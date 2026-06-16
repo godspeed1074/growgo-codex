@@ -4276,7 +4276,7 @@ function buildPinIcon(pin, state = null) {
 
   const html = `
     <div class="base-pin-marker ${glowClass} ${capturedClass}">
-      <img src="pin-base-blue.png" alt="Base Pin">
+      <img src="pin-base-blue.svg" alt="Base Pin">
       ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
     </div>
   `;

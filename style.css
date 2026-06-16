@@ -125,7 +125,7 @@ body.phone-preview .menu-panel {
   border-radius: 28px 28px 0 0;
   background-image:
     linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.48)),
-    url("assets/ui/menu-header-bg.png");
+    url("assets/ui/menu-header-bg.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4169,7 +4169,7 @@ button.social-party-rule:active {
   transition: transform 0.28s ease !important;
   background-image:
     linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.48)),
-    url("assets/ui/menu-header-bg.png") !important;
+    url("assets/ui/menu-header-bg.svg") !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
