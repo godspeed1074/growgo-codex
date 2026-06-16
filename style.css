@@ -4838,3 +4838,16 @@ body.phone-preview .menu-header .profile-swipe-card,
   max-height: 62px !important;
   image-rendering: pixelated;
 }
+
+/* ========================================================= */
+/* SWIPE BACK NAVIGATION                                     */
+/* Back arrows are replaced by right-swipe menu navigation    */
+/* ========================================================= */
+
+.submenu-back,
+.market-details-back,
+.market-buy-back,
+.market-listings-back,
+.inventory-details-back {
+  display: none !important;
+}

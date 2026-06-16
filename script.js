@@ -195,6 +195,9 @@ let playerQrCode;
 let profileSwipeStartX = 0;
 let profileSwipeStartY = 0;
 let profileSwipeCurrentMode = localStorage.getItem(GROWGO_PROFILE_CARD_MODE_KEY) || "photo";
+let menuBackSwipeStartX = 0;
+let menuBackSwipeStartY = 0;
+let menuBackSwipePointerId = null;
 
 let menuHome;
 
@@ -1482,8 +1485,6 @@ function renderMarketItemDetails() {
 
   marketItemDetailsView.innerHTML = `
     <div class="market-detail-panel">
-      <button class="market-details-back" type="button">← Back</button>
-
       <div class="market-detail-hero">
         <div class="market-detail-icon">${item.icon}</div>
         <div>
@@ -1525,8 +1526,6 @@ function renderMarketBuyView() {
 
   marketBuyView.innerHTML = `
     <div class="market-buy-panel">
-      <button class="market-buy-back" type="button">← Back</button>
-
       <div class="market-detail-hero">
         <div class="market-detail-icon">${item.icon}</div>
         <div>
@@ -1866,8 +1865,6 @@ function renderMarketListings() {
 
   marketListingsView.innerHTML = `
     <div class="market-detail-panel">
-      <button class="market-listings-back" type="button">← Back</button>
-
       <h3>My Listings</h3>
 
       ${playerListings.length
@@ -2141,8 +2138,6 @@ function openInventoryDetails(itemId) {
   const rarityClass = String(item.rarity || "common").toLowerCase();
 
   inventoryDetailsCard.innerHTML = `
-    <button class="inventory-details-back" type="button">← Back</button>
-
     <div class="inventory-detail-hero">
       <div class="inventory-detail-icon">${item.icon}</div>
 
@@ -2631,7 +2626,150 @@ function initBasicUi() {
 
       showToast("Coming soon", `${rawLabel.trim()} screen is wired for the next build.`);
     });
+
+    setupMenuBackSwipe();
   }
+}
+
+function setupMenuBackSwipe() {
+  if (!sideMenu) return;
+
+  function shouldIgnoreMenuBackSwipe(target) {
+    if (!target || typeof target.closest !== "function") return false;
+
+    return !!target.closest(
+      "#profileSwipeCard, input, textarea, select, .market-sell-overlay, .inventory-buy-overlay, .social-party-overlay, .friends-overlay, .players-met-overlay, .add-friend-overlay"
+    );
+  }
+
+  function handleSwipeStart(startX, startY, target) {
+    if (shouldIgnoreMenuBackSwipe(target)) {
+      menuBackSwipeStartX = 0;
+      menuBackSwipeStartY = 0;
+      return;
+    }
+
+    menuBackSwipeStartX = startX;
+    menuBackSwipeStartY = startY;
+  }
+
+  function handleSwipeEnd(endX, endY) {
+    if (!menuBackSwipeStartX && !menuBackSwipeStartY) return;
+
+    const diffX = endX - menuBackSwipeStartX;
+    const diffY = endY - menuBackSwipeStartY;
+
+    menuBackSwipeStartX = 0;
+    menuBackSwipeStartY = 0;
+
+    if (diffX < 55) return;
+    if (Math.abs(diffY) > 45) return;
+    if (Math.abs(diffX) < Math.abs(diffY) * 1.25) return;
+
+    navigateMenuBackOnePage();
+  }
+
+  sideMenu.addEventListener("touchstart", (event) => {
+    if (!event.touches || event.touches.length !== 1) return;
+    handleSwipeStart(event.touches[0].clientX, event.touches[0].clientY, event.target);
+  }, { passive: true });
+
+  sideMenu.addEventListener("touchend", (event) => {
+    if (!event.changedTouches || event.changedTouches.length !== 1) return;
+    handleSwipeEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+  }, { passive: true });
+
+  sideMenu.addEventListener("mousedown", (event) => {
+    handleSwipeStart(event.clientX, event.clientY, event.target);
+  });
+
+  sideMenu.addEventListener("mouseup", (event) => {
+    handleSwipeEnd(event.clientX, event.clientY);
+  });
+
+  sideMenu.addEventListener("pointerdown", (event) => {
+    if (menuBackSwipePointerId !== null) return;
+    menuBackSwipePointerId = event.pointerId;
+    handleSwipeStart(event.clientX, event.clientY, event.target);
+  });
+
+  sideMenu.addEventListener("pointerup", (event) => {
+    if (menuBackSwipePointerId !== event.pointerId) return;
+    menuBackSwipePointerId = null;
+    handleSwipeEnd(event.clientX, event.clientY);
+  });
+
+  sideMenu.addEventListener("pointercancel", () => {
+    menuBackSwipePointerId = null;
+    menuBackSwipeStartX = 0;
+    menuBackSwipeStartY = 0;
+  });
+}
+
+function navigateMenuBackOnePage() {
+  if (!sideMenu || !sideMenu.classList.contains("open")) return false;
+
+  if (marketScreen && !marketScreen.classList.contains("hidden")) {
+    if (marketBuyView && !marketBuyView.classList.contains("hidden")) {
+      showMarketDetailsView();
+      return true;
+    }
+
+    if (
+      (marketItemDetailsView && !marketItemDetailsView.classList.contains("hidden")) ||
+      (marketListingsView && !marketListingsView.classList.contains("hidden"))
+    ) {
+      showMarketItemsView();
+      return true;
+    }
+
+    closeMarket();
+    return true;
+  }
+
+  if (inventoryScreen && !inventoryScreen.classList.contains("hidden")) {
+    if (inventoryDetailsView && !inventoryDetailsView.classList.contains("hidden")) {
+      selectedInventoryItemId = null;
+      showInventoryListView();
+      renderInventory();
+      return true;
+    }
+
+    closeInventory();
+    return true;
+  }
+
+  if (craftingScreen && !craftingScreen.classList.contains("hidden")) {
+    if (recipeDetailsPanel && !recipeDetailsPanel.classList.contains("hidden")) {
+      closeRecipeDetails();
+      return true;
+    }
+
+    closeRecipeDetails();
+    craftingScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
+  if (statsScreen && !statsScreen.classList.contains("hidden")) {
+    statsScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
+  if (leadersScreen && !leadersScreen.classList.contains("hidden")) {
+    leadersScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
+  if (socialScreen && !socialScreen.classList.contains("hidden")) {
+    socialScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
+  return false;
 }
 
 function toggleMenu() {
