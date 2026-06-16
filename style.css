@@ -4878,3 +4878,87 @@ body.phone-preview .menu-level-number,
     0 4px 10px rgba(0,0,0,0.46),
     0 0 0 3px rgba(255,255,255,0.72) !important;
 }
+
+/* ========================================================= */
+/* MARKET + CRAFTING SCREEN MATCH                            */
+/* Keeps these menus on the same scenic layer as Leaders      */
+/* ========================================================= */
+
+body.phone-preview #marketScreen,
+body.phone-preview #craftingScreen,
+#marketScreen,
+#craftingScreen {
+  position: absolute !important;
+  top: var(--menu-header-height) !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  inset: var(--menu-header-height) 0 0 0 !important;
+  width: 100% !important;
+  height: calc(100% - var(--menu-header-height)) !important;
+  z-index: 22 !important;
+  display: block !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 0 16px calc(24px + var(--safe-bottom)) !important;
+  background:
+    radial-gradient(circle at top, rgba(80, 190, 255, 0.16), transparent 34%),
+    linear-gradient(rgba(0,14,25,0.28), rgba(0,14,25,0.86)) !important;
+  backdrop-filter: blur(2px) !important;
+  color: #ffffff !important;
+}
+
+body.phone-preview #marketScreen.hidden,
+body.phone-preview #craftingScreen.hidden,
+#marketScreen.hidden,
+#craftingScreen.hidden {
+  display: none !important;
+}
+
+body.phone-preview #recipePanel,
+body.phone-preview .recipe-panel,
+#recipePanel,
+.recipe-panel {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  flex: none !important;
+  overflow: visible !important;
+  padding: 0 0 28px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#marketScreen h2,
+#recipePanel h2 {
+  margin: 20px 0 14px !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  font-weight: 1000 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  letter-spacing: 0 !important;
+  text-shadow: 0 3px 7px rgba(0,0,0,0.7) !important;
+}
+
+#marketScreen .submenu-intro,
+#recipePanel .submenu-intro {
+  margin: 0 0 14px !important;
+  text-align: left !important;
+}
+
+.market-view,
+#marketItemsView,
+#marketItemDetailsView,
+#marketBuyView,
+#marketListingsView {
+  overflow: visible !important;
+  padding-bottom: 28px !important;
+}
