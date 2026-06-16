@@ -1,0 +1,19 @@
+{
+  "name": "GrowGo",
+  "short_name": "GrowGo",
+  "description": "A mobile-first GrowGo map game.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#073050",
+  "theme_color": "#073050",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/ui/market.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
