@@ -4792,7 +4792,7 @@ body.phone-preview .menu-header .profile-swipe-card,
   width: var(--profile-card-size) !important;
   height: var(--profile-card-size) !important;
   border-radius: var(--profile-card-radius) !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .profile-swipe-card,
@@ -4860,8 +4860,10 @@ body.phone-preview .menu-header .profile-swipe-card,
 body.phone-preview .menu-level-row,
 .menu-level-row {
   position: absolute !important;
-  left: 82px !important;
-  top: 112px !important;
+  left: auto !important;
+  top: auto !important;
+  right: -14px !important;
+  bottom: -14px !important;
   z-index: 120 !important;
   pointer-events: none !important;
 }
