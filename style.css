@@ -4851,3 +4851,28 @@ body.phone-preview .menu-header .profile-swipe-card,
 .inventory-details-back {
   display: none !important;
 }
+
+/* ========================================================= */
+/* PROFILE LEVEL BADGE                                       */
+/* Overlaps the profile card corner instead of sitting below  */
+/* ========================================================= */
+
+body.phone-preview .menu-level-row,
+.menu-level-row {
+  position: absolute !important;
+  left: 82px !important;
+  top: 112px !important;
+  z-index: 120 !important;
+  pointer-events: none !important;
+}
+
+body.phone-preview .menu-level-number,
+.menu-level-number {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 20px !important;
+  border-width: 3px !important;
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.46),
+    0 0 0 3px rgba(255,255,255,0.72) !important;
+}
