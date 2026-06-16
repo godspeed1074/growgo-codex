@@ -3942,10 +3942,13 @@ function requestRoadPinsForCurrentView(force = false) {
 
   roadFetchTimer = setTimeout(() => {
     fetchRoadPinsForViewport(force).catch((error) => {
+      if (error?.name === "AbortError") {
+        scheduleRedrawPins();
+        return;
+      }
+
       console.warn("Road pin fetch failed:", error);
       scheduleRedrawPins();
-
-      if (error?.name === "AbortError") return;
 
       if (!roadErrorToastShown && pinStore.size === 0) {
         roadErrorToastShown = true;
