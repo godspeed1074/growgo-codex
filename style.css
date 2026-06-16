@@ -4763,3 +4763,15 @@ body.phone-preview .menu-btn span,
 
   z-index: 80 !important;
 }
+
+.menu-header > #gmtResetClock {
+  position: absolute !important;
+  top: calc(12px + var(--safe-top)) !important;
+  right: 12px !important;
+  left: auto !important;
+  bottom: auto !important;
+  height: 30px !important;
+  max-width: 176px !important;
+  padding: 0 12px !important;
+  z-index: 90 !important;
+}
