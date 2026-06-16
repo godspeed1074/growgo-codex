@@ -1271,31 +1271,105 @@ body.phone-preview .menu-overlay {
 
 .base-pin-marker {
   position: relative;
-  width: 64px !important;
-  height: 84px !important;
+  width: 72px !important;
+  height: 92px !important;
+  filter: drop-shadow(0 8px 8px rgba(0,0,0,0.34));
 }
 
-.base-pin-marker img {
-  width: 64px !important;
-  height: 84px !important;
-  display: block !important;
-  object-fit: contain !important;
-  pointer-events: none !important;
+.base-pin-tail {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 34px;
+  height: 40px;
+  transform: translateX(-50%) rotate(45deg);
+  transform-origin: center;
+  border-radius: 0 0 9px 0;
+  background:
+    linear-gradient(135deg, #147df5 0%, #0757c9 58%, #033796 100%);
+  box-shadow:
+    inset 3px 3px 0 rgba(255,255,255,0.14),
+    inset -5px -5px 0 rgba(0,25,100,0.24);
+}
+
+.base-pin-disc {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 72px;
+  height: 72px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255,255,255,0.28), rgba(255,255,255,0) 28%),
+    linear-gradient(145deg, #2494ff 0%, #0069e9 52%, #0646b8 100%);
+  box-shadow:
+    inset 0 4px 0 rgba(255,255,255,0.28),
+    inset 0 -7px 0 rgba(0,28,110,0.26),
+    0 3px 0 rgba(2,50,150,0.88);
+}
+
+.base-pin-disc::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    inset 0 2px 2px rgba(0,0,0,0.08),
+    0 1px 0 rgba(255,255,255,0.45);
+}
+
+.base-pin-face {
+  position: absolute;
+  inset: 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255,255,255,0.78), rgba(255,255,255,0.08) 28%, rgba(255,255,255,0) 42%),
+    linear-gradient(160deg, #74edff 0%, #16b9f5 43%, #006fe8 66%, #063da8 100%);
+  box-shadow:
+    inset 0 3px 4px rgba(255,255,255,0.45),
+    inset 0 -7px 8px rgba(0,21,112,0.38),
+    0 1px 3px rgba(0,0,0,0.2);
+}
+
+.base-pin-face::before,
+.base-pin-face::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  height: 19px;
+  border-radius: 50%;
+  background: rgba(155,245,255,0.32);
+  transform: rotate(-9deg);
+  pointer-events: none;
+}
+
+.base-pin-face::before {
+  top: 9px;
+}
+
+.base-pin-face::after {
+  bottom: 9px;
+  background: rgba(0,92,218,0.32);
 }
 
 .base-pin-number {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) translate(0px, -7px);
-  font-size: 18px;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
   font-weight: 900;
   line-height: 1;
-  color: #071d55;
-  -webkit-text-stroke: 1px rgba(255,255,255,0.65);
+  color: #ffffff;
+  -webkit-text-stroke: 1.5px rgba(5, 47, 150, 0.72);
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.65),
-    0 2px 4px rgba(0,0,0,0.22);
+    0 2px 0 rgba(3,50,150,0.75),
+    0 4px 6px rgba(0,0,0,0.26);
   pointer-events: none;
 }
 

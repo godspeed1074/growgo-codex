@@ -4276,16 +4276,20 @@ function buildPinIcon(pin, state = null) {
 
   const html = `
     <div class="base-pin-marker ${glowClass} ${capturedClass}">
-      <img src="pin-base-blue.png" alt="Base Pin">
-      ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
+      <div class="base-pin-tail"></div>
+      <div class="base-pin-disc">
+        <div class="base-pin-face">
+          ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
+        </div>
+      </div>
     </div>
   `;
 
   const icon = L.divIcon({
     className: "base-pin-icon",
     html,
-    iconSize: [64, 84],
-    iconAnchor: [32, 84]
+    iconSize: [72, 92],
+    iconAnchor: [36, 92]
   });
 
   pinIconCache.set(cacheKey, icon);
