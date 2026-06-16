@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>GrowGo</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css?v=clean3h" />
+</head>
+
+<body class="phone-preview">
+  <div id="app">
+    <!-- MAP -->
+    <div id="map"></div>
+
+    <!-- TOASTS -->
+    <div id="toast-stack" class="toast-stack"></div>
+
+    <!-- TOP UI -->
+    <button id="avatarButton" class="avatar-button" type="button">
+      <img id="topAvatarImage" class="hidden" alt="Player avatar" />
+      <span id="topAvatarFallback">+</span>
+    </button>
+
+    <div class="coin-pill">
+      🪙 <span id="coinCount">12,450</span>
+    </div>
+
+    <div class="live-pill">LIVE</div>
+
+    <!-- MENU OVERLAY -->
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <!-- SIDE / BOTTOM MENU -->
+    <section id="sideMenu" class="menu-panel">
+      <div class="menu-header">
+        <div id="profileSwipeCard" class="profile-swipe-card">
+          <div id="profilePhotoFace" class="profile-face profile-photo-face active">
+            <img id="menuAvatarImg" class="hidden" alt="Profile picture" />
+            <span id="menuAvatarPlus">+</span>
+          </div>
+
+          <div id="profileQrFace" class="profile-face profile-qr-face">
+            <div id="playerQrCode" class="player-qr-code"></div>
+          </div>
+        </div>
+
+        <input id="menuAvatarInput" type="file" accept="image/*" class="hidden" />
+
+        <div class="menu-player-info">
+          <div class="menu-player-name">grower123</div>
+
+         <div class="menu-level-row">
+  <span class="menu-level-number">23</span>
+</div>
+
+<span id="gmtResetClock">Reset: syncing...</span>
+
+          <div class="menu-xp-bar">
+            <div class="menu-xp-fill" style="width: 87%;"></div>
+          </div>
+
+          <div class="menu-xp-text">
+            <span>87%</span>
+            <span>6932 / 7900 XP</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="menuHome" class="menu-home">
+        <div class="menu-grid">
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/stats.png" alt="Stats" />
+            <span>Stats</span>
+          </button>
+
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/leaders.png" alt="Leaders" />
+            <span>Leaders</span>
+          </button>
+
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/crafting.png" alt="Crafting" />
+            <span>Crafting</span>
+          </button>
+
+          <button id="marketBtn" class="menu-btn" type="button">
+            <img src="assets/ui/market.png" alt="Market" />
+            <span>Market</span>
+          </button>
+
+          <button id="inventoryBtn" class="menu-btn" type="button">
+            <img src="assets/ui/inventory.png" alt="Inventory" />
+            <span>Inventory</span>
+          </button>
+
+          <button id="socialBtn" class="menu-btn" type="button">
+            <img src="assets/ui/social.png" alt="Social" />
+            <span>Social</span>
+          </button>
+
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/achievements.png" alt="Achievements" />
+            <span>Achievements</span>
+          </button>
+
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/quests.png" alt="Quests" />
+            <span>Quests</span>
+          </button>
+
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/collections.png" alt="Collections" />
+            <span>Collections</span>
+          </button>
+
+          <button class="menu-btn" type="button">
+            <img src="assets/ui/settings.png" alt="Settings" />
+            <span>Settings</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STATS SCREEN -->
+      <section id="statsScreen" class="submenu-screen hidden">
+        <button id="statsBack" class="submenu-back" type="button">←</button>
+
+        <h2>STATS</h2>
+
+        <div class="stats-tabs">
+          <button class="tab active" data-tab="today" type="button">Today</button>
+          <button class="tab" data-tab="lifetime" type="button">Lifetime</button>
+          <button class="tab" data-tab="best" type="button">Personal Best</button>
+        </div>
+
+        <div id="statsContent" class="stats-content"></div>
+      </section>
+
+      <!-- LEADERS SCREEN -->
+      <section id="leadersScreen" class="submenu-screen hidden">
+        <button id="leadersBackBtn" class="submenu-back" type="button">←</button>
+
+        <h2>LEADERS</h2>
+
+        <div class="leader-segments">
+          <button class="seg-btn active" data-board="points" type="button">Points</button>
+          <button class="seg-btn" data-board="achievements" type="button">Achievements</button>
+          <button class="seg-btn" data-board="records" type="button">Records</button>
+        </div>
+
+        <div class="leader-segments">
+          <button class="seg-btn active" data-board="local" type="button">Local</button>
+          <button class="seg-btn" data-board="regional" type="button">Regional</button>
+          <button class="seg-btn" data-board="global" type="button">Global</button>
+        </div>
+
+        <div class="leader-segments">
+          <button class="seg-btn active" data-board="daily" type="button">Daily</button>
+          <button class="seg-btn" data-board="seasonal" type="button">Seasonal</button>
+          <button class="seg-btn" data-board="all-time" type="button">All-Time</button>
+        </div>
+
+        <div class="leaderboard-list"></div>
+      </section>
+
+      <!-- SOCIAL SCREEN -->
+      <section id="socialScreen" class="submenu-screen hidden">
+        <button id="socialBackBtn" class="submenu-back" type="button">←</button>
+
+        <h2>SOCIAL</h2>
+        <p class="submenu-intro">Friends, parties, QR codes and nearby players.</p>
+
+        <div class="social-profile-card">
+          <div class="social-profile-avatar">
+            <img id="socialAvatarImg" class="hidden" alt="Social avatar" />
+            <span id="socialAvatarFallback">+</span>
+          </div>
+
+          <div>
+            <strong>grower123</strong>
+            <div class="social-public-id">
+              Public ID: <span id="socialPublicId">syncing...</span>
+            </div>
+            <p>Swipe your profile picture in the header to show your QR code.</p>
+          </div>
+        </div>
+
+        <div class="social-action-grid">
+          <button class="social-action-card" data-social-action="meet" type="button">
+            <span>📷</span>
+            <strong>Meet</strong>
+            <small>Scan another player’s QR code.</small>
+          </button>
+
+          <button class="social-action-card" data-social-action="friends" type="button">
+            <span>👥</span>
+            <strong>Friends</strong>
+            <small>View your GrowGo friends.</small>
+          </button>
+
+          <button class="social-action-card" data-social-action="party" type="button">
+            <span>🎉</span>
+            <strong>Party</strong>
+            <small>Create or join a nearby party.</small>
+          </button>
+
+          <button class="social-action-card" data-social-action="guild" type="button">
+            <span>🛡️</span>
+            <strong>Guild</strong>
+            <small>Team up with your GrowGo group.</small>
+          </button>
+
+          <button class="social-action-card" data-social-action="create-market" type="button">
+            <span>🏕️</span>
+            <strong>Create Market</strong>
+            <small>Host a local GrowGo market.</small>
+          </button>
+
+          <button class="social-action-card" data-social-action="nearby-markets" type="button">
+            <span>📍</span>
+            <strong>Nearby Markets</strong>
+            <small>Find active markets near you.</small>
+          </button>
+
+          <button class="social-action-card" data-social-action="verify-attendance" type="button">
+            <span>✅</span>
+            <strong>Verify Attendance</strong>
+            <small>Check in at a real-world market.</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- MARKET SCREEN -->
+      <section id="marketScreen" class="submenu-screen hidden">
+        <button id="marketBack" class="submenu-back market-back-btn" type="button">←</button>
+
+        <h2>MARKET</h2>
+        <p class="submenu-intro">Buy and sell resources, food, cards and skins.</p>
+
+        <div class="market-wallet">
+          🪙 12,450 coins
+        </div>
+
+        <div id="marketItemsView" class="market-view"></div>
+        <div id="marketItemDetailsView" class="market-view hidden"></div>
+        <div id="marketBuyView" class="market-view hidden"></div>
+        <div id="marketListingsView" class="market-view hidden"></div>
+      </section>
+
+      <!-- INVENTORY SCREEN -->
+      <section id="inventoryScreen" class="submenu-screen hidden">
+        <button id="inventoryBackBtn" class="submenu-back" type="button">←</button>
+
+        <h2>INVENTORY</h2>
+        <p class="submenu-intro">Your resources, food, cards, skins and special rewards.</p>
+
+        <div id="inventoryListView">
+          <div class="inventory-tabs">
+            <button class="inventory-tab active" data-inventory-category="resources" type="button">Resources</button>
+            <button class="inventory-tab" data-inventory-category="food" type="button">Food</button>
+            <button class="inventory-tab" data-inventory-category="cards" type="button">Cards</button>
+            <button class="inventory-tab" data-inventory-category="skins" type="button">Skins</button>
+            <button class="inventory-tab" data-inventory-category="special" type="button">Special</button>
+          </div>
+
+          <div id="inventoryGrid" class="inventory-grid"></div>
+        </div>
+
+        <div id="inventoryDetailsView" class="hidden">
+          <div id="inventoryDetailsCard" class="inventory-details-card"></div>
+        </div>
+      </section>
+
+      <!-- CRAFTING SCREEN -->
+      <section id="craftingScreen" class="submenu-screen hidden">
+        <button id="craftingBackBtn" class="submenu-back" type="button">←</button>
+
+        <div id="recipePanel" class="recipe-panel">
+          <h2>RECIPES</h2>
+          <p class="submenu-intro">Craft items to power your journey!</p>
+
+          <div class="crafting-header-card">
+            <div class="crafting-level-badge-large">23</div>
+
+            <div class="crafting-header-info">
+              <div id="craftingLevelLabel">Crafting Level 23</div>
+              <div id="craftingNextLevelText">Next Level 24</div>
+
+              <div class="crafting-xp-bar">
+                <div id="craftingXpFill" class="crafting-xp-fill"></div>
+              </div>
+
+              <div class="crafting-xp-row">
+                <span id="craftingXpText">6932 / 7900 XP</span>
+                <span id="craftingXpToGoText">968 XP to go</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="recipeBookGrid" class="recipe-book-grid"></div>
+        </div>
+
+        <div id="recipeDetailsPanel" class="recipe-details-panel hidden">
+          <button id="recipeDetailsBackBtn" class="submenu-back" type="button">←</button>
+
+          <h2>RECIPE DETAILS</h2>
+
+          <div id="recipeDetailsCard" class="recipe-details-card">
+            <div id="recipeHeroIcon" class="recipe-hero-icon">🥤</div>
+
+            <div class="recipe-detail-title-row">
+              <div>
+                <h3 id="recipeTitle">Energy Drink</h3>
+                <span id="recipeLevel">Lv. 7</span>
+              </div>
+
+              <span id="recipeRarity" class="recipe-rarity">Rare</span>
+            </div>
+
+            <p id="recipeEffect" class="recipe-effect">
+              A refreshing boost that increases XP gain for a limited time.
+            </p>
+
+            <div class="recipe-stat-grid">
+              <div class="recipe-stat-card">
+                <span>XP</span>
+                <strong id="recipeBoostType">Effect Boost</strong>
+              </div>
+
+              <div class="recipe-stat-card">
+                <span>⏱</span>
+                <strong id="recipeDuration">5m</strong>
+              </div>
+
+              <div class="recipe-stat-card">
+                <span>Boost</span>
+                <strong id="recipeBoostAmount">+100%</strong>
+              </div>
+
+              <div class="recipe-stat-card">
+                <span>Crafting XP</span>
+                <strong id="recipeCraftingXp">250</strong>
+              </div>
+            </div>
+
+            <h4>Ingredients</h4>
+            <div id="recipeIngredients" class="recipe-ingredients"></div>
+
+            <button id="craftRecipeBtn" class="craft-recipe-btn" type="button">
+              CRAFT
+            </button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- MARKET SELL OVERLAY -->
+    <div id="marketSellOverlay" class="market-sell-overlay hidden"></div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="script.js?v=clean3h"></script>
+</body>
+</html>
