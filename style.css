@@ -4775,3 +4775,66 @@ body.phone-preview .menu-btn span,
   padding: 0 12px !important;
   z-index: 90 !important;
 }
+
+/* ========================================================= */
+/* PROFILE CARD SHAPE                                        */
+/* Makes photo and QR faces match exactly                     */
+/* ========================================================= */
+
+:root {
+  --profile-card-size: 82px;
+  --profile-card-radius: 18px;
+}
+
+body.phone-preview .menu-header .profile-swipe-card,
+.menu-header .profile-swipe-card,
+.profile-swipe-card {
+  width: var(--profile-card-size) !important;
+  height: var(--profile-card-size) !important;
+  border-radius: var(--profile-card-radius) !important;
+  overflow: hidden !important;
+}
+
+.profile-swipe-card,
+.profile-swipe-card.qr-mode {
+  background: #ffffff !important;
+  border: 4px solid rgba(160, 230, 145, 0.95) !important;
+}
+
+.profile-face,
+.profile-photo-face,
+.profile-qr-face,
+.profile-swipe-card.qr-mode .profile-face {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: calc(var(--profile-card-radius) - 4px) !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+}
+
+#menuAvatarImg,
+#menuAvatarPlus {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: calc(var(--profile-card-radius) - 4px) !important;
+}
+
+#playerQrCode,
+.player-qr-code {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 7px !important;
+  border-radius: calc(var(--profile-card-radius) - 4px) !important;
+  background: #ffffff !important;
+}
+
+#playerQrCode canvas,
+#playerQrCode img,
+.player-qr-code canvas,
+.player-qr-code img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 62px !important;
+  max-height: 62px !important;
+  image-rendering: pixelated;
+}
