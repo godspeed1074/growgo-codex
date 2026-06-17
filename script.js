@@ -29,9 +29,10 @@ const CRAFTING_STORAGE_KEY = "growgo-crafting";
 const MARKET_STORAGE_KEY = "growgo-market";
 const MARKET_LONG_PRESS_MS = 550;
 
+const PLAYER_STORAGE_KEY = "growgo-player-state";
 const GROWGO_PLAYER_ID_KEY = "growgo-player-public-id";
 const GROWGO_PROFILE_CARD_MODE_KEY = "growgo-profile-card-mode";
-const PLAYER_NAME = "rubberlips";
+const DEFAULT_PLAYER_NAME = "rubberlips";
 const PROGRESSION_RESET_KEY = "growgo-progression-reset-version";
 const PROGRESSION_RESET_VERSION = "rubberlips-reset-1";
 
@@ -49,6 +50,7 @@ function resetPlayerProgressionOnce() {
       STATS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
       MARKET_STORAGE_KEY,
+      PLAYER_STORAGE_KEY,
       GROWGO_PLAYER_ID_KEY,
       GROWGO_PROFILE_CARD_MODE_KEY,
       "growgo-players-met",
@@ -60,6 +62,76 @@ function resetPlayerProgressionOnce() {
     console.warn("Could not reset player progression.", error);
   }
 }
+
+function createDefaultPlayerState() {
+  return {
+    name: DEFAULT_PLAYER_NAME,
+    publicId: null,
+    avatarSrc: null,
+    profileCardMode: "photo",
+    progress: {
+      level: 1,
+      xp: 0,
+      coins: 0,
+      score: 0
+    },
+    settings: {}
+  };
+}
+
+function loadPlayerState() {
+  const defaults = createDefaultPlayerState();
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY) || "null") || {};
+    const legacyProfileCardMode = localStorage.getItem(GROWGO_PROFILE_CARD_MODE_KEY);
+    const legacyPublicId = localStorage.getItem(GROWGO_PLAYER_ID_KEY);
+    const legacyAvatar = localStorage.getItem(AVATAR_STORAGE_KEY);
+
+    return {
+      ...defaults,
+      ...saved,
+      name: String(saved.name || defaults.name),
+      publicId: saved.publicId || legacyPublicId || defaults.publicId,
+      avatarSrc: saved.avatarSrc || legacyAvatar || defaults.avatarSrc,
+      profileCardMode: saved.profileCardMode || legacyProfileCardMode || defaults.profileCardMode,
+      progress: {
+        ...defaults.progress,
+        ...(saved.progress || {})
+      },
+      settings: {
+        ...defaults.settings,
+        ...(saved.settings || {})
+      }
+    };
+  } catch (error) {
+    console.warn("Could not load player state.", error);
+    return defaults;
+  }
+}
+
+function savePlayerState() {
+  try {
+    localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(playerState));
+
+    if (playerState.publicId) {
+      localStorage.setItem(GROWGO_PLAYER_ID_KEY, playerState.publicId);
+    }
+
+    if (playerState.avatarSrc) {
+      localStorage.setItem(AVATAR_STORAGE_KEY, playerState.avatarSrc);
+    } else {
+      localStorage.removeItem(AVATAR_STORAGE_KEY);
+    }
+
+    localStorage.setItem(GROWGO_PROFILE_CARD_MODE_KEY, playerState.profileCardMode || "photo");
+  } catch (error) {
+    console.warn("Could not save player state.", error);
+  }
+}
+
+let playerState = loadPlayerState();
+savePlayerState();
 
 /* ----------------------------- */
 /* MARKET DATA */
@@ -223,7 +295,7 @@ let profileQrFace;
 let playerQrCode;
 let profileSwipeStartX = 0;
 let profileSwipeStartY = 0;
-let profileSwipeCurrentMode = localStorage.getItem(GROWGO_PROFILE_CARD_MODE_KEY) || "photo";
+let profileSwipeCurrentMode = playerState.profileCardMode || "photo";
 let menuBackSwipeStartX = 0;
 let menuBackSwipeStartY = 0;
 let menuBackSwipeActive = false;
@@ -501,6 +573,7 @@ function addStat(statKey, amount = 1) {
   }
 
   saveStats();
+  renderPlayerOverview();
 
   if (statsScreen && !statsScreen.classList.contains("hidden")) {
     const activeTab = statsScreen.querySelector(".stats-tabs .tab.active");
@@ -1654,6 +1727,7 @@ function confirmMarketPurchase() {
 
 saveMarketState();
 renderMarketWallet();
+renderPlayerOverview();
 renderMarket();
 refreshInventoryIfOpen();
 
@@ -2388,6 +2462,7 @@ function addMarketCoins(amount) {
   marketState.wallet = Math.max(0, Number(marketState.wallet || 0) + Number(amount || 0));
   saveMarketState();
   renderMarketWallet();
+  renderPlayerOverview();
 
   if (marketScreen && !marketScreen.classList.contains("hidden")) {
     renderMarket();
@@ -3049,9 +3124,21 @@ function renderPlayerOverview() {
   const currentXp = Math.floor(progress.currentXpIntoLevel);
   const neededXp = Math.max(1, progress.neededThisLevel || 1);
   const percent = Math.max(0, Math.min(100, progress.percent || 0));
+  const playerName = playerState.name || DEFAULT_PLAYER_NAME;
+  const coins = Number(marketState?.wallet || 0);
+  const score = Number(playerStats?.lifetime?.score || 0);
+
+  playerState.name = playerName;
+  playerState.progress = {
+    level: playerCrafting.level,
+    xp: playerCrafting.xp,
+    coins,
+    score
+  };
+  savePlayerState();
 
   document.querySelectorAll(".menu-player-name").forEach((el) => {
-    el.textContent = PLAYER_NAME;
+    el.textContent = playerName;
   });
 
   document.querySelectorAll(".menu-level-number").forEach((el) => {
@@ -3070,7 +3157,7 @@ function renderPlayerOverview() {
   });
 
   document.querySelectorAll(".social-profile-card strong").forEach((el) => {
-    el.textContent = PLAYER_NAME;
+    el.textContent = playerName;
   });
 
   renderMarketWallet();
@@ -3098,7 +3185,7 @@ MOCK_LEADERBOARD[0] = {
 
 MOCK_LEADERBOARD[117] = {
   rank: 118,
-  name: PLAYER_NAME,
+  name: DEFAULT_PLAYER_NAME,
   score: 0,
   me: true
 };
@@ -3144,7 +3231,13 @@ function renderLeaderboard(type) {
   if (!leaderboardList) return;
 
   const top100 = MOCK_LEADERBOARD.slice(0, 100);
-  const currentPlayer = MOCK_LEADERBOARD.find((p) => p.me);
+  const currentPlayer = {
+    ...(MOCK_LEADERBOARD.find((p) => p.me) || {}),
+    rank: 118,
+    name: playerState.name || DEFAULT_PLAYER_NAME,
+    score: playerStats?.lifetime?.score || 0,
+    me: true
+  };
 
   let html = top100.map((player) => {
     const cardClass = [
@@ -3856,11 +3949,8 @@ function initAvatarUpload() {
       const src = e.target?.result;
       if (!src) return;
 
-      try {
-        localStorage.setItem(AVATAR_STORAGE_KEY, src);
-      } catch (error) {
-        console.warn("Could not save avatar.", error);
-      }
+      playerState.avatarSrc = src;
+      savePlayerState();
 
       applyAvatar(src);
       updatePlayerMarkerIcon();
@@ -3955,12 +4045,8 @@ function setupProfileSwipeCard() {
 
 function setProfileCardMode(mode) {
   profileSwipeCurrentMode = mode === "qr" ? "qr" : "photo";
-
-  try {
-    localStorage.setItem(GROWGO_PROFILE_CARD_MODE_KEY, profileSwipeCurrentMode);
-  } catch (error) {
-    console.warn("Could not save profile card mode.", error);
-  }
+  playerState.profileCardMode = profileSwipeCurrentMode;
+  savePlayerState();
 
   if (!profilePhotoFace || !profileQrFace) return;
 
@@ -3980,9 +4066,16 @@ if (profileSwipeCurrentMode === "qr") {
 
 function getOrCreateGrowGoPlayerId() {
   try {
-    let playerId = localStorage.getItem(GROWGO_PLAYER_ID_KEY);
+    let playerId = playerState.publicId || localStorage.getItem(GROWGO_PLAYER_ID_KEY);
 
-    if (playerId) return playerId;
+    if (playerId) {
+      if (playerState.publicId !== playerId) {
+        playerState.publicId = playerId;
+        savePlayerState();
+      }
+
+      return playerId;
+    }
 
     const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     let randomPart = "";
@@ -3992,7 +4085,8 @@ function getOrCreateGrowGoPlayerId() {
     }
 
     playerId = `GG${randomPart}`;
-    localStorage.setItem(GROWGO_PLAYER_ID_KEY, playerId);
+    playerState.publicId = playerId;
+    savePlayerState();
 
     return playerId;
   } catch (error) {
@@ -4067,9 +4161,9 @@ function clearAvatar() {
 
 function getSavedAvatar() {
   try {
-    return localStorage.getItem(AVATAR_STORAGE_KEY);
+    return playerState.avatarSrc || localStorage.getItem(AVATAR_STORAGE_KEY);
   } catch {
-    return null;
+    return playerState.avatarSrc || null;
   }
 }
 
