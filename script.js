@@ -2809,6 +2809,7 @@ function startGmtResetClock() {
 function initMap() {
   map = L.map("map", {
     zoomControl: false,
+    doubleClickZoom: false,
     preferCanvas: true
   }).setView(DEFAULT_CENTER, 17);
 
@@ -2826,6 +2827,23 @@ function initMap() {
   });
 
   map.on("click", closeMenu);
+  map.on("dblclick", recenterMapOnPlayer);
+}
+
+function recenterMapOnPlayer(event) {
+  if (event?.originalEvent) {
+    L.DomEvent.preventDefault(event.originalEvent);
+  }
+
+  if (!playerLatLng) {
+    showToast("Location", "Player location not ready yet.");
+    return;
+  }
+
+  closeMenu();
+  map.setView(playerLatLng, Math.max(map.getZoom(), 18), {
+    animate: true
+  });
 }
 
 /* ----------------------------- */
@@ -4902,6 +4920,11 @@ function redrawVisiblePins() {
     marker._growgoZIndex = zIndex;
 
     marker.on("click", () => capturePin(pin));
+    marker.on("dblclick", (event) => {
+      if (event?.originalEvent) {
+        L.DomEvent.stopPropagation(event.originalEvent);
+      }
+    });
 
     pinsLayer.addLayer(marker);
     renderedPinMarkers.set(pin.id, marker);
