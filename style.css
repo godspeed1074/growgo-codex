@@ -4916,6 +4916,8 @@ body.phone-preview #craftingScreen,
     linear-gradient(rgba(0,14,25,0.28), rgba(0,14,25,0.86)) !important;
   backdrop-filter: blur(2px) !important;
   color: #ffffff !important;
+  touch-action: pan-y !important;
+  overscroll-behavior-x: contain !important;
 }
 
 body.phone-preview #statsScreen.hidden,

@@ -197,6 +197,7 @@ let profileSwipeStartY = 0;
 let profileSwipeCurrentMode = localStorage.getItem(GROWGO_PROFILE_CARD_MODE_KEY) || "photo";
 let menuBackSwipeStartX = 0;
 let menuBackSwipeStartY = 0;
+let menuBackSwipeActive = false;
 let menuBackSwipePointerId = null;
 
 let menuHome;
@@ -2634,6 +2635,11 @@ function initBasicUi() {
 function setupMenuBackSwipe() {
   if (!sideMenu) return;
 
+  const SWIPE_BACK_MIN_X = 36;
+  const SWIPE_BACK_TRIGGER_X = 48;
+  const SWIPE_BACK_MAX_Y = 82;
+  const SWIPE_BACK_RATIO = 0.72;
+
   function shouldIgnoreMenuBackSwipe(target) {
     if (!target || typeof target.closest !== "function") return false;
 
@@ -2646,27 +2652,50 @@ function setupMenuBackSwipe() {
     if (shouldIgnoreMenuBackSwipe(target)) {
       menuBackSwipeStartX = 0;
       menuBackSwipeStartY = 0;
+      menuBackSwipeActive = false;
       return;
     }
 
     menuBackSwipeStartX = startX;
     menuBackSwipeStartY = startY;
+    menuBackSwipeActive = true;
+  }
+
+  function resetMenuBackSwipe() {
+    menuBackSwipeStartX = 0;
+    menuBackSwipeStartY = 0;
+    menuBackSwipeActive = false;
+  }
+
+  function isMenuBackSwipe(diffX, diffY, minX) {
+    if (diffX < minX) return false;
+    if (Math.abs(diffY) > SWIPE_BACK_MAX_Y) return false;
+    return Math.abs(diffX) >= Math.abs(diffY) * SWIPE_BACK_RATIO;
+  }
+
+  function handleSwipeMove(currentX, currentY) {
+    if (!menuBackSwipeActive) return;
+
+    const diffX = currentX - menuBackSwipeStartX;
+    const diffY = currentY - menuBackSwipeStartY;
+
+    if (!isMenuBackSwipe(diffX, diffY, SWIPE_BACK_TRIGGER_X)) return;
+
+    resetMenuBackSwipe();
+    navigateMenuBackOnePage();
   }
 
   function handleSwipeEnd(endX, endY) {
-    if (!menuBackSwipeStartX && !menuBackSwipeStartY) return;
+    if (!menuBackSwipeActive) return;
 
     const diffX = endX - menuBackSwipeStartX;
     const diffY = endY - menuBackSwipeStartY;
 
-    menuBackSwipeStartX = 0;
-    menuBackSwipeStartY = 0;
+    resetMenuBackSwipe();
 
-    if (diffX < 55) return;
-    if (Math.abs(diffY) > 45) return;
-    if (Math.abs(diffX) < Math.abs(diffY) * 1.25) return;
-
-    navigateMenuBackOnePage();
+    if (isMenuBackSwipe(diffX, diffY, SWIPE_BACK_MIN_X)) {
+      navigateMenuBackOnePage();
+    }
   }
 
   sideMenu.addEventListener("touchstart", (event) => {
@@ -2674,23 +2703,45 @@ function setupMenuBackSwipe() {
     handleSwipeStart(event.touches[0].clientX, event.touches[0].clientY, event.target);
   }, { passive: true });
 
+  sideMenu.addEventListener("touchmove", (event) => {
+    if (!event.touches || event.touches.length !== 1) return;
+    handleSwipeMove(event.touches[0].clientX, event.touches[0].clientY);
+  }, { passive: true });
+
   sideMenu.addEventListener("touchend", (event) => {
     if (!event.changedTouches || event.changedTouches.length !== 1) return;
     handleSwipeEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+  }, { passive: true });
+
+  sideMenu.addEventListener("touchcancel", () => {
+    resetMenuBackSwipe();
   }, { passive: true });
 
   sideMenu.addEventListener("mousedown", (event) => {
     handleSwipeStart(event.clientX, event.clientY, event.target);
   });
 
+  sideMenu.addEventListener("mousemove", (event) => {
+    handleSwipeMove(event.clientX, event.clientY);
+  });
+
   sideMenu.addEventListener("mouseup", (event) => {
     handleSwipeEnd(event.clientX, event.clientY);
+  });
+
+  sideMenu.addEventListener("mouseleave", () => {
+    resetMenuBackSwipe();
   });
 
   sideMenu.addEventListener("pointerdown", (event) => {
     if (menuBackSwipePointerId !== null) return;
     menuBackSwipePointerId = event.pointerId;
     handleSwipeStart(event.clientX, event.clientY, event.target);
+  });
+
+  sideMenu.addEventListener("pointermove", (event) => {
+    if (menuBackSwipePointerId !== event.pointerId) return;
+    handleSwipeMove(event.clientX, event.clientY);
   });
 
   sideMenu.addEventListener("pointerup", (event) => {
@@ -2701,8 +2752,7 @@ function setupMenuBackSwipe() {
 
   sideMenu.addEventListener("pointercancel", () => {
     menuBackSwipePointerId = null;
-    menuBackSwipeStartX = 0;
-    menuBackSwipeStartY = 0;
+    resetMenuBackSwipe();
   });
 }
 
