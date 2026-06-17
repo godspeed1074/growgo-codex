@@ -4889,12 +4889,14 @@ body.phone-preview #statsScreen,
 body.phone-preview #leadersScreen,
 body.phone-preview #inventoryScreen,
 body.phone-preview #socialScreen,
+body.phone-preview #settingsScreen,
 body.phone-preview #marketScreen,
 body.phone-preview #craftingScreen,
 #statsScreen,
 #leadersScreen,
 #inventoryScreen,
 #socialScreen,
+#settingsScreen,
 #marketScreen,
 #craftingScreen {
   position: absolute !important;
@@ -4924,12 +4926,14 @@ body.phone-preview #statsScreen.hidden,
 body.phone-preview #leadersScreen.hidden,
 body.phone-preview #inventoryScreen.hidden,
 body.phone-preview #socialScreen.hidden,
+body.phone-preview #settingsScreen.hidden,
 body.phone-preview #marketScreen.hidden,
 body.phone-preview #craftingScreen.hidden,
 #statsScreen.hidden,
 #leadersScreen.hidden,
 #inventoryScreen.hidden,
 #socialScreen.hidden,
+#settingsScreen.hidden,
 #marketScreen.hidden,
 #craftingScreen.hidden {
   display: none !important;
@@ -4939,12 +4943,14 @@ body.phone-preview #statsScreen h2,
 body.phone-preview #leadersScreen h2,
 body.phone-preview #inventoryScreen h2,
 body.phone-preview #socialScreen h2,
+body.phone-preview #settingsScreen h2,
 body.phone-preview #marketScreen h2,
 body.phone-preview #recipePanel h2,
 #statsScreen h2,
 #leadersScreen h2,
 #inventoryScreen h2,
 #socialScreen h2,
+#settingsScreen h2,
 #marketScreen h2,
 #recipePanel h2 {
   margin: 20px 0 14px !important;
@@ -5004,4 +5010,65 @@ body.phone-preview .recipe-panel,
 #marketListingsView {
   overflow: visible !important;
   padding-bottom: 28px !important;
+}
+
+.settings-card {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 58px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 3px solid rgba(139, 207, 138, 0.68);
+  background: rgba(1, 28, 50, 0.94);
+  box-shadow:
+    0 7px 15px rgba(0,0,0,0.36),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+.settings-row span {
+  color: rgba(255,255,255,0.78);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.settings-row strong {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 1000;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.settings-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.settings-btn {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 18px;
+  border: 3px solid rgba(139, 207, 138, 0.72);
+  background: linear-gradient(#56d92c, #16871b);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  box-shadow:
+    0 7px 15px rgba(0,0,0,0.36),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.settings-btn.danger {
+  border-color: rgba(255, 190, 105, 0.84);
+  background: linear-gradient(#d07b28, #8b2d1c);
 }

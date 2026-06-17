@@ -315,6 +315,11 @@ let socialBackBtn;
 let socialAvatarImg;
 let socialAvatarFallback;
 let socialPublicId;
+let settingsScreen;
+let settingsPlayerName;
+let settingsPlayerId;
+let clearAvatarBtn;
+let resetLocalProgressBtn;
 let growGoQrScanner = null;
 let growGoQrScannerRunning = false;
 
@@ -364,6 +369,7 @@ initSocialUi();
 initCraftingUi();
   initMarketUi();
   initInventoryUi();
+  initSettingsUi();
   renderPlayerOverview();
 
   await syncTrustedTime();
@@ -409,6 +415,11 @@ socialBackBtn = document.getElementById("socialBackBtn");
 socialAvatarImg = document.getElementById("socialAvatarImg");
 socialAvatarFallback = document.getElementById("socialAvatarFallback");
 socialPublicId = document.getElementById("socialPublicId");
+settingsScreen = document.getElementById("settingsScreen");
+settingsPlayerName = document.getElementById("settingsPlayerName");
+settingsPlayerId = document.getElementById("settingsPlayerId");
+clearAvatarBtn = document.getElementById("clearAvatarBtn");
+resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
 
   craftingScreen = document.getElementById("craftingScreen");
   craftingBackBtn = document.getElementById("craftingBackBtn");
@@ -2724,6 +2735,11 @@ function initBasicUi() {
         return;
       }
 
+      if (label.includes("settings")) {
+        openSettings();
+        return;
+      }
+
       showToast("Coming soon", `${rawLabel.trim()} screen is wired for the next build.`);
     });
 
@@ -2918,6 +2934,12 @@ function navigateMenuBackOnePage() {
     return true;
   }
 
+  if (settingsScreen && !settingsScreen.classList.contains("hidden")) {
+    settingsScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
   return false;
 }
 
@@ -2952,6 +2974,69 @@ function hideSubmenus() {
   if (craftingScreen) craftingScreen.classList.add("hidden");
   if (marketScreen) marketScreen.classList.add("hidden");
   if (inventoryScreen) inventoryScreen.classList.add("hidden");
+  if (settingsScreen) settingsScreen.classList.add("hidden");
+}
+
+function initSettingsUi() {
+  if (clearAvatarBtn) {
+    clearAvatarBtn.addEventListener("click", () => {
+      playerState.avatarSrc = null;
+      savePlayerState();
+      clearAvatar();
+      renderSocialScreen();
+      updatePlayerMarkerIcon();
+      showToast("Avatar cleared", "Profile picture removed from this device.");
+    });
+  }
+
+  if (resetLocalProgressBtn) {
+    resetLocalProgressBtn.addEventListener("click", () => {
+      if (!window.confirm("Reset local progress on this device?")) return;
+      resetLocalProgress();
+    });
+  }
+}
+
+function openSettings() {
+  if (!settingsScreen) return;
+
+  hideSubmenus();
+  hideMenuHome();
+  renderSettings();
+  settingsScreen.classList.remove("hidden");
+}
+
+function renderSettings() {
+  if (settingsPlayerName) {
+    settingsPlayerName.textContent = playerState.name || DEFAULT_PLAYER_NAME;
+  }
+
+  if (settingsPlayerId) {
+    settingsPlayerId.textContent = getOrCreateGrowGoPlayerId();
+  }
+}
+
+function resetLocalProgress() {
+  try {
+    [
+      PIN_STORAGE_KEY,
+      AVATAR_STORAGE_KEY,
+      STATS_STORAGE_KEY,
+      CRAFTING_STORAGE_KEY,
+      MARKET_STORAGE_KEY,
+      PLAYER_STORAGE_KEY,
+      GROWGO_PLAYER_ID_KEY,
+      GROWGO_PROFILE_CARD_MODE_KEY,
+      "growgo-players-met",
+      "growgo-friends"
+    ].forEach((key) => localStorage.removeItem(key));
+
+    localStorage.setItem(PROGRESSION_RESET_KEY, PROGRESSION_RESET_VERSION);
+  } catch (error) {
+    console.warn("Could not reset local progress.", error);
+  }
+
+  window.location.reload();
 }
 /* ----------------------------- */
 /* STATS UI */
