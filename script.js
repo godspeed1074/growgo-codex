@@ -1087,6 +1087,10 @@ function addCraftingXp(amount) {
   }
 }
 
+function addPlayerXp(amount) {
+  addCraftingXp(amount);
+}
+
 function initCraftingUi() {
   if (craftingBackBtn) {
     craftingBackBtn.addEventListener("click", () => {
@@ -4996,12 +5000,13 @@ function capturePin(pin) {
   addStat("captures", 1);
   addStat("score", points);
   addStat("goldEarned", 1);
+  addPlayerXp(points);
   addMarketCoins(1);
 
   scheduleSavePinsToLocal();
   clearPinIconCache();
 
-  showToast("Captured base pin", `+${points} points, +1 gold`);
+  showToast("Captured base pin", `+${points} points, +${points} XP, +1 gold`);
   scheduleRedrawPins();
 }
 
