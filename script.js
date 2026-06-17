@@ -485,6 +485,8 @@ let clearAvatarBtn;
 let resetLocalProgressBtn;
 let collectionsScreen;
 let ownedPinsCount;
+let ownedPinsPendingTotal;
+let claimOwnedPinRewardsBtn;
 let ownedPinsList;
 let growGoQrScanner = null;
 let growGoQrScannerRunning = false;
@@ -596,6 +598,8 @@ clearAvatarBtn = document.getElementById("clearAvatarBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
 collectionsScreen = document.getElementById("collectionsScreen");
 ownedPinsCount = document.getElementById("ownedPinsCount");
+ownedPinsPendingTotal = document.getElementById("ownedPinsPendingTotal");
+claimOwnedPinRewardsBtn = document.getElementById("claimOwnedPinRewardsBtn");
 ownedPinsList = document.getElementById("ownedPinsList");
 
   craftingScreen = document.getElementById("craftingScreen");
@@ -3215,6 +3219,15 @@ function renderOwnedPinsCollection() {
     });
 
   ownedPinsCount.textContent = `${ownedPins.length} owned`;
+  const pendingTotal = getOwnedPinsPendingTotal(ownedPins);
+
+  if (ownedPinsPendingTotal) {
+    ownedPinsPendingTotal.textContent = `${formatNumber(pendingTotal)} pts`;
+  }
+
+  if (claimOwnedPinRewardsBtn) {
+    claimOwnedPinRewardsBtn.disabled = pendingTotal <= 0;
+  }
 
   if (!ownedPins.length) {
     ownedPinsList.innerHTML = `
@@ -3276,6 +3289,11 @@ function initCollectionsUi() {
   if (!collectionsScreen) return;
 
   collectionsScreen.addEventListener("click", (event) => {
+    if (event.target.closest("#claimOwnedPinRewardsBtn")) {
+      claimOwnedPinRewards();
+      return;
+    }
+
     const manageButton = event.target.closest("[data-owned-pin-manage]");
     if (manageButton) {
       openOwnedPinFromCollections(manageButton.dataset.ownedPinManage);
@@ -3295,6 +3313,35 @@ function getDistanceToPinLabel(pin) {
   const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
   if (distance >= 1000) return `${(distance / 1000).toFixed(2)} km`;
   return `${Math.round(distance)} m`;
+}
+
+function getOwnedPinsForActivePlayer() {
+  const activePlayerId = getActivePlayerId();
+  return Array.from(pinStore.values()).filter((pin) => pin.ownerId === activePlayerId);
+}
+
+function getOwnedPinsPendingTotal(ownedPins = getOwnedPinsForActivePlayer()) {
+  return ownedPins.reduce((total, pin) => total + Number(pin.ownerPendingPoints || 0), 0);
+}
+
+function claimOwnedPinRewards() {
+  const ownedPins = getOwnedPinsForActivePlayer();
+  const pendingTotal = getOwnedPinsPendingTotal(ownedPins);
+
+  if (pendingTotal <= 0) {
+    showToast("Owned Pins", "No rewards ready to claim.");
+    return;
+  }
+
+  ownedPins.forEach((pin) => {
+    pin.ownerPendingPoints = 0;
+  });
+
+  addStat("score", pendingTotal);
+  addPlayerXp(pendingTotal);
+  scheduleSavePinsToLocal();
+  renderCollections();
+  showToast("Rewards claimed", `+${formatNumber(pendingTotal)} points and XP.`);
 }
 
 function openOwnedPinFromCollections(pinId) {
