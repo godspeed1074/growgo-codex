@@ -5469,3 +5469,29 @@ body.phone-preview .recipe-panel,
   font-weight: 1000;
   text-align: right;
 }
+
+.owned-pin-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  padding-top: 4px;
+}
+
+.owned-pin-actions button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.24);
+}
+
+.owned-pin-actions button:first-child {
+  background: linear-gradient(#56d92c, #16871b);
+}
+
+.owned-pin-actions button:last-child {
+  background: linear-gradient(#248cff, #0f4fa9);
+}

@@ -535,6 +535,7 @@ initSocialUi();
 initCraftingUi();
   initMarketUi();
   initInventoryUi();
+  initCollectionsUi();
   initSettingsUi();
   renderPlayerOverview();
 
@@ -3233,9 +3234,10 @@ function renderOwnedPinCard(pin) {
   const plantLabel = pin.plant ? getPlantStageLabel(pin.plant) : "No plant";
   const pending = Number(pin.ownerPendingPoints || 0);
   const replant = pin.replantEnabled ? "On" : "Off";
+  const distance = getDistanceToPinLabel(pin);
 
   return `
-    <div class="owned-pin-card">
+    <div class="owned-pin-card" data-owned-pin-id="${escapeAttribute(pin.id)}">
       <div class="owned-pin-topline">
         <div>
           <h4>Base Pin</h4>
@@ -3258,8 +3260,59 @@ function renderOwnedPinCard(pin) {
         <span>Pending rewards</span>
         <strong>${formatNumber(pending)} pts</strong>
       </div>
+      <div class="owned-pin-detail-row">
+        <span>Distance</span>
+        <strong>${escapeHtml(distance)}</strong>
+      </div>
+      <div class="owned-pin-actions">
+        <button data-owned-pin-manage="${escapeAttribute(pin.id)}" type="button">Manage</button>
+        <button data-owned-pin-go="${escapeAttribute(pin.id)}" type="button">Go to pin</button>
+      </div>
     </div>
   `;
+}
+
+function initCollectionsUi() {
+  if (!collectionsScreen) return;
+
+  collectionsScreen.addEventListener("click", (event) => {
+    const manageButton = event.target.closest("[data-owned-pin-manage]");
+    if (manageButton) {
+      openOwnedPinFromCollections(manageButton.dataset.ownedPinManage);
+      return;
+    }
+
+    const goButton = event.target.closest("[data-owned-pin-go]");
+    if (goButton) {
+      goToOwnedPin(goButton.dataset.ownedPinGo);
+    }
+  });
+}
+
+function getDistanceToPinLabel(pin) {
+  if (!playerLatLng) return "Location needed";
+
+  const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
+  if (distance >= 1000) return `${(distance / 1000).toFixed(2)} km`;
+  return `${Math.round(distance)} m`;
+}
+
+function openOwnedPinFromCollections(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin || pin.ownerId !== getActivePlayerId()) return;
+
+  openBasePinPlantPopup(pin);
+}
+
+function goToOwnedPin(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin) return;
+
+  closeBasePinPopup();
+  closeMenu();
+  map.setView([pin.lat, pin.lng], Math.max(map.getZoom(), 18), {
+    animate: true
+  });
 }
 
 function initSettingsUi() {
