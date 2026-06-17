@@ -446,6 +446,7 @@ let copyBackupBtn;
 let downloadBackupBtn;
 let restoreBackupBtn;
 let restoreBackupInput;
+let changeAvatarBtn;
 let clearAvatarBtn;
 let resetLocalProgressBtn;
 let growGoQrScanner = null;
@@ -550,6 +551,7 @@ copyBackupBtn = document.getElementById("copyBackupBtn");
 downloadBackupBtn = document.getElementById("downloadBackupBtn");
 restoreBackupBtn = document.getElementById("restoreBackupBtn");
 restoreBackupInput = document.getElementById("restoreBackupInput");
+changeAvatarBtn = document.getElementById("changeAvatarBtn");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
 
@@ -3130,6 +3132,14 @@ function initSettingsUi() {
     restoreBackupInput.addEventListener("change", () => {
       handleRestoreBackupFile(restoreBackupInput.files && restoreBackupInput.files[0]);
       restoreBackupInput.value = "";
+    });
+  }
+
+  if (changeAvatarBtn) {
+    changeAvatarBtn.addEventListener("click", () => {
+      if (menuAvatarInput) {
+        menuAvatarInput.click();
+      }
     });
   }
 
