@@ -1299,6 +1299,40 @@ body.phone-preview .menu-overlay {
   pointer-events: none;
 }
 
+.pin-owned::after {
+  content: "★";
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(#ffd961, #c98712);
+  color: #4d2b00;
+  font-size: 12px;
+  font-weight: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+  pointer-events: none;
+}
+
+.base-pin-plant-stage {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.88);
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.28);
+  pointer-events: none;
+}
+
 .pin-ready-glow {
   animation: pinGlowPulse 1.8s ease-in-out infinite;
   filter:
@@ -2571,6 +2605,108 @@ body.phone-preview .menu-panel {
 
 .market-sell-overlay.hidden {
   display: none !important;
+}
+
+.base-pin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 14000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0,0,0,0.58);
+}
+
+.base-pin-popup {
+  position: relative;
+  width: min(360px, 100%);
+  border-radius: 24px;
+  padding: 42px 16px 18px;
+  background:
+    radial-gradient(circle at top, rgba(255,255,255,0.34), transparent 44%),
+    linear-gradient(180deg, #fff3c6 0%, #d9b762 100%);
+  color: #1b2531;
+  border: 3px solid rgba(92, 59, 15, 0.38);
+  box-shadow:
+    0 10px 0 rgba(0, 0, 0, 0.34),
+    inset 0 2px 0 rgba(255,255,255,0.28);
+  text-align: center;
+}
+
+.base-pin-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 28, 35, 0.18);
+  color: #182431;
+  font-size: 24px;
+  font-weight: 1000;
+}
+
+.base-pin-popup h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.base-pin-popup-copy,
+.base-pin-popup-meta {
+  font-size: 14px;
+  font-weight: 900;
+  margin: 8px 0;
+}
+
+.base-pin-select-label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.base-pin-select {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 14px;
+  border: 2px solid rgba(27, 37, 49, 0.28);
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.base-pin-popup-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.base-pin-secondary-btn,
+.base-pin-primary-btn {
+  min-height: 48px;
+  border: 0;
+  border-radius: 16px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.base-pin-secondary-btn {
+  background: linear-gradient(#5f7182, #263543);
+}
+
+.base-pin-primary-btn {
+  background: linear-gradient(#56d92c, #16871b);
+}
+
+.base-pin-primary-btn:disabled {
+  opacity: 0.55;
 }
 
 .market-sell-popup {

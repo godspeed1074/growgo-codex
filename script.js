@@ -9,6 +9,10 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 const BASE_PIN_VALUE = 5;
 const POINTS_GROWTH_HOURS = 168;
 const CAPTURE_RADIUS_METERS = 100;
+const BASE_PIN_PURCHASE_COST = 100;
+const PIN_OWNER_CAPTURE_REWARD = 5;
+const PIN_LONG_PRESS_MS = 500;
+const PIN_PLANT_STAGE_HOURS = 168;
 
 const PIN_SPACING_METERS = 46;
 const MIN_PIN_SEPARATION_METERS = 46;
@@ -412,11 +416,20 @@ let roadErrorToastShown = false;
 
 let redrawTimer = null;
 let savePinsTimer = null;
+let pinLongPressTimer = null;
+let pinLongPressTriggered = false;
+let activeLongPressPin = null;
 
 let toastStack;
 let sideMenu;
 let menuOverlay;
 let avatarButton;
+
+const BASE_PIN_SEED_OPTIONS = [
+  { id: "wheat", label: "Wheat", icon: "🌾" },
+  { id: "corn", label: "Corn", icon: "🌽" },
+  { id: "sugar_cane", label: "Sugar Cane", icon: "🎋" }
+];
 
 let menuAvatarInput;
 let menuAvatarImg;
@@ -4787,6 +4800,7 @@ function maybeAddRoadPin(point, visibleBounds, localSeen, generated) {
 
   generated.push({
     id: key,
+    type: "base",
     lat: point.lat,
     lng: point.lng,
     basePoints: BASE_PIN_VALUE,
@@ -4927,7 +4941,16 @@ function redrawVisiblePins() {
     marker._growgoIconState = iconState.key;
     marker._growgoZIndex = zIndex;
 
-    marker.on("click", () => capturePin(pin));
+    marker.on("click", () => {
+      if (pinLongPressTriggered) {
+        pinLongPressTriggered = false;
+        return;
+      }
+
+      capturePin(pin);
+    });
+    marker.on("mousedown touchstart", () => startPinLongPress(pin));
+    marker.on("mouseup mouseout touchend touchcancel", clearPinLongPress);
     marker.on("dblclick", (event) => {
       if (event?.originalEvent) {
         L.DomEvent.stopPropagation(event.originalEvent);
@@ -4943,12 +4966,17 @@ function getPinIconState(pin) {
   const points = getPinPoints(pin);
   const capturedToday = wasCapturedToday(pin);
   const glowing = shouldPinGlow(pin, capturedToday);
+  const ownerId = pin.ownerId || "";
+  const plantStage = getPinPlantStage(pin);
 
   return {
     points,
     capturedToday,
     glowing,
-    key: `${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}`
+    owned: Boolean(ownerId),
+    ownedByActivePlayer: ownerId === getActivePlayerId(),
+    plantStage,
+    key: `${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}`
   };
 }
 
@@ -4962,11 +4990,16 @@ function buildPinIcon(pin, state = null) {
 
   const glowClass = iconState.glowing ? "pin-ready-glow" : "";
   const capturedClass = iconState.capturedToday ? "pin-captured-today" : "";
+  const ownedClass = iconState.owned ? "pin-owned" : "";
+  const plantBadge = iconState.plantStage > 0
+    ? `<div class="base-pin-plant-stage">${getPlantStageIcon(iconState.plantStage)}</div>`
+    : "";
 
   const html = `
-    <div class="base-pin-marker ${glowClass} ${capturedClass}">
+    <div class="base-pin-marker ${glowClass} ${capturedClass} ${ownedClass}">
       <img src="pin-base-blue.png" alt="Base Pin">
       ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
+      ${plantBadge}
     </div>
   `;
 
@@ -5002,6 +5035,215 @@ function shouldPinGlow(pin, capturedToday = null) {
   return isInCaptureRing;
 }
 
+function startPinLongPress(pin) {
+  clearPinLongPress();
+  activeLongPressPin = pin;
+
+  pinLongPressTimer = setTimeout(() => {
+    pinLongPressTriggered = true;
+    openBasePinLongPressPopup(activeLongPressPin);
+
+    setTimeout(() => {
+      pinLongPressTriggered = false;
+    }, 800);
+  }, PIN_LONG_PRESS_MS);
+}
+
+function clearPinLongPress() {
+  if (pinLongPressTimer) {
+    clearTimeout(pinLongPressTimer);
+    pinLongPressTimer = null;
+  }
+
+  activeLongPressPin = null;
+}
+
+function openBasePinLongPressPopup(pin) {
+  clearPinLongPress();
+  if (!pin) return;
+
+  if (!pin.ownerId) {
+    openBasePinPurchasePopup(pin);
+    return;
+  }
+
+  if (pin.ownerId === getActivePlayerId()) {
+    openBasePinPlantPopup(pin);
+    return;
+  }
+
+  showToast("Owned pin", "This base pin already belongs to another player.");
+}
+
+function openBasePinPurchasePopup(pin) {
+  closeBasePinPopup();
+
+  const overlay = document.createElement("div");
+  overlay.id = "basePinOverlay";
+  overlay.className = "base-pin-overlay";
+  overlay.innerHTML = `
+    <div class="base-pin-popup">
+      <button class="base-pin-popup-close" type="button">×</button>
+      <h3>Purchase Base Pin</h3>
+      <div class="base-pin-popup-copy">
+        Own this base pin for ${formatNumber(BASE_PIN_PURCHASE_COST)} coins.
+      </div>
+      <div class="base-pin-popup-meta">
+        Wallet: ${formatNumber(marketState.wallet)} coins
+      </div>
+      <div class="base-pin-popup-actions">
+        <button class="base-pin-secondary-btn" data-base-pin-cancel type="button">Not Now</button>
+        <button class="base-pin-primary-btn" data-base-pin-purchase="${escapeAttribute(pin.id)}" type="button">
+          Purchase
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click", handleBasePinPopupClick);
+}
+
+function openBasePinPlantPopup(pin) {
+  closeBasePinPopup();
+
+  const seedOptions = getAvailableBasePinSeeds();
+  const planted = pin.plant ? getPlantStageLabel(pin.plant) : "No seed planted";
+
+  const overlay = document.createElement("div");
+  overlay.id = "basePinOverlay";
+  overlay.className = "base-pin-overlay";
+  overlay.innerHTML = `
+    <div class="base-pin-popup">
+      <button class="base-pin-popup-close" type="button">×</button>
+      <h3>Owned Base Pin</h3>
+      <div class="base-pin-popup-copy">
+        Current plant: ${escapeHtml(planted)}
+      </div>
+      <label class="base-pin-select-label" for="basePinSeedSelect">Seed</label>
+      <select id="basePinSeedSelect" class="base-pin-select" ${seedOptions.length ? "" : "disabled"}>
+        ${seedOptions.length
+          ? seedOptions.map((seed) => `
+            <option value="${escapeAttribute(seed.id)}">
+              ${escapeHtml(seed.label)} x${formatNumber(seed.quantity)}
+            </option>
+          `).join("")
+          : `<option>No seeds available</option>`}
+      </select>
+      <div class="base-pin-popup-actions">
+        <button class="base-pin-secondary-btn" data-base-pin-cancel type="button">Not Now</button>
+        <button class="base-pin-primary-btn" data-base-pin-plant="${escapeAttribute(pin.id)}" type="button" ${seedOptions.length ? "" : "disabled"}>
+          Plant Seed
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click", handleBasePinPopupClick);
+}
+
+function handleBasePinPopupClick(event) {
+  if (
+    event.target.id === "basePinOverlay" ||
+    event.target.closest(".base-pin-popup-close") ||
+    event.target.closest("[data-base-pin-cancel]")
+  ) {
+    closeBasePinPopup();
+    return;
+  }
+
+  const purchaseButton = event.target.closest("[data-base-pin-purchase]");
+  if (purchaseButton) {
+    purchaseBasePin(purchaseButton.dataset.basePinPurchase);
+    return;
+  }
+
+  const plantButton = event.target.closest("[data-base-pin-plant]");
+  if (plantButton) {
+    const select = document.getElementById("basePinSeedSelect");
+    plantBasePinSeed(plantButton.dataset.basePinPlant, select?.value);
+  }
+}
+
+function closeBasePinPopup() {
+  const overlay = document.getElementById("basePinOverlay");
+  if (overlay) overlay.remove();
+}
+
+function purchaseBasePin(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin) return;
+
+  if (pin.ownerId) {
+    showToast("Base pin", "This pin has already been purchased.");
+    closeBasePinPopup();
+    return;
+  }
+
+  if (marketState.wallet < BASE_PIN_PURCHASE_COST) {
+    showToast("Not enough coins", `${formatNumber(BASE_PIN_PURCHASE_COST)} coins needed.`);
+    return;
+  }
+
+  marketState.wallet -= BASE_PIN_PURCHASE_COST;
+  saveMarketState();
+  renderMarketWallet();
+  renderPlayerOverview();
+
+  pin.type = "base";
+  pin.ownerId = getActivePlayerId();
+  pin.ownerName = playerState.name || DEFAULT_PLAYER_NAME;
+  pin.ownedAt = getTrustedNow();
+
+  scheduleSavePinsToLocal();
+  clearPinIconCache();
+  scheduleRedrawPins();
+  closeBasePinPopup();
+  showToast("Base pin owned", "This pin is now yours.");
+}
+
+function getAvailableBasePinSeeds() {
+  return BASE_PIN_SEED_OPTIONS
+    .map((seed) => ({
+      ...seed,
+      quantity: Number(marketState.inventory[seed.id] || 0)
+    }))
+    .filter((seed) => seed.quantity > 0);
+}
+
+function plantBasePinSeed(pinId, seedId) {
+  const pin = pinStore.get(pinId);
+  const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === seedId);
+  if (!pin || !seed || pin.ownerId !== getActivePlayerId()) return;
+
+  const owned = Number(marketState.inventory[seed.id] || 0);
+  if (owned <= 0) {
+    showToast("Seeds", "You do not have that seed available.");
+    return;
+  }
+
+  marketState.inventory[seed.id] = owned - 1;
+  saveMarketState();
+  refreshInventoryIfOpen();
+
+  pin.plant = {
+    seedId: seed.id,
+    plantedAt: getTrustedNow(),
+    harvestedByDay: {}
+  };
+
+  scheduleSavePinsToLocal();
+  clearPinIconCache();
+  scheduleRedrawPins();
+  closeBasePinPopup();
+  showToast("Seed planted", `${seed.label} is growing on this base pin.`);
+}
+
+function getActivePlayerId() {
+  return getOrCreateGrowGoPlayerId();
+}
+
 /* ----------------------------- */
 /* CAPTURE */
 /* ----------------------------- */
@@ -5033,12 +5275,45 @@ function capturePin(pin) {
   addStat("goldEarned", 1);
   addPlayerXp(points);
   addMarketCoins(1);
+  awardBasePinOwnerCaptureReward(pin);
+  harvestReadyBasePinPlant(pin);
 
   scheduleSavePinsToLocal();
   clearPinIconCache();
 
   showToast("Captured base pin", `+${points} points, +${points} XP, +1 gold`);
   scheduleRedrawPins();
+}
+
+function awardBasePinOwnerCaptureReward(pin) {
+  if (!pin.ownerId || pin.ownerId === getActivePlayerId()) return;
+
+  pin.ownerPendingPoints = Number(pin.ownerPendingPoints || 0) + PIN_OWNER_CAPTURE_REWARD;
+}
+
+function harvestReadyBasePinPlant(pin) {
+  if (!pin?.plant || getPinPlantStage(pin) < 4) return;
+
+  const playerId = getActivePlayerId();
+  const todayKey = getUtcDayKey(getTrustedNow());
+  const harvestedByDay = pin.plant.harvestedByDay || {};
+
+  if (harvestedByDay[playerId] === todayKey) return;
+
+  const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === pin.plant.seedId);
+  if (!seed) return;
+
+  marketState.inventory[seed.id] = Number(marketState.inventory[seed.id] || 0) + 1;
+  saveMarketState();
+  refreshInventoryIfOpen();
+  addStat("resourcesGained", 1);
+
+  pin.plant.harvestedByDay = {
+    ...harvestedByDay,
+    [playerId]: todayKey
+  };
+
+  showToast("Harvested", `+1 ${seed.label}`);
 }
 
 function getPinPoints(pin) {
@@ -5065,6 +5340,40 @@ function getServerStartedAt() {
     console.warn("Could not read server start time.", error);
     return Date.now();
   }
+}
+
+function getPinPlantStage(pin) {
+  if (!pin?.plant?.plantedAt) return 0;
+
+  const hoursSincePlanting = Math.max(
+    0,
+    (getTrustedNow() - Number(pin.plant.plantedAt)) / (1000 * 60 * 60)
+  );
+
+  if (hoursSincePlanting >= PIN_PLANT_STAGE_HOURS * 3) return 4;
+  if (hoursSincePlanting >= PIN_PLANT_STAGE_HOURS * 2) return 3;
+  if (hoursSincePlanting >= PIN_PLANT_STAGE_HOURS) return 2;
+  return 1;
+}
+
+function getPlantStageIcon(stage) {
+  if (stage >= 4) return "🌽";
+  if (stage === 3) return "🌿";
+  if (stage === 2) return "🌱";
+  return "·";
+}
+
+function getPlantStageLabel(plant) {
+  if (!plant) return "No seed planted";
+
+  const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === plant.seedId);
+  const label = seed ? seed.label : "Plant";
+  const stage = getPinPlantStage({ plant });
+
+  if (stage >= 4) return `${label}, ready to harvest`;
+  if (stage === 3) return `${label}, almost ready`;
+  if (stage === 2) return `${label}, sprouting`;
+  return `${label}, planted`;
 }
 
 function wasCapturedToday(pin) {
@@ -5112,10 +5421,16 @@ function loadPinsFromLocal() {
       ) {
         pinStore.set(pin.id, {
           id: pin.id,
+          type: pin.type || "base",
           lat: pin.lat,
           lng: pin.lng,
           basePoints: typeof pin.basePoints === "number" ? pin.basePoints : BASE_PIN_VALUE,
-          capturedAt: pin.capturedAt || null
+          capturedAt: pin.capturedAt || null,
+          ownerId: pin.ownerId || null,
+          ownerName: pin.ownerName || null,
+          ownedAt: pin.ownedAt || null,
+          ownerPendingPoints: Number(pin.ownerPendingPoints || 0),
+          plant: pin.plant || null
         });
       }
     });
