@@ -285,6 +285,9 @@ const MARKET_CATEGORY_BASE_PRICES = {
 };
 
 const MARKET_ITEMS = [
+  { id: "wheat_seed", name: "Wheat Seed", icon: "🌱", rarity: "Common", category: "resources" },
+  { id: "corn_seed", name: "Corn Seed", icon: "🌱", rarity: "Common", category: "resources" },
+  { id: "sugar_cane_seed", name: "Sugar Cane Seed", icon: "🌱", rarity: "Common", category: "resources" },
   { id: "wheat", name: "Wheat", icon: "🌾", rarity: "Common", category: "resources" },
   { id: "sugar_cane", name: "Sugar Cane", icon: "🎋", rarity: "Common", category: "resources" },
   { id: "corn", name: "Corn", icon: "🌽", rarity: "Common", category: "resources" },
@@ -364,6 +367,9 @@ const INVENTORY_SPECIAL_ITEMS = [
 ];
 
 const INVENTORY_DESCRIPTIONS = {
+  wheat_seed: "A seed for owned base pins. Plant it to grow wheat over four weekly stages.",
+  corn_seed: "A seed for owned base pins. Plant it to grow corn over four weekly stages.",
+  sugar_cane_seed: "A seed for owned base pins. Plant it to grow sugar cane over four weekly stages.",
   wheat: "Basic crop used to make flour and simple foods.",
   sugar_cane: "Can be processed into sugar for snacks and drinks.",
   corn: "A common crop used in capture radius snacks.",
@@ -427,9 +433,9 @@ let menuOverlay;
 let avatarButton;
 
 const BASE_PIN_SEED_OPTIONS = [
-  { id: "wheat", label: "Wheat", icon: "🌾" },
-  { id: "corn", label: "Corn", icon: "🌽" },
-  { id: "sugar_cane", label: "Sugar Cane", icon: "🎋" }
+  { id: "wheat_seed", harvestItemId: "wheat", label: "Wheat Seed", cropLabel: "Wheat", icon: "🌾" },
+  { id: "corn_seed", harvestItemId: "corn", label: "Corn Seed", cropLabel: "Corn", icon: "🌽" },
+  { id: "sugar_cane_seed", harvestItemId: "sugar_cane", label: "Sugar Cane Seed", cropLabel: "Sugar Cane", icon: "🎋" }
 ];
 
 const BASE_PIN_LEVELS = {
@@ -1352,6 +1358,9 @@ function createDefaultMarketState() {
     wallet: 0,
     inventory: {},
     listings: [
+      createNpcListing("wheat_seed", 8, 100),
+      createNpcListing("corn_seed", 8, 100),
+      createNpcListing("sugar_cane_seed", 8, 100),
       createNpcListing("wheat", 20, 50),
       createNpcListing("sugar_cane", 20, 40),
       createNpcListing("corn", 21, 35),
@@ -1383,6 +1392,23 @@ function createNpcListing(itemId, price, quantity) {
   };
 }
 
+function mergeDefaultNpcListings(savedListings, defaultListings) {
+  const listings = Array.isArray(savedListings) ? [...savedListings] : [];
+
+  defaultListings.forEach((defaultListing) => {
+    const alreadyListed = listings.some((listing) => (
+      listing.id === defaultListing.id ||
+      (listing.sellerId === "npc" && listing.itemId === defaultListing.itemId)
+    ));
+
+    if (!alreadyListed) {
+      listings.push(defaultListing);
+    }
+  });
+
+  return listings;
+}
+
 function loadMarketState() {
   try {
     const raw = localStorage.getItem(MARKET_STORAGE_KEY);
@@ -1399,7 +1425,7 @@ function loadMarketState() {
         ...defaults.inventory,
         ...(saved.inventory || {})
       },
-      listings: Array.isArray(saved.listings) ? saved.listings : defaults.listings,
+      listings: mergeDefaultNpcListings(saved.listings, defaults.listings),
       sales: Array.isArray(saved.sales) ? saved.sales : [],
       transfers: Array.isArray(saved.transfers) ? saved.transfers : [],
       nextListingId: saved.nextListingId || defaults.nextListingId
@@ -5469,6 +5495,13 @@ function getAvailableBasePinSeeds() {
     .filter((seed) => seed.quantity > 0);
 }
 
+function getBasePinSeedOption(seedId) {
+  return BASE_PIN_SEED_OPTIONS.find((seed) => (
+    seed.id === seedId ||
+    seed.harvestItemId === seedId
+  ));
+}
+
 function getBasePinLevel(pin) {
   const level = Number(pin?.level || 1);
   return Math.max(1, Math.min(BASE_PIN_MAX_LEVEL, level));
@@ -5528,7 +5561,7 @@ function upgradeBasePin(pinId) {
 
 function plantBasePinSeed(pinId, seedId) {
   const pin = pinStore.get(pinId);
-  const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === seedId);
+  const seed = getBasePinSeedOption(seedId);
   if (!pin || !seed || pin.ownerId !== getActivePlayerId()) return;
 
   const owned = Number(marketState.inventory[seed.id] || 0);
@@ -5614,15 +5647,17 @@ function harvestReadyBasePinPlant(pin) {
 
   if (harvestedByDay[playerId] === todayKey) return;
 
-  const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === pin.plant.seedId);
+  const seed = getBasePinSeedOption(pin.plant.seedId);
   if (!seed) return;
 
+  const harvestItemId = seed.harvestItemId || seed.id;
+  const harvestLabel = seed.cropLabel || seed.label;
   const canAutoReplant =
     pin.replantEnabled &&
     pin.ownerId === playerId &&
     Number(marketState.inventory[seed.id] || 0) > 0;
 
-  marketState.inventory[seed.id] = Number(marketState.inventory[seed.id] || 0) + 1;
+  marketState.inventory[harvestItemId] = Number(marketState.inventory[harvestItemId] || 0) + 1;
   addStat("resourcesGained", 1);
 
   if (canAutoReplant) {
@@ -5641,7 +5676,7 @@ function harvestReadyBasePinPlant(pin) {
 
   saveMarketState();
   refreshInventoryIfOpen();
-  showToast("Harvested", canAutoReplant ? `+1 ${seed.label}, replanted.` : `+1 ${seed.label}`);
+  showToast("Harvested", canAutoReplant ? `+1 ${harvestLabel}, replanted.` : `+1 ${harvestLabel}`);
 }
 
 function getPinPoints(pin) {
@@ -5694,8 +5729,8 @@ function getPlantStageIcon(stage) {
 function getPlantStageLabel(plant) {
   if (!plant) return "No seed planted";
 
-  const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === plant.seedId);
-  const label = seed ? seed.label : "Plant";
+  const seed = getBasePinSeedOption(plant.seedId);
+  const label = seed ? (seed.cropLabel || seed.label) : "Plant";
   const stage = getPinPlantStage({ plant });
 
   if (stage >= 4) return `${label}, ready to harvest`;
