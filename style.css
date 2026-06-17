@@ -4848,7 +4848,8 @@ body.phone-preview .menu-header .profile-swipe-card,
 .market-details-back,
 .market-buy-back,
 .market-listings-back,
-.inventory-details-back {
+.inventory-details-back,
+.market-back-btn {
   display: none !important;
 }
 
@@ -4880,12 +4881,20 @@ body.phone-preview .menu-level-number,
 }
 
 /* ========================================================= */
-/* MARKET + CRAFTING SCREEN MATCH                            */
-/* Keeps these menus on the same scenic layer as Leaders      */
+/* SHARED MENU SCREEN SYSTEM                                  */
+/* Keeps all submenus on the same scenic layer and spacing     */
 /* ========================================================= */
 
+body.phone-preview #statsScreen,
+body.phone-preview #leadersScreen,
+body.phone-preview #inventoryScreen,
+body.phone-preview #socialScreen,
 body.phone-preview #marketScreen,
 body.phone-preview #craftingScreen,
+#statsScreen,
+#leadersScreen,
+#inventoryScreen,
+#socialScreen,
 #marketScreen,
 #craftingScreen {
   position: absolute !important;
@@ -4896,7 +4905,7 @@ body.phone-preview #craftingScreen,
   inset: var(--menu-header-height) 0 0 0 !important;
   width: 100% !important;
   height: calc(100% - var(--menu-header-height)) !important;
-  z-index: 22 !important;
+  z-index: 24 !important;
   display: block !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
@@ -4909,11 +4918,62 @@ body.phone-preview #craftingScreen,
   color: #ffffff !important;
 }
 
+body.phone-preview #statsScreen.hidden,
+body.phone-preview #leadersScreen.hidden,
+body.phone-preview #inventoryScreen.hidden,
+body.phone-preview #socialScreen.hidden,
 body.phone-preview #marketScreen.hidden,
 body.phone-preview #craftingScreen.hidden,
+#statsScreen.hidden,
+#leadersScreen.hidden,
+#inventoryScreen.hidden,
+#socialScreen.hidden,
 #marketScreen.hidden,
 #craftingScreen.hidden {
   display: none !important;
+}
+
+body.phone-preview #statsScreen h2,
+body.phone-preview #leadersScreen h2,
+body.phone-preview #inventoryScreen h2,
+body.phone-preview #socialScreen h2,
+body.phone-preview #marketScreen h2,
+body.phone-preview #recipePanel h2,
+#statsScreen h2,
+#leadersScreen h2,
+#inventoryScreen h2,
+#socialScreen h2,
+#marketScreen h2,
+#recipePanel h2 {
+  margin: 20px 0 14px !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  font-weight: 1000 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  letter-spacing: 0 !important;
+  text-shadow: 0 3px 7px rgba(0,0,0,0.7) !important;
+}
+
+body.phone-preview .submenu-intro,
+.submenu-intro {
+  margin: 0 0 14px !important;
+  text-align: left !important;
+  color: rgba(255,255,255,0.88) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+body.phone-preview #inventoryListView,
+body.phone-preview #inventoryDetailsView,
+#inventoryListView,
+#inventoryDetailsView {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
 }
 
 body.phone-preview #recipePanel,
@@ -4933,25 +4993,6 @@ body.phone-preview .recipe-panel,
   padding: 0 0 28px !important;
   background: transparent !important;
   box-shadow: none !important;
-}
-
-#marketScreen h2,
-#recipePanel h2 {
-  margin: 20px 0 14px !important;
-  padding: 0 !important;
-  color: #ffffff !important;
-  font-size: 30px !important;
-  font-weight: 1000 !important;
-  line-height: 1 !important;
-  text-align: left !important;
-  letter-spacing: 0 !important;
-  text-shadow: 0 3px 7px rgba(0,0,0,0.7) !important;
-}
-
-#marketScreen .submenu-intro,
-#recipePanel .submenu-intro {
-  margin: 0 0 14px !important;
-  text-align: left !important;
 }
 
 .market-view,
