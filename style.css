@@ -5092,6 +5092,7 @@ body.phone-preview #leadersScreen,
 body.phone-preview #inventoryScreen,
 body.phone-preview #socialScreen,
 body.phone-preview #settingsScreen,
+body.phone-preview #collectionsScreen,
 body.phone-preview #marketScreen,
 body.phone-preview #craftingScreen,
 #statsScreen,
@@ -5099,6 +5100,7 @@ body.phone-preview #craftingScreen,
 #inventoryScreen,
 #socialScreen,
 #settingsScreen,
+#collectionsScreen,
 #marketScreen,
 #craftingScreen {
   position: absolute !important;
@@ -5129,6 +5131,7 @@ body.phone-preview #leadersScreen.hidden,
 body.phone-preview #inventoryScreen.hidden,
 body.phone-preview #socialScreen.hidden,
 body.phone-preview #settingsScreen.hidden,
+body.phone-preview #collectionsScreen.hidden,
 body.phone-preview #marketScreen.hidden,
 body.phone-preview #craftingScreen.hidden,
 #statsScreen.hidden,
@@ -5136,6 +5139,7 @@ body.phone-preview #craftingScreen.hidden,
 #inventoryScreen.hidden,
 #socialScreen.hidden,
 #settingsScreen.hidden,
+#collectionsScreen.hidden,
 #marketScreen.hidden,
 #craftingScreen.hidden {
   display: none !important;
@@ -5146,6 +5150,7 @@ body.phone-preview #leadersScreen h2,
 body.phone-preview #inventoryScreen h2,
 body.phone-preview #socialScreen h2,
 body.phone-preview #settingsScreen h2,
+body.phone-preview #collectionsScreen h2,
 body.phone-preview #marketScreen h2,
 body.phone-preview #recipePanel h2,
 #statsScreen h2,
@@ -5153,6 +5158,7 @@ body.phone-preview #recipePanel h2,
 #inventoryScreen h2,
 #socialScreen h2,
 #settingsScreen h2,
+#collectionsScreen h2,
 #marketScreen h2,
 #recipePanel h2 {
   margin: 20px 0 14px !important;
@@ -5330,4 +5336,136 @@ body.phone-preview .recipe-panel,
 .settings-btn.danger {
   border-color: rgba(255, 190, 105, 0.84);
   background: linear-gradient(#d07b28, #8b2d1c);
+}
+
+.collections-sections {
+  display: grid;
+  gap: 14px;
+  padding-bottom: 28px;
+}
+
+.collections-section {
+  border-radius: 18px;
+  border: 3px solid rgba(139, 207, 138, 0.68);
+  background: rgba(1, 28, 50, 0.94);
+  box-shadow:
+    0 7px 15px rgba(0,0,0,0.36),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+  padding: 12px;
+}
+
+.collections-section.locked {
+  opacity: 0.72;
+}
+
+.collections-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.collections-section-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.collections-section-header span {
+  color: rgba(255,255,255,0.72);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.owned-pins-list {
+  display: grid;
+  gap: 10px;
+}
+
+.owned-pins-empty {
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.82);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.owned-pin-card {
+  display: grid;
+  gap: 9px;
+  padding: 12px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(18, 74, 120, 0.92), rgba(3, 28, 48, 0.96));
+  border: 2px solid rgba(139, 207, 138, 0.58);
+}
+
+.owned-pin-topline,
+.owned-pin-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.owned-pin-topline h4 {
+  margin: 0 0 3px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.owned-pin-coords {
+  color: rgba(255,255,255,0.64);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.owned-pin-level {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.owned-pin-level.common {
+  color: #ffffff;
+}
+
+.owned-pin-level.uncommon {
+  color: #35b85f;
+}
+
+.owned-pin-level.rare {
+  color: #2f80ed;
+}
+
+.owned-pin-level.epic {
+  color: #8f45ff;
+}
+
+.owned-pin-detail-row {
+  min-height: 28px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.owned-pin-detail-row span {
+  color: rgba(255,255,255,0.66);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.owned-pin-detail-row strong {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 1000;
+  text-align: right;
 }

@@ -483,6 +483,9 @@ let restoreBackupInput;
 let changeAvatarBtn;
 let clearAvatarBtn;
 let resetLocalProgressBtn;
+let collectionsScreen;
+let ownedPinsCount;
+let ownedPinsList;
 let growGoQrScanner = null;
 let growGoQrScannerRunning = false;
 
@@ -590,6 +593,9 @@ restoreBackupInput = document.getElementById("restoreBackupInput");
 changeAvatarBtn = document.getElementById("changeAvatarBtn");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
+collectionsScreen = document.getElementById("collectionsScreen");
+ownedPinsCount = document.getElementById("ownedPinsCount");
+ownedPinsList = document.getElementById("ownedPinsList");
 
   craftingScreen = document.getElementById("craftingScreen");
   craftingBackBtn = document.getElementById("craftingBackBtn");
@@ -2928,6 +2934,11 @@ function initBasicUi() {
         return;
       }
 
+      if (label.includes("collections")) {
+        openCollections();
+        return;
+      }
+
       if (label.includes("settings")) {
         openSettings();
         return;
@@ -3133,6 +3144,12 @@ function navigateMenuBackOnePage() {
     return true;
   }
 
+  if (collectionsScreen && !collectionsScreen.classList.contains("hidden")) {
+    collectionsScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
   return false;
 }
 
@@ -3168,6 +3185,81 @@ function hideSubmenus() {
   if (marketScreen) marketScreen.classList.add("hidden");
   if (inventoryScreen) inventoryScreen.classList.add("hidden");
   if (settingsScreen) settingsScreen.classList.add("hidden");
+  if (collectionsScreen) collectionsScreen.classList.add("hidden");
+}
+
+function openCollections() {
+  if (!collectionsScreen) return;
+
+  hideSubmenus();
+  hideMenuHome();
+  renderCollections();
+  collectionsScreen.classList.remove("hidden");
+}
+
+function renderCollections() {
+  renderOwnedPinsCollection();
+}
+
+function renderOwnedPinsCollection() {
+  if (!ownedPinsList || !ownedPinsCount) return;
+
+  const activePlayerId = getActivePlayerId();
+  const ownedPins = Array.from(pinStore.values())
+    .filter((pin) => pin.ownerId === activePlayerId)
+    .sort((a, b) => {
+      const levelDiff = getBasePinLevel(b) - getBasePinLevel(a);
+      if (levelDiff) return levelDiff;
+      return Number(b.ownedAt || 0) - Number(a.ownedAt || 0);
+    });
+
+  ownedPinsCount.textContent = `${ownedPins.length} owned`;
+
+  if (!ownedPins.length) {
+    ownedPinsList.innerHTML = `
+      <div class="owned-pins-empty">
+        Long-press a base pin on the map to purchase your first owned pin.
+      </div>
+    `;
+    return;
+  }
+
+  ownedPinsList.innerHTML = ownedPins.map(renderOwnedPinCard).join("");
+}
+
+function renderOwnedPinCard(pin) {
+  const level = getBasePinLevel(pin);
+  const levelInfo = getBasePinLevelInfo(level);
+  const plantLabel = pin.plant ? getPlantStageLabel(pin.plant) : "No plant";
+  const pending = Number(pin.ownerPendingPoints || 0);
+  const replant = pin.replantEnabled ? "On" : "Off";
+
+  return `
+    <div class="owned-pin-card">
+      <div class="owned-pin-topline">
+        <div>
+          <h4>Base Pin</h4>
+          <div class="owned-pin-coords">${Number(pin.lat).toFixed(5)}, ${Number(pin.lng).toFixed(5)}</div>
+        </div>
+        <span class="owned-pin-level ${escapeAttribute(levelInfo.className)}">
+          Lv ${level} ${escapeHtml(levelInfo.name)}
+        </span>
+      </div>
+
+      <div class="owned-pin-detail-row">
+        <span>Plant</span>
+        <strong>${escapeHtml(plantLabel)}</strong>
+      </div>
+      <div class="owned-pin-detail-row">
+        <span>Replant</span>
+        <strong>${escapeHtml(replant)}</strong>
+      </div>
+      <div class="owned-pin-detail-row">
+        <span>Pending rewards</span>
+        <strong>${formatNumber(pending)} pts</strong>
+      </div>
+    </div>
+  `;
 }
 
 function initSettingsUi() {
