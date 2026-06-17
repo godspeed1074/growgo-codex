@@ -23,6 +23,7 @@ const OVERPASS_API_URL = "https://overpass-api.de/api/interpreter";
 const TRUSTED_TIME_URL = "https://www.timeapi.io/api/Time/current/zone?timeZone=UTC";
 
 const PIN_STORAGE_KEY = "growgo-pins";
+const SERVER_STARTED_AT_KEY = "growgo-server-started-at";
 const AVATAR_STORAGE_KEY = "growgo-avatar";
 const STATS_STORAGE_KEY = "growgo-stats";
 const CRAFTING_STORAGE_KEY = "growgo-crafting";
@@ -47,6 +48,7 @@ function resetPlayerProgressionOnce() {
 
     [
       PIN_STORAGE_KEY,
+      SERVER_STARTED_AT_KEY,
       AVATAR_STORAGE_KEY,
       STATS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
@@ -157,6 +159,7 @@ function createLocalBackup() {
     crafting: readStoredJson(CRAFTING_STORAGE_KEY, null),
     market: readStoredJson(MARKET_STORAGE_KEY, null),
     pins: readStoredJson(PIN_STORAGE_KEY, []),
+    serverStartedAt: getServerStartedAt(),
     social: {
       playersMet: readStoredJson("growgo-players-met", []),
       friends: readStoredJson("growgo-friends", [])
@@ -237,6 +240,10 @@ function restoreLocalBackup(backup) {
   writeStoredJson(CRAFTING_STORAGE_KEY, backup.crafting);
   writeStoredJson(MARKET_STORAGE_KEY, backup.market);
   writeStoredJson(PIN_STORAGE_KEY, Array.isArray(backup.pins) ? backup.pins : []);
+  localStorage.setItem(
+    SERVER_STARTED_AT_KEY,
+    String(Number(backup.serverStartedAt) || getTrustedNow())
+  );
   writeStoredJson("growgo-players-met", backup.social?.playersMet || []);
   writeStoredJson("growgo-friends", backup.social?.friends || []);
 
@@ -3273,6 +3280,7 @@ function resetLocalProgress() {
   try {
     [
       PIN_STORAGE_KEY,
+      SERVER_STARTED_AT_KEY,
       AVATAR_STORAGE_KEY,
       STATS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
@@ -5034,13 +5042,29 @@ function capturePin(pin) {
 }
 
 function getPinPoints(pin) {
-  if (!pin.capturedAt) return pin.basePoints || BASE_PIN_VALUE;
-
   const now = getTrustedNow();
-  const hoursSinceCapture = (now - pin.capturedAt) / (1000 * 60 * 60);
-  const growthSteps = Math.floor(hoursSinceCapture / POINTS_GROWTH_HOURS);
+  const growthStartedAt = Number(pin.capturedAt || getServerStartedAt());
+  const hoursSinceGrowthStarted = Math.max(0, (now - growthStartedAt) / (1000 * 60 * 60));
+  const growthSteps = Math.floor(hoursSinceGrowthStarted / POINTS_GROWTH_HOURS);
 
   return (pin.basePoints || BASE_PIN_VALUE) + growthSteps;
+}
+
+function getServerStartedAt() {
+  try {
+    const savedStartedAt = Number(localStorage.getItem(SERVER_STARTED_AT_KEY));
+
+    if (Number.isFinite(savedStartedAt) && savedStartedAt > 0) {
+      return savedStartedAt;
+    }
+
+    const startedAt = getTrustedNow();
+    localStorage.setItem(SERVER_STARTED_AT_KEY, String(startedAt));
+    return startedAt;
+  } catch (error) {
+    console.warn("Could not read server start time.", error);
+    return Date.now();
+  }
 }
 
 function wasCapturedToday(pin) {
