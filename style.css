@@ -1267,12 +1267,20 @@ body.phone-preview .menu-overlay {
 .base-pin-icon {
   background: transparent !important;
   border: none !important;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .base-pin-marker {
   position: relative;
   width: 64px !important;
   height: 84px !important;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .base-pin-marker img {

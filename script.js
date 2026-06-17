@@ -4949,8 +4949,7 @@ function redrawVisiblePins() {
 
       capturePin(pin);
     });
-    marker.on("mousedown touchstart", () => startPinLongPress(pin));
-    marker.on("mouseup mouseout touchend touchcancel", clearPinLongPress);
+    marker.on("add", () => bindPinLongPress(marker, pin));
     marker.on("dblclick", (event) => {
       if (event?.originalEvent) {
         L.DomEvent.stopPropagation(event.originalEvent);
@@ -5056,6 +5055,31 @@ function clearPinLongPress() {
   }
 
   activeLongPressPin = null;
+}
+
+function bindPinLongPress(marker, pin) {
+  const element = marker.getElement();
+  if (!element || element._growgoLongPressBound) return;
+
+  element._growgoLongPressBound = true;
+  element.style.touchAction = "manipulation";
+  element.style.webkitUserSelect = "none";
+  element.style.userSelect = "none";
+
+  element.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+
+    event.preventDefault();
+    startPinLongPress(pin);
+  }, { passive: false });
+
+  ["pointerup", "pointercancel", "pointerleave", "lostpointercapture"].forEach((eventName) => {
+    element.addEventListener(eventName, clearPinLongPress);
+  });
+
+  element.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
 }
 
 function openBasePinLongPressPopup(pin) {
