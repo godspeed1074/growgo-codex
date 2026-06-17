@@ -76,7 +76,10 @@ function createDefaultPlayerState() {
       coins: 0,
       score: 0
     },
-    settings: {}
+    settings: {
+      soundEffects: true,
+      vibration: true
+    }
   };
 }
 
@@ -223,6 +226,7 @@ function restoreLocalBackup(backup) {
       ...(backup.player.progress || {})
     },
     settings: {
+      ...createDefaultPlayerState().settings,
       ...(backup.player.settings || {})
     }
   };
@@ -442,6 +446,8 @@ let socialPublicId;
 let settingsScreen;
 let settingsPlayerName;
 let settingsPlayerId;
+let soundEffectsToggle;
+let vibrationToggle;
 let copyBackupBtn;
 let downloadBackupBtn;
 let restoreBackupBtn;
@@ -547,6 +553,8 @@ socialPublicId = document.getElementById("socialPublicId");
 settingsScreen = document.getElementById("settingsScreen");
 settingsPlayerName = document.getElementById("settingsPlayerName");
 settingsPlayerId = document.getElementById("settingsPlayerId");
+soundEffectsToggle = document.getElementById("soundEffectsToggle");
+vibrationToggle = document.getElementById("vibrationToggle");
 copyBackupBtn = document.getElementById("copyBackupBtn");
 downloadBackupBtn = document.getElementById("downloadBackupBtn");
 restoreBackupBtn = document.getElementById("restoreBackupBtn");
@@ -3112,6 +3120,18 @@ function hideSubmenus() {
 }
 
 function initSettingsUi() {
+  if (soundEffectsToggle) {
+    soundEffectsToggle.addEventListener("click", () => {
+      setPlayerPreference("soundEffects", !playerState.settings.soundEffects);
+    });
+  }
+
+  if (vibrationToggle) {
+    vibrationToggle.addEventListener("click", () => {
+      setPlayerPreference("vibration", !playerState.settings.vibration);
+    });
+  }
+
   if (copyBackupBtn) {
     copyBackupBtn.addEventListener("click", () => {
       copyLocalBackup();
@@ -3178,6 +3198,36 @@ function renderSettings() {
 
   if (settingsPlayerId) {
     settingsPlayerId.textContent = getOrCreateGrowGoPlayerId();
+  }
+
+  renderSettingsToggles();
+}
+
+function setPlayerPreference(key, enabled) {
+  playerState.settings = {
+    ...createDefaultPlayerState().settings,
+    ...(playerState.settings || {}),
+    [key]: Boolean(enabled)
+  };
+
+  savePlayerState();
+  renderSettingsToggles();
+}
+
+function renderSettingsToggles() {
+  renderSettingsToggle(soundEffectsToggle, playerState.settings.soundEffects);
+  renderSettingsToggle(vibrationToggle, playerState.settings.vibration);
+}
+
+function renderSettingsToggle(button, enabled) {
+  if (!button) return;
+
+  button.classList.toggle("off", !enabled);
+  button.setAttribute("aria-pressed", enabled ? "true" : "false");
+
+  const stateLabel = button.querySelector("strong");
+  if (stateLabel) {
+    stateLabel.textContent = enabled ? "On" : "Off";
   }
 }
 
