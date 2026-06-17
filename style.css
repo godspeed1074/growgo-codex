@@ -2669,6 +2669,30 @@ body.phone-preview .menu-panel {
   margin: 8px 0;
 }
 
+.base-pin-level {
+  margin: 0 auto 10px;
+  font-size: 14px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.base-pin-level.common {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.65);
+}
+
+.base-pin-level.uncommon {
+  color: #35b85f;
+}
+
+.base-pin-level.rare {
+  color: #2f80ed;
+}
+
+.base-pin-level.epic {
+  color: #8f45ff;
+}
+
 .base-pin-select-label {
   display: block;
   margin: 12px 0 6px;
@@ -2685,6 +2709,40 @@ body.phone-preview .menu-panel {
   padding: 0 12px;
   font-size: 15px;
   font-weight: 900;
+}
+
+.base-pin-toggle,
+.base-pin-upgrade-btn,
+.base-pin-max-level {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 0;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.base-pin-toggle {
+  background: linear-gradient(#5f7182, #263543);
+  color: #ffffff;
+}
+
+.base-pin-toggle.active {
+  background: linear-gradient(#56d92c, #16871b);
+}
+
+.base-pin-upgrade-btn {
+  background: linear-gradient(#248cff, #0f4fa9);
+  color: #ffffff;
+}
+
+.base-pin-max-level {
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.42);
+  color: #5f24bf;
 }
 
 .base-pin-popup-actions {

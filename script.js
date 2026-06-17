@@ -13,6 +13,7 @@ const BASE_PIN_PURCHASE_COST = 100;
 const PIN_OWNER_CAPTURE_REWARD = 5;
 const PIN_LONG_PRESS_MS = 500;
 const PIN_PLANT_STAGE_HOURS = 168;
+const BASE_PIN_MAX_LEVEL = 4;
 
 const PIN_SPACING_METERS = 46;
 const MIN_PIN_SEPARATION_METERS = 46;
@@ -430,6 +431,13 @@ const BASE_PIN_SEED_OPTIONS = [
   { id: "corn", label: "Corn", icon: "🌽" },
   { id: "sugar_cane", label: "Sugar Cane", icon: "🎋" }
 ];
+
+const BASE_PIN_LEVELS = {
+  1: { name: "Common", className: "common", upgradeCost: 200 },
+  2: { name: "Uncommon", className: "uncommon", upgradeCost: 300 },
+  3: { name: "Rare", className: "rare", upgradeCost: 400 },
+  4: { name: "Epic", className: "epic", upgradeCost: null }
+};
 
 let menuAvatarInput;
 let menuAvatarImg;
@@ -5133,6 +5141,9 @@ function openBasePinPlantPopup(pin) {
 
   const seedOptions = getAvailableBasePinSeeds();
   const planted = pin.plant ? getPlantStageLabel(pin.plant) : "No seed planted";
+  const level = getBasePinLevel(pin);
+  const levelInfo = getBasePinLevelInfo(level);
+  const upgrade = getBasePinUpgradeInfo(pin);
 
   const overlay = document.createElement("div");
   overlay.id = "basePinOverlay";
@@ -5141,8 +5152,14 @@ function openBasePinPlantPopup(pin) {
     <div class="base-pin-popup">
       <button class="base-pin-popup-close" type="button">×</button>
       <h3>Owned Base Pin</h3>
+      <div class="base-pin-level ${escapeAttribute(levelInfo.className)}">
+        Level ${level} · ${escapeHtml(levelInfo.name)}
+      </div>
       <div class="base-pin-popup-copy">
         Current plant: ${escapeHtml(planted)}
+      </div>
+      <div class="base-pin-popup-meta">
+        Replant: ${pin.replantEnabled ? "On" : "Off"}
       </div>
       <label class="base-pin-select-label" for="basePinSeedSelect">Seed</label>
       <select id="basePinSeedSelect" class="base-pin-select" ${seedOptions.length ? "" : "disabled"}>
@@ -5154,6 +5171,16 @@ function openBasePinPlantPopup(pin) {
           `).join("")
           : `<option>No seeds available</option>`}
       </select>
+      <button class="base-pin-toggle ${pin.replantEnabled ? "active" : ""}" data-base-pin-replant="${escapeAttribute(pin.id)}" type="button">
+        Replant ${pin.replantEnabled ? "On" : "Off"}
+      </button>
+      ${upgrade ? `
+        <button class="base-pin-upgrade-btn" data-base-pin-upgrade="${escapeAttribute(pin.id)}" type="button">
+          Upgrade to Level ${upgrade.nextLevel} (${escapeHtml(upgrade.nextInfo.name)}) · ${formatNumber(upgrade.cost)}g
+        </button>
+      ` : `
+        <div class="base-pin-max-level">Epic level reached</div>
+      `}
       <div class="base-pin-popup-actions">
         <button class="base-pin-secondary-btn" data-base-pin-cancel type="button">Not Now</button>
         <button class="base-pin-primary-btn" data-base-pin-plant="${escapeAttribute(pin.id)}" type="button" ${seedOptions.length ? "" : "disabled"}>
@@ -5187,6 +5214,18 @@ function handleBasePinPopupClick(event) {
   if (plantButton) {
     const select = document.getElementById("basePinSeedSelect");
     plantBasePinSeed(plantButton.dataset.basePinPlant, select?.value);
+    return;
+  }
+
+  const replantButton = event.target.closest("[data-base-pin-replant]");
+  if (replantButton) {
+    toggleBasePinReplant(replantButton.dataset.basePinReplant);
+    return;
+  }
+
+  const upgradeButton = event.target.closest("[data-base-pin-upgrade]");
+  if (upgradeButton) {
+    upgradeBasePin(upgradeButton.dataset.basePinUpgrade);
   }
 }
 
@@ -5219,6 +5258,8 @@ function purchaseBasePin(pinId) {
   pin.ownerId = getActivePlayerId();
   pin.ownerName = playerState.name || DEFAULT_PLAYER_NAME;
   pin.ownedAt = getTrustedNow();
+  pin.level = 1;
+  pin.replantEnabled = false;
 
   scheduleSavePinsToLocal();
   clearPinIconCache();
@@ -5234,6 +5275,63 @@ function getAvailableBasePinSeeds() {
       quantity: Number(marketState.inventory[seed.id] || 0)
     }))
     .filter((seed) => seed.quantity > 0);
+}
+
+function getBasePinLevel(pin) {
+  const level = Number(pin?.level || 1);
+  return Math.max(1, Math.min(BASE_PIN_MAX_LEVEL, level));
+}
+
+function getBasePinLevelInfo(level) {
+  return BASE_PIN_LEVELS[getBasePinLevel({ level })] || BASE_PIN_LEVELS[1];
+}
+
+function getBasePinUpgradeInfo(pin) {
+  const level = getBasePinLevel(pin);
+  if (level >= BASE_PIN_MAX_LEVEL) return null;
+
+  const currentInfo = getBasePinLevelInfo(level);
+  const nextLevel = level + 1;
+
+  return {
+    nextLevel,
+    nextInfo: getBasePinLevelInfo(nextLevel),
+    cost: currentInfo.upgradeCost
+  };
+}
+
+function toggleBasePinReplant(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin || pin.ownerId !== getActivePlayerId()) return;
+
+  pin.replantEnabled = !pin.replantEnabled;
+  scheduleSavePinsToLocal();
+  openBasePinPlantPopup(pin);
+}
+
+function upgradeBasePin(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin || pin.ownerId !== getActivePlayerId()) return;
+
+  const upgrade = getBasePinUpgradeInfo(pin);
+  if (!upgrade) return;
+
+  if (marketState.wallet < upgrade.cost) {
+    showToast("Not enough gold", `${formatNumber(upgrade.cost)}g needed.`);
+    return;
+  }
+
+  marketState.wallet -= upgrade.cost;
+  saveMarketState();
+  renderMarketWallet();
+  renderPlayerOverview();
+
+  pin.level = upgrade.nextLevel;
+  scheduleSavePinsToLocal();
+  clearPinIconCache();
+  scheduleRedrawPins();
+  openBasePinPlantPopup(pin);
+  showToast("Pin upgraded", `Base pin is now ${upgrade.nextInfo.name}.`);
 }
 
 function plantBasePinSeed(pinId, seedId) {
@@ -5327,17 +5425,31 @@ function harvestReadyBasePinPlant(pin) {
   const seed = BASE_PIN_SEED_OPTIONS.find((entry) => entry.id === pin.plant.seedId);
   if (!seed) return;
 
+  const canAutoReplant =
+    pin.replantEnabled &&
+    pin.ownerId === playerId &&
+    Number(marketState.inventory[seed.id] || 0) > 0;
+
   marketState.inventory[seed.id] = Number(marketState.inventory[seed.id] || 0) + 1;
-  saveMarketState();
-  refreshInventoryIfOpen();
   addStat("resourcesGained", 1);
 
-  pin.plant.harvestedByDay = {
-    ...harvestedByDay,
-    [playerId]: todayKey
-  };
+  if (canAutoReplant) {
+    marketState.inventory[seed.id] = Math.max(0, Number(marketState.inventory[seed.id] || 0) - 1);
+    pin.plant = {
+      seedId: seed.id,
+      plantedAt: getTrustedNow(),
+      harvestedByDay: {}
+    };
+  } else {
+    pin.plant.harvestedByDay = {
+      ...harvestedByDay,
+      [playerId]: todayKey
+    };
+  }
 
-  showToast("Harvested", `+1 ${seed.label}`);
+  saveMarketState();
+  refreshInventoryIfOpen();
+  showToast("Harvested", canAutoReplant ? `+1 ${seed.label}, replanted.` : `+1 ${seed.label}`);
 }
 
 function getPinPoints(pin) {
@@ -5453,6 +5565,8 @@ function loadPinsFromLocal() {
           ownerId: pin.ownerId || null,
           ownerName: pin.ownerName || null,
           ownedAt: pin.ownedAt || null,
+          level: getBasePinLevel(pin),
+          replantEnabled: Boolean(pin.replantEnabled),
           ownerPendingPoints: Number(pin.ownerPendingPoints || 0),
           plant: pin.plant || null
         });
