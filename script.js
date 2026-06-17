@@ -31,6 +31,35 @@ const MARKET_LONG_PRESS_MS = 550;
 
 const GROWGO_PLAYER_ID_KEY = "growgo-player-public-id";
 const GROWGO_PROFILE_CARD_MODE_KEY = "growgo-profile-card-mode";
+const PLAYER_NAME = "rubberlips";
+const PROGRESSION_RESET_KEY = "growgo-progression-reset-version";
+const PROGRESSION_RESET_VERSION = "rubberlips-reset-1";
+
+resetPlayerProgressionOnce();
+
+function resetPlayerProgressionOnce() {
+  try {
+    if (localStorage.getItem(PROGRESSION_RESET_KEY) === PROGRESSION_RESET_VERSION) {
+      return;
+    }
+
+    [
+      PIN_STORAGE_KEY,
+      AVATAR_STORAGE_KEY,
+      STATS_STORAGE_KEY,
+      CRAFTING_STORAGE_KEY,
+      MARKET_STORAGE_KEY,
+      GROWGO_PLAYER_ID_KEY,
+      GROWGO_PROFILE_CARD_MODE_KEY,
+      "growgo-players-met",
+      "growgo-friends"
+    ].forEach((key) => localStorage.removeItem(key));
+
+    localStorage.setItem(PROGRESSION_RESET_KEY, PROGRESSION_RESET_VERSION);
+  } catch (error) {
+    console.warn("Could not reset player progression.", error);
+  }
+}
 
 /* ----------------------------- */
 /* MARKET DATA */
@@ -263,6 +292,7 @@ initSocialUi();
 initCraftingUi();
   initMarketUi();
   initInventoryUi();
+  renderPlayerOverview();
 
   await syncTrustedTime();
   startGmtResetClock();
@@ -747,8 +777,8 @@ const RECIPES = [
 
 function createDefaultCrafting() {
   return {
-    level: 23,
-    xp: 6932
+    level: 1,
+    xp: 0
   };
 }
 
@@ -819,6 +849,7 @@ function addCraftingXp(amount) {
 
   saveCrafting();
   renderCraftingHeader();
+  renderPlayerOverview();
 
   if (playerCrafting.level !== previousLevel) {
     renderRecipeBook(true);
@@ -1048,21 +1079,8 @@ function craftSelectedRecipe() {
 
 function createDefaultMarketState() {
   return {
-    wallet: 250,
-    inventory: {
-      wheat: 12,
-      sugar_cane: 10,
-      corn: 8,
-      water: 20,
-      fish: 5,
-      milk: 4,
-      cocoa_beans: 3,
-      flour: 4,
-      sugar: 4,
-      bread: 2,
-      energy_bar: 2,
-      dinosaur_card: 1
-    },
+    wallet: 0,
+    inventory: {},
     listings: [
       createNpcListing("wheat", 20, 50),
       createNpcListing("sugar_cane", 20, 40),
@@ -1377,6 +1395,11 @@ function renderMarketWallet() {
   walletEls.forEach((el) => {
     el.textContent = `${formatNumber(marketState.wallet)} coins`;
   });
+
+  const coinCount = document.getElementById("coinCount");
+  if (coinCount) {
+    coinCount.textContent = formatNumber(marketState.wallet);
+  }
 }
 
 function renderMarketTabs() {
@@ -2364,9 +2387,10 @@ function addMarketCoins(amount) {
 
   marketState.wallet = Math.max(0, Number(marketState.wallet || 0) + Number(amount || 0));
   saveMarketState();
+  renderMarketWallet();
 
   if (marketScreen && !marketScreen.classList.contains("hidden")) {
-    renderMarketWallet();
+    renderMarket();
   }
 }
 
@@ -3020,6 +3044,38 @@ function formatNumber(value) {
   return Number(value || 0).toLocaleString();
 }
 
+function renderPlayerOverview() {
+  const progress = getCraftingProgress();
+  const currentXp = Math.floor(progress.currentXpIntoLevel);
+  const neededXp = Math.max(1, progress.neededThisLevel || 1);
+  const percent = Math.max(0, Math.min(100, progress.percent || 0));
+
+  document.querySelectorAll(".menu-player-name").forEach((el) => {
+    el.textContent = PLAYER_NAME;
+  });
+
+  document.querySelectorAll(".menu-level-number").forEach((el) => {
+    el.textContent = playerCrafting.level;
+  });
+
+  document.querySelectorAll(".menu-xp-fill").forEach((el) => {
+    el.style.width = `${percent}%`;
+  });
+
+  document.querySelectorAll(".menu-xp-text").forEach((el) => {
+    el.innerHTML = `
+      <span>${Math.round(percent)}%</span>
+      <span>${formatNumber(currentXp)} / ${formatNumber(neededXp)} XP</span>
+    `;
+  });
+
+  document.querySelectorAll(".social-profile-card strong").forEach((el) => {
+    el.textContent = PLAYER_NAME;
+  });
+
+  renderMarketWallet();
+}
+
 /* ----------------------------- */
 /* LEADERS UI */
 /* ----------------------------- */
@@ -3042,8 +3098,8 @@ MOCK_LEADERBOARD[0] = {
 
 MOCK_LEADERBOARD[117] = {
   rank: 118,
-  name: "grower123",
-  score: 12450,
+  name: PLAYER_NAME,
+  score: 0,
   me: true
 };
 
