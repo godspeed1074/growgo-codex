@@ -1078,6 +1078,7 @@ function addCraftingXp(amount) {
   renderPlayerOverview();
 
   if (playerCrafting.level !== previousLevel) {
+    triggerLevelUpFeedback();
     renderRecipeBook(true);
   }
 
@@ -3229,6 +3230,21 @@ function renderSettingsToggle(button, enabled) {
   if (stateLabel) {
     stateLabel.textContent = enabled ? "On" : "Off";
   }
+}
+
+function triggerMilestoneFeedback(pattern = [35, 45, 55]) {
+  if (!playerState.settings?.vibration) return;
+  if (!navigator.vibrate) return;
+
+  try {
+    navigator.vibrate(pattern);
+  } catch (error) {
+    console.warn("Vibration feedback failed.", error);
+  }
+}
+
+function triggerLevelUpFeedback() {
+  triggerMilestoneFeedback([35, 45, 55]);
 }
 
 function resetLocalProgress() {
