@@ -262,13 +262,24 @@
         </div>
 
         <div class="settings-actions">
-          <button id="copyBackupBtn" class="settings-btn" type="button">Copy backup</button>
-          <button id="downloadBackupBtn" class="settings-btn" type="button">Download backup</button>
-          <button id="restoreBackupBtn" class="settings-btn" type="button">Restore backup</button>
-          <input id="restoreBackupInput" class="settings-file-input" type="file" accept="application/json,.json" />
-          <button id="changeAvatarBtn" class="settings-btn" type="button">Change profile picture</button>
-          <button id="clearAvatarBtn" class="settings-btn" type="button">Clear avatar</button>
-          <button id="resetLocalProgressBtn" class="settings-btn danger" type="button">Reset local progress</button>
+          <div class="settings-group">
+            <h3>Profile</h3>
+            <button id="changeAvatarBtn" class="settings-btn" type="button">Change profile picture</button>
+            <button id="clearAvatarBtn" class="settings-btn" type="button">Clear avatar</button>
+          </div>
+
+          <div class="settings-group">
+            <h3>Backup</h3>
+            <button id="copyBackupBtn" class="settings-btn" type="button">Copy backup</button>
+            <button id="downloadBackupBtn" class="settings-btn" type="button">Download backup</button>
+            <button id="restoreBackupBtn" class="settings-btn" type="button">Restore backup</button>
+            <input id="restoreBackupInput" class="settings-file-input" type="file" accept="application/json,.json" />
+          </div>
+
+          <div class="settings-group">
+            <h3>Danger</h3>
+            <button id="resetLocalProgressBtn" class="settings-btn danger" type="button">Reset local progress</button>
+          </div>
         </div>
       </section>
 
@@ -381,6 +392,6 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
-  <script src="script.js?v=clean3q"></script>
+  <script src="script.js?v=clean3r"></script>
 </body>
 </html>
