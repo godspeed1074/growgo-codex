@@ -5053,6 +5053,10 @@ body.phone-preview .recipe-panel,
   gap: 10px;
 }
 
+.settings-file-input {
+  display: none;
+}
+
 .settings-btn {
   width: 100%;
   min-height: 56px;

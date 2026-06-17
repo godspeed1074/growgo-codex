@@ -173,6 +173,64 @@ async function copyLocalBackup() {
   }
 }
 
+function writeStoredJson(key, value) {
+  try {
+    if (value === null || value === undefined) {
+      localStorage.removeItem(key);
+      return;
+    }
+
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.warn(`Could not write ${key}.`, error);
+  }
+}
+
+function restoreLocalBackup(backup) {
+  if (!backup || backup.version !== LOCAL_BACKUP_VERSION || !backup.player) {
+    throw new Error("Unsupported backup file.");
+  }
+
+  const restoredPlayer = {
+    ...createDefaultPlayerState(),
+    ...backup.player,
+    name: String(backup.player.name || DEFAULT_PLAYER_NAME),
+    progress: {
+      ...createDefaultPlayerState().progress,
+      ...(backup.player.progress || {})
+    },
+    settings: {
+      ...(backup.player.settings || {})
+    }
+  };
+
+  playerState = restoredPlayer;
+  savePlayerState();
+  writeStoredJson(STATS_STORAGE_KEY, backup.stats);
+  writeStoredJson(CRAFTING_STORAGE_KEY, backup.crafting);
+  writeStoredJson(MARKET_STORAGE_KEY, backup.market);
+  writeStoredJson(PIN_STORAGE_KEY, Array.isArray(backup.pins) ? backup.pins : []);
+  writeStoredJson("growgo-players-met", backup.social?.playersMet || []);
+  writeStoredJson("growgo-friends", backup.social?.friends || []);
+
+  window.location.reload();
+}
+
+async function handleRestoreBackupFile(file) {
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const backup = JSON.parse(text);
+
+    if (!window.confirm("Replace this device's local progress with this backup?")) return;
+    restoreLocalBackup(backup);
+  } catch (error) {
+    console.warn("Could not restore backup.", error);
+    showToast("Restore failed", "That backup file could not be loaded.");
+  }
+}
+
 let playerState = loadPlayerState();
 savePlayerState();
 
@@ -362,6 +420,8 @@ let settingsScreen;
 let settingsPlayerName;
 let settingsPlayerId;
 let copyBackupBtn;
+let restoreBackupBtn;
+let restoreBackupInput;
 let clearAvatarBtn;
 let resetLocalProgressBtn;
 let growGoQrScanner = null;
@@ -463,6 +523,8 @@ settingsScreen = document.getElementById("settingsScreen");
 settingsPlayerName = document.getElementById("settingsPlayerName");
 settingsPlayerId = document.getElementById("settingsPlayerId");
 copyBackupBtn = document.getElementById("copyBackupBtn");
+restoreBackupBtn = document.getElementById("restoreBackupBtn");
+restoreBackupInput = document.getElementById("restoreBackupInput");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
 
@@ -3026,6 +3088,17 @@ function initSettingsUi() {
   if (copyBackupBtn) {
     copyBackupBtn.addEventListener("click", () => {
       copyLocalBackup();
+    });
+  }
+
+  if (restoreBackupBtn && restoreBackupInput) {
+    restoreBackupBtn.addEventListener("click", () => {
+      restoreBackupInput.click();
+    });
+
+    restoreBackupInput.addEventListener("change", () => {
+      handleRestoreBackupFile(restoreBackupInput.files && restoreBackupInput.files[0]);
+      restoreBackupInput.value = "";
     });
   }
 
