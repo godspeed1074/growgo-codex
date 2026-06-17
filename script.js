@@ -35,6 +35,7 @@ const GROWGO_PROFILE_CARD_MODE_KEY = "growgo-profile-card-mode";
 const DEFAULT_PLAYER_NAME = "rubberlips";
 const PROGRESSION_RESET_KEY = "growgo-progression-reset-version";
 const PROGRESSION_RESET_VERSION = "rubberlips-reset-1";
+const LOCAL_BACKUP_VERSION = 1;
 
 resetPlayerProgressionOnce();
 
@@ -127,6 +128,48 @@ function savePlayerState() {
     localStorage.setItem(GROWGO_PROFILE_CARD_MODE_KEY, playerState.profileCardMode || "photo");
   } catch (error) {
     console.warn("Could not save player state.", error);
+  }
+}
+
+function readStoredJson(key, fallback = null) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "null") || fallback;
+  } catch (error) {
+    console.warn(`Could not read ${key}.`, error);
+    return fallback;
+  }
+}
+
+function createLocalBackup() {
+  const publicId = getOrCreateGrowGoPlayerId();
+
+  return {
+    version: LOCAL_BACKUP_VERSION,
+    exportedAt: new Date().toISOString(),
+    player: {
+      ...playerState,
+      publicId
+    },
+    stats: readStoredJson(STATS_STORAGE_KEY, null),
+    crafting: readStoredJson(CRAFTING_STORAGE_KEY, null),
+    market: readStoredJson(MARKET_STORAGE_KEY, null),
+    pins: readStoredJson(PIN_STORAGE_KEY, []),
+    social: {
+      playersMet: readStoredJson("growgo-players-met", []),
+      friends: readStoredJson("growgo-friends", [])
+    }
+  };
+}
+
+async function copyLocalBackup() {
+  const backupText = JSON.stringify(createLocalBackup(), null, 2);
+
+  try {
+    await navigator.clipboard.writeText(backupText);
+    showToast("Backup copied", "Your local save is on the clipboard.");
+  } catch (error) {
+    console.warn("Could not copy backup.", error);
+    showToast("Backup unavailable", "Clipboard access was blocked by this browser.");
   }
 }
 
@@ -318,6 +361,7 @@ let socialPublicId;
 let settingsScreen;
 let settingsPlayerName;
 let settingsPlayerId;
+let copyBackupBtn;
 let clearAvatarBtn;
 let resetLocalProgressBtn;
 let growGoQrScanner = null;
@@ -418,6 +462,7 @@ socialPublicId = document.getElementById("socialPublicId");
 settingsScreen = document.getElementById("settingsScreen");
 settingsPlayerName = document.getElementById("settingsPlayerName");
 settingsPlayerId = document.getElementById("settingsPlayerId");
+copyBackupBtn = document.getElementById("copyBackupBtn");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
 
@@ -2978,6 +3023,12 @@ function hideSubmenus() {
 }
 
 function initSettingsUi() {
+  if (copyBackupBtn) {
+    copyBackupBtn.addEventListener("click", () => {
+      copyLocalBackup();
+    });
+  }
+
   if (clearAvatarBtn) {
     clearAvatarBtn.addEventListener("click", () => {
       playerState.avatarSrc = null;
