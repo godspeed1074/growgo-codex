@@ -173,6 +173,29 @@ async function copyLocalBackup() {
   }
 }
 
+function downloadLocalBackup() {
+  try {
+    const backup = createLocalBackup();
+    const backupText = JSON.stringify(backup, null, 2);
+    const publicId = String(backup.player.publicId || "player").toLowerCase();
+    const date = new Date().toISOString().slice(0, 10);
+    const blob = new Blob([backupText], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `growgo-${publicId}-${date}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showToast("Backup downloaded", "Save file created for this device.");
+  } catch (error) {
+    console.warn("Could not download backup.", error);
+    showToast("Backup unavailable", "This browser blocked the download.");
+  }
+}
+
 function writeStoredJson(key, value) {
   try {
     if (value === null || value === undefined) {
@@ -420,6 +443,7 @@ let settingsScreen;
 let settingsPlayerName;
 let settingsPlayerId;
 let copyBackupBtn;
+let downloadBackupBtn;
 let restoreBackupBtn;
 let restoreBackupInput;
 let clearAvatarBtn;
@@ -523,6 +547,7 @@ settingsScreen = document.getElementById("settingsScreen");
 settingsPlayerName = document.getElementById("settingsPlayerName");
 settingsPlayerId = document.getElementById("settingsPlayerId");
 copyBackupBtn = document.getElementById("copyBackupBtn");
+downloadBackupBtn = document.getElementById("downloadBackupBtn");
 restoreBackupBtn = document.getElementById("restoreBackupBtn");
 restoreBackupInput = document.getElementById("restoreBackupInput");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
@@ -3088,6 +3113,12 @@ function initSettingsUi() {
   if (copyBackupBtn) {
     copyBackupBtn.addEventListener("click", () => {
       copyLocalBackup();
+    });
+  }
+
+  if (downloadBackupBtn) {
+    downloadBackupBtn.addEventListener("click", () => {
+      downloadLocalBackup();
     });
   }
 
