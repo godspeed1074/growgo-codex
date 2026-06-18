@@ -2866,6 +2866,19 @@ body.phone-preview .menu-panel {
   text-transform: uppercase;
 }
 
+.poi-info-popup h3 {
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+}
+
+.poi-info-category {
+  margin-bottom: 10px;
+  color: #854f07;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
 .base-pin-popup-copy,
 .base-pin-popup-meta {
   font-size: 14px;

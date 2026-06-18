@@ -5965,9 +5965,7 @@ function redrawVisiblePins() {
 
       capturePin(pin);
     });
-    if (pin.type !== "poi") {
-      marker.on("add", () => bindPinLongPress(marker, pin));
-    }
+    marker.on("add", () => bindPinLongPress(marker, pin));
     marker.on("dblclick", (event) => {
       if (event?.originalEvent) {
         L.DomEvent.stopPropagation(event.originalEvent);
@@ -6124,7 +6122,7 @@ function startPinLongPress(pin) {
 
   pinLongPressTimer = setTimeout(() => {
     pinLongPressTriggered = true;
-    openBasePinLongPressPopup(activeLongPressPin);
+    openPinLongPressPopup(activeLongPressPin);
 
     setTimeout(() => {
       pinLongPressTriggered = false;
@@ -6166,9 +6164,14 @@ function bindPinLongPress(marker, pin) {
   });
 }
 
-function openBasePinLongPressPopup(pin) {
+function openPinLongPressPopup(pin) {
   clearPinLongPress();
   if (!pin) return;
+
+  if (pin.type === "poi") {
+    openPoiInfoPopup(pin);
+    return;
+  }
 
   if (pin.type === "water") {
     showToast("Water pin", "Water pins cannot be purchased yet.");
@@ -6186,6 +6189,45 @@ function openBasePinLongPressPopup(pin) {
   }
 
   showToast("Owned pin", "This base pin already belongs to another player.");
+}
+
+function openPoiInfoPopup(pin) {
+  closeBasePinPopup();
+
+  const distance = getDistanceToPinLabel(pin);
+  const capturedToday = wasCapturedToday(pin);
+  const status = capturedToday ? "Captured today" : "Ready to capture";
+  const category = pin.poiCategory || "POI";
+  const name = pin.poiName || category;
+
+  const overlay = document.createElement("div");
+  overlay.id = "basePinOverlay";
+  overlay.className = "base-pin-overlay";
+  overlay.innerHTML = `
+    <div class="base-pin-popup poi-info-popup">
+      <button class="base-pin-popup-close" type="button">×</button>
+      <h3>${escapeHtml(name)}</h3>
+      <div class="poi-info-category">${escapeHtml(category)}</div>
+      <div class="base-pin-popup-copy">
+        Standard POI · ${formatNumber(POI_PIN_VALUE)} points, ${formatNumber(POI_PIN_VALUE)} XP, +1 gold.
+      </div>
+      <div class="base-pin-popup-meta">
+        Distance: ${escapeHtml(distance)}
+      </div>
+      <div class="base-pin-popup-meta">
+        Status: ${escapeHtml(status)}
+      </div>
+      <div class="base-pin-popup-actions">
+        <button class="base-pin-secondary-btn" data-base-pin-cancel type="button">Close</button>
+        <button class="base-pin-primary-btn" data-poi-pin-go="${escapeAttribute(pin.id)}" type="button">
+          Go to POI
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click", handleBasePinPopupClick);
 }
 
 function openBasePinPurchasePopup(pin) {
@@ -6311,6 +6353,12 @@ function handleBasePinPopupClick(event) {
   const upgradeButton = event.target.closest("[data-base-pin-upgrade]");
   if (upgradeButton) {
     upgradeBasePin(upgradeButton.dataset.basePinUpgrade);
+    return;
+  }
+
+  const poiGoButton = event.target.closest("[data-poi-pin-go]");
+  if (poiGoButton) {
+    goToPoiPin(poiGoButton.dataset.poiPinGo);
   }
 }
 
