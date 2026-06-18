@@ -488,6 +488,8 @@ let restoreBackupBtn;
 let restoreBackupInput;
 let changeAvatarBtn;
 let clearAvatarBtn;
+let advanceCropsBtn;
+let readyCropsBtn;
 let resetLocalProgressBtn;
 let collectionsScreen;
 let ownedPinsCount;
@@ -601,6 +603,8 @@ restoreBackupBtn = document.getElementById("restoreBackupBtn");
 restoreBackupInput = document.getElementById("restoreBackupInput");
 changeAvatarBtn = document.getElementById("changeAvatarBtn");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
+advanceCropsBtn = document.getElementById("advanceCropsBtn");
+readyCropsBtn = document.getElementById("readyCropsBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
 collectionsScreen = document.getElementById("collectionsScreen");
 ownedPinsCount = document.getElementById("ownedPinsCount");
@@ -3448,6 +3452,18 @@ function initSettingsUi() {
     });
   }
 
+  if (advanceCropsBtn) {
+    advanceCropsBtn.addEventListener("click", () => {
+      advanceOwnedCropTestStage(false);
+    });
+  }
+
+  if (readyCropsBtn) {
+    readyCropsBtn.addEventListener("click", () => {
+      advanceOwnedCropTestStage(true);
+    });
+  }
+
   if (resetLocalProgressBtn) {
     resetLocalProgressBtn.addEventListener("click", () => {
       if (!window.confirm("Reset local progress on this device?")) return;
@@ -3503,6 +3519,41 @@ function renderSettingsToggle(button, enabled) {
   if (stateLabel) {
     stateLabel.textContent = enabled ? "On" : "Off";
   }
+}
+
+function advanceOwnedCropTestStage(makeReady = false) {
+  const plantedPins = getOwnedPinsForActivePlayer().filter((pin) => pin.plant?.plantedAt);
+
+  if (!plantedPins.length) {
+    showToast("Farming test", "No planted owned pins to advance.");
+    return;
+  }
+
+  const now = getTrustedNow();
+  const stageMs = PIN_PLANT_STAGE_HOURS * 60 * 60 * 1000;
+
+  plantedPins.forEach((pin) => {
+    const currentStage = getPinPlantStage(pin);
+    const nextStage = makeReady ? 4 : Math.min(4, currentStage + 1);
+    const stageAge = nextStage >= 4 ? stageMs * 3 : stageMs * (nextStage - 1);
+
+    pin.plant.plantedAt = now - stageAge - (60 * 1000);
+
+    if (nextStage >= 4 && pin.plant.harvestedByDay) {
+      delete pin.plant.harvestedByDay[getActivePlayerId()];
+    }
+  });
+
+  scheduleSavePinsToLocal();
+  clearPinIconCache();
+  scheduleRedrawPins();
+  renderCollections();
+  showToast(
+    "Farming test",
+    makeReady
+      ? `${plantedPins.length} crop${plantedPins.length === 1 ? "" : "s"} ready to harvest.`
+      : `${plantedPins.length} crop${plantedPins.length === 1 ? "" : "s"} advanced.`
+  );
 }
 
 function triggerMilestoneFeedback(pattern = [35, 45, 55]) {
