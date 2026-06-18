@@ -5106,6 +5106,7 @@ function buildOverpassQuery(boundsObj) {
 (
   way["highway"~"^(${highwayRegex})$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["natural"="water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["natural"="coastline"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["waterway"~"^(river|stream|canal)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["landuse"~"^(reservoir|basin)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
@@ -5156,6 +5157,7 @@ function extractMapFeaturesFromOverpass(data) {
 function isWaterFeature(tags) {
   return (
     tags.natural === "water" ||
+    tags.natural === "coastline" ||
     Boolean(tags.water) ||
     ["river", "stream", "canal"].includes(tags.waterway) ||
     ["reservoir", "basin"].includes(tags.landuse)
