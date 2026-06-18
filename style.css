@@ -1296,9 +1296,9 @@ body.phone-preview .menu-overlay {
 }
 
 .base-pin-marker:not(.water-pin-marker) img {
-  width: 32px !important;
-  height: 42px !important;
-  margin: 42px 0 0 16px;
+  width: 38px !important;
+  height: 50px !important;
+  margin: 34px 0 0 13px;
 }
 
 .base-pin-number {
@@ -1317,10 +1317,17 @@ body.phone-preview .menu-overlay {
   pointer-events: none;
 }
 
+.base-pin-marker:not(.water-pin-marker) .base-pin-number {
+  top: 67%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  -webkit-text-stroke-width: 0.7px;
+}
+
 .water-pin-marker img {
-  width: 32px !important;
-  height: 42px !important;
-  margin: 42px 0 0 16px;
+  width: 38px !important;
+  height: 50px !important;
+  margin: 34px 0 0 13px;
   filter:
     saturate(1.35)
     hue-rotate(8deg)
