@@ -1397,6 +1397,58 @@ body.phone-preview .menu-overlay {
   top: 9px;
 }
 
+.poi-pin-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.poi-pin-marker {
+  position: relative;
+  width: 42px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 1000;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.42);
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.35));
+}
+
+.poi-pin-marker::before {
+  content: "";
+  position: absolute;
+  inset: 0 3px 8px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255,255,255,0.75), rgba(255,255,255,0) 32%),
+    linear-gradient(#ffd96a, #c8790b);
+  border: 3px solid #fff7ca;
+  box-shadow:
+    inset 0 -4px 8px rgba(83,44,0,0.34),
+    0 0 0 2px rgba(95,57,8,0.34);
+}
+
+.poi-pin-marker::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 18px;
+  height: 18px;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 0 0 4px 0;
+  background: linear-gradient(135deg, #c8790b, #7d4807);
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.22);
+  z-index: -1;
+}
+
+.poi-pin-marker span {
+  position: relative;
+  z-index: 1;
+}
+
 .water-pin-fish-blue {
   background: linear-gradient(#e7fbff, #38a8ff);
 }
@@ -5437,6 +5489,11 @@ body.phone-preview .recipe-panel,
   box-shadow:
     0 7px 15px rgba(0,0,0,0.36),
     inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.settings-btn:disabled {
+  opacity: 0.68;
+  filter: grayscale(0.3);
 }
 
 .settings-toggle {

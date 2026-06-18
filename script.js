@@ -15,6 +15,7 @@ const WATER_PIN_FISH_LIFETIME_MS = 4 * 60 * 60 * 1000;
 const POINTS_GROWTH_HOURS = 168;
 const CAPTURE_RADIUS_METERS = 100;
 const WATER_PIN_DISTANCE_METERS = 50;
+const POI_SCAN_RADIUS_METERS = 5000;
 const BASE_PIN_PURCHASE_COST = 100;
 const PIN_OWNER_CAPTURE_REWARD = 5;
 const PIN_LONG_PRESS_MS = 500;
@@ -41,6 +42,7 @@ const WATER_PIN_FISH_TYPES = {
 const PIN_SPACING_METERS = 46;
 const MIN_PIN_SEPARATION_METERS = 46;
 const MAX_VISIBLE_PINS = 500;
+const MAX_POIS_PER_SCAN = 250;
 
 const MIN_FETCH_ZOOM = 15;
 const PIN_FETCH_DEBOUNCE_MS = 450;
@@ -513,6 +515,7 @@ let restoreBackupBtn;
 let restoreBackupInput;
 let changeAvatarBtn;
 let clearAvatarBtn;
+let scanPoiBtn;
 let advanceCropsBtn;
 let readyCropsBtn;
 let resetLocalProgressBtn;
@@ -628,6 +631,7 @@ restoreBackupBtn = document.getElementById("restoreBackupBtn");
 restoreBackupInput = document.getElementById("restoreBackupInput");
 changeAvatarBtn = document.getElementById("changeAvatarBtn");
 clearAvatarBtn = document.getElementById("clearAvatarBtn");
+scanPoiBtn = document.getElementById("scanPoiBtn");
 advanceCropsBtn = document.getElementById("advanceCropsBtn");
 readyCropsBtn = document.getElementById("readyCropsBtn");
 resetLocalProgressBtn = document.getElementById("resetLocalProgressBtn");
@@ -3504,6 +3508,12 @@ function initSettingsUi() {
     });
   }
 
+  if (scanPoiBtn) {
+    scanPoiBtn.addEventListener("click", () => {
+      scanNearbyPois();
+    });
+  }
+
   if (advanceCropsBtn) {
     advanceCropsBtn.addEventListener("click", () => {
       advanceOwnedCropTestStage(false);
@@ -3571,6 +3581,128 @@ function renderSettingsToggle(button, enabled) {
   if (stateLabel) {
     stateLabel.textContent = enabled ? "On" : "Off";
   }
+}
+
+async function scanNearbyPois() {
+  if (!playerLatLng) {
+    showToast("POI scan", "Player location not ready yet.");
+    return;
+  }
+
+  if (scanPoiBtn) {
+    scanPoiBtn.disabled = true;
+    scanPoiBtn.textContent = "Scanning POIs...";
+  }
+
+  try {
+    const response = await fetch(OVERPASS_API_URL, {
+      method: "POST",
+      body: buildPoiOverpassQuery(playerLatLng.lat, playerLatLng.lng)
+    });
+
+    if (!response.ok) {
+      throw new Error(`POI scan failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const pois = extractPoisFromOverpass(data);
+    let added = 0;
+
+    pois.slice(0, MAX_POIS_PER_SCAN).forEach((poi) => {
+      if (pinStore.has(poi.id)) return;
+      pinStore.set(poi.id, poi);
+      added += 1;
+    });
+
+    if (added > 0) {
+      scheduleSavePinsToLocal();
+      clearPinIconCache();
+      scheduleRedrawPins();
+    }
+
+    showToast(
+      "POI scan complete",
+      added > 0
+        ? `${added} new POI${added === 1 ? "" : "s"} added locally.`
+        : "No new POIs found nearby."
+    );
+  } catch (error) {
+    console.warn("POI scan failed:", error);
+    showToast("POI scan failed", "OpenStreetMap did not respond. Try again soon.");
+  } finally {
+    if (scanPoiBtn) {
+      scanPoiBtn.disabled = false;
+      scanPoiBtn.textContent = "Scan nearby POIs";
+    }
+  }
+}
+
+function buildPoiOverpassQuery(lat, lng) {
+  return `
+[out:json][timeout:35];
+(
+  nwr["amenity"="place_of_worship"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+  nwr["amenity"="hospital"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+  nwr["historic"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+  nwr["tourism"~"^(attraction|museum|gallery|viewpoint|artwork|information)$"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+  nwr["leisure"~"^(park|garden|nature_reserve)$"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+  nwr["boundary"="national_park"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+  nwr["man_made"~"^(lighthouse|tower|water_tower|obelisk)$"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
+);
+out center tags ${MAX_POIS_PER_SCAN};
+`;
+}
+
+function extractPoisFromOverpass(data) {
+  const elements = Array.isArray(data?.elements) ? data.elements : [];
+  const seen = new Set();
+  const pois = [];
+
+  elements.forEach((el) => {
+    const tags = el.tags || {};
+    const category = getPoiCategory(tags);
+    const lat = typeof el.lat === "number" ? el.lat : el.center?.lat;
+    const lng = typeof el.lon === "number" ? el.lon : el.center?.lon;
+
+    if (!category || typeof lat !== "number" || typeof lng !== "number") return;
+
+    const id = `poi:osm:${el.type}:${el.id}`;
+    if (seen.has(id)) return;
+
+    seen.add(id);
+    pois.push({
+      id,
+      type: "poi",
+      lat,
+      lng,
+      poiCategory: category,
+      poiName: getPoiName(tags, category),
+      osmType: el.type,
+      osmId: el.id,
+      discoveredBy: getActivePlayerId(),
+      discoveredAt: getTrustedNow()
+    });
+  });
+
+  return pois;
+}
+
+function getPoiCategory(tags) {
+  if (tags.amenity === "hospital") return "Hospital";
+  if (tags.amenity === "place_of_worship") return "Church";
+  if (tags.historic) return "Historic";
+  if (tags.leisure === "park" || tags.leisure === "garden" || tags.leisure === "nature_reserve" || tags.boundary === "national_park") {
+    return "Park";
+  }
+  if (tags.man_made === "lighthouse" || tags.man_made === "tower" || tags.man_made === "water_tower" || tags.man_made === "obelisk") {
+    return "Landmark";
+  }
+  if (tags.tourism) return "Local POI";
+  return "";
+}
+
+function getPoiName(tags, category) {
+  return tags.name || tags["name:en"] || category || "Point of Interest";
 }
 
 function advanceOwnedCropTestStage(makeReady = false) {
@@ -5378,6 +5510,8 @@ function rebuildSpatialBuckets() {
 }
 
 function addPinToSpatialBuckets(pin) {
+  if (pin?.type === "poi") return;
+
   const key = getBucketKey(pin.lat, pin.lng);
 
   if (!pinSpatialBuckets.has(key)) {
@@ -5476,7 +5610,7 @@ function redrawVisiblePins() {
 
   selectedPins.forEach((pin) => {
     const iconState = getPinIconState(pin);
-    const zIndex = iconState.glowing ? 1500 : 1000;
+    const zIndex = iconState.type === "poi" ? 1300 : iconState.glowing ? 1500 : 1000;
     const existingMarker = renderedPinMarkers.get(pin.id);
 
     if (existingMarker) {
@@ -5502,6 +5636,11 @@ function redrawVisiblePins() {
     marker._growgoZIndex = zIndex;
 
     marker.on("click", () => {
+      if (pin.type === "poi") {
+        showPoiToast(pin);
+        return;
+      }
+
       if (pinLongPressTriggered) {
         pinLongPressTriggered = false;
         return;
@@ -5509,7 +5648,9 @@ function redrawVisiblePins() {
 
       capturePin(pin);
     });
-    marker.on("add", () => bindPinLongPress(marker, pin));
+    if (pin.type !== "poi") {
+      marker.on("add", () => bindPinLongPress(marker, pin));
+    }
     marker.on("dblclick", (event) => {
       if (event?.originalEvent) {
         L.DomEvent.stopPropagation(event.originalEvent);
@@ -5522,14 +5663,14 @@ function redrawVisiblePins() {
 }
 
 function getPinIconState(pin) {
-  const points = getPinPoints(pin);
+  const type = pin.type || "base";
+  const points = type === "poi" ? 0 : getPinPoints(pin);
   const capturedToday = wasCapturedToday(pin);
   const glowing = shouldPinGlow(pin, capturedToday);
   const ownerId = pin.ownerId || "";
   const plantStage = getPinPlantStage(pin);
   const plantSeedId = pin.plant?.seedId || "";
   const plantHarvestedKey = pin.plant?.harvestedByDay?.[getActivePlayerId()] || "";
-  const type = pin.type || "base";
   const activeFish = getActiveWaterPinFish(pin);
   const fishType = activeFish?.type || "";
 
@@ -5543,7 +5684,7 @@ function getPinIconState(pin) {
     ownedByActivePlayer: ownerId === getActivePlayerId(),
     plantStage,
     plantSeedId,
-    key: `${type}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
+    key: `${type}|${pin.poiCategory || ""}|${pin.poiName || ""}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
   };
 }
 
@@ -5553,6 +5694,10 @@ function buildPinIcon(pin, state = null) {
 
   if (pinIconCache.has(cacheKey)) {
     return pinIconCache.get(cacheKey);
+  }
+
+  if (iconState.type === "poi") {
+    return buildPoiIcon(pin, cacheKey);
   }
 
   const glowClass = iconState.glowing ? "pin-ready-glow" : "";
@@ -5604,6 +5749,38 @@ function buildPinIcon(pin, state = null) {
 
   pinIconCache.set(cacheKey, icon);
   return icon;
+}
+
+function buildPoiIcon(pin, cacheKey) {
+  const category = pin.poiCategory || "POI";
+  const html = `
+    <div class="poi-pin-marker" aria-label="${escapeAttribute(pin.poiName || category)}">
+      <span>${escapeHtml(getPoiIconLabel(category))}</span>
+    </div>
+  `;
+
+  const icon = L.divIcon({
+    className: "poi-pin-icon",
+    html,
+    iconSize: [42, 52],
+    iconAnchor: [21, 52]
+  });
+
+  pinIconCache.set(cacheKey, icon);
+  return icon;
+}
+
+function getPoiIconLabel(category) {
+  if (category === "Church") return "C";
+  if (category === "Hospital") return "H";
+  if (category === "Historic") return "H";
+  if (category === "Park") return "P";
+  if (category === "Landmark") return "L";
+  return "I";
+}
+
+function showPoiToast(pin) {
+  showToast(pin.poiName || "Point of Interest", `${pin.poiCategory || "POI"} - capture rules coming later.`);
 }
 
 function clearPinIconCache() {
@@ -6289,7 +6466,13 @@ function loadPinsFromLocal() {
           replantEnabled: Boolean(pin.replantEnabled),
           ownerPendingPoints: Number(pin.ownerPendingPoints || 0),
           plant: pin.plant || null,
-          fish: pin.fish || null
+          fish: pin.fish || null,
+          poiCategory: pin.poiCategory || null,
+          poiName: pin.poiName || null,
+          osmType: pin.osmType || null,
+          osmId: pin.osmId || null,
+          discoveredBy: pin.discoveredBy || null,
+          discoveredAt: pin.discoveredAt || null
         });
       }
     });
