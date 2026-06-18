@@ -3597,7 +3597,12 @@ async function scanNearbyPois() {
   try {
     const response = await fetch(OVERPASS_API_URL, {
       method: "POST",
-      body: buildPoiOverpassQuery(playerLatLng.lat, playerLatLng.lng)
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
+      body: new URLSearchParams({
+        data: buildPoiOverpassQuery(playerLatLng.lat, playerLatLng.lng)
+      })
     });
 
     if (!response.ok) {
@@ -3649,7 +3654,7 @@ function buildPoiOverpassQuery(lat, lng) {
   nwr["boundary"="national_park"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
   nwr["man_made"~"^(lighthouse|tower|water_tower|obelisk)$"](around:${POI_SCAN_RADIUS_METERS},${lat},${lng});
 );
-out center tags ${MAX_POIS_PER_SCAN};
+out tags center ${MAX_POIS_PER_SCAN};
 `;
 }
 
