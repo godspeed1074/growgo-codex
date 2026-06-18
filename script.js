@@ -8,13 +8,15 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
-const POI_PIN_VALUE = 25;
+const POI_PIN_VALUE = 100;
+const POI_COIN_REWARD = 100;
 const WATER_PIN_RESOURCE_DROP_CHANCE = 0.25;
 const WATER_PIN_BLUE_FISH_CHANCE = 1 / 250;
 const WATER_PIN_SALMON_CHANCE = 1 / 1000;
 const WATER_PIN_FISH_LIFETIME_MS = 4 * 60 * 60 * 1000;
 const POINTS_GROWTH_HOURS = 168;
 const CAPTURE_RADIUS_METERS = 100;
+const POI_CAPTURE_RADIUS_METERS = 304.8;
 const WATER_PIN_DISTANCE_METERS = 50;
 const POI_SCAN_RADIUS_METERS = 5000;
 const BASE_PIN_PURCHASE_COST = 100;
@@ -47,12 +49,74 @@ const MAX_POIS_PER_SCAN = 250;
 
 const POI_CAPTURE_STAT_BY_CATEGORY = {
   Church: "poiChurchCaptures",
+  Churches: "poiChurchCaptures",
   Hospital: "poiHospitalCaptures",
+  Hospitals: "poiHospitalCaptures",
   Historic: "poiHistoricCaptures",
   Park: "poiParkCaptures",
+  Parks: "poiParkCaptures",
   Landmark: "poiLandmarkCaptures",
+  Landmarks: "poiLandmarkCaptures",
   "Local POI": "poiLocalCaptures"
 };
+
+const MOCK_POIS = [
+  {
+    id: "poi:mock:local-church",
+    name: "Local Church",
+    category: "Places",
+    subcategory: "Churches",
+    rarity: "normal",
+    icon: "church",
+    lat: -38.45295,
+    lng: 145.23835,
+    description: "A quiet local church added for POI testing."
+  },
+  {
+    id: "poi:mock:community-park",
+    name: "Community Park",
+    category: "Places",
+    subcategory: "Parks",
+    rarity: "normal",
+    icon: "park",
+    lat: -38.45435,
+    lng: 145.23755,
+    description: "A small green park for testing POI collections."
+  },
+  {
+    id: "poi:mock:waterfall",
+    name: "Waterfall",
+    category: "Places",
+    subcategory: "Waterfalls",
+    rarity: "normal",
+    icon: "waterfall",
+    lat: -38.45345,
+    lng: 145.23925,
+    description: "A waterfall-style test POI."
+  },
+  {
+    id: "poi:mock:dinosaur-fossil-site",
+    name: "Dinosaur Fossil Site",
+    category: "Dinosaur Sites",
+    subcategory: "Fossil Digs",
+    rarity: "special",
+    icon: "dinosaur",
+    lat: -38.45485,
+    lng: 145.2389,
+    description: "A rare fossil dig location for testing special POIs."
+  },
+  {
+    id: "poi:mock:famous-film-location",
+    name: "Famous Film Location",
+    category: "Film Locations",
+    subcategory: "Iconic Scenes",
+    rarity: "special",
+    icon: "film",
+    lat: -38.45245,
+    lng: 145.23775,
+    description: "A special film-location POI used for testing."
+  }
+];
 
 const MIN_FETCH_ZOOM = 15;
 const PIN_FETCH_DEBOUNCE_MS = 450;
@@ -63,6 +127,7 @@ const OVERPASS_API_URL = "https://overpass-api.de/api/interpreter";
 const TRUSTED_TIME_URL = "https://www.timeapi.io/api/Time/current/zone?timeZone=UTC";
 
 const PIN_STORAGE_KEY = "growgo-pins";
+const CAPTURED_POIS_STORAGE_KEY = "growgo-captured-pois";
 const SERVER_STARTED_AT_KEY = "growgo-server-started-at";
 const AVATAR_STORAGE_KEY = "growgo-avatar";
 const STATS_STORAGE_KEY = "growgo-stats";
@@ -89,6 +154,7 @@ function resetPlayerProgressionOnce() {
 
     [
       PIN_STORAGE_KEY,
+      CAPTURED_POIS_STORAGE_KEY,
       SERVER_STARTED_AT_KEY,
       AVATAR_STORAGE_KEY,
       STATS_STORAGE_KEY,
@@ -446,6 +512,7 @@ let captureRing;
 let playerLatLng = null;
 
 let pinStore = new Map();
+let capturedPOIs = new Map();
 let renderedPinMarkers = new Map();
 let pinSpatialBuckets = new Map();
 let fetchedViewportKeys = new Set();
@@ -577,10 +644,12 @@ const pinIconCache = new Map();
 
 document.addEventListener("DOMContentLoaded", async () => {
   loadPinsFromLocal();
+  loadPOIs();
   rebuildSpatialBuckets();
 
   cacheDom();
   initMap();
+  renderPOIs();
   initBasicUi();
   initAvatarUpload();
   initStatsUi();
@@ -3513,9 +3582,95 @@ function renderAchievementCard(achievement) {
   `;
 }
 
+function loadPOIs() {
+  capturedPOIs = loadCapturedPOIs();
+
+  pinStore.forEach((pin, id) => {
+    if (pin.type === "poi") {
+      pinStore.set(id, normalizePOI(pin));
+    }
+  });
+
+  MOCK_POIS.forEach((poi) => {
+    if (!pinStore.has(poi.id)) {
+      addPOIToMap(poi);
+    }
+  });
+}
+
+function addPOIToMap(poi) {
+  const normalized = normalizePOI({
+    ...poi,
+    type: "poi",
+    discoveredBy: poi.discoveredBy || getActivePlayerId(),
+    discoveredAt: poi.discoveredAt || getTrustedNow()
+  });
+
+  pinStore.set(normalized.id, normalized);
+}
+
+function normalizePOI(poi) {
+  const captured = capturedPOIs.get(poi.id) || null;
+  const category = poi.category || getPoiCollectionCategory(poi.poiCategory || poi.subcategory || "Places");
+  const subcategory = poi.subcategory || poi.poiCategory || "Local POI";
+  const name = poi.name || poi.poiName || subcategory;
+
+  return {
+    ...poi,
+    id: poi.id,
+    type: "poi",
+    name,
+    category,
+    subcategory,
+    rarity: poi.rarity === "special" ? "special" : "normal",
+    icon: poi.icon || getPoiIconKey(subcategory),
+    lat: poi.lat,
+    lng: poi.lng,
+    description: poi.description || `${subcategory} discovered in the world.`,
+    captured: Boolean(captured || poi.captured),
+    capturedAt: captured?.capturedAt || poi.capturedAt || null,
+    poiName: name,
+    poiCategory: subcategory
+  };
+}
+
+function getPoiCollectionCategory(subcategory) {
+  if (subcategory === "Church" || subcategory === "Churches") return "Places";
+  if (subcategory === "Park" || subcategory === "Parks") return "Places";
+  if (subcategory === "Beach" || subcategory === "Beaches") return "Places";
+  if (subcategory === "Waterfall" || subcategory === "Waterfalls") return "Places";
+  if (subcategory === "Landmark" || subcategory === "Landmarks") return "Places";
+  if (subcategory === "Historic") return "Tourist Attractions";
+  if (subcategory === "Hospital") return "Places";
+  return "Tourist Attractions";
+}
+
+function getPoiIconKey(subcategory) {
+  const key = String(subcategory || "").toLowerCase();
+  if (key.includes("church")) return "church";
+  if (key.includes("park")) return "park";
+  if (key.includes("beach")) return "beach";
+  if (key.includes("waterfall")) return "waterfall";
+  if (key.includes("dinosaur") || key.includes("fossil")) return "dinosaur";
+  if (key.includes("film")) return "film";
+  if (key.includes("music")) return "music";
+  if (key.includes("landmark")) return "landmark";
+  return "landmark";
+}
+
+function renderPOIs() {
+  clearPinIconCache();
+  scheduleRedrawPins();
+  renderPOICollections();
+}
+
+function renderPOICollections() {
+  renderPoiPinsCollection();
+}
+
 function renderCollections() {
   renderOwnedPinsCollection();
-  renderPoiPinsCollection();
+  renderPOICollections();
 }
 
 function renderOwnedPinsCollection() {
@@ -3614,7 +3769,8 @@ function renderPoiPinsCollection() {
       return String(a.poiName || "").localeCompare(String(b.poiName || ""));
     });
 
-  poiPinsCount.textContent = `${formatNumber(poiPins.length)} found`;
+  const capturedCount = poiPins.filter((pin) => pin.captured).length;
+  poiPinsCount.textContent = `${formatNumber(capturedCount)} / ${formatNumber(poiPins.length)} collected`;
 
   if (!poiPins.length) {
     poiPinsList.innerHTML = `
@@ -3630,22 +3786,22 @@ function renderPoiPinsCollection() {
 
 function renderPoiPinCard(pin) {
   const distance = getDistanceToPinLabel(pin);
-  const capturedToday = wasCapturedToday(pin);
-  const captureStatus = capturedToday ? "Captured today" : "Ready";
-  const category = pin.poiCategory || "POI";
-  const name = pin.poiName || category;
+  const captureStatus = pin.captured ? "Collected" : "Ready";
+  const category = pin.category || "Places";
+  const subcategory = pin.subcategory || pin.poiCategory || "POI";
+  const name = pin.name || pin.poiName || subcategory;
   const discoveredDate = pin.discoveredAt ? getDisplayDate(pin.discoveredAt) : "Unknown";
 
   return `
     <div class="poi-pin-card" data-poi-pin-id="${escapeAttribute(pin.id)}">
-      <div class="poi-pin-badge">${escapeHtml(getPoiIconLabel(category))}</div>
+      <div class="poi-pin-badge ${escapeAttribute(pin.rarity || "normal")}">${escapeHtml(getPoiIconText(pin.icon))}</div>
       <div class="poi-pin-info">
         <div class="poi-pin-topline">
           <h4>${escapeHtml(name)}</h4>
-          <span class="${capturedToday ? "captured" : "ready"}">${escapeHtml(captureStatus)}</span>
+          <span class="${pin.captured ? "captured" : "ready"}">${escapeHtml(captureStatus)}</span>
         </div>
         <div class="poi-pin-meta">
-          ${escapeHtml(category)} · ${escapeHtml(distance)} · Found ${escapeHtml(discoveredDate)}
+          ${escapeHtml(category)} · ${escapeHtml(subcategory)} · ${escapeHtml(distance)} · Found ${escapeHtml(discoveredDate)}
         </div>
         <button data-poi-pin-go="${escapeAttribute(pin.id)}" type="button">Go to POI</button>
       </div>
@@ -3913,7 +4069,7 @@ async function scanNearbyPois() {
 
     pois.slice(0, MAX_POIS_PER_SCAN).forEach((poi) => {
       if (pinStore.has(poi.id)) return;
-      pinStore.set(poi.id, poi);
+      addPOIToMap(poi);
       added += 1;
     });
 
@@ -3978,8 +4134,16 @@ function extractPoisFromOverpass(data) {
     pois.push({
       id,
       type: "poi",
+      name: getPoiName(tags, category),
+      category: getPoiCollectionCategory(category),
+      subcategory: category,
+      rarity: "normal",
+      icon: getPoiIconKey(category),
       lat,
       lng,
+      description: `${category} from OpenStreetMap.`,
+      captured: false,
+      capturedAt: null,
       poiCategory: category,
       poiName: getPoiName(tags, category),
       osmType: el.type,
@@ -4064,6 +4228,7 @@ function resetLocalProgress() {
   try {
     [
       PIN_STORAGE_KEY,
+      CAPTURED_POIS_STORAGE_KEY,
       SERVER_STARTED_AT_KEY,
       AVATAR_STORAGE_KEY,
       STATS_STORAGE_KEY,
@@ -5980,7 +6145,7 @@ function redrawVisiblePins() {
 function getPinIconState(pin) {
   const type = pin.type || "base";
   const points = getPinPoints(pin);
-  const capturedToday = wasCapturedToday(pin);
+  const capturedToday = type === "poi" ? Boolean(pin.captured) : wasCapturedToday(pin);
   const glowing = shouldPinGlow(pin, capturedToday);
   const ownerId = pin.ownerId || "";
   const plantStage = getPinPlantStage(pin);
@@ -5999,7 +6164,7 @@ function getPinIconState(pin) {
     ownedByActivePlayer: ownerId === getActivePlayerId(),
     plantStage,
     plantSeedId,
-    key: `${type}|${pin.poiCategory || ""}|${pin.poiName || ""}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
+    key: `${type}|${pin.category || ""}|${pin.subcategory || ""}|${pin.rarity || ""}|${pin.icon || ""}|${pin.poiCategory || ""}|${pin.poiName || ""}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
   };
 }
 
@@ -6067,19 +6232,21 @@ function buildPinIcon(pin, state = null) {
 }
 
 function buildPoiIcon(pin, cacheKey) {
-  const category = pin.poiCategory || "POI";
-  const capturedClass = wasCapturedToday(pin) ? "poi-captured-today" : "";
+  const category = pin.subcategory || pin.poiCategory || "POI";
+  const capturedClass = pin.captured ? "poi-captured" : "";
+  const rarityClass = pin.rarity === "special" ? "special" : "normal";
+  const artClass = `poi-art-${escapeAttribute(pin.icon || getPoiIconKey(category))}`;
   const html = `
-    <div class="poi-pin-marker ${capturedClass}" aria-label="${escapeAttribute(pin.poiName || category)}">
-      <span>${escapeHtml(getPoiIconLabel(category))}</span>
+    <div class="poi-pin-marker ${rarityClass} ${capturedClass}" aria-label="${escapeAttribute(pin.name || pin.poiName || category)}">
+      <span class="poi-art ${artClass}">${escapeHtml(getPoiIconText(pin.icon || category))}</span>
     </div>
   `;
 
   const icon = L.divIcon({
     className: "poi-pin-icon",
     html,
-    iconSize: [42, 52],
-    iconAnchor: [21, 52]
+    iconSize: [38, 50],
+    iconAnchor: [19, 50]
   });
 
   pinIconCache.set(cacheKey, icon);
@@ -6087,12 +6254,20 @@ function buildPoiIcon(pin, cacheKey) {
 }
 
 function getPoiIconLabel(category) {
-  if (category === "Church") return "C";
-  if (category === "Hospital") return "H";
-  if (category === "Historic") return "H";
-  if (category === "Park") return "P";
-  if (category === "Landmark") return "L";
-  return "I";
+  return getPoiIconText(category);
+}
+
+function getPoiIconText(icon) {
+  const key = String(icon || "").toLowerCase();
+  if (key.includes("church")) return "⛪";
+  if (key.includes("park")) return "🌳";
+  if (key.includes("beach")) return "◒";
+  if (key.includes("waterfall")) return "▥";
+  if (key.includes("dinosaur") || key.includes("fossil")) return "◆";
+  if (key.includes("film")) return "▶";
+  if (key.includes("music")) return "♪";
+  if (key.includes("hospital")) return "+";
+  return "★";
 }
 
 function clearPinIconCache() {
@@ -6110,8 +6285,9 @@ function shouldPinGlow(pin, capturedToday = null) {
 
   if (alreadyCaptured) return false;
 
+  const captureRadius = pin?.type === "poi" ? POI_CAPTURE_RADIUS_METERS : CAPTURE_RADIUS_METERS;
   const isInCaptureRing =
-    playerLatLng.distanceTo([pin.lat, pin.lng]) <= CAPTURE_RADIUS_METERS;
+    playerLatLng.distanceTo([pin.lat, pin.lng]) <= captureRadius;
 
   return isInCaptureRing;
 }
@@ -6195,10 +6371,11 @@ function openPoiInfoPopup(pin) {
   closeBasePinPopup();
 
   const distance = getDistanceToPinLabel(pin);
-  const capturedToday = wasCapturedToday(pin);
-  const status = capturedToday ? "Captured today" : "Ready to capture";
-  const category = pin.poiCategory || "POI";
-  const name = pin.poiName || category;
+  const status = pin.captured ? "Collected" : "Ready to capture";
+  const category = pin.category || "Places";
+  const subcategory = pin.subcategory || pin.poiCategory || "POI";
+  const name = pin.name || pin.poiName || subcategory;
+  const rarityLabel = pin.rarity === "special" ? "Special POI" : "Normal POI";
 
   const overlay = document.createElement("div");
   overlay.id = "basePinOverlay";
@@ -6207,9 +6384,12 @@ function openPoiInfoPopup(pin) {
     <div class="base-pin-popup poi-info-popup">
       <button class="base-pin-popup-close" type="button">×</button>
       <h3>${escapeHtml(name)}</h3>
-      <div class="poi-info-category">${escapeHtml(category)}</div>
+      <div class="poi-info-category">${escapeHtml(rarityLabel)} · ${escapeHtml(category)} · ${escapeHtml(subcategory)}</div>
       <div class="base-pin-popup-copy">
-        Standard POI · ${formatNumber(POI_PIN_VALUE)} points, ${formatNumber(POI_PIN_VALUE)} XP, +1 gold.
+        ${escapeHtml(pin.description || "A real-world point of interest.")}
+      </div>
+      <div class="base-pin-popup-meta">
+        Reward: ${formatNumber(POI_PIN_VALUE)} points, ${formatNumber(POI_PIN_VALUE)} XP, ${formatNumber(POI_COIN_REWARD)} coins
       </div>
       <div class="base-pin-popup-meta">
         Distance: ${escapeHtml(distance)}
@@ -6511,6 +6691,11 @@ function getActivePlayerId() {
 /* ----------------------------- */
 
 function capturePin(pin) {
+  if (pin?.type === "poi") {
+    capturePOI(pin);
+    return;
+  }
+
   if (!playerLatLng) {
     showToast("Capture", "Player location not ready yet.");
     return;
@@ -6555,6 +6740,41 @@ function capturePin(pin) {
   scheduleRedrawPins();
 }
 
+function capturePOI(pin) {
+  if (!playerLatLng) {
+    showToast("POI", "Player location not ready yet.");
+    return;
+  }
+
+  const trustedNow = getTrustedNow();
+  const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
+
+  if (distance > POI_CAPTURE_RADIUS_METERS) {
+    showToast("Too far away", `${Math.round(distance)}m away.`);
+    return;
+  }
+
+  if (capturedPOIs.has(pin.id) || pin.captured) {
+    showToast("POI collected", "This point of interest is already in your collection.");
+    return;
+  }
+
+  pin.captured = true;
+  pin.capturedAt = trustedNow;
+
+  saveCapturedPOI(pin);
+  addStat("captures", 1);
+  recordPoiCaptureStats(pin);
+  addStat("score", POI_PIN_VALUE);
+  addStat("goldEarned", POI_COIN_REWARD);
+  addPlayerXp(POI_PIN_VALUE);
+  addMarketCoins(POI_COIN_REWARD);
+
+  scheduleSavePinsToLocal();
+  renderPOIs();
+  showToast("POI captured", `+${POI_PIN_VALUE} points, +${POI_PIN_VALUE} XP, +${POI_COIN_REWARD} coins.`);
+}
+
 function getPinTypeLabel(pin) {
   if (pin?.type === "poi") {
     return pin.poiCategory ? `${pin.poiCategory.toLowerCase()} POI` : "POI";
@@ -6569,7 +6789,7 @@ function recordPoiCaptureStats(pin) {
 
   addStat("poiCaptures", 1);
 
-  const categoryStat = POI_CAPTURE_STAT_BY_CATEGORY[pin.poiCategory || ""];
+  const categoryStat = POI_CAPTURE_STAT_BY_CATEGORY[pin.subcategory || pin.poiCategory || ""];
   if (categoryStat) {
     addStat(categoryStat, 1);
   }
@@ -6821,6 +7041,47 @@ function savePinsToLocal() {
   }
 }
 
+function loadCapturedPOIs() {
+  try {
+    const raw = localStorage.getItem(CAPTURED_POIS_STORAGE_KEY);
+    if (!raw) return new Map();
+
+    const data = JSON.parse(raw);
+    if (!Array.isArray(data)) return new Map();
+
+    return new Map(data
+      .filter((poi) => poi && typeof poi.id === "string")
+      .map((poi) => [poi.id, poi]));
+  } catch (error) {
+    console.warn("Could not load captured POIs.", error);
+    return new Map();
+  }
+}
+
+function saveCapturedPOI(pin) {
+  const capturedPOI = {
+    id: pin.id,
+    name: pin.name || pin.poiName || "POI",
+    category: pin.category || "Places",
+    subcategory: pin.subcategory || pin.poiCategory || "POI",
+    rarity: pin.rarity === "special" ? "special" : "normal",
+    icon: pin.icon || getPoiIconKey(pin.subcategory || pin.poiCategory),
+    lat: pin.lat,
+    lng: pin.lng,
+    description: pin.description || "",
+    captured: true,
+    capturedAt: pin.capturedAt || getTrustedNow()
+  };
+
+  capturedPOIs.set(pin.id, capturedPOI);
+
+  try {
+    localStorage.setItem(CAPTURED_POIS_STORAGE_KEY, JSON.stringify(Array.from(capturedPOIs.values())));
+  } catch (error) {
+    console.warn("Could not save captured POI.", error);
+  }
+}
+
 function loadPinsFromLocal() {
   try {
     const raw = localStorage.getItem(PIN_STORAGE_KEY);
@@ -6851,6 +7112,13 @@ function loadPinsFromLocal() {
           ownerPendingPoints: Number(pin.ownerPendingPoints || 0),
           plant: pin.plant || null,
           fish: pin.fish || null,
+          name: pin.name || pin.poiName || null,
+          category: pin.category || null,
+          subcategory: pin.subcategory || pin.poiCategory || null,
+          rarity: pin.rarity || null,
+          icon: pin.icon || null,
+          description: pin.description || null,
+          captured: Boolean(pin.captured),
           poiCategory: pin.poiCategory || null,
           poiName: pin.poiName || null,
           osmType: pin.osmType || null,
