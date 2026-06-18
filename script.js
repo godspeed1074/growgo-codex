@@ -9,6 +9,9 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
 const WATER_PIN_RESOURCE_DROP_CHANCE = 0.25;
+const WATER_PIN_BLUE_FISH_CHANCE = 1 / 250;
+const WATER_PIN_SALMON_CHANCE = 1 / 1000;
+const WATER_PIN_FISH_LIFETIME_MS = 4 * 60 * 60 * 1000;
 const POINTS_GROWTH_HOURS = 168;
 const CAPTURE_RADIUS_METERS = 100;
 const WATER_PIN_DISTANCE_METERS = 50;
@@ -17,6 +20,23 @@ const PIN_OWNER_CAPTURE_REWARD = 5;
 const PIN_LONG_PRESS_MS = 500;
 const PIN_PLANT_STAGE_HOURS = 168;
 const BASE_PIN_MAX_LEVEL = 4;
+
+const WATER_PIN_FISH_TYPES = {
+  blue: {
+    itemId: "fish",
+    label: "Blue Fish",
+    icon: "🐟",
+    xp: 50,
+    className: "blue"
+  },
+  salmon: {
+    itemId: "salmon",
+    label: "Salmon",
+    icon: "🐟",
+    xp: 200,
+    className: "salmon"
+  }
+};
 
 const PIN_SPACING_METERS = 46;
 const MIN_PIN_SEPARATION_METERS = 46;
@@ -295,7 +315,8 @@ const MARKET_ITEMS = [
   { id: "sugar_cane", name: "Sugar Cane", icon: "🎋", rarity: "Common", category: "resources" },
   { id: "corn", name: "Corn", icon: "🌽", rarity: "Common", category: "resources" },
   { id: "water", name: "Water", icon: "💧", rarity: "Common", category: "resources" },
-  { id: "fish", name: "Fish", icon: "🐟", rarity: "Common", category: "resources" },
+  { id: "fish", name: "Blue Fish", icon: "🐟", rarity: "Common", category: "resources" },
+  { id: "salmon", name: "Salmon", icon: "🐟", rarity: "Rare", category: "resources" },
   { id: "milk", name: "Milk", icon: "🥛", rarity: "Uncommon", category: "resources" },
   { id: "cocoa_beans", name: "Cocoa Beans", icon: "🍫", rarity: "Uncommon", category: "resources" },
   { id: "egg", name: "Egg", icon: "🥚", rarity: "Rare", category: "resources" },
@@ -377,7 +398,8 @@ const INVENTORY_DESCRIPTIONS = {
   sugar_cane: "Can be processed into sugar for snacks and drinks.",
   corn: "A common crop used in capture radius snacks.",
   water: "Useful for cooking, fishing recipes, and basic crafting.",
-  fish: "A common resource used in prepared meals.",
+  fish: "A common blue fish used in lower-level recipes.",
+  salmon: "A rare fish caught from water pins and saved for stronger recipes.",
   milk: "Produced by cows and used in drinks, butter, cream, and desserts.",
   cocoa_beans: "Used for chocolate recipes and uncommon crafting.",
   egg: "Produced by chickens and used in rare food recipes.",
@@ -5187,15 +5209,17 @@ function maybeAddRoadPin(point, visibleBounds, localSeen, generated, waterFeatur
   localSeen.push(candidate);
 
   const isWaterPin = isPointNearWaterFeatures(candidate, waterFeatures);
-
-  generated.push({
+  const pin = {
     id: key,
     type: isWaterPin ? "water" : "base",
     lat: point.lat,
     lng: point.lng,
     basePoints: BASE_PIN_VALUE,
     capturedAt: null
-  });
+  };
+
+  maybeAssignWaterPinFish(pin);
+  generated.push(pin);
 }
 
 function convertBasePinsNearWater(waterFeatures, visibleBounds) {
@@ -5210,6 +5234,7 @@ function convertBasePinsNearWater(waterFeatures, visibleBounds) {
     if (!isPointNearWaterFeatures(L.latLng(pin.lat, pin.lng), waterFeatures)) return;
 
     pin.type = "water";
+    maybeAssignWaterPinFish(pin);
     converted = true;
   });
 
@@ -5289,6 +5314,48 @@ function isPointInsideLatLngPolygon(point, coords) {
   }
 
   return inside;
+}
+
+function maybeAssignWaterPinFish(pin) {
+  if (!pin || pin.type !== "water" || pin.fish) return;
+
+  const roll = Math.random();
+  let fishType = null;
+
+  if (roll < WATER_PIN_SALMON_CHANCE) {
+    fishType = "salmon";
+  } else if (roll < WATER_PIN_SALMON_CHANCE + WATER_PIN_BLUE_FISH_CHANCE) {
+    fishType = "blue";
+  }
+
+  if (!fishType) return;
+
+  pin.fish = {
+    type: fishType,
+    spawnedAt: getTrustedNow()
+  };
+}
+
+function getActiveWaterPinFish(pin, mutateExpired = true) {
+  if (!pin || pin.type !== "water" || !pin.fish) return null;
+
+  const fish = WATER_PIN_FISH_TYPES[pin.fish.type];
+  const spawnedAt = Number(pin.fish.spawnedAt || 0);
+
+  if (!fish || !spawnedAt || getTrustedNow() - spawnedAt >= WATER_PIN_FISH_LIFETIME_MS) {
+    if (mutateExpired) {
+      delete pin.fish;
+      scheduleSavePinsToLocal();
+    }
+
+    return null;
+  }
+
+  return {
+    ...fish,
+    type: pin.fish.type,
+    spawnedAt
+  };
 }
 
 /* ----------------------------- */
@@ -5453,9 +5520,12 @@ function getPinIconState(pin) {
   const plantSeedId = pin.plant?.seedId || "";
   const plantHarvestedKey = pin.plant?.harvestedByDay?.[getActivePlayerId()] || "";
   const type = pin.type || "base";
+  const activeFish = getActiveWaterPinFish(pin);
+  const fishType = activeFish?.type || "";
 
   return {
     type,
+    fishType,
     points,
     capturedToday,
     glowing,
@@ -5463,7 +5533,7 @@ function getPinIconState(pin) {
     ownedByActivePlayer: ownerId === getActivePlayerId(),
     plantStage,
     plantSeedId,
-    key: `${type}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
+    key: `${type}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
   };
 }
 
@@ -5481,6 +5551,17 @@ function buildPinIcon(pin, state = null) {
   const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
   const typeBadge = iconState.type === "water"
     ? `<div class="water-pin-drop" aria-label="Water pin">💧</div>`
+    : "";
+  const fish = getActiveWaterPinFish(pin);
+  const fishBadge = fish
+    ? `
+      <div
+        class="water-pin-fish water-pin-fish-${escapeAttribute(fish.className)}"
+        aria-label="${escapeAttribute(fish.label)}"
+      >
+        ${escapeHtml(fish.icon)}
+      </div>
+    `
     : "";
   const pinAlt = iconState.type === "water" ? "Water Pin" : "Base Pin";
   const plantVisual = getPinPlantVisual(pin);
@@ -5500,6 +5581,7 @@ function buildPinIcon(pin, state = null) {
       <img src="pin-base-blue.png" alt="${pinAlt}">
       ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
       ${typeBadge}
+      ${fishBadge}
       ${plantBadge}
     </div>
   `;
@@ -5910,12 +5992,17 @@ function capturePin(pin) {
   awardBasePinOwnerCaptureReward(pin);
   harvestReadyBasePinPlant(pin);
   const waterDrop = awardWaterPinResourceDrop(pin);
+  const fishDrop = awardWaterPinFishCapture(pin);
 
   scheduleSavePinsToLocal();
   clearPinIconCache();
 
-  const resourceText = waterDrop ? ", +1 water" : "";
-  showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold${resourceText}`);
+  const resourceText = [
+    waterDrop ? "+1 water" : "",
+    fishDrop ? `+1 ${fishDrop.label}, +${fishDrop.xp} fish XP` : ""
+  ].filter(Boolean).join(", ");
+  const resourceSuffix = resourceText ? `, ${resourceText}` : "";
+  showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold${resourceSuffix}`);
   scheduleRedrawPins();
 }
 
@@ -5934,6 +6021,22 @@ function awardWaterPinResourceDrop(pin) {
   refreshInventoryIfOpen();
 
   return true;
+}
+
+function awardWaterPinFishCapture(pin) {
+  const fish = getActiveWaterPinFish(pin);
+  if (!fish) return null;
+
+  marketState.inventory[fish.itemId] = Number(marketState.inventory[fish.itemId] || 0) + 1;
+  delete pin.fish;
+
+  addStat("fishCaught", 1);
+  addStat("resourcesGained", 1);
+  addPlayerXp(fish.xp);
+  saveMarketState();
+  refreshInventoryIfOpen();
+
+  return fish;
 }
 
 function awardBasePinOwnerCaptureReward(pin) {
@@ -6176,7 +6279,8 @@ function loadPinsFromLocal() {
           level: getBasePinLevel(pin),
           replantEnabled: Boolean(pin.replantEnabled),
           ownerPendingPoints: Number(pin.ownerPendingPoints || 0),
-          plant: pin.plant || null
+          plant: pin.plant || null,
+          fish: pin.fish || null
         });
       }
     });
