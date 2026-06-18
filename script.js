@@ -5193,6 +5193,8 @@ function getPinIconState(pin) {
   const glowing = shouldPinGlow(pin, capturedToday);
   const ownerId = pin.ownerId || "";
   const plantStage = getPinPlantStage(pin);
+  const plantSeedId = pin.plant?.seedId || "";
+  const plantHarvestedKey = pin.plant?.harvestedByDay?.[getActivePlayerId()] || "";
 
   return {
     points,
@@ -5201,7 +5203,8 @@ function getPinIconState(pin) {
     owned: Boolean(ownerId),
     ownedByActivePlayer: ownerId === getActivePlayerId(),
     plantStage,
-    key: `${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}`
+    plantSeedId,
+    key: `${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
   };
 }
 
@@ -5216,8 +5219,16 @@ function buildPinIcon(pin, state = null) {
   const glowClass = iconState.glowing ? "pin-ready-glow" : "";
   const capturedClass = iconState.capturedToday ? "pin-captured-today" : "";
   const ownedClass = iconState.owned ? "pin-owned" : "";
+  const plantVisual = getPinPlantVisual(pin);
   const plantBadge = iconState.plantStage > 0
-    ? `<div class="base-pin-plant-stage">${getPlantStageIcon(iconState.plantStage)}</div>`
+    ? `
+      <div
+        class="base-pin-plant-stage ${escapeAttribute(plantVisual.className)}"
+        aria-label="${escapeAttribute(plantVisual.label)}"
+      >
+        ${escapeHtml(plantVisual.icon)}
+      </div>
+    `
     : "";
 
   const html = `
@@ -5724,6 +5735,49 @@ function getPlantStageIcon(stage) {
   if (stage === 3) return "🌿";
   if (stage === 2) return "🌱";
   return "·";
+}
+
+function getPinPlantVisual(pin) {
+  const stage = getPinPlantStage(pin);
+  const seed = getBasePinSeedOption(pin?.plant?.seedId);
+  const cropLabel = seed ? (seed.cropLabel || seed.label) : "Plant";
+  const readyIcon = seed?.icon || getPlantStageIcon(stage);
+  const stageNames = {
+    1: "planted",
+    2: "sprouting",
+    3: "almost ready",
+    4: "ready to harvest"
+  };
+
+  if (stage >= 4) {
+    return {
+      icon: readyIcon,
+      className: "plant-stage-4",
+      label: `${cropLabel} ready to harvest`
+    };
+  }
+
+  if (stage === 3) {
+    return {
+      icon: "🌿",
+      className: "plant-stage-3",
+      label: `${cropLabel} almost ready`
+    };
+  }
+
+  if (stage === 2) {
+    return {
+      icon: "🌱",
+      className: "plant-stage-2",
+      label: `${cropLabel} sprouting`
+    };
+  }
+
+  return {
+    icon: "●",
+    className: "plant-stage-1",
+    label: `${cropLabel} ${stageNames[stage] || "planted"}`
+  };
 }
 
 function getPlantStageLabel(plant) {
