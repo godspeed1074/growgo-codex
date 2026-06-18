@@ -1084,7 +1084,7 @@ function saveCrafting() {
   }
 }
 
-function getCraftingXpNeeded(level) {
+function getLevelXpNeeded(level) {
   return Math.round(100 * Math.pow(1.2, level - 1));
 }
 
@@ -1092,10 +1092,14 @@ function getTotalXpForLevel(level) {
   let total = 0;
 
   for (let i = 1; i < level; i++) {
-    total += getCraftingXpNeeded(i);
+    total += getLevelXpNeeded(i);
   }
 
   return total;
+}
+
+function getCraftingXpNeeded(level) {
+  return getLevelXpNeeded(level);
 }
 
 function getCraftingProgress() {
@@ -1138,7 +1142,30 @@ function addCraftingXp(amount) {
 }
 
 function addPlayerXp(amount) {
-  addCraftingXp(amount);
+  const progress = getPlayerProgressInfo();
+  const previousLevel = progress.level;
+  const addedXp = Math.max(0, Number(amount || 0));
+  let nextXp = progress.totalXp + addedXp;
+  let nextLevel = progress.level;
+
+  while (nextXp >= getTotalXpForLevel(nextLevel + 1)) {
+    nextLevel += 1;
+  }
+
+  playerState.progress = {
+    ...createDefaultPlayerState().progress,
+    ...(playerState.progress || {}),
+    level: nextLevel,
+    xp: nextXp
+  };
+
+  savePlayerState();
+  renderPlayerOverview();
+
+  if (nextLevel !== previousLevel) {
+    showToast("Level up!", `You reached player level ${nextLevel}.`);
+    triggerLevelUpFeedback();
+  }
 }
 
 function initCraftingUi() {
@@ -3778,8 +3805,36 @@ function formatDuration(ms) {
   return `${minutes}m`;
 }
 
+function getPlayerProgressInfo() {
+  const savedProgress = {
+    ...createDefaultPlayerState().progress,
+    ...(playerState.progress || {})
+  };
+  let level = Math.max(1, Number(savedProgress.level || 1));
+  let totalXp = Math.max(0, Number(savedProgress.xp || 0));
+
+  while (totalXp >= getTotalXpForLevel(level + 1)) {
+    level += 1;
+  }
+
+  const currentLevelStart = getTotalXpForLevel(level);
+  const nextLevelAt = getTotalXpForLevel(level + 1);
+  const currentXpIntoLevel = Math.max(0, totalXp - currentLevelStart);
+  const neededThisLevel = Math.max(1, nextLevelAt - currentLevelStart);
+  const percent = Math.min(100, Math.max(0, (currentXpIntoLevel / neededThisLevel) * 100));
+
+  return {
+    level,
+    totalXp,
+    currentXpIntoLevel,
+    neededThisLevel,
+    percent,
+    xpToGo: Math.max(0, neededThisLevel - currentXpIntoLevel)
+  };
+}
+
 function renderPlayerOverview() {
-  const progress = getCraftingProgress();
+  const progress = getPlayerProgressInfo();
   const currentXp = Math.floor(progress.currentXpIntoLevel);
   const neededXp = Math.max(1, progress.neededThisLevel || 1);
   const percent = Math.max(0, Math.min(100, progress.percent || 0));
@@ -3789,8 +3844,10 @@ function renderPlayerOverview() {
 
   playerState.name = playerName;
   playerState.progress = {
-    level: playerCrafting.level,
-    xp: playerCrafting.xp,
+    ...createDefaultPlayerState().progress,
+    ...(playerState.progress || {}),
+    level: progress.level,
+    xp: progress.totalXp,
     coins,
     score
   };
@@ -3801,7 +3858,7 @@ function renderPlayerOverview() {
   });
 
   document.querySelectorAll(".menu-level-number").forEach((el) => {
-    el.textContent = playerCrafting.level;
+    el.textContent = progress.level;
   });
 
   document.querySelectorAll(".menu-xp-fill").forEach((el) => {
