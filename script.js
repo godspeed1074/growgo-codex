@@ -9,6 +9,7 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 const BASE_PIN_VALUE = 5;
 const POINTS_GROWTH_HOURS = 168;
 const CAPTURE_RADIUS_METERS = 100;
+const WATER_PIN_DISTANCE_METERS = 50;
 const BASE_PIN_PURCHASE_COST = 100;
 const PIN_OWNER_CAPTURE_REWARD = 5;
 const PIN_LONG_PRESS_MS = 500;
@@ -4992,10 +4993,11 @@ async function fetchRoadPinsForViewport(force = false) {
     if (!response.ok) throw new Error(`Overpass failed: ${response.status}`);
 
     const data = await response.json();
-    const ways = extractWaysFromOverpass(data);
-    const newPins = buildPinsFromWays(ways, bounds);
+    const features = extractMapFeaturesFromOverpass(data);
+    const converted = convertBasePinsNearWater(features.waterFeatures, bounds);
+    const newPins = buildPinsFromWays(features.roadWays, bounds, features.waterFeatures);
 
-    let added = false;
+    let added = converted;
 
     newPins.forEach((pin) => {
       if (!pinStore.has(pin.id)) {
@@ -5022,13 +5024,18 @@ function buildOverpassQuery(boundsObj) {
 [out:json][timeout:25];
 (
   way["highway"~"^(${highwayRegex})$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["natural"="water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["waterway"~"^(river|stream|canal|drain|ditch)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["landuse"~"^(reservoir|basin)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["leisure"="swimming_pool"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
 );
 (._;>;);
 out body;
 `;
 }
 
-function extractWaysFromOverpass(data) {
+function extractMapFeaturesFromOverpass(data) {
   const elements = Array.isArray(data?.elements) ? data.elements : [];
   const nodesById = new Map();
 
@@ -5038,22 +5045,45 @@ function extractWaysFromOverpass(data) {
     }
   });
 
-  const ways = [];
+  const roadWays = [];
+  const waterFeatures = [];
 
   elements.forEach((el) => {
     if (el.type !== "way" || !Array.isArray(el.nodes)) return;
 
     const coords = el.nodes.map((nodeId) => nodesById.get(nodeId)).filter(Boolean);
+    const tags = el.tags || {};
 
-    if (coords.length >= 2) {
-      ways.push({ id: el.id, coords });
+    if (coords.length < 2) return;
+
+    if (tags.highway) {
+      roadWays.push({ id: el.id, coords });
+      return;
+    }
+
+    if (isWaterFeature(tags)) {
+      waterFeatures.push({
+        id: el.id,
+        coords,
+        closed: coords.length >= 4 && coords[0][0] === coords[coords.length - 1][0] && coords[0][1] === coords[coords.length - 1][1]
+      });
     }
   });
 
-  return ways;
+  return { roadWays, waterFeatures };
 }
 
-function buildPinsFromWays(ways, visibleBounds) {
+function isWaterFeature(tags) {
+  return (
+    tags.natural === "water" ||
+    Boolean(tags.water) ||
+    ["river", "stream", "canal", "drain", "ditch"].includes(tags.waterway) ||
+    ["reservoir", "basin"].includes(tags.landuse) ||
+    tags.leisure === "swimming_pool"
+  );
+}
+
+function buildPinsFromWays(ways, visibleBounds, waterFeatures = []) {
   const generated = [];
   const localSeen = [];
 
@@ -5067,7 +5097,7 @@ function buildPinsFromWays(ways, visibleBounds) {
       const segmentLength = start.distanceTo(end);
 
       if (segmentLength < PIN_SPACING_METERS * 0.75) {
-        maybeAddRoadPin(interpolateLatLng(start, end, 0.5), visibleBounds, localSeen, generated);
+        maybeAddRoadPin(interpolateLatLng(start, end, 0.5), visibleBounds, localSeen, generated, waterFeatures);
         continue;
       }
 
@@ -5075,7 +5105,7 @@ function buildPinsFromWays(ways, visibleBounds) {
 
       for (let step = 0; step <= steps; step++) {
         const t = Math.min(1, (step * PIN_SPACING_METERS) / segmentLength);
-        maybeAddRoadPin(interpolateLatLng(start, end, t), visibleBounds, localSeen, generated);
+        maybeAddRoadPin(interpolateLatLng(start, end, t), visibleBounds, localSeen, generated, waterFeatures);
 
         if (generated.length >= MAX_PINS_PER_FETCH) return generated;
       }
@@ -5085,7 +5115,7 @@ function buildPinsFromWays(ways, visibleBounds) {
   return generated;
 }
 
-function maybeAddRoadPin(point, visibleBounds, localSeen, generated) {
+function maybeAddRoadPin(point, visibleBounds, localSeen, generated, waterFeatures = []) {
   if (!visibleBounds.contains(point)) return;
 
   const candidate = L.latLng(point.lat, point.lng);
@@ -5097,14 +5127,109 @@ function maybeAddRoadPin(point, visibleBounds, localSeen, generated) {
 
   localSeen.push(candidate);
 
+  const isWaterPin = isPointNearWaterFeatures(candidate, waterFeatures);
+
   generated.push({
     id: key,
-    type: "base",
+    type: isWaterPin ? "water" : "base",
     lat: point.lat,
     lng: point.lng,
     basePoints: BASE_PIN_VALUE,
     capturedAt: null
   });
+}
+
+function convertBasePinsNearWater(waterFeatures, visibleBounds) {
+  if (!Array.isArray(waterFeatures) || !waterFeatures.length) return false;
+
+  let converted = false;
+
+  pinStore.forEach((pin) => {
+    if (!pin || pin.type !== "base") return;
+    if (pin.ownerId || pin.plant) return;
+    if (!visibleBounds.contains([pin.lat, pin.lng])) return;
+    if (!isPointNearWaterFeatures(L.latLng(pin.lat, pin.lng), waterFeatures)) return;
+
+    pin.type = "water";
+    converted = true;
+  });
+
+  if (converted) {
+    clearPinIconCache();
+  }
+
+  return converted;
+}
+
+function isPointNearWaterFeatures(point, waterFeatures) {
+  return waterFeatures.some((feature) => {
+    if (!Array.isArray(feature.coords) || feature.coords.length < 2) return false;
+
+    if (feature.closed && isPointInsideLatLngPolygon(point, feature.coords)) {
+      return true;
+    }
+
+    return getDistanceToLatLngPath(point, feature.coords) <= WATER_PIN_DISTANCE_METERS;
+  });
+}
+
+function getDistanceToLatLngPath(point, coords) {
+  let closest = Infinity;
+
+  for (let i = 0; i < coords.length - 1; i++) {
+    const start = L.latLng(coords[i][0], coords[i][1]);
+    const end = L.latLng(coords[i + 1][0], coords[i + 1][1]);
+    const distance = getDistanceToSegmentMeters(point, start, end);
+
+    if (distance < closest) closest = distance;
+    if (closest <= WATER_PIN_DISTANCE_METERS) return closest;
+  }
+
+  return closest;
+}
+
+function getDistanceToSegmentMeters(point, start, end) {
+  const centerLat = (point.lat + start.lat + end.lat) / 3;
+  const metersPerLat = 111320;
+  const metersPerLng = Math.cos(centerLat * Math.PI / 180) * 111320;
+  const px = point.lng * metersPerLng;
+  const py = point.lat * metersPerLat;
+  const ax = start.lng * metersPerLng;
+  const ay = start.lat * metersPerLat;
+  const bx = end.lng * metersPerLng;
+  const by = end.lat * metersPerLat;
+  const dx = bx - ax;
+  const dy = by - ay;
+  const lengthSquared = (dx * dx) + (dy * dy);
+
+  if (!lengthSquared) {
+    return point.distanceTo(start);
+  }
+
+  const t = Math.max(0, Math.min(1, (((px - ax) * dx) + ((py - ay) * dy)) / lengthSquared));
+  const closestX = ax + (t * dx);
+  const closestY = ay + (t * dy);
+
+  return Math.hypot(px - closestX, py - closestY);
+}
+
+function isPointInsideLatLngPolygon(point, coords) {
+  let inside = false;
+  const x = point.lng;
+  const y = point.lat;
+
+  for (let i = 0, j = coords.length - 1; i < coords.length; j = i++) {
+    const yi = coords[i][0];
+    const xi = coords[i][1];
+    const yj = coords[j][0];
+    const xj = coords[j][1];
+    const intersects = ((yi > y) !== (yj > y)) &&
+      (x < ((xj - xi) * (y - yi)) / ((yj - yi) || 1e-12) + xi);
+
+    if (intersects) inside = !inside;
+  }
+
+  return inside;
 }
 
 /* ----------------------------- */
@@ -5268,8 +5393,10 @@ function getPinIconState(pin) {
   const plantStage = getPinPlantStage(pin);
   const plantSeedId = pin.plant?.seedId || "";
   const plantHarvestedKey = pin.plant?.harvestedByDay?.[getActivePlayerId()] || "";
+  const type = pin.type || "base";
 
   return {
+    type,
     points,
     capturedToday,
     glowing,
@@ -5277,7 +5404,7 @@ function getPinIconState(pin) {
     ownedByActivePlayer: ownerId === getActivePlayerId(),
     plantStage,
     plantSeedId,
-    key: `${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
+    key: `${type}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}`
   };
 }
 
@@ -5292,6 +5419,11 @@ function buildPinIcon(pin, state = null) {
   const glowClass = iconState.glowing ? "pin-ready-glow" : "";
   const capturedClass = iconState.capturedToday ? "pin-captured-today" : "";
   const ownedClass = iconState.owned ? "pin-owned" : "";
+  const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
+  const typeBadge = iconState.type === "water"
+    ? `<div class="water-pin-drop" aria-label="Water pin">💧</div>`
+    : "";
+  const pinAlt = iconState.type === "water" ? "Water Pin" : "Base Pin";
   const plantVisual = getPinPlantVisual(pin);
   const plantBadge = iconState.plantStage > 0
     ? `
@@ -5305,9 +5437,10 @@ function buildPinIcon(pin, state = null) {
     : "";
 
   const html = `
-    <div class="base-pin-marker ${glowClass} ${capturedClass} ${ownedClass}">
-      <img src="pin-base-blue.png" alt="Base Pin">
+    <div class="base-pin-marker ${typeClass} ${glowClass} ${capturedClass} ${ownedClass}">
+      <img src="pin-base-blue.png" alt="${pinAlt}">
       ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
+      ${typeBadge}
       ${plantBadge}
     </div>
   `;
@@ -5395,6 +5528,11 @@ function bindPinLongPress(marker, pin) {
 function openBasePinLongPressPopup(pin) {
   clearPinLongPress();
   if (!pin) return;
+
+  if (pin.type === "water") {
+    showToast("Water pin", "Water pins cannot be purchased yet.");
+    return;
+  }
 
   if (!pin.ownerId) {
     openBasePinPurchasePopup(pin);
@@ -5716,8 +5854,13 @@ function capturePin(pin) {
   scheduleSavePinsToLocal();
   clearPinIconCache();
 
-  showToast("Captured base pin", `+${points} points, +${points} XP, +1 gold`);
+  showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold`);
   scheduleRedrawPins();
+}
+
+function getPinTypeLabel(pin) {
+  if (pin?.type === "water") return "water pin";
+  return "base pin";
 }
 
 function awardBasePinOwnerCaptureReward(pin) {

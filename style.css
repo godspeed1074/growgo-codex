@@ -1307,6 +1307,39 @@ body.phone-preview .menu-overlay {
   pointer-events: none;
 }
 
+.water-pin-marker img {
+  filter:
+    saturate(1.35)
+    hue-rotate(8deg)
+    drop-shadow(0 0 7px rgba(54, 191, 255, 0.62));
+}
+
+.water-pin-marker .base-pin-number {
+  color: #012b6f;
+  -webkit-text-stroke-color: rgba(225,247,255,0.84);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.78),
+    0 0 7px rgba(83,210,255,0.58);
+}
+
+.water-pin-drop {
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(#ffffff, #9de9ff);
+  border: 1px solid rgba(5, 105, 192, 0.45);
+  font-size: 11px;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.82),
+    0 2px 5px rgba(0,0,0,0.32);
+  pointer-events: none;
+}
+
 .pin-owned::after {
   content: "★";
   position: absolute;
