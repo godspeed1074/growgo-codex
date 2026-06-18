@@ -538,6 +538,8 @@ let ownedPinsCount;
 let ownedPinsPendingTotal;
 let claimOwnedPinRewardsBtn;
 let ownedPinsList;
+let poiPinsCount;
+let poiPinsList;
 let growGoQrScanner = null;
 let growGoQrScannerRunning = false;
 
@@ -656,6 +658,8 @@ ownedPinsCount = document.getElementById("ownedPinsCount");
 ownedPinsPendingTotal = document.getElementById("ownedPinsPendingTotal");
 claimOwnedPinRewardsBtn = document.getElementById("claimOwnedPinRewardsBtn");
 ownedPinsList = document.getElementById("ownedPinsList");
+poiPinsCount = document.getElementById("poiPinsCount");
+poiPinsList = document.getElementById("poiPinsList");
 
   craftingScreen = document.getElementById("craftingScreen");
   craftingBackBtn = document.getElementById("craftingBackBtn");
@@ -3511,6 +3515,7 @@ function renderAchievementCard(achievement) {
 
 function renderCollections() {
   renderOwnedPinsCollection();
+  renderPoiPinsCollection();
 }
 
 function renderOwnedPinsCollection() {
@@ -3597,6 +3602,57 @@ function renderOwnedPinCard(pin) {
   `;
 }
 
+function renderPoiPinsCollection() {
+  if (!poiPinsList || !poiPinsCount) return;
+
+  const poiPins = Array.from(pinStore.values())
+    .filter((pin) => pin.type === "poi")
+    .sort((a, b) => {
+      const distanceA = getDistanceToPinValue(a);
+      const distanceB = getDistanceToPinValue(b);
+      if (distanceA !== distanceB) return distanceA - distanceB;
+      return String(a.poiName || "").localeCompare(String(b.poiName || ""));
+    });
+
+  poiPinsCount.textContent = `${formatNumber(poiPins.length)} found`;
+
+  if (!poiPins.length) {
+    poiPinsList.innerHTML = `
+      <div class="owned-pins-empty">
+        Scan nearby POIs in Settings to add churches, hospitals, parks, landmarks and local places.
+      </div>
+    `;
+    return;
+  }
+
+  poiPinsList.innerHTML = poiPins.slice(0, 40).map(renderPoiPinCard).join("");
+}
+
+function renderPoiPinCard(pin) {
+  const distance = getDistanceToPinLabel(pin);
+  const capturedToday = wasCapturedToday(pin);
+  const captureStatus = capturedToday ? "Captured today" : "Ready";
+  const category = pin.poiCategory || "POI";
+  const name = pin.poiName || category;
+  const discoveredDate = pin.discoveredAt ? getDisplayDate(pin.discoveredAt) : "Unknown";
+
+  return `
+    <div class="poi-pin-card" data-poi-pin-id="${escapeAttribute(pin.id)}">
+      <div class="poi-pin-badge">${escapeHtml(getPoiIconLabel(category))}</div>
+      <div class="poi-pin-info">
+        <div class="poi-pin-topline">
+          <h4>${escapeHtml(name)}</h4>
+          <span class="${capturedToday ? "captured" : "ready"}">${escapeHtml(captureStatus)}</span>
+        </div>
+        <div class="poi-pin-meta">
+          ${escapeHtml(category)} · ${escapeHtml(distance)} · Found ${escapeHtml(discoveredDate)}
+        </div>
+        <button data-poi-pin-go="${escapeAttribute(pin.id)}" type="button">Go to POI</button>
+      </div>
+    </div>
+  `;
+}
+
 function initCollectionsUi() {
   if (!collectionsScreen) return;
 
@@ -3615,14 +3671,25 @@ function initCollectionsUi() {
     const goButton = event.target.closest("[data-owned-pin-go]");
     if (goButton) {
       goToOwnedPin(goButton.dataset.ownedPinGo);
+      return;
+    }
+
+    const poiGoButton = event.target.closest("[data-poi-pin-go]");
+    if (poiGoButton) {
+      goToPoiPin(poiGoButton.dataset.poiPinGo);
     }
   });
+}
+
+function getDistanceToPinValue(pin) {
+  if (!playerLatLng) return Number.POSITIVE_INFINITY;
+  return playerLatLng.distanceTo([pin.lat, pin.lng]);
 }
 
 function getDistanceToPinLabel(pin) {
   if (!playerLatLng) return "Location needed";
 
-  const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
+  const distance = getDistanceToPinValue(pin);
   if (distance >= 1000) return `${(distance / 1000).toFixed(2)} km`;
   return `${Math.round(distance)} m`;
 }
@@ -3668,6 +3735,16 @@ function goToOwnedPin(pinId) {
   if (!pin) return;
 
   closeBasePinPopup();
+  closeMenu();
+  map.setView([pin.lat, pin.lng], Math.max(map.getZoom(), 18), {
+    animate: true
+  });
+}
+
+function goToPoiPin(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin || pin.type !== "poi") return;
+
   closeMenu();
   map.setView([pin.lat, pin.lng], Math.max(map.getZoom(), 18), {
     animate: true
