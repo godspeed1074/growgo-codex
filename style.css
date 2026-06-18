@@ -1318,15 +1318,15 @@ body.phone-preview .menu-overlay {
 }
 
 .base-pin-marker:not(.water-pin-marker) .base-pin-number {
-  top: 58%;
-  transform: translate(-50%, -50%) translate(0, -1px);
-  font-size: 16px;
+  top: 62%;
+  transform: translate(-50%, -50%);
+  font-size: 17px;
   font-weight: 950;
   color: #071d55;
-  -webkit-text-stroke: 1px rgba(255,255,255,0.88);
+  -webkit-text-stroke: 1.25px rgba(255,255,255,0.92);
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.78),
-    0 2px 4px rgba(0,0,0,0.36);
+    0 1px 0 rgba(255,255,255,0.84),
+    0 2px 4px rgba(0,0,0,0.44);
 }
 
 .water-pin-marker img {
