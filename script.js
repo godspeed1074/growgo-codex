@@ -5075,7 +5075,7 @@ async function fetchRoadPinsForViewport(force = false) {
 
     const data = await response.json();
     const features = extractMapFeaturesFromOverpass(data);
-    const converted = convertBasePinsNearWater(features.waterFeatures, bounds);
+    const converted = syncPinsNearWater(features.waterFeatures, bounds);
     const newPins = buildPinsFromWays(features.roadWays, bounds, features.waterFeatures);
 
     let added = converted;
@@ -5107,9 +5107,8 @@ function buildOverpassQuery(boundsObj) {
   way["highway"~"^(${highwayRegex})$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["natural"="water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
-  way["waterway"~"^(river|stream|canal|drain|ditch)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["waterway"~"^(river|stream|canal)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["landuse"~"^(reservoir|basin)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
-  way["leisure"="swimming_pool"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
 );
 (._;>;);
 out body;
@@ -5158,9 +5157,8 @@ function isWaterFeature(tags) {
   return (
     tags.natural === "water" ||
     Boolean(tags.water) ||
-    ["river", "stream", "canal", "drain", "ditch"].includes(tags.waterway) ||
-    ["reservoir", "basin"].includes(tags.landuse) ||
-    tags.leisure === "swimming_pool"
+    ["river", "stream", "canal"].includes(tags.waterway) ||
+    ["reservoir", "basin"].includes(tags.landuse)
   );
 }
 
@@ -5222,27 +5220,37 @@ function maybeAddRoadPin(point, visibleBounds, localSeen, generated, waterFeatur
   generated.push(pin);
 }
 
-function convertBasePinsNearWater(waterFeatures, visibleBounds) {
+function syncPinsNearWater(waterFeatures, visibleBounds) {
   if (!Array.isArray(waterFeatures) || !waterFeatures.length) return false;
 
-  let converted = false;
+  let changed = false;
 
   pinStore.forEach((pin) => {
-    if (!pin || pin.type !== "base") return;
+    if (!pin || (pin.type !== "base" && pin.type !== "water")) return;
     if (pin.ownerId || pin.plant) return;
     if (!visibleBounds.contains([pin.lat, pin.lng])) return;
-    if (!isPointNearWaterFeatures(L.latLng(pin.lat, pin.lng), waterFeatures)) return;
 
-    pin.type = "water";
-    maybeAssignWaterPinFish(pin);
-    converted = true;
+    const nearWater = isPointNearWaterFeatures(L.latLng(pin.lat, pin.lng), waterFeatures);
+
+    if (nearWater && pin.type !== "water") {
+      pin.type = "water";
+      maybeAssignWaterPinFish(pin);
+      changed = true;
+      return;
+    }
+
+    if (!nearWater && pin.type === "water") {
+      pin.type = "base";
+      delete pin.fish;
+      changed = true;
+    }
   });
 
-  if (converted) {
+  if (changed) {
     clearPinIconCache();
   }
 
-  return converted;
+  return changed;
 }
 
 function isPointNearWaterFeatures(point, waterFeatures) {
