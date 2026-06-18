@@ -5560,6 +5560,7 @@ function buildPinIcon(pin, state = null) {
   const ownedClass = iconState.owned ? "pin-owned" : "";
   const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
   const pinImage = iconState.type === "water" ? "pin-water-blue.png" : "pin-base-blue.png";
+  const showPointNumber = iconState.type !== "water" && !iconState.capturedToday;
   const fish = getActiveWaterPinFish(pin);
   const fishBadge = fish
     ? `
@@ -5587,7 +5588,7 @@ function buildPinIcon(pin, state = null) {
   const html = `
     <div class="base-pin-marker ${typeClass} ${glowClass} ${capturedClass} ${ownedClass}">
       <img src="${pinImage}" alt="${pinAlt}">
-      ${iconState.capturedToday ? "" : `<div class="base-pin-number">${iconState.points}</div>`}
+      ${showPointNumber ? `<div class="base-pin-number">${iconState.points}</div>` : ""}
       ${fishBadge}
       ${plantBadge}
     </div>
