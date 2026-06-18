@@ -5293,6 +5293,7 @@ body.phone-preview .menu-level-number,
 
 body.phone-preview #statsScreen,
 body.phone-preview #leadersScreen,
+body.phone-preview #achievementsScreen,
 body.phone-preview #inventoryScreen,
 body.phone-preview #socialScreen,
 body.phone-preview #settingsScreen,
@@ -5301,6 +5302,7 @@ body.phone-preview #marketScreen,
 body.phone-preview #craftingScreen,
 #statsScreen,
 #leadersScreen,
+#achievementsScreen,
 #inventoryScreen,
 #socialScreen,
 #settingsScreen,
@@ -5332,6 +5334,7 @@ body.phone-preview #craftingScreen,
 
 body.phone-preview #statsScreen.hidden,
 body.phone-preview #leadersScreen.hidden,
+body.phone-preview #achievementsScreen.hidden,
 body.phone-preview #inventoryScreen.hidden,
 body.phone-preview #socialScreen.hidden,
 body.phone-preview #settingsScreen.hidden,
@@ -5340,6 +5343,7 @@ body.phone-preview #marketScreen.hidden,
 body.phone-preview #craftingScreen.hidden,
 #statsScreen.hidden,
 #leadersScreen.hidden,
+#achievementsScreen.hidden,
 #inventoryScreen.hidden,
 #socialScreen.hidden,
 #settingsScreen.hidden,
@@ -5351,6 +5355,7 @@ body.phone-preview #craftingScreen.hidden,
 
 body.phone-preview #statsScreen h2,
 body.phone-preview #leadersScreen h2,
+body.phone-preview #achievementsScreen h2,
 body.phone-preview #inventoryScreen h2,
 body.phone-preview #socialScreen h2,
 body.phone-preview #settingsScreen h2,
@@ -5359,6 +5364,7 @@ body.phone-preview #marketScreen h2,
 body.phone-preview #recipePanel h2,
 #statsScreen h2,
 #leadersScreen h2,
+#achievementsScreen h2,
 #inventoryScreen h2,
 #socialScreen h2,
 #settingsScreen h2,
@@ -5588,6 +5594,151 @@ body.phone-preview .recipe-panel,
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.achievements-list {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 28px;
+}
+
+.achievements-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 3px solid rgba(247, 208, 84, 0.76);
+  background: linear-gradient(180deg, rgba(18, 74, 120, 0.94), rgba(3, 28, 48, 0.98));
+  box-shadow:
+    0 7px 15px rgba(0,0,0,0.36),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+.achievements-summary span {
+  color: rgba(255,255,255,0.72);
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.achievements-summary strong {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 1000;
+}
+
+.achievement-card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 11px;
+  align-items: center;
+  min-height: 104px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 3px solid rgba(139, 207, 138, 0.62);
+  background: linear-gradient(180deg, rgba(18, 74, 120, 0.92), rgba(3, 28, 48, 0.96));
+  box-shadow:
+    0 7px 15px rgba(0,0,0,0.36),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+.achievement-card.locked {
+  opacity: 0.74;
+}
+
+.achievement-card.unlocked {
+  border-color: rgba(247, 208, 84, 0.9);
+  box-shadow:
+    0 7px 15px rgba(0,0,0,0.36),
+    0 0 14px rgba(247, 208, 84, 0.22),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.achievement-medal {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(#56d92c, #16871b);
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 1000;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.34),
+    0 5px 10px rgba(0,0,0,0.28);
+}
+
+.achievement-card.locked .achievement-medal {
+  background: linear-gradient(#5f7182, #263543);
+}
+
+.achievement-info {
+  min-width: 0;
+}
+
+.achievement-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.achievement-topline h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 1000;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.achievement-topline span {
+  flex: 0 0 auto;
+  color: rgba(255,255,255,0.7);
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.achievement-card.unlocked .achievement-topline span {
+  color: #f7d054;
+}
+
+.achievement-info p {
+  margin: 5px 0 8px;
+  color: rgba(255,255,255,0.78);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.achievement-progress-track {
+  height: 9px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.48);
+  box-shadow:
+    inset 0 2px 4px rgba(0,0,0,0.42),
+    0 1px 0 rgba(255,255,255,0.12);
+}
+
+.achievement-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #56d92c, #f7d054);
+}
+
+.achievement-progress-text {
+  margin-top: 4px;
+  color: rgba(255,255,255,0.72);
+  font-size: 11px;
+  font-weight: 900;
+  text-align: right;
 }
 
 .owned-pins-rewards {

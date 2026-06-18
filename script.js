@@ -66,6 +66,7 @@ const PIN_STORAGE_KEY = "growgo-pins";
 const SERVER_STARTED_AT_KEY = "growgo-server-started-at";
 const AVATAR_STORAGE_KEY = "growgo-avatar";
 const STATS_STORAGE_KEY = "growgo-stats";
+const ACHIEVEMENTS_STORAGE_KEY = "growgo-achievements";
 const CRAFTING_STORAGE_KEY = "growgo-crafting";
 const MARKET_STORAGE_KEY = "growgo-market";
 const MARKET_LONG_PRESS_MS = 550;
@@ -91,6 +92,7 @@ function resetPlayerProgressionOnce() {
       SERVER_STARTED_AT_KEY,
       AVATAR_STORAGE_KEY,
       STATS_STORAGE_KEY,
+      ACHIEVEMENTS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
       MARKET_STORAGE_KEY,
       PLAYER_STORAGE_KEY,
@@ -509,6 +511,8 @@ let statsBack;
 let leadersScreen;
 let leadersBackBtn;
 let leaderboardList;
+let achievementsScreen;
+let achievementsList;
 let socialScreen;
 let socialBackBtn;
 let socialAvatarImg;
@@ -625,6 +629,8 @@ playerQrCode = document.getElementById("playerQrCode");
   leadersScreen = document.getElementById("leadersScreen");
   leadersBackBtn = document.getElementById("leadersBackBtn");
   leaderboardList = leadersScreen ? leadersScreen.querySelector(".leaderboard-list") : null;
+achievementsScreen = document.getElementById("achievementsScreen");
+achievementsList = document.getElementById("achievementsList");
 socialScreen = document.getElementById("socialScreen");
 socialBackBtn = document.getElementById("socialBackBtn");
 socialAvatarImg = document.getElementById("socialAvatarImg");
@@ -779,6 +785,135 @@ function saveStats() {
     localStorage.setItem(STATS_STORAGE_KEY, JSON.stringify(playerStats));
   } catch (error) {
     console.warn("Could not save stats.", error);
+  }
+}
+
+const POI_ACHIEVEMENTS = [
+  {
+    id: "poi-discover-1",
+    title: "First Find",
+    description: "Discover your first point of interest.",
+    statKey: "newPois",
+    target: 1
+  },
+  {
+    id: "poi-discover-10",
+    title: "Local Scout",
+    description: "Discover 10 points of interest.",
+    statKey: "newPois",
+    target: 10
+  },
+  {
+    id: "poi-discover-50",
+    title: "Area Mapper",
+    description: "Discover 50 points of interest.",
+    statKey: "newPois",
+    target: 50
+  },
+  {
+    id: "poi-capture-1",
+    title: "First Check-In",
+    description: "Capture your first point of interest.",
+    statKey: "poiCaptures",
+    target: 1
+  },
+  {
+    id: "poi-capture-10",
+    title: "POI Runner",
+    description: "Capture 10 points of interest.",
+    statKey: "poiCaptures",
+    target: 10
+  },
+  {
+    id: "poi-capture-50",
+    title: "Landmark Legend",
+    description: "Capture 50 points of interest.",
+    statKey: "poiCaptures",
+    target: 50
+  },
+  {
+    id: "poi-church-1",
+    title: "Steeple Spotter",
+    description: "Capture a church POI.",
+    statKey: "poiChurchCaptures",
+    target: 1
+  },
+  {
+    id: "poi-hospital-1",
+    title: "Care Finder",
+    description: "Capture a hospital POI.",
+    statKey: "poiHospitalCaptures",
+    target: 1
+  },
+  {
+    id: "poi-historic-1",
+    title: "History Hunter",
+    description: "Capture a historic POI.",
+    statKey: "poiHistoricCaptures",
+    target: 1
+  },
+  {
+    id: "poi-park-1",
+    title: "Green Trail",
+    description: "Capture a park POI.",
+    statKey: "poiParkCaptures",
+    target: 1
+  },
+  {
+    id: "poi-landmark-1",
+    title: "Landmark Found",
+    description: "Capture a landmark POI.",
+    statKey: "poiLandmarkCaptures",
+    target: 1
+  },
+  {
+    id: "poi-local-1",
+    title: "Local Knowledge",
+    description: "Capture a local POI.",
+    statKey: "poiLocalCaptures",
+    target: 1
+  }
+];
+
+let unlockedAchievements = loadUnlockedAchievements();
+
+function loadUnlockedAchievements() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY) || "[]");
+    return new Set(Array.isArray(saved) ? saved : []);
+  } catch (error) {
+    console.warn("Could not load achievements.", error);
+    return new Set();
+  }
+}
+
+function saveUnlockedAchievements() {
+  try {
+    localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY, JSON.stringify(Array.from(unlockedAchievements)));
+  } catch (error) {
+    console.warn("Could not save achievements.", error);
+  }
+}
+
+function getAchievementProgress(achievement) {
+  return Number(playerStats.lifetime[achievement.statKey] || 0);
+}
+
+function checkPoiAchievements() {
+  let unlockedAny = false;
+
+  POI_ACHIEVEMENTS.forEach((achievement) => {
+    if (unlockedAchievements.has(achievement.id)) return;
+    if (getAchievementProgress(achievement) < achievement.target) return;
+
+    unlockedAchievements.add(achievement.id);
+    unlockedAny = true;
+    showToast("Achievement unlocked", achievement.title);
+  });
+
+  if (unlockedAny) {
+    saveUnlockedAchievements();
+    renderAchievements();
   }
 }
 
@@ -3030,6 +3165,11 @@ function initBasicUi() {
         return;
       }
 
+      if (label.includes("achievements")) {
+        openAchievements();
+        return;
+      }
+
       if (label.includes("social") || button.id === "socialBtn") {
         openSocial();
         return;
@@ -3248,6 +3388,12 @@ function navigateMenuBackOnePage() {
     return true;
   }
 
+  if (achievementsScreen && !achievementsScreen.classList.contains("hidden")) {
+    achievementsScreen.classList.add("hidden");
+    showMenuHome();
+    return true;
+  }
+
   if (socialScreen && !socialScreen.classList.contains("hidden")) {
     socialScreen.classList.add("hidden");
     showMenuHome();
@@ -3296,6 +3442,7 @@ function showMenuHome() {
 function hideSubmenus() {
   if (statsScreen) statsScreen.classList.add("hidden");
   if (leadersScreen) leadersScreen.classList.add("hidden");
+  if (achievementsScreen) achievementsScreen.classList.add("hidden");
   if (socialScreen) socialScreen.classList.add("hidden");
   if (craftingScreen) craftingScreen.classList.add("hidden");
   if (marketScreen) marketScreen.classList.add("hidden");
@@ -3311,6 +3458,55 @@ function openCollections() {
   hideMenuHome();
   renderCollections();
   collectionsScreen.classList.remove("hidden");
+}
+
+function openAchievements() {
+  if (!achievementsScreen) return;
+
+  hideSubmenus();
+  hideMenuHome();
+  renderAchievements();
+  achievementsScreen.classList.remove("hidden");
+}
+
+function renderAchievements() {
+  if (!achievementsList) return;
+
+  const unlockedCount = POI_ACHIEVEMENTS.filter((achievement) => unlockedAchievements.has(achievement.id)).length;
+
+  achievementsList.innerHTML = `
+    <div class="achievements-summary">
+      <span>Unlocked</span>
+      <strong>${formatNumber(unlockedCount)} / ${formatNumber(POI_ACHIEVEMENTS.length)}</strong>
+    </div>
+    ${POI_ACHIEVEMENTS.map(renderAchievementCard).join("")}
+  `;
+}
+
+function renderAchievementCard(achievement) {
+  const progress = getAchievementProgress(achievement);
+  const progressValue = Math.min(progress, achievement.target);
+  const progressPercent = Math.min(100, Math.round((progressValue / achievement.target) * 100));
+  const unlocked = unlockedAchievements.has(achievement.id);
+
+  return `
+    <div class="achievement-card ${unlocked ? "unlocked" : "locked"}">
+      <div class="achievement-medal">${unlocked ? "★" : "•"}</div>
+      <div class="achievement-info">
+        <div class="achievement-topline">
+          <h3>${escapeHtml(achievement.title)}</h3>
+          <span>${unlocked ? "Unlocked" : "Locked"}</span>
+        </div>
+        <p>${escapeHtml(achievement.description)}</p>
+        <div class="achievement-progress-track">
+          <div class="achievement-progress-fill" style="width: ${progressPercent}%;"></div>
+        </div>
+        <div class="achievement-progress-text">
+          ${formatNumber(progressValue)} / ${formatNumber(achievement.target)}
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderCollections() {
@@ -3646,6 +3842,7 @@ async function scanNearbyPois() {
 
     if (added > 0) {
       addStat("newPois", added);
+      checkPoiAchievements();
       scheduleSavePinsToLocal();
       clearPinIconCache();
       scheduleRedrawPins();
@@ -3793,6 +3990,7 @@ function resetLocalProgress() {
       SERVER_STARTED_AT_KEY,
       AVATAR_STORAGE_KEY,
       STATS_STORAGE_KEY,
+      ACHIEVEMENTS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
       MARKET_STORAGE_KEY,
       PLAYER_STORAGE_KEY,
@@ -6250,6 +6448,8 @@ function recordPoiCaptureStats(pin) {
   if (categoryStat) {
     addStat(categoryStat, 1);
   }
+
+  checkPoiAchievements();
 }
 
 function awardWaterPinResourceDrop(pin) {
