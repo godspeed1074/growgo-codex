@@ -5557,7 +5557,9 @@ body.phone-preview .recipe-panel,
   color: #ffffff;
   font-size: 12px;
   font-weight: 1000;
+  line-height: 1.2;
   text-align: right;
+  overflow-wrap: anywhere;
 }
 
 .owned-pin-actions {

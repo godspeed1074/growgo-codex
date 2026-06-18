@@ -3271,6 +3271,7 @@ function renderOwnedPinCard(pin) {
   const level = getBasePinLevel(pin);
   const levelInfo = getBasePinLevelInfo(level);
   const plantLabel = pin.plant ? getPlantStageLabel(pin.plant) : "No plant";
+  const plantTiming = pin.plant ? getPlantTimingLabel(pin.plant) : "Plant a seed to start growing";
   const pending = Number(pin.ownerPendingPoints || 0);
   const replant = pin.replantEnabled ? "On" : "Off";
   const distance = getDistanceToPinLabel(pin);
@@ -3290,6 +3291,10 @@ function renderOwnedPinCard(pin) {
       <div class="owned-pin-detail-row">
         <span>Plant</span>
         <strong>${escapeHtml(plantLabel)}</strong>
+      </div>
+      <div class="owned-pin-detail-row">
+        <span>Growth</span>
+        <strong>${escapeHtml(plantTiming)}</strong>
       </div>
       <div class="owned-pin-detail-row">
         <span>Replant</span>
@@ -3702,6 +3707,23 @@ function renderRankRow(label, data) {
 
 function formatNumber(value) {
   return Number(value || 0).toLocaleString();
+}
+
+function formatDuration(ms) {
+  const totalMinutes = Math.max(0, Math.ceil(Number(ms || 0) / (1000 * 60)));
+  const days = Math.floor(totalMinutes / (60 * 24));
+  const hours = Math.floor((totalMinutes - (days * 60 * 24)) / 60);
+  const minutes = totalMinutes % 60;
+
+  if (days > 0) {
+    return `${days}d ${hours}h`;
+  }
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+
+  return `${minutes}m`;
 }
 
 function renderPlayerOverview() {
@@ -5370,6 +5392,7 @@ function openBasePinPlantPopup(pin) {
 
   const seedOptions = getAvailableBasePinSeeds();
   const planted = pin.plant ? getPlantStageLabel(pin.plant) : "No seed planted";
+  const plantTiming = pin.plant ? getPlantTimingLabel(pin.plant) : "Plant a seed to start growing";
   const level = getBasePinLevel(pin);
   const levelInfo = getBasePinLevelInfo(level);
   const upgrade = getBasePinUpgradeInfo(pin);
@@ -5386,6 +5409,9 @@ function openBasePinPlantPopup(pin) {
       </div>
       <div class="base-pin-popup-copy">
         Current plant: ${escapeHtml(planted)}
+      </div>
+      <div class="base-pin-popup-meta">
+        Growth: ${escapeHtml(plantTiming)}
       </div>
       <div class="base-pin-popup-meta">
         Replant: ${pin.replantEnabled ? "On" : "Off"}
@@ -5791,6 +5817,36 @@ function getPlantStageLabel(plant) {
   if (stage === 3) return `${label}, almost ready`;
   if (stage === 2) return `${label}, sprouting`;
   return `${label}, planted`;
+}
+
+function getPlantTimingLabel(plant) {
+  if (!plant?.plantedAt) return "Plant a seed to start growing";
+
+  const stage = getPinPlantStage({ plant });
+  const now = getTrustedNow();
+  const plantedAt = Number(plant.plantedAt);
+  const stageMs = PIN_PLANT_STAGE_HOURS * 60 * 60 * 1000;
+
+  if (stage >= 4) {
+    const playerId = getActivePlayerId();
+    const harvestedByDay = plant.harvestedByDay || {};
+
+    if (harvestedByDay[playerId] === getUtcDayKey(now)) {
+      return "Harvested today";
+    }
+
+    return "Ready now";
+  }
+
+  const nextStageAt = plantedAt + (stage * stageMs);
+  const harvestAt = plantedAt + (stageMs * 3);
+  const nextLabel = stage === 3 ? "Ready" : "Next stage";
+
+  if (stage === 3) {
+    return `${nextLabel} in ${formatDuration(harvestAt - now)}`;
+  }
+
+  return `${nextLabel} in ${formatDuration(nextStageAt - now)}`;
 }
 
 function wasCapturedToday(pin) {
