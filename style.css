@@ -1312,9 +1312,9 @@ body.phone-preview .menu-overlay {
 }
 
 .water-pin-marker img {
-  width: 64px !important;
-  height: 84px !important;
-  margin: 0;
+  width: 32px !important;
+  height: 42px !important;
+  margin: 42px 0 0 16px;
   filter:
     saturate(1.35)
     hue-rotate(8deg)
@@ -1322,9 +1322,9 @@ body.phone-preview .menu-overlay {
 }
 
 .water-pin-marker.water-pin-has-fish img {
-  width: 74px !important;
-  height: 96px !important;
-  margin: -8px 0 0 -5px;
+  width: 64px !important;
+  height: 84px !important;
+  margin: 0;
   filter:
     saturate(1.45)
     hue-rotate(8deg)
