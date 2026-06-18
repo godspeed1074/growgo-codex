@@ -8,6 +8,7 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
+const POI_PIN_VALUE = 25;
 const WATER_PIN_RESOURCE_DROP_CHANCE = 0.25;
 const WATER_PIN_BLUE_FISH_CHANCE = 1 / 250;
 const WATER_PIN_SALMON_CHANCE = 1 / 1000;
@@ -43,6 +44,15 @@ const PIN_SPACING_METERS = 46;
 const MIN_PIN_SEPARATION_METERS = 46;
 const MAX_VISIBLE_PINS = 500;
 const MAX_POIS_PER_SCAN = 250;
+
+const POI_CAPTURE_STAT_BY_CATEGORY = {
+  Church: "poiChurchCaptures",
+  Hospital: "poiHospitalCaptures",
+  Historic: "poiHistoricCaptures",
+  Park: "poiParkCaptures",
+  Landmark: "poiLandmarkCaptures",
+  "Local POI": "poiLocalCaptures"
+};
 
 const MIN_FETCH_ZOOM = 15;
 const PIN_FETCH_DEBOUNCE_MS = 450;
@@ -687,6 +697,13 @@ function createDefaultStats() {
       birdsCaptured: 0,
       fishCaught: 0,
       newPois: 0,
+      poiCaptures: 0,
+      poiChurchCaptures: 0,
+      poiHospitalCaptures: 0,
+      poiHistoricCaptures: 0,
+      poiParkCaptures: 0,
+      poiLandmarkCaptures: 0,
+      poiLocalCaptures: 0,
       playersMet: 0
     },
 
@@ -700,6 +717,13 @@ function createDefaultStats() {
       birdsCaptured: 0,
       fishCaught: 0,
       newPois: 0,
+      poiCaptures: 0,
+      poiChurchCaptures: 0,
+      poiHospitalCaptures: 0,
+      poiHistoricCaptures: 0,
+      poiParkCaptures: 0,
+      poiLandmarkCaptures: 0,
+      poiLocalCaptures: 0,
       marketsAttended: 0,
       playersMet: 0,
       localNumberOnes: 0,
@@ -717,6 +741,7 @@ function createDefaultStats() {
       birdsCaptured: { value: 0, date: null },
       fishCaught: { value: 0, date: null },
       newPois: { value: 0, date: null },
+      poiCaptures: { value: 0, date: null },
       playersMet: { value: 0, date: null },
       bestLocalRank: { rank: null, date: null },
       bestRegionalRank: { rank: null, date: null },
@@ -3620,6 +3645,7 @@ async function scanNearbyPois() {
     });
 
     if (added > 0) {
+      addStat("newPois", added);
       scheduleSavePinsToLocal();
       clearPinIconCache();
       scheduleRedrawPins();
@@ -3842,6 +3868,7 @@ function renderStats(tabName) {
       ${renderStatRow("Birds Captured", playerStats.today.birdsCaptured)}
       ${renderStatRow("Fish Caught", playerStats.today.fishCaught)}
       ${renderStatRow("New POIs", playerStats.today.newPois)}
+      ${renderStatRow("POI Captures", playerStats.today.poiCaptures)}
       ${renderStatRow("Players Met", playerStats.today.playersMet)}
     `;
     return;
@@ -3858,6 +3885,13 @@ function renderStats(tabName) {
       ${renderStatRow("Birds Captured", playerStats.lifetime.birdsCaptured)}
       ${renderStatRow("Fish Caught", playerStats.lifetime.fishCaught)}
       ${renderStatRow("New POIs", playerStats.lifetime.newPois)}
+      ${renderStatRow("POI Captures", playerStats.lifetime.poiCaptures)}
+      ${renderStatRow("Church POIs", playerStats.lifetime.poiChurchCaptures)}
+      ${renderStatRow("Hospital POIs", playerStats.lifetime.poiHospitalCaptures)}
+      ${renderStatRow("Historic POIs", playerStats.lifetime.poiHistoricCaptures)}
+      ${renderStatRow("Park POIs", playerStats.lifetime.poiParkCaptures)}
+      ${renderStatRow("Landmark POIs", playerStats.lifetime.poiLandmarkCaptures)}
+      ${renderStatRow("Local POIs", playerStats.lifetime.poiLocalCaptures)}
       ${renderStatRow("Markets Attended", playerStats.lifetime.marketsAttended)}
       ${renderStatRow("Players Met", playerStats.lifetime.playersMet)}
       ${renderStatRow("#1 Local Finishes", playerStats.lifetime.localNumberOnes)}
@@ -3878,6 +3912,7 @@ function renderStats(tabName) {
       ${renderBestRow("Most Birds Captured Day", playerStats.best.birdsCaptured)}
       ${renderBestRow("Most Fish Caught Day", playerStats.best.fishCaught)}
       ${renderBestRow("Most New POIs Day", playerStats.best.newPois)}
+      ${renderBestRow("Most POI Captures Day", playerStats.best.poiCaptures)}
       ${renderBestRow("Most Players Met Day", playerStats.best.playersMet)}
       ${renderRankRow("Best Local Rank", playerStats.best.bestLocalRank)}
       ${renderRankRow("Best Regional Rank", playerStats.best.bestRegionalRank)}
@@ -3897,6 +3932,13 @@ function getStatIcon(label) {
     "Birds Captured": "🐦",
     "Fish Caught": "🐟",
     "New POIs": "🗺️",
+    "POI Captures": "📌",
+    "Church POIs": "⛪",
+    "Hospital POIs": "🏥",
+    "Historic POIs": "🏛️",
+    "Park POIs": "🌳",
+    "Landmark POIs": "🗿",
+    "Local POIs": "🧭",
     "Players Met": "🤝",
     "Markets Attended": "🏪",
     "#1 Local Finishes": "🏆",
@@ -5641,11 +5683,6 @@ function redrawVisiblePins() {
     marker._growgoZIndex = zIndex;
 
     marker.on("click", () => {
-      if (pin.type === "poi") {
-        showPoiToast(pin);
-        return;
-      }
-
       if (pinLongPressTriggered) {
         pinLongPressTriggered = false;
         return;
@@ -5669,7 +5706,7 @@ function redrawVisiblePins() {
 
 function getPinIconState(pin) {
   const type = pin.type || "base";
-  const points = type === "poi" ? 0 : getPinPoints(pin);
+  const points = getPinPoints(pin);
   const capturedToday = wasCapturedToday(pin);
   const glowing = shouldPinGlow(pin, capturedToday);
   const ownerId = pin.ownerId || "";
@@ -5758,8 +5795,9 @@ function buildPinIcon(pin, state = null) {
 
 function buildPoiIcon(pin, cacheKey) {
   const category = pin.poiCategory || "POI";
+  const capturedClass = wasCapturedToday(pin) ? "poi-captured-today" : "";
   const html = `
-    <div class="poi-pin-marker" aria-label="${escapeAttribute(pin.poiName || category)}">
+    <div class="poi-pin-marker ${capturedClass}" aria-label="${escapeAttribute(pin.poiName || category)}">
       <span>${escapeHtml(getPoiIconLabel(category))}</span>
     </div>
   `;
@@ -5782,10 +5820,6 @@ function getPoiIconLabel(category) {
   if (category === "Park") return "P";
   if (category === "Landmark") return "L";
   return "I";
-}
-
-function showPoiToast(pin) {
-  showToast(pin.poiName || "Point of Interest", `${pin.poiCategory || "POI"} - capture rules coming later.`);
 }
 
 function clearPinIconCache() {
@@ -6176,6 +6210,7 @@ function capturePin(pin) {
   pin.capturedAt = trustedNow;
 
   addStat("captures", 1);
+  recordPoiCaptureStats(pin);
   addStat("score", points);
   addStat("goldEarned", 1);
   addPlayerXp(points);
@@ -6198,8 +6233,23 @@ function capturePin(pin) {
 }
 
 function getPinTypeLabel(pin) {
+  if (pin?.type === "poi") {
+    return pin.poiCategory ? `${pin.poiCategory.toLowerCase()} POI` : "POI";
+  }
+
   if (pin?.type === "water") return "water pin";
   return "base pin";
+}
+
+function recordPoiCaptureStats(pin) {
+  if (pin?.type !== "poi") return;
+
+  addStat("poiCaptures", 1);
+
+  const categoryStat = POI_CAPTURE_STAT_BY_CATEGORY[pin.poiCategory || ""];
+  if (categoryStat) {
+    addStat(categoryStat, 1);
+  }
 }
 
 function awardWaterPinResourceDrop(pin) {
@@ -6278,6 +6328,10 @@ function harvestReadyBasePinPlant(pin) {
 }
 
 function getPinPoints(pin) {
+  if (pin?.type === "poi") {
+    return POI_PIN_VALUE;
+  }
+
   if (pin?.type === "water") {
     return WATER_PIN_VALUE;
   }

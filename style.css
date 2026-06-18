@@ -1449,6 +1449,13 @@ body.phone-preview .menu-overlay {
   z-index: 1;
 }
 
+.poi-pin-marker.poi-captured-today {
+  opacity: 0.58;
+  filter:
+    grayscale(0.35)
+    drop-shadow(0 2px 4px rgba(0,0,0,0.28));
+}
+
 .water-pin-fish-blue {
   background: linear-gradient(#e7fbff, #38a8ff);
 }
