@@ -1295,6 +1295,12 @@ body.phone-preview .menu-overlay {
   pointer-events: none !important;
 }
 
+.base-pin-marker:not(.water-pin-marker) img {
+  width: 32px !important;
+  height: 42px !important;
+  margin: 42px 0 0 16px;
+}
+
 .base-pin-number {
   position: absolute;
   left: 50%;

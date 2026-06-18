@@ -5559,8 +5559,8 @@ function buildPinIcon(pin, state = null) {
   const capturedClass = iconState.capturedToday ? "pin-captured-today" : "";
   const ownedClass = iconState.owned ? "pin-owned" : "";
   const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
-  const pinImage = iconState.type === "water" ? "pin-water-blue.png" : "pin-base-blue.png";
-  const showPointNumber = iconState.type !== "water" && !iconState.capturedToday;
+  const pinImage = iconState.type === "water" ? "pin-water-blue.png" : "pin-base-purple.png";
+  const showPointNumber = false;
   const fish = getActiveWaterPinFish(pin);
   const fishClass = fish ? "water-pin-has-fish" : "";
   const fishBadge = fish
