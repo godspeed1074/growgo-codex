@@ -7,6 +7,8 @@
 const DEFAULT_CENTER = [-38.4537, 145.2381];
 
 const BASE_PIN_VALUE = 5;
+const WATER_PIN_VALUE = 10;
+const WATER_PIN_RESOURCE_DROP_CHANCE = 0.25;
 const POINTS_GROWTH_HOURS = 168;
 const CAPTURE_RADIUS_METERS = 100;
 const WATER_PIN_DISTANCE_METERS = 50;
@@ -5907,17 +5909,31 @@ function capturePin(pin) {
   addMarketCoins(1);
   awardBasePinOwnerCaptureReward(pin);
   harvestReadyBasePinPlant(pin);
+  const waterDrop = awardWaterPinResourceDrop(pin);
 
   scheduleSavePinsToLocal();
   clearPinIconCache();
 
-  showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold`);
+  const resourceText = waterDrop ? ", +1 water" : "";
+  showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold${resourceText}`);
   scheduleRedrawPins();
 }
 
 function getPinTypeLabel(pin) {
   if (pin?.type === "water") return "water pin";
   return "base pin";
+}
+
+function awardWaterPinResourceDrop(pin) {
+  if (pin?.type !== "water") return false;
+  if (Math.random() >= WATER_PIN_RESOURCE_DROP_CHANCE) return false;
+
+  marketState.inventory.water = Number(marketState.inventory.water || 0) + 1;
+  addStat("resourcesGained", 1);
+  saveMarketState();
+  refreshInventoryIfOpen();
+
+  return true;
 }
 
 function awardBasePinOwnerCaptureReward(pin) {
@@ -5968,6 +5984,10 @@ function harvestReadyBasePinPlant(pin) {
 }
 
 function getPinPoints(pin) {
+  if (pin?.type === "water") {
+    return WATER_PIN_VALUE;
+  }
+
   const now = getTrustedNow();
   const growthStartedAt = Number(pin.capturedAt || getServerStartedAt());
   const hoursSinceGrowthStarted = Math.max(0, (now - growthStartedAt) / (1000 * 60 * 60));
