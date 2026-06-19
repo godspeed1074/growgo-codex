@@ -7913,7 +7913,6 @@ function capturePin(pin) {
     showToast("Resource found", resourceText);
   }
   showPinCaptureFloat(pin, points, 1);
-  showRewardBurst(`+${points} XP`);
   scheduleRedrawPins();
 }
 
