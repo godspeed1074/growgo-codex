@@ -5861,7 +5861,56 @@ body.phone-preview .recipe-panel,
 
 .poi-pins-list {
   display: grid;
+  gap: 12px;
+}
+
+.poi-category-group {
+  display: grid;
   gap: 10px;
+}
+
+.poi-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 54px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 2px solid rgba(139, 207, 138, 0.55);
+  background: rgba(255,255,255,0.08);
+}
+
+.poi-category-header h4 {
+  margin: 0 0 3px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.poi-category-header span {
+  color: rgba(255,255,255,0.64);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.poi-category-header strong {
+  flex: 0 0 auto;
+  min-width: 58px;
+  padding: 7px 9px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.25);
+  color: #f7d054;
+  font-size: 12px;
+  font-weight: 1000;
+  text-align: center;
+}
+
+.poi-category-list {
+  display: grid;
+  gap: 9px;
 }
 
 .owned-pins-empty {

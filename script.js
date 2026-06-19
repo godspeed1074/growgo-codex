@@ -118,6 +118,15 @@ const MOCK_POIS = [
   }
 ];
 
+const POI_COLLECTION_CATEGORIES = [
+  "Places",
+  "Film Locations",
+  "Dinosaur Sites",
+  "Music Landmarks",
+  "Historical People",
+  "Tourist Attractions"
+];
+
 const MIN_FETCH_ZOOM = 15;
 const PIN_FETCH_DEBOUNCE_MS = 450;
 const ROAD_FETCH_PADDING = 0.0035;
@@ -3781,7 +3790,52 @@ function renderPoiPinsCollection() {
     return;
   }
 
-  poiPinsList.innerHTML = poiPins.slice(0, 40).map(renderPoiPinCard).join("");
+  poiPinsList.innerHTML = groupPOIsByCategory(poiPins).map(renderPoiCategoryGroup).join("");
+}
+
+function groupPOIsByCategory(poiPins) {
+  const groups = new Map(POI_COLLECTION_CATEGORIES.map((category) => [category, []]));
+
+  poiPins.forEach((pin) => {
+    const category = pin.category || "Tourist Attractions";
+    if (!groups.has(category)) {
+      groups.set(category, []);
+    }
+
+    groups.get(category).push(pin);
+  });
+
+  return Array.from(groups.entries())
+    .filter(([, pins]) => pins.length > 0)
+    .map(([category, pins]) => ({
+      category,
+      pins: pins.slice(0, 40)
+    }));
+}
+
+function renderPoiCategoryGroup(group) {
+  const capturedCount = group.pins.filter((pin) => pin.captured).length;
+  const subcategorySummary = getPoiSubcategorySummary(group.pins);
+
+  return `
+    <section class="poi-category-group">
+      <div class="poi-category-header">
+        <div>
+          <h4>${escapeHtml(group.category)}</h4>
+          <span>${escapeHtml(subcategorySummary)}</span>
+        </div>
+        <strong>${formatNumber(capturedCount)} / ${formatNumber(group.pins.length)}</strong>
+      </div>
+      <div class="poi-category-list">
+        ${group.pins.map(renderPoiPinCard).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function getPoiSubcategorySummary(pins) {
+  const subcategories = Array.from(new Set(pins.map((pin) => pin.subcategory || pin.poiCategory || "POI")));
+  return subcategories.slice(0, 3).join(" · ");
 }
 
 function renderPoiPinCard(pin) {
