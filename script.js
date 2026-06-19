@@ -199,7 +199,7 @@ const CARD_SETS = [
       cardName,
       rarity: index === 0 ? "legendary" : index < 4 ? "rare" : index < 10 ? "uncommon" : "common",
       image: index === 0 ? "assets/cards/t-rex-card.jpg" : null,
-      ghostImage: null,
+      ghostImage: "assets/cards/dinosaur-card-back.jpg",
       variationType: "normal",
       isAnimatedVariation: false,
       matchingPoiId: index === 0 ? "poi:mock:dinosaur-fossil-site" : null
