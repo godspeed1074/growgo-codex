@@ -3232,10 +3232,21 @@ function initBasicUi() {
   }
 
   if (menuOverlay) {
-    menuOverlay.addEventListener("click", closeMenu);
+    menuOverlay.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeMenu();
+    });
+    menuOverlay.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeMenu();
+    });
   }
 
   if (sideMenu) {
+    document.addEventListener("pointerdown", handleOutsideMenuPointerDown, true);
+
     sideMenu.addEventListener("click", (event) => {
       const button = event.target.closest(".menu-btn");
       if (!button) return;
@@ -3293,6 +3304,15 @@ function initBasicUi() {
 
     setupMenuBackSwipe();
   }
+}
+
+function handleOutsideMenuPointerDown(event) {
+  if (!sideMenu || !sideMenu.classList.contains("open")) return;
+  if (sideMenu.contains(event.target)) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  closeMenu();
 }
 
 function setupMenuBackSwipe() {

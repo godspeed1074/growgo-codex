@@ -4720,6 +4720,12 @@ button.social-party-rule:active {
   pointer-events: auto;
 }
 
+body.menu-open #map .leaflet-marker-pane,
+body.menu-open #map .leaflet-tooltip-pane,
+body.menu-open #map .leaflet-popup-pane {
+  pointer-events: none !important;
+}
+
 /* Menu header */
 .menu-header {
   position: relative;
