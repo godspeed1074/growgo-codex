@@ -4230,7 +4230,6 @@ function getCardArtMarkup(card, owned) {
     return `
       <div class="collection-card-art-inner image-card-art">
         <img class="collection-card-image" src="${escapeAttribute(cardImage)}" alt="${escapeAttribute(card.cardName)} card art" loading="lazy" />
-        <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
       </div>
     `;
   }
@@ -4242,7 +4241,6 @@ function getCardArtMarkup(card, owned) {
   return `
     <div class="collection-card-art-inner">
       <div class="collection-card-icon">${escapeHtml(owned ? icon : initial)}</div>
-      <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
     </div>
   `;
 }
@@ -4272,7 +4270,6 @@ function getDinosaurCardArtMarkup(card, owned) {
         <strong>${escapeHtml(card.cardName)}</strong>
         <span>${escapeHtml(profile.habitat)}</span>
       </div>
-      <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
     </div>
   `;
 }
@@ -4295,7 +4292,6 @@ function openCardPreview(cardId) {
       <h3>${escapeHtml(card.cardName)}</h3>
       <p>Card #${formatNumber(card.cardNumber)} / ${formatNumber(set.totalCards)}</p>
       <p>${escapeHtml(set.setName)}</p>
-      <strong>${escapeHtml(card.rarity)}</strong>
     </div>
   `;
 

@@ -6637,6 +6637,8 @@ body.phone-preview .recipe-panel,
   display: block;
   object-fit: cover;
   border-radius: 14px;
+  transform: scale(1.09);
+  transform-origin: center;
 }
 
 .card-set-back-name {
@@ -6844,6 +6846,8 @@ body.phone-preview .recipe-panel,
   display: block;
   object-fit: cover;
   border-radius: 10px;
+  transform: scale(1.09);
+  transform-origin: center;
 }
 
 .collection-card-icon {
