@@ -163,6 +163,7 @@ const CARD_SETS = [
     setName: "Dinosaur Discoveries",
     themeIcon: "🦖",
     themeClass: "dinosaur",
+    coverImage: "assets/cards/dinosaur-card-back.jpg",
     totalCards: 24,
     completedTitle: "Fossil Hunter",
     completionAchievementId: "achievement-dinosaur-discoveries-complete",
@@ -199,7 +200,7 @@ const CARD_SETS = [
       cardName,
       rarity: index === 0 ? "legendary" : index < 4 ? "rare" : index < 10 ? "uncommon" : "common",
       image: index === 0 ? "assets/cards/t-rex-card.jpg" : null,
-      ghostImage: "assets/cards/dinosaur-card-back.jpg",
+      ghostImage: null,
       variationType: "normal",
       isAnimatedVariation: false,
       matchingPoiId: index === 0 ? "poi:mock:dinosaur-fossil-site" : null
@@ -4126,11 +4127,14 @@ function renderCardSetBack(set) {
   const completion = playerCardCollection.completedSets?.[set.setId] || null;
   const completeClass = completion ? "complete" : "";
   const rewardLabel = completion?.titleAwarded || set.completedTitle || "Complete";
+  const coverArt = set.coverImage
+    ? `<img class="card-set-back-cover-image" src="${escapeAttribute(set.coverImage)}" alt="${escapeAttribute(set.setName)} cover art" loading="lazy" />`
+    : `<span>${escapeHtml(set.themeIcon || "★")}</span>`;
 
   return `
     <button class="card-set-back ${escapeAttribute(set.themeClass || "")} ${completeClass}" data-card-set-id="${escapeAttribute(set.setId)}" type="button">
       <div class="card-set-back-art">
-        <span>${escapeHtml(set.themeIcon || "★")}</span>
+        ${coverArt}
       </div>
       <div class="card-set-back-name">${escapeHtml(set.setName)}</div>
       <div class="card-set-back-progress">${formatNumber(progress.ownedCount)} / ${formatNumber(progress.totalCards)}</div>

@@ -6631,6 +6631,14 @@ body.phone-preview .recipe-panel,
     inset 0 1px 0 rgba(255,255,255,0.44);
 }
 
+.card-set-back-cover-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
 .card-set-back-name {
   position: relative;
   font-size: 14px;
