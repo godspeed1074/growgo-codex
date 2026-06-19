@@ -143,24 +143,25 @@
       <section id="leadersScreen" class="submenu-screen hidden">
         <h2>LEADERS</h2>
 
-        <div class="leader-segments stats-tabs">
+        <div class="leader-segments stats-tabs" data-leader-filter="metric">
           <button class="seg-btn active" data-board="points" type="button">Points</button>
           <button class="seg-btn" data-board="achievements" type="button">Achievements</button>
           <button class="seg-btn" data-board="records" type="button">Records</button>
         </div>
 
-        <div class="leader-segments stats-tabs">
+        <div class="leader-segments stats-tabs" data-leader-filter="scope">
           <button class="seg-btn active" data-board="local" type="button">Local</button>
           <button class="seg-btn" data-board="regional" type="button">Regional</button>
           <button class="seg-btn" data-board="global" type="button">Global</button>
         </div>
 
-        <div class="leader-segments stats-tabs">
+        <div class="leader-segments stats-tabs" data-leader-filter="period">
           <button class="seg-btn active" data-board="daily" type="button">Daily</button>
           <button class="seg-btn" data-board="seasonal" type="button">Seasonal</button>
           <button class="seg-btn" data-board="all-time" type="button">All-Time</button>
         </div>
 
+        <div id="leaderboardSummary" class="leaderboard-summary"></div>
         <div class="leaderboard-list"></div>
       </section>
 

@@ -587,6 +587,7 @@ let statsBack;
 let leadersScreen;
 let leadersBackBtn;
 let leaderboardList;
+let leaderboardSummary;
 let achievementsScreen;
 let achievementsList;
 let socialScreen;
@@ -711,6 +712,7 @@ playerQrCode = document.getElementById("playerQrCode");
   leadersScreen = document.getElementById("leadersScreen");
   leadersBackBtn = document.getElementById("leadersBackBtn");
   leaderboardList = leadersScreen ? leadersScreen.querySelector(".leaderboard-list") : null;
+  leaderboardSummary = document.getElementById("leaderboardSummary");
 achievementsScreen = document.getElementById("achievementsScreen");
 achievementsList = document.getElementById("achievementsList");
 socialScreen = document.getElementById("socialScreen");
@@ -4760,7 +4762,7 @@ function initLeadersUi() {
     }
 
     button.classList.add("active");
-    renderLeaderboard(button.dataset.board || "points");
+    renderLeaderboard();
   });
 }
 
@@ -4771,22 +4773,106 @@ function openLeaders() {
   hideMenuHome();
 
   leadersScreen.classList.remove("hidden");
-  renderLeaderboard("daily");
+  renderLeaderboard();
 }
 
-function renderLeaderboard(type) {
+function getLeaderBoardState() {
+  const getActiveValue = (filterName, fallback) => {
+    const group = leadersScreen?.querySelector(`[data-leader-filter="${filterName}"]`);
+    return group?.querySelector(".seg-btn.active")?.dataset.board || fallback;
+  };
+
+  return {
+    metric: getActiveValue("metric", "points"),
+    scope: getActiveValue("scope", "local"),
+    period: getActiveValue("period", "daily")
+  };
+}
+
+function getLeaderBoardTitle(state) {
+  return [state.period, state.scope, state.metric]
+    .map((part) => part.replaceAll("-", " "))
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function getLeaderMetricLabel(metric) {
+  if (metric === "achievements") return "Unlocked";
+  if (metric === "records") return "Record";
+  return "Score";
+}
+
+function getLeaderMetricValue(player, metric) {
+  if (metric === "achievements") {
+    return Math.max(0, Math.round((player.score || 0) / 15000));
+  }
+
+  if (metric === "records") {
+    return `${Math.max(1, Math.round((player.score || 0) / 12000))}x`;
+  }
+
+  return Number(player.score || 0).toLocaleString();
+}
+
+function getLeaderSubtitle(state) {
+  if (state.metric === "achievements") {
+    return "Most achievements unlocked for this board.";
+  }
+
+  if (state.metric === "records") {
+    return "Best streaks and standout records for this board.";
+  }
+
+  return "Top player points for this board.";
+}
+
+function renderLeaderboard() {
   if (!leaderboardList) return;
 
-  const top100 = MOCK_LEADERBOARD.slice(0, 100);
-  const currentPlayer = {
+  const state = getLeaderBoardState();
+  renderLeaderboardSummary(state);
+
+  if (state.metric === "achievements") {
+    renderAchievementLeaderboard(state);
+    return;
+  }
+
+  if (state.metric === "records") {
+    renderRecordsLeaderboard(state);
+    return;
+  }
+
+  renderPointsLeaderboard(state);
+}
+
+function renderLeaderboardSummary(state) {
+  if (!leaderboardSummary) return;
+
+  leaderboardSummary.innerHTML = `
+    <div>
+      <span>Active Board</span>
+      <strong>${escapeHtml(getLeaderBoardTitle(state))}</strong>
+    </div>
+    <p>${escapeHtml(getLeaderSubtitle(state))}</p>
+  `;
+}
+
+function getCurrentLeaderPlayer() {
+  return {
     ...(MOCK_LEADERBOARD.find((p) => p.me) || {}),
     rank: 118,
     name: playerState.name || DEFAULT_PLAYER_NAME,
     score: playerStats?.lifetime?.score || 0,
     me: true
   };
+}
 
-  let html = top100.map((player) => {
+function renderPointsLeaderboard(state) {
+  const top100 = MOCK_LEADERBOARD.slice(0, 100);
+  const currentPlayer = getCurrentLeaderPlayer();
+
+  let html = renderYourRankCard(currentPlayer, state);
+  html += top100.map((player) => {
     const cardClass = [
       "leader-card",
       player.rank === 1 ? "champion" : "",
@@ -4803,40 +4889,81 @@ function renderLeaderboard(type) {
 
         <div class="leader-info">
           <strong>${escapeHtml(player.name)}</strong>
-          <span>${escapeHtml(String(type || "daily").toUpperCase())} LEADERBOARD</span>
+          <span>${escapeHtml(getLeaderBoardTitle(state).toUpperCase())}</span>
         </div>
 
         <div class="leader-score">
-          <span>Score</span>
-          <strong>${player.score.toLocaleString()}</strong>
+          <span>${escapeHtml(getLeaderMetricLabel(state.metric))}</span>
+          <strong>${escapeHtml(getLeaderMetricValue(player, state.metric))}</strong>
         </div>
       </div>
     `;
   }).join("");
 
-  if (currentPlayer && currentPlayer.rank > 100) {
-    html += `
-      <div style="height:14px"></div>
-
-      <div class="leader-card my-rank">
-        <div class="leader-rank">#${currentPlayer.rank}</div>
-
-        <div class="leader-avatar">⭐</div>
-
-        <div class="leader-info">
-          <strong>${escapeHtml(currentPlayer.name)}</strong>
-          <span>YOUR RANK</span>
-        </div>
-
-        <div class="leader-score">
-          <span>Score</span>
-          <strong>${currentPlayer.score.toLocaleString()}</strong>
-        </div>
-      </div>
-    `;
-  }
-
   leaderboardList.innerHTML = html;
+}
+
+function renderYourRankCard(player, state) {
+  return `
+    <div class="leader-card my-rank leader-your-rank">
+      <div class="leader-rank">#${player.rank}</div>
+
+      <div class="leader-avatar">⭐</div>
+
+      <div class="leader-info">
+        <strong>${escapeHtml(player.name)}</strong>
+        <span>Your Rank</span>
+      </div>
+
+      <div class="leader-score">
+        <span>${escapeHtml(getLeaderMetricLabel(state.metric))}</span>
+        <strong>${escapeHtml(getLeaderMetricValue(player, state.metric))}</strong>
+      </div>
+    </div>
+  `;
+}
+
+function renderAchievementLeaderboard(state) {
+  const currentPlayer = getCurrentLeaderPlayer();
+  const achievementPlayers = MOCK_LEADERBOARD.slice(0, 10).map((player) => ({
+    ...player,
+    score: getLeaderMetricValue(player, "achievements")
+  }));
+
+  leaderboardList.innerHTML = `
+    ${renderYourRankCard(currentPlayer, state)}
+    ${achievementPlayers.map((player) => renderPlaceholderLeaderRow(player, state, "🏅")).join("")}
+  `;
+}
+
+function renderRecordsLeaderboard(state) {
+  const currentPlayer = getCurrentLeaderPlayer();
+  const recordPlayers = MOCK_LEADERBOARD.slice(0, 10).map((player) => ({
+    ...player,
+    score: getLeaderMetricValue(player, "records")
+  }));
+
+  leaderboardList.innerHTML = `
+    ${renderYourRankCard(currentPlayer, state)}
+    ${recordPlayers.map((player) => renderPlaceholderLeaderRow(player, state, "⚡")).join("")}
+  `;
+}
+
+function renderPlaceholderLeaderRow(player, state, icon) {
+  return `
+    <div class="leader-card ${player.rank === 1 ? "champion" : ""}">
+      <div class="leader-rank">#${player.rank}</div>
+      <div class="leader-avatar">${icon}</div>
+      <div class="leader-info">
+        <strong>${escapeHtml(player.name)}</strong>
+        <span>${escapeHtml(getLeaderBoardTitle(state).toUpperCase())}</span>
+      </div>
+      <div class="leader-score">
+        <span>${escapeHtml(getLeaderMetricLabel(state.metric))}</span>
+        <strong>${escapeHtml(String(player.score))}</strong>
+      </div>
+    </div>
+  `;
 }
 /* ----------------------------- */
 /* SOCIAL UI */

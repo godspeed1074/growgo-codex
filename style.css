@@ -688,6 +688,45 @@ body.phone-preview .menu-overlay {
   border-color: rgba(190, 255, 150, 0.95);
 }
 
+.leaderboard-summary {
+  display: grid;
+  gap: 5px;
+  margin: 10px 0 10px;
+  padding: 12px;
+  border-radius: 17px;
+  border: 3px solid rgba(139, 207, 138, 0.68);
+  background: rgba(1, 28, 50, 0.94);
+  box-shadow:
+    0 9px 18px rgba(0,0,0,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+.leaderboard-summary span {
+  display: block;
+  color: rgba(255,255,255,0.66);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.leaderboard-summary strong {
+  display: block;
+  margin-top: 3px;
+  color: #ffc72d;
+  font-size: 18px;
+  font-weight: 1000;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.leaderboard-summary p {
+  margin: 0;
+  color: rgba(255,255,255,0.78);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
 .leaderboard-list {
   display: grid;
   gap: 8px;
@@ -715,6 +754,12 @@ body.phone-preview .menu-overlay {
 
 .leader-card.my-rank {
   border-color: rgba(86, 217, 44, 0.95);
+}
+
+.leader-card.leader-your-rank {
+  margin-bottom: 6px;
+  background:
+    linear-gradient(180deg, rgba(20, 86, 64, 0.94), rgba(1, 32, 43, 0.96));
 }
 
 .leader-rank {
