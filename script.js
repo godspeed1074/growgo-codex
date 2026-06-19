@@ -7912,7 +7912,7 @@ function capturePin(pin) {
   if (resourceText) {
     showToast("Resource found", resourceText);
   }
-  showPinCaptureFloat(pin, points, 1);
+  showPinCaptureFloat(pin, points, 1, { showXp: false });
   scheduleRedrawPins();
 }
 
@@ -8366,20 +8366,21 @@ function showRewardBurst(text, type = "reward") {
   }, 1100);
 }
 
-function showPinCaptureFloat(pin, points, coins = 1) {
+function showPinCaptureFloat(pin, points, coins = 1, options = {}) {
   if (!map || !pin || typeof pin.lat !== "number" || typeof pin.lng !== "number") return;
 
   const mapRect = map.getContainer().getBoundingClientRect();
   const point = map.latLngToContainerPoint([pin.lat, pin.lng]);
   const float = document.createElement("div");
   const coinText = `+${formatNumber(coins)}`;
+  const showXp = options.showXp !== false;
 
-  float.className = "pin-capture-float";
+  float.className = `pin-capture-float ${showXp ? "" : "compact"}`.trim();
   float.style.left = `${mapRect.left + point.x}px`;
   float.style.top = `${mapRect.top + point.y}px`;
   float.innerHTML = `
     <div class="pin-capture-text">+${formatNumber(points)} pts</div>
-    <div class="pin-capture-xp">+${formatNumber(points)} XP</div>
+    ${showXp ? `<div class="pin-capture-xp">+${formatNumber(points)} XP</div>` : ""}
     <div class="pin-capture-coin" aria-label="${escapeAttribute(coinText)} coin reward">
       <span>${escapeHtml(coinText)}</span>
     </div>

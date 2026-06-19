@@ -7581,6 +7581,12 @@ body.phone-preview .menu-overlay {
   animation: growgoPinCaptureFloat 1180ms var(--gg-ease-pop) forwards;
 }
 
+.pin-capture-float.compact {
+  width: 102px;
+  min-height: 52px;
+  transform: translate(-50%, -62px);
+}
+
 .pin-capture-text,
 .pin-capture-xp {
   display: inline-grid;
@@ -7614,6 +7620,12 @@ body.phone-preview .menu-overlay {
   animation: growgoCaptureXpPop 820ms var(--gg-ease-pop) 80ms both;
 }
 
+.pin-capture-float.compact .pin-capture-text {
+  min-width: 80px;
+  min-height: 28px;
+  font-size: 15px;
+}
+
 .pin-capture-coin {
   position: absolute;
   right: 4px;
@@ -7637,6 +7649,11 @@ body.phone-preview .menu-overlay {
     inset 0 1px 0 rgba(255,255,255,0.66);
   transform-origin: center;
   animation: growgoCoinFlip 760ms var(--gg-ease-pop) 90ms both;
+}
+
+.pin-capture-float.compact .pin-capture-coin {
+  right: 0;
+  top: 16px;
 }
 
 .pin-capture-coin span {
