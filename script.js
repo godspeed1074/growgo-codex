@@ -7087,6 +7087,7 @@ function capturePin(pin) {
   ].filter(Boolean).join(", ");
   const resourceSuffix = resourceText ? `, ${resourceText}` : "";
   showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold${resourceSuffix}`);
+  showPinCaptureFloat(pin, points, 1);
   showRewardBurst(`+${points} XP`);
   scheduleRedrawPins();
 }
@@ -7124,6 +7125,7 @@ function capturePOI(pin) {
   scheduleSavePinsToLocal();
   renderPOIs();
   showToast("POI captured", `+${POI_PIN_VALUE} points, +${POI_PIN_VALUE} XP, +${POI_COIN_REWARD} coins.`);
+  showPinCaptureFloat(pin, POI_PIN_VALUE, POI_COIN_REWARD);
   showRewardBurst(`+${POI_PIN_VALUE} XP`);
 }
 
@@ -7527,6 +7529,32 @@ function showRewardBurst(text, type = "reward") {
   setTimeout(() => {
     burst.remove();
   }, 1100);
+}
+
+function showPinCaptureFloat(pin, points, coins = 1) {
+  if (!map || !pin || typeof pin.lat !== "number" || typeof pin.lng !== "number") return;
+
+  const mapRect = map.getContainer().getBoundingClientRect();
+  const point = map.latLngToContainerPoint([pin.lat, pin.lng]);
+  const float = document.createElement("div");
+  const coinText = `+${formatNumber(coins)}`;
+
+  float.className = "pin-capture-float";
+  float.style.left = `${mapRect.left + point.x}px`;
+  float.style.top = `${mapRect.top + point.y}px`;
+  float.innerHTML = `
+    <div class="pin-capture-text">+${formatNumber(points)} pts</div>
+    <div class="pin-capture-xp">+${formatNumber(points)} XP</div>
+    <div class="pin-capture-coin" aria-label="${escapeAttribute(coinText)} coin reward">
+      <span>${escapeHtml(coinText)}</span>
+    </div>
+  `;
+
+  document.body.appendChild(float);
+
+  setTimeout(() => {
+    float.remove();
+  }, 1300);
 }
 
 function escapeHtml(value) {

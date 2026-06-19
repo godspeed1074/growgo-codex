@@ -6707,6 +6707,80 @@ body.phone-preview .menu-overlay {
   color: #07351c;
 }
 
+.pin-capture-float {
+  position: fixed;
+  z-index: 15500;
+  width: 112px;
+  min-height: 82px;
+  transform: translate(-50%, -74px);
+  pointer-events: none;
+  text-align: center;
+  animation: growgoPinCaptureFloat 1180ms var(--gg-ease-pop) forwards;
+}
+
+.pin-capture-text,
+.pin-capture-xp {
+  display: inline-grid;
+  place-items: center;
+  min-width: 74px;
+  min-height: 25px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 1000;
+  text-transform: uppercase;
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.42),
+    0 0 2px rgba(0,0,0,0.8);
+  box-shadow:
+    0 7px 13px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.26);
+}
+
+.pin-capture-text {
+  background: linear-gradient(180deg, #7cff43, #17a51d);
+  border: 2px solid rgba(218,255,178,0.92);
+  font-size: 14px;
+}
+
+.pin-capture-xp {
+  margin-top: 3px;
+  background: linear-gradient(180deg, #49b8ff, #1456d8);
+  border: 2px solid rgba(197,235,255,0.92);
+  font-size: 11px;
+  animation: growgoCaptureXpPop 820ms var(--gg-ease-pop) 80ms both;
+}
+
+.pin-capture-coin {
+  position: absolute;
+  right: 4px;
+  top: 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 32% 26%, #fff7be 0 18%, transparent 20%),
+    linear-gradient(145deg, #fff06e, #f7ae1d 56%, #b96808);
+  border: 3px solid rgba(255,247,202,0.98);
+  color: #7a3d00;
+  font-size: 12px;
+  font-weight: 1000;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.52);
+  box-shadow:
+    0 7px 13px rgba(0,0,0,0.32),
+    0 0 13px rgba(255,210,64,0.46),
+    inset 0 1px 0 rgba(255,255,255,0.66);
+  transform-origin: center;
+  animation: growgoCoinFlip 760ms var(--gg-ease-pop) 90ms both;
+}
+
+.pin-capture-coin span {
+  display: block;
+  transform: translateY(1px);
+}
+
 @keyframes growgoMenuSettle {
   0% { transform: translateY(105%); }
   72% { transform: translateY(-8px); }
@@ -6768,6 +6842,55 @@ body.phone-preview .menu-overlay {
   100% {
     opacity: 0;
     transform: translate(-50%, -42px) scale(0.92);
+  }
+}
+
+@keyframes growgoPinCaptureFloat {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -46px) scale(0.72);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -78px) scale(1.08);
+  }
+  58% {
+    opacity: 1;
+    transform: translate(-50%, -94px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -126px) scale(0.96);
+  }
+}
+
+@keyframes growgoCaptureXpPop {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.82);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes growgoCoinFlip {
+  0% {
+    opacity: 0;
+    transform: translate(12px, 10px) rotateY(0deg) scale(0.55);
+  }
+  28% {
+    opacity: 1;
+    transform: translate(0, -2px) rotateY(180deg) scale(1.12);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(0, -8px) rotateY(360deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -18px) rotateY(540deg) scale(0.92);
   }
 }
 
