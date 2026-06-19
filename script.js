@@ -145,6 +145,8 @@ const CRAFTING_STORAGE_KEY = "growgo-crafting";
 const MARKET_STORAGE_KEY = "growgo-market";
 const MARKET_LONG_PRESS_MS = 550;
 const CARD_COLLECTION_STORAGE_KEY = "growgo-card-collection";
+const PLAYER_TITLES_STORAGE_KEY = "growgo-player-titles";
+const PLAYER_ARTIFACTS_STORAGE_KEY = "growgo-player-artifacts";
 const CARD_LONG_PRESS_MS = 550;
 
 const PLAYER_STORAGE_KEY = "growgo-player-state";
@@ -205,6 +207,15 @@ const CARD_SETS = [
   }
 ];
 
+const CARD_ARTIFACTS = {
+  "ancient-dig-kit": {
+    artifactId: "ancient-dig-kit",
+    name: "Ancient Dig Kit",
+    icon: "⛏️",
+    description: "Reveals a nearby hidden fossil-themed POI or bonus dig reward."
+  }
+};
+
 resetPlayerProgressionOnce();
 
 function resetPlayerProgressionOnce() {
@@ -223,6 +234,8 @@ function resetPlayerProgressionOnce() {
       CRAFTING_STORAGE_KEY,
       MARKET_STORAGE_KEY,
       CARD_COLLECTION_STORAGE_KEY,
+      PLAYER_TITLES_STORAGE_KEY,
+      PLAYER_ARTIFACTS_STORAGE_KEY,
       PLAYER_STORAGE_KEY,
       GROWGO_PLAYER_ID_KEY,
       GROWGO_PROFILE_CARD_MODE_KEY,
@@ -328,6 +341,9 @@ function createLocalBackup() {
     stats: readStoredJson(STATS_STORAGE_KEY, null),
     crafting: readStoredJson(CRAFTING_STORAGE_KEY, null),
     market: readStoredJson(MARKET_STORAGE_KEY, null),
+    cards: readStoredJson(CARD_COLLECTION_STORAGE_KEY, null),
+    titles: readStoredJson(PLAYER_TITLES_STORAGE_KEY, []),
+    artifacts: readStoredJson(PLAYER_ARTIFACTS_STORAGE_KEY, []),
     pins: readStoredJson(PIN_STORAGE_KEY, []),
     serverStartedAt: getServerStartedAt(),
     social: {
@@ -409,6 +425,9 @@ function restoreLocalBackup(backup) {
   writeStoredJson(STATS_STORAGE_KEY, backup.stats);
   writeStoredJson(CRAFTING_STORAGE_KEY, backup.crafting);
   writeStoredJson(MARKET_STORAGE_KEY, backup.market);
+  writeStoredJson(CARD_COLLECTION_STORAGE_KEY, backup.cards);
+  writeStoredJson(PLAYER_TITLES_STORAGE_KEY, backup.titles || []);
+  writeStoredJson(PLAYER_ARTIFACTS_STORAGE_KEY, backup.artifacts || []);
   writeStoredJson(PIN_STORAGE_KEY, Array.isArray(backup.pins) ? backup.pins : []);
   localStorage.setItem(
     SERVER_STARTED_AT_KEY,
@@ -1034,6 +1053,8 @@ const POI_ACHIEVEMENTS = [
 ];
 
 let unlockedAchievements = loadUnlockedAchievements();
+let playerTitles = loadPlayerTitles();
+let playerArtifacts = loadPlayerArtifacts();
 
 function loadUnlockedAchievements() {
   try {
@@ -1053,7 +1074,28 @@ function saveUnlockedAchievements() {
   }
 }
 
+function loadPlayerTitles() {
+  return new Set(readStoredJson(PLAYER_TITLES_STORAGE_KEY, []));
+}
+
+function savePlayerTitles() {
+  writeStoredJson(PLAYER_TITLES_STORAGE_KEY, Array.from(playerTitles));
+}
+
+function loadPlayerArtifacts() {
+  return new Set(readStoredJson(PLAYER_ARTIFACTS_STORAGE_KEY, []));
+}
+
+function savePlayerArtifacts() {
+  writeStoredJson(PLAYER_ARTIFACTS_STORAGE_KEY, Array.from(playerArtifacts));
+}
+
 function getAchievementProgress(achievement) {
+  if (achievement.cardSetId) {
+    const set = getCardSet(achievement.cardSetId);
+    return set ? getCardSetProgress(set).ownedCount : 0;
+  }
+
   return Number(playerStats.lifetime[achievement.statKey] || 0);
 }
 
@@ -3783,15 +3825,31 @@ function openAchievements() {
 function renderAchievements() {
   if (!achievementsList) return;
 
-  const unlockedCount = POI_ACHIEVEMENTS.filter((achievement) => unlockedAchievements.has(achievement.id)).length;
+  const achievements = getAllAchievementDefinitions();
+  const unlockedCount = achievements.filter((achievement) => unlockedAchievements.has(achievement.id)).length;
 
   achievementsList.innerHTML = `
     <div class="achievements-summary">
       <span>Unlocked</span>
-      <strong>${formatNumber(unlockedCount)} / ${formatNumber(POI_ACHIEVEMENTS.length)}</strong>
+      <strong>${formatNumber(unlockedCount)} / ${formatNumber(achievements.length)}</strong>
     </div>
-    ${POI_ACHIEVEMENTS.map(renderAchievementCard).join("")}
+    ${achievements.map(renderAchievementCard).join("")}
   `;
+}
+
+function getAllAchievementDefinitions() {
+  const cardAchievements = CARD_SETS.map((set) => ({
+    id: set.completionAchievementId,
+    title: `${set.setName} Complete`,
+    description: `Complete every card in ${set.setName}.`,
+    cardSetId: set.setId,
+    target: set.totalCards || set.cards.length
+  }));
+
+  return [
+    ...POI_ACHIEVEMENTS,
+    ...cardAchievements
+  ];
 }
 
 function renderAchievementCard(achievement) {
@@ -4018,7 +4076,9 @@ function renderCardCollections() {
 
 function renderCardSetBack(set) {
   const progress = getCardSetProgress(set);
-  const completeClass = progress.complete ? "complete" : "";
+  const completion = playerCardCollection.completedSets?.[set.setId] || null;
+  const completeClass = completion ? "complete" : "";
+  const rewardLabel = completion?.titleAwarded || set.completedTitle || "Complete";
 
   return `
     <button class="card-set-back ${escapeAttribute(set.themeClass || "")} ${completeClass}" data-card-set-id="${escapeAttribute(set.setId)}" type="button">
@@ -4027,7 +4087,7 @@ function renderCardSetBack(set) {
       </div>
       <div class="card-set-back-name">${escapeHtml(set.setName)}</div>
       <div class="card-set-back-progress">${formatNumber(progress.ownedCount)} / ${formatNumber(progress.totalCards)}</div>
-      ${progress.complete ? `<div class="card-set-complete-badge">Complete</div>` : ""}
+      ${completion ? `<div class="card-set-complete-badge">${escapeHtml(rewardLabel)}</div>` : ""}
     </button>
   `;
 }
@@ -4057,8 +4117,32 @@ function openCardSet(setId, updateActive = true) {
         <p>${formatNumber(progress.ownedCount)} / ${formatNumber(progress.totalCards)} cards collected</p>
       </div>
     </div>
+    ${renderCardSetRewardSummary(set)}
   `;
   cardSetGrid.innerHTML = set.cards.map((card) => renderCardSlot(card, set)).join("");
+}
+
+function renderCardSetRewardSummary(set) {
+  const completion = playerCardCollection.completedSets?.[set.setId] || null;
+  const artifact = set.artifactRewardId ? CARD_ARTIFACTS[set.artifactRewardId] : null;
+
+  if (!completion) {
+    return `
+      <div class="card-set-reward-summary">
+        <span>Completion Reward</span>
+        <strong>Title: ${escapeHtml(set.completedTitle || "Collector")}</strong>
+        ${artifact ? `<em>Artifact: ${escapeHtml(artifact.name)}</em>` : ""}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="card-set-reward-summary complete">
+      <span>Completed</span>
+      <strong>Title: ${escapeHtml(completion.titleAwarded || set.completedTitle || "Collector")}</strong>
+      ${completion.artifactAwarded && artifact ? `<em>Artifact: ${escapeHtml(artifact.name)}</em>` : ""}
+    </div>
+  `;
 }
 
 function renderCardSlot(card, set) {
@@ -4216,6 +4300,7 @@ function awardCard(cardId, source = "test") {
     source
   };
 
+  checkCardSetCompletion(card.setId);
   savePlayerCardCollection();
   renderCardCollections();
   refreshInventoryIfOpen();
@@ -4258,10 +4343,106 @@ function awardCardPack(packSize = 1, source = "test-pack") {
   return results;
 }
 
+function checkCardSetCompletion(setId) {
+  const set = getCardSet(setId);
+  if (!set) return false;
+  if (playerCardCollection.completedSets?.[setId]) return false;
+
+  const progress = getCardSetProgress(set);
+  if (!progress.complete) return false;
+
+  awardCardSetCompletionRewards(set);
+  return true;
+}
+
+function awardCardSetCompletionRewards(set) {
+  const completedAt = getTrustedNow();
+  const titleAwarded = set.completedTitle || `${set.setName} Collector`;
+  const artifact = set.artifactRewardId ? CARD_ARTIFACTS[set.artifactRewardId] : null;
+
+  playerCardCollection.completedSets[set.setId] = {
+    completedAt,
+    titleAwarded,
+    achievementAwarded: true,
+    artifactAwarded: artifact?.artifactId || null
+  };
+
+  playerTitles.add(titleAwarded);
+
+  if (artifact) {
+    playerArtifacts.add(artifact.artifactId);
+  }
+
+  if (set.completionAchievementId) {
+    unlockedAchievements.add(set.completionAchievementId);
+  }
+
+  savePlayerTitles();
+  savePlayerArtifacts();
+  saveUnlockedAchievements();
+  savePlayerCardCollection();
+  renderAchievements();
+  showCardSetCompletionPopup(set, titleAwarded, artifact);
+  showToast("Collection Complete!", `${set.setName} complete. Title earned: ${titleAwarded}.`);
+  showRewardBurst("Complete!", "level-up");
+}
+
+function showCardSetCompletionPopup(set, titleAwarded, artifact = null) {
+  closeCardSetCompletionPopup();
+
+  const overlay = document.createElement("div");
+  overlay.id = "cardCompletionOverlay";
+  overlay.className = "card-completion-overlay";
+  overlay.innerHTML = `
+    <div class="card-completion-popup">
+      <button class="card-completion-close" data-card-completion-close type="button">×</button>
+      <div class="card-completion-medal">${escapeHtml(set.themeIcon || "★")}</div>
+      <h3>Collection Complete!</h3>
+      <h4>${escapeHtml(set.setName)}</h4>
+      <div class="card-completion-reward">
+        <span>Title Earned</span>
+        <strong>${escapeHtml(titleAwarded)}</strong>
+      </div>
+      <div class="card-completion-reward">
+        <span>Achievement Unlocked</span>
+        <strong>${escapeHtml(set.setName)} Complete</strong>
+      </div>
+      ${artifact ? `
+        <div class="card-completion-reward artifact">
+          <span>Artifact Earned</span>
+          <strong>${escapeHtml(artifact.icon)} ${escapeHtml(artifact.name)}</strong>
+          <em>${escapeHtml(artifact.description)}</em>
+        </div>
+      ` : ""}
+    </div>
+  `;
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay || event.target.closest("[data-card-completion-close]")) {
+      closeCardSetCompletionPopup();
+    }
+  });
+
+  document.body.appendChild(overlay);
+}
+
+function closeCardSetCompletionPopup() {
+  const overlay = document.getElementById("cardCompletionOverlay");
+  if (overlay) overlay.remove();
+}
+
+function awardFullCardSet(setId = "dinosaur-discoveries", source = "test-complete") {
+  const set = getCardSet(setId);
+  if (!set) return [];
+  return set.cards.map((card) => awardCard(card.cardId, source));
+}
+
 window.awardCard = awardCard;
 globalThis.awardCard = awardCard;
 window.awardCardPack = awardCardPack;
 globalThis.awardCardPack = awardCardPack;
+window.awardFullCardSet = awardFullCardSet;
+globalThis.awardFullCardSet = awardFullCardSet;
 
 function renderOwnedPinsCollection() {
   if (!ownedPinsList || !ownedPinsCount) return;
@@ -5064,6 +5245,9 @@ function resetLocalProgress() {
       ACHIEVEMENTS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
       MARKET_STORAGE_KEY,
+      CARD_COLLECTION_STORAGE_KEY,
+      PLAYER_TITLES_STORAGE_KEY,
+      PLAYER_ARTIFACTS_STORAGE_KEY,
       PLAYER_STORAGE_KEY,
       GROWGO_PLAYER_ID_KEY,
       GROWGO_PROFILE_CARD_MODE_KEY,
