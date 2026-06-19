@@ -6488,6 +6488,25 @@ body.phone-preview .recipe-panel,
   gap: 12px;
 }
 
+.card-pack-test-btn {
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 12px;
+  border: 2px solid rgba(255, 238, 157, 0.72);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 28% 16%, rgba(255,255,255,0.28), transparent 30%),
+    linear-gradient(180deg, #7cff43, #16871b);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.42);
+  box-shadow:
+    0 6px 13px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
 .card-set-back {
   position: relative;
   min-height: 178px;
@@ -6915,6 +6934,141 @@ body.phone-preview .recipe-panel,
 }
 
 .card-market-actions button:last-child {
+  background: linear-gradient(#56d92c, #16871b);
+}
+
+.inventory-card-duplicate {
+  border-color: rgba(255, 213, 92, 0.72);
+  background:
+    radial-gradient(circle at 28% 14%, rgba(255,255,255,0.26), transparent 30%),
+    linear-gradient(180deg, rgba(33, 102, 142, 0.94), rgba(4, 30, 52, 0.98));
+}
+
+.inventory-card-duplicate .inventory-icon {
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 34% 20%, rgba(255,255,255,0.32), transparent 28%),
+    linear-gradient(180deg, #ffe176, #f08d24);
+  border: 2px solid rgba(255,255,255,0.72);
+  box-shadow:
+    0 5px 10px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.32);
+}
+
+.duplicate-card-sell-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 17000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0,0,0,0.58);
+}
+
+.duplicate-card-sell-popup {
+  position: relative;
+  width: min(340px, 90vw);
+  border-radius: 24px;
+  padding: 42px 16px 18px;
+  background:
+    radial-gradient(circle at 30% 14%, rgba(255,255,255,0.46), transparent 34%),
+    linear-gradient(180deg, #fff3c6, #d9b762);
+  color: #17314c;
+  border: 3px solid rgba(92, 59, 15, 0.36);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+  text-align: center;
+  animation: growgoPopupIn 230ms var(--gg-ease-pop) both;
+}
+
+.duplicate-card-sell-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 28, 35, 0.16);
+  color: #17314c;
+  font-size: 22px;
+  font-weight: 1000;
+}
+
+.duplicate-card-sell-popup h3 {
+  margin: 0 0 12px;
+  font-size: 21px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.duplicate-card-sell-card {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 11px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.36);
+  text-align: left;
+}
+
+.duplicate-card-sell-icon {
+  width: 58px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 34% 20%, rgba(255,255,255,0.34), transparent 28%),
+    linear-gradient(180deg, #135f87, #031c30);
+  border: 2px solid rgba(255,255,255,0.72);
+  font-size: 29px;
+}
+
+.duplicate-card-sell-card strong,
+.duplicate-card-sell-card span,
+.duplicate-card-sell-card em {
+  display: block;
+  font-style: normal;
+  font-weight: 1000;
+}
+
+.duplicate-card-sell-card span,
+.duplicate-card-sell-card em {
+  color: rgba(23,49,76,0.72);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.duplicate-card-sell-popup p {
+  margin: 13px 0;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.duplicate-card-sell-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.duplicate-card-sell-actions button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 15px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.duplicate-card-sell-actions button:first-child {
+  background: linear-gradient(#5f7182, #263543);
+}
+
+.duplicate-card-sell-actions button:last-child {
   background: linear-gradient(#56d92c, #16871b);
 }
 

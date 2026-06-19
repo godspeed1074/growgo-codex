@@ -2757,7 +2757,7 @@ function getInventoryItemsForCategory(category) {
     baseItems = MARKET_ITEMS.filter((item) => item.category === category);
   }
 
-  return baseItems
+  const regularItems = baseItems
     .map((item) => {
       const fullItem = getInventoryItem(item.id);
       if (!fullItem) return null;
@@ -2773,9 +2773,22 @@ function getInventoryItemsForCategory(category) {
       if (a.quantity <= 0 && b.quantity > 0) return 1;
       return a.name.localeCompare(b.name);
     });
+
+  if (category !== "cards") {
+    return regularItems;
+  }
+
+  return [
+    ...getDuplicateCardInventoryItems(),
+    ...regularItems
+  ];
 }
 
 function getInventoryItem(itemId) {
+  if (itemId && String(itemId).startsWith("duplicate-card-")) {
+    return getDuplicateCardInventoryItem(itemId);
+  }
+
   const marketItem = getMarketItem(itemId);
 
   if (marketItem) {
@@ -2795,9 +2808,48 @@ function getInventoryItem(itemId) {
   return null;
 }
 
+function getDuplicateCardInventoryItems() {
+  return Object.entries(playerCardCollection?.duplicateCards || {})
+    .map(([cardId, quantity]) => {
+      if (Number(quantity) <= 0) return null;
+      return getDuplicateCardInventoryItem(`duplicate-card-${cardId}`);
+    })
+    .filter(Boolean)
+    .sort((a, b) => {
+      if (a.quantity !== b.quantity) return b.quantity - a.quantity;
+      return a.name.localeCompare(b.name);
+    });
+}
+
+function getDuplicateCardInventoryItem(itemId) {
+  const cardId = String(itemId || "").replace("duplicate-card-", "");
+  const card = getCardById(cardId);
+  const set = card ? getCardSet(card.setId) : null;
+  if (!card || !set) return null;
+
+  const variationLabel = card.isAnimatedVariation ? "Animated variation" : "Normal";
+  const quantity = Number(playerCardCollection?.duplicateCards?.[card.cardId] || 0);
+
+  return {
+    id: `duplicate-card-${card.cardId}`,
+    type: "card",
+    cardId: card.cardId,
+    name: card.cardName,
+    icon: set.themeIcon || "🃏",
+    rarity: card.isAnimatedVariation ? "Variation" : capitalizeInventoryText(card.rarity),
+    category: "cards",
+    setName: set.setName,
+    variationType: card.variationType || "normal",
+    quantity,
+    sellable: true,
+    description: `${set.setName} duplicate card · ${variationLabel}.`
+  };
+}
+
 function renderInventoryCard(item) {
   const rarityClass = String(item.rarity || "common").toLowerCase();
   const isGhost = Number(item.quantity || 0) <= 0;
+  const cardDuplicateClass = item.type === "card" ? " inventory-card-duplicate" : "";
 
   let hintText = "Unsellable";
 
@@ -2809,7 +2861,7 @@ function renderInventoryCard(item) {
 
   return `
     <button
-      class="inventory-card ${item.sellable ? "" : "unsellable"} ${isGhost ? "inventory-ghost-card" : ""}"
+      class="inventory-card${cardDuplicateClass} ${item.sellable ? "" : "unsellable"} ${isGhost ? "inventory-ghost-card" : ""}"
       data-inventory-item-id="${escapeAttribute(item.id)}"
       type="button"
     >
@@ -2833,7 +2885,9 @@ function openInventoryDetails(itemId) {
   selectedInventoryItemId = itemId;
   showInventoryDetailsView();
 
-  const quantity = marketState.inventory[itemId] || 0;
+  const quantity = item.type === "card"
+    ? Number(playerCardCollection.duplicateCards[item.cardId] || 0)
+    : marketState.inventory[itemId] || 0;
   const rarityClass = String(item.rarity || "common").toLowerCase();
 
   inventoryDetailsCard.innerHTML = `
@@ -2901,6 +2955,11 @@ function openInventorySellPopup(itemId) {
   const item = getInventoryItem(itemId);
   if (!item) return;
 
+  if (item.type === "card") {
+    openDuplicateCardSellPrompt(item);
+    return;
+  }
+
   if (!item.sellable) {
     showToast("Inventory", `${item.name} cannot be sold.`);
     return;
@@ -2917,6 +2976,80 @@ function openInventorySellPopup(itemId) {
   }
 
   showToast("Market", "Sell popup is not available yet.");
+}
+
+function openDuplicateCardSellPrompt(item) {
+  if (!item || item.type !== "card") return;
+  if (Number(item.quantity || 0) <= 0) {
+    showToast("Inventory", "No duplicate copies available.");
+    return;
+  }
+
+  closeDuplicateCardSellPrompt();
+
+  const overlay = document.createElement("div");
+  overlay.id = "duplicateCardSellOverlay";
+  overlay.className = "duplicate-card-sell-overlay";
+  overlay.innerHTML = `
+    <div class="duplicate-card-sell-popup">
+      <button class="duplicate-card-sell-close" data-duplicate-card-sell-close type="button">×</button>
+      <h3>Sell duplicate card?</h3>
+      <div class="duplicate-card-sell-card">
+        <div class="duplicate-card-sell-icon">${escapeHtml(item.icon)}</div>
+        <div>
+          <strong>${escapeHtml(item.name)}</strong>
+          <span>${escapeHtml(item.setName || "Card Collection")}</span>
+          <em>${escapeHtml(item.rarity)} · x${formatNumber(item.quantity)}</em>
+        </div>
+      </div>
+      <p>Would you like to list this card on the Market?</p>
+      <div class="duplicate-card-sell-actions">
+        <button data-duplicate-card-sell-close type="button">Cancel</button>
+        <button data-duplicate-card-sell-confirm="${escapeAttribute(item.cardId)}" type="button">Sell on Market</button>
+      </div>
+    </div>
+  `;
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay || event.target.closest("[data-duplicate-card-sell-close]")) {
+      closeDuplicateCardSellPrompt();
+      return;
+    }
+
+    const sellButton = event.target.closest("[data-duplicate-card-sell-confirm]");
+    if (sellButton) {
+      listDuplicateCardOnMarket(sellButton.dataset.duplicateCardSellConfirm);
+    }
+  });
+
+  document.body.appendChild(overlay);
+}
+
+function closeDuplicateCardSellPrompt() {
+  const overlay = document.getElementById("duplicateCardSellOverlay");
+  if (overlay) overlay.remove();
+}
+
+function listDuplicateCardOnMarket(cardId) {
+  const quantity = Number(playerCardCollection?.duplicateCards?.[cardId] || 0);
+  const card = getCardById(cardId);
+
+  if (!card || quantity <= 0) {
+    showToast("Cards", "No duplicate copy available.");
+    closeDuplicateCardSellPrompt();
+    return;
+  }
+
+  playerCardCollection.duplicateCards[cardId] = quantity - 1;
+
+  if (playerCardCollection.duplicateCards[cardId] <= 0) {
+    delete playerCardCollection.duplicateCards[cardId];
+  }
+
+  savePlayerCardCollection();
+  closeDuplicateCardSellPrompt();
+  refreshInventoryIfOpen();
+  showToast("Listed", `${card.cardName} duplicate queued for the Market.`);
 }
 function openInventoryBuyPrompt(itemId) {
   const item = getInventoryItem(itemId);
@@ -4085,6 +4218,7 @@ function awardCard(cardId, source = "test") {
 
   savePlayerCardCollection();
   renderCardCollections();
+  refreshInventoryIfOpen();
   showToast("New Card Found!", `${card.cardName} added to ${set.setName}.`);
   return { status: "new", card };
 }
@@ -4095,10 +4229,39 @@ function handleDuplicateCard(cardId) {
 
   playerCardCollection.duplicateCards[cardId] = Number(playerCardCollection.duplicateCards[cardId] || 0) + 1;
   savePlayerCardCollection();
+  refreshInventoryIfOpen();
+}
+
+function awardCardPack(packSize = 1, source = "test-pack") {
+  const allCards = getAllCards();
+  const size = Math.max(1, Number(packSize || 1));
+  const results = [];
+
+  for (let i = 0; i < size; i += 1) {
+    const card = allCards[Math.floor(Math.random() * allCards.length)];
+    if (!card) continue;
+    results.push(awardCard(card.cardId, source));
+  }
+
+  playerCardCollection.packHistory.push({
+    source,
+    packSize: size,
+    openedAt: getTrustedNow(),
+    results: results.filter(Boolean).map((result) => ({
+      cardId: result.card.cardId,
+      status: result.status
+    }))
+  });
+
+  savePlayerCardCollection();
+  showToast("Card Pack Opened", `${formatNumber(results.length)} card${results.length === 1 ? "" : "s"} revealed.`);
+  return results;
 }
 
 window.awardCard = awardCard;
 globalThis.awardCard = awardCard;
+window.awardCardPack = awardCardPack;
+globalThis.awardCardPack = awardCardPack;
 
 function renderOwnedPinsCollection() {
   if (!ownedPinsList || !ownedPinsCount) return;
@@ -4326,6 +4489,11 @@ function initCollectionsUi() {
   if (!collectionsScreen) return;
 
   collectionsScreen.addEventListener("click", (event) => {
+    if (event.target.closest("#openTestCardPackBtn")) {
+      awardCardPack(3, "test-pack");
+      return;
+    }
+
     const setBackButton = event.target.closest("#cardSetBackBtn");
     if (setBackButton) {
       showCardSetsView();
