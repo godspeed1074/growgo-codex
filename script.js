@@ -202,7 +202,7 @@ const CARD_SETS = [
       ghostImage: null,
       variationType: "normal",
       isAnimatedVariation: false,
-      matchingPoiId: null
+      matchingPoiId: index === 0 ? "poi:mock:dinosaur-fossil-site" : null
     }))
   }
 ];
@@ -4039,6 +4039,26 @@ function getCardById(cardId) {
   return getAllCards().find((card) => card.cardId === cardId) || null;
 }
 
+function getCardForPOI(poiId) {
+  return getAllCards().find((card) => card.matchingPoiId === poiId) || null;
+}
+
+function renderPoiCardRewardLine(pin) {
+  const card = getCardForPOI(pin.id);
+  if (!card) return "";
+
+  const set = getCardSet(card.setId);
+  const owned = isCardOwned(card.cardId);
+
+  return `
+    <div class="poi-card-reward-line ${owned ? "owned" : "new"}">
+      <span>Card Reward</span>
+      <strong>${escapeHtml(card.cardName)}</strong>
+      <em>${escapeHtml(set?.setName || "Card Collection")} · ${owned ? "Already collected" : "Guaranteed on capture"}</em>
+    </div>
+  `;
+}
+
 function isCardOwned(cardId) {
   return Boolean(playerCardCollection?.ownedCards?.[cardId]);
 }
@@ -4842,6 +4862,7 @@ function openPoiDetails(pinId) {
     <div class="poi-details-reward">
       ${formatNumber(POI_PIN_VALUE)} points · ${formatNumber(POI_PIN_VALUE)} XP · ${formatNumber(POI_COIN_REWARD)} coins
     </div>
+    ${renderPoiCardRewardLine(pin)}
     <div class="poi-details-actions">
       <button data-poi-details-close type="button">Close</button>
       <button data-poi-pin-go="${escapeAttribute(pin.id)}" type="button">Go to POI</button>
@@ -7543,6 +7564,7 @@ function openPoiInfoPopup(pin) {
       <div class="base-pin-popup-meta">
         Reward: ${formatNumber(POI_PIN_VALUE)} points, ${formatNumber(POI_PIN_VALUE)} XP, ${formatNumber(POI_COIN_REWARD)} coins
       </div>
+      ${renderPoiCardRewardLine(pin)}
       <div class="base-pin-popup-meta">
         Distance: ${escapeHtml(distance)}
       </div>
@@ -7923,12 +7945,23 @@ function capturePOI(pin) {
   addStat("goldEarned", POI_COIN_REWARD);
   addPlayerXp(POI_PIN_VALUE);
   addMarketCoins(POI_COIN_REWARD);
+  const cardReward = awardCardForPOI(pin);
 
   scheduleSavePinsToLocal();
   renderPOIs();
-  showToast("POI captured", `+${POI_PIN_VALUE} points, +${POI_PIN_VALUE} XP, +${POI_COIN_REWARD} coins.`);
+  const cardRewardText = cardReward?.card
+    ? ` ${cardReward.status === "duplicate" ? "Duplicate card" : "New card"}: ${cardReward.card.cardName}.`
+    : "";
+  showToast("POI captured", `+${POI_PIN_VALUE} points, +${POI_PIN_VALUE} XP, +${POI_COIN_REWARD} coins.${cardRewardText}`);
   showPinCaptureFloat(pin, POI_PIN_VALUE, POI_COIN_REWARD);
   showRewardBurst(`+${POI_PIN_VALUE} XP`);
+}
+
+function awardCardForPOI(pin) {
+  const card = getCardForPOI(pin?.id);
+  if (!card) return null;
+
+  return awardCard(card.cardId, "poi");
 }
 
 function getPinTypeLabel(pin) {
