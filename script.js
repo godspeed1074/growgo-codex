@@ -3816,6 +3816,7 @@ function groupPOIsByCategory(poiPins) {
 function renderPoiCategoryGroup(group) {
   const capturedCount = group.pins.filter((pin) => pin.captured).length;
   const subcategorySummary = getPoiSubcategorySummary(group.pins);
+  const subcategoryRows = getPoiSubcategoryGroups(group.pins).map(renderPoiSubcategoryRow).join("");
 
   return `
     <section class="poi-category-group">
@@ -3825,6 +3826,9 @@ function renderPoiCategoryGroup(group) {
           <span>${escapeHtml(subcategorySummary)}</span>
         </div>
         <strong>${formatNumber(capturedCount)} / ${formatNumber(group.pins.length)}</strong>
+      </div>
+      <div class="poi-subcategory-list">
+        ${subcategoryRows}
       </div>
       <div class="poi-category-list">
         ${group.pins.map(renderPoiPinCard).join("")}
@@ -3836,6 +3840,42 @@ function renderPoiCategoryGroup(group) {
 function getPoiSubcategorySummary(pins) {
   const subcategories = Array.from(new Set(pins.map((pin) => pin.subcategory || pin.poiCategory || "POI")));
   return subcategories.slice(0, 3).join(" · ");
+}
+
+function getPoiSubcategoryGroups(pins) {
+  const groups = new Map();
+
+  pins.forEach((pin) => {
+    const subcategory = pin.subcategory || pin.poiCategory || "POI";
+    if (!groups.has(subcategory)) {
+      groups.set(subcategory, []);
+    }
+
+    groups.get(subcategory).push(pin);
+  });
+
+  return Array.from(groups.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([subcategory, subcategoryPins]) => ({
+      subcategory,
+      pins: subcategoryPins
+    }));
+}
+
+function renderPoiSubcategoryRow(group) {
+  const capturedCount = group.pins.filter((pin) => pin.captured).length;
+  const total = group.pins.length;
+  const percent = total > 0 ? Math.round((capturedCount / total) * 100) : 0;
+
+  return `
+    <div class="poi-subcategory-row">
+      <span>${escapeHtml(group.subcategory)}</span>
+      <div class="poi-subcategory-progress">
+        <div style="width: ${percent}%;"></div>
+      </div>
+      <strong>${formatNumber(capturedCount)} / ${formatNumber(total)}</strong>
+    </div>
+  `;
 }
 
 function renderPoiPinCard(pin) {
