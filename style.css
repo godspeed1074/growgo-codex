@@ -6368,3 +6368,307 @@ body.phone-preview .recipe-panel,
   text-transform: uppercase;
   box-shadow: 0 4px 10px rgba(0,0,0,0.24);
 }
+
+/* ========================================================= */
+/* PREMIUM GAME FEEL POLISH                                  */
+/* ========================================================= */
+
+:root {
+  --gg-ease-pop: cubic-bezier(0.18, 0.9, 0.22, 1.12);
+  --gg-ease-soft: cubic-bezier(0.22, 0.8, 0.22, 1);
+  --gg-card-shadow:
+    0 8px 18px rgba(0,0,0,0.32),
+    inset 0 1px 0 rgba(255,255,255,0.16);
+  --gg-card-shadow-pressed:
+    0 4px 10px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+button,
+[role="button"],
+.menu-btn,
+.avatar-button,
+.stats-tabs .tab,
+.seg-btn,
+.inventory-tab,
+.market-tab,
+.settings-btn,
+.settings-toggle,
+.social-action-card,
+.owned-pin-card,
+.poi-pin-card,
+.leader-card,
+.stat-card,
+.recipe-card,
+.market-owned-item {
+  touch-action: manipulation;
+  transition:
+    transform 130ms var(--gg-ease-pop),
+    filter 160ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    opacity 180ms ease;
+}
+
+button:active,
+[role="button"]:active,
+.avatar-button:active,
+.menu-btn:active,
+.stats-tabs .tab:active,
+.seg-btn:active,
+.inventory-tab:active,
+.market-tab:active,
+.settings-btn:active,
+.settings-toggle:active,
+.social-action-card:active,
+.owned-pin-card:active,
+.poi-pin-card:active,
+.leader-card:active,
+.recipe-card:active,
+.market-owned-item:active {
+  transform: translateY(2px) scale(0.965);
+  filter: brightness(1.06) saturate(1.06);
+  box-shadow: var(--gg-card-shadow-pressed);
+}
+
+.menu-panel,
+body.phone-preview .menu-panel {
+  transition:
+    transform 360ms var(--gg-ease-soft),
+    opacity 240ms ease !important;
+  will-change: transform;
+}
+
+.menu-panel.open,
+body.phone-preview .menu-panel.open {
+  animation: growgoMenuSettle 360ms var(--gg-ease-pop) both;
+}
+
+.menu-overlay,
+body.phone-preview .menu-overlay {
+  transition: opacity 260ms ease;
+}
+
+#menuHome,
+.submenu-screen:not(.hidden) {
+  animation: growgoScreenIn 260ms var(--gg-ease-soft) both;
+}
+
+.menu-btn,
+.stat-card,
+.leader-card,
+.inventory-item,
+.market-item-card,
+.recipe-card,
+.owned-pin-card,
+.poi-pin-card,
+.leaderboard-summary,
+.base-pin-popup,
+.market-sell-popup,
+.inventory-buy-popup,
+.social-party-popup,
+.meet-scanner-popup,
+.poi-details-popup {
+  box-shadow: var(--gg-card-shadow);
+}
+
+.base-pin-popup,
+.market-sell-popup,
+.inventory-buy-popup,
+.social-party-popup,
+.meet-scanner-popup,
+.poi-details-popup {
+  animation: growgoPopupIn 230ms var(--gg-ease-pop) both;
+}
+
+.base-pin-primary-btn,
+.base-pin-secondary-btn,
+.social-party-primary,
+.social-party-secondary,
+.inventory-primary-btn,
+.inventory-secondary-btn,
+.market-confirm-buy,
+.craft-recipe-btn,
+.owned-pin-actions button,
+.poi-details-actions button,
+.poi-pin-card button {
+  position: relative;
+  overflow: hidden;
+}
+
+.base-pin-primary-btn::after,
+.social-party-primary::after,
+.inventory-primary-btn::after,
+.market-confirm-buy::after,
+.craft-recipe-btn::after,
+.owned-pin-actions button:first-child::after,
+.poi-details-actions button:last-child::after,
+.poi-pin-card button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: translateX(-120%);
+  transition: transform 320ms ease;
+  pointer-events: none;
+}
+
+.base-pin-primary-btn:active::after,
+.social-party-primary:active::after,
+.inventory-primary-btn:active::after,
+.market-confirm-buy:active::after,
+.craft-recipe-btn:active::after,
+.owned-pin-actions button:first-child:active::after,
+.poi-details-actions button:last-child:active::after,
+.poi-pin-card button:active::after {
+  transform: translateX(120%);
+}
+
+.toast {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(134, 211, 255, 0.24);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 42%),
+    linear-gradient(180deg, rgba(16, 67, 108, 0.97), rgba(6, 24, 48, 0.98));
+  box-shadow:
+    0 9px 20px rgba(0,0,0,0.34),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+  transform-origin: top right;
+  animation: growgoToastIn 260ms var(--gg-ease-pop) both;
+}
+
+.toast.reward,
+.toast.level-up {
+  border-color: rgba(255, 221, 97, 0.68);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.34), transparent 42%),
+    linear-gradient(180deg, rgba(40, 132, 92, 0.98), rgba(10, 50, 58, 0.98));
+}
+
+.toast.reward::before,
+.toast.level-up::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle, rgba(255,231,112,0.34), transparent 48%);
+  opacity: 0;
+  animation: growgoRewardGlow 900ms ease-out 1;
+  pointer-events: none;
+}
+
+.toast-title {
+  letter-spacing: 0.2px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.34);
+}
+
+.growgo-reward-burst {
+  position: fixed;
+  left: 50%;
+  top: 38%;
+  z-index: 16000;
+  min-width: 142px;
+  padding: 12px 15px;
+  border-radius: 18px;
+  border: 2px solid rgba(255,247,202,0.88);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.42), transparent 44%),
+    linear-gradient(180deg, #ffe37a, #f49b1f);
+  color: #17314c;
+  font-size: 18px;
+  font-weight: 1000;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.36);
+  box-shadow:
+    0 12px 26px rgba(0,0,0,0.32),
+    0 0 22px rgba(255,211,64,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.42);
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(0.74);
+  animation: growgoRewardBurst 980ms var(--gg-ease-pop) forwards;
+}
+
+.growgo-reward-burst.level-up {
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.5), transparent 44%),
+    linear-gradient(180deg, #dffb83, #42c746);
+  color: #07351c;
+}
+
+@keyframes growgoMenuSettle {
+  0% { transform: translateY(105%); }
+  72% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes growgoScreenIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes growgoPopupIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes growgoToastIn {
+  from {
+    opacity: 0;
+    transform: translateX(22px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes growgoRewardGlow {
+  0% { opacity: 0; transform: scale(0.7); }
+  38% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+
+@keyframes growgoRewardBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 16px) scale(0.62);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -8px) scale(1.08);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(-50%, -18px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -42px) scale(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}

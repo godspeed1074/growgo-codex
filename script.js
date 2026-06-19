@@ -4412,6 +4412,7 @@ function triggerMilestoneFeedback(pattern = [35, 45, 55]) {
 
 function triggerLevelUpFeedback() {
   triggerMilestoneFeedback([35, 45, 55]);
+  showRewardBurst("Level Up!", "level-up");
 }
 
 function resetLocalProgress() {
@@ -7054,6 +7055,7 @@ function capturePin(pin) {
   ].filter(Boolean).join(", ");
   const resourceSuffix = resourceText ? `, ${resourceText}` : "";
   showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold${resourceSuffix}`);
+  showRewardBurst(`+${points} XP`);
   scheduleRedrawPins();
 }
 
@@ -7090,6 +7092,7 @@ function capturePOI(pin) {
   scheduleSavePinsToLocal();
   renderPOIs();
   showToast("POI captured", `+${POI_PIN_VALUE} points, +${POI_PIN_VALUE} XP, +${POI_COIN_REWARD} coins.`);
+  showRewardBurst(`+${POI_PIN_VALUE} XP`);
 }
 
 function getPinTypeLabel(pin) {
@@ -7458,7 +7461,12 @@ function showToast(title, body) {
   if (!toastStack) return;
 
   const toast = document.createElement("div");
-  toast.className = "toast";
+  const lowerTitle = String(title || "").toLowerCase();
+  const rewardClass = lowerTitle.includes("captured") || lowerTitle.includes("reward") || lowerTitle.includes("collected")
+    ? " reward"
+    : "";
+  const levelClass = lowerTitle.includes("level up") ? " level-up" : "";
+  toast.className = `toast${rewardClass}${levelClass}`;
   toast.innerHTML = `
     <div class="toast-title">${escapeHtml(title)}</div>
     <div class="toast-body">${escapeHtml(body)}</div>
@@ -7475,6 +7483,18 @@ function showToast(title, body) {
       toast.remove();
     }, 220);
   }, 3000);
+}
+
+function showRewardBurst(text, type = "reward") {
+  const burst = document.createElement("div");
+  burst.className = `growgo-reward-burst ${type === "level-up" ? "level-up" : ""}`;
+  burst.textContent = text;
+
+  document.body.appendChild(burst);
+
+  setTimeout(() => {
+    burst.remove();
+  }, 1100);
 }
 
 function escapeHtml(value) {
