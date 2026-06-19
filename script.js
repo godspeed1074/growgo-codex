@@ -144,6 +144,8 @@ const ACHIEVEMENTS_STORAGE_KEY = "growgo-achievements";
 const CRAFTING_STORAGE_KEY = "growgo-crafting";
 const MARKET_STORAGE_KEY = "growgo-market";
 const MARKET_LONG_PRESS_MS = 550;
+const CARD_COLLECTION_STORAGE_KEY = "growgo-card-collection";
+const CARD_LONG_PRESS_MS = 550;
 
 const PLAYER_STORAGE_KEY = "growgo-player-state";
 const GROWGO_PLAYER_ID_KEY = "growgo-player-public-id";
@@ -152,6 +154,56 @@ const DEFAULT_PLAYER_NAME = "rubberlips";
 const PROGRESSION_RESET_KEY = "growgo-progression-reset-version";
 const PROGRESSION_RESET_VERSION = "rubberlips-reset-1";
 const LOCAL_BACKUP_VERSION = 1;
+
+const CARD_SETS = [
+  {
+    setId: "dinosaur-discoveries",
+    setName: "Dinosaur Discoveries",
+    themeIcon: "🦖",
+    themeClass: "dinosaur",
+    totalCards: 24,
+    completedTitle: "Fossil Hunter",
+    completionAchievementId: "achievement-dinosaur-discoveries-complete",
+    artifactRewardId: "ancient-dig-kit",
+    cards: [
+      "Tyrannosaurus",
+      "Raptor",
+      "Triceratops",
+      "Stegosaurus",
+      "Brachiosaurus",
+      "Ankylosaurus",
+      "Spinosaurus",
+      "Pteranodon",
+      "Allosaurus",
+      "Parasaurolophus",
+      "Diplodocus",
+      "Iguanodon",
+      "Carnotaurus",
+      "Pachycephalosaurus",
+      "Mosasaurus",
+      "Megalodon",
+      "Archaeopteryx",
+      "Compsognathus",
+      "Dimetrodon",
+      "Therizinosaurus",
+      "Gallimimus",
+      "Argentinosaurus",
+      "Dilophosaurus",
+      "Brontosaurus"
+    ].map((cardName, index) => ({
+      cardId: `dino-${String(index + 1).padStart(3, "0")}`,
+      setId: "dinosaur-discoveries",
+      cardNumber: index + 1,
+      cardName,
+      rarity: index === 0 ? "legendary" : index < 4 ? "rare" : index < 10 ? "uncommon" : "common",
+      image: null,
+      ghostImage: null,
+      variationType: "normal",
+      isAnimatedVariation: false,
+      matchingPoiId: null
+    }))
+  }
+];
 
 resetPlayerProgressionOnce();
 
@@ -170,6 +222,7 @@ function resetPlayerProgressionOnce() {
       ACHIEVEMENTS_STORAGE_KEY,
       CRAFTING_STORAGE_KEY,
       MARKET_STORAGE_KEY,
+      CARD_COLLECTION_STORAGE_KEY,
       PLAYER_STORAGE_KEY,
       GROWGO_PLAYER_ID_KEY,
       GROWGO_PROFILE_CARD_MODE_KEY,
@@ -619,6 +672,16 @@ let poiPinsCount;
 let poiPinsList;
 let poiDetailsPanel;
 let poiDetailsCard;
+let cardCollectionsCount;
+let cardSetsView;
+let cardSetDetailView;
+let cardSetBackBtn;
+let cardSetDetailHeader;
+let cardSetGrid;
+let activeCardSetId = null;
+let playerCardCollection = createDefaultCardCollection();
+let cardLongPressTimer = null;
+let cardLongPressTriggered = false;
 let growGoQrScanner = null;
 let growGoQrScannerRunning = false;
 
@@ -657,6 +720,7 @@ const pinIconCache = new Map();
 document.addEventListener("DOMContentLoaded", async () => {
   loadPinsFromLocal();
   loadPOIs();
+  playerCardCollection = loadPlayerCardCollection();
   rebuildSpatialBuckets();
 
   cacheDom();
@@ -744,6 +808,12 @@ poiPinsCount = document.getElementById("poiPinsCount");
 poiPinsList = document.getElementById("poiPinsList");
 poiDetailsPanel = document.getElementById("poiDetailsPanel");
 poiDetailsCard = document.getElementById("poiDetailsCard");
+cardCollectionsCount = document.getElementById("cardCollectionsCount");
+cardSetsView = document.getElementById("cardSetsView");
+cardSetDetailView = document.getElementById("cardSetDetailView");
+cardSetBackBtn = document.getElementById("cardSetBackBtn");
+cardSetDetailHeader = document.getElementById("cardSetDetailHeader");
+cardSetGrid = document.getElementById("cardSetGrid");
 
   craftingScreen = document.getElementById("craftingScreen");
   craftingBackBtn = document.getElementById("craftingBackBtn");
@@ -3706,7 +3776,329 @@ function renderPOICollections() {
 function renderCollections() {
   renderOwnedPinsCollection();
   renderPOICollections();
+  renderCardCollections();
 }
+
+function createDefaultCardCollection() {
+  const now = getTrustedNow();
+
+  return {
+    ownedCards: {
+      "dino-002": {
+        cardId: "dino-002",
+        ownedAt: now,
+        source: "starter"
+      },
+      "dino-004": {
+        cardId: "dino-004",
+        ownedAt: now,
+        source: "starter"
+      }
+    },
+    completedSets: {},
+    duplicateCards: {},
+    packHistory: []
+  };
+}
+
+function loadPlayerCardCollection() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CARD_COLLECTION_STORAGE_KEY) || "null");
+    const defaults = createDefaultCardCollection();
+
+    if (!saved || typeof saved !== "object") {
+      savePlayerCardCollection(defaults);
+      return defaults;
+    }
+
+    return {
+      ...defaults,
+      ...saved,
+      ownedCards: {
+        ...defaults.ownedCards,
+        ...(saved.ownedCards || {})
+      },
+      completedSets: saved.completedSets || {},
+      duplicateCards: saved.duplicateCards || {},
+      packHistory: saved.packHistory || []
+    };
+  } catch (error) {
+    console.warn("Could not load card collection.", error);
+    return createDefaultCardCollection();
+  }
+}
+
+function savePlayerCardCollection(collectionData = playerCardCollection) {
+  try {
+    localStorage.setItem(CARD_COLLECTION_STORAGE_KEY, JSON.stringify(collectionData));
+  } catch (error) {
+    console.warn("Could not save card collection.", error);
+  }
+}
+
+function getAllCards() {
+  return CARD_SETS.flatMap((set) => set.cards);
+}
+
+function getCardSet(setId) {
+  return CARD_SETS.find((set) => set.setId === setId) || null;
+}
+
+function getCardById(cardId) {
+  return getAllCards().find((card) => card.cardId === cardId) || null;
+}
+
+function isCardOwned(cardId) {
+  return Boolean(playerCardCollection?.ownedCards?.[cardId]);
+}
+
+function getCardSetProgress(set) {
+  const ownedCount = set.cards.filter((card) => isCardOwned(card.cardId)).length;
+
+  return {
+    ownedCount,
+    totalCards: set.totalCards || set.cards.length,
+    complete: ownedCount >= (set.totalCards || set.cards.length)
+  };
+}
+
+function renderCardCollections() {
+  if (!cardSetsView || !cardCollectionsCount) return;
+
+  const totals = CARD_SETS.reduce((summary, set) => {
+    const progress = getCardSetProgress(set);
+    summary.owned += progress.ownedCount;
+    summary.total += progress.totalCards;
+    return summary;
+  }, { owned: 0, total: 0 });
+
+  cardCollectionsCount.textContent = `${formatNumber(totals.owned)} / ${formatNumber(totals.total)}`;
+
+  if (activeCardSetId) {
+    openCardSet(activeCardSetId, false);
+    return;
+  }
+
+  showCardSetsView();
+  cardSetsView.innerHTML = CARD_SETS.map(renderCardSetBack).join("");
+}
+
+function renderCardSetBack(set) {
+  const progress = getCardSetProgress(set);
+  const completeClass = progress.complete ? "complete" : "";
+
+  return `
+    <button class="card-set-back ${escapeAttribute(set.themeClass || "")} ${completeClass}" data-card-set-id="${escapeAttribute(set.setId)}" type="button">
+      <div class="card-set-back-art">
+        <span>${escapeHtml(set.themeIcon || "★")}</span>
+      </div>
+      <div class="card-set-back-name">${escapeHtml(set.setName)}</div>
+      <div class="card-set-back-progress">${formatNumber(progress.ownedCount)} / ${formatNumber(progress.totalCards)}</div>
+      ${progress.complete ? `<div class="card-set-complete-badge">Complete</div>` : ""}
+    </button>
+  `;
+}
+
+function showCardSetsView() {
+  activeCardSetId = null;
+  if (cardSetsView) cardSetsView.classList.remove("hidden");
+  if (cardSetDetailView) cardSetDetailView.classList.add("hidden");
+}
+
+function openCardSet(setId, updateActive = true) {
+  const set = getCardSet(setId);
+  if (!set || !cardSetDetailView || !cardSetGrid || !cardSetDetailHeader) return;
+
+  if (updateActive) {
+    activeCardSetId = setId;
+  }
+
+  const progress = getCardSetProgress(set);
+  if (cardSetsView) cardSetsView.classList.add("hidden");
+  cardSetDetailView.classList.remove("hidden");
+  cardSetDetailHeader.innerHTML = `
+    <div class="card-set-detail-title">
+      <span>${escapeHtml(set.themeIcon || "★")}</span>
+      <div>
+        <h4>${escapeHtml(set.setName)}</h4>
+        <p>${formatNumber(progress.ownedCount)} / ${formatNumber(progress.totalCards)} cards collected</p>
+      </div>
+    </div>
+  `;
+  cardSetGrid.innerHTML = set.cards.map((card) => renderCardSlot(card, set)).join("");
+}
+
+function renderCardSlot(card, set) {
+  const owned = isCardOwned(card.cardId);
+  const ownedClass = owned ? "owned" : "unowned";
+  const art = getCardArtMarkup(card, owned);
+
+  return `
+    <button
+      class="collection-card-slot ${ownedClass} rarity-${escapeAttribute(card.rarity)}"
+      data-card-id="${escapeAttribute(card.cardId)}"
+      type="button"
+      aria-label="${escapeAttribute(card.cardName)} ${owned ? "owned" : "unowned"}"
+    >
+      <div class="collection-card-art">
+        ${art}
+      </div>
+      <div class="collection-card-label">
+        <span>${formatNumber(card.cardNumber)}</span>
+        <strong>${escapeHtml(card.cardName)}</strong>
+      </div>
+      ${owned ? `<div class="collection-card-owned-pill">Owned</div>` : `<div class="collection-card-ghost-pill">Missing</div>`}
+    </button>
+  `;
+}
+
+function getCardArtMarkup(card, owned) {
+  const set = getCardSet(card.setId);
+  const icon = set?.themeIcon || "★";
+  const initial = String(card.cardName || "?").charAt(0).toUpperCase();
+
+  return `
+    <div class="collection-card-art-inner">
+      <div class="collection-card-icon">${escapeHtml(owned ? icon : initial)}</div>
+      <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
+    </div>
+  `;
+}
+
+function openCardPreview(cardId) {
+  const card = getCardById(cardId);
+  const set = card ? getCardSet(card.setId) : null;
+  if (!card || !set || !isCardOwned(card.cardId)) return;
+
+  closeCardPreview();
+
+  const overlay = document.createElement("div");
+  overlay.id = "cardPreviewOverlay";
+  overlay.className = "card-preview-overlay";
+  overlay.innerHTML = `
+    <div class="card-preview-card rarity-${escapeAttribute(card.rarity)}">
+      <div class="card-preview-art">
+        ${getCardArtMarkup(card, true)}
+      </div>
+      <h3>${escapeHtml(card.cardName)}</h3>
+      <p>Card #${formatNumber(card.cardNumber)} / ${formatNumber(set.totalCards)}</p>
+      <p>${escapeHtml(set.setName)}</p>
+      <strong>${escapeHtml(card.rarity)}</strong>
+    </div>
+  `;
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      closeCardPreview();
+    }
+  });
+
+  document.body.appendChild(overlay);
+}
+
+function closeCardPreview() {
+  const overlay = document.getElementById("cardPreviewOverlay");
+  if (overlay) overlay.remove();
+}
+
+function handleUnownedCardLongPress(cardId) {
+  const card = getCardById(cardId);
+  const set = card ? getCardSet(card.setId) : null;
+  if (!card || !set || isCardOwned(card.cardId)) return;
+
+  openCardMarketPrompt(card, set);
+}
+
+function openCardMarketPrompt(card, set) {
+  closeCardMarketPrompt();
+
+  const overlay = document.createElement("div");
+  overlay.id = "cardMarketPromptOverlay";
+  overlay.className = "card-market-prompt-overlay";
+  overlay.innerHTML = `
+    <div class="card-market-prompt">
+      <button class="card-market-close" data-card-market-close type="button">×</button>
+      <h3>You don’t own this card.</h3>
+      <p>Would you like to search for it on the Market?</p>
+      <div class="card-market-missing">
+        <strong>#${formatNumber(card.cardNumber)} ${escapeHtml(card.cardName)}</strong>
+        <span>${escapeHtml(set.setName)}</span>
+      </div>
+      <div class="card-market-actions">
+        <button data-card-market-close type="button">Cancel</button>
+        <button data-card-market-open="${escapeAttribute(card.cardId)}" type="button">Open Market</button>
+      </div>
+    </div>
+  `;
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay || event.target.closest("[data-card-market-close]")) {
+      closeCardMarketPrompt();
+      return;
+    }
+
+    const marketButton = event.target.closest("[data-card-market-open]");
+    if (marketButton) {
+      closeCardMarketPrompt();
+      openMarket();
+      activeMarketCategory = "cards";
+      renderMarket();
+      showToast("Market", "Card trading search will be wired in the server phase.");
+    }
+  });
+
+  document.body.appendChild(overlay);
+}
+
+function closeCardMarketPrompt() {
+  const overlay = document.getElementById("cardMarketPromptOverlay");
+  if (overlay) overlay.remove();
+}
+
+function clearCardLongPress() {
+  if (cardLongPressTimer) {
+    clearTimeout(cardLongPressTimer);
+    cardLongPressTimer = null;
+  }
+
+  setTimeout(() => {
+    cardLongPressTriggered = false;
+  }, 80);
+}
+
+function awardCard(cardId, source = "test") {
+  const card = getCardById(cardId);
+  const set = card ? getCardSet(card.setId) : null;
+  if (!card || !set) return null;
+
+  if (isCardOwned(cardId)) {
+    handleDuplicateCard(cardId);
+    showToast("Duplicate Card Found!", `${card.cardName} added to Inventory.`);
+    return { status: "duplicate", card };
+  }
+
+  playerCardCollection.ownedCards[cardId] = {
+    cardId,
+    ownedAt: getTrustedNow(),
+    source
+  };
+
+  savePlayerCardCollection();
+  renderCardCollections();
+  showToast("New Card Found!", `${card.cardName} added to ${set.setName}.`);
+  return { status: "new", card };
+}
+
+function handleDuplicateCard(cardId) {
+  const card = getCardById(cardId);
+  if (!card) return;
+
+  playerCardCollection.duplicateCards[cardId] = Number(playerCardCollection.duplicateCards[cardId] || 0) + 1;
+  savePlayerCardCollection();
+}
+
+window.awardCard = awardCard;
+globalThis.awardCard = awardCard;
 
 function renderOwnedPinsCollection() {
   if (!ownedPinsList || !ownedPinsCount) return;
@@ -3934,6 +4326,35 @@ function initCollectionsUi() {
   if (!collectionsScreen) return;
 
   collectionsScreen.addEventListener("click", (event) => {
+    const setBackButton = event.target.closest("#cardSetBackBtn");
+    if (setBackButton) {
+      showCardSetsView();
+      renderCardCollections();
+      return;
+    }
+
+    const cardSetButton = event.target.closest("[data-card-set-id]");
+    if (cardSetButton) {
+      openCardSet(cardSetButton.dataset.cardSetId);
+      return;
+    }
+
+    const cardSlot = event.target.closest("[data-card-id]");
+    if (cardSlot) {
+      if (cardLongPressTriggered) {
+        cardLongPressTriggered = false;
+        return;
+      }
+
+      const cardId = cardSlot.dataset.cardId;
+      if (isCardOwned(cardId)) {
+        openCardPreview(cardId);
+      } else {
+        showToast("Missing card", "Long-press missing cards to search the Market.");
+      }
+      return;
+    }
+
     if (event.target.closest("#claimOwnedPinRewardsBtn")) {
       claimOwnedPinRewards();
       return;
@@ -3968,8 +4389,37 @@ function initCollectionsUi() {
     }
   });
 
+  collectionsScreen.addEventListener("pointerdown", (event) => {
+    const cardSlot = event.target.closest("[data-card-id]");
+    if (!cardSlot) return;
+
+    clearCardLongPress();
+    const cardId = cardSlot.dataset.cardId;
+
+    cardLongPressTimer = setTimeout(() => {
+      cardLongPressTriggered = true;
+      handleUnownedCardLongPress(cardId);
+    }, CARD_LONG_PRESS_MS);
+  });
+
+  ["pointerup", "pointercancel", "pointerleave", "lostpointercapture"].forEach((eventName) => {
+    collectionsScreen.addEventListener(eventName, clearCardLongPress);
+  });
+
   collectionsScreen.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
+
+    const cardSlot = event.target.closest("[data-card-id]");
+    if (cardSlot) {
+      event.preventDefault();
+      const cardId = cardSlot.dataset.cardId;
+      if (isCardOwned(cardId)) {
+        openCardPreview(cardId);
+      } else {
+        handleUnownedCardLongPress(cardId);
+      }
+      return;
+    }
 
     const poiCard = event.target.closest("[data-poi-pin-id]");
     if (!poiCard) return;

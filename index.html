@@ -11,7 +11,7 @@
 
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css?v=capturefloat1" />
+  <link rel="stylesheet" href="style.css?v=cards1" />
 </head>
 
 <body class="phone-preview">
@@ -373,10 +373,18 @@
             </div>
           </section>
 
-          <section class="collections-section locked">
+          <section class="collections-section">
             <div class="collections-section-header">
               <h3>Cards</h3>
-              <span>Coming soon</span>
+              <span id="cardCollectionsCount">0 / 0</span>
+            </div>
+
+            <div id="cardSetsView" class="card-sets-view"></div>
+
+            <div id="cardSetDetailView" class="card-set-detail-view hidden">
+              <button id="cardSetBackBtn" class="card-set-back-btn" type="button">Card Collections</button>
+              <div id="cardSetDetailHeader" class="card-set-detail-header"></div>
+              <div id="cardSetGrid" class="card-set-grid"></div>
             </div>
           </section>
 
@@ -483,6 +491,6 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
-  <script src="script.js?v=capturefloat1"></script>
+  <script src="script.js?v=cards1"></script>
 </body>
 </html>
