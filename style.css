@@ -6618,26 +6618,26 @@ body.phone-preview .recipe-panel,
   width: 76px;
   height: 92px;
   margin: 0 auto 8px;
-  display: grid;
-  place-items: center;
   border-radius: 18px;
-  border: 3px solid rgba(255,255,255,0.74);
-  background:
-    radial-gradient(circle at 34% 22%, #ffffff, transparent 20%),
-    linear-gradient(180deg, #ffe176, #f08d24);
+  overflow: hidden;
+  background: linear-gradient(180deg, #184766, #07233c);
   font-size: 38px;
   box-shadow:
     0 7px 12px rgba(0,0,0,0.28),
-    inset 0 1px 0 rgba(255,255,255,0.44);
+    inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
 .card-set-back-cover-image {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
   display: block;
   object-fit: cover;
-  border-radius: 14px;
-  transform: scale(1.09);
+  margin: 5px;
+  border-radius: 13px;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.14);
+  transform: scale(1.06);
   transform-origin: center;
 }
 
@@ -6792,33 +6792,16 @@ body.phone-preview .recipe-panel,
 .collection-card-art {
   aspect-ratio: 0.72;
   border-radius: 13px;
-  padding: 4px;
-  background:
-    radial-gradient(circle at 34% 20%, rgba(255,255,255,0.36), transparent 30%),
-    linear-gradient(180deg, #2580c8, #052445);
-  border: 2px solid rgba(255,255,255,0.58);
+  overflow: hidden;
+  background: linear-gradient(180deg, #184766, #07233c);
   box-shadow:
     0 5px 10px rgba(0,0,0,0.26),
-    inset 0 1px 0 rgba(255,255,255,0.16);
+    inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
 .collection-card-slot.unowned .collection-card-art {
   filter: grayscale(1);
   opacity: 0.56;
-  border-style: dashed;
-}
-
-.collection-card-slot.rarity-rare .collection-card-art {
-  background:
-    radial-gradient(circle at 34% 20%, rgba(255,255,255,0.36), transparent 30%),
-    linear-gradient(180deg, #4bb8ff, #133ba7);
-}
-
-.collection-card-slot.rarity-legendary .collection-card-art {
-  background:
-    radial-gradient(circle at 34% 20%, rgba(255,255,255,0.48), transparent 30%),
-    linear-gradient(180deg, #ffe176, #b96512);
-  border-color: rgba(255,245,182,0.95);
 }
 
 .collection-card-art-inner {
@@ -6837,7 +6820,14 @@ body.phone-preview .recipe-panel,
 .collection-card-art-inner.image-card-art {
   position: relative;
   overflow: hidden;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+  border-radius: 12px;
   background: linear-gradient(180deg, rgba(9,29,50,0.24), rgba(2,10,20,0.12));
+  box-shadow:
+    0 8px 14px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
 .collection-card-image {
@@ -6845,8 +6835,8 @@ body.phone-preview .recipe-panel,
   height: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 10px;
-  transform: scale(1.09);
+  border-radius: 12px;
+  transform: scale(1.06);
   transform-origin: center;
 }
 
