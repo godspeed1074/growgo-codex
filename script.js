@@ -4807,7 +4807,8 @@ function renderLeaderboard(type) {
         </div>
 
         <div class="leader-score">
-          ${player.score.toLocaleString()}
+          <span>Score</span>
+          <strong>${player.score.toLocaleString()}</strong>
         </div>
       </div>
     `;
@@ -4828,7 +4829,8 @@ function renderLeaderboard(type) {
         </div>
 
         <div class="leader-score">
-          ${currentPlayer.score.toLocaleString()}
+          <span>Score</span>
+          <strong>${currentPlayer.score.toLocaleString()}</strong>
         </div>
       </div>
     `;
