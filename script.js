@@ -198,7 +198,7 @@ const CARD_SETS = [
       cardNumber: index + 1,
       cardName,
       rarity: index === 0 ? "legendary" : index < 4 ? "rare" : index < 10 ? "uncommon" : "common",
-      image: null,
+      image: index === 0 ? "assets/cards/t-rex-card.jpg" : null,
       ghostImage: null,
       variationType: "normal",
       isAnimatedVariation: false,
@@ -206,6 +206,33 @@ const CARD_SETS = [
     }))
   }
 ];
+
+const DINOSAUR_CARD_ART_PROFILES = {
+  Tyrannosaurus: { badge: "Apex", habitat: "Volcanic Plains", frameClass: "theropod", silhouetteClass: "theropod" },
+  Raptor: { badge: "Swift", habitat: "Red Ridge", frameClass: "theropod", silhouetteClass: "raptor" },
+  Triceratops: { badge: "Shield", habitat: "Fern Basin", frameClass: "horned", silhouetteClass: "horned" },
+  Stegosaurus: { badge: "Plated", habitat: "Sunset Valley", frameClass: "plated", silhouetteClass: "plated" },
+  Brachiosaurus: { badge: "Titan", habitat: "Cloud Canopy", frameClass: "longneck", silhouetteClass: "longneck" },
+  Ankylosaurus: { badge: "Armored", habitat: "Stone Brush", frameClass: "armored", silhouetteClass: "armored" },
+  Spinosaurus: { badge: "River King", habitat: "Delta Marsh", frameClass: "spined", silhouetteClass: "spined" },
+  Pteranodon: { badge: "Skies", habitat: "Cliff Winds", frameClass: "sky", silhouetteClass: "winged" },
+  Allosaurus: { badge: "Hunter", habitat: "Mesa Run", frameClass: "theropod", silhouetteClass: "theropod" },
+  Parasaurolophus: { badge: "Crest", habitat: "Mist Grove", frameClass: "crest", silhouetteClass: "crest" },
+  Diplodocus: { badge: "Colossus", habitat: "River Plains", frameClass: "longneck", silhouetteClass: "longneck" },
+  Iguanodon: { badge: "Grazer", habitat: "Amber Field", frameClass: "herbivore", silhouetteClass: "herbivore" },
+  Carnotaurus: { badge: "Dash", habitat: "Crimson Dust", frameClass: "theropod", silhouetteClass: "raptor" },
+  Pachycephalosaurus: { badge: "Dome", habitat: "Thunder Steppe", frameClass: "dome", silhouetteClass: "dome" },
+  Mosasaurus: { badge: "Deep", habitat: "Ancient Sea", frameClass: "ocean", silhouetteClass: "marine" },
+  Megalodon: { badge: "Legend", habitat: "Open Ocean", frameClass: "ocean", silhouetteClass: "shark" },
+  Archaeopteryx: { badge: "Feather", habitat: "Sky Forest", frameClass: "sky", silhouetteClass: "feathered" },
+  Compsognathus: { badge: "Tiny", habitat: "Leaf Floor", frameClass: "swift", silhouetteClass: "swift" },
+  Dimetrodon: { badge: "Sail", habitat: "Steam Flats", frameClass: "spined", silhouetteClass: "spined" },
+  Therizinosaurus: { badge: "Claw", habitat: "Moon Jungle", frameClass: "mystic", silhouetteClass: "clawed" },
+  Gallimimus: { badge: "Runner", habitat: "Golden Plain", frameClass: "swift", silhouetteClass: "swift" },
+  Argentinosaurus: { badge: "World Giant", habitat: "Endless Prairie", frameClass: "longneck", silhouetteClass: "longneck" },
+  Dilophosaurus: { badge: "Twin Crest", habitat: "Storm Basin", frameClass: "crest", silhouetteClass: "crest" },
+  Brontosaurus: { badge: "Classic", habitat: "Blue Meadow", frameClass: "longneck", silhouetteClass: "longneck" }
+};
 
 const CARD_ARTIFACTS = {
   "ancient-dig-kit": {
@@ -4193,10 +4220,54 @@ function getCardArtMarkup(card, owned) {
   const set = getCardSet(card.setId);
   const icon = set?.themeIcon || "★";
   const initial = String(card.cardName || "?").charAt(0).toUpperCase();
+  const cardImage = owned ? (card.image || null) : (card.ghostImage || card.image || null);
+
+  if (cardImage) {
+    return `
+      <div class="collection-card-art-inner image-card-art">
+        <img class="collection-card-image" src="${escapeAttribute(cardImage)}" alt="${escapeAttribute(card.cardName)} card art" loading="lazy" />
+        <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
+      </div>
+    `;
+  }
+
+  if (card.setId === "dinosaur-discoveries") {
+    return getDinosaurCardArtMarkup(card, owned);
+  }
 
   return `
     <div class="collection-card-art-inner">
       <div class="collection-card-icon">${escapeHtml(owned ? icon : initial)}</div>
+      <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
+    </div>
+  `;
+}
+
+function getDinosaurCardArtMarkup(card, owned) {
+  const profile = DINOSAUR_CARD_ART_PROFILES[card.cardName] || {
+    badge: "Fossil",
+    habitat: "Discovery Zone",
+    frameClass: "theropod",
+    silhouetteClass: "theropod"
+  };
+
+  const ownedStateClass = owned ? "owned" : "ghost";
+
+  return `
+    <div class="collection-card-art-inner dinosaur-card-art ${escapeAttribute(profile.frameClass)} ${ownedStateClass}">
+      <div class="dinosaur-card-foil"></div>
+      <div class="dinosaur-card-sky"></div>
+      <div class="dinosaur-card-sun"></div>
+      <div class="dinosaur-card-silhouette ${escapeAttribute(profile.silhouetteClass)}"></div>
+      <div class="dinosaur-card-ground"></div>
+      <div class="dinosaur-card-topline">
+        <span>#${formatNumber(card.cardNumber)}</span>
+        <strong>${escapeHtml(profile.badge)}</strong>
+      </div>
+      <div class="dinosaur-card-bottomline">
+        <strong>${escapeHtml(card.cardName)}</strong>
+        <span>${escapeHtml(profile.habitat)}</span>
+      </div>
       <div class="collection-card-rarity">${escapeHtml(card.rarity)}</div>
     </div>
   `;
