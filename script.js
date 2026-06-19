@@ -7909,8 +7909,9 @@ function capturePin(pin) {
     waterDrop ? "+1 water" : "",
     fishDrop ? `+1 ${fishDrop.label}, +${fishDrop.xp} fish XP` : ""
   ].filter(Boolean).join(", ");
-  const resourceSuffix = resourceText ? `, ${resourceText}` : "";
-  showToast(`Captured ${getPinTypeLabel(pin)}`, `+${points} points, +${points} XP, +1 gold${resourceSuffix}`);
+  if (resourceText) {
+    showToast("Resource found", resourceText);
+  }
   showPinCaptureFloat(pin, points, 1);
   showRewardBurst(`+${points} XP`);
   scheduleRedrawPins();
