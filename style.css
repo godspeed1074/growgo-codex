@@ -1350,6 +1350,54 @@ body.phone-preview .menu-overlay {
   margin: 34px 0 0 13px;
 }
 
+.base-pin-marker.base-pin-value-5:not(.water-pin-marker) img {
+  filter:
+    hue-rotate(0deg)
+    saturate(1.16)
+    brightness(1.04)
+    drop-shadow(0 2px 5px rgba(8, 80, 210, 0.42));
+}
+
+.base-pin-marker.base-pin-value-10:not(.water-pin-marker) img {
+  filter:
+    hue-rotate(88deg)
+    saturate(1.34)
+    brightness(1.05)
+    drop-shadow(0 2px 6px rgba(54, 205, 72, 0.48));
+}
+
+.base-pin-marker.base-pin-value-20:not(.water-pin-marker) img {
+  filter:
+    hue-rotate(154deg)
+    saturate(1.5)
+    brightness(1.16)
+    drop-shadow(0 2px 7px rgba(255, 210, 65, 0.58));
+}
+
+.base-pin-marker.base-pin-value-30:not(.water-pin-marker) img {
+  filter:
+    hue-rotate(178deg)
+    saturate(1.55)
+    brightness(1.08)
+    drop-shadow(0 2px 7px rgba(255, 136, 42, 0.58));
+}
+
+.base-pin-marker.base-pin-value-40:not(.water-pin-marker) img {
+  filter:
+    hue-rotate(208deg)
+    saturate(1.55)
+    brightness(1.05)
+    drop-shadow(0 2px 8px rgba(255, 74, 74, 0.6));
+}
+
+.base-pin-marker.base-pin-value-50:not(.water-pin-marker) img {
+  filter:
+    hue-rotate(282deg)
+    saturate(1.72)
+    brightness(1.15)
+    drop-shadow(0 0 9px rgba(209, 104, 255, 0.74));
+}
+
 .base-pin-number {
   position: absolute;
   left: 50%;

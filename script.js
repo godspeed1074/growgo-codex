@@ -6522,6 +6522,7 @@ function buildPinIcon(pin, state = null) {
   const capturedClass = iconState.capturedToday ? "pin-captured-today" : "";
   const ownedClass = iconState.owned ? "pin-owned" : "";
   const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
+  const valueClass = iconState.type === "water" ? "" : getBasePinValueClass(iconState.points);
   const pinImage = iconState.type === "water" ? "pin-water-blue.png" : "pin-base-purple.png";
   const showPointNumber = iconState.type !== "water" && !iconState.capturedToday;
   const fish = getActiveWaterPinFish(pin);
@@ -6550,7 +6551,7 @@ function buildPinIcon(pin, state = null) {
     : "";
 
   const html = `
-    <div class="base-pin-marker ${typeClass} ${fishClass} ${glowClass} ${capturedClass} ${ownedClass}">
+    <div class="base-pin-marker ${typeClass} ${valueClass} ${fishClass} ${glowClass} ${capturedClass} ${ownedClass}">
       <img src="${pinImage}" alt="${pinAlt}">
       ${showPointNumber ? `<div class="base-pin-number">${iconState.points}</div>` : ""}
       ${fishBadge}
@@ -6567,6 +6568,17 @@ function buildPinIcon(pin, state = null) {
 
   pinIconCache.set(cacheKey, icon);
   return icon;
+}
+
+function getBasePinValueClass(points) {
+  const value = Number(points || 0);
+
+  if (value >= 50) return "base-pin-value-50";
+  if (value >= 40) return "base-pin-value-40";
+  if (value >= 30) return "base-pin-value-30";
+  if (value >= 20) return "base-pin-value-20";
+  if (value >= 10) return "base-pin-value-10";
+  return "base-pin-value-5";
 }
 
 function buildPoiIcon(pin, cacheKey) {
