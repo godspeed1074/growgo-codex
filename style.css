@@ -1392,10 +1392,36 @@ body.phone-preview .menu-overlay {
 
 .base-pin-marker.base-pin-value-50:not(.water-pin-marker) img {
   filter:
-    hue-rotate(282deg)
-    saturate(1.72)
-    brightness(1.15)
-    drop-shadow(0 0 9px rgba(209, 104, 255, 0.74));
+    saturate(1.85)
+    brightness(1.16)
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.78));
+  animation: growgoRainbowPin 3.8s linear infinite;
+}
+
+.base-pin-marker.base-pin-value-50:not(.water-pin-marker)::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 31px;
+  width: 44px;
+  height: 56px;
+  border-radius: 50% 50% 48% 48%;
+  background:
+    conic-gradient(
+      from 0deg,
+      #ff4b5f,
+      #ffb238,
+      #fff05c,
+      #4be36c,
+      #38cfff,
+      #5d7cff,
+      #c95cff,
+      #ff4b5f
+    );
+  filter: blur(4px);
+  opacity: 0.72;
+  pointer-events: none;
+  animation: growgoRainbowGlow 2.8s linear infinite;
 }
 
 .base-pin-number {
@@ -1412,6 +1438,35 @@ body.phone-preview .menu-overlay {
     0 1px 0 rgba(255,255,255,0.65),
     0 2px 4px rgba(0,0,0,0.22);
   pointer-events: none;
+}
+
+@keyframes growgoRainbowPin {
+  from {
+    filter:
+      hue-rotate(0deg)
+      saturate(1.85)
+      brightness(1.16)
+      drop-shadow(0 0 8px rgba(255, 255, 255, 0.78));
+  }
+  to {
+    filter:
+      hue-rotate(360deg)
+      saturate(1.85)
+      brightness(1.16)
+      drop-shadow(0 0 8px rgba(255, 255, 255, 0.78));
+  }
+}
+
+@keyframes growgoRainbowGlow {
+  from {
+    transform: rotate(0deg) scale(0.98);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.06);
+  }
+  to {
+    transform: rotate(360deg) scale(0.98);
+  }
 }
 
 .base-pin-marker:not(.water-pin-marker) .base-pin-number {
