@@ -616,6 +616,8 @@ let claimOwnedPinRewardsBtn;
 let ownedPinsList;
 let poiPinsCount;
 let poiPinsList;
+let poiDetailsPanel;
+let poiDetailsCard;
 let growGoQrScanner = null;
 let growGoQrScannerRunning = false;
 
@@ -738,6 +740,8 @@ claimOwnedPinRewardsBtn = document.getElementById("claimOwnedPinRewardsBtn");
 ownedPinsList = document.getElementById("ownedPinsList");
 poiPinsCount = document.getElementById("poiPinsCount");
 poiPinsList = document.getElementById("poiPinsList");
+poiDetailsPanel = document.getElementById("poiDetailsPanel");
+poiDetailsCard = document.getElementById("poiDetailsCard");
 
   craftingScreen = document.getElementById("craftingScreen");
   craftingBackBtn = document.getElementById("craftingBackBtn");
@@ -3768,6 +3772,7 @@ function renderOwnedPinCard(pin) {
 
 function renderPoiPinsCollection() {
   if (!poiPinsList || !poiPinsCount) return;
+  closePoiDetails();
 
   const poiPins = Array.from(pinStore.values())
     .filter((pin) => pin.type === "poi")
@@ -3887,7 +3892,7 @@ function renderPoiPinCard(pin) {
   const discoveredDate = pin.discoveredAt ? getDisplayDate(pin.discoveredAt) : "Unknown";
 
   return `
-    <div class="poi-pin-card" data-poi-pin-id="${escapeAttribute(pin.id)}">
+    <div class="poi-pin-card" data-poi-pin-id="${escapeAttribute(pin.id)}" role="button" tabindex="0">
       <div class="poi-pin-badge ${escapeAttribute(pin.rarity || "normal")}">${escapeHtml(getPoiIconText(pin.icon))}</div>
       <div class="poi-pin-info">
         <div class="poi-pin-topline">
@@ -3927,7 +3932,28 @@ function initCollectionsUi() {
     const poiGoButton = event.target.closest("[data-poi-pin-go]");
     if (poiGoButton) {
       goToPoiPin(poiGoButton.dataset.poiPinGo);
+      return;
     }
+
+    const poiCard = event.target.closest("[data-poi-pin-id]");
+    if (poiCard) {
+      openPoiDetails(poiCard.dataset.poiPinId);
+      return;
+    }
+
+    if (event.target.closest("[data-poi-details-close]")) {
+      closePoiDetails();
+    }
+  });
+
+  collectionsScreen.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    const poiCard = event.target.closest("[data-poi-pin-id]");
+    if (!poiCard) return;
+
+    event.preventDefault();
+    openPoiDetails(poiCard.dataset.poiPinId);
   });
 }
 
@@ -3942,6 +3968,73 @@ function getDistanceToPinLabel(pin) {
   const distance = getDistanceToPinValue(pin);
   if (distance >= 1000) return `${(distance / 1000).toFixed(2)} km`;
   return `${Math.round(distance)} m`;
+}
+
+function openPoiDetails(pinId) {
+  const pin = pinStore.get(pinId);
+  if (!pin || pin.type !== "poi" || !poiDetailsPanel || !poiDetailsCard) return;
+
+  const category = pin.category || "Places";
+  const subcategory = pin.subcategory || pin.poiCategory || "POI";
+  const rarity = pin.rarity === "special" ? "Special" : "Normal";
+  const capturedAt = pin.capturedAt ? getDisplayDate(pin.capturedAt) : "Not collected";
+  const distance = getDistanceToPinLabel(pin);
+  const status = pin.captured ? "Collected" : "Ready to collect";
+
+  poiDetailsCard.innerHTML = `
+    <button class="poi-details-close" data-poi-details-close type="button">×</button>
+    <div class="poi-details-hero">
+      <div class="poi-details-badge ${escapeAttribute(pin.rarity || "normal")}">
+        ${escapeHtml(getPoiIconText(pin.icon))}
+      </div>
+      <div>
+        <h3>${escapeHtml(pin.name || pin.poiName || subcategory)}</h3>
+        <div class="poi-details-rarity ${escapeAttribute(pin.rarity || "normal")}">
+          ${escapeHtml(rarity)} POI
+        </div>
+      </div>
+    </div>
+
+    <div class="poi-details-row">
+      <span>Category</span>
+      <strong>${escapeHtml(category)}</strong>
+    </div>
+    <div class="poi-details-row">
+      <span>Subcategory</span>
+      <strong>${escapeHtml(subcategory)}</strong>
+    </div>
+    <div class="poi-details-row">
+      <span>Status</span>
+      <strong>${escapeHtml(status)}</strong>
+    </div>
+    <div class="poi-details-row">
+      <span>Captured</span>
+      <strong>${escapeHtml(capturedAt)}</strong>
+    </div>
+    <div class="poi-details-row">
+      <span>Distance</span>
+      <strong>${escapeHtml(distance)}</strong>
+    </div>
+    <div class="poi-details-description">
+      ${escapeHtml(pin.description || "A real-world point of interest.")}
+    </div>
+    <div class="poi-details-reward">
+      ${formatNumber(POI_PIN_VALUE)} points · ${formatNumber(POI_PIN_VALUE)} XP · ${formatNumber(POI_COIN_REWARD)} coins
+    </div>
+    <div class="poi-details-actions">
+      <button data-poi-details-close type="button">Close</button>
+      <button data-poi-pin-go="${escapeAttribute(pin.id)}" type="button">Go to POI</button>
+    </div>
+  `;
+
+  poiDetailsPanel.classList.remove("hidden");
+  poiDetailsPanel.scrollIntoView({ block: "nearest" });
+}
+
+function closePoiDetails() {
+  if (poiDetailsPanel) {
+    poiDetailsPanel.classList.add("hidden");
+  }
 }
 
 function getOwnedPinsForActivePlayer() {
@@ -3995,6 +4088,7 @@ function goToPoiPin(pinId) {
   const pin = pinStore.get(pinId);
   if (!pin || pin.type !== "poi") return;
 
+  closePoiDetails();
   closeMenu();
   map.setView([pin.lat, pin.lng], Math.max(map.getZoom(), 18), {
     animate: true
