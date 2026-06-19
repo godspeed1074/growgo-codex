@@ -203,7 +203,7 @@ const CARD_SETS = [
       ghostImage: null,
       variationType: "normal",
       isAnimatedVariation: false,
-      matchingPoiId: index === 0 ? "poi:mock:dinosaur-fossil-site" : null
+      matchingPoiId: null
     }))
   }
 ];
@@ -4071,8 +4071,63 @@ function getCardForPOI(poiId) {
   return getAllCards().find((card) => card.matchingPoiId === poiId) || null;
 }
 
+function isDinosaurPOI(pin) {
+  const text = [
+    pin?.category,
+    pin?.subcategory,
+    pin?.poiCategory,
+    pin?.name,
+    pin?.poiName,
+    pin?.icon
+  ].filter(Boolean).join(" ").toLowerCase();
+
+  return text.includes("dinosaur") || text.includes("fossil");
+}
+
+function getMissingCardsInSet(setId) {
+  const set = getCardSet(setId);
+  if (!set) return [];
+
+  return set.cards.filter((card) => !isCardOwned(card.cardId));
+}
+
+function pickCardRewardForPOI(pin) {
+  if (isDinosaurPOI(pin)) {
+    const missingCards = getMissingCardsInSet("dinosaur-discoveries");
+    if (missingCards.length > 0) {
+      return {
+        card: missingCards[Math.floor(Math.random() * missingCards.length)],
+        mode: "set-missing"
+      };
+    }
+
+    const set = getCardSet("dinosaur-discoveries");
+    return {
+      card: set?.cards[Math.floor(Math.random() * set.cards.length)] || null,
+      mode: "set-duplicate"
+    };
+  }
+
+  const exactCard = getCardForPOI(pin?.id);
+  return exactCard ? { card: exactCard, mode: "exact" } : null;
+}
+
 function renderPoiCardRewardLine(pin) {
-  const card = getCardForPOI(pin.id);
+  const reward = pickCardRewardForPOI(pin);
+  const card = reward?.card || null;
+
+  if (isDinosaurPOI(pin)) {
+    const missingCount = getMissingCardsInSet("dinosaur-discoveries").length;
+
+    return `
+      <div class="poi-card-reward-line ${missingCount > 0 ? "new" : "owned"}">
+        <span>Card Reward</span>
+        <strong>Dinosaur Discoveries</strong>
+        <em>${missingCount > 0 ? "Awards one missing dinosaur card" : "Set complete · duplicate card reward"}</em>
+      </div>
+    `;
+  }
+
   if (!card) return "";
 
   const set = getCardSet(card.setId);
@@ -8029,7 +8084,8 @@ function capturePOI(pin) {
 }
 
 function awardCardForPOI(pin) {
-  const card = getCardForPOI(pin?.id);
+  const reward = pickCardRewardForPOI(pin);
+  const card = reward?.card || null;
   if (!card) return null;
 
   return awardCard(card.cardId, "poi");
