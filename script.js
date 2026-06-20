@@ -3456,7 +3456,37 @@ let custom25DRoadFeatures = [];
 let custom25DZoneFeatures = [];
 let custom25DBuildingFeatures = [];
 
+function syncCustom25DMapPresentation() {
+  if (!map) return;
+
+  const container = map.getContainer();
+  const tilePane = map.getPane("tilePane");
+  const overlayPane = map.getPane("overlayPane");
+
+  if (ENABLE_CUSTOM_25D_MAP) {
+    container.classList.add("custom-25d-map-enabled");
+    if (tilePane) {
+      tilePane.style.filter = "grayscale(0.88) saturate(0.45) brightness(1.08) contrast(0.82)";
+      tilePane.style.opacity = "0.26";
+    }
+    if (overlayPane) {
+      overlayPane.style.opacity = "0.92";
+    }
+    return;
+  }
+
+  container.classList.remove("custom-25d-map-enabled");
+  if (tilePane) {
+    tilePane.style.filter = "";
+    tilePane.style.opacity = "";
+  }
+  if (overlayPane) {
+    overlayPane.style.opacity = "";
+  }
+}
+
 function initCustom25DMapExperiment() {
+  syncCustom25DMapPresentation();
   if (!ENABLE_CUSTOM_25D_MAP || !map || custom25DMapLayer) return;
 
   map.createPane("custom25DMapPane");
@@ -3542,9 +3572,9 @@ function custom25DPoint(size, seed, index) {
 
 function drawCustom25DBackground(ctx, size) {
   const bg = ctx.createLinearGradient(0, 0, size.x, size.y);
-  bg.addColorStop(0, "rgba(236, 244, 219, 0.62)");
-  bg.addColorStop(0.5, "rgba(226, 239, 209, 0.72)");
-  bg.addColorStop(1, "rgba(216, 232, 198, 0.62)");
+  bg.addColorStop(0, "rgba(239, 244, 222, 0.78)");
+  bg.addColorStop(0.48, "rgba(228, 237, 210, 0.86)");
+  bg.addColorStop(1, "rgba(214, 228, 195, 0.78)");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, size.x, size.y);
 }
@@ -3558,34 +3588,34 @@ function shouldDrawZoneDetailsAtZoom(zoom, detailLevel = "medium") {
 function getZoneStyleForFeature(featureType, zoom) {
   const styles = {
     park: {
-      fill: "rgba(120, 198, 112, 0.30)",
-      edge: "rgba(75, 145, 74, 0.30)",
-      inner: "rgba(167, 222, 148, 0.18)"
+      fill: "rgba(128, 198, 110, 0.42)",
+      edge: "rgba(80, 146, 72, 0.34)",
+      inner: "rgba(182, 228, 158, 0.16)"
     },
     grass: {
-      fill: "rgba(150, 208, 126, 0.18)",
-      edge: "rgba(104, 160, 86, 0.18)",
-      inner: "rgba(194, 232, 171, 0.10)"
+      fill: "rgba(153, 205, 129, 0.26)",
+      edge: "rgba(105, 157, 88, 0.18)",
+      inner: "rgba(199, 229, 177, 0.08)"
     },
     water: {
-      fill: "rgba(105, 191, 226, 0.22)",
-      edge: "rgba(55, 139, 198, 0.28)",
-      inner: "rgba(173, 225, 248, 0.14)"
+      fill: "rgba(95, 182, 220, 0.36)",
+      edge: "rgba(58, 132, 191, 0.34)",
+      inner: "rgba(194, 234, 250, 0.14)"
     },
     beach: {
-      fill: "rgba(236, 217, 154, 0.28)",
-      edge: "rgba(198, 173, 112, 0.20)",
-      inner: "rgba(247, 233, 186, 0.16)"
+      fill: "rgba(235, 216, 160, 0.36)",
+      edge: "rgba(192, 167, 108, 0.22)",
+      inner: "rgba(247, 235, 198, 0.14)"
     },
     wetland: {
-      fill: "rgba(118, 183, 155, 0.22)",
-      edge: "rgba(84, 141, 118, 0.22)",
-      inner: "rgba(168, 214, 190, 0.10)"
+      fill: "rgba(121, 176, 152, 0.28)",
+      edge: "rgba(82, 133, 112, 0.24)",
+      inner: "rgba(174, 214, 193, 0.08)"
     },
     sports: {
-      fill: "rgba(114, 193, 110, 0.20)",
-      edge: "rgba(76, 146, 78, 0.20)",
-      inner: "rgba(204, 239, 188, 0.08)"
+      fill: "rgba(122, 196, 114, 0.26)",
+      edge: "rgba(78, 142, 80, 0.18)",
+      inner: "rgba(207, 236, 192, 0.08)"
     }
   };
 
@@ -3639,19 +3669,19 @@ function drawWaterTexture(ctx, points, zoom, closed) {
   if (!shouldDrawZoneDetailsAtZoom(zoom, "medium") || !Array.isArray(points) || points.length < 2) return;
 
   const bounds = getProjectedBounds(points);
-  const spacing = zoom >= 18 ? 20 : 28;
+  const spacing = zoom >= 18 ? 22 : 30;
 
   ctx.save();
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
-  ctx.lineWidth = 1.2;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
+  ctx.lineWidth = 1.1;
   if (closed) {
     clipToProjectedPolygon(ctx, points);
   }
 
   for (let y = bounds.minY + 10; y < bounds.maxY; y += spacing) {
     ctx.beginPath();
-    for (let x = bounds.minX - 12; x <= bounds.maxX + 12; x += 18) {
-      const waveY = y + Math.sin((x + y) * 0.04) * 2.8;
+    for (let x = bounds.minX - 12; x <= bounds.maxX + 12; x += 22) {
+      const waveY = y + Math.sin((x + y) * 0.032) * 2.2;
       if (x === bounds.minX - 12) ctx.moveTo(x, waveY);
       else ctx.lineTo(x, waveY);
     }
@@ -3666,11 +3696,11 @@ function drawBeachDetails(ctx, points, zoom) {
   const bounds = getProjectedBounds(points);
   ctx.save();
   clipToProjectedPolygon(ctx, points);
-  ctx.fillStyle = "rgba(255, 246, 214, 0.28)";
+  ctx.fillStyle = "rgba(255, 246, 214, 0.18)";
 
-  for (let i = 0; i < 18; i += 1) {
-    const x = bounds.minX + ((i * 37) % Math.max(40, bounds.maxX - bounds.minX + 1));
-    const y = bounds.minY + ((i * 23) % Math.max(40, bounds.maxY - bounds.minY + 1));
+  for (let i = 0; i < 10; i += 1) {
+    const x = bounds.minX + ((i * 41) % Math.max(40, bounds.maxX - bounds.minX + 1));
+    const y = bounds.minY + ((i * 27) % Math.max(40, bounds.maxY - bounds.minY + 1));
     ctx.fillRect(x, y, 2, 2);
   }
   ctx.restore();
@@ -3684,13 +3714,9 @@ function drawGrassTexture(ctx, points, zoom, style) {
   clipToProjectedPolygon(ctx, points);
   ctx.fillStyle = style.inner;
 
-  const spacing = zoom >= 18 ? 16 : 24;
-  for (let y = bounds.minY + 8; y < bounds.maxY; y += spacing) {
-    for (let x = bounds.minX + 8; x < bounds.maxX; x += spacing) {
-      ctx.beginPath();
-      ctx.arc(x, y, zoom >= 18 ? 2.2 : 1.4, 0, Math.PI * 2);
-      ctx.fill();
-    }
+  const spacing = zoom >= 18 ? 28 : 40;
+  for (let y = bounds.minY + 12; y < bounds.maxY; y += spacing) {
+    ctx.fillRect(bounds.minX, y, Math.max(20, bounds.maxX - bounds.minX), zoom >= 18 ? 2 : 1.2);
   }
   ctx.restore();
 }
@@ -3702,30 +3728,13 @@ function drawParkDetails(ctx, points, zoom) {
   ctx.save();
   clipToProjectedPolygon(ctx, points);
 
-  const treeSpacing = zoom >= 18 ? 22 : 34;
-  for (let y = bounds.minY + 12; y < bounds.maxY; y += treeSpacing) {
-    for (let x = bounds.minX + 12; x < bounds.maxX; x += treeSpacing) {
-      ctx.fillStyle = "rgba(49, 134, 62, 0.50)";
-      ctx.beginPath();
-      ctx.arc(x, y, zoom >= 18 ? 3.2 : 2.3, 0, Math.PI * 2);
-      ctx.fill();
-
-      if (zoom >= 18) {
-        ctx.fillStyle = "rgba(206, 244, 186, 0.22)";
-        ctx.beginPath();
-        ctx.arc(x - 0.9, y - 1.1, 1.1, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-  }
-
   if (shouldDrawZoneDetailsAtZoom(zoom, "high")) {
-    ctx.strokeStyle = "rgba(245, 236, 191, 0.28)";
-    ctx.lineWidth = 1.1;
-    for (let y = bounds.minY + 18; y < bounds.maxY; y += 42) {
+    ctx.strokeStyle = "rgba(248, 240, 204, 0.18)";
+    ctx.lineWidth = 1;
+    for (let y = bounds.minY + 18; y < bounds.maxY; y += 54) {
       ctx.beginPath();
       ctx.moveTo(bounds.minX, y);
-      ctx.quadraticCurveTo((bounds.minX + bounds.maxX) * 0.5, y + 8, bounds.maxX, y - 4);
+      ctx.quadraticCurveTo((bounds.minX + bounds.maxX) * 0.5, y + 6, bounds.maxX, y - 3);
       ctx.stroke();
     }
   }
@@ -3845,16 +3854,16 @@ function hashFeatureSeed(input) {
 
 function getBuildingVariantFromSeed(seed) {
   const roofPalette = [
-    { top: "rgba(206, 103, 91, 0.92)", side: "rgba(160, 76, 69, 0.94)" },
-    { top: "rgba(196, 136, 92, 0.92)", side: "rgba(157, 105, 69, 0.94)" },
-    { top: "rgba(136, 154, 181, 0.92)", side: "rgba(102, 120, 147, 0.94)" },
-    { top: "rgba(168, 116, 176, 0.92)", side: "rgba(128, 84, 134, 0.94)" }
+    { top: "rgba(203, 115, 101, 0.86)", side: "rgba(164, 87, 76, 0.90)" },
+    { top: "rgba(194, 145, 107, 0.86)", side: "rgba(156, 113, 79, 0.90)" },
+    { top: "rgba(136, 158, 178, 0.86)", side: "rgba(103, 123, 144, 0.90)" },
+    { top: "rgba(152, 130, 171, 0.84)", side: "rgba(121, 102, 139, 0.88)" }
   ];
   const wallPalette = [
-    { front: "rgba(234, 220, 196, 0.94)", side: "rgba(200, 184, 160, 0.96)" },
-    { front: "rgba(222, 205, 184, 0.94)", side: "rgba(188, 170, 150, 0.96)" },
-    { front: "rgba(214, 198, 220, 0.94)", side: "rgba(178, 162, 190, 0.96)" },
-    { front: "rgba(204, 216, 198, 0.94)", side: "rgba(169, 181, 163, 0.96)" }
+    { front: "rgba(232, 220, 201, 0.84)", side: "rgba(205, 191, 171, 0.88)" },
+    { front: "rgba(223, 210, 192, 0.84)", side: "rgba(194, 178, 158, 0.88)" },
+    { front: "rgba(214, 202, 220, 0.80)", side: "rgba(184, 171, 194, 0.84)" },
+    { front: "rgba(207, 218, 202, 0.82)", side: "rgba(177, 188, 171, 0.86)" }
   ];
 
   const roofIndex = seed % roofPalette.length;
@@ -3863,10 +3872,10 @@ function getBuildingVariantFromSeed(seed) {
   return {
     roof: roofPalette[roofIndex],
     wall: wallPalette[wallIndex],
-    height: 5 + (seed % 8),
-    roofLift: 2 + (seed % 3),
-    shadowAlpha: 0.08 + ((seed % 5) * 0.02),
-    skew: ((seed % 5) - 2) * 0.25
+    height: 4 + (seed % 6),
+    roofLift: 1.5 + (seed % 2),
+    shadowAlpha: 0.05 + ((seed % 4) * 0.018),
+    skew: ((seed % 5) - 2) * 0.18
   };
 }
 
@@ -3935,17 +3944,23 @@ function drawGeneric25DBuilding(ctx, points, style, zoom) {
   if (!Array.isArray(points) || points.length < 3) return;
 
   const centroid = getBuildingCentroid(points);
-  const roofPoints = offsetBuildingPoints(points, centroid, style.skew, -style.height, 0.95);
-  const shadowPoints = offsetBuildingPoints(points, centroid, 4 + style.skew, 4 + style.height * 0.35, 1);
+  const roofPoints = offsetBuildingPoints(points, centroid, style.skew, -style.height, 0.96);
+  const shadowPoints = offsetBuildingPoints(points, centroid, 3 + style.skew, 3 + style.height * 0.28, 1.01);
   const frontIndex = points.reduce((best, point, index) => point.y > points[best].y ? index : best, 0);
   const nextIndex = (frontIndex + 1) % points.length;
   const prevIndex = (frontIndex - 1 + points.length) % points.length;
 
   ctx.save();
 
+  ctx.shadowColor = `rgba(68, 57, 46, ${Math.max(0.06, style.shadowAlpha).toFixed(2)})`;
+  ctx.shadowBlur = zoom >= 18 ? 6 : 4;
+  ctx.shadowOffsetY = 2;
   ctx.fillStyle = `rgba(68, 57, 46, ${style.shadowAlpha.toFixed(2)})`;
   drawPolygonPath(ctx, shadowPoints);
   ctx.fill();
+  ctx.shadowColor = "transparent";
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
 
   const frontFace = [
     points[frontIndex],
@@ -3978,8 +3993,8 @@ function drawGeneric25DBuilding(ctx, points, style, zoom) {
   ctx.stroke();
 
   if (zoom >= 18) {
-    ctx.strokeStyle = "rgba(255,255,255,0.28)";
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255,255,255,0.16)";
+    ctx.lineWidth = 0.9;
     ctx.beginPath();
     ctx.moveTo(roofPoints[0].x, roofPoints[0].y);
     for (let i = 1; i < roofPoints.length; i += 1) {
@@ -4016,43 +4031,42 @@ function drawCustom25DBuildings(ctx, bounds, topLeft) {
 
 function getRoadStyleForFeature(highwayType, zoom) {
   const normalized = String(highwayType || "residential").toLowerCase();
-  const zoomBoost = Math.max(0, zoom - 15) * 0.65;
+  const zoomBoost = Math.max(0, zoom - 15) * 0.55;
   const styles = {
     primary: {
-      width: 11.5 + zoomBoost,
-      fill: "rgba(255, 201, 120, 0.96)",
-      edge: "rgba(196, 126, 68, 0.92)",
-      highlight: "rgba(255, 241, 199, 0.75)",
-      shadow: "rgba(119, 84, 53, 0.26)"
+      width: 10.5 + zoomBoost,
+      fill: "rgba(237, 189, 117, 0.94)",
+      edge: "rgba(198, 139, 82, 0.44)",
+      highlight: "rgba(255, 240, 203, 0.34)",
+      shadow: "rgba(124, 96, 63, 0.14)"
     },
     secondary: {
-      width: 8.8 + zoomBoost * 0.85,
-      fill: "rgba(251, 228, 169, 0.94)",
-      edge: "rgba(179, 142, 92, 0.85)",
-      highlight: "rgba(255, 247, 224, 0.7)",
-      shadow: "rgba(109, 95, 66, 0.22)"
+      width: 7.8 + zoomBoost * 0.8,
+      fill: "rgba(239, 221, 177, 0.92)",
+      edge: "rgba(176, 148, 104, 0.34)",
+      highlight: "rgba(255, 247, 224, 0.26)",
+      shadow: "rgba(109, 95, 66, 0.10)"
     },
     residential: {
-      width: 6.4 + zoomBoost * 0.7,
-      fill: "rgba(247, 243, 232, 0.92)",
-      edge: "rgba(188, 183, 171, 0.72)",
-      highlight: "rgba(255, 255, 255, 0.68)",
-      shadow: "rgba(112, 109, 103, 0.16)"
+      width: 5.3 + zoomBoost * 0.62,
+      fill: "rgba(244, 240, 229, 0.88)",
+      edge: "rgba(190, 184, 171, 0.22)",
+      highlight: "rgba(255, 255, 255, 0.18)",
+      shadow: "rgba(112, 109, 103, 0.07)"
     },
     service: {
-      width: 4.7 + zoomBoost * 0.55,
-      fill: "rgba(239, 235, 225, 0.88)",
-      edge: "rgba(173, 168, 156, 0.6)",
-      highlight: "rgba(255, 255, 255, 0.54)",
-      shadow: "rgba(101, 98, 92, 0.12)"
+      width: 3.8 + zoomBoost * 0.48,
+      fill: "rgba(235, 231, 221, 0.82)",
+      edge: "rgba(176, 171, 160, 0.16)",
+      highlight: "rgba(255, 255, 255, 0.12)",
+      shadow: "rgba(101, 98, 92, 0.05)"
     },
     path: {
-      width: 2.4 + zoomBoost * 0.3,
-      fill: "rgba(205, 191, 153, 0.8)",
-      edge: "rgba(152, 136, 103, 0.56)",
-      highlight: "rgba(245, 233, 199, 0.44)",
-      shadow: "rgba(96, 83, 60, 0.1)",
-      dash: [7, 6]
+      width: 2 + zoomBoost * 0.22,
+      fill: "rgba(198, 184, 149, 0.72)",
+      edge: "rgba(151, 137, 103, 0.12)",
+      highlight: "rgba(245, 233, 199, 0.08)",
+      shadow: "rgba(96, 83, 60, 0.03)"
     }
   };
 
@@ -4066,12 +4080,12 @@ function getRoadStyleForFeature(highwayType, zoom) {
 function drawRoadShadow(ctx, points, style) {
   ctx.save();
   ctx.strokeStyle = style.shadow;
-  ctx.lineWidth = style.width + 4;
+  ctx.lineWidth = style.width + 2.2;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.shadowColor = style.shadow;
-  ctx.shadowBlur = Math.max(4, style.width * 0.8);
-  ctx.shadowOffsetY = Math.max(1, style.width * 0.12);
+  ctx.shadowBlur = Math.max(2, style.width * 0.35);
+  ctx.shadowOffsetY = Math.max(0.5, style.width * 0.06);
   drawCustom25DRoadPath(ctx, points, style.dash || null);
   ctx.restore();
 }
@@ -4084,7 +4098,7 @@ function drawCustom25DRoad(ctx, points, style) {
   ctx.lineJoin = "round";
 
   ctx.strokeStyle = style.edge;
-  ctx.lineWidth = style.width + 2;
+  ctx.lineWidth = style.width + 0.8;
   drawCustom25DRoadPath(ctx, points, style.dash || null);
 
   ctx.strokeStyle = style.fill;
@@ -4092,8 +4106,8 @@ function drawCustom25DRoad(ctx, points, style) {
   drawCustom25DRoadPath(ctx, points, style.dash || null);
 
   ctx.strokeStyle = style.highlight;
-  ctx.lineWidth = Math.max(1.2, style.width * 0.28);
-  drawCustom25DRoadPath(ctx, points, style.dash ? style.dash.map((value) => Math.max(2, value * 0.55)) : null);
+  ctx.lineWidth = Math.max(0.7, style.width * 0.16);
+  drawCustom25DRoadPath(ctx, points, null);
   ctx.restore();
 }
 
@@ -4142,23 +4156,57 @@ function drawCustom25DRoads(ctx, bounds, topLeft) {
   });
 }
 
+function drawTreeCluster(ctx, x, y, scale = 1) {
+  const blobs = [
+    { x: -5, y: 2, r: 4.2 },
+    { x: 0, y: -2, r: 5.3 },
+    { x: 5, y: 2, r: 4.4 }
+  ];
+
+  blobs.forEach((blob, index) => {
+    ctx.fillStyle = index === 1 ? "rgba(50, 133, 63, 0.58)" : "rgba(64, 149, 77, 0.52)";
+    ctx.beginPath();
+    ctx.arc(x + blob.x * scale, y + blob.y * scale, blob.r * scale, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.fillStyle = "rgba(228, 247, 206, 0.14)";
+  ctx.beginPath();
+  ctx.arc(x - 1.4 * scale, y - 3.2 * scale, 1.8 * scale, 0, Math.PI * 2);
+  ctx.fill();
+}
+
 function drawCustom25DTrees(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 120;
+  if (!Array.isArray(custom25DZoneFeatures) || !custom25DZoneFeatures.length) return;
 
-  for (let i = 0; i < 36; i += 1) {
-    const point = custom25DPoint(size, seed, i);
-    const radius = 3 + custom25DRandom(seed, i + 20) * 4;
+  const zoom = map.getZoom();
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "medium")) return;
 
-    ctx.fillStyle = "rgba(45, 132, 66, 0.56)";
-    ctx.beginPath();
-    ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
-    ctx.fill();
+  custom25DZoneFeatures
+    .filter((feature) => feature.zoneType === "park")
+    .filter((feature) => Array.isArray(feature.coords) && feature.coords.length >= 3)
+    .filter((feature) => feature.coords.some(([lat, lng]) => bounds.contains([lat, lng])))
+    .forEach((feature) => {
+      const seed = hashFeatureSeed(feature.id);
+      const points = projectCustom25DZonePoints(feature.coords, map.latLngToLayerPoint(bounds.getNorthWest()));
+      if (points.length < 3) return;
 
-    ctx.fillStyle = "rgba(255, 255, 255, 0.22)";
-    ctx.beginPath();
-    ctx.arc(point.x - radius * 0.28, point.y - radius * 0.34, radius * 0.36, 0, Math.PI * 2);
-    ctx.fill();
-  }
+      const clippedBounds = getProjectedBounds(points);
+      ctx.save();
+      clipToProjectedPolygon(ctx, points);
+
+      const clusterCount = zoom >= 18 ? 5 : 3;
+      for (let i = 0; i < clusterCount; i += 1) {
+        const rx = (Math.abs(Math.sin(seed + i * 17.3)) % 1);
+        const ry = (Math.abs(Math.sin(seed + i * 29.7)) % 1);
+        const x = clippedBounds.minX + rx * Math.max(12, clippedBounds.maxX - clippedBounds.minX);
+        const y = clippedBounds.minY + ry * Math.max(12, clippedBounds.maxY - clippedBounds.minY);
+        const scale = zoom >= 18 ? 0.9 + ((i % 3) * 0.08) : 0.72 + ((i % 2) * 0.05);
+        drawTreeCluster(ctx, x, y, scale);
+      }
+
+      ctx.restore();
+    });
 }
 /* CUSTOM 2.5D MAP EXPERIMENT END */
 
