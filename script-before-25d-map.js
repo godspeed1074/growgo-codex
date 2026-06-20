@@ -6,8 +6,6 @@
 
 const DEFAULT_CENTER = [-38.4537, 145.2381];
 
-const ENABLE_CUSTOM_25D_MAP = false;
-
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
 const POI_PIN_VALUE = 100;
@@ -3450,187 +3448,6 @@ function startGmtResetClock() {
   gmtClockTimer = setInterval(updateClock, 1000);
 }
 
-/* CUSTOM 2.5D MAP EXPERIMENT START */
-let custom25DMapLayer = null;
-
-function initCustom25DMapExperiment() {
-  if (!ENABLE_CUSTOM_25D_MAP || !map || custom25DMapLayer) return;
-
-  map.createPane("custom25DMapPane");
-  const pane = map.getPane("custom25DMapPane");
-  pane.style.zIndex = "350";
-  pane.style.pointerEvents = "none";
-
-  const canvas = L.DomUtil.create("canvas", "custom-25d-map-canvas", pane);
-  canvas.style.position = "absolute";
-  canvas.style.pointerEvents = "none";
-
-  const redraw = () => drawCustom25DMapCanvas(canvas);
-  custom25DMapLayer = { canvas, redraw };
-
-  map.on("moveend zoomend", redraw);
-  redraw();
-}
-
-function drawCustom25DMapCanvas(canvas) {
-  if (!ENABLE_CUSTOM_25D_MAP || !map || !canvas) return;
-
-  const size = map.getSize();
-  const bounds = map.getBounds();
-  const topLeft = map.latLngToLayerPoint(bounds.getNorthWest());
-  L.DomUtil.setPosition(canvas, topLeft);
-
-  const scale = window.devicePixelRatio || 1;
-  canvas.width = Math.max(1, Math.round(size.x * scale));
-  canvas.height = Math.max(1, Math.round(size.y * scale));
-  canvas.style.width = `${size.x}px`;
-  canvas.style.height = `${size.y}px`;
-
-  const ctx = canvas.getContext("2d");
-  ctx.setTransform(scale, 0, 0, scale, 0, 0);
-  ctx.clearRect(0, 0, size.x, size.y);
-
-  drawCustom25DBackground(ctx, size, bounds);
-  drawCustom25DParks(ctx, size, bounds);
-  drawCustom25DWaterAndBeach(ctx, size, bounds);
-  drawCustom25DBuildings(ctx, size, bounds);
-  drawCustom25DRoads(ctx, size, bounds);
-  drawCustom25DTrees(ctx, size, bounds);
-}
-
-function custom25DSeedFromBounds(bounds) {
-  const center = bounds.getCenter();
-  return Math.abs(Math.sin(center.lat * 12.9898 + center.lng * 78.233) * 43758.5453);
-}
-
-function custom25DRandom(seed, index) {
-  return Math.abs(Math.sin(seed + index * 127.1) * 10000) % 1;
-}
-
-function custom25DPoint(size, seed, index) {
-  return {
-    x: custom25DRandom(seed, index) * size.x,
-    y: custom25DRandom(seed, index + 41) * size.y
-  };
-}
-
-function drawCustom25DBackground(ctx, size) {
-  const bg = ctx.createLinearGradient(0, 0, size.x, size.y);
-  bg.addColorStop(0, "rgba(236, 244, 219, 0.62)");
-  bg.addColorStop(0.5, "rgba(226, 239, 209, 0.72)");
-  bg.addColorStop(1, "rgba(216, 232, 198, 0.62)");
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, size.x, size.y);
-}
-
-function drawCustom25DParks(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 10;
-  ctx.fillStyle = "rgba(113, 185, 96, 0.24)";
-  ctx.strokeStyle = "rgba(83, 143, 82, 0.22)";
-  ctx.lineWidth = 2;
-
-  for (let i = 0; i < 4; i += 1) {
-    const point = custom25DPoint(size, seed, i);
-    const width = 95 + custom25DRandom(seed, i + 80) * 120;
-    const height = 58 + custom25DRandom(seed, i + 120) * 80;
-
-    ctx.beginPath();
-    ctx.ellipse(point.x, point.y, width, height, -0.25, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-  }
-}
-
-function drawCustom25DWaterAndBeach(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 30;
-  const waterY = size.y * (0.18 + custom25DRandom(seed, 1) * 0.56);
-
-  ctx.fillStyle = "rgba(85, 177, 219, 0.22)";
-  ctx.beginPath();
-  ctx.moveTo(-20, waterY);
-  for (let x = -20; x <= size.x + 20; x += 55) {
-    const y = waterY + Math.sin((x + seed) * 0.018) * 22;
-    ctx.lineTo(x, y);
-  }
-  ctx.lineTo(size.x + 20, -20);
-  ctx.lineTo(-20, -20);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.strokeStyle = "rgba(236, 213, 145, 0.42)";
-  ctx.lineWidth = 14;
-  ctx.beginPath();
-  for (let x = -20; x <= size.x + 20; x += 55) {
-    const y = waterY + Math.sin((x + seed) * 0.018) * 22;
-    if (x === -20) ctx.moveTo(x, y + 10);
-    else ctx.lineTo(x, y + 10);
-  }
-  ctx.stroke();
-}
-
-function drawCustom25DBuildings(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 60;
-
-  for (let i = 0; i < 18; i += 1) {
-    const point = custom25DPoint(size, seed, i);
-    const width = 22 + custom25DRandom(seed, i + 50) * 30;
-    const height = 16 + custom25DRandom(seed, i + 70) * 24;
-    const rotation = (custom25DRandom(seed, i + 90) - 0.5) * 0.6;
-
-    ctx.save();
-    ctx.translate(point.x, point.y);
-    ctx.rotate(rotation);
-    ctx.fillStyle = "rgba(214, 185, 154, 0.42)";
-    ctx.strokeStyle = "rgba(128, 102, 82, 0.22)";
-    ctx.lineWidth = 1;
-    ctx.fillRect(-width / 2, -height / 2, width, height);
-    ctx.strokeRect(-width / 2, -height / 2, width, height);
-    ctx.restore();
-  }
-}
-
-function drawCustom25DRoads(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 90;
-
-  for (let i = 0; i < 6; i += 1) {
-    const startY = custom25DRandom(seed, i) * size.y;
-    const endY = custom25DRandom(seed, i + 20) * size.y;
-    const controlY = custom25DRandom(seed, i + 40) * size.y;
-
-    ctx.strokeStyle = "rgba(255, 251, 235, 0.74)";
-    ctx.lineWidth = i % 2 === 0 ? 14 : 9;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(-30, startY);
-    ctx.quadraticCurveTo(size.x * 0.5, controlY, size.x + 30, endY);
-    ctx.stroke();
-
-    ctx.strokeStyle = "rgba(177, 162, 135, 0.24)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-}
-
-function drawCustom25DTrees(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 120;
-
-  for (let i = 0; i < 36; i += 1) {
-    const point = custom25DPoint(size, seed, i);
-    const radius = 3 + custom25DRandom(seed, i + 20) * 4;
-
-    ctx.fillStyle = "rgba(45, 132, 66, 0.56)";
-    ctx.beginPath();
-    ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "rgba(255, 255, 255, 0.22)";
-    ctx.beginPath();
-    ctx.arc(point.x - radius * 0.28, point.y - radius * 0.34, radius * 0.36, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-/* CUSTOM 2.5D MAP EXPERIMENT END */
-
 /* ----------------------------- */
 /* MAP SETUP */
 /* ----------------------------- */
@@ -3647,8 +3464,6 @@ function initMap() {
     maxZoom: 20,
     attribution: "&copy; OpenStreetMap contributors"
   }).addTo(map);
-
-  initCustom25DMapExperiment();
 
   pinsLayer = L.layerGroup().addTo(map);
 
