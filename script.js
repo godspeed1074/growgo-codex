@@ -3453,6 +3453,7 @@ function startGmtResetClock() {
 /* CUSTOM 2.5D MAP EXPERIMENT START */
 let custom25DMapLayer = null;
 let custom25DRoadFeatures = [];
+let custom25DZoneFeatures = [];
 
 function initCustom25DMapExperiment() {
   if (!ENABLE_CUSTOM_25D_MAP || !map || custom25DMapLayer) return;
@@ -3492,8 +3493,7 @@ function drawCustom25DMapCanvas(canvas) {
   ctx.clearRect(0, 0, size.x, size.y);
 
   drawCustom25DBackground(ctx, size, bounds);
-  drawCustom25DParks(ctx, size, bounds);
-  drawCustom25DWaterAndBeach(ctx, size, bounds);
+  drawCustom25DZones(ctx, bounds, topLeft);
   drawCustom25DBuildings(ctx, size, bounds);
   drawCustom25DRoads(ctx, bounds, topLeft);
   drawCustom25DTrees(ctx, size, bounds);
@@ -3501,6 +3501,14 @@ function drawCustom25DMapCanvas(canvas) {
 
 function setCustom25DMapRoadFeatures(roadWays) {
   custom25DRoadFeatures = Array.isArray(roadWays) ? roadWays : [];
+
+  if (ENABLE_CUSTOM_25D_MAP && custom25DMapLayer?.redraw) {
+    custom25DMapLayer.redraw();
+  }
+}
+
+function setCustom25DMapZoneFeatures(zoneFeatures) {
+  custom25DZoneFeatures = Array.isArray(zoneFeatures) ? zoneFeatures : [];
 
   if (ENABLE_CUSTOM_25D_MAP && custom25DMapLayer?.redraw) {
     custom25DMapLayer.redraw();
@@ -3532,49 +3540,282 @@ function drawCustom25DBackground(ctx, size) {
   ctx.fillRect(0, 0, size.x, size.y);
 }
 
-function drawCustom25DParks(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 10;
-  ctx.fillStyle = "rgba(113, 185, 96, 0.24)";
-  ctx.strokeStyle = "rgba(83, 143, 82, 0.22)";
-  ctx.lineWidth = 2;
-
-  for (let i = 0; i < 4; i += 1) {
-    const point = custom25DPoint(size, seed, i);
-    const width = 95 + custom25DRandom(seed, i + 80) * 120;
-    const height = 58 + custom25DRandom(seed, i + 120) * 80;
-
-    ctx.beginPath();
-    ctx.ellipse(point.x, point.y, width, height, -0.25, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-  }
+function shouldDrawZoneDetailsAtZoom(zoom, detailLevel = "medium") {
+  if (detailLevel === "low") return zoom >= 15;
+  if (detailLevel === "high") return zoom >= 18;
+  return zoom >= 16.5;
 }
 
-function drawCustom25DWaterAndBeach(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 30;
-  const waterY = size.y * (0.18 + custom25DRandom(seed, 1) * 0.56);
+function getZoneStyleForFeature(featureType, zoom) {
+  const styles = {
+    park: {
+      fill: "rgba(120, 198, 112, 0.30)",
+      edge: "rgba(75, 145, 74, 0.30)",
+      inner: "rgba(167, 222, 148, 0.18)"
+    },
+    grass: {
+      fill: "rgba(150, 208, 126, 0.18)",
+      edge: "rgba(104, 160, 86, 0.18)",
+      inner: "rgba(194, 232, 171, 0.10)"
+    },
+    water: {
+      fill: "rgba(105, 191, 226, 0.22)",
+      edge: "rgba(55, 139, 198, 0.28)",
+      inner: "rgba(173, 225, 248, 0.14)"
+    },
+    beach: {
+      fill: "rgba(236, 217, 154, 0.28)",
+      edge: "rgba(198, 173, 112, 0.20)",
+      inner: "rgba(247, 233, 186, 0.16)"
+    },
+    wetland: {
+      fill: "rgba(118, 183, 155, 0.22)",
+      edge: "rgba(84, 141, 118, 0.22)",
+      inner: "rgba(168, 214, 190, 0.10)"
+    },
+    sports: {
+      fill: "rgba(114, 193, 110, 0.20)",
+      edge: "rgba(76, 146, 78, 0.20)",
+      inner: "rgba(204, 239, 188, 0.08)"
+    }
+  };
 
-  ctx.fillStyle = "rgba(85, 177, 219, 0.22)";
+  const base = styles[featureType] || styles.grass;
+  return {
+    ...base,
+    lineWidth: zoom >= 18 ? 2.2 : zoom >= 16.5 ? 1.6 : 1.1
+  };
+}
+
+function projectCustom25DZonePoints(coords, topLeft) {
+  if (!Array.isArray(coords) || !coords.length) return [];
+
+  return coords.map(([lat, lng]) => {
+    const point = map.latLngToLayerPoint([lat, lng]);
+    return {
+      x: point.x - topLeft.x,
+      y: point.y - topLeft.y
+    };
+  });
+}
+
+function drawCustom25DZone(ctx, points, style, closed = true) {
+  if (!Array.isArray(points) || points.length < 2) return;
+
+  ctx.save();
   ctx.beginPath();
-  ctx.moveTo(-20, waterY);
-  for (let x = -20; x <= size.x + 20; x += 55) {
-    const y = waterY + Math.sin((x + seed) * 0.018) * 22;
-    ctx.lineTo(x, y);
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i += 1) {
+    ctx.lineTo(points[i].x, points[i].y);
   }
-  ctx.lineTo(size.x + 20, -20);
-  ctx.lineTo(-20, -20);
+  if (closed) ctx.closePath();
+
+  if (closed) {
+    ctx.fillStyle = style.fill;
+    ctx.fill();
+    ctx.strokeStyle = style.edge;
+    ctx.lineWidth = style.lineWidth;
+    ctx.stroke();
+  } else {
+    ctx.strokeStyle = style.fill;
+    ctx.lineWidth = Math.max(4, style.lineWidth * 3.2);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawWaterTexture(ctx, points, zoom, closed) {
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "medium") || !Array.isArray(points) || points.length < 2) return;
+
+  const bounds = getProjectedBounds(points);
+  const spacing = zoom >= 18 ? 20 : 28;
+
+  ctx.save();
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
+  ctx.lineWidth = 1.2;
+  if (closed) {
+    clipToProjectedPolygon(ctx, points);
+  }
+
+  for (let y = bounds.minY + 10; y < bounds.maxY; y += spacing) {
+    ctx.beginPath();
+    for (let x = bounds.minX - 12; x <= bounds.maxX + 12; x += 18) {
+      const waveY = y + Math.sin((x + y) * 0.04) * 2.8;
+      if (x === bounds.minX - 12) ctx.moveTo(x, waveY);
+      else ctx.lineTo(x, waveY);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawBeachDetails(ctx, points, zoom) {
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "high") || !Array.isArray(points) || points.length < 3) return;
+
+  const bounds = getProjectedBounds(points);
+  ctx.save();
+  clipToProjectedPolygon(ctx, points);
+  ctx.fillStyle = "rgba(255, 246, 214, 0.28)";
+
+  for (let i = 0; i < 18; i += 1) {
+    const x = bounds.minX + ((i * 37) % Math.max(40, bounds.maxX - bounds.minX + 1));
+    const y = bounds.minY + ((i * 23) % Math.max(40, bounds.maxY - bounds.minY + 1));
+    ctx.fillRect(x, y, 2, 2);
+  }
+  ctx.restore();
+}
+
+function drawGrassTexture(ctx, points, zoom, style) {
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "medium") || !Array.isArray(points) || points.length < 3) return;
+
+  const bounds = getProjectedBounds(points);
+  ctx.save();
+  clipToProjectedPolygon(ctx, points);
+  ctx.fillStyle = style.inner;
+
+  const spacing = zoom >= 18 ? 16 : 24;
+  for (let y = bounds.minY + 8; y < bounds.maxY; y += spacing) {
+    for (let x = bounds.minX + 8; x < bounds.maxX; x += spacing) {
+      ctx.beginPath();
+      ctx.arc(x, y, zoom >= 18 ? 2.2 : 1.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+function drawParkDetails(ctx, points, zoom) {
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "medium") || !Array.isArray(points) || points.length < 3) return;
+
+  const bounds = getProjectedBounds(points);
+  ctx.save();
+  clipToProjectedPolygon(ctx, points);
+
+  const treeSpacing = zoom >= 18 ? 22 : 34;
+  for (let y = bounds.minY + 12; y < bounds.maxY; y += treeSpacing) {
+    for (let x = bounds.minX + 12; x < bounds.maxX; x += treeSpacing) {
+      ctx.fillStyle = "rgba(49, 134, 62, 0.50)";
+      ctx.beginPath();
+      ctx.arc(x, y, zoom >= 18 ? 3.2 : 2.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (zoom >= 18) {
+        ctx.fillStyle = "rgba(206, 244, 186, 0.22)";
+        ctx.beginPath();
+        ctx.arc(x - 0.9, y - 1.1, 1.1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  if (shouldDrawZoneDetailsAtZoom(zoom, "high")) {
+    ctx.strokeStyle = "rgba(245, 236, 191, 0.28)";
+    ctx.lineWidth = 1.1;
+    for (let y = bounds.minY + 18; y < bounds.maxY; y += 42) {
+      ctx.beginPath();
+      ctx.moveTo(bounds.minX, y);
+      ctx.quadraticCurveTo((bounds.minX + bounds.maxX) * 0.5, y + 8, bounds.maxX, y - 4);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+function drawSportsFieldDetails(ctx, points, zoom) {
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "high") || !Array.isArray(points) || points.length < 3) return;
+
+  const bounds = getProjectedBounds(points);
+  ctx.save();
+  clipToProjectedPolygon(ctx, points);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.28)";
+  ctx.lineWidth = 1.2;
+  ctx.strokeRect(bounds.minX + 8, bounds.minY + 8, Math.max(0, bounds.maxX - bounds.minX - 16), Math.max(0, bounds.maxY - bounds.minY - 16));
+  ctx.restore();
+}
+
+function drawWetlandDetails(ctx, points, zoom) {
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "high") || !Array.isArray(points) || points.length < 3) return;
+
+  const bounds = getProjectedBounds(points);
+  ctx.save();
+  clipToProjectedPolygon(ctx, points);
+  ctx.strokeStyle = "rgba(89, 134, 104, 0.28)";
+  ctx.lineWidth = 1;
+
+  for (let x = bounds.minX + 10; x < bounds.maxX; x += 18) {
+    ctx.beginPath();
+    ctx.moveTo(x, bounds.maxY);
+    ctx.lineTo(x - 2, bounds.maxY - 9);
+    ctx.lineTo(x + 1, bounds.maxY - 17);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function getProjectedBounds(points) {
+  return points.reduce((acc, point) => ({
+    minX: Math.min(acc.minX, point.x),
+    minY: Math.min(acc.minY, point.y),
+    maxX: Math.max(acc.maxX, point.x),
+    maxY: Math.max(acc.maxY, point.y)
+  }), {
+    minX: Number.POSITIVE_INFINITY,
+    minY: Number.POSITIVE_INFINITY,
+    maxX: Number.NEGATIVE_INFINITY,
+    maxY: Number.NEGATIVE_INFINITY
+  });
+}
+
+function clipToProjectedPolygon(ctx, points) {
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i += 1) {
+    ctx.lineTo(points[i].x, points[i].y);
+  }
   ctx.closePath();
-  ctx.fill();
+  ctx.clip();
+}
 
-  ctx.strokeStyle = "rgba(236, 213, 145, 0.42)";
-  ctx.lineWidth = 14;
-  ctx.beginPath();
-  for (let x = -20; x <= size.x + 20; x += 55) {
-    const y = waterY + Math.sin((x + seed) * 0.018) * 22;
-    if (x === -20) ctx.moveTo(x, y + 10);
-    else ctx.lineTo(x, y + 10);
-  }
-  ctx.stroke();
+function drawCustom25DZones(ctx, bounds, topLeft) {
+  if (!Array.isArray(custom25DZoneFeatures) || !custom25DZoneFeatures.length) return;
+
+  const zoom = map.getZoom();
+  const zonePriority = {
+    grass: 1,
+    sports: 2,
+    park: 3,
+    wetland: 4,
+    beach: 5,
+    water: 6
+  };
+
+  custom25DZoneFeatures
+    .filter((feature) => Array.isArray(feature?.coords) && feature.coords.length >= 2)
+    .filter((feature) => feature.coords.some(([lat, lng]) => bounds.contains([lat, lng])))
+    .sort((a, b) => (zonePriority[a.zoneType] || 0) - (zonePriority[b.zoneType] || 0))
+    .forEach((feature) => {
+      const points = projectCustom25DZonePoints(feature.coords, topLeft);
+      if (points.length < 2) return;
+
+      const style = getZoneStyleForFeature(feature.zoneType, zoom);
+      drawCustom25DZone(ctx, points, style, feature.closed !== false);
+
+      if (feature.zoneType === "water") {
+        drawWaterTexture(ctx, points, zoom, feature.closed !== false);
+      } else if (feature.zoneType === "beach") {
+        drawBeachDetails(ctx, points, zoom);
+      } else if (feature.zoneType === "park") {
+        drawParkDetails(ctx, points, zoom);
+      } else if (feature.zoneType === "grass") {
+        drawGrassTexture(ctx, points, zoom, style);
+      } else if (feature.zoneType === "sports") {
+        drawSportsFieldDetails(ctx, points, zoom);
+      } else if (feature.zoneType === "wetland") {
+        drawWetlandDetails(ctx, points, zoom);
+      }
+    });
 }
 
 function drawCustom25DBuildings(ctx, size, bounds) {
@@ -7218,6 +7459,9 @@ function requestRoadPinsForCurrentView(force = false) {
   if (!map) return;
 
   if (map.getZoom() < MIN_FETCH_ZOOM) {
+    /* CUSTOM 2.5D MAP EXPERIMENT START */
+    setCustom25DMapZoneFeatures([]);
+    /* CUSTOM 2.5D MAP EXPERIMENT END */
     setCustom25DMapRoadFeatures([]);
     scheduleRedrawPins();
     return;
@@ -7282,6 +7526,9 @@ async function fetchRoadPinsForViewport(force = false) {
 
     const data = await response.json();
     const features = extractMapFeaturesFromOverpass(data);
+    /* CUSTOM 2.5D MAP EXPERIMENT START */
+    setCustom25DMapZoneFeatures(features.zoneFeatures);
+    /* CUSTOM 2.5D MAP EXPERIMENT END */
     setCustom25DMapRoadFeatures(features.roadWays);
     const converted = syncPinsNearWater(features.waterFeatures, bounds);
     const newPins = buildPinsFromWays(features.roadWays, bounds, features.waterFeatures);
@@ -7315,9 +7562,15 @@ function buildOverpassQuery(boundsObj) {
   way["highway"~"^(${highwayRegex})$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["natural"="water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["natural"="coastline"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["natural"="beach"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["natural"="sand"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["natural"="wetland"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["natural"="grassland"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["water"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["waterway"~"^(river|stream|canal)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["landuse"~"^(reservoir|basin)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["landuse"~"^(grass|meadow|village_green|recreation_ground)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["leisure"~"^(park|garden|pitch|sports_centre|nature_reserve|common)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
 );
 (._;>;);
 out body;
@@ -7336,6 +7589,9 @@ function extractMapFeaturesFromOverpass(data) {
 
   const roadWays = [];
   const waterFeatures = [];
+  /* CUSTOM 2.5D MAP EXPERIMENT START */
+  const zoneFeatures = [];
+  /* CUSTOM 2.5D MAP EXPERIMENT END */
 
   elements.forEach((el) => {
     if (el.type !== "way" || !Array.isArray(el.nodes)) return;
@@ -7361,10 +7617,51 @@ function extractMapFeaturesFromOverpass(data) {
         closed: coords.length >= 4 && coords[0][0] === coords[coords.length - 1][0] && coords[0][1] === coords[coords.length - 1][1]
       });
     }
+
+    /* CUSTOM 2.5D MAP EXPERIMENT START */
+    const zoneType = getCustom25DZoneType(tags);
+    if (zoneType) {
+      zoneFeatures.push({
+        id: `zone:${el.id}`,
+        zoneType,
+        coords,
+        closed: coords.length >= 4 && coords[0][0] === coords[coords.length - 1][0] && coords[0][1] === coords[coords.length - 1][1]
+      });
+    }
+    /* CUSTOM 2.5D MAP EXPERIMENT END */
   });
 
-  return { roadWays, waterFeatures };
+  return { roadWays, waterFeatures, zoneFeatures };
 }
+
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+function getCustom25DZoneType(tags) {
+  if (!tags) return null;
+
+  if (
+    tags.natural === "water" ||
+    tags.natural === "coastline" ||
+    Boolean(tags.water) ||
+    ["river", "stream", "canal"].includes(tags.waterway) ||
+    ["reservoir", "basin"].includes(tags.landuse)
+  ) {
+    return "water";
+  }
+
+  if (tags.natural === "beach" || tags.natural === "sand") return "beach";
+  if (tags.natural === "wetland") return "wetland";
+  if (tags.leisure === "pitch" || tags.leisure === "sports_centre") return "sports";
+  if (["park", "garden", "nature_reserve", "common"].includes(tags.leisure)) return "park";
+  if (
+    tags.natural === "grassland" ||
+    ["grass", "meadow", "village_green", "recreation_ground"].includes(tags.landuse)
+  ) {
+    return "grass";
+  }
+
+  return null;
+}
+/* CUSTOM 2.5D MAP EXPERIMENT END */
 
 function isWaterFeature(tags) {
   return (
