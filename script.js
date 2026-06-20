@@ -3452,6 +3452,7 @@ function startGmtResetClock() {
 
 /* CUSTOM 2.5D MAP EXPERIMENT START */
 let custom25DMapLayer = null;
+let custom25DRoadFeatures = [];
 
 function initCustom25DMapExperiment() {
   if (!ENABLE_CUSTOM_25D_MAP || !map || custom25DMapLayer) return;
@@ -3494,8 +3495,16 @@ function drawCustom25DMapCanvas(canvas) {
   drawCustom25DParks(ctx, size, bounds);
   drawCustom25DWaterAndBeach(ctx, size, bounds);
   drawCustom25DBuildings(ctx, size, bounds);
-  drawCustom25DRoads(ctx, size, bounds);
+  drawCustom25DRoads(ctx, bounds, topLeft);
   drawCustom25DTrees(ctx, size, bounds);
+}
+
+function setCustom25DMapRoadFeatures(roadWays) {
+  custom25DRoadFeatures = Array.isArray(roadWays) ? roadWays : [];
+
+  if (ENABLE_CUSTOM_25D_MAP && custom25DMapLayer?.redraw) {
+    custom25DMapLayer.redraw();
+  }
 }
 
 function custom25DSeedFromBounds(bounds) {
@@ -3589,26 +3598,132 @@ function drawCustom25DBuildings(ctx, size, bounds) {
   }
 }
 
-function drawCustom25DRoads(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 90;
+function getRoadStyleForFeature(highwayType, zoom) {
+  const normalized = String(highwayType || "residential").toLowerCase();
+  const zoomBoost = Math.max(0, zoom - 15) * 0.65;
+  const styles = {
+    primary: {
+      width: 11.5 + zoomBoost,
+      fill: "rgba(255, 201, 120, 0.96)",
+      edge: "rgba(196, 126, 68, 0.92)",
+      highlight: "rgba(255, 241, 199, 0.75)",
+      shadow: "rgba(119, 84, 53, 0.26)"
+    },
+    secondary: {
+      width: 8.8 + zoomBoost * 0.85,
+      fill: "rgba(251, 228, 169, 0.94)",
+      edge: "rgba(179, 142, 92, 0.85)",
+      highlight: "rgba(255, 247, 224, 0.7)",
+      shadow: "rgba(109, 95, 66, 0.22)"
+    },
+    residential: {
+      width: 6.4 + zoomBoost * 0.7,
+      fill: "rgba(247, 243, 232, 0.92)",
+      edge: "rgba(188, 183, 171, 0.72)",
+      highlight: "rgba(255, 255, 255, 0.68)",
+      shadow: "rgba(112, 109, 103, 0.16)"
+    },
+    service: {
+      width: 4.7 + zoomBoost * 0.55,
+      fill: "rgba(239, 235, 225, 0.88)",
+      edge: "rgba(173, 168, 156, 0.6)",
+      highlight: "rgba(255, 255, 255, 0.54)",
+      shadow: "rgba(101, 98, 92, 0.12)"
+    },
+    path: {
+      width: 2.4 + zoomBoost * 0.3,
+      fill: "rgba(205, 191, 153, 0.8)",
+      edge: "rgba(152, 136, 103, 0.56)",
+      highlight: "rgba(245, 233, 199, 0.44)",
+      shadow: "rgba(96, 83, 60, 0.1)",
+      dash: [7, 6]
+    }
+  };
 
-  for (let i = 0; i < 6; i += 1) {
-    const startY = custom25DRandom(seed, i) * size.y;
-    const endY = custom25DRandom(seed, i + 20) * size.y;
-    const controlY = custom25DRandom(seed, i + 40) * size.y;
+  if (normalized === "primary" || normalized === "primary_link") return styles.primary;
+  if (normalized === "secondary" || normalized === "secondary_link" || normalized === "tertiary" || normalized === "tertiary_link") return styles.secondary;
+  if (normalized === "service" || normalized === "road") return styles.service;
+  if (["track", "path", "footway", "cycleway", "pedestrian"].includes(normalized)) return styles.path;
+  return styles.residential;
+}
 
-    ctx.strokeStyle = "rgba(255, 251, 235, 0.74)";
-    ctx.lineWidth = i % 2 === 0 ? 14 : 9;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(-30, startY);
-    ctx.quadraticCurveTo(size.x * 0.5, controlY, size.x + 30, endY);
-    ctx.stroke();
+function drawRoadShadow(ctx, points, style) {
+  ctx.save();
+  ctx.strokeStyle = style.shadow;
+  ctx.lineWidth = style.width + 4;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.shadowColor = style.shadow;
+  ctx.shadowBlur = Math.max(4, style.width * 0.8);
+  ctx.shadowOffsetY = Math.max(1, style.width * 0.12);
+  drawCustom25DRoadPath(ctx, points, style.dash || null);
+  ctx.restore();
+}
 
-    ctx.strokeStyle = "rgba(177, 162, 135, 0.24)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
+function drawCustom25DRoad(ctx, points, style) {
+  drawRoadShadow(ctx, points, style);
+
+  ctx.save();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  ctx.strokeStyle = style.edge;
+  ctx.lineWidth = style.width + 2;
+  drawCustom25DRoadPath(ctx, points, style.dash || null);
+
+  ctx.strokeStyle = style.fill;
+  ctx.lineWidth = style.width;
+  drawCustom25DRoadPath(ctx, points, style.dash || null);
+
+  ctx.strokeStyle = style.highlight;
+  ctx.lineWidth = Math.max(1.2, style.width * 0.28);
+  drawCustom25DRoadPath(ctx, points, style.dash ? style.dash.map((value) => Math.max(2, value * 0.55)) : null);
+  ctx.restore();
+}
+
+function drawCustom25DRoadPath(ctx, points, dashPattern) {
+  if (!Array.isArray(points) || points.length < 2) return;
+
+  ctx.setLineDash(dashPattern || []);
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+
+  for (let i = 1; i < points.length; i += 1) {
+    ctx.lineTo(points[i].x, points[i].y);
   }
+
+  ctx.stroke();
+}
+
+function projectCustom25DRoadPoints(coords, topLeft) {
+  if (!Array.isArray(coords) || coords.length < 2) return [];
+
+  return coords.map(([lat, lng]) => {
+    const point = map.latLngToLayerPoint([lat, lng]);
+    return {
+      x: point.x - topLeft.x,
+      y: point.y - topLeft.y
+    };
+  });
+}
+
+function drawCustom25DRoads(ctx, bounds, topLeft) {
+  if (!Array.isArray(custom25DRoadFeatures) || !custom25DRoadFeatures.length) return;
+
+  const zoom = map.getZoom();
+
+  custom25DRoadFeatures.forEach((road) => {
+    if (!Array.isArray(road?.coords) || road.coords.length < 2) return;
+
+    const intersectsBounds = road.coords.some(([lat, lng]) => bounds.contains([lat, lng]));
+    if (!intersectsBounds) return;
+
+    const points = projectCustom25DRoadPoints(road.coords, topLeft);
+    if (points.length < 2) return;
+
+    const style = getRoadStyleForFeature(road.highway, zoom);
+    drawCustom25DRoad(ctx, points, style);
+  });
 }
 
 function drawCustom25DTrees(ctx, size, bounds) {
@@ -7103,6 +7218,7 @@ function requestRoadPinsForCurrentView(force = false) {
   if (!map) return;
 
   if (map.getZoom() < MIN_FETCH_ZOOM) {
+    setCustom25DMapRoadFeatures([]);
     scheduleRedrawPins();
     return;
   }
@@ -7166,6 +7282,7 @@ async function fetchRoadPinsForViewport(force = false) {
 
     const data = await response.json();
     const features = extractMapFeaturesFromOverpass(data);
+    setCustom25DMapRoadFeatures(features.roadWays);
     const converted = syncPinsNearWater(features.waterFeatures, bounds);
     const newPins = buildPinsFromWays(features.roadWays, bounds, features.waterFeatures);
 
@@ -7229,7 +7346,11 @@ function extractMapFeaturesFromOverpass(data) {
     if (coords.length < 2) return;
 
     if (tags.highway) {
-      roadWays.push({ id: el.id, coords });
+      roadWays.push({
+        id: el.id,
+        coords,
+        highway: tags.highway
+      });
       return;
     }
 
