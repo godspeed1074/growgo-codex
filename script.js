@@ -3454,6 +3454,7 @@ function startGmtResetClock() {
 let custom25DMapLayer = null;
 let custom25DRoadFeatures = [];
 let custom25DZoneFeatures = [];
+let custom25DBuildingFeatures = [];
 
 function initCustom25DMapExperiment() {
   if (!ENABLE_CUSTOM_25D_MAP || !map || custom25DMapLayer) return;
@@ -3494,7 +3495,7 @@ function drawCustom25DMapCanvas(canvas) {
 
   drawCustom25DBackground(ctx, size, bounds);
   drawCustom25DZones(ctx, bounds, topLeft);
-  drawCustom25DBuildings(ctx, size, bounds);
+  drawCustom25DBuildings(ctx, bounds, topLeft);
   drawCustom25DRoads(ctx, bounds, topLeft);
   drawCustom25DTrees(ctx, size, bounds);
 }
@@ -3509,6 +3510,14 @@ function setCustom25DMapRoadFeatures(roadWays) {
 
 function setCustom25DMapZoneFeatures(zoneFeatures) {
   custom25DZoneFeatures = Array.isArray(zoneFeatures) ? zoneFeatures : [];
+
+  if (ENABLE_CUSTOM_25D_MAP && custom25DMapLayer?.redraw) {
+    custom25DMapLayer.redraw();
+  }
+}
+
+function setCustom25DMapBuildingFeatures(buildingFeatures) {
+  custom25DBuildingFeatures = Array.isArray(buildingFeatures) ? buildingFeatures : [];
 
   if (ENABLE_CUSTOM_25D_MAP && custom25DMapLayer?.redraw) {
     custom25DMapLayer.redraw();
@@ -3818,25 +3827,191 @@ function drawCustom25DZones(ctx, bounds, topLeft) {
     });
 }
 
-function drawCustom25DBuildings(ctx, size, bounds) {
-  const seed = custom25DSeedFromBounds(bounds) + 60;
+function shouldDrawBuildingAtZoom(zoom) {
+  return zoom >= 16.2;
+}
 
-  for (let i = 0; i < 18; i += 1) {
-    const point = custom25DPoint(size, seed, i);
-    const width = 22 + custom25DRandom(seed, i + 50) * 30;
-    const height = 16 + custom25DRandom(seed, i + 70) * 24;
-    const rotation = (custom25DRandom(seed, i + 90) - 0.5) * 0.6;
+function hashFeatureSeed(input) {
+  const text = String(input || "");
+  let hash = 2166136261;
 
-    ctx.save();
-    ctx.translate(point.x, point.y);
-    ctx.rotate(rotation);
-    ctx.fillStyle = "rgba(214, 185, 154, 0.42)";
-    ctx.strokeStyle = "rgba(128, 102, 82, 0.22)";
-    ctx.lineWidth = 1;
-    ctx.fillRect(-width / 2, -height / 2, width, height);
-    ctx.strokeRect(-width / 2, -height / 2, width, height);
-    ctx.restore();
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
   }
+
+  return (hash >>> 0) || 1;
+}
+
+function getBuildingVariantFromSeed(seed) {
+  const roofPalette = [
+    { top: "rgba(206, 103, 91, 0.92)", side: "rgba(160, 76, 69, 0.94)" },
+    { top: "rgba(196, 136, 92, 0.92)", side: "rgba(157, 105, 69, 0.94)" },
+    { top: "rgba(136, 154, 181, 0.92)", side: "rgba(102, 120, 147, 0.94)" },
+    { top: "rgba(168, 116, 176, 0.92)", side: "rgba(128, 84, 134, 0.94)" }
+  ];
+  const wallPalette = [
+    { front: "rgba(234, 220, 196, 0.94)", side: "rgba(200, 184, 160, 0.96)" },
+    { front: "rgba(222, 205, 184, 0.94)", side: "rgba(188, 170, 150, 0.96)" },
+    { front: "rgba(214, 198, 220, 0.94)", side: "rgba(178, 162, 190, 0.96)" },
+    { front: "rgba(204, 216, 198, 0.94)", side: "rgba(169, 181, 163, 0.96)" }
+  ];
+
+  const roofIndex = seed % roofPalette.length;
+  const wallIndex = Math.floor(seed / 7) % wallPalette.length;
+
+  return {
+    roof: roofPalette[roofIndex],
+    wall: wallPalette[wallIndex],
+    height: 5 + (seed % 8),
+    roofLift: 2 + (seed % 3),
+    shadowAlpha: 0.08 + ((seed % 5) * 0.02),
+    skew: ((seed % 5) - 2) * 0.25
+  };
+}
+
+function getBuildingStyleForFeature(feature, zoom) {
+  const seed = hashFeatureSeed([
+    feature?.id,
+    feature?.center?.lat?.toFixed?.(6),
+    feature?.center?.lng?.toFixed?.(6),
+    feature?.buildingType,
+    feature?.zoneType
+  ].filter(Boolean).join(":"));
+  const variant = getBuildingVariantFromSeed(seed);
+  const detail = zoom >= 18;
+
+  return {
+    ...variant,
+    seed,
+    detail,
+    roofLineWidth: detail ? 1.2 : 0.8,
+    bodyLineWidth: detail ? 1 : 0.7
+  };
+}
+
+function projectCustom25DBuildingPoints(coords, topLeft) {
+  if (!Array.isArray(coords) || coords.length < 3) return [];
+
+  return coords.map(([lat, lng]) => {
+    const point = map.latLngToLayerPoint([lat, lng]);
+    return {
+      x: point.x - topLeft.x,
+      y: point.y - topLeft.y
+    };
+  });
+}
+
+function getBuildingCentroid(points) {
+  const total = points.reduce((acc, point) => ({
+    x: acc.x + point.x,
+    y: acc.y + point.y
+  }), { x: 0, y: 0 });
+
+  return {
+    x: total.x / points.length,
+    y: total.y / points.length
+  };
+}
+
+function offsetBuildingPoints(points, centroid, shiftX, shiftY, scale = 1) {
+  return points.map((point) => ({
+    x: centroid.x + (point.x - centroid.x) * scale + shiftX,
+    y: centroid.y + (point.y - centroid.y) * scale + shiftY
+  }));
+}
+
+function drawPolygonPath(ctx, points) {
+  if (!Array.isArray(points) || points.length < 3) return;
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length; i += 1) {
+    ctx.lineTo(points[i].x, points[i].y);
+  }
+  ctx.closePath();
+}
+
+function drawGeneric25DBuilding(ctx, points, style, zoom) {
+  if (!Array.isArray(points) || points.length < 3) return;
+
+  const centroid = getBuildingCentroid(points);
+  const roofPoints = offsetBuildingPoints(points, centroid, style.skew, -style.height, 0.95);
+  const shadowPoints = offsetBuildingPoints(points, centroid, 4 + style.skew, 4 + style.height * 0.35, 1);
+  const frontIndex = points.reduce((best, point, index) => point.y > points[best].y ? index : best, 0);
+  const nextIndex = (frontIndex + 1) % points.length;
+  const prevIndex = (frontIndex - 1 + points.length) % points.length;
+
+  ctx.save();
+
+  ctx.fillStyle = `rgba(68, 57, 46, ${style.shadowAlpha.toFixed(2)})`;
+  drawPolygonPath(ctx, shadowPoints);
+  ctx.fill();
+
+  const frontFace = [
+    points[frontIndex],
+    points[nextIndex],
+    roofPoints[nextIndex],
+    roofPoints[frontIndex]
+  ];
+  const sideFace = [
+    points[prevIndex],
+    points[frontIndex],
+    roofPoints[frontIndex],
+    roofPoints[prevIndex]
+  ];
+
+  ctx.fillStyle = style.wall.side;
+  drawPolygonPath(ctx, sideFace);
+  ctx.fill();
+
+  ctx.fillStyle = style.wall.front;
+  drawPolygonPath(ctx, frontFace);
+  ctx.fill();
+
+  ctx.fillStyle = style.roof.top;
+  drawPolygonPath(ctx, roofPoints);
+  ctx.fill();
+
+  ctx.strokeStyle = style.roof.side;
+  ctx.lineWidth = style.roofLineWidth;
+  drawPolygonPath(ctx, roofPoints);
+  ctx.stroke();
+
+  if (zoom >= 18) {
+    ctx.strokeStyle = "rgba(255,255,255,0.28)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(roofPoints[0].x, roofPoints[0].y);
+    for (let i = 1; i < roofPoints.length; i += 1) {
+      const point = roofPoints[i];
+      ctx.lineTo((roofPoints[i - 1].x + point.x) * 0.5, (roofPoints[i - 1].y + point.y) * 0.5);
+    }
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawCustom25DBuildings(ctx, bounds, topLeft) {
+  if (!shouldDrawBuildingAtZoom(map.getZoom())) return;
+  if (!Array.isArray(custom25DBuildingFeatures) || !custom25DBuildingFeatures.length) return;
+
+  const zoom = map.getZoom();
+  const maxBuildings = zoom >= 18 ? 120 : zoom >= 17 ? 80 : 45;
+  let drawn = 0;
+
+  custom25DBuildingFeatures.forEach((feature) => {
+    if (drawn >= maxBuildings) return;
+    if (!Array.isArray(feature?.coords) || feature.coords.length < 3) return;
+    if (!feature.coords.some(([lat, lng]) => bounds.contains([lat, lng]))) return;
+
+    const points = projectCustom25DBuildingPoints(feature.coords, topLeft);
+    if (points.length < 3) return;
+
+    const style = getBuildingStyleForFeature(feature, zoom);
+    drawGeneric25DBuilding(ctx, points, style, zoom);
+    drawn += 1;
+  });
 }
 
 function getRoadStyleForFeature(highwayType, zoom) {
@@ -7461,6 +7636,7 @@ function requestRoadPinsForCurrentView(force = false) {
   if (map.getZoom() < MIN_FETCH_ZOOM) {
     /* CUSTOM 2.5D MAP EXPERIMENT START */
     setCustom25DMapZoneFeatures([]);
+    setCustom25DMapBuildingFeatures([]);
     /* CUSTOM 2.5D MAP EXPERIMENT END */
     setCustom25DMapRoadFeatures([]);
     scheduleRedrawPins();
@@ -7528,6 +7704,7 @@ async function fetchRoadPinsForViewport(force = false) {
     const features = extractMapFeaturesFromOverpass(data);
     /* CUSTOM 2.5D MAP EXPERIMENT START */
     setCustom25DMapZoneFeatures(features.zoneFeatures);
+    setCustom25DMapBuildingFeatures(features.buildingFeatures);
     /* CUSTOM 2.5D MAP EXPERIMENT END */
     setCustom25DMapRoadFeatures(features.roadWays);
     const converted = syncPinsNearWater(features.waterFeatures, bounds);
@@ -7571,6 +7748,7 @@ function buildOverpassQuery(boundsObj) {
   way["landuse"~"^(reservoir|basin)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["landuse"~"^(grass|meadow|village_green|recreation_ground)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
   way["leisure"~"^(park|garden|pitch|sports_centre|nature_reserve|common)$"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
+  way["building"](${boundsObj.south},${boundsObj.west},${boundsObj.north},${boundsObj.east});
 );
 (._;>;);
 out body;
@@ -7591,6 +7769,7 @@ function extractMapFeaturesFromOverpass(data) {
   const waterFeatures = [];
   /* CUSTOM 2.5D MAP EXPERIMENT START */
   const zoneFeatures = [];
+  const buildingFeatures = [];
   /* CUSTOM 2.5D MAP EXPERIMENT END */
 
   elements.forEach((el) => {
@@ -7619,6 +7798,16 @@ function extractMapFeaturesFromOverpass(data) {
     }
 
     /* CUSTOM 2.5D MAP EXPERIMENT START */
+    if (isCustom25DBuildingFeature(tags, coords)) {
+      const center = getFeatureCenter(coords);
+      buildingFeatures.push({
+        id: `building:${el.id}`,
+        coords,
+        center,
+        buildingType: tags.building || "yes"
+      });
+    }
+
     const zoneType = getCustom25DZoneType(tags);
     if (zoneType) {
       zoneFeatures.push({
@@ -7631,10 +7820,26 @@ function extractMapFeaturesFromOverpass(data) {
     /* CUSTOM 2.5D MAP EXPERIMENT END */
   });
 
-  return { roadWays, waterFeatures, zoneFeatures };
+  return { roadWays, waterFeatures, zoneFeatures, buildingFeatures };
 }
 
 /* CUSTOM 2.5D MAP EXPERIMENT START */
+function isCustom25DBuildingFeature(tags, coords) {
+  return Boolean(tags?.building) && Array.isArray(coords) && coords.length >= 4;
+}
+
+function getFeatureCenter(coords) {
+  const total = coords.reduce((acc, [lat, lng]) => ({
+    lat: acc.lat + lat,
+    lng: acc.lng + lng
+  }), { lat: 0, lng: 0 });
+
+  return {
+    lat: total.lat / coords.length,
+    lng: total.lng / coords.length
+  };
+}
+
 function getCustom25DZoneType(tags) {
   if (!tags) return null;
 
