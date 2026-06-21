@@ -4021,11 +4021,21 @@ function getBuildingVariantFromSeed(seed) {
   return {
     roof: roofPalette[roofIndex],
     wall: wallPalette[wallIndex],
-    height: 3.5 + (seed % 5),
+    height: 3.9 + ((seed % 4) * 0.72),
     roofLift: 1.2 + (seed % 2) * 0.6,
-    shadowAlpha: 0.055 + ((seed % 4) * 0.018),
+    shadowAlpha: 0.052 + ((seed % 4) * 0.015),
     skew: ((seed % 5) - 2) * 0.12,
-    inset: 0.875 + ((seed % 3) * 0.02)
+    inset: 0.875 + ((seed % 3) * 0.02),
+    depthX: 1.7 + ((Math.floor(seed / 3) % 4) * 0.34),
+    depthY: 3.1 + ((Math.floor(seed / 11) % 4) * 0.44),
+    roofScale: 1.014 + ((seed % 3) * 0.004),
+    roofInsetScale: 0.9 + ((seed % 2) * 0.025),
+    roofHighlightAlpha: 0.07 + ((seed % 3) * 0.018),
+    wallHighlightAlpha: 0.045 + ((seed % 2) * 0.012),
+    sideShadeAlpha: 0.07 + ((seed % 3) * 0.012),
+    shadowOffsetX: 1.8 + ((seed % 3) * 0.28),
+    shadowOffsetY: 2.15 + ((seed % 4) * 0.22),
+    shadowBlur: 5.2 + ((seed % 4) * 0.8)
   };
 }
 
@@ -4287,12 +4297,23 @@ function getBuildingGeometry(points, style, scale = 1) {
   const scaledBasePoints = scale === 1
     ? basePoints
     : offsetBuildingPoints(basePoints, centroid, 0, 0, scale);
-  const roofPoints = offsetBuildingPoints(scaledBasePoints, centroid, style.skew, -style.height, 1.02);
-  const shadowPoints = offsetBuildingPoints(scaledBasePoints, centroid, 2.4 + style.skew, 2.6 + style.height * 0.24, 1.02);
+  const roofPoints = offsetBuildingPoints(
+    scaledBasePoints,
+    centroid,
+    (style.depthX ?? (style.skew + 1.8)),
+    -(style.depthY ?? style.height),
+    style.roofScale || 1.02
+  );
+  const shadowPoints = offsetBuildingPoints(
+    scaledBasePoints,
+    centroid,
+    style.shadowOffsetX ?? (2.2 + style.skew),
+    style.shadowOffsetY ?? (2.4 + style.height * 0.24),
+    1.018
+  );
   const bounds = getProjectedBounds(scaledBasePoints);
-  const frontIndex = scaledBasePoints.reduce((best, point, index) => point.y > scaledBasePoints[best].y ? index : best, 0);
-  const nextIndex = (frontIndex + 1) % scaledBasePoints.length;
-  const prevIndex = (frontIndex - 1 + scaledBasePoints.length) % scaledBasePoints.length;
+  const frontEdge = getDominantBuildingEdge(scaledBasePoints, "y");
+  const sideEdge = getDominantBuildingEdge(scaledBasePoints, "x", frontEdge);
 
   return {
     centroid,
@@ -4300,11 +4321,111 @@ function getBuildingGeometry(points, style, scale = 1) {
     basePoints: scaledBasePoints,
     roofPoints,
     shadowPoints,
-    frontIndex,
-    nextIndex,
-    prevIndex
+    frontEdge,
+    sideEdge
   };
 }
+
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+// Phase 8 checkpoint: true 2.5D building depth pass.
+// Building/shop depth only. Roads, pins, player marker, capture radius,
+// gameplay, UI, and normal flag-off GrowGo behavior must remain unchanged.
+// Phase 8.1 checkpoint: building softness + depth balance micro-pass.
+// Softens Phase 8 building/shop depth without changing roads, pins,
+// player marker, capture radius, gameplay, UI, density, or flag-off behavior.
+function getEdgeKey(startIndex, endIndex) {
+  return `${startIndex}:${endIndex}`;
+}
+
+function getDominantBuildingEdge(points, axis = "y", excludedEdge = null) {
+  if (!Array.isArray(points) || points.length < 2) {
+    return { startIndex: 0, endIndex: 0 };
+  }
+
+  const excludedKey = excludedEdge ? getEdgeKey(excludedEdge.startIndex, excludedEdge.endIndex) : "";
+  let bestEdge = { startIndex: 0, endIndex: 1 };
+  let bestScore = Number.NEGATIVE_INFINITY;
+
+  for (let i = 0; i < points.length; i += 1) {
+    const nextIndex = (i + 1) % points.length;
+    const edgeKey = getEdgeKey(i, nextIndex);
+    if (edgeKey === excludedKey) continue;
+    const score = (points[i][axis] + points[nextIndex][axis]) * 0.5;
+    if (score > bestScore) {
+      bestScore = score;
+      bestEdge = { startIndex: i, endIndex: nextIndex };
+    }
+  }
+
+  return bestEdge;
+}
+
+function getBuildingDepth(style, zoom, emphasis = 1) {
+  const zoomFactor = zoom >= 18.4 ? 1.08 : zoom >= 17.4 ? 1.02 : 0.96;
+  return {
+    x: (style.depthX || 1.9) * emphasis * zoomFactor,
+    y: (style.depthY || style.height || 3.8) * emphasis * zoomFactor
+  };
+}
+
+function getBuildingTone(color, alpha = 0.12) {
+  return color.replace(/rgba\(([^)]+),\s*([0-9.]+)\)/, (_m, rgb, existingAlpha) => {
+    const mixedAlpha = Math.min(0.95, Number(existingAlpha) + alpha);
+    return `rgba(${rgb}, ${mixedAlpha.toFixed(2)})`;
+  });
+}
+
+function drawBuildingShadow(ctx, shadowPoints, style, zoom, cornerRadius) {
+  ctx.shadowColor = `rgba(68, 57, 46, ${Math.max(0.05, style.shadowAlpha).toFixed(2)})`;
+  ctx.shadowBlur = zoom >= 18 ? (style.shadowBlur || 7.8) : Math.max(4.8, (style.shadowBlur || 7.8) - 1.4);
+  ctx.shadowOffsetY = style.shadowOffsetY || 2.2;
+  ctx.shadowOffsetX = style.shadowOffsetX || 1.8;
+  ctx.fillStyle = `rgba(68, 57, 46, ${(style.shadowAlpha * 0.82).toFixed(2)})`;
+  drawRoundedPolygonPath(ctx, shadowPoints, cornerRadius);
+  ctx.fill();
+  ctx.shadowColor = "transparent";
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+}
+
+function drawBuildingVerticalFace(ctx, facePoints, fill, stroke, lineWidth, cornerRadius, innerAlpha = 0.06) {
+  ctx.fillStyle = fill;
+  drawRoundedPolygonPath(ctx, facePoints, cornerRadius);
+  ctx.fill();
+
+  ctx.fillStyle = `rgba(255,255,255,${innerAlpha.toFixed(2)})`;
+  drawRoundedPolygonPath(ctx, offsetBuildingPoints(facePoints, getBuildingCentroid(facePoints), 0, 0, 0.95), Math.max(1.1, cornerRadius * 0.84));
+  ctx.fill();
+
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = lineWidth;
+  drawRoundedPolygonPath(ctx, facePoints, cornerRadius);
+  ctx.stroke();
+}
+
+function drawBuildingRoof(ctx, roofPoints, style, roofCornerRadius) {
+  ctx.fillStyle = style.roof.top;
+  drawRoundedPolygonPath(ctx, roofPoints, roofCornerRadius);
+  ctx.fill();
+
+  const roofHighlightPoints = offsetBuildingPoints(
+    roofPoints,
+    getBuildingCentroid(roofPoints),
+    0,
+    0,
+    style.roofInsetScale || 0.92
+  );
+  ctx.fillStyle = `rgba(255,255,255,${(style.roofHighlightAlpha || 0.08).toFixed(2)})`;
+  drawRoundedPolygonPath(ctx, roofHighlightPoints, Math.max(1.1, roofCornerRadius * 0.78));
+  ctx.fill();
+
+  ctx.strokeStyle = style.roof.side;
+  ctx.lineWidth = style.roofLineWidth;
+  drawRoundedPolygonPath(ctx, roofPoints, roofCornerRadius);
+  ctx.stroke();
+}
+/* CUSTOM 2.5D MAP EXPERIMENT END */
 
 function drawGeneric25DBuilding(ctx, points, style, zoom, geometry = null) {
   if (!Array.isArray(points) || points.length < 3) return;
@@ -4314,76 +4435,57 @@ function drawGeneric25DBuilding(ctx, points, style, zoom, geometry = null) {
     basePoints,
     roofPoints,
     shadowPoints,
-    frontIndex,
-    nextIndex,
-    prevIndex
+    frontEdge,
+    sideEdge
   } = buildingGeometry;
   const baseCornerRadius = getSoftBuildingCornerRadius(basePoints, 0.15, style.cornerRadius || 4);
   const roofCornerRadius = getSoftBuildingCornerRadius(roofPoints, 0.13, Math.max(1.6, (style.cornerRadius || 4) - 0.4));
-
-  ctx.save();
-
-  ctx.shadowColor = `rgba(68, 57, 46, ${Math.max(0.06, style.shadowAlpha).toFixed(2)})`;
-  ctx.shadowBlur = zoom >= 18 ? 8.4 : 6.2;
-  ctx.shadowOffsetY = 2.45;
-  ctx.fillStyle = `rgba(68, 57, 46, ${(style.shadowAlpha * 0.88).toFixed(2)})`;
-  drawRoundedPolygonPath(ctx, shadowPoints, baseCornerRadius);
-  ctx.fill();
-  ctx.shadowColor = "transparent";
-  ctx.shadowBlur = 0;
-  ctx.shadowOffsetY = 0;
-
+  const faceRadius = Math.max(1.35, baseCornerRadius * 0.58);
   const frontFace = [
-    basePoints[frontIndex],
-    basePoints[nextIndex],
-    roofPoints[nextIndex],
-    roofPoints[frontIndex]
+    basePoints[frontEdge.startIndex],
+    basePoints[frontEdge.endIndex],
+    roofPoints[frontEdge.endIndex],
+    roofPoints[frontEdge.startIndex]
   ];
   const sideFace = [
-    basePoints[prevIndex],
-    basePoints[frontIndex],
-    roofPoints[frontIndex],
-    roofPoints[prevIndex]
+    basePoints[sideEdge.startIndex],
+    basePoints[sideEdge.endIndex],
+    roofPoints[sideEdge.endIndex],
+    roofPoints[sideEdge.startIndex]
   ];
 
-  ctx.fillStyle = style.wall.side;
-  drawRoundedPolygonPath(ctx, sideFace, Math.max(1.3, baseCornerRadius * 0.56));
-  ctx.fill();
-  ctx.strokeStyle = "rgba(109, 97, 86, 0.11)";
-  ctx.lineWidth = style.bodyLineWidth;
-  drawRoundedPolygonPath(ctx, sideFace, Math.max(1.3, baseCornerRadius * 0.56));
-  ctx.stroke();
+  ctx.save();
+  drawBuildingShadow(ctx, shadowPoints, style, zoom, baseCornerRadius);
 
-  ctx.fillStyle = style.wall.front;
-  drawRoundedPolygonPath(ctx, frontFace, Math.max(1.4, baseCornerRadius * 0.62));
-  ctx.fill();
-  ctx.strokeStyle = "rgba(122, 110, 100, 0.13)";
-  drawRoundedPolygonPath(ctx, frontFace, Math.max(1.4, baseCornerRadius * 0.62));
-  ctx.stroke();
+  drawBuildingVerticalFace(
+    ctx,
+    sideFace,
+    getBuildingTone(style.wall.side, Math.max(0.03, (style.sideShadeAlpha || 0.08) - 0.025)),
+    "rgba(102, 92, 84, 0.08)",
+    style.bodyLineWidth,
+    Math.max(1.25, faceRadius * 0.98),
+    0.018
+  );
 
-  ctx.fillStyle = style.roof.top;
-  drawRoundedPolygonPath(ctx, roofPoints, roofCornerRadius);
-  ctx.fill();
+  drawBuildingVerticalFace(
+    ctx,
+    frontFace,
+    style.wall.front,
+    "rgba(122, 110, 100, 0.08)",
+    style.bodyLineWidth,
+    Math.max(1.3, faceRadius * 1.02),
+    Math.max(0.022, (style.wallHighlightAlpha || 0.05) - 0.012)
+  );
 
-  ctx.strokeStyle = style.roof.side;
-  ctx.lineWidth = style.roofLineWidth;
-  drawRoundedPolygonPath(ctx, roofPoints, roofCornerRadius);
-  ctx.stroke();
-
-  const roofHighlightPoints = offsetBuildingPoints(roofPoints, getBuildingCentroid(roofPoints), 0, 0, 0.92);
-  ctx.fillStyle = "rgba(255,255,255,0.08)";
-  drawRoundedPolygonPath(ctx, roofHighlightPoints, Math.max(1.1, roofCornerRadius * 0.78));
-  ctx.fill();
+  drawBuildingRoof(ctx, roofPoints, style, roofCornerRadius);
 
   if (zoom >= 18) {
-    ctx.strokeStyle = "rgba(255,255,255,0.14)";
-    ctx.lineWidth = 0.8;
+    const roofRidge = getDominantBuildingEdge(roofPoints, "y", frontEdge);
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.lineWidth = 0.62;
     ctx.beginPath();
-    ctx.moveTo(roofPoints[0].x, roofPoints[0].y);
-    for (let i = 1; i < roofPoints.length; i += 1) {
-      const point = roofPoints[i];
-      ctx.lineTo((roofPoints[i - 1].x + point.x) * 0.5, (roofPoints[i - 1].y + point.y) * 0.5);
-    }
+    ctx.moveTo(roofPoints[roofRidge.startIndex].x, roofPoints[roofRidge.startIndex].y);
+    ctx.lineTo(roofPoints[roofRidge.endIndex].x, roofPoints[roofRidge.endIndex].y);
     ctx.stroke();
   }
 
@@ -4540,8 +4642,17 @@ function drawShop25D(ctx, points, style, zoom, recipeBundle) {
   const compactScale = Math.min(0.94, recipe.sizeBias || 0.96);
   const softenedStyle = {
     ...style,
-    height: Math.max(2.4, style.height * 0.72),
-    skew: style.skew * 0.75,
+    height: Math.max(3.1, style.height * 0.86),
+    skew: style.skew * 0.72,
+    depthX: getBuildingDepth(style, zoom, 1.12).x,
+    depthY: getBuildingDepth(style, zoom, 1.12).y,
+    roofScale: Math.max(style.roofScale || 1.02, 1.022),
+    roofInsetScale: Math.min(0.95, (style.roofInsetScale || 0.92) + 0.015),
+    roofHighlightAlpha: Math.max(style.roofHighlightAlpha || 0.08, 0.086),
+    shadowAlpha: Math.max(style.shadowAlpha || 0.06, 0.068),
+    shadowOffsetX: Math.max(style.shadowOffsetX || 1.8, 2.05),
+    shadowOffsetY: Math.max(style.shadowOffsetY || 2.2, 2.35),
+    shadowBlur: Math.max(style.shadowBlur || 6.4, 6.9),
     cornerRadius: (style.cornerRadius || 3.2) + 0.55
   };
   const geometry = getBuildingGeometry(points, {
@@ -4570,9 +4681,18 @@ function drawShop25D(ctx, points, style, zoom, recipeBundle) {
   const signWidth = width * 0.49;
   const signX = centroid.x - signWidth * 0.5;
 
+  ctx.fillStyle = "rgba(62, 53, 45, 0.10)";
+  ctx.beginPath();
+  ctx.roundRect(signX + 0.5, signY + 0.8, signWidth, signHeight, signHeight * 0.56);
+  ctx.fill();
+
   ctx.fillStyle = recipe.palette.sign;
   ctx.beginPath();
   ctx.roundRect(signX, signY, signWidth, signHeight, signHeight * 0.56);
+  ctx.fill();
+  ctx.fillStyle = "rgba(255,255,255,0.05)";
+  ctx.beginPath();
+  ctx.roundRect(signX + signWidth * 0.08, signY + signHeight * 0.12, signWidth * 0.78, signHeight * 0.28, signHeight * 0.32);
   ctx.fill();
 
   const awningY = signY + signHeight + height * 0.04;
@@ -4580,6 +4700,16 @@ function drawShop25D(ctx, points, style, zoom, recipeBundle) {
   const awningInset = width * 0.12;
   const awningWidth = width - awningInset * 2;
   const awningX = bounds.minX + awningInset;
+
+  ctx.fillStyle = "rgba(61, 52, 44, 0.06)";
+  ctx.beginPath();
+  ctx.moveTo(awningX + 0.5, awningY + 0.8);
+  ctx.lineTo(awningX + awningWidth - 0.5, awningY + 0.8);
+  ctx.lineTo(awningX + awningWidth * 0.94, awningY + awningHeight + 0.9);
+  ctx.lineTo(awningX + awningWidth * 0.06, awningY + awningHeight + 0.9);
+  ctx.closePath();
+  ctx.fill();
+
   ctx.fillStyle = recipe.palette.awning;
 
   if (recipe.awning === "curved") {
@@ -4600,6 +4730,8 @@ function drawShop25D(ctx, points, style, zoom, recipeBundle) {
     ctx.closePath();
     ctx.fill();
   }
+  ctx.fillStyle = "rgba(255,255,255,0.05)";
+  ctx.fillRect(awningX + awningWidth * 0.08, awningY + awningHeight * 0.16, awningWidth * 0.74, Math.max(0.85, awningHeight * 0.15));
 
   if (recipe.awning === "striped" && shouldDrawShopDetailsAtZoom(zoom)) {
     const stripeCount = 3 + (variant.detailVariant % 2);
@@ -4630,6 +4762,11 @@ function drawShop25D(ctx, points, style, zoom, recipeBundle) {
     ctx.beginPath();
     ctx.roundRect(x, windowTop, windowWidth, windowHeight, Math.min(4.5, windowWidth * 0.24));
     ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.045)";
+      ctx.beginPath();
+      ctx.roundRect(x + windowWidth * 0.08, windowTop + windowHeight * 0.1, windowWidth * 0.32, windowHeight * 0.22, Math.min(2.4, windowWidth * 0.12));
+      ctx.fill();
+    ctx.fillStyle = recipe.palette.window;
   }
 
   ctx.fillStyle = "rgba(62, 58, 57, 0.43)";
