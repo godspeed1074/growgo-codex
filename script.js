@@ -6,6 +6,7 @@
 
 const DEFAULT_CENTER = [-38.4537, 145.2381];
 
+/* Production-safe default: keep false for normal GrowGo behavior. Set true only for local custom renderer testing; gameplay must remain unchanged when false. */
 const ENABLE_CUSTOM_25D_MAP = false;
 
 const BASE_PIN_VALUE = 5;
@@ -3465,9 +3466,11 @@ function syncCustom25DMapPresentation() {
 
   if (ENABLE_CUSTOM_25D_MAP) {
     container.classList.add("custom-25d-map-enabled");
+    /* Phase 7 checkpoint: Stable daytime 2.5D renderer. Current road/building/shop/zone balance is approved as the safe baseline. Future visual phases must preserve OSM visibility, pin dominance, and ENABLE_CUSTOM_25D_MAP safety. */
+    /* Phase 6.7: Contrast hierarchy tune. Slight readability boost only. Must preserve OSM visibility and safe renderer behavior. */
     if (tilePane) {
-      tilePane.style.filter = "grayscale(0.88) saturate(0.45) brightness(1.08) contrast(0.82)";
-      tilePane.style.opacity = "0.26";
+      tilePane.style.filter = "grayscale(0.75) saturate(0.4) brightness(1.06) contrast(0.86)";
+      tilePane.style.opacity = "0.45";
     }
     if (overlayPane) {
       overlayPane.style.opacity = "0.92";
@@ -3489,6 +3492,7 @@ function initCustom25DMapExperiment() {
   syncCustom25DMapPresentation();
   if (!ENABLE_CUSTOM_25D_MAP || !map || custom25DMapLayer) return;
 
+  /* Custom 2.5D canvas must stay below pins, player marker, capture radius, and UI. */
   map.createPane("custom25DMapPane");
   const pane = map.getPane("custom25DMapPane");
   pane.style.zIndex = "350";
@@ -3572,9 +3576,9 @@ function custom25DPoint(size, seed, index) {
 
 function drawCustom25DBackground(ctx, size) {
   const bg = ctx.createLinearGradient(0, 0, size.x, size.y);
-  bg.addColorStop(0, "rgba(239, 244, 222, 0.78)");
-  bg.addColorStop(0.48, "rgba(228, 237, 210, 0.86)");
-  bg.addColorStop(1, "rgba(214, 228, 195, 0.78)");
+  bg.addColorStop(0, "rgba(241, 246, 226, 0.25)");
+  bg.addColorStop(0.48, "rgba(229, 238, 213, 0.35)");
+  bg.addColorStop(1, "rgba(214, 227, 194, 0.25)");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, size.x, size.y);
 }
@@ -3588,34 +3592,34 @@ function shouldDrawZoneDetailsAtZoom(zoom, detailLevel = "medium") {
 function getZoneStyleForFeature(featureType, zoom) {
   const styles = {
     park: {
-      fill: "rgba(128, 198, 110, 0.42)",
-      edge: "rgba(80, 146, 72, 0.34)",
-      inner: "rgba(182, 228, 158, 0.16)"
+      fill: "rgba(125, 198, 108, 0.40)",
+      edge: "rgba(76, 144, 68, 0.32)",
+      inner: "rgba(196, 233, 173, 0.11)"
     },
     grass: {
-      fill: "rgba(153, 205, 129, 0.26)",
-      edge: "rgba(105, 157, 88, 0.18)",
-      inner: "rgba(199, 229, 177, 0.08)"
+      fill: "rgba(154, 203, 130, 0.22)",
+      edge: "rgba(108, 156, 89, 0.12)",
+      inner: "rgba(201, 228, 178, 0.04)"
     },
     water: {
-      fill: "rgba(95, 182, 220, 0.36)",
-      edge: "rgba(58, 132, 191, 0.34)",
-      inner: "rgba(194, 234, 250, 0.14)"
+      fill: "rgba(92, 181, 221, 0.37)",
+      edge: "rgba(56, 132, 192, 0.34)",
+      inner: "rgba(204, 239, 251, 0.11)"
     },
     beach: {
-      fill: "rgba(235, 216, 160, 0.36)",
-      edge: "rgba(192, 167, 108, 0.22)",
-      inner: "rgba(247, 235, 198, 0.14)"
+      fill: "rgba(239, 221, 165, 0.34)",
+      edge: "rgba(195, 171, 111, 0.22)",
+      inner: "rgba(251, 239, 206, 0.11)"
     },
     wetland: {
-      fill: "rgba(121, 176, 152, 0.28)",
-      edge: "rgba(82, 133, 112, 0.24)",
-      inner: "rgba(174, 214, 193, 0.08)"
+      fill: "rgba(121, 176, 152, 0.24)",
+      edge: "rgba(82, 133, 112, 0.18)",
+      inner: "rgba(174, 214, 193, 0.06)"
     },
     sports: {
-      fill: "rgba(122, 196, 114, 0.26)",
-      edge: "rgba(78, 142, 80, 0.18)",
-      inner: "rgba(207, 236, 192, 0.08)"
+      fill: "rgba(122, 196, 114, 0.22)",
+      edge: "rgba(78, 142, 80, 0.14)",
+      inner: "rgba(207, 236, 192, 0.06)"
     }
   };
 
@@ -3672,8 +3676,8 @@ function drawWaterTexture(ctx, points, zoom, closed) {
   const spacing = zoom >= 18 ? 22 : 30;
 
   ctx.save();
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
-  ctx.lineWidth = 1.1;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.24)";
+  ctx.lineWidth = 1.12;
   if (closed) {
     clipToProjectedPolygon(ctx, points);
   }
@@ -3681,7 +3685,7 @@ function drawWaterTexture(ctx, points, zoom, closed) {
   for (let y = bounds.minY + 10; y < bounds.maxY; y += spacing) {
     ctx.beginPath();
     for (let x = bounds.minX - 12; x <= bounds.maxX + 12; x += 22) {
-      const waveY = y + Math.sin((x + y) * 0.032) * 2.2;
+      const waveY = y + Math.sin((x + y) * 0.032) * 2.1;
       if (x === bounds.minX - 12) ctx.moveTo(x, waveY);
       else ctx.lineTo(x, waveY);
     }
@@ -3696,7 +3700,7 @@ function drawBeachDetails(ctx, points, zoom) {
   const bounds = getProjectedBounds(points);
   ctx.save();
   clipToProjectedPolygon(ctx, points);
-  ctx.fillStyle = "rgba(255, 246, 214, 0.18)";
+  ctx.fillStyle = "rgba(255, 246, 214, 0.24)";
 
   for (let i = 0; i < 10; i += 1) {
     const x = bounds.minX + ((i * 41) % Math.max(40, bounds.maxX - bounds.minX + 1));
@@ -3714,9 +3718,9 @@ function drawGrassTexture(ctx, points, zoom, style) {
   clipToProjectedPolygon(ctx, points);
   ctx.fillStyle = style.inner;
 
-  const spacing = zoom >= 18 ? 28 : 40;
-  for (let y = bounds.minY + 12; y < bounds.maxY; y += spacing) {
-    ctx.fillRect(bounds.minX, y, Math.max(20, bounds.maxX - bounds.minX), zoom >= 18 ? 2 : 1.2);
+  const spacing = zoom >= 18 ? 22 : 32;
+  for (let y = bounds.minY + 10; y < bounds.maxY; y += spacing) {
+    ctx.fillRect(bounds.minX, y, Math.max(20, bounds.maxX - bounds.minX), zoom >= 18 ? 1.6 : 1);
   }
   ctx.restore();
 }
@@ -3729,7 +3733,7 @@ function drawParkDetails(ctx, points, zoom) {
   clipToProjectedPolygon(ctx, points);
 
   if (shouldDrawZoneDetailsAtZoom(zoom, "high")) {
-    ctx.strokeStyle = "rgba(248, 240, 204, 0.18)";
+    ctx.strokeStyle = "rgba(248, 240, 204, 0.24)";
     ctx.lineWidth = 1;
     for (let y = bounds.minY + 18; y < bounds.maxY; y += 54) {
       ctx.beginPath();
@@ -3840,6 +3844,150 @@ function shouldDrawBuildingAtZoom(zoom) {
   return zoom >= 16.2;
 }
 
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+const SHOP_25D_RECIPES = {
+  bakery: {
+    key: "bakery",
+    palette: {
+      roof: { top: "rgba(183, 108, 92, 0.86)", side: "rgba(149, 84, 71, 0.9)" },
+      wall: { front: "rgba(238, 224, 196, 0.86)", side: "rgba(212, 194, 166, 0.9)" },
+      awning: "rgba(197, 101, 82, 0.92)",
+      sign: "rgba(131, 72, 52, 0.94)",
+      window: "rgba(88, 64, 51, 0.34)"
+    },
+    awning: "striped",
+    icon: "bread",
+    outside: "crate",
+    sizeBias: 0.98
+  },
+  cafe: {
+    key: "cafe",
+    palette: {
+      roof: { top: "rgba(145, 122, 101, 0.84)", side: "rgba(113, 95, 79, 0.88)" },
+      wall: { front: "rgba(229, 214, 194, 0.84)", side: "rgba(198, 183, 163, 0.88)" },
+      awning: "rgba(120, 153, 124, 0.9)",
+      sign: "rgba(93, 74, 58, 0.9)",
+      window: "rgba(63, 73, 80, 0.38)"
+    },
+    awning: "flat",
+    icon: "cup",
+    outside: "table",
+    sizeBias: 0.96
+  },
+  surfShop: {
+    key: "surfShop",
+    palette: {
+      roof: { top: "rgba(109, 152, 188, 0.86)", side: "rgba(82, 122, 156, 0.9)" },
+      wall: { front: "rgba(225, 237, 233, 0.84)", side: "rgba(196, 209, 205, 0.88)" },
+      awning: "rgba(72, 170, 176, 0.92)",
+      sign: "rgba(58, 108, 140, 0.94)",
+      window: "rgba(67, 107, 125, 0.32)"
+    },
+    awning: "curved",
+    icon: "surfboard",
+    outside: "rack",
+    sizeBias: 1.02
+  },
+  fishAndChips: {
+    key: "fishAndChips",
+    palette: {
+      roof: { top: "rgba(116, 150, 182, 0.86)", side: "rgba(84, 118, 146, 0.9)" },
+      wall: { front: "rgba(232, 239, 241, 0.86)", side: "rgba(201, 212, 216, 0.9)" },
+      awning: "rgba(77, 128, 170, 0.92)",
+      sign: "rgba(53, 90, 132, 0.95)",
+      window: "rgba(52, 87, 122, 0.28)"
+    },
+    awning: "striped",
+    icon: "fish",
+    outside: "crate",
+    sizeBias: 1
+  },
+  pharmacy: {
+    key: "pharmacy",
+    palette: {
+      roof: { top: "rgba(173, 186, 180, 0.84)", side: "rgba(137, 149, 143, 0.88)" },
+      wall: { front: "rgba(242, 245, 238, 0.88)", side: "rgba(217, 221, 214, 0.9)" },
+      awning: "rgba(101, 176, 111, 0.9)",
+      sign: "rgba(69, 139, 83, 0.95)",
+      window: "rgba(93, 127, 107, 0.2)"
+    },
+    awning: "flat",
+    icon: "cross",
+    outside: "none",
+    sizeBias: 0.94
+  },
+  realEstate: {
+    key: "realEstate",
+    palette: {
+      roof: { top: "rgba(150, 151, 165, 0.84)", side: "rgba(114, 116, 130, 0.88)" },
+      wall: { front: "rgba(231, 229, 224, 0.84)", side: "rgba(203, 201, 196, 0.88)" },
+      awning: "rgba(122, 139, 164, 0.88)",
+      sign: "rgba(84, 99, 124, 0.92)",
+      window: "rgba(79, 96, 115, 0.26)"
+    },
+    awning: "flat",
+    icon: "house",
+    outside: "signboard",
+    sizeBias: 0.98
+  },
+  bottleShop: {
+    key: "bottleShop",
+    palette: {
+      roof: { top: "rgba(104, 96, 118, 0.86)", side: "rgba(76, 70, 92, 0.9)" },
+      wall: { front: "rgba(197, 191, 205, 0.8)", side: "rgba(170, 164, 178, 0.86)" },
+      awning: "rgba(102, 89, 133, 0.92)",
+      sign: "rgba(73, 63, 100, 0.95)",
+      window: "rgba(57, 52, 72, 0.34)"
+    },
+    awning: "flat",
+    icon: "bottle",
+    outside: "crate",
+    sizeBias: 0.98
+  },
+  newsagent: {
+    key: "newsagent",
+    palette: {
+      roof: { top: "rgba(166, 149, 121, 0.84)", side: "rgba(129, 115, 92, 0.88)" },
+      wall: { front: "rgba(234, 224, 210, 0.84)", side: "rgba(207, 194, 178, 0.88)" },
+      awning: "rgba(214, 121, 78, 0.92)",
+      sign: "rgba(174, 92, 56, 0.96)",
+      window: "rgba(76, 88, 98, 0.26)"
+    },
+    awning: "striped",
+    icon: "paper",
+    outside: "stand",
+    sizeBias: 0.95
+  },
+  hardware: {
+    key: "hardware",
+    palette: {
+      roof: { top: "rgba(151, 131, 109, 0.86)", side: "rgba(118, 102, 84, 0.9)" },
+      wall: { front: "rgba(223, 214, 201, 0.84)", side: "rgba(195, 185, 171, 0.88)" },
+      awning: "rgba(216, 134, 73, 0.92)",
+      sign: "rgba(149, 91, 49, 0.96)",
+      window: "rgba(88, 94, 92, 0.24)"
+    },
+    awning: "shed",
+    icon: "hammer",
+    outside: "crate",
+    sizeBias: 1
+  },
+  supermarket: {
+    key: "supermarket",
+    palette: {
+      roof: { top: "rgba(124, 137, 156, 0.84)", side: "rgba(95, 108, 126, 0.88)" },
+      wall: { front: "rgba(227, 232, 229, 0.84)", side: "rgba(198, 204, 200, 0.88)" },
+      awning: "rgba(106, 152, 118, 0.9)",
+      sign: "rgba(72, 116, 86, 0.94)",
+      window: "rgba(78, 111, 99, 0.22)"
+    },
+    awning: "wide",
+    icon: "basket",
+    outside: "cart",
+    sizeBias: 1.08
+  }
+};
+
 function hashFeatureSeed(input) {
   const text = String(input || "");
   let hash = 2166136261;
@@ -3851,19 +3999,20 @@ function hashFeatureSeed(input) {
 
   return (hash >>> 0) || 1;
 }
+/* CUSTOM 2.5D MAP EXPERIMENT END */
 
 function getBuildingVariantFromSeed(seed) {
   const roofPalette = [
-    { top: "rgba(203, 115, 101, 0.86)", side: "rgba(164, 87, 76, 0.90)" },
-    { top: "rgba(194, 145, 107, 0.86)", side: "rgba(156, 113, 79, 0.90)" },
-    { top: "rgba(136, 158, 178, 0.86)", side: "rgba(103, 123, 144, 0.90)" },
-    { top: "rgba(152, 130, 171, 0.84)", side: "rgba(121, 102, 139, 0.88)" }
+    { top: "rgba(185, 130, 118, 0.84)", side: "rgba(154, 104, 95, 0.88)" },
+    { top: "rgba(184, 151, 122, 0.84)", side: "rgba(148, 120, 95, 0.88)" },
+    { top: "rgba(145, 160, 173, 0.82)", side: "rgba(112, 127, 139, 0.86)" },
+    { top: "rgba(165, 165, 170, 0.8)", side: "rgba(131, 131, 138, 0.84)" }
   ];
   const wallPalette = [
-    { front: "rgba(232, 220, 201, 0.84)", side: "rgba(205, 191, 171, 0.88)" },
-    { front: "rgba(223, 210, 192, 0.84)", side: "rgba(194, 178, 158, 0.88)" },
-    { front: "rgba(214, 202, 220, 0.80)", side: "rgba(184, 171, 194, 0.84)" },
-    { front: "rgba(207, 218, 202, 0.82)", side: "rgba(177, 188, 171, 0.86)" }
+    { front: "rgba(231, 221, 204, 0.82)", side: "rgba(202, 189, 172, 0.86)" },
+    { front: "rgba(224, 214, 198, 0.82)", side: "rgba(193, 181, 164, 0.86)" },
+    { front: "rgba(214, 209, 216, 0.78)", side: "rgba(185, 178, 187, 0.82)" },
+    { front: "rgba(207, 214, 207, 0.8)", side: "rgba(177, 184, 177, 0.84)" }
   ];
 
   const roofIndex = seed % roofPalette.length;
@@ -3872,10 +4021,11 @@ function getBuildingVariantFromSeed(seed) {
   return {
     roof: roofPalette[roofIndex],
     wall: wallPalette[wallIndex],
-    height: 4 + (seed % 6),
-    roofLift: 1.5 + (seed % 2),
-    shadowAlpha: 0.05 + ((seed % 4) * 0.018),
-    skew: ((seed % 5) - 2) * 0.18
+    height: 3.5 + (seed % 5),
+    roofLift: 1.2 + (seed % 2) * 0.6,
+    shadowAlpha: 0.055 + ((seed % 4) * 0.018),
+    skew: ((seed % 5) - 2) * 0.12,
+    inset: 0.875 + ((seed % 3) * 0.02)
   };
 }
 
@@ -3890,14 +4040,145 @@ function getBuildingStyleForFeature(feature, zoom) {
   const variant = getBuildingVariantFromSeed(seed);
   const detail = zoom >= 18;
 
+  /* CUSTOM 2.5D MAP EXPERIMENT START */
+  /* Phase 6.8: Building shape softening. Keep Phase 6.7 readability, but reduce harsh boxy building/shop shapes. */
+  /* CUSTOM 2.5D MAP EXPERIMENT END */
   return {
     ...variant,
     seed,
     detail,
-    roofLineWidth: detail ? 1.2 : 0.8,
-    bodyLineWidth: detail ? 1 : 0.7
+    roofLineWidth: detail ? 1.34 : 0.94,
+    bodyLineWidth: detail ? 1.08 : 0.82,
+    cornerRadius: detail ? 3.6 : 2.8
   };
 }
+
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+function shouldDrawShopDetailsAtZoom(zoom) {
+  return zoom >= 18.2;
+}
+
+function shouldDrawShopAtZoom(zoom) {
+  return zoom >= 16.8;
+}
+
+function hasExactShopHint(feature) {
+  return Boolean(getShopTagHint(feature));
+}
+
+function isCommercialFeature(feature) {
+  if (!feature) return false;
+
+  const buildingType = String(feature.buildingType || "").toLowerCase();
+  const shopTag = String(feature.shopTag || "").toLowerCase();
+  const amenity = String(feature.amenity || "").toLowerCase();
+  const office = String(feature.office || "").toLowerCase();
+
+  return Boolean(
+    shopTag ||
+    ["commercial", "retail", "supermarket", "kiosk", "shop"].includes(buildingType) ||
+    ["cafe", "pharmacy", "fast_food", "restaurant", "bar", "pub"].includes(amenity) ||
+    ["estate_agent", "real_estate_agent"].includes(office)
+  );
+}
+
+function getShopTagHint(feature) {
+  const shopTag = String(feature?.shopTag || "").toLowerCase();
+  const amenity = String(feature?.amenity || "").toLowerCase();
+  const cuisine = String(feature?.cuisine || "").toLowerCase();
+  const office = String(feature?.office || "").toLowerCase();
+  const buildingType = String(feature?.buildingType || "").toLowerCase();
+
+  if (shopTag === "bakery") return "bakery";
+  if (shopTag === "supermarket" || buildingType === "supermarket") return "supermarket";
+  if (shopTag === "newsagent") return "newsagent";
+  if (shopTag === "pharmacy" || amenity === "pharmacy") return "pharmacy";
+  if (shopTag === "doityourself" || shopTag === "hardware") return "hardware";
+  if (shopTag === "alcohol" || shopTag === "beverages" || shopTag === "wine") return "bottleShop";
+  if (shopTag === "estate_agent" || office === "estate_agent" || office === "real_estate_agent") return "realEstate";
+  if (shopTag === "sports" || shopTag === "surf") return "surfShop";
+  if (shopTag === "seafood") return "fishAndChips";
+  if (amenity === "cafe") return "cafe";
+  if (amenity === "fast_food" || amenity === "restaurant") {
+    if (cuisine.includes("fish") || cuisine.includes("seafood")) return "fishAndChips";
+    return "cafe";
+  }
+
+  return null;
+}
+
+function getShopVariantFromSeed(seed, shopKey) {
+  const stripeFlip = seed % 2 === 0;
+  const awningDepth = 0.9 + ((seed % 4) * 0.18);
+  const signHeight = 0.75 + ((seed % 3) * 0.18);
+  const windowCols = 1 + (seed % 3);
+  const doorwayOffset = ((seed % 5) - 2) * 0.06;
+
+  return {
+    key: shopKey,
+    stripeFlip,
+    awningDepth,
+    signHeight,
+    windowCols,
+    doorwayOffset,
+    detailVariant: Math.floor(seed / 13) % 3
+  };
+}
+
+function getShopRecipeForFeature(feature) {
+  const zoom = map?.getZoom?.() || 0;
+  if (!shouldDrawShopAtZoom(zoom)) return null;
+  if (!isCommercialFeature(feature)) return null;
+
+  const seed = hashFeatureSeed([
+    feature?.id,
+    feature?.center?.lat?.toFixed?.(6),
+    feature?.center?.lng?.toFixed?.(6),
+    feature?.buildingType,
+    feature?.shopTag,
+    feature?.amenity,
+    feature?.office
+  ].filter(Boolean).join(":"));
+
+  const hintedKey = getShopTagHint(feature);
+  if (hintedKey && SHOP_25D_RECIPES[hintedKey]) {
+    return {
+      recipe: SHOP_25D_RECIPES[hintedKey],
+      variant: getShopVariantFromSeed(seed, hintedKey),
+      seed
+    };
+  }
+
+  const buildingType = String(feature?.buildingType || "").toLowerCase();
+  const baseChance = feature?.buildingArea > 900
+    ? 0.42
+    : feature?.buildingArea > 550
+      ? 0.28
+      : 0.16;
+  const zoomBoost = zoom >= 18.4 ? 0.12 : zoom >= 17.6 ? 0.04 : 0;
+  const roadBoost = ["retail", "commercial", "supermarket"].includes(buildingType) ? 0.12 : 0;
+  const coastBoost = feature?.nearCoast ? 0.06 : 0;
+  const conversionChance = Math.min(0.58, baseChance + zoomBoost + roadBoost + coastBoost);
+  const chanceRoll = (seed % 1000) / 1000;
+  if (chanceRoll > conversionChance) return null;
+
+  const defaults = feature?.nearCoast
+    ? ["surfShop", "fishAndChips", "cafe", "newsagent"]
+    : ["cafe", "bakery", "newsagent", "realEstate"];
+  const largerDefaults = feature?.buildingArea > 700
+    ? ["supermarket", "hardware", "supermarket", "hardware"]
+    : defaults;
+  const pool = largerDefaults.filter((key) => SHOP_25D_RECIPES[key]);
+  if (!pool.length) return null;
+
+  const selectedKey = pool[seed % pool.length];
+  return {
+    recipe: SHOP_25D_RECIPES[selectedKey],
+    variant: getShopVariantFromSeed(seed, selectedKey),
+    seed
+  };
+}
+/* CUSTOM 2.5D MAP EXPERIMENT END */
 
 function projectCustom25DBuildingPoints(coords, topLeft) {
   if (!Array.isArray(coords) || coords.length < 3) return [];
@@ -3940,61 +4221,163 @@ function drawPolygonPath(ctx, points) {
   ctx.closePath();
 }
 
-function drawGeneric25DBuilding(ctx, points, style, zoom) {
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+function getSoftBuildingCornerRadius(points, softness = 0.16, maxRadius = 5.5) {
+  const bounds = getProjectedBounds(points);
+  const width = Math.max(1, bounds.maxX - bounds.minX);
+  const height = Math.max(1, bounds.maxY - bounds.minY);
+  return Math.min(maxRadius, Math.max(1.1, Math.min(width, height) * softness));
+}
+
+function drawRoundedPolygonPath(ctx, points, radius = 2.2) {
   if (!Array.isArray(points) || points.length < 3) return;
 
-  const centroid = getBuildingCentroid(points);
-  const roofPoints = offsetBuildingPoints(points, centroid, style.skew, -style.height, 0.96);
-  const shadowPoints = offsetBuildingPoints(points, centroid, 3 + style.skew, 3 + style.height * 0.28, 1.01);
-  const frontIndex = points.reduce((best, point, index) => point.y > points[best].y ? index : best, 0);
-  const nextIndex = (frontIndex + 1) % points.length;
-  const prevIndex = (frontIndex - 1 + points.length) % points.length;
+  const total = points.length;
+  ctx.beginPath();
+
+  for (let i = 0; i < total; i += 1) {
+    const prev = points[(i - 1 + total) % total];
+    const current = points[i];
+    const next = points[(i + 1) % total];
+    const inDx = current.x - prev.x;
+    const inDy = current.y - prev.y;
+    const outDx = next.x - current.x;
+    const outDy = next.y - current.y;
+    const inLen = Math.max(0.001, Math.hypot(inDx, inDy));
+    const outLen = Math.max(0.001, Math.hypot(outDx, outDy));
+    const cornerRadius = Math.min(radius, inLen * 0.33, outLen * 0.33);
+    const startX = current.x - (inDx / inLen) * cornerRadius;
+    const startY = current.y - (inDy / inLen) * cornerRadius;
+    const endX = current.x + (outDx / outLen) * cornerRadius;
+    const endY = current.y + (outDy / outLen) * cornerRadius;
+
+    if (i === 0) ctx.moveTo(startX, startY);
+    else ctx.lineTo(startX, startY);
+    ctx.quadraticCurveTo(current.x, current.y, endX, endY);
+  }
+
+  ctx.closePath();
+}
+/* CUSTOM 2.5D MAP EXPERIMENT END */
+
+function getSimplifiedBuildingShape(points, style) {
+  const bounds = getProjectedBounds(points);
+  const width = bounds.maxX - bounds.minX;
+  const height = bounds.maxY - bounds.minY;
+  const area = width * height;
+  const useToyRect = points.length !== 4 || area < 420 || width > height * 2.6 || height > width * 2.6;
+
+  if (!useToyRect) {
+    return offsetBuildingPoints(points, getBuildingCentroid(points), 0, 0, style.inset);
+  }
+
+  const insetX = Math.max(2, width * (1 - style.inset) * 0.5);
+  const insetY = Math.max(2, height * (1 - style.inset) * 0.5);
+  return [
+    { x: bounds.minX + insetX, y: bounds.minY + insetY },
+    { x: bounds.maxX - insetX, y: bounds.minY + insetY },
+    { x: bounds.maxX - insetX, y: bounds.maxY - insetY },
+    { x: bounds.minX + insetX, y: bounds.maxY - insetY }
+  ];
+}
+
+function getBuildingGeometry(points, style, scale = 1) {
+  const basePoints = getSimplifiedBuildingShape(points, style).map((point) => ({ ...point }));
+  const centroid = getBuildingCentroid(basePoints);
+  const scaledBasePoints = scale === 1
+    ? basePoints
+    : offsetBuildingPoints(basePoints, centroid, 0, 0, scale);
+  const roofPoints = offsetBuildingPoints(scaledBasePoints, centroid, style.skew, -style.height, 1.02);
+  const shadowPoints = offsetBuildingPoints(scaledBasePoints, centroid, 2.4 + style.skew, 2.6 + style.height * 0.24, 1.02);
+  const bounds = getProjectedBounds(scaledBasePoints);
+  const frontIndex = scaledBasePoints.reduce((best, point, index) => point.y > scaledBasePoints[best].y ? index : best, 0);
+  const nextIndex = (frontIndex + 1) % scaledBasePoints.length;
+  const prevIndex = (frontIndex - 1 + scaledBasePoints.length) % scaledBasePoints.length;
+
+  return {
+    centroid,
+    bounds,
+    basePoints: scaledBasePoints,
+    roofPoints,
+    shadowPoints,
+    frontIndex,
+    nextIndex,
+    prevIndex
+  };
+}
+
+function drawGeneric25DBuilding(ctx, points, style, zoom, geometry = null) {
+  if (!Array.isArray(points) || points.length < 3) return;
+
+  const buildingGeometry = geometry || getBuildingGeometry(points, style);
+  const {
+    basePoints,
+    roofPoints,
+    shadowPoints,
+    frontIndex,
+    nextIndex,
+    prevIndex
+  } = buildingGeometry;
+  const baseCornerRadius = getSoftBuildingCornerRadius(basePoints, 0.15, style.cornerRadius || 4);
+  const roofCornerRadius = getSoftBuildingCornerRadius(roofPoints, 0.13, Math.max(1.6, (style.cornerRadius || 4) - 0.4));
 
   ctx.save();
 
   ctx.shadowColor = `rgba(68, 57, 46, ${Math.max(0.06, style.shadowAlpha).toFixed(2)})`;
-  ctx.shadowBlur = zoom >= 18 ? 6 : 4;
-  ctx.shadowOffsetY = 2;
-  ctx.fillStyle = `rgba(68, 57, 46, ${style.shadowAlpha.toFixed(2)})`;
-  drawPolygonPath(ctx, shadowPoints);
+  ctx.shadowBlur = zoom >= 18 ? 8.4 : 6.2;
+  ctx.shadowOffsetY = 2.45;
+  ctx.fillStyle = `rgba(68, 57, 46, ${(style.shadowAlpha * 0.88).toFixed(2)})`;
+  drawRoundedPolygonPath(ctx, shadowPoints, baseCornerRadius);
   ctx.fill();
   ctx.shadowColor = "transparent";
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
 
   const frontFace = [
-    points[frontIndex],
-    points[nextIndex],
+    basePoints[frontIndex],
+    basePoints[nextIndex],
     roofPoints[nextIndex],
     roofPoints[frontIndex]
   ];
   const sideFace = [
-    points[prevIndex],
-    points[frontIndex],
+    basePoints[prevIndex],
+    basePoints[frontIndex],
     roofPoints[frontIndex],
     roofPoints[prevIndex]
   ];
 
   ctx.fillStyle = style.wall.side;
-  drawPolygonPath(ctx, sideFace);
+  drawRoundedPolygonPath(ctx, sideFace, Math.max(1.3, baseCornerRadius * 0.56));
   ctx.fill();
+  ctx.strokeStyle = "rgba(109, 97, 86, 0.11)";
+  ctx.lineWidth = style.bodyLineWidth;
+  drawRoundedPolygonPath(ctx, sideFace, Math.max(1.3, baseCornerRadius * 0.56));
+  ctx.stroke();
 
   ctx.fillStyle = style.wall.front;
-  drawPolygonPath(ctx, frontFace);
+  drawRoundedPolygonPath(ctx, frontFace, Math.max(1.4, baseCornerRadius * 0.62));
   ctx.fill();
+  ctx.strokeStyle = "rgba(122, 110, 100, 0.13)";
+  drawRoundedPolygonPath(ctx, frontFace, Math.max(1.4, baseCornerRadius * 0.62));
+  ctx.stroke();
 
   ctx.fillStyle = style.roof.top;
-  drawPolygonPath(ctx, roofPoints);
+  drawRoundedPolygonPath(ctx, roofPoints, roofCornerRadius);
   ctx.fill();
 
   ctx.strokeStyle = style.roof.side;
   ctx.lineWidth = style.roofLineWidth;
-  drawPolygonPath(ctx, roofPoints);
+  drawRoundedPolygonPath(ctx, roofPoints, roofCornerRadius);
   ctx.stroke();
 
+  const roofHighlightPoints = offsetBuildingPoints(roofPoints, getBuildingCentroid(roofPoints), 0, 0, 0.92);
+  ctx.fillStyle = "rgba(255,255,255,0.08)";
+  drawRoundedPolygonPath(ctx, roofHighlightPoints, Math.max(1.1, roofCornerRadius * 0.78));
+  ctx.fill();
+
   if (zoom >= 18) {
-    ctx.strokeStyle = "rgba(255,255,255,0.16)";
-    ctx.lineWidth = 0.9;
+    ctx.strokeStyle = "rgba(255,255,255,0.14)";
+    ctx.lineWidth = 0.8;
     ctx.beginPath();
     ctx.moveTo(roofPoints[0].x, roofPoints[0].y);
     for (let i = 1; i < roofPoints.length; i += 1) {
@@ -4006,6 +4389,278 @@ function drawGeneric25DBuilding(ctx, points, style, zoom) {
 
   ctx.restore();
 }
+
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+function drawShopIcon25D(ctx, x, y, width, height, iconKey, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = Math.max(0.8, width * 0.08);
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  if (iconKey === "bread") {
+    ctx.beginPath();
+    ctx.roundRect(x - width * 0.3, y - height * 0.16, width * 0.6, height * 0.32, height * 0.16);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.16, y - height * 0.14);
+    ctx.lineTo(x - width * 0.08, y + height * 0.12);
+    ctx.moveTo(x, y - height * 0.15);
+    ctx.lineTo(x + width * 0.06, y + height * 0.12);
+    ctx.moveTo(x + width * 0.14, y - height * 0.12);
+    ctx.lineTo(x + width * 0.18, y + height * 0.12);
+    ctx.stroke();
+  } else if (iconKey === "cup") {
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.22, y - height * 0.1);
+    ctx.lineTo(x + width * 0.16, y - height * 0.1);
+    ctx.lineTo(x + width * 0.1, y + height * 0.18);
+    ctx.lineTo(x - width * 0.16, y + height * 0.18);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x + width * 0.2, y + height * 0.02, width * 0.08, -Math.PI * 0.5, Math.PI * 0.5);
+    ctx.stroke();
+  } else if (iconKey === "surfboard") {
+    ctx.beginPath();
+    ctx.ellipse(x, y, width * 0.12, height * 0.26, 0.28, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y - height * 0.2);
+    ctx.lineTo(x, y + height * 0.22);
+    ctx.stroke();
+  } else if (iconKey === "fish") {
+    ctx.beginPath();
+    ctx.ellipse(x, y, width * 0.17, height * 0.12, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x + width * 0.17, y);
+    ctx.lineTo(x + width * 0.28, y - height * 0.1);
+    ctx.lineTo(x + width * 0.28, y + height * 0.1);
+    ctx.closePath();
+    ctx.stroke();
+  } else if (iconKey === "cross") {
+    ctx.fillRect(x - width * 0.05, y - height * 0.22, width * 0.1, height * 0.44);
+    ctx.fillRect(x - width * 0.22, y - height * 0.05, width * 0.44, height * 0.1);
+  } else if (iconKey === "house") {
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.22, y + height * 0.12);
+    ctx.lineTo(x - width * 0.22, y - height * 0.02);
+    ctx.lineTo(x, y - height * 0.22);
+    ctx.lineTo(x + width * 0.22, y - height * 0.02);
+    ctx.lineTo(x + width * 0.22, y + height * 0.12);
+    ctx.closePath();
+    ctx.stroke();
+  } else if (iconKey === "bottle") {
+    ctx.beginPath();
+    ctx.roundRect(x - width * 0.08, y - height * 0.2, width * 0.16, height * 0.4, width * 0.06);
+    ctx.stroke();
+    ctx.fillRect(x - width * 0.03, y - height * 0.26, width * 0.06, height * 0.06);
+  } else if (iconKey === "paper") {
+    ctx.beginPath();
+    ctx.rect(x - width * 0.18, y - height * 0.18, width * 0.32, height * 0.34);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.12, y - height * 0.06);
+    ctx.lineTo(x + width * 0.08, y - height * 0.06);
+    ctx.moveTo(x - width * 0.12, y + 0.01);
+    ctx.lineTo(x + width * 0.08, y + 0.01);
+    ctx.stroke();
+  } else if (iconKey === "hammer") {
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.18, y + height * 0.14);
+    ctx.lineTo(x + width * 0.08, y - height * 0.12);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.04, y - height * 0.14);
+    ctx.lineTo(x + width * 0.16, y - height * 0.14);
+    ctx.lineTo(x + width * 0.12, y - height * 0.02);
+    ctx.lineTo(x - width * 0.08, y - height * 0.02);
+    ctx.closePath();
+    ctx.fill();
+  } else if (iconKey === "basket") {
+    ctx.beginPath();
+    ctx.moveTo(x - width * 0.18, y - height * 0.02);
+    ctx.lineTo(x - width * 0.12, y + height * 0.18);
+    ctx.lineTo(x + width * 0.12, y + height * 0.18);
+    ctx.lineTo(x + width * 0.18, y - height * 0.02);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x, y - height * 0.04, width * 0.12, Math.PI, 0);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawShopOutsideDetail(ctx, x, y, size, detailKey, color) {
+  if (!detailKey || detailKey === "none") return;
+
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.strokeStyle = "rgba(76, 66, 58, 0.34)";
+  ctx.lineWidth = 0.8;
+
+  if (detailKey === "table") {
+    ctx.beginPath();
+    ctx.arc(x, y, size * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(x - size * 0.02, y, size * 0.04, size * 0.14);
+  } else if (detailKey === "signboard") {
+    ctx.fillRect(x - size * 0.04, y - size * 0.1, size * 0.08, size * 0.22);
+    ctx.fillRect(x - size * 0.12, y - size * 0.18, size * 0.24, size * 0.1);
+  } else if (detailKey === "stand") {
+    ctx.fillRect(x - size * 0.14, y - size * 0.1, size * 0.28, size * 0.16);
+  } else if (detailKey === "cart") {
+    ctx.beginPath();
+    ctx.rect(x - size * 0.14, y - size * 0.1, size * 0.22, size * 0.12);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x - size * 0.08, y + size * 0.05, size * 0.03, 0, Math.PI * 2);
+    ctx.arc(x + size * 0.04, y + size * 0.05, size * 0.03, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (detailKey === "rack") {
+    ctx.strokeRect(x - size * 0.05, y - size * 0.18, size * 0.1, size * 0.3);
+  } else if (detailKey === "crate") {
+    ctx.fillRect(x - size * 0.08, y - size * 0.08, size * 0.16, size * 0.1);
+  }
+
+  ctx.restore();
+}
+
+function drawShop25D(ctx, points, style, zoom, recipeBundle) {
+  if (!recipeBundle?.recipe) {
+    drawGeneric25DBuilding(ctx, points, style, zoom);
+    return;
+  }
+
+  const { recipe, variant } = recipeBundle;
+  const compactScale = Math.min(0.94, recipe.sizeBias || 0.96);
+  const softenedStyle = {
+    ...style,
+    height: Math.max(2.4, style.height * 0.72),
+    skew: style.skew * 0.75,
+    cornerRadius: (style.cornerRadius || 3.2) + 0.55
+  };
+  const geometry = getBuildingGeometry(points, {
+    ...softenedStyle
+  }, compactScale);
+  const {
+    basePoints,
+    bounds
+  } = geometry;
+  const centroid = getBuildingCentroid(basePoints);
+  const frontTop = Math.min(basePoints[0].y, basePoints[1].y, basePoints[2].y, basePoints[3].y);
+  const frontBottom = Math.max(basePoints[0].y, basePoints[1].y, basePoints[2].y, basePoints[3].y);
+  const width = Math.max(12, bounds.maxX - bounds.minX);
+  const height = Math.max(12, frontBottom - frontTop);
+
+  ctx.save();
+  drawGeneric25DBuilding(ctx, points, {
+    ...softenedStyle,
+    roof: recipe.palette.roof,
+    wall: recipe.palette.wall,
+    shadowAlpha: Math.max(style.shadowAlpha, 0.06)
+  }, zoom, geometry);
+
+  const signHeight = Math.max(2.55, height * 0.088 * variant.signHeight);
+  const signY = frontTop + height * 0.10;
+  const signWidth = width * 0.49;
+  const signX = centroid.x - signWidth * 0.5;
+
+  ctx.fillStyle = recipe.palette.sign;
+  ctx.beginPath();
+  ctx.roundRect(signX, signY, signWidth, signHeight, signHeight * 0.56);
+  ctx.fill();
+
+  const awningY = signY + signHeight + height * 0.04;
+  const awningHeight = Math.max(3.05, height * 0.128 * variant.awningDepth);
+  const awningInset = width * 0.12;
+  const awningWidth = width - awningInset * 2;
+  const awningX = bounds.minX + awningInset;
+  ctx.fillStyle = recipe.palette.awning;
+
+  if (recipe.awning === "curved") {
+    ctx.beginPath();
+    ctx.moveTo(awningX, awningY);
+    ctx.quadraticCurveTo(centroid.x, awningY + awningHeight, awningX + awningWidth, awningY);
+    ctx.lineTo(awningX + awningWidth, awningY + awningHeight * 0.45);
+    ctx.quadraticCurveTo(centroid.x, awningY + awningHeight * 1.25, awningX, awningY + awningHeight * 0.45);
+    ctx.closePath();
+    ctx.fill();
+  } else {
+    const topLift = recipe.awning === "shed" ? -awningHeight * 0.18 : 0;
+    ctx.beginPath();
+    ctx.moveTo(awningX, awningY + topLift);
+    ctx.lineTo(awningX + awningWidth, awningY + topLift);
+    ctx.lineTo(awningX + awningWidth * 0.95, awningY + awningHeight);
+    ctx.lineTo(awningX + awningWidth * 0.05, awningY + awningHeight);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  if (recipe.awning === "striped" && shouldDrawShopDetailsAtZoom(zoom)) {
+    const stripeCount = 3 + (variant.detailVariant % 2);
+    ctx.fillStyle = "rgba(255,255,255,0.22)";
+    for (let i = 0; i < stripeCount; i += 1) {
+      const stripeWidth = awningWidth / stripeCount;
+      const stripeIndex = variant.stripeFlip ? i : stripeCount - i - 1;
+      ctx.fillRect(awningX + stripeIndex * stripeWidth + stripeWidth * 0.18, awningY + awningHeight * 0.12, stripeWidth * 0.24, awningHeight * 0.62);
+    }
+  }
+
+  const windowTop = awningY + awningHeight + height * 0.04;
+  const windowBottom = frontBottom - height * 0.10;
+  const windowHeight = Math.max(4, windowBottom - windowTop);
+  const windowWidth = Math.max(4.5, (width * 0.62) / variant.windowCols);
+  const windowGap = width * 0.035;
+  const totalWindowWidth = variant.windowCols * windowWidth + Math.max(0, variant.windowCols - 1) * windowGap;
+  const windowX = centroid.x - totalWindowWidth * 0.5;
+  const doorWidth = Math.max(3.6, width * 0.14);
+  const doorHeight = Math.max(5.8, height * 0.22);
+  const doorX = centroid.x + width * variant.doorwayOffset - doorWidth * 0.5;
+  const doorY = frontBottom - doorHeight - height * 0.035;
+
+  ctx.fillStyle = recipe.palette.window;
+  for (let i = 0; i < variant.windowCols; i += 1) {
+    const x = windowX + i * (windowWidth + windowGap);
+    if (x + windowWidth > doorX - 2 && x < doorX + doorWidth + 2) continue;
+    ctx.beginPath();
+    ctx.roundRect(x, windowTop, windowWidth, windowHeight, Math.min(4.5, windowWidth * 0.24));
+    ctx.fill();
+  }
+
+  ctx.fillStyle = "rgba(62, 58, 57, 0.43)";
+  ctx.beginPath();
+  ctx.roundRect(doorX, doorY, doorWidth, doorHeight, Math.min(4.5, doorWidth * 0.24));
+  ctx.fill();
+
+  if (shouldDrawShopDetailsAtZoom(zoom)) {
+    drawShopIcon25D(
+      ctx,
+      centroid.x,
+      signY + signHeight * 0.54,
+      signWidth * 0.72,
+      signHeight * 1.55,
+      recipe.icon,
+      "rgba(255, 252, 240, 0.84)"
+    );
+
+    drawShopOutsideDetail(
+      ctx,
+      bounds.minX + width * 0.16,
+      frontBottom - height * 0.01,
+      Math.min(width, height) * 0.7,
+      recipe.outside,
+      "rgba(119, 112, 92, 0.48)"
+    );
+  }
+
+  ctx.restore();
+}
+/* CUSTOM 2.5D MAP EXPERIMENT END */
 
 function drawCustom25DBuildings(ctx, bounds, topLeft) {
   if (!shouldDrawBuildingAtZoom(map.getZoom())) return;
@@ -4024,7 +4679,12 @@ function drawCustom25DBuildings(ctx, bounds, topLeft) {
     if (points.length < 3) return;
 
     const style = getBuildingStyleForFeature(feature, zoom);
-    drawGeneric25DBuilding(ctx, points, style, zoom);
+    const shopRecipe = getShopRecipeForFeature(feature);
+    if (shopRecipe) {
+      drawShop25D(ctx, points, style, zoom, shopRecipe);
+    } else {
+      drawGeneric25DBuilding(ctx, points, style, zoom);
+    }
     drawn += 1;
   });
 }
@@ -4032,41 +4692,48 @@ function drawCustom25DBuildings(ctx, bounds, topLeft) {
 function getRoadStyleForFeature(highwayType, zoom) {
   const normalized = String(highwayType || "residential").toLowerCase();
   const zoomBoost = Math.max(0, zoom - 15) * 0.55;
+  /* Phase 6.9: Road charm pass. Make roads feel slightly more polished and integrated without overpowering OSM or pins. */
+  /* Phase 6.9.1: Road balance micro-pass. Preserve road charm while keeping roads calm under pins. */
   const styles = {
     primary: {
-      width: 10.5 + zoomBoost,
-      fill: "rgba(237, 189, 117, 0.94)",
-      edge: "rgba(198, 139, 82, 0.44)",
-      highlight: "rgba(255, 240, 203, 0.34)",
-      shadow: "rgba(124, 96, 63, 0.14)"
+      width: 12.1 + zoomBoost,
+      fill: "rgba(232, 188, 118, 0.95)",
+      edge: "rgba(189, 140, 88, 0.30)",
+      highlight: "rgba(255, 244, 216, 0.34)",
+      warmCore: "rgba(246, 213, 152, 0.20)",
+      shadow: "rgba(118, 93, 61, 0.08)"
     },
     secondary: {
-      width: 7.8 + zoomBoost * 0.8,
-      fill: "rgba(239, 221, 177, 0.92)",
-      edge: "rgba(176, 148, 104, 0.34)",
-      highlight: "rgba(255, 247, 224, 0.26)",
-      shadow: "rgba(109, 95, 66, 0.10)"
+      width: 8.9 + zoomBoost * 0.8,
+      fill: "rgba(239, 223, 184, 0.94)",
+      edge: "rgba(175, 149, 110, 0.20)",
+      highlight: "rgba(255, 249, 232, 0.24)",
+      warmCore: "rgba(245, 226, 186, 0.14)",
+      shadow: "rgba(109, 95, 66, 0.06)"
     },
     residential: {
-      width: 5.3 + zoomBoost * 0.62,
-      fill: "rgba(244, 240, 229, 0.88)",
-      edge: "rgba(190, 184, 171, 0.22)",
-      highlight: "rgba(255, 255, 255, 0.18)",
-      shadow: "rgba(112, 109, 103, 0.07)"
+      width: 6.45 + zoomBoost * 0.62,
+      fill: "rgba(246, 243, 234, 0.92)",
+      edge: "rgba(186, 181, 170, 0.13)",
+      highlight: "rgba(255, 255, 255, 0.12)",
+      warmCore: "rgba(255, 250, 240, 0.08)",
+      shadow: "rgba(112, 109, 103, 0.04)"
     },
     service: {
-      width: 3.8 + zoomBoost * 0.48,
-      fill: "rgba(235, 231, 221, 0.82)",
-      edge: "rgba(176, 171, 160, 0.16)",
-      highlight: "rgba(255, 255, 255, 0.12)",
-      shadow: "rgba(101, 98, 92, 0.05)"
+      width: 4.2 + zoomBoost * 0.44,
+      fill: "rgba(235, 231, 222, 0.82)",
+      edge: "rgba(176, 171, 160, 0.07)",
+      highlight: "rgba(255, 255, 255, 0.06)",
+      warmCore: "rgba(252, 248, 236, 0.05)",
+      shadow: "rgba(101, 98, 92, 0.028)"
     },
     path: {
-      width: 2 + zoomBoost * 0.22,
-      fill: "rgba(198, 184, 149, 0.72)",
-      edge: "rgba(151, 137, 103, 0.12)",
-      highlight: "rgba(245, 233, 199, 0.08)",
-      shadow: "rgba(96, 83, 60, 0.03)"
+      width: 2.2 + zoomBoost * 0.18,
+      fill: "rgba(196, 184, 150, 0.72)",
+      edge: "rgba(151, 137, 103, 0.05)",
+      highlight: "rgba(245, 233, 199, 0.04)",
+      warmCore: "rgba(245, 233, 199, 0.02)",
+      shadow: "rgba(96, 83, 60, 0.02)"
     }
   };
 
@@ -4080,12 +4747,12 @@ function getRoadStyleForFeature(highwayType, zoom) {
 function drawRoadShadow(ctx, points, style) {
   ctx.save();
   ctx.strokeStyle = style.shadow;
-  ctx.lineWidth = style.width + 2.2;
+  ctx.lineWidth = style.width + 1.85;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.shadowColor = style.shadow;
-  ctx.shadowBlur = Math.max(2, style.width * 0.35);
-  ctx.shadowOffsetY = Math.max(0.5, style.width * 0.06);
+  ctx.shadowBlur = Math.max(1.4, style.width * 0.24);
+  ctx.shadowOffsetY = Math.max(0.26, style.width * 0.038);
   drawCustom25DRoadPath(ctx, points, style.dash || null);
   ctx.restore();
 }
@@ -4098,15 +4765,21 @@ function drawCustom25DRoad(ctx, points, style) {
   ctx.lineJoin = "round";
 
   ctx.strokeStyle = style.edge;
-  ctx.lineWidth = style.width + 0.8;
+  ctx.lineWidth = style.width + 0.3;
   drawCustom25DRoadPath(ctx, points, style.dash || null);
 
   ctx.strokeStyle = style.fill;
   ctx.lineWidth = style.width;
   drawCustom25DRoadPath(ctx, points, style.dash || null);
 
+  if (style.warmCore) {
+    ctx.strokeStyle = style.warmCore;
+    ctx.lineWidth = Math.max(0.68, style.width * 0.31);
+    drawCustom25DRoadPath(ctx, points, null);
+  }
+
   ctx.strokeStyle = style.highlight;
-  ctx.lineWidth = Math.max(0.7, style.width * 0.16);
+  ctx.lineWidth = Math.max(0.62, style.width * 0.12);
   drawCustom25DRoadPath(ctx, points, null);
   ctx.restore();
 }
@@ -7852,7 +8525,15 @@ function extractMapFeaturesFromOverpass(data) {
         id: `building:${el.id}`,
         coords,
         center,
-        buildingType: tags.building || "yes"
+        buildingType: tags.building || "yes",
+        shopTag: tags.shop || "",
+        amenity: tags.amenity || "",
+        office: tags.office || "",
+        cuisine: tags.cuisine || "",
+        tourism: tags.tourism || "",
+        leisure: tags.leisure || "",
+        landuse: tags.landuse || "",
+        buildingArea: estimateFeatureArea(coords)
       });
     }
 
@@ -7867,6 +8548,8 @@ function extractMapFeaturesFromOverpass(data) {
     }
     /* CUSTOM 2.5D MAP EXPERIMENT END */
   });
+
+  markCustom25DBuildingContext(buildingFeatures, zoneFeatures, waterFeatures);
 
   return { roadWays, waterFeatures, zoneFeatures, buildingFeatures };
 }
@@ -7886,6 +8569,54 @@ function getFeatureCenter(coords) {
     lat: total.lat / coords.length,
     lng: total.lng / coords.length
   };
+}
+
+function estimateFeatureArea(coords) {
+  if (!Array.isArray(coords) || coords.length < 3) return 0;
+
+  const averageLat = coords.reduce((sum, [lat]) => sum + lat, 0) / coords.length;
+  const metersPerDegLat = 111320;
+  const metersPerDegLng = Math.cos((averageLat * Math.PI) / 180) * 111320;
+  let area = 0;
+
+  for (let i = 0; i < coords.length; i += 1) {
+    const [lat1, lng1] = coords[i];
+    const [lat2, lng2] = coords[(i + 1) % coords.length];
+    const x1 = lng1 * metersPerDegLng;
+    const y1 = lat1 * metersPerDegLat;
+    const x2 = lng2 * metersPerDegLng;
+    const y2 = lat2 * metersPerDegLat;
+    area += x1 * y2 - x2 * y1;
+  }
+
+  return Math.abs(area) * 0.5;
+}
+
+function getApproxDistanceMeters(a, b) {
+  if (!a || !b) return Number.POSITIVE_INFINITY;
+
+  const latScale = 111320;
+  const lngScale = Math.cos((((a.lat + b.lat) * 0.5) * Math.PI) / 180) * 111320;
+  const dx = (a.lng - b.lng) * lngScale;
+  const dy = (a.lat - b.lat) * latScale;
+  return Math.hypot(dx, dy);
+}
+
+function markCustom25DBuildingContext(buildingFeatures, zoneFeatures, waterFeatures) {
+  if (!Array.isArray(buildingFeatures) || !buildingFeatures.length) return;
+
+  const coastalCenters = [
+    ...((Array.isArray(zoneFeatures) ? zoneFeatures : [])
+      .filter((feature) => feature?.zoneType === "water" || feature?.zoneType === "beach")
+      .map((feature) => getFeatureCenter(feature.coords))),
+    ...((Array.isArray(waterFeatures) ? waterFeatures : [])
+      .filter((feature) => Array.isArray(feature?.coords) && feature.coords.length >= 2)
+      .map((feature) => getFeatureCenter(feature.coords)))
+  ];
+
+  buildingFeatures.forEach((feature) => {
+    feature.nearCoast = coastalCenters.some((center) => getApproxDistanceMeters(feature.center, center) <= 180);
+  });
 }
 
 function getCustom25DZoneType(tags) {
