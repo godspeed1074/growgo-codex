@@ -9,6 +9,7 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 /* Production-safe default: keep false for normal GrowGo behavior. Set true only for local custom renderer testing; gameplay must remain unchanged when false. */
 const ENABLE_CUSTOM_25D_MAP = false;
 const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
+const ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false;
 
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
@@ -5084,8 +5085,113 @@ const CUSTOM_25D_LANDMARK_VISUAL_RECIPES = {
   }
 };
 
+// PHASE 10 CHECKPOINT: dormant landmark data foundation only; no real POIs loaded.
+const CUSTOM_25D_LANDMARK_CATEGORY_DEFINITIONS = {
+  dinosaurSites: {
+    id: "dinosaurSites",
+    label: "Dinosaur Sites",
+    rendererCategory: "dinosaur",
+    collectionKey: "dinosaurSites",
+    rewardType: "landmarkCollection",
+    enabledByDefault: false
+  },
+  filmLocations: {
+    id: "filmLocations",
+    label: "Film Locations",
+    rendererCategory: "film",
+    collectionKey: "filmLocations",
+    rewardType: "landmarkCollection",
+    enabledByDefault: false
+  },
+  musicLandmarks: {
+    id: "musicLandmarks",
+    label: "Music Landmarks",
+    rendererCategory: "music",
+    collectionKey: "musicLandmarks",
+    rewardType: "landmarkCollection",
+    enabledByDefault: false
+  },
+  waterfalls: {
+    id: "waterfalls",
+    label: "Waterfalls",
+    rendererCategory: "waterfall",
+    collectionKey: "waterfalls",
+    rewardType: "landmarkCollection",
+    enabledByDefault: false
+  },
+  beaches: {
+    id: "beaches",
+    label: "Beaches",
+    rendererCategory: "beach",
+    collectionKey: "beaches",
+    rewardType: "landmarkCollection",
+    enabledByDefault: false
+  },
+  historicPlaces: {
+    id: "historicPlaces",
+    label: "Historic Places",
+    rendererCategory: "historic",
+    collectionKey: "historicPlaces",
+    rewardType: "landmarkCollection",
+    enabledByDefault: false
+  }
+};
+
+const CUSTOM_25D_LANDMARK_SAMPLE_DATA = [
+  {
+    id: "sample-landmark-alpha",
+    name: "Sample Landmark Alpha",
+    categoryId: "historicPlaces",
+    lat: DEFAULT_CENTER[0] + 0.0018,
+    lng: DEFAULT_CENTER[1] + 0.0016
+  },
+  {
+    id: "sample-landmark-beta",
+    name: "Sample Landmark Beta",
+    categoryId: "musicLandmarks",
+    lat: DEFAULT_CENTER[0] - 0.0012,
+    lng: DEFAULT_CENTER[1] + 0.0014
+  },
+  {
+    id: "sample-landmark-gamma",
+    name: "Sample Landmark Gamma",
+    categoryId: "dinosaurSites",
+    lat: DEFAULT_CENTER[0] + 0.001,
+    lng: DEFAULT_CENTER[1] - 0.0017
+  }
+];
+
 function getLandmarkVisualRecipe(category = "generic") {
   return CUSTOM_25D_LANDMARK_VISUAL_RECIPES[category] || CUSTOM_25D_LANDMARK_VISUAL_RECIPES.generic;
+}
+
+function getLandmarkCategoryDefinition(categoryId) {
+  return CUSTOM_25D_LANDMARK_CATEGORY_DEFINITIONS[categoryId] || null;
+}
+
+function getCustom25DLandmarkSampleData(categoryFilter = null) {
+  if (!ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA) return [];
+
+  const samples = CUSTOM_25D_LANDMARK_SAMPLE_DATA.map((entry) => {
+    const category = getLandmarkCategoryDefinition(entry.categoryId);
+    return {
+      ...entry,
+      rendererCategory: category?.rendererCategory || "generic",
+      source: "sample"
+    };
+  });
+
+  if (!categoryFilter) return samples;
+  return samples.filter((entry) => entry.categoryId === categoryFilter || entry.rendererCategory === categoryFilter);
+}
+
+function getActiveCustom25DLandmarkData(options = {}) {
+  const {
+    categoryFilter = null
+  } = options;
+
+  if (!ENABLE_CUSTOM_25D_MAP) return [];
+  return getCustom25DLandmarkSampleData(categoryFilter);
 }
 
 function getCustom25DLandmarkTestMarkers(bounds) {
@@ -5229,19 +5335,22 @@ function drawSpecialPoiFoundation(ctx, point, recipe, category = "generic") {
 }
 
 function renderCustomLandmarkLayer(ctx, bounds) {
+  const activeLandmarks = getActiveCustom25DLandmarkData();
   const testMarkers = getCustom25DLandmarkTestMarkers(bounds);
-  if (!testMarkers.length) return;
+  const allMarkers = [...activeLandmarks, ...testMarkers];
+  if (!allMarkers.length) return;
 
-  testMarkers.forEach((marker) => {
+  allMarkers.forEach((marker) => {
     const point = map.latLngToLayerPoint([marker.lat, marker.lng]);
     if (!bounds.contains([marker.lat, marker.lng])) return;
-    drawSpecialPoiFoundation(ctx, point, getLandmarkVisualRecipe(marker.category), marker.category);
+    const rendererCategory = marker.rendererCategory || marker.category || "generic";
+    drawSpecialPoiFoundation(ctx, point, getLandmarkVisualRecipe(rendererCategory), rendererCategory);
   });
 }
 
 function drawCustom25DLandmarkFoundation(ctx, bounds) {
   if (!ENABLE_CUSTOM_25D_MAP) return;
-  if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS) return;
+  if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS && !ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA) return;
   renderCustomLandmarkLayer(ctx, bounds);
 }
 /* CUSTOM 2.5D MAP EXPERIMENT END */
