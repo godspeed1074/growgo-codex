@@ -8,6 +8,7 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 
 /* Production-safe default: keep false for normal GrowGo behavior. Set true only for local custom renderer testing; gameplay must remain unchanged when false. */
 const ENABLE_CUSTOM_25D_MAP = false;
+const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
 
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
@@ -3532,6 +3533,7 @@ function drawCustom25DMapCanvas(canvas) {
   drawCustom25DBuildings(ctx, bounds, topLeft);
   drawCustom25DRoads(ctx, bounds, topLeft);
   drawCustom25DTrees(ctx, size, bounds);
+  drawCustom25DLandmarkFoundation(ctx, bounds, topLeft);
 }
 
 function setCustom25DMapRoadFeatures(roadWays) {
@@ -5018,6 +5020,231 @@ function drawCustom25DTrees(ctx, size, bounds) {
       ctx.restore();
     });
 }
+
+/* CUSTOM 2.5D MAP EXPERIMENT START */
+// Phase 9 checkpoint: landmark foundation only.
+// Prepares safe future special POI rendering helpers without adding live
+// landmark data, gameplay, rewards, collection logic, or flag-off behavior changes.
+const CUSTOM_25D_LANDMARK_VISUAL_RECIPES = {
+  generic: {
+    ring: "rgba(201, 160, 74, 0.92)",
+    ringShadow: "rgba(108, 82, 38, 0.18)",
+    innerTop: "rgba(252, 247, 231, 0.94)",
+    innerBottom: "rgba(232, 221, 188, 0.9)",
+    glyph: "rgba(134, 98, 38, 0.88)",
+    glow: "rgba(255, 232, 170, 0.12)"
+  },
+  dinosaur: {
+    ring: "rgba(206, 166, 82, 0.92)",
+    ringShadow: "rgba(108, 82, 38, 0.18)",
+    innerTop: "rgba(250, 245, 227, 0.94)",
+    innerBottom: "rgba(229, 220, 187, 0.9)",
+    glyph: "rgba(120, 88, 44, 0.88)",
+    glow: "rgba(241, 220, 152, 0.12)"
+  },
+  film: {
+    ring: "rgba(201, 160, 74, 0.92)",
+    ringShadow: "rgba(108, 82, 38, 0.18)",
+    innerTop: "rgba(251, 246, 231, 0.94)",
+    innerBottom: "rgba(232, 221, 190, 0.9)",
+    glyph: "rgba(110, 82, 48, 0.88)",
+    glow: "rgba(243, 223, 168, 0.1)"
+  },
+  music: {
+    ring: "rgba(205, 164, 78, 0.92)",
+    ringShadow: "rgba(108, 82, 38, 0.18)",
+    innerTop: "rgba(252, 246, 232, 0.94)",
+    innerBottom: "rgba(231, 220, 189, 0.9)",
+    glyph: "rgba(124, 86, 49, 0.88)",
+    glow: "rgba(245, 223, 164, 0.1)"
+  },
+  waterfall: {
+    ring: "rgba(194, 156, 74, 0.92)",
+    ringShadow: "rgba(100, 78, 42, 0.18)",
+    innerTop: "rgba(249, 245, 231, 0.94)",
+    innerBottom: "rgba(226, 218, 191, 0.9)",
+    glyph: "rgba(90, 108, 133, 0.88)",
+    glow: "rgba(188, 225, 250, 0.1)"
+  },
+  beach: {
+    ring: "rgba(198, 157, 76, 0.92)",
+    ringShadow: "rgba(104, 80, 40, 0.18)",
+    innerTop: "rgba(252, 246, 231, 0.94)",
+    innerBottom: "rgba(235, 224, 192, 0.9)",
+    glyph: "rgba(162, 122, 66, 0.88)",
+    glow: "rgba(244, 223, 161, 0.1)"
+  },
+  historic: {
+    ring: "rgba(204, 163, 82, 0.92)",
+    ringShadow: "rgba(109, 84, 41, 0.18)",
+    innerTop: "rgba(252, 247, 232, 0.94)",
+    innerBottom: "rgba(233, 223, 191, 0.9)",
+    glyph: "rgba(127, 95, 56, 0.88)",
+    glow: "rgba(243, 222, 164, 0.1)"
+  }
+};
+
+function getLandmarkVisualRecipe(category = "generic") {
+  return CUSTOM_25D_LANDMARK_VISUAL_RECIPES[category] || CUSTOM_25D_LANDMARK_VISUAL_RECIPES.generic;
+}
+
+function getCustom25DLandmarkTestMarkers(bounds) {
+  if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
+
+  const center = bounds.getCenter();
+  return [
+    {
+      id: "landmark-test-generic",
+      lat: center.lat + 0.00018,
+      lng: center.lng + 0.00012,
+      category: "generic"
+    }
+  ];
+}
+
+function drawLandmarkPreviewGlyph(ctx, x, y, size, category, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.lineWidth = Math.max(0.75, size * 0.08);
+
+  if (category === "dinosaur") {
+    ctx.beginPath();
+    ctx.arc(x - size * 0.02, y + size * 0.02, size * 0.16, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - size * 0.04, y + size * 0.12);
+    ctx.lineTo(x + size * 0.18, y - size * 0.08);
+    ctx.stroke();
+  } else if (category === "film") {
+    ctx.beginPath();
+    ctx.rect(x - size * 0.18, y - size * 0.12, size * 0.36, size * 0.24);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - size * 0.1, y - size * 0.12);
+    ctx.lineTo(x - size * 0.1, y + size * 0.12);
+    ctx.moveTo(x, y - size * 0.12);
+    ctx.lineTo(x, y + size * 0.12);
+    ctx.stroke();
+  } else if (category === "music") {
+    ctx.beginPath();
+    ctx.moveTo(x - size * 0.02, y - size * 0.18);
+    ctx.lineTo(x - size * 0.02, y + size * 0.08);
+    ctx.lineTo(x + size * 0.16, y + size * 0.02);
+    ctx.lineTo(x + size * 0.16, y - size * 0.16);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x - size * 0.06, y + size * 0.14, size * 0.07, 0, Math.PI * 2);
+    ctx.arc(x + size * 0.12, y + size * 0.08, size * 0.07, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (category === "waterfall") {
+    ctx.beginPath();
+    ctx.moveTo(x - size * 0.14, y - size * 0.14);
+    ctx.quadraticCurveTo(x - size * 0.04, y - size * 0.02, x - size * 0.08, y + size * 0.18);
+    ctx.moveTo(x + size * 0.05, y - size * 0.14);
+    ctx.quadraticCurveTo(x + size * 0.15, y - size * 0.02, x + size * 0.1, y + size * 0.18);
+    ctx.stroke();
+  } else if (category === "beach") {
+    ctx.beginPath();
+    ctx.arc(x - size * 0.02, y + size * 0.02, size * 0.07, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x - size * 0.02, y + size * 0.02);
+    ctx.lineTo(x + size * 0.12, y - size * 0.16);
+    ctx.stroke();
+  } else if (category === "historic") {
+    ctx.beginPath();
+    ctx.moveTo(x - size * 0.16, y + size * 0.12);
+    ctx.lineTo(x + size * 0.16, y + size * 0.12);
+    ctx.moveTo(x - size * 0.12, y + size * 0.12);
+    ctx.lineTo(x - size * 0.12, y - size * 0.08);
+    ctx.moveTo(x, y + size * 0.12);
+    ctx.lineTo(x, y - size * 0.08);
+    ctx.moveTo(x + size * 0.12, y + size * 0.12);
+    ctx.lineTo(x + size * 0.12, y - size * 0.08);
+    ctx.moveTo(x - size * 0.18, y - size * 0.08);
+    ctx.lineTo(x, y - size * 0.18);
+    ctx.lineTo(x + size * 0.18, y - size * 0.08);
+    ctx.stroke();
+  } else {
+    ctx.beginPath();
+    ctx.arc(x, y, size * 0.1, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x, y - size * 0.18);
+    ctx.lineTo(x, y - size * 0.03);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawSpecialPoiFoundation(ctx, point, recipe, category = "generic") {
+  const outerRadius = 13;
+  const innerRadius = 9.2;
+  const glowRadius = 16.5;
+  const gradient = ctx.createRadialGradient(point.x, point.y - 1.5, 2, point.x, point.y, innerRadius);
+  gradient.addColorStop(0, recipe.innerTop);
+  gradient.addColorStop(1, recipe.innerBottom);
+
+  ctx.save();
+  ctx.shadowColor = recipe.ringShadow;
+  ctx.shadowBlur = 6;
+  ctx.shadowOffsetY = 1.5;
+
+  ctx.fillStyle = recipe.glow;
+  ctx.beginPath();
+  ctx.arc(point.x, point.y, glowRadius, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = recipe.ring;
+  ctx.beginPath();
+  ctx.arc(point.x, point.y, outerRadius, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.shadowColor = "transparent";
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+
+  ctx.fillStyle = "rgba(255,255,255,0.96)";
+  ctx.beginPath();
+  ctx.arc(point.x, point.y, outerRadius - 2.2, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.arc(point.x, point.y, innerRadius, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = "rgba(255,255,255,0.32)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(point.x, point.y - 0.6, innerRadius - 1.25, Math.PI * 1.08, Math.PI * 1.9);
+  ctx.stroke();
+
+  drawLandmarkPreviewGlyph(ctx, point.x, point.y, innerRadius * 1.5, category, recipe.glyph);
+  ctx.restore();
+}
+
+function renderCustomLandmarkLayer(ctx, bounds) {
+  const testMarkers = getCustom25DLandmarkTestMarkers(bounds);
+  if (!testMarkers.length) return;
+
+  testMarkers.forEach((marker) => {
+    const point = map.latLngToLayerPoint([marker.lat, marker.lng]);
+    if (!bounds.contains([marker.lat, marker.lng])) return;
+    drawSpecialPoiFoundation(ctx, point, getLandmarkVisualRecipe(marker.category), marker.category);
+  });
+}
+
+function drawCustom25DLandmarkFoundation(ctx, bounds) {
+  if (!ENABLE_CUSTOM_25D_MAP) return;
+  if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS) return;
+  renderCustomLandmarkLayer(ctx, bounds);
+}
+/* CUSTOM 2.5D MAP EXPERIMENT END */
 /* CUSTOM 2.5D MAP EXPERIMENT END */
 
 /* ----------------------------- */
