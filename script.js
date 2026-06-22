@@ -5627,6 +5627,25 @@ function canRunCustom25DLandmarkManualTestHook(options = {}) {
   return getRenderableCustom25DLandmarks(options).length > 0;
 }
 
+function normalizeCustom25DLandmarkManualTestHookResult(result = {}, options = {}) {
+  const safeResult = result && typeof result === "object" ? result : {};
+  const safeReason = typeof safeResult.reason === "string" && safeResult.reason.trim()
+    ? safeResult.reason.trim()
+    : "Manual landmark test result is unavailable.";
+  const timestamp = typeof options?.timestamp === "string" && options.timestamp
+    ? options.timestamp
+    : new Date().toISOString();
+
+  return {
+    ok: safeResult.ok === true,
+    executed: safeResult.executed === true,
+    reason: safeReason,
+    result: Object.prototype.hasOwnProperty.call(safeResult, "result") ? safeResult.result : null,
+    timestamp,
+    source: "custom-25d-landmark-manual-test-hook"
+  };
+}
+
 function executeCustom25DLandmarkManualTestHook(options = {}) {
   const renderableLandmarks = getRenderableCustom25DLandmarks(options);
   const canInitializeLayer = canInitializeCustom25DLandmarkTestLayer(options);
@@ -5643,7 +5662,7 @@ function executeCustom25DLandmarkManualTestHook(options = {}) {
     reason = "manual-test-execute-shell";
   }
 
-  const result = {
+  const rawResult = {
     ok: canRun,
     executed: canRun,
     reason,
@@ -5653,8 +5672,13 @@ function executeCustom25DLandmarkManualTestHook(options = {}) {
     debugEnabled: isCustom25DLandmarkDebugEnabled()
   };
 
+  const result = {
+    ...rawResult,
+    ...normalizeCustom25DLandmarkManualTestHookResult(rawResult)
+  };
+
   CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastRunAt = Date.now();
-  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastResult = result.ok;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastResult = result;
   CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastReason = result.reason;
 
   return result;
