@@ -5138,6 +5138,64 @@ const CUSTOM_25D_LANDMARK_CATEGORY_DEFINITIONS = {
   }
 };
 
+// PHASE 12 CHECKPOINT: dormant landmark category shell only; metadata-only; no rendering, gameplay, rewards, or collections enabled.
+const CUSTOM_25D_LANDMARK_CATEGORY_SHELLS = {
+  dinosaurSitesAU: {
+    id: "dinosaurSitesAU",
+    label: "AU Dinosaur Sites",
+    description: "Future Australian dinosaur and fossil landmark group.",
+    enabled: false,
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false
+  },
+  filmLocationsAU: {
+    id: "filmLocationsAU",
+    label: "AU Film Locations",
+    description: "Future Australian film-location landmark group.",
+    enabled: false,
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false
+  },
+  musicLandmarks: {
+    id: "musicLandmarks",
+    label: "Music Landmarks",
+    description: "Future music-related landmark group.",
+    enabled: false,
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false
+  },
+  waterfalls: {
+    id: "waterfalls",
+    label: "Waterfalls",
+    description: "Future waterfall landmark group.",
+    enabled: false,
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false
+  },
+  beaches: {
+    id: "beaches",
+    label: "Beaches",
+    description: "Future beach landmark group.",
+    enabled: false,
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false
+  },
+  specialLandmarks: {
+    id: "specialLandmarks",
+    label: "Special Landmarks",
+    description: "Future rare or premium landmark group.",
+    enabled: false,
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false
+  }
+};
+
 const CUSTOM_25D_LANDMARK_SAMPLE_DATA = [
   {
     id: "sample-landmark-alpha",
@@ -5257,6 +5315,20 @@ function getLandmarkVisualRecipe(category = "generic") {
 
 function getLandmarkCategoryDefinition(categoryId) {
   return CUSTOM_25D_LANDMARK_CATEGORY_DEFINITIONS[categoryId] || null;
+}
+
+function getAllCustom25DLandmarkCategoryShells() {
+  return Object.values(CUSTOM_25D_LANDMARK_CATEGORY_SHELLS).map((category) => ({
+    ...category
+  }));
+}
+
+function getEnabledCustom25DLandmarkCategoryShells() {
+  return getAllCustom25DLandmarkCategoryShells().filter((category) => category.enabled);
+}
+
+function getCustom25DLandmarkCategoryShellById(categoryId) {
+  return CUSTOM_25D_LANDMARK_CATEGORY_SHELLS[categoryId] || null;
 }
 
 function getCustom25DLandmarkSampleData(categoryFilter = null) {
