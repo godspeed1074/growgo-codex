@@ -10,6 +10,7 @@ const DEFAULT_CENTER = [-38.4537, 145.2381];
 const ENABLE_CUSTOM_25D_MAP = false;
 const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
 const ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false;
+const ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false;
 
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
@@ -5161,6 +5162,95 @@ const CUSTOM_25D_LANDMARK_SAMPLE_DATA = [
   }
 ];
 
+// PHASE 11 CHECKPOINT: first dormant AU dinosaur site seed data; disabled by default; no gameplay, rewards, or collections.
+const CUSTOM_25D_DINOSAUR_SITES_AU_SEED = [
+  {
+    id: "dino-au-lark-quarry",
+    categoryId: "dinosaurSites",
+    label: "Dinosaur Stampede National Monument",
+    shortLabel: "Dinosaur Stampede",
+    region: "Queensland",
+    country: "Australia",
+    lat: -23.0161,
+    lng: 142.4114,
+    coordinatePrecision: "approximate",
+    rendererType: "dinosaur",
+    collectionKey: "dinosaurSitesAu",
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false,
+    notes: "Dormant seed data only. Not capturable yet."
+  },
+  {
+    id: "dino-au-age-of-dinosaurs",
+    categoryId: "dinosaurSites",
+    label: "Australian Age of Dinosaurs Museum",
+    shortLabel: "Age of Dinosaurs",
+    region: "Queensland",
+    country: "Australia",
+    lat: -22.324,
+    lng: 143.038,
+    coordinatePrecision: "approximate",
+    rendererType: "dinosaur",
+    collectionKey: "dinosaurSitesAu",
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false,
+    notes: "Dormant seed data only. Not capturable yet."
+  },
+  {
+    id: "dino-au-dinosaur-dreaming",
+    categoryId: "dinosaurSites",
+    label: "Dinosaur Dreaming",
+    shortLabel: "Dinosaur Dreaming",
+    region: "Victoria",
+    country: "Australia",
+    lat: -38.631,
+    lng: 145.729,
+    coordinatePrecision: "approximate",
+    rendererType: "dinosaur",
+    collectionKey: "dinosaurSitesAu",
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false,
+    notes: "Dormant seed data only. Not capturable yet."
+  },
+  {
+    id: "dino-au-dinosaur-cove",
+    categoryId: "dinosaurSites",
+    label: "Dinosaur Cove",
+    shortLabel: "Dinosaur Cove",
+    region: "Victoria",
+    country: "Australia",
+    lat: -38.665,
+    lng: 143.105,
+    coordinatePrecision: "approximate",
+    rendererType: "dinosaur",
+    collectionKey: "dinosaurSitesAu",
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false,
+    notes: "Dormant seed data only. Not capturable yet."
+  },
+  {
+    id: "dino-au-gantheaume-point",
+    categoryId: "dinosaurSites",
+    label: "Gantheaume Point Dinosaur Footprints",
+    shortLabel: "Gantheaume Point",
+    region: "Western Australia",
+    country: "Australia",
+    lat: -17.975,
+    lng: 122.19,
+    coordinatePrecision: "approximate",
+    rendererType: "dinosaur",
+    collectionKey: "dinosaurSitesAu",
+    gameplayEnabled: false,
+    collectionEnabled: false,
+    rewardEnabled: false,
+    notes: "Dormant seed data only. Not capturable yet."
+  }
+];
+
 function getLandmarkVisualRecipe(category = "generic") {
   return CUSTOM_25D_LANDMARK_VISUAL_RECIPES[category] || CUSTOM_25D_LANDMARK_VISUAL_RECIPES.generic;
 }
@@ -5185,13 +5275,29 @@ function getCustom25DLandmarkSampleData(categoryFilter = null) {
   return samples.filter((entry) => entry.categoryId === categoryFilter || entry.rendererCategory === categoryFilter);
 }
 
+function getCustom25DDinosaurSitesAuSeed(categoryFilter = null) {
+  if (!ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA) return [];
+
+  const entries = CUSTOM_25D_DINOSAUR_SITES_AU_SEED.map((entry) => ({
+    ...entry,
+    rendererCategory: entry.rendererType || "dinosaur",
+    source: "realSeed"
+  }));
+
+  if (!categoryFilter) return entries;
+  return entries.filter((entry) => entry.categoryId === categoryFilter || entry.rendererCategory === categoryFilter);
+}
+
 function getActiveCustom25DLandmarkData(options = {}) {
   const {
     categoryFilter = null
   } = options;
 
   if (!ENABLE_CUSTOM_25D_MAP) return [];
-  return getCustom25DLandmarkSampleData(categoryFilter);
+  return [
+    ...getCustom25DLandmarkSampleData(categoryFilter),
+    ...getCustom25DDinosaurSitesAuSeed(categoryFilter)
+  ];
 }
 
 function getCustom25DLandmarkTestMarkers(bounds) {
