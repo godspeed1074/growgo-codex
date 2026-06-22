@@ -5498,6 +5498,65 @@ function canInitializeCustom25DLandmarkTestLayer(options = {}) {
   return getRenderableCustom25DLandmarks(options).length > 0;
 }
 
+// PHASE 16 CHECKPOINT: dormant landmark debug toggle shell only; no UI, rendering, markers, or map layers enabled by default.
+const CUSTOM_25D_LANDMARK_DEBUG_STATE = {
+  enabled: false,
+  showBounds: false,
+  showLabels: false,
+  showCoordinates: false,
+  showCategoryIds: false,
+  lastToggledAt: null
+};
+
+function getCustom25DLandmarkDebugState() {
+  return {
+    ...CUSTOM_25D_LANDMARK_DEBUG_STATE
+  };
+}
+
+function resetCustom25DLandmarkDebugState() {
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.enabled = false;
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.showBounds = false;
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.showLabels = false;
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.showCoordinates = false;
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.showCategoryIds = false;
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.lastToggledAt = null;
+  return getCustom25DLandmarkDebugState();
+}
+
+function setCustom25DLandmarkDebugState(nextState = {}) {
+  const allowedKeys = new Set([
+    "enabled",
+    "showBounds",
+    "showLabels",
+    "showCoordinates",
+    "showCategoryIds"
+  ]);
+
+  Object.entries(nextState).forEach(([key, value]) => {
+    if (!allowedKeys.has(key)) return;
+    CUSTOM_25D_LANDMARK_DEBUG_STATE[key] = Boolean(value);
+  });
+
+  const hasAnyDebugToggleEnabled = (
+    CUSTOM_25D_LANDMARK_DEBUG_STATE.enabled ||
+    CUSTOM_25D_LANDMARK_DEBUG_STATE.showBounds ||
+    CUSTOM_25D_LANDMARK_DEBUG_STATE.showLabels ||
+    CUSTOM_25D_LANDMARK_DEBUG_STATE.showCoordinates ||
+    CUSTOM_25D_LANDMARK_DEBUG_STATE.showCategoryIds
+  );
+
+  CUSTOM_25D_LANDMARK_DEBUG_STATE.lastToggledAt = hasAnyDebugToggleEnabled
+    ? Date.now()
+    : null;
+
+  return getCustom25DLandmarkDebugState();
+}
+
+function isCustom25DLandmarkDebugEnabled() {
+  return CUSTOM_25D_LANDMARK_DEBUG_STATE.enabled;
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
