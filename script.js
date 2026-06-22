@@ -5196,6 +5196,64 @@ const CUSTOM_25D_LANDMARK_CATEGORY_SHELLS = {
   }
 };
 
+// PHASE 14 CHECKPOINT: dormant landmark icon shell only; metadata-only; no rendering, Leaflet icons, or marker layers enabled.
+const CUSTOM_25D_LANDMARK_ICON_SHELLS = {
+  dinosaurSitesAU: {
+    id: "dinosaurSitesAU",
+    categoryId: "dinosaurSitesAU",
+    label: "AU Dinosaur Site Icon",
+    ringStyle: "gold-soft",
+    innerStyle: "paper-cream",
+    badgeStyle: "fossil-amber",
+    enabled: false
+  },
+  filmLocationsAU: {
+    id: "filmLocationsAU",
+    categoryId: "filmLocationsAU",
+    label: "AU Film Location Icon",
+    ringStyle: "gold-soft",
+    innerStyle: "paper-cream",
+    badgeStyle: "reel-bronze",
+    enabled: false
+  },
+  musicLandmarks: {
+    id: "musicLandmarks",
+    categoryId: "musicLandmarks",
+    label: "Music Landmark Icon",
+    ringStyle: "gold-soft",
+    innerStyle: "paper-cream",
+    badgeStyle: "note-amber",
+    enabled: false
+  },
+  waterfalls: {
+    id: "waterfalls",
+    categoryId: "waterfalls",
+    label: "Waterfall Icon",
+    ringStyle: "gold-soft",
+    innerStyle: "paper-mist",
+    badgeStyle: "water-blue",
+    enabled: false
+  },
+  beaches: {
+    id: "beaches",
+    categoryId: "beaches",
+    label: "Beach Icon",
+    ringStyle: "gold-soft",
+    innerStyle: "paper-sand",
+    badgeStyle: "shore-warm",
+    enabled: false
+  },
+  specialLandmarks: {
+    id: "specialLandmarks",
+    categoryId: "specialLandmarks",
+    label: "Special Landmark Icon",
+    ringStyle: "gold-premium",
+    innerStyle: "paper-ivory",
+    badgeStyle: "star-bright",
+    enabled: false
+  }
+};
+
 const CUSTOM_25D_LANDMARK_SAMPLE_DATA = [
   {
     id: "sample-landmark-alpha",
@@ -5329,6 +5387,20 @@ function getEnabledCustom25DLandmarkCategoryShells() {
 
 function getCustom25DLandmarkCategoryShellById(categoryId) {
   return CUSTOM_25D_LANDMARK_CATEGORY_SHELLS[categoryId] || null;
+}
+
+function getAllCustom25DLandmarkIconShells() {
+  return Object.values(CUSTOM_25D_LANDMARK_ICON_SHELLS).map((icon) => ({
+    ...icon
+  }));
+}
+
+function getEnabledCustom25DLandmarkIconShells() {
+  return getAllCustom25DLandmarkIconShells().filter((icon) => icon.enabled);
+}
+
+function getCustom25DLandmarkIconShellByCategoryId(categoryId) {
+  return CUSTOM_25D_LANDMARK_ICON_SHELLS[categoryId] || null;
 }
 
 function getCustom25DLandmarkSampleData(categoryFilter = null) {
