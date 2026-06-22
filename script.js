@@ -5627,7 +5627,7 @@ function canRunCustom25DLandmarkManualTestHook(options = {}) {
   return getRenderableCustom25DLandmarks(options).length > 0;
 }
 
-function runCustom25DLandmarkManualTestHook(options = {}) {
+function executeCustom25DLandmarkManualTestHook(options = {}) {
   const renderableLandmarks = getRenderableCustom25DLandmarks(options);
   const canInitializeLayer = canInitializeCustom25DLandmarkTestLayer(options);
   const canRun = canRunCustom25DLandmarkManualTestHook(options);
@@ -5640,12 +5640,14 @@ function runCustom25DLandmarkManualTestHook(options = {}) {
   } else if (CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed && canInitializeLayer && renderableLandmarks.length === 0) {
     reason = "No renderable landmarks are available.";
   } else if (canRun) {
-    reason = "Manual landmark hook is ready.";
+    reason = "manual-test-execute-shell";
   }
 
   const result = {
     ok: canRun,
+    executed: canRun,
     reason,
+    result: null,
     renderableCount: renderableLandmarks.length,
     canInitializeLayer,
     debugEnabled: isCustom25DLandmarkDebugEnabled()
@@ -5656,6 +5658,10 @@ function runCustom25DLandmarkManualTestHook(options = {}) {
   CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastReason = result.reason;
 
   return result;
+}
+
+function runCustom25DLandmarkManualTestHook(options = {}) {
+  return executeCustom25DLandmarkManualTestHook(options);
 }
 
 function getCustom25DLandmarkTestMarkers(bounds) {
