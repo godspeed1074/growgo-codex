@@ -5579,6 +5579,47 @@ function resetCustom25DLandmarkManualTestHookState() {
   return getCustom25DLandmarkManualTestHookState();
 }
 
+function isCustom25DLandmarkManualTestHookArmed() {
+  return CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed;
+}
+
+function armCustom25DLandmarkManualTestHook(options = {}) {
+  const allowArm = options?.allowArm !== false;
+  if (!allowArm) {
+    return {
+      ok: false,
+      armed: false,
+      reason: "Manual landmark hook arming is not allowed."
+    };
+  }
+
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed = true;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastReason = "Manual landmark hook armed.";
+
+  return {
+    ok: true,
+    armed: true,
+    reason: "Manual landmark hook armed."
+  };
+}
+
+function disarmCustom25DLandmarkManualTestHook(options = {}) {
+  const keepHistory = options?.keepHistory === true;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed = false;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastReason = "Manual landmark hook disarmed.";
+
+  if (!keepHistory) {
+    CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastResult = null;
+    CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastRunAt = null;
+  }
+
+  return {
+    ok: true,
+    armed: false,
+    reason: "Manual landmark hook disarmed."
+  };
+}
+
 function canRunCustom25DLandmarkManualTestHook(options = {}) {
   if (!CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed) return false;
   if (!shouldRenderCustom25DLandmarks(options)) return false;
