@@ -5372,6 +5372,30 @@ function getActiveCustom25DLandmarkData(options = {}) {
   ];
 }
 
+// PHASE 13 CHECKPOINT: dormant landmark render gate only; rendering stays blocked until explicit map/data conditions are met.
+function shouldRenderCustom25DLandmarks(options = {}) {
+  const {
+    categoryFilter = null
+  } = options;
+
+  if (!ENABLE_CUSTOM_25D_MAP) return false;
+
+  const hasLandmarkDataFlagEnabled = (
+    ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS ||
+    ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA ||
+    ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+  );
+
+  if (!hasLandmarkDataFlagEnabled) return false;
+
+  return getActiveCustom25DLandmarkData({ categoryFilter }).length > 0;
+}
+
+function getRenderableCustom25DLandmarks(options = {}) {
+  if (!shouldRenderCustom25DLandmarks(options)) return [];
+  return getActiveCustom25DLandmarkData(options);
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
