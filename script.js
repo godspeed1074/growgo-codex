@@ -5557,6 +5557,66 @@ function isCustom25DLandmarkDebugEnabled() {
   return CUSTOM_25D_LANDMARK_DEBUG_STATE.enabled;
 }
 
+// PHASE 17 CHECKPOINT: dormant landmark manual test hook only; no automatic calls, rendering, markers, layers, or UI enabled by default.
+const CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE = {
+  armed: false,
+  lastRunAt: null,
+  lastResult: null,
+  lastReason: null
+};
+
+function getCustom25DLandmarkManualTestHookState() {
+  return {
+    ...CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE
+  };
+}
+
+function resetCustom25DLandmarkManualTestHookState() {
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed = false;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastRunAt = null;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastResult = null;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastReason = null;
+  return getCustom25DLandmarkManualTestHookState();
+}
+
+function canRunCustom25DLandmarkManualTestHook(options = {}) {
+  if (!CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed) return false;
+  if (!shouldRenderCustom25DLandmarks(options)) return false;
+  if (!canInitializeCustom25DLandmarkTestLayer(options)) return false;
+  return getRenderableCustom25DLandmarks(options).length > 0;
+}
+
+function runCustom25DLandmarkManualTestHook(options = {}) {
+  const renderableLandmarks = getRenderableCustom25DLandmarks(options);
+  const canInitializeLayer = canInitializeCustom25DLandmarkTestLayer(options);
+  const canRun = canRunCustom25DLandmarkManualTestHook(options);
+
+  let reason = "Manual landmark hook is not armed.";
+  if (CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed && !shouldRenderCustom25DLandmarks(options)) {
+    reason = "Landmark rendering conditions are not met.";
+  } else if (CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed && shouldRenderCustom25DLandmarks(options) && !canInitializeLayer) {
+    reason = "Landmark test layer cannot initialize.";
+  } else if (CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.armed && canInitializeLayer && renderableLandmarks.length === 0) {
+    reason = "No renderable landmarks are available.";
+  } else if (canRun) {
+    reason = "Manual landmark hook is ready.";
+  }
+
+  const result = {
+    ok: canRun,
+    reason,
+    renderableCount: renderableLandmarks.length,
+    canInitializeLayer,
+    debugEnabled: isCustom25DLandmarkDebugEnabled()
+  };
+
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastRunAt = Date.now();
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastResult = result.ok;
+  CUSTOM_25D_LANDMARK_MANUAL_TEST_HOOK_STATE.lastReason = result.reason;
+
+  return result;
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
