@@ -5468,6 +5468,36 @@ function getRenderableCustom25DLandmarks(options = {}) {
   return getActiveCustom25DLandmarkData(options);
 }
 
+// PHASE 15 CHECKPOINT: dormant landmark test layer shell only; no Leaflet layer, markers, or map wiring enabled by default.
+const CUSTOM_25D_LANDMARK_TEST_LAYER_STATE = {
+  initialized: false,
+  enabled: false,
+  layer: null,
+  markerCount: 0,
+  lastUpdatedAt: null
+};
+
+function getCustom25DLandmarkTestLayerState() {
+  return {
+    ...CUSTOM_25D_LANDMARK_TEST_LAYER_STATE
+  };
+}
+
+function resetCustom25DLandmarkTestLayerState() {
+  CUSTOM_25D_LANDMARK_TEST_LAYER_STATE.initialized = false;
+  CUSTOM_25D_LANDMARK_TEST_LAYER_STATE.enabled = false;
+  CUSTOM_25D_LANDMARK_TEST_LAYER_STATE.layer = null;
+  CUSTOM_25D_LANDMARK_TEST_LAYER_STATE.markerCount = 0;
+  CUSTOM_25D_LANDMARK_TEST_LAYER_STATE.lastUpdatedAt = null;
+  return getCustom25DLandmarkTestLayerState();
+}
+
+function canInitializeCustom25DLandmarkTestLayer(options = {}) {
+  if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS) return false;
+  if (!shouldRenderCustom25DLandmarks(options)) return false;
+  return getRenderableCustom25DLandmarks(options).length > 0;
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
