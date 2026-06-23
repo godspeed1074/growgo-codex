@@ -5712,6 +5712,43 @@ function inspectCustom25DLandmarkManualTestHookState(options = {}) {
   };
 }
 
+function getCustom25DLandmarkManualTestHookSafetySummary(options = {}) {
+  const snapshot = inspectCustom25DLandmarkManualTestHookState(options) || {};
+  const flags = snapshot.flags || {};
+  const timestamp = typeof options?.timestamp === "string" && options.timestamp
+    ? options.timestamp
+    : new Date().toISOString();
+
+  return {
+    ok: true,
+    source: "custom-25d-landmark-manual-test-hook",
+    dormantByDefault: (
+      flags.custom25DMap !== true &&
+      flags.landmarkTestMarkers !== true &&
+      flags.landmarkSampleData !== true &&
+      flags.dinosaurSitesAuData !== true
+    ),
+    safeToInspect: true,
+    armed: snapshot.armed === true,
+    canRun: snapshot.canRun === true,
+    flags: {
+      custom25DMap: flags.custom25DMap === true,
+      landmarkTestMarkers: flags.landmarkTestMarkers === true,
+      landmarkSampleData: flags.landmarkSampleData === true,
+      dinosaurSitesAuData: flags.dinosaurSitesAuData === true
+    },
+    createsMarkers: false,
+    createsLayers: false,
+    createsDomElements: false,
+    rendersByDefault: false,
+    connectsToLeaflet: false,
+    connectsToMapStartup: false,
+    changesGameplay: false,
+    changesOsmBehavior: false,
+    timestamp
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
