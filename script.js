@@ -5749,6 +5749,46 @@ function getCustom25DLandmarkManualTestHookSafetySummary(options = {}) {
   };
 }
 
+function getCustom25DLandmarkManualTestHookConsoleGuide(options = {}) {
+  const summary = getCustom25DLandmarkManualTestHookSafetySummary(options) || {};
+  const timestamp = typeof options?.timestamp === "string" && options.timestamp
+    ? options.timestamp
+    : new Date().toISOString();
+
+  return {
+    ok: true,
+    source: "custom-25d-landmark-manual-test-hook",
+    dormantByDefault: summary.dormantByDefault === true,
+    safeToInspect: summary.safeToInspect === true,
+    recommendedOrder: [
+      "getCustom25DLandmarkManualTestHookSafetySummary()",
+      "inspectCustom25DLandmarkManualTestHookState()",
+      "isCustom25DLandmarkManualTestHookArmed()",
+      "armCustom25DLandmarkManualTestHook()",
+      "canRunCustom25DLandmarkManualTestHook()",
+      "executeCustom25DLandmarkManualTestHook()",
+      "runCustom25DLandmarkManualTestHook()",
+      "disarmCustom25DLandmarkManualTestHook()",
+      "resetCustom25DLandmarkManualTestHookState()"
+    ],
+    helpers: {
+      safetySummary: "getCustom25DLandmarkManualTestHookSafetySummary()",
+      inspectState: "inspectCustom25DLandmarkManualTestHookState()",
+      readState: "getCustom25DLandmarkManualTestHookState()",
+      resetState: "resetCustom25DLandmarkManualTestHookState()",
+      isArmed: "isCustom25DLandmarkManualTestHookArmed()",
+      arm: "armCustom25DLandmarkManualTestHook()",
+      disarm: "disarmCustom25DLandmarkManualTestHook()",
+      canRun: "canRunCustom25DLandmarkManualTestHook()",
+      execute: "executeCustom25DLandmarkManualTestHook()",
+      run: "runCustom25DLandmarkManualTestHook()",
+      normalizeResult: "normalizeCustom25DLandmarkManualTestHookResult()"
+    },
+    warning: "Dormant manual helpers only. These do not render or enable landmark markers by default.",
+    timestamp
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
