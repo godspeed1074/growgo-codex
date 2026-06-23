@@ -5853,6 +5853,41 @@ function getCustom25DLandmarkManualTestValidationSummary() {
   };
 }
 
+function getCustom25DLandmarkManualTestReadinessReport() {
+  return {
+    ok: true,
+    phase: 26,
+    name: "landmark-manual-test-readiness-report",
+    dormant: true,
+    flagsReady: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    helpersReady: {
+      safetySummary: typeof getCustom25DLandmarkManualTestHookSafetySummary === "function",
+      consoleGuide: typeof getCustom25DLandmarkManualTestHookConsoleGuide === "function",
+      cleanupCheck: typeof getCustom25DLandmarkManualTestCleanupCheck === "function",
+      validationSummary: typeof getCustom25DLandmarkManualTestValidationSummary === "function",
+      inspectState: typeof inspectCustom25DLandmarkManualTestHookState === "function",
+      canRun: typeof canRunCustom25DLandmarkManualTestHook === "function"
+    },
+    previousPhase: {
+      validationSummaryExists: typeof getCustom25DLandmarkManualTestValidationSummary === "function"
+    },
+    readyForManualInspection: true,
+    notReadyForVisibleRendering: true,
+    safetyNotes: [
+      "Inspection-only helper.",
+      "Does not render markers or layers.",
+      "Does not create DOM elements.",
+      "Does not enable flags.",
+      "Does not mutate manual test state."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
