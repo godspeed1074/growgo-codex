@@ -7410,6 +7410,114 @@ function getCustom25DLandmarkVisibleTestMarkerLifecyclePlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestCleanupBoundaryPlan() {
+  return {
+    ok: true,
+    phase: 47,
+    name: "custom-25d-landmark-visible-test-cleanup-boundary-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Future cleanup boundary planning for manual-only visible landmark marker testing.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    cleanupDefaultOff: true,
+    visibleMarkersDefaultOff: true,
+    noCleanupBehaviorByDefault: true,
+    noMarkerRemovalByDefault: true,
+    noLayerMutationByDefault: true,
+    requiresExplicitRuntimeOptIn: true,
+    doesNotCreateMarkers: true,
+    doesNotAttachMarkers: true,
+    doesNotRemoveMarkers: true,
+    doesNotMutateMarkerState: true,
+    doesNotCreateLayers: true,
+    doesNotMutateLayers: true,
+    doesNotMutateMapState: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestMarkerLifecyclePlan()",
+      "getCustom25DLandmarkVisibleTestUiIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestDataIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestRuntimeGuardPlan()",
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    noDefaultCleanupExecution: [
+      "no cleanup behavior executes by default",
+      "no cleanup lifecycle starts automatically on load or startup",
+    ],
+    noMarkerRemovalPathByDefault: [
+      "no marker removal path is introduced",
+      "no runtime path may remove visible landmark markers by default",
+    ],
+    noLayerMutationPathByDefault: [
+      "no layer mutation path is introduced",
+      "no future cleanup path may alter map layers without explicit manual-only approval",
+    ],
+    noMapMutationPathByDefault: [
+      "no cleanup path may mutate map state in this phase",
+      "no add, remove, clear, or reset map operations are introduced for landmark cleanup behavior",
+    ],
+    noDomCleanupPathByDefault: [
+      "no DOM cleanup path is introduced",
+      "no overlays, panels, buttons, or DOM containers are created or cleaned up in this phase",
+    ],
+    noEventListenerCleanupPathByDefault: [
+      "no event listener cleanup path is introduced",
+      "no click, touch, hover, drag, timer, or interval teardown behavior is added",
+    ],
+    noGameplayCleanupPath: [
+      "no cleanup behavior may connect to gameplay systems",
+      "no cleanup behavior may affect normal blue pins, player marker, or capture radius",
+    ],
+    noRewardCleanupPath: [
+      "no reward cleanup behavior is introduced",
+      "no reward display or payout path may be altered through cleanup behavior",
+    ],
+    noCollectionCleanupPath: [
+      "no collection cleanup behavior is introduced",
+      "no dormant landmark data may surface through cleanup-related collection flows",
+    ],
+    noBackendCleanupPath: [
+      "no backend cleanup behavior is introduced",
+      "no read, write, delete, or sync cleanup path may be introduced for landmark testing",
+    ],
+    rollbackSafeCleanupBoundary: [
+      "any future temporary cleanup behavior must be removable without residue",
+      "post-test rollback must return the app to a no-visible-landmark-cleanup-behavior state",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with cleanup boundary planning documented only and no visible landmark marker output, cleanup behavior, or layer mutation.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
