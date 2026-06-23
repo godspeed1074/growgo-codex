@@ -7094,6 +7094,113 @@ function getCustom25DLandmarkVisibleTestRuntimeGuardPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestDataIsolationPlan() {
+  return {
+    ok: true,
+    phase: 44,
+    name: "custom-25d-landmark-visible-test-data-isolation-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Future data isolation planning for manual-only visible landmark marker testing.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    dataDefaultOff: true,
+    sampleDataDefaultOff: true,
+    dinosaurSiteDataDefaultOff: true,
+    noRealPoiExpansion: true,
+    visibleMarkersDefaultOff: true,
+    requiresExplicitRuntimeOptIn: true,
+    doesNotLoadData: true,
+    doesNotExposeData: true,
+    doesNotMutateData: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotCreateDomElements: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestRuntimeGuardPlan()",
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    dormantSampleDataBoundary: [
+      "sample landmark data remains disabled by default",
+      "sample data must not load automatically",
+      "sample data must not become visible without explicit future manual opt-in",
+    ],
+    dormantDinosaurSiteDataBoundary: [
+      "dinosaur site data remains disabled by default",
+      "dinosaur site data must not load automatically",
+      "dormant AU dinosaur site data must not become visible without explicit future manual opt-in",
+    ],
+    noAutomaticDataLoading: [
+      "no data loading on startup",
+      "no data loading from timers, intervals, or event listeners",
+      "no automatic expansion from dormant data definitions into active visible data",
+    ],
+    noVisibleMarkerDataPath: [
+      "no data path may create visible landmark markers by default",
+      "no data path may auto-populate marker layers",
+      "no data path may bypass manual-only future runtime opt-in",
+    ],
+    noGameplayDataPath: [
+      "no data path may connect landmark data to capture logic",
+      "no data path may affect progression, XP, coins, or gameplay state",
+      "no data path may affect normal blue pins, player marker, or capture radius",
+    ],
+    noRewardsDataPath: [
+      "no data path may create rewards or reward side effects",
+      "no data path may award items, XP, coins, or unlocks",
+    ],
+    noCollectionsDataPath: [
+      "no data path may populate or mutate collections",
+      "no data path may expose dormant landmark data through collection systems",
+    ],
+    noBackendWritePath: [
+      "no backend writes are allowed in this phase",
+      "no runtime path may persist dormant landmark test data",
+    ],
+    noBackendReadPath: [
+      "no backend reads are allowed in this phase",
+      "no external or remote POI fetch path may be introduced in this phase",
+    ],
+    manualTestDataAccessOnly: [
+      "any future data access must remain manual-only and explicitly approved",
+      "future temporary data access must remain local, reviewable, and reversible",
+    ],
+    rollbackSafeDataBoundary: [
+      "any future temporary data activation must return to the all-false dormant state after testing",
+      "no persistent data exposure may remain after rollback",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with data isolation planning documented only and no visible landmark marker output or automatic data loading.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
