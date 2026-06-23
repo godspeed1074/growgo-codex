@@ -7518,6 +7518,118 @@ function getCustom25DLandmarkVisibleTestCleanupBoundaryPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestManualOptInPlan() {
+  return {
+    ok: true,
+    phase: 48,
+    name: "custom-25d-landmark-visible-test-manual-opt-in-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Future manual opt-in planning for visible landmark marker testing.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    requiresExplicitRuntimeOptIn: true,
+    requiresDeveloperIntent: true,
+    requiresLocalManualTestContext: true,
+    noAutomaticOptIn: true,
+    noPersistentOptIn: true,
+    noRemoteOptIn: true,
+    noUiOptInByDefault: true,
+    visibleMarkersDefaultOff: true,
+    dataDefaultOff: true,
+    doesNotEnableFlags: true,
+    doesNotCreateUi: true,
+    doesNotCreateDebugButtons: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotLoadData: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotMutateMapState: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestCleanupBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestMarkerLifecyclePlan()",
+      "getCustom25DLandmarkVisibleTestUiIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestDataIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestRuntimeGuardPlan()",
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    noDefaultOptIn: [
+      "no visible landmark testing opt-in exists by default",
+      "no automatic activation path is introduced on load or startup",
+    ],
+    noPersistedOptIn: [
+      "no persisted opt-in state is introduced",
+      "no localStorage, saved preference, or sticky test mode is introduced",
+    ],
+    noRemoteOptIn: [
+      "no remote config or backend-driven opt-in is introduced",
+      "no network-based activation path is introduced in this phase",
+    ],
+    noUiOptInByDefault: [
+      "no UI opt-in control is created",
+      "no buttons, panels, switches, menus, or debug controls are introduced",
+    ],
+    noAutomaticTestActivation: [
+      "no timers, intervals, listeners, or startup hooks may activate landmark visible testing",
+      "no runtime path may auto-enable marker visibility or data loading",
+    ],
+    localManualDeveloperOnlyActivationBoundary: [
+      "any future opt-in must remain local and manual-only",
+      "any future opt-in must require direct developer intent during an explicit test context",
+    ],
+    explicitRuntimeIntentBoundary: [
+      "future visible testing must require deliberate runtime action",
+      "future opt-in must be explicit, reviewable, and reversible",
+    ],
+    flagSafetyBoundary: [
+      "all landmark-related safety flags remain false by default",
+      "no helper in this phase enables or mutates those flags",
+    ],
+    dataSafetyBoundary: [
+      "no sample or dinosaur site data is loaded automatically",
+      "no dormant data is exposed through a visible opt-in path in this phase",
+    ],
+    markerSafetyBoundary: [
+      "no visible landmark markers or layers are created",
+      "no future opt-in path is implemented in this phase",
+    ],
+    rollbackSafeOptInBoundary: [
+      "any future temporary opt-in must be removable without residue",
+      "post-test rollback must restore the all-false dormant state immediately after testing",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with manual opt-in planning documented only and no visible landmark marker output, opt-in behavior, or data loading.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
