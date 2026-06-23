@@ -7304,6 +7304,112 @@ function getCustom25DLandmarkVisibleTestUiIsolationPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestMarkerLifecyclePlan() {
+  return {
+    ok: true,
+    phase: 46,
+    name: "custom-25d-landmark-visible-test-marker-lifecycle-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Future marker lifecycle planning for manual-only visible landmark marker testing.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    markersDefaultOff: true,
+    visibleMarkersDefaultOff: true,
+    markerLifecycleDefaultOff: true,
+    noMarkerCreationByDefault: true,
+    noLayerCreationByDefault: true,
+    requiresExplicitRuntimeOptIn: true,
+    doesNotCreateMarkers: true,
+    doesNotAttachMarkers: true,
+    doesNotRemoveMarkers: true,
+    doesNotMutateMarkerState: true,
+    doesNotCreateLayers: true,
+    doesNotMutateMapState: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestUiIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestDataIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestRuntimeGuardPlan()",
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    noDefaultMarkerCreation: [
+      "no visible landmark markers are created by default",
+      "no marker lifecycle starts automatically on load or startup",
+    ],
+    noMarkerLayerCreation: [
+      "no marker layers are created in this phase",
+      "no future marker test layer may appear without explicit manual-only approval",
+    ],
+    noMarkerAttachPath: [
+      "no marker attach path is introduced",
+      "no runtime path may attach visible landmark markers to the map by default",
+    ],
+    noMarkerCleanupPathByDefault: [
+      "no marker cleanup path is needed because no markers are created",
+      "no automatic marker teardown lifecycle is introduced in this phase",
+    ],
+    noMapMutationPath: [
+      "no map mutation path is introduced for landmark marker lifecycle behavior",
+      "no add/remove/update map operations are introduced for visible landmark markers",
+    ],
+    noDomMarkerPath: [
+      "no DOM-backed marker path is introduced",
+      "no overlays, popups, or DOM marker containers are created",
+    ],
+    noMarkerEventListenerPath: [
+      "no marker event listeners are attached",
+      "no click, touch, hover, drag, or lifecycle callbacks are introduced for markers",
+    ],
+    noGameplayMarkerPath: [
+      "no marker lifecycle behavior may connect to gameplay systems",
+      "no marker lifecycle may affect normal blue pins, player marker, or capture radius",
+    ],
+    noRewardMarkerPath: [
+      "no reward logic may be connected to marker lifecycle behavior",
+      "no reward display or payout path may be introduced through markers",
+    ],
+    noCollectionMarkerPath: [
+      "no collection logic may be connected to marker lifecycle behavior",
+      "no dormant landmark data may surface through collection marker flows",
+    ],
+    rollbackSafeMarkerBoundary: [
+      "any future temporary marker lifecycle must be removable without residue",
+      "post-test rollback must return the app to a no-visible-landmark-marker state",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with marker lifecycle planning documented only and no visible landmark marker output, marker lifecycle behavior, or map mutation.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
