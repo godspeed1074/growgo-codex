@@ -6001,6 +6001,38 @@ function getCustom25DLandmarkManualTestArchiveIndex() {
   };
 }
 
+function getCustom25DLandmarkManualTestCloseoutMarker() {
+  return {
+    ok: true,
+    phase: 30,
+    name: "landmark-manual-test-closeout-marker",
+    dormant: true,
+    closeoutPurpose: "Mark the dormant landmark manual test foundation as ready for next planning.",
+    completedRange: "phases-11-through-30-dormant-landmark-manual-test-foundation",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    previousPhase: {
+      archiveIndexExists: typeof getCustom25DLandmarkManualTestArchiveIndex === "function"
+    },
+    closeoutStatus: "inspection-only-closeout-marker",
+    visibleOutputCreated: false,
+    stateMutated: false,
+    flagsChanged: false,
+    readyForNextPlanningStep: true,
+    safetyNotes: [
+      "Inspection-only helper.",
+      "Does not render markers or layers.",
+      "Does not create DOM elements.",
+      "Does not enable flags.",
+      "Does not mutate manual test state."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
