@@ -6314,6 +6314,87 @@ function getCustom25DLandmarkVisibleTestApprovalGatePlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestRollbackPlan() {
+  return {
+    ok: true,
+    phase: 36,
+    name: "custom-25d-landmark-visible-test-rollback-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the rollback expectations for any future manual-only visible landmark marker test before that test is ever allowed to begin.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    rollbackTriggers: [
+      "any safety flag remains enabled after a future manual-only test",
+      "any visible landmark output appears outside the approved manual test window",
+      "any gameplay, reward, collection, backend, or OSM behavior changes are detected",
+      "any blank, opaque, or map-obscuring canvas behavior appears",
+    ],
+    rollbackActionsFutureOnly: [
+      "return all landmark-related safety flags to false immediately after testing",
+      "remove any temporary manual-only activation steps",
+      "restore the last known safe dormant map state",
+      "confirm no visible landmark rendering remains active",
+    ],
+    requiredRollbackEvidence: [
+      "post-test flag values are documented as false",
+      "working tree is reviewed for only approved reversible changes",
+      "default app behavior matches the dormant baseline after rollback",
+      "no visible landmark markers, layers, or UI remain after rollback",
+    ],
+    safeDefaultState: {
+      custom25DMap: false,
+      landmarkTestMarkers: false,
+      landmarkSampleData: false,
+      dinosaurSitesAuData: false,
+      visibleLandmarkRendering: false,
+    },
+    requiredPostRollbackChecks: [
+      "OSM remains visible underneath",
+      "no markers, layers, DOM elements, or manual-test UI remain active",
+      "no gameplay, reward, collection, or backend changes remain",
+      "normal blue pins, player marker, and capture radius still behave exactly as before",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with rollback planning documented only and no visible landmark marker output.",
+    passCriteriaForRollbackReadiness: [
+      "a future test can be fully reversed to the all-false safe default state",
+      "post-rollback checks are explicit and reviewable",
+      "rollback does not depend on gameplay, backend, or map behavior changes",
+      "rollback can be verified without creating visible output by default",
+    ],
+    failCriteria: [
+      "rollback requires leaving any safety flag enabled",
+      "rollback depends on permanent visible rendering changes",
+      "rollback leaves markers, layers, DOM elements, or UI behind",
+      "rollback cannot restore the dormant safe baseline immediately after testing",
+    ],
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-rollback-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
