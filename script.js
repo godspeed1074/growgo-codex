@@ -7201,6 +7201,109 @@ function getCustom25DLandmarkVisibleTestDataIsolationPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestUiIsolationPlan() {
+  return {
+    ok: true,
+    phase: 45,
+    name: "custom-25d-landmark-visible-test-ui-isolation-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Future UI isolation planning for manual-only visible landmark marker testing.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    uiDefaultOff: true,
+    visibleMarkersDefaultOff: true,
+    debugUiDefaultOff: true,
+    noVisibleControlsByDefault: true,
+    requiresExplicitRuntimeOptIn: true,
+    doesNotCreateUi: true,
+    doesNotCreateDebugButtons: true,
+    doesNotCreatePanels: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestDataIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestRuntimeGuardPlan()",
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    noDefaultVisibleUi: [
+      "no visible landmark test UI appears by default",
+      "no runtime path may expose landmark test controls automatically",
+    ],
+    noDebugButtonCreation: [
+      "no debug buttons are created in this phase",
+      "no future visible test control buttons may appear without explicit manual-only approval",
+    ],
+    noManualTestPanelCreation: [
+      "no manual test panels are created",
+      "no future test panel may appear by default or on startup",
+    ],
+    noDomQueryRequirement: [
+      "no DOM queries are required in this phase",
+      "no runtime path may depend on querying UI elements for landmark testing by default",
+    ],
+    noEventListenerPath: [
+      "no event listeners are attached in this phase",
+      "no automatic click, touch, keyboard, or resize handling is introduced for landmark visible testing",
+    ],
+    noMarkerInteractionUi: [
+      "no marker interaction UI is created",
+      "no popups, tooltips, overlays, or test marker controls are introduced",
+    ],
+    noGameplayUiPath: [
+      "no gameplay-facing UI may be altered for landmark visible testing",
+      "no menus, HUD elements, or player controls may be repurposed in this phase",
+    ],
+    noRewardUiPath: [
+      "no reward UI may be created or altered",
+      "no reward previews, banners, or dialogs may be introduced",
+    ],
+    noCollectionUiPath: [
+      "no collection UI may be created or altered",
+      "no dormant landmark data may surface through collection views",
+    ],
+    noBackendStatusUiPath: [
+      "no backend status UI may be created",
+      "no data sync indicators or network status panels may be introduced for landmark testing",
+    ],
+    rollbackSafeUiBoundary: [
+      "any future temporary UI for approved visible testing must be removable without residue",
+      "post-test rollback must return the app to a no-visible-landmark-test-UI state",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with UI isolation planning documented only and no visible landmark marker output, UI creation, or event listener attachment.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
