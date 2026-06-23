@@ -5688,6 +5688,30 @@ function runCustom25DLandmarkManualTestHook(options = {}) {
   return executeCustom25DLandmarkManualTestHook(options);
 }
 
+function inspectCustom25DLandmarkManualTestHookState(options = {}) {
+  const safeState = getCustom25DLandmarkManualTestHookState() || {};
+  const timestamp = typeof options?.timestamp === "string" && options.timestamp
+    ? options.timestamp
+    : new Date().toISOString();
+
+  return {
+    ok: true,
+    source: "custom-25d-landmark-manual-test-hook",
+    armed: isCustom25DLandmarkManualTestHookArmed() === true,
+    canRun: canRunCustom25DLandmarkManualTestHook(options) === true,
+    lastRunAt: safeState.lastRunAt ?? null,
+    lastResult: safeState.lastResult ?? null,
+    lastReason: safeState.lastReason ?? null,
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === true,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === true,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === true,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === true
+    },
+    timestamp
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
