@@ -6877,6 +6877,128 @@ function getCustom25DLandmarkVisibleTestGoNoGoPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestExecutionBoundaryPlan() {
+  return {
+    ok: true,
+    phase: 42,
+    name: "custom-25d-landmark-visible-test-execution-boundary-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the execution boundaries that must contain any future manual-only visible landmark marker test.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    executionBoundary: [
+      "future testing remains manual-only",
+      "future testing remains temporary and reversible",
+      "future testing remains local-only unless explicitly re-approved",
+      "future testing remains separate from gameplay and backend behavior",
+    ],
+    allowedFutureManualOnlyActions: [
+      "temporary console-only activation during an approved future test window",
+      "temporary reversible local-only flag changes for inspection",
+      "temporary observation, screenshot capture, and structured reporting",
+      "immediate rollback after inspection completes",
+    ],
+    disallowedCurrentActions: [
+      "default-on visible landmark rendering",
+      "automatic startup execution",
+      "persistent marker or layer creation",
+      "any gameplay-connected landmark behavior",
+    ],
+    requiredBeforeAnyExecution: [
+      "explicit manual approval is granted",
+      "preflight, safety, rollback, and report plans are reviewed",
+      "all landmark-related flags are false before temporary activation",
+      "a rollback path is documented before the future test begins",
+    ],
+    requiredDuringExecution: [
+      "OSM remains visible underneath",
+      "normal blue pins remain readable and dominant",
+      "player marker and capture radius remain unobscured",
+      "no gameplay, reward, collection, or backend changes occur",
+    ],
+    requiredAfterExecution: [
+      "all landmark-related flags are returned to false immediately",
+      "no test markers, layers, DOM elements, or UI remain active",
+      "a structured report records what happened",
+      "the dormant baseline is visually and behaviorally restored",
+    ],
+    mapBoundaryRules: [
+      "do not obscure or replace the existing map context",
+      "do not reduce OSM visibility below safe readability",
+      "do not introduce opaque or blank canvas behavior",
+    ],
+    markerBoundaryRules: [
+      "do not replace normal blue pins",
+      "do not create dense or noisy visible marker output",
+      "do not make temporary markers look like approved live gameplay markers",
+    ],
+    dataBoundaryRules: [
+      "do not enable real POI data by default",
+      "do not blur the line between sample, dormant, and approved data",
+      "do not create backend writes or persistent live data effects",
+    ],
+    gameplayBoundaryRules: [
+      "do not change capture logic",
+      "do not change rewards, XP, coins, collections, or progression",
+      "do not change player marker or capture radius behavior",
+    ],
+    rollbackBoundaryRules: [
+      "rollback must happen immediately after inspection",
+      "rollback must restore all flags to false",
+      "rollback must restore no-visible-output behavior",
+    ],
+    reportingBoundaryRules: [
+      "report must document temporary active flags",
+      "report must document map, marker, OSM, gameplay, and rollback findings",
+      "report must record whether future testing should proceed or stop",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with execution-boundary planning documented only and no visible landmark marker output.",
+    passCriteriaForBoundaryReadiness: [
+      "execution boundaries are explicit and reviewable",
+      "future testing is clearly manual-only, temporary, and reversible",
+      "map, marker, data, gameplay, rollback, and reporting boundaries remain separated",
+      "the dormant all-false baseline remains unchanged while planning continues",
+    ],
+    failCriteria: [
+      "any visible landmark behavior appears during this planning phase",
+      "execution boundaries require gameplay or backend changes",
+      "future testing cannot be contained to a manual-only reversible path",
+      "boundary planning does not preserve the dormant safe baseline",
+    ],
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-execution-boundary-review",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
