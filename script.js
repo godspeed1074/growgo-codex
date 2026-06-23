@@ -6395,6 +6395,100 @@ function getCustom25DLandmarkVisibleTestRollbackPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestRiskPlan() {
+  return {
+    ok: true,
+    phase: 37,
+    name: "custom-25d-landmark-visible-test-risk-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the risks that must be considered before any future manual-only visible landmark marker test can begin.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    primaryRisks: [
+      "future visible test could escape dormant/manual-only boundaries",
+      "temporary test changes could linger past inspection",
+      "manual-only rendering could be mistaken for approved gameplay behavior",
+    ],
+    mapSafetyRisks: [
+      "OSM visibility could be reduced too far during future testing",
+      "visible landmark markers could crowd or visually compete with normal blue pins",
+      "future test rendering could accidentally obscure player marker or capture radius",
+      "future test canvas behavior could reintroduce blank or pale map failures",
+    ],
+    gameplaySafetyRisks: [
+      "future visible test could accidentally connect to capture logic",
+      "future visible test could accidentally affect rewards, collections, or progression",
+      "future visible test could be confused with active gameplay landmarks before approval",
+    ],
+    performanceRisks: [
+      "future visible markers could add too much draw cost or map clutter",
+      "future manual-only rendering could create too many markers or layers at once",
+      "future test behavior could reduce mobile responsiveness if not tightly gated",
+    ],
+    dataSafetyRisks: [
+      "future test could surface real POI data earlier than intended",
+      "temporary test data could be mistaken for approved production landmark content",
+      "future test changes could accidentally blur the line between sample and real data",
+    ],
+    userExperienceRisks: [
+      "players could misread temporary test markers as a live feature",
+      "visible test output could make the map feel busier or less readable",
+      "future manual-only testing could create confusing visual inconsistency if not fully rolled back",
+    ],
+    mitigationPlanFutureOnly: [
+      "keep all landmark-related flags false by default",
+      "allow only explicit console-only temporary activation during approved testing",
+      "require rollback to the dormant baseline immediately after inspection",
+      "require proof that no gameplay, backend, or OSM behavior changed",
+    ],
+    requiredEvidenceBeforeTesting: [
+      "preflight, approval, rollback, and readiness plans are reviewed together",
+      "future visible test path remains manual-only and reversible",
+      "post-test rollback steps are documented before any activation",
+      "normal pins, player marker, capture radius, and OSM visibility remain protected",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with risk planning documented only and no visible landmark marker output.",
+    passCriteriaForRiskReadiness: [
+      "major visible-test risks are explicitly listed and reviewable",
+      "mitigation remains manual-only and reversible",
+      "no risk handling depends on gameplay or backend changes",
+      "the dormant default state remains unchanged while planning continues",
+    ],
+    failCriteria: [
+      "any visible landmark behavior is enabled during this planning phase",
+      "risk handling requires changing gameplay, rewards, backend, or OSM behavior",
+      "future visible testing cannot be clearly separated from normal map behavior",
+      "risk mitigation cannot restore the all-false dormant baseline immediately after testing",
+    ],
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-risk-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
