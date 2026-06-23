@@ -6586,6 +6586,117 @@ function getCustom25DLandmarkVisibleTestObservationPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestReportPlan() {
+  return {
+    ok: true,
+    phase: 39,
+    name: "custom-25d-landmark-visible-test-report-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the report structure that should be produced after any future manual-only visible landmark marker test.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    reportScope: [
+      "future manual-only visible landmark marker test results",
+      "map safety observations during temporary approved testing",
+      "marker clarity and separation from normal gameplay pins",
+      "confirmation that rollback returned the map to the dormant baseline",
+    ],
+    requiredReportSections: [
+      "test context and approval reference",
+      "active temporary flag state during testing",
+      "map and marker observations",
+      "safety findings and rollback outcome",
+      "decision outcome and next recommendation",
+    ],
+    requiredSafetyFindings: [
+      "whether all safety gates remained respected during testing",
+      "whether all landmark-related flags returned to false after testing",
+      "whether any forbidden behavior appeared",
+    ],
+    requiredMapFindings: [
+      "whether the map remained readable",
+      "whether player marker and capture radius stayed unobscured",
+      "whether no blank, pale, or opaque canvas issue appeared",
+    ],
+    requiredMarkerFindings: [
+      "whether test markers were clearly separate from normal blue pins",
+      "whether marker density remained low and reviewable",
+      "whether markers appeared temporary and test-only",
+    ],
+    requiredOsmFindings: [
+      "whether OSM stayed visible underneath throughout the test",
+      "whether base map context remained readable",
+      "whether no future test step hid or fully covered OSM",
+    ],
+    requiredGameplayFindings: [
+      "whether captures, rewards, collections, XP, coins, and backend behavior remained unchanged",
+      "whether normal blue pins, player marker, and capture radius behaved exactly as before",
+      "whether visible test output stayed disconnected from gameplay",
+    ],
+    requiredPerformanceFindings: [
+      "whether the map stayed responsive",
+      "whether marker or layer activity remained lightweight",
+      "whether future visible testing stayed reversible without performance regressions",
+    ],
+    requiredUserExperienceFindings: [
+      "whether the map remained understandable and uncluttered",
+      "whether future visible test output was clearly temporary",
+      "whether landmark visuals avoided overpowering core gameplay readability",
+    ],
+    requiredScreenshotsFutureOnly: [
+      "default dormant baseline before any temporary test activation",
+      "approved manual-only visible landmark test state",
+      "post-rollback dormant baseline after all flags return to false",
+    ],
+    requiredDecisionOutcome: [
+      "approve further manual-only testing",
+      "request revisions before further testing",
+      "reject visible testing until safety concerns are resolved",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with report planning documented only and no visible landmark marker output.",
+    passCriteriaForReportReadiness: [
+      "future report sections are explicit and reviewable",
+      "report expectations preserve OSM visibility and gameplay safety",
+      "report plan includes rollback confirmation and decision outcome",
+      "the dormant all-false default state remains unchanged while planning continues",
+    ],
+    failCriteria: [
+      "any visible landmark behavior appears during this planning phase",
+      "report expectations require gameplay or backend changes",
+      "report structure cannot distinguish temporary test behavior from normal gameplay",
+      "report planning does not preserve the dormant safe baseline",
+    ],
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-report-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
