@@ -6489,6 +6489,103 @@ function getCustom25DLandmarkVisibleTestRiskPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestObservationPlan() {
+  return {
+    ok: true,
+    phase: 38,
+    name: "custom-25d-landmark-visible-test-observation-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe what should be observed during any future manual-only visible landmark marker test before that test is ever approved to run.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    observationScope: [
+      "future manual-only visible landmark marker behavior",
+      "interaction between test markers and the protected custom 2.5D map",
+      "visual separation between landmark test markers and normal gameplay pins",
+      "preservation of dormant default behavior outside explicit test windows",
+    ],
+    mapObservationChecklist: [
+      "confirm the map remains readable with OSM still visible underneath",
+      "confirm player marker and capture radius remain unobscured",
+      "confirm landmark test output does not crowd the map or dominate the scene",
+      "confirm no blank, pale, or opaque canvas failure returns",
+    ],
+    markerObservationChecklist: [
+      "confirm any future test markers are visually distinct from normal blue pins",
+      "confirm test markers do not replace gameplay pins",
+      "confirm any future marker density remains low and reviewable",
+      "confirm markers remain clearly temporary and test-only",
+    ],
+    osmSafetyObservationChecklist: [
+      "confirm OSM remains visible underneath at all times",
+      "confirm no future test step hides or fully covers OSM",
+      "confirm base map context stays readable during manual-only inspection",
+    ],
+    gameplaySafetyObservationChecklist: [
+      "confirm no capture logic is affected",
+      "confirm no rewards, collections, XP, coins, or backend writes occur",
+      "confirm normal blue pins, player marker, and capture radius behave exactly as before",
+      "confirm visible test output is not mistaken for approved gameplay",
+    ],
+    performanceObservationChecklist: [
+      "confirm map responsiveness remains acceptable on mobile",
+      "confirm no excessive marker, layer, or draw buildup occurs",
+      "confirm any temporary visible test remains lightweight and reversible",
+    ],
+    userExperienceObservationChecklist: [
+      "confirm the map does not become cluttered or confusing",
+      "confirm future visible test output is understandable as temporary",
+      "confirm landmark visuals do not overpower navigation or gameplay clarity",
+    ],
+    requiredEvidenceFutureOnly: [
+      "screenshots or observations showing pins remain dominant",
+      "evidence that OSM stays visible underneath",
+      "evidence that gameplay behavior is unchanged during the manual-only test",
+      "evidence that rollback returns the map to the dormant baseline immediately after testing",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with observation planning documented only and no visible landmark marker output.",
+    passCriteriaForObservationReadiness: [
+      "the future observation checklist is explicit and reviewable",
+      "observation remains manual-only and reversible",
+      "observation requirements protect OSM visibility and pin dominance",
+      "the dormant all-false default state remains unchanged while planning continues",
+    ],
+    failCriteria: [
+      "any visible landmark output appears during this planning phase",
+      "observation expectations require gameplay or backend changes",
+      "future visible tests cannot be cleanly distinguished from normal map behavior",
+      "observation planning does not preserve the dormant safe baseline",
+    ],
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-observation-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
