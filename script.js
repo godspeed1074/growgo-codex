@@ -6069,6 +6069,46 @@ function getCustom25DLandmarkNextPhasePlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestReadinessPlan() {
+  return {
+    ok: true,
+    phase: 32,
+    name: "custom-25d-landmark-visible-test-readiness-plan",
+    dormant: true,
+    purpose: "Readiness plan for a future manual-only visible landmark test without enabling it yet.",
+    previousPhase: {
+      nextPhasePlanExists: typeof getCustom25DLandmarkNextPhasePlan === "function"
+    },
+    visibleTestingAllowedNow: false,
+    readyForVisibleRendering: false,
+    requiresExplicitFutureApproval: true,
+    recommendedBeforeVisibleTest: [
+      "keep all feature flags false by default",
+      "define a manual-only activation path",
+      "require console-only invocation",
+      "require existing OSM to remain visible underneath",
+      "require no gameplay, reward, capture, or backend changes",
+      "require test markers to remain disabled until explicitly armed"
+    ],
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    visibleOutputCreated: false,
+    stateMutated: false,
+    flagsChanged: false,
+    safetyNotes: [
+      "Planning-only helper.",
+      "Does not render markers or layers.",
+      "Does not create DOM elements.",
+      "Does not enable flags.",
+      "Does not mutate manual test state."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
