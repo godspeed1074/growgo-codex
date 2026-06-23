@@ -6999,6 +6999,101 @@ function getCustom25DLandmarkVisibleTestExecutionBoundaryPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestRuntimeGuardPlan() {
+  return {
+    ok: true,
+    phase: 43,
+    name: "custom-25d-landmark-visible-test-runtime-guard-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Future runtime guard planning for manual-only visible landmark marker testing.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    visibleMarkersDefaultOff: true,
+    requiresExplicitRuntimeOptIn: true,
+    requiresAllSafetyFlagsFalseByDefault: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotCreateDomElements: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    branchGuard: [
+      "future visible landmark testing must not be developed directly on main",
+      "manual-only visible testing must remain isolated to an explicit future branch or approved local test window",
+    ],
+    featureFlagGuard: [
+      "ENABLE_CUSTOM_25D_MAP remains false by default",
+      "ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS remains false by default",
+      "ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA remains false by default",
+      "ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA remains false by default",
+    ],
+    runtimeOptInGuard: [
+      "any future visible test must require explicit runtime opt-in",
+      "runtime opt-in must remain manual-only and reversible",
+      "runtime opt-in must not happen automatically on load or startup",
+    ],
+    sampleDataGuard: [
+      "sample landmark data must remain disabled by default",
+      "sample data must not appear without explicit temporary approval",
+    ],
+    dinosaurSiteDataGuard: [
+      "AU dinosaur site data must remain disabled by default",
+      "dormant real landmark seed data must not become visible without explicit temporary approval",
+    ],
+    markerCreationGuard: [
+      "no marker creation by default",
+      "no automatic marker creation path may be introduced in this phase",
+    ],
+    layerCreationGuard: [
+      "no layer creation by default",
+      "no active Leaflet layer path may be introduced in this phase",
+    ],
+    domGuard: [
+      "no DOM elements, UI panels, debug buttons, or visible manual-test tools are created",
+      "no event listeners, timers, or intervals are introduced for landmark visible testing",
+    ],
+    osmVisibilityGuard: [
+      "OSM must remain visible underneath",
+      "no opaque or blank canvas background may be introduced",
+      "no future runtime guard may reduce base map readability by default",
+    ],
+    rollbackGuard: [
+      "any future runtime opt-in must be paired with immediate rollback expectations",
+      "all safety flags must return to false after any future visible test window",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with runtime guard planning documented only and no visible landmark marker output.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
