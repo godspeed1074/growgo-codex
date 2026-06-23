@@ -6697,6 +6697,99 @@ function getCustom25DLandmarkVisibleTestReportPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestFinalCheckPlan() {
+  return {
+    ok: true,
+    phase: 40,
+    name: "custom-25d-landmark-visible-test-final-check-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the final checklist that must pass before any future manual-only visible landmark marker test can be considered.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    finalCleanStateChecks: [
+      "working tree is clean before any future visible test",
+      "no unreviewed dormant helper edits remain pending",
+      "default app state is still the dormant baseline before temporary testing",
+    ],
+    finalFlagChecks: [
+      "ENABLE_CUSTOM_25D_MAP remains false by default",
+      "ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS remains false by default",
+      "ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA remains false by default",
+      "ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA remains false by default",
+    ],
+    finalHelperChecks: [
+      "planning helpers remain present and reviewable",
+      "manual-only test helpers remain dormant by default",
+      "no helper enables visible behavior automatically",
+    ],
+    finalSafetyChecks: [
+      "OSM remains visible underneath",
+      "no opaque or blank canvas background exists",
+      "no markers, layers, DOM elements, or visible manual-test UI are created by default",
+      "no gameplay, reward, collection, or backend changes are introduced",
+    ],
+    finalBehaviorChecks: [
+      "normal blue pins remain unchanged",
+      "player marker remains unchanged",
+      "capture radius remains unchanged",
+      "current map behavior remains fully dormant with no visible landmark output",
+    ],
+    finalManualReviewChecks: [
+      "preflight, approval, rollback, risk, observation, and report plans are reviewed together",
+      "future visible testing remains manual-only and explicitly approved",
+      "future rollback path is documented before any visible test begins",
+    ],
+    finalApprovalRequirement:
+      "An explicit future approval decision is required before any manual-only visible landmark marker test can be considered.",
+    finalRollbackRequirement:
+      "Any future visible test must include an immediate rollback back to the all-false dormant state after inspection.",
+    finalReportingRequirement:
+      "Any future visible test must produce a structured report covering safety, map behavior, markers, OSM visibility, gameplay isolation, performance, and rollback outcome.",
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with final-check planning documented only and no visible landmark marker output.",
+    passCriteriaForFutureVisibleTestConsideration: [
+      "all final checks are explicit and reviewable",
+      "all safety flags remain false by default",
+      "future visible testing remains manual-only, reversible, and approval-gated",
+      "the dormant all-false baseline remains unchanged while planning continues",
+    ],
+    failCriteria: [
+      "any visible landmark behavior appears during this planning phase",
+      "any final-check expectation requires gameplay or backend changes",
+      "future visible testing cannot be clearly separated from normal map behavior",
+      "final-check planning does not preserve the dormant safe baseline",
+    ],
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-final-check-review",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
