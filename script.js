@@ -6162,6 +6162,74 @@ function getCustom25DLandmarkVisibleTestPathPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestPreflightPlan() {
+  return {
+    ok: true,
+    phase: 34,
+    name: "custom-25d-landmark-visible-test-preflight-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose: "Describe the preflight checks required before any future manual-only visible landmark test is considered.",
+    dependsOn: [
+      "getCustom25DLandmarkNextPhasePlan",
+      "getCustom25DLandmarkVisibleTestReadinessPlan",
+      "getCustom25DLandmarkVisibleTestPathPlan"
+    ],
+    requiredCleanState: [
+      "working tree is clean before temporary test changes",
+      "all dormant helpers remain present",
+      "no unrelated gameplay changes are in progress"
+    ],
+    requiredFlagState: [
+      "ENABLE_CUSTOM_25D_MAP = false",
+      "ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false",
+      "ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false",
+      "ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false"
+    ],
+    requiredHelperChecks: [
+      "planning helpers exist exactly once",
+      "manual test helpers remain dormant",
+      "no helper mutates state unless explicitly intended"
+    ],
+    requiredBehaviorChecks: [
+      "no visible marker rendering by default",
+      "no Leaflet layers added by default",
+      "no DOM or UI debug tools added by default"
+    ],
+    requiredManualReview: [
+      "confirm OSM stays visible underneath",
+      "confirm no gameplay, reward, capture, or backend changes",
+      "confirm any future visible test remains manual-only"
+    ],
+    forbiddenNow: [
+      "visible rendering",
+      "marker creation",
+      "layer creation",
+      "DOM or UI creation",
+      "flag activation"
+    ],
+    expectedCurrentBehavior: "No visible landmark test behavior is active.",
+    passCriteriaForFutureVisibleTest: [
+      "explicit approval is given",
+      "manual-only invocation path is defined",
+      "temporary test flags can be restored safely after inspection"
+    ],
+    failCriteria: [
+      "any default-visible output appears",
+      "any gameplay or backend state changes are required",
+      "OSM visibility is reduced in an unsafe way"
+    ],
+    nextSuggestedPhase: "manual-visible-test-approval-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    }
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
