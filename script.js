@@ -6230,6 +6230,90 @@ function getCustom25DLandmarkVisibleTestPreflightPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestApprovalGatePlan() {
+  return {
+    ok: true,
+    phase: 35,
+    name: "custom-25d-landmark-visible-test-approval-gate-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the approval gates that must be satisfied before any future manual-only visible landmark marker test can begin.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    approvalRequiredFrom: [
+      "explicit future product approval",
+      "manual-only renderer test approval",
+      "custom 2.5D landmark safety review approval",
+    ],
+    requiredPreflightEvidence: [
+      "preflight plan remains documented and dormant",
+      "working tree is clean before any future visible test",
+      "all landmark-related feature flags remain false by default",
+      "a reversible manual-only activation path is documented before use",
+    ],
+    requiredSafetyEvidence: [
+      "OSM remains visible underneath at all times",
+      "no gameplay, reward, capture, collection, or backend changes are introduced",
+      "no default-visible landmark markers render automatically",
+      "no markers, layers, DOM elements, or visible debug tools are created by default",
+    ],
+    requiredManualDecision: [
+      "decide whether a future visible test is still inspection-only",
+      "decide which console-only steps are allowed during a future approved test",
+      "decide how rollback to all-false flags will be verified after testing",
+    ],
+    approvedActionsFutureOnly: [
+      "console-only manual activation after explicit approval",
+      "temporary and reversible local-only flag changes for inspection",
+      "post-test restoration of all safety flags to false",
+    ],
+    rejectedActionsNow: [
+      "visible rendering in the current phase",
+      "automatic startup activation",
+      "persistent feature flag changes",
+      "gameplay-connected landmark behavior",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with no visible landmark marker output and no gameplay changes.",
+    passCriteriaForFutureApproval: [
+      "explicit approval is granted for a manual-only visible test",
+      "required preflight evidence is reviewed and accepted",
+      "required safety evidence is reviewed and accepted",
+      "rollback expectation is documented and feasible before any visible test begins",
+    ],
+    failCriteria: [
+      "any safety flag is enabled by default",
+      "any visible landmark rendering occurs without explicit approval",
+      "any gameplay, reward, collection, backend, or OSM behavior changes are required",
+      "any opaque or blank canvas background is introduced",
+    ],
+    rollbackExpectation:
+      "Any future visible test must remain temporary and restore all landmark-related safety flags to false immediately after inspection.",
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-approval-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
