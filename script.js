@@ -6109,6 +6109,59 @@ function getCustom25DLandmarkVisibleTestReadinessPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestPathPlan() {
+  return {
+    ok: true,
+    phase: 33,
+    name: "custom-25d-landmark-visible-test-path-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose: "Describe the future manual-only path for visible landmark testing without enabling it now.",
+    dependsOn: [
+      "getCustom25DLandmarkNextPhasePlan",
+      "getCustom25DLandmarkVisibleTestReadinessPlan"
+    ],
+    blockedUntil: [
+      "explicit future approval",
+      "manual-only activation path is defined",
+      "all safety flags remain false by default"
+    ],
+    requiredBeforeVisibleTesting: [
+      "manual-only invocation path documented",
+      "OSM remains visible underneath",
+      "no gameplay, reward, capture, or backend changes",
+      "test markers stay disabled until explicitly armed"
+    ],
+    manualOnlyFuturePath: [
+      "review dormant planning helpers",
+      "approve a console-only test path",
+      "enable only the minimum temporary flags during a future manual test",
+      "restore all flags to false after testing"
+    ],
+    safetyRules: [
+      "do not render anything by default",
+      "do not create markers or layers by default",
+      "do not mutate gameplay or backend state"
+    ],
+    forbiddenNow: [
+      "visible rendering",
+      "marker creation",
+      "layer creation",
+      "DOM or UI creation",
+      "flag activation"
+    ],
+    expectedCurrentBehavior: "No visible landmark test behavior is active.",
+    nextSuggestedPhase: "manual-visible-test-approval-check",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    }
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
