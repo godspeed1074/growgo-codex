@@ -6790,6 +6790,93 @@ function getCustom25DLandmarkVisibleTestFinalCheckPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestGoNoGoPlan() {
+  return {
+    ok: true,
+    phase: 41,
+    name: "custom-25d-landmark-visible-test-go-no-go-plan",
+    dormant: true,
+    planningOnly: true,
+    visibleTestingAllowedNow: false,
+    purpose:
+      "Describe the go/no-go decision structure for whether any future manual-only visible landmark marker test may proceed.",
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    goRequirements: [
+      "all safety flags remain false by default until an explicitly approved future test window",
+      "preflight, approval, rollback, risk, observation, report, and final-check plans are reviewed together",
+      "future visible testing remains manual-only, reversible, and temporary",
+      "OSM visibility, pin dominance, and gameplay isolation remain protected",
+    ],
+    noGoConditions: [
+      "any visible landmark behavior appears before explicit approval",
+      "any future test requires gameplay, reward, collection, or backend changes",
+      "any future test cannot guarantee immediate rollback to the dormant baseline",
+      "any future test risks obscuring OSM, blue pins, player marker, or capture radius",
+    ],
+    requiredEvidenceBeforeGo: [
+      "clean-state and flag-state checks are documented",
+      "risk, observation, and report expectations are explicit and reviewable",
+      "rollback steps are documented before temporary activation",
+      "future visible test path remains console-only and manually approved",
+    ],
+    requiredManualApproval: [
+      "explicit approval for manual-only visible testing",
+      "explicit approval that no gameplay or backend behavior may change",
+      "explicit approval that rollback must happen immediately after inspection",
+    ],
+    allowedFutureGoActions: [
+      "temporary console-only activation during an approved future test",
+      "temporary, reversible local-only flag changes for inspection",
+      "structured reporting and immediate rollback after the future test",
+    ],
+    forbiddenNow: [
+      "enable custom 2.5D map by default",
+      "enable landmark test markers",
+      "enable sample landmark data",
+      "enable AU dinosaur site data",
+      "render visible markers",
+      "create Leaflet markers or layers",
+      "create DOM elements or manual-test UI",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with go/no-go planning documented only and no visible landmark marker output.",
+    goDecisionCriteria: [
+      "future visible testing is manual-only, explicitly approved, and reversible",
+      "all planning and safety checkpoints are satisfied before temporary activation",
+      "OSM visibility and gameplay isolation remain protected throughout",
+      "the dormant all-false baseline remains unchanged outside future test windows",
+    ],
+    noGoDecisionCriteria: [
+      "any missing approval, missing rollback path, or missing report expectation blocks testing",
+      "any required behavior change outside inspection-only rendering blocks testing",
+      "any inability to preserve dormant defaults blocks testing",
+      "any uncertainty about map safety or player-facing clarity blocks testing",
+    ],
+    rollbackExpectation:
+      "Any future go decision must still require an immediate rollback back to the all-false dormant state after inspection.",
+    reportingExpectation:
+      "Any future go decision must require a structured report covering safety, map behavior, marker clarity, OSM visibility, gameplay isolation, performance, and rollback outcome.",
+    nextSuggestedPhase: "custom-25d-landmark-visible-test-go-no-go-review",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
