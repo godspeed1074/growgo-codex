@@ -5789,6 +5789,37 @@ function getCustom25DLandmarkManualTestHookConsoleGuide(options = {}) {
   };
 }
 
+function getCustom25DLandmarkManualTestCleanupCheck() {
+  return {
+    ok: true,
+    phase: 24,
+    name: "landmark-manual-test-cleanup-check",
+    dormant: true,
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === true,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === true,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === true,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === true
+    },
+    helperChecks: {
+      inspectState: typeof inspectCustom25DLandmarkManualTestHookState === "function",
+      safetySummary: typeof getCustom25DLandmarkManualTestHookSafetySummary === "function",
+      consoleGuide: typeof getCustom25DLandmarkManualTestHookConsoleGuide === "function",
+      isArmed: typeof isCustom25DLandmarkManualTestHookArmed === "function",
+      canRun: typeof canRunCustom25DLandmarkManualTestHook === "function",
+      execute: typeof executeCustom25DLandmarkManualTestHook === "function",
+      run: typeof runCustom25DLandmarkManualTestHook === "function"
+    },
+    safetyNotes: [
+      "Does not render markers.",
+      "Does not create layers.",
+      "Does not create DOM elements.",
+      "Does not enable flags.",
+      "Does not call gameplay or capture systems."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
