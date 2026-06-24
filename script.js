@@ -6868,6 +6868,247 @@ function getCustom25DVisualLayerHostImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualRenderLayerRegistryState() {
+  return {
+    ok: true,
+    phase: 74,
+    name: "Custom 2.5D visual renderer render-layer registry",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresLayerHost: true,
+    registryInitialized: false,
+    registryVisible: false,
+    layersDefined: 13,
+    layersActive: 0,
+    isRendering: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false,
+    layerKeys: [
+      "background",
+      "water",
+      "beach",
+      "grass",
+      "park",
+      "roadShadow",
+      "roadBase",
+      "roadHighlight",
+      "buildingShadow",
+      "buildingBase",
+      "label",
+      "atmosphere",
+      "overlay"
+    ]
+  };
+}
+
+function canInitializeCustom25DVisualRenderLayerRegistry(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowRenderLayerRegistry !== true) {
+    blockedReasons.push("options.allowRenderLayerRegistry must be true");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 74,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualRenderLayerRegistry(options = {}) {
+  const guard = canInitializeCustom25DVisualRenderLayerRegistry(options);
+  const layerRegistry = [
+    {
+      key: "background",
+      name: "Background",
+      order: 0,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future calm base tone for the visual renderer."
+    },
+    {
+      key: "water",
+      name: "Water",
+      order: 1,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future soft water shapes and calm shoreline tone."
+    },
+    {
+      key: "beach",
+      name: "Beach",
+      order: 2,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future beach band layer with warm sand treatment."
+    },
+    {
+      key: "grass",
+      name: "Grass",
+      order: 3,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future general grass/open-land layer."
+    },
+    {
+      key: "park",
+      name: "Park",
+      order: 4,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future park zones and soft green grouping."
+    },
+    {
+      key: "roadShadow",
+      name: "Road Shadow",
+      order: 5,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future subtle shadow under road shapes."
+    },
+    {
+      key: "roadBase",
+      name: "Road Base",
+      order: 6,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future main road body layer."
+    },
+    {
+      key: "roadHighlight",
+      name: "Road Highlight",
+      order: 7,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future road highlight and bevel accents."
+    },
+    {
+      key: "buildingShadow",
+      name: "Building Shadow",
+      order: 8,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future soft building shadow layer."
+    },
+    {
+      key: "buildingBase",
+      name: "Building Base",
+      order: 9,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future simple building planes and depth blocks."
+    },
+    {
+      key: "label",
+      name: "Label",
+      order: 10,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future readable map labels."
+    },
+    {
+      key: "atmosphere",
+      name: "Atmosphere",
+      order: 11,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future subtle depth and atmosphere accents."
+    },
+    {
+      key: "overlay",
+      name: "Overlay",
+      order: 12,
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      description: "Future non-gameplay visual overlay pass."
+    }
+  ];
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 74,
+      dormant: true,
+      defaultVisualChange: false,
+      registryState: getCustom25DVisualRenderLayerRegistryState(),
+      layerRegistry
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 74,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Render-layer registry remains guarded, data-only, and inert in this phase.",
+    registryState: {
+      ...getCustom25DVisualRenderLayerRegistryState(),
+      lastReason: "guarded-invisible-render-layer-registry"
+    },
+    layerRegistry
+  };
+}
+
+function clearCustom25DVisualRenderLayerRegistry() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 74,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual render-layer registry exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualRenderLayerRegistryImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 74,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    dataOnlyRegistry: true,
+    readyForFutureInvisibleLayerActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
