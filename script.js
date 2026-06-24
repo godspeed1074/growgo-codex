@@ -12454,6 +12454,222 @@ function getCustom25DVisualLayerStateInventoryAuditPlan(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateInventoryReport(options = {}) {
+  const auditPlan =
+    typeof getCustom25DVisualLayerStateInventoryAuditPlan === "function"
+      ? getCustom25DVisualLayerStateInventoryAuditPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory audit plan helper is unavailable."
+        };
+  const shellCloseout =
+    typeof getCustom25DVisualLayerInitializationShellCloseoutReport === "function"
+      ? getCustom25DVisualLayerInitializationShellCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization shell closeout report helper is unavailable."
+        };
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable"
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualLayers === "function"
+      ? initializeCustom25DVisualLayers(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-initialization-shell-unavailable",
+          initialized: false,
+          mutatesState: false,
+          createsVisibleGraphics: false,
+          attachesToMap: false
+        };
+
+  const knownLayerSlots = [
+    {
+      key: "roadBase",
+      name: "Road Base",
+      expectedOrder: 6,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "roadShadow",
+      name: "Road Shadow",
+      expectedOrder: 5,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "water",
+      name: "Water",
+      expectedOrder: 3,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "park",
+      name: "Park",
+      expectedOrder: 4,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "building",
+      name: "Building",
+      expectedOrder: 9,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "landmark",
+      name: "Landmark",
+      expectedOrder: 12,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "dinosaur",
+      name: "Dinosaur",
+      expectedOrder: 13,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "film",
+      name: "Film",
+      expectedOrder: 14,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    },
+    {
+      key: "poi",
+      name: "POI",
+      expectedOrder: 15,
+      expectedEnabledByDefault: false,
+      expectedVisible: false,
+      expectedImplemented: false,
+      expectedDormant: true,
+      expectedInitialized: false,
+      expectedAttachedToMap: false,
+      expectedCreatesVisibleGraphics: false,
+      expectedAffectsGameplay: false,
+      requiresClearOrResetPath: true
+    }
+  ];
+
+  return {
+    ok: true,
+    phase: 118,
+    name: "custom-25d-visual-layer-state-inventory-report",
+    dormant: true,
+    inventoryReportOnly: true,
+    reportOnly: true,
+    dataOnly: true,
+    mutatesState: false,
+    auditPlan,
+    shellCloseout,
+    guard,
+    shellResult,
+    knownLayerSlots,
+    inventorySummary: {
+      passive: true,
+      slotCount: knownLayerSlots.length,
+      expectedDormantOrAbsentByDefault: true,
+      startupRemainsUnwired: true
+    },
+    missingStateObjects: knownLayerSlots.map((slot) => slot.key),
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    safety: {
+      defaultSafe: true,
+      noRendererInitializerCalled: true,
+      noRegistryInitializerCalled: true,
+      noLayerInitializerCalled: true,
+      noLayerStateObjectCreated: true,
+      noLayerCreated: true,
+      noLayerInitialized: true,
+      noLayerAttached: true,
+      noLayerDrawn: true,
+      noLayerVisible: true
+    },
+    recommendation: "Keep visual layer inventory reporting passive and follow with a dedicated safety review before any state work begins.",
+    nextPhase: "phase-119-visual-layer-state-inventory-safety-review-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
