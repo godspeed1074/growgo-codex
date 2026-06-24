@@ -8025,7 +8025,7 @@ function canRunCustom25DLandmarkVisibleTinyManualTest(options = {}) {
     allowed: blockedReasons.length === 0,
     blockedReasons,
     requiredOptions,
-    phase: 52,
+    phase: 58,
     manualOnly: true,
     defaultOff: true
   };
@@ -8039,8 +8039,12 @@ function runCustom25DLandmarkVisibleTinyManualTest(options = {}) {
       ran: false,
       blocked: true,
       blockedReasons: safety.blockedReasons,
+      requiredOptions: safety.requiredOptions,
       markersCreated: 0,
-      phase: 52,
+      markerLimit: 3,
+      fakeInternalOnly: true,
+      cleanupCommand: "clearCustom25DLandmarkVisibleTinyManualTest()",
+      phase: 58,
       manualOnly: true,
       defaultOff: true
     };
@@ -8124,11 +8128,23 @@ function runCustom25DLandmarkVisibleTinyManualTest(options = {}) {
     ok: true,
     ran: true,
     blocked: false,
-    blockedReasons: [],
     markersCreated: fakeEntries.length,
-    phase: 52,
+    markerLimit: 3,
+    fakeInternalOnly: true,
+    cleanupCommand: "clearCustom25DLandmarkVisibleTinyManualTest()",
+    phase: 58,
     manualOnly: true,
-    defaultOff: true
+    defaultOff: true,
+    safetySummary: {
+      noGameplay: true,
+      noRewards: true,
+      noCollections: true,
+      noBackend: true,
+      normalBluePinsUnaffected: true,
+      playerMarkerUnaffected: true,
+      captureRadiusUnaffected: true,
+      osmRemainsVisible: true
+    }
   };
 }
 
@@ -8148,7 +8164,9 @@ function clearCustom25DLandmarkVisibleTinyManualTest() {
     ok: true,
     cleared: Boolean(currentLayer),
     markersRemoved,
-    phase: 52
+    phase: 58,
+    manualOnly: true,
+    defaultOff: true
   };
 }
 
