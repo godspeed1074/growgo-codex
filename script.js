@@ -11599,6 +11599,82 @@ function getCustom25DVisualLayerInitializationResultContract(options = {}) {
   };
 }
 
+function canInitializeCustom25DVisualLayers(options = {}) {
+  const checks = {
+    custom25DMapEnabled: ENABLE_CUSTOM_25D_MAP === true,
+    manual: options.manual === true,
+    developerIntent: options.developerIntent === true,
+    allowVisualLayerInitialization: options.allowVisualLayerInitialization === true,
+    hasRendererShell: options.hasRendererShell === true,
+    hasRendererContainer: options.hasRendererContainer === true,
+    hasLayerHost: options.hasLayerHost === true,
+    hasRenderLayerRegistry: options.hasRenderLayerRegistry === true,
+    hasInitializedRendererRegistry: options.hasInitializedRendererRegistry === true,
+    preserveGameplayOverlays: options.preserveGameplayOverlays === true,
+    preserveOSMBehavior: options.preserveOSMBehavior === true,
+    keepLayersInvisible: options.keepLayersInvisible === true,
+    preventStartupWiring: options.preventStartupWiring === true,
+    preventMapAttachment: options.preventMapAttachment === true
+  };
+
+  const missing = [];
+  if (!checks.custom25DMapEnabled) missing.push("custom25DMapEnabled");
+  if (!checks.manual) missing.push("manual");
+  if (!checks.developerIntent) missing.push("developerIntent");
+  if (!checks.allowVisualLayerInitialization) missing.push("allowVisualLayerInitialization");
+  if (!checks.hasRendererShell) missing.push("hasRendererShell");
+  if (!checks.hasRendererContainer) missing.push("hasRendererContainer");
+  if (!checks.hasLayerHost) missing.push("hasLayerHost");
+  if (!checks.hasRenderLayerRegistry) missing.push("hasRenderLayerRegistry");
+  if (!checks.hasInitializedRendererRegistry) missing.push("hasInitializedRendererRegistry");
+  if (!checks.preserveGameplayOverlays) missing.push("preserveGameplayOverlays");
+  if (!checks.preserveOSMBehavior) missing.push("preserveOSMBehavior");
+  if (!checks.keepLayersInvisible) missing.push("keepLayersInvisible");
+  if (!checks.preventStartupWiring) missing.push("preventStartupWiring");
+  if (!checks.preventMapAttachment) missing.push("preventMapAttachment");
+
+  const reasonMap = {
+    custom25DMapEnabled: "custom-25d-map-disabled",
+    manual: "manual-option-required",
+    developerIntent: "developer-intent-required",
+    allowVisualLayerInitialization: "visual-layer-initialization-not-allowed",
+    hasRendererShell: "renderer-shell-required",
+    hasRendererContainer: "renderer-container-required",
+    hasLayerHost: "layer-host-required",
+    hasRenderLayerRegistry: "render-layer-registry-required",
+    hasInitializedRendererRegistry: "initialized-renderer-registry-required",
+    preserveGameplayOverlays: "gameplay-overlay-preservation-required",
+    preserveOSMBehavior: "osm-behavior-preservation-required",
+    keepLayersInvisible: "keep-layers-invisible-required",
+    preventStartupWiring: "prevent-startup-wiring-required",
+    preventMapAttachment: "prevent-map-attachment-required"
+  };
+  const firstMissing = missing[0] || null;
+
+  return {
+    allowed: missing.length === 0,
+    reason: firstMissing ? reasonMap[firstMissing] : null,
+    phase: 110,
+    dormant: true,
+    manualOnly: true,
+    developerIntentRequired: true,
+    checks,
+    missing,
+    safety: {
+      mutatesState: false,
+      startupWired: false,
+      rendererCreated: false,
+      registryCreated: false,
+      layersInitialized: false,
+      visibleGraphicsCreated: false,
+      mapAttached: false,
+      dataLoaded: false,
+      gameplayChanged: false
+    },
+    nextPhase: "phase-111-visual-layer-initialization-shell-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
