@@ -6670,6 +6670,102 @@ function getCustom25DVisualRendererShellReadiness() {
   };
 }
 
+function getCustom25DVisualRendererContainerState() {
+  return {
+    ok: true,
+    phase: 72,
+    name: "Custom 2.5D visual renderer invisible container",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    containerCreated: false,
+    containerVisible: false,
+    layersCreated: false,
+    isRendering: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canCreateCustom25DVisualRendererContainer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowVisualRendererContainer !== true) {
+    blockedReasons.push("options.allowVisualRendererContainer must be true");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 72,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function createCustom25DVisualRendererContainer(options = {}) {
+  const guard = canCreateCustom25DVisualRendererContainer(options);
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      created: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 72,
+      dormant: true,
+      defaultVisualChange: false,
+      containerState: getCustom25DVisualRendererContainerState()
+    };
+  }
+
+  return {
+    ok: true,
+    created: false,
+    blocked: false,
+    phase: 72,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Invisible renderer container remains guarded and inert in this phase.",
+    containerState: {
+      ...getCustom25DVisualRendererContainerState(),
+      lastReason: "guarded-invisible-container"
+    }
+  };
+}
+
+function clearCustom25DVisualRendererContainer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 72,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual renderer container exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualRendererContainerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 72,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    readyForFutureInvisibleLayerHost: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
