@@ -8606,6 +8606,165 @@ function getCustom25DVisualBuildingRoofLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualLabelLayerState() {
+  return {
+    ok: true,
+    phase: 86,
+    name: "Custom 2.5D visual renderer label layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    requiresRoadHighlightLayer: true,
+    requiresBuildingRoofLayer: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    preservesOSMLabels: true,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualLabelLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowLabelLayer !== true) {
+    blockedReasons.push("options.allowLabelLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+  if (options.hasRoadHighlightLayer !== true) {
+    blockedReasons.push("A valid guarded road highlight layer is required");
+  }
+  if (options.hasBuildingRoofLayer !== true) {
+    blockedReasons.push("A valid guarded building roof layer is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 86,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualLabelLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualLabelLayer(options);
+  const labelLayerConfig = {
+    key: "label",
+    name: "Label",
+    order: 11,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "readable street and place label foundation for future polished 2.5D map presentation",
+    targetStyle: "clear mobile-friendly labels, soft outline or shadow support, readable over toy-like roads, grass, water, parks, and buildings",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealStreetLabels: false,
+    usesRealPlaceLabels: false,
+    dependsOnRoadHighlightLayer: true,
+    dependsOnBuildingRoofLayer: true,
+    sitsAboveRoadShadowLayer: true,
+    sitsAboveRoadBaseLayer: true,
+    sitsAboveRoadHighlightLayer: true,
+    sitsAboveBuildingShadowLayer: true,
+    sitsAboveBuildingBaseLayer: true,
+    sitsAboveBuildingRoofLayer: true,
+    sitsBelowPinLayer: true,
+    preservesOSMLabels: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 86,
+      dormant: true,
+      defaultVisualChange: false,
+      labelLayerState: getCustom25DVisualLabelLayerState(),
+      labelLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 86,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Label layer remains guarded, data-only, and inert in this phase.",
+    labelLayerState: {
+      ...getCustom25DVisualLabelLayerState(),
+      lastReason: "guarded-invisible-label-layer"
+    },
+    labelLayerConfig
+  };
+}
+
+function clearCustom25DVisualLabelLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 86,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual label layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualLabelLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 86,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    hasGuardedParkLayerImplementation: true,
+    hasGuardedRoadShadowLayerImplementation: true,
+    hasGuardedRoadBaseLayerImplementation: true,
+    hasGuardedRoadHighlightLayerImplementation: true,
+    hasGuardedBuildingShadowLayerImplementation: true,
+    hasGuardedBuildingBaseLayerImplementation: true,
+    hasGuardedBuildingRoofLayerImplementation: true,
+    hasGuardedLabelLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    preservesOSMLabelsByDefault: true,
+    readyForFutureLabelVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
