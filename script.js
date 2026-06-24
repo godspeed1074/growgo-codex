@@ -9737,6 +9737,156 @@ function canAssembleCustom25DVisualRenderer(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyResultContract() {
+  const safeCall = (fn, fallbackReason) => {
+    if (typeof fn === "function") {
+      try {
+        return fn();
+      } catch (_error) {
+        return { ok: false, missing: false, errored: true, reason: fallbackReason };
+      }
+    }
+    return { ok: false, missing: true, reason: fallbackReason };
+  };
+
+  return {
+    ok: true,
+    phase: 94,
+    name: "Custom 2.5D visual manual renderer assembly result contract",
+    dormant: true,
+    contractOnly: true,
+    planningOnly: true,
+    guarded: true,
+    manualOnly: true,
+    developerOnly: true,
+    invisibleByDefault: true,
+    nonRendering: true,
+    dataOnly: true,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    assemblesRenderer: false,
+    initializesLayers: false,
+    createsRendererShell: false,
+    createsRendererContainer: false,
+    createsLayerHost: false,
+    initializesRenderLayerRegistry: false,
+    createsVisibleMapLayers: false,
+    drawsContent: false,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    usesRealPOIData: false,
+    usesDinosaurSiteData: false,
+    usesFilmLocationData: false,
+    usesRealRoadGeometry: false,
+    usesRealBuildingGeometry: false,
+    readyForFutureManualAssemblyResultShape: true,
+    futureHelperName: "assembleCustom25DVisualRenderer",
+    futureHelperPurpose:
+      "Return a safe manual renderer assembly result without changing default app behavior or bypassing the guard evaluator.",
+    futureResultShape: {
+      ok: "boolean",
+      phase: 94,
+      action: "manual-renderer-assembly",
+      attempted: "boolean",
+      allowed: "boolean",
+      blocked: "boolean",
+      reason: "string|null",
+      reasons: "array",
+      assembled: "boolean",
+      rendererShellReady: "boolean",
+      rendererContainerReady: "boolean",
+      layerHostReady: "boolean",
+      renderLayerRegistryReady: "boolean",
+      preparedLayerStackReady: "boolean",
+      visualBehaviorChanged: "boolean",
+      startupWiringAdded: "boolean",
+      mutatesState: "boolean",
+      drawsContent: "boolean",
+      createsVisibleMapLayers: "boolean",
+      preservesNormalBluePins: "boolean",
+      preservesPlayerMarker: "boolean",
+      preservesCaptureRadius: "boolean",
+      preservesOSMBehavior: "boolean",
+      preservesOSMLabels: "boolean"
+    },
+    futureBlockedResultExample: {
+      ok: true,
+      phase: 94,
+      action: "manual-renderer-assembly",
+      attempted: true,
+      allowed: false,
+      blocked: true,
+      reason: "custom-25d-map-disabled",
+      reasons: ["custom-25d-map-disabled"],
+      assembled: false,
+      visualBehaviorChanged: false,
+      startupWiringAdded: false,
+      mutatesState: false,
+      drawsContent: false,
+      createsVisibleMapLayers: false,
+      preservesNormalBluePins: true,
+      preservesPlayerMarker: true,
+      preservesCaptureRadius: true,
+      preservesOSMBehavior: true,
+      preservesOSMLabels: true
+    },
+    futureAllowedDryResultExample: {
+      ok: true,
+      phase: 94,
+      action: "manual-renderer-assembly",
+      attempted: true,
+      allowed: true,
+      blocked: false,
+      reason: null,
+      reasons: [],
+      assembled: false,
+      visualBehaviorChanged: false,
+      startupWiringAdded: false,
+      mutatesState: false,
+      drawsContent: false,
+      createsVisibleMapLayers: false,
+      preservesNormalBluePins: true,
+      preservesPlayerMarker: true,
+      preservesCaptureRadius: true,
+      preservesOSMBehavior: true,
+      preservesOSMLabels: true
+    },
+    futureAssemblyResultMustNot: [
+      "must not report assembled true unless a future explicit assembly phase actually assembles",
+      "must not hide guard failures",
+      "must not treat missing options as allowed",
+      "must not auto-enable ENABLE_CUSTOM_25D_MAP",
+      "must not imply startup wiring exists",
+      "must not imply visible rendering exists",
+      "must not imply real POI, road, or building data is loaded",
+      "must not imply pins, player marker, capture radius, OSM labels, or OSM behavior changed"
+    ],
+    passiveReports: {
+      manualAssemblyGuardContract: safeCall(
+        typeof getCustom25DVisualManualRendererAssemblyGuardContract === "function"
+          ? getCustom25DVisualManualRendererAssemblyGuardContract
+          : null,
+        "Manual renderer assembly guard contract helper is unavailable."
+      ),
+      manualAssemblyGuardEvaluatorPlan: safeCall(
+        typeof getCustom25DVisualManualRendererAssemblyGuardEvaluatorPlan === "function"
+          ? getCustom25DVisualManualRendererAssemblyGuardEvaluatorPlan
+          : null,
+        "Manual renderer assembly guard evaluator plan helper is unavailable."
+      ),
+      canAssembleGuard: safeCall(
+        typeof canAssembleCustom25DVisualRenderer === "function"
+          ? () => canAssembleCustom25DVisualRenderer({})
+          : null,
+        "Manual renderer assembly guard evaluator helper is unavailable."
+      )
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
