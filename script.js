@@ -8311,6 +8311,150 @@ function getCustom25DVisualBuildingShadowLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualBuildingBaseLayerState() {
+  return {
+    ok: true,
+    phase: 84,
+    name: "Custom 2.5D visual renderer building base layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    requiresBuildingShadowLayer: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualBuildingBaseLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowBuildingBaseLayer !== true) {
+    blockedReasons.push("options.allowBuildingBaseLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+  if (options.hasBuildingShadowLayer !== true) {
+    blockedReasons.push("A valid guarded building shadow layer is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 84,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualBuildingBaseLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualBuildingBaseLayer(options);
+  const buildingBaseLayerConfig = {
+    key: "buildingBase",
+    name: "Building Base",
+    order: 9,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "simple toy-like building body foundation for future 2.5D map polish",
+    targetStyle: "soft rounded building footprints, warm pastel surfaces, simple toy-block shapes, mobile-friendly Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealBuildingGeometry: false,
+    dependsOnBuildingShadowLayer: true,
+    sitsAboveBuildingShadowLayer: true,
+    sitsBelowBuildingRoofLayer: true,
+    sitsBelowLabelLayer: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 84,
+      dormant: true,
+      defaultVisualChange: false,
+      buildingBaseLayerState: getCustom25DVisualBuildingBaseLayerState(),
+      buildingBaseLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 84,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Building base layer remains guarded, data-only, and inert in this phase.",
+    buildingBaseLayerState: {
+      ...getCustom25DVisualBuildingBaseLayerState(),
+      lastReason: "guarded-invisible-building-base-layer"
+    },
+    buildingBaseLayerConfig
+  };
+}
+
+function clearCustom25DVisualBuildingBaseLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 84,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual building base layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualBuildingBaseLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 84,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    hasGuardedParkLayerImplementation: true,
+    hasGuardedRoadShadowLayerImplementation: true,
+    hasGuardedRoadBaseLayerImplementation: true,
+    hasGuardedRoadHighlightLayerImplementation: true,
+    hasGuardedBuildingShadowLayerImplementation: true,
+    hasGuardedBuildingBaseLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureBuildingBaseVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
