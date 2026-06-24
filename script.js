@@ -8513,6 +8513,106 @@ function getCustom25DLandmarkVisibleTinyManualTestObservationAudit() {
   };
 }
 
+function getCustom25DLandmarkVisibleTinyManualTestFinalChecklist() {
+  return {
+    ok: true,
+    phase: 63,
+    name: "Manual-only landmark visible test final checklist",
+    dormant: true,
+    purpose:
+      "Summarize the final passive checklist for deciding whether the guarded manual-only landmark visible test path is complete.",
+    manualRunCommand:
+      'runCustom25DLandmarkVisibleTinyManualTest({ manual: true, developerIntent: true, allowVisibleTestMarkers: true, limit: 3 })',
+    cleanupCommand: "clearCustom25DLandmarkVisibleTinyManualTest()",
+    preRunChecks: [
+      "Confirm all four safety flags remain false.",
+      "Confirm the app is in its normal default state with no visible test markers.",
+      "Confirm no sample or dinosaur site data is loaded by default.",
+      "Confirm no extra UI or event listeners were added for the manual test path."
+    ],
+    duringRunChecks: [
+      "Manual command creates no more than 3 fake/internal markers.",
+      "Markers use the Phase 56 visible marker style.",
+      "Labels use the Phase 57 label behavior and text.",
+      "Result object behavior from Phase 58 remains unchanged.",
+      "Spacing uses the Phase 59 centered triangle layout around the current map center.",
+      "No auto-pan, auto-fly, or auto-zoom occurs.",
+      "No gameplay, backend, rewards, collections, or map systems are affected."
+    ],
+    cleanupChecks: [
+      "Cleanup removes only the manual test markers and their attached labels.",
+      "Cleanup does not affect normal blue pins, player marker, capture radius, or other map content.",
+      "Cleanup does not leave test UI or extra listeners behind."
+    ],
+    defaultLoadChecks: [
+      "Default app load creates no visible test markers.",
+      "Default app load creates no new UI.",
+      "Default app load creates no new event listeners.",
+      "Default app load does not load sample data.",
+      "Default app load does not load dinosaur site data."
+    ],
+    expectedMarkerLimit: 3,
+    expectedMarkerLayout:
+      "Centered triangle spacing around the current map center from Phase 59.",
+    expectedMarkerStyle:
+      "Phase 56 small gold/orange landmark-style manual test markers remain unchanged.",
+    expectedLabels:
+      'Phase 57 labels remain attached and communicate "Internal Landmark Test" and "No gameplay".',
+    expectedResultObject:
+      "Phase 58 result object behavior remains unchanged and guarded/manual-only.",
+    expectedNoMapMovement: {
+      autoPan: false,
+      autoFly: false,
+      autoZoom: false
+    },
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    completionCriteria: [
+      "All helpers exist exactly once.",
+      "Syntax check passes.",
+      "Flags remain false.",
+      "Default app behavior is unchanged.",
+      "Manual test remains explicitly console-only.",
+      "Manual test remains fake/internal only.",
+      "Cleanup is safe and narrow.",
+      "No visible debug UI has been added.",
+      "No data loads by default."
+    ],
+    doNotProceedIf: [
+      "Any marker appears without the manual console command.",
+      "Any flag is enabled by default.",
+      "More than 3 markers can appear in this manual test.",
+      "Map movement happens automatically.",
+      "Cleanup affects anything beyond manual test markers and labels.",
+      "Sample or dinosaur data loads by default.",
+      "Normal gameplay or map systems change."
+    ],
+    notes: [
+      "Do not change marker style from Phase 56.",
+      "Do not change labels from Phase 57.",
+      "Do not change result objects from Phase 58.",
+      "Do not change spacing from Phase 59.",
+      "Do not change safety helper from Phase 60.",
+      "Do not change console guide audit from Phase 61.",
+      "Do not change observation audit from Phase 62."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
