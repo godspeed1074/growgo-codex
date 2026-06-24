@@ -6587,6 +6587,89 @@ function getCustom25DVisualRendererContainerReadiness() {
   };
 }
 
+function getCustom25DVisualRendererShellState() {
+  return {
+    ok: true,
+    phase: 71,
+    name: "Custom 2.5D visual renderer shell",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    containerCreated: false,
+    layersCreated: false,
+    isRendering: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualRendererShell(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowVisualRendererShell !== true) {
+    blockedReasons.push("options.allowVisualRendererShell must be true");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 71,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualRendererShell(options = {}) {
+  const guard = canInitializeCustom25DVisualRendererShell(options);
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 71,
+      dormant: true,
+      defaultVisualChange: false,
+      shellState: getCustom25DVisualRendererShellState()
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 71,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Renderer shell remains guarded and inactive in this phase.",
+    shellState: {
+      ...getCustom25DVisualRendererShellState(),
+      lastReason: "guarded-inactive-shell"
+    }
+  };
+}
+
+function getCustom25DVisualRendererShellReadiness() {
+  return {
+    ok: true,
+    phase: 71,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    readyForFutureGuardedContainerCreation: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
