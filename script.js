@@ -7362,6 +7362,136 @@ function getCustom25DVisualWaterLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualBeachLayerState() {
+  return {
+    ok: true,
+    phase: 77,
+    name: "Custom 2.5D visual renderer beach layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualBeachLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowBeachLayer !== true) {
+    blockedReasons.push("options.allowBeachLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 77,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualBeachLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualBeachLayer(options);
+  const beachLayerConfig = {
+    key: "beach",
+    name: "Beach",
+    order: 2,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "soft sand and shoreline foundation for future 2.5D map polish",
+    targetStyle: "warm sand tones, rounded shoreline shapes, mobile-friendly, toy-like, Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealBeachGeometry: false,
+    dependsOnWaterLayer: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 77,
+      dormant: true,
+      defaultVisualChange: false,
+      beachLayerState: getCustom25DVisualBeachLayerState(),
+      beachLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 77,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Beach layer remains guarded, data-only, and inert in this phase.",
+    beachLayerState: {
+      ...getCustom25DVisualBeachLayerState(),
+      lastReason: "guarded-invisible-beach-layer"
+    },
+    beachLayerConfig
+  };
+}
+
+function clearCustom25DVisualBeachLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 77,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual beach layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualBeachLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 77,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureBeachVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
