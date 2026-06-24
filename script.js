@@ -11986,6 +11986,85 @@ function getCustom25DVisualLayerInitializationCloseoutReport(options = {}) {
   };
 }
 
+function initializeCustom25DVisualLayers(options = {}) {
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable",
+          phase: 114,
+          dormant: true,
+          manualOnly: true,
+          developerIntentRequired: true,
+          checks: {},
+          missing: ["guard"],
+          safety: {
+            mutatesState: false,
+            startupWired: false,
+            rendererCreated: false,
+            registryCreated: false,
+            layersInitialized: false,
+            visibleGraphicsCreated: false,
+            mapAttached: false,
+            dataLoaded: false,
+            gameplayChanged: false
+          },
+          nextPhase: "phase-115-visual-layer-initialization-verification-report-only"
+        };
+  const contract =
+    typeof getCustom25DVisualLayerInitializationResultContract === "function"
+      ? getCustom25DVisualLayerInitializationResultContract({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization result contract helper is unavailable."
+        };
+  const closeout =
+    typeof getCustom25DVisualLayerInitializationCloseoutReport === "function"
+      ? getCustom25DVisualLayerInitializationCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization closeout report helper is unavailable."
+        };
+  const blockedLayers = Array.isArray(guard.missing) ? guard.missing.slice() : [];
+  const allowed = guard.allowed === true;
+
+  return {
+    ok: true,
+    allowed,
+    reason: allowed ? "implementation-shell-only" : guard.reason || "visual-layer-initialization-blocked",
+    phase: 114,
+    name: "custom-25d-visual-layer-initialization-implementation-shell",
+    dormant: true,
+    implementationShellOnly: true,
+    initialized: false,
+    mutatesState: false,
+    createsVisibleGraphics: false,
+    attachesToMap: false,
+    guard,
+    contract,
+    closeout,
+    affectedLayers: [],
+    skippedLayers: [],
+    blockedLayers,
+    safety: {
+      noRendererInitializerCalled: true,
+      noRegistryInitializerCalled: true,
+      noLayerInitializerCalled: true,
+      noLayerCreated: true,
+      noLayerInitialized: true,
+      noLayerAttached: true,
+      noVisibleGraphics: true,
+      noStartupWiring: true,
+      noDataLoading: true,
+      noGameplayChanges: true
+    },
+    nextPhase: "phase-115-visual-layer-initialization-verification-report-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
