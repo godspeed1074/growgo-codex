@@ -9296,6 +9296,138 @@ function getCustom25DVisualManualRendererAssemblyReadinessPlan() {
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyDryRunPlan() {
+  const safeCall = (fn, fallbackReason) => {
+    if (typeof fn === "function") {
+      try {
+        return fn();
+      } catch (_error) {
+        return { ok: false, missing: false, errored: true, reason: fallbackReason };
+      }
+    }
+    return { ok: false, missing: true, reason: fallbackReason };
+  };
+
+  return {
+    ok: true,
+    phase: 90,
+    name: "Custom 2.5D visual manual renderer assembly dry-run plan",
+    dormant: true,
+    planningOnly: true,
+    dryRunOnly: true,
+    guarded: true,
+    manualOnly: true,
+    developerOnly: true,
+    invisibleByDefault: true,
+    nonRendering: true,
+    dataOnly: true,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    assemblesRenderer: false,
+    initializesLayers: false,
+    createsRendererShell: false,
+    createsRendererContainer: false,
+    createsLayerHost: false,
+    initializesRenderLayerRegistry: false,
+    createsVisibleMapLayers: false,
+    drawsContent: false,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    usesRealPOIData: false,
+    usesDinosaurSiteData: false,
+    usesFilmLocationData: false,
+    usesRealRoadGeometry: false,
+    usesRealBuildingGeometry: false,
+    requiresEnableCustom25DMap: true,
+    requiresManualOption: true,
+    requiresDeveloperIntent: true,
+    requiresRendererShellReadiness: true,
+    requiresRendererContainerReadiness: true,
+    requiresLayerHostReadiness: true,
+    requiresRenderLayerRegistryReadiness: true,
+    requiresPreparedLayerStackReadiness: true,
+    readyForFutureManualDryRunPhase: true,
+    dryRunChecklist: [
+      "Confirm ENABLE_CUSTOM_25D_MAP is intentionally enabled only for a manual/developer test.",
+      "Confirm manual option is explicitly true.",
+      "Confirm developerIntent option is explicitly true.",
+      "Confirm renderer shell readiness before attempting any future creation.",
+      "Confirm renderer container readiness before attempting any future creation.",
+      "Confirm layer host readiness before attempting any future creation.",
+      "Confirm render layer registry readiness before attempting any future initialization.",
+      "Confirm full visual layer stack readiness summary is available.",
+      "Confirm all layer configs remain invisible, dormant, and non-rendering.",
+      "Confirm no startup wiring exists.",
+      "Confirm no automatic initialization exists.",
+      "Confirm normal blue pins remain above the future visual stack.",
+      "Confirm player marker remains above the future visual stack.",
+      "Confirm capture radius remains above the future visual stack.",
+      "Confirm OSM labels and OSM behavior remain preserved."
+    ],
+    dryRunSequence: [
+      "inspectRendererShellReadiness",
+      "inspectRendererContainerReadiness",
+      "inspectLayerHostReadiness",
+      "inspectRenderLayerRegistryReadiness",
+      "inspectVisualLayerStackReadiness",
+      "inspectManualAssemblyReadinessPlan",
+      "confirmNoInitialization",
+      "confirmNoRendering",
+      "confirmGameplayOverlayPreservation"
+    ],
+    blockedByDefaultReasons: [
+      "ENABLE_CUSTOM_25D_MAP is false by default.",
+      "No startup wiring exists.",
+      "No automatic initialization exists.",
+      "No renderer assembly exists.",
+      "No visible drawing layers are created.",
+      "No real geometry/data loading exists.",
+      "Manual/developer intent is required for any future dry run."
+    ],
+    passiveReports: {
+      rendererShellReadiness: safeCall(
+        typeof getCustom25DVisualRendererShellReadiness === "function"
+          ? getCustom25DVisualRendererShellReadiness
+          : null,
+        "Renderer shell readiness helper is unavailable."
+      ),
+      rendererContainerReadiness: safeCall(
+        typeof getCustom25DVisualRendererContainerImplementationReadiness === "function"
+          ? getCustom25DVisualRendererContainerImplementationReadiness
+          : null,
+        "Renderer container readiness helper is unavailable."
+      ),
+      layerHostReadiness: safeCall(
+        typeof getCustom25DVisualLayerHostImplementationReadiness === "function"
+          ? getCustom25DVisualLayerHostImplementationReadiness
+          : null,
+        "Layer host readiness helper is unavailable."
+      ),
+      renderLayerRegistryReadiness: safeCall(
+        typeof getCustom25DVisualRenderLayerRegistryImplementationReadiness === "function"
+          ? getCustom25DVisualRenderLayerRegistryImplementationReadiness
+          : null,
+        "Render layer registry readiness helper is unavailable."
+      ),
+      visualLayerStackReadiness: safeCall(
+        typeof getCustom25DVisualLayerStackReadinessSummary === "function"
+          ? getCustom25DVisualLayerStackReadinessSummary
+          : null,
+        "Visual layer stack readiness summary helper is unavailable."
+      ),
+      manualAssemblyReadinessPlan: safeCall(
+        typeof getCustom25DVisualManualRendererAssemblyReadinessPlan === "function"
+          ? getCustom25DVisualManualRendererAssemblyReadinessPlan
+          : null,
+        "Manual renderer assembly readiness helper is unavailable."
+      )
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
