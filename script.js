@@ -11068,6 +11068,130 @@ function getCustom25DVisualManualRendererRegistryResultContract() {
   };
 }
 
+function canInitializeCustom25DVisualManualRendererRegistry(options = {}) {
+  const reasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) reasons.push("custom-25d-map-disabled");
+  if (options.manual !== true) reasons.push("manual-option-required");
+  if (options.developerIntent !== true) reasons.push("developer-intent-required");
+  if (options.allowRegistryInitialization !== true) {
+    reasons.push("registry-initialization-not-allowed");
+  }
+  if (options.structuralAssemblyOnlyComplete !== true) {
+    reasons.push("structural-assembly-closeout-required");
+  }
+  if (options.preserveGameplayOverlays !== true) {
+    reasons.push("gameplay-overlay-preservation-required");
+  }
+  if (options.preserveOSMBehavior !== true) {
+    reasons.push("osm-behavior-preservation-required");
+  }
+
+  return {
+    ok: true,
+    phase: 105,
+    guard: "manual-renderer-registry-initialization",
+    allowed: reasons.length === 0,
+    blocked: reasons.length > 0,
+    reason: reasons.length > 0 ? reasons[0] : null,
+    reasons,
+    dormant: true,
+    guarded: true,
+    manualOnly: true,
+    developerOnly: true,
+    mutatesState: false,
+    initializesRegistry: false,
+    initializesLayers: false,
+    drawsContent: false,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true
+  };
+}
+
+function initializeCustom25DVisualManualRendererRegistry(options = {}) {
+  const guard = canInitializeCustom25DVisualManualRendererRegistry(options);
+  const readinessPlan =
+    typeof getCustom25DVisualManualRendererRegistryReadinessPlan === "function"
+      ? getCustom25DVisualManualRendererRegistryReadinessPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry readiness plan helper is unavailable."
+        };
+  const resultContract =
+    typeof getCustom25DVisualManualRendererRegistryResultContract === "function"
+      ? getCustom25DVisualManualRendererRegistryResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry result contract helper is unavailable."
+        };
+
+  if (!guard.allowed) {
+    return {
+      ok: true,
+      attempted: true,
+      allowed: false,
+      blocked: true,
+      phase: 105,
+      action: "manual-renderer-registry-initialization",
+      registryInitialized: false,
+      registryCreated: false,
+      layerCount: 0,
+      layersInitialized: false,
+      startupWired: false,
+      visibleGraphicsCreated: false,
+      dataLoaded: false,
+      gameplayChanged: false,
+      reason: guard.reason,
+      reasons: guard.reasons,
+      safetyNotes: [
+        "Registry initialization remains blocked by default.",
+        "No registry, layers, drawing, startup wiring, data loading, or gameplay changes occurred."
+      ],
+      passiveReports: {
+        guard,
+        readinessPlan,
+        resultContract
+      }
+    };
+  }
+
+  return {
+    ok: true,
+    attempted: true,
+    allowed: true,
+    blocked: false,
+    phase: 105,
+    action: "manual-renderer-registry-initialization",
+    registryInitialized: false,
+    registryCreated: false,
+    layerCount: 0,
+    layersInitialized: false,
+    startupWired: false,
+    visibleGraphicsCreated: false,
+    dataLoaded: false,
+    gameplayChanged: false,
+    reason: "registry-helper-shell-only",
+    reasons: ["registry-helper-shell-only"],
+    safetyNotes: [
+      "Guard passed, but this phase remains shell-only.",
+      "No registry was created or initialized.",
+      "No layers, drawing, startup wiring, data loading, or gameplay changes occurred."
+    ],
+    passiveReports: {
+      guard,
+      readinessPlan,
+      resultContract
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
