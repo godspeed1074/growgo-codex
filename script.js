@@ -10041,6 +10041,98 @@ function getCustom25DVisualManualRendererAssemblyReadinessReport(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyDryRunReport(options = {}) {
+  const guard = canAssembleCustom25DVisualRenderer(options);
+  const passiveResultContract =
+    typeof getCustom25DVisualManualRendererAssemblyResultContract === "function"
+      ? getCustom25DVisualManualRendererAssemblyResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly result contract helper is unavailable."
+        };
+  const shellResult =
+    typeof assembleCustom25DVisualRendererManual === "function"
+      ? assembleCustom25DVisualRendererManual(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly shell helper is unavailable."
+        };
+  const readinessReport =
+    typeof getCustom25DVisualManualRendererAssemblyReadinessReport === "function"
+      ? getCustom25DVisualManualRendererAssemblyReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly readiness report helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 97,
+    name: "custom-25d-visual-manual-renderer-assembly-dry-run-report",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    dryRun: true,
+    guard: {
+      allowed: guard.allowed,
+      reason: guard.reason,
+      reasons: guard.reasons,
+      checks: {
+        custom25DMapEnabled: ENABLE_CUSTOM_25D_MAP === true,
+        manual: options.manual === true,
+        developerIntent: options.developerIntent === true,
+        allowRendererAssembly: options.allowRendererAssembly === true,
+        hasRendererShell: options.hasRendererShell === true,
+        hasRendererContainer: options.hasRendererContainer === true,
+        hasLayerHost: options.hasLayerHost === true,
+        hasRenderLayerRegistry: options.hasRenderLayerRegistry === true,
+        hasPreparedLayerStack: options.hasPreparedLayerStack === true,
+        preserveGameplayOverlays: options.preserveGameplayOverlays === true,
+        preserveOSMBehavior: options.preserveOSMBehavior === true
+      }
+    },
+    contractAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyResultContract === "function",
+    readinessReportAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyReadinessReport === "function",
+    shellResult,
+    wouldAssemblyBeAllowed: guard.allowed === true,
+    assembled: false,
+    rendererCreated: false,
+    shellCreated: false,
+    containerCreated: false,
+    layerHostCreated: false,
+    registryInitialized: false,
+    layersInitialized: false,
+    startupWired: false,
+    visibleGraphicsCreated: false,
+    blockedByDefault: guard.allowed !== true,
+    confirmedNonActions: [
+      "does not assemble renderer",
+      "does not create renderer shell/container/host",
+      "does not initialize render layer registry or layers",
+      "does not draw content or create visible map layers",
+      "does not wire startup",
+      "does not mutate state",
+      "does not add UI or event listeners"
+    ],
+    safetyNotes: [
+      "Dry run only; assembled always remains false in this phase.",
+      "Shell helper is read-only in practice and does not perform real assembly.",
+      "Normal blue pins, player marker, capture radius, OSM labels, and OSM behavior remain preserved."
+    ],
+    nextRecommendedPhase: "phase-98-manual-renderer-assembly-shell-contract-alignment",
+    passiveReports: {
+      resultContract: passiveResultContract,
+      readinessReport
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
