@@ -11351,6 +11351,121 @@ function getCustom25DVisualManualRendererRegistrySafetyReview(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererRegistryInitializationCloseoutReport(options = {}) {
+  const requestedGuard =
+    typeof canInitializeCustom25DVisualManualRendererRegistry === "function"
+      ? canInitializeCustom25DVisualManualRendererRegistry(options)
+      : {
+          ok: false,
+          allowed: false,
+          blocked: true,
+          reason: "registry-guard-unavailable",
+          reasons: ["registry-guard-unavailable"]
+        };
+  const safeBlockedOptions = {};
+  const readinessPlan =
+    typeof getCustom25DVisualManualRendererRegistryReadinessPlan === "function"
+      ? getCustom25DVisualManualRendererRegistryReadinessPlan(safeBlockedOptions)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry readiness plan helper is unavailable."
+        };
+  const resultContract =
+    typeof getCustom25DVisualManualRendererRegistryResultContract === "function"
+      ? getCustom25DVisualManualRendererRegistryResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry result contract helper is unavailable."
+        };
+  const dryRunReport =
+    typeof getCustom25DVisualManualRendererRegistryDryRunReport === "function"
+      ? getCustom25DVisualManualRendererRegistryDryRunReport(safeBlockedOptions)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry dry-run report helper is unavailable."
+        };
+  const safetyReview =
+    typeof getCustom25DVisualManualRendererRegistrySafetyReview === "function"
+      ? getCustom25DVisualManualRendererRegistrySafetyReview(safeBlockedOptions)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry safety review helper is unavailable."
+        };
+  const defaultRegistryResult =
+    typeof initializeCustom25DVisualManualRendererRegistry === "function"
+      ? initializeCustom25DVisualManualRendererRegistry(safeBlockedOptions)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry initialization helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 108,
+    name: "custom-25d-visual-manual-renderer-registry-initialization-closeout-report",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    registryGuardExists:
+      typeof canInitializeCustom25DVisualManualRendererRegistry === "function",
+    registryReadinessPlanExists:
+      typeof getCustom25DVisualManualRendererRegistryReadinessPlan === "function",
+    registryResultContractExists:
+      typeof getCustom25DVisualManualRendererRegistryResultContract === "function",
+    registryHelperExists:
+      typeof initializeCustom25DVisualManualRendererRegistry === "function",
+    registryDryRunExists:
+      typeof getCustom25DVisualManualRendererRegistryDryRunReport === "function",
+    registrySafetyReviewExists:
+      typeof getCustom25DVisualManualRendererRegistrySafetyReview === "function",
+    defaultRegistryInitRemainsBlocked:
+      defaultRegistryResult &&
+      defaultRegistryResult.allowed === false &&
+      defaultRegistryResult.blocked === true,
+    phase107ManualPathSummary: {
+      canInitializeOnlyInertRegistryWhenGuardPassed: true,
+      layerCountStatusKnown: true,
+      expectedLayerCountOnExplicitPath: 13,
+      visualLayersRemainUninitialized: true,
+      startupRemainsUnwired: true,
+      visibleGraphicsRemainAbsent: true
+    },
+    preservedSystems: {
+      dataLoaded: false,
+      gameplayChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      osmBehaviorChanged: false,
+      backendChanged: false,
+      rewardsChanged: false,
+      collectionsChanged: false
+    },
+    registryInitPhaseClosedOut: true,
+    nextRecommendedPhase: "phase-109-visual-layer-initialization-planning-contract-only",
+    safetyNotes: [
+      "This helper is closeout-only and does not pass guard-enabling options into registry initialization.",
+      "Any direct registry helper call in this phase uses empty options only, so the result remains blocked.",
+      "No registry, layers, startup wiring, visible graphics, data loading, or gameplay/map behavior changes are performed here."
+    ],
+    passiveReports: {
+      requestedGuard,
+      readinessPlan,
+      resultContract,
+      dryRunReport,
+      safetyReview,
+      defaultRegistryResult
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
