@@ -8075,15 +8075,24 @@ function runCustom25DLandmarkVisibleTinyManualTest(options = {}) {
 
   const testLayer = L.layerGroup();
   fakeEntries.forEach((entry) => {
-    L.circleMarker([entry.lat, entry.lng], {
-      radius: 7,
-      color: "#d08b1d",
-      weight: 2,
-      fillColor: "#fff0b3",
-      fillOpacity: 0.92,
-      opacity: 0.95,
+    const icon = L.divIcon({
+      className: "",
+      iconSize: [22, 28],
+      iconAnchor: [11, 26],
+      html: `
+        <div style="position:relative;width:22px;height:28px;filter:drop-shadow(0 2px 4px rgba(73,42,4,0.28));pointer-events:none;">
+          <div style="position:absolute;left:2px;top:0;width:18px;height:18px;border-radius:999px;background:linear-gradient(180deg,#f7cf72 0%,#e79b23 58%,#b86b12 100%);box-shadow:0 0 0 2px rgba(255,244,214,0.96),0 0 0 3px rgba(123,71,10,0.72),inset 0 1px 1px rgba(255,255,255,0.58);"></div>
+          <div style="position:absolute;left:6px;top:4px;width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 35% 35%,#fffdf3 0%,#fff0bf 55%,#f6ca67 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,0.68),0 0 0 1px rgba(150,94,22,0.32);"></div>
+          <div style="position:absolute;left:8px;top:15px;width:8px;height:8px;background:linear-gradient(180deg,#d98a1c 0%,#9b560f 100%);transform:rotate(45deg);border-radius:1px 1px 3px 1px;box-shadow:0 1px 1px rgba(92,48,8,0.18);"></div>
+        </div>
+      `,
+    });
+
+    L.marker([entry.lat, entry.lng], {
+      icon,
       pane: "markerPane",
-      interactive: false
+      interactive: false,
+      keyboard: false,
     }).addTo(testLayer);
   });
 
