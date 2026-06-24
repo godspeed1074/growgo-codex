@@ -8430,6 +8430,89 @@ function getCustom25DLandmarkVisibleTinyManualTestConsoleGuideAudit() {
   };
 }
 
+function getCustom25DLandmarkVisibleTinyManualTestObservationAudit() {
+  return {
+    ok: true,
+    phase: 62,
+    name: "Manual-only landmark visible test observation audit",
+    dormant: true,
+    purpose:
+      "Describe the passive visual observation checklist for the guarded manual-only landmark visible marker test path.",
+    manualRunCommand:
+      'runCustom25DLandmarkVisibleTinyManualTest({ manual: true, developerIntent: true, allowVisibleTestMarkers: true, limit: 3 })',
+    cleanupCommand: "clearCustom25DLandmarkVisibleTinyManualTest()",
+    expectedVisibleResult:
+      "Up to 3 fake/internal landmark visible test markers appear only after the explicit manual console command.",
+    expectedMarkerCount: 3,
+    expectedMarkerLayout:
+      "Centered triangle spacing around the current map center from Phase 59, visually less cramped than the earlier layout.",
+    expectedMarkerStyle:
+      "Small gold/orange landmark-style manual test markers from Phase 56 remain unchanged.",
+    expectedLabels:
+      'Phase 57 permanent labels remain attached and communicate "Internal Landmark Test" and "No gameplay".',
+    expectedResultObject:
+      "Phase 58 result object behavior remains unchanged and reports guarded/manual-only test details without changing app behavior.",
+    expectedCleanupResult:
+      "Cleanup removes only the manual test markers and their attached labels from the dedicated manual test layer.",
+    expectedNoDefaultBehavior: {
+      createsMarkersOnLoad: false,
+      createsUiOnLoad: false,
+      addsEventListenersOnLoad: false,
+      loadsSampleDataOnLoad: false,
+      loadsDinosaurSiteDataOnLoad: false
+    },
+    expectedNoMapMovement: {
+      autoPan: false,
+      autoFly: false,
+      autoZoom: false
+    },
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    passCriteria: [
+      "Nothing appears on normal/default app load.",
+      "The manual command creates no more than 3 fake/internal markers.",
+      "The marker layout is visibly less cramped than before Phase 59.",
+      "Labels remain attached to the test markers.",
+      "The result object is returned as expected.",
+      "Cleanup removes the manual markers and labels.",
+      "Normal gameplay and map systems remain unchanged."
+    ],
+    failCriteria: [
+      "Markers appear on default app load.",
+      "More than 3 markers appear.",
+      "Marker style changes unexpectedly.",
+      "Labels change unexpectedly.",
+      "Result object changes unexpectedly.",
+      "Cleanup removes anything beyond manual test markers and labels.",
+      "The map moves automatically.",
+      "Sample or dinosaur data loads.",
+      "Normal gameplay or map systems change."
+    ],
+    notes: [
+      "Do not change marker style from Phase 56.",
+      "Do not change labels from Phase 57.",
+      "Do not change result objects from Phase 58.",
+      "Do not change spacing from Phase 59.",
+      "Do not change safety helper from Phase 60.",
+      "Do not change console guide audit from Phase 61."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
