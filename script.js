@@ -10330,6 +10330,170 @@ function getCustom25DVisualManualRendererAssemblyFinalReviewReport(options = {})
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyHandoffPlan(options = {}) {
+  const guard =
+    typeof canAssembleCustom25DVisualRenderer === "function"
+      ? canAssembleCustom25DVisualRenderer(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "guard-evaluator-unavailable",
+          reasons: ["guard-evaluator-unavailable"]
+        };
+  const resultContract =
+    typeof getCustom25DVisualManualRendererAssemblyResultContract === "function"
+      ? getCustom25DVisualManualRendererAssemblyResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly result contract helper is unavailable."
+        };
+  const readinessReport =
+    typeof getCustom25DVisualManualRendererAssemblyReadinessReport === "function"
+      ? getCustom25DVisualManualRendererAssemblyReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly readiness report helper is unavailable."
+        };
+  const dryRunReport =
+    typeof getCustom25DVisualManualRendererAssemblyDryRunReport === "function"
+      ? getCustom25DVisualManualRendererAssemblyDryRunReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly dry-run report helper is unavailable."
+        };
+  const safetyAudit =
+    typeof getCustom25DVisualManualRendererAssemblySafetyAudit === "function"
+      ? getCustom25DVisualManualRendererAssemblySafetyAudit(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly safety audit helper is unavailable."
+        };
+  const finalReviewReport =
+    typeof getCustom25DVisualManualRendererAssemblyFinalReviewReport === "function"
+      ? getCustom25DVisualManualRendererAssemblyFinalReviewReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly final review report helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 100,
+    name: "custom-25d-visual-manual-renderer-assembly-handoff-plan",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    handoffOnly: true,
+    guard,
+    contractAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyResultContract === "function",
+    shellHelperAvailable:
+      typeof assembleCustom25DVisualRendererManual === "function",
+    readinessReportAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyReadinessReport === "function",
+    dryRunReportAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyDryRunReport === "function",
+    safetyAuditAvailable:
+      typeof getCustom25DVisualManualRendererAssemblySafetyAudit === "function",
+    finalReviewReportAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyFinalReviewReport === "function",
+    blockedByDefault: guard.allowed !== true,
+    realAssemblyPerformed: false,
+    futureRealAssemblyStillBlockedByDefault: true,
+    currentSafeState: {
+      defaultStateBlocked: guard.allowed !== true,
+      realAssemblyStarted: false,
+      rendererShellCreatedThisPhase: false,
+      rendererContainerCreatedThisPhase: false,
+      layerHostCreatedThisPhase: false,
+      renderLayerRegistryInitializedThisPhase: false,
+      visualLayersInitializedThisPhase: false,
+      startupWiringAddedThisPhase: false,
+      visibleGraphicsCreatedThisPhase: false
+    },
+    futureAssemblyEntryCriteria: [
+      "manual-only invocation",
+      "guard evaluator must explicitly allow the attempt",
+      "future work must stay shell/container/host-only unless a later phase explicitly expands scope",
+      "future work must preserve gameplay overlays, normal blue pins, player marker, capture radius, and OSM behavior",
+      "future work must remain blocked from startup wiring and visible rendering unless explicitly requested"
+    ],
+    futureAssemblyHardLimits: [
+      "do not auto-enable ENABLE_CUSTOM_25D_MAP",
+      "do not assemble on startup",
+      "do not create visible graphics by default",
+      "do not load sample, dinosaur, film, or real POI data",
+      "do not load real road geometry",
+      "do not load real building geometry",
+      "do not change gameplay, backend, rewards, or collections"
+    ],
+    confirmedNonActions: [
+      "does not assemble renderer",
+      "does not create renderer shell/container/host",
+      "does not initialize render layer registry or visual layers",
+      "does not draw content or create visible map layers",
+      "does not wire startup",
+      "does not mutate state",
+      "does not add UI or event listeners",
+      "does not touch pins, player marker, capture radius, or OSM labels"
+    ],
+    preservedSystems: {
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true,
+      osmLabels: true,
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true
+    },
+    dataLoadingStatus: {
+      sampleDataLoaded: false,
+      dinosaurSiteDataLoaded: false,
+      filmLocationDataLoaded: false,
+      realPoiDataLoaded: false,
+      realRoadGeometryLoaded: false,
+      realBuildingGeometryLoaded: false
+    },
+    phaseChainSummary: {
+      phase93GuardEvaluator: typeof canAssembleCustom25DVisualRenderer === "function",
+      phase94ResultContract:
+        typeof getCustom25DVisualManualRendererAssemblyResultContract === "function",
+      phase95ManualShellHelper:
+        typeof assembleCustom25DVisualRendererManual === "function",
+      phase96ReadinessReport:
+        typeof getCustom25DVisualManualRendererAssemblyReadinessReport === "function",
+      phase97DryRunReport:
+        typeof getCustom25DVisualManualRendererAssemblyDryRunReport === "function",
+      phase98SafetyAudit:
+        typeof getCustom25DVisualManualRendererAssemblySafetyAudit === "function",
+      phase99FinalReviewReport:
+        typeof getCustom25DVisualManualRendererAssemblyFinalReviewReport === "function"
+    },
+    nextRecommendedPhase: "phase-101-manual-renderer-assembly-real-phase-boundary-shell",
+    safetyNotes: [
+      "This helper is handoff-only and report-only.",
+      "Default state remains blocked while ENABLE_CUSTOM_25D_MAP is false.",
+      "No real assembly has been performed in this phase.",
+      "Any future real assembly work must stay manual-only and explicitly guarded."
+    ],
+    passiveReports: {
+      resultContract,
+      readinessReport,
+      dryRunReport,
+      safetyAudit,
+      finalReviewReport
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
