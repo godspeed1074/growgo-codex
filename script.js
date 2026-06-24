@@ -8052,26 +8052,29 @@ function runCustom25DLandmarkVisibleTinyManualTest(options = {}) {
 
   const requestedLimit = Math.max(1, Math.min(3, Math.floor(Number(options.limit))));
   const center = map.getCenter();
+  const spacingOffsets = [
+    { latOffset: 0.00018, lngOffset: 0 },
+    { latOffset: -0.00009, lngOffset: -0.00017 },
+    { latOffset: -0.00009, lngOffset: 0.00017 }
+  ];
   const fakeEntries = [
     {
       id: "tiny-manual-landmark-a",
-      label: "Internal Test A",
-      lat: center.lat + 0.00012,
-      lng: center.lng + 0.00012
+      label: "Internal Test A"
     },
     {
       id: "tiny-manual-landmark-b",
-      label: "Internal Test B",
-      lat: center.lat + 0.00018,
-      lng: center.lng - 0.0001
+      label: "Internal Test B"
     },
     {
       id: "tiny-manual-landmark-c",
-      label: "Internal Test C",
-      lat: center.lat - 0.00014,
-      lng: center.lng + 0.00008
+      label: "Internal Test C"
     }
-  ].slice(0, requestedLimit);
+  ].map((entry, index) => ({
+    ...entry,
+    lat: center.lat + spacingOffsets[index].latOffset,
+    lng: center.lng + spacingOffsets[index].lngOffset
+  })).slice(0, requestedLimit);
 
   if (CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer && map.hasLayer(CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer)) {
     map.removeLayer(CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer);
