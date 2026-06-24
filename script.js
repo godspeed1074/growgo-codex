@@ -11192,6 +11192,145 @@ function initializeCustom25DVisualManualRendererRegistry(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererRegistryDryRunReport(options = {}) {
+  const guard =
+    typeof canInitializeCustom25DVisualManualRendererRegistry === "function"
+      ? canInitializeCustom25DVisualManualRendererRegistry(options)
+      : {
+          ok: false,
+          allowed: false,
+          blocked: true,
+          reason: "registry-guard-unavailable",
+          reasons: ["registry-guard-unavailable"]
+        };
+  const readinessPlan =
+    typeof getCustom25DVisualManualRendererRegistryReadinessPlan === "function"
+      ? getCustom25DVisualManualRendererRegistryReadinessPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry readiness plan helper is unavailable."
+        };
+  const resultContract =
+    typeof getCustom25DVisualManualRendererRegistryResultContract === "function"
+      ? getCustom25DVisualManualRendererRegistryResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry result contract helper is unavailable."
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualManualRendererRegistry === "function"
+      ? initializeCustom25DVisualManualRendererRegistry(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry shell helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 106,
+    name: "custom-25d-visual-manual-renderer-registry-dry-run-report",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    dryRun: true,
+    guard,
+    shellResult,
+    blockedByDefault: shellResult.allowed !== true,
+    attempted: true,
+    allowed: shellResult.allowed === true,
+    blocked: shellResult.blocked !== false,
+    registryInitialized: false,
+    registryCreated: false,
+    layerCount: 0,
+    layersInitialized: false,
+    startupWired: false,
+    visibleGraphicsCreated: false,
+    dataLoaded: false,
+    gameplayChanged: false,
+    reason: shellResult.reason || guard.reason,
+    safetyNotes: [
+      "Dry-run only; no real registry initialization occurs in this phase.",
+      "Even with explicit caller options, the registry helper remains shell-only.",
+      "No layers, drawing, startup wiring, data loading, or gameplay changes occur."
+    ],
+    passiveReports: {
+      readinessPlan,
+      resultContract
+    }
+  };
+}
+
+function getCustom25DVisualManualRendererRegistrySafetyReview(options = {}) {
+  const guard =
+    typeof canInitializeCustom25DVisualManualRendererRegistry === "function"
+      ? canInitializeCustom25DVisualManualRendererRegistry(options)
+      : {
+          ok: false,
+          allowed: false,
+          blocked: true,
+          reason: "registry-guard-unavailable",
+          reasons: ["registry-guard-unavailable"]
+        };
+  const dryRunReport =
+    typeof getCustom25DVisualManualRendererRegistryDryRunReport === "function"
+      ? getCustom25DVisualManualRendererRegistryDryRunReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer registry dry-run report helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 106,
+    name: "custom-25d-visual-manual-renderer-registry-safety-review",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    reviewOnly: true,
+    guardExists:
+      typeof canInitializeCustom25DVisualManualRendererRegistry === "function",
+    readinessPlanExists:
+      typeof getCustom25DVisualManualRendererRegistryReadinessPlan === "function",
+    resultContractExists:
+      typeof getCustom25DVisualManualRendererRegistryResultContract === "function",
+    shellHelperExists:
+      typeof initializeCustom25DVisualManualRendererRegistry === "function",
+    dryRunReportExists:
+      typeof getCustom25DVisualManualRendererRegistryDryRunReport === "function",
+    defaultRegistryPathBlocked: guard.allowed !== true,
+    noRealRegistryInitializationHappened:
+      dryRunReport.registryInitialized === false &&
+      dryRunReport.registryCreated === false,
+    noBehaviorChangesOccurred: {
+      layersInitialized: false,
+      startupWired: false,
+      visibleGraphicsCreated: false,
+      dataLoaded: false,
+      gameplayChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      osmBehaviorChanged: false
+    },
+    nextRecommendedPhase: "phase-107-manual-guarded-registry-initialization-only",
+    safetyNotes: [
+      "Registry path remains dry-run and shell-only at this phase.",
+      "No real registry initialization, layer initialization, startup wiring, or visible graphics occurred.",
+      "Pins, player marker, capture radius, OSM behavior, gameplay, backend, rewards, and collections remain unchanged."
+    ],
+    passiveReports: {
+      guard,
+      dryRunReport
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
