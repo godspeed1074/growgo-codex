@@ -11466,6 +11466,139 @@ function getCustom25DVisualManualRendererRegistryInitializationCloseoutReport(op
   };
 }
 
+function getCustom25DVisualLayerInitializationPlan(options = {}) {
+  const registryCloseout =
+    typeof getCustom25DVisualManualRendererRegistryInitializationCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererRegistryInitializationCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Registry initialization closeout report helper is unavailable."
+        };
+  const registryReadiness =
+    typeof getCustom25DVisualManualRendererRegistryReadinessPlan === "function"
+      ? getCustom25DVisualManualRendererRegistryReadinessPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Registry readiness plan helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 109,
+    name: "custom-25d-visual-layer-initialization-plan",
+    dormant: true,
+    manualOnly: true,
+    planningOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    requiredPrerequisites: [
+      "manual developer-only invocation path remains in place",
+      "inert renderer registry must be initialized in a future explicitly guarded phase",
+      "registry initialization closeout must remain complete",
+      "all feature flags remain false by default"
+    ],
+    guardRequirements: [
+      "manual: true",
+      "developerIntent: true",
+      "future per-layer allow flags or equivalent explicit approvals",
+      "preserveGameplayOverlays: true",
+      "preserveOSMBehavior: true"
+    ],
+    initializationRules: [
+      "visual layers must remain invisible and dormant by default",
+      "visual layer state must not attach to map or startup in this phase",
+      "each layer should initialize independently and safely",
+      "future initialization should be reversible and clearable",
+      "any failure should block and report without partially enabling visible behavior"
+    ],
+    protectedSystems: {
+      osmBehavior: true,
+      osmLabels: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      ui: true
+    },
+    nextRecommendedPhase: "phase-110-visual-layer-initialization-guard-evaluator-only",
+    safetyNotes: [
+      "Planning-only helper.",
+      "Does not create, initialize, attach, draw, or reveal any visual layer.",
+      "Does not call any renderer, registry, or layer initializer."
+    ],
+    passiveReports: {
+      registryCloseout,
+      registryReadiness
+    }
+  };
+}
+
+function getCustom25DVisualLayerInitializationResultContract(options = {}) {
+  return {
+    ok: true,
+    phase: 109,
+    name: "custom-25d-visual-layer-initialization-result-contract",
+    dormant: true,
+    manualOnly: true,
+    developerIntentRequired: true,
+    planningOnly: true,
+    contractOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    mutatesState: false,
+    createsVisibleGraphics: false,
+    initializesLayers: false,
+    attachesToMap: false,
+    affectsGameplay: false,
+    expectedResultShape: {
+      ok: "boolean",
+      allowed: "boolean",
+      reason: "string|null",
+      phase: 109,
+      dormant: "boolean",
+      manualOnly: "boolean",
+      developerIntentRequired: "boolean",
+      mutatesState: "boolean",
+      createsVisibleGraphics: "boolean",
+      initializesLayers: "boolean",
+      attachesToMap: "boolean",
+      affectsGameplay: "boolean",
+      affectedLayers: "string[]",
+      skippedLayers: "string[]",
+      blockedLayers: "string[]",
+      safety: "object",
+      nextPhase: "string"
+    },
+    defaultContractExpectations: {
+      affectedLayers: [],
+      skippedLayers: [],
+      blockedLayers: [],
+      safety: {
+        startupWired: false,
+        visibleGraphicsCreated: false,
+        mapAttached: false,
+        dataLoaded: false,
+        gameplayChanged: false
+      },
+      nextPhase: "phase-110-visual-layer-initialization-guard-evaluator-only"
+    },
+    safetyNotes: [
+      "Contract-only helper.",
+      "Does not perform any initialization or map attachment.",
+      "Keeps future layer initialization constrained to a reversible, manual-only path."
+    ],
+    optionsEcho: {
+      manualRequested: options.manual === true,
+      developerIntentRequested: options.developerIntent === true
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
