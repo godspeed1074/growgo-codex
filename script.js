@@ -8029,6 +8029,149 @@ function getCustom25DVisualRoadBaseLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualRoadHighlightLayerState() {
+  return {
+    ok: true,
+    phase: 82,
+    name: "Custom 2.5D visual renderer road highlight layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    requiresRoadBaseLayer: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualRoadHighlightLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowRoadHighlightLayer !== true) {
+    blockedReasons.push("options.allowRoadHighlightLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+  if (options.hasRoadBaseLayer !== true) {
+    blockedReasons.push("A valid guarded road base layer is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 82,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualRoadHighlightLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualRoadHighlightLayer(options);
+  const roadHighlightLayerConfig = {
+    key: "roadHighlight",
+    name: "Road Highlight",
+    order: 7,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "soft road edge highlight and polish layer for future cartoony 2.5D roads",
+    targetStyle: "subtle warm highlights, rounded road edges, toy-like mobile-friendly road polish, Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealRoadGeometry: false,
+    dependsOnRoadShadowLayer: true,
+    dependsOnRoadBaseLayer: true,
+    sitsAboveRoadShadowLayer: true,
+    sitsAboveRoadBaseLayer: true,
+    sitsBelowLabelLayer: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 82,
+      dormant: true,
+      defaultVisualChange: false,
+      roadHighlightLayerState: getCustom25DVisualRoadHighlightLayerState(),
+      roadHighlightLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 82,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Road highlight layer remains guarded, data-only, and inert in this phase.",
+    roadHighlightLayerState: {
+      ...getCustom25DVisualRoadHighlightLayerState(),
+      lastReason: "guarded-invisible-road-highlight-layer"
+    },
+    roadHighlightLayerConfig
+  };
+}
+
+function clearCustom25DVisualRoadHighlightLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 82,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual road highlight layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualRoadHighlightLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 82,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    hasGuardedParkLayerImplementation: true,
+    hasGuardedRoadShadowLayerImplementation: true,
+    hasGuardedRoadBaseLayerImplementation: true,
+    hasGuardedRoadHighlightLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureRoadHighlightVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
