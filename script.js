@@ -8124,6 +8124,73 @@ function clearCustom25DLandmarkVisibleTinyManualTest() {
   };
 }
 
+function getCustom25DLandmarkVisibleTinyManualTestConsoleGuide() {
+  return {
+    ok: true,
+    phase: 53,
+    name: "custom-25d-landmark-visible-test-console-guide",
+    dormant: true,
+    planningOnly: true,
+    documentationOnly: true,
+    purpose:
+      "Browser console guide for the Phase 52 tiny manual-only visible landmark marker test.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    doesNotRunTest: true,
+    doesNotEnableFlags: true,
+    doesNotCreateUi: true,
+    doesNotCreateDebugButtons: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotLoadData: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotMutateMapState: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    requiredBranchCheckpointReminder: [
+      "Use this guide only from the dedicated local manual test branch or an explicitly approved local test context.",
+      "Keep the default app state unchanged before any manual console testing.",
+    ],
+    requiredSafetyFlagsReminder: [
+      "ENABLE_CUSTOM_25D_MAP = false",
+      "ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false",
+      "ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false",
+      "ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false",
+    ],
+    defaultBlockedCallExample: "runCustom25DLandmarkVisibleTinyManualTest()",
+    expectedDefaultBlockedBehavior: [
+      "Calling the manual test with no options should return a blocked result.",
+      "No markers should be created.",
+      "No UI or data loading should occur.",
+    ],
+    explicitManualOptInCallExample:
+      'runCustom25DLandmarkVisibleTinyManualTest({ manual: true, developerIntent: true, allowVisibleTestMarkers: true, limit: 1 })',
+    clearCleanupCallExample: "clearCustom25DLandmarkVisibleTinyManualTest()",
+    warnings: [
+      "Local manual testing only.",
+      "Never enable this behavior by default.",
+      "Verify OSM remains visible underneath.",
+      "Verify normal blue pins, player marker, and capture radius remain unchanged.",
+      "Verify the manual clear path is used only after an intentional local manual test run.",
+    ],
+    helperNames: [
+      "canRunCustom25DLandmarkVisibleTinyManualTest()",
+      "runCustom25DLandmarkVisibleTinyManualTest()",
+      "clearCustom25DLandmarkVisibleTinyManualTest()",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant; this guide documents manual console usage only and does not run the manual test or create visible markers.",
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
