@@ -7492,6 +7492,138 @@ function getCustom25DVisualBeachLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualGrassLayerState() {
+  return {
+    ok: true,
+    phase: 78,
+    name: "Custom 2.5D visual renderer grass layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualGrassLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowGrassLayer !== true) {
+    blockedReasons.push("options.allowGrassLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 78,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualGrassLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualGrassLayer(options);
+  const grassLayerConfig = {
+    key: "grass",
+    name: "Grass",
+    order: 3,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "soft base land and grass foundation for future 2.5D map polish",
+    targetStyle: "playful green land base, soft rounded shapes, mobile-friendly, toy-like, Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealLandGeometry: false,
+    dependsOnBackgroundLayer: true,
+    sitsBelowParkLayer: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 78,
+      dormant: true,
+      defaultVisualChange: false,
+      grassLayerState: getCustom25DVisualGrassLayerState(),
+      grassLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 78,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Grass layer remains guarded, data-only, and inert in this phase.",
+    grassLayerState: {
+      ...getCustom25DVisualGrassLayerState(),
+      lastReason: "guarded-invisible-grass-layer"
+    },
+    grassLayerConfig
+  };
+}
+
+function clearCustom25DVisualGrassLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 78,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual grass layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualGrassLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 78,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureGrassVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
