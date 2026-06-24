@@ -6399,6 +6399,100 @@ function getCustom25DVisualBackgroundPaletteReadiness() {
   };
 }
 
+function getCustom25DVisualLayerStructureConfig() {
+  return {
+    ok: true,
+    phase: 69,
+    name: "Custom 2.5D visual layer structure config",
+    dormant: true,
+    purpose:
+      "Define a passive future layer structure for Track A custom 2.5D renderer work without drawing anything in this phase.",
+    styleGoal: [
+      "layered playful 2.5D map composition",
+      "clear visual stacking under gameplay markers",
+      "mobile-friendly depth and readability"
+    ],
+    layerOrder: [
+      "baseBackground",
+      "water",
+      "beach",
+      "parksAndGrass",
+      "roadsAndPaths",
+      "buildings",
+      "labels",
+      "depthAndShadows",
+      "gameMarkers"
+    ],
+    layerResponsibilities: {
+      baseBackground: "Future soft land and grass base; no active drawing yet.",
+      water: "Future water shapes and soft highlights; no active drawing yet.",
+      beach: "Future beach and shoreline shapes; no active drawing yet.",
+      parksAndGrass: "Future park and open-space polish; no active drawing yet.",
+      roadsAndPaths: "Future cartoony roads, paths, and trails; no active drawing yet.",
+      buildings: "Future simple toy-like buildings and depth; no active drawing yet.",
+      labels: "Future readable labels and halo behavior; no active drawing yet.",
+      depthAndShadows: "Future subtle shadow and depth pass; no active drawing yet.",
+      gameMarkers: "Normal blue pins, player marker, and capture radius remain protected; no behavior changes in this phase."
+    },
+    renderingRules: [
+      "higher visual layers should build on lower layers without replacing protected gameplay markers",
+      "gameMarkers must remain above future visual background layers",
+      "future label and depth passes should preserve pin readability",
+      "no active drawing is introduced by this config"
+    ],
+    usageRules: [
+      "layer structure is dormant",
+      "layer structure is not applied automatically",
+      "layer structure does not draw anything",
+      "layer structure does not change Leaflet/OSM appearance by default",
+      "future renderer phases may reference it only while guarded by ENABLE_CUSTOM_25D_MAP",
+      "ENABLE_CUSTOM_25D_MAP must remain false by default",
+      "no visible layer should be created on default app load in this phase"
+    ],
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true,
+      landmarkMarkerManualTestPath: true,
+      sampleData: true,
+      dinosaurSiteData: true,
+      filmLocationData: true,
+      realPoiData: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    notes: [
+      "Layer-structure helper only.",
+      "No active rendering in this phase.",
+      "No map appearance change by default.",
+      "No visible layers created on load.",
+      "Future use remains gated behind ENABLE_CUSTOM_25D_MAP."
+    ]
+  };
+}
+
+function getCustom25DVisualLayerStructureReadiness() {
+  return {
+    ok: true,
+    phase: 69,
+    dormant: true,
+    hasLayerStructureConfig: true,
+    hasPaletteConfig: true,
+    readyForFutureRendererPrep: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
