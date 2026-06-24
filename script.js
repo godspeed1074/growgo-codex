@@ -7234,6 +7234,134 @@ function getCustom25DVisualBackgroundLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualWaterLayerState() {
+  return {
+    ok: true,
+    phase: 76,
+    name: "Custom 2.5D visual renderer water layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualWaterLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowWaterLayer !== true) {
+    blockedReasons.push("options.allowWaterLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 76,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualWaterLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualWaterLayer(options);
+  const waterLayerConfig = {
+    key: "water",
+    name: "Water",
+    order: 1,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "soft playful water foundation for future 2.5D map polish",
+    targetStyle: "soft blue, rounded, mobile-friendly, toy-like, Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealWaterGeometry: false
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 76,
+      dormant: true,
+      defaultVisualChange: false,
+      waterLayerState: getCustom25DVisualWaterLayerState(),
+      waterLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 76,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Water layer remains guarded, data-only, and inert in this phase.",
+    waterLayerState: {
+      ...getCustom25DVisualWaterLayerState(),
+      lastReason: "guarded-invisible-water-layer"
+    },
+    waterLayerConfig
+  };
+}
+
+function clearCustom25DVisualWaterLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 76,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual water layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualWaterLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 76,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureWaterVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
