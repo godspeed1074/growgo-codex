@@ -9202,6 +9202,100 @@ function getCustom25DVisualLayerStackReadinessSummary() {
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyReadinessPlan() {
+  const safeLayerStackSummary =
+    typeof getCustom25DVisualLayerStackReadinessSummary === "function"
+      ? getCustom25DVisualLayerStackReadinessSummary()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Layer stack readiness summary helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 89,
+    name: "Custom 2.5D visual manual renderer assembly readiness plan",
+    dormant: true,
+    planningOnly: true,
+    guarded: true,
+    manualOnly: true,
+    developerOnly: true,
+    invisibleByDefault: true,
+    nonRendering: true,
+    dataOnly: true,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    assemblesRenderer: false,
+    initializesLayers: false,
+    createsVisibleMapLayers: false,
+    drawsContent: false,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    usesRealPOIData: false,
+    usesDinosaurSiteData: false,
+    usesFilmLocationData: false,
+    usesRealRoadGeometry: false,
+    usesRealBuildingGeometry: false,
+    requiresEnableCustom25DMap: true,
+    requiresManualOption: true,
+    requiresDeveloperIntent: true,
+    requiresRendererShell: true,
+    requiresRendererContainer: true,
+    requiresLayerHost: true,
+    requiresRenderLayerRegistry: true,
+    requiresPreparedLayerStack: true,
+    readyForFutureManualAssemblyPhase: true,
+    checklist: [
+      "Confirm ENABLE_CUSTOM_25D_MAP is intentionally enabled only for a manual/developer test.",
+      "Confirm manual option is explicitly true.",
+      "Confirm developerIntent option is explicitly true.",
+      "Confirm renderer shell exists before assembly.",
+      "Confirm renderer container exists before assembly.",
+      "Confirm layer host exists before assembly.",
+      "Confirm render layer registry exists before assembly.",
+      "Confirm all visual layer configs remain invisible/non-rendering before any draw phase.",
+      "Confirm normal blue pins remain above the custom visual stack.",
+      "Confirm player marker remains above the custom visual stack.",
+      "Confirm capture radius remains above the custom visual stack.",
+      "Confirm OSM labels and OSM behavior are preserved unless a future planned phase explicitly changes that."
+    ],
+    blockedByDefaultReasons: [
+      "ENABLE_CUSTOM_25D_MAP is false by default.",
+      "No startup wiring exists.",
+      "No automatic initialization exists.",
+      "No visible drawing layers are created.",
+      "No real geometry/data loading exists.",
+      "Manual/developer intent is required for any future assembly."
+    ],
+    intendedFutureAssemblyOrder: [
+      "rendererShell",
+      "rendererContainer",
+      "layerHost",
+      "renderLayerRegistry",
+      "background",
+      "water",
+      "beach",
+      "grass",
+      "park",
+      "roadShadow",
+      "roadBase",
+      "roadHighlight",
+      "buildingShadow",
+      "buildingBase",
+      "buildingRoof",
+      "label",
+      "pinOverlayPreservation"
+    ],
+    passiveReports: {
+      layerStackSummary: safeLayerStackSummary
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
