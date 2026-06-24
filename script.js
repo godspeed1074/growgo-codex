@@ -9428,6 +9428,129 @@ function getCustom25DVisualManualRendererAssemblyDryRunPlan() {
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyGuardContract() {
+  const safeCall = (fn, fallbackReason) => {
+    if (typeof fn === "function") {
+      try {
+        return fn();
+      } catch (_error) {
+        return { ok: false, missing: false, errored: true, reason: fallbackReason };
+      }
+    }
+    return { ok: false, missing: true, reason: fallbackReason };
+  };
+
+  return {
+    ok: true,
+    phase: 91,
+    name: "Custom 2.5D visual manual renderer assembly guard contract",
+    dormant: true,
+    contractOnly: true,
+    planningOnly: true,
+    guarded: true,
+    manualOnly: true,
+    developerOnly: true,
+    invisibleByDefault: true,
+    nonRendering: true,
+    dataOnly: true,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    assemblesRenderer: false,
+    initializesLayers: false,
+    createsRendererShell: false,
+    createsRendererContainer: false,
+    createsLayerHost: false,
+    initializesRenderLayerRegistry: false,
+    createsVisibleMapLayers: false,
+    drawsContent: false,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    usesRealPOIData: false,
+    usesDinosaurSiteData: false,
+    usesFilmLocationData: false,
+    usesRealRoadGeometry: false,
+    usesRealBuildingGeometry: false,
+    readyForFutureGuardedAssemblyFunction: true,
+    requiredFutureAssemblyOptions: {
+      manual: true,
+      developerIntent: true,
+      allowRendererAssembly: true,
+      hasRendererShell: true,
+      hasRendererContainer: true,
+      hasLayerHost: true,
+      hasRenderLayerRegistry: true,
+      hasPreparedLayerStack: true,
+      preserveGameplayOverlays: true,
+      preserveOSMBehavior: true
+    },
+    requiredFutureBlockedConditions: [
+      "ENABLE_CUSTOM_25D_MAP must not be false.",
+      "options.manual must be exactly true.",
+      "options.developerIntent must be exactly true.",
+      "options.allowRendererAssembly must be exactly true.",
+      "options.hasRendererShell must be exactly true.",
+      "options.hasRendererContainer must be exactly true.",
+      "options.hasLayerHost must be exactly true.",
+      "options.hasRenderLayerRegistry must be exactly true.",
+      "options.hasPreparedLayerStack must be exactly true.",
+      "options.preserveGameplayOverlays must be exactly true.",
+      "options.preserveOSMBehavior must be exactly true."
+    ],
+    futureAssemblyMustNot: [
+      "must not run on startup",
+      "must not auto-enable ENABLE_CUSTOM_25D_MAP",
+      "must not initialize without manual option",
+      "must not initialize without developerIntent option",
+      "must not create visible drawing layers by default",
+      "must not hide or replace OSM tiles by default",
+      "must not hide or replace OSM labels by default",
+      "must not create, move, restyle, hide, or replace normal blue pins",
+      "must not change player marker",
+      "must not change capture radius",
+      "must not load real POI data",
+      "must not load dinosaur site data",
+      "must not load film location data",
+      "must not change gameplay, backend, rewards, or collections",
+      "must not auto-pan, auto-fly, or auto-zoom"
+    ],
+    futureAssemblyAllowedOnlyWhen: [
+      "ENABLE_CUSTOM_25D_MAP is intentionally enabled for a manual/developer test",
+      "manual option is explicitly true",
+      "developerIntent option is explicitly true",
+      "allowRendererAssembly option is explicitly true",
+      "renderer shell readiness has been confirmed",
+      "renderer container readiness has been confirmed",
+      "layer host readiness has been confirmed",
+      "render layer registry readiness has been confirmed",
+      "full dormant visual layer stack readiness has been confirmed",
+      "gameplay overlay preservation has been confirmed"
+    ],
+    passiveReports: {
+      manualAssemblyReadinessPlan: safeCall(
+        typeof getCustom25DVisualManualRendererAssemblyReadinessPlan === "function"
+          ? getCustom25DVisualManualRendererAssemblyReadinessPlan
+          : null,
+        "Manual renderer assembly readiness helper is unavailable."
+      ),
+      manualAssemblyDryRunPlan: safeCall(
+        typeof getCustom25DVisualManualRendererAssemblyDryRunPlan === "function"
+          ? getCustom25DVisualManualRendererAssemblyDryRunPlan
+          : null,
+        "Manual renderer assembly dry-run helper is unavailable."
+      ),
+      visualLayerStackReadiness: safeCall(
+        typeof getCustom25DVisualLayerStackReadinessSummary === "function"
+          ? getCustom25DVisualLayerStackReadinessSummary
+          : null,
+        "Visual layer stack readiness summary helper is unavailable."
+      )
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
