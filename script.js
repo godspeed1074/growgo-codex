@@ -7864,6 +7864,129 @@ function getCustom25DLandmarkVisibleTestFinalReadinessGatePlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTestLaunchSafetyWrapperPlan() {
+  return {
+    ok: true,
+    phase: 51,
+    name: "custom-25d-landmark-visible-test-launch-safety-wrapper-plan",
+    dormant: true,
+    planningOnly: true,
+    purpose:
+      "Final launch safety wrapper planning before the first actual manual-only visible landmark marker test path.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    requiresExplicitRuntimeOptIn: true,
+    requiresDeveloperIntent: true,
+    requiresCleanMainBeforeVisibleTestBranch: true,
+    requiresAllReadinessGatesPassed: true,
+    requiresRollbackPlanReady: true,
+    requiresVisibleTestScopeLimited: true,
+    requiresNoDefaultUi: true,
+    requiresNoDefaultDataLoading: true,
+    visibleMarkersDefaultOff: true,
+    dataDefaultOff: true,
+    uiDefaultOff: true,
+    cleanupDefaultOff: true,
+    markerLifecycleDefaultOff: true,
+    doesNotEnableFlags: true,
+    doesNotCreateUi: true,
+    doesNotCreateDebugButtons: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotLoadData: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotMutateMapState: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    dependsOn: [
+      "getCustom25DLandmarkVisibleTestFinalReadinessGatePlan()",
+      "getCustom25DLandmarkVisibleTestReadinessSummaryPlan()",
+      "getCustom25DLandmarkVisibleTestManualOptInPlan()",
+      "getCustom25DLandmarkVisibleTestCleanupBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestMarkerLifecyclePlan()",
+      "getCustom25DLandmarkVisibleTestUiIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestDataIsolationPlan()",
+      "getCustom25DLandmarkVisibleTestRuntimeGuardPlan()",
+      "getCustom25DLandmarkVisibleTestExecutionBoundaryPlan()",
+      "getCustom25DLandmarkVisibleTestGoNoGoPlan()",
+      "getCustom25DLandmarkVisibleTestFinalCheckPlan()",
+      "getCustom25DLandmarkVisibleTestReportPlan()",
+      "getCustom25DLandmarkVisibleTestObservationPlan()",
+      "getCustom25DLandmarkVisibleTestRiskPlan()",
+      "getCustom25DLandmarkVisibleTestRollbackPlan()",
+      "getCustom25DLandmarkVisibleTestApprovalGatePlan()",
+      "getCustom25DLandmarkVisibleTestPreflightPlan()",
+      "getCustom25DLandmarkVisibleTestPathPlan()",
+      "getCustom25DLandmarkVisibleTestReadinessPlan()",
+      "getCustom25DLandmarkNextPhasePlan()",
+    ],
+    cleanMainGate: [
+      "main must be clean and up to date before any future visible-test branch is used",
+      "future visible testing must begin from an explicit safe checkpoint",
+    ],
+    visibleTestBranchGate: [
+      "future visible testing must stay off main",
+      "future testing must remain isolated to a dedicated manual-only branch or local test context",
+    ],
+    explicitManualRuntimeOptInGate: [
+      "future visible testing requires explicit runtime opt-in",
+      "future opt-in requires direct developer intent and remains reversible",
+    ],
+    limitedTestScopeGate: [
+      "future visible testing must remain narrowly scoped and temporary",
+      "future testing may not expand into broader gameplay, UI, data, or backend behavior",
+    ],
+    noDefaultUiGate: [
+      "no visible controls, panels, or debug UI are created by default",
+      "no UI path may activate landmark testing automatically",
+    ],
+    noDefaultDataLoadingGate: [
+      "sample and dinosaur site data remain off by default",
+      "no dormant data is loaded or exposed automatically",
+    ],
+    markerLifecycleGate: [
+      "no markers, layers, attach paths, or cleanup behavior are created by default",
+      "no marker lifecycle may begin without an explicit future manual test path",
+    ],
+    cleanupRollbackGate: [
+      "any future approved visible test must roll back to the all-false dormant state immediately after testing",
+      "no persistent opt-in, marker, UI, or data side effects may remain after rollback",
+    ],
+    osmVisibilityGate: [
+      "OSM must remain visible underneath",
+      "no opaque or blank canvas background may be introduced",
+    ],
+    noGameplayImpactGate: [
+      "no gameplay, normal blue pins, player marker, or capture radius behavior may change",
+      "no rewards or collections behavior may be affected",
+    ],
+    noBackendImpactGate: [
+      "no backend reads, writes, remote config, or network-driven activation may be introduced",
+      "no backend state may be changed by this planning phase",
+    ],
+    finalLaunchHoldGate: [
+      "future visible testing may not proceed until all prior planning gates are reviewed together",
+      "any missing readiness area blocks movement from planning toward the first live manual test path",
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant with launch safety wrapper planning documented only and no visible landmark marker output, opt-in behavior, UI creation, or data loading.",
+    flags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA,
+    },
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
