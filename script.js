@@ -7624,6 +7624,140 @@ function getCustom25DVisualGrassLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualParkLayerState() {
+  return {
+    ok: true,
+    phase: 79,
+    name: "Custom 2.5D visual renderer park layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualParkLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowParkLayer !== true) {
+    blockedReasons.push("options.allowParkLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 79,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualParkLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualParkLayer(options);
+  const parkLayerConfig = {
+    key: "park",
+    name: "Park",
+    order: 4,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "soft park and green-space accent layer for future 2.5D map polish",
+    targetStyle: "slightly richer greens, rounded park shapes, gentle depth, mobile-friendly, toy-like, Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealParkGeometry: false,
+    dependsOnGrassLayer: true,
+    sitsAboveGrassLayer: true,
+    sitsBelowRoadLayers: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 79,
+      dormant: true,
+      defaultVisualChange: false,
+      parkLayerState: getCustom25DVisualParkLayerState(),
+      parkLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 79,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Park layer remains guarded, data-only, and inert in this phase.",
+    parkLayerState: {
+      ...getCustom25DVisualParkLayerState(),
+      lastReason: "guarded-invisible-park-layer"
+    },
+    parkLayerConfig
+  };
+}
+
+function clearCustom25DVisualParkLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 79,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual park layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualParkLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 79,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    hasGuardedParkLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureParkVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
