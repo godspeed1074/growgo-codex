@@ -6493,6 +6493,100 @@ function getCustom25DVisualLayerStructureReadiness() {
   };
 }
 
+function getCustom25DVisualRendererContainerPrep() {
+  return {
+    ok: true,
+    phase: 70,
+    name: "Custom 2.5D visual renderer container prep",
+    dormant: true,
+    purpose:
+      "Define passive future renderer container preparation rules for Track A without creating or showing any renderer container in this phase.",
+    rendererContainerGoal:
+      "Prepare a future parent container/canvas/layer host for custom 2.5D visual rendering while keeping the current app visually unchanged by default.",
+    expectedContainerRole: [
+      "future parent container or canvas host for custom 2.5D visual rendering",
+      "future place where background, water, beach, parks, roads, buildings, labels, and depth layers can be organized",
+      "future renderer should sit behind game markers",
+      "normal blue pins, player marker, and capture radius remain protected",
+      "Leaflet/OSM behavior remains protected unless explicitly changed in a later guarded phase"
+    ],
+    futureSetupRules: [
+      "renderer container must only be created or used when guarded by ENABLE_CUSTOM_25D_MAP",
+      "ENABLE_CUSTOM_25D_MAP must remain false by default",
+      "default app load must remain visually unchanged",
+      "no container should be visible on default app load in this phase",
+      "no drawing should occur in this phase",
+      "no UI switch should be added in this phase",
+      "no event listeners should be added in this phase",
+      "no real POI, dinosaur, film, or sample data should load in this phase"
+    ],
+    guardRules: [
+      "container work must remain behind ENABLE_CUSTOM_25D_MAP",
+      "default-off behavior is mandatory",
+      "future container implementation must be small and reversible"
+    ],
+    layerRelationship: [
+      "should reference the Phase 69 layer structure conceptually",
+      "should not apply the layer structure yet",
+      "should not create active visual layers yet"
+    ],
+    paletteRelationship: [
+      "should reference the Phase 68 palette conceptually",
+      "should not apply the palette yet",
+      "should not change map colors yet"
+    ],
+    defaultBehavior: {
+      createsVisibleContainerOnLoad: false,
+      drawsOnLoad: false,
+      changesMapAppearanceOnLoad: false,
+      addsUiOnLoad: false,
+      addsEventListenersOnLoad: false
+    },
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true,
+      landmarkMarkerManualTestPath: true,
+      sampleData: true,
+      dinosaurSiteData: true,
+      filmLocationData: true,
+      realPoiData: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    notes: [
+      "Renderer-container prep helper only.",
+      "No visible container is created in this phase.",
+      "No active rendering or canvas drawing is added.",
+      "No UI, markers, layers, or event listeners are created.",
+      "Future use remains gated behind ENABLE_CUSTOM_25D_MAP."
+    ]
+  };
+}
+
+function getCustom25DVisualRendererContainerReadiness() {
+  return {
+    ok: true,
+    phase: 70,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    readyForGuardedContainerImplementation: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
