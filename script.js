@@ -7109,6 +7109,131 @@ function getCustom25DVisualRenderLayerRegistryImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualBackgroundLayerState() {
+  return {
+    ok: true,
+    phase: 75,
+    name: "Custom 2.5D visual renderer background layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualBackgroundLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowBackgroundLayer !== true) {
+    blockedReasons.push("options.allowBackgroundLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 75,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualBackgroundLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualBackgroundLayer(options);
+  const backgroundLayerConfig = {
+    key: "background",
+    name: "Background",
+    order: 0,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    paletteSource: "getCustom25DVisualBackgroundPaletteConfig",
+    intendedVisualRole: "soft base world color foundation for future 2.5D map polish",
+    drawsContent: false,
+    affectsMap: false
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 75,
+      dormant: true,
+      defaultVisualChange: false,
+      backgroundLayerState: getCustom25DVisualBackgroundLayerState(),
+      backgroundLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 75,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Background layer remains guarded, data-only, and inert in this phase.",
+    backgroundLayerState: {
+      ...getCustom25DVisualBackgroundLayerState(),
+      lastReason: "guarded-invisible-background-layer"
+    },
+    backgroundLayerConfig
+  };
+}
+
+function clearCustom25DVisualBackgroundLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 75,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual background layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualBackgroundLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 75,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureBackgroundVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
