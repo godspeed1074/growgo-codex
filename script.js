@@ -8936,6 +8936,272 @@ function getCustom25DVisualPinOverlayPreservationLayerImplementationReadiness() 
   };
 }
 
+function getCustom25DVisualLayerStackReadinessSummary() {
+  const safeCall = (fn) => {
+    if (typeof fn === "function") {
+      try {
+        return fn();
+      } catch (_error) {
+        return { ok: false, missing: false, errored: true };
+      }
+    }
+    return { ok: false, missing: true };
+  };
+
+  const layerOrder = [
+    {
+      key: "background",
+      name: "Background",
+      order: 1,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft base world color foundation for future 2.5D map polish"
+    },
+    {
+      key: "water",
+      name: "Water",
+      order: 2,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft playful water foundation for future 2.5D map polish"
+    },
+    {
+      key: "beach",
+      name: "Beach",
+      order: 3,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft sand and shoreline foundation for future 2.5D map polish"
+    },
+    {
+      key: "grass",
+      name: "Grass",
+      order: 4,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft base land and grass foundation for future 2.5D map polish"
+    },
+    {
+      key: "park",
+      name: "Park",
+      order: 5,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft park and green-space accent layer for future 2.5D map polish"
+    },
+    {
+      key: "roadShadow",
+      name: "Road Shadow",
+      order: 6,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft offset road depth shadow foundation for future 2.5D map polish"
+    },
+    {
+      key: "roadBase",
+      name: "Road Base",
+      order: 7,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "cartoony rounded road body foundation for future 2.5D map polish"
+    },
+    {
+      key: "roadHighlight",
+      name: "Road Highlight",
+      order: 8,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft road edge highlight and polish layer for future cartoony 2.5D roads"
+    },
+    {
+      key: "buildingShadow",
+      name: "Building Shadow",
+      order: 9,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "soft offset building depth shadow foundation for future toy-like 2.5D buildings"
+    },
+    {
+      key: "buildingBase",
+      name: "Building Base",
+      order: 10,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "simple toy-like building body foundation for future 2.5D map polish"
+    },
+    {
+      key: "buildingRoof",
+      name: "Building Roof",
+      order: 11,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "simple toy-like roof cap foundation for future 2.5D building polish"
+    },
+    {
+      key: "label",
+      name: "Label",
+      order: 12,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "readable street and place label foundation for future polished 2.5D map presentation"
+    },
+    {
+      key: "pinOverlayPreservation",
+      name: "Pin Overlay Preservation",
+      order: 13,
+      dormant: true,
+      visible: false,
+      implemented: false,
+      drawsContent: false,
+      affectsMap: false,
+      dataSource: "none",
+      intendedVisualRole: "preserve normal GrowGo pins, player marker, and capture radius above future custom 2.5D visual layers"
+    }
+  ];
+
+  return {
+    ok: true,
+    phase: 88,
+    name: "Custom 2.5D visual layer stack readiness summary",
+    dormant: true,
+    guarded: true,
+    invisibleByDefault: true,
+    nonRendering: true,
+    dataOnly: true,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    usesRealPOIData: false,
+    usesDinosaurSiteData: false,
+    usesFilmLocationData: false,
+    usesRealRoadGeometry: false,
+    usesRealBuildingGeometry: false,
+    layerStackPrepared: true,
+    readyForFutureManualRendererAssembly: true,
+    readyForFutureVisualPrototype: true,
+    layerOrder,
+    readinessChecks: {
+      background: safeCall(
+        typeof getCustom25DVisualBackgroundLayerImplementationReadiness === "function"
+          ? getCustom25DVisualBackgroundLayerImplementationReadiness
+          : null
+      ),
+      water: safeCall(
+        typeof getCustom25DVisualWaterLayerImplementationReadiness === "function"
+          ? getCustom25DVisualWaterLayerImplementationReadiness
+          : null
+      ),
+      beach: safeCall(
+        typeof getCustom25DVisualBeachLayerImplementationReadiness === "function"
+          ? getCustom25DVisualBeachLayerImplementationReadiness
+          : null
+      ),
+      grass: safeCall(
+        typeof getCustom25DVisualGrassLayerImplementationReadiness === "function"
+          ? getCustom25DVisualGrassLayerImplementationReadiness
+          : null
+      ),
+      park: safeCall(
+        typeof getCustom25DVisualParkLayerImplementationReadiness === "function"
+          ? getCustom25DVisualParkLayerImplementationReadiness
+          : null
+      ),
+      roadShadow: safeCall(
+        typeof getCustom25DVisualRoadShadowLayerImplementationReadiness === "function"
+          ? getCustom25DVisualRoadShadowLayerImplementationReadiness
+          : null
+      ),
+      roadBase: safeCall(
+        typeof getCustom25DVisualRoadBaseLayerImplementationReadiness === "function"
+          ? getCustom25DVisualRoadBaseLayerImplementationReadiness
+          : null
+      ),
+      roadHighlight: safeCall(
+        typeof getCustom25DVisualRoadHighlightLayerImplementationReadiness === "function"
+          ? getCustom25DVisualRoadHighlightLayerImplementationReadiness
+          : null
+      ),
+      buildingShadow: safeCall(
+        typeof getCustom25DVisualBuildingShadowLayerImplementationReadiness === "function"
+          ? getCustom25DVisualBuildingShadowLayerImplementationReadiness
+          : null
+      ),
+      buildingBase: safeCall(
+        typeof getCustom25DVisualBuildingBaseLayerImplementationReadiness === "function"
+          ? getCustom25DVisualBuildingBaseLayerImplementationReadiness
+          : null
+      ),
+      buildingRoof: safeCall(
+        typeof getCustom25DVisualBuildingRoofLayerImplementationReadiness === "function"
+          ? getCustom25DVisualBuildingRoofLayerImplementationReadiness
+          : null
+      ),
+      label: safeCall(
+        typeof getCustom25DVisualLabelLayerImplementationReadiness === "function"
+          ? getCustom25DVisualLabelLayerImplementationReadiness
+          : null
+      ),
+      pinOverlayPreservation: safeCall(
+        typeof getCustom25DVisualPinOverlayPreservationLayerImplementationReadiness === "function"
+          ? getCustom25DVisualPinOverlayPreservationLayerImplementationReadiness
+          : null
+      )
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
