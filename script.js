@@ -6069,6 +6069,116 @@ function getCustom25DLandmarkNextPhasePlan() {
   };
 }
 
+function getCustom25DVisualMapRendererTrackRoadmap() {
+  return {
+    ok: true,
+    phase: 66,
+    name: "Custom 2.5D visual map renderer track roadmap",
+    dormant: true,
+    purpose:
+      "Document the passive Track A roadmap for future visual 2.5D map renderer polish without changing the renderer in this phase.",
+    targetVisualStyle: [
+      "playful 2.5D / isometric-feeling map",
+      "toy-town / paper-cut / polished mobile look",
+      "soft water and beaches",
+      "cartoony roads and paths",
+      "green parks and grass zones",
+      "simple buildings with depth and shadows",
+      "readable labels",
+      "normal blue pins still clearly visible",
+      "player marker still clearly visible",
+      "capture radius still preserved"
+    ],
+    trackScope: [
+      "visual 2.5D map renderer polish only",
+      "mobile-friendly presentation improvements only",
+      "no gameplay changes",
+      "no POI data loading changes"
+    ],
+    plannedLayers: [
+      "renderer safety boundary",
+      "visual background palette",
+      "roads and paths polish",
+      "water and beach polish",
+      "parks and grass polish",
+      "simple building depth pass",
+      "label readability pass",
+      "shadow and depth pass",
+      "mobile performance pass",
+      "final comparison against the Cowes Jetty target screenshot"
+    ],
+    plannedPhases: [
+      "roadmap checkpoint",
+      "safe renderer boundary review",
+      "layer-by-layer visual polish passes",
+      "label pass",
+      "depth/shadow pass",
+      "mobile performance review",
+      "final visual comparison and tuning"
+    ],
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true,
+      landmarkMarkerManualTestPath: true,
+      sampleData: true,
+      dinosaurSiteData: true,
+      filmLocationData: true,
+      realPoiData: true
+    },
+    doNotChangeYet: [
+      "do not enable ENABLE_CUSTOM_25D_MAP",
+      "do not change map appearance in this phase",
+      "do not add new visual layers in this phase",
+      "do not add real POI data",
+      "do not add dinosaur site data",
+      "do not add film location data",
+      "do not add UI toggles",
+      "do not change gameplay",
+      "do not change backend",
+      "do not change rewards",
+      "do not change collections",
+      "do not change normal blue pins",
+      "do not change player marker",
+      "do not change capture radius",
+      "do not change OSM behavior",
+      "do not auto-pan",
+      "do not auto-fly",
+      "do not auto-zoom"
+    ],
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    performanceGoals: [
+      "preserve mobile-safe rendering costs",
+      "avoid unnecessary layer churn",
+      "keep labels and shadows lightweight",
+      "protect scroll, pan, and zoom responsiveness"
+    ],
+    mobileGoals: [
+      "maintain readability on small screens",
+      "keep pins and player marker visually dominant",
+      "avoid clutter around capture interactions",
+      "support polished touch-friendly map presentation"
+    ],
+    notes: [
+      "Roadmap-only helper.",
+      "Does not change renderer output in this phase.",
+      "Does not enable flags.",
+      "Does not load data.",
+      "Does not create markers, layers, UI, or event listeners."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
