@@ -9684,6 +9684,59 @@ function getCustom25DVisualManualRendererAssemblyGuardEvaluatorPlan() {
   };
 }
 
+function canAssembleCustom25DVisualRenderer(options = {}) {
+  const reasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) reasons.push("custom-25d-map-disabled");
+  if (options.manual !== true) reasons.push("manual-option-required");
+  if (options.developerIntent !== true) reasons.push("developer-intent-required");
+  if (options.allowRendererAssembly !== true) reasons.push("renderer-assembly-not-allowed");
+  if (options.hasRendererShell !== true) reasons.push("renderer-shell-required");
+  if (options.hasRendererContainer !== true) reasons.push("renderer-container-required");
+  if (options.hasLayerHost !== true) reasons.push("layer-host-required");
+  if (options.hasRenderLayerRegistry !== true) reasons.push("render-layer-registry-required");
+  if (options.hasPreparedLayerStack !== true) reasons.push("prepared-layer-stack-required");
+  if (options.preserveGameplayOverlays !== true) {
+    reasons.push("gameplay-overlay-preservation-required");
+  }
+  if (options.preserveOSMBehavior !== true) reasons.push("osm-behavior-preservation-required");
+
+  return {
+    ok: true,
+    phase: 93,
+    guard: "manual-renderer-assembly",
+    allowed: reasons.length === 0,
+    reason: reasons.length > 0 ? reasons[0] : null,
+    reasons,
+    dormant: true,
+    guarded: true,
+    manualOnly: true,
+    developerOnly: true,
+    mutatesState: false,
+    assemblesRenderer: false,
+    initializesLayers: false,
+    createsRendererShell: false,
+    createsRendererContainer: false,
+    createsLayerHost: false,
+    initializesRenderLayerRegistry: false,
+    drawsContent: false,
+    createsVisibleMapLayers: false,
+    startupWiringAdded: false,
+    visualBehaviorChanged: false,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    passiveReports: {
+      guardContractAvailable:
+        typeof getCustom25DVisualManualRendererAssemblyGuardContract === "function",
+      evaluatorPlanAvailable:
+        typeof getCustom25DVisualManualRendererAssemblyGuardEvaluatorPlan === "function"
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
