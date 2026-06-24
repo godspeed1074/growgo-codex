@@ -8613,6 +8613,89 @@ function getCustom25DLandmarkVisibleTinyManualTestFinalChecklist() {
   };
 }
 
+function getCustom25DLandmarkVisibleTinyManualTestCompletionDecision() {
+  return {
+    ok: true,
+    phase: 64,
+    name: "Manual-only landmark visible test completion decision",
+    dormant: true,
+    purpose:
+      "Summarize whether the guarded manual-only landmark visible test path is complete enough and what the safe future options are.",
+    currentStatus: "ready-for-merge-review",
+    completedPieces: [
+      "guarded manual-only console run path",
+      "required developer opt-in options",
+      "max marker count of 3",
+      "Phase 56 visible marker style",
+      "Phase 57 label behavior/text",
+      "Phase 58 result object behavior",
+      "Phase 59 centered triangle marker spacing",
+      "Phase 60 safety check helper",
+      "Phase 61 console guide audit helper",
+      "Phase 62 observation audit helper",
+      "Phase 63 final checklist helper",
+      "safe cleanup command",
+      "no default marker creation",
+      "no default UI creation",
+      "no default event listeners",
+      "no sample data loading",
+      "no dinosaur site data loading",
+      "no auto-pan, auto-fly, or auto-zoom"
+    ],
+    manualRunCommand:
+      'runCustom25DLandmarkVisibleTinyManualTest({ manual: true, developerIntent: true, allowVisibleTestMarkers: true, limit: 3 })',
+    cleanupCommand: "clearCustom25DLandmarkVisibleTinyManualTest()",
+    completionSummary:
+      "The manual visible landmark test path is fully guarded, fake/internal only, visually inspectable by explicit console call, and safely removable by the dedicated cleanup command.",
+    safeFutureOptions: [
+      "keep the manual visible test path dormant for future developer inspection",
+      "remove the manual visible test path later if it is no longer needed",
+      "use the guarded manual-only pattern later for real landmark POI development",
+      "create a separate future branch for real landmark, dinosaur, or film-location data only after this test path is merged and stable"
+    ],
+    recommendedNextStep:
+      "Treat this manual visible marker test path as complete after Phase 64 is merged, unless a bug is found during manual inspection.",
+    doNotDoYet: [
+      "do not add real landmark data",
+      "do not add dinosaur site data",
+      "do not add film location data",
+      "do not enable visible landmark markers by default",
+      "do not connect this to gameplay",
+      "do not connect this to rewards",
+      "do not connect this to collections",
+      "do not add backend storage",
+      "do not add UI toggles",
+      "do not add map auto-movement"
+    ],
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    notes: [
+      "Do not change marker style from Phase 56.",
+      "Do not change labels from Phase 57.",
+      "Do not change result objects from Phase 58.",
+      "Do not change spacing from Phase 59.",
+      "Do not change safety helper from Phase 60.",
+      "Do not change console guide audit from Phase 61.",
+      "Do not change observation audit from Phase 62.",
+      "Do not change final checklist from Phase 63."
+    ]
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
