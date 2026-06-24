@@ -8765,6 +8765,177 @@ function getCustom25DVisualLabelLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualPinOverlayPreservationLayerState() {
+  return {
+    ok: true,
+    phase: 87,
+    name: "Custom 2.5D visual renderer pin overlay preservation layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    requiresLabelLayer: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    createsPins: false,
+    movesPins: false,
+    restylesPins: false,
+    changesPlayerMarker: false,
+    changesCaptureRadius: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualPinOverlayPreservationLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowPinOverlayPreservationLayer !== true) {
+    blockedReasons.push("options.allowPinOverlayPreservationLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+  if (options.hasLabelLayer !== true) {
+    blockedReasons.push("A valid guarded label layer is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 87,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualPinOverlayPreservationLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualPinOverlayPreservationLayer(options);
+  const pinOverlayPreservationLayerConfig = {
+    key: "pinOverlayPreservation",
+    name: "Pin Overlay Preservation",
+    order: 12,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "preserve normal GrowGo pins, player marker, and capture radius above future custom 2.5D visual layers",
+    targetStyle: "existing GrowGo blue pins, avatar player marker, and capture radius remain unchanged and readable over the polished map",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    createsPins: false,
+    movesPins: false,
+    restylesPins: false,
+    changesPlayerMarker: false,
+    changesCaptureRadius: false,
+    dependsOnLabelLayer: true,
+    sitsAboveBackgroundLayer: true,
+    sitsAboveWaterLayer: true,
+    sitsAboveBeachLayer: true,
+    sitsAboveGrassLayer: true,
+    sitsAboveParkLayer: true,
+    sitsAboveRoadShadowLayer: true,
+    sitsAboveRoadBaseLayer: true,
+    sitsAboveRoadHighlightLayer: true,
+    sitsAboveBuildingShadowLayer: true,
+    sitsAboveBuildingBaseLayer: true,
+    sitsAboveBuildingRoofLayer: true,
+    sitsAboveLabelLayer: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 87,
+      dormant: true,
+      defaultVisualChange: false,
+      pinOverlayPreservationLayerState: getCustom25DVisualPinOverlayPreservationLayerState(),
+      pinOverlayPreservationLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 87,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Pin overlay preservation layer remains guarded, data-only, and inert in this phase.",
+    pinOverlayPreservationLayerState: {
+      ...getCustom25DVisualPinOverlayPreservationLayerState(),
+      lastReason: "guarded-invisible-pin-overlay-preservation-layer"
+    },
+    pinOverlayPreservationLayerConfig
+  };
+}
+
+function clearCustom25DVisualPinOverlayPreservationLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 87,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual pin overlay preservation layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualPinOverlayPreservationLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 87,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    hasGuardedParkLayerImplementation: true,
+    hasGuardedRoadShadowLayerImplementation: true,
+    hasGuardedRoadBaseLayerImplementation: true,
+    hasGuardedRoadHighlightLayerImplementation: true,
+    hasGuardedBuildingShadowLayerImplementation: true,
+    hasGuardedBuildingBaseLayerImplementation: true,
+    hasGuardedBuildingRoofLayerImplementation: true,
+    hasGuardedLabelLayerImplementation: true,
+    hasGuardedPinOverlayPreservationLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    readyForFutureOverlayOrderingProtectionRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
