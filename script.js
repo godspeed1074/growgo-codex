@@ -6288,6 +6288,117 @@ function getCustom25DVisualMapRendererSafetyBoundary() {
   };
 }
 
+function getCustom25DVisualBackgroundPaletteConfig() {
+  return {
+    ok: true,
+    phase: 68,
+    name: "Custom 2.5D visual background palette config",
+    dormant: true,
+    purpose:
+      "Define passive future color and style intentions for Track A custom 2.5D background visuals without applying them in this phase.",
+    styleGoal: [
+      "soft playful 2.5D background tone",
+      "toy-town / paper-cut mobile feel",
+      "calm layered map surface under gameplay pins",
+      "readable but gentle contrast"
+    ],
+    palette: {
+      water: {
+        base: "#7cb7de",
+        highlight: "#b9e0f5",
+        shorelineContrast: "#5f9bc3"
+      },
+      beach: {
+        base: "#e6d0a4",
+        edgeHighlight: "#f3e4c3"
+      },
+      grass: {
+        base: "#8fbe73",
+        openAreaHighlight: "#b6d995"
+      },
+      parks: {
+        base: "#79ac63",
+        softContrast: "#96c97d"
+      },
+      roads: {
+        base: "#d8c7a9",
+        softEdgeShadow: "#b7a88f"
+      },
+      paths: {
+        base: "#cdbb9a"
+      },
+      buildings: {
+        base: "#e7dccb",
+        sideShadow: "#c8bba6"
+      },
+      labels: {
+        text: "#2f3b2d",
+        halo: "#f6f1e6"
+      },
+      depth: {
+        softShadow: "rgba(76, 63, 46, 0.16)",
+        subtleLift: "rgba(255, 255, 255, 0.12)"
+      }
+    },
+    layerIntent: [
+      "water and beach tones sit low in the stack",
+      "grass and parks provide broad soft color fields",
+      "roads and paths stay readable without overpowering pins",
+      "buildings use warm neutral tones with simple depth separation",
+      "labels remain legible with a light halo concept",
+      "depth tones stay soft and mobile-friendly"
+    ],
+    usageRules: [
+      "palette is dormant",
+      "palette is not applied automatically",
+      "palette does not draw anything",
+      "palette does not change Leaflet/OSM appearance by default",
+      "future renderer phases may reference it only while guarded by ENABLE_CUSTOM_25D_MAP",
+      "ENABLE_CUSTOM_25D_MAP must remain false by default"
+    ],
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true,
+      landmarkMarkerManualTestPath: true,
+      sampleData: true,
+      dinosaurSiteData: true,
+      filmLocationData: true,
+      realPoiData: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    notes: [
+      "Palette/config helper only.",
+      "No active rendering in this phase.",
+      "No map appearance change by default.",
+      "No layers, UI, markers, or event listeners created.",
+      "Future use remains gated behind ENABLE_CUSTOM_25D_MAP."
+    ]
+  };
+}
+
+function getCustom25DVisualBackgroundPaletteReadiness() {
+  return {
+    ok: true,
+    phase: 68,
+    dormant: true,
+    hasPaletteConfig: true,
+    readyForFutureLayerPrep: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
