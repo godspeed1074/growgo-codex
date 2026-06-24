@@ -7987,6 +7987,143 @@ function getCustom25DLandmarkVisibleTestLaunchSafetyWrapperPlan() {
   };
 }
 
+const CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE = {
+  layer: null,
+  markersCreated: 0,
+  lastRunAt: null,
+  lastClearAt: null
+};
+
+function canRunCustom25DLandmarkVisibleTinyManualTest(options = {}) {
+  const blockedReasons = [];
+  const requiredOptions = {
+    manual: true,
+    developerIntent: true,
+    allowVisibleTestMarkers: true,
+    limit: "1-3"
+  };
+  const requestedLimit = Number(options.limit);
+
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowVisibleTestMarkers !== true) blockedReasons.push("options.allowVisibleTestMarkers must be true");
+  if (!Number.isFinite(requestedLimit)) {
+    blockedReasons.push("options.limit must be provided");
+  } else if (requestedLimit < 1 || requestedLimit > 3) {
+    blockedReasons.push("options.limit must be between 1 and 3");
+  }
+
+  if (!map) blockedReasons.push("map is unavailable");
+  if (typeof L === "undefined") blockedReasons.push("Leaflet is unavailable");
+  if (ENABLE_CUSTOM_25D_MAP !== false) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must remain false by default");
+  if (ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS !== false) blockedReasons.push("ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS must remain false by default");
+  if (ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA !== false) blockedReasons.push("ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA must remain false by default");
+  if (ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA !== false) blockedReasons.push("ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA must remain false by default");
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blockedReasons,
+    requiredOptions,
+    phase: 52,
+    manualOnly: true,
+    defaultOff: true
+  };
+}
+
+function runCustom25DLandmarkVisibleTinyManualTest(options = {}) {
+  const safety = canRunCustom25DLandmarkVisibleTinyManualTest(options);
+  if (!safety.allowed) {
+    return {
+      ok: false,
+      ran: false,
+      blocked: true,
+      blockedReasons: safety.blockedReasons,
+      markersCreated: 0,
+      phase: 52,
+      manualOnly: true,
+      defaultOff: true
+    };
+  }
+
+  const requestedLimit = Math.max(1, Math.min(3, Math.floor(Number(options.limit))));
+  const center = map.getCenter();
+  const fakeEntries = [
+    {
+      id: "tiny-manual-landmark-a",
+      label: "Internal Test A",
+      lat: center.lat + 0.00012,
+      lng: center.lng + 0.00012
+    },
+    {
+      id: "tiny-manual-landmark-b",
+      label: "Internal Test B",
+      lat: center.lat + 0.00018,
+      lng: center.lng - 0.0001
+    },
+    {
+      id: "tiny-manual-landmark-c",
+      label: "Internal Test C",
+      lat: center.lat - 0.00014,
+      lng: center.lng + 0.00008
+    }
+  ].slice(0, requestedLimit);
+
+  if (CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer && map.hasLayer(CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer)) {
+    map.removeLayer(CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer);
+  }
+
+  const testLayer = L.layerGroup();
+  fakeEntries.forEach((entry) => {
+    L.circleMarker([entry.lat, entry.lng], {
+      radius: 7,
+      color: "#d08b1d",
+      weight: 2,
+      fillColor: "#fff0b3",
+      fillOpacity: 0.92,
+      opacity: 0.95,
+      pane: "markerPane",
+      interactive: false
+    }).addTo(testLayer);
+  });
+
+  testLayer.addTo(map);
+  CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer = testLayer;
+  CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.markersCreated = fakeEntries.length;
+  CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.lastRunAt = Date.now();
+
+  return {
+    ok: true,
+    ran: true,
+    blocked: false,
+    blockedReasons: [],
+    markersCreated: fakeEntries.length,
+    phase: 52,
+    manualOnly: true,
+    defaultOff: true
+  };
+}
+
+function clearCustom25DLandmarkVisibleTinyManualTest() {
+  const currentLayer = CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer;
+  const markersRemoved = CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.markersCreated || 0;
+
+  if (currentLayer && map && map.hasLayer(currentLayer)) {
+    map.removeLayer(currentLayer);
+  }
+
+  CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.layer = null;
+  CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.markersCreated = 0;
+  CUSTOM_25D_VISIBLE_TINY_MANUAL_TEST_STATE.lastClearAt = Date.now();
+
+  return {
+    ok: true,
+    cleared: Boolean(currentLayer),
+    markersRemoved,
+    phase: 52
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
