@@ -8455,6 +8455,157 @@ function getCustom25DVisualBuildingBaseLayerImplementationReadiness() {
   };
 }
 
+function getCustom25DVisualBuildingRoofLayerState() {
+  return {
+    ok: true,
+    phase: 85,
+    name: "Custom 2.5D visual renderer building roof layer",
+    dormant: true,
+    enabled: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP",
+    requiresRenderLayerRegistry: true,
+    requiresLayerHost: true,
+    requiresBuildingShadowLayer: true,
+    requiresBuildingBaseLayer: true,
+    layerInitialized: false,
+    layerVisible: false,
+    drawsContent: false,
+    affectsMap: false,
+    lastInitializedAt: null,
+    lastReason: null,
+    defaultVisualChange: false
+  };
+}
+
+function canInitializeCustom25DVisualBuildingRoofLayer(options = {}) {
+  const blockedReasons = [];
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) blockedReasons.push("ENABLE_CUSTOM_25D_MAP must be true");
+  if (options.manual !== true) blockedReasons.push("options.manual must be true");
+  if (options.developerIntent !== true) blockedReasons.push("options.developerIntent must be true");
+  if (options.allowBuildingRoofLayer !== true) {
+    blockedReasons.push("options.allowBuildingRoofLayer must be true");
+  }
+  if (options.hasRenderLayerRegistry !== true) {
+    blockedReasons.push("A valid guarded render-layer registry is required");
+  }
+  if (options.hasLayerHost !== true) {
+    blockedReasons.push("A valid guarded invisible layer host is required");
+  }
+  if (options.hasBuildingShadowLayer !== true) {
+    blockedReasons.push("A valid guarded building shadow layer is required");
+  }
+  if (options.hasBuildingBaseLayer !== true) {
+    blockedReasons.push("A valid guarded building base layer is required");
+  }
+
+  return {
+    ok: blockedReasons.length === 0,
+    allowed: blockedReasons.length === 0,
+    blocked: blockedReasons.length > 0,
+    blockedReasons,
+    phase: 85,
+    dormant: true,
+    defaultVisualChange: false
+  };
+}
+
+function initializeCustom25DVisualBuildingRoofLayer(options = {}) {
+  const guard = canInitializeCustom25DVisualBuildingRoofLayer(options);
+  const buildingRoofLayerConfig = {
+    key: "buildingRoof",
+    name: "Building Roof",
+    order: 10,
+    enabledByDefault: false,
+    visible: false,
+    implemented: false,
+    dormant: true,
+    intendedVisualRole: "simple toy-like roof cap foundation for future 2.5D building polish",
+    targetStyle: "soft rounded roof caps, warm playful roof colors, simple toy-block building tops, mobile-friendly Cowes Jetty visual direction",
+    drawsContent: false,
+    affectsMap: false,
+    dataSource: "none",
+    usesRealBuildingGeometry: false,
+    dependsOnBuildingShadowLayer: true,
+    dependsOnBuildingBaseLayer: true,
+    sitsAboveBuildingShadowLayer: true,
+    sitsAboveBuildingBaseLayer: true,
+    sitsBelowLabelLayer: true,
+    completesBuildingDepthTrio: true
+  };
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      initialized: false,
+      blocked: true,
+      blockedReasons: guard.blockedReasons,
+      phase: 85,
+      dormant: true,
+      defaultVisualChange: false,
+      buildingRoofLayerState: getCustom25DVisualBuildingRoofLayerState(),
+      buildingRoofLayerConfig
+    };
+  }
+
+  return {
+    ok: true,
+    initialized: false,
+    blocked: false,
+    phase: 85,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "Building roof layer remains guarded, data-only, and inert in this phase.",
+    buildingRoofLayerState: {
+      ...getCustom25DVisualBuildingRoofLayerState(),
+      lastReason: "guarded-invisible-building-roof-layer"
+    },
+    buildingRoofLayerConfig
+  };
+}
+
+function clearCustom25DVisualBuildingRoofLayer() {
+  return {
+    ok: true,
+    cleared: false,
+    phase: 85,
+    dormant: true,
+    defaultVisualChange: false,
+    reason: "No custom 2.5D visual building roof layer exists to clear in this phase."
+  };
+}
+
+function getCustom25DVisualBuildingRoofLayerImplementationReadiness() {
+  return {
+    ok: true,
+    phase: 85,
+    dormant: true,
+    hasPaletteConfig: true,
+    hasLayerStructureConfig: true,
+    hasContainerPrep: true,
+    hasRendererShell: true,
+    hasGuardedContainerImplementation: true,
+    hasGuardedLayerHostImplementation: true,
+    hasGuardedRenderLayerRegistryImplementation: true,
+    hasGuardedBackgroundLayerImplementation: true,
+    hasGuardedWaterLayerImplementation: true,
+    hasGuardedBeachLayerImplementation: true,
+    hasGuardedGrassLayerImplementation: true,
+    hasGuardedParkLayerImplementation: true,
+    hasGuardedRoadShadowLayerImplementation: true,
+    hasGuardedRoadBaseLayerImplementation: true,
+    hasGuardedRoadHighlightLayerImplementation: true,
+    hasGuardedBuildingShadowLayerImplementation: true,
+    hasGuardedBuildingBaseLayerImplementation: true,
+    hasGuardedBuildingRoofLayerImplementation: true,
+    dataOnlyLayerConfig: true,
+    nonRenderingByDefault: true,
+    readyForFutureBuildingRoofVisualActivationRules: true,
+    defaultVisualChange: false,
+    requiresFlag: "ENABLE_CUSTOM_25D_MAP"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
