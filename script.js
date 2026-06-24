@@ -9963,6 +9963,84 @@ function assembleCustom25DVisualRendererManual(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererAssemblyReadinessReport(options = {}) {
+  const guard = canAssembleCustom25DVisualRenderer(options);
+  const passiveResultContract =
+    typeof getCustom25DVisualManualRendererAssemblyResultContract === "function"
+      ? getCustom25DVisualManualRendererAssemblyResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly result contract helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 96,
+    name: "custom-25d-visual-manual-renderer-assembly-readiness-report",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    guard: {
+      allowed: guard.allowed,
+      reason: guard.reason,
+      reasons: guard.reasons,
+      checks: {
+        custom25DMapEnabled: ENABLE_CUSTOM_25D_MAP === true,
+        manual: options.manual === true,
+        developerIntent: options.developerIntent === true,
+        allowRendererAssembly: options.allowRendererAssembly === true,
+        hasRendererShell: options.hasRendererShell === true,
+        hasRendererContainer: options.hasRendererContainer === true,
+        hasLayerHost: options.hasLayerHost === true,
+        hasRenderLayerRegistry: options.hasRenderLayerRegistry === true,
+        hasPreparedLayerStack: options.hasPreparedLayerStack === true,
+        preserveGameplayOverlays: options.preserveGameplayOverlays === true,
+        preserveOSMBehavior: options.preserveOSMBehavior === true
+      }
+    },
+    contractAvailable:
+      typeof getCustom25DVisualManualRendererAssemblyResultContract === "function",
+    shellHelperAvailable:
+      typeof assembleCustom25DVisualRendererManual === "function",
+    readyForRealAssembly: false,
+    readyForManualShellOnly: guard.allowed === true,
+    blockedByDefault: guard.allowed !== true,
+    requiredManualInputs: [
+      "manual: true",
+      "developerIntent: true",
+      "allowRendererAssembly: true",
+      "hasRendererShell: true",
+      "hasRendererContainer: true",
+      "hasLayerHost: true",
+      "hasRenderLayerRegistry: true",
+      "hasPreparedLayerStack: true",
+      "preserveGameplayOverlays: true",
+      "preserveOSMBehavior: true"
+    ],
+    confirmedNonActions: [
+      "does not assemble renderer",
+      "does not create renderer shell/container/host",
+      "does not initialize render layer registry or layers",
+      "does not draw content or create visible map layers",
+      "does not wire startup",
+      "does not mutate state",
+      "does not add UI or event listeners"
+    ],
+    nextRecommendedPhase: "phase-97-manual-renderer-assembly-shell-report-alignment",
+    safetyNotes: [
+      "Default path remains blocked while ENABLE_CUSTOM_25D_MAP is false.",
+      "This helper is report-only and does not attempt assembly.",
+      "Normal blue pins, player marker, capture radius, OSM labels, and OSM behavior remain preserved."
+    ],
+    passiveReports: {
+      guard,
+      resultContract: passiveResultContract
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
