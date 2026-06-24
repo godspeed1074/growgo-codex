@@ -12199,6 +12199,155 @@ function getCustom25DVisualLayerInitializationShellVerificationReport(options = 
   };
 }
 
+function getCustom25DVisualLayerInitializationShellCloseoutReport(options = {}) {
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable",
+          phase: 116,
+          dormant: true,
+          manualOnly: true,
+          developerIntentRequired: true,
+          checks: {},
+          missing: ["guard"],
+          safety: {
+            mutatesState: false,
+            startupWired: false,
+            rendererCreated: false,
+            registryCreated: false,
+            layersInitialized: false,
+            visibleGraphicsCreated: false,
+            mapAttached: false,
+            dataLoaded: false,
+            gameplayChanged: false
+          },
+          nextPhase: "phase-117-visual-layer-state-inventory-audit-plan-only"
+        };
+  const plan =
+    typeof getCustom25DVisualLayerInitializationPlan === "function"
+      ? getCustom25DVisualLayerInitializationPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization plan helper is unavailable."
+        };
+  const contract =
+    typeof getCustom25DVisualLayerInitializationResultContract === "function"
+      ? getCustom25DVisualLayerInitializationResultContract({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization result contract helper is unavailable."
+        };
+  const dryRun =
+    typeof getCustom25DVisualLayerInitializationDryRunReport === "function"
+      ? getCustom25DVisualLayerInitializationDryRunReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization dry-run report helper is unavailable."
+        };
+  const safetyReview =
+    typeof getCustom25DVisualLayerInitializationSafetyReview === "function"
+      ? getCustom25DVisualLayerInitializationSafetyReview({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization safety review helper is unavailable."
+        };
+  const initializationCloseout =
+    typeof getCustom25DVisualLayerInitializationCloseoutReport === "function"
+      ? getCustom25DVisualLayerInitializationCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization closeout report helper is unavailable."
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualLayers === "function"
+      ? initializeCustom25DVisualLayers(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-initialization-shell-unavailable",
+          initialized: false,
+          mutatesState: false,
+          createsVisibleGraphics: false,
+          attachesToMap: false,
+          affectedLayers: [],
+          skippedLayers: [],
+          blockedLayers: ["shell"]
+        };
+  const shellVerification =
+    typeof getCustom25DVisualLayerInitializationShellVerificationReport === "function"
+      ? getCustom25DVisualLayerInitializationShellVerificationReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization shell verification report helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 116,
+    name: "custom-25d-visual-layer-initialization-shell-closeout-report",
+    dormant: true,
+    closeoutReportOnly: true,
+    reportOnly: true,
+    dataOnly: true,
+    mutatesState: false,
+    guard,
+    plan,
+    contract,
+    dryRun,
+    safetyReview,
+    initializationCloseout,
+    shellResult,
+    shellVerification,
+    defaultOutcome: {
+      blocked: shellResult.allowed !== true,
+      reason: shellResult.reason || guard.reason || "visual-layer-initialization-blocked",
+      initialized: shellResult.initialized === true,
+      mutatesState: shellResult.mutatesState === true,
+      createsVisibleGraphics: shellResult.createsVisibleGraphics === true,
+      attachesToMap: shellResult.attachesToMap === true
+    },
+    verifiedSafetyBoundaries: {
+      noRendererInitializerCalled: true,
+      noRegistryInitializerCalled: true,
+      noLayerInitializerCalled: true,
+      noLayerCreated: true,
+      noLayerInitialized: true,
+      noLayerAttached: true,
+      noLayerDrawn: true,
+      noLayerVisible: true,
+      noStartupWiring: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      shellSequenceClosedOut: true,
+      defaultShellPathBlocked: shellResult.allowed !== true,
+      shellStayedInert: shellResult.initialized !== true,
+      noVisibleSideEffects: true
+    },
+    recommendation: "Keep the visual layer initialization shell sequence closed out until a dedicated layer state inventory and audit plan is complete.",
+    nextPhase: "phase-117-visual-layer-state-inventory-audit-plan-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
