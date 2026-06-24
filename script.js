@@ -9901,7 +9901,7 @@ function assembleCustom25DVisualRendererManual(options = {}) {
   if (!guard.allowed) {
     return {
       ok: true,
-      phase: 95,
+      phase: 101,
       action: "manual-renderer-assembly",
       attempted: true,
       allowed: false,
@@ -9909,21 +9909,33 @@ function assembleCustom25DVisualRendererManual(options = {}) {
       reason: guard.reason,
       reasons: guard.reasons,
       assembled: false,
+      structuralAssemblyOnly: false,
+      rendererShellCreated: false,
+      rendererContainerCreated: false,
+      layerHostCreated: false,
       rendererShellReady: options.hasRendererShell === true,
       rendererContainerReady: options.hasRendererContainer === true,
       layerHostReady: options.hasLayerHost === true,
-      renderLayerRegistryReady: options.hasRenderLayerRegistry === true,
-      preparedLayerStackReady: options.hasPreparedLayerStack === true,
+      renderLayerRegistryInitialized: false,
+      visualLayersInitialized: false,
       visualBehaviorChanged: false,
       startupWiringAdded: false,
       mutatesState: false,
       drawsContent: false,
       createsVisibleMapLayers: false,
+      visibleGraphicsCreated: false,
+      dataLoaded: false,
+      gameplayChanged: false,
       preservesNormalBluePins: true,
       preservesPlayerMarker: true,
       preservesCaptureRadius: true,
       preservesOSMBehavior: true,
       preservesOSMLabels: true,
+      safetyNotes: [
+        "Guard failed, so no structural renderer helpers were called.",
+        "No render layer registry or visual layers were initialized.",
+        "No visible graphics, startup wiring, data loading, or gameplay changes occurred."
+      ],
       passiveReports: {
         guard,
         resultContract: passiveResultContract
@@ -9931,34 +9943,98 @@ function assembleCustom25DVisualRendererManual(options = {}) {
     };
   }
 
+  const shellResult =
+    typeof initializeCustom25DVisualRendererShell === "function"
+      ? initializeCustom25DVisualRendererShell({
+          manual: true,
+          developerIntent: true,
+          allowVisualRendererShell: true
+        })
+      : {
+          ok: false,
+          initialized: false,
+          blocked: true,
+          blockedReasons: ["renderer-shell-helper-unavailable"]
+        };
+  const rendererShellCreated = shellResult.ok === true && shellResult.blocked === false;
+
+  const containerResult =
+    typeof createCustom25DVisualRendererContainer === "function"
+      ? createCustom25DVisualRendererContainer({
+          manual: true,
+          developerIntent: true,
+          allowVisualRendererContainer: true
+        })
+      : {
+          ok: false,
+          created: false,
+          blocked: true,
+          blockedReasons: ["renderer-container-helper-unavailable"]
+        };
+  const rendererContainerCreated =
+    containerResult.ok === true && containerResult.blocked === false;
+
+  const layerHostResult =
+    typeof createCustom25DVisualLayerHost === "function"
+      ? createCustom25DVisualLayerHost({
+          manual: true,
+          developerIntent: true,
+          allowVisualLayerHost: true,
+          hasRendererContainer: rendererContainerCreated
+        })
+      : {
+          ok: false,
+          created: false,
+          blocked: true,
+          blockedReasons: ["layer-host-helper-unavailable"]
+        };
+  const layerHostCreated = layerHostResult.ok === true && layerHostResult.blocked === false;
+  const structuralAssemblySucceeded =
+    rendererShellCreated && rendererContainerCreated && layerHostCreated;
+
   return {
-    ok: false,
-    phase: 95,
+    ok: true,
+    phase: 101,
     action: "manual-renderer-assembly",
     attempted: true,
     allowed: true,
     blocked: false,
-    reason: "renderer-assembly-shell-only",
-    reasons: ["renderer-assembly-shell-only"],
-    assembled: false,
-    rendererShellReady: options.hasRendererShell === true,
-    rendererContainerReady: options.hasRendererContainer === true,
-    layerHostReady: options.hasLayerHost === true,
-    renderLayerRegistryReady: options.hasRenderLayerRegistry === true,
-    preparedLayerStackReady: options.hasPreparedLayerStack === true,
+    reason: "structural-assembly-only",
+    reasons: ["structural-assembly-only"],
+    assembled: structuralAssemblySucceeded,
+    structuralAssemblyOnly: structuralAssemblySucceeded,
+    rendererShellCreated,
+    rendererContainerCreated,
+    layerHostCreated,
+    rendererShellReady: rendererShellCreated,
+    rendererContainerReady: rendererContainerCreated,
+    layerHostReady: layerHostCreated,
+    renderLayerRegistryInitialized: false,
+    visualLayersInitialized: false,
     visualBehaviorChanged: false,
     startupWiringAdded: false,
     mutatesState: false,
     drawsContent: false,
     createsVisibleMapLayers: false,
+    visibleGraphicsCreated: false,
+    dataLoaded: false,
+    gameplayChanged: false,
     preservesNormalBluePins: true,
     preservesPlayerMarker: true,
     preservesCaptureRadius: true,
     preservesOSMBehavior: true,
     preservesOSMLabels: true,
+    safetyNotes: [
+      "Only inert structural renderer helpers were confirmed in this phase.",
+      "Render layer registry and visual layers remain uninitialized.",
+      "No drawing, visible graphics, startup wiring, data loading, or gameplay changes occurred."
+    ],
     passiveReports: {
       guard,
-      resultContract: passiveResultContract
+      resultContract: passiveResultContract,
+      rendererShell: shellResult,
+      rendererContainer: containerResult,
+      layerHost: layerHostResult
     }
   };
 }
