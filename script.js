@@ -8191,6 +8191,80 @@ function getCustom25DLandmarkVisibleTinyManualTestConsoleGuide() {
   };
 }
 
+function getCustom25DLandmarkVisibleTinyManualTestResultReportPlan() {
+  return {
+    ok: true,
+    phase: 55,
+    name: "custom-25d-landmark-visible-test-result-report-plan",
+    dormant: true,
+    planningOnly: true,
+    documentationOnly: true,
+    purpose:
+      "Document the Phase 54 manual-only visible landmark marker test result.",
+    noDefaultExecution: true,
+    manualOnly: true,
+    doesNotRunTest: true,
+    doesNotEnableFlags: true,
+    doesNotCreateUi: true,
+    doesNotCreateDebugButtons: true,
+    doesNotCreateDomElements: true,
+    doesNotAttachEventListeners: true,
+    doesNotLoadData: true,
+    doesNotCreateMarkers: true,
+    doesNotCreateLayers: true,
+    doesNotMutateMapState: true,
+    doesNotChangeMapBehavior: true,
+    doesNotChangeGameplay: true,
+    doesNotChangeBackend: true,
+    doesNotChangeRewards: true,
+    doesNotChangeCollections: true,
+    doesNotChangeNormalPins: true,
+    doesNotChangePlayerMarker: true,
+    doesNotChangeCaptureRadius: true,
+    doesNotChangeOsmVisibility: true,
+    reportSummary: {
+      phase54Branch: "feature/custom-25d-landmark-visible-test-console-visual-check",
+      phase54CodeChanges: false,
+      phase54CommitNeeded: false,
+      defaultBlockedCallSucceeded: true,
+      manualOptInVisualCallSucceeded: true,
+      markersCreated: 3,
+      cleanupSucceeded: true,
+      osmRemainedVisible: true,
+      normalBluePinsUnaffected: true,
+      playerMarkerUnaffected: true,
+      captureRadiusUnaffected: true,
+      uiUnaffected: true,
+      gameplayUnaffected: true,
+      backendUnaffected: true,
+      rewardsUnaffected: true,
+      collectionsUnaffected: true
+    },
+    consoleCommands: [
+      "runCustom25DLandmarkVisibleTinyManualTest()",
+      "getCustom25DLandmarkVisibleTinyManualTestConsoleGuide()",
+      "runCustom25DLandmarkVisibleTinyManualTest({ manual: true, developerIntent: true, allowVisibleTestMarkers: true, limit: 3 })",
+      "clearCustom25DLandmarkVisibleTinyManualTest()"
+    ],
+    nextStepRecommendations: [
+      "continue with a slightly more polished manual marker visual test",
+      "still off by default",
+      "still manual-only",
+      "still no UI switch",
+      "still no real POIs",
+      "still no sample/dinosaur data loading by default"
+    ],
+    helperNames: [
+      "getCustom25DLandmarkVisibleTinyManualTestConsoleGuide()",
+      "canRunCustom25DLandmarkVisibleTinyManualTest()",
+      "runCustom25DLandmarkVisibleTinyManualTest()",
+      "clearCustom25DLandmarkVisibleTinyManualTest()"
+    ],
+    expectedCurrentBehavior:
+      "Current behavior remains fully dormant; this report documents the successful manual console test result only and does not run the manual test or create visible markers."
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
