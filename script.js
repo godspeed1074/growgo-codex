@@ -8088,12 +8088,31 @@ function runCustom25DLandmarkVisibleTinyManualTest(options = {}) {
       `,
     });
 
-    L.marker([entry.lat, entry.lng], {
+    const marker = L.marker([entry.lat, entry.lng], {
       icon,
       pane: "markerPane",
       interactive: false,
       keyboard: false,
-    }).addTo(testLayer);
+    });
+
+    marker.bindTooltip(
+      `
+        <div style="padding:4px 6px;border-radius:10px;background:rgba(34,23,10,0.92);color:#fff6d6;border:1px solid rgba(241,192,88,0.72);box-shadow:0 2px 6px rgba(0,0,0,0.18);font-size:10px;line-height:1.15;font-weight:700;letter-spacing:0;text-align:center;white-space:nowrap;">
+          Internal Landmark Test<br>
+          <span style="display:block;margin-top:2px;font-size:9px;font-weight:600;color:#ffd87a;">No gameplay</span>
+        </div>
+      `,
+      {
+        permanent: true,
+        direction: "top",
+        offset: [0, -20],
+        opacity: 1,
+        interactive: false,
+        className: "",
+      }
+    );
+
+    marker.addTo(testLayer);
   });
 
   testLayer.addTo(map);
