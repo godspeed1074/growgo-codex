@@ -10895,6 +10895,179 @@ function getCustom25DVisualManualRendererStructuralAssemblyCloseoutReport(option
   };
 }
 
+function getCustom25DVisualManualRendererRegistryReadinessPlan(options = {}) {
+  const requestedGuard =
+    typeof canAssembleCustom25DVisualRenderer === "function"
+      ? canAssembleCustom25DVisualRenderer(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "guard-evaluator-unavailable",
+          reasons: ["guard-evaluator-unavailable"]
+        };
+  const safeBlockedOptions = {};
+  const structuralCloseout =
+    typeof getCustom25DVisualManualRendererStructuralAssemblyCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererStructuralAssemblyCloseoutReport(safeBlockedOptions)
+      : {
+          ok: false,
+          missing: true,
+          reason: "Structural assembly closeout helper is unavailable."
+        };
+  const resultContract =
+    typeof getCustom25DVisualManualRendererAssemblyResultContract === "function"
+      ? getCustom25DVisualManualRendererAssemblyResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly result contract helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 104,
+    name: "custom-25d-visual-manual-renderer-registry-readiness-plan",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    planningOnly: true,
+    guard: requestedGuard,
+    structuralCloseoutAvailable:
+      typeof getCustom25DVisualManualRendererStructuralAssemblyCloseoutReport === "function",
+    registryInitializationBlockedByDefault: true,
+    registryInitializationStarted: false,
+    structuralPhaseClosedOut:
+      structuralCloseout &&
+      structuralCloseout.structuralScopeClosedOut === true,
+    requiredFutureManualInputs: [
+      "manual: true",
+      "developerIntent: true",
+      "allowRendererAssembly: true",
+      "hasRendererShell: true",
+      "hasRendererContainer: true",
+      "hasLayerHost: true",
+      "allowRenderLayerRegistry: true"
+    ],
+    requiredStructuralPrerequisites: [
+      "renderer shell path exists",
+      "renderer container path exists",
+      "layer host path exists",
+      "structural assembly closeout is complete",
+      "registry work remains manual-only and guard-controlled"
+    ],
+    registryOnlyAllowedFutureScope: [
+      "create or confirm inert render layer registry only",
+      "report registry metadata and layer count only",
+      "keep visual layers uninitialized"
+    ],
+    forbiddenFutureActions: [
+      "visual layer initialization",
+      "canvas drawing",
+      "visible custom map layer creation",
+      "startup wiring",
+      "UI or debug panel creation",
+      "event listener creation",
+      "sample, dinosaur, film, POI, road, or building data loading",
+      "gameplay, pin, player marker, capture radius, or OSM changes"
+    ],
+    blockedByDefault: true,
+    nextRecommendedPhase: "phase-105-manual-renderer-registry-guard-shell",
+    safetyNotes: [
+      "This helper is planning-only and does not initialize the registry.",
+      "Structural shell/container/host work is treated as closed out before registry planning begins.",
+      "Registry work remains blocked by default and must stay isolated from layers, drawing, startup, and gameplay."
+    ],
+    passiveReports: {
+      structuralCloseout,
+      assemblyResultContract: resultContract
+    }
+  };
+}
+
+function getCustom25DVisualManualRendererRegistryResultContract() {
+  return {
+    ok: true,
+    phase: 104,
+    name: "custom-25d-visual-manual-renderer-registry-result-contract",
+    dormant: true,
+    manualOnly: true,
+    dataOnly: true,
+    reportOnly: true,
+    contractOnly: true,
+    futureRegistryInitializationAction: "manual-renderer-registry-initialization",
+    registryInitializationBlockedByDefault: true,
+    futureResultShape: {
+      ok: "boolean",
+      attempted: "boolean",
+      allowed: "boolean",
+      blocked: "boolean",
+      registryInitialized: "boolean",
+      registryCreated: "boolean",
+      layerCount: "number",
+      layersInitialized: false,
+      startupWired: false,
+      visibleGraphicsCreated: false,
+      dataLoaded: false,
+      gameplayChanged: false,
+      reason: "string|null",
+      safetyNotes: "string[]"
+    },
+    futureBlockedResultExample: {
+      ok: true,
+      attempted: true,
+      allowed: false,
+      blocked: true,
+      registryInitialized: false,
+      registryCreated: false,
+      layerCount: 0,
+      layersInitialized: false,
+      startupWired: false,
+      visibleGraphicsCreated: false,
+      dataLoaded: false,
+      gameplayChanged: false,
+      reason: "custom-25d-map-disabled",
+      safetyNotes: [
+        "Registry initialization remains blocked by default.",
+        "No layers, drawing, startup wiring, data loading, or gameplay changes occurred."
+      ]
+    },
+    futureAllowedRegistryOnlyResultExample: {
+      ok: true,
+      attempted: true,
+      allowed: true,
+      blocked: false,
+      registryInitialized: true,
+      registryCreated: true,
+      layerCount: 0,
+      layersInitialized: false,
+      startupWired: false,
+      visibleGraphicsCreated: false,
+      dataLoaded: false,
+      gameplayChanged: false,
+      reason: "registry-only",
+      safetyNotes: [
+        "Only the inert registry boundary was initialized.",
+        "No layers, drawing, startup wiring, data loading, or gameplay changes occurred."
+      ]
+    },
+    contractRules: [
+      "must not report layersInitialized true in the registry-only phase",
+      "must not report startupWired true in the registry-only phase",
+      "must not report visibleGraphicsCreated true in the registry-only phase",
+      "must not report dataLoaded true in the registry-only phase",
+      "must not report gameplayChanged true in the registry-only phase",
+      "must not imply pins, player marker, capture radius, or OSM behavior changed"
+    ],
+    safetyNotes: [
+      "Contract-only helper.",
+      "Does not initialize the registry.",
+      "Does not initialize layers, draw content, wire startup, or load data.",
+      "Keeps future registry work constrained to a manual-only dormant path."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
