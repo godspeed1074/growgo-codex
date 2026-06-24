@@ -12670,6 +12670,115 @@ function getCustom25DVisualLayerStateInventoryReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateInventorySafetyReview(options = {}) {
+  const auditPlan =
+    typeof getCustom25DVisualLayerStateInventoryAuditPlan === "function"
+      ? getCustom25DVisualLayerStateInventoryAuditPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory audit plan helper is unavailable."
+        };
+  const inventoryReport =
+    typeof getCustom25DVisualLayerStateInventoryReport === "function"
+      ? getCustom25DVisualLayerStateInventoryReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory report helper is unavailable."
+        };
+  const shellCloseout =
+    typeof getCustom25DVisualLayerInitializationShellCloseoutReport === "function"
+      ? getCustom25DVisualLayerInitializationShellCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization shell closeout report helper is unavailable."
+        };
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable"
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualLayers === "function"
+      ? initializeCustom25DVisualLayers(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-initialization-shell-unavailable",
+          initialized: false,
+          mutatesState: false,
+          createsVisibleGraphics: false,
+          attachesToMap: false
+        };
+  const knownLayerSlotsReviewed = Array.isArray(inventoryReport.knownLayerSlots)
+    ? inventoryReport.knownLayerSlots.map((slot) => slot.key)
+    : [];
+
+  return {
+    ok: true,
+    phase: 119,
+    name: "custom-25d-visual-layer-state-inventory-safety-review",
+    dormant: true,
+    safetyReviewOnly: true,
+    inventoryReviewOnly: true,
+    reportOnly: true,
+    dataOnly: true,
+    mutatesState: false,
+    auditPlan,
+    inventoryReport,
+    shellCloseout,
+    guard,
+    shellResult,
+    knownLayerSlotsReviewed,
+    defaultOutcome: {
+      defaultSafe: true,
+      shellBlocked: shellResult.allowed !== true,
+      reason: shellResult.reason || guard.reason || "visual-layer-initialization-blocked",
+      initialized: shellResult.initialized === true
+    },
+    reviewedSafetyBoundaries: {
+      noLayerStateObjectCreated: true,
+      noLayerCreated: true,
+      noLayerInitialized: true,
+      noLayerAttachedToMap: true,
+      noLayerDrawn: true,
+      noLayerVisible: true,
+      noStartupWiring: true
+    },
+    blockedBehaviors: {
+      rendererInitialization: true,
+      registryInitialization: true,
+      layerInitialization: true,
+      layerStateCreation: true,
+      drawing: true,
+      mapAttachment: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    risks: [
+      "future inventory work must remain passive until an explicit state-creation phase is approved",
+      "future layer state creation must stay separate from initialization and map attachment",
+      "future work must preserve OSM, pins, player marker, capture radius, gameplay overlays, and UI behavior"
+    ],
+    recommendation: "Complete a closeout report for passive visual layer state inventory before considering any explicit state-creation phase.",
+    nextPhase: "phase-120-visual-layer-state-inventory-closeout-report-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
