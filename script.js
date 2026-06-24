@@ -8314,6 +8314,55 @@ function getCustom25DLandmarkVisibleTinyManualTestResultReportPlan() {
   };
 }
 
+function getCustom25DLandmarkVisibleTinyManualTestSafetyCheck() {
+  return {
+    ok: true,
+    phase: 60,
+    name: "Manual-only landmark visible test safety check",
+    dormant: true,
+    purpose:
+      "Describe the passive safety expectations for the guarded manual-only landmark visible marker test path.",
+    requiresManualConsoleCall: true,
+    requiredOptions: {
+      manual: true,
+      developerIntent: true,
+      allowVisibleTestMarkers: true,
+      limit: 3
+    },
+    maxMarkers: 3,
+    defaultCreatesMarkers: false,
+    defaultCreatesUi: false,
+    defaultAddsEventListeners: false,
+    defaultLoadsSampleData: false,
+    defaultLoadsDinosaurSiteData: false,
+    cleanupScope: "Removes only the manual fake/internal test markers and their attached labels from the dedicated manual test layer.",
+    mapMovement: {
+      autoPan: false,
+      autoFly: false,
+      autoZoom: false
+    },
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true
+    },
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    manualRunCommand:
+      'runCustom25DLandmarkVisibleTinyManualTest({ manual: true, developerIntent: true, allowVisibleTestMarkers: true, limit: 3 })',
+    cleanupCommand: "clearCustom25DLandmarkVisibleTinyManualTest()"
+  };
+}
+
 function getCustom25DLandmarkTestMarkers(bounds) {
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS || !bounds) return [];
 
