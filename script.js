@@ -6179,6 +6179,115 @@ function getCustom25DVisualMapRendererTrackRoadmap() {
   };
 }
 
+function getCustom25DVisualMapRendererSafetyBoundary() {
+  return {
+    ok: true,
+    phase: 67,
+    name: "Custom 2.5D visual map renderer safety boundary",
+    dormant: true,
+    purpose:
+      "Document the passive safety boundary for future Track A visual 2.5D renderer work without changing renderer output in this phase.",
+    rendererBoundary: "Visual renderer polish only. No gameplay, data, or interaction behavior changes are allowed inside this boundary.",
+    allowedFutureVisualAreas: [
+      "visual background palette",
+      "roads and paths visual polish",
+      "water and beach visual polish",
+      "parks and grass visual polish",
+      "simple building depth and shadow visuals",
+      "label readability visuals",
+      "custom 2.5D canvas/layer styling",
+      "mobile performance tuning for visual layers only"
+    ],
+    blockedAreas: [
+      "no gameplay changes",
+      "no backend changes",
+      "no reward changes",
+      "no collection changes",
+      "no normal blue pin behavior changes",
+      "no player marker behavior changes",
+      "no capture radius behavior changes",
+      "no real POI data",
+      "no dinosaur site data",
+      "no film location data",
+      "no sample data loading",
+      "no visible debug UI",
+      "no UI toggles yet",
+      "no automatic map movement"
+    ],
+    protectedSystems: {
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      osmBehavior: true,
+      completedManualLandmarkVisibleMarkerTestPath: true,
+      sampleData: true,
+      dinosaurSiteData: true,
+      filmLocationData: true,
+      realPoiData: true
+    },
+    safeExperimentRules: [
+      "keep all visual renderer changes behind ENABLE_CUSTOM_25D_MAP",
+      "keep ENABLE_CUSTOM_25D_MAP false by default",
+      "default app load must remain visually unchanged until explicitly enabled in a later controlled test",
+      "visual phases should be small and reversible",
+      "each visual phase should affect one layer or one rendering concern only",
+      "no new UI switches until explicitly planned later",
+      "no real data loading while working on visual renderer foundation"
+    ],
+    flagRules: [
+      "ENABLE_CUSTOM_25D_MAP remains false by default",
+      "landmark test/data flags remain false by default",
+      "no renderer roadmap/helper phase may enable flags automatically"
+    ],
+    dataRules: [
+      "do not add real POI data",
+      "do not add dinosaur site data",
+      "do not add film location data",
+      "do not load sample data",
+      "do not couple visual-track work to data-track work"
+    ],
+    mapMovementRules: [
+      "no auto-pan",
+      "no auto-fly",
+      "no auto-zoom",
+      "no forced map recentering",
+      "no camera behavior changes"
+    ],
+    performanceRules: [
+      "preserve smooth map interaction",
+      "avoid heavy DOM creation",
+      "avoid excessive per-frame work",
+      "keep renderer work lightweight",
+      "preserve battery-conscious behavior",
+      "do not add expensive polling loops",
+      "do not add always-running animation loops unless explicitly planned and guarded later"
+    ],
+    mobileRules: [
+      "maintain readability on smaller screens",
+      "keep interactive map behavior responsive",
+      "avoid overcrowding around pins and player marker",
+      "preserve mobile-friendly layering and contrast"
+    ],
+    safetyFlags: {
+      ENABLE_CUSTOM_25D_MAP,
+      ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS,
+      ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA,
+      ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA
+    },
+    notes: [
+      "Safety-boundary helper only.",
+      "Does not change map appearance in this phase.",
+      "Does not create layers, UI, markers, or event listeners.",
+      "Does not load data.",
+      "Does not alter the completed manual landmark visible marker test path."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
