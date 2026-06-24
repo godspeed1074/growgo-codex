@@ -12348,6 +12348,112 @@ function getCustom25DVisualLayerInitializationShellCloseoutReport(options = {}) 
   };
 }
 
+function getCustom25DVisualLayerStateInventoryAuditPlan(options = {}) {
+  const shellCloseout =
+    typeof getCustom25DVisualLayerInitializationShellCloseoutReport === "function"
+      ? getCustom25DVisualLayerInitializationShellCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization shell closeout report helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 117,
+    name: "custom-25d-visual-layer-state-inventory-audit-plan",
+    dormant: true,
+    auditPlanOnly: true,
+    reportOnly: true,
+    dataOnly: true,
+    mutatesState: false,
+    shellCloseout,
+    knownLayerSlots: [
+      "roadShadow",
+      "roadBase",
+      "roadHighlight",
+      "water",
+      "park",
+      "buildingShadow",
+      "buildingBase",
+      "buildingRoof",
+      "label",
+      "landmark",
+      "dinosaur",
+      "film",
+      "poi"
+    ],
+    inventoryChecklist: {
+      inventoryWithoutCreation: true,
+      verifyDormantOrAbsentStates: [
+        "road",
+        "water",
+        "park",
+        "building",
+        "shadow",
+        "landmark",
+        "dinosaur",
+        "film",
+        "poi"
+      ],
+      requiredLayerFields: [
+        "key",
+        "name",
+        "order",
+        "enabledByDefault",
+        "visible",
+        "implemented",
+        "dormant",
+        "initialized",
+        "attachedToMap",
+        "createsVisibleGraphics",
+        "affectsGameplay",
+        "clear/reset pathway"
+      ],
+      confirmNoMapAttachment: true,
+      confirmNoStartupWiring: true,
+      confirmOSMPreservation: true,
+      confirmPinPlayerCapturePreservation: true,
+      confirmGameplayBackendRewardCollectionDataPreservation: true,
+      futurePassiveInventoryReportRequired: true
+    },
+    blockedBehaviors: {
+      rendererInitialization: true,
+      registryInitialization: true,
+      layerInitialization: true,
+      layerStateCreation: true,
+      drawing: true,
+      mapAttachment: true,
+      startupWiring: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplay: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    safety: {
+      defaultSafe: true,
+      noRendererInitializerCalled: true,
+      noRegistryInitializerCalled: true,
+      noLayerInitializerCalled: true,
+      noLayerStateObjectCreated: true,
+      noLayerCreated: true,
+      noLayerInitialized: true,
+      noLayerAttached: true,
+      noLayerDrawn: true,
+      noLayerVisible: true
+    },
+    recommendation: "Audit future visual layer state passively before allowing any real layer initialization work.",
+    nextPhase: "phase-118-visual-layer-state-inventory-report-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
