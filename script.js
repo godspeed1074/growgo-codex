@@ -11162,32 +11162,52 @@ function initializeCustom25DVisualManualRendererRegistry(options = {}) {
     };
   }
 
+  const registryShell =
+    typeof initializeCustom25DVisualRenderLayerRegistry === "function"
+      ? initializeCustom25DVisualRenderLayerRegistry({
+          manual: true,
+          developerIntent: true,
+          allowRenderLayerRegistry: true,
+          hasLayerHost: true
+        })
+      : {
+          ok: false,
+          initialized: false,
+          blocked: true,
+          blockedReasons: ["render-layer-registry-helper-unavailable"],
+          layerRegistry: []
+        };
+  const registryCreated = registryShell.ok === true && registryShell.blocked === false;
+  const layerCount = Array.isArray(registryShell.layerRegistry)
+    ? registryShell.layerRegistry.length
+    : 0;
+
   return {
     ok: true,
     attempted: true,
     allowed: true,
     blocked: false,
-    phase: 105,
+    phase: 107,
     action: "manual-renderer-registry-initialization",
-    registryInitialized: false,
-    registryCreated: false,
-    layerCount: 0,
+    registryInitialized: registryCreated,
+    registryCreated,
+    layerCount,
     layersInitialized: false,
     startupWired: false,
     visibleGraphicsCreated: false,
     dataLoaded: false,
     gameplayChanged: false,
-    reason: "registry-helper-shell-only",
-    reasons: ["registry-helper-shell-only"],
+    reason: "registry-initialized-inert-only",
+    reasons: ["registry-initialized-inert-only"],
     safetyNotes: [
-      "Guard passed, but this phase remains shell-only.",
-      "No registry was created or initialized.",
+      "Guard passed and only the inert render-layer registry boundary was created or confirmed.",
       "No layers, drawing, startup wiring, data loading, or gameplay changes occurred."
     ],
     passiveReports: {
       guard,
       readinessPlan,
-      resultContract
+      resultContract,
+      registryShell
     }
   };
 }
