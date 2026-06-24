@@ -9887,6 +9887,82 @@ function getCustom25DVisualManualRendererAssemblyResultContract() {
   };
 }
 
+function assembleCustom25DVisualRendererManual(options = {}) {
+  const guard = canAssembleCustom25DVisualRenderer(options);
+  const passiveResultContract =
+    typeof getCustom25DVisualManualRendererAssemblyResultContract === "function"
+      ? getCustom25DVisualManualRendererAssemblyResultContract()
+      : {
+          ok: false,
+          missing: true,
+          reason: "Manual renderer assembly result contract helper is unavailable."
+        };
+
+  if (!guard.allowed) {
+    return {
+      ok: true,
+      phase: 95,
+      action: "manual-renderer-assembly",
+      attempted: true,
+      allowed: false,
+      blocked: true,
+      reason: guard.reason,
+      reasons: guard.reasons,
+      assembled: false,
+      rendererShellReady: options.hasRendererShell === true,
+      rendererContainerReady: options.hasRendererContainer === true,
+      layerHostReady: options.hasLayerHost === true,
+      renderLayerRegistryReady: options.hasRenderLayerRegistry === true,
+      preparedLayerStackReady: options.hasPreparedLayerStack === true,
+      visualBehaviorChanged: false,
+      startupWiringAdded: false,
+      mutatesState: false,
+      drawsContent: false,
+      createsVisibleMapLayers: false,
+      preservesNormalBluePins: true,
+      preservesPlayerMarker: true,
+      preservesCaptureRadius: true,
+      preservesOSMBehavior: true,
+      preservesOSMLabels: true,
+      passiveReports: {
+        guard,
+        resultContract: passiveResultContract
+      }
+    };
+  }
+
+  return {
+    ok: false,
+    phase: 95,
+    action: "manual-renderer-assembly",
+    attempted: true,
+    allowed: true,
+    blocked: false,
+    reason: "renderer-assembly-shell-only",
+    reasons: ["renderer-assembly-shell-only"],
+    assembled: false,
+    rendererShellReady: options.hasRendererShell === true,
+    rendererContainerReady: options.hasRendererContainer === true,
+    layerHostReady: options.hasLayerHost === true,
+    renderLayerRegistryReady: options.hasRenderLayerRegistry === true,
+    preparedLayerStackReady: options.hasPreparedLayerStack === true,
+    visualBehaviorChanged: false,
+    startupWiringAdded: false,
+    mutatesState: false,
+    drawsContent: false,
+    createsVisibleMapLayers: false,
+    preservesNormalBluePins: true,
+    preservesPlayerMarker: true,
+    preservesCaptureRadius: true,
+    preservesOSMBehavior: true,
+    preservesOSMLabels: true,
+    passiveReports: {
+      guard,
+      resultContract: passiveResultContract
+    }
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
