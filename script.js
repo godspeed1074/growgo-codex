@@ -15073,6 +15073,107 @@ function assembleCustom25DVisualLayerStateRegistryShell(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateRegistryAssemblyCloseoutBundle(options = {}) {
+  const readinessPlan =
+    typeof getCustom25DVisualLayerStateRegistryReadinessPlan === "function"
+      ? getCustom25DVisualLayerStateRegistryReadinessPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry readiness plan helper is unavailable."
+        };
+  const defaultAssemblyShell =
+    typeof assembleCustom25DVisualLayerStateRegistryShell === "function"
+      ? assembleCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-assembly-shell-unavailable",
+          assembly: null,
+          knownLayerSlots: []
+        };
+  const allowedAssemblyShell =
+    typeof assembleCustom25DVisualLayerStateRegistryShell === "function"
+      ? assembleCustom25DVisualLayerStateRegistryShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateRegistryAssembly: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-assembly-shell-unavailable",
+          assembly: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedAssemblyShell.knownLayerSlots)
+    ? allowedAssemblyShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 144,
+    name: "custom-25d-visual-layer-state-registry-assembly-closeout-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    verificationReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    mutatesState: false,
+    readinessPlan,
+    defaultAssemblyShell,
+    allowedAssemblyShell,
+    knownLayerSlots,
+    verificationChecks: {
+      readinessPlanExists: !!readinessPlan.ok,
+      defaultAssemblyShellBlocked: defaultAssemblyShell.allowed !== true,
+      defaultAssemblyIsNull: defaultAssemblyShell.assembly === null,
+      allowedAssemblyShellReturnsInertDataOnly: !!allowedAssemblyShell.assembly,
+      allowedAssemblyNotStoredGlobally: allowedAssemblyShell.storesGlobally === false,
+      noGlobalRegistryCreated: allowedAssemblyShell.storesGlobally === false,
+      noLayerStateStoredGlobally: allowedAssemblyShell.storesGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      assemblySlotCountIsNine:
+        !!allowedAssemblyShell.assembly && allowedAssemblyShell.assembly.slotCount === 9
+    },
+    safetyChecks: {
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true,
+      passiveOnly: true,
+      noMutation: true
+    },
+    closeoutChecks: {
+      registryAssemblyShellSequenceClosedOut: true,
+      defaultPathRemainsBlocked: defaultAssemblyShell.allowed !== true,
+      allowedPathRemainsInert: !!allowedAssemblyShell.assembly,
+      returnedDataOnly: !!allowedAssemblyShell.assembly
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      registryAssemblyShellSequenceClosedOut: true,
+      noPersistentRegistryCreated: true,
+      noPersistentLayerStateStored: true
+    },
+    recommendation: "Treat the registry assembly shell sequence as passively closed out and move next only to a readiness/inventory bundle for future stored registry work.",
+    nextPhase: "registry-assembly-inventory-readiness-passive-bundle"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
