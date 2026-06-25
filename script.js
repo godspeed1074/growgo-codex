@@ -16138,6 +16138,92 @@ function getCustom25DVisualRendererShellInventoryReadinessBundle(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererMaterializationContractPlan(options = {}) {
+  const rendererShellReadinessBundle =
+    typeof getCustom25DVisualRendererShellInventoryReadinessBundle === "function"
+      ? getCustom25DVisualRendererShellInventoryReadinessBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer shell inventory readiness bundle helper is unavailable."
+        };
+  const defaultRendererShell =
+    typeof createCustom25DVisualRendererShell === "function"
+      ? createCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-shell-unavailable",
+          renderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultRendererShell.knownLayerSlots)
+    ? defaultRendererShell.knownLayerSlots.slice()
+    : Array.isArray(rendererShellReadinessBundle.knownLayerSlots)
+      ? rendererShellReadinessBundle.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 155,
+    name: "custom-25d-visual-renderer-materialization-contract-plan",
+    dormant: true,
+    contractPlanOnly: true,
+    mutatesState: false,
+    materializesRendererNow: false,
+    createsRendererNow: false,
+    initializesRendererNow: false,
+    rendererShellReadinessBundle,
+    defaultRendererShell,
+    knownLayerSlots,
+    materializationContract: {
+      manualOnly: true,
+      developerIntentRequired: true,
+      materializesRendererNow: false,
+      createsRendererNow: false,
+      initializesRendererNow: false,
+      storesGlobally: false,
+      remainsInertUntilLaterGuardedInitialization: true,
+      attachesToMap: false,
+      drawsGraphics: false,
+      becomesVisible: false
+    },
+    safetyBoundaries: {
+      phase154RendererShellReadinessBundleExists: !!rendererShellReadinessBundle.ok,
+      rendererShellInventorySequenceClosedOut: !!(
+        rendererShellReadinessBundle.closedOut &&
+        rendererShellReadinessBundle.closedOut.rendererShellInventorySequenceClosedOut
+      ),
+      readinessIsSafeForNextGuardedRendererStep: !!(
+        rendererShellReadinessBundle.readinessChecks &&
+        rendererShellReadinessBundle.readinessChecks.readinessIsSafeForNextGuardedRendererStep
+      ),
+      noRendererMaterializationNow: true,
+      noRendererCreationNow: true,
+      noRendererInitializationNow: true,
+      noRendererStoredGlobally: true,
+      explicitManualDeveloperGuardsRequired: true,
+      futureRendererRemainsInertUntilLaterInitialization: true,
+      noAttachDrawShowLayers: true,
+      noStartupWiring: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep this step at the contract boundary and move next to a guarded renderer materialization shell only.",
+    nextPhase: "guarded-visual-renderer-materialization-shell"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
