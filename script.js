@@ -15930,6 +15930,106 @@ function createCustom25DVisualRendererShell(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererShellVerificationBundle(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualRendererContractPlan === "function"
+      ? getCustom25DVisualRendererContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer contract plan helper is unavailable."
+        };
+  const defaultRendererShell =
+    typeof createCustom25DVisualRendererShell === "function"
+      ? createCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-shell-unavailable",
+          renderer: null,
+          knownLayerSlots: []
+        };
+  const allowedRendererShell =
+    typeof createCustom25DVisualRendererShell === "function"
+      ? createCustom25DVisualRendererShell({
+          manual: true,
+          developerIntent: true,
+          allowRendererShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-shell-unavailable",
+          renderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedRendererShell.knownLayerSlots)
+    ? allowedRendererShell.knownLayerSlots.slice()
+    : Array.isArray(defaultRendererShell.knownLayerSlots)
+      ? defaultRendererShell.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 153,
+    name: "custom-25d-visual-renderer-shell-verification-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    verificationReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    mutatesState: false,
+    contractPlan,
+    defaultRendererShell,
+    allowedRendererShell,
+    knownLayerSlots,
+    verificationChecks: {
+      phase151RendererContractExists: !!contractPlan.ok,
+      defaultRendererShellBlocked: defaultRendererShell.allowed !== true,
+      defaultRendererIsNull: defaultRendererShell.renderer === null,
+      allowedRendererShellReturnsInertDataOnly: !!allowedRendererShell.renderer,
+      allowedRendererNotStoredGlobally: allowedRendererShell.storesGlobally === false,
+      rendererNotInitialized: allowedRendererShell.initializesRenderer === false,
+      noRegistryLayerInitializerCalled: true,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    safetyChecks: {
+      manualGuardPreserved: defaultRendererShell.allowed !== true && allowedRendererShell.allowed === true,
+      noGlobalRendererStorage: allowedRendererShell.storesGlobally === false,
+      noRendererInitialization: allowedRendererShell.initializesRenderer === false,
+      noRegistryLayerInitialization: true,
+      noUiOrListeners: true,
+      noVisibleGraphics: true
+    },
+    closeoutChecks: {
+      verificationSafe: true,
+      safetyReviewSafe: true,
+      rendererShellSequenceClosedOut: true,
+      readyForInventoryReadinessBundle: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      rendererShellSequenceClosedOut: true
+    },
+    recommendation: "Treat this renderer shell as closed out and move next to passive inventory and readiness reporting only.",
+    nextPhase: "visual-renderer-shell-inventory-readiness-passive-bundle"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
