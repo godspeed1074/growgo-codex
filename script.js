@@ -14035,6 +14035,102 @@ function getCustom25DVisualLayerStateRegistryShellSafetyReview(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateRegistryShellCloseoutReport(options = {}) {
+  const safetyReview =
+    typeof getCustom25DVisualLayerStateRegistryShellSafetyReview === "function"
+      ? getCustom25DVisualLayerStateRegistryShellSafetyReview({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry shell safety review helper is unavailable."
+        };
+  const verificationReport =
+    typeof getCustom25DVisualLayerStateRegistryShellVerificationReport === "function"
+      ? getCustom25DVisualLayerStateRegistryShellVerificationReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry shell verification report helper is unavailable."
+        };
+  const defaultRegistryShell =
+    typeof createCustom25DVisualLayerStateRegistryShell === "function"
+      ? createCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-shell-unavailable",
+          registry: null,
+          knownLayerSlots: []
+        };
+  const allowedRegistryShell =
+    typeof createCustom25DVisualLayerStateRegistryShell === "function"
+      ? createCustom25DVisualLayerStateRegistryShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateRegistryShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-shell-unavailable",
+          registry: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedRegistryShell.knownLayerSlots)
+    ? allowedRegistryShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 133,
+    name: "custom-25d-visual-layer-state-registry-shell-closeout-report",
+    dormant: true,
+    closeoutReportOnly: true,
+    mutatesState: false,
+    safetyReview,
+    verificationReport,
+    defaultRegistryShell,
+    allowedRegistryShell,
+    knownLayerSlots,
+    closeoutChecks: {
+      safetyReviewExists: !!safetyReview.ok,
+      verificationReportExists: !!verificationReport.ok,
+      defaultRegistryShellBlocked: defaultRegistryShell.allowed !== true,
+      defaultRegistryIsNull: defaultRegistryShell.registry === null,
+      allowedRegistryShellReturnsInertDataOnly: !!allowedRegistryShell.registry,
+      allowedRegistryNotStoredGlobally: allowedRegistryShell.createsStoredRegistry === false,
+      registryStoresNoLayerState: allowedRegistryShell.storesLayerState === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true,
+      registryShellSequenceClosedOut: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      sequenceClosedOut: true,
+      registryShellRemainsPassive: true,
+      noPersistentRegistryCreated: true
+    },
+    recommendation: "Treat the registry shell sequence as closed out and move next only to a passive stored-registry inventory phase with the same dormant guardrails.",
+    nextPhase: "phase-134-visual-layer-state-registry-inventory-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
