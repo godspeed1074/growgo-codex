@@ -17901,6 +17901,110 @@ function getCustom25DVisualRendererInitializationGoNoGoReportPlan(options = {}) 
   };
 }
 
+function getCustom25DVisualRendererInitializationGoNoGoReportReview(options = {}) {
+  const goNoGoPlan =
+    typeof getCustom25DVisualRendererInitializationGoNoGoReportPlan === "function"
+      ? getCustom25DVisualRendererInitializationGoNoGoReportPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-go-no-go-report-plan-unavailable"
+        };
+  const preflightReview =
+    typeof getCustom25DVisualRendererInitializationPreflightReview === "function"
+      ? getCustom25DVisualRendererInitializationPreflightReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-preflight-review-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 172,
+    name: "custom-25d-visual-renderer-initialization-go-no-go-report-review",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Review the future renderer initialization go/no-go report plan and confirm it remains safely default-blocked.",
+    dependsOn: {
+      goNoGoPlan: !!goNoGoPlan.ok,
+      preflightReview: !!preflightReview.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function",
+      phase: goNoGoPlan.phase || 171
+    },
+    goNoGoPlanSummary: {
+      planExistsAsPassiveReportPlan: !!goNoGoPlan.ok,
+      defaultDecisionRemainsNoGo: goNoGoPlan.defaultDecision === "no-go",
+      expectedDefaultBlockedReason: goNoGoPlan.expectedDefaultBlockedReason || "visual-renderer-initialization-guard-unavailable",
+      lifecycleCreationBlocked: goNoGoPlan.lifecycleCreationAllowed === false,
+      stateCreationBlocked: goNoGoPlan.stateCreationAllowed === false
+    },
+    preflightReviewSummary: {
+      reviewAvailable: !!preflightReview.ok,
+      futureInitializationBlockedByDefault: !!(
+        preflightReview.defaultBlocked &&
+        preflightReview.defaultBlocked.futureInitializationBlockedByDefault
+      ),
+      expectedDefaultBlockedReason: preflightReview.expectedDefaultBlockedReason || "visual-renderer-initialization-guard-unavailable",
+      lifecycleCreationBlocked: preflightReview.lifecycleCreationAllowed === false,
+      stateCreationBlocked: preflightReview.stateCreationAllowed === false
+    },
+    guardResult,
+    defaultDecision: "no-go",
+    expectedDefaultBlockedReason: guardResult.reason || "visual-renderer-initialization-guard-unavailable",
+    reviewFindings: {
+      goNoGoReportPlanExistsAsPassivePlan: true,
+      defaultDecisionRemainsNoGo: goNoGoPlan.defaultDecision === "no-go",
+      guardResultRemainsDefaultBlocked: guardResult.allowed === false,
+      lifecycleObjectCreationRemainsProhibited: true,
+      initializationStateCreationRemainsProhibited: true,
+      realRendererInitializationRemainsProhibited: true,
+      mapAttachmentRemainsProhibited: true,
+      drawingRemainsProhibited: true,
+      startupWiringRemainsProhibited: true,
+      gameplayOsmPinsPlayerCaptureRadiusBackendUntouched: true
+    },
+    lifecycleCreationAllowed: false,
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noInitializationStateCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "create a lifecycle object",
+      "create initialization state",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-final-readiness-summary"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
