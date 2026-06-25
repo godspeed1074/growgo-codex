@@ -14987,6 +14987,92 @@ function getCustom25DVisualLayerStateRegistryReadinessPlan(options = {}) {
   };
 }
 
+function assembleCustom25DVisualLayerStateRegistryShell(options = {}) {
+  const readinessPlan =
+    typeof getCustom25DVisualLayerStateRegistryReadinessPlan === "function"
+      ? getCustom25DVisualLayerStateRegistryReadinessPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry readiness plan helper is unavailable."
+        };
+  const defaultStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultStorageShell.knownLayerSlots)
+    ? defaultStorageShell.knownLayerSlots.slice()
+    : Array.isArray(readinessPlan.knownLayerSlots)
+      ? readinessPlan.knownLayerSlots.slice()
+      : [];
+  const allowed =
+    options.manual === true &&
+    options.developerIntent === true &&
+    options.allowLayerStateRegistryAssembly === true;
+
+  let assembly = null;
+  if (allowed) {
+    const allowedStorageShell =
+      typeof createCustom25DVisualLayerStateStorageShell === "function"
+        ? createCustom25DVisualLayerStateStorageShell({
+            manual: true,
+            developerIntent: true,
+            allowLayerStateStorageShell: true
+          })
+        : null;
+    const storage = allowedStorageShell ? allowedStorageShell.storage : null;
+    assembly = {
+      created: true,
+      initialized: false,
+      dormant: true,
+      storedGlobally: false,
+      registry: storage ? storage.registry : null,
+      layerStates: storage ? storage.layerStates : [],
+      slotCount: storage ? storage.slotCount : 0,
+      mapAttached: false,
+      drawsGraphics: false,
+      visible: false,
+      notes: "Inert assembled registry/state bundle only. Returned data is not stored globally or initialized."
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 143,
+    name: "custom-25d-visual-layer-state-registry-assembly-shell",
+    dormant: true,
+    shellOnly: true,
+    mutatesState: false,
+    storesGlobally: false,
+    readinessPlan,
+    defaultStorageShell,
+    allowed,
+    reason: allowed ? "layer-state-registry-assembly-shell-only" : "manual-guard-required",
+    assembly,
+    knownLayerSlots,
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Use this assembly shell only as a passive checkpoint and keep all returned registry/state data out of global storage until a dedicated verification phase is approved.",
+    nextPhase: "stored-visual-layer-state-registry-assembly-shell-verification-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
