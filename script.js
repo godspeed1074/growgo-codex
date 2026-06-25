@@ -16030,6 +16030,114 @@ function getCustom25DVisualRendererShellVerificationBundle(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererShellInventoryReadinessBundle(options = {}) {
+  const rendererShellVerificationBundle =
+    typeof getCustom25DVisualRendererShellVerificationBundle === "function"
+      ? getCustom25DVisualRendererShellVerificationBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer shell verification bundle helper is unavailable."
+        };
+  const defaultRendererShell =
+    typeof createCustom25DVisualRendererShell === "function"
+      ? createCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-shell-unavailable",
+          renderer: null,
+          knownLayerSlots: []
+        };
+  const allowedRendererShell =
+    typeof createCustom25DVisualRendererShell === "function"
+      ? createCustom25DVisualRendererShell({
+          manual: true,
+          developerIntent: true,
+          allowRendererShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-shell-unavailable",
+          renderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedRendererShell.knownLayerSlots)
+    ? allowedRendererShell.knownLayerSlots.slice()
+    : Array.isArray(defaultRendererShell.knownLayerSlots)
+      ? defaultRendererShell.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 154,
+    name: "custom-25d-visual-renderer-shell-inventory-readiness-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    inventoryReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    readinessPlanOnly: true,
+    mutatesState: false,
+    rendererShellVerificationBundle,
+    defaultRendererShell,
+    allowedRendererShell,
+    knownLayerSlots,
+    inventoryChecks: {
+      phase153RendererShellVerificationBundleExists: !!rendererShellVerificationBundle.ok,
+      defaultRendererShellBlocked: defaultRendererShell.allowed !== true,
+      defaultRendererIsNull: defaultRendererShell.renderer === null,
+      allowedRendererShellReturnsInertDataOnly: !!allowedRendererShell.renderer,
+      allowedRendererNotStoredGlobally: allowedRendererShell.storesGlobally === false,
+      rendererNotInitialized: allowedRendererShell.initializesRenderer === false,
+      noRegistryLayerInitializerCalled: true,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    safetyChecks: {
+      noGlobalRendererStorage: allowedRendererShell.storesGlobally === false,
+      noRendererInitialization: allowedRendererShell.initializesRenderer === false,
+      noRegistryLayerInitialization: true,
+      noUiOrListeners: true,
+      noVisibleGraphics: true
+    },
+    closeoutChecks: {
+      rendererShellInventorySequenceClosedOut: true,
+      verificationBundleClosedOut: !!(
+        rendererShellVerificationBundle.closedOut &&
+        rendererShellVerificationBundle.closedOut.rendererShellSequenceClosedOut
+      ),
+      noBehaviorChanged: true
+    },
+    readinessChecks: {
+      readinessIsSafeForNextGuardedRendererStep: true,
+      nextGuardedStepRequiresManualDeveloperIntent: true,
+      rendererStillDormant: allowedRendererShell.renderer ? allowedRendererShell.renderer.dormant === true : true,
+      noMapAttachmentPlannedNow: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      rendererShellInventorySequenceClosedOut: true
+    },
+    recommendation: "Keep the renderer shell path passive and use the next phase only for guarded renderer materialization planning.",
+    nextPhase: "guarded-visual-renderer-materialization-contract-plan"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
