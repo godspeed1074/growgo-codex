@@ -13779,6 +13779,94 @@ function getCustom25DVisualLayerStateRegistryContractPlan(options = {}) {
   };
 }
 
+function createCustom25DVisualLayerStateRegistryShell(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateRegistryContractPlan === "function"
+      ? getCustom25DVisualLayerStateRegistryContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry contract plan helper is unavailable."
+        };
+  const defaultLayerStateShell =
+    typeof createCustom25DVisualLayerStateShell === "function"
+      ? createCustom25DVisualLayerStateShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-shell-unavailable",
+          state: null,
+          knownLayerSlots: []
+        };
+  const sampleLayerStateShell =
+    typeof createCustom25DVisualLayerStateShell === "function"
+      ? createCustom25DVisualLayerStateShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateShell: true,
+          slot: "roadBase"
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-shell-unavailable",
+          state: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(sampleLayerStateShell.knownLayerSlots)
+    ? sampleLayerStateShell.knownLayerSlots.slice()
+    : [];
+  const allowed =
+    options.manual === true &&
+    options.developerIntent === true &&
+    options.allowLayerStateRegistryShell === true;
+
+  return {
+    ok: true,
+    phase: 130,
+    name: "custom-25d-visual-layer-state-registry-shell",
+    dormant: true,
+    shellOnly: true,
+    mutatesState: false,
+    createsStoredRegistry: false,
+    storesLayerState: false,
+    contractPlan,
+    defaultLayerStateShell,
+    sampleLayerStateShell,
+    allowed,
+    reason: allowed ? "layer-state-registry-shell-only" : "manual-guard-required",
+    registry: allowed
+      ? {
+          created: true,
+          initialized: false,
+          dormant: true,
+          storesState: false,
+          slots: [],
+          slotCount: 0,
+          mapAttached: false,
+          drawsGraphics: false,
+          visible: false,
+          notes: "Inert manual registry shell only. Not stored, initialized, attached, rendered, or made visible."
+        }
+      : null,
+    knownLayerSlots,
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Use this shell only as a passive contract checkpoint and keep the future stored registry uncreated until a dedicated verification phase is approved.",
+    nextPhase: "phase-131-visual-layer-state-registry-shell-verification-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
