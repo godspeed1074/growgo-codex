@@ -15772,6 +15772,89 @@ function getCustom25DVisualLayerStateRegistryHandoffReadinessReport(options = {}
   };
 }
 
+function getCustom25DVisualRendererContractPlan(options = {}) {
+  const registryHandoffReadiness =
+    typeof getCustom25DVisualLayerStateRegistryHandoffReadinessReport === "function"
+      ? getCustom25DVisualLayerStateRegistryHandoffReadinessReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry handoff readiness helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultMaterializationShell.knownLayerSlots)
+    ? defaultMaterializationShell.knownLayerSlots.slice()
+    : Array.isArray(registryHandoffReadiness.knownLayerSlots)
+      ? registryHandoffReadiness.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 151,
+    name: "custom-25d-visual-renderer-contract-plan",
+    dormant: true,
+    contractPlanOnly: true,
+    mutatesState: false,
+    createsRendererNow: false,
+    initializesRendererNow: false,
+    registryHandoffReadiness,
+    defaultMaterializationShell,
+    knownLayerSlots,
+    rendererContract: {
+      manualOnly: true,
+      developerIntentRequired: true,
+      createsRendererNow: false,
+      initializesRendererNow: false,
+      autoRuns: false,
+      wiresStartup: false,
+      attachesMapLayers: false,
+      drawsGraphics: false,
+      becomesVisible: false,
+      storesRegistryNow: false,
+      storesLayerStateNow: false
+    },
+    safetyBoundaries: {
+      phase150HandoffReadinessExists: !!registryHandoffReadiness.ok,
+      readyOnlyForRendererPlanningOrContract: !!(
+        registryHandoffReadiness.readinessChecks &&
+        registryHandoffReadiness.readinessChecks.readyOnlyForRendererPlanningNext
+      ),
+      explicitManualDeveloperGuardsRequired: true,
+      noRendererCreationNow: true,
+      noRendererInitializationNow: true,
+      noRegistryStorageNow: true,
+      noLayerStateStorageNow: true,
+      noAutoRun: true,
+      noStartupWiring: true,
+      noMapLayerAttachment: true,
+      noDrawOrVisibility: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep renderer work at the contract boundary for now and move next to a dormant visual renderer shell.",
+    nextPhase: "dormant-visual-renderer-shell"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
