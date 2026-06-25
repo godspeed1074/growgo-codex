@@ -16514,6 +16514,101 @@ function getCustom25DVisualRendererMaterializationInventoryReadinessBundle(optio
   };
 }
 
+function getCustom25DVisualRendererHandoffReadinessReport(options = {}) {
+  const rendererMaterializationReadinessBundle =
+    typeof getCustom25DVisualRendererMaterializationInventoryReadinessBundle === "function"
+      ? getCustom25DVisualRendererMaterializationInventoryReadinessBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer materialization inventory readiness bundle helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualRendererShell === "function"
+      ? materializeCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-materialization-shell-unavailable",
+          materializedRenderer: null,
+          knownLayerSlots: []
+        };
+  const allowedMaterializationShell =
+    typeof materializeCustom25DVisualRendererShell === "function"
+      ? materializeCustom25DVisualRendererShell({
+          manual: true,
+          developerIntent: true,
+          allowRendererMaterialization: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-materialization-shell-unavailable",
+          materializedRenderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedMaterializationShell.knownLayerSlots)
+    ? allowedMaterializationShell.knownLayerSlots.slice()
+    : Array.isArray(defaultMaterializationShell.knownLayerSlots)
+      ? defaultMaterializationShell.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 159,
+    name: "custom-25d-visual-renderer-handoff-readiness-report",
+    dormant: true,
+    handoffReadinessReportOnly: true,
+    mutatesState: false,
+    rendererMaterializationReadinessBundle,
+    defaultMaterializationShell,
+    allowedMaterializationShell,
+    knownLayerSlots,
+    readinessChecks: {
+      phase158RendererMaterializationInventoryReadinessBundleExists: !!rendererMaterializationReadinessBundle.ok,
+      rendererMaterializationInventorySequenceClosedOut: !!(
+        rendererMaterializationReadinessBundle.closedOut &&
+        rendererMaterializationReadinessBundle.closedOut.rendererMaterializationInventorySequenceClosedOut
+      ),
+      readinessIsSafe: !!(
+        rendererMaterializationReadinessBundle.readinessChecks &&
+        rendererMaterializationReadinessBundle.readinessChecks.readinessIsSafeForNextGuardedRendererStep
+      ),
+      defaultMaterializationShellBlocked: defaultMaterializationShell.allowed !== true,
+      defaultMaterializedRendererIsNull: defaultMaterializationShell.materializedRenderer === null,
+      allowedMaterializationShellReturnsInertDataOnly: !!allowedMaterializationShell.materializedRenderer,
+      allowedMaterializedRendererNotStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      rendererNotInitialized: allowedMaterializationShell.initializesRenderer === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noRegistryLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    handoffBoundaries: {
+      readyOnlyForRendererInitializationPlanningNext: true,
+      notReadyForRendererInitializationYet: true,
+      noGlobalRendererStorage: true,
+      noRenderingActivation: true,
+      noLayerInitialization: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Use this as a handoff checkpoint only and move next to renderer initialization planning or contracts, not renderer initialization itself.",
+    nextPhase: "visual-renderer-initialization-contract-plan"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
