@@ -15288,6 +15288,86 @@ function getCustom25DVisualLayerStateRegistryAssemblyInventoryReadinessBundle(op
   };
 }
 
+function getCustom25DVisualLayerStateRegistryMaterializationContractPlan(options = {}) {
+  const assemblyReadinessBundle =
+    typeof getCustom25DVisualLayerStateRegistryAssemblyInventoryReadinessBundle === "function"
+      ? getCustom25DVisualLayerStateRegistryAssemblyInventoryReadinessBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry assembly inventory readiness bundle helper is unavailable."
+        };
+  const defaultAssemblyShell =
+    typeof assembleCustom25DVisualLayerStateRegistryShell === "function"
+      ? assembleCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-assembly-shell-unavailable",
+          assembly: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultAssemblyShell.knownLayerSlots)
+    ? defaultAssemblyShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 146,
+    name: "custom-25d-visual-layer-state-registry-materialization-contract-plan",
+    dormant: true,
+    contractPlanOnly: true,
+    mutatesState: false,
+    materializesNow: false,
+    createsStoredRegistryNow: false,
+    storesLayerStateNow: false,
+    assemblyReadinessBundle,
+    defaultAssemblyShell,
+    knownLayerSlots,
+    materializationContract: {
+      requiresExplicitManualGuard: true,
+      requiresExplicitDeveloperIntent: true,
+      storesOnlyInertRegistryData: true,
+      createsVisibleGraphics: false,
+      initializesLayers: false,
+      attachesToMap: false,
+      drawsGraphics: false,
+      slotCount: knownLayerSlots.length
+    },
+    safetyBoundaries: {
+      assemblyInventorySequenceClosedOut: !!(
+        assemblyReadinessBundle.closedOut &&
+        assemblyReadinessBundle.closedOut.registryAssemblyInventorySequenceClosedOut
+      ),
+      readinessSafeForNextGuardedStep: !!(
+        assemblyReadinessBundle.readinessChecks &&
+        assemblyReadinessBundle.readinessChecks.readyForNextGuardedStoredRegistryStep
+      ),
+      noMaterializationNow: true,
+      noRegistryCreatedNow: true,
+      noLayerStateStoredNow: true,
+      noRendererRegistryOrLayerInitialization: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep registry materialization in planning-only mode and move next only to a guarded materialization shell that still returns inert data without storing it.",
+    nextPhase: "guarded-stored-visual-layer-state-registry-materialization-shell"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
