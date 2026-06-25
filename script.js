@@ -16701,6 +16701,96 @@ function getCustom25DVisualRendererInitializationContractPlan(options = {}) {
   };
 }
 
+function canInitializeCustom25DVisualRenderer(options = {}) {
+  const initializationContract =
+    typeof getCustom25DVisualRendererInitializationContractPlan === "function"
+      ? getCustom25DVisualRendererInitializationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer initialization contract plan helper is unavailable."
+        };
+  const checks = {
+    custom25DMapEnabled: ENABLE_CUSTOM_25D_MAP === true,
+    manual: options.manual === true,
+    developerIntent: options.developerIntent === true,
+    allowRendererInitialization: options.allowRendererInitialization === true,
+    hasRendererShell: options.hasRendererShell === true,
+    hasRendererMaterializationShell: options.hasRendererMaterializationShell === true,
+    hasRendererHandoffReadiness: options.hasRendererHandoffReadiness === true,
+    hasInitializationContract: options.hasInitializationContract === true,
+    preserveGameplayOverlays: options.preserveGameplayOverlays === true,
+    preserveOSMBehavior: options.preserveOSMBehavior === true,
+    preservePins: options.preservePins === true,
+    preservePlayerMarker: options.preservePlayerMarker === true,
+    preserveCaptureRadius: options.preserveCaptureRadius === true,
+    preventStartupWiring: options.preventStartupWiring === true,
+    preventDrawing: options.preventDrawing === true,
+    preventMapAttachment: options.preventMapAttachment === true
+  };
+  const orderedFailures = [
+    ["custom25DMapEnabled", "custom-25d-map-disabled"],
+    ["manual", "manual-flag-required"],
+    ["developerIntent", "developer-intent-required"],
+    ["allowRendererInitialization", "allow-renderer-initialization-required"],
+    ["hasRendererShell", "renderer-shell-required"],
+    ["hasRendererMaterializationShell", "renderer-materialization-shell-required"],
+    ["hasRendererHandoffReadiness", "renderer-handoff-readiness-required"],
+    ["hasInitializationContract", "renderer-initialization-contract-required"],
+    ["preserveGameplayOverlays", "preserve-gameplay-overlays-required"],
+    ["preserveOSMBehavior", "preserve-osm-behavior-required"],
+    ["preservePins", "preserve-pins-required"],
+    ["preservePlayerMarker", "preserve-player-marker-required"],
+    ["preserveCaptureRadius", "preserve-capture-radius-required"],
+    ["preventStartupWiring", "prevent-startup-wiring-required"],
+    ["preventDrawing", "prevent-drawing-required"],
+    ["preventMapAttachment", "prevent-map-attachment-required"]
+  ];
+  const failedEntry = orderedFailures.find(([key]) => checks[key] !== true) || null;
+  const failedCheck = failedEntry ? failedEntry[0] : null;
+  const reason = failedEntry ? failedEntry[1] : "all-guards-pass-initialization-still-not-performed";
+
+  return {
+    allowed: failedEntry === null,
+    reason,
+    phase: 161,
+    name: "custom-25d-visual-renderer-initialization-guard-evaluator",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    checkedAt: typeof Date === "function" ? new Date().toISOString() : "unknown",
+    checks,
+    failedCheck,
+    dependsOn: {
+      initializationContract: !!initializationContract.ok,
+      phase: initializationContract.phase || 160
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-dry-run-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
