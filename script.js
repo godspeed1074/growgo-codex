@@ -12986,6 +12986,168 @@ function getCustom25DVisualLayerStateCreationContractPlan(options = {}) {
   };
 }
 
+function createCustom25DVisualLayerStateShell(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateCreationContractPlan === "function"
+      ? getCustom25DVisualLayerStateCreationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state creation contract plan helper is unavailable."
+        };
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable"
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualLayers === "function"
+      ? initializeCustom25DVisualLayers(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-initialization-shell-unavailable",
+          initialized: false,
+          mutatesState: false,
+          createsVisibleGraphics: false,
+          attachesToMap: false
+        };
+
+  const slotDefinitions = {
+    roadBase: {
+      key: "roadBase",
+      name: "Road Base",
+      order: 6,
+      intendedVisualRole: "cartoony rounded road body foundation for future 2.5D map polish",
+      targetStyle: "soft warm road surfaces, rounded edges, toy-like mobile-friendly roads"
+    },
+    roadShadow: {
+      key: "roadShadow",
+      name: "Road Shadow",
+      order: 5,
+      intendedVisualRole: "soft road shadow foundation for future depth and layering",
+      targetStyle: "subtle soft shadows beneath rounded cartoony roads"
+    },
+    water: {
+      key: "water",
+      name: "Water",
+      order: 3,
+      intendedVisualRole: "soft water base foundation for future 2.5D map polish",
+      targetStyle: "calm mobile-friendly water surfaces with playful color blocking"
+    },
+    park: {
+      key: "park",
+      name: "Park",
+      order: 4,
+      intendedVisualRole: "park and grass zone foundation for future map greenery polish",
+      targetStyle: "soft green park surfaces with toy-like simplified terrain shapes"
+    },
+    building: {
+      key: "building",
+      name: "Building",
+      order: 9,
+      intendedVisualRole: "simple toy-like building body foundation",
+      targetStyle: "warm pastel building masses with simple mobile-friendly depth cues"
+    },
+    landmark: {
+      key: "landmark",
+      name: "Landmark",
+      order: 12,
+      intendedVisualRole: "future landmark visual layer placeholder",
+      targetStyle: "playful readable landmark accents without affecting gameplay"
+    },
+    dinosaur: {
+      key: "dinosaur",
+      name: "Dinosaur",
+      order: 13,
+      intendedVisualRole: "future dinosaur visual layer placeholder",
+      targetStyle: "cartoony internal-only dinosaur accent styling kept dormant by default"
+    },
+    film: {
+      key: "film",
+      name: "Film",
+      order: 14,
+      intendedVisualRole: "future film location visual layer placeholder",
+      targetStyle: "subtle cinematic location accents kept dormant and non-gameplay"
+    },
+    poi: {
+      key: "poi",
+      name: "POI",
+      order: 15,
+      intendedVisualRole: "future point-of-interest visual layer placeholder",
+      targetStyle: "lightweight readable POI accents that preserve existing overlays"
+    }
+  };
+
+  const knownLayerSlots = Object.keys(slotDefinitions);
+  const requestedSlot = typeof options.slot === "string" ? options.slot : null;
+  const hasValidSlot = !!(requestedSlot && slotDefinitions[requestedSlot]);
+  const manual = options.manual === true;
+  const developerIntent = options.developerIntent === true;
+  const allowLayerStateShell = options.allowLayerStateShell === true;
+
+  let reason = null;
+  if (!manual) {
+    reason = "manual-option-required";
+  } else if (!developerIntent) {
+    reason = "developer-intent-required";
+  } else if (!allowLayerStateShell) {
+    reason = "layer-state-shell-not-allowed";
+  } else if (!hasValidSlot) {
+    reason = "valid-layer-slot-required";
+  }
+
+  const allowed = reason === null;
+  const baseState = hasValidSlot ? slotDefinitions[requestedSlot] : null;
+  const state = allowed && baseState
+    ? {
+        ...baseState,
+        enabledByDefault: false,
+        visible: false,
+        implemented: false,
+        dormant: true,
+        createsMapLayer: false,
+        attachesToMap: false,
+        drawsGraphics: false,
+        notes: "Inert visual layer state shell only. Not stored, registered, initialized, attached, or drawn."
+      }
+    : null;
+
+  return {
+    ok: true,
+    phase: 122,
+    name: "custom-25d-visual-layer-state-factory-shell",
+    dormant: true,
+    shellOnly: true,
+    mutatesState: false,
+    createsStoredState: false,
+    guard,
+    shellResult,
+    contractPlan,
+    requestedSlot,
+    allowed,
+    reason: reason || "layer-state-shell-only",
+    state,
+    knownLayerSlots,
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep returned layer state shells inert and non-persistent until a dedicated state registration plan is approved.",
+    nextPhase: "phase-123-visual-layer-state-registration-planning-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
