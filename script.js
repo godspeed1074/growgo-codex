@@ -15557,6 +15557,121 @@ function getCustom25DVisualLayerStateRegistryMaterializationCloseoutBundle(optio
   };
 }
 
+function getCustom25DVisualLayerStateRegistryMaterializationInventoryReadinessBundle(options = {}) {
+  const materializationCloseoutBundle =
+    typeof getCustom25DVisualLayerStateRegistryMaterializationCloseoutBundle === "function"
+      ? getCustom25DVisualLayerStateRegistryMaterializationCloseoutBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry materialization closeout bundle helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const allowedMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateRegistryMaterialization: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedMaterializationShell.knownLayerSlots)
+    ? allowedMaterializationShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 149,
+    name: "custom-25d-visual-layer-state-registry-materialization-inventory-readiness-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    inventoryReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    readinessPlanOnly: true,
+    mutatesState: false,
+    materializationCloseoutBundle,
+    defaultMaterializationShell,
+    allowedMaterializationShell,
+    knownLayerSlots,
+    inventoryChecks: {
+      materializationCloseoutExists: !!materializationCloseoutBundle.ok,
+      defaultMaterializationShellBlocked: defaultMaterializationShell.allowed !== true,
+      defaultMaterializedRegistryIsNull: defaultMaterializationShell.materializedRegistry === null,
+      allowedMaterializationShellReturnsInertDataOnly: !!allowedMaterializationShell.materializedRegistry,
+      allowedMaterializedRegistryNotStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      noGlobalRegistryCreated: allowedMaterializationShell.storesGlobally === false,
+      noLayerStateStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      materializedSlotCountIsNine:
+        !!allowedMaterializationShell.materializedRegistry &&
+        allowedMaterializationShell.materializedRegistry.slotCount === 9,
+      materializationInventorySequenceClosedOut: true
+    },
+    safetyChecks: {
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true,
+      passiveOnly: true,
+      noMutation: true
+    },
+    closeoutChecks: {
+      materializationShellSequenceClosedOut: !!(
+        materializationCloseoutBundle.closedOut &&
+        materializationCloseoutBundle.closedOut.materializationShellSequenceClosedOut
+      ),
+      defaultPathRemainsBlocked: defaultMaterializationShell.allowed !== true,
+      allowedPathRemainsInert: !!allowedMaterializationShell.materializedRegistry,
+      returnedDataOnly: !!allowedMaterializationShell.materializedRegistry
+    },
+    readinessChecks: {
+      readyForNextGuardedStoredRegistryStep: true,
+      noRegistryCreatedNow: true,
+      noLayerStateStoredNow: true,
+      slotCountIsStable: knownLayerSlots.length === 9,
+      startupRemainsUnwired: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      materializationInventorySequenceClosedOut: true,
+      noPersistentRegistryCreated: true,
+      noPersistentLayerStateStored: true
+    },
+    recommendation: "Treat the materialization inventory/readiness sequence as passively complete and move next only to a visual layer state registry handoff readiness report.",
+    nextPhase: "visual-layer-state-registry-handoff-readiness-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
