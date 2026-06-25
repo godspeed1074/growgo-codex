@@ -13690,6 +13690,95 @@ function getCustom25DVisualLayerStateFactoryInventoryCloseoutReport(options = {}
   };
 }
 
+function getCustom25DVisualLayerStateRegistryContractPlan(options = {}) {
+  const factoryInventoryCloseout =
+    typeof getCustom25DVisualLayerStateFactoryInventoryCloseoutReport === "function"
+      ? getCustom25DVisualLayerStateFactoryInventoryCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state factory inventory closeout report helper is unavailable."
+        };
+  const factoryCloseout =
+    typeof getCustom25DVisualLayerStateFactoryCloseoutReport === "function"
+      ? getCustom25DVisualLayerStateFactoryCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state factory closeout report helper is unavailable."
+        };
+  const defaultShell =
+    typeof createCustom25DVisualLayerStateShell === "function"
+      ? createCustom25DVisualLayerStateShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-shell-unavailable",
+          state: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultShell.knownLayerSlots)
+    ? defaultShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 129,
+    name: "custom-25d-visual-layer-state-registry-contract-plan",
+    dormant: true,
+    contractPlanOnly: true,
+    createsRegistryNow: false,
+    storesLayerStateNow: false,
+    mutatesState: false,
+    factoryInventoryCloseout,
+    factoryCloseout,
+    defaultShell,
+    knownLayerSlots,
+    plannedRegistryShape: {
+      created: false,
+      initialized: false,
+      dormant: true,
+      storesState: false,
+      slots: [],
+      slotCount: 0,
+      mapAttached: false,
+      drawsGraphics: false,
+      visible: false
+    },
+    plannedRegistryRules: {
+      futureRegistryStoresOnlyInertStateDescriptions: true,
+      futureRegistryDoesNotInitializeLayers: true,
+      futureRegistryDoesNotRenderLayers: true,
+      futureRegistryDoesNotAttachToMap: true,
+      futureRegistryDoesNotDrawGraphics: true,
+      futureRegistryDoesNotMakeLayersVisible: true,
+      startupRemainsUnwired: true
+    },
+    safetyBoundaries: {
+      noRegistryCreatedNow: true,
+      noLayerStateStoredNow: true,
+      factoryInventorySequenceClosedOut: !!factoryInventoryCloseout.closedOut,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep registry planning passive and move next only to a dormant visual layer state registry shell that still stores nothing by default.",
+    nextPhase: "phase-130-dormant-visual-layer-state-registry-shell"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
