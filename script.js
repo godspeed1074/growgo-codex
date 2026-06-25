@@ -14897,6 +14897,96 @@ function getCustom25DVisualLayerStateStorageShellCloseoutBundle(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateRegistryReadinessPlan(options = {}) {
+  const storageCloseoutBundle =
+    typeof getCustom25DVisualLayerStateStorageShellCloseoutBundle === "function"
+      ? getCustom25DVisualLayerStateStorageShellCloseoutBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage shell closeout bundle helper is unavailable."
+        };
+  const storageContractPlan =
+    typeof getCustom25DVisualLayerStateStorageContractPlan === "function"
+      ? getCustom25DVisualLayerStateStorageContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage contract plan helper is unavailable."
+        };
+  const defaultStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultStorageShell.knownLayerSlots)
+    ? defaultStorageShell.knownLayerSlots.slice()
+    : Array.isArray(storageContractPlan.knownLayerSlots)
+      ? storageContractPlan.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 142,
+    name: "custom-25d-visual-layer-state-registry-readiness-plan",
+    dormant: true,
+    readinessPlanOnly: true,
+    mutatesState: false,
+    createsStoredRegistryNow: false,
+    storesLayerStateNow: false,
+    storageCloseoutBundle,
+    storageContractPlan,
+    defaultStorageShell,
+    knownLayerSlots,
+    readinessChecks: {
+      closeoutBundleExists: !!storageCloseoutBundle.ok,
+      storageShellSequenceClosedOut: !!(
+        storageCloseoutBundle.closedOut &&
+        storageCloseoutBundle.closedOut.storageShellSequenceClosedOut
+      ),
+      storageInventorySequenceClosedOut: !!(
+        storageCloseoutBundle.closedOut &&
+        storageCloseoutBundle.closedOut.storageShellInventorySequenceClosedOut
+      ),
+      noRegistryCreatedNow: true,
+      noLayerStateStoredNow: true,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      futureStepRequiresExplicitManualGuard: true,
+      futureStepRequiresExplicitDeveloperIntent: true,
+      futureStepStoresOnlyInertReturnedData: true,
+      futureStepDoesNotRenderInitAttachDrawShowLayers: true,
+      startupRemainsUnwired: true,
+      noBehaviorChanged: true
+    },
+    safetyBoundaries: {
+      noGlobalRegistryCreation: true,
+      noGlobalLayerStateStorage: true,
+      noRendererRegistryOrLayerInitialization: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Treat stored registry work as planning-ready only and move next to a guarded assembly shell that still returns inert data without storing it.",
+    nextPhase: "guarded-stored-visual-layer-state-registry-assembly-shell"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
