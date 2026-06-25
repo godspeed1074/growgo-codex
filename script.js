@@ -16609,6 +16609,98 @@ function getCustom25DVisualRendererHandoffReadinessReport(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererInitializationContractPlan(options = {}) {
+  const handoffReadiness =
+    typeof getCustom25DVisualRendererHandoffReadinessReport === "function"
+      ? getCustom25DVisualRendererHandoffReadinessReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer handoff readiness helper is unavailable."
+        };
+  const knownLayerSlots = Array.isArray(handoffReadiness.knownLayerSlots)
+    ? handoffReadiness.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 160,
+    name: "custom-25d-visual-renderer-initialization-contract-plan",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Define the future contract required before any renderer initialization is ever allowed.",
+    dependsOn: {
+      rendererHandoffReadiness: !!handoffReadiness.ok,
+      phase: handoffReadiness.phase || 159
+    },
+    futureContract: {
+      manualOnly: true,
+      developerIntentRequired: true,
+      explicitInitializationApprovalRequired: true,
+      rendererMustRemainDormantUntilGuardedInitializationPhase: true,
+      initializationMayNotAutoRun: true,
+      initializationMayNotWireStartup: true,
+      initializationMayNotAttachToMap: true,
+      initializationMayNotDrawGraphics: true,
+      initializationMayNotCreateVisibleOutput: true
+    },
+    requiredPreconditions: {
+      phase159HandoffReadinessExists: !!handoffReadiness.ok,
+      readyOnlyForInitializationPlanning: !!(
+        handoffReadiness.handoffBoundaries &&
+        handoffReadiness.handoffBoundaries.readyOnlyForRendererInitializationPlanningNext
+      ),
+      notReadyForInitializationYet: !!(
+        handoffReadiness.handoffBoundaries &&
+        handoffReadiness.handoffBoundaries.notReadyForRendererInitializationYet
+      ),
+      knownLayerSlotsCountIsNine: knownLayerSlots.length === 9,
+      materializationPathRemainsInert: !!(
+        handoffReadiness.readinessChecks &&
+        handoffReadiness.readinessChecks.allowedMaterializationShellReturnsInertDataOnly
+      ),
+      noRendererInitializationHasOccurred: !!(
+        handoffReadiness.readinessChecks &&
+        handoffReadiness.readinessChecks.rendererNotInitialized
+      )
+    },
+    defaultBlockedBehavior: {
+      initializationAllowedByDefault: false,
+      createsRendererNow: false,
+      initializesRendererNow: false,
+      createsRegistryNow: false,
+      createsLayerStateNow: false,
+      attachesToMapNow: false,
+      drawsGraphicsNow: false,
+      mutatesStateNow: false
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-guard-evaluator"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
