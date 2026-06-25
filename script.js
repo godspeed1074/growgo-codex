@@ -12779,6 +12779,113 @@ function getCustom25DVisualLayerStateInventorySafetyReview(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateInventoryCloseoutReport(options = {}) {
+  const auditPlan =
+    typeof getCustom25DVisualLayerStateInventoryAuditPlan === "function"
+      ? getCustom25DVisualLayerStateInventoryAuditPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory audit plan helper is unavailable."
+        };
+  const inventoryReport =
+    typeof getCustom25DVisualLayerStateInventoryReport === "function"
+      ? getCustom25DVisualLayerStateInventoryReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory report helper is unavailable."
+        };
+  const safetyReview =
+    typeof getCustom25DVisualLayerStateInventorySafetyReview === "function"
+      ? getCustom25DVisualLayerStateInventorySafetyReview({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory safety review helper is unavailable."
+        };
+  const shellCloseout =
+    typeof getCustom25DVisualLayerInitializationShellCloseoutReport === "function"
+      ? getCustom25DVisualLayerInitializationShellCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer initialization shell closeout report helper is unavailable."
+        };
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable"
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualLayers === "function"
+      ? initializeCustom25DVisualLayers(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-initialization-shell-unavailable",
+          initialized: false,
+          mutatesState: false,
+          createsVisibleGraphics: false,
+          attachesToMap: false
+        };
+  const knownLayerSlots = Array.isArray(inventoryReport.knownLayerSlots)
+    ? inventoryReport.knownLayerSlots.map((slot) => slot.key)
+    : [];
+
+  return {
+    ok: true,
+    phase: 120,
+    name: "custom-25d-visual-layer-state-inventory-closeout-report",
+    dormant: true,
+    closeoutReportOnly: true,
+    inventoryCloseoutOnly: true,
+    reportOnly: true,
+    dataOnly: true,
+    mutatesState: false,
+    auditPlan,
+    inventoryReport,
+    safetyReview,
+    shellCloseout,
+    guard,
+    shellResult,
+    knownLayerSlots,
+    defaultOutcome: {
+      defaultSafe: true,
+      shellBlocked: shellResult.allowed !== true,
+      reason: shellResult.reason || guard.reason || "visual-layer-initialization-blocked",
+      initialized: shellResult.initialized === true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      slotsRemainPassiveIntendedOnly: true,
+      noLayerStateObjectCreated: true,
+      noLayerCreated: true,
+      noLayerInitialized: true,
+      noLayerAttached: true,
+      noLayerDrawn: true,
+      noLayerVisible: true,
+      startupUnwired: true,
+      inventorySequenceClosedOut: true
+    },
+    recommendation: "Use a dedicated planning-and-contract phase before any future visual layer state creation work begins.",
+    nextPhase: "phase-121-visual-layer-state-creation-planning-contract-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
