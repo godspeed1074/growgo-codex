@@ -15368,6 +15368,93 @@ function getCustom25DVisualLayerStateRegistryMaterializationContractPlan(options
   };
 }
 
+function materializeCustom25DVisualLayerStateRegistryShell(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateRegistryMaterializationContractPlan === "function"
+      ? getCustom25DVisualLayerStateRegistryMaterializationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry materialization contract plan helper is unavailable."
+        };
+  const defaultAssemblyShell =
+    typeof assembleCustom25DVisualLayerStateRegistryShell === "function"
+      ? assembleCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-assembly-shell-unavailable",
+          assembly: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultAssemblyShell.knownLayerSlots)
+    ? defaultAssemblyShell.knownLayerSlots.slice()
+    : Array.isArray(contractPlan.knownLayerSlots)
+      ? contractPlan.knownLayerSlots.slice()
+      : [];
+  const allowed =
+    options.manual === true &&
+    options.developerIntent === true &&
+    options.allowLayerStateRegistryMaterialization === true;
+
+  let materializedRegistry = null;
+  if (allowed) {
+    const allowedAssemblyShell =
+      typeof assembleCustom25DVisualLayerStateRegistryShell === "function"
+        ? assembleCustom25DVisualLayerStateRegistryShell({
+            manual: true,
+            developerIntent: true,
+            allowLayerStateRegistryAssembly: true
+          })
+        : null;
+    const assembly = allowedAssemblyShell ? allowedAssemblyShell.assembly : null;
+    materializedRegistry = {
+      created: true,
+      initialized: false,
+      dormant: true,
+      storedGlobally: false,
+      registry: assembly ? assembly.registry : null,
+      layerStates: assembly ? assembly.layerStates : [],
+      slotCount: assembly ? assembly.slotCount : 0,
+      materialized: true,
+      mapAttached: false,
+      drawsGraphics: false,
+      visible: false,
+      notes: "Inert materialized registry only. Returned data is not stored globally, initialized, rendered, or attached."
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 147,
+    name: "custom-25d-visual-layer-state-registry-materialization-shell",
+    dormant: true,
+    shellOnly: true,
+    mutatesState: false,
+    storesGlobally: false,
+    contractPlan,
+    defaultAssemblyShell,
+    allowed,
+    reason: allowed ? "layer-state-registry-materialization-shell-only" : "manual-guard-required",
+    materializedRegistry,
+    knownLayerSlots,
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Use this materialization shell only as a passive checkpoint and keep all returned registry/state data out of global storage until a dedicated verification phase is approved.",
+    nextPhase: "stored-visual-layer-state-registry-materialization-shell-verification-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
