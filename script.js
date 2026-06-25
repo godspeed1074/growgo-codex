@@ -17632,6 +17632,137 @@ function getCustom25DVisualRendererInitializationPreflightInventory(options = {}
   };
 }
 
+function getCustom25DVisualRendererInitializationPreflightReview(options = {}) {
+  const preflightInventory =
+    typeof getCustom25DVisualRendererInitializationPreflightInventory === "function"
+      ? getCustom25DVisualRendererInitializationPreflightInventory(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-preflight-inventory-unavailable",
+          presentPrerequisites: [],
+          missingPrerequisites: []
+        };
+  const lifecycleBoundaryReview =
+    typeof getCustom25DVisualRendererInitializationLifecycleBoundaryReview === "function"
+      ? getCustom25DVisualRendererInitializationLifecycleBoundaryReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-lifecycle-boundary-review-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 170,
+    name: "custom-25d-visual-renderer-initialization-preflight-review",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Review the passive renderer initialization preflight inventory and confirm it remains safely default-blocked.",
+    dependsOn: {
+      preflightInventory: !!preflightInventory.ok,
+      lifecycleBoundaryReview: !!lifecycleBoundaryReview.ok,
+      phase: preflightInventory.phase || 169
+    },
+    preflightInventorySummary: {
+      inventoryExistsAsPassiveReport: !!preflightInventory.ok,
+      futureInitializationBlockedByDefault: !!(
+        preflightInventory.defaultBlocked &&
+        preflightInventory.defaultBlocked.futureInitializationBlockedByDefault
+      ),
+      expectedDefaultBlockedReasonRemainsMapDisabled: !!(
+        preflightInventory.defaultBlocked &&
+        preflightInventory.defaultBlocked.expectedDefaultBlockedReasonRemainsMapDisabled
+      ),
+      noRealInitializationStateCreated: !!(
+        preflightInventory.defaultBlocked &&
+        preflightInventory.defaultBlocked.noRealInitializationStateCreated
+      ),
+      noLifecycleObjectCreated: !!(
+        preflightInventory.defaultBlocked &&
+        preflightInventory.defaultBlocked.noLifecycleObjectCreated
+      )
+    },
+    lifecycleBoundaryReviewSummary: {
+      reviewAvailable: !!lifecycleBoundaryReview.ok,
+      lifecycleBoundaryExistsOnlyAsPlan: !!(
+        lifecycleBoundaryReview.defaultBlocked &&
+        lifecycleBoundaryReview.defaultBlocked.lifecycleBoundaryExistsOnlyAsPlan
+      ),
+      lifecycleCreationBlocked: !!(
+        lifecycleBoundaryReview.defaultBlocked &&
+        lifecycleBoundaryReview.defaultBlocked.lifecycleCreationAllowed === false
+      ),
+      stateCreationBlocked: !!(
+        lifecycleBoundaryReview.defaultBlocked &&
+        lifecycleBoundaryReview.defaultBlocked.stateCreationAllowed === false
+      )
+    },
+    presentPrerequisites: Array.isArray(preflightInventory.presentPrerequisites)
+      ? preflightInventory.presentPrerequisites.slice()
+      : [],
+    missingPrerequisites: Array.isArray(preflightInventory.missingPrerequisites)
+      ? preflightInventory.missingPrerequisites.slice()
+      : [],
+    defaultBlocked: {
+      futureInitializationBlockedByDefault: !!(
+        preflightInventory.defaultBlocked &&
+        preflightInventory.defaultBlocked.futureInitializationBlockedByDefault
+      ),
+      expectedDefaultBlockedReason: preflightInventory.guardResult
+        ? preflightInventory.guardResult.reason
+        : "visual-renderer-initialization-guard-unavailable",
+      lifecycleCreationAllowed: false,
+      stateCreationAllowed: false,
+      initializationPerformed: false
+    },
+    expectedDefaultBlockedReason: preflightInventory.guardResult
+      ? preflightInventory.guardResult.reason
+      : "visual-renderer-initialization-guard-unavailable",
+    lifecycleCreationAllowed: false,
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    reviewFindings: {
+      preflightInventoryRemainsPassive: true,
+      lifecycleObjectCreationRemainsProhibited: true,
+      initializationStateCreationRemainsProhibited: true,
+      realRendererInitializationRemainsProhibited: true,
+      mapAttachmentRemainsProhibited: true,
+      drawingRemainsProhibited: true,
+      startupWiringRemainsProhibited: true,
+      gameplayOsmPinsPlayerCaptureRadiusBackendUntouched: true
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noInitializationStateCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "create a lifecycle object",
+      "create initialization state",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-go-no-go-report-plan"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
