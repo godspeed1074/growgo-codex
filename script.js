@@ -17276,6 +17276,101 @@ function getCustom25DVisualRendererInitializationStateContractReview(options = {
   };
 }
 
+function getCustom25DVisualRendererInitializationLifecycleBoundaryPlan(options = {}) {
+  const stateContractReview =
+    typeof getCustom25DVisualRendererInitializationStateContractReview === "function"
+      ? getCustom25DVisualRendererInitializationStateContractReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-contract-review-unavailable"
+        };
+  const stateContractPlan =
+    typeof getCustom25DVisualRendererInitializationStateContractPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateContractPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-contract-plan-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 167,
+    name: "custom-25d-visual-renderer-initialization-lifecycle-boundary-plan",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Define the future lifecycle boundaries around renderer initialization without creating any lifecycle object, state, or initialization side effects.",
+    dependsOn: {
+      initializationStateContractReview: !!stateContractReview.ok,
+      initializationStateContractPlan: !!stateContractPlan.ok,
+      phase: stateContractReview.phase || 166
+    },
+    lifecycleBoundary: {
+      planningReportHelpersMayRunPassively: true,
+      guardEvaluatorsMayReportAllowedOrBlocked: true,
+      manualAttemptEvaluatorsMaySimulateOnly: true,
+      realStateCreationNotAllowedHere: true,
+      realRendererInitializationNotAllowedHere: true,
+      mapAttachmentNotAllowedHere: true,
+      drawingNotAllowedHere: true,
+      startupWiringNotAllowedHere: true
+    },
+    allowedFutureLifecycleStages: [
+      "planning",
+      "guard-evaluation",
+      "manual-attempt-evaluation",
+      "state-contract-definition",
+      "lifecycle-boundary-review"
+    ],
+    prohibitedDefaultLifecycleStages: [
+      "lifecycle-object-creation",
+      "renderer-state-creation",
+      "renderer-initialization",
+      "map-attachment",
+      "drawing",
+      "startup-wiring"
+    ],
+    separationOfConcerns: {
+      planningSeparatedFromGuarding: true,
+      guardingSeparatedFromAttemptEvaluation: true,
+      attemptEvaluationSeparatedFromStateCreation: true,
+      stateCreationSeparatedFromInitialization: true,
+      initializationSeparatedFromMapAttachment: true,
+      mapAttachmentSeparatedFromDrawing: true
+    },
+    stateCreationAllowed: false,
+    lifecycleCreationAllowed: false,
+    initializationPerformed: false,
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "create a lifecycle object",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-lifecycle-boundary-review-closeout"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
