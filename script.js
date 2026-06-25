@@ -17497,6 +17497,141 @@ function getCustom25DVisualRendererInitializationLifecycleBoundaryReview(options
   };
 }
 
+function getCustom25DVisualRendererInitializationPreflightInventory(options = {}) {
+  const lifecycleBoundaryReview =
+    typeof getCustom25DVisualRendererInitializationLifecycleBoundaryReview === "function"
+      ? getCustom25DVisualRendererInitializationLifecycleBoundaryReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-lifecycle-boundary-review-unavailable"
+        };
+  const lifecycleBoundaryPlan =
+    typeof getCustom25DVisualRendererInitializationLifecycleBoundaryPlan === "function"
+      ? getCustom25DVisualRendererInitializationLifecycleBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-lifecycle-boundary-plan-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+  const preflightInventory = {
+    rendererShellReadiness: options.hasRendererShell === true,
+    materializationShellReadiness: options.hasRendererMaterializationShell === true,
+    handoffReadiness: options.hasRendererHandoffReadiness === true,
+    initializationContractReadiness: options.hasInitializationContract === true,
+    guardEvaluatorReadiness: typeof canInitializeCustom25DVisualRenderer === "function",
+    manualAttemptEvaluatorReadiness:
+      typeof getCustom25DVisualManualRendererInitializationAttemptResult === "function",
+    stateContractReadiness:
+      typeof getCustom25DVisualRendererInitializationStateContractPlan === "function" &&
+      typeof getCustom25DVisualRendererInitializationStateContractReview === "function",
+    lifecycleBoundaryReadiness:
+      typeof getCustom25DVisualRendererInitializationLifecycleBoundaryPlan === "function" &&
+      typeof getCustom25DVisualRendererInitializationLifecycleBoundaryReview === "function",
+    mapFlagState: ENABLE_CUSTOM_25D_MAP === true,
+    manualDeveloperOptionState: options.manual === true && options.developerIntent === true,
+    noStartupWiring: options.preventStartupWiring === true,
+    noDrawing: options.preventDrawing === true,
+    noMapAttachment: options.preventMapAttachment === true
+  };
+  const presentPrerequisites = Object.keys(preflightInventory).filter((key) => preflightInventory[key] === true);
+  const missingPrerequisites = Object.keys(preflightInventory).filter((key) => preflightInventory[key] !== true);
+
+  return {
+    ok: true,
+    phase: 169,
+    name: "custom-25d-visual-renderer-initialization-preflight-inventory",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Inventory passive readiness signals required before any future renderer initialization path is considered.",
+    dependsOn: {
+      lifecycleBoundaryReview: !!lifecycleBoundaryReview.ok,
+      lifecycleBoundaryPlan: !!lifecycleBoundaryPlan.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function",
+      phase: lifecycleBoundaryReview.phase || 168
+    },
+    guardResult,
+    lifecycleBoundaryReviewSummary: {
+      reviewAvailable: !!lifecycleBoundaryReview.ok,
+      lifecycleBoundaryExistsOnlyAsPlan: !!(
+        lifecycleBoundaryReview.defaultBlocked &&
+        lifecycleBoundaryReview.defaultBlocked.lifecycleBoundaryExistsOnlyAsPlan
+      ),
+      lifecycleCreationBlocked: !!(
+        lifecycleBoundaryReview.defaultBlocked &&
+        lifecycleBoundaryReview.defaultBlocked.lifecycleCreationAllowed === false
+      ),
+      stateCreationBlocked: !!(
+        lifecycleBoundaryReview.defaultBlocked &&
+        lifecycleBoundaryReview.defaultBlocked.stateCreationAllowed === false
+      )
+    },
+    lifecycleBoundaryPlanSummary: {
+      planAvailable: !!lifecycleBoundaryPlan.ok,
+      planningHelpersPassive: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.planningReportHelpersMayRunPassively
+      ),
+      guardEvaluatorsPassive: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.guardEvaluatorsMayReportAllowedOrBlocked
+      ),
+      realInitializationProhibited: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.realRendererInitializationNotAllowedHere
+      )
+    },
+    preflightInventory,
+    presentPrerequisites,
+    missingPrerequisites,
+    defaultBlocked: {
+      preflightInventoryReportOnly: true,
+      futureInitializationBlockedByDefault: guardResult.allowed === false,
+      expectedDefaultBlockedReasonRemainsMapDisabled: guardResult.reason === "custom-25d-map-disabled",
+      noRealInitializationStateCreated: true,
+      noLifecycleObjectCreated: true
+    },
+    lifecycleCreationAllowed: false,
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noInitializationStateCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "create a lifecycle object",
+      "create initialization state",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-preflight-inventory-closeout"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
