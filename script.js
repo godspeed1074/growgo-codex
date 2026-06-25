@@ -17371,6 +17371,132 @@ function getCustom25DVisualRendererInitializationLifecycleBoundaryPlan(options =
   };
 }
 
+function getCustom25DVisualRendererInitializationLifecycleBoundaryReview(options = {}) {
+  const lifecycleBoundaryPlan =
+    typeof getCustom25DVisualRendererInitializationLifecycleBoundaryPlan === "function"
+      ? getCustom25DVisualRendererInitializationLifecycleBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-lifecycle-boundary-plan-unavailable"
+        };
+  const stateContractReview =
+    typeof getCustom25DVisualRendererInitializationStateContractReview === "function"
+      ? getCustom25DVisualRendererInitializationStateContractReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-contract-review-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 168,
+    name: "custom-25d-visual-renderer-initialization-lifecycle-boundary-review",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Review the future renderer initialization lifecycle boundary plan and confirm the boundaries remain safely separated and default-blocked.",
+    dependsOn: {
+      lifecycleBoundaryPlan: !!lifecycleBoundaryPlan.ok,
+      initializationStateContractReview: !!stateContractReview.ok,
+      phase: lifecycleBoundaryPlan.phase || 167
+    },
+    lifecycleBoundarySummary: {
+      boundaryExistsAsPlanOnly: !!lifecycleBoundaryPlan.ok,
+      planningReportingSeparateFromGuardEvaluation: !!(
+        lifecycleBoundaryPlan.separationOfConcerns &&
+        lifecycleBoundaryPlan.separationOfConcerns.planningSeparatedFromGuarding
+      ),
+      guardEvaluationSeparateFromManualAttemptSimulation: !!(
+        lifecycleBoundaryPlan.separationOfConcerns &&
+        lifecycleBoundaryPlan.separationOfConcerns.guardingSeparatedFromAttemptEvaluation
+      ),
+      manualAttemptSimulationSeparateFromRealStateCreation: !!(
+        lifecycleBoundaryPlan.separationOfConcerns &&
+        lifecycleBoundaryPlan.separationOfConcerns.attemptEvaluationSeparatedFromStateCreation
+      ),
+      realStateCreationStillProhibited: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.realStateCreationNotAllowedHere
+      ),
+      realRendererInitializationStillProhibited: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.realRendererInitializationNotAllowedHere
+      ),
+      mapAttachmentStillProhibited: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.mapAttachmentNotAllowedHere
+      ),
+      drawingStillProhibited: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.drawingNotAllowedHere
+      ),
+      startupWiringStillProhibited: !!(
+        lifecycleBoundaryPlan.lifecycleBoundary &&
+        lifecycleBoundaryPlan.lifecycleBoundary.startupWiringNotAllowedHere
+      )
+    },
+    stateContractReviewSummary: {
+      reviewAvailable: !!stateContractReview.ok,
+      expectedDefaultReasonRemainsBlocked: !!(
+        stateContractReview.defaultBlocked &&
+        stateContractReview.defaultBlocked.expectedDefaultReasonRemainsBlocked
+      ),
+      noRealInitializationStateCreated: !!(
+        stateContractReview.defaultBlocked &&
+        stateContractReview.defaultBlocked.noRealInitializationStateCreated
+      ),
+      initializationPerformed: !!stateContractReview.initializationPerformed
+    },
+    defaultBlocked: {
+      lifecycleBoundaryExistsOnlyAsPlan: !!lifecycleBoundaryPlan.ok,
+      lifecycleCreationAllowed: false,
+      stateCreationAllowed: false,
+      initializationPerformed: false,
+      expectedDefaultBlockedReasonRemainsMapDisabled: !!(
+        stateContractReview.defaultBlocked &&
+        stateContractReview.defaultBlocked.expectedDefaultReasonRemainsBlocked
+      )
+    },
+    lifecycleCreationAllowed: false,
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    reviewFindings: {
+      noLifecycleObjectCreated: true,
+      noActualInitializationStateCreated: true,
+      noRendererInitializationOccurred: true,
+      noMapAttachmentOrDrawingPossibleHere: true,
+      gameplayOsmPinsPlayerCaptureRadiusBackendUntouched: true
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "create a lifecycle object",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-preflight-inventory-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
