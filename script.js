@@ -14606,6 +14606,88 @@ function createCustom25DVisualLayerStateStorageShell(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateStorageShellVerificationReport(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateStorageContractPlan === "function"
+      ? getCustom25DVisualLayerStateStorageContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage contract plan helper is unavailable."
+        };
+  const defaultStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const allowedStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateStorageShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedStorageShell.knownLayerSlots)
+    ? allowedStorageShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 139,
+    name: "custom-25d-visual-layer-state-storage-shell-verification-report",
+    dormant: true,
+    verificationReportOnly: true,
+    mutatesState: false,
+    contractPlan,
+    defaultStorageShell,
+    allowedStorageShell,
+    knownLayerSlots,
+    checks: {
+      defaultStorageShellBlocked: defaultStorageShell.allowed !== true,
+      defaultStorageIsNull: defaultStorageShell.storage === null,
+      allowedStorageShellReturnsInertDataOnly: !!allowedStorageShell.storage,
+      allowedStorageNotStoredGlobally: allowedStorageShell.storesLayerStateGlobally === false,
+      noGlobalRegistryCreated: allowedStorageShell.createsStoredRegistry === false,
+      noLayerStateStoredGlobally: allowedStorageShell.storesLayerStateGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      storageSlotCountIsNine:
+        !!allowedStorageShell.storage && allowedStorageShell.storage.slotCount === 9,
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep the storage shell in verification-only mode until a dedicated safety review confirms the same inert non-storing behavior.",
+    nextPhase: "phase-140-stored-visual-layer-state-registry-creation-shell-safety-review"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
