@@ -16882,6 +16882,85 @@ function getCustom25DVisualRendererInitializationGuardReview(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererInitializationAttemptResult(options = {}) {
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable",
+          failedCheck: "guardUnavailable"
+        };
+  const guardReview =
+    typeof getCustom25DVisualRendererInitializationGuardReview === "function"
+      ? getCustom25DVisualRendererInitializationGuardReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-guard-review-unavailable"
+        };
+  const allowed = guardResult.allowed === true;
+  const reason = allowed
+    ? "evaluation-only-no-initialization-performed"
+    : guardResult.reason || "visual-renderer-initialization-blocked";
+
+  return {
+    attempted: true,
+    allowed,
+    initialized: false,
+    phase: 163,
+    name: "custom-25d-visual-manual-renderer-initialization-attempt-result",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    manualAttempt: true,
+    reason,
+    guardResult,
+    guardReviewSummary: {
+      reviewAvailable: !!guardReview.ok,
+      defaultBlocked: !!(guardReview.defaultBlocked && guardReview.defaultBlocked.initializationRemainsBlockedByDefault),
+      expectedFirstFailure: !!(guardReview.defaultBlocked && guardReview.defaultBlocked.expectedFirstFailure),
+      custom25DMapFlagStillFalse: !!(guardReview.defaultBlocked && guardReview.defaultBlocked.custom25DMapFlagStillFalse)
+    },
+    result: {
+      attempted: true,
+      allowed,
+      initialized: false,
+      evaluationOnly: true,
+      rendererCreated: false,
+      registryCreated: false,
+      layerCreated: false,
+      layerStateCreated: false,
+      startupWired: false,
+      attachedToMap: false,
+      drewGraphics: false
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-attempt-closeout-review"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
