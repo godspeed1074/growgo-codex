@@ -12886,6 +12886,106 @@ function getCustom25DVisualLayerStateInventoryCloseoutReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateCreationContractPlan(options = {}) {
+  const inventoryCloseout =
+    typeof getCustom25DVisualLayerStateInventoryCloseoutReport === "function"
+      ? getCustom25DVisualLayerStateInventoryCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state inventory closeout report helper is unavailable."
+        };
+  const guard =
+    typeof canInitializeCustom25DVisualLayers === "function"
+      ? canInitializeCustom25DVisualLayers(options)
+      : {
+          allowed: false,
+          reason: "visual-layer-initialization-guard-unavailable"
+        };
+  const shellResult =
+    typeof initializeCustom25DVisualLayers === "function"
+      ? initializeCustom25DVisualLayers(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-initialization-shell-unavailable",
+          initialized: false,
+          mutatesState: false,
+          createsVisibleGraphics: false,
+          attachesToMap: false
+        };
+
+  const knownLayerSlots = [
+    "roadBase",
+    "roadShadow",
+    "water",
+    "park",
+    "building",
+    "landmark",
+    "dinosaur",
+    "film",
+    "poi"
+  ];
+
+  return {
+    ok: true,
+    phase: 121,
+    name: "custom-25d-visual-layer-state-creation-contract-plan",
+    dormant: true,
+    contractPlanOnly: true,
+    createsLayerStateNow: false,
+    mutatesState: false,
+    inventoryCloseout,
+    guard,
+    shellResult,
+    plannedLayerStateShape: {
+      key: "string",
+      name: "string",
+      order: "number",
+      enabledByDefault: false,
+      visible: false,
+      implemented: false,
+      dormant: true,
+      intendedVisualRole: "string",
+      targetStyle: "string",
+      createsMapLayer: false,
+      attachesToMap: false,
+      drawsGraphics: false,
+      notes: "string"
+    },
+    knownLayerSlots,
+    safetyBoundaries: {
+      noStateCreationNow: true,
+      noLayerCreationNow: true,
+      noLayerInitializationNow: true,
+      noMapAttachmentNow: true,
+      noVisibleGraphicsNow: true,
+      noStartupWiringNow: true
+    },
+    defaultOutcome: {
+      defaultSafe: true,
+      noStateCreatedNow: true,
+      shellBlocked: shellResult.allowed !== true,
+      reason: shellResult.reason || guard.reason || "visual-layer-initialization-blocked",
+      initialized: shellResult.initialized === true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep visual layer state work in planning-and-contract mode until a dedicated dormant state factory shell is introduced.",
+    nextPhase: "phase-122-create-dormant-visual-layer-state-factory-shell"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
