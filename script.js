@@ -15672,6 +15672,106 @@ function getCustom25DVisualLayerStateRegistryMaterializationInventoryReadinessBu
   };
 }
 
+function getCustom25DVisualLayerStateRegistryHandoffReadinessReport(options = {}) {
+  const materializationInventoryReadinessBundle =
+    typeof getCustom25DVisualLayerStateRegistryMaterializationInventoryReadinessBundle === "function"
+      ? getCustom25DVisualLayerStateRegistryMaterializationInventoryReadinessBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry materialization inventory readiness bundle helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const allowedMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateRegistryMaterialization: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedMaterializationShell.knownLayerSlots)
+    ? allowedMaterializationShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 150,
+    name: "custom-25d-visual-layer-state-registry-handoff-readiness-report",
+    dormant: true,
+    handoffReadinessReportOnly: true,
+    mutatesState: false,
+    materializationInventoryReadinessBundle,
+    defaultMaterializationShell,
+    allowedMaterializationShell,
+    knownLayerSlots,
+    readinessChecks: {
+      materializationInventoryReadinessBundleExists: !!materializationInventoryReadinessBundle.ok,
+      materializationInventorySequenceClosedOut: !!(
+        materializationInventoryReadinessBundle.closedOut &&
+        materializationInventoryReadinessBundle.closedOut.materializationInventorySequenceClosedOut
+      ),
+      readinessIsSafe: !!(
+        materializationInventoryReadinessBundle.readinessChecks &&
+        materializationInventoryReadinessBundle.readinessChecks.readyForNextGuardedStoredRegistryStep
+      ),
+      defaultMaterializationShellBlocked: defaultMaterializationShell.allowed !== true,
+      defaultMaterializedRegistryIsNull: defaultMaterializationShell.materializedRegistry === null,
+      allowedMaterializationShellReturnsInertDataOnly: !!allowedMaterializationShell.materializedRegistry,
+      allowedMaterializedRegistryNotStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      noGlobalRegistryCreated: allowedMaterializationShell.storesGlobally === false,
+      noLayerStateStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      materializedSlotCountIsNine:
+        !!allowedMaterializationShell.materializedRegistry &&
+        allowedMaterializationShell.materializedRegistry.slotCount === 9,
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true,
+      readyOnlyForRendererPlanningNext: true
+    },
+    handoffBoundaries: {
+      rendererPlanningOnlyNext: true,
+      notReadyForRendererCreation: true,
+      noRegistryMaterializationPersistence: true,
+      noLayerStatePersistence: true,
+      noRenderingActivation: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Use this path as a handoff checkpoint only and move next to renderer planning or contracts, not renderer creation.",
+    nextPhase: "renderer-planning-contract-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
