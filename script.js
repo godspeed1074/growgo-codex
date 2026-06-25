@@ -14131,6 +14131,84 @@ function getCustom25DVisualLayerStateRegistryShellCloseoutReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateRegistryInventoryReport(options = {}) {
+  const registryShellCloseout =
+    typeof getCustom25DVisualLayerStateRegistryShellCloseoutReport === "function"
+      ? getCustom25DVisualLayerStateRegistryShellCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry shell closeout report helper is unavailable."
+        };
+  const defaultRegistryShell =
+    typeof createCustom25DVisualLayerStateRegistryShell === "function"
+      ? createCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-shell-unavailable",
+          registry: null,
+          knownLayerSlots: []
+        };
+  const sampleAllowedRegistryShell =
+    typeof createCustom25DVisualLayerStateRegistryShell === "function"
+      ? createCustom25DVisualLayerStateRegistryShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateRegistryShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-shell-unavailable",
+          registry: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(sampleAllowedRegistryShell.knownLayerSlots)
+    ? sampleAllowedRegistryShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 134,
+    name: "custom-25d-visual-layer-state-registry-inventory-report",
+    dormant: true,
+    inventoryReportOnly: true,
+    mutatesState: false,
+    registryShellCloseout,
+    defaultRegistryShell,
+    sampleAllowedRegistryShell,
+    knownLayerSlots,
+    registryInventory: {
+      registryShellCloseoutExists: !!registryShellCloseout.ok,
+      defaultRegistryShellBlocked: defaultRegistryShell.allowed !== true,
+      defaultRegistryIsNull: defaultRegistryShell.registry === null,
+      sampleAllowedRegistryShellReturnsInertDataOnly: !!sampleAllowedRegistryShell.registry,
+      allowedRegistryNotStoredGlobally: sampleAllowedRegistryShell.createsStoredRegistry === false,
+      registryStoresNoLayerState: sampleAllowedRegistryShell.storesLayerState === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noRendererRegistryOrLayerInitializer: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep the registry inventory passive and move next only to a safety review that confirms the same inert non-stored behavior.",
+    nextPhase: "phase-135-visual-layer-state-registry-inventory-safety-review"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
