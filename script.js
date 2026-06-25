@@ -16403,6 +16403,117 @@ function getCustom25DVisualRendererMaterializationCloseoutBundle(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererMaterializationInventoryReadinessBundle(options = {}) {
+  const rendererMaterializationCloseoutBundle =
+    typeof getCustom25DVisualRendererMaterializationCloseoutBundle === "function"
+      ? getCustom25DVisualRendererMaterializationCloseoutBundle({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer materialization closeout bundle helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualRendererShell === "function"
+      ? materializeCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-materialization-shell-unavailable",
+          materializedRenderer: null,
+          knownLayerSlots: []
+        };
+  const allowedMaterializationShell =
+    typeof materializeCustom25DVisualRendererShell === "function"
+      ? materializeCustom25DVisualRendererShell({
+          manual: true,
+          developerIntent: true,
+          allowRendererMaterialization: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-materialization-shell-unavailable",
+          materializedRenderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedMaterializationShell.knownLayerSlots)
+    ? allowedMaterializationShell.knownLayerSlots.slice()
+    : Array.isArray(defaultMaterializationShell.knownLayerSlots)
+      ? defaultMaterializationShell.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 158,
+    name: "custom-25d-visual-renderer-materialization-inventory-readiness-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    inventoryReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    readinessPlanOnly: true,
+    mutatesState: false,
+    rendererMaterializationCloseoutBundle,
+    defaultMaterializationShell,
+    allowedMaterializationShell,
+    knownLayerSlots,
+    inventoryChecks: {
+      phase157RendererMaterializationCloseoutBundleExists: !!rendererMaterializationCloseoutBundle.ok,
+      defaultMaterializationShellBlocked: defaultMaterializationShell.allowed !== true,
+      defaultMaterializedRendererIsNull: defaultMaterializationShell.materializedRenderer === null,
+      allowedMaterializationShellReturnsInertDataOnly: !!allowedMaterializationShell.materializedRenderer,
+      allowedMaterializedRendererNotStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      rendererNotInitialized: allowedMaterializationShell.initializesRenderer === false,
+      noRegistryLayerInitializerCalled: true,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    safetyChecks: {
+      noGlobalRendererStorage: allowedMaterializationShell.storesGlobally === false,
+      noRendererInitialization: allowedMaterializationShell.initializesRenderer === false,
+      noRegistryLayerInitialization: true,
+      noUiOrListeners: true,
+      noVisibleGraphics: true
+    },
+    closeoutChecks: {
+      rendererMaterializationInventorySequenceClosedOut: true,
+      materializationCloseoutBundleClosedOut: !!(
+        rendererMaterializationCloseoutBundle.closedOut &&
+        rendererMaterializationCloseoutBundle.closedOut.rendererMaterializationShellSequenceClosedOut
+      ),
+      noBehaviorChanged: true
+    },
+    readinessChecks: {
+      readinessIsSafeForNextGuardedRendererStep: true,
+      nextGuardedStepRequiresManualDeveloperIntent: true,
+      rendererStillDormant:
+        allowedMaterializationShell.materializedRenderer
+          ? allowedMaterializationShell.materializedRenderer.dormant === true
+          : true,
+      noMapAttachmentPlannedNow: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      rendererMaterializationInventorySequenceClosedOut: true
+    },
+    recommendation: "Keep the renderer materialization path passive and use the next phase only for handoff readiness reporting.",
+    nextPhase: "visual-renderer-handoff-readiness-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
