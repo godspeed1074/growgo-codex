@@ -14494,6 +14494,118 @@ function getCustom25DVisualLayerStateStorageContractPlan(options = {}) {
   };
 }
 
+function createCustom25DVisualLayerStateStorageShell(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateStorageContractPlan === "function"
+      ? getCustom25DVisualLayerStateStorageContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage contract plan helper is unavailable."
+        };
+  const defaultRegistryShell =
+    typeof createCustom25DVisualLayerStateRegistryShell === "function"
+      ? createCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-shell-unavailable",
+          registry: null,
+          knownLayerSlots: []
+        };
+  const defaultLayerStateShell =
+    typeof createCustom25DVisualLayerStateShell === "function"
+      ? createCustom25DVisualLayerStateShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-shell-unavailable",
+          state: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(contractPlan.knownLayerSlots)
+    ? contractPlan.knownLayerSlots.slice()
+    : Array.isArray(defaultRegistryShell.knownLayerSlots)
+      ? defaultRegistryShell.knownLayerSlots.slice()
+      : Array.isArray(defaultLayerStateShell.knownLayerSlots)
+        ? defaultLayerStateShell.knownLayerSlots.slice()
+        : [];
+  const allowed =
+    options.manual === true &&
+    options.developerIntent === true &&
+    options.allowLayerStateStorageShell === true;
+
+  let storage = null;
+  if (allowed) {
+    const allowedRegistryShell =
+      typeof createCustom25DVisualLayerStateRegistryShell === "function"
+        ? createCustom25DVisualLayerStateRegistryShell({
+            manual: true,
+            developerIntent: true,
+            allowLayerStateRegistryShell: true
+          })
+        : null;
+    const layerStates = knownLayerSlots.map((slot) => {
+      const shell =
+        typeof createCustom25DVisualLayerStateShell === "function"
+          ? createCustom25DVisualLayerStateShell({
+              manual: true,
+              developerIntent: true,
+              allowLayerStateShell: true,
+              slot
+            })
+          : null;
+      return shell && shell.state ? shell.state : null;
+    }).filter(Boolean);
+
+    storage = {
+      created: true,
+      initialized: false,
+      dormant: true,
+      storedGlobally: false,
+      registry: allowedRegistryShell ? allowedRegistryShell.registry : null,
+      layerStates,
+      slotCount: layerStates.length,
+      mapAttached: false,
+      drawsGraphics: false,
+      visible: false,
+      notes: "Inert storage shell only. Registry and layer states are returned data only and are not stored globally."
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 138,
+    name: "custom-25d-visual-layer-state-storage-shell",
+    dormant: true,
+    shellOnly: true,
+    mutatesState: false,
+    createsStoredRegistry: false,
+    storesLayerStateGlobally: false,
+    contractPlan,
+    defaultRegistryShell,
+    defaultLayerStateShell,
+    allowed,
+    reason: allowed ? "layer-state-storage-shell-only" : "manual-guard-required",
+    storage,
+    knownLayerSlots,
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Use this storage shell only as a passive checkpoint and keep all returned registry and layer state data out of global storage until a dedicated verification phase is approved.",
+    nextPhase: "phase-139-stored-visual-layer-state-registry-creation-shell-verification-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
