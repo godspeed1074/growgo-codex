@@ -14688,6 +14688,98 @@ function getCustom25DVisualLayerStateStorageShellVerificationReport(options = {}
   };
 }
 
+function getCustom25DVisualLayerStateStorageShellSafetyReview(options = {}) {
+  const verificationReport =
+    typeof getCustom25DVisualLayerStateStorageShellVerificationReport === "function"
+      ? getCustom25DVisualLayerStateStorageShellVerificationReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage shell verification report helper is unavailable."
+        };
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateStorageContractPlan === "function"
+      ? getCustom25DVisualLayerStateStorageContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage contract plan helper is unavailable."
+        };
+  const defaultStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const allowedStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateStorageShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedStorageShell.knownLayerSlots)
+    ? allowedStorageShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 140,
+    name: "custom-25d-visual-layer-state-storage-shell-safety-review",
+    dormant: true,
+    safetyReviewOnly: true,
+    mutatesState: false,
+    verificationReport,
+    contractPlan,
+    defaultStorageShell,
+    allowedStorageShell,
+    knownLayerSlots,
+    safetyChecks: {
+      verificationReportExists: !!verificationReport.ok,
+      defaultStorageShellBlocked: defaultStorageShell.allowed !== true,
+      defaultStorageIsNull: defaultStorageShell.storage === null,
+      allowedStorageShellReturnsInertDataOnly: !!allowedStorageShell.storage,
+      allowedStorageNotStoredGlobally: allowedStorageShell.storesLayerStateGlobally === false,
+      noGlobalRegistryCreated: allowedStorageShell.createsStoredRegistry === false,
+      noLayerStateStoredGlobally: allowedStorageShell.storesLayerStateGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      storageSlotCountIsNine:
+        !!allowedStorageShell.storage && allowedStorageShell.storage.slotCount === 9,
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep the storage shell in safety-review mode until a closeout report records the same inert non-storing behavior.",
+    nextPhase: "phase-141-stored-visual-layer-state-registry-creation-shell-closeout-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
