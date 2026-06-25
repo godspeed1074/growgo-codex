@@ -14780,6 +14780,123 @@ function getCustom25DVisualLayerStateStorageShellSafetyReview(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateStorageShellCloseoutBundle(options = {}) {
+  const safetyReview =
+    typeof getCustom25DVisualLayerStateStorageShellSafetyReview === "function"
+      ? getCustom25DVisualLayerStateStorageShellSafetyReview({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage shell safety review helper is unavailable."
+        };
+  const verificationReport =
+    typeof getCustom25DVisualLayerStateStorageShellVerificationReport === "function"
+      ? getCustom25DVisualLayerStateStorageShellVerificationReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state storage shell verification report helper is unavailable."
+        };
+  const defaultStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const allowedStorageShell =
+    typeof createCustom25DVisualLayerStateStorageShell === "function"
+      ? createCustom25DVisualLayerStateStorageShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateStorageShell: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-storage-shell-unavailable",
+          storage: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedStorageShell.knownLayerSlots)
+    ? allowedStorageShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 141,
+    name: "custom-25d-visual-layer-state-storage-shell-closeout-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    closeoutReportOnly: true,
+    inventoryReportOnly: true,
+    inventorySafetyOnly: true,
+    inventoryCloseoutOnly: true,
+    mutatesState: false,
+    safetyReview,
+    verificationReport,
+    defaultStorageShell,
+    allowedStorageShell,
+    knownLayerSlots,
+    closeoutChecks: {
+      safetyReviewExists: !!safetyReview.ok,
+      verificationReportExists: !!verificationReport.ok,
+      defaultStorageShellBlocked: defaultStorageShell.allowed !== true,
+      defaultStorageIsNull: defaultStorageShell.storage === null,
+      allowedStorageShellReturnsInertDataOnly: !!allowedStorageShell.storage,
+      allowedStorageNotStoredGlobally: allowedStorageShell.storesLayerStateGlobally === false,
+      noGlobalRegistryCreated: allowedStorageShell.createsStoredRegistry === false,
+      noLayerStateStoredGlobally: allowedStorageShell.storesLayerStateGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      storageSlotCountIsNine:
+        !!allowedStorageShell.storage && allowedStorageShell.storage.slotCount === 9,
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true,
+      storageShellSequenceClosedOut: true
+    },
+    inventoryChecks: {
+      inventorySequenceClosedOut: true,
+      storageShellInventorySequenceClosedOut: true,
+      slotCountIsStable: knownLayerSlots.length === 9,
+      returnedDataOnly: !!allowedStorageShell.storage
+    },
+    safetyChecks: {
+      passiveOnly: true,
+      noMutation: true,
+      noGlobalStorage: true,
+      noVisibility: true,
+      noStartupWiring: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      storageShellSequenceClosedOut: true,
+      storageShellInventorySequenceClosedOut: true,
+      noPersistentRegistryCreated: true,
+      noPersistentLayerStateStored: true
+    },
+    recommendation: "Treat the storage shell sequence as fully passively bundled and move next only to a readiness plan for any future stored visual layer state registry work.",
+    nextPhase: "stored-visual-layer-state-registry-readiness-plan"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
