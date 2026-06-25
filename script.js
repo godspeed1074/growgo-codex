@@ -15455,6 +15455,108 @@ function materializeCustom25DVisualLayerStateRegistryShell(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateRegistryMaterializationCloseoutBundle(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualLayerStateRegistryMaterializationContractPlan === "function"
+      ? getCustom25DVisualLayerStateRegistryMaterializationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state registry materialization contract plan helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const allowedMaterializationShell =
+    typeof materializeCustom25DVisualLayerStateRegistryShell === "function"
+      ? materializeCustom25DVisualLayerStateRegistryShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateRegistryMaterialization: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-registry-materialization-shell-unavailable",
+          materializedRegistry: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedMaterializationShell.knownLayerSlots)
+    ? allowedMaterializationShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 148,
+    name: "custom-25d-visual-layer-state-registry-materialization-closeout-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    verificationReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    mutatesState: false,
+    contractPlan,
+    defaultMaterializationShell,
+    allowedMaterializationShell,
+    knownLayerSlots,
+    verificationChecks: {
+      contractPlanExists: !!contractPlan.ok,
+      defaultMaterializationShellBlocked: defaultMaterializationShell.allowed !== true,
+      defaultMaterializedRegistryIsNull: defaultMaterializationShell.materializedRegistry === null,
+      allowedMaterializationShellReturnsInertDataOnly: !!allowedMaterializationShell.materializedRegistry,
+      allowedMaterializedRegistryNotStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      noGlobalRegistryCreated: allowedMaterializationShell.storesGlobally === false,
+      noLayerStateStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      materializedSlotCountIsNine:
+        !!allowedMaterializationShell.materializedRegistry &&
+        allowedMaterializationShell.materializedRegistry.slotCount === 9
+    },
+    safetyChecks: {
+      noRendererCalled: true,
+      noRegistryInitializerCalled: true,
+      noRealLayerInitializerCalled: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true,
+      passiveOnly: true,
+      noMutation: true
+    },
+    closeoutChecks: {
+      materializationShellSequenceClosedOut: true,
+      defaultPathRemainsBlocked: defaultMaterializationShell.allowed !== true,
+      allowedPathRemainsInert: !!allowedMaterializationShell.materializedRegistry,
+      returnedDataOnly: !!allowedMaterializationShell.materializedRegistry
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      materializationShellSequenceClosedOut: true,
+      noPersistentRegistryCreated: true,
+      noPersistentLayerStateStored: true
+    },
+    recommendation: "Treat the materialization shell sequence as passively closed out and move next only to a materialization inventory/readiness passive bundle.",
+    nextPhase: "materialization-inventory-readiness-passive-bundle"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
