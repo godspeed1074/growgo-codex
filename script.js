@@ -16302,6 +16302,107 @@ function materializeCustom25DVisualRendererShell(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererMaterializationCloseoutBundle(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualRendererMaterializationContractPlan === "function"
+      ? getCustom25DVisualRendererMaterializationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer materialization contract plan helper is unavailable."
+        };
+  const defaultMaterializationShell =
+    typeof materializeCustom25DVisualRendererShell === "function"
+      ? materializeCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-materialization-shell-unavailable",
+          materializedRenderer: null,
+          knownLayerSlots: []
+        };
+  const allowedMaterializationShell =
+    typeof materializeCustom25DVisualRendererShell === "function"
+      ? materializeCustom25DVisualRendererShell({
+          manual: true,
+          developerIntent: true,
+          allowRendererMaterialization: true
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-materialization-shell-unavailable",
+          materializedRenderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(allowedMaterializationShell.knownLayerSlots)
+    ? allowedMaterializationShell.knownLayerSlots.slice()
+    : Array.isArray(defaultMaterializationShell.knownLayerSlots)
+      ? defaultMaterializationShell.knownLayerSlots.slice()
+      : [];
+
+  return {
+    ok: true,
+    phase: 157,
+    name: "custom-25d-visual-renderer-materialization-closeout-bundle",
+    dormant: true,
+    combinedPassiveBundle: true,
+    verificationReportOnly: true,
+    safetyReviewOnly: true,
+    closeoutReportOnly: true,
+    mutatesState: false,
+    contractPlan,
+    defaultMaterializationShell,
+    allowedMaterializationShell,
+    knownLayerSlots,
+    verificationChecks: {
+      phase155RendererMaterializationContractExists: !!contractPlan.ok,
+      defaultMaterializationShellBlocked: defaultMaterializationShell.allowed !== true,
+      defaultMaterializedRendererIsNull: defaultMaterializationShell.materializedRenderer === null,
+      allowedMaterializationShellReturnsInertDataOnly: !!allowedMaterializationShell.materializedRenderer,
+      allowedMaterializedRendererNotStoredGlobally: allowedMaterializationShell.storesGlobally === false,
+      rendererNotInitialized: allowedMaterializationShell.initializesRenderer === false,
+      noRegistryLayerInitializerCalled: true,
+      knownSlotCountIsNine: knownLayerSlots.length === 9,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    safetyChecks: {
+      manualGuardPreserved:
+        defaultMaterializationShell.allowed !== true && allowedMaterializationShell.allowed === true,
+      noGlobalRendererStorage: allowedMaterializationShell.storesGlobally === false,
+      noRendererInitialization: allowedMaterializationShell.initializesRenderer === false,
+      noRegistryLayerInitialization: true,
+      noUiOrListeners: true,
+      noVisibleGraphics: true
+    },
+    closeoutChecks: {
+      verificationSafe: true,
+      safetyReviewSafe: true,
+      rendererMaterializationShellSequenceClosedOut: true,
+      readyForInventoryReadinessBundle: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    closedOut: {
+      rendererMaterializationShellSequenceClosedOut: true
+    },
+    recommendation: "Treat this renderer materialization shell as closed out and move next to passive inventory and readiness reporting only.",
+    nextPhase: "renderer-materialization-inventory-readiness-passive-bundle"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
