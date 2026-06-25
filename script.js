@@ -17763,6 +17763,144 @@ function getCustom25DVisualRendererInitializationPreflightReview(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererInitializationGoNoGoReportPlan(options = {}) {
+  const preflightReview =
+    typeof getCustom25DVisualRendererInitializationPreflightReview === "function"
+      ? getCustom25DVisualRendererInitializationPreflightReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-preflight-review-unavailable"
+        };
+  const preflightInventory =
+    typeof getCustom25DVisualRendererInitializationPreflightInventory === "function"
+      ? getCustom25DVisualRendererInitializationPreflightInventory(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-preflight-inventory-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 171,
+    name: "custom-25d-visual-renderer-initialization-go-no-go-report-plan",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Define how a future renderer initialization go/no-go report should summarize readiness while keeping the default outcome blocked.",
+    dependsOn: {
+      preflightReview: !!preflightReview.ok,
+      preflightInventory: !!preflightInventory.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function",
+      phase: preflightReview.phase || 170
+    },
+    guardResult,
+    preflightReviewSummary: {
+      reviewAvailable: !!preflightReview.ok,
+      futureInitializationBlockedByDefault: !!(
+        preflightReview.defaultBlocked &&
+        preflightReview.defaultBlocked.futureInitializationBlockedByDefault
+      ),
+      expectedDefaultBlockedReason: preflightReview.expectedDefaultBlockedReason || "visual-renderer-initialization-guard-unavailable",
+      lifecycleCreationBlocked: preflightReview.lifecycleCreationAllowed === false,
+      stateCreationBlocked: preflightReview.stateCreationAllowed === false
+    },
+    preflightInventorySummary: {
+      inventoryAvailable: !!preflightInventory.ok,
+      presentPrerequisiteCount: Array.isArray(preflightInventory.presentPrerequisites)
+        ? preflightInventory.presentPrerequisites.length
+        : 0,
+      missingPrerequisiteCount: Array.isArray(preflightInventory.missingPrerequisites)
+        ? preflightInventory.missingPrerequisites.length
+        : 0,
+      futureInitializationBlockedByDefault: !!(
+        preflightInventory.defaultBlocked &&
+        preflightInventory.defaultBlocked.futureInitializationBlockedByDefault
+      )
+    },
+    goNoGoPlan: {
+      reportOnly: true,
+      defaultDecision: "no-go",
+      decisionDependsOnGuardResult: true,
+      decisionDependsOnPreflightReadiness: true,
+      decisionMustRemainBlockedWhileMapFlagFalse: ENABLE_CUSTOM_25D_MAP === false,
+      noRendererInitializationPerformed: true
+    },
+    defaultDecision: "no-go",
+    expectedDefaultBlockedReason: guardResult.reason || "visual-renderer-initialization-guard-unavailable",
+    decisionInputs: {
+      mapFlagState: ENABLE_CUSTOM_25D_MAP === true,
+      manualDeveloperIntent: options.manual === true && options.developerIntent === true,
+      rendererShellReadiness: options.hasRendererShell === true,
+      materializationShellReadiness: options.hasRendererMaterializationShell === true,
+      handoffReadiness: options.hasRendererHandoffReadiness === true,
+      initializationContractReadiness: options.hasInitializationContract === true,
+      guardEvaluatorResult: guardResult.allowed === true,
+      manualAttemptResult:
+        typeof getCustom25DVisualManualRendererInitializationAttemptResult === "function",
+      stateContractReadiness:
+        typeof getCustom25DVisualRendererInitializationStateContractPlan === "function" &&
+        typeof getCustom25DVisualRendererInitializationStateContractReview === "function",
+      lifecycleBoundaryReadiness:
+        typeof getCustom25DVisualRendererInitializationLifecycleBoundaryPlan === "function" &&
+        typeof getCustom25DVisualRendererInitializationLifecycleBoundaryReview === "function",
+      preflightInventoryReviewReadiness: !!preflightInventory.ok && !!preflightReview.ok,
+      startupWiringBlocked: options.preventStartupWiring === true,
+      drawingBlocked: options.preventDrawing === true,
+      mapAttachmentBlocked: options.preventMapAttachment === true
+    },
+    noGoReasons: Array.isArray(preflightInventory.missingPrerequisites)
+      ? preflightInventory.missingPrerequisites.slice()
+      : [],
+    futureGoRequirements: [
+      "custom 2.5D map flag explicitly enabled in a future guarded phase",
+      "manual and developer intent explicitly confirmed",
+      "renderer shell and materialization shell readiness confirmed",
+      "handoff and initialization contract readiness confirmed",
+      "preflight inventory and review show no missing prerequisites",
+      "startup wiring, drawing, and map attachment remain blocked until a later approved phase"
+    ],
+    lifecycleCreationAllowed: false,
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noInitializationStateCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "create a lifecycle object",
+      "create initialization state",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-go-no-go-review-closeout"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
