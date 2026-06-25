@@ -13415,6 +13415,85 @@ function getCustom25DVisualLayerStateFactoryCloseoutReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLayerStateFactoryInventoryReport(options = {}) {
+  const factoryCloseout =
+    typeof getCustom25DVisualLayerStateFactoryCloseoutReport === "function"
+      ? getCustom25DVisualLayerStateFactoryCloseoutReport({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual layer state factory closeout report helper is unavailable."
+        };
+  const defaultShell =
+    typeof createCustom25DVisualLayerStateShell === "function"
+      ? createCustom25DVisualLayerStateShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-shell-unavailable",
+          state: null,
+          knownLayerSlots: []
+        };
+  const sampleAllowedShell =
+    typeof createCustom25DVisualLayerStateShell === "function"
+      ? createCustom25DVisualLayerStateShell({
+          manual: true,
+          developerIntent: true,
+          allowLayerStateShell: true,
+          slot: "roadBase"
+        })
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-layer-state-shell-unavailable",
+          state: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(sampleAllowedShell.knownLayerSlots)
+    ? sampleAllowedShell.knownLayerSlots.slice()
+    : [];
+
+  return {
+    ok: true,
+    phase: 126,
+    name: "custom-25d-visual-layer-state-factory-inventory-report",
+    dormant: true,
+    inventoryReportOnly: true,
+    mutatesState: false,
+    factoryCloseout,
+    defaultShell,
+    sampleAllowedShell,
+    knownLayerSlots,
+    factoryOutputInventory: {
+      factoryCloseoutExists: !!factoryCloseout.ok,
+      defaultShellBlocked: defaultShell.allowed !== true,
+      defaultStateNull: defaultShell.state === null,
+      sampleAllowedShellReturnsInertDataOnly: !!sampleAllowedShell.state,
+      allowedStateNotStored: sampleAllowedShell.createsStoredState === false,
+      knownSlotCount: knownLayerSlots.length,
+      factoryDescribesStateDataOnly: true,
+      noRendererRegistryOrLayerInitializer: true,
+      noMapAttachDrawVisibility: true,
+      noStartupWiring: true,
+      noBehaviorChanged: true
+    },
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep factory output inventory passive and move next only to registration planning, not implementation.",
+    nextPhase: "phase-127-visual-layer-state-registration-planning-only"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
