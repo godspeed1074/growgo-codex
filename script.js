@@ -16791,6 +16791,97 @@ function canInitializeCustom25DVisualRenderer(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererInitializationGuardReview(options = {}) {
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable",
+          failedCheck: "guardUnavailable"
+        };
+  const contractPlan =
+    typeof getCustom25DVisualRendererInitializationContractPlan === "function"
+      ? getCustom25DVisualRendererInitializationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer initialization contract plan helper is unavailable."
+        };
+
+  return {
+    ok: true,
+    phase: 162,
+    name: "custom-25d-visual-renderer-initialization-guard-review",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Review the future renderer initialization guard and confirm that initialization remains blocked by default.",
+    dependsOn: {
+      initializationGuardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function",
+      initializationContractPlan: !!contractPlan.ok,
+      phase: contractPlan.phase || 160
+    },
+    guardResult,
+    contractPlanSummary: {
+      contractAvailable: !!contractPlan.ok,
+      manualOnly: !!(contractPlan.futureContract && contractPlan.futureContract.manualOnly),
+      developerIntentRequired: !!(
+        contractPlan.futureContract && contractPlan.futureContract.developerIntentRequired
+      ),
+      explicitInitializationApprovalRequired: !!(
+        contractPlan.futureContract && contractPlan.futureContract.explicitInitializationApprovalRequired
+      ),
+      initializationBlockedByDefault: !!(
+        contractPlan.defaultBlockedBehavior &&
+        contractPlan.defaultBlockedBehavior.initializationAllowedByDefault === false
+      )
+    },
+    defaultBlocked: {
+      initializationRemainsBlockedByDefault: guardResult.allowed === false,
+      defaultGuardAllowed: guardResult.allowed === true ? false : guardResult.allowed,
+      expectedFirstFailure: guardResult.reason === "custom-25d-map-disabled",
+      custom25DMapFlagStillFalse: ENABLE_CUSTOM_25D_MAP === false,
+      manualDeveloperIntentStillRequired: !!(
+        contractPlan.futureContract &&
+        contractPlan.futureContract.manualOnly &&
+        contractPlan.futureContract.developerIntentRequired
+      )
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    reviewFindings: {
+      futureInitializationReadinessReviewOnly: true,
+      defaultGuardResultBlocked: guardResult.allowed === false,
+      defaultFirstFailureReason: guardResult.reason,
+      rendererInitializationNotPerformedHere: true,
+      noMapAttachmentOrDrawingPossibleHere: true,
+      gameplayOsmPinsPlayerCaptureRadiusBackendUntouched: true
+    },
+    nextPhaseRecommendation: "visual-renderer-initialization-attempt-simulator"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
