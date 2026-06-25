@@ -17153,6 +17153,129 @@ function getCustom25DVisualRendererInitializationStateContractPlan(options = {})
   };
 }
 
+function getCustom25DVisualRendererInitializationStateContractReview(options = {}) {
+  const stateContractPlan =
+    typeof getCustom25DVisualRendererInitializationStateContractPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateContractPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-contract-plan-unavailable"
+        };
+  const attemptCloseout =
+    typeof getCustom25DVisualManualRendererInitializationAttemptCloseout === "function"
+      ? getCustom25DVisualManualRendererInitializationAttemptCloseout(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-attempt-closeout-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 166,
+    name: "custom-25d-visual-renderer-initialization-state-contract-review",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Review the future renderer initialization state contract and confirm it remains safely default-blocked and plan-only.",
+    dependsOn: {
+      initializationStateContractPlan: !!stateContractPlan.ok,
+      initializationAttemptCloseout: !!attemptCloseout.ok,
+      phase: stateContractPlan.phase || 165
+    },
+    stateContractPlanSummary: {
+      contractExistsAsPlanOnly: !!stateContractPlan.ok,
+      initializedDefaultFalse: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.initialized === false
+      ),
+      initializedAtDefaultNull: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.initializedAt === null
+      ),
+      initializationAllowedDefaultFalse: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.initializationAllowed === false
+      ),
+      attachedToMapDefaultFalse: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.attachedToMap === false
+      ),
+      drawingEnabledDefaultFalse: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.drawingEnabled === false
+      )
+    },
+    attemptCloseoutSummary: {
+      closeoutAvailable: !!attemptCloseout.ok,
+      defaultAttemptBlocked: !!(attemptCloseout.defaultBlocked && attemptCloseout.defaultBlocked.defaultAttemptAllowed),
+      initializedAlwaysFalse: !!(attemptCloseout.defaultBlocked && attemptCloseout.defaultBlocked.initializedAlwaysFalse),
+      expectedDefaultReason: !!(attemptCloseout.defaultBlocked && attemptCloseout.defaultBlocked.expectedDefaultReason)
+    },
+    defaultBlocked: {
+      contractExistsOnlyAsPlan: !!stateContractPlan.ok,
+      noRealInitializationStateCreated: true,
+      initializedRemainsFalseByContract: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.initialized === false
+      ),
+      initializedAtRemainsNullByContract: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.initializedAt === null
+      ),
+      initializationAllowedRemainsFalseByDefault: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.initializationAllowed === false
+      ),
+      attachedToMapRemainsFalseByContract: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.attachedToMap === false
+      ),
+      drawingEnabledRemainsFalseByContract: !!(
+        stateContractPlan.defaultStateValues &&
+        stateContractPlan.defaultStateValues.drawingEnabled === false
+      ),
+      expectedDefaultReasonRemainsBlocked: !!(
+        stateContractPlan.blockedStateValues &&
+        stateContractPlan.blockedStateValues.reasonBlockedWhileMapFlagFalse === "custom-25d-map-disabled"
+      )
+    },
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    reviewFindings: {
+      rendererInitializationNotPerformedHere: true,
+      noMapAttachmentOrDrawingPossibleHere: true,
+      gameplayOsmPinsPlayerCaptureRadiusBackendUntouched: true,
+      futureStateContractStillPlanOnly: true,
+      noActualStateObjectCreated: true
+    },
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-lifecycle-boundary-plan"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
