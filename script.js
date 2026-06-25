@@ -16224,6 +16224,84 @@ function getCustom25DVisualRendererMaterializationContractPlan(options = {}) {
   };
 }
 
+function materializeCustom25DVisualRendererShell(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualRendererMaterializationContractPlan === "function"
+      ? getCustom25DVisualRendererMaterializationContractPlan({})
+      : {
+          ok: false,
+          missing: true,
+          reason: "Visual renderer materialization contract plan helper is unavailable."
+        };
+  const defaultRendererShell =
+    typeof createCustom25DVisualRendererShell === "function"
+      ? createCustom25DVisualRendererShell({})
+      : {
+          ok: false,
+          allowed: false,
+          reason: "visual-renderer-shell-unavailable",
+          renderer: null,
+          knownLayerSlots: []
+        };
+  const knownLayerSlots = Array.isArray(defaultRendererShell.knownLayerSlots)
+    ? defaultRendererShell.knownLayerSlots.slice()
+    : Array.isArray(contractPlan.knownLayerSlots)
+      ? contractPlan.knownLayerSlots.slice()
+      : [];
+  const allowed =
+    options.manual === true &&
+    options.developerIntent === true &&
+    options.allowRendererMaterialization === true;
+  const reason = allowed
+    ? "renderer-materialization-shell-data-only"
+    : "renderer-materialization-manual-guard-required";
+  const materializedRenderer = allowed
+    ? {
+        created: true,
+        materialized: true,
+        initialized: false,
+        dormant: true,
+        storedGlobally: false,
+        attachedToMap: false,
+        drawsGraphics: false,
+        visible: false,
+        usesLayerStateRegistry: false,
+        notes: "Inert materialized renderer shell returned as data only. It is not stored, initialized, attached, drawn, or shown."
+      }
+    : null;
+
+  return {
+    ok: true,
+    phase: 156,
+    name: "custom-25d-visual-renderer-materialization-shell",
+    dormant: true,
+    shellOnly: true,
+    mutatesState: false,
+    initializesRenderer: false,
+    storesGlobally: false,
+    contractPlan,
+    defaultRendererShell,
+    allowed,
+    reason,
+    materializedRenderer,
+    knownLayerSlots,
+    unchangedBehavior: {
+      osmBehavior: true,
+      normalBluePins: true,
+      playerMarker: true,
+      captureRadius: true,
+      gameplayOverlays: true,
+      ui: true,
+      backend: true,
+      rewards: true,
+      collections: true,
+      dataSourcesUnloaded: true
+    },
+    recommendation: "Keep this materialized renderer shell inert and use it only as guarded returned data before any future renderer initialization work.",
+    nextPhase: "visual-renderer-materialization-verification-bundle"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
