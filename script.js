@@ -17041,6 +17041,118 @@ function getCustom25DVisualManualRendererInitializationAttemptCloseout(options =
   };
 }
 
+function getCustom25DVisualRendererInitializationStateContractPlan(options = {}) {
+  const attemptCloseout =
+    typeof getCustom25DVisualManualRendererInitializationAttemptCloseout === "function"
+      ? getCustom25DVisualManualRendererInitializationAttemptCloseout(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-attempt-closeout-unavailable"
+        };
+  const attemptResult =
+    typeof getCustom25DVisualManualRendererInitializationAttemptResult === "function"
+      ? getCustom25DVisualManualRendererInitializationAttemptResult(options)
+      : {
+          attempted: true,
+          allowed: false,
+          initialized: false,
+          reason: "visual-renderer-initialization-attempt-result-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 165,
+    name: "custom-25d-visual-renderer-initialization-state-contract-plan",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Define the future contract for a renderer initialization state object without creating any actual state.",
+    dependsOn: {
+      initializationAttemptCloseout: !!attemptCloseout.ok,
+      initializationAttemptResult: typeof getCustom25DVisualManualRendererInitializationAttemptResult === "function",
+      phase: attemptCloseout.phase || 164
+    },
+    futureStateContract: {
+      initialized: "boolean",
+      initializedAt: "string|null",
+      manual: "boolean",
+      developerIntent: "boolean",
+      rendererShellReady: "boolean",
+      materializationShellReady: "boolean",
+      handoffReady: "boolean",
+      initializationAllowed: "boolean",
+      reason: "string",
+      lastAttempt: "object|null",
+      attachedToMap: "boolean",
+      drawingEnabled: "boolean"
+    },
+    allowedFutureFields: [
+      "initialized",
+      "initializedAt",
+      "manual",
+      "developerIntent",
+      "rendererShellReady",
+      "materializationShellReady",
+      "handoffReady",
+      "initializationAllowed",
+      "reason",
+      "lastAttempt",
+      "attachedToMap",
+      "drawingEnabled"
+    ],
+    defaultStateValues: {
+      initialized: false,
+      initializedAt: null,
+      manual: false,
+      developerIntent: false,
+      rendererShellReady: false,
+      materializationShellReady: false,
+      handoffReady: false,
+      initializationAllowed: false,
+      reason: "custom-25d-map-disabled",
+      lastAttempt: null,
+      attachedToMap: false,
+      drawingEnabled: false
+    },
+    blockedStateValues: {
+      initialized: false,
+      initializedAt: null,
+      initializationAllowed: false,
+      attachedToMap: false,
+      drawingEnabled: false,
+      reasonBlockedWhileMapFlagFalse: ENABLE_CUSTOM_25D_MAP === false
+        ? "custom-25d-map-disabled"
+        : "manual-guard-required"
+    },
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiOrDebugControls: true,
+      noGraphicsOrDrawing: true,
+      noMapAttachment: true,
+      noGameplayOsmPinsPlayerCaptureRadiusBackendChanges: true
+    },
+    prohibitedActions: [
+      "create a renderer instance",
+      "initialize the renderer",
+      "create or initialize registries",
+      "create layers or layer state",
+      "wire startup behavior",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "visual-renderer-initialization-state-contract-review-closeout"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
