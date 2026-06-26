@@ -20108,6 +20108,107 @@ function getCustom25DVisualRendererInitializationStateShellSchemaPlan(options = 
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const metadataValidation =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-validation-unavailable"
+        };
+  const schemaPlan =
+    typeof getCustom25DVisualRendererInitializationStateShellSchemaPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateShellSchemaPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-schema-plan-unavailable"
+        };
+
+  return {
+    phase: 191,
+    name: "custom-25d-visual-renderer-initialization-state-shell-schema-readiness-gate",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      schemaPlan.blockedReason ||
+      metadataValidation.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    gateOnly: true,
+    schemaOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    schemaInventoryReadiness: {
+      readyForFutureSeparatelyReviewedSchemaInventoryExpansion: !!schemaPlan.ok,
+      approvesSchemaExpansionNow: false
+    },
+    runtimeValidationReadiness: {
+      readyForRuntimeSchemaValidation: false,
+      schemaReadinessIsNotRuntimeValidationReadiness: true
+    },
+    rendererInitializationReadiness: {
+      readyForRendererInitialization: false,
+      schemaReadinessIsNotRendererInitializationReadiness: true
+    },
+    mapAttachmentReadiness: {
+      readyForMapAttachment: false,
+      approvesVisibleMapBehavior: false
+    },
+    startupWiringReadiness: {
+      readyForStartupWiring: false,
+      approvesStartupIntegration: false
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      metadataValidation:
+        typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function",
+      schemaPlan: typeof getCustom25DVisualRendererInitializationStateShellSchemaPlan === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-schema-closeout-or-separately-reviewed-inert-schema-inventory-expansion",
+    notes: [
+      "Passive/report-only/gate-only/schema-only helper.",
+      "Acts only as the final passive gate before any separately reviewed inert schema inventory or documentation expansion.",
+      "Schema readiness is not runtime validation readiness and not renderer initialization readiness.",
+      "No visible, map, drawing, startup, or renderer behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
