@@ -21498,6 +21498,156 @@ function getCustom25DVisualRendererLifecycleContractCloseoutReport(options = {})
   };
 }
 
+function getCustom25DVisualRendererLifecycleSafetyGatePlan(options = {}) {
+  const lifecycleCloseout =
+    typeof getCustom25DVisualRendererLifecycleContractCloseoutReport === "function"
+      ? getCustom25DVisualRendererLifecycleContractCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-contract-closeout-unavailable"
+        };
+  const blockedReason = lifecycleCloseout.blockedReason || "custom-25d-map-disabled";
+
+  const stageGate = (stageKey, gatePurpose, requiredPriorReadiness = []) => ({
+    stageKey,
+    gatePurpose,
+    requiredFlags: ["ENABLE_CUSTOM_25D_MAP === true"],
+    requiredManualOptions: [
+      "manual === true",
+      "developerIntent === true",
+      "allowLifecycleStage === true"
+    ],
+    requiredPriorReadiness,
+    blockedByDefault: true,
+    allowedWhen: [
+      "future explicit manual approval exists",
+      "all safety flags are reviewed in a separate implementation phase",
+      "startup wiring, map attachment, drawing, and renderer initialization remain separately approved"
+    ],
+    deniedWhen: [
+      "default passive mode remains active",
+      "ENABLE_CUSTOM_25D_MAP is false",
+      "lifecycle object creation is not separately approved",
+      "renderer initialization is not separately approved"
+    ],
+    disallowedSideEffects: [
+      "renderer initialization",
+      "map attachment",
+      "drawing",
+      "startup wiring",
+      "runtime schema enforcement",
+      "validator creation",
+      "registry creation",
+      "layer or layer state creation"
+    ],
+    currentApprovalStatus: {
+      planned: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      approved: false,
+      futureOnly: true,
+      blockedByDefault: true
+    }
+  });
+
+  return {
+    phase: 201,
+    name: "custom-25d-visual-renderer-lifecycle-safety-gate-plan",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    safetyGateOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "lifecycle-safety-gate-plan-planning-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleSafetyGates: {
+      construct: stageGate("construct", "future construction-stage lifecycle safety gate", [
+        "lifecycle boundary closeout reviewed"
+      ]),
+      initialize: stageGate("initialize", "future initialization-stage lifecycle safety gate", [
+        "construct gate reviewed",
+        "manual readiness separately approved"
+      ]),
+      attach: stageGate("attach", "future map-attachment lifecycle safety gate", [
+        "initialize gate reviewed",
+        "map attachment readiness separately approved"
+      ]),
+      render: stageGate("render", "future drawing-stage lifecycle safety gate", [
+        "attach gate reviewed",
+        "drawing readiness separately approved"
+      ]),
+      update: stageGate("update", "future update-stage lifecycle safety gate", [
+        "render gate reviewed",
+        "state update readiness separately approved"
+      ]),
+      suspend: stageGate("suspend", "future suspend-stage lifecycle safety gate", [
+        "update gate reviewed",
+        "lifecycle pause readiness separately approved"
+      ]),
+      resume: stageGate("resume", "future resume-stage lifecycle safety gate", [
+        "suspend gate reviewed",
+        "lifecycle resume readiness separately approved"
+      ]),
+      destroy: stageGate("destroy", "future destroy-stage lifecycle safety gate", [
+        "resume gate reviewed",
+        "teardown readiness separately approved"
+      ]),
+      clear: stageGate("clear", "future clear-stage lifecycle safety gate", [
+        "destroy gate reviewed",
+        "reset readiness separately approved"
+      ])
+    },
+    reviewedHelpers: {
+      lifecycleCloseout:
+        typeof getCustom25DVisualRendererLifecycleContractCloseoutReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-lifecycle-safety-gate-review-or-separately-reviewed-future-lifecycle-gating-phase",
+    notes: [
+      "Passive/report-only/planning-only/safety-gate-only helper.",
+      "Plans future lifecycle safety gates only for construct, initialize, attach, render, update, suspend, resume, destroy, and clear.",
+      "Does not approve, create, validate, wire, attach, draw, or implement lifecycle behavior.",
+      "No lifecycle object, renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, validators, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
