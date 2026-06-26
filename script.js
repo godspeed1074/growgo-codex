@@ -18919,6 +18919,89 @@ function getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellReadinessGate(options = {}) {
+  const architectureCloseout =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-closeout-report-unavailable"
+        };
+  const implementationBoundaryPlan =
+    typeof getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-implementation-boundary-plan-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+
+  return {
+    phase: 180,
+    name: "custom-25d-visual-renderer-initialization-state-shell-readiness-gate",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason: guardResult.reason || "visual-renderer-initialization-guard-unavailable",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    gateOnly: true,
+    createsInitializationState: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    shellPlanningReadiness: {
+      readyForFutureInertShellPlanning: !!implementationBoundaryPlan.ok,
+      approvesCreationNow: false
+    },
+    rendererInitializationReadiness: {
+      readyForRendererInitialization: false,
+      approvedByThisPhase: false
+    },
+    mapAttachmentReadiness: {
+      readyForMapAttachment: false,
+      approvedByThisPhase: false
+    },
+    drawingReadiness: {
+      readyForDrawingOrStartupWiring: false,
+      approvedByThisPhase: false
+    },
+    reviewedHelpers: {
+      architectureCloseout: !!architectureCloseout.ok,
+      implementationBoundaryPlan: !!implementationBoundaryPlan.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-future-inert-initialization-state-shell-phase-planning-only",
+    notes: [
+      "Passive/report-only/gate-only helper.",
+      "This phase is only a final readiness gate for future inert shell planning.",
+      "This phase does not approve real renderer initialization.",
+      "This phase is not ready for map attachment, drawing, or startup wiring."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
