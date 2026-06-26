@@ -23020,6 +23020,294 @@ function clearCustom25DVisualRendererManualAttachmentSmokeShell(options = {}) {
   };
 }
 
+function getCustom25DVisualManualVisibleTestLayerPlan(options = {}) {
+  const manualMapAttachmentGuard =
+    typeof canAttachCustom25DVisualRendererManualMapShell === "function"
+      ? canAttachCustom25DVisualRendererManualMapShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "manual-map-attachment-guard-unavailable"
+        };
+  const attachmentSmokeCleanup =
+    typeof clearCustom25DVisualRendererManualAttachmentSmokeShell === "function"
+      ? clearCustom25DVisualRendererManualAttachmentSmokeShell(options)
+      : {
+          ok: false,
+          noOp: false,
+          safeToRepeat: false,
+          reason: "manual-attachment-smoke-shell-cleanup-unavailable"
+        };
+
+  return {
+    phase: 211,
+    name: "custom-25d-visual-manual-visible-test-layer-plan",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason: manualMapAttachmentGuard.reason || "custom-25d-map-disabled",
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    visibilityBoundaryOnly: true,
+    createsVisibleTestLayer: false,
+    callsCreateLifecycleShell: false,
+    callsCreateAttachmentSmokeShell: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    wiresStartup: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "visible-test-layer-plan-planning-only",
+      "no-visible-layer-creation-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-startup-wiring-approved",
+      "no-gameplay-changes-approved",
+      "no-osm-changes-approved",
+      "no-pin-changes-approved",
+      "no-player-marker-changes-approved",
+      "no-capture-radius-changes-approved",
+      "no-backend-changes-approved"
+    ],
+    visibleTestLayerPlan: {
+      layerKey: "custom25DVisualManualVisibleTestLayer",
+      manualOnly: true,
+      developerOnly: true,
+      tinyTestOnly: true,
+      reversible: true,
+      cleanupRequired: true,
+      startupWiringAllowed: false,
+      mapAttachmentAllowedByDefault: false,
+      drawingAllowedByDefault: false,
+      changesGameplay: false,
+      changesOSM: false,
+      changesPins: false,
+      changesPlayerMarker: false,
+      changesCaptureRadius: false,
+      changesBackend: false,
+      futureOnly: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      approved: false
+    },
+    reviewedHelpers: {
+      manualMapAttachmentGuard:
+        typeof canAttachCustom25DVisualRendererManualMapShell === "function",
+      attachmentSmokeCleanup:
+        typeof clearCustom25DVisualRendererManualAttachmentSmokeShell === "function"
+    },
+    cleanupReadiness: {
+      noOp: attachmentSmokeCleanup.noOp === true,
+      safeToRepeat: attachmentSmokeCleanup.safeToRepeat === true,
+      touchesMap: false,
+      touchesLayers: false,
+      touchesRenderer: false,
+      touchesPins: false,
+      touchesOSM: false,
+      touchesBackend: false,
+      changesGameplay: false
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-visible-test-layer-readiness-review-or-separately-reviewed-future-tiny-visible-layer-phase",
+    notes: [
+      "Passive/report-only/planning-only/visibility-boundary-only helper.",
+      "Defines the future tiny manual visible test layer plan without creating, attaching, drawing, or approving visibility.",
+      "Does not create lifecycle shells, attachment smoke shells, renderer objects, lifecycle objects, or initialization state."
+    ]
+  };
+}
+
+function canCreateCustom25DVisualManualVisibleTestLayer(options = {}) {
+  const visibleTestLayerPlan =
+    typeof getCustom25DVisualManualVisibleTestLayerPlan === "function"
+      ? getCustom25DVisualManualVisibleTestLayerPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "manual-visible-test-layer-plan-unavailable"
+        };
+
+  const requirements = [
+    {
+      key: "custom25DMapEnabled",
+      label: "ENABLE_CUSTOM_25D_MAP === true",
+      passed: ENABLE_CUSTOM_25D_MAP === true,
+      reason: "custom-25d-map-disabled"
+    },
+    {
+      key: "manual",
+      label: "options.manual === true",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      label: "options.developerIntent === true",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "allowVisibleTestLayer",
+      label: "options.allowVisibleTestLayer === true",
+      passed: options.allowVisibleTestLayer === true,
+      reason: "visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowManualMapAttachment",
+      label: "options.allowManualMapAttachment === true",
+      passed: options.allowManualMapAttachment === true,
+      reason: "manual-map-attachment-required"
+    },
+    {
+      key: "allowTinyTestOnly",
+      label: "options.allowTinyTestOnly === true",
+      passed: options.allowTinyTestOnly === true,
+      reason: "tiny-test-only-required"
+    },
+    {
+      key: "cleanupVerified",
+      label: "options.cleanupVerified === true",
+      passed: options.cleanupVerified === true,
+      reason: "cleanup-verification-required"
+    },
+    {
+      key: "attachmentSmokeShellReady",
+      label: "options.attachmentSmokeShellReady === true",
+      passed: options.attachmentSmokeShellReady === true,
+      reason: "attachment-smoke-shell-readiness-required"
+    },
+    {
+      key: "preserveExistingMap",
+      label: "options.preserveExistingMap === true",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      label: "options.preserveGameplayOverlays === true",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      label: "options.preserveOSMBehavior === true",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      label: "options.preservePins === true",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      label: "options.preservePlayerMarker === true",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      label: "options.preserveCaptureRadius === true",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    },
+    {
+      key: "noStartupWiring",
+      label: "options.noStartupWiring === true",
+      passed: options.noStartupWiring === true,
+      reason: "no-startup-wiring-required"
+    },
+    {
+      key: "noBackendChanges",
+      label: "options.noBackendChanges === true",
+      passed: options.noBackendChanges === true,
+      reason: "no-backend-changes-required"
+    }
+  ];
+
+  const firstFailure = requirements.find((requirement) => !requirement.passed) || null;
+  const allowed = firstFailure === null;
+
+  return {
+    phase: 211,
+    name: "custom-25d-visual-manual-visible-test-layer-guard",
+    ok: true,
+    ready: false,
+    allowed,
+    reason: allowed ? "manual-visible-test-layer-guard-passed-evaluation-only" : firstFailure.reason,
+    failedRequirement: firstFailure ? firstFailure.key : null,
+    guardOnly: true,
+    evaluatorOnly: true,
+    createsVisibleTestLayer: false,
+    callsCreateLifecycleShell: false,
+    callsCreateAttachmentSmokeShell: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    wiresStartup: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    requirements,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "visible-test-layer-plan-planning-only",
+      "visible-test-guard-evaluator-only",
+      "no-visible-layer-creation-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-startup-wiring-approved",
+      "no-gameplay-changes-approved",
+      "no-osm-changes-approved",
+      "no-pin-changes-approved",
+      "no-player-marker-changes-approved",
+      "no-capture-radius-changes-approved",
+      "no-backend-changes-approved"
+    ],
+    reviewedHelpers: {
+      visibleTestLayerPlan:
+        typeof getCustom25DVisualManualVisibleTestLayerPlan === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-visible-test-layer-closeout-or-separately-reviewed-future-visible-layer-smoke-shell-phase",
+    notes: [
+      "Guard-only/evaluator-only helper.",
+      "Evaluates whether a future tiny manual visible test layer would be allowed.",
+      "Does not create, attach, draw, or approve visibility by itself."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
