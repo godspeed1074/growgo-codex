@@ -19394,6 +19394,127 @@ function getCustom25DVisualRendererInitializationStateShellCloseoutReport(option
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellInventoryReport(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const guard =
+    typeof canCreateCustom25DVisualRendererInitializationStateShell === "function"
+      ? canCreateCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          allowed: false,
+          blocked: true,
+          blockedReason: "initialization-state-shell-guard-unavailable"
+        };
+  const readiness =
+    typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function"
+      ? getCustom25DVisualRendererInitializationStateShellImplementationReadiness(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-readiness-unavailable"
+        };
+  const closeout =
+    typeof getCustom25DVisualRendererInitializationStateShellCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-closeout-unavailable",
+          shellCloseout: null
+        };
+
+  return {
+    phase: 184,
+    name: "custom-25d-visual-renderer-initialization-state-shell-inventory-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      guard.blockedReason ||
+      closeout.blockedReason ||
+      readiness.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    inventoryOnly: true,
+    readinessOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    helperInventory: {
+      getShellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      canCreateShell: typeof canCreateCustom25DVisualRendererInitializationStateShell === "function",
+      createShell: typeof createCustom25DVisualRendererInitializationStateShell === "function",
+      clearShell: typeof clearCustom25DVisualRendererInitializationStateShell === "function",
+      implementationReadiness: typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function",
+      validationReport: typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function",
+      closeoutReport: typeof getCustom25DVisualRendererInitializationStateShellCloseoutReport === "function"
+    },
+    allowedCapabilities: [
+      "inspect default inert shell state",
+      "evaluate guarded shell creation readiness",
+      "report passive readiness, validation, and closeout status",
+      "manually create an inert internal-only plain data shell only when explicitly guard-approved"
+    ],
+    forbiddenCapabilities: [
+      "approve renderer initialization",
+      "attach anything to the map",
+      "draw graphics or enable visible behavior",
+      "wire startup behavior",
+      "create registries",
+      "create layers or layer state"
+    ],
+    defaultSafetySummary: {
+      shellPresentByDefault: shellState.shellPresent === false,
+      shellDormantByDefault: !!(shellState.shell && shellState.shell.dormant === true),
+      shellInternalOnlyByDefault: !!(shellState.shell && shellState.shell.internalOnly === true),
+      shellNotReadyByDefault: !!(shellState.shell && shellState.shell.ready === false),
+      defaultGuardBlockedByMapDisabled: guard.blockedReason === "custom-25d-map-disabled",
+      notConnectedToStartup: true,
+      doesNotApproveRendererInitialization: true
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      shellGuard: typeof canCreateCustom25DVisualRendererInitializationStateShell === "function",
+      shellReadiness: typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function",
+      shellCloseout: typeof getCustom25DVisualRendererInitializationStateShellCloseoutReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-initialization-state-shell-expansion-plan-or-metadata-review",
+    notes: [
+      "Passive/report-only/inventory-only/readiness-only helper.",
+      "Inventories the initialization state shell helper family without creating or clearing anything.",
+      "The family is not connected to startup and does not approve renderer initialization.",
+      "Any future shell expansion must remain separately reviewed and inert-only."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
