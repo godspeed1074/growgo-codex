@@ -19022,6 +19022,22 @@ function getCustom25DVisualRendererInitializationStateShell(options = {}) {
     layerStateCreated: false,
     createdAtPhase: 181,
     createdManually: false,
+    metadataVersion: 1,
+    metadataExpandedAtPhase: 187,
+    architectureStage: "initialization-state-shell",
+    rendererInitializationApproved: false,
+    mapAttachmentApproved: false,
+    drawingApproved: false,
+    startupWiringApproved: false,
+    visibleBehaviorApproved: false,
+    allowedUse: "internal dormant architecture metadata only",
+    forbiddenUse: [
+      "renderer initialization",
+      "map attachment",
+      "drawing",
+      "startup wiring",
+      "visible UI or gameplay behavior"
+    ],
     notes: "Default inert initialization state shell. Blocked by default and not created unless manually allowed."
   };
 
@@ -19121,6 +19137,22 @@ function createCustom25DVisualRendererInitializationStateShell(options = {}) {
     layerStateCreated: false,
     createdAtPhase: 181,
     createdManually: true,
+    metadataVersion: 1,
+    metadataExpandedAtPhase: 187,
+    architectureStage: "initialization-state-shell",
+    rendererInitializationApproved: false,
+    mapAttachmentApproved: false,
+    drawingApproved: false,
+    startupWiringApproved: false,
+    visibleBehaviorApproved: false,
+    allowedUse: "internal dormant architecture metadata only",
+    forbiddenUse: [
+      "renderer initialization",
+      "map attachment",
+      "drawing",
+      "startup wiring",
+      "visible UI or gameplay behavior"
+    ],
     notes: "Inert internal-only initialization state shell. Created manually, not initialized, not attached, not drawn, and not wired to startup."
   };
 
