@@ -24447,6 +24447,109 @@ function getCustom25DVisualLocalDevVisibleTestObservationGuide(options = {}) {
   };
 }
 
+function getCustom25DVisualLocalDevVisibleTestResultReport(options = {}) {
+  const helperPresence = {
+    consoleGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function",
+    preflightReport:
+      typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function",
+    observationGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestObservationGuide === "function",
+    runner: typeof runCustom25DVisualLocalDevVisibleTest === "function",
+    cleanupHelper:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function"
+  };
+
+  const observationGuideSnapshot =
+    helperPresence.observationGuide &&
+    typeof getCustom25DVisualLocalDevVisibleTestObservationGuide === "function"
+      ? getCustom25DVisualLocalDevVisibleTestObservationGuide(options)
+      : null;
+
+  const manualResults = {
+    ranManually: options.ranManually === true,
+    appearedOnlyAfterManualCommand:
+      options.appearedOnlyAfterManualCommand === true,
+    singleTestLayerOnly: options.singleTestLayerOnly === true,
+    mapStillUsable: options.mapStillUsable === true,
+    pinsUnchanged: options.pinsUnchanged === true,
+    playerMarkerUnchanged: options.playerMarkerUnchanged === true,
+    captureRadiusUnchanged: options.captureRadiusUnchanged === true,
+    uiUnchanged: options.uiUnchanged === true,
+    cleanupWorked: options.cleanupWorked === true,
+    reloadReturnedToInvisible: options.reloadReturnedToInvisible === true,
+    notes: typeof options.notes === "string" ? options.notes : ""
+  };
+
+  const checklistCompletionSummary = {
+    totalChecks: 10,
+    passedChecks: [
+      manualResults.ranManually,
+      manualResults.appearedOnlyAfterManualCommand,
+      manualResults.singleTestLayerOnly,
+      manualResults.mapStillUsable,
+      manualResults.pinsUnchanged,
+      manualResults.playerMarkerUnchanged,
+      manualResults.captureRadiusUnchanged,
+      manualResults.uiUnchanged,
+      manualResults.cleanupWorked,
+      manualResults.reloadReturnedToInvisible
+    ].filter(Boolean).length
+  };
+
+  return {
+    phase: 220,
+    name: "custom-25d-visual-local-dev-visible-test-result-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    helperPresence,
+    observationGuideSnapshot,
+    manualResults,
+    checklistCompletionSummary: {
+      ...checklistCompletionSummary,
+      completedAllChecks:
+        checklistCompletionSummary.passedChecks === checklistCompletionSummary.totalChecks
+    },
+    passedManualVisibleSmokeTest:
+      manualResults.ranManually &&
+      manualResults.appearedOnlyAfterManualCommand &&
+      manualResults.singleTestLayerOnly &&
+      manualResults.mapStillUsable &&
+      manualResults.pinsUnchanged &&
+      manualResults.playerMarkerUnchanged &&
+      manualResults.captureRadiusUnchanged &&
+      manualResults.uiUnchanged &&
+      manualResults.cleanupWorked &&
+      manualResults.reloadReturnedToInvisible,
+    startupWired: false,
+    automaticInvocationAdded: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsVisibleTestLayer: false,
+    attachesToMap: false,
+    draws: false,
+    createsRendererObject: false,
+    initializesRendererState: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    uiChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive/manual result-report helper only.",
+      "Does not perform the manual test itself.",
+      "Normal app reload remains unchanged and invisible unless the developer manually uses the browser console command."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
