@@ -20881,6 +20881,139 @@ function getCustom25DVisualRendererLifecycleBoundaryPlan(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererLifecycleBoundaryReadinessReport(options = {}) {
+  const lifecycleBoundaryPlan =
+    typeof getCustom25DVisualRendererLifecycleBoundaryPlan === "function"
+      ? getCustom25DVisualRendererLifecycleBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-boundary-plan-unavailable"
+        };
+  const blockedReason = lifecycleBoundaryPlan.blockedReason || "custom-25d-map-disabled";
+
+  return {
+    phase: 197,
+    name: "custom-25d-visual-renderer-lifecycle-boundary-readiness-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    reviewOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleStageReadiness: {
+      construct: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      initialize: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      attach: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      render: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      update: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      suspend: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      resume: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      destroy: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      clear: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      }
+    },
+    readinessSummary: {
+      readyForFutureContractDesignOnly: !!lifecycleBoundaryPlan.ok,
+      readyForImplementation: false,
+      readyForRendererInitialization: false,
+      readyForMapAttachment: false,
+      readyForDrawing: false,
+      readyForStartupWiring: false,
+      readyForRuntimeSchemaEnforcement: false
+    },
+    reviewedHelpers: {
+      lifecycleBoundaryPlan: typeof getCustom25DVisualRendererLifecycleBoundaryPlan === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-lifecycle-boundary-closeout-or-separately-reviewed-future-contract-design-phase",
+    notes: [
+      "Passive/report-only/readiness-only/review-only helper.",
+      "Reviews whether the lifecycle boundary plan is ready for future contract design only.",
+      "All lifecycle stages remain future-only, not implemented, not active, not wired, and not approved.",
+      "No implementation, renderer initialization, map attachment, drawing, startup wiring, or runtime schema enforcement is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
