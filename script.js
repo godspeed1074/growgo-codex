@@ -22670,6 +22670,220 @@ function getCustom25DVisualRendererBridgeMapAttachmentBoundaryReport(options = {
   };
 }
 
+function canAttachCustom25DVisualRendererManualMapShell(options = {}) {
+  const bridgeBoundary =
+    typeof getCustom25DVisualRendererBridgeMapAttachmentBoundaryReport === "function"
+      ? getCustom25DVisualRendererBridgeMapAttachmentBoundaryReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-bridge-map-attachment-boundary-unavailable"
+        };
+
+  const requirements = [
+    {
+      key: "custom25DMapEnabled",
+      label: "ENABLE_CUSTOM_25D_MAP === true",
+      passed: ENABLE_CUSTOM_25D_MAP === true,
+      reason: "custom-25d-map-disabled"
+    },
+    {
+      key: "manual",
+      label: "options.manual === true",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      label: "options.developerIntent === true",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "allowManualMapAttachment",
+      label: "options.allowManualMapAttachment === true",
+      passed: options.allowManualMapAttachment === true,
+      reason: "manual-map-attachment-not-allowed"
+    },
+    {
+      key: "allowRendererLifecycleBridge",
+      label: "options.allowRendererLifecycleBridge === true",
+      passed: options.allowRendererLifecycleBridge === true,
+      reason: "renderer-lifecycle-bridge-not-allowed"
+    },
+    {
+      key: "allowMapAttachmentPlanning",
+      label: "options.allowMapAttachmentPlanning === true",
+      passed: options.allowMapAttachmentPlanning === true,
+      reason: "map-attachment-planning-not-allowed"
+    },
+    {
+      key: "lifecycleShellAvailable",
+      label: "options.lifecycleShellAvailable === true",
+      passed: options.lifecycleShellAvailable === true,
+      reason: "lifecycle-shell-availability-required"
+    },
+    {
+      key: "rendererShellAvailable",
+      label: "options.rendererShellAvailable === true",
+      passed: options.rendererShellAvailable === true,
+      reason: "renderer-shell-availability-required"
+    },
+    {
+      key: "cleanupVerified",
+      label: "options.cleanupVerified === true",
+      passed: options.cleanupVerified === true,
+      reason: "cleanup-verification-required"
+    },
+    {
+      key: "attachmentMustBeManualOnly",
+      label: "options.attachmentMustBeManualOnly === true",
+      passed: options.attachmentMustBeManualOnly === true,
+      reason: "manual-only-attachment-required"
+    },
+    {
+      key: "attachmentMustBeReversible",
+      label: "options.attachmentMustBeReversible === true",
+      passed: options.attachmentMustBeReversible === true,
+      reason: "reversible-attachment-required"
+    },
+    {
+      key: "attachmentMustAvoidStartupWiring",
+      label: "options.attachmentMustAvoidStartupWiring === true",
+      passed: options.attachmentMustAvoidStartupWiring === true,
+      reason: "startup-wiring-avoidance-required"
+    },
+    {
+      key: "attachmentMustAvoidDrawingByDefault",
+      label: "options.attachmentMustAvoidDrawingByDefault === true",
+      passed: options.attachmentMustAvoidDrawingByDefault === true,
+      reason: "drawing-by-default-avoidance-required"
+    },
+    {
+      key: "attachmentMustAvoidOSMMutation",
+      label: "options.attachmentMustAvoidOSMMutation === true",
+      passed: options.attachmentMustAvoidOSMMutation === true,
+      reason: "osm-mutation-avoidance-required"
+    },
+    {
+      key: "attachmentMustAvoidPinMutation",
+      label: "options.attachmentMustAvoidPinMutation === true",
+      passed: options.attachmentMustAvoidPinMutation === true,
+      reason: "pin-mutation-avoidance-required"
+    },
+    {
+      key: "attachmentMustAvoidPlayerMarkerMutation",
+      label: "options.attachmentMustAvoidPlayerMarkerMutation === true",
+      passed: options.attachmentMustAvoidPlayerMarkerMutation === true,
+      reason: "player-marker-mutation-avoidance-required"
+    },
+    {
+      key: "attachmentMustAvoidCaptureRadiusMutation",
+      label: "options.attachmentMustAvoidCaptureRadiusMutation === true",
+      passed: options.attachmentMustAvoidCaptureRadiusMutation === true,
+      reason: "capture-radius-mutation-avoidance-required"
+    },
+    {
+      key: "attachmentMustHaveCleanupPath",
+      label: "options.attachmentMustHaveCleanupPath === true",
+      passed: options.attachmentMustHaveCleanupPath === true,
+      reason: "attachment-cleanup-path-required"
+    },
+    {
+      key: "preserveExistingMap",
+      label: "options.preserveExistingMap === true",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      label: "options.preserveGameplayOverlays === true",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      label: "options.preserveOSMBehavior === true",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      label: "options.preservePins === true",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      label: "options.preservePlayerMarker === true",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      label: "options.preserveCaptureRadius === true",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    }
+  ];
+
+  const firstFailure = requirements.find((requirement) => !requirement.passed) || null;
+  const allowed = firstFailure === null;
+
+  return {
+    phase: 209,
+    name: "custom-25d-visual-renderer-manual-map-shell-attachment-guard",
+    ok: true,
+    ready: false,
+    allowed,
+    reason: allowed ? "manual-map-attachment-guard-passed-evaluation-only" : firstFailure.reason,
+    failedRequirement: firstFailure ? firstFailure.key : null,
+    guardOnly: true,
+    evaluatorOnly: true,
+    createsLifecycleShell: false,
+    callsCreateLifecycleShell: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    requirements,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "manual-map-attachment-guard-evaluator-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    reviewedHelpers: {
+      bridgeMapAttachmentBoundary:
+        typeof getCustom25DVisualRendererBridgeMapAttachmentBoundaryReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-manual-map-attachment-readiness-review-or-separately-reviewed-future-attachment-shell-phase",
+    notes: [
+      "Guard-only/evaluator-only helper.",
+      "Evaluates whether a future manual map attachment shell would be allowed.",
+      "Does not attach, create, draw, or approve attachment by itself."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
