@@ -21014,6 +21014,150 @@ function getCustom25DVisualRendererLifecycleBoundaryReadinessReport(options = {}
   };
 }
 
+function getCustom25DVisualRendererLifecycleContractInventory(options = {}) {
+  const lifecycleBoundaryReadiness =
+    typeof getCustom25DVisualRendererLifecycleBoundaryReadinessReport === "function"
+      ? getCustom25DVisualRendererLifecycleBoundaryReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-boundary-readiness-unavailable"
+        };
+  const blockedReason = lifecycleBoundaryReadiness.blockedReason || "custom-25d-map-disabled";
+
+  const stageContract = (stageKey, intendedRole, dependencies = []) => ({
+    stageKey,
+    intendedRole,
+    requiredInputs: [
+      "manual developer-approved future contract",
+      "dormant renderer lifecycle architecture",
+      "preserved gameplay and OSM safety boundaries"
+    ],
+    expectedOutputs: [
+      "planning-only lifecycle contract definition",
+      "no renderer behavior",
+      "no visible map behavior"
+    ],
+    allowedSideEffects: [],
+    disallowedSideEffects: [
+      "renderer initialization",
+      "map attachment",
+      "drawing",
+      "startup wiring",
+      "runtime schema enforcement",
+      "registry creation",
+      "layer or layer state creation"
+    ],
+    dependencies,
+    safetyGateRequired: true,
+    implementationStatus: {
+      implemented: false,
+      active: false,
+      wired: false,
+      futureOnly: true
+    },
+    approvalStatus: {
+      approved: false
+    }
+  });
+
+  return {
+    phase: 198,
+    name: "custom-25d-visual-renderer-lifecycle-contract-inventory",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    inventoryOnly: true,
+    contractPlanningOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "lifecycle-contract-inventory-planning-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleContractInventory: {
+      construct: stageContract("construct", "future renderer lifecycle construction boundary", [
+        "manual safety gate",
+        "future lifecycle contract review"
+      ]),
+      initialize: stageContract("initialize", "future renderer initialization boundary", [
+        "construct contract",
+        "manual safety gate"
+      ]),
+      attach: stageContract("attach", "future map attachment boundary", [
+        "initialize contract",
+        "map safety gate"
+      ]),
+      render: stageContract("render", "future renderer draw boundary", [
+        "attach contract",
+        "drawing safety gate"
+      ]),
+      update: stageContract("update", "future renderer update boundary", [
+        "render contract",
+        "state safety gate"
+      ]),
+      suspend: stageContract("suspend", "future renderer suspension boundary", [
+        "update contract",
+        "lifecycle safety gate"
+      ]),
+      resume: stageContract("resume", "future renderer resume boundary", [
+        "suspend contract",
+        "lifecycle safety gate"
+      ]),
+      destroy: stageContract("destroy", "future renderer teardown boundary", [
+        "resume contract",
+        "cleanup safety gate"
+      ]),
+      clear: stageContract("clear", "future renderer clear/reset boundary", [
+        "destroy contract",
+        "cleanup safety gate"
+      ])
+    },
+    reviewedHelpers: {
+      lifecycleBoundaryReadiness:
+        typeof getCustom25DVisualRendererLifecycleBoundaryReadinessReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-lifecycle-contract-inventory-review-or-separately-reviewed-future-contract-schema-phase",
+    notes: [
+      "Passive/report-only/inventory-only/contract-planning-only helper.",
+      "Inventories future lifecycle contract shape only for construct, initialize, attach, render, update, suspend, resume, destroy, and clear.",
+      "Every lifecycle stage remains future-only, not implemented, not active, not wired, and not approved.",
+      "No lifecycle object, renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
