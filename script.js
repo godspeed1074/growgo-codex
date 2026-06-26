@@ -21812,6 +21812,187 @@ function getCustom25DVisualRendererLifecycleSafetyGateReadinessReport(options = 
   };
 }
 
+function getCustom25DVisualRendererLifecycleSafetyGateCloseoutReport(options = {}) {
+  const lifecycleSafetyGatePlan =
+    typeof getCustom25DVisualRendererLifecycleSafetyGatePlan === "function"
+      ? getCustom25DVisualRendererLifecycleSafetyGatePlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-safety-gate-plan-unavailable"
+        };
+  const lifecycleSafetyGateReadiness =
+    typeof getCustom25DVisualRendererLifecycleSafetyGateReadinessReport === "function"
+      ? getCustom25DVisualRendererLifecycleSafetyGateReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-safety-gate-readiness-unavailable"
+        };
+  const blockedReason =
+    lifecycleSafetyGateReadiness.blockedReason ||
+    lifecycleSafetyGatePlan.blockedReason ||
+    "custom-25d-map-disabled";
+
+  return {
+    phase: 203,
+    name: "custom-25d-visual-renderer-lifecycle-safety-gate-closeout-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    summaryOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "lifecycle-safety-gate-closeout-summary-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleSafetyGateStages: {
+      construct: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      initialize: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      attach: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      render: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      update: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      suspend: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      resume: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      destroy: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      },
+      clear: {
+        planned: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true,
+        blockedByDefault: true
+      }
+    },
+    closeoutStatus: {
+      lifecycleSafetyGatePlanned: true,
+      lifecycleSafetyGateReadinessReviewed: true,
+      lifecycleSafetyGateImplementationApproved: false
+    },
+    closeoutSummary: {
+      closesOutPassivePlanningSequenceOnly: true,
+      approvesNoLifecycleStages: true,
+      readyForImplementation: false,
+      readyForRendererInitialization: false,
+      readyForMapAttachment: false,
+      readyForDrawing: false,
+      readyForStartupWiring: false,
+      readyForRuntimeSchemaEnforcement: false
+    },
+    reviewedHelpers: {
+      lifecycleSafetyGatePlan:
+        typeof getCustom25DVisualRendererLifecycleSafetyGatePlan === "function",
+      lifecycleSafetyGateReadiness:
+        typeof getCustom25DVisualRendererLifecycleSafetyGateReadinessReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-post-closeout-lifecycle-handoff-or-separately-reviewed-future-lifecycle-gate-implementation-planning",
+    notes: [
+      "Passive/report-only/closeout-only/summary-only helper.",
+      "Closes out the passive lifecycle safety gate planning sequence for Phases 201 through 202.",
+      "Does not approve, create, validate, wire, attach, draw, or implement lifecycle behavior.",
+      "No lifecycle object, renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, validators, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
