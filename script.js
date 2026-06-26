@@ -22543,6 +22543,133 @@ function getCustom25DVisualRendererManualLifecycleShellCleanupVerificationReport
   };
 }
 
+function getCustom25DVisualRendererBridgeMapAttachmentBoundaryReport(options = {}) {
+  const cleanupVerification =
+    typeof getCustom25DVisualRendererManualLifecycleShellCleanupVerificationReport === "function"
+      ? getCustom25DVisualRendererManualLifecycleShellCleanupVerificationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "manual-lifecycle-shell-cleanup-verification-unavailable"
+        };
+
+  return {
+    phase: 208,
+    name: "custom-25d-visual-renderer-bridge-map-attachment-boundary-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason: cleanupVerification.blockedReason || "custom-25d-map-disabled",
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    readinessOnly: true,
+    boundaryOnly: true,
+    createsLifecycleShell: false,
+    callsCreateLifecycleShell: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "bridge-boundary-planning-only",
+      "map-attachment-boundary-planning-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    rendererLifecycleBridgeBoundary: {
+      lifecycleShellAvailable: true,
+      rendererShellAvailable: true,
+      manual: true,
+      developerIntent: true,
+      allowRendererLifecycleBridge: true,
+      allowMapAttachmentPlanning: true,
+      cleanupVerified: true,
+      preserveExistingMap: true,
+      preserveGameplayOverlays: true,
+      preserveOSMBehavior: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      futureOnly: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      approved: false,
+      blockedByDefault: true
+    },
+    bridgeReadinessReview: {
+      bridgeReadyForImplementation: false,
+      bridgeReadyForRendererInitialization: false,
+      cleanupVerified:
+        cleanupVerification.verificationStatus?.cleanupVerificationPassed === true,
+      preservesExistingMap: true,
+      preservesGameplayOverlays: true,
+      preservesOSMBehavior: true,
+      preservesPins: true,
+      preservesPlayerMarker: true,
+      preservesCaptureRadius: true,
+      futureOnly: true,
+      approved: false
+    },
+    mapAttachmentBoundaryPlan: {
+      attachmentMustBeManualOnly: true,
+      attachmentMustBeReversible: true,
+      attachmentMustAvoidStartupWiring: true,
+      attachmentMustAvoidDrawingByDefault: true,
+      attachmentMustAvoidOSMMutation: true,
+      attachmentMustAvoidPinMutation: true,
+      attachmentMustAvoidPlayerMarkerMutation: true,
+      attachmentMustAvoidCaptureRadiusMutation: true,
+      attachmentMustHaveCleanupPath: true,
+      futureOnly: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      approved: false,
+      blockedByDefault: true
+    },
+    bridgeStatus: {
+      bridgePlanned: true,
+      bridgeReadinessReviewed: true,
+      mapAttachmentBoundaryPlanned: true,
+      bridgeImplementationApproved: false,
+      mapAttachmentApproved: false,
+      drawingApproved: false
+    },
+    reviewedHelpers: {
+      manualLifecycleShellCleanupVerification:
+        typeof getCustom25DVisualRendererManualLifecycleShellCleanupVerificationReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-bridge-closeout-or-separately-reviewed-future-manual-map-attachment-planning-phase",
+    notes: [
+      "Passive/report-only/planning-only/readiness-only/boundary-only helper.",
+      "Combines future renderer-to-lifecycle bridge planning, bridge readiness review, and map attachment boundary planning.",
+      "Does not approve or implement bridge behavior, map attachment, drawing, startup wiring, or renderer initialization."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
