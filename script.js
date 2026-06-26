@@ -20368,6 +20368,120 @@ function getCustom25DVisualRendererInitializationStateShellSchemaInventory(optio
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellSchemaInventoryValidationReport(options = {}) {
+  const schemaInventory =
+    typeof getCustom25DVisualRendererInitializationStateShellSchemaInventory === "function"
+      ? getCustom25DVisualRendererInitializationStateShellSchemaInventory(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-schema-inventory-unavailable"
+        };
+  const schemaReadinessGate =
+    typeof getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate === "function"
+      ? getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-schema-readiness-gate-unavailable"
+        };
+  const metadataValidation =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-validation-unavailable"
+        };
+
+  const forbiddenFieldTypes = Array.isArray(schemaInventory.forbiddenFieldTypes)
+    ? schemaInventory.forbiddenFieldTypes
+    : [];
+
+  return {
+    phase: 193,
+    name: "custom-25d-visual-renderer-initialization-state-shell-schema-inventory-validation-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      schemaInventory.blockedReason ||
+      schemaReadinessGate.blockedReason ||
+      metadataValidation.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    validationOnly: true,
+    schemaOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    schemaInventoryValidation: {
+      schemaInventoryAvailable: !!schemaInventory.ok,
+      documentationOnlyInventory: schemaInventory.reportOnly === true && schemaInventory.inventoryOnly === true,
+      schemaOnlyInventory: schemaInventory.schemaOnly === true,
+      runtimeSchemaEnforcementImplied: false,
+      rendererInitializationReadinessImplied: false
+    },
+    forbiddenTypeCoverage: {
+      coversDomNodes: forbiddenFieldTypes.includes("DOM nodes"),
+      coversMapReferences: forbiddenFieldTypes.includes("map references"),
+      coversLeafletObjects: forbiddenFieldTypes.includes("Leaflet objects"),
+      coversTimers: forbiddenFieldTypes.includes("timers"),
+      coversEventHandlers: forbiddenFieldTypes.includes("event handlers"),
+      coversNetworkCalls: forbiddenFieldTypes.includes("network calls"),
+      coversStorageWrites: forbiddenFieldTypes.includes("storage writes"),
+      coversBackendReferences: forbiddenFieldTypes.includes("backend references"),
+      coversRendererObjects: forbiddenFieldTypes.includes("renderer objects"),
+      coversLifecycleObjects: forbiddenFieldTypes.includes("lifecycle objects"),
+      coversRegistries: forbiddenFieldTypes.includes("registries"),
+      coversLayerObjects: forbiddenFieldTypes.includes("layer objects"),
+      coversMutableStartupHooks: forbiddenFieldTypes.includes("mutable startup hooks")
+    },
+    documentationOnlyValidation: {
+      inventoryIsDocumentationOnly: true,
+      notRuntimeSchemaValidation: true,
+      notRendererInitializationApproval: true,
+      noVisibleMapStartupBehaviorApproved: true
+    },
+    reviewedHelpers: {
+      schemaInventory:
+        typeof getCustom25DVisualRendererInitializationStateShellSchemaInventory === "function",
+      schemaReadinessGate:
+        typeof getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate === "function",
+      metadataValidation:
+        typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-schema-inventory-closeout-or-separately-reviewed-inert-schema-documentation-summary",
+    notes: [
+      "Passive/report-only/validation-only/schema-only helper.",
+      "Validates that schema inventory remains documentation-only and does not imply runtime validation.",
+      "Validates forbidden field/value type coverage without creating or mutating shell state.",
+      "No visible, map, drawing, startup, or renderer behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
