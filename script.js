@@ -23308,6 +23308,269 @@ function canCreateCustom25DVisualManualVisibleTestLayer(options = {}) {
   };
 }
 
+function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
+  const visibleTestGuard =
+    typeof canCreateCustom25DVisualManualVisibleTestLayer === "function"
+      ? canCreateCustom25DVisualManualVisibleTestLayer(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "manual-visible-test-layer-guard-unavailable",
+          failedRequirement: "guardUnavailable"
+        };
+
+  if (!visibleTestGuard.allowed) {
+    return {
+      phase: 212,
+      name: "custom-25d-visual-first-manual-visible-test-layer",
+      ok: true,
+      allowed: false,
+      ready: false,
+      created: false,
+      visible: false,
+      manualOnly: true,
+      developerOnly: true,
+      testOnly: true,
+      startupWired: false,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      cleanupAvailable: true,
+      elementCreated: false,
+      reason: visibleTestGuard.reason || "custom-25d-map-disabled",
+      failedRequirement: visibleTestGuard.failedRequirement || "custom25DMapEnabled",
+      notes: [
+        "Blocked by guard.",
+        "No visible test layer was created.",
+        "Default behavior remains blocked and invisible while ENABLE_CUSTOM_25D_MAP is false."
+      ]
+    };
+  }
+
+  const container =
+    options.mapContainer ||
+    options.container ||
+    (options.map && typeof options.map.getContainer === "function"
+      ? options.map.getContainer()
+      : null);
+
+  if (!container || typeof container.appendChild !== "function") {
+    return {
+      phase: 212,
+      name: "custom-25d-visual-first-manual-visible-test-layer",
+      ok: true,
+      allowed: true,
+      ready: false,
+      created: false,
+      visible: false,
+      manualOnly: true,
+      developerOnly: true,
+      testOnly: true,
+      startupWired: false,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      cleanupAvailable: true,
+      elementCreated: false,
+      reason: "manual-visible-test-layer-container-unavailable",
+      failedRequirement: "validMapContainer",
+      notes: [
+        "Guard passed, but no safe map container was provided.",
+        "No visible test layer was created."
+      ]
+    };
+  }
+
+  const doc = container.ownerDocument || (typeof document !== "undefined" ? document : null);
+  if (!doc || typeof doc.createElement !== "function") {
+    return {
+      phase: 212,
+      name: "custom-25d-visual-first-manual-visible-test-layer",
+      ok: true,
+      allowed: true,
+      ready: false,
+      created: false,
+      visible: false,
+      manualOnly: true,
+      developerOnly: true,
+      testOnly: true,
+      startupWired: false,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      cleanupAvailable: true,
+      elementCreated: false,
+      reason: "manual-visible-test-layer-document-unavailable",
+      failedRequirement: "validDocument",
+      notes: [
+        "Guard passed, but no safe document context was available.",
+        "No visible test layer was created."
+      ]
+    };
+  }
+
+  const existing = container.querySelector(
+    '[data-custom25d-manual-visible-test-layer="true"]'
+  );
+  if (existing) {
+    return {
+      phase: 212,
+      name: "custom-25d-visual-first-manual-visible-test-layer",
+      ok: true,
+      allowed: true,
+      ready: true,
+      created: false,
+      visible: true,
+      manualOnly: true,
+      developerOnly: true,
+      testOnly: true,
+      startupWired: false,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      cleanupAvailable: true,
+      elementCreated: false,
+      reason: "manual-visible-test-layer-already-present",
+      notes: [
+        "Existing tiny manual test layer was left unchanged.",
+        "No additional element was created."
+      ]
+    };
+  }
+
+  const el = doc.createElement("div");
+  el.setAttribute("data-custom25d-manual-visible-test-layer", "true");
+  el.textContent = "2.5D TEST";
+  Object.assign(el.style, {
+    position: "absolute",
+    top: "48px",
+    right: "12px",
+    zIndex: "450",
+    pointerEvents: "none",
+    padding: "2px 6px",
+    borderRadius: "4px",
+    fontSize: "10px",
+    lineHeight: "1.2",
+    fontWeight: "700",
+    letterSpacing: "0",
+    color: "#111827",
+    background: "rgba(255, 214, 10, 0.88)",
+    border: "1px solid rgba(17, 24, 39, 0.18)",
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.08)",
+    userSelect: "none"
+  });
+  container.appendChild(el);
+
+  return {
+    phase: 212,
+    name: "custom-25d-visual-first-manual-visible-test-layer",
+    ok: true,
+    allowed: true,
+    ready: true,
+    created: true,
+    visible: true,
+    manualOnly: true,
+    developerOnly: true,
+    testOnly: true,
+    startupWired: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    cleanupAvailable: true,
+    elementCreated: true,
+    reason: "manual-visible-test-layer-created-as-tiny-dom-overlay-only",
+    notes: [
+      "Created a tiny temporary DOM overlay only.",
+      "Did not attach Leaflet layers, mutate OSM, pins, player marker, capture radius, gameplay, or backend state."
+    ]
+  };
+}
+
+function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
+  const container =
+    options.mapContainer ||
+    options.container ||
+    (options.map && typeof options.map.getContainer === "function"
+      ? options.map.getContainer()
+      : null);
+  const doc =
+    (container && container.ownerDocument) || (typeof document !== "undefined" ? document : null);
+
+  if (!doc || typeof doc.querySelectorAll !== "function") {
+    return {
+      phase: 212,
+      cleared: false,
+      noOp: true,
+      safeToRepeat: true,
+      touchesMapContainerOnlyForOwnTestElement: true,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      reason: "no-manual-visible-test-layer-document-context"
+    };
+  }
+
+  const scope =
+    container && typeof container.querySelectorAll === "function" ? container : doc;
+  const elements = scope.querySelectorAll('[data-custom25d-manual-visible-test-layer="true"]');
+
+  if (!elements.length) {
+    return {
+      phase: 212,
+      cleared: false,
+      noOp: true,
+      safeToRepeat: true,
+      touchesMapContainerOnlyForOwnTestElement: true,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      reason: "no-manual-visible-test-layer-to-clear"
+    };
+  }
+
+  elements.forEach((element) => {
+    if (element && element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+  });
+
+  return {
+    phase: 212,
+    cleared: true,
+    noOp: false,
+    safeToRepeat: true,
+    touchesMapContainerOnlyForOwnTestElement: true,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    reason: "manual-visible-test-layer-cleared"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
