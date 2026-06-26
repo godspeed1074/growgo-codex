@@ -23695,6 +23695,123 @@ function getCustom25DVisualFirstManualVisibleTestReadinessReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLocalDevVisibleTestOverridePlan(options = {}) {
+  const visibleTestReadiness =
+    typeof getCustom25DVisualFirstManualVisibleTestReadinessReport === "function"
+      ? getCustom25DVisualFirstManualVisibleTestReadinessReport(options)
+      : {
+          ok: false,
+          allowed: false,
+          blockedReason: "manual-visible-test-readiness-report-unavailable"
+        };
+  const visibleTestGuard =
+    typeof canCreateCustom25DVisualManualVisibleTestLayer === "function"
+      ? canCreateCustom25DVisualManualVisibleTestLayer(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "manual-visible-test-layer-guard-unavailable"
+        };
+
+  return {
+    phase: 214,
+    name: "custom-25d-visual-local-dev-visible-test-override-plan",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      visibleTestGuard.reason || visibleTestReadiness.blockedReason || "custom-25d-map-disabled",
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    localDevTestOnly: true,
+    createsVisibleTestLayer: false,
+    callsCreateVisibleTestLayer: false,
+    callsCreateLifecycleShell: false,
+    callsCreateAttachmentSmokeShell: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    wiresStartup: false,
+    automaticInvocationAdded: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    localDevOverrideRequirements: {
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      manual: true,
+      developerIntent: true,
+      allowVisibleTestLayer: true,
+      allowManualMapAttachment: true,
+      allowTinyTestOnly: true,
+      cleanupVerified: true,
+      attachmentSmokeShellReady: true,
+      preserveExistingMap: true,
+      preserveGameplayOverlays: true,
+      preserveOSMBehavior: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      noStartupWiring: true,
+      noBackendChanges: true,
+      noPersistence: true,
+      noAutomaticInvocation: true
+    },
+    localDevOverridePlanned: true,
+    localDevOverrideImplemented: false,
+    defaultVisible: false,
+    startupWired: false,
+    productionBehaviorChanged: false,
+    normalAppBehaviorChanged: false,
+    safetyFlagsRemainFalse: true,
+    visibleBehaviorApprovedByDefault: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "local-dev-override-planning-only",
+      "no-automatic-visible-behavior-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved-by-default",
+      "no-drawing-approved-by-default",
+      "no-gameplay-changes-approved",
+      "no-osm-changes-approved",
+      "no-pin-changes-approved",
+      "no-player-marker-changes-approved",
+      "no-capture-radius-changes-approved",
+      "no-backend-changes-approved"
+    ],
+    reviewedHelpers: {
+      visibleTestReadiness:
+        typeof getCustom25DVisualFirstManualVisibleTestReadinessReport === "function",
+      visibleTestGuard:
+        typeof canCreateCustom25DVisualManualVisibleTestLayer === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    notes: [
+      "Passive/report-only/planning-only/local-dev-test-only helper.",
+      "Plans the safe local-dev-only override conditions for a future manual browser-console visible test.",
+      "Does not create the visible test layer, flip safety flags, wire startup, or approve visible behavior by default."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
