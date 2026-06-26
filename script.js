@@ -21322,6 +21322,182 @@ function getCustom25DVisualRendererLifecycleContractReadinessReport(options = {}
   };
 }
 
+function getCustom25DVisualRendererLifecycleContractCloseoutReport(options = {}) {
+  const lifecycleBoundaryPlan =
+    typeof getCustom25DVisualRendererLifecycleBoundaryPlan === "function"
+      ? getCustom25DVisualRendererLifecycleBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-boundary-plan-unavailable"
+        };
+  const lifecycleBoundaryReadiness =
+    typeof getCustom25DVisualRendererLifecycleBoundaryReadinessReport === "function"
+      ? getCustom25DVisualRendererLifecycleBoundaryReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-boundary-readiness-unavailable"
+        };
+  const lifecycleContractInventory =
+    typeof getCustom25DVisualRendererLifecycleContractInventory === "function"
+      ? getCustom25DVisualRendererLifecycleContractInventory(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-contract-inventory-unavailable"
+        };
+  const lifecycleContractReadiness =
+    typeof getCustom25DVisualRendererLifecycleContractReadinessReport === "function"
+      ? getCustom25DVisualRendererLifecycleContractReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-contract-readiness-unavailable"
+        };
+  const blockedReason =
+    lifecycleContractReadiness.blockedReason ||
+    lifecycleContractInventory.blockedReason ||
+    lifecycleBoundaryReadiness.blockedReason ||
+    lifecycleBoundaryPlan.blockedReason ||
+    "custom-25d-map-disabled";
+
+  return {
+    phase: 200,
+    name: "custom-25d-visual-renderer-lifecycle-contract-closeout-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    summaryOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "lifecycle-contract-closeout-summary-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleStagesSummary: {
+      construct: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      initialize: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      attach: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      render: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      update: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      suspend: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      resume: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      destroy: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      clear: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      }
+    },
+    closeoutStatus: {
+      lifecycleBoundaryPlanned: true,
+      lifecycleBoundaryReadinessReviewed: true,
+      lifecycleContractInventoried: true,
+      lifecycleContractReadinessReviewed: true,
+      lifecycleImplementationApproved: false
+    },
+    reviewedHelpers: {
+      lifecycleBoundaryPlan: typeof getCustom25DVisualRendererLifecycleBoundaryPlan === "function",
+      lifecycleBoundaryReadiness:
+        typeof getCustom25DVisualRendererLifecycleBoundaryReadinessReport === "function",
+      lifecycleContractInventory:
+        typeof getCustom25DVisualRendererLifecycleContractInventory === "function",
+      lifecycleContractReadiness:
+        typeof getCustom25DVisualRendererLifecycleContractReadinessReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-post-closeout-handoff-or-separately-reviewed-future-lifecycle-implementation-planning",
+    notes: [
+      "Passive/report-only/closeout-only/summary-only helper.",
+      "Closes out the passive lifecycle boundary and contract planning sequence for Phases 196 through 199.",
+      "Does not approve, create, validate, wire, attach, draw, or implement the lifecycle.",
+      "No lifecycle object, renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
