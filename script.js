@@ -20593,6 +20593,137 @@ function getCustom25DVisualRendererInitializationStateShellSchemaInventoryCloseo
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellHandoffReadinessReport(options = {}) {
+  const shellCloseout =
+    typeof getCustom25DVisualRendererInitializationStateShellCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-closeout-unavailable"
+        };
+  const metadataCloseout =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-closeout-unavailable"
+        };
+  const schemaCloseout =
+    typeof getCustom25DVisualRendererInitializationStateShellSchemaInventoryCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellSchemaInventoryCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-schema-inventory-closeout-unavailable"
+        };
+  const shellReadiness =
+    typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function"
+      ? getCustom25DVisualRendererInitializationStateShellImplementationReadiness(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-implementation-readiness-unavailable"
+        };
+  const blockedReason =
+    schemaCloseout.blockedReason ||
+    metadataCloseout.blockedReason ||
+    shellCloseout.blockedReason ||
+    shellReadiness.blockedReason ||
+    "custom-25d-map-disabled";
+
+  return {
+    phase: 195,
+    name: "custom-25d-visual-renderer-initialization-state-shell-handoff-readiness-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    handoffOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    handoffReadiness: {
+      readyForFuturePlanningOnly: true,
+      readyForRendererInitialization: false,
+      readyForRuntimeSchemaEnforcement: false,
+      readyForMapAttachment: false,
+      readyForDrawing: false,
+      readyForStartupWiring: false,
+      readyForVisibleBehavior: false
+    },
+    shellSequenceSummary: {
+      inertShellArchitectureExists: !!shellCloseout.ok,
+      manualGuardBehaviorDocumented: !!shellReadiness.ok,
+      metadataExpansionReviewed: !!metadataCloseout.ok,
+      shellStillDormantAndInternalOnly: true
+    },
+    schemaSequenceSummary: {
+      schemaInventoryClosedOut: !!schemaCloseout.ok,
+      schemaRemainsDocumentationOnly: !!(
+        schemaCloseout.documentationOnlySummary &&
+        schemaCloseout.documentationOnlySummary.documentationOnly
+      ),
+      runtimeSchemaEnforcementInactive: !!(
+        schemaCloseout.runtimeValidationSummary &&
+        schemaCloseout.runtimeValidationSummary.runtimeSchemaEnforcementActive === false
+      ),
+      runtimeValidatorsNotAdded: !!(
+        schemaCloseout.runtimeValidationSummary &&
+        schemaCloseout.runtimeValidationSummary.runtimeValidatorsAdded === false
+      )
+    },
+    futureBoundaryRecommendation: {
+      nextWorkMustRemainPassiveOrSeparatelyReviewed: true,
+      notRendererInitializationReadiness: true,
+      notMapAttachmentReadiness: true,
+      notDrawingReadiness: true,
+      notStartupWiringReadiness: true
+    },
+    reviewedHelpers: {
+      shellCloseout:
+        typeof getCustom25DVisualRendererInitializationStateShellCloseoutReport === "function",
+      metadataCloseout:
+        typeof getCustom25DVisualRendererInitializationStateShellMetadataCloseoutReport === "function",
+      schemaCloseout:
+        typeof getCustom25DVisualRendererInitializationStateShellSchemaInventoryCloseoutReport === "function",
+      shellReadiness:
+        typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-lifecycle-boundary-planning-or-separately-reviewed-inert-architecture-phase",
+    notes: [
+      "Passive/report-only/readiness-only/handoff-only helper.",
+      "Summarizes inert shell, metadata, and schema readiness for future planning only.",
+      "This is not readiness for renderer initialization, runtime schema enforcement, map attachment, drawing, startup wiring, or visible behavior.",
+      "Recommends only passive lifecycle-boundary planning or another separately reviewed inert architecture phase next."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
