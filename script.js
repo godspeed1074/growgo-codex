@@ -22110,6 +22110,156 @@ function getCustom25DVisualRendererManualActivationRollbackBoundaryReport(option
   };
 }
 
+function canCreateCustom25DVisualRendererManualLifecycleShell(options = {}) {
+  const manualActivationRollbackBoundary =
+    typeof getCustom25DVisualRendererManualActivationRollbackBoundaryReport === "function"
+      ? getCustom25DVisualRendererManualActivationRollbackBoundaryReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-manual-activation-rollback-boundary-unavailable"
+        };
+
+  const requirements = [
+    {
+      key: "custom25DMapEnabled",
+      label: "ENABLE_CUSTOM_25D_MAP === true",
+      passed: ENABLE_CUSTOM_25D_MAP === true,
+      reason: "custom-25d-map-disabled"
+    },
+    {
+      key: "manual",
+      label: "options.manual === true",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      label: "options.developerIntent === true",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "allowLifecycleShellCreation",
+      label: "options.allowLifecycleShellCreation === true",
+      passed: options.allowLifecycleShellCreation === true,
+      reason: "lifecycle-shell-creation-not-allowed"
+    },
+    {
+      key: "allowRendererLifecycle",
+      label: "options.allowRendererLifecycle === true",
+      passed: options.allowRendererLifecycle === true,
+      reason: "renderer-lifecycle-not-allowed"
+    },
+    {
+      key: "preserveExistingMap",
+      label: "options.preserveExistingMap === true",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      label: "options.preserveGameplayOverlays === true",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      label: "options.preserveOSMBehavior === true",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      label: "options.preservePins === true",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      label: "options.preservePlayerMarker === true",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      label: "options.preserveCaptureRadius === true",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    },
+    {
+      key: "rollbackReady",
+      label: "options.rollbackReady === true",
+      passed: options.rollbackReady === true,
+      reason: "rollback-readiness-required"
+    },
+    {
+      key: "cleanupFunctionPlanned",
+      label: "options.cleanupFunctionPlanned === true",
+      passed: options.cleanupFunctionPlanned === true,
+      reason: "cleanup-function-plan-required"
+    }
+  ];
+
+  const firstFailure = requirements.find((requirement) => !requirement.passed) || null;
+  const allowed = firstFailure === null;
+
+  return {
+    phase: 205,
+    name: "custom-25d-visual-renderer-manual-lifecycle-shell-guard",
+    ok: true,
+    ready: false,
+    allowed,
+    reason: allowed ? "manual-lifecycle-shell-guard-passed-evaluation-only" : firstFailure.reason,
+    failedRequirement: firstFailure ? firstFailure.key : null,
+    guardOnly: true,
+    evaluatorOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    requirements,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "manual-lifecycle-shell-guard-evaluator-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    reviewedHelpers: {
+      manualActivationRollbackBoundary:
+        typeof getCustom25DVisualRendererManualActivationRollbackBoundaryReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-manual-lifecycle-shell-readiness-review-or-separately-reviewed-future-shell-creation-phase",
+    notes: [
+      "Guard-only/evaluator-only helper.",
+      "Evaluates whether a future manual lifecycle shell creation would be allowed.",
+      "Does not create or approve lifecycle shell creation by itself."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
