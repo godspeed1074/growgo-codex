@@ -21158,6 +21158,170 @@ function getCustom25DVisualRendererLifecycleContractInventory(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererLifecycleContractReadinessReport(options = {}) {
+  const lifecycleContractInventory =
+    typeof getCustom25DVisualRendererLifecycleContractInventory === "function"
+      ? getCustom25DVisualRendererLifecycleContractInventory(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-contract-inventory-unavailable"
+        };
+  const blockedReason = lifecycleContractInventory.blockedReason || "custom-25d-map-disabled";
+
+  return {
+    phase: 199,
+    name: "custom-25d-visual-renderer-lifecycle-contract-readiness-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    reviewOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "lifecycle-contract-readiness-review-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleContractReadiness: {
+      construct: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      initialize: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      attach: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      render: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      update: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      suspend: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      resume: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      destroy: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      },
+      clear: {
+        hasContractPlanningFields: true,
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false,
+        futureOnly: true
+      }
+    },
+    reviewedContractFields: [
+      "stageKey",
+      "intendedRole",
+      "requiredInputs",
+      "expectedOutputs",
+      "allowedSideEffects",
+      "disallowedSideEffects",
+      "dependencies",
+      "safetyGateRequired",
+      "implementationStatus",
+      "approvalStatus"
+    ],
+    readinessSummary: {
+      readyForFutureLifecycleContractOnly: !!lifecycleContractInventory.ok,
+      readyToApproveLifecycle: false,
+      readyToCreateLifecycleObject: false,
+      readyToInitializeRenderer: false,
+      readyToValidateRuntimeSchema: false,
+      readyToAttachOrDraw: false
+    },
+    reviewedHelpers: {
+      lifecycleContractInventory:
+        typeof getCustom25DVisualRendererLifecycleContractInventory === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-lifecycle-contract-closeout-or-separately-reviewed-future-lifecycle-contract-phase",
+    notes: [
+      "Passive/report-only/readiness-only/review-only helper.",
+      "Reviews the future-only lifecycle contract inventory for construct, initialize, attach, render, update, suspend, resume, destroy, and clear.",
+      "Does not approve, create, validate, or implement the lifecycle.",
+      "No lifecycle object, renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
