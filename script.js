@@ -21993,6 +21993,123 @@ function getCustom25DVisualRendererLifecycleSafetyGateCloseoutReport(options = {
   };
 }
 
+function getCustom25DVisualRendererManualActivationRollbackBoundaryReport(options = {}) {
+  const lifecycleSafetyGateCloseout =
+    typeof getCustom25DVisualRendererLifecycleSafetyGateCloseoutReport === "function"
+      ? getCustom25DVisualRendererLifecycleSafetyGateCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-lifecycle-safety-gate-closeout-unavailable"
+        };
+  const blockedReason =
+    lifecycleSafetyGateCloseout.blockedReason || "custom-25d-map-disabled";
+
+  return {
+    phase: 204,
+    name: "custom-25d-visual-renderer-manual-activation-rollback-boundary-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    boundaryOnly: true,
+    rollbackOnly: true,
+    readinessReviewOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "manual-activation-boundary-planning-only",
+      "rollback-boundary-planning-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    manualActivationBoundary: {
+      futureOnly: true,
+      manual: true,
+      developerIntent: true,
+      allowLifecycleActivation: true,
+      allowRendererLifecycle: true,
+      preserveExistingMap: true,
+      preserveGameplayOverlays: true,
+      preserveOSMBehavior: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      approved: false,
+      blockedByDefault: true
+    },
+    cleanupRollbackBoundary: {
+      futureOnly: true,
+      cleanupFunctionRequired: true,
+      rollbackMustBeNoOpSafe: true,
+      repeatedCleanupSafe: true,
+      noMapResidueAllowed: true,
+      noLayerResidueAllowed: true,
+      noRegistryResidueAllowed: true,
+      noRuntimeStateResidueAllowed: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      approved: false,
+      blockedByDefault: true
+    },
+    readinessReview: {
+      futureManualActivationOnly: true,
+      readyForManualActivationImplementation: false,
+      readyForRollbackImplementation: false,
+      readyForRendererInitialization: false,
+      readyForMapAttachment: false,
+      readyForDrawing: false,
+      readyForStartupWiring: false,
+      readyForRuntimeSchemaEnforcement: false,
+      approvesNoBehavior: true
+    },
+    reviewedHelpers: {
+      lifecycleSafetyGateCloseout:
+        typeof getCustom25DVisualRendererLifecycleSafetyGateCloseoutReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-manual-activation-closeout-or-separately-reviewed-future-rollback-implementation-planning",
+    notes: [
+      "Passive/report-only/planning-only/boundary-only/rollback-only/readiness-review-only helper.",
+      "Combines future manual activation boundary planning, cleanup and rollback boundary planning, and readiness review for future manual activation only.",
+      "Does not approve or implement lifecycle behavior, renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, or visible behavior."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
