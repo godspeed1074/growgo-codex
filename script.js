@@ -20724,6 +20724,163 @@ function getCustom25DVisualRendererInitializationStateShellHandoffReadinessRepor
   };
 }
 
+function getCustom25DVisualRendererLifecycleBoundaryPlan(options = {}) {
+  const shellHandoff =
+    typeof getCustom25DVisualRendererInitializationStateShellHandoffReadinessReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellHandoffReadinessReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-handoff-readiness-unavailable"
+        };
+  const stateBoundaryPlan =
+    typeof getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-implementation-boundary-plan-unavailable"
+        };
+  const priorLifecycleBoundary =
+    typeof getCustom25DVisualRendererInitializationLifecycleBoundaryPlan === "function"
+      ? getCustom25DVisualRendererInitializationLifecycleBoundaryPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "renderer-initialization-lifecycle-boundary-plan-unavailable"
+        };
+  const blockedReason =
+    shellHandoff.blockedReason ||
+    stateBoundaryPlan.blockedReason ||
+    priorLifecycleBoundary.blockedReason ||
+    "custom-25d-map-disabled";
+
+  return {
+    phase: 196,
+    name: "custom-25d-visual-renderer-lifecycle-boundary-plan",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason,
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    boundaryOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    lifecycleBoundaries: {
+      construct: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      initialize: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      attach: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      render: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      update: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      suspend: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      resume: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      destroy: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      },
+      clear: {
+        implemented: false,
+        active: false,
+        wired: false,
+        approved: false
+      }
+    },
+    handoffReadiness: {
+      futurePlanningOnly: true,
+      rendererInitializationReadiness: false,
+      runtimeSchemaEnforcementReadiness: false,
+      mapAttachmentReadiness: false,
+      drawingReadiness: false,
+      startupWiringReadiness: false
+    },
+    reviewedHelpers: {
+      shellHandoff:
+        typeof getCustom25DVisualRendererInitializationStateShellHandoffReadinessReport === "function",
+      stateBoundaryPlan:
+        typeof getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan === "function",
+      priorLifecycleBoundary:
+        typeof getCustom25DVisualRendererInitializationLifecycleBoundaryPlan === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-lifecycle-boundary-review-or-separately-reviewed-inert-lifecycle-architecture-phase",
+    notes: [
+      "Passive/report-only/planning-only/boundary-only helper.",
+      "Plans a future lifecycle boundary contract only and does not create lifecycle objects, renderer state, or initialization state.",
+      "All lifecycle stages remain not implemented, not active, not wired, and not approved.",
+      "No renderer initialization, map attachment, drawing, startup wiring, runtime schema enforcement, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
