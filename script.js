@@ -24157,6 +24157,194 @@ function runCustom25DVisualLocalDevVisibleTest(options = {}) {
   };
 }
 
+function getCustom25DVisualLocalDevVisibleTestConsoleGuide(options = {}) {
+  const helperPresence = {
+    runner: typeof runCustom25DVisualLocalDevVisibleTest === "function",
+    overrideGuard:
+      typeof canUseCustom25DVisualLocalDevVisibleTestOverride === "function",
+    visibleLayerCreator:
+      typeof createCustom25DVisualFirstManualVisibleTestLayer === "function",
+    cleanupHelper:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function"
+  };
+
+  const manualOptions = {
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    manual: true,
+    developerIntent: true,
+    allowLocalDevVisibleTestOverride: true,
+    allowVisibleTestLayer: true,
+    allowManualMapAttachment: true,
+    allowTinyTestOnly: true,
+    cleanupVerified: true,
+    attachmentSmokeShellReady: true,
+    preserveExistingMap: true,
+    preserveGameplayOverlays: true,
+    preserveOSMBehavior: true,
+    preservePins: true,
+    preservePlayerMarker: true,
+    preserveCaptureRadius: true,
+    noStartupWiring: true,
+    noBackendChanges: true,
+    noPersistence: true,
+    noAutomaticInvocation: true,
+    acceptsTemporaryLocalDevVisual: true
+  };
+
+  return {
+    phase: 217,
+    name: "custom-25d-visual-local-dev-visible-test-console-guide",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    helperPresence,
+    manualOptions,
+    runCommandExample: `runCustom25DVisualLocalDevVisibleTest(${JSON.stringify(manualOptions, null, 2)})`,
+    cleanupCommandExample: "clearCustom25DVisualFirstManualVisibleTestLayer({})",
+    startupWired: false,
+    automaticInvocationAdded: false,
+    createsVisibleTestLayer: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsRendererObject: false,
+    initializesRenderer: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    attachesToMap: false,
+    draws: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive guide/report-only helper.",
+      "Does not call the runner, creator, or cleanup helper.",
+      "Normal app reload remains unchanged and invisible."
+    ]
+  };
+}
+
+function getCustom25DVisualLocalDevVisibleTestPreflightReport(options = {}) {
+  const helperPresence = {
+    consoleGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function",
+    runner: typeof runCustom25DVisualLocalDevVisibleTest === "function",
+    overrideGuard:
+      typeof canUseCustom25DVisualLocalDevVisibleTestOverride === "function",
+    visibleLayerCreator:
+      typeof createCustom25DVisualFirstManualVisibleTestLayer === "function",
+    cleanupHelper:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function"
+  };
+
+  const safetyFlagSnapshot = {
+    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+  };
+
+  const allHelpersPresent = Object.values(helperPresence).every(Boolean);
+  const allSafetyFlagsFalse = Object.values(safetyFlagSnapshot).every(Boolean);
+
+  const fallbackManualOptions = {
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    manual: true,
+    developerIntent: true,
+    allowLocalDevVisibleTestOverride: true,
+    allowVisibleTestLayer: true,
+    allowManualMapAttachment: true,
+    allowTinyTestOnly: true,
+    cleanupVerified: true,
+    attachmentSmokeShellReady: true,
+    preserveExistingMap: true,
+    preserveGameplayOverlays: true,
+    preserveOSMBehavior: true,
+    preservePins: true,
+    preservePlayerMarker: true,
+    preserveCaptureRadius: true,
+    noStartupWiring: true,
+    noBackendChanges: true,
+    noPersistence: true,
+    noAutomaticInvocation: true,
+    acceptsTemporaryLocalDevVisual: true
+  };
+
+  const guideManualOptions =
+    helperPresence.consoleGuide &&
+    typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function"
+      ? getCustom25DVisualLocalDevVisibleTestConsoleGuide(options).manualOptions || fallbackManualOptions
+      : fallbackManualOptions;
+
+  const runCommandExample =
+    helperPresence.consoleGuide &&
+    typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function"
+      ? getCustom25DVisualLocalDevVisibleTestConsoleGuide(options).runCommandExample ||
+        `runCustom25DVisualLocalDevVisibleTest(${JSON.stringify(guideManualOptions, null, 2)})`
+      : `runCustom25DVisualLocalDevVisibleTest(${JSON.stringify(guideManualOptions, null, 2)})`;
+
+  const cleanupCommandExample =
+    helperPresence.consoleGuide &&
+    typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function"
+      ? getCustom25DVisualLocalDevVisibleTestConsoleGuide(options).cleanupCommandExample ||
+        "clearCustom25DVisualFirstManualVisibleTestLayer({})"
+      : "clearCustom25DVisualFirstManualVisibleTestLayer({})";
+
+  return {
+    phase: 218,
+    name: "custom-25d-visual-local-dev-visible-test-preflight-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    defaultBlockedNoOptionsExpectation: true,
+    helperPresence,
+    safetyFlagSnapshot,
+    manualOnlyLocalDevBrowserConsoleReadiness: {
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      normalReloadUnchanged: true,
+      defaultVisible: false
+    },
+    runCommandExample,
+    cleanupCommandExample,
+    readyForManualConsoleTest: allHelpersPresent && allSafetyFlagsFalse,
+    startupWired: false,
+    automaticInvocationAdded: false,
+    createsVisibleTestLayer: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive/report-only helper for manual browser-console visible test preflight.",
+      "Does not call the guide command examples, runner, creator, or cleanup helper.",
+      "Normal app reload remains unchanged and invisible."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
