@@ -19995,6 +19995,119 @@ function getCustom25DVisualRendererInitializationStateShellMetadataCloseoutRepor
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellSchemaPlan(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const metadataValidation =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-validation-unavailable"
+        };
+  const metadataCloseout =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-closeout-unavailable"
+        };
+
+  return {
+    phase: 190,
+    name: "custom-25d-visual-renderer-initialization-state-shell-schema-plan",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      metadataCloseout.blockedReason ||
+      metadataValidation.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    schemaOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    currentSchemaSignals: {
+      shellKeyPresent: !!(shellState.shell && shellState.shell.key),
+      architectureStagePresent: !!(shellState.shell && shellState.shell.architectureStage),
+      metadataVersionPresent: !!(shellState.shell && shellState.shell.metadataVersion === 1),
+      metadataStillPlainDataOnly: !!(
+        metadataValidation.plainDataValidation &&
+        metadataValidation.plainDataValidation.metadataLooksLikePlainDataOnly
+      ),
+      approvalFlagsRemainFalse: !!(
+        metadataValidation.approvalFlagValidation &&
+        metadataValidation.approvalFlagValidation.rendererInitializationApproved &&
+        metadataValidation.approvalFlagValidation.mapAttachmentApproved &&
+        metadataValidation.approvalFlagValidation.drawingApproved &&
+        metadataValidation.approvalFlagValidation.startupWiringApproved &&
+        metadataValidation.approvalFlagValidation.visibleBehaviorApproved
+      )
+    },
+    futureSchemaPlan: [
+      "document inert shell field meanings",
+      "document optional future metadata inventory fields",
+      "document approval fields as permanently false unless separately reviewed",
+      "document schema boundaries between metadata and behavior",
+      "document that schema planning does not imply state creation or runtime enforcement"
+    ],
+    disallowedSchemaWork: [
+      "runtime schema enforcement",
+      "schema-driven renderer initialization",
+      "schema-driven map attachment",
+      "schema-driven drawing or visible behavior",
+      "schema-driven startup wiring",
+      "schema work that creates state, registries, layers, or layer state"
+    ],
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      metadataValidation:
+        typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function",
+      metadataCloseout:
+        typeof getCustom25DVisualRendererInitializationStateShellMetadataCloseoutReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-schema-inventory-review-or-separately-reviewed-inert-schema-expansion-plan",
+    notes: [
+      "Passive/report-only/planning-only/schema-only helper.",
+      "Separates future schema documentation from actual state creation, runtime validation enforcement, and renderer behavior.",
+      "Any future schema expansion must remain separately reviewed, inert, internal-only, and non-wired.",
+      "No renderer initialization, map attachment, drawing, startup wiring, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
