@@ -18603,6 +18603,160 @@ function getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan(o
   };
 }
 
+function getCustom25DVisualRendererInitializationStateArchitectureDecisionReview(options = {}) {
+  const architectureDecisionPlanSummary =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-decision-plan-unavailable"
+        };
+  const architectureHandoffSummary =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureHandoff === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureHandoff(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-handoff-unavailable"
+        };
+  const stateContractReviewSummary =
+    typeof getCustom25DVisualRendererInitializationStateContractReview === "function"
+      ? getCustom25DVisualRendererInitializationStateContractReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-contract-review-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+
+  return {
+    ok: true,
+    phase: 177,
+    name: "custom-25d-visual-renderer-initialization-state-architecture-decision-review",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    purpose: "Review the future renderer initialization state architecture decisions while keeping the pathway blocked, internal-only, dormant, and report-only.",
+    dependsOn: {
+      architectureDecisionPlanSummary: !!architectureDecisionPlanSummary.ok,
+      architectureHandoffSummary: !!architectureHandoffSummary.ok,
+      stateContractReviewSummary: !!stateContractReviewSummary.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function",
+      phase: architectureDecisionPlanSummary.phase || 176
+    },
+    architectureDecisionPlanSummary: {
+      planAvailable: !!architectureDecisionPlanSummary.ok,
+      futureStateArchitecturePlanningOnly: !!(
+        architectureDecisionPlanSummary.architectureDecisionPlan &&
+        architectureDecisionPlanSummary.architectureDecisionPlan.futureInitializationStateArchitecturePlanningOnly
+      ),
+      futureStateInternalOnly: !!(
+        architectureDecisionPlanSummary.architectureDecisionPlan &&
+        architectureDecisionPlanSummary.architectureDecisionPlan.futureStateMustRemainInternalOnly
+      ),
+      futureStateDormantByDefault: !!(
+        architectureDecisionPlanSummary.architectureDecisionPlan &&
+        architectureDecisionPlanSummary.architectureDecisionPlan.futureStateMustRemainDormantByDefault
+      ),
+      expectedDefaultBlockedReason:
+        architectureDecisionPlanSummary.expectedDefaultBlockedReason ||
+        "visual-renderer-initialization-guard-unavailable"
+    },
+    architectureHandoffSummary: {
+      handoffAvailable: !!architectureHandoffSummary.ok,
+      futureArchitecturePlanningOnly: !!(
+        architectureHandoffSummary.stateArchitectureHandoff &&
+        architectureHandoffSummary.stateArchitectureHandoff.futureArchitecturePlanningOnly
+      ),
+      realStateCreationStillProhibited: !!(
+        architectureHandoffSummary.stateArchitectureHandoff &&
+        architectureHandoffSummary.stateArchitectureHandoff.realStateCreationStillProhibited
+      ),
+      expectedDefaultBlockedReason:
+        architectureHandoffSummary.expectedDefaultBlockedReason ||
+        "visual-renderer-initialization-guard-unavailable"
+    },
+    stateContractReviewSummary: {
+      reviewAvailable: !!stateContractReviewSummary.ok,
+      futureStateContractRemainsPlanOnly: !!(
+        stateContractReviewSummary.reviewFindings &&
+        stateContractReviewSummary.reviewFindings.futureStateContractExistsOnlyAsPlan
+      ),
+      stateCreationBlocked: stateContractReviewSummary.stateCreationAllowed === false,
+      initializationStillNotPerformed: stateContractReviewSummary.initializationPerformed === false
+    },
+    decisionReview: {
+      futureInitializationStateArchitectureReviewedOnly: true,
+      noActualStateCreatedNow: true,
+      futureStateRemainsInternalOnly: true,
+      futureStateRemainsDormantByDefault: true,
+      futureStateRemainsNonRenderingAndUnattached: true
+    },
+    reviewedDecisions: [
+      "future initialization state should remain internal-only",
+      "future initialization state should remain dormant by default",
+      "future initialization state should remain blocked by default",
+      "future initialization state should not attach to the map",
+      "future initialization state should not enable drawing",
+      "future initialization state should not wire startup"
+    ],
+    acceptedFutureStateArchitectureConstraints: [
+      "preserve gameplay overlays",
+      "preserve OSM behavior",
+      "preserve pins",
+      "preserve player marker",
+      "preserve capture radius",
+      "preserve backend behavior",
+      "require future dedicated guard approval before any state creation"
+    ],
+    ready: false,
+    defaultDecision: "no-go",
+    expectedDefaultBlockedReason: guardResult.reason || "visual-renderer-initialization-guard-unavailable",
+    lifecycleCreationAllowed: false,
+    stateCreationAllowed: false,
+    initializationPerformed: false,
+    safetyBoundaries: {
+      noRendererCreation: true,
+      noRendererInitialization: true,
+      noLifecycleObjectCreation: true,
+      noInitializationStateCreation: true,
+      noRegistryCreation: true,
+      noLayerCreation: true,
+      noLayerStateCreation: true,
+      noStartupWiring: true,
+      noUiChanges: true,
+      noGraphics: true,
+      noMapAttachment: true,
+      noDrawing: true,
+      noGameplayChanges: true,
+      noOsmChanges: true,
+      noPinChanges: true,
+      noPlayerMarkerChanges: true,
+      noCaptureRadiusChanges: true,
+      noBackendChanges: true
+    },
+    prohibitedActions: [
+      "create lifecycle objects",
+      "create initialization state",
+      "initialize the renderer",
+      "create renderer objects or registries",
+      "create layers or layer state",
+      "attach anything to the map",
+      "draw graphics or show visible output",
+      "wire startup behavior",
+      "change gameplay, OSM, pins, player marker, capture radius, or backend behavior"
+    ],
+    nextPhaseRecommendation: "passive-initialization-state-architecture-closeout-readiness-report"
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
