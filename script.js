@@ -19625,6 +19625,109 @@ function getCustom25DVisualRendererInitializationStateShellExpansionPlan(options
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellMetadataReadinessGate(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const validation =
+    typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-validation-unavailable"
+        };
+  const inventory =
+    typeof getCustom25DVisualRendererInitializationStateShellInventoryReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellInventoryReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-inventory-unavailable"
+        };
+  const expansionPlan =
+    typeof getCustom25DVisualRendererInitializationStateShellExpansionPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateShellExpansionPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-expansion-plan-unavailable"
+        };
+
+  return {
+    phase: 186,
+    name: "custom-25d-visual-renderer-initialization-state-shell-metadata-readiness-gate",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      expansionPlan.blockedReason ||
+      inventory.blockedReason ||
+      validation.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    gateOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    metadataExpansionReadiness: {
+      readyForFutureSeparatelyReviewedMetadataExpansion: !!expansionPlan.ok,
+      approvesMetadataExpansionNow: false
+    },
+    rendererInitializationReadiness: {
+      readyForRendererInitialization: false,
+      metadataReadinessIsNotRendererInitializationReadiness: true
+    },
+    mapAttachmentReadiness: {
+      readyForMapAttachment: false,
+      approvesVisibleMapBehavior: false
+    },
+    startupWiringReadiness: {
+      readyForStartupWiring: false,
+      approvesStartupIntegration: false
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      shellValidation: typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function",
+      shellInventory: typeof getCustom25DVisualRendererInitializationStateShellInventoryReport === "function",
+      shellExpansionPlan: typeof getCustom25DVisualRendererInitializationStateShellExpansionPlan === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-shell-metadata-expansion-closeout-or-separate-reviewed-expansion-plan",
+    notes: [
+      "Passive/report-only/gate-only helper.",
+      "Acts only as the final passive gate before any separately reviewed inert metadata expansion.",
+      "Metadata expansion readiness is not renderer initialization readiness.",
+      "No visible, map, drawing, or startup behavior is approved in this phase."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
