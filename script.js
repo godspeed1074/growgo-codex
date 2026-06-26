@@ -19760,6 +19760,120 @@ function getCustom25DVisualRendererInitializationStateShellMetadataReadinessGate
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellMetadataValidationReport(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const validation =
+    typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-validation-unavailable"
+        };
+  const expansionPlan =
+    typeof getCustom25DVisualRendererInitializationStateShellExpansionPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateShellExpansionPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-expansion-plan-unavailable"
+        };
+  const metadataGate =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataReadinessGate === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataReadinessGate(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-readiness-gate-unavailable"
+        };
+
+  const shell = shellState.shell || {};
+  const plainDataApproved =
+    typeof shell.metadataVersion === "number" &&
+    typeof shell.metadataExpandedAtPhase === "number" &&
+    typeof shell.architectureStage === "string" &&
+    typeof shell.allowedUse === "string" &&
+    Array.isArray(shell.forbiddenUse);
+
+  return {
+    phase: 188,
+    name: "custom-25d-visual-renderer-initialization-state-shell-metadata-validation-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      metadataGate.blockedReason ||
+      expansionPlan.blockedReason ||
+      validation.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    validationOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    metadataValidation: {
+      metadataVersionIsOne: shell.metadataVersion === 1,
+      metadataExpandedAtPhaseIs187: shell.metadataExpandedAtPhase === 187,
+      architectureStageIsInitializationStateShell:
+        shell.architectureStage === "initialization-state-shell",
+      metadataExpansionDoesNotImplyRendererInitializationReadiness: true
+    },
+    approvalFlagValidation: {
+      rendererInitializationApproved: shell.rendererInitializationApproved === false,
+      mapAttachmentApproved: shell.mapAttachmentApproved === false,
+      drawingApproved: shell.drawingApproved === false,
+      startupWiringApproved: shell.startupWiringApproved === false,
+      visibleBehaviorApproved: shell.visibleBehaviorApproved === false
+    },
+    plainDataValidation: {
+      allowedUseIsString: typeof shell.allowedUse === "string",
+      forbiddenUseIsArray: Array.isArray(shell.forbiddenUse),
+      metadataLooksLikePlainDataOnly: plainDataApproved
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      shellValidation: typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function",
+      shellExpansionPlan: typeof getCustom25DVisualRendererInitializationStateShellExpansionPlan === "function",
+      shellMetadataGate: typeof getCustom25DVisualRendererInitializationStateShellMetadataReadinessGate === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-shell-metadata-validation-closeout-or-separate-reviewed-metadata-plan",
+    notes: [
+      "Passive/report-only/validation-only helper.",
+      "Validates that inert shell metadata remains plain data only.",
+      "Validates that all approval flags remain false.",
+      "No visible, map, drawing, startup, or renderer initialization behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
