@@ -18757,6 +18757,70 @@ function getCustom25DVisualRendererInitializationStateArchitectureDecisionReview
   };
 }
 
+function getCustom25DVisualRendererInitializationStateArchitectureCloseoutReport(options = {}) {
+  const architectureDecisionPlan =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-decision-plan-unavailable"
+        };
+  const architectureDecisionReview =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureDecisionReview === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureDecisionReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-decision-review-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+
+  return {
+    phase: 178,
+    name: "custom-25d-visual-renderer-initialization-state-architecture-closeout-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason: guardResult.reason || "visual-renderer-initialization-guard-unavailable",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    createsInitializationState: false,
+    createsLifecycleObject: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    changesGameplay: false,
+    reviewedHelpers: {
+      architectureDecisionPlan: !!architectureDecisionPlan.ok,
+      architectureDecisionReview: !!architectureDecisionReview.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function"
+    },
+    planningSequenceClosedOut: !!architectureDecisionReview.ok,
+    futureImplementationMustRemainSeparate: true,
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-future-initialization-state-architecture-planning-only",
+    notes: [
+      "Passive closeout/readiness report only.",
+      "Future initialization state architecture remains internal-only and dormant by default.",
+      "Default path remains blocked while ENABLE_CUSTOM_25D_MAP is false.",
+      "Any future phase that creates state, objects, or initializers must remain separate."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
