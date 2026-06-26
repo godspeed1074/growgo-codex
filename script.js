@@ -23350,12 +23350,21 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
     };
   }
 
+  const doc =
+    typeof document !== "undefined" && document ? document : null;
+  const discoveredContainer =
+    doc && typeof doc.querySelector === "function"
+      ? doc.querySelector(
+          ".leaflet-container, [data-map-container], [data-map-root], .map-container, #map"
+        )
+      : null;
   const container =
     options.mapContainer ||
     options.container ||
     (options.map && typeof options.map.getContainer === "function"
       ? options.map.getContainer()
-      : null);
+      : null) ||
+    discoveredContainer;
 
   if (!container || typeof container.appendChild !== "function") {
     return {
@@ -23387,8 +23396,8 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
     };
   }
 
-  const doc = container.ownerDocument || (typeof document !== "undefined" ? document : null);
-  if (!doc || typeof doc.createElement !== "function") {
+  const ownerDoc = container.ownerDocument || doc;
+  if (!ownerDoc || typeof ownerDoc.createElement !== "function") {
     return {
       phase: 212,
       name: "custom-25d-visual-first-manual-visible-test-layer",
@@ -23418,9 +23427,12 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
     };
   }
 
-  const existing = container.querySelector(
-    '[data-custom25d-manual-visible-test-layer="true"]'
-  );
+  const existingSelector =
+    '[data-custom-25d-visible-test="true"], [data-custom25d-manual-visible-test-layer="true"]';
+  const existing =
+    typeof ownerDoc.querySelector === "function"
+      ? ownerDoc.querySelector(existingSelector)
+      : null;
   if (existing) {
     return {
       phase: 212,
@@ -23442,6 +23454,7 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
       backendChanged: false,
       cleanupAvailable: true,
       elementCreated: false,
+      elementFound: true,
       reason: "manual-visible-test-layer-already-present",
       notes: [
         "Existing tiny manual test layer was left unchanged.",
@@ -23450,7 +23463,8 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
     };
   }
 
-  const el = doc.createElement("div");
+  const el = ownerDoc.createElement("div");
+  el.setAttribute("data-custom-25d-visible-test", "true");
   el.setAttribute("data-custom25d-manual-visible-test-layer", "true");
   el.textContent = "2.5D TEST";
   Object.assign(el.style, {
@@ -23469,7 +23483,8 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
     background: "rgba(255, 214, 10, 0.88)",
     border: "1px solid rgba(17, 24, 39, 0.18)",
     boxShadow: "0 1px 2px rgba(0, 0, 0, 0.08)",
-    userSelect: "none"
+    userSelect: "none",
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
   });
   container.appendChild(el);
 
@@ -23493,6 +23508,12 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
     backendChanged: false,
     cleanupAvailable: true,
     elementCreated: true,
+    elementFound:
+      typeof ownerDoc.body !== "undefined" &&
+      ownerDoc.body &&
+      typeof ownerDoc.body.textContent === "string"
+        ? ownerDoc.body.textContent.includes("2.5D TEST")
+        : false,
     reason: "manual-visible-test-layer-created-as-tiny-dom-overlay-only",
     notes: [
       "Created a tiny temporary DOM overlay only.",
@@ -23530,7 +23551,9 @@ function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
 
   const scope =
     container && typeof container.querySelectorAll === "function" ? container : doc;
-  const elements = scope.querySelectorAll('[data-custom25d-manual-visible-test-layer="true"]');
+  const elements = scope.querySelectorAll(
+    '[data-custom-25d-visible-test="true"], [data-custom25d-manual-visible-test-layer="true"]'
+  );
 
   if (!elements.length) {
     return {
@@ -24122,6 +24145,15 @@ function runCustom25DVisualLocalDevVisibleTest(options = {}) {
           visible: false,
           reason: "manual-visible-test-layer-creator-unavailable"
         };
+  const doc = typeof document !== "undefined" ? document : null;
+  const elementFound =
+    !!(
+      doc &&
+      typeof doc.querySelector === "function" &&
+      doc.querySelector(
+        '[data-custom-25d-visible-test="true"], [data-custom25d-manual-visible-test-layer="true"]'
+      )
+    );
 
   return {
     phase: 216,
@@ -24131,7 +24163,8 @@ function runCustom25DVisualLocalDevVisibleTest(options = {}) {
     ready: result.ready === true,
     ran: true,
     created: result.created === true,
-    visible: result.visible === true,
+    visible: result.visible === true || elementFound,
+    elementFound,
     manualOnly: true,
     localDevOnly: true,
     browserConsoleOnly: true,
