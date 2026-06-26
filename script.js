@@ -20209,6 +20209,165 @@ function getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate(o
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellSchemaInventory(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const metadataValidation =
+    typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellMetadataValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-metadata-validation-unavailable"
+        };
+  const schemaReadinessGate =
+    typeof getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate === "function"
+      ? getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-schema-readiness-gate-unavailable"
+        };
+
+  return {
+    phase: 192,
+    name: "custom-25d-visual-renderer-initialization-state-shell-schema-inventory",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      schemaReadinessGate.blockedReason ||
+      metadataValidation.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    inventoryOnly: true,
+    schemaOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    expandsShellMetadata: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    expectedShellFields: [
+      "key",
+      "phase",
+      "dormant",
+      "internalOnly",
+      "inert",
+      "ready",
+      "initialized",
+      "attachedToMap",
+      "drawing",
+      "startupWired",
+      "rendererCreated",
+      "lifecycleCreated",
+      "registryCreated",
+      "layerStateCreated",
+      "createdAtPhase",
+      "createdManually",
+      "metadataVersion",
+      "metadataExpandedAtPhase",
+      "architectureStage",
+      "rendererInitializationApproved",
+      "mapAttachmentApproved",
+      "drawingApproved",
+      "startupWiringApproved",
+      "visibleBehaviorApproved",
+      "allowedUse",
+      "forbiddenUse",
+      "notes"
+    ],
+    expectedInertValues: {
+      ready: false,
+      initialized: false,
+      attachedToMap: false,
+      drawing: false,
+      startupWired: false,
+      rendererCreated: false,
+      lifecycleCreated: false,
+      registryCreated: false,
+      layerStateCreated: false,
+      rendererInitializationApproved: false,
+      mapAttachmentApproved: false,
+      drawingApproved: false,
+      startupWiringApproved: false,
+      visibleBehaviorApproved: false
+    },
+    forbiddenFieldTypes: [
+      "DOM nodes",
+      "map references",
+      "Leaflet objects",
+      "timers",
+      "event handlers",
+      "network calls",
+      "storage writes",
+      "backend references",
+      "renderer objects",
+      "lifecycle objects",
+      "registries",
+      "layer objects",
+      "mutable startup hooks"
+    ],
+    currentShellSnapshotSummary: {
+      shellPresentByDefault: shellState.shellPresent === false,
+      shellKeyPresent: !!(shellState.shell && shellState.shell.key),
+      architectureStagePresent: !!(shellState.shell && shellState.shell.architectureStage),
+      metadataStillPlainDataOnly: !!(
+        metadataValidation.plainDataValidation &&
+        metadataValidation.plainDataValidation.metadataLooksLikePlainDataOnly
+      ),
+      noRendererBehaviorApproved: !!(
+        metadataValidation.approvalFlagValidation &&
+        metadataValidation.approvalFlagValidation.rendererInitializationApproved &&
+        metadataValidation.approvalFlagValidation.mapAttachmentApproved &&
+        metadataValidation.approvalFlagValidation.drawingApproved &&
+        metadataValidation.approvalFlagValidation.startupWiringApproved &&
+        metadataValidation.approvalFlagValidation.visibleBehaviorApproved
+      )
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      metadataValidation:
+        typeof getCustom25DVisualRendererInitializationStateShellMetadataValidationReport === "function",
+      schemaReadinessGate:
+        typeof getCustom25DVisualRendererInitializationStateShellSchemaReadinessGate === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-schema-inventory-closeout-or-separately-reviewed-inert-schema-documentation-expansion",
+    notes: [
+      "Passive/report-only/inventory-only/schema-only helper.",
+      "Inventories expected inert shell fields and forbidden field/value types only.",
+      "This is documentation/inventory only, not runtime schema enforcement.",
+      "No renderer initialization, map attachment, drawing, startup wiring, or visible behavior is approved."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
