@@ -19515,6 +19515,116 @@ function getCustom25DVisualRendererInitializationStateShellInventoryReport(optio
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellExpansionPlan(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const readiness =
+    typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function"
+      ? getCustom25DVisualRendererInitializationStateShellImplementationReadiness(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-readiness-unavailable"
+        };
+  const validation =
+    typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-validation-unavailable"
+        };
+  const inventory =
+    typeof getCustom25DVisualRendererInitializationStateShellInventoryReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellInventoryReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-inventory-unavailable",
+          helperInventory: null
+        };
+
+  return {
+    phase: 185,
+    name: "custom-25d-visual-renderer-initialization-state-shell-expansion-plan",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      inventory.blockedReason ||
+      validation.blockedReason ||
+      readiness.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    currentShellFamily: {
+      shellPresentByDefault: shellState.shellPresent === false,
+      helperInventory: inventory.helperInventory,
+      inertByDefault: !!(validation.defaultShellValidation && validation.defaultShellValidation.inert),
+      internalOnlyByDefault: !!(
+        validation.defaultShellValidation && validation.defaultShellValidation.internalOnly
+      ),
+      blockedByDefault: inventory.blockedReason === "custom-25d-map-disabled"
+    },
+    proposedFutureMetadata: [
+      "lastManualGuardEvaluationSummary",
+      "lastValidationPhase",
+      "lastCloseoutPhase",
+      "expansionReviewStatus",
+      "inertMetadataRevision"
+    ],
+    disallowedExpansion: [
+      "metadata that initializes the renderer",
+      "metadata that attaches anything to the map",
+      "metadata that enables drawing or visible behavior",
+      "metadata that wires startup",
+      "metadata that creates registries, layers, or layer state"
+    ],
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      shellReadiness: typeof getCustom25DVisualRendererInitializationStateShellImplementationReadiness === "function",
+      shellValidation: typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function",
+      shellInventory: typeof getCustom25DVisualRendererInitializationStateShellInventoryReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-inert-shell-metadata-expansion-review-or-planning-closeout",
+    notes: [
+      "Passive/report-only/planning-only helper.",
+      "Defines only a safe future inert metadata expansion plan for the initialization state shell.",
+      "Metadata expansion must remain separately reviewed, internal-only, dormant, and non-wired.",
+      "This does not approve renderer initialization, map attachment, drawing, startup wiring, or visible behavior."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
