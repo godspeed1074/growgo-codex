@@ -22884,6 +22884,142 @@ function canAttachCustom25DVisualRendererManualMapShell(options = {}) {
   };
 }
 
+function createCustom25DVisualRendererManualAttachmentSmokeShell(options = {}) {
+  const guard =
+    typeof canAttachCustom25DVisualRendererManualMapShell === "function"
+      ? canAttachCustom25DVisualRendererManualMapShell(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "manual-map-attachment-guard-unavailable",
+          failedRequirement: "guardUnavailable"
+        };
+
+  if (!guard.allowed) {
+    return {
+      phase: 210,
+      name: "custom-25d-visual-renderer-manual-attachment-smoke-shell-creator",
+      ok: true,
+      allowed: false,
+      ready: false,
+      created: false,
+      smokeShell: null,
+      reason: guard.reason || "custom-25d-map-disabled",
+      failedRequirement: guard.failedRequirement || "custom25DMapEnabled",
+      manualOnly: true,
+      inertOnly: true,
+      createsRendererObject: false,
+      createsLifecycleObject: false,
+      createsInitializationState: false,
+      initializesRenderer: false,
+      attachesToMap: false,
+      draws: false,
+      renders: false,
+      wiresStartup: false,
+      createsRegistry: false,
+      createsLayerState: false,
+      changesGameplay: false,
+      storedGlobally: false,
+      reviewedHelpers: {
+        manualMapAttachmentGuard:
+          typeof canAttachCustom25DVisualRendererManualMapShell === "function"
+      },
+      notes: [
+        "Manual-only inert attachment smoke shell creator.",
+        "Returns a blocked result when the Phase 209 guard does not allow creation.",
+        "Does not create or store smoke shell data when blocked."
+      ]
+    };
+  }
+
+  return {
+    phase: 210,
+    name: "custom-25d-visual-renderer-manual-attachment-smoke-shell-creator",
+    ok: true,
+    allowed: true,
+    ready: false,
+    created: true,
+    reason: "manual-attachment-smoke-shell-created-as-inert-local-data-only",
+    failedRequirement: null,
+    manualOnly: true,
+    inertOnly: true,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    wiresStartup: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    storedGlobally: false,
+    smokeShell: {
+      key: "custom25DVisualRendererManualAttachmentSmokeShell",
+      phase: 210,
+      dormant: true,
+      manualOnly: true,
+      futureOnly: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      attached: false,
+      rendered: false,
+      drawn: false,
+      approved: false,
+      touchesMap: false,
+      touchesLayers: false,
+      touchesRenderer: false,
+      touchesPins: false,
+      touchesOSM: false,
+      touchesPlayerMarker: false,
+      touchesCaptureRadius: false,
+      changesGameplay: false,
+      changesUI: false
+    },
+    reviewedHelpers: {
+      manualMapAttachmentGuard:
+        typeof canAttachCustom25DVisualRendererManualMapShell === "function"
+    },
+    notes: [
+      "Manual-only inert attachment smoke shell creator.",
+      "Returns inert plain-data smoke shell content only when the Phase 209 guard allows it.",
+      "Does not store smoke shell data globally or touch the real map."
+    ]
+  };
+}
+
+function clearCustom25DVisualRendererManualAttachmentSmokeShell(options = {}) {
+  return {
+    phase: 210,
+    name: "custom-25d-visual-renderer-manual-attachment-smoke-shell-clear",
+    ok: true,
+    cleared: false,
+    noOp: true,
+    safeToRepeat: true,
+    reason: "no-global-attachment-smoke-shell-state-to-clear",
+    manualOnly: true,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    wiresStartup: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    mutatesGlobalState: false,
+    notes: [
+      "No-op cleanup helper.",
+      "Does not touch global state, map state, layers, renderer, pins, UI, OSM, backend, or gameplay.",
+      "Safe to repeat because no global attachment smoke shell state is stored."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
