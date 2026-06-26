@@ -24345,6 +24345,108 @@ function getCustom25DVisualLocalDevVisibleTestPreflightReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLocalDevVisibleTestObservationGuide(options = {}) {
+  const helperPresence = {
+    consoleGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function",
+    preflightReport:
+      typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function",
+    runner: typeof runCustom25DVisualLocalDevVisibleTest === "function",
+    cleanupHelper:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function"
+  };
+
+  const preflightSnapshot =
+    helperPresence.preflightReport &&
+    typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function"
+      ? getCustom25DVisualLocalDevVisibleTestPreflightReport(options)
+      : null;
+
+  const consoleGuide =
+    helperPresence.consoleGuide &&
+    typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function"
+      ? getCustom25DVisualLocalDevVisibleTestConsoleGuide(options)
+      : null;
+
+  const runCommandExample =
+    (consoleGuide && consoleGuide.runCommandExample) ||
+    (preflightSnapshot && preflightSnapshot.runCommandExample) ||
+    null;
+
+  const cleanupCommandExample =
+    (consoleGuide && consoleGuide.cleanupCommandExample) ||
+    (preflightSnapshot && preflightSnapshot.cleanupCommandExample) ||
+    null;
+
+  const requiredHelpersPresent = Object.values(helperPresence).every(Boolean);
+  const preflightReady =
+    !!(
+      preflightSnapshot &&
+      (preflightSnapshot.readyForManualConsoleTest === true ||
+        preflightSnapshot.ready === true)
+    );
+
+  return {
+    phase: 219,
+    name: "custom-25d-visual-local-dev-visible-test-observation-guide",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    helperPresence,
+    preflightSnapshot,
+    runCommandExample,
+    cleanupCommandExample,
+    manualObservationChecklist: [
+      "normal reload remains unchanged before manual command",
+      "visible test appears only after manual command",
+      "tiny 2.5D TEST layer appears only once",
+      "existing Leaflet map remains usable",
+      "base pins remain unchanged",
+      "player marker remains unchanged",
+      "capture radius remains unchanged",
+      "UI/menu remains unchanged",
+      "cleanup command removes only the test layer",
+      "reload returns to normal invisible state"
+    ],
+    observationResultTemplate: {
+      ranManually: false,
+      appearedOnlyAfterManualCommand: false,
+      mapStillUsable: false,
+      pinsUnchanged: false,
+      playerMarkerUnchanged: false,
+      captureRadiusUnchanged: false,
+      cleanupWorked: false,
+      notes: ""
+    },
+    readyForManualObservation: requiredHelpersPresent && preflightReady,
+    startupWired: false,
+    automaticInvocationAdded: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsVisibleTestLayer: false,
+    attachesToMap: false,
+    draws: false,
+    createsRendererObject: false,
+    initializesRendererState: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    uiChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive observation/checklist/report-only helper for the future manual browser-console visible test.",
+      "Does not call the runner, creator, cleanup helper, or visible layer creation path.",
+      "Normal app reload remains unchanged and invisible."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
