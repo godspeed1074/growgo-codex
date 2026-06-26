@@ -24550,6 +24550,168 @@ function getCustom25DVisualLocalDevVisibleTestResultReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLocalDevVisibleTestDiagnosticsReport(options = {}) {
+  const helperPresence = {
+    consoleGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function",
+    preflightReport:
+      typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function",
+    observationGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestObservationGuide === "function",
+    resultReport:
+      typeof getCustom25DVisualLocalDevVisibleTestResultReport === "function",
+    runner: typeof runCustom25DVisualLocalDevVisibleTest === "function",
+    overrideGuard:
+      typeof canUseCustom25DVisualLocalDevVisibleTestOverride === "function",
+    creator:
+      typeof createCustom25DVisualFirstManualVisibleTestLayer === "function",
+    cleanupHelper:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function"
+  };
+
+  const preflightSnapshot =
+    helperPresence.preflightReport &&
+    typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function"
+      ? getCustom25DVisualLocalDevVisibleTestPreflightReport(options)
+      : null;
+
+  const observationGuideSnapshot =
+    helperPresence.observationGuide &&
+    typeof getCustom25DVisualLocalDevVisibleTestObservationGuide === "function"
+      ? getCustom25DVisualLocalDevVisibleTestObservationGuide(options)
+      : null;
+
+  const manualResultSnapshot =
+    options.manualResult && typeof options.manualResult === "object"
+      ? options.manualResult
+      : null;
+
+  const safetyFlagSnapshot = {
+    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+  };
+
+  const documentExists = typeof document !== "undefined";
+  const windowExists = typeof window !== "undefined";
+  const mapGlobals = {
+    map: typeof map !== "undefined",
+    leafletMap: typeof leafletMap !== "undefined",
+    globalMap: typeof globalMap !== "undefined",
+    appMap: typeof appMap !== "undefined",
+    windowMap: windowExists && typeof window.map !== "undefined",
+    windowLeafletMap: windowExists && typeof window.leafletMap !== "undefined",
+    windowGlobalMap: windowExists && typeof window.globalMap !== "undefined",
+    windowAppMap: windowExists && typeof window.appMap !== "undefined"
+  };
+  const mapReferenceAppearsAvailable = Object.values(mapGlobals).some(Boolean);
+  const leafletContainerExists = documentExists
+    ? !!document.querySelector(".leaflet-container")
+    : false;
+  const domContains2d5dTestText = documentExists
+    ? (document.body && typeof document.body.textContent === "string"
+        ? document.body.textContent
+        : ""
+      ).includes("2.5D TEST")
+    : false;
+
+  const diagnosticConclusions = {
+    missingGuide: !helperPresence.consoleGuide,
+    missingPreflight: !helperPresence.preflightReport,
+    missingObservationGuide: !helperPresence.observationGuide,
+    missingResultReport: !helperPresence.resultReport,
+    missingRunner: !helperPresence.runner,
+    missingOverrideGuard: !helperPresence.overrideGuard,
+    missingCreator: !helperPresence.creator,
+    missingCleanup: !helperPresence.cleanupHelper,
+    preflightNotReady: !(
+      preflightSnapshot &&
+      preflightSnapshot.readyForManualConsoleTest === true
+    ),
+    mapContainerMissing: !leafletContainerExists,
+    testElementNotFound: !domContains2d5dTestText
+  };
+
+  const likelyBlockedReason =
+    (!helperPresence.consoleGuide && "missingGuide") ||
+    (!helperPresence.preflightReport && "missingPreflight") ||
+    (!helperPresence.observationGuide && "missingObservationGuide") ||
+    (!helperPresence.resultReport && "missingResultReport") ||
+    (!helperPresence.runner && "missingRunner") ||
+    (!helperPresence.creator && "missingCreator") ||
+    (!helperPresence.cleanupHelper && "missingCleanup") ||
+    (!(preflightSnapshot && preflightSnapshot.readyForManualConsoleTest === true) &&
+      "preflightNotReady") ||
+    (!leafletContainerExists && "mapContainerMissing") ||
+    (!domContains2d5dTestText && "testElementNotFound") ||
+    "no-diagnostic-blocker-detected";
+
+  const diagnosticsComplete =
+    helperPresence.consoleGuide &&
+    helperPresence.preflightReport &&
+    helperPresence.observationGuide &&
+    helperPresence.resultReport &&
+    helperPresence.runner &&
+    helperPresence.overrideGuard &&
+    helperPresence.creator &&
+    helperPresence.cleanupHelper &&
+    Object.values(safetyFlagSnapshot).every(Boolean);
+
+  return {
+    phase: 221,
+    name: "custom-25d-visual-local-dev-visible-test-diagnostics-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    helperPresence,
+    preflightSnapshot,
+    observationGuideSnapshot,
+    manualResultSnapshot,
+    safetyFlagSnapshot,
+    domMapEnvironmentPresence: {
+      documentExists,
+      windowExists,
+      mapReferenceAppearsAvailable,
+      mapGlobals,
+      leafletContainerExists,
+      domContains2d5dTestText
+    },
+    diagnosticConclusions,
+    likelyBlockedReason,
+    readyForNextVisibleFixPhase:
+      diagnosticsComplete &&
+      Object.values(safetyFlagSnapshot).every(Boolean) &&
+      !domContains2d5dTestText,
+    startupWired: false,
+    automaticInvocationAdded: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsVisibleTestLayer: false,
+    mutatesDom: false,
+    attachesToMap: false,
+    draws: false,
+    createsRendererObject: false,
+    initializesRendererState: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    uiChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive diagnostics/report-only helper.",
+      "Does not run the manual test and does not create or attach anything.",
+      "Does not mutate the DOM, draw, or wire startup."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
