@@ -18821,6 +18821,104 @@ function getCustom25DVisualRendererInitializationStateArchitectureCloseoutReport
   };
 }
 
+function getCustom25DVisualRendererInitializationStateImplementationBoundaryPlan(options = {}) {
+  const architectureDecisionPlan =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureDecisionPlan(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-decision-plan-unavailable"
+        };
+  const architectureDecisionReview =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureDecisionReview === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureDecisionReview(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-decision-review-unavailable"
+        };
+  const architectureCloseout =
+    typeof getCustom25DVisualRendererInitializationStateArchitectureCloseoutReport === "function"
+      ? getCustom25DVisualRendererInitializationStateArchitectureCloseoutReport(options)
+      : {
+          ok: false,
+          missing: true,
+          reason: "visual-renderer-initialization-state-architecture-closeout-report-unavailable"
+        };
+  const guardResult =
+    typeof canInitializeCustom25DVisualRenderer === "function"
+      ? canInitializeCustom25DVisualRenderer(options)
+      : {
+          allowed: false,
+          reason: "visual-renderer-initialization-guard-unavailable"
+        };
+
+  return {
+    phase: 179,
+    name: "custom-25d-visual-renderer-initialization-state-implementation-boundary-plan",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason: guardResult.reason || "visual-renderer-initialization-guard-unavailable",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    createsInitializationState: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    changesGameplay: false,
+    boundary: {
+      thisPhaseCreatesNothing: true,
+      futureCreationWorkMustBeSeparate: true,
+      futureCreationWorkMustBeReviewedSeparately: true,
+      futureCreationMayOnlyTargetInertInitializationStateShell: true
+    },
+    allowedFutureWork: [
+      "plan a future inert initialization state shell phase",
+      "define future dedicated guards for state creation",
+      "keep future state internal-only and dormant by default",
+      "separate any future creation work from initialization, attachment, and drawing"
+    ],
+    disallowedThisPhase: [
+      "create initialization state",
+      "create lifecycle objects",
+      "create renderer objects",
+      "create registries",
+      "create layers or layer state",
+      "initialize the renderer",
+      "attach anything to the map",
+      "draw graphics",
+      "wire startup behavior"
+    ],
+    reviewedHelpers: {
+      architectureDecisionPlan: !!architectureDecisionPlan.ok,
+      architectureDecisionReview: !!architectureDecisionReview.ok,
+      architectureCloseout: !!architectureCloseout.ok,
+      guardEvaluator: typeof canInitializeCustom25DVisualRenderer === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-future-inert-initialization-state-shell-planning-only",
+    notes: [
+      "Passive/report-only/planning-only helper.",
+      "Default path remains blocked while ENABLE_CUSTOM_25D_MAP is false.",
+      "This phase defines an implementation boundary only and must not create state or objects.",
+      "Any future creation work must be isolated into its own phase and reviewed separately."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
