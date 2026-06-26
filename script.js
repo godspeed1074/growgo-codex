@@ -19210,6 +19210,88 @@ function getCustom25DVisualRendererInitializationStateShellImplementationReadine
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellValidationReport(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const guard =
+    typeof canCreateCustom25DVisualRendererInitializationStateShell === "function"
+      ? canCreateCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          allowed: false,
+          blocked: true,
+          blockedReason: "initialization-state-shell-guard-unavailable"
+        };
+
+  const shell = shellState.shell || {};
+
+  return {
+    phase: 182,
+    name: "custom-25d-visual-renderer-initialization-state-shell-validation-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason: guard.blockedReason || shellState.blockedReason || "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    validationOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    defaultShellValidation: {
+      shellPresentByDefault: shellState.shellPresent === false,
+      inert: shell.inert === true,
+      dormant: shell.dormant === true,
+      internalOnly: shell.internalOnly === true,
+      ready: shell.ready === false,
+      initialized: shell.initialized === false,
+      attachedToMap: shell.attachedToMap === false,
+      drawing: shell.drawing === false,
+      startupWired: shell.startupWired === false
+    },
+    defaultGuardValidation: {
+      blocked: guard.blocked === true,
+      allowed: guard.allowed === false,
+      blockedReasonIsMapDisabled: guard.blockedReason === "custom-25d-map-disabled"
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      shellGuard: typeof canCreateCustom25DVisualRendererInitializationStateShell === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-initialization-state-shell-closeout-review",
+    notes: [
+      "Passive/report-only/validation-only helper.",
+      "Validates the default inert shell path and the default blocked guard path.",
+      "Does not approve renderer initialization, map attachment, drawing, or startup wiring.",
+      "Does not create, clear, or mutate initialization state."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
