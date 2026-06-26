@@ -23812,6 +23812,233 @@ function getCustom25DVisualLocalDevVisibleTestOverridePlan(options = {}) {
   };
 }
 
+function canUseCustom25DVisualLocalDevVisibleTestOverride(options = {}) {
+  const localDevOverridePlan =
+    typeof getCustom25DVisualLocalDevVisibleTestOverridePlan === "function"
+      ? getCustom25DVisualLocalDevVisibleTestOverridePlan(options)
+      : {
+          ok: false,
+          allowed: false,
+          blockedReason: "local-dev-visible-test-override-plan-unavailable"
+        };
+  const visibleTestGuard =
+    typeof canCreateCustom25DVisualManualVisibleTestLayer === "function"
+      ? canCreateCustom25DVisualManualVisibleTestLayer(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "manual-visible-test-layer-guard-unavailable"
+        };
+
+  const requirements = [
+    {
+      key: "localDevOnly",
+      label: "options.localDevOnly === true",
+      passed: options.localDevOnly === true,
+      reason: "local-dev-only-required"
+    },
+    {
+      key: "browserConsoleOnly",
+      label: "options.browserConsoleOnly === true",
+      passed: options.browserConsoleOnly === true,
+      reason: "browser-console-only-required"
+    },
+    {
+      key: "manual",
+      label: "options.manual === true",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      label: "options.developerIntent === true",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "allowLocalDevVisibleTestOverride",
+      label: "options.allowLocalDevVisibleTestOverride === true",
+      passed: options.allowLocalDevVisibleTestOverride === true,
+      reason: "local-dev-visible-test-override-not-allowed"
+    },
+    {
+      key: "allowVisibleTestLayer",
+      label: "options.allowVisibleTestLayer === true",
+      passed: options.allowVisibleTestLayer === true,
+      reason: "visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowManualMapAttachment",
+      label: "options.allowManualMapAttachment === true",
+      passed: options.allowManualMapAttachment === true,
+      reason: "manual-map-attachment-required"
+    },
+    {
+      key: "allowTinyTestOnly",
+      label: "options.allowTinyTestOnly === true",
+      passed: options.allowTinyTestOnly === true,
+      reason: "tiny-test-only-required"
+    },
+    {
+      key: "cleanupVerified",
+      label: "options.cleanupVerified === true",
+      passed: options.cleanupVerified === true,
+      reason: "cleanup-verification-required"
+    },
+    {
+      key: "attachmentSmokeShellReady",
+      label: "options.attachmentSmokeShellReady === true",
+      passed: options.attachmentSmokeShellReady === true,
+      reason: "attachment-smoke-shell-readiness-required"
+    },
+    {
+      key: "preserveExistingMap",
+      label: "options.preserveExistingMap === true",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      label: "options.preserveGameplayOverlays === true",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      label: "options.preserveOSMBehavior === true",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      label: "options.preservePins === true",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      label: "options.preservePlayerMarker === true",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      label: "options.preserveCaptureRadius === true",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    },
+    {
+      key: "noStartupWiring",
+      label: "options.noStartupWiring === true",
+      passed: options.noStartupWiring === true,
+      reason: "no-startup-wiring-required"
+    },
+    {
+      key: "noBackendChanges",
+      label: "options.noBackendChanges === true",
+      passed: options.noBackendChanges === true,
+      reason: "no-backend-changes-required"
+    },
+    {
+      key: "noPersistence",
+      label: "options.noPersistence === true",
+      passed: options.noPersistence === true,
+      reason: "no-persistence-required"
+    },
+    {
+      key: "noAutomaticInvocation",
+      label: "options.noAutomaticInvocation === true",
+      passed: options.noAutomaticInvocation === true,
+      reason: "no-automatic-invocation-required"
+    },
+    {
+      key: "acceptsTemporaryLocalDevVisual",
+      label: "options.acceptsTemporaryLocalDevVisual === true",
+      passed: options.acceptsTemporaryLocalDevVisual === true,
+      reason: "temporary-local-dev-visual-acceptance-required"
+    }
+  ];
+
+  const firstFailure = requirements.find((requirement) => !requirement.passed) || null;
+  const allowed = firstFailure === null;
+
+  return {
+    phase: 215,
+    name: "custom-25d-visual-local-dev-visible-test-override-guard",
+    ok: true,
+    allowed,
+    ready: false,
+    reason:
+      allowed ? "local-dev-visible-test-override-guard-passed-evaluation-only" : firstFailure.reason,
+    failedRequirement: firstFailure ? firstFailure.key : null,
+    guardOnly: true,
+    evaluatorOnly: true,
+    localDevOnly: true,
+    browserConsoleTestOnly: true,
+    createsVisibleTestLayer: false,
+    callsCreateVisibleTestLayer: false,
+    callsCreateLifecycleShell: false,
+    callsCreateAttachmentSmokeShell: false,
+    createsRendererObject: false,
+    createsLifecycleObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    renders: false,
+    wiresStartup: false,
+    automaticInvocationAdded: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    productionFlagsRemainFalse: true,
+    defaultVisible: false,
+    startupWired: false,
+    productionBehaviorChanged: false,
+    normalAppBehaviorChanged: false,
+    requirements,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "local-dev-override-guard-evaluator-only",
+      "no-automatic-visible-behavior-approved",
+      "no-startup-wiring-approved",
+      "no-production-flag-changes-approved",
+      "no-map-attachment-approved-by-default",
+      "no-drawing-approved-by-default",
+      "no-gameplay-changes-approved",
+      "no-osm-changes-approved",
+      "no-pin-changes-approved",
+      "no-player-marker-changes-approved",
+      "no-capture-radius-changes-approved",
+      "no-backend-changes-approved"
+    ],
+    reviewedHelpers: {
+      localDevOverridePlan:
+        typeof getCustom25DVisualLocalDevVisibleTestOverridePlan === "function",
+      visibleTestGuard:
+        typeof canCreateCustom25DVisualManualVisibleTestLayer === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    notes: [
+      "Guard-only/evaluator-only/local-dev-only/browser-console-test-only helper.",
+      "Evaluates whether a future local-dev manual visible test override would be allowed.",
+      "Does not create, attach, draw, approve production behavior, or change default app behavior."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
