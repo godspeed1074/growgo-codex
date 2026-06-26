@@ -19002,6 +19002,214 @@ function getCustom25DVisualRendererInitializationStateShellReadinessGate(options
   };
 }
 
+let custom25DVisualRendererInitializationStateShell = null;
+
+function getCustom25DVisualRendererInitializationStateShell(options = {}) {
+  const shell = custom25DVisualRendererInitializationStateShell || {
+    key: "custom25DRendererInitializationStateShell",
+    phase: 181,
+    dormant: true,
+    internalOnly: true,
+    inert: true,
+    ready: false,
+    initialized: false,
+    attachedToMap: false,
+    drawing: false,
+    startupWired: false,
+    rendererCreated: false,
+    lifecycleCreated: false,
+    registryCreated: false,
+    layerStateCreated: false,
+    createdAtPhase: 181,
+    createdManually: false,
+    notes: "Default inert initialization state shell. Blocked by default and not created unless manually allowed."
+  };
+
+  return {
+    ok: true,
+    phase: 181,
+    dormant: true,
+    passive: true,
+    shellPresent: custom25DVisualRendererInitializationStateShell !== null,
+    blockedReason:
+      custom25DVisualRendererInitializationStateShell === null && ENABLE_CUSTOM_25D_MAP !== true
+        ? "custom-25d-map-disabled"
+        : null,
+    shell: { ...shell }
+  };
+}
+
+function canCreateCustom25DVisualRendererInitializationStateShell(options = {}) {
+  let blockedReason = null;
+
+  if (ENABLE_CUSTOM_25D_MAP !== true) {
+    blockedReason = "custom-25d-map-disabled";
+  } else if (options.manual !== true) {
+    blockedReason = "manual-required";
+  } else if (options.developerIntent !== true) {
+    blockedReason = "developer-intent-required";
+  } else if (options.allowInitializationStateShell !== true) {
+    blockedReason = "initialization-state-shell-not-allowed";
+  } else if (options.inertOnly !== true) {
+    blockedReason = "inert-only-required";
+  } else if (options.noRendererInitialization !== true) {
+    blockedReason = "no-renderer-initialization-required";
+  } else if (options.noMapAttachment !== true) {
+    blockedReason = "no-map-attachment-required";
+  } else if (options.noDrawing !== true) {
+    blockedReason = "no-drawing-required";
+  } else if (options.noStartupWiring !== true) {
+    blockedReason = "no-startup-wiring-required";
+  } else if (options.preserveGameplay !== true) {
+    blockedReason = "preserve-gameplay-required";
+  } else if (options.preserveOSMBehavior !== true) {
+    blockedReason = "preserve-osm-behavior-required";
+  } else if (options.preservePins !== true) {
+    blockedReason = "preserve-pins-required";
+  } else if (options.preservePlayerMarker !== true) {
+    blockedReason = "preserve-player-marker-required";
+  } else if (options.preserveCaptureRadius !== true) {
+    blockedReason = "preserve-capture-radius-required";
+  }
+
+  return {
+    ok: blockedReason === null,
+    allowed: blockedReason === null,
+    blocked: blockedReason !== null,
+    blockedReason,
+    phase: 181,
+    dormant: true,
+    passive: true,
+    reportOnly: true
+  };
+}
+
+function createCustom25DVisualRendererInitializationStateShell(options = {}) {
+  const guard = canCreateCustom25DVisualRendererInitializationStateShell(options);
+
+  if (!guard.allowed) {
+    return {
+      ok: false,
+      allowed: false,
+      blocked: true,
+      blockedReason: guard.blockedReason,
+      phase: 181,
+      dormant: true,
+      createsInitializationState: false,
+      initializesRenderer: false,
+      attachesToMap: false,
+      draws: false,
+      wiresStartup: false,
+      shell: getCustom25DVisualRendererInitializationStateShell(options).shell
+    };
+  }
+
+  custom25DVisualRendererInitializationStateShell = {
+    key: "custom25DRendererInitializationStateShell",
+    phase: 181,
+    dormant: true,
+    internalOnly: true,
+    inert: true,
+    ready: false,
+    initialized: false,
+    attachedToMap: false,
+    drawing: false,
+    startupWired: false,
+    rendererCreated: false,
+    lifecycleCreated: false,
+    registryCreated: false,
+    layerStateCreated: false,
+    createdAtPhase: 181,
+    createdManually: true,
+    notes: "Inert internal-only initialization state shell. Created manually, not initialized, not attached, not drawn, and not wired to startup."
+  };
+
+  return {
+    ok: true,
+    allowed: true,
+    blocked: false,
+    blockedReason: null,
+    phase: 181,
+    dormant: true,
+    createsInitializationState: true,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    shell: { ...custom25DVisualRendererInitializationStateShell }
+  };
+}
+
+function clearCustom25DVisualRendererInitializationStateShell() {
+  if (!custom25DVisualRendererInitializationStateShell) {
+    return {
+      ok: true,
+      cleared: false,
+      phase: 181,
+      dormant: true,
+      reason: "No custom 2.5D visual renderer initialization state shell exists to clear."
+    };
+  }
+
+  custom25DVisualRendererInitializationStateShell = null;
+
+  return {
+    ok: true,
+    cleared: true,
+    phase: 181,
+    dormant: true,
+    reason: "Custom 2.5D visual renderer initialization state shell cleared."
+  };
+}
+
+function getCustom25DVisualRendererInitializationStateShellImplementationReadiness(options = {}) {
+  const guard = canCreateCustom25DVisualRendererInitializationStateShell(options);
+
+  return {
+    ok: true,
+    phase: 181,
+    name: "custom-25d-visual-renderer-initialization-state-shell-implementation-readiness",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason: guard.blockedReason || "custom-25d-map-disabled",
+    createsInitializationState: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    shellPresent: custom25DVisualRendererInitializationStateShell !== null,
+    manualCreationRequirements: [
+      "ENABLE_CUSTOM_25D_MAP === true",
+      "options.manual === true",
+      "options.developerIntent === true",
+      "options.allowInitializationStateShell === true",
+      "options.inertOnly === true",
+      "options.noRendererInitialization === true",
+      "options.noMapAttachment === true",
+      "options.noDrawing === true",
+      "options.noStartupWiring === true",
+      "options.preserveGameplay === true",
+      "options.preserveOSMBehavior === true",
+      "options.preservePins === true",
+      "options.preservePlayerMarker === true",
+      "options.preserveCaptureRadius === true"
+    ],
+    notes: [
+      "Passive readiness helper only.",
+      "Default behavior remains blocked while ENABLE_CUSTOM_25D_MAP is false.",
+      "Manual creation is limited to an inert internal-only plain data shell.",
+      "This phase does not approve renderer initialization, map attachment, drawing, or startup wiring."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
