@@ -22260,6 +22260,189 @@ function canCreateCustom25DVisualRendererManualLifecycleShell(options = {}) {
   };
 }
 
+function createCustom25DVisualRendererManualLifecycleShell(options = {}) {
+  const guard =
+    typeof canCreateCustom25DVisualRendererManualLifecycleShell === "function"
+      ? canCreateCustom25DVisualRendererManualLifecycleShell(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "manual-lifecycle-shell-guard-unavailable",
+          failedRequirement: "guardUnavailable"
+        };
+
+  if (!guard.allowed) {
+    return {
+      phase: 206,
+      name: "custom-25d-visual-renderer-manual-lifecycle-shell-creator",
+      ok: true,
+      allowed: false,
+      ready: false,
+      created: false,
+      shell: null,
+      reason: guard.reason || "custom-25d-map-disabled",
+      failedRequirement: guard.failedRequirement || "custom25DMapEnabled",
+      manualOnly: true,
+      inertOnly: true,
+      createsLifecycleObject: false,
+      createsRendererObject: false,
+      createsInitializationState: false,
+      initializesRenderer: false,
+      attachesToMap: false,
+      draws: false,
+      wiresStartup: false,
+      changesGameplay: false,
+      storedGlobally: false,
+      reviewedHelpers: {
+        manualLifecycleShellGuard:
+          typeof canCreateCustom25DVisualRendererManualLifecycleShell === "function"
+      },
+      notes: [
+        "Manual-only inert lifecycle shell creator.",
+        "Returns a blocked result when the Phase 205 guard does not allow creation.",
+        "Does not create or store shell data when blocked."
+      ]
+    };
+  }
+
+  return {
+    phase: 206,
+    name: "custom-25d-visual-renderer-manual-lifecycle-shell-creator",
+    ok: true,
+    allowed: true,
+    ready: false,
+    created: true,
+    reason: "manual-lifecycle-shell-created-as-inert-local-data-only",
+    failedRequirement: null,
+    manualOnly: true,
+    inertOnly: true,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    storedGlobally: false,
+    shell: {
+      key: "custom25DVisualRendererManualLifecycleShell",
+      phase: 206,
+      dormant: true,
+      implemented: false,
+      active: false,
+      wired: false,
+      attached: false,
+      initialized: false,
+      rendered: false,
+      approved: false,
+      futureOnly: true,
+      manualOnly: true,
+      lifecycleStages: {
+        construct: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        initialize: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        attach: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        render: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        update: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        suspend: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        resume: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        destroy: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        },
+        clear: {
+          implemented: false,
+          active: false,
+          wired: false,
+          approved: false,
+          futureOnly: true
+        }
+      }
+    },
+    reviewedHelpers: {
+      manualLifecycleShellGuard:
+        typeof canCreateCustom25DVisualRendererManualLifecycleShell === "function"
+    },
+    notes: [
+      "Manual-only inert lifecycle shell creator.",
+      "Returns inert plain-data shell content only when the Phase 205 guard allows it.",
+      "Does not store shell data globally or implement lifecycle behavior."
+    ]
+  };
+}
+
+function clearCustom25DVisualRendererManualLifecycleShell(options = {}) {
+  return {
+    phase: 206,
+    name: "custom-25d-visual-renderer-manual-lifecycle-shell-clear",
+    ok: true,
+    cleared: false,
+    noOp: true,
+    safeToRepeat: true,
+    reason: "no-global-lifecycle-shell-state-to-clear",
+    manualOnly: true,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    mutatesGlobalState: false,
+    notes: [
+      "No-op cleanup helper.",
+      "Does not touch global state, map state, layers, renderer, pins, UI, OSM, backend, or gameplay.",
+      "Safe to repeat because no global lifecycle shell state is stored."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
