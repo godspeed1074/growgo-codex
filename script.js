@@ -24039,6 +24039,124 @@ function canUseCustom25DVisualLocalDevVisibleTestOverride(options = {}) {
   };
 }
 
+function runCustom25DVisualLocalDevVisibleTest(options = {}) {
+  const overrideGuard =
+    typeof canUseCustom25DVisualLocalDevVisibleTestOverride === "function"
+      ? canUseCustom25DVisualLocalDevVisibleTestOverride(options)
+      : {
+          ok: false,
+          allowed: false,
+          reason: "local-dev-visible-test-override-guard-unavailable",
+          failedRequirement: "guardUnavailable"
+        };
+
+  if (!overrideGuard.allowed) {
+    return {
+      phase: 216,
+      name: "custom-25d-visual-local-dev-visible-test-runner",
+      ok: true,
+      allowed: false,
+      ready: false,
+      ran: false,
+      created: false,
+      visible: false,
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      startupWired: false,
+      automaticInvocationAdded: false,
+      productionFlagsChanged: false,
+      normalAppBehaviorChanged: false,
+      gameplayChanged: false,
+      osmChanged: false,
+      pinsChanged: false,
+      playerMarkerChanged: false,
+      captureRadiusChanged: false,
+      backendChanged: false,
+      cleanupAvailable:
+        typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function",
+      reason: overrideGuard.reason || "local-dev-visible-test-override-not-allowed",
+      failedRequirement: overrideGuard.failedRequirement || "localDevOnly",
+      notes: [
+        "Blocked by local-dev override guard.",
+        "Did not call the manual visible test layer creator.",
+        "Default no-option behavior remains blocked and invisible."
+      ]
+    };
+  }
+
+  const runnerOptions = {
+    localDevOnly: options.localDevOnly === true,
+    browserConsoleOnly: options.browserConsoleOnly === true,
+    manual: options.manual === true,
+    developerIntent: options.developerIntent === true,
+    allowLocalDevVisibleTestOverride: options.allowLocalDevVisibleTestOverride === true,
+    allowVisibleTestLayer: options.allowVisibleTestLayer === true,
+    allowManualMapAttachment: options.allowManualMapAttachment === true,
+    allowTinyTestOnly: options.allowTinyTestOnly === true,
+    cleanupVerified: options.cleanupVerified === true,
+    attachmentSmokeShellReady: options.attachmentSmokeShellReady === true,
+    preserveExistingMap: options.preserveExistingMap === true,
+    preserveGameplayOverlays: options.preserveGameplayOverlays === true,
+    preserveOSMBehavior: options.preserveOSMBehavior === true,
+    preservePins: options.preservePins === true,
+    preservePlayerMarker: options.preservePlayerMarker === true,
+    preserveCaptureRadius: options.preserveCaptureRadius === true,
+    noStartupWiring: options.noStartupWiring === true,
+    noBackendChanges: options.noBackendChanges === true,
+    noPersistence: options.noPersistence === true,
+    noAutomaticInvocation: options.noAutomaticInvocation === true,
+    acceptsTemporaryLocalDevVisual: options.acceptsTemporaryLocalDevVisual === true,
+    mapContainer: options.mapContainer || null,
+    container: options.container || null,
+    map: options.map || null
+  };
+
+  const result =
+    typeof createCustom25DVisualFirstManualVisibleTestLayer === "function"
+      ? createCustom25DVisualFirstManualVisibleTestLayer(runnerOptions)
+      : {
+          ok: false,
+          allowed: true,
+          created: false,
+          visible: false,
+          reason: "manual-visible-test-layer-creator-unavailable"
+        };
+
+  return {
+    phase: 216,
+    name: "custom-25d-visual-local-dev-visible-test-runner",
+    ok: true,
+    allowed: overrideGuard.allowed === true,
+    ready: result.ready === true,
+    ran: true,
+    created: result.created === true,
+    visible: result.visible === true,
+    manualOnly: true,
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    startupWired: false,
+    automaticInvocationAdded: false,
+    productionFlagsChanged: false,
+    normalAppBehaviorChanged: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    backendChanged: false,
+    cleanupAvailable:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function",
+    reason:
+      result.reason || "local-dev-visible-test-runner-completed-with-manual-visible-test-layer-result",
+    notes: [
+      "Manual local-dev/browser-console-only runner.",
+      "Calls the visible test layer creator only after the local-dev override guard allows it.",
+      "Does not change startup wiring, production flags, or default app behavior."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
