@@ -19292,6 +19292,108 @@ function getCustom25DVisualRendererInitializationStateShellValidationReport(opti
   };
 }
 
+function getCustom25DVisualRendererInitializationStateShellCloseoutReport(options = {}) {
+  const shellState =
+    typeof getCustom25DVisualRendererInitializationStateShell === "function"
+      ? getCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-unavailable",
+          shell: null
+        };
+  const guard =
+    typeof canCreateCustom25DVisualRendererInitializationStateShell === "function"
+      ? canCreateCustom25DVisualRendererInitializationStateShell(options)
+      : {
+          ok: false,
+          allowed: false,
+          blocked: true,
+          blockedReason: "initialization-state-shell-guard-unavailable"
+        };
+  const validationSummary =
+    typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function"
+      ? getCustom25DVisualRendererInitializationStateShellValidationReport(options)
+      : {
+          ok: false,
+          missing: true,
+          blockedReason: "initialization-state-shell-validation-unavailable",
+          defaultShellValidation: null,
+          defaultGuardValidation: null
+        };
+
+  return {
+    phase: 183,
+    name: "custom-25d-visual-renderer-initialization-state-shell-closeout-report",
+    ok: true,
+    ready: false,
+    defaultDecision: "no-go",
+    blockedReason:
+      guard.blockedReason ||
+      validationSummary.blockedReason ||
+      shellState.blockedReason ||
+      "custom-25d-map-disabled",
+    dormant: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    createsInitializationState: false,
+    mutatesInitializationState: false,
+    callsCreateShell: false,
+    clearsShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    changesGameplay: false,
+    shellCloseout: {
+      guardedInternalArchitectureOnly: true,
+      defaultStateRemainsDormant: !!(
+        validationSummary.defaultShellValidation &&
+        validationSummary.defaultShellValidation.dormant
+      ),
+      defaultStateRemainsInert: !!(
+        validationSummary.defaultShellValidation &&
+        validationSummary.defaultShellValidation.inert
+      ),
+      defaultStateRemainsInternalOnly: !!(
+        validationSummary.defaultShellValidation &&
+        validationSummary.defaultShellValidation.internalOnly
+      ),
+      defaultStateRemainsNotReady: !!(
+        validationSummary.defaultShellValidation &&
+        validationSummary.defaultShellValidation.ready
+      ) === false
+    },
+    validationSummary: {
+      defaultShellValidation: validationSummary.defaultShellValidation,
+      defaultGuardValidation: validationSummary.defaultGuardValidation
+    },
+    reviewedHelpers: {
+      shellState: typeof getCustom25DVisualRendererInitializationStateShell === "function",
+      shellGuard: typeof canCreateCustom25DVisualRendererInitializationStateShell === "function",
+      shellValidation: typeof getCustom25DVisualRendererInitializationStateShellValidationReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-initialization-state-shell-inventory-or-planning-review",
+    notes: [
+      "Passive/report-only/closeout-only helper.",
+      "The inert shell exists only as guarded internal architecture.",
+      "Default guard remains blocked by custom-25d-map-disabled.",
+      "This does not approve renderer initialization, map attachment, drawing, startup wiring, or visible behavior."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
