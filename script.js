@@ -22443,6 +22443,106 @@ function clearCustom25DVisualRendererManualLifecycleShell(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererManualLifecycleShellCleanupVerificationReport(options = {}) {
+  const cleanupReport =
+    typeof clearCustom25DVisualRendererManualLifecycleShell === "function"
+      ? clearCustom25DVisualRendererManualLifecycleShell(options)
+      : {
+          ok: false,
+          noOp: false,
+          safeToRepeat: false,
+          reason: "manual-lifecycle-shell-cleanup-helper-unavailable"
+        };
+
+  const cleanupVerificationPassed = Boolean(
+    cleanupReport &&
+      cleanupReport.noOp === true &&
+      cleanupReport.safeToRepeat === true &&
+      cleanupReport.mutatesGlobalState === false &&
+      cleanupReport.attachesToMap === false &&
+      cleanupReport.draws === false &&
+      cleanupReport.initializesRenderer === false &&
+      cleanupReport.wiresStartup === false &&
+      cleanupReport.changesGameplay === false
+  );
+
+  return {
+    phase: 207,
+    name: "custom-25d-visual-renderer-manual-lifecycle-shell-cleanup-verification-report",
+    ok: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "no-go",
+    blockedReason: "custom-25d-map-disabled",
+    passive: true,
+    reportOnly: true,
+    verificationOnly: true,
+    cleanupReviewOnly: true,
+    createsLifecycleShell: false,
+    callsCreateLifecycleShell: false,
+    createsLifecycleObject: false,
+    createsRendererObject: false,
+    createsInitializationState: false,
+    initializesRenderer: false,
+    attachesToMap: false,
+    draws: false,
+    wiresStartup: false,
+    enforcesRuntimeSchema: false,
+    addsRuntimeValidators: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    changesGameplay: false,
+    blockedReasons: [
+      "custom-25d-map-disabled",
+      "cleanup-verification-report-only",
+      "no-lifecycle-object-creation-approved",
+      "no-renderer-initialization-approved",
+      "no-startup-wiring-approved",
+      "no-map-attachment-approved",
+      "no-drawing-approved",
+      "no-runtime-schema-enforcement-approved"
+    ],
+    cleanupVerification: {
+      noOp: cleanupReport.noOp === true,
+      safeToRepeat: cleanupReport.safeToRepeat === true,
+      clearsGlobalState: false,
+      touchesMap: false,
+      touchesLayers: false,
+      touchesRenderer: false,
+      touchesPins: false,
+      touchesUI: false,
+      touchesOSM: false,
+      touchesBackend: false,
+      changesGameplay: false
+    },
+    verificationStatus: {
+      cleanupHelperPresent:
+        typeof clearCustom25DVisualRendererManualLifecycleShell === "function",
+      lifecycleShellStoredGlobally: false,
+      cleanupVerificationPassed,
+      lifecycleImplementationApproved: false,
+      mapAttachmentApproved: false,
+      drawingApproved: false
+    },
+    reviewedHelpers: {
+      manualLifecycleShellCleanup:
+        typeof clearCustom25DVisualRendererManualLifecycleShell === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    nextPhaseRecommendation: "passive-manual-lifecycle-shell-closeout-or-separately-reviewed-future-lifecycle-shell-expansion-phase",
+    notes: [
+      "Passive/report-only/verification-only/cleanup-review-only helper.",
+      "Passively reviews the no-op cleanup helper because it is safe to call repeatedly.",
+      "Does not approve, create, initialize, wire, attach, draw, or implement lifecycle behavior."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
