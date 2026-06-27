@@ -25054,6 +25054,92 @@ function getCustom25DVisualExpandedManualVisibleTestContract(options = {}) {
   };
 }
 
+function getCustom25DVisualExpandedManualVisibleTestReadinessChecklist(options = {}) {
+  const expandedContractSnapshot =
+    typeof getCustom25DVisualExpandedManualVisibleTestContract === "function"
+      ? getCustom25DVisualExpandedManualVisibleTestContract(options)
+      : null;
+
+  const safetyFlagSnapshot = {
+    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+  };
+
+  return {
+    phase: 227,
+    name: "custom-25d-visual-expanded-manual-visible-test-readiness-checklist",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    checklistOnly: true,
+    expandedContractSnapshot,
+    futureImplementationReadinessChecklist: {
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      manuallyInvoked: true,
+      temporary: true,
+      cleanupSafe: true,
+      visuallyTiny: true,
+      notConnectedToStartup: true,
+      notPersistent: true,
+      notRealRenderer: true,
+      notRealMapLayer: true,
+      notProductionBehavior: true,
+      preserveExistingLeafletMapBehavior: true,
+      preserveOSMBehavior: true,
+      preserveGameplay: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      preserveUI: true,
+      preserveBackendBehavior: true,
+      explicitManualOverrideRequired: true,
+      failsClosedByDefault: true,
+      cleanupRemovesOnlyTemporaryExpandedTestElement: true,
+      normalReloadRemainsUnchangedAndInvisible: true,
+      noScopeExpansionIntoStartupWiring: true,
+      noScopeExpansionIntoRealRendererCreation: true,
+      noScopeExpansionIntoRendererInitialization: true,
+      noScopeExpansionIntoLifecycleCreation: true,
+      noScopeExpansionIntoRegistryCreation: true,
+      noScopeExpansionIntoPersistentLayerState: true,
+      noScopeExpansionIntoAutomaticMapAttachment: true,
+      noScopeExpansionIntoAutomaticDrawing: true
+    },
+    safetyFlagSnapshot,
+    nextPhaseReadinessRecommendation:
+      "checklist-only-readiness-for-future-expanded-manual-visible-test-implementation-planning-phase",
+    startupWired: false,
+    automaticInvocationAdded: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsDomElements: false,
+    mutatesDom: false,
+    attachesToMap: false,
+    draws: false,
+    createsRendererObject: false,
+    initializesRendererState: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsPersistentLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    uiChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive checklist/report-only helper.",
+      "Provides an implementation-neutral readiness checklist for a future tiny expanded manual visible test implementation phase.",
+      "Does not call the visible test runner, creator, cleanup, renderer, DOM creation, attachment, drawing, gameplay, OSM, pins, player marker, capture radius, UI, or backend code."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
