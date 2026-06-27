@@ -23318,8 +23318,32 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
           reason: "manual-visible-test-layer-guard-unavailable",
           failedRequirement: "guardUnavailable"
         };
+  const localDevVisibleTestMapDisabledBypass =
+    options.allowCustom25DMapDisabledLocalDevVisibleTestBypass === true &&
+    visibleTestGuard.failedRequirement === "custom25DMapEnabled" &&
+    options.localDevOnly === true &&
+    options.browserConsoleOnly === true &&
+    options.manual === true &&
+    options.developerIntent === true &&
+    options.allowLocalDevVisibleTestOverride === true &&
+    options.allowVisibleTestLayer === true &&
+    options.allowManualMapAttachment === true &&
+    options.allowTinyTestOnly === true &&
+    options.cleanupVerified === true &&
+    options.attachmentSmokeShellReady === true &&
+    options.preserveExistingMap === true &&
+    options.preserveGameplayOverlays === true &&
+    options.preserveOSMBehavior === true &&
+    options.preservePins === true &&
+    options.preservePlayerMarker === true &&
+    options.preserveCaptureRadius === true &&
+    options.noStartupWiring === true &&
+    options.noBackendChanges === true &&
+    options.noPersistence === true &&
+    options.noAutomaticInvocation === true &&
+    options.acceptsTemporaryLocalDevVisual === true;
 
-  if (!visibleTestGuard.allowed) {
+  if (!visibleTestGuard.allowed && !localDevVisibleTestMapDisabledBypass) {
     return {
       phase: 212,
       name: "custom-25d-visual-first-manual-visible-test-layer",
@@ -23514,7 +23538,9 @@ function createCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
       typeof ownerDoc.body.textContent === "string"
         ? ownerDoc.body.textContent.includes("2.5D TEST")
         : false,
-    reason: "manual-visible-test-layer-created-as-tiny-dom-overlay-only",
+    reason: localDevVisibleTestMapDisabledBypass
+      ? "manual-visible-test-layer-created-with-local-dev-map-disabled-bypass"
+      : "manual-visible-test-layer-created-as-tiny-dom-overlay-only",
     notes: [
       "Created a tiny temporary DOM overlay only.",
       "Did not attach Leaflet layers, mutate OSM, pins, player marker, capture radius, gameplay, or backend state."
@@ -24130,6 +24156,7 @@ function runCustom25DVisualLocalDevVisibleTest(options = {}) {
     noPersistence: options.noPersistence === true,
     noAutomaticInvocation: options.noAutomaticInvocation === true,
     acceptsTemporaryLocalDevVisual: options.acceptsTemporaryLocalDevVisual === true,
+    allowCustom25DMapDisabledLocalDevVisibleTestBypass: true,
     mapContainer: options.mapContainer || null,
     container: options.container || null,
     map: options.map || null
