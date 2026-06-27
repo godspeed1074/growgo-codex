@@ -23665,7 +23665,9 @@ function createCustom25DVisualExpandedManualVisibleTestLayer(options = {}) {
   const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
   const fullStrictOverridePassed = firstFailure === null;
   const localDevVisibleTestMapDisabledBypass =
-    ENABLE_CUSTOM_25D_MAP !== true && fullStrictOverridePassed;
+    options.allowCustom25DMapDisabledLocalDevVisibleTestBypass === true &&
+    ENABLE_CUSTOM_25D_MAP !== true &&
+    fullStrictOverridePassed;
 
   if (!localDevVisibleTestMapDisabledBypass) {
     return {
@@ -23946,6 +23948,629 @@ function createCustom25DVisualExpandedManualVisibleTestLayer(options = {}) {
     browserConsoleOnly: true,
     temporary: true,
     cleanupRequired: true,
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      rendererObjects: true,
+      rendererInitialization: true,
+      lifecycleObjects: true,
+      registries: true,
+      persistentLayerState: true,
+      realMapLayerAttachment: true,
+      mapGeometryDrawing: true,
+      gameplayChanges: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      uiSystemChanges: true,
+      backendChanges: true
+    }
+  };
+}
+
+function runCustom25DVisualExpandedManualVisibleTest(options = {}) {
+  const strictRequirements = [
+    {
+      key: "localDevOnly",
+      passed: options.localDevOnly === true,
+      reason: "local-dev-only-required"
+    },
+    {
+      key: "browserConsoleOnly",
+      passed: options.browserConsoleOnly === true,
+      reason: "browser-console-only-required"
+    },
+    {
+      key: "manual",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "allowLocalDevVisibleTestOverride",
+      passed: options.allowLocalDevVisibleTestOverride === true,
+      reason: "local-dev-visible-test-override-not-allowed"
+    },
+    {
+      key: "allowVisibleTestLayer",
+      passed: options.allowVisibleTestLayer === true,
+      reason: "visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowExpandedVisibleTestLayer",
+      passed: options.allowExpandedVisibleTestLayer === true,
+      reason: "expanded-visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowManualMapAttachment",
+      passed: options.allowManualMapAttachment === true,
+      reason: "manual-map-attachment-required"
+    },
+    {
+      key: "allowTinyTestOnly",
+      passed: options.allowTinyTestOnly === true,
+      reason: "tiny-test-only-required"
+    },
+    {
+      key: "cleanupVerified",
+      passed: options.cleanupVerified === true,
+      reason: "cleanup-verification-required"
+    },
+    {
+      key: "attachmentSmokeShellReady",
+      passed: options.attachmentSmokeShellReady === true,
+      reason: "attachment-smoke-shell-readiness-required"
+    },
+    {
+      key: "preserveExistingMap",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    },
+    {
+      key: "noStartupWiring",
+      passed: options.noStartupWiring === true,
+      reason: "no-startup-wiring-required"
+    },
+    {
+      key: "noBackendChanges",
+      passed: options.noBackendChanges === true,
+      reason: "no-backend-changes-required"
+    },
+    {
+      key: "noPersistence",
+      passed: options.noPersistence === true,
+      reason: "no-persistence-required"
+    },
+    {
+      key: "noAutomaticInvocation",
+      passed: options.noAutomaticInvocation === true,
+      reason: "no-automatic-invocation-required"
+    },
+    {
+      key: "acceptsTemporaryLocalDevVisual",
+      passed: options.acceptsTemporaryLocalDevVisual === true,
+      reason: "temporary-local-dev-visual-acceptance-required"
+    }
+  ];
+
+  const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
+
+  if (firstFailure) {
+    return {
+      phase: 231,
+      name: "custom-25d-visual-expanded-manual-visible-test-runner",
+      ok: true,
+      allowed: false,
+      ready: false,
+      ran: false,
+      created: false,
+      visible: false,
+      elementFound: false,
+      elementCount: 0,
+      selector: '[data-custom-25d-expanded-visible-test="true"]',
+      text: "2.5D EXPANDED TEST",
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      temporary: true,
+      cleanupRequired: true,
+      reason: firstFailure.reason,
+      failedRequirement: firstFailure.key,
+      safetyFlags: {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      },
+      preservedSystems: {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true
+      },
+      notApprovedFor: {
+        startupWiring: true,
+        rendererObjects: true,
+        rendererInitialization: true,
+        lifecycleObjects: true,
+        registries: true,
+        persistentLayerState: true,
+        realMapLayerAttachment: true,
+        mapGeometryDrawing: true,
+        gameplayChanges: true,
+        osmChanges: true,
+        pinChanges: true,
+        playerMarkerChanges: true,
+        captureRadiusChanges: true,
+        uiSystemChanges: true,
+        backendChanges: true
+      }
+    };
+  }
+
+  const runnerOptions = {
+    localDevOnly: options.localDevOnly === true,
+    browserConsoleOnly: options.browserConsoleOnly === true,
+    manual: options.manual === true,
+    developerIntent: options.developerIntent === true,
+    allowLocalDevVisibleTestOverride: options.allowLocalDevVisibleTestOverride === true,
+    allowVisibleTestLayer: options.allowVisibleTestLayer === true,
+    allowExpandedVisibleTestLayer: options.allowExpandedVisibleTestLayer === true,
+    allowManualMapAttachment: options.allowManualMapAttachment === true,
+    allowTinyTestOnly: options.allowTinyTestOnly === true,
+    cleanupVerified: options.cleanupVerified === true,
+    attachmentSmokeShellReady: options.attachmentSmokeShellReady === true,
+    preserveExistingMap: options.preserveExistingMap === true,
+    preserveGameplayOverlays: options.preserveGameplayOverlays === true,
+    preserveOSMBehavior: options.preserveOSMBehavior === true,
+    preservePins: options.preservePins === true,
+    preservePlayerMarker: options.preservePlayerMarker === true,
+    preserveCaptureRadius: options.preserveCaptureRadius === true,
+    noStartupWiring: options.noStartupWiring === true,
+    noBackendChanges: options.noBackendChanges === true,
+    noPersistence: options.noPersistence === true,
+    noAutomaticInvocation: options.noAutomaticInvocation === true,
+    acceptsTemporaryLocalDevVisual: options.acceptsTemporaryLocalDevVisual === true,
+    allowCustom25DMapDisabledLocalDevVisibleTestBypass: true,
+    mapContainer: options.mapContainer || null,
+    container: options.container || null,
+    map: options.map || null
+  };
+
+  const result =
+    typeof createCustom25DVisualExpandedManualVisibleTestLayer === "function"
+      ? createCustom25DVisualExpandedManualVisibleTestLayer(runnerOptions)
+      : {
+          ok: false,
+          allowed: false,
+          created: false,
+          visible: false,
+          reason: "expanded-visible-test-layer-creator-unavailable"
+        };
+  const doc = typeof document !== "undefined" ? document : null;
+  const selector = '[data-custom-25d-expanded-visible-test="true"]';
+  const elementCount =
+    doc && typeof doc.querySelectorAll === "function" ? doc.querySelectorAll(selector).length : 0;
+  const elementFound =
+    !!(doc && typeof doc.querySelector === "function" && doc.querySelector(selector));
+
+  return {
+    phase: 231,
+    name: "custom-25d-visual-expanded-manual-visible-test-runner",
+    ok: true,
+    allowed: result.allowed === true,
+    ready: result.visible === true || result.created === true || elementFound,
+    ran: true,
+    created: result.created === true,
+    visible: result.visible === true || elementFound,
+    elementFound,
+    elementCount,
+    selector,
+    text: "2.5D EXPANDED TEST",
+    manualOnly: true,
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    temporary: true,
+    cleanupRequired: true,
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      rendererObjects: true,
+      rendererInitialization: true,
+      lifecycleObjects: true,
+      registries: true,
+      persistentLayerState: true,
+      realMapLayerAttachment: true,
+      mapGeometryDrawing: true,
+      gameplayChanges: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      uiSystemChanges: true,
+      backendChanges: true
+    },
+    reason: result.reason || "expanded-visible-test-runner-finished",
+    failedRequirement: result.failedRequirement || null
+  };
+}
+
+function clearCustom25DVisualExpandedManualVisibleTestLayer(options = {}) {
+  const strictRequirements = [
+    {
+      key: "localDevOnly",
+      passed: options.localDevOnly === true,
+      reason: "local-dev-only-required"
+    },
+    {
+      key: "browserConsoleOnly",
+      passed: options.browserConsoleOnly === true,
+      reason: "browser-console-only-required"
+    },
+    {
+      key: "manual",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "allowLocalDevVisibleTestOverride",
+      passed: options.allowLocalDevVisibleTestOverride === true,
+      reason: "local-dev-visible-test-override-not-allowed"
+    },
+    {
+      key: "allowVisibleTestLayer",
+      passed: options.allowVisibleTestLayer === true,
+      reason: "visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowExpandedVisibleTestLayer",
+      passed: options.allowExpandedVisibleTestLayer === true,
+      reason: "expanded-visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowManualMapAttachment",
+      passed: options.allowManualMapAttachment === true,
+      reason: "manual-map-attachment-required"
+    },
+    {
+      key: "allowTinyTestOnly",
+      passed: options.allowTinyTestOnly === true,
+      reason: "tiny-test-only-required"
+    },
+    {
+      key: "cleanupVerified",
+      passed: options.cleanupVerified === true,
+      reason: "cleanup-verification-required"
+    },
+    {
+      key: "attachmentSmokeShellReady",
+      passed: options.attachmentSmokeShellReady === true,
+      reason: "attachment-smoke-shell-readiness-required"
+    },
+    {
+      key: "preserveExistingMap",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    },
+    {
+      key: "noStartupWiring",
+      passed: options.noStartupWiring === true,
+      reason: "no-startup-wiring-required"
+    },
+    {
+      key: "noBackendChanges",
+      passed: options.noBackendChanges === true,
+      reason: "no-backend-changes-required"
+    },
+    {
+      key: "noPersistence",
+      passed: options.noPersistence === true,
+      reason: "no-persistence-required"
+    },
+    {
+      key: "noAutomaticInvocation",
+      passed: options.noAutomaticInvocation === true,
+      reason: "no-automatic-invocation-required"
+    },
+    {
+      key: "acceptsTemporaryLocalDevVisual",
+      passed: options.acceptsTemporaryLocalDevVisual === true,
+      reason: "temporary-local-dev-visual-acceptance-required"
+    }
+  ];
+
+  const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
+  const selector = '[data-custom-25d-expanded-visible-test="true"]';
+
+  if (firstFailure) {
+    return {
+      phase: 230,
+      name: "custom-25d-visual-expanded-manual-visible-test-cleanup",
+      ok: true,
+      allowed: false,
+      removed: false,
+      reason: firstFailure.reason,
+      failedRequirement: firstFailure.key,
+      beforeCount: 0,
+      afterCount: 0,
+      selector,
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      temporary: true,
+      cleanupOnly: true,
+      safetyFlags: {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      },
+      preservedSystems: {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true
+      },
+      notApprovedFor: {
+        startupWiring: true,
+        rendererObjects: true,
+        rendererInitialization: true,
+        lifecycleObjects: true,
+        registries: true,
+        persistentLayerState: true,
+        realMapLayerAttachment: true,
+        mapGeometryDrawing: true,
+        gameplayChanges: true,
+        osmChanges: true,
+        pinChanges: true,
+        playerMarkerChanges: true,
+        captureRadiusChanges: true,
+        uiSystemChanges: true,
+        backendChanges: true
+      }
+    };
+  }
+
+  const container =
+    options.mapContainer ||
+    options.container ||
+    (options.map && typeof options.map.getContainer === "function"
+      ? options.map.getContainer()
+      : null);
+  const doc =
+    (container && container.ownerDocument) || (typeof document !== "undefined" ? document : null);
+
+  if (!doc || typeof doc.querySelectorAll !== "function") {
+    return {
+      phase: 230,
+      name: "custom-25d-visual-expanded-manual-visible-test-cleanup",
+      ok: true,
+      allowed: true,
+      removed: false,
+      reason: "expanded-visible-test-cleanup-document-unavailable",
+      beforeCount: 0,
+      afterCount: 0,
+      selector,
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      temporary: true,
+      cleanupOnly: true,
+      safetyFlags: {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      },
+      preservedSystems: {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true
+      },
+      notApprovedFor: {
+        startupWiring: true,
+        rendererObjects: true,
+        rendererInitialization: true,
+        lifecycleObjects: true,
+        registries: true,
+        persistentLayerState: true,
+        realMapLayerAttachment: true,
+        mapGeometryDrawing: true,
+        gameplayChanges: true,
+        osmChanges: true,
+        pinChanges: true,
+        playerMarkerChanges: true,
+        captureRadiusChanges: true,
+        uiSystemChanges: true,
+        backendChanges: true
+      }
+    };
+  }
+
+  const scope =
+    container && typeof container.querySelectorAll === "function" ? container : doc;
+  const elements = scope.querySelectorAll(selector);
+  const beforeCount = elements.length || 0;
+
+  if (!beforeCount) {
+    return {
+      phase: 230,
+      name: "custom-25d-visual-expanded-manual-visible-test-cleanup",
+      ok: true,
+      allowed: true,
+      removed: false,
+      reason: "no-expanded-visible-test-layer-to-clear",
+      beforeCount,
+      afterCount: 0,
+      selector,
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      temporary: true,
+      cleanupOnly: true,
+      safetyFlags: {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      },
+      preservedSystems: {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true
+      },
+      notApprovedFor: {
+        startupWiring: true,
+        rendererObjects: true,
+        rendererInitialization: true,
+        lifecycleObjects: true,
+        registries: true,
+        persistentLayerState: true,
+        realMapLayerAttachment: true,
+        mapGeometryDrawing: true,
+        gameplayChanges: true,
+        osmChanges: true,
+        pinChanges: true,
+        playerMarkerChanges: true,
+        captureRadiusChanges: true,
+        uiSystemChanges: true,
+        backendChanges: true
+      }
+    };
+  }
+
+  elements.forEach((element) => {
+    if (element && element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+  });
+
+  const afterCount =
+    typeof scope.querySelectorAll === "function" ? scope.querySelectorAll(selector).length : 0;
+
+  return {
+    phase: 230,
+    name: "custom-25d-visual-expanded-manual-visible-test-cleanup",
+    ok: true,
+    allowed: true,
+    removed: true,
+    reason: "expanded-visible-test-layer-cleared",
+    beforeCount,
+    afterCount,
+    selector,
+    manualOnly: true,
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    temporary: true,
+    cleanupOnly: true,
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
       landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
