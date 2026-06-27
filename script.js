@@ -24772,6 +24772,115 @@ function getCustom25DVisualLocalDevVisibleTestDiagnosticsReport(options = {}) {
   };
 }
 
+function getCustom25DVisualLocalDevVisibleTestSuccessCloseoutReport(options = {}) {
+  const helperPresence = {
+    consoleGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function",
+    preflightReport:
+      typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function",
+    observationGuide:
+      typeof getCustom25DVisualLocalDevVisibleTestObservationGuide === "function",
+    resultReport:
+      typeof getCustom25DVisualLocalDevVisibleTestResultReport === "function",
+    diagnosticsReport:
+      typeof getCustom25DVisualLocalDevVisibleTestDiagnosticsReport === "function",
+    runner: typeof runCustom25DVisualLocalDevVisibleTest === "function",
+    creator:
+      typeof createCustom25DVisualFirstManualVisibleTestLayer === "function",
+    cleanupHelper:
+      typeof clearCustom25DVisualFirstManualVisibleTestLayer === "function"
+  };
+
+  const helperSnapshots = {
+    consoleGuide:
+      helperPresence.consoleGuide &&
+      typeof getCustom25DVisualLocalDevVisibleTestConsoleGuide === "function"
+        ? getCustom25DVisualLocalDevVisibleTestConsoleGuide(options)
+        : null,
+    preflightReport:
+      helperPresence.preflightReport &&
+      typeof getCustom25DVisualLocalDevVisibleTestPreflightReport === "function"
+        ? getCustom25DVisualLocalDevVisibleTestPreflightReport(options)
+        : null,
+    observationGuide:
+      helperPresence.observationGuide &&
+      typeof getCustom25DVisualLocalDevVisibleTestObservationGuide === "function"
+        ? getCustom25DVisualLocalDevVisibleTestObservationGuide(options)
+        : null,
+    resultReport:
+      helperPresence.resultReport &&
+      typeof getCustom25DVisualLocalDevVisibleTestResultReport === "function"
+        ? getCustom25DVisualLocalDevVisibleTestResultReport(options)
+        : null,
+    diagnosticsReport:
+      helperPresence.diagnosticsReport &&
+      typeof getCustom25DVisualLocalDevVisibleTestDiagnosticsReport === "function"
+        ? getCustom25DVisualLocalDevVisibleTestDiagnosticsReport(options)
+        : null
+  };
+
+  const safetyFlagSnapshot = {
+    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+  };
+
+  return {
+    phase: 224,
+    name: "custom-25d-visual-local-dev-visible-test-success-closeout-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    helperPresence,
+    helperSnapshots,
+    successfulDomCheckExpectations: {
+      bodyContainsTestText: 'document.body.textContent.includes("2.5D TEST") === true',
+      singleTaggedElement:
+        'document.querySelectorAll(\'[data-custom-25d-visible-test="true"]\').length === 1'
+    },
+    cleanupExpectation: {
+      bodyDoesNotContainTestTextAfterCleanup:
+        'document.body.textContent.includes("2.5D TEST") === false'
+    },
+    normalReloadUnchangedAndInvisible: true,
+    safetyFlagSnapshot,
+    approvesStartupWiring: false,
+    approvesProductionUse: false,
+    approvesRealRendererCreation: false,
+    approvesRealMapAttachment: false,
+    approvesLargerVisibleTests: false,
+    nextPhaseReadinessRecommendation:
+      "planning-only-follow-up-for-future-guarded-visual-test-expansion",
+    startupWired: false,
+    automaticInvocationAdded: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsVisibleTestLayer: false,
+    mutatesDom: false,
+    attachesToMap: false,
+    draws: false,
+    createsRendererObject: false,
+    initializesRendererState: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    uiChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive closeout/report-only helper for the successful strict manual local-dev browser-console visible test.",
+      "Does not run the test, create the test element, or perform cleanup.",
+      "Does not approve startup wiring, production use, real renderer creation, real map attachment, or larger visible tests."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
