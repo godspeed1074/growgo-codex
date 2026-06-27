@@ -24607,6 +24607,91 @@ function clearCustom25DVisualExpandedManualVisibleTestLayer(options = {}) {
   };
 }
 
+function getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport(options = {}) {
+  return {
+    phase: 232,
+    name: "custom-25d-visual-expanded-manual-visible-test-success-closeout-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "planning-only-next-step",
+    expandedManualVisibleTestSucceeded: true,
+    helperPresence: {
+      expandedCreator:
+        typeof createCustom25DVisualExpandedManualVisibleTestLayer === "function",
+      expandedCleanup:
+        typeof clearCustom25DVisualExpandedManualVisibleTestLayer === "function",
+      expandedRunner:
+        typeof runCustom25DVisualExpandedManualVisibleTest === "function"
+    },
+    manualBrowserConsoleExpectations: {
+      bodyTextIncludesExpandedTest:
+        'document.body.textContent.includes("2.5D EXPANDED TEST") === true',
+      expandedElementCountExactlyOne:
+        'document.querySelectorAll(\'[data-custom-25d-expanded-visible-test="true"]\').length === 1'
+    },
+    duplicatePreventionExpectation: {
+      repeatFullManualRunnerKeepsElementCountOne: true,
+      expectedCheck:
+        'document.querySelectorAll(\'[data-custom-25d-expanded-visible-test="true"]\').length === 1'
+    },
+    cleanupExpectations: {
+      bodyTextExcludesExpandedTestAfterCleanup:
+        'document.body.textContent.includes("2.5D EXPANDED TEST") === false',
+      expandedElementCountZeroAfterCleanup:
+        'document.querySelectorAll(\'[data-custom-25d-expanded-visible-test="true"]\').length === 0'
+    },
+    normalReload: {
+      unchanged: true,
+      invisibleByDefault: true,
+      startupWired: false,
+      automaticInvocationAdded: false
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      productionUse: true,
+      enablingCustom25DMap: true,
+      realRendererCreation: true,
+      rendererInitialization: true,
+      lifecycleCreation: true,
+      registryCreation: true,
+      persistentLayerState: true,
+      realMapAttachment: true,
+      automaticDrawing: true,
+      largerVisualTests: true
+    },
+    preservedSystems: {
+      gameplay: true,
+      osmBehavior: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    },
+    nextPhaseRecommendation: {
+      readyForNextPlanningPhase: true,
+      recommendation:
+        "plan-only follow-up for any future manual/local-dev/browser-console expanded visible test work"
+    },
+    notes: [
+      "Passive closeout/report helper only.",
+      "Does not call the expanded runner, expanded creator, or expanded cleanup helper.",
+      "Does not call the tiny runner, tiny creator, or tiny cleanup helper.",
+      "Normal reload remains unchanged and invisible unless the developer manually runs the expanded local-dev browser-console path."
+    ]
+  };
+}
+
 function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
   const container =
     options.mapContainer ||
