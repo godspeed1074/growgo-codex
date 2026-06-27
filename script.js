@@ -24881,6 +24881,91 @@ function getCustom25DVisualLocalDevVisibleTestSuccessCloseoutReport(options = {}
   };
 }
 
+function getCustom25DVisualManualVisibleTestNextStepPlan(options = {}) {
+  const successCloseoutSnapshot =
+    typeof getCustom25DVisualLocalDevVisibleTestSuccessCloseoutReport === "function"
+      ? getCustom25DVisualLocalDevVisibleTestSuccessCloseoutReport(options)
+      : null;
+
+  const safetyFlagSnapshot = {
+    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+  };
+
+  return {
+    phase: 225,
+    name: "custom-25d-visual-manual-visible-test-next-step-plan",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    successCloseoutSnapshot,
+    nextPlanningStep:
+      "plan a future manually triggered, local-dev-only, browser-console-only visual test expansion",
+    nextVisibleTestRequirements: {
+      tiny: true,
+      temporary: true,
+      manuallyInvoked: true,
+      cleanupSafe: true,
+      startupConnected: false
+    },
+    preservationRequirements: {
+      preserveExistingLeafletMapBehavior: true,
+      preserveOSMBehavior: true,
+      preserveGameplay: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      preserveUI: true,
+      preserveBackendBehavior: true
+    },
+    approvals: {
+      startupWiring: false,
+      productionUse: false,
+      enableCustom25DMap: false,
+      rendererCreation: false,
+      rendererInitialization: false,
+      lifecycleCreation: false,
+      registryCreation: false,
+      persistentLayerState: false,
+      automaticMapAttachment: false,
+      automaticDrawing: false,
+      largerVisualTests: false
+    },
+    safetyFlagSnapshot,
+    nextPhaseReadinessRecommendation:
+      "planning-only-future-manual-visual-test-expansion-phase",
+    startupWired: false,
+    automaticInvocationAdded: false,
+    callsRunner: false,
+    callsCreator: false,
+    callsCleanupHelper: false,
+    createsDomElements: false,
+    mutatesDom: false,
+    attachesToMap: false,
+    draws: false,
+    createsRendererObject: false,
+    initializesRendererState: false,
+    createsLifecycleObject: false,
+    createsRegistry: false,
+    createsPersistentLayerState: false,
+    gameplayChanged: false,
+    osmChanged: false,
+    pinsChanged: false,
+    playerMarkerChanged: false,
+    captureRadiusChanged: false,
+    uiChanged: false,
+    backendChanged: false,
+    notes: [
+      "Passive plan/report-only helper.",
+      "Summarizes the next planning-only step after the tiny manual visible test proof.",
+      "Does not approve startup wiring, production use, ENABLE_CUSTOM_25D_MAP, renderer creation, renderer initialization, lifecycle creation, registry creation, persistent layer state, automatic map attachment, automatic drawing, or larger visual tests."
+    ]
+  };
+}
+
 function getCustom25DLandmarkVisibleTestReadinessPlan() {
   return {
     ok: true,
