@@ -12,6 +12,24 @@ const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
 const ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false;
 const ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false;
 
+if (
+  typeof window !== "undefined" &&
+  window &&
+  window.location &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.hostname === "0.0.0.0" ||
+    window.location.hostname === "::1") &&
+  typeof exposeCustom25DVisualManualTestHelpersForLocalDevConsole === "function"
+) {
+  exposeCustom25DVisualManualTestHelpersForLocalDevConsole({
+    manual: true,
+    developerIntent: true,
+    localDevOnly: true,
+    browserConsoleOnly: true
+  });
+}
+
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
 const POI_PIN_VALUE = 100;
