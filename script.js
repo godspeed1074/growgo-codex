@@ -798,6 +798,24 @@ initCraftingUi();
 
   locatePlayer();
   requestRoadPinsForCurrentView(true);
+
+  if (
+    typeof exposeCustom25DVisualManualTestHelpersForLocalDevConsole === "function" &&
+    typeof window !== "undefined" &&
+    window &&
+    window.location &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname === "0.0.0.0" ||
+      window.location.hostname === "::1")
+  ) {
+    exposeCustom25DVisualManualTestHelpersForLocalDevConsole({
+      manual: true,
+      developerIntent: true,
+      localDevOnly: true,
+      browserConsoleOnly: true
+    });
+  }
 });
 
 /* ----------------------------- */
