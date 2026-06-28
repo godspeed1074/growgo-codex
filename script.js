@@ -12,6 +12,54 @@ const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
 const ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false;
 const ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false;
 
+function bootstrapGrowGoScriptExecutionDiagnosticForLocalDev(options = {}) {
+  const windowExists = typeof window !== "undefined" && window;
+  const hostname =
+    windowExists && window.location && typeof window.location.hostname === "string"
+      ? window.location.hostname
+      : "";
+  const isLocalDevHost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname === "::1";
+
+  if (!windowExists || !isLocalDevHost || options.localDevExecutionDiagnostic !== true) {
+    return {
+      phase: 250,
+      name: "growgo-script-execution-diagnostic",
+      ok: true,
+      attached: false,
+      reason: !windowExists
+        ? "window-unavailable"
+        : !isLocalDevHost
+          ? "local-dev-host-required"
+          : "local-dev-execution-diagnostic-flag-required"
+    };
+  }
+
+  window.GrowGoScriptExecutionDiagnostic = {
+    available: true,
+    source: "phase-250-script-execution-diagnostic",
+    scriptVersion: "phase-250",
+    href: window.location.href,
+    localDev: true,
+    bootstrappedAt: "phase-250"
+  };
+
+  return {
+    phase: 250,
+    name: "growgo-script-execution-diagnostic",
+    ok: true,
+    attached: true,
+    source: window.GrowGoScriptExecutionDiagnostic.source
+  };
+}
+
+bootstrapGrowGoScriptExecutionDiagnosticForLocalDev({
+  localDevExecutionDiagnostic: true
+});
+
 function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
