@@ -25887,6 +25887,24 @@ function clearCustom25DVisualFirstShapeManualTestLayer(options = {}) {
 }
 
 function runCustom25DVisualFirstShapeManualTest(options = {}) {
+  const runtimeHostname =
+    typeof window !== "undefined" &&
+    window &&
+    window.location &&
+    typeof window.location.hostname === "string"
+      ? window.location.hostname
+      : "";
+  const runtimeLocalDevDetected =
+    (typeof window !== "undefined" &&
+      window &&
+      window.GrowGoScriptExecutionDiagnostic &&
+      window.GrowGoScriptExecutionDiagnostic.localDev === true) ||
+    runtimeHostname === "localhost" ||
+    runtimeHostname === "127.0.0.1" ||
+    runtimeHostname === "0.0.0.0" ||
+    runtimeHostname === "::1";
+  const localDevIntentProvided = options.localDevOnly === true || options.localDev === true;
+  const resolvedLocalDevOnly = localDevIntentProvided && runtimeLocalDevDetected;
   const strictRequirements = [
     {
       key: "manual",
@@ -25900,7 +25918,7 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
     },
     {
       key: "localDevOnly",
-      passed: options.localDevOnly === true,
+      passed: resolvedLocalDevOnly,
       reason: "local-dev-only-required"
     },
     {
