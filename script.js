@@ -25995,6 +25995,117 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
   };
 }
 
+function getCustom25DVisualFirstShapeManualTestVerificationReport(options = {}) {
+  const selector = '[data-growgo-custom-25d-first-shape-manual-test="true"]';
+
+  return {
+    phase: 238,
+    name: "custom-25d-visual-first-shape-manual-test-verification-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "verification-only",
+    failClosedByDefault: true,
+    createsNothing: true,
+    removesNothing: true,
+    drawsNothing: true,
+    attachesNothing: true,
+    mutatesNothing: true,
+    helperPresence: {
+      createFirstShapeManualTestLayer:
+        typeof createCustom25DVisualFirstShapeManualTestLayer === "function",
+      clearFirstShapeManualTestLayer:
+        typeof clearCustom25DVisualFirstShapeManualTestLayer === "function",
+      runFirstShapeManualTest:
+        typeof runCustom25DVisualFirstShapeManualTest === "function",
+      firstShapeTestContract:
+        typeof getCustom25DVisualFirstShapeTestContract === "function"
+    },
+    ownedSelector: selector,
+    requiredManualOptionPattern: {
+      manual: true,
+      developerIntent: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      allowLocalDevVisibleTestOverride: true,
+      allowVisibleTestLayer: true,
+      allowFirstShapeManualTestLayer: true,
+      allowManualMapAttachment: true,
+      allowTinyTestOnly: true,
+      cleanupVerified: true,
+      attachmentSmokeShellReady: true,
+      preserveExistingMap: true,
+      preserveGameplayOverlays: true,
+      preserveOSMBehavior: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      noStartupWiring: true,
+      noBackendChanges: true,
+      noPersistence: true,
+      noAutomaticInvocation: true,
+      acceptsTemporaryLocalDevVisual: true,
+      allowCustom25DMapDisabledLocalDevVisibleTestBypass: true
+    },
+    allowedFutureManualPath: "runCustom25DVisualFirstShapeManualTest(options)",
+    expectedManualFlow: [
+      "create the owned first-shape manual test element through the Phase 235 helper",
+      "verify the owned selector exists exactly for the temporary shape test",
+      "clean up through the Phase 236 helper",
+      "confirm the owned selector is removed"
+    ],
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      automaticInvocation: true,
+      browserTestingByThisHelper: true,
+      domCreation: true,
+      domMutation: true,
+      drawing: true,
+      cleanupExecution: true,
+      backendUsage: true,
+      networkUsage: true,
+      storageUsage: true,
+      rendererWork: true,
+      lifecycleWork: true,
+      registryWork: true,
+      persistentLayerState: true,
+      realLeafletLayer: true,
+      mapGeometry: true,
+      gameplayChanges: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      uiChanges: true,
+      existingMapBehaviorChanges: true
+    },
+    notes: [
+      "Passive/report-only helper.",
+      "Does not run the manual test.",
+      "The only allowed future browser-console path is runCustom25DVisualFirstShapeManualTest(options).",
+      "The future manual test must create, verify, clean up, and confirm removal while preserving fail-closed default behavior."
+    ]
+  };
+}
+
 function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
   const container =
     options.mapContainer ||
