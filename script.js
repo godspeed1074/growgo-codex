@@ -26106,6 +26106,192 @@ function getCustom25DVisualFirstShapeManualTestVerificationReport(options = {}) 
   };
 }
 
+function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
+  const windowExists = typeof window !== "undefined" && window;
+  const hostname =
+    windowExists && window.location && typeof window.location.hostname === "string"
+      ? window.location.hostname
+      : "";
+  const isLocalDevHost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname === "::1";
+  const strictRequirements = [
+    {
+      key: "manual",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "localDevOnly",
+      passed: options.localDevOnly === true,
+      reason: "local-dev-only-required"
+    },
+    {
+      key: "browserConsoleOnly",
+      passed: options.browserConsoleOnly === true,
+      reason: "browser-console-only-required"
+    }
+  ];
+  const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
+  const namespaceKey = "GrowGoCustom25DVisualManualTests";
+
+  if (!windowExists) {
+    return {
+      phase: 240,
+      name: "custom-25d-visual-manual-test-helper-exposure",
+      ok: true,
+      allowed: false,
+      exposed: false,
+      reason: "window-unavailable",
+      failedRequirement: "windowAvailable",
+      namespace: namespaceKey
+    };
+  }
+
+  if (!isLocalDevHost) {
+    return {
+      phase: 240,
+      name: "custom-25d-visual-manual-test-helper-exposure",
+      ok: true,
+      allowed: false,
+      exposed: false,
+      reason: "local-dev-host-required",
+      failedRequirement: "localDevHost",
+      namespace: namespaceKey
+    };
+  }
+
+  if (firstFailure) {
+    return {
+      phase: 240,
+      name: "custom-25d-visual-manual-test-helper-exposure",
+      ok: true,
+      allowed: false,
+      exposed: false,
+      reason: firstFailure.reason,
+      failedRequirement: firstFailure.key,
+      namespace: namespaceKey
+    };
+  }
+
+  const namespace = {
+    getCustom25DVisualFirstShapeTestContract:
+      typeof getCustom25DVisualFirstShapeTestContract === "function"
+        ? getCustom25DVisualFirstShapeTestContract
+        : undefined,
+    createCustom25DVisualFirstShapeManualTestLayer:
+      typeof createCustom25DVisualFirstShapeManualTestLayer === "function"
+        ? createCustom25DVisualFirstShapeManualTestLayer
+        : undefined,
+    clearCustom25DVisualFirstShapeManualTestLayer:
+      typeof clearCustom25DVisualFirstShapeManualTestLayer === "function"
+        ? clearCustom25DVisualFirstShapeManualTestLayer
+        : undefined,
+    runCustom25DVisualFirstShapeManualTest:
+      typeof runCustom25DVisualFirstShapeManualTest === "function"
+        ? runCustom25DVisualFirstShapeManualTest
+        : undefined,
+    getCustom25DVisualFirstShapeManualTestVerificationReport:
+      typeof getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
+        ? getCustom25DVisualFirstShapeManualTestVerificationReport
+        : undefined,
+    getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport:
+      typeof getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport === "function"
+        ? getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport
+        : undefined,
+    createCustom25DVisualExpandedManualVisibleTestLayer:
+      typeof createCustom25DVisualExpandedManualVisibleTestLayer === "function"
+        ? createCustom25DVisualExpandedManualVisibleTestLayer
+        : undefined,
+    clearCustom25DVisualExpandedManualVisibleTestLayer:
+      typeof clearCustom25DVisualExpandedManualVisibleTestLayer === "function"
+        ? clearCustom25DVisualExpandedManualVisibleTestLayer
+        : undefined,
+    runCustom25DVisualExpandedManualVisibleTest:
+      typeof runCustom25DVisualExpandedManualVisibleTest === "function"
+        ? runCustom25DVisualExpandedManualVisibleTest
+        : undefined
+  };
+
+  window[namespaceKey] = namespace;
+  globalThis[namespaceKey] = namespace;
+
+  return {
+    phase: 240,
+    name: "custom-25d-visual-manual-test-helper-exposure",
+    ok: true,
+    allowed: true,
+    exposed: true,
+    reason: "local-dev-console-helper-namespace-exposed",
+    failedRequirement: null,
+    namespace: namespaceKey,
+    hostname,
+    localDevHost: true,
+    manualOnly: true,
+    browserConsoleOnly: true,
+    helperPresence: {
+      getCustom25DVisualFirstShapeTestContract:
+        typeof namespace.getCustom25DVisualFirstShapeTestContract === "function",
+      createCustom25DVisualFirstShapeManualTestLayer:
+        typeof namespace.createCustom25DVisualFirstShapeManualTestLayer === "function",
+      clearCustom25DVisualFirstShapeManualTestLayer:
+        typeof namespace.clearCustom25DVisualFirstShapeManualTestLayer === "function",
+      runCustom25DVisualFirstShapeManualTest:
+        typeof namespace.runCustom25DVisualFirstShapeManualTest === "function",
+      getCustom25DVisualFirstShapeManualTestVerificationReport:
+        typeof namespace.getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    namespacedOnly: true,
+    invokedHelpers: false,
+    domCreated: false,
+    domMutated: false,
+    drewAnything: false,
+    cleanupExecuted: false,
+    storageUsed: false,
+    networkUsed: false,
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    }
+  };
+}
+
+if (
+  typeof window !== "undefined" &&
+  window &&
+  window.location &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.hostname === "0.0.0.0" ||
+    window.location.hostname === "::1")
+) {
+  exposeCustom25DVisualManualTestHelpersForLocalDevConsole({
+    manual: true,
+    developerIntent: true,
+    localDevOnly: true,
+    browserConsoleOnly: true
+  });
+}
+
 function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
   const container =
     options.mapContainer ||
