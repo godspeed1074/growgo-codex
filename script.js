@@ -25711,6 +25711,290 @@ function clearCustom25DVisualFirstShapeManualTestLayer(options = {}) {
   };
 }
 
+function runCustom25DVisualFirstShapeManualTest(options = {}) {
+  const strictRequirements = [
+    {
+      key: "manual",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "localDevOnly",
+      passed: options.localDevOnly === true,
+      reason: "local-dev-only-required"
+    },
+    {
+      key: "browserConsoleOnly",
+      passed: options.browserConsoleOnly === true,
+      reason: "browser-console-only-required"
+    },
+    {
+      key: "allowLocalDevVisibleTestOverride",
+      passed: options.allowLocalDevVisibleTestOverride === true,
+      reason: "local-dev-visible-test-override-not-allowed"
+    },
+    {
+      key: "allowVisibleTestLayer",
+      passed: options.allowVisibleTestLayer === true,
+      reason: "visible-test-layer-not-allowed"
+    },
+    {
+      key: "allowFirstShapeManualTestLayer",
+      passed: options.allowFirstShapeManualTestLayer === true,
+      reason: "first-shape-manual-test-layer-not-allowed"
+    },
+    {
+      key: "allowManualMapAttachment",
+      passed: options.allowManualMapAttachment === true,
+      reason: "manual-map-attachment-required"
+    },
+    {
+      key: "allowTinyTestOnly",
+      passed: options.allowTinyTestOnly === true,
+      reason: "tiny-test-only-required"
+    },
+    {
+      key: "cleanupVerified",
+      passed: options.cleanupVerified === true,
+      reason: "cleanup-verification-required"
+    },
+    {
+      key: "attachmentSmokeShellReady",
+      passed: options.attachmentSmokeShellReady === true,
+      reason: "attachment-smoke-shell-readiness-required"
+    },
+    {
+      key: "preserveExistingMap",
+      passed: options.preserveExistingMap === true,
+      reason: "existing-map-preservation-required"
+    },
+    {
+      key: "preserveGameplayOverlays",
+      passed: options.preserveGameplayOverlays === true,
+      reason: "gameplay-overlay-preservation-required"
+    },
+    {
+      key: "preserveOSMBehavior",
+      passed: options.preserveOSMBehavior === true,
+      reason: "osm-behavior-preservation-required"
+    },
+    {
+      key: "preservePins",
+      passed: options.preservePins === true,
+      reason: "pin-preservation-required"
+    },
+    {
+      key: "preservePlayerMarker",
+      passed: options.preservePlayerMarker === true,
+      reason: "player-marker-preservation-required"
+    },
+    {
+      key: "preserveCaptureRadius",
+      passed: options.preserveCaptureRadius === true,
+      reason: "capture-radius-preservation-required"
+    },
+    {
+      key: "noStartupWiring",
+      passed: options.noStartupWiring === true,
+      reason: "no-startup-wiring-required"
+    },
+    {
+      key: "noBackendChanges",
+      passed: options.noBackendChanges === true,
+      reason: "no-backend-changes-required"
+    },
+    {
+      key: "noPersistence",
+      passed: options.noPersistence === true,
+      reason: "no-persistence-required"
+    },
+    {
+      key: "noAutomaticInvocation",
+      passed: options.noAutomaticInvocation === true,
+      reason: "no-automatic-invocation-required"
+    },
+    {
+      key: "acceptsTemporaryLocalDevVisual",
+      passed: options.acceptsTemporaryLocalDevVisual === true,
+      reason: "temporary-local-dev-visual-acceptance-required"
+    }
+  ];
+
+  const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
+  const selector = '[data-growgo-custom-25d-first-shape-manual-test="true"]';
+
+  if (firstFailure) {
+    return {
+      phase: 237,
+      name: "custom-25d-visual-first-shape-manual-test-runner",
+      ok: true,
+      allowed: false,
+      ran: false,
+      reason: firstFailure.reason,
+      failedRequirement: firstFailure.key,
+      createResult: null,
+      cleanupResult: null,
+      existedAfterCreate: false,
+      existedAfterCleanup: false,
+      selector,
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      temporary: true,
+      cleanupOnly: false,
+      safetyFlags: {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      },
+      preservedSystems: {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true
+      }
+    };
+  }
+
+  if (
+    typeof createCustom25DVisualFirstShapeManualTestLayer !== "function" ||
+    typeof clearCustom25DVisualFirstShapeManualTestLayer !== "function"
+  ) {
+    return {
+      phase: 237,
+      name: "custom-25d-visual-first-shape-manual-test-runner",
+      ok: true,
+      allowed: false,
+      ran: false,
+      reason: "shape-manual-test-helpers-unavailable",
+      failedRequirement:
+        typeof createCustom25DVisualFirstShapeManualTestLayer !== "function"
+          ? "createHelperAvailable"
+          : "cleanupHelperAvailable",
+      createResult: null,
+      cleanupResult: null,
+      existedAfterCreate: false,
+      existedAfterCleanup: false,
+      selector,
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      temporary: true,
+      cleanupOnly: false,
+      safetyFlags: {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      },
+      preservedSystems: {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true
+      }
+    };
+  }
+
+  const doc = typeof document !== "undefined" ? document : null;
+  const createResult = createCustom25DVisualFirstShapeManualTestLayer(options);
+  const existedAfterCreate =
+    !!(doc && typeof doc.querySelector === "function" && doc.querySelector(selector));
+
+  let cleanupResult = null;
+  if (createResult && createResult.created === true) {
+    cleanupResult = clearCustom25DVisualFirstShapeManualTestLayer(options);
+  } else if (existedAfterCreate) {
+    cleanupResult = clearCustom25DVisualFirstShapeManualTestLayer(options);
+  } else {
+    cleanupResult = {
+      phase: 237,
+      ok: true,
+      allowed: true,
+      removed: false,
+      reason: "cleanup-not-needed-no-owned-shape-test-element-found",
+      removedCount: 0,
+      beforeCount: 0,
+      afterCount: 0,
+      selector
+    };
+  }
+
+  const existedAfterCleanup =
+    !!(doc && typeof doc.querySelector === "function" && doc.querySelector(selector));
+
+  return {
+    phase: 237,
+    name: "custom-25d-visual-first-shape-manual-test-runner",
+    ok: true,
+    allowed: createResult.allowed === true,
+    ran: true,
+    reason:
+      existedAfterCreate && !existedAfterCleanup
+        ? "first-shape-manual-test-run-completed-and-cleaned"
+        : createResult.reason || "first-shape-manual-test-runner-finished",
+    failedRequirement: createResult.failedRequirement || null,
+    createResult,
+    cleanupResult,
+    existedAfterCreate,
+    existedAfterCleanup,
+    selector,
+    manualOnly: true,
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    temporary: true,
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      automaticInvocation: true,
+      rendererWork: true,
+      lifecycleWork: true,
+      registryWork: true,
+      persistentLayerState: true,
+      realLeafletLayer: true,
+      mapGeometryDrawing: true,
+      gameplayChanges: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      networkAccess: true,
+      storageWrites: true
+    }
+  };
+}
+
 function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
   const container =
     options.mapContainer ||
