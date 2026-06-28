@@ -12,23 +12,114 @@ const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
 const ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false;
 const ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false;
 
-if (
-  typeof window !== "undefined" &&
-  window &&
-  window.location &&
-  (window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1" ||
-    window.location.hostname === "0.0.0.0" ||
-    window.location.hostname === "::1") &&
-  typeof exposeCustom25DVisualManualTestHelpersForLocalDevConsole === "function"
-) {
-  exposeCustom25DVisualManualTestHelpersForLocalDevConsole({
-    manual: true,
-    developerIntent: true,
-    localDevOnly: true,
-    browserConsoleOnly: true
-  });
+function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options = {}) {
+  const windowExists = typeof window !== "undefined" && window;
+  const hostname =
+    windowExists && window.location && typeof window.location.hostname === "string"
+      ? window.location.hostname
+      : "";
+  const isLocalDevHost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname === "::1";
+  const namespaceKey = "GrowGoCustom25DVisualManualTests";
+  const allowBootstrap = options.localDevBootstrap === true;
+
+  if (!windowExists || !isLocalDevHost || !allowBootstrap) {
+    return {
+      phase: 248,
+      name: "custom-25d-visual-manual-test-console-namespace-bootstrap",
+      ok: true,
+      allowed: false,
+      bootstrapped: false,
+      namespace: namespaceKey,
+      reason: !windowExists
+        ? "window-unavailable"
+        : !isLocalDevHost
+          ? "local-dev-host-required"
+          : "local-dev-bootstrap-flag-required"
+    };
+  }
+
+  const createNamespaceWrapper = (helperName, resolver) => (...args) => {
+    const helper = typeof resolver === "function" ? resolver() : null;
+    if (typeof helper !== "function") {
+      return {
+        phase: 248,
+        name: "custom-25d-visual-manual-test-console-namespace-bootstrap-wrapper",
+        ok: false,
+        allowed: false,
+        helperName,
+        reason: "helper-unavailable-at-call-time",
+        namespace: namespaceKey
+      };
+    }
+
+    return helper(...args);
+  };
+
+  const existingNamespace =
+    typeof window[namespaceKey] === "object" && window[namespaceKey] ? window[namespaceKey] : {};
+  const namespace = {
+    ...existingNamespace,
+    available: true,
+    source: "phase-248-bootstrap",
+    localDev: true,
+    bootstrappedAt: "phase-248",
+    getCustom25DVisualFirstShapeTestContract: createNamespaceWrapper(
+      "getCustom25DVisualFirstShapeTestContract",
+      () =>
+        typeof getCustom25DVisualFirstShapeTestContract === "function"
+          ? getCustom25DVisualFirstShapeTestContract
+          : null
+    ),
+    createCustom25DVisualFirstShapeManualTestLayer: createNamespaceWrapper(
+      "createCustom25DVisualFirstShapeManualTestLayer",
+      () =>
+        typeof createCustom25DVisualFirstShapeManualTestLayer === "function"
+          ? createCustom25DVisualFirstShapeManualTestLayer
+          : null
+    ),
+    clearCustom25DVisualFirstShapeManualTestLayer: createNamespaceWrapper(
+      "clearCustom25DVisualFirstShapeManualTestLayer",
+      () =>
+        typeof clearCustom25DVisualFirstShapeManualTestLayer === "function"
+          ? clearCustom25DVisualFirstShapeManualTestLayer
+          : null
+    ),
+    runCustom25DVisualFirstShapeManualTest: createNamespaceWrapper(
+      "runCustom25DVisualFirstShapeManualTest",
+      () =>
+        typeof runCustom25DVisualFirstShapeManualTest === "function"
+          ? runCustom25DVisualFirstShapeManualTest
+          : null
+    ),
+    getCustom25DVisualFirstShapeManualTestVerificationReport: createNamespaceWrapper(
+      "getCustom25DVisualFirstShapeManualTestVerificationReport",
+      () =>
+        typeof getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
+          ? getCustom25DVisualFirstShapeManualTestVerificationReport
+          : null
+    )
+  };
+
+  window[namespaceKey] = namespace;
+  return {
+    phase: 248,
+    name: "custom-25d-visual-manual-test-console-namespace-bootstrap",
+    ok: true,
+    allowed: true,
+    bootstrapped: true,
+    namespace: namespaceKey,
+    source: namespace.source,
+    localDev: true
+  };
 }
+
+bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev({
+  localDevBootstrap: true
+});
 
 const BASE_PIN_VALUE = 5;
 const WATER_PIN_VALUE = 10;
