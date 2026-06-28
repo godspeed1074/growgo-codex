@@ -24692,6 +24692,103 @@ function getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport(option
   };
 }
 
+function getCustom25DVisualFirstShapeTestPlanningReport(options = {}) {
+  const expandedSuccessCloseout =
+    typeof getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport === "function"
+      ? getCustom25DVisualExpandedManualVisibleTestSuccessCloseoutReport(options)
+      : null;
+
+  return {
+    phase: 233,
+    name: "custom-25d-visual-first-shape-test-planning-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "shape-test-contract-planning-only",
+    priorPhaseSummary: expandedSuccessCloseout
+      ? {
+          expandedManualVisibleTestSucceeded:
+            expandedSuccessCloseout.expandedManualVisibleTestSucceeded === true,
+          normalReloadUnchanged:
+            expandedSuccessCloseout.normalReload &&
+            expandedSuccessCloseout.normalReload.unchanged === true,
+          startupWired:
+            expandedSuccessCloseout.normalReload &&
+            expandedSuccessCloseout.normalReload.startupWired === true
+        }
+      : {
+          expandedManualVisibleTestSucceeded: false,
+          normalReloadUnchanged: false,
+          startupWired: false
+        },
+    futureShapeTestRequirements: {
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      manuallyInvoked: true,
+      temporary: true,
+      cleanupSafe: true,
+      visuallyTiny: true,
+      failClosedByDefault: true,
+      notConnectedToStartup: true,
+      notPersistent: true,
+      notBackendConnected: true,
+      notARealRenderer: true,
+      notARealMapLayer: true,
+      notProductionBehavior: true
+    },
+    planningRecommendations: {
+      recommendedScope:
+        "tiny static test shape or marker-like proof only, not a real map-rendered system",
+      distinctDataAttributeRequired: true,
+      reuseStrictManualVisibleTestGuardPattern: true,
+      cleanupMustRemoveOnlyFutureShapeTestElement: true
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      productionUse: true,
+      enablingCustom25DMap: true,
+      realRendererCreation: true,
+      rendererInitialization: true,
+      lifecycleCreation: true,
+      registryCreation: true,
+      persistentLayerState: true,
+      realMapAttachment: true,
+      automaticDrawing: true,
+      mapGeometryDrawing: true,
+      largerVisualTests: true
+    },
+    nextPhaseRecommendation: {
+      readyForShapeTestContractPhase: true,
+      recommendation:
+        "planning-only follow-up for a future first shape-test contract phase using the existing strict manual/local-dev/browser-console guard pattern"
+    },
+    notes: [
+      "Passive planning/report helper only.",
+      "Does not call the expanded runner, expanded creator, expanded cleanup, tiny runner, tiny creator, or tiny cleanup helpers.",
+      "Does not create DOM elements, mutate DOM, attach anything, draw anything, or wire startup."
+    ]
+  };
+}
+
 function clearCustom25DVisualFirstManualVisibleTestLayer(options = {}) {
   const container =
     options.mapContainer ||
