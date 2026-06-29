@@ -205,6 +205,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
           ? getCustom25DVisualManualInitializationGuardShellCloseoutReport
           : null
+    ),
+    getCustom25DVisualManualInitializationApprovalSignalPlanReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationApprovalSignalPlanReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationApprovalSignalPlanReport === "function"
+          ? getCustom25DVisualManualInitializationApprovalSignalPlanReport
+          : null
     )
   };
 
@@ -27644,6 +27651,88 @@ function getCustom25DVisualManualInitializationGuardShellCloseoutReport(options 
   };
 }
 
+function getCustom25DVisualManualInitializationApprovalSignalPlanReport(options = {}) {
+  const guardShellCloseout =
+    typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
+      ? getCustom25DVisualManualInitializationGuardShellCloseoutReport(options)
+      : null;
+
+  return {
+    phase: 269,
+    name: "custom-25d-visual-manual-initialization-approval-signal-plan",
+    ok: !!(guardShellCloseout && guardShellCloseout.ok === true),
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    guardShellCloseoutAvailable:
+      typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function",
+    guardShellCloseoutOk: !!(guardShellCloseout && guardShellCloseout.ok === true),
+    plannedApprovalSignals: [
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "manualRendererInitializationApproved",
+      "lifecycleContractOk",
+      "shellInertBeforeInitialization",
+      "rendererCreationStillBlocked",
+      "mapAttachmentStillBlocked",
+      "drawingStillBlocked"
+    ],
+    approvalSignalsDoNotAuthorizeYet: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    approvedBehavior: "approval-signal-plan-only",
+    blockedBehavior:
+      guardShellCloseout && guardShellCloseout.blockedBehavior
+        ? guardShellCloseout.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          },
+    preservedSystems:
+      guardShellCloseout && guardShellCloseout.preservedSystems
+        ? guardShellCloseout.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-initialization-approval-signal-contract",
+    safetyFlags:
+      guardShellCloseout && guardShellCloseout.safetyFlags
+        ? guardShellCloseout.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual initialization approval signal planning report only.",
+      "Approval signals are planned here but do not authorize renderer initialization in this phase.",
+      "Renderer creation, initialization, map attachment, and drawing remain blocked."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -27829,6 +27918,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
           ? getCustom25DVisualManualInitializationGuardShellCloseoutReport
           : null
+    ),
+    getCustom25DVisualManualInitializationApprovalSignalPlanReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationApprovalSignalPlanReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationApprovalSignalPlanReport === "function"
+          ? getCustom25DVisualManualInitializationApprovalSignalPlanReport
+          : null
     )
   };
 
@@ -27874,7 +27970,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       canInitializeCustom25DVisualRendererManually:
         typeof namespace.canInitializeCustom25DVisualRendererManually === "function",
       getCustom25DVisualManualInitializationGuardShellCloseoutReport:
-        typeof namespace.getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
+        typeof namespace.getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function",
+      getCustom25DVisualManualInitializationApprovalSignalPlanReport:
+        typeof namespace.getCustom25DVisualManualInitializationApprovalSignalPlanReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
