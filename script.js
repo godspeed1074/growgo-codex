@@ -26797,6 +26797,153 @@ function getCustom25DVisualRendererBridgePlanReport(options = {}) {
   };
 }
 
+function getCustom25DVisualInertRendererShellContractPlanReport(options = {}) {
+  const selector = '[data-growgo-custom-25d-first-shape-manual-test="true"]';
+  const doc = typeof document !== "undefined" ? document : null;
+  const cleanupSelectorCount =
+    doc && typeof doc.querySelectorAll === "function"
+      ? doc.querySelectorAll(selector).length
+      : 0;
+  const noOptionRunnerResult =
+    typeof runCustom25DVisualFirstShapeManualTest === "function"
+      ? runCustom25DVisualFirstShapeManualTest()
+      : null;
+  const rendererBridgePlan =
+    typeof getCustom25DVisualRendererBridgePlanReport === "function"
+      ? getCustom25DVisualRendererBridgePlanReport(options)
+      : null;
+
+  return {
+    phase: 260,
+    name: "custom-25d-visual-inert-renderer-shell-contract-plan-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    contractOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "planning-only-inert-renderer-shell-contract",
+    failClosedByDefault: true,
+    createsNothing: true,
+    removesNothing: true,
+    drawsNothing: true,
+    attachesNothing: true,
+    mutatesNothing: true,
+    helperAvailability: {
+      rendererBridgePlan:
+        typeof getCustom25DVisualRendererBridgePlanReport === "function",
+      firstShapeHandoff:
+        typeof getCustom25DVisualFirstShapeToRendererHandoffReport === "function",
+      firstShapeCloseout:
+        typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function",
+      firstShapeRunner:
+        typeof runCustom25DVisualFirstShapeManualTest === "function"
+    },
+    contractSummary: {
+      phase259BridgeHelperAvailable:
+        typeof getCustom25DVisualRendererBridgePlanReport === "function",
+      futureShellMustBeInertByDefault: true,
+      futureShellMustNotInitializeAutomatically: true,
+      futureShellMustNotAttachToRealLeafletMap: true,
+      futureShellMustNotDrawGeometry: true,
+      futureShellMustNotAffectOsmPinsPlayerMarkerCaptureRadiusGameplayUiBackendStorageOrNetwork:
+        true,
+      futureShellMayOnlyExposePassiveMetadataStateInLaterReviewedPhase: true,
+      recommendedNextPhaseMayCreateInertShellObjectOnlyIfDisconnectedAndNonRendering: true
+    },
+    bridgeSnapshot: rendererBridgePlan
+      ? {
+          phase: rendererBridgePlan.phase,
+          ok: rendererBridgePlan.ok === true,
+          defaultDecision: rendererBridgePlan.defaultDecision || null,
+          firstShapeManualTestChainClosedOut:
+            !!(
+              rendererBridgePlan.bridgeSummary &&
+              rendererBridgePlan.bridgeSummary.firstShapeManualTestChainClosedOut
+            ),
+          recommendedNextWorkInertRendererShellContractPlanOnly:
+            !!(
+              rendererBridgePlan.bridgeSummary &&
+              rendererBridgePlan.bridgeSummary.recommendedNextWorkInertRendererShellContractPlanOnly
+            )
+        }
+      : null,
+    blockedNoOptionRunnerSnapshot: noOptionRunnerResult
+      ? {
+          allowed: noOptionRunnerResult.allowed === true,
+          ran: noOptionRunnerResult.ran === true,
+          reason: noOptionRunnerResult.reason || null,
+          failedRequirement: noOptionRunnerResult.failedRequirement || null,
+          missingRequirements: Array.isArray(noOptionRunnerResult.missingRequirements)
+            ? noOptionRunnerResult.missingRequirements
+            : [],
+          missingReasons: Array.isArray(noOptionRunnerResult.missingReasons)
+            ? noOptionRunnerResult.missingReasons
+            : []
+        }
+      : null,
+    ownedSelector: selector,
+    cleanupSelectorCount,
+    nextStepRecommendation: {
+      planningOnly: true,
+      inertRendererShellObjectOnly: true,
+      disconnectedOnly: true,
+      nonRenderingOnly: true,
+      rendererBehaviorApproved: false,
+      realMapAttachmentApproved: false,
+      mapGeometryDrawingApproved: false,
+      startupWiringApproved: false,
+      recommendedNextPhase:
+        "a separately reviewed inert renderer shell object only, still disconnected and non-rendering"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    },
+    notApprovedFor: {
+      rendererShellCreationByThisHelper: true,
+      rendererInitialization: true,
+      rendererBehavior: true,
+      realMapAttachment: true,
+      mapGeometryDrawing: true,
+      firstShapeExecutionByThisHelper: true,
+      cleanupExecutionByThisHelper: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      gameplayChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    notes: [
+      "Passive inert renderer shell contract planning report only.",
+      "Does not create a renderer shell.",
+      "Does not initialize a renderer, attach a real map layer, or draw geometry.",
+      "Any future inert shell phase must remain disconnected, non-rendering, and separately reviewed."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
