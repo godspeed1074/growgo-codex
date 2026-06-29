@@ -219,6 +219,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualManualInitializationApprovalSignalContractReport === "function"
           ? getCustom25DVisualManualInitializationApprovalSignalContractReport
           : null
+    ),
+    evaluateCustom25DVisualManualInitializationSignals: createNamespaceWrapper(
+      "evaluateCustom25DVisualManualInitializationSignals",
+      () =>
+        typeof evaluateCustom25DVisualManualInitializationSignals === "function"
+          ? evaluateCustom25DVisualManualInitializationSignals
+          : null
     )
   };
 
@@ -27822,6 +27829,107 @@ function getCustom25DVisualManualInitializationApprovalSignalContractReport(opti
   };
 }
 
+function evaluateCustom25DVisualManualInitializationSignals(options = {}) {
+  const signalContract =
+    typeof getCustom25DVisualManualInitializationApprovalSignalContractReport === "function"
+      ? getCustom25DVisualManualInitializationApprovalSignalContractReport(options)
+      : null;
+  const signalsChecked = [
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "manualRendererInitializationApproved",
+    "lifecycleContractOk",
+    "shellInertBeforeInitialization",
+    "rendererCreationStillBlocked",
+    "mapAttachmentStillBlocked",
+    "drawingStillBlocked"
+  ];
+  const signalStates = {
+    localDevOnly: options.localDevOnly === true,
+    browserConsoleOnly: options.browserConsoleOnly === true,
+    explicitOptionsOnly: options.explicitOptionsOnly === true,
+    manualRendererInitializationApproved:
+      options.manualRendererInitializationApproved === true,
+    lifecycleContractOk: !!(signalContract && signalContract.approvalSignalPlanOk === true),
+    shellInertBeforeInitialization: options.shellInertBeforeInitialization === true,
+    rendererCreationStillBlocked: true,
+    mapAttachmentStillBlocked: true,
+    drawingStillBlocked: true
+  };
+  const presentSignals = signalsChecked.filter((signal) => signalStates[signal] === true);
+  const missingSignals = signalsChecked.filter((signal) => signalStates[signal] !== true);
+
+  return {
+    phase: 271,
+    name: "custom-25d-visual-manual-initialization-signal-evaluator-shell",
+    ok: !!(signalContract && signalContract.ok === true),
+    passive: true,
+    evaluatorOnly: true,
+    shellOnly: true,
+    contractAvailable:
+      typeof getCustom25DVisualManualInitializationApprovalSignalContractReport === "function",
+    contractOk: !!(signalContract && signalContract.ok === true),
+    signalsChecked,
+    presentSignals,
+    missingSignals,
+    allowed: false,
+    blocked: true,
+    approvalSignalsAuthorizeInitialization: false,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    approvedBehavior: "signal-evaluator-shell-only",
+    blockedBehavior:
+      signalContract && signalContract.blockedBehavior
+        ? signalContract.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          },
+    preservedSystems:
+      signalContract && signalContract.preservedSystems
+        ? signalContract.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-initialization-signal-evaluator-closeout",
+    safetyFlags:
+      signalContract && signalContract.safetyFlags
+        ? signalContract.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual initialization signal evaluator shell only.",
+      "A no-option call remains blocked by default.",
+      "Approval-like options are reported as signals only and still do not authorize initialization in this phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -28021,6 +28129,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualManualInitializationApprovalSignalContractReport === "function"
           ? getCustom25DVisualManualInitializationApprovalSignalContractReport
           : null
+    ),
+    evaluateCustom25DVisualManualInitializationSignals: createNamespaceWrapper(
+      "evaluateCustom25DVisualManualInitializationSignals",
+      () =>
+        typeof evaluateCustom25DVisualManualInitializationSignals === "function"
+          ? evaluateCustom25DVisualManualInitializationSignals
+          : null
     )
   };
 
@@ -28070,7 +28185,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualInitializationApprovalSignalPlanReport:
         typeof namespace.getCustom25DVisualManualInitializationApprovalSignalPlanReport === "function",
       getCustom25DVisualManualInitializationApprovalSignalContractReport:
-        typeof namespace.getCustom25DVisualManualInitializationApprovalSignalContractReport === "function"
+        typeof namespace.getCustom25DVisualManualInitializationApprovalSignalContractReport === "function",
+      evaluateCustom25DVisualManualInitializationSignals:
+        typeof namespace.evaluateCustom25DVisualManualInitializationSignals === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
