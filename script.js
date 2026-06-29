@@ -233,6 +233,14 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function"
           ? getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport
           : null
+    ),
+    getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport ===
+        "function"
+          ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport
+          : null
     )
   };
 
@@ -28026,6 +28034,103 @@ function getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport(opt
   };
 }
 
+function getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport(
+  options = {}
+) {
+  const evaluatorCloseout =
+    typeof getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function"
+      ? getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport(options)
+      : null;
+  const guardResult =
+    typeof canInitializeCustom25DVisualRendererManually === "function"
+      ? canInitializeCustom25DVisualRendererManually(options)
+      : null;
+
+  return {
+    phase: 273,
+    name: "custom-25d-visual-manual-initialization-guard-evaluator-integration-plan",
+    ok:
+      !!(evaluatorCloseout && evaluatorCloseout.ok === true) &&
+      !!(guardResult && guardResult.ok === true),
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    guardAvailable: typeof canInitializeCustom25DVisualRendererManually === "function",
+    guardOk: !!(guardResult && guardResult.ok === true),
+    evaluatorCloseoutAvailable:
+      typeof getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport ===
+      "function",
+    evaluatorCloseoutOk: !!(evaluatorCloseout && evaluatorCloseout.ok === true),
+    integrationPurpose: "plan-only",
+    plannedIntegrationSteps: [
+      "check-lifecycle-contract",
+      "evaluate-manual-signals",
+      "require-guard-and-evaluator-agreement",
+      "keep-renderer-creation-blocked",
+      "keep-initialization-blocked-until-future-approved-phase"
+    ],
+    integrationAuthorizesInitialization: false,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    approvedBehavior: "guard-evaluator-integration-plan-only",
+    blockedBehavior:
+      evaluatorCloseout && evaluatorCloseout.blockedBehavior
+        ? evaluatorCloseout.blockedBehavior
+        : guardResult && guardResult.blockedBehavior
+          ? guardResult.blockedBehavior
+          : {
+              rendererCreation: true,
+              rendererInitialization: true,
+              mapAttachment: true,
+              drawing: true,
+              domCreation: true,
+              startupWiring: true,
+              automaticInvocation: true,
+              gameplayChanges: true,
+              pinChanges: true,
+              uiChanges: true,
+              backendChanges: true,
+              storageWrites: true,
+              networkAccess: true
+            },
+    preservedSystems:
+      evaluatorCloseout && evaluatorCloseout.preservedSystems
+        ? evaluatorCloseout.preservedSystems
+        : guardResult && guardResult.preservedSystems
+          ? guardResult.preservedSystems
+          : {
+              existingLeafletMapBehavior: true,
+              osmBehavior: true,
+              gameplay: true,
+              pins: true,
+              playerMarker: true,
+              captureRadius: true,
+              ui: true,
+              backend: true,
+              storage: true,
+              network: true
+            },
+    nextStep: "manual-initialization-guard-evaluator-integration-contract",
+    safetyFlags:
+      evaluatorCloseout && evaluatorCloseout.safetyFlags
+        ? evaluatorCloseout.safetyFlags
+        : guardResult && guardResult.safetyFlags
+          ? guardResult.safetyFlags
+          : {
+              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+              landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+              landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+              dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+            },
+    notes: [
+      "Passive manual initialization guard/evaluator integration planning report only.",
+      "Does not make the guard allow initialization.",
+      "Does not make the evaluator allow initialization.",
+      "Renderer creation and initialization remain blocked until a future separately approved phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -28239,7 +28344,16 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function"
           ? getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport
           : null
-    )
+    ),
+    getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport",
+        () =>
+          typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport ===
+          "function"
+            ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport
+            : null
+      )
   };
 
   window[namespaceKey] = namespace;
@@ -28292,7 +28406,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       evaluateCustom25DVisualManualInitializationSignals:
         typeof namespace.evaluateCustom25DVisualManualInitializationSignals === "function",
       getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport:
-        typeof namespace.getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function"
+        typeof namespace.getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function",
+      getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport:
+        typeof namespace.getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
