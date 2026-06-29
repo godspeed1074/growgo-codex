@@ -149,6 +149,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
           ? getCustom25DVisualFirstShapeManualTestVerificationReport
           : null
+    ),
+    getCustom25DVisualFirstShapeManualTestCloseoutReport: createNamespaceWrapper(
+      "getCustom25DVisualFirstShapeManualTestCloseoutReport",
+      () =>
+        typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
+          ? getCustom25DVisualFirstShapeManualTestCloseoutReport
+          : null
     )
   };
 
@@ -26319,6 +26326,158 @@ function getCustom25DVisualFirstShapeManualTestVerificationReport(options = {}) 
   };
 }
 
+function getCustom25DVisualFirstShapeManualTestCloseoutReport(options = {}) {
+  const selector = '[data-growgo-custom-25d-first-shape-manual-test="true"]';
+  const doc = typeof document !== "undefined" ? document : null;
+  const cleanupSelectorCount =
+    doc && typeof doc.querySelectorAll === "function"
+      ? doc.querySelectorAll(selector).length
+      : 0;
+  const noOptionRunnerResult =
+    typeof runCustom25DVisualFirstShapeManualTest === "function"
+      ? runCustom25DVisualFirstShapeManualTest()
+      : null;
+
+  return {
+    phase: 256,
+    name: "custom-25d-visual-first-shape-manual-test-closeout-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "closeout-only",
+    failClosedByDefault: true,
+    createsNothing: true,
+    removesNothing: true,
+    drawsNothing: true,
+    attachesNothing: true,
+    mutatesNothing: true,
+    helperAvailability: {
+      firstShapeCreator:
+        typeof createCustom25DVisualFirstShapeManualTestLayer === "function",
+      firstShapeCleanup:
+        typeof clearCustom25DVisualFirstShapeManualTestLayer === "function",
+      firstShapeRunner:
+        typeof runCustom25DVisualFirstShapeManualTest === "function",
+      firstShapeVerificationReport:
+        typeof getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
+    },
+    closeoutSummary: {
+      phase235CreatorAvailable:
+        typeof createCustom25DVisualFirstShapeManualTestLayer === "function",
+      phase236CleanupAvailable:
+        typeof clearCustom25DVisualFirstShapeManualTestLayer === "function",
+      phase237RunnerAvailable:
+        typeof runCustom25DVisualFirstShapeManualTest === "function",
+      phase254MissingGateReportingAvailable:
+        !!(
+          noOptionRunnerResult &&
+          Array.isArray(noOptionRunnerResult.missingRequirements) &&
+          Array.isArray(noOptionRunnerResult.missingReasons) &&
+          Array.isArray(noOptionRunnerResult.requiredSafetyGates)
+        ),
+      phase255MapDisabledBypassRemainsLocalManualTestOnly: true,
+      defaultNoOptionRunnerCallBlocked:
+        !!(noOptionRunnerResult && noOptionRunnerResult.allowed === false),
+      fullManualTestRequiresExplicitApprovalsOnly: true,
+      cleanupSelectorCountSafeWhenAvailable: cleanupSelectorCount >= 0
+    },
+    blockedNoOptionRunnerSnapshot: noOptionRunnerResult
+      ? {
+          allowed: noOptionRunnerResult.allowed === true,
+          ran: noOptionRunnerResult.ran === true,
+          reason: noOptionRunnerResult.reason || null,
+          failedRequirement: noOptionRunnerResult.failedRequirement || null,
+          missingRequirements: Array.isArray(noOptionRunnerResult.missingRequirements)
+            ? noOptionRunnerResult.missingRequirements
+            : [],
+          missingReasons: Array.isArray(noOptionRunnerResult.missingReasons)
+            ? noOptionRunnerResult.missingReasons
+            : [],
+          requiredSafetyGates: Array.isArray(noOptionRunnerResult.requiredSafetyGates)
+            ? noOptionRunnerResult.requiredSafetyGates
+            : []
+        }
+      : null,
+    fullManualApprovalPattern: {
+      manual: true,
+      developerIntent: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      allowLocalDevVisibleTestOverride: true,
+      allowVisibleTestLayer: true,
+      allowFirstShapeManualTestLayer: true,
+      allowManualMapAttachment: true,
+      allowTinyTestOnly: true,
+      cleanupVerified: true,
+      attachmentSmokeShellReady: true,
+      preserveExistingMap: true,
+      preserveGameplayOverlays: true,
+      preserveOSMBehavior: true,
+      preservePins: true,
+      preservePlayerMarker: true,
+      preserveCaptureRadius: true,
+      noStartupWiring: true,
+      noBackendChanges: true,
+      noPersistence: true,
+      noAutomaticInvocation: true,
+      acceptsTemporaryLocalDevVisual: true,
+      allowCustom25DMapDisabledFirstShapeManualTestBypass: true
+    },
+    ownedSelector: selector,
+    cleanupSelectorCount,
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      automaticInvocation: true,
+      testLayerCreation: true,
+      manualTestExecutionByThisHelper: true,
+      cleanupExecutionByThisHelper: true,
+      rendererWork: true,
+      lifecycleWork: true,
+      registryWork: true,
+      persistentLayerState: true,
+      realLeafletLayer: true,
+      mapGeometryDrawing: true,
+      gameplayChanges: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    notes: [
+      "Passive closeout/report-only helper.",
+      "Does not create the first-shape test layer.",
+      "Does not run the manual test.",
+      "Does not execute cleanup.",
+      "Confirms the default no-option runner path remains blocked while the full manual approval path stays explicit and local-dev-only."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -26448,6 +26607,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
           ? getCustom25DVisualFirstShapeManualTestVerificationReport
           : null
+    ),
+    getCustom25DVisualFirstShapeManualTestCloseoutReport: createNamespaceWrapper(
+      "getCustom25DVisualFirstShapeManualTestCloseoutReport",
+      () =>
+        typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
+          ? getCustom25DVisualFirstShapeManualTestCloseoutReport
+          : null
     )
   };
 
@@ -26477,7 +26643,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       runCustom25DVisualFirstShapeManualTest:
         typeof namespace.runCustom25DVisualFirstShapeManualTest === "function",
       getCustom25DVisualFirstShapeManualTestVerificationReport:
-        typeof namespace.getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
+        typeof namespace.getCustom25DVisualFirstShapeManualTestVerificationReport === "function",
+      getCustom25DVisualFirstShapeManualTestCloseoutReport:
+        typeof namespace.getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
