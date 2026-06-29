@@ -241,7 +241,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         "function"
           ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport
           : null
-    )
+    ),
+    getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport",
+        () =>
+          typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport ===
+          "function"
+            ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport
+            : null
+      )
   };
 
   window[namespaceKey] = namespace;
@@ -28131,6 +28140,91 @@ function getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanRepo
   };
 }
 
+function getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport(
+  options = {}
+) {
+  const integrationPlan =
+    typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport ===
+    "function"
+      ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport(options)
+      : null;
+
+  return {
+    phase: 274,
+    name: "custom-25d-visual-manual-initialization-guard-evaluator-integration-contract",
+    ok: !!(integrationPlan && integrationPlan.ok === true),
+    passive: true,
+    reportOnly: true,
+    contractOnly: true,
+    integrationPlanAvailable:
+      typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport ===
+      "function",
+    integrationPlanOk: !!(integrationPlan && integrationPlan.ok === true),
+    requiredIntegrationChecks: {
+      lifecycleContractOk: true,
+      guardAvailable: true,
+      evaluatorAvailable: true,
+      guardAndEvaluatorMustAgree: true,
+      rendererCreationStillBlocked: true,
+      rendererInitializationStillBlocked: true,
+      mapAttachmentStillBlocked: true,
+      drawingStillBlocked: true
+    },
+    integrationAuthorizesInitialization: false,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    approvedBehavior: "guard-evaluator-integration-contract-only",
+    blockedBehavior:
+      integrationPlan && integrationPlan.blockedBehavior
+        ? integrationPlan.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          },
+    preservedSystems:
+      integrationPlan && integrationPlan.preservedSystems
+        ? integrationPlan.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-initialization-integrated-guard-shell",
+    safetyFlags:
+      integrationPlan && integrationPlan.safetyFlags
+        ? integrationPlan.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual initialization guard/evaluator integration contract report only.",
+      "Does not make the guard allow initialization or the evaluator authorize initialization.",
+      "Renderer creation and initialization remain blocked until a future separately approved phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -28353,6 +28447,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
           "function"
             ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport
             : null
+      ),
+    getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport",
+        () =>
+          typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport ===
+          "function"
+            ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport
+            : null
       )
   };
 
@@ -28408,7 +28511,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport:
         typeof namespace.getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function",
       getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport:
-        typeof namespace.getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport === "function"
+        typeof namespace.getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport === "function",
+      getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport:
+        typeof namespace.getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
