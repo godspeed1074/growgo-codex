@@ -536,6 +536,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererIntegrationShellPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellPlanReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellContractReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -34586,6 +34613,461 @@ function getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseout
   };
 }
 
+function getCustom25DVisualManualRendererIntegrationShellPlanReport(options = {}) {
+  const integrationPlan =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport(options)
+      : null;
+  const integrationContract =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport(options)
+      : null;
+  const integrationCloseout =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport(options)
+      : null;
+  const snapshotConsumerReport =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport(options)
+      : null;
+  const snapshotConsumerCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerCloseoutReport(options)
+      : null;
+  const requiredOptionKeys =
+    integrationCloseout && Array.isArray(integrationCloseout.requiredOptionKeys)
+      ? integrationCloseout.requiredOptionKeys
+      : integrationContract && Array.isArray(integrationContract.requiredOptionKeys)
+        ? integrationContract.requiredOptionKeys
+        : integrationPlan && Array.isArray(integrationPlan.requiredOptionKeys)
+          ? integrationPlan.requiredOptionKeys
+          : snapshotConsumerCloseout &&
+              Array.isArray(snapshotConsumerCloseout.requiredOptionKeys)
+            ? snapshotConsumerCloseout.requiredOptionKeys
+            : snapshotConsumerReport &&
+                Array.isArray(snapshotConsumerReport.requiredOptionKeys)
+              ? snapshotConsumerReport.requiredOptionKeys
+              : [
+                  "manual",
+                  "developerIntent",
+                  "localDevOnly",
+                  "browserConsoleOnly",
+                  "explicitOptionsOnly",
+                  "allowManualRendererStateContainerShell",
+                  "noStartupWiring",
+                  "noBackendChanges",
+                  "noPersistence",
+                  "noAutomaticInvocation"
+                ];
+
+  return {
+    phase: 301,
+    name: "custom-25d-visual-manual-renderer-integration-shell-plan",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    planOnly: true,
+    integrationShellPlan: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: true,
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      plannedShellUsesSnapshotConsumerReportOnly: true,
+      plannedShellUsesLiveStateReference: false
+    },
+    actualIntegrationShellAdded: false,
+    phase300PlanAvailable:
+      typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport ===
+      "function",
+    phase300ContractAvailable:
+      typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport ===
+      "function",
+    plannedShellMode: "manual-snapshot-consumer-integration-shell",
+    plannedShellUsesSnapshotConsumerReportOnly: true,
+    plannedShellUsesLiveStateReference: false,
+    plannedShellCreatesState: false,
+    plannedShellMutatesState: false,
+    plannedShellStartsRenderer: false,
+    plannedShellAttachesMap: false,
+    plannedShellDrawsGeometry: false,
+    plannedShellCreatesDom: false,
+    futureIntegrationShellReady: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    blockedBehavior:
+      integrationCloseout && integrationCloseout.blockedBehavior
+        ? integrationCloseout.blockedBehavior
+        : integrationContract && integrationContract.blockedBehavior
+          ? integrationContract.blockedBehavior
+          : integrationPlan && integrationPlan.blockedBehavior
+            ? integrationPlan.blockedBehavior
+            : {
+                rendererCreation: true,
+                rendererInitialization: true,
+                mapAttachment: true,
+                drawing: true,
+                domCreation: true,
+                startupWiring: true,
+                automaticInvocation: true,
+                gameplayChanges: true,
+                pinChanges: true,
+                uiChanges: true,
+                backendChanges: true,
+                storageWrites: true,
+                networkAccess: true
+              },
+    preservedSystems:
+      integrationCloseout && integrationCloseout.preservedSystems
+        ? integrationCloseout.preservedSystems
+        : integrationContract && integrationContract.preservedSystems
+          ? integrationContract.preservedSystems
+          : integrationPlan && integrationPlan.preservedSystems
+            ? integrationPlan.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              },
+    safetyFlags:
+      integrationCloseout && integrationCloseout.safetyFlags
+        ? integrationCloseout.safetyFlags
+        : integrationContract && integrationContract.safetyFlags
+          ? integrationContract.safetyFlags
+          : integrationPlan && integrationPlan.safetyFlags
+            ? integrationPlan.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+    notes: [
+      "Passive plan for a future manual integration shell only.",
+      "A future shell may consume the Phase 299 snapshot-consumer report only.",
+      "No shared state, renderer, map, drawing, DOM, startup, backend, or gameplay integration is added in this phase."
+    ]
+  };
+}
+
+function getCustom25DVisualManualRendererIntegrationShellContractReport(options = {}) {
+  const shellPlan =
+    typeof getCustom25DVisualManualRendererIntegrationShellPlanReport === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellPlanReport(options)
+      : null;
+  const integrationPlan =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport(options)
+      : null;
+  const integrationContract =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport(options)
+      : null;
+  const integrationCloseout =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport(options)
+      : null;
+  const requiredOptionKeys =
+    shellPlan && Array.isArray(shellPlan.requiredOptionKeys)
+      ? shellPlan.requiredOptionKeys
+      : integrationCloseout && Array.isArray(integrationCloseout.requiredOptionKeys)
+        ? integrationCloseout.requiredOptionKeys
+        : integrationContract && Array.isArray(integrationContract.requiredOptionKeys)
+          ? integrationContract.requiredOptionKeys
+          : integrationPlan && Array.isArray(integrationPlan.requiredOptionKeys)
+            ? integrationPlan.requiredOptionKeys
+            : [
+                "manual",
+                "developerIntent",
+                "localDevOnly",
+                "browserConsoleOnly",
+                "explicitOptionsOnly",
+                "allowManualRendererStateContainerShell",
+                "noStartupWiring",
+                "noBackendChanges",
+                "noPersistence",
+                "noAutomaticInvocation"
+              ];
+
+  return {
+    phase: 301,
+    name: "custom-25d-visual-manual-renderer-integration-shell-contract",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    contractOnly: true,
+    integrationShellContract: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: true,
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      allowedInputMode: "phase-299-snapshot-consumer-report-only",
+      allowedOutputMode: "primitive-report-only"
+    },
+    actualIntegrationShellAdded: false,
+    allowedInputMode: "phase-299-snapshot-consumer-report-only",
+    allowedOutputMode: "primitive-report-only",
+    shellMayCreateState: false,
+    shellMayMutateState: false,
+    shellMayStartRenderer: false,
+    shellMayAttachMap: false,
+    shellMayDrawGeometry: false,
+    shellMayCreateDom: false,
+    shellMayWireStartup: false,
+    shellMayChangeGameplay: false,
+    contractReadyForFutureManualShell: true,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    blockedBehavior:
+      shellPlan && shellPlan.blockedBehavior
+        ? shellPlan.blockedBehavior
+        : integrationCloseout && integrationCloseout.blockedBehavior
+          ? integrationCloseout.blockedBehavior
+          : integrationContract && integrationContract.blockedBehavior
+            ? integrationContract.blockedBehavior
+            : {
+                rendererCreation: true,
+                rendererInitialization: true,
+                mapAttachment: true,
+                drawing: true,
+                domCreation: true,
+                startupWiring: true,
+                automaticInvocation: true,
+                gameplayChanges: true,
+                pinChanges: true,
+                uiChanges: true,
+                backendChanges: true,
+                storageWrites: true,
+                networkAccess: true
+              },
+    preservedSystems:
+      shellPlan && shellPlan.preservedSystems
+        ? shellPlan.preservedSystems
+        : integrationCloseout && integrationCloseout.preservedSystems
+          ? integrationCloseout.preservedSystems
+          : integrationContract && integrationContract.preservedSystems
+            ? integrationContract.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              },
+    safetyFlags:
+      shellPlan && shellPlan.safetyFlags
+        ? shellPlan.safetyFlags
+        : integrationCloseout && integrationCloseout.safetyFlags
+          ? integrationCloseout.safetyFlags
+          : integrationContract && integrationContract.safetyFlags
+            ? integrationContract.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+    notes: [
+      "Passive contract for a future manual integration shell only.",
+      "The future shell may accept only the Phase 299 snapshot-consumer report and output primitive report data only.",
+      "State creation, mutation, renderer lifecycle work, map attachment, drawing, DOM work, startup wiring, and gameplay changes remain blocked."
+    ]
+  };
+}
+
+function getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport(
+  options = {}
+) {
+  const shellPlan =
+    typeof getCustom25DVisualManualRendererIntegrationShellPlanReport === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellPlanReport(options)
+      : null;
+  const shellContract =
+    typeof getCustom25DVisualManualRendererIntegrationShellContractReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellContractReport(options)
+      : null;
+  const integrationCloseout =
+    typeof getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport(options)
+      : null;
+  const requiredOptionKeys =
+    shellContract && Array.isArray(shellContract.requiredOptionKeys)
+      ? shellContract.requiredOptionKeys
+      : shellPlan && Array.isArray(shellPlan.requiredOptionKeys)
+        ? shellPlan.requiredOptionKeys
+        : integrationCloseout && Array.isArray(integrationCloseout.requiredOptionKeys)
+          ? integrationCloseout.requiredOptionKeys
+          : [
+              "manual",
+              "developerIntent",
+              "localDevOnly",
+              "browserConsoleOnly",
+              "explicitOptionsOnly",
+              "allowManualRendererStateContainerShell",
+              "noStartupWiring",
+              "noBackendChanges",
+              "noPersistence",
+              "noAutomaticInvocation"
+            ];
+
+  return {
+    phase: 301,
+    name: "custom-25d-visual-manual-renderer-integration-shell-plan-closeout",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    integrationShellPlanCloseout: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: true,
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      integrationShellPlanStayedPassive: true
+    },
+    phase301PlanAvailable:
+      typeof getCustom25DVisualManualRendererIntegrationShellPlanReport === "function",
+    phase301ContractAvailable:
+      typeof getCustom25DVisualManualRendererIntegrationShellContractReport ===
+      "function",
+    actualIntegrationShellAdded: false,
+    integrationShellPlanStayedPassive: true,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    readyForFutureActualManualIntegrationShell: true,
+    blockedBehavior:
+      shellContract && shellContract.blockedBehavior
+        ? shellContract.blockedBehavior
+        : shellPlan && shellPlan.blockedBehavior
+          ? shellPlan.blockedBehavior
+          : integrationCloseout && integrationCloseout.blockedBehavior
+            ? integrationCloseout.blockedBehavior
+            : {
+                rendererCreation: true,
+                rendererInitialization: true,
+                mapAttachment: true,
+                drawing: true,
+                domCreation: true,
+                startupWiring: true,
+                automaticInvocation: true,
+                gameplayChanges: true,
+                pinChanges: true,
+                uiChanges: true,
+                backendChanges: true,
+                storageWrites: true,
+                networkAccess: true
+              },
+    preservedSystems:
+      shellContract && shellContract.preservedSystems
+        ? shellContract.preservedSystems
+        : shellPlan && shellPlan.preservedSystems
+          ? shellPlan.preservedSystems
+          : integrationCloseout && integrationCloseout.preservedSystems
+            ? integrationCloseout.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              },
+    safetyFlags:
+      shellContract && shellContract.safetyFlags
+        ? shellContract.safetyFlags
+        : shellPlan && shellPlan.safetyFlags
+          ? shellPlan.safetyFlags
+          : integrationCloseout && integrationCloseout.safetyFlags
+            ? integrationCloseout.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+    notes: [
+      "Passive closeout for the future manual integration shell planning bundle.",
+      "No actual integration shell, renderer, map attachment, drawing path, or DOM path is added here.",
+      "The next implementation phase may add an actual manual integration shell only after a separate reviewed request."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -35103,6 +35585,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererIntegrationShellPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellPlanReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellContractReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -35232,6 +35741,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof namespace.getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport === "function",
       getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport === "function",
+      getCustom25DVisualManualRendererIntegrationShellPlanReport:
+        typeof namespace.getCustom25DVisualManualRendererIntegrationShellPlanReport ===
+        "function",
+      getCustom25DVisualManualRendererIntegrationShellContractReport:
+        typeof namespace.getCustom25DVisualManualRendererIntegrationShellContractReport ===
+        "function",
+      getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport ===
+        "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
     },
