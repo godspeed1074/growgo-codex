@@ -163,6 +163,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualInertRendererShellCloseoutReport === "function"
           ? getCustom25DVisualInertRendererShellCloseoutReport
           : null
+    ),
+    getCustom25DVisualRendererLifecyclePlanReport: createNamespaceWrapper(
+      "getCustom25DVisualRendererLifecyclePlanReport",
+      () =>
+        typeof getCustom25DVisualRendererLifecyclePlanReport === "function"
+          ? getCustom25DVisualRendererLifecyclePlanReport
+          : null
     )
   };
 
@@ -27113,6 +27120,80 @@ function getCustom25DVisualInertRendererShellCloseoutReport(options = {}) {
   };
 }
 
+function getCustom25DVisualRendererLifecyclePlanReport(options = {}) {
+  const shellCloseout =
+    typeof getCustom25DVisualInertRendererShellCloseoutReport === "function"
+      ? getCustom25DVisualInertRendererShellCloseoutReport(options)
+      : null;
+
+  return {
+    phase: 263,
+    name: "custom-25d-visual-renderer-lifecycle-plan",
+    ok: !!(shellCloseout && shellCloseout.ok === true),
+    passive: true,
+    reportOnly: true,
+    planningOnly: true,
+    shellCloseoutAvailable:
+      typeof getCustom25DVisualInertRendererShellCloseoutReport === "function",
+    shellCloseoutOk: !!(shellCloseout && shellCloseout.ok === true),
+    approvedLifecycleStates: [
+      "created-metadata-only",
+      "initialized-false",
+      "attached-false",
+      "running-false",
+      "drawing-enabled-false",
+      "disposed-metadata-only"
+    ],
+    blockedLifecycleActions: {
+      rendererInitialization: true,
+      rendererInstanceCreation: true,
+      mapAttachment: true,
+      geometryDrawing: true,
+      domCreation: true,
+      startupWiring: true,
+      autoRun: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    preservedSystems:
+      shellCloseout && shellCloseout.preservedSystems
+        ? shellCloseout.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    requiredFutureReviews: [
+      "renderer-lifecycle-contract",
+      "manual-initialization-guard-plan",
+      "manual-attachment-guard-plan",
+      "manual-drawing-guard-plan"
+    ],
+    nextStep: "renderer-lifecycle-contract",
+    safetyFlags:
+      shellCloseout && shellCloseout.safetyFlags
+        ? shellCloseout.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive renderer lifecycle planning report only.",
+      "Does not initialize a renderer, create a renderer instance, attach to the map, draw geometry, or create DOM.",
+      "Any renderer lifecycle work remains blocked pending future contract and guard review phases."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -27256,6 +27337,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualInertRendererShellCloseoutReport === "function"
           ? getCustom25DVisualInertRendererShellCloseoutReport
           : null
+    ),
+    getCustom25DVisualRendererLifecyclePlanReport: createNamespaceWrapper(
+      "getCustom25DVisualRendererLifecyclePlanReport",
+      () =>
+        typeof getCustom25DVisualRendererLifecyclePlanReport === "function"
+          ? getCustom25DVisualRendererLifecyclePlanReport
+          : null
     )
   };
 
@@ -27289,7 +27377,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualFirstShapeManualTestCloseoutReport:
         typeof namespace.getCustom25DVisualFirstShapeManualTestCloseoutReport === "function",
       getCustom25DVisualInertRendererShellCloseoutReport:
-        typeof namespace.getCustom25DVisualInertRendererShellCloseoutReport === "function"
+        typeof namespace.getCustom25DVisualInertRendererShellCloseoutReport === "function",
+      getCustom25DVisualRendererLifecyclePlanReport:
+        typeof namespace.getCustom25DVisualRendererLifecyclePlanReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
