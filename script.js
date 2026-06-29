@@ -198,6 +198,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof canInitializeCustom25DVisualRendererManually === "function"
           ? canInitializeCustom25DVisualRendererManually
           : null
+    ),
+    getCustom25DVisualManualInitializationGuardShellCloseoutReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationGuardShellCloseoutReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
+          ? getCustom25DVisualManualInitializationGuardShellCloseoutReport
+          : null
     )
   };
 
@@ -27549,6 +27556,94 @@ function canInitializeCustom25DVisualRendererManually(options = {}) {
   };
 }
 
+function getCustom25DVisualManualInitializationGuardShellCloseoutReport(options = {}) {
+  const guardResult =
+    typeof canInitializeCustom25DVisualRendererManually === "function"
+      ? canInitializeCustom25DVisualRendererManually(options)
+      : null;
+  const noOptionResult =
+    typeof canInitializeCustom25DVisualRendererManually === "function"
+      ? canInitializeCustom25DVisualRendererManually()
+      : null;
+  const approvalLikeOptionsResult =
+    typeof canInitializeCustom25DVisualRendererManually === "function"
+      ? canInitializeCustom25DVisualRendererManually({
+          localDevOnly: true,
+          browserConsoleOnly: true,
+          explicitOptionsOnly: true,
+          manualRendererInitializationApproved: true,
+          shellInertBeforeInitialization: true
+        })
+      : null;
+
+  return {
+    phase: 268,
+    name: "custom-25d-visual-manual-initialization-guard-shell-closeout",
+    ok: !!(guardResult && guardResult.ok === true),
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    guardAvailable:
+      typeof canInitializeCustom25DVisualRendererManually === "function",
+    guardOk: !!(guardResult && guardResult.ok === true),
+    noOptionAllowed: !!(noOptionResult && noOptionResult.allowed === true),
+    noOptionBlocked: !!(noOptionResult && noOptionResult.blocked === true),
+    approvalLikeOptionsStillBlocked:
+      !!(approvalLikeOptionsResult && approvalLikeOptionsResult.blocked === true),
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    guardShellOnly: true,
+    blockedBehavior:
+      guardResult && guardResult.blockedBehavior
+        ? guardResult.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          },
+    preservedSystems:
+      guardResult && guardResult.preservedSystems
+        ? guardResult.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-initialization-approval-signal-plan",
+    safetyFlags:
+      guardResult && guardResult.safetyFlags
+        ? guardResult.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual initialization guard shell closeout report only.",
+      "A no-option call remains blocked by default.",
+      "Approval-like options still do not permit any real initialization, attachment, drawing, or mutation in this phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -27727,6 +27822,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof canInitializeCustom25DVisualRendererManually === "function"
           ? canInitializeCustom25DVisualRendererManually
           : null
+    ),
+    getCustom25DVisualManualInitializationGuardShellCloseoutReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationGuardShellCloseoutReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
+          ? getCustom25DVisualManualInitializationGuardShellCloseoutReport
+          : null
     )
   };
 
@@ -27770,7 +27872,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualInitializationGuardContractReport:
         typeof namespace.getCustom25DVisualManualInitializationGuardContractReport === "function",
       canInitializeCustom25DVisualRendererManually:
-        typeof namespace.canInitializeCustom25DVisualRendererManually === "function"
+        typeof namespace.canInitializeCustom25DVisualRendererManually === "function",
+      getCustom25DVisualManualInitializationGuardShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
