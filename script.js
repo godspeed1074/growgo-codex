@@ -26018,6 +26018,14 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
     }
   ];
 
+  const failedRequirements = strictRequirements.filter((requirement) => !requirement.passed);
+  const missingRequirements = failedRequirements.map((requirement) => requirement.key);
+  const missingReasons = failedRequirements.map((requirement) => requirement.reason);
+  const requiredSafetyGates = strictRequirements.map((requirement) => ({
+    key: requirement.key,
+    passed: requirement.passed,
+    reason: requirement.reason
+  }));
   const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
   const selector = '[data-growgo-custom-25d-first-shape-manual-test="true"]';
 
@@ -26030,6 +26038,9 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
       ran: false,
       reason: firstFailure.reason,
       failedRequirement: firstFailure.key,
+      missingRequirements,
+      missingReasons,
+      requiredSafetyGates,
       createResult: null,
       cleanupResult: null,
       existedAfterCreate: false,
@@ -26074,6 +26085,9 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
         typeof createCustom25DVisualFirstShapeManualTestLayer !== "function"
           ? "createHelperAvailable"
           : "cleanupHelperAvailable",
+      missingRequirements: [],
+      missingReasons: [],
+      requiredSafetyGates,
       createResult: null,
       cleanupResult: null,
       existedAfterCreate: false,
@@ -26141,6 +26155,9 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
         ? "first-shape-manual-test-run-completed-and-cleaned"
         : createResult.reason || "first-shape-manual-test-runner-finished",
     failedRequirement: createResult.failedRequirement || null,
+    missingRequirements: [],
+    missingReasons: [],
+    requiredSafetyGates,
     createResult,
     cleanupResult,
     existedAfterCreate,
