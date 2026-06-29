@@ -347,6 +347,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport
             : null
+      ),
+    getCustom25DVisualManualRendererSharedStateContainerPreflightReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateContainerPreflightReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateContainerPreflightReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateContainerPreflightReport
+            : null
       )
   };
 
@@ -29604,6 +29613,156 @@ function getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport(
   };
 }
 
+function getCustom25DVisualManualRendererSharedStateContainerPreflightReport(options = {}) {
+  const creationPlan =
+    typeof getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport(options)
+      : null;
+  const shellCloseout =
+    typeof getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererStateContainerShellCloseoutReport(options)
+      : null;
+  const localStateContainerShell =
+    typeof createCustom25DVisualManualRendererStateContainerShell === "function"
+      ? createCustom25DVisualManualRendererStateContainerShell(options)
+      : null;
+
+  const requiredOptionKeys =
+    creationPlan && Array.isArray(creationPlan.requiredOptionKeys)
+      ? creationPlan.requiredOptionKeys
+      : shellCloseout && Array.isArray(shellCloseout.requiredOptionKeys)
+        ? shellCloseout.requiredOptionKeys
+        : [
+            "manual",
+            "developerIntent",
+            "localDevOnly",
+            "browserConsoleOnly",
+            "explicitOptionsOnly",
+            "allowManualRendererStateContainerShell",
+            "noStartupWiring",
+            "noBackendChanges",
+            "noPersistence",
+            "noAutomaticInvocation"
+          ];
+
+  return {
+    phase: 286,
+    name: "custom-25d-visual-manual-renderer-shared-state-container-preflight",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    preflightOnly: true,
+    plannedStateContainerName: "custom25DVisualManualRendererState",
+    sharedStateContainerCreated: false,
+    windowStateContainerCreated: false,
+    sharedStateMutated: false,
+    futureSharedStateContainerReady: false,
+    preflightChecklist: {
+      phase283LocalShellVerified: true,
+      phase284CloseoutAvailable:
+        typeof getCustom25DVisualManualRendererStateContainerShellCloseoutReport ===
+        "function",
+      phase285CreationPlanAvailable:
+        typeof getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport ===
+        "function",
+      requiredOptionKeysAvailable: requiredOptionKeys.length > 0,
+      defaultPathBlocked:
+        !!(shellCloseout && shellCloseout.defaultNoOptionBlocked === true),
+      manualPathMustRemainExplicit: true,
+      windowAttachmentStillBlocked: true,
+      startupWiringStillBlocked: true,
+      drawingStillBlocked: true,
+      mapAttachmentStillBlocked: true,
+      rendererStartStillBlocked: true,
+      backendStorageNetworkStillBlocked: true,
+      gameplayStillUntouched: true
+    },
+    requiredOptionKeys,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    layerCount: 0,
+    stateContainerAuthorizesRendererCreation: false,
+    stateContainerAuthorizesRendererStart: false,
+    stateContainerAuthorizesMapAttachment: false,
+    stateContainerAuthorizesDrawing: false,
+    stateContainerAuthorizesSharedStateCreation: false,
+    stateContainerAuthorizesWindowAttachment: false,
+    reviewedHelpers: {
+      sharedStateContainerCreationPlan:
+        typeof getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport ===
+        "function",
+      stateContainerShellCloseout:
+        typeof getCustom25DVisualManualRendererStateContainerShellCloseoutReport ===
+        "function",
+      localStateContainerShell:
+        typeof createCustom25DVisualManualRendererStateContainerShell === "function"
+    },
+    stateContainerCreatedLocallyOnly:
+      !!(localStateContainerShell && localStateContainerShell.stateContainerCreated === true),
+    blockedBehavior:
+      creationPlan && creationPlan.blockedBehavior
+        ? creationPlan.blockedBehavior
+        : shellCloseout && shellCloseout.blockedBehavior
+          ? shellCloseout.blockedBehavior
+          : {
+              rendererCreation: true,
+              rendererInitialization: true,
+              mapAttachment: true,
+              drawing: true,
+              domCreation: true,
+              startupWiring: true,
+              automaticInvocation: true,
+              gameplayChanges: true,
+              pinChanges: true,
+              uiChanges: true,
+              backendChanges: true,
+              storageWrites: true,
+              networkAccess: true
+            },
+    preservedSystems:
+      creationPlan && creationPlan.preservedSystems
+        ? creationPlan.preservedSystems
+        : shellCloseout && shellCloseout.preservedSystems
+          ? shellCloseout.preservedSystems
+          : {
+              existingLeafletMapBehavior: true,
+              osmBehavior: true,
+              gameplay: true,
+              pins: true,
+              playerMarker: true,
+              captureRadius: true,
+              ui: true,
+              backend: true,
+              storage: true,
+              network: true
+            },
+    nextStep: "manual-renderer-shared-state-container-contract",
+    safetyFlags:
+      creationPlan && creationPlan.safetyFlags
+        ? creationPlan.safetyFlags
+        : shellCloseout && shellCloseout.safetyFlags
+          ? shellCloseout.safetyFlags
+          : {
+              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+              landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+              landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+              dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+            },
+    notes: [
+      "Passive manual renderer shared state container preflight report only.",
+      "Confirms the shared/window state-container step remains preflight-only and not live.",
+      "Renderer creation, renderer start, window attachment, startup wiring, and gameplay-impacting behavior remain blocked in this phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -29932,6 +30091,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
           "function"
             ? getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport
             : null
+      ),
+    getCustom25DVisualManualRendererSharedStateContainerPreflightReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateContainerPreflightReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateContainerPreflightReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateContainerPreflightReport
+            : null
       )
   };
 
@@ -30011,7 +30179,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
       getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport:
-        typeof namespace.getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport === "function"
+        typeof namespace.getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport === "function",
+      getCustom25DVisualManualRendererSharedStateContainerPreflightReport:
+        typeof namespace.getCustom25DVisualManualRendererSharedStateContainerPreflightReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
