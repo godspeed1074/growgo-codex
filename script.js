@@ -321,6 +321,14 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateContainerContractReadinessReport
             : null
+      ),
+    createCustom25DVisualManualRendererStateContainerShell:
+      createNamespaceWrapper(
+        "createCustom25DVisualManualRendererStateContainerShell",
+        () =>
+          typeof createCustom25DVisualManualRendererStateContainerShell === "function"
+            ? createCustom25DVisualManualRendererStateContainerShell
+            : null
       )
   };
 
@@ -29091,6 +29099,189 @@ function getCustom25DVisualManualRendererStateContainerContractReadinessReport(
   };
 }
 
+function createCustom25DVisualManualRendererStateContainerShell(options = {}) {
+  const contractReadiness =
+    typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
+    "function"
+      ? getCustom25DVisualManualRendererStateContainerContractReadinessReport(options)
+      : null;
+  const stateContainerPlan =
+    typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
+      ? getCustom25DVisualManualRendererStateContainerPlanReport(options)
+      : null;
+
+  const requiredSignals = [
+    {
+      key: "manual",
+      passed: options.manual === true,
+      reason: "manual-flag-required"
+    },
+    {
+      key: "developerIntent",
+      passed: options.developerIntent === true,
+      reason: "developer-intent-required"
+    },
+    {
+      key: "localDevOnly",
+      passed: options.localDevOnly === true,
+      reason: "local-dev-only-required"
+    },
+    {
+      key: "browserConsoleOnly",
+      passed: options.browserConsoleOnly === true,
+      reason: "browser-console-only-required"
+    },
+    {
+      key: "explicitOptionsOnly",
+      passed: options.explicitOptionsOnly === true,
+      reason: "explicit-options-only-required"
+    },
+    {
+      key: "allowManualRendererStateContainerShell",
+      passed: options.allowManualRendererStateContainerShell === true,
+      reason: "manual-renderer-state-container-shell-not-allowed"
+    },
+    {
+      key: "noStartupWiring",
+      passed: options.noStartupWiring === true,
+      reason: "no-startup-wiring-acknowledgement-required"
+    },
+    {
+      key: "noBackendChanges",
+      passed: options.noBackendChanges === true,
+      reason: "no-backend-changes-acknowledgement-required"
+    },
+    {
+      key: "noPersistence",
+      passed: options.noPersistence === true,
+      reason: "no-persistence-acknowledgement-required"
+    },
+    {
+      key: "noAutomaticInvocation",
+      passed: options.noAutomaticInvocation === true,
+      reason: "no-automatic-invocation-acknowledgement-required"
+    }
+  ];
+  const firstFailure = requiredSignals.find((signal) => !signal.passed) || null;
+
+  if (firstFailure) {
+    return {
+      phase: 283,
+      name: "custom-25d-visual-manual-renderer-state-container-shell",
+      ok: true,
+      allowed: false,
+      ready: false,
+      inert: true,
+      manualOnly: true,
+      sharedStateMutated: false,
+      stateContainerCreated: false,
+      stateContainerShared: false,
+      stateContainerAttachedToWindow: false,
+      plannedStateContainerName: "custom25DVisualManualRendererState",
+      state: null,
+      stateContainerAuthorizesRendererCreation: false,
+      stateContainerAuthorizesRendererStart: false,
+      stateContainerAuthorizesMapAttachment: false,
+      stateContainerAuthorizesDrawing: false,
+      rendererCreated: false,
+      rendererInitialized: false,
+      rendererRunning: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domCreated: false,
+      startupWired: false,
+      layerCount: 0,
+      reason: firstFailure.reason,
+      failedRequirement: firstFailure.key,
+      reviewedHelpers: {
+        stateContainerContractReadiness:
+          typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
+          "function",
+        stateContainerPlan:
+          typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
+      },
+      safetyFlags:
+        contractReadiness && contractReadiness.safetyFlags
+          ? contractReadiness.safetyFlags
+          : stateContainerPlan && stateContainerPlan.safetyFlags
+            ? stateContainerPlan.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+      notes: [
+        "Manual/local-dev inert renderer state container shell creator.",
+        "Returns a blocked result by default until the explicit safe manual signals are provided.",
+        "Does not create any live/shared/global state container when blocked."
+      ]
+    };
+  }
+
+  return {
+    phase: 283,
+    name: "custom-25d-visual-manual-renderer-state-container-shell",
+    ok: true,
+    allowed: true,
+    ready: false,
+    inert: true,
+    manualOnly: true,
+    sharedStateMutated: false,
+    stateContainerCreated: true,
+    stateContainerShared: false,
+    stateContainerAttachedToWindow: false,
+    plannedStateContainerName: "custom25DVisualManualRendererState",
+    state: {
+      rendererCreated: false,
+      rendererInitialized: false,
+      rendererRunning: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domCreated: false,
+      startupWired: false,
+      layerCount: 0
+    },
+    stateContainerAuthorizesRendererCreation: false,
+    stateContainerAuthorizesRendererStart: false,
+    stateContainerAuthorizesMapAttachment: false,
+    stateContainerAuthorizesDrawing: false,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    layerCount: 0,
+    reason: "manual-renderer-state-container-shell-created-as-inert-local-data-only",
+    failedRequirement: null,
+    reviewedHelpers: {
+      stateContainerContractReadiness:
+        typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
+        "function",
+      stateContainerPlan:
+        typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
+    },
+    safetyFlags:
+      contractReadiness && contractReadiness.safetyFlags
+        ? contractReadiness.safetyFlags
+        : stateContainerPlan && stateContainerPlan.safetyFlags
+          ? stateContainerPlan.safetyFlags
+          : {
+              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+              landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+              landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+              dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+            },
+    notes: [
+      "Manual/local-dev inert renderer state container shell creator.",
+      "Returns local inert state data only when the explicit safe manual signals are provided.",
+      "Does not create any live/shared/global state container or attach anything to window."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -29393,6 +29584,14 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
           "function"
             ? getCustom25DVisualManualRendererStateContainerContractReadinessReport
             : null
+      ),
+    createCustom25DVisualManualRendererStateContainerShell:
+      createNamespaceWrapper(
+        "createCustom25DVisualManualRendererStateContainerShell",
+        () =>
+          typeof createCustom25DVisualManualRendererStateContainerShell === "function"
+            ? createCustom25DVisualManualRendererStateContainerShell
+            : null
       )
   };
 
@@ -29466,7 +29665,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualRendererStateContainerPlanReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerPlanReport === "function",
       getCustom25DVisualManualRendererStateContainerContractReadinessReport:
-        typeof namespace.getCustom25DVisualManualRendererStateContainerContractReadinessReport === "function"
+        typeof namespace.getCustom25DVisualManualRendererStateContainerContractReadinessReport === "function",
+      createCustom25DVisualManualRendererStateContainerShell:
+        typeof namespace.createCustom25DVisualManualRendererStateContainerShell === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
