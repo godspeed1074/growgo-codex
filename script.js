@@ -184,6 +184,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualManualInitializationGuardPlanReport === "function"
           ? getCustom25DVisualManualInitializationGuardPlanReport
           : null
+    ),
+    getCustom25DVisualManualInitializationGuardContractReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationGuardContractReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationGuardContractReport === "function"
+          ? getCustom25DVisualManualInitializationGuardContractReport
+          : null
     )
   };
 
@@ -27363,6 +27370,82 @@ function getCustom25DVisualManualInitializationGuardPlanReport(options = {}) {
   };
 }
 
+function getCustom25DVisualManualInitializationGuardContractReport(options = {}) {
+  const guardPlan =
+    typeof getCustom25DVisualManualInitializationGuardPlanReport === "function"
+      ? getCustom25DVisualManualInitializationGuardPlanReport(options)
+      : null;
+
+  return {
+    phase: 266,
+    name: "custom-25d-visual-manual-initialization-guard-contract",
+    ok: !!(guardPlan && guardPlan.ok === true),
+    passive: true,
+    reportOnly: true,
+    contractOnly: true,
+    guardPlanAvailable:
+      typeof getCustom25DVisualManualInitializationGuardPlanReport === "function",
+    guardPlanOk: !!(guardPlan && guardPlan.ok === true),
+    guardName: "canInitializeCustom25DVisualRendererManually",
+    requiredSignals: {
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      explicitOptionsOnly: true,
+      manualRendererInitializationApproved: true,
+      lifecycleContractOk: true,
+      shellInertBeforeInitialization: true
+    },
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    allowedBehavior: "contract-report-only",
+    blockedBehavior: {
+      rendererCreation: true,
+      rendererInitialization: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    preservedSystems:
+      guardPlan && guardPlan.preservedSystems
+        ? guardPlan.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-initialization-guard-shell",
+    safetyFlags:
+      guardPlan && guardPlan.safetyFlags
+        ? guardPlan.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual initialization guard contract report only.",
+      "Does not initialize a renderer, create a renderer instance, attach to the map, draw geometry, or create DOM.",
+      "Future manual initialization remains blocked until a separate guard shell phase is reviewed."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -27527,6 +27610,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualManualInitializationGuardPlanReport === "function"
           ? getCustom25DVisualManualInitializationGuardPlanReport
           : null
+    ),
+    getCustom25DVisualManualInitializationGuardContractReport: createNamespaceWrapper(
+      "getCustom25DVisualManualInitializationGuardContractReport",
+      () =>
+        typeof getCustom25DVisualManualInitializationGuardContractReport === "function"
+          ? getCustom25DVisualManualInitializationGuardContractReport
+          : null
     )
   };
 
@@ -27566,7 +27656,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualRendererLifecycleContractReport:
         typeof namespace.getCustom25DVisualRendererLifecycleContractReport === "function",
       getCustom25DVisualManualInitializationGuardPlanReport:
-        typeof namespace.getCustom25DVisualManualInitializationGuardPlanReport === "function"
+        typeof namespace.getCustom25DVisualManualInitializationGuardPlanReport === "function",
+      getCustom25DVisualManualInitializationGuardContractReport:
+        typeof namespace.getCustom25DVisualManualInitializationGuardContractReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
