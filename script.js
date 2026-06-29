@@ -156,6 +156,13 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
           ? getCustom25DVisualFirstShapeManualTestCloseoutReport
           : null
+    ),
+    getCustom25DVisualInertRendererShellCloseoutReport: createNamespaceWrapper(
+      "getCustom25DVisualInertRendererShellCloseoutReport",
+      () =>
+        typeof getCustom25DVisualInertRendererShellCloseoutReport === "function"
+          ? getCustom25DVisualInertRendererShellCloseoutReport
+          : null
     )
   };
 
@@ -27025,6 +27032,87 @@ function createCustom25DVisualInertRendererShell(options = {}) {
   };
 }
 
+function getCustom25DVisualInertRendererShellCloseoutReport(options = {}) {
+  const inertShell =
+    typeof createCustom25DVisualInertRendererShell === "function"
+      ? createCustom25DVisualInertRendererShell(options)
+      : null;
+  const firstShapeCloseout =
+    typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
+      ? getCustom25DVisualFirstShapeManualTestCloseoutReport(options)
+      : null;
+  const firstShapeHandoff =
+    typeof getCustom25DVisualFirstShapeToRendererHandoffReport === "function"
+      ? getCustom25DVisualFirstShapeToRendererHandoffReport(options)
+      : null;
+  const cleanupSelectorCount =
+    firstShapeCloseout && typeof firstShapeCloseout.cleanupSelectorCount === "number"
+      ? firstShapeCloseout.cleanupSelectorCount
+      : firstShapeHandoff && typeof firstShapeHandoff.cleanupSelectorCount === "number"
+        ? firstShapeHandoff.cleanupSelectorCount
+        : null;
+
+  return {
+    phase: 262,
+    name: "custom-25d-visual-inert-renderer-shell-closeout",
+    ok: !!(inertShell && inertShell.ok === true),
+    passive: true,
+    reportOnly: true,
+    inertShellAvailable: typeof createCustom25DVisualInertRendererShell === "function",
+    shellOk: !!(inertShell && inertShell.ok === true),
+    shellInert: !!(inertShell && inertShell.inert === true),
+    shellDisconnected: !!(inertShell && inertShell.disconnected === true),
+    shellInitialized: !!(inertShell && inertShell.initialized === true),
+    shellAttached: !!(inertShell && inertShell.attached === true),
+    shellDrawingEnabled: !!(inertShell && inertShell.drawingEnabled === true),
+    shellLayerCount:
+      inertShell && typeof inertShell.layerCount === "number" ? inertShell.layerCount : 0,
+    cleanupSelectorCount,
+    preservedSystems:
+      inertShell && inertShell.preservedSystems
+        ? inertShell.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    blockedBehavior: {
+      rendererInitialization: true,
+      mapAttachment: true,
+      geometryDrawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    nextStep: "renderer-lifecycle-plan",
+    safetyFlags:
+      inertShell && inertShell.safetyFlags
+        ? inertShell.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive inert renderer shell closeout report only.",
+      "Inspects inert shell metadata only.",
+      "Does not initialize a renderer, attach to the map, draw geometry, create DOM, or wire startup."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -27161,6 +27249,13 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
           ? getCustom25DVisualFirstShapeManualTestCloseoutReport
           : null
+    ),
+    getCustom25DVisualInertRendererShellCloseoutReport: createNamespaceWrapper(
+      "getCustom25DVisualInertRendererShellCloseoutReport",
+      () =>
+        typeof getCustom25DVisualInertRendererShellCloseoutReport === "function"
+          ? getCustom25DVisualInertRendererShellCloseoutReport
+          : null
     )
   };
 
@@ -27192,7 +27287,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualFirstShapeManualTestVerificationReport:
         typeof namespace.getCustom25DVisualFirstShapeManualTestVerificationReport === "function",
       getCustom25DVisualFirstShapeManualTestCloseoutReport:
-        typeof namespace.getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
+        typeof namespace.getCustom25DVisualFirstShapeManualTestCloseoutReport === "function",
+      getCustom25DVisualInertRendererShellCloseoutReport:
+        typeof namespace.getCustom25DVisualInertRendererShellCloseoutReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
