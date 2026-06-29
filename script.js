@@ -277,6 +277,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationShellPlanReport
             : null
+      ),
+    getCustom25DVisualManualRendererInitializationShellContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationShellContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationShellContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationShellContractReport
+            : null
       )
   };
 
@@ -28554,6 +28563,91 @@ function getCustom25DVisualManualRendererInitializationShellPlanReport(options =
   };
 }
 
+function getCustom25DVisualManualRendererInitializationShellContractReport(options = {}) {
+  const initializationShellPlan =
+    typeof getCustom25DVisualManualRendererInitializationShellPlanReport === "function"
+      ? getCustom25DVisualManualRendererInitializationShellPlanReport(options)
+      : null;
+
+  return {
+    phase: 278,
+    name: "custom-25d-visual-manual-renderer-initialization-shell-contract",
+    ok: !!(initializationShellPlan && initializationShellPlan.ok === true),
+    passive: true,
+    reportOnly: true,
+    contractOnly: true,
+    initializationShellPlanAvailable:
+      typeof getCustom25DVisualManualRendererInitializationShellPlanReport === "function",
+    initializationShellPlanOk:
+      !!(initializationShellPlan && initializationShellPlan.ok === true),
+    futureShellName: "initializeCustom25DVisualRendererManually",
+    requiredShellDefaults: {
+      allowed: false,
+      blocked: true,
+      rendererCreated: false,
+      rendererInitialized: false,
+      rendererRunning: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domCreated: false,
+      startupWired: false
+    },
+    initializationAuthorizesRendererCreation: false,
+    initializationAuthorizesRendererStart: false,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    approvedBehavior: "manual-renderer-initialization-shell-contract-only",
+    blockedBehavior:
+      initializationShellPlan && initializationShellPlan.blockedBehavior
+        ? initializationShellPlan.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          },
+    preservedSystems:
+      initializationShellPlan && initializationShellPlan.preservedSystems
+        ? initializationShellPlan.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-renderer-initialization-shell",
+    safetyFlags:
+      initializationShellPlan && initializationShellPlan.safetyFlags
+        ? initializationShellPlan.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual renderer initialization shell contract report only.",
+      "Does not create initializeCustom25DVisualRendererManually in this phase.",
+      "Renderer creation and renderer start remain blocked until a future separately approved phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -28812,6 +28906,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
           "function"
             ? getCustom25DVisualManualRendererInitializationShellPlanReport
             : null
+      ),
+    getCustom25DVisualManualRendererInitializationShellContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationShellContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationShellContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationShellContractReport
+            : null
       )
   };
 
@@ -28875,7 +28978,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualInitializationIntegratedGuardCloseoutReport:
         typeof namespace.getCustom25DVisualManualInitializationIntegratedGuardCloseoutReport === "function",
       getCustom25DVisualManualRendererInitializationShellPlanReport:
-        typeof namespace.getCustom25DVisualManualRendererInitializationShellPlanReport === "function"
+        typeof namespace.getCustom25DVisualManualRendererInitializationShellPlanReport === "function",
+      getCustom25DVisualManualRendererInitializationShellContractReport:
+        typeof namespace.getCustom25DVisualManualRendererInitializationShellContractReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
