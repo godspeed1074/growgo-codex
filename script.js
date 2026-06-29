@@ -464,6 +464,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport
             : null
       ),
+    getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport
+            : null
+      ),
+    getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport
+            : null
+      ),
+    getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -32991,6 +33018,553 @@ function getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessRep
   };
 }
 
+function getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport(
+  options = {}
+) {
+  const snapshotResult =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshot(options)
+      : null;
+  const snapshotNoOptionResult =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshot()
+      : null;
+  const snapshotCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport(options)
+      : null;
+  const snapshotConsumerReadiness =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport(options)
+      : null;
+  const snapshotReaderReadiness =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotReaderReadinessReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotReaderReadinessReport(options)
+      : null;
+  const snapshotReaderPlanCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanCloseoutReport(options)
+      : null;
+  const snapshotReaderPlan =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport(options)
+      : null;
+  const readResultContractPlan =
+    typeof getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport(options)
+      : null;
+  const readResultContractCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport(options)
+      : null;
+
+  const requiredOptionKeys =
+    snapshotConsumerReadiness &&
+    Array.isArray(snapshotConsumerReadiness.requiredOptionKeys)
+      ? snapshotConsumerReadiness.requiredOptionKeys
+      : snapshotCloseout && Array.isArray(snapshotCloseout.requiredOptionKeys)
+        ? snapshotCloseout.requiredOptionKeys
+        : snapshotResult && Array.isArray(snapshotResult.requiredOptionKeys)
+          ? snapshotResult.requiredOptionKeys
+          : snapshotReaderReadiness && Array.isArray(snapshotReaderReadiness.requiredOptionKeys)
+            ? snapshotReaderReadiness.requiredOptionKeys
+            : snapshotReaderPlanCloseout &&
+                Array.isArray(snapshotReaderPlanCloseout.requiredOptionKeys)
+              ? snapshotReaderPlanCloseout.requiredOptionKeys
+              : snapshotReaderPlan && Array.isArray(snapshotReaderPlan.requiredOptionKeys)
+                ? snapshotReaderPlan.requiredOptionKeys
+                : readResultContractCloseout &&
+                    Array.isArray(readResultContractCloseout.requiredOptionKeys)
+                  ? readResultContractCloseout.requiredOptionKeys
+                  : readResultContractPlan &&
+                      Array.isArray(readResultContractPlan.requiredOptionKeys)
+                    ? readResultContractPlan.requiredOptionKeys
+                    : [
+                        "manual",
+                        "developerIntent",
+                        "localDevOnly",
+                        "browserConsoleOnly",
+                        "explicitOptionsOnly",
+                        "allowManualRendererStateContainerShell",
+                        "noStartupWiring",
+                        "noBackendChanges",
+                        "noPersistence",
+                        "noAutomaticInvocation"
+                      ];
+
+  return {
+    phase: 298,
+    name: "custom-25d-visual-manual-renderer-shared-state-snapshot-consumer-plan",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    planOnly: true,
+    snapshotConsumerPlan: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: !!(snapshotNoOptionResult && snapshotNoOptionResult.blocked === true),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      snapshotSummaryOnly: true,
+      returnsLiveStateReference: false,
+      returnsNestedLiveReference: false
+    },
+    actualSnapshotConsumerAdded: false,
+    phase296SnapshotAvailable:
+      typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function",
+    phase297ReadinessAvailable:
+      typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport ===
+      "function",
+    plannedConsumerMode: "snapshot-summary-consumer-only",
+    plannedConsumerUsesSnapshotOnly: true,
+    plannedConsumerUsesLiveStateReference: false,
+    plannedConsumerCreatesState: false,
+    plannedConsumerMutatesState: false,
+    plannedConsumerStartsRenderer: false,
+    plannedConsumerAttachesMap: false,
+    plannedConsumerDrawsGeometry: false,
+    plannedConsumerCreatesDom: false,
+    futureSnapshotConsumerReady: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    layersReturned: false,
+    sharedStateAvailable:
+      !!(snapshotResult && snapshotResult.allowed === true && snapshotResult.sharedStateAvailable),
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    blockedBehavior:
+      snapshotConsumerReadiness && snapshotConsumerReadiness.blockedBehavior
+        ? snapshotConsumerReadiness.blockedBehavior
+        : snapshotCloseout && snapshotCloseout.blockedBehavior
+          ? snapshotCloseout.blockedBehavior
+          : snapshotResult && snapshotResult.blockedBehavior
+            ? snapshotResult.blockedBehavior
+            : snapshotReaderReadiness && snapshotReaderReadiness.blockedBehavior
+              ? snapshotReaderReadiness.blockedBehavior
+              : {
+                  rendererCreation: true,
+                  rendererInitialization: true,
+                  mapAttachment: true,
+                  drawing: true,
+                  domCreation: true,
+                  startupWiring: true,
+                  automaticInvocation: true,
+                  gameplayChanges: true,
+                  pinChanges: true,
+                  uiChanges: true,
+                  backendChanges: true,
+                  storageWrites: true,
+                  networkAccess: true
+                },
+    preservedSystems:
+      snapshotConsumerReadiness && snapshotConsumerReadiness.preservedSystems
+        ? snapshotConsumerReadiness.preservedSystems
+        : snapshotCloseout && snapshotCloseout.preservedSystems
+          ? snapshotCloseout.preservedSystems
+          : snapshotResult && snapshotResult.preservedSystems
+            ? snapshotResult.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              },
+    safetyFlags:
+      snapshotConsumerReadiness && snapshotConsumerReadiness.safetyFlags
+        ? snapshotConsumerReadiness.safetyFlags
+        : snapshotCloseout && snapshotCloseout.safetyFlags
+          ? snapshotCloseout.safetyFlags
+          : snapshotResult && snapshotResult.safetyFlags
+            ? snapshotResult.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+    notes: [
+      "Passive plan for a future snapshot consumer only.",
+      "A future consumer must use snapshot-summary values only and never the live shared state object.",
+      "No renderer, map, drawing, DOM, startup, or gameplay consumer is added in this phase."
+    ]
+  };
+}
+
+function getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport(
+  options = {}
+) {
+  const consumerPlan =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport(options)
+      : null;
+  const snapshotResult =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshot(options)
+      : null;
+  const snapshotNoOptionResult =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshot()
+      : null;
+  const snapshotCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport(options)
+      : null;
+  const snapshotConsumerReadiness =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport(options)
+      : null;
+
+  const requiredOptionKeys =
+    consumerPlan && Array.isArray(consumerPlan.requiredOptionKeys)
+      ? consumerPlan.requiredOptionKeys
+      : snapshotConsumerReadiness &&
+          Array.isArray(snapshotConsumerReadiness.requiredOptionKeys)
+        ? snapshotConsumerReadiness.requiredOptionKeys
+        : snapshotCloseout && Array.isArray(snapshotCloseout.requiredOptionKeys)
+          ? snapshotCloseout.requiredOptionKeys
+          : snapshotResult && Array.isArray(snapshotResult.requiredOptionKeys)
+            ? snapshotResult.requiredOptionKeys
+            : [
+                "manual",
+                "developerIntent",
+                "localDevOnly",
+                "browserConsoleOnly",
+                "explicitOptionsOnly",
+                "allowManualRendererStateContainerShell",
+                "noStartupWiring",
+                "noBackendChanges",
+                "noPersistence",
+                "noAutomaticInvocation"
+              ];
+
+  return {
+    phase: 298,
+    name: "custom-25d-visual-manual-renderer-shared-state-snapshot-consumer-contract",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    contractOnly: true,
+    snapshotConsumerContract: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: !!(snapshotNoOptionResult && snapshotNoOptionResult.blocked === true),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      snapshotSummaryOnly: true,
+      returnsLiveStateReference: false,
+      returnsNestedLiveReference: false
+    },
+    actualSnapshotConsumerAdded: false,
+    allowedInputMode: "snapshot-summary-only",
+    disallowedInputModes: [
+      "live-shared-state-reference",
+      "live-layers-array",
+      "leaflet-layer-reference",
+      "dom-node-reference"
+    ],
+    allowedOutputMode: "primitive-report-only",
+    consumerMayCreateState: false,
+    consumerMayMutateState: false,
+    consumerMayStartRenderer: false,
+    consumerMayAttachMap: false,
+    consumerMayDrawGeometry: false,
+    consumerMayCreateDom: false,
+    consumerMayWireStartup: false,
+    consumerMayChangeGameplay: false,
+    contractReadyForFutureConsumer: true,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    layersReturned: false,
+    sharedStateAvailable:
+      !!(snapshotResult && snapshotResult.allowed === true && snapshotResult.sharedStateAvailable),
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    blockedBehavior:
+      consumerPlan && consumerPlan.blockedBehavior
+        ? consumerPlan.blockedBehavior
+        : snapshotConsumerReadiness && snapshotConsumerReadiness.blockedBehavior
+          ? snapshotConsumerReadiness.blockedBehavior
+          : snapshotCloseout && snapshotCloseout.blockedBehavior
+            ? snapshotCloseout.blockedBehavior
+            : snapshotResult && snapshotResult.blockedBehavior
+              ? snapshotResult.blockedBehavior
+              : {
+                  rendererCreation: true,
+                  rendererInitialization: true,
+                  mapAttachment: true,
+                  drawing: true,
+                  domCreation: true,
+                  startupWiring: true,
+                  automaticInvocation: true,
+                  gameplayChanges: true,
+                  pinChanges: true,
+                  uiChanges: true,
+                  backendChanges: true,
+                  storageWrites: true,
+                  networkAccess: true
+                },
+    preservedSystems:
+      consumerPlan && consumerPlan.preservedSystems
+        ? consumerPlan.preservedSystems
+        : snapshotConsumerReadiness && snapshotConsumerReadiness.preservedSystems
+          ? snapshotConsumerReadiness.preservedSystems
+          : snapshotCloseout && snapshotCloseout.preservedSystems
+            ? snapshotCloseout.preservedSystems
+            : snapshotResult && snapshotResult.preservedSystems
+              ? snapshotResult.preservedSystems
+              : {
+                  existingLeafletMapBehavior: true,
+                  osmBehavior: true,
+                  gameplay: true,
+                  pins: true,
+                  playerMarker: true,
+                  captureRadius: true,
+                  ui: true,
+                  backend: true,
+                  storage: true,
+                  network: true
+                },
+    safetyFlags:
+      consumerPlan && consumerPlan.safetyFlags
+        ? consumerPlan.safetyFlags
+        : snapshotConsumerReadiness && snapshotConsumerReadiness.safetyFlags
+          ? snapshotConsumerReadiness.safetyFlags
+          : snapshotCloseout && snapshotCloseout.safetyFlags
+            ? snapshotCloseout.safetyFlags
+            : snapshotResult && snapshotResult.safetyFlags
+              ? snapshotResult.safetyFlags
+              : {
+                  custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                  landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                  landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                  dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+                },
+    notes: [
+      "Passive contract for a future snapshot consumer only.",
+      "A future consumer may accept snapshot-summary input only and must output primitive report data only.",
+      "Live shared-state references and nested live references remain disallowed."
+    ]
+  };
+}
+
+function getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport(
+  options = {}
+) {
+  const consumerPlan =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport(options)
+      : null;
+  const consumerContract =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport(options)
+      : null;
+  const snapshotResult =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshot(options)
+      : null;
+  const snapshotNoOptionResult =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshot()
+      : null;
+  const snapshotCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport(options)
+      : null;
+  const snapshotConsumerReadiness =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport(options)
+      : null;
+
+  const requiredOptionKeys =
+    consumerContract && Array.isArray(consumerContract.requiredOptionKeys)
+      ? consumerContract.requiredOptionKeys
+      : consumerPlan && Array.isArray(consumerPlan.requiredOptionKeys)
+        ? consumerPlan.requiredOptionKeys
+        : snapshotConsumerReadiness &&
+            Array.isArray(snapshotConsumerReadiness.requiredOptionKeys)
+          ? snapshotConsumerReadiness.requiredOptionKeys
+          : snapshotCloseout && Array.isArray(snapshotCloseout.requiredOptionKeys)
+            ? snapshotCloseout.requiredOptionKeys
+            : snapshotResult && Array.isArray(snapshotResult.requiredOptionKeys)
+              ? snapshotResult.requiredOptionKeys
+              : [
+                  "manual",
+                  "developerIntent",
+                  "localDevOnly",
+                  "browserConsoleOnly",
+                  "explicitOptionsOnly",
+                  "allowManualRendererStateContainerShell",
+                  "noStartupWiring",
+                  "noBackendChanges",
+                  "noPersistence",
+                  "noAutomaticInvocation"
+                ];
+
+  return {
+    phase: 298,
+    name: "custom-25d-visual-manual-renderer-shared-state-snapshot-consumer-plan-closeout",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    snapshotConsumerPlanCloseout: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: !!(snapshotNoOptionResult && snapshotNoOptionResult.blocked === true),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      snapshotSummaryOnly: true,
+      returnsLiveStateReference: false,
+      returnsNestedLiveReference: false
+    },
+    phase298PlanAvailable:
+      typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport ===
+      "function",
+    phase298ContractAvailable:
+      typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport ===
+      "function",
+    actualSnapshotConsumerAdded: false,
+    snapshotConsumerPlanStayedPassive: true,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    readyForFutureActualSnapshotConsumer: true,
+    sharedStateAvailable:
+      !!(snapshotResult && snapshotResult.allowed === true && snapshotResult.sharedStateAvailable),
+    blockedBehavior:
+      consumerContract && consumerContract.blockedBehavior
+        ? consumerContract.blockedBehavior
+        : consumerPlan && consumerPlan.blockedBehavior
+          ? consumerPlan.blockedBehavior
+          : snapshotConsumerReadiness && snapshotConsumerReadiness.blockedBehavior
+            ? snapshotConsumerReadiness.blockedBehavior
+            : snapshotCloseout && snapshotCloseout.blockedBehavior
+              ? snapshotCloseout.blockedBehavior
+              : snapshotResult && snapshotResult.blockedBehavior
+                ? snapshotResult.blockedBehavior
+                : {
+                    rendererCreation: true,
+                    rendererInitialization: true,
+                    mapAttachment: true,
+                    drawing: true,
+                    domCreation: true,
+                    startupWiring: true,
+                    automaticInvocation: true,
+                    gameplayChanges: true,
+                    pinChanges: true,
+                    uiChanges: true,
+                    backendChanges: true,
+                    storageWrites: true,
+                    networkAccess: true
+                  },
+    preservedSystems:
+      consumerContract && consumerContract.preservedSystems
+        ? consumerContract.preservedSystems
+        : consumerPlan && consumerPlan.preservedSystems
+          ? consumerPlan.preservedSystems
+          : snapshotConsumerReadiness && snapshotConsumerReadiness.preservedSystems
+            ? snapshotConsumerReadiness.preservedSystems
+            : snapshotCloseout && snapshotCloseout.preservedSystems
+              ? snapshotCloseout.preservedSystems
+              : snapshotResult && snapshotResult.preservedSystems
+                ? snapshotResult.preservedSystems
+                : {
+                    existingLeafletMapBehavior: true,
+                    osmBehavior: true,
+                    gameplay: true,
+                    pins: true,
+                    playerMarker: true,
+                    captureRadius: true,
+                    ui: true,
+                    backend: true,
+                    storage: true,
+                    network: true
+                  },
+    safetyFlags:
+      consumerContract && consumerContract.safetyFlags
+        ? consumerContract.safetyFlags
+        : consumerPlan && consumerPlan.safetyFlags
+          ? consumerPlan.safetyFlags
+          : snapshotConsumerReadiness && snapshotConsumerReadiness.safetyFlags
+            ? snapshotConsumerReadiness.safetyFlags
+            : snapshotCloseout && snapshotCloseout.safetyFlags
+              ? snapshotCloseout.safetyFlags
+              : snapshotResult && snapshotResult.safetyFlags
+                ? snapshotResult.safetyFlags
+                : {
+                    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+                  },
+    notes: [
+      "Passive closeout for the future snapshot consumer plan and contract only.",
+      "No actual snapshot consumer is added in this phase.",
+      "Shared-state creation, mutation, live references, renderer start, drawing, DOM work, and gameplay changes remain blocked."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -33436,6 +34010,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport
             : null
       ),
+    getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport
+            : null
+      ),
+    getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport
+            : null
+      ),
+    getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -33549,6 +34150,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof namespace.getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport === "function",
       getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport:
         typeof namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport === "function",
+      getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport:
+        typeof namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport === "function",
+      getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport:
+        typeof namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport === "function",
+      getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport === "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
     },
