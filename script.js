@@ -26478,6 +26478,163 @@ function getCustom25DVisualFirstShapeManualTestCloseoutReport(options = {}) {
   };
 }
 
+function getCustom25DVisualFirstShapeToRendererHandoffReport(options = {}) {
+  const selector = '[data-growgo-custom-25d-first-shape-manual-test="true"]';
+  const doc = typeof document !== "undefined" ? document : null;
+  const cleanupSelectorCount =
+    doc && typeof doc.querySelectorAll === "function"
+      ? doc.querySelectorAll(selector).length
+      : 0;
+  const noOptionRunnerResult =
+    typeof runCustom25DVisualFirstShapeManualTest === "function"
+      ? runCustom25DVisualFirstShapeManualTest()
+      : null;
+  const closeoutReport =
+    typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
+      ? getCustom25DVisualFirstShapeManualTestCloseoutReport(options)
+      : null;
+
+  return {
+    phase: 258,
+    name: "custom-25d-visual-first-shape-to-renderer-handoff-report",
+    ok: true,
+    passive: true,
+    reportOnly: true,
+    handoffOnly: true,
+    ready: false,
+    allowed: false,
+    defaultDecision: "planning-only-handoff",
+    failClosedByDefault: true,
+    createsNothing: true,
+    removesNothing: true,
+    drawsNothing: true,
+    attachesNothing: true,
+    mutatesNothing: true,
+    helperAvailability: {
+      firstShapeContract:
+        typeof getCustom25DVisualFirstShapeTestContract === "function",
+      firstShapeCreator:
+        typeof createCustom25DVisualFirstShapeManualTestLayer === "function",
+      firstShapeCleanup:
+        typeof clearCustom25DVisualFirstShapeManualTestLayer === "function",
+      firstShapeRunner:
+        typeof runCustom25DVisualFirstShapeManualTest === "function",
+      firstShapeCloseout:
+        typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
+    },
+    handoffSummary: {
+      firstShapeContractAvailable:
+        typeof getCustom25DVisualFirstShapeTestContract === "function",
+      creatorAvailable:
+        typeof createCustom25DVisualFirstShapeManualTestLayer === "function",
+      cleanupAvailable:
+        typeof clearCustom25DVisualFirstShapeManualTestLayer === "function",
+      runnerAvailable:
+        typeof runCustom25DVisualFirstShapeManualTest === "function",
+      closeoutHelperAvailable:
+        typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function",
+      missingGateReportingAvailable:
+        !!(
+          noOptionRunnerResult &&
+          Array.isArray(noOptionRunnerResult.missingRequirements) &&
+          Array.isArray(noOptionRunnerResult.missingReasons) &&
+          Array.isArray(noOptionRunnerResult.requiredSafetyGates)
+        ),
+      phase255MapDisabledBypassRemainsLocalManualTestOnly: true,
+      noOptionRunnerStillBlocked:
+        !!(noOptionRunnerResult && noOptionRunnerResult.allowed === false),
+      cleanupSelectorCountIsZero: cleanupSelectorCount === 0,
+      recommendedNextStepPlanningOnly: true
+    },
+    closeoutSnapshot: closeoutReport
+      ? {
+          phase: closeoutReport.phase,
+          ok: closeoutReport.ok === true,
+          defaultDecision: closeoutReport.defaultDecision || null,
+          cleanupSelectorCount: closeoutReport.cleanupSelectorCount,
+          defaultNoOptionRunnerCallBlocked:
+            !!(
+              closeoutReport.closeoutSummary &&
+              closeoutReport.closeoutSummary.defaultNoOptionRunnerCallBlocked
+            )
+        }
+      : null,
+    blockedNoOptionRunnerSnapshot: noOptionRunnerResult
+      ? {
+          allowed: noOptionRunnerResult.allowed === true,
+          ran: noOptionRunnerResult.ran === true,
+          reason: noOptionRunnerResult.reason || null,
+          failedRequirement: noOptionRunnerResult.failedRequirement || null,
+          missingRequirements: Array.isArray(noOptionRunnerResult.missingRequirements)
+            ? noOptionRunnerResult.missingRequirements
+            : [],
+          missingReasons: Array.isArray(noOptionRunnerResult.missingReasons)
+            ? noOptionRunnerResult.missingReasons
+            : [],
+          requiredSafetyGates: Array.isArray(noOptionRunnerResult.requiredSafetyGates)
+            ? noOptionRunnerResult.requiredSafetyGates
+            : []
+        }
+      : null,
+    ownedSelector: selector,
+    cleanupSelectorCount,
+    nextStepRecommendation: {
+      planningOnly: true,
+      rendererBehaviorApproved: false,
+      realMapAttachmentApproved: false,
+      mapGeometryDrawingApproved: false,
+      startupWiringApproved: false,
+      recommendedNextPhase:
+        "planning-only unless a future phase explicitly adds renderer behavior under separate review"
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    },
+    notApprovedFor: {
+      startupWiring: true,
+      automaticInvocation: true,
+      testLayerCreation: true,
+      manualTestExecutionByThisHelper: true,
+      cleanupExecutionByThisHelper: true,
+      rendererInitialization: true,
+      rendererWork: true,
+      realLeafletLayer: true,
+      mapGeometryDrawing: true,
+      gameplayChanges: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    notes: [
+      "Passive handoff/report-only helper.",
+      "Does not create the first-shape test layer.",
+      "Does not run the manual test.",
+      "Does not execute cleanup.",
+      "The next recommended step remains planning-only unless a future phase explicitly adds renderer behavior."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
