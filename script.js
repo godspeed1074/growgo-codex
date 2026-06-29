@@ -411,6 +411,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -31399,6 +31408,267 @@ function getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutRe
   };
 }
 
+function getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport(
+  options = {}
+) {
+  const readResultContractPlan =
+    typeof getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport(options)
+      : null;
+  const readResultContractCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport(options)
+      : null;
+  const readAccessPlan =
+    typeof getCustom25DVisualManualRendererSharedStateReadAccessPlanReport === "function"
+      ? getCustom25DVisualManualRendererSharedStateReadAccessPlanReport(options)
+      : null;
+  const readAccessCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport(options)
+      : null;
+  const schemaReview =
+    typeof getCustom25DVisualManualRendererSharedStateSchemaReviewReport === "function"
+      ? getCustom25DVisualManualRendererSharedStateSchemaReviewReport(options)
+      : null;
+  const shellCloseout =
+    typeof getCustom25DVisualManualRendererSharedStateContainerShellCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateContainerShellCloseoutReport(options)
+      : null;
+  const noOptionResult =
+    typeof createCustom25DVisualManualRendererSharedStateContainerShell === "function"
+      ? createCustom25DVisualManualRendererSharedStateContainerShell()
+      : null;
+
+  const requiredOptionKeys =
+    readResultContractCloseout &&
+    Array.isArray(readResultContractCloseout.requiredOptionKeys)
+      ? readResultContractCloseout.requiredOptionKeys
+      : readResultContractPlan && Array.isArray(readResultContractPlan.requiredOptionKeys)
+        ? readResultContractPlan.requiredOptionKeys
+        : readAccessCloseout && Array.isArray(readAccessCloseout.requiredOptionKeys)
+          ? readAccessCloseout.requiredOptionKeys
+          : readAccessPlan && Array.isArray(readAccessPlan.requiredOptionKeys)
+            ? readAccessPlan.requiredOptionKeys
+            : schemaReview && Array.isArray(schemaReview.requiredOptionKeys)
+              ? schemaReview.requiredOptionKeys
+              : shellCloseout && Array.isArray(shellCloseout.requiredOptionKeys)
+                ? shellCloseout.requiredOptionKeys
+                : [
+                    "manual",
+                    "developerIntent",
+                    "localDevOnly",
+                    "browserConsoleOnly",
+                    "explicitOptionsOnly",
+                    "allowManualRendererStateContainerShell",
+                    "noStartupWiring",
+                    "noBackendChanges",
+                    "noPersistence",
+                    "noAutomaticInvocation"
+                  ];
+
+  const existingWindowState =
+    typeof window !== "undefined" && window
+      ? window.custom25DVisualManualRendererState
+      : undefined;
+  const stateExists = typeof existingWindowState !== "undefined";
+  const stateIsObject =
+    !!existingWindowState &&
+    typeof existingWindowState === "object" &&
+    !Array.isArray(existingWindowState);
+
+  return {
+    phase: 294,
+    name: "custom-25d-visual-manual-renderer-shared-state-snapshot-reader-plan",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    planOnly: true,
+    snapshotReaderPlanOnly: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    actualSnapshotReaderAdded: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    plannedReaderMode: "snapshot-summary-only",
+    plannedReaderCreatesState: false,
+    plannedReaderMutatesState: false,
+    plannedReaderReturnsLiveReference: false,
+    phase292ContractAvailable:
+      typeof getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport ===
+      "function",
+    phase293CloseoutAvailable:
+      typeof getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport ===
+      "function",
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked:
+        !!(
+          noOptionResult &&
+          noOptionResult.allowed === false &&
+          noOptionResult.sharedStateContainerCreated === false &&
+          noOptionResult.windowStateContainerCreated === false
+        ),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      snapshotSummaryOnly: true,
+      returnsLiveStateReference: false,
+      createsState: false,
+      mutatesState: false
+    },
+    sharedStateSnapshotSummary: stateExists
+      ? {
+          stateAvailable: true,
+          stateName: stateIsObject ? existingWindowState.name || null : null,
+          inert: stateIsObject ? existingWindowState.inert === true : false,
+          rendererInitialized:
+            stateIsObject ? existingWindowState.rendererInitialized === true : false,
+          rendererRunning:
+            stateIsObject ? existingWindowState.rendererRunning === true : false,
+          mapAttached: stateIsObject ? existingWindowState.mapAttached === true : false,
+          drawingEnabled:
+            stateIsObject ? existingWindowState.drawingEnabled === true : false,
+          domCreated: stateIsObject ? existingWindowState.domCreated === true : false,
+          startupWired: stateIsObject ? existingWindowState.startupWired === true : false,
+          layerCount:
+            stateIsObject && typeof existingWindowState.layerCount === "number"
+              ? existingWindowState.layerCount
+              : 0,
+          layersIsArray: stateIsObject && Array.isArray(existingWindowState.layers)
+        }
+      : {
+          stateAvailable: false,
+          stateName: null,
+          inert: false,
+          rendererInitialized: false,
+          rendererRunning: false,
+          mapAttached: false,
+          drawingEnabled: false,
+          domCreated: false,
+          startupWired: false,
+          layerCount: 0,
+          layersIsArray: false
+        },
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    futureSnapshotReaderReady: false,
+    stateContainerAuthorizesRendererCreation: false,
+    stateContainerAuthorizesRendererStart: false,
+    stateContainerAuthorizesMapAttachment: false,
+    stateContainerAuthorizesDrawing: false,
+    stateContainerAuthorizesDomMutation: false,
+    stateContainerAuthorizesLayerMutation: false,
+    stateContainerAuthorizesStateMutation: false,
+    reviewedHelpers: {
+      readResultContractPlan:
+        typeof getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport ===
+        "function",
+      readResultContractCloseout:
+        typeof getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport ===
+        "function",
+      readAccessPlan:
+        typeof getCustom25DVisualManualRendererSharedStateReadAccessPlanReport ===
+        "function",
+      readAccessPlanCloseout:
+        typeof getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport ===
+        "function"
+    },
+    blockedBehavior:
+      readResultContractCloseout && readResultContractCloseout.blockedBehavior
+        ? readResultContractCloseout.blockedBehavior
+        : readResultContractPlan && readResultContractPlan.blockedBehavior
+          ? readResultContractPlan.blockedBehavior
+          : readAccessCloseout && readAccessCloseout.blockedBehavior
+            ? readAccessCloseout.blockedBehavior
+            : readAccessPlan && readAccessPlan.blockedBehavior
+              ? readAccessPlan.blockedBehavior
+              : schemaReview && schemaReview.blockedBehavior
+                ? schemaReview.blockedBehavior
+                : shellCloseout && shellCloseout.blockedBehavior
+                  ? shellCloseout.blockedBehavior
+                  : {
+                      rendererCreation: true,
+                      rendererInitialization: true,
+                      mapAttachment: true,
+                      drawing: true,
+                      domCreation: true,
+                      startupWiring: true,
+                      automaticInvocation: true,
+                      gameplayChanges: true,
+                      pinChanges: true,
+                      uiChanges: true,
+                      backendChanges: true,
+                      storageWrites: true,
+                      networkAccess: true
+                    },
+    preservedSystems:
+      readResultContractCloseout && readResultContractCloseout.preservedSystems
+        ? readResultContractCloseout.preservedSystems
+        : readResultContractPlan && readResultContractPlan.preservedSystems
+          ? readResultContractPlan.preservedSystems
+          : readAccessCloseout && readAccessCloseout.preservedSystems
+            ? readAccessCloseout.preservedSystems
+            : readAccessPlan && readAccessPlan.preservedSystems
+              ? readAccessPlan.preservedSystems
+              : schemaReview && schemaReview.preservedSystems
+                ? schemaReview.preservedSystems
+                : shellCloseout && shellCloseout.preservedSystems
+                  ? shellCloseout.preservedSystems
+                  : {
+                      existingLeafletMapBehavior: true,
+                      osmBehavior: true,
+                      gameplay: true,
+                      pins: true,
+                      playerMarker: true,
+                      captureRadius: true,
+                      ui: true,
+                      backend: true,
+                      storage: true,
+                      network: true
+                    },
+    safetyFlags:
+      readResultContractCloseout && readResultContractCloseout.safetyFlags
+        ? readResultContractCloseout.safetyFlags
+        : readResultContractPlan && readResultContractPlan.safetyFlags
+          ? readResultContractPlan.safetyFlags
+          : readAccessCloseout && readAccessCloseout.safetyFlags
+            ? readAccessCloseout.safetyFlags
+            : readAccessPlan && readAccessPlan.safetyFlags
+              ? readAccessPlan.safetyFlags
+              : schemaReview && schemaReview.safetyFlags
+                ? schemaReview.safetyFlags
+                : shellCloseout && shellCloseout.safetyFlags
+                  ? shellCloseout.safetyFlags
+                  : {
+                      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+                    },
+    nextStep: "manual-renderer-shared-state-snapshot-reader-contract-plan",
+    notes: [
+      "Passive plan for a future shared renderer state snapshot reader only.",
+      "Does not create, replace, or mutate window.custom25DVisualManualRendererState.",
+      "The future reader remains snapshot-summary-only and is not added in this phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -31791,6 +32061,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -31892,6 +32171,8 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof namespace.getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport === "function",
       getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport === "function",
+      getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport:
+        typeof namespace.getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport === "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
     },
