@@ -294,6 +294,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           typeof initializeCustom25DVisualRendererManually === "function"
             ? initializeCustom25DVisualRendererManually
             : null
+      ),
+    getCustom25DVisualManualRendererInitializationShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationShellCloseoutReport
+            : null
       )
   };
 
@@ -28771,6 +28780,107 @@ function initializeCustom25DVisualRendererManually(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererInitializationShellCloseoutReport(options = {}) {
+  const initializationShellResult =
+    typeof initializeCustom25DVisualRendererManually === "function"
+      ? initializeCustom25DVisualRendererManually(options)
+      : null;
+  const noOptionResult =
+    typeof initializeCustom25DVisualRendererManually === "function"
+      ? initializeCustom25DVisualRendererManually()
+      : null;
+  const approvalLikeOptionsResult =
+    typeof initializeCustom25DVisualRendererManually === "function"
+      ? initializeCustom25DVisualRendererManually({
+          localDevOnly: true,
+          browserConsoleOnly: true,
+          explicitOptionsOnly: true,
+          manualRendererInitializationApproved: true,
+          lifecycleContractOk: true,
+          shellInertBeforeInitialization: true,
+          rendererCreationStillBlocked: true,
+          mapAttachmentStillBlocked: true,
+          drawingStillBlocked: true
+        })
+      : null;
+
+  return {
+    phase: 280,
+    name: "custom-25d-visual-manual-renderer-initialization-shell-closeout",
+    ok: !!(initializationShellResult && initializationShellResult.ok === true),
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    initializationShellAvailable:
+      typeof initializeCustom25DVisualRendererManually === "function",
+    initializationShellOk: !!(initializationShellResult && initializationShellResult.ok === true),
+    noOptionAllowed: !!(noOptionResult && noOptionResult.allowed === true),
+    noOptionBlocked: !!(noOptionResult && noOptionResult.blocked === true),
+    approvalLikeOptionsStillBlocked:
+      !!(approvalLikeOptionsResult && approvalLikeOptionsResult.blocked === true),
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    initializationAuthorizesRendererCreation: false,
+    initializationAuthorizesRendererStart: false,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    initializationShellOnly: true,
+    blockedBehavior:
+      initializationShellResult && initializationShellResult.blockedBehavior
+        ? initializationShellResult.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          },
+    preservedSystems:
+      initializationShellResult && initializationShellResult.preservedSystems
+        ? initializationShellResult.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          },
+    nextStep: "manual-renderer-state-container-plan",
+    safetyFlags:
+      initializationShellResult && initializationShellResult.safetyFlags
+        ? initializationShellResult.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          },
+    notes: [
+      "Passive manual renderer initialization shell closeout report only.",
+      "A no-option initialization shell check remains blocked by default.",
+      "Approval-like options still do not initialize, create, attach, draw, or mutate anything in this phase."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -29046,6 +29156,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
           typeof initializeCustom25DVisualRendererManually === "function"
             ? initializeCustom25DVisualRendererManually
             : null
+      ),
+    getCustom25DVisualManualRendererInitializationShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationShellCloseoutReport
+            : null
       )
   };
 
@@ -29113,7 +29232,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
       getCustom25DVisualManualRendererInitializationShellContractReport:
         typeof namespace.getCustom25DVisualManualRendererInitializationShellContractReport === "function",
       initializeCustom25DVisualRendererManually:
-        typeof namespace.initializeCustom25DVisualRendererManually === "function"
+        typeof namespace.initializeCustom25DVisualRendererManually === "function",
+      getCustom25DVisualManualRendererInitializationShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererInitializationShellCloseoutReport === "function"
     },
     safetyFlags: {
       custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
