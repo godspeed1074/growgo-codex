@@ -26944,6 +26944,87 @@ function getCustom25DVisualInertRendererShellContractPlanReport(options = {}) {
   };
 }
 
+function createCustom25DVisualInertRendererShell(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualInertRendererShellContractPlanReport === "function"
+      ? getCustom25DVisualInertRendererShellContractPlanReport(options)
+      : null;
+
+  return {
+    phase: 261,
+    name: "custom-25d-visual-inert-renderer-shell",
+    ok: true,
+    inert: true,
+    disconnected: true,
+    initialized: false,
+    attached: false,
+    drawingEnabled: false,
+    mapAttached: false,
+    geometryDrawn: false,
+    startupWired: false,
+    autoRun: false,
+    layerCount: 0,
+    metadataOnly: true,
+    contractPlanAvailable: !!contractPlan,
+    bridgePlanAvailable:
+      typeof getCustom25DVisualRendererBridgePlanReport === "function",
+    shellState: {
+      rendererCreated: false,
+      rendererInitialized: false,
+      rendererRunning: false,
+      lifecycleConnected: false,
+      mapLayerAttached: false,
+      geometryDrawingActive: false,
+      domNodesCreated: false
+    },
+    preservedSystems: {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    },
+    notApprovedFor: {
+      globalStorage: true,
+      windowAttachment: true,
+      rendererInitialization: true,
+      rendererBehavior: true,
+      realMapAttachment: true,
+      mapGeometryDrawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      firstShapeExecution: true,
+      firstShapeCleanupExecution: true,
+      osmChanges: true,
+      pinChanges: true,
+      playerMarkerChanges: true,
+      captureRadiusChanges: true,
+      gameplayChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    },
+    safetyFlags: {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    },
+    notes: [
+      "Returns an inert disconnected renderer shell object only.",
+      "Does not attach anything to window or store shell state globally.",
+      "Does not initialize a renderer, attach a map layer, create DOM, or draw geometry."
+    ]
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
