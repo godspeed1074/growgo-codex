@@ -25185,7 +25185,7 @@ function createCustom25DVisualFirstShapeManualTestLayer(options = {}) {
   const firstFailure = strictRequirements.find((requirement) => !requirement.passed) || null;
   const fullStrictOverridePassed = firstFailure === null;
   const localDevVisibleTestMapDisabledBypass =
-    options.allowCustom25DMapDisabledLocalDevVisibleTestBypass === true &&
+    options.allowCustom25DMapDisabledFirstShapeManualTestBypass === true &&
     ENABLE_CUSTOM_25D_MAP !== true &&
     fullStrictOverridePassed;
 
@@ -26118,7 +26118,10 @@ function runCustom25DVisualFirstShapeManualTest(options = {}) {
   }
 
   const doc = typeof document !== "undefined" ? document : null;
-  const createResult = createCustom25DVisualFirstShapeManualTestLayer(options);
+  const createResult = createCustom25DVisualFirstShapeManualTestLayer({
+    ...options,
+    allowCustom25DMapDisabledFirstShapeManualTestBypass: true
+  });
   const existedAfterCreate =
     !!(doc && typeof doc.querySelector === "function" && doc.querySelector(selector));
 
