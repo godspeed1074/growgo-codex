@@ -1008,6 +1008,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualFutureModuleSplitReadinessReport
             : null
       ),
+    getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport
+            : null
+      ),
+    getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport",
+        () =>
+          typeof getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport ===
+          "function"
+            ? getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -45929,6 +45947,344 @@ function getCustom25DVisualFutureModuleSplitReadinessReport(options = {}) {
   };
 }
 
+function getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport(options = {}) {
+  const scriptSizeStatusReport =
+    typeof getCustom25DVisualScriptSizeStatusReport === "function"
+      ? getCustom25DVisualScriptSizeStatusReport(options)
+      : null;
+  const moduleSplitPlanReport =
+    typeof getCustom25DVisualFutureModuleSplitPlanReport === "function"
+      ? getCustom25DVisualFutureModuleSplitPlanReport(options)
+      : null;
+  const moduleSplitReadinessReport =
+    typeof getCustom25DVisualFutureModuleSplitReadinessReport === "function"
+      ? getCustom25DVisualFutureModuleSplitReadinessReport(options)
+      : null;
+  const requiredOptionKeys =
+    moduleSplitReadinessReport &&
+    Array.isArray(moduleSplitReadinessReport.requiredOptionKeys)
+      ? moduleSplitReadinessReport.requiredOptionKeys
+      : moduleSplitPlanReport && Array.isArray(moduleSplitPlanReport.requiredOptionKeys)
+        ? moduleSplitPlanReport.requiredOptionKeys
+        : scriptSizeStatusReport &&
+            Array.isArray(scriptSizeStatusReport.requiredOptionKeys)
+          ? scriptSizeStatusReport.requiredOptionKeys
+          : [
+              "manual",
+              "developerIntent",
+              "localDevOnly",
+              "browserConsoleOnly",
+              "explicitOptionsOnly",
+              "allowManualRendererStateContainerShell",
+              "noStartupWiring",
+              "noBackendChanges",
+              "noPersistence",
+              "noAutomaticInvocation"
+            ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    moduleSplitReadinessReport && moduleSplitReadinessReport.blockedBehavior
+      ? moduleSplitReadinessReport.blockedBehavior
+      : moduleSplitPlanReport && moduleSplitPlanReport.blockedBehavior
+        ? moduleSplitPlanReport.blockedBehavior
+        : scriptSizeStatusReport && scriptSizeStatusReport.blockedBehavior
+          ? scriptSizeStatusReport.blockedBehavior
+          : {
+              rendererCreation: true,
+              rendererInitialization: true,
+              rendererRun: true,
+              mapAttachment: true,
+              drawing: true,
+              domCreation: true,
+              startupWiring: true,
+              automaticInvocation: true,
+              gameplayChanges: true,
+              pinChanges: true,
+              uiChanges: true,
+              backendChanges: true,
+              storageWrites: true,
+              networkAccess: true
+            };
+  const preservedSystems =
+    moduleSplitReadinessReport && moduleSplitReadinessReport.preservedSystems
+      ? moduleSplitReadinessReport.preservedSystems
+      : moduleSplitPlanReport && moduleSplitPlanReport.preservedSystems
+        ? moduleSplitPlanReport.preservedSystems
+        : scriptSizeStatusReport && scriptSizeStatusReport.preservedSystems
+          ? scriptSizeStatusReport.preservedSystems
+          : {
+              existingLeafletMapBehavior: true,
+              osmBehavior: true,
+              gameplay: true,
+              pins: true,
+              playerMarker: true,
+              captureRadius: true,
+              ui: true,
+              backend: true,
+              storage: true,
+              network: true
+            };
+  const safetyFlags =
+    moduleSplitReadinessReport && moduleSplitReadinessReport.safetyFlags
+      ? moduleSplitReadinessReport.safetyFlags
+      : moduleSplitPlanReport && moduleSplitPlanReport.safetyFlags
+        ? moduleSplitPlanReport.safetyFlags
+        : scriptSizeStatusReport && scriptSizeStatusReport.safetyFlags
+          ? scriptSizeStatusReport.safetyFlags
+          : {
+              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+              landmarkTestMarkers:
+                ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+              landmarkSampleData:
+                ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+              dinosaurSitesAuData:
+                ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+            };
+  const concerns =
+    scriptSizeStatusReport && Array.isArray(scriptSizeStatusReport.concerns)
+      ? scriptSizeStatusReport.concerns
+      : [
+          "script-js-large-single-file-maintenance-risk",
+          "helper-density-makes-future-navigation-slower",
+          "future-refactor-should-preserve-load-order-and-runtime-behavior",
+          "module-splitting-should-happen-in-small-reviewed-phases"
+        ];
+  const recommendedFirstExtractionArea =
+    moduleSplitReadinessReport &&
+    typeof moduleSplitReadinessReport.suggestedFirstExtractionArea === "string"
+      ? moduleSplitReadinessReport.suggestedFirstExtractionArea
+      : moduleSplitPlanReport &&
+          typeof moduleSplitPlanReport.firstSafeCandidate === "string"
+        ? moduleSplitPlanReport.firstSafeCandidate
+        : "custom25dvisual-report-planning-helpers";
+
+  if (missingKey) {
+    return {
+      phase: 322,
+      phaseClosedOut: 321,
+      helperName: "getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      closeoutOnly: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      scriptSizeStatusReportAvailable:
+        typeof getCustom25DVisualScriptSizeStatusReport === "function",
+      moduleSplitPlanReportAvailable:
+        typeof getCustom25DVisualFutureModuleSplitPlanReport === "function",
+      moduleSplitReadinessReportAvailable:
+        typeof getCustom25DVisualFutureModuleSplitReadinessReport ===
+        "function",
+      moduleSplitPerformed: false,
+      codeMoved: false,
+      filesCreated: false,
+      importsAdded: false,
+      exportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      recommendedFirstExtractionArea,
+      concerns,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 322,
+    phaseClosedOut: 321,
+    helperName: "getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    closeoutOnly: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    scriptSizeStatusReportAvailable:
+      typeof getCustom25DVisualScriptSizeStatusReport === "function",
+    moduleSplitPlanReportAvailable:
+      typeof getCustom25DVisualFutureModuleSplitPlanReport === "function",
+    moduleSplitReadinessReportAvailable:
+      typeof getCustom25DVisualFutureModuleSplitReadinessReport === "function",
+    moduleSplitPerformed: false,
+    codeMoved: false,
+    filesCreated: false,
+    importsAdded: false,
+    exportsAdded: false,
+    loadingOrderChanged: false,
+    runtimeBehaviorChanged: false,
+    recommendedFirstExtractionArea,
+    concerns,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport(options = {}) {
+  const closeoutReport =
+    typeof getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport === "function"
+      ? getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport(options)
+      : null;
+  const requiredOptionKeys =
+    closeoutReport && Array.isArray(closeoutReport.requiredOptionKeys)
+      ? closeoutReport.requiredOptionKeys
+      : [
+          "manual",
+          "developerIntent",
+          "localDevOnly",
+          "browserConsoleOnly",
+          "explicitOptionsOnly",
+          "allowManualRendererStateContainerShell",
+          "noStartupWiring",
+          "noBackendChanges",
+          "noPersistence",
+          "noAutomaticInvocation"
+        ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    closeoutReport && closeoutReport.blockedBehavior
+      ? closeoutReport.blockedBehavior
+      : {
+          rendererCreation: true,
+          rendererInitialization: true,
+          rendererRun: true,
+          mapAttachment: true,
+          drawing: true,
+          domCreation: true,
+          startupWiring: true,
+          automaticInvocation: true,
+          gameplayChanges: true,
+          pinChanges: true,
+          uiChanges: true,
+          backendChanges: true,
+          storageWrites: true,
+          networkAccess: true
+        };
+  const preservedSystems =
+    closeoutReport && closeoutReport.preservedSystems
+      ? closeoutReport.preservedSystems
+      : {
+          existingLeafletMapBehavior: true,
+          osmBehavior: true,
+          gameplay: true,
+          pins: true,
+          playerMarker: true,
+          captureRadius: true,
+          ui: true,
+          backend: true,
+          storage: true,
+          network: true
+        };
+  const safetyFlags =
+    closeoutReport && closeoutReport.safetyFlags
+      ? closeoutReport.safetyFlags
+      : {
+          custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+          landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+          landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+          dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+        };
+  const blockers = [
+    "future-module-split-should-wait-for-tiny-reviewed-phases",
+    "load-order-sensitive-areas-still-need-cautious-extraction",
+    "renderer-metadata-planning-remains-safer-immediate-work"
+  ];
+  const safetyNotes = [
+    "pause-module-split-work-after-planning-sequence",
+    "return-to-renderer-metadata-planning-before-any-real-file-split",
+    "keep-any-future-split-to-small-reversible-phases"
+  ];
+  const concerns =
+    closeoutReport && Array.isArray(closeoutReport.concerns)
+      ? closeoutReport.concerns
+      : [
+          "script-js-large-single-file-maintenance-risk",
+          "helper-density-makes-future-navigation-slower",
+          "future-refactor-should-preserve-load-order-and-runtime-behavior",
+          "module-splitting-should-happen-in-small-reviewed-phases"
+        ];
+
+  if (missingKey) {
+    return {
+      phase: 322,
+      helperName: "getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      selfReviewOnly: true,
+      reportOnly: true,
+      sequenceReviewed: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      readyToReturnToRendererMetadataPlanning: true,
+      readyForImmediateModuleSplit: false,
+      futureModuleSplitShouldBeTinyPhases: true,
+      blockers,
+      safetyNotes,
+      concerns,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 322,
+    helperName: "getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    selfReviewOnly: true,
+    reportOnly: true,
+    sequenceReviewed: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    readyToReturnToRendererMetadataPlanning: true,
+    readyForImmediateModuleSplit: false,
+    futureModuleSplitShouldBeTinyPhases: true,
+    blockers,
+    safetyNotes,
+    concerns,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -46918,6 +47274,24 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualFutureModuleSplitReadinessReport
             : null
       ),
+    getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport
+            : null
+      ),
+    getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport",
+        () =>
+          typeof getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport ===
+          "function"
+            ? getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -47208,6 +47582,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualFutureModuleSplitReadinessReport:
         typeof namespace.getCustom25DVisualFutureModuleSplitReadinessReport ===
+        "function",
+      getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport ===
+        "function",
+      getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport:
+        typeof namespace.getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport ===
         "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
