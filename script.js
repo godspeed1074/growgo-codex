@@ -649,6 +649,23 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererLifecyclePlanCloseoutReport
             : null
       ),
+    createCustom25DVisualManualRendererLifecycleShell:
+      createNamespaceWrapper(
+        "createCustom25DVisualManualRendererLifecycleShell",
+        () =>
+          typeof createCustom25DVisualManualRendererLifecycleShell === "function"
+            ? createCustom25DVisualManualRendererLifecycleShell
+            : null
+      ),
+    getCustom25DVisualManualRendererLifecycleShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleShellCloseoutReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -36903,6 +36920,461 @@ function getCustom25DVisualManualRendererLifecyclePlanCloseoutReport(options = {
   };
 }
 
+function createCustom25DVisualManualRendererLifecycleShell(options = {}) {
+  const lifecyclePlan =
+    typeof getCustom25DVisualManualRendererLifecyclePlanReport === "function"
+      ? getCustom25DVisualManualRendererLifecyclePlanReport(options)
+      : null;
+  const lifecycleContract =
+    typeof getCustom25DVisualManualRendererLifecycleContractReport === "function"
+      ? getCustom25DVisualManualRendererLifecycleContractReport(options)
+      : null;
+  const lifecyclePlanCloseout =
+    typeof getCustom25DVisualManualRendererLifecyclePlanCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererLifecyclePlanCloseoutReport(options)
+      : null;
+  const integrationStatus =
+    typeof getCustom25DVisualManualRendererIntegrationShellStatus === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellStatus(options)
+      : null;
+  const integrationStatusCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport(options)
+      : null;
+
+  const requiredOptionKeys =
+    lifecyclePlanCloseout && Array.isArray(lifecyclePlanCloseout.requiredOptionKeys)
+      ? lifecyclePlanCloseout.requiredOptionKeys
+      : lifecycleContract && Array.isArray(lifecycleContract.requiredOptionKeys)
+        ? lifecycleContract.requiredOptionKeys
+        : lifecyclePlan && Array.isArray(lifecyclePlan.requiredOptionKeys)
+          ? lifecyclePlan.requiredOptionKeys
+          : integrationStatusCloseout &&
+              Array.isArray(integrationStatusCloseout.requiredOptionKeys)
+            ? integrationStatusCloseout.requiredOptionKeys
+            : integrationStatus && Array.isArray(integrationStatus.requiredOptionKeys)
+              ? integrationStatus.requiredOptionKeys
+              : [
+                  "manual",
+                  "developerIntent",
+                  "localDevOnly",
+                  "browserConsoleOnly",
+                  "explicitOptionsOnly",
+                  "allowManualRendererStateContainerShell",
+                  "noStartupWiring",
+                  "noBackendChanges",
+                  "noPersistence",
+                  "noAutomaticInvocation"
+                ];
+
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell: "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+
+  if (missingKey) {
+    return {
+      phase: 306,
+      name: "custom-25d-visual-manual-renderer-lifecycle-shell",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      manualLifecycleShell: true,
+      inert: true,
+      lifecycleShellCreated: false,
+      consumedIntegrationShellStatusOnly: true,
+      consumedLiveStateReference: false,
+      returnedLiveStateReference: false,
+      returnedNestedLiveReference: false,
+      sharedStateCreated: false,
+      sharedStateMutated: false,
+      rendererCreated: false,
+      rendererInitialized: false,
+      rendererRunning: false,
+      rendererLoopStarted: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domCreated: false,
+      startupWired: false,
+      gameplayChanged: false,
+      lifecycleMode: "manual-inert-renderer-lifecycle-shell-only",
+      blockedBehavior:
+        lifecyclePlanCloseout && lifecyclePlanCloseout.blockedBehavior
+          ? lifecyclePlanCloseout.blockedBehavior
+          : lifecycleContract && lifecycleContract.blockedBehavior
+            ? lifecycleContract.blockedBehavior
+            : lifecyclePlan && lifecyclePlan.blockedBehavior
+              ? lifecyclePlan.blockedBehavior
+              : integrationStatusCloseout && integrationStatusCloseout.blockedBehavior
+                ? integrationStatusCloseout.blockedBehavior
+                : {
+                    rendererCreation: true,
+                    rendererInitialization: true,
+                    mapAttachment: true,
+                    drawing: true,
+                    domCreation: true,
+                    startupWiring: true,
+                    automaticInvocation: true,
+                    gameplayChanges: true,
+                    pinChanges: true,
+                    uiChanges: true,
+                    backendChanges: true,
+                    storageWrites: true,
+                    networkAccess: true
+                  },
+      preservedSystems:
+        lifecyclePlanCloseout && lifecyclePlanCloseout.preservedSystems
+          ? lifecyclePlanCloseout.preservedSystems
+          : lifecycleContract && lifecycleContract.preservedSystems
+            ? lifecycleContract.preservedSystems
+            : lifecyclePlan && lifecyclePlan.preservedSystems
+              ? lifecyclePlan.preservedSystems
+              : integrationStatusCloseout && integrationStatusCloseout.preservedSystems
+                ? integrationStatusCloseout.preservedSystems
+                : {
+                    existingLeafletMapBehavior: true,
+                    osmBehavior: true,
+                    gameplay: true,
+                    pins: true,
+                    playerMarker: true,
+                    captureRadius: true,
+                    ui: true,
+                    backend: true,
+                    storage: true,
+                    network: true
+                  },
+      safetyFlags:
+        lifecyclePlanCloseout && lifecyclePlanCloseout.safetyFlags
+          ? lifecyclePlanCloseout.safetyFlags
+          : lifecycleContract && lifecycleContract.safetyFlags
+            ? lifecycleContract.safetyFlags
+            : lifecyclePlan && lifecyclePlan.safetyFlags
+              ? lifecyclePlan.safetyFlags
+              : integrationStatusCloseout && integrationStatusCloseout.safetyFlags
+                ? integrationStatusCloseout.safetyFlags
+                : {
+                    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+                  }
+    };
+  }
+
+  const integrationStatusAvailable =
+    !!(
+      integrationStatus &&
+      integrationStatus.allowed === true &&
+      integrationStatus.blocked === false
+    );
+
+  return {
+    phase: 306,
+    name: "custom-25d-visual-manual-renderer-lifecycle-shell",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    reason: integrationStatusAvailable ? null : "integration-shell-status-not-available",
+    failedRequirement: integrationStatusAvailable ? null : "integrationShellStatusAvailable",
+    requiredOptionKeys,
+    manualLifecycleShell: true,
+    inert: true,
+    lifecycleShellCreated: integrationStatusAvailable,
+    consumedIntegrationShellStatusOnly: true,
+    consumedLiveStateReference: false,
+    returnedLiveStateReference: false,
+    returnedNestedLiveReference: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    rendererLoopStarted: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    gameplayChanged: false,
+    lifecycleMode: "manual-inert-renderer-lifecycle-shell-only",
+    integrationShellStatusSummary:
+      integrationStatusAvailable && integrationStatus
+        ? {
+            shellAvailable: integrationStatus.shellAvailable === true,
+            shellStayedInert: integrationStatus.shellStayedInert === true,
+            shellCreated: integrationStatus.shellCreated === true,
+            snapshotConsumerConsumed:
+              integrationStatus.snapshotConsumerConsumed === true,
+            rendererCreated: integrationStatus.rendererCreated === true,
+            rendererInitialized: integrationStatus.rendererInitialized === true,
+            rendererRunning: integrationStatus.rendererRunning === true,
+            mapAttached: integrationStatus.mapAttached === true,
+            drawingEnabled: integrationStatus.drawingEnabled === true,
+            domCreated: integrationStatus.domCreated === true,
+            startupWired: integrationStatus.startupWired === true,
+            gameplayChanged: integrationStatus.gameplayChanged === true
+          }
+        : null,
+    blockedBehavior:
+      lifecyclePlanCloseout && lifecyclePlanCloseout.blockedBehavior
+        ? lifecyclePlanCloseout.blockedBehavior
+        : lifecycleContract && lifecycleContract.blockedBehavior
+          ? lifecycleContract.blockedBehavior
+          : lifecyclePlan && lifecyclePlan.blockedBehavior
+            ? lifecyclePlan.blockedBehavior
+            : integrationStatusCloseout && integrationStatusCloseout.blockedBehavior
+              ? integrationStatusCloseout.blockedBehavior
+              : integrationStatus && integrationStatus.blockedBehavior
+                ? integrationStatus.blockedBehavior
+                : {
+                    rendererCreation: true,
+                    rendererInitialization: true,
+                    mapAttachment: true,
+                    drawing: true,
+                    domCreation: true,
+                    startupWiring: true,
+                    automaticInvocation: true,
+                    gameplayChanges: true,
+                    pinChanges: true,
+                    uiChanges: true,
+                    backendChanges: true,
+                    storageWrites: true,
+                    networkAccess: true
+                  },
+    preservedSystems:
+      lifecyclePlanCloseout && lifecyclePlanCloseout.preservedSystems
+        ? lifecyclePlanCloseout.preservedSystems
+        : lifecycleContract && lifecycleContract.preservedSystems
+          ? lifecycleContract.preservedSystems
+          : lifecyclePlan && lifecyclePlan.preservedSystems
+            ? lifecyclePlan.preservedSystems
+            : integrationStatusCloseout && integrationStatusCloseout.preservedSystems
+              ? integrationStatusCloseout.preservedSystems
+              : integrationStatus && integrationStatus.preservedSystems
+                ? integrationStatus.preservedSystems
+                : {
+                    existingLeafletMapBehavior: true,
+                    osmBehavior: true,
+                    gameplay: true,
+                    pins: true,
+                    playerMarker: true,
+                    captureRadius: true,
+                    ui: true,
+                    backend: true,
+                    storage: true,
+                    network: true
+                  },
+    safetyFlags:
+      lifecyclePlanCloseout && lifecyclePlanCloseout.safetyFlags
+        ? lifecyclePlanCloseout.safetyFlags
+        : lifecycleContract && lifecycleContract.safetyFlags
+          ? lifecycleContract.safetyFlags
+          : lifecyclePlan && lifecyclePlan.safetyFlags
+            ? lifecyclePlan.safetyFlags
+            : integrationStatusCloseout && integrationStatusCloseout.safetyFlags
+              ? integrationStatusCloseout.safetyFlags
+              : integrationStatus && integrationStatus.safetyFlags
+                ? integrationStatus.safetyFlags
+                : {
+                    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+                  }
+  };
+}
+
+function getCustom25DVisualManualRendererLifecycleShellCloseoutReport(options = {}) {
+  const lifecyclePlan =
+    typeof getCustom25DVisualManualRendererLifecyclePlanReport === "function"
+      ? getCustom25DVisualManualRendererLifecyclePlanReport(options)
+      : null;
+  const lifecycleContract =
+    typeof getCustom25DVisualManualRendererLifecycleContractReport === "function"
+      ? getCustom25DVisualManualRendererLifecycleContractReport(options)
+      : null;
+  const lifecyclePlanCloseout =
+    typeof getCustom25DVisualManualRendererLifecyclePlanCloseoutReport === "function"
+      ? getCustom25DVisualManualRendererLifecyclePlanCloseoutReport(options)
+      : null;
+  const integrationStatus =
+    typeof getCustom25DVisualManualRendererIntegrationShellStatus === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellStatus(options)
+      : null;
+  const integrationStatusCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport(options)
+      : null;
+  const shellResult =
+    typeof createCustom25DVisualManualRendererLifecycleShell === "function"
+      ? createCustom25DVisualManualRendererLifecycleShell(options)
+      : null;
+  const noOptionShellResult =
+    typeof createCustom25DVisualManualRendererLifecycleShell === "function"
+      ? createCustom25DVisualManualRendererLifecycleShell()
+      : null;
+
+  const requiredOptionKeys =
+    shellResult && Array.isArray(shellResult.requiredOptionKeys)
+      ? shellResult.requiredOptionKeys
+      : lifecyclePlanCloseout && Array.isArray(lifecyclePlanCloseout.requiredOptionKeys)
+        ? lifecyclePlanCloseout.requiredOptionKeys
+        : lifecycleContract && Array.isArray(lifecycleContract.requiredOptionKeys)
+          ? lifecycleContract.requiredOptionKeys
+          : lifecyclePlan && Array.isArray(lifecyclePlan.requiredOptionKeys)
+            ? lifecyclePlan.requiredOptionKeys
+            : integrationStatusCloseout &&
+                Array.isArray(integrationStatusCloseout.requiredOptionKeys)
+              ? integrationStatusCloseout.requiredOptionKeys
+              : integrationStatus && Array.isArray(integrationStatus.requiredOptionKeys)
+                ? integrationStatus.requiredOptionKeys
+                : [
+                    "manual",
+                    "developerIntent",
+                    "localDevOnly",
+                    "browserConsoleOnly",
+                    "explicitOptionsOnly",
+                    "allowManualRendererStateContainerShell",
+                    "noStartupWiring",
+                    "noBackendChanges",
+                    "noPersistence",
+                    "noAutomaticInvocation"
+                  ];
+
+  return {
+    phase: 306,
+    name: "custom-25d-visual-manual-renderer-lifecycle-shell-closeout",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    requiredOptionKeys,
+    lifecycleShellCloseout: true,
+    phase306ShellAvailable:
+      typeof createCustom25DVisualManualRendererLifecycleShell === "function",
+    defaultNoOptionCheck: {
+      blocked: !!(noOptionShellResult && noOptionShellResult.blocked === true),
+      requiredOptionKeys
+    },
+    lifecycleShellStayedInert:
+      !!(
+        shellResult &&
+        shellResult.inert === true &&
+        shellResult.consumedIntegrationShellStatusOnly === true &&
+        shellResult.rendererCreated === false &&
+        shellResult.rendererInitialized === false &&
+        shellResult.rendererRunning === false &&
+        shellResult.rendererLoopStarted === false &&
+        shellResult.mapAttached === false &&
+        shellResult.drawingEnabled === false &&
+        shellResult.domCreated === false &&
+        shellResult.startupWired === false &&
+        shellResult.gameplayChanged === false
+      ),
+    consumedIntegrationShellStatusOnly: true,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    rendererLoopStarted: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    gameplayChanged: false,
+    readyForFutureLifecycleStatusBundle: true,
+    blockedBehavior:
+      shellResult && shellResult.blockedBehavior
+        ? shellResult.blockedBehavior
+        : lifecyclePlanCloseout && lifecyclePlanCloseout.blockedBehavior
+          ? lifecyclePlanCloseout.blockedBehavior
+          : lifecycleContract && lifecycleContract.blockedBehavior
+            ? lifecycleContract.blockedBehavior
+            : lifecyclePlan && lifecyclePlan.blockedBehavior
+              ? lifecyclePlan.blockedBehavior
+              : integrationStatusCloseout && integrationStatusCloseout.blockedBehavior
+                ? integrationStatusCloseout.blockedBehavior
+                : integrationStatus && integrationStatus.blockedBehavior
+                  ? integrationStatus.blockedBehavior
+                  : {
+                      rendererCreation: true,
+                      rendererInitialization: true,
+                      mapAttachment: true,
+                      drawing: true,
+                      domCreation: true,
+                      startupWiring: true,
+                      automaticInvocation: true,
+                      gameplayChanges: true,
+                      pinChanges: true,
+                      uiChanges: true,
+                      backendChanges: true,
+                      storageWrites: true,
+                      networkAccess: true
+                    },
+    preservedSystems:
+      shellResult && shellResult.preservedSystems
+        ? shellResult.preservedSystems
+        : lifecyclePlanCloseout && lifecyclePlanCloseout.preservedSystems
+          ? lifecyclePlanCloseout.preservedSystems
+          : lifecycleContract && lifecycleContract.preservedSystems
+            ? lifecycleContract.preservedSystems
+            : lifecyclePlan && lifecyclePlan.preservedSystems
+              ? lifecyclePlan.preservedSystems
+              : integrationStatusCloseout && integrationStatusCloseout.preservedSystems
+                ? integrationStatusCloseout.preservedSystems
+                : integrationStatus && integrationStatus.preservedSystems
+                  ? integrationStatus.preservedSystems
+                  : {
+                      existingLeafletMapBehavior: true,
+                      osmBehavior: true,
+                      gameplay: true,
+                      pins: true,
+                      playerMarker: true,
+                      captureRadius: true,
+                      ui: true,
+                      backend: true,
+                      storage: true,
+                      network: true
+                    },
+    safetyFlags:
+      shellResult && shellResult.safetyFlags
+        ? shellResult.safetyFlags
+        : lifecyclePlanCloseout && lifecyclePlanCloseout.safetyFlags
+          ? lifecyclePlanCloseout.safetyFlags
+          : lifecycleContract && lifecycleContract.safetyFlags
+            ? lifecycleContract.safetyFlags
+            : lifecyclePlan && lifecyclePlan.safetyFlags
+              ? lifecyclePlan.safetyFlags
+              : integrationStatusCloseout && integrationStatusCloseout.safetyFlags
+                ? integrationStatusCloseout.safetyFlags
+                : integrationStatus && integrationStatus.safetyFlags
+                  ? integrationStatus.safetyFlags
+                  : {
+                      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+                    }
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -37533,6 +38005,23 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererLifecyclePlanCloseoutReport
             : null
       ),
+    createCustom25DVisualManualRendererLifecycleShell:
+      createNamespaceWrapper(
+        "createCustom25DVisualManualRendererLifecycleShell",
+        () =>
+          typeof createCustom25DVisualManualRendererLifecycleShell === "function"
+            ? createCustom25DVisualManualRendererLifecycleShell
+            : null
+      ),
+    getCustom25DVisualManualRendererLifecycleShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleShellCloseoutReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -37700,6 +38189,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererLifecyclePlanCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererLifecyclePlanCloseoutReport ===
+        "function",
+      createCustom25DVisualManualRendererLifecycleShell:
+        typeof namespace.createCustom25DVisualManualRendererLifecycleShell ===
+        "function",
+      getCustom25DVisualManualRendererLifecycleShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererLifecycleShellCloseoutReport ===
         "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
