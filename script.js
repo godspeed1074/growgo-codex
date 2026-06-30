@@ -966,6 +966,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererMetadataValidationResultPlanReport
             : null
       ),
+    getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport
+            : null
+      ),
+    getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport",
+        () =>
+          typeof getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport ===
+          "function"
+            ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -45074,6 +45092,409 @@ function getCustom25DVisualManualRendererMetadataValidationResultPlanReport(
   };
 }
 
+function getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport(
+  options = {}
+) {
+  const statusReport =
+    typeof getCustom25DVisualManualRendererMetadataValidationShellStatusReport ===
+    "function"
+      ? getCustom25DVisualManualRendererMetadataValidationShellStatusReport(options)
+      : null;
+  const readinessReport =
+    typeof getCustom25DVisualManualRendererMetadataValidationShellReadinessReport ===
+    "function"
+      ? getCustom25DVisualManualRendererMetadataValidationShellReadinessReport(options)
+      : null;
+  const resultPlanReport =
+    typeof getCustom25DVisualManualRendererMetadataValidationResultPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererMetadataValidationResultPlanReport(options)
+      : null;
+  const noOptionValidationShell =
+    typeof createCustom25DVisualManualRendererMetadataValidationShell ===
+    "function"
+      ? createCustom25DVisualManualRendererMetadataValidationShell()
+      : null;
+
+  const requiredOptionKeys =
+    statusReport && Array.isArray(statusReport.requiredOptionKeys)
+      ? statusReport.requiredOptionKeys
+      : readinessReport && Array.isArray(readinessReport.requiredOptionKeys)
+        ? readinessReport.requiredOptionKeys
+        : resultPlanReport && Array.isArray(resultPlanReport.requiredOptionKeys)
+          ? resultPlanReport.requiredOptionKeys
+          : [
+              "manual",
+              "developerIntent",
+              "localDevOnly",
+              "browserConsoleOnly",
+              "explicitOptionsOnly",
+              "allowManualRendererStateContainerShell",
+              "noStartupWiring",
+              "noBackendChanges",
+              "noPersistence",
+              "noAutomaticInvocation"
+            ];
+
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+
+  const blockedBehavior =
+    statusReport && statusReport.blockedBehavior
+      ? statusReport.blockedBehavior
+      : readinessReport && readinessReport.blockedBehavior
+        ? readinessReport.blockedBehavior
+        : resultPlanReport && resultPlanReport.blockedBehavior
+          ? resultPlanReport.blockedBehavior
+          : {
+              rendererCreation: true,
+              rendererInitialization: true,
+              rendererRun: true,
+              mapAttachment: true,
+              drawing: true,
+              domCreation: true,
+              startupWiring: true,
+              automaticInvocation: true,
+              gameplayChanges: true,
+              pinChanges: true,
+              uiChanges: true,
+              backendChanges: true,
+              storageWrites: true,
+              networkAccess: true
+            };
+
+  const preservedSystems =
+    statusReport && statusReport.preservedSystems
+      ? statusReport.preservedSystems
+      : readinessReport && readinessReport.preservedSystems
+        ? readinessReport.preservedSystems
+        : resultPlanReport && resultPlanReport.preservedSystems
+          ? resultPlanReport.preservedSystems
+          : {
+              existingLeafletMapBehavior: true,
+              osmBehavior: true,
+              gameplay: true,
+              pins: true,
+              playerMarker: true,
+              captureRadius: true,
+              ui: true,
+              backend: true,
+              storage: true,
+              network: true
+            };
+
+  const safetyFlags =
+    statusReport && statusReport.safetyFlags
+      ? statusReport.safetyFlags
+      : readinessReport && readinessReport.safetyFlags
+        ? readinessReport.safetyFlags
+        : resultPlanReport && resultPlanReport.safetyFlags
+          ? resultPlanReport.safetyFlags
+          : {
+              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+              landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+              landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+              dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+            };
+
+  if (missingKey) {
+    return {
+      phase: 320,
+      phaseClosedOut: 319,
+      name: "custom-25d-visual-manual-renderer-metadata-validation-status-result-plan-closeout",
+      helperName:
+        "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      closeoutOnly: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      statusReportAvailable:
+        typeof getCustom25DVisualManualRendererMetadataValidationShellStatusReport ===
+        "function",
+      readinessReportAvailable:
+        typeof getCustom25DVisualManualRendererMetadataValidationShellReadinessReport ===
+        "function",
+      resultPlanReportAvailable:
+        typeof getCustom25DVisualManualRendererMetadataValidationResultPlanReport ===
+        "function",
+      defaultNoOptionCheck: {
+        blocked:
+          !!(
+            noOptionValidationShell &&
+            noOptionValidationShell.blocked === true
+          ),
+        requiredOptionKeys
+      },
+      resultPlanStillPlanOnly: true,
+      runtimeValidationEnforced: false,
+      liveRendererCreated: false,
+      callableMethodsCreated: false,
+      sharedStateCreated: false,
+      sharedStateMutated: false,
+      sharedStateDirectlyRead: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domMutated: false,
+      startupWired: false,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 320,
+    phaseClosedOut: 319,
+    name: "custom-25d-visual-manual-renderer-metadata-validation-status-result-plan-closeout",
+    helperName:
+      "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    closeoutOnly: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    statusReportAvailable:
+      typeof getCustom25DVisualManualRendererMetadataValidationShellStatusReport ===
+      "function",
+    readinessReportAvailable:
+      typeof getCustom25DVisualManualRendererMetadataValidationShellReadinessReport ===
+      "function",
+    resultPlanReportAvailable:
+      typeof getCustom25DVisualManualRendererMetadataValidationResultPlanReport ===
+      "function",
+    defaultNoOptionCheck: {
+      blocked:
+        !!(
+          noOptionValidationShell &&
+          noOptionValidationShell.blocked === true
+        ),
+      requiredOptionKeys
+    },
+    resultPlanStillPlanOnly: true,
+    runtimeValidationEnforced: false,
+    liveRendererCreated: false,
+    callableMethodsCreated: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    sharedStateDirectlyRead: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domMutated: false,
+    startupWired: false,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport(
+  options = {}
+) {
+  const closeoutReport =
+    typeof getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport(
+          options
+        )
+      : null;
+  const noOptionValidationShell =
+    typeof createCustom25DVisualManualRendererMetadataValidationShell ===
+    "function"
+      ? createCustom25DVisualManualRendererMetadataValidationShell()
+      : null;
+
+  const requiredOptionKeys =
+    closeoutReport && Array.isArray(closeoutReport.requiredOptionKeys)
+      ? closeoutReport.requiredOptionKeys
+      : [
+          "manual",
+          "developerIntent",
+          "localDevOnly",
+          "browserConsoleOnly",
+          "explicitOptionsOnly",
+          "allowManualRendererStateContainerShell",
+          "noStartupWiring",
+          "noBackendChanges",
+          "noPersistence",
+          "noAutomaticInvocation"
+        ];
+
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+
+  const blockedBehavior =
+    closeoutReport && closeoutReport.blockedBehavior
+      ? closeoutReport.blockedBehavior
+      : {
+          rendererCreation: true,
+          rendererInitialization: true,
+          rendererRun: true,
+          mapAttachment: true,
+          drawing: true,
+          domCreation: true,
+          startupWiring: true,
+          automaticInvocation: true,
+          gameplayChanges: true,
+          pinChanges: true,
+          uiChanges: true,
+          backendChanges: true,
+          storageWrites: true,
+          networkAccess: true
+        };
+
+  const preservedSystems =
+    closeoutReport && closeoutReport.preservedSystems
+      ? closeoutReport.preservedSystems
+      : {
+          existingLeafletMapBehavior: true,
+          osmBehavior: true,
+          gameplay: true,
+          pins: true,
+          playerMarker: true,
+          captureRadius: true,
+          ui: true,
+          backend: true,
+          storage: true,
+          network: true
+        };
+
+  const safetyFlags =
+    closeoutReport && closeoutReport.safetyFlags
+      ? closeoutReport.safetyFlags
+      : {
+          custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+          landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+          landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+          dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+        };
+
+  const blockers = [];
+  const concerns = [];
+  if (!closeoutReport) blockers.push("phase-320-closeout-report-unavailable");
+  if (closeoutReport && closeoutReport.statusReportAvailable !== true) {
+    blockers.push("phase-319-status-report-unavailable");
+  }
+  if (closeoutReport && closeoutReport.readinessReportAvailable !== true) {
+    blockers.push("phase-319-readiness-report-unavailable");
+  }
+  if (closeoutReport && closeoutReport.resultPlanReportAvailable !== true) {
+    blockers.push("phase-319-result-plan-report-unavailable");
+  }
+  if (closeoutReport && closeoutReport.resultPlanStillPlanOnly !== true) {
+    concerns.push("result-plan-no-longer-plan-only");
+  }
+  if (closeoutReport && closeoutReport.runtimeValidationEnforced !== false) {
+    concerns.push("runtime-validation-appears-enabled");
+  }
+
+  if (missingKey) {
+    return {
+      phase: 320,
+      name: "custom-25d-visual-manual-renderer-metadata-validation-status-result-plan-self-review",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      reportOnly: true,
+      selfReviewOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      sequenceReadyForNextPassivePlanningStep: blockers.length === 0,
+      blockers,
+      concerns,
+      defaultNoOptionCheck: {
+        blocked:
+          !!(
+            noOptionValidationShell &&
+            noOptionValidationShell.blocked === true
+          ),
+        requiredOptionKeys
+      },
+      runtimeValidationEnforced: false,
+      liveRendererCreated: false,
+      callableMethodsCreated: false,
+      sharedStateCreated: false,
+      sharedStateMutated: false,
+      sharedStateDirectlyRead: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domMutated: false,
+      startupWired: false,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 320,
+    name: "custom-25d-visual-manual-renderer-metadata-validation-status-result-plan-self-review",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    reportOnly: true,
+    selfReviewOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    sequenceReadyForNextPassivePlanningStep: blockers.length === 0,
+    blockers,
+    concerns,
+    defaultNoOptionCheck: {
+      blocked:
+        !!(
+          noOptionValidationShell &&
+          noOptionValidationShell.blocked === true
+        ),
+      requiredOptionKeys
+    },
+    runtimeValidationEnforced: false,
+    liveRendererCreated: false,
+    callableMethodsCreated: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    sharedStateDirectlyRead: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domMutated: false,
+    startupWired: false,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -46021,6 +46442,24 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererMetadataValidationResultPlanReport
             : null
       ),
+    getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport
+            : null
+      ),
+    getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport",
+        () =>
+          typeof getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport ===
+          "function"
+            ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -46296,6 +46735,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererMetadataValidationResultPlanReport:
         typeof namespace.getCustom25DVisualManualRendererMetadataValidationResultPlanReport ===
+        "function",
+      getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport:
+        typeof namespace.getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport ===
         "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
