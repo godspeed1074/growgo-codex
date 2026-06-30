@@ -580,6 +580,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererIntegrationShellCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererIntegrationShellReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -35515,9 +35542,519 @@ function getCustom25DVisualManualRendererIntegrationShellCloseoutReport(options 
               : {
                   custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
                   landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              }
+  };
+}
+
+function getCustom25DVisualManualRendererIntegrationShellReadinessReport(options = {}) {
+  const shellResult =
+    typeof createCustom25DVisualManualRendererIntegrationShell === "function"
+      ? createCustom25DVisualManualRendererIntegrationShell(options)
+      : null;
+  const shellCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellCloseoutReport(options)
+      : null;
+  const shellPlan =
+    typeof getCustom25DVisualManualRendererIntegrationShellPlanReport === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellPlanReport(options)
+      : null;
+  const shellContract =
+    typeof getCustom25DVisualManualRendererIntegrationShellContractReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellContractReport(options)
+      : null;
+  const shellPlanCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport(options)
+      : null;
+  const consumerReport =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport(options)
+      : null;
+  const noOptionShellResult =
+    typeof createCustom25DVisualManualRendererIntegrationShell === "function"
+      ? createCustom25DVisualManualRendererIntegrationShell()
+      : null;
+
+  const requiredOptionKeys =
+    shellCloseout && Array.isArray(shellCloseout.requiredOptionKeys)
+      ? shellCloseout.requiredOptionKeys
+      : shellResult && Array.isArray(shellResult.requiredOptionKeys)
+        ? shellResult.requiredOptionKeys
+        : shellPlanCloseout && Array.isArray(shellPlanCloseout.requiredOptionKeys)
+          ? shellPlanCloseout.requiredOptionKeys
+          : shellContract && Array.isArray(shellContract.requiredOptionKeys)
+            ? shellContract.requiredOptionKeys
+            : shellPlan && Array.isArray(shellPlan.requiredOptionKeys)
+              ? shellPlan.requiredOptionKeys
+              : consumerReport && Array.isArray(consumerReport.requiredOptionKeys)
+                ? consumerReport.requiredOptionKeys
+                : [
+                    "manual",
+                    "developerIntent",
+                    "localDevOnly",
+                    "browserConsoleOnly",
+                    "explicitOptionsOnly",
+                    "allowManualRendererStateContainerShell",
+                    "noStartupWiring",
+                    "noBackendChanges",
+                    "noPersistence",
+                    "noAutomaticInvocation"
+                  ];
+
+  return {
+    phase: 303,
+    name: "custom-25d-visual-manual-renderer-integration-shell-readiness",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    integrationShellReadiness: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: !!(noOptionShellResult && noOptionShellResult.blocked === true),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      shellConsumesSnapshotConsumerReportOnly: true,
+      actualStatusReaderAdded: false
+    },
+    phase302ShellAvailable:
+      typeof createCustom25DVisualManualRendererIntegrationShell === "function",
+    phase302CloseoutAvailable:
+      typeof getCustom25DVisualManualRendererIntegrationShellCloseoutReport ===
+      "function",
+    shellStayedInert:
+      !!(
+        shellCloseout &&
+        shellCloseout.shellStayedInert === true
+      ),
+    shellConsumesSnapshotConsumerReportOnly: true,
+    actualStatusReaderAdded: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    readyForFutureStatusReaderPlan: true,
+    blockedBehavior:
+      shellCloseout && shellCloseout.blockedBehavior
+        ? shellCloseout.blockedBehavior
+        : shellResult && shellResult.blockedBehavior
+          ? shellResult.blockedBehavior
+          : shellPlanCloseout && shellPlanCloseout.blockedBehavior
+            ? shellPlanCloseout.blockedBehavior
+            : {
+                rendererCreation: true,
+                rendererInitialization: true,
+                mapAttachment: true,
+                drawing: true,
+                domCreation: true,
+                startupWiring: true,
+                automaticInvocation: true,
+                gameplayChanges: true,
+                pinChanges: true,
+                uiChanges: true,
+                backendChanges: true,
+                storageWrites: true,
+                networkAccess: true
+              },
+    preservedSystems:
+      shellCloseout && shellCloseout.preservedSystems
+        ? shellCloseout.preservedSystems
+        : shellResult && shellResult.preservedSystems
+          ? shellResult.preservedSystems
+          : shellPlanCloseout && shellPlanCloseout.preservedSystems
+            ? shellPlanCloseout.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              },
+    safetyFlags:
+      shellCloseout && shellCloseout.safetyFlags
+        ? shellCloseout.safetyFlags
+        : shellResult && shellResult.safetyFlags
+          ? shellResult.safetyFlags
+          : shellPlanCloseout && shellPlanCloseout.safetyFlags
+            ? shellPlanCloseout.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+    notes: [
+      "Passive readiness report after the Phase 302 manual integration shell.",
+      "No actual status reader is added in this phase.",
+      "The shell remains inert and report-only, with no renderer, map, DOM, startup, backend, or gameplay effects."
+    ]
+  };
+}
+
+function getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport(
+  options = {}
+) {
+  const readiness =
+    typeof getCustom25DVisualManualRendererIntegrationShellReadinessReport === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellReadinessReport(options)
+      : null;
+  const shellCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellCloseoutReport(options)
+      : null;
+  const shellPlan =
+    typeof getCustom25DVisualManualRendererIntegrationShellPlanReport === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellPlanReport(options)
+      : null;
+  const shellContract =
+    typeof getCustom25DVisualManualRendererIntegrationShellContractReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellContractReport(options)
+      : null;
+  const shellPlanCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport(options)
+      : null;
+  const consumerReport =
+    typeof getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport ===
+    "function"
+      ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport(options)
+      : null;
+  const noOptionShellResult =
+    typeof createCustom25DVisualManualRendererIntegrationShell === "function"
+      ? createCustom25DVisualManualRendererIntegrationShell()
+      : null;
+
+  const requiredOptionKeys =
+    readiness && Array.isArray(readiness.requiredOptionKeys)
+      ? readiness.requiredOptionKeys
+      : shellCloseout && Array.isArray(shellCloseout.requiredOptionKeys)
+        ? shellCloseout.requiredOptionKeys
+        : shellPlanCloseout && Array.isArray(shellPlanCloseout.requiredOptionKeys)
+          ? shellPlanCloseout.requiredOptionKeys
+          : shellContract && Array.isArray(shellContract.requiredOptionKeys)
+            ? shellContract.requiredOptionKeys
+            : shellPlan && Array.isArray(shellPlan.requiredOptionKeys)
+              ? shellPlan.requiredOptionKeys
+              : consumerReport && Array.isArray(consumerReport.requiredOptionKeys)
+                ? consumerReport.requiredOptionKeys
+                : [
+                    "manual",
+                    "developerIntent",
+                    "localDevOnly",
+                    "browserConsoleOnly",
+                    "explicitOptionsOnly",
+                    "allowManualRendererStateContainerShell",
+                    "noStartupWiring",
+                    "noBackendChanges",
+                    "noPersistence",
+                    "noAutomaticInvocation"
+                  ];
+
+  return {
+    phase: 303,
+    name: "custom-25d-visual-manual-renderer-integration-shell-status-reader-plan",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    planOnly: true,
+    integrationShellStatusReaderPlan: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: !!(noOptionShellResult && noOptionShellResult.blocked === true),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      plannedStatusReaderConsumesShellReportOnly: true,
+      actualStatusReaderAdded: false
+    },
+    actualStatusReaderAdded: false,
+    plannedStatusReaderMode: "manual-integration-shell-status-summary-only",
+    plannedStatusReaderConsumesShellReportOnly: true,
+    plannedStatusReaderUsesLiveStateReference: false,
+    plannedStatusReaderCreatesState: false,
+    plannedStatusReaderMutatesState: false,
+    plannedStatusReaderStartsRenderer: false,
+    plannedStatusReaderAttachesMap: false,
+    plannedStatusReaderDrawsGeometry: false,
+    plannedStatusReaderCreatesDom: false,
+    futureStatusReaderReady: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    blockedBehavior:
+      readiness && readiness.blockedBehavior
+        ? readiness.blockedBehavior
+        : shellCloseout && shellCloseout.blockedBehavior
+          ? shellCloseout.blockedBehavior
+          : shellPlanCloseout && shellPlanCloseout.blockedBehavior
+            ? shellPlanCloseout.blockedBehavior
+            : {
+                rendererCreation: true,
+                rendererInitialization: true,
+                mapAttachment: true,
+                drawing: true,
+                domCreation: true,
+                startupWiring: true,
+                automaticInvocation: true,
+                gameplayChanges: true,
+                pinChanges: true,
+                uiChanges: true,
+                backendChanges: true,
+                storageWrites: true,
+                networkAccess: true
+              },
+    preservedSystems:
+      readiness && readiness.preservedSystems
+        ? readiness.preservedSystems
+        : shellCloseout && shellCloseout.preservedSystems
+          ? shellCloseout.preservedSystems
+          : shellPlanCloseout && shellPlanCloseout.preservedSystems
+            ? shellPlanCloseout.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              },
+    safetyFlags:
+      readiness && readiness.safetyFlags
+        ? readiness.safetyFlags
+        : shellCloseout && shellCloseout.safetyFlags
+          ? shellCloseout.safetyFlags
+          : shellPlanCloseout && shellPlanCloseout.safetyFlags
+            ? shellPlanCloseout.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              },
+    notes: [
+      "Passive plan for a future integration-shell status reader only.",
+      "A future status reader may consume the Phase 302 shell report only.",
+      "No renderer, map, drawing, DOM, startup, backend, or gameplay integration is added in this phase."
+    ]
+  };
+}
+
+function getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport(
+  options = {}
+) {
+  const readiness =
+    typeof getCustom25DVisualManualRendererIntegrationShellReadinessReport === "function"
+      ? getCustom25DVisualManualRendererIntegrationShellReadinessReport(options)
+      : null;
+  const statusReaderPlan =
+    typeof getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport(options)
+      : null;
+  const shellCloseout =
+    typeof getCustom25DVisualManualRendererIntegrationShellCloseoutReport ===
+    "function"
+      ? getCustom25DVisualManualRendererIntegrationShellCloseoutReport(options)
+      : null;
+  const shellResult =
+    typeof createCustom25DVisualManualRendererIntegrationShell === "function"
+      ? createCustom25DVisualManualRendererIntegrationShell(options)
+      : null;
+  const noOptionShellResult =
+    typeof createCustom25DVisualManualRendererIntegrationShell === "function"
+      ? createCustom25DVisualManualRendererIntegrationShell()
+      : null;
+
+  const requiredOptionKeys =
+    statusReaderPlan && Array.isArray(statusReaderPlan.requiredOptionKeys)
+      ? statusReaderPlan.requiredOptionKeys
+      : readiness && Array.isArray(readiness.requiredOptionKeys)
+        ? readiness.requiredOptionKeys
+        : shellCloseout && Array.isArray(shellCloseout.requiredOptionKeys)
+          ? shellCloseout.requiredOptionKeys
+          : shellResult && Array.isArray(shellResult.requiredOptionKeys)
+            ? shellResult.requiredOptionKeys
+            : [
+                "manual",
+                "developerIntent",
+                "localDevOnly",
+                "browserConsoleOnly",
+                "explicitOptionsOnly",
+                "allowManualRendererStateContainerShell",
+                "noStartupWiring",
+                "noBackendChanges",
+                "noPersistence",
+                "noAutomaticInvocation"
+              ];
+
+  return {
+    phase: 303,
+    name: "custom-25d-visual-manual-renderer-integration-shell-status-reader-contract",
+    ok: true,
+    inert: true,
+    passive: true,
+    reportOnly: true,
+    contractOnly: true,
+    integrationShellStatusReaderContract: true,
+    allowed: false,
+    blocked: true,
+    defaultDecision: "blocked",
+    noOptionCallAllowed: false,
+    requiredOptionKeys,
+    defaultNoOptionCheck: {
+      blocked: !!(noOptionShellResult && noOptionShellResult.blocked === true),
+      requiredOptionKeys
+    },
+    manualPathStyleSummary: {
+      explicitOptionsRequired: true,
+      requiredOptionKeys,
+      allowedInputMode: "phase-302-manual-integration-shell-report-only",
+      allowedOutputMode: "primitive-status-summary-only"
+    },
+    actualStatusReaderAdded: false,
+    allowedInputMode: "phase-302-manual-integration-shell-report-only",
+    allowedOutputMode: "primitive-status-summary-only",
+    disallowedInputModes: [
+      "live-shared-state-reference",
+      "live-layers-array",
+      "leaflet-layer-reference",
+      "dom-node-reference",
+      "renderer-instance-reference"
+    ],
+    statusReaderMayCreateState: false,
+    statusReaderMayMutateState: false,
+    statusReaderMayStartRenderer: false,
+    statusReaderMayAttachMap: false,
+    statusReaderMayDrawGeometry: false,
+    statusReaderMayCreateDom: false,
+    statusReaderMayWireStartup: false,
+    statusReaderMayChangeGameplay: false,
+    contractReadyForFutureStatusReader: true,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    liveStateReferenceReturned: false,
+    nestedLiveReferenceReturned: false,
+    rendererCreated: false,
+    rendererInitialized: false,
+    rendererRunning: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domCreated: false,
+    startupWired: false,
+    blockedBehavior:
+      statusReaderPlan && statusReaderPlan.blockedBehavior
+        ? statusReaderPlan.blockedBehavior
+        : readiness && readiness.blockedBehavior
+          ? readiness.blockedBehavior
+          : shellCloseout && shellCloseout.blockedBehavior
+            ? shellCloseout.blockedBehavior
+            : shellResult && shellResult.blockedBehavior
+              ? shellResult.blockedBehavior
+              : {
+                  rendererCreation: true,
+                  rendererInitialization: true,
+                  mapAttachment: true,
+                  drawing: true,
+                  domCreation: true,
+                  startupWiring: true,
+                  automaticInvocation: true,
+                  gameplayChanges: true,
+                  pinChanges: true,
+                  uiChanges: true,
+                  backendChanges: true,
+                  storageWrites: true,
+                  networkAccess: true
+                },
+    preservedSystems:
+      statusReaderPlan && statusReaderPlan.preservedSystems
+        ? statusReaderPlan.preservedSystems
+        : readiness && readiness.preservedSystems
+          ? readiness.preservedSystems
+          : shellCloseout && shellCloseout.preservedSystems
+            ? shellCloseout.preservedSystems
+            : shellResult && shellResult.preservedSystems
+              ? shellResult.preservedSystems
+              : {
+                  existingLeafletMapBehavior: true,
+                  osmBehavior: true,
+                  gameplay: true,
+                  pins: true,
+                  playerMarker: true,
+                  captureRadius: true,
+                  ui: true,
+                  backend: true,
+                  storage: true,
+                  network: true
+                },
+    safetyFlags:
+      statusReaderPlan && statusReaderPlan.safetyFlags
+        ? statusReaderPlan.safetyFlags
+        : readiness && readiness.safetyFlags
+          ? readiness.safetyFlags
+          : shellCloseout && shellCloseout.safetyFlags
+            ? shellCloseout.safetyFlags
+            : shellResult && shellResult.safetyFlags
+              ? shellResult.safetyFlags
+              : {
+                  custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                  landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
                   landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
                   dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
-                }
+                },
+    notes: [
+      "Passive contract for a future integration-shell status reader only.",
+      "The future status reader may accept only the Phase 302 manual integration shell report.",
+      "Live state references, nested live references, renderer instances, DOM nodes, and map-layer references remain disallowed."
+    ]
   };
 }
 
@@ -36082,6 +36619,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererIntegrationShellCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererIntegrationShellReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport
+            : null
+      ),
+    getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport",
+        () =>
+          typeof getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport ===
+          "function"
+            ? getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport
+            : null
+      ),
     createCustom25DVisualManualRendererSharedStateContainerShell:
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
@@ -36225,6 +36789,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererIntegrationShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererIntegrationShellCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererIntegrationShellReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererIntegrationShellReadinessReport ===
+        "function",
+      getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport:
+        typeof namespace.getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport ===
+        "function",
+      getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport:
+        typeof namespace.getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport ===
         "function",
       createCustom25DVisualManualRendererSharedStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererSharedStateContainerShell === "function"
