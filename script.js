@@ -1299,6 +1299,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport
             : null
       ),
+    getCustom25DVisualManualRendererPassiveValidationChecklistReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererPassiveValidationChecklistReport",
+        () =>
+          typeof getCustom25DVisualManualRendererPassiveValidationChecklistReport ===
+          "function"
+            ? getCustom25DVisualManualRendererPassiveValidationChecklistReport
+            : null
+      ),
+    getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport
+            : null
+      ),
     getCustom25DVisualScriptSizeStatusReport:
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeStatusReport",
@@ -52637,6 +52655,563 @@ function getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceS
   };
 }
 
+function getCustom25DVisualManualRendererPassiveValidationChecklistReport(
+  options = {}
+) {
+  const checklistPlanSequenceSelfReview =
+    typeof getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport ===
+    "function"
+      ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport(
+          options
+        )
+      : null;
+  const contractShell =
+    typeof createCustom25DVisualManualRendererMetadataValidationResultContractShell ===
+    "function"
+      ? createCustom25DVisualManualRendererMetadataValidationResultContractShell(
+          options
+        )
+      : null;
+  const resultShell =
+    typeof createCustom25DVisualManualRendererMetadataValidationResultShell ===
+    "function"
+      ? createCustom25DVisualManualRendererMetadataValidationResultShell(options)
+      : null;
+  const passiveReviewReport =
+    typeof getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport ===
+    "function"
+      ? getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport(
+          options
+        )
+      : null;
+  const requiredOptionKeys =
+    checklistPlanSequenceSelfReview &&
+    Array.isArray(checklistPlanSequenceSelfReview.requiredOptionKeys)
+      ? checklistPlanSequenceSelfReview.requiredOptionKeys
+      : resultShell && Array.isArray(resultShell.requiredOptionKeys)
+        ? resultShell.requiredOptionKeys
+        : contractShell && Array.isArray(contractShell.requiredOptionKeys)
+          ? contractShell.requiredOptionKeys
+          : passiveReviewReport && Array.isArray(passiveReviewReport.requiredOptionKeys)
+            ? passiveReviewReport.requiredOptionKeys
+            : [
+                "manual",
+                "developerIntent",
+                "localDevOnly",
+                "browserConsoleOnly",
+                "explicitOptionsOnly",
+                "allowManualRendererStateContainerShell",
+                "noStartupWiring",
+                "noBackendChanges",
+                "noPersistence",
+                "noAutomaticInvocation"
+              ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    checklistPlanSequenceSelfReview && checklistPlanSequenceSelfReview.blockedBehavior
+      ? checklistPlanSequenceSelfReview.blockedBehavior
+      : passiveReviewReport && passiveReviewReport.blockedBehavior
+        ? passiveReviewReport.blockedBehavior
+        : resultShell && resultShell.blockedBehavior
+          ? resultShell.blockedBehavior
+          : contractShell && contractShell.blockedBehavior
+            ? contractShell.blockedBehavior
+            : {
+                rendererCreation: true,
+                rendererInitialization: true,
+                rendererRun: true,
+                mapAttachment: true,
+                drawing: true,
+                domCreation: true,
+                startupWiring: true,
+                automaticInvocation: true,
+                gameplayChanges: true,
+                pinChanges: true,
+                uiChanges: true,
+                backendChanges: true,
+                storageWrites: true,
+                networkAccess: true
+              };
+  const preservedSystems =
+    checklistPlanSequenceSelfReview && checklistPlanSequenceSelfReview.preservedSystems
+      ? checklistPlanSequenceSelfReview.preservedSystems
+      : passiveReviewReport && passiveReviewReport.preservedSystems
+        ? passiveReviewReport.preservedSystems
+        : resultShell && resultShell.preservedSystems
+          ? resultShell.preservedSystems
+          : contractShell && contractShell.preservedSystems
+            ? contractShell.preservedSystems
+            : {
+                existingLeafletMapBehavior: true,
+                osmBehavior: true,
+                gameplay: true,
+                pins: true,
+                playerMarker: true,
+                captureRadius: true,
+                ui: true,
+                backend: true,
+                storage: true,
+                network: true
+              };
+  const safetyFlags =
+    checklistPlanSequenceSelfReview && checklistPlanSequenceSelfReview.safetyFlags
+      ? checklistPlanSequenceSelfReview.safetyFlags
+      : passiveReviewReport && passiveReviewReport.safetyFlags
+        ? passiveReviewReport.safetyFlags
+        : resultShell && resultShell.safetyFlags
+          ? resultShell.safetyFlags
+          : contractShell && contractShell.safetyFlags
+            ? contractShell.safetyFlags
+            : {
+                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+              };
+  const requiredFieldsToCheck = [
+    "phase",
+    "ok",
+    "allowed",
+    "blocked",
+    "requiredOptionKeys",
+    "blockedBehavior",
+    "preservedSystems",
+    "safetyFlags"
+  ];
+  const safetyFieldsToCheck = [
+    "runtimeValidationEnabled",
+    "enforcementEnabled",
+    "validatesLiveMetadata",
+    "validationExecuted"
+  ];
+  const statusFieldsToCheck = [
+    "liveRendererCreated",
+    "callableMethodsCreated",
+    "sharedStateCreated",
+    "sharedStateMutated",
+    "sharedStateDirectlyRead",
+    "mapAttached",
+    "drawingEnabled",
+    "domMutated",
+    "startupWired"
+  ];
+  const failureReasonFieldsToCheck = [
+    "reason",
+    "failedRequirement",
+    "requiredOptionKeys"
+  ];
+  const requiredFieldChecklistPassed = [
+    checklistPlanSequenceSelfReview,
+    passiveReviewReport,
+    contractShell,
+    resultShell
+  ].every(
+    (report) =>
+      !!report &&
+      requiredFieldsToCheck.every((fieldName) =>
+        Object.prototype.hasOwnProperty.call(report, fieldName)
+      )
+  );
+  const safetyFieldChecklistPassed = [passiveReviewReport, resultShell].every(
+    (report) =>
+      !!report &&
+      safetyFieldsToCheck.every((fieldName) =>
+        Object.prototype.hasOwnProperty.call(report, fieldName)
+      )
+  );
+  const statusValueChecklistPassed = [passiveReviewReport, contractShell, resultShell].every(
+    (report) =>
+      !!report &&
+      statusFieldsToCheck.every(
+        (fieldName) =>
+          Object.prototype.hasOwnProperty.call(report, fieldName) &&
+          report[fieldName] === false
+      )
+  );
+  const failureReasonChecklistPassed = [contractShell, resultShell].every(
+    (report) =>
+      !!report &&
+      failureReasonFieldsToCheck.every((fieldName) =>
+        Object.prototype.hasOwnProperty.call(report, fieldName)
+      )
+  );
+  const blockedRuntimeChecklistPassed =
+    blockedBehavior.rendererCreation === true &&
+    blockedBehavior.rendererInitialization === true &&
+    blockedBehavior.rendererRun === true &&
+    blockedBehavior.mapAttachment === true &&
+    blockedBehavior.drawing === true &&
+    blockedBehavior.domCreation === true &&
+    blockedBehavior.startupWiring === true &&
+    blockedBehavior.backendChanges === true &&
+    blockedBehavior.storageWrites === true &&
+    blockedBehavior.networkAccess === true;
+  const blockers = [];
+  if (
+    !checklistPlanSequenceSelfReview ||
+    checklistPlanSequenceSelfReview.readyForFuturePassiveChecklistHelper !== true
+  ) {
+    blockers.push("passive-validation-checklist-plan-sequence-not-ready");
+  }
+  if (!requiredFieldChecklistPassed) {
+    blockers.push("required-field-checklist-not-passed");
+  }
+  if (!safetyFieldChecklistPassed) {
+    blockers.push("safety-field-checklist-not-passed");
+  }
+  if (!statusValueChecklistPassed) {
+    blockers.push("status-value-checklist-not-passed");
+  }
+  if (!failureReasonChecklistPassed) {
+    blockers.push("failure-reason-checklist-not-passed");
+  }
+  if (!blockedRuntimeChecklistPassed) {
+    blockers.push("blocked-runtime-checklist-not-passed");
+  }
+  const concerns = [];
+  if (
+    typeof getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport !==
+    "function"
+  ) {
+    concerns.push("passive-validation-checklist-plan-sequence-self-review-unavailable");
+  }
+  if (
+    typeof createCustom25DVisualManualRendererMetadataValidationResultContractShell !==
+    "function"
+  ) {
+    concerns.push("metadata-validation-result-contract-shell-unavailable");
+  }
+  if (
+    typeof createCustom25DVisualManualRendererMetadataValidationResultShell !==
+    "function"
+  ) {
+    concerns.push("metadata-validation-result-shell-unavailable");
+  }
+  if (
+    typeof getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport !==
+    "function"
+  ) {
+    concerns.push("passive-non-runtime-validation-review-report-unavailable");
+  }
+  const safetyNotes = [
+    "checklist-checks-remain-shape-only",
+    "checklist-uses-only-primitive-report-shapes",
+    "runtime-validation-remains-disabled",
+    "live-metadata-validation-remains-blocked"
+  ];
+
+  if (missingKey) {
+    return {
+      phase: 338,
+      helperName:
+        "getCustom25DVisualManualRendererPassiveValidationChecklistReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      checklistOnly: true,
+      reportOnly: true,
+      passiveOnly: true,
+      shapeOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      checklistExecutedAgainstLiveMetadata: false,
+      checklistUsedOnlyPrimitiveReportShapes: true,
+      checklistPlanAvailable:
+        typeof getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport ===
+        "function",
+      contractShellAvailable:
+        typeof createCustom25DVisualManualRendererMetadataValidationResultContractShell ===
+        "function",
+      resultShellAvailable:
+        typeof createCustom25DVisualManualRendererMetadataValidationResultShell ===
+        "function",
+      passiveReviewAvailable:
+        typeof getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport ===
+        "function",
+      requiredFieldChecklistPassed,
+      safetyFieldChecklistPassed,
+      statusValueChecklistPassed,
+      failureReasonChecklistPassed,
+      blockedRuntimeChecklistPassed,
+      runtimeValidationEnabled: false,
+      enforcementEnabled: false,
+      validatesLiveMetadata: false,
+      validationExecuted: false,
+      resultSystemCreated: false,
+      resultObjectCreated: false,
+      liveRendererCreated: false,
+      callableMethodsCreated: false,
+      sharedStateCreated: false,
+      sharedStateMutated: false,
+      sharedStateDirectlyRead: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domMutated: false,
+      startupWired: false,
+      blockers,
+      concerns,
+      safetyNotes,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 338,
+    helperName:
+      "getCustom25DVisualManualRendererPassiveValidationChecklistReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    checklistOnly: true,
+    reportOnly: true,
+    passiveOnly: true,
+    shapeOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    checklistExecutedAgainstLiveMetadata: false,
+    checklistUsedOnlyPrimitiveReportShapes: true,
+    checklistPlanAvailable:
+      typeof getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport ===
+      "function",
+    contractShellAvailable:
+      typeof createCustom25DVisualManualRendererMetadataValidationResultContractShell ===
+      "function",
+    resultShellAvailable:
+      typeof createCustom25DVisualManualRendererMetadataValidationResultShell ===
+      "function",
+    passiveReviewAvailable:
+      typeof getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport ===
+      "function",
+    requiredFieldChecklistPassed,
+    safetyFieldChecklistPassed,
+    statusValueChecklistPassed,
+    failureReasonChecklistPassed,
+    blockedRuntimeChecklistPassed,
+    runtimeValidationEnabled: false,
+    enforcementEnabled: false,
+    validatesLiveMetadata: false,
+    validationExecuted: false,
+    resultSystemCreated: false,
+    resultObjectCreated: false,
+    liveRendererCreated: false,
+    callableMethodsCreated: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    sharedStateDirectlyRead: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domMutated: false,
+    startupWired: false,
+    blockers,
+    concerns,
+    safetyNotes,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport(
+  options = {}
+) {
+  const passiveChecklistReport =
+    typeof getCustom25DVisualManualRendererPassiveValidationChecklistReport ===
+    "function"
+      ? getCustom25DVisualManualRendererPassiveValidationChecklistReport(options)
+      : null;
+  const requiredOptionKeys =
+    passiveChecklistReport && Array.isArray(passiveChecklistReport.requiredOptionKeys)
+      ? passiveChecklistReport.requiredOptionKeys
+      : [
+          "manual",
+          "developerIntent",
+          "localDevOnly",
+          "browserConsoleOnly",
+          "explicitOptionsOnly",
+          "allowManualRendererStateContainerShell",
+          "noStartupWiring",
+          "noBackendChanges",
+          "noPersistence",
+          "noAutomaticInvocation"
+        ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    passiveChecklistReport && passiveChecklistReport.blockedBehavior
+      ? passiveChecklistReport.blockedBehavior
+      : {
+          rendererCreation: true,
+          rendererInitialization: true,
+          rendererRun: true,
+          mapAttachment: true,
+          drawing: true,
+          domCreation: true,
+          startupWiring: true,
+          automaticInvocation: true,
+          gameplayChanges: true,
+          pinChanges: true,
+          uiChanges: true,
+          backendChanges: true,
+          storageWrites: true,
+          networkAccess: true
+        };
+  const preservedSystems =
+    passiveChecklistReport && passiveChecklistReport.preservedSystems
+      ? passiveChecklistReport.preservedSystems
+      : {
+          existingLeafletMapBehavior: true,
+          osmBehavior: true,
+          gameplay: true,
+          pins: true,
+          playerMarker: true,
+          captureRadius: true,
+          ui: true,
+          backend: true,
+          storage: true,
+          network: true
+        };
+  const safetyFlags =
+    passiveChecklistReport && passiveChecklistReport.safetyFlags
+      ? passiveChecklistReport.safetyFlags
+      : {
+          custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+          landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+          landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+          dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+        };
+  const passiveChecklistCompleted = !!(
+    passiveChecklistReport &&
+    passiveChecklistReport.requiredFieldChecklistPassed === true &&
+    passiveChecklistReport.safetyFieldChecklistPassed === true &&
+    passiveChecklistReport.statusValueChecklistPassed === true &&
+    passiveChecklistReport.failureReasonChecklistPassed === true &&
+    passiveChecklistReport.blockedRuntimeChecklistPassed === true
+  );
+  const concerns = [];
+  if (
+    typeof getCustom25DVisualManualRendererPassiveValidationChecklistReport !==
+    "function"
+  ) {
+    concerns.push("passive-validation-checklist-report-unavailable");
+  }
+  if (!passiveChecklistCompleted) {
+    concerns.push("passive-validation-checklist-not-complete");
+  }
+
+  if (missingKey) {
+    return {
+      phase: 338,
+      helperName:
+        "getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      closeoutOnly: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      passiveChecklistAvailable:
+        typeof getCustom25DVisualManualRendererPassiveValidationChecklistReport ===
+        "function",
+      passiveChecklistCompleted,
+      checklistUsedOnlyPrimitiveReportShapes:
+        passiveChecklistReport &&
+        passiveChecklistReport.checklistUsedOnlyPrimitiveReportShapes === true,
+      checklistExecutedAgainstLiveMetadata: false,
+      runtimeValidationEnabled: false,
+      enforcementEnabled: false,
+      validatesLiveMetadata: false,
+      validationExecuted: false,
+      resultSystemCreated: false,
+      resultObjectCreated: false,
+      liveRendererCreated: false,
+      callableMethodsCreated: false,
+      sharedStateCreated: false,
+      sharedStateMutated: false,
+      sharedStateDirectlyRead: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domMutated: false,
+      startupWired: false,
+      concerns,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 338,
+    helperName:
+      "getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    closeoutOnly: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    passiveChecklistAvailable:
+      typeof getCustom25DVisualManualRendererPassiveValidationChecklistReport ===
+      "function",
+    passiveChecklistCompleted,
+    checklistUsedOnlyPrimitiveReportShapes:
+      passiveChecklistReport &&
+      passiveChecklistReport.checklistUsedOnlyPrimitiveReportShapes === true,
+    checklistExecutedAgainstLiveMetadata: false,
+    runtimeValidationEnabled: false,
+    enforcementEnabled: false,
+    validatesLiveMetadata: false,
+    validationExecuted: false,
+    resultSystemCreated: false,
+    resultObjectCreated: false,
+    liveRendererCreated: false,
+    callableMethodsCreated: false,
+    sharedStateCreated: false,
+    sharedStateMutated: false,
+    sharedStateDirectlyRead: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domMutated: false,
+    startupWired: false,
+    concerns,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function getCustom25DVisualScriptSizeStatusReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -54665,6 +55240,24 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport
             : null
       ),
+    getCustom25DVisualManualRendererPassiveValidationChecklistReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererPassiveValidationChecklistReport",
+        () =>
+          typeof getCustom25DVisualManualRendererPassiveValidationChecklistReport ===
+          "function"
+            ? getCustom25DVisualManualRendererPassiveValidationChecklistReport
+            : null
+      ),
+    getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport
+            : null
+      ),
     getCustom25DVisualScriptSizeStatusReport:
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeStatusReport",
@@ -55093,6 +55686,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport:
         typeof namespace.getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport ===
+        "function",
+      getCustom25DVisualManualRendererPassiveValidationChecklistReport:
+        typeof namespace.getCustom25DVisualManualRendererPassiveValidationChecklistReport ===
+        "function",
+      getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport ===
         "function",
       getCustom25DVisualScriptSizeStatusReport:
         typeof namespace.getCustom25DVisualScriptSizeStatusReport ===
