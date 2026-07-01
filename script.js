@@ -1542,6 +1542,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport
             : null
       ),
+    getCustom25DVisualPassiveExtractionManifestPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPassiveExtractionManifestPlanReport",
+        () =>
+          typeof getCustom25DVisualPassiveExtractionManifestPlanReport ===
+          "function"
+            ? getCustom25DVisualPassiveExtractionManifestPlanReport
+            : null
+      ),
+    getCustom25DVisualPassiveExtractionManifestReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPassiveExtractionManifestReadinessReport",
+        () =>
+          typeof getCustom25DVisualPassiveExtractionManifestReadinessReport ===
+          "function"
+            ? getCustom25DVisualPassiveExtractionManifestReadinessReport
+            : null
+      ),
+    getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport
+            : null
+      ),
     getCustom25DVisualScriptSizeStatusReport:
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeStatusReport",
@@ -58669,6 +58696,556 @@ function getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport(
   };
 }
 
+function getCustom25DVisualPassiveExtractionManifestPlanReport(options = {}) {
+  const maintenanceSelfReview =
+    typeof getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport ===
+    "function"
+      ? getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport(
+          options
+        )
+      : null;
+  const safeExtractionCandidate =
+    typeof getCustom25DVisualFutureSafeExtractionCandidateReport === "function"
+      ? getCustom25DVisualFutureSafeExtractionCandidateReport(options)
+      : null;
+  const requiredOptionKeys =
+    maintenanceSelfReview &&
+    Array.isArray(maintenanceSelfReview.requiredOptionKeys)
+      ? maintenanceSelfReview.requiredOptionKeys
+      : safeExtractionCandidate &&
+          Array.isArray(safeExtractionCandidate.requiredOptionKeys)
+        ? safeExtractionCandidate.requiredOptionKeys
+        : [
+            "manual",
+            "developerIntent",
+            "localDevOnly",
+            "browserConsoleOnly",
+            "explicitOptionsOnly",
+            "allowManualRendererStateContainerShell",
+            "noStartupWiring",
+            "noBackendChanges",
+            "noPersistence",
+            "noAutomaticInvocation"
+          ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    maintenanceSelfReview && maintenanceSelfReview.blockedBehavior
+      ? maintenanceSelfReview.blockedBehavior
+      : safeExtractionCandidate && safeExtractionCandidate.blockedBehavior
+        ? safeExtractionCandidate.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            rendererRun: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          };
+  const preservedSystems =
+    maintenanceSelfReview && maintenanceSelfReview.preservedSystems
+      ? maintenanceSelfReview.preservedSystems
+      : safeExtractionCandidate && safeExtractionCandidate.preservedSystems
+        ? safeExtractionCandidate.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          };
+  const safetyFlags =
+    maintenanceSelfReview && maintenanceSelfReview.safetyFlags
+      ? maintenanceSelfReview.safetyFlags
+      : safeExtractionCandidate && safeExtractionCandidate.safetyFlags
+        ? safeExtractionCandidate.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          };
+  const safestFirstExtractionArea =
+    safeExtractionCandidate &&
+    typeof safeExtractionCandidate.safestFirstCandidate === "string"
+      ? safeExtractionCandidate.safestFirstCandidate
+      : "passive-custom25dvisual-report-planning-helpers";
+  const plannedExtractionGroups = [
+    "passive-custom25dvisual-report-planning-helpers",
+    "passive-custom25dvisual-closeout-self-review-helpers",
+    "passive-custom25dvisual-maintenance-planning-helpers"
+  ];
+  const unsafeToMoveFirst =
+    safeExtractionCandidate &&
+    Array.isArray(safeExtractionCandidate.unsafeToMoveFirst)
+      ? safeExtractionCandidate.unsafeToMoveFirst
+      : [
+          "app-startup",
+          "map-initialization",
+          "leaflet-layer-creation-or-mutation",
+          "player-marker",
+          "capture-radius",
+          "osm-pin-loading",
+          "gameplay-capture-logic",
+          "backend-storage-network-code",
+          "dom-menu-social-qr-behavior",
+          "any-helper-that-creates-or-mutates-shared-state"
+        ];
+  const requiredPreExtractionChecks = [
+    "confirm-passive-only-helper-group",
+    "confirm-no-runtime-side-effects",
+    "confirm-no-shared-state-touchpoints",
+    "confirm-no-startup-order-dependency"
+  ];
+  const plannedRollbackChecks = [
+    "preserve-original-function-names",
+    "verify-namespace-exposure-parity",
+    "verify-helper-presence-report-parity",
+    "revert-single-tiny-phase-if-any-runtime-diff-appears"
+  ];
+  const concerns = [
+    "manifest-plan-does-not-authorize-code-movement",
+    "extraction-should-remain-tiny-and-reviewed",
+    "runtime-code-must-not-be-the-first-target"
+  ];
+  const recommendedNextStep = "future-passive-extraction-manifest-helper-phase";
+
+  if (missingKey) {
+    return {
+      phase: 350,
+      helperName: "getCustom25DVisualPassiveExtractionManifestPlanReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      planOnly: true,
+      reportOnly: true,
+      manifestOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      plannedManifestName: "custom25DVisualPassiveExtractionManifest",
+      manifestCreated: false,
+      extractionPerformed: false,
+      safestFirstExtractionArea,
+      plannedExtractionGroups,
+      unsafeToMoveFirst,
+      requiredPreExtractionChecks,
+      plannedRollbackChecks,
+      futureExtractionShouldBeTinyPhases: true,
+      futureExtractionShouldBeReversible: true,
+      futureExtractionShouldAvoidRuntimeCodeFirst: true,
+      codeMoved: false,
+      filesCreated: false,
+      importsAdded: false,
+      exportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      concerns,
+      recommendedNextStep,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 350,
+    helperName: "getCustom25DVisualPassiveExtractionManifestPlanReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    planOnly: true,
+    reportOnly: true,
+    manifestOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    plannedManifestName: "custom25DVisualPassiveExtractionManifest",
+    manifestCreated: false,
+    extractionPerformed: false,
+    safestFirstExtractionArea,
+    plannedExtractionGroups,
+    unsafeToMoveFirst,
+    requiredPreExtractionChecks,
+    plannedRollbackChecks,
+    futureExtractionShouldBeTinyPhases: true,
+    futureExtractionShouldBeReversible: true,
+    futureExtractionShouldAvoidRuntimeCodeFirst: true,
+    codeMoved: false,
+    filesCreated: false,
+    importsAdded: false,
+    exportsAdded: false,
+    loadingOrderChanged: false,
+    runtimeBehaviorChanged: false,
+    concerns,
+    recommendedNextStep,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualPassiveExtractionManifestReadinessReport(
+  options = {}
+) {
+  const manifestPlan =
+    typeof getCustom25DVisualPassiveExtractionManifestPlanReport === "function"
+      ? getCustom25DVisualPassiveExtractionManifestPlanReport(options)
+      : null;
+  const requiredOptionKeys =
+    manifestPlan && Array.isArray(manifestPlan.requiredOptionKeys)
+      ? manifestPlan.requiredOptionKeys
+      : [
+          "manual",
+          "developerIntent",
+          "localDevOnly",
+          "browserConsoleOnly",
+          "explicitOptionsOnly",
+          "allowManualRendererStateContainerShell",
+          "noStartupWiring",
+          "noBackendChanges",
+          "noPersistence",
+          "noAutomaticInvocation"
+        ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    manifestPlan && manifestPlan.blockedBehavior
+      ? manifestPlan.blockedBehavior
+      : {
+          rendererCreation: true,
+          rendererInitialization: true,
+          rendererRun: true,
+          mapAttachment: true,
+          drawing: true,
+          domCreation: true,
+          startupWiring: true,
+          automaticInvocation: true,
+          gameplayChanges: true,
+          pinChanges: true,
+          uiChanges: true,
+          backendChanges: true,
+          storageWrites: true,
+          networkAccess: true
+        };
+  const preservedSystems =
+    manifestPlan && manifestPlan.preservedSystems
+      ? manifestPlan.preservedSystems
+      : {
+          existingLeafletMapBehavior: true,
+          osmBehavior: true,
+          gameplay: true,
+          pins: true,
+          playerMarker: true,
+          captureRadius: true,
+          ui: true,
+          backend: true,
+          storage: true,
+          network: true
+        };
+  const safetyFlags =
+    manifestPlan && manifestPlan.safetyFlags
+      ? manifestPlan.safetyFlags
+      : {
+          custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+          landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+          landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+          dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+        };
+  const blockers = [
+    "immediate-code-extraction-must-stay-blocked",
+    "future-manifest-helper-should-remain-planning-only",
+    "runtime-code-still-must-not-move-first"
+  ];
+  const safetyNotes = [
+    "manifest-readiness-does-not-authorize-extraction",
+    "future-manifest-work-should-stay-tiny-and-reversible",
+    "passive-helper-groups-remain-the-safest-first-target"
+  ];
+  const concerns = [
+    "manifest-readiness-remains-planning-only",
+    "runtime-behavior-must-stay-unchanged-during-any-future-extraction-phase"
+  ];
+  const recommendedFirstExtractionArea =
+    manifestPlan &&
+    typeof manifestPlan.safestFirstExtractionArea === "string"
+      ? manifestPlan.safestFirstExtractionArea
+      : "passive-custom25dvisual-report-planning-helpers";
+  const readyForFutureExtractionManifestHelper = !!(
+    manifestPlan &&
+    manifestPlan.manifestOnly === true &&
+    manifestPlan.extractionPerformed === false &&
+    manifestPlan.futureExtractionShouldBeTinyPhases === true
+  );
+
+  if (missingKey) {
+    return {
+      phase: 350,
+      helperName: "getCustom25DVisualPassiveExtractionManifestReadinessReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      readinessOnly: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      readyForImmediateCodeExtraction: false,
+      readyForFutureExtractionManifestHelper,
+      recommendedNextPhaseType: "passive-extraction-manifest-helper",
+      recommendedFirstExtractionArea,
+      blockers,
+      safetyNotes,
+      concerns,
+      codeMoved: false,
+      filesCreated: false,
+      importsAdded: false,
+      exportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 350,
+    helperName: "getCustom25DVisualPassiveExtractionManifestReadinessReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    readinessOnly: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    readyForImmediateCodeExtraction: false,
+    readyForFutureExtractionManifestHelper,
+    recommendedNextPhaseType: "passive-extraction-manifest-helper",
+    recommendedFirstExtractionArea,
+    blockers,
+    safetyNotes,
+    concerns,
+    codeMoved: false,
+    filesCreated: false,
+    importsAdded: false,
+    exportsAdded: false,
+    loadingOrderChanged: false,
+    runtimeBehaviorChanged: false,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport(
+  options = {}
+) {
+  const manifestPlan =
+    typeof getCustom25DVisualPassiveExtractionManifestPlanReport === "function"
+      ? getCustom25DVisualPassiveExtractionManifestPlanReport(options)
+      : null;
+  const manifestReadiness =
+    typeof getCustom25DVisualPassiveExtractionManifestReadinessReport ===
+    "function"
+      ? getCustom25DVisualPassiveExtractionManifestReadinessReport(options)
+      : null;
+  const requiredOptionKeys =
+    manifestReadiness && Array.isArray(manifestReadiness.requiredOptionKeys)
+      ? manifestReadiness.requiredOptionKeys
+      : manifestPlan && Array.isArray(manifestPlan.requiredOptionKeys)
+        ? manifestPlan.requiredOptionKeys
+        : [
+            "manual",
+            "developerIntent",
+            "localDevOnly",
+            "browserConsoleOnly",
+            "explicitOptionsOnly",
+            "allowManualRendererStateContainerShell",
+            "noStartupWiring",
+            "noBackendChanges",
+            "noPersistence",
+            "noAutomaticInvocation"
+          ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    manifestReadiness && manifestReadiness.blockedBehavior
+      ? manifestReadiness.blockedBehavior
+      : manifestPlan && manifestPlan.blockedBehavior
+        ? manifestPlan.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            rendererRun: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          };
+  const preservedSystems =
+    manifestReadiness && manifestReadiness.preservedSystems
+      ? manifestReadiness.preservedSystems
+      : manifestPlan && manifestPlan.preservedSystems
+        ? manifestPlan.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          };
+  const safetyFlags =
+    manifestReadiness && manifestReadiness.safetyFlags
+      ? manifestReadiness.safetyFlags
+      : manifestPlan && manifestPlan.safetyFlags
+        ? manifestPlan.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          };
+  const concerns = [];
+  if (typeof getCustom25DVisualPassiveExtractionManifestPlanReport !== "function") {
+    concerns.push("passive-extraction-manifest-plan-report-unavailable");
+  }
+  if (
+    typeof getCustom25DVisualPassiveExtractionManifestReadinessReport !==
+    "function"
+  ) {
+    concerns.push("passive-extraction-manifest-readiness-report-unavailable");
+  }
+
+  if (missingKey) {
+    return {
+      phase: 350,
+      helperName: "getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport",
+      ok: true,
+      allowed: false,
+      blocked: true,
+      closeoutOnly: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      manifestPlanAvailable:
+        typeof getCustom25DVisualPassiveExtractionManifestPlanReport ===
+        "function",
+      manifestReadinessAvailable:
+        typeof getCustom25DVisualPassiveExtractionManifestReadinessReport ===
+        "function",
+      manifestCreated: false,
+      extractionPerformed: false,
+      readyForImmediateCodeExtraction: false,
+      codeMoved: false,
+      filesCreated: false,
+      importsAdded: false,
+      exportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      concerns,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    phase: 350,
+    helperName: "getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport",
+    ok: true,
+    allowed: true,
+    blocked: false,
+    closeoutOnly: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    manifestPlanAvailable:
+      typeof getCustom25DVisualPassiveExtractionManifestPlanReport ===
+      "function",
+    manifestReadinessAvailable:
+      typeof getCustom25DVisualPassiveExtractionManifestReadinessReport ===
+      "function",
+    manifestCreated: false,
+    extractionPerformed: false,
+    readyForImmediateCodeExtraction: false,
+    codeMoved: false,
+    filesCreated: false,
+    importsAdded: false,
+    exportsAdded: false,
+    loadingOrderChanged: false,
+    runtimeBehaviorChanged: false,
+    concerns,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function getCustom25DVisualScriptSizeStatusReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -60940,6 +61517,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport
             : null
       ),
+    getCustom25DVisualPassiveExtractionManifestPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPassiveExtractionManifestPlanReport",
+        () =>
+          typeof getCustom25DVisualPassiveExtractionManifestPlanReport ===
+          "function"
+            ? getCustom25DVisualPassiveExtractionManifestPlanReport
+            : null
+      ),
+    getCustom25DVisualPassiveExtractionManifestReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPassiveExtractionManifestReadinessReport",
+        () =>
+          typeof getCustom25DVisualPassiveExtractionManifestReadinessReport ===
+          "function"
+            ? getCustom25DVisualPassiveExtractionManifestReadinessReport
+            : null
+      ),
+    getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport
+            : null
+      ),
     getCustom25DVisualScriptSizeStatusReport:
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeStatusReport",
@@ -61449,6 +62053,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport:
         typeof namespace.getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport ===
+        "function",
+      getCustom25DVisualPassiveExtractionManifestPlanReport:
+        typeof namespace.getCustom25DVisualPassiveExtractionManifestPlanReport ===
+        "function",
+      getCustom25DVisualPassiveExtractionManifestReadinessReport:
+        typeof namespace.getCustom25DVisualPassiveExtractionManifestReadinessReport ===
+        "function",
+      getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport ===
         "function",
       getCustom25DVisualScriptSizeStatusReport:
         typeof namespace.getCustom25DVisualScriptSizeStatusReport ===
