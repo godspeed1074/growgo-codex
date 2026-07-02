@@ -2230,6 +2230,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport
             : null
       ),
+    getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -68220,10 +68229,6 @@ function getCustom25DVisualInertStateContainerCreationReadinessCloseoutReport(op
 }
 
 function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
-  const readiness =
-    typeof getCustom25DVisualInertStateContainerCreationReadinessReport === "function"
-      ? getCustom25DVisualInertStateContainerCreationReadinessReport(options)
-      : null;
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
     windowExists && window.location && typeof window.location.hostname === "string"
@@ -68318,57 +68323,29 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
   ];
   const requiredOptionKeys = requiredSignals.map((signal) => signal.key);
   const firstFailure = requiredSignals.find((signal) => !signal.passed) || null;
-  const blockedBehavior =
-    (readiness && readiness.blockedBehavior) || {
-      rendererCreation: true,
-      rendererInitialization: true,
-      rendererRun: true,
-      mapAttachment: true,
-      drawing: true,
-      domCreation: true,
-      startupWiring: true,
-      automaticInvocation: true,
-      gameplayChanges: true,
-      pinChanges: true,
-      uiChanges: true,
-      backendChanges: true,
-      storageWrites: true,
-      networkAccess: true
-    };
-  const preservedSystems =
-    (readiness && readiness.preservedSystems) || {
-      existingLeafletMapBehavior: true,
-      osmBehavior: true,
-      gameplay: true,
-      pins: true,
-      playerMarker: true,
-      captureRadius: true,
-      ui: true,
-      backend: true,
-      storage: true,
-      network: true
-    };
-  const safetyFlags =
-    (readiness && readiness.safetyFlags) || {
-      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
-      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
-      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
-      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
-    };
+  const missingRequiredOptionKeys = requiredSignals
+    .filter((signal) => !signal.passed)
+    .map((signal) => signal.key);
 
   if (!windowExists) {
     return {
-      ok: true,
+      ok: false,
       phase: 381,
       helperName: "createCustom25DVisualInertManualRendererStateContainer",
       manualOnly: true,
       localDevOnly: true,
       requiredOptionKeys,
+      missingRequiredOptionKeys,
+      safariSafeFixPhase: 387,
+      jsonSafeResult: true,
       allowed: false,
       blocked: true,
       reason: "window-unavailable",
       failedRequirement: "windowAvailable",
+      stateExistsBefore: false,
+      stateExistsAfter: false,
       stateContainerCreated: false,
+      stateCreatedByThisCall: false,
       stateContainerAlreadyExisted: false,
       sharedStateReplaced: false,
       existingStateMutated: false,
@@ -68376,96 +68353,111 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
       rendererInitialized: false,
       rendererStarted: false,
       mapAttached: false,
-      drawingEnabled: false,
+      drawingStarted: false,
       layerCount: 0,
       domMutated: false,
       leafletMutated: false,
       startupWired: false,
-      runtimeBehaviorChanged: false,
-      blockedBehavior,
-      preservedSystems,
-      safetyFlags
+      gameplayChanged: false,
+      runtimeBehaviorChanged: false
     };
   }
 
+  const stateExistsBefore =
+    typeof window.custom25DVisualManualRendererState !== "undefined";
+
   if (!isLocalDevHost) {
     return {
-      ok: true,
+      ok: false,
       phase: 381,
       helperName: "createCustom25DVisualInertManualRendererStateContainer",
       manualOnly: true,
       localDevOnly: true,
       requiredOptionKeys,
+      missingRequiredOptionKeys,
+      safariSafeFixPhase: 387,
+      jsonSafeResult: true,
       allowed: false,
       blocked: true,
       reason: "local-dev-host-required",
       failedRequirement: "localDevHost",
+      stateExistsBefore,
+      stateExistsAfter: stateExistsBefore,
       stateContainerCreated: false,
-      stateContainerAlreadyExisted: false,
+      stateCreatedByThisCall: false,
+      stateContainerAlreadyExisted: stateExistsBefore,
       sharedStateReplaced: false,
       existingStateMutated: false,
       rendererInstanceCreated: false,
       rendererInitialized: false,
       rendererStarted: false,
       mapAttached: false,
-      drawingEnabled: false,
+      drawingStarted: false,
       layerCount: 0,
       domMutated: false,
       leafletMutated: false,
       startupWired: false,
-      runtimeBehaviorChanged: false,
-      blockedBehavior,
-      preservedSystems,
-      safetyFlags
+      gameplayChanged: false,
+      runtimeBehaviorChanged: false
     };
   }
 
   if (firstFailure) {
     return {
-      ok: true,
+      ok: false,
       phase: 381,
       helperName: "createCustom25DVisualInertManualRendererStateContainer",
       manualOnly: true,
       localDevOnly: true,
       requiredOptionKeys,
+      missingRequiredOptionKeys,
+      safariSafeFixPhase: 387,
+      jsonSafeResult: true,
       allowed: false,
       blocked: true,
       reason: firstFailure.reason,
       failedRequirement: firstFailure.key,
+      stateExistsBefore,
+      stateExistsAfter: stateExistsBefore,
       stateContainerCreated: false,
-      stateContainerAlreadyExisted: false,
+      stateCreatedByThisCall: false,
+      stateContainerAlreadyExisted: stateExistsBefore,
       sharedStateReplaced: false,
       existingStateMutated: false,
       rendererInstanceCreated: false,
       rendererInitialized: false,
       rendererStarted: false,
       mapAttached: false,
-      drawingEnabled: false,
+      drawingStarted: false,
       layerCount: 0,
       domMutated: false,
       leafletMutated: false,
       startupWired: false,
-      runtimeBehaviorChanged: false,
-      blockedBehavior,
-      preservedSystems,
-      safetyFlags
+      gameplayChanged: false,
+      runtimeBehaviorChanged: false
     };
   }
 
   const existingState = window.custom25DVisualManualRendererState;
   if (typeof existingState !== "undefined") {
     return {
-      ok: true,
+      ok: false,
       phase: 381,
       helperName: "createCustom25DVisualInertManualRendererStateContainer",
       manualOnly: true,
       localDevOnly: true,
       requiredOptionKeys,
+      missingRequiredOptionKeys: [],
+      safariSafeFixPhase: 387,
+      jsonSafeResult: true,
       allowed: false,
       blocked: true,
       reason: "state-container-already-exists",
       failedRequirement: "stateContainerAbsent",
+      stateExistsBefore: true,
+      stateExistsAfter: true,
       stateContainerCreated: false,
+      stateCreatedByThisCall: false,
       stateContainerAlreadyExisted: true,
       sharedStateReplaced: false,
       existingStateMutated: false,
@@ -68473,7 +68465,7 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
       rendererInitialized: false,
       rendererStarted: false,
       mapAttached: false,
-      drawingEnabled: false,
+      drawingStarted: false,
       layerCount:
         existingState && typeof existingState.layerCount === "number"
           ? existingState.layerCount
@@ -68481,10 +68473,8 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
       domMutated: false,
       leafletMutated: false,
       startupWired: false,
-      runtimeBehaviorChanged: false,
-      blockedBehavior,
-      preservedSystems,
-      safetyFlags
+      gameplayChanged: false,
+      runtimeBehaviorChanged: false
     };
   }
 
@@ -68496,6 +68486,7 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
     drawingEnabled: false,
     layerCount: 0,
     rendererInstance: null,
+    map: null,
     mapReference: null,
     layers: [],
     lastManualAction: "inert-state-container-created",
@@ -68510,11 +68501,17 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
     manualOnly: true,
     localDevOnly: true,
     requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    safariSafeFixPhase: 387,
+    jsonSafeResult: true,
     allowed: true,
     blocked: false,
     reason: null,
     failedRequirement: null,
+    stateExistsBefore: false,
+    stateExistsAfter: true,
     stateContainerCreated: true,
+    stateCreatedByThisCall: true,
     stateContainerAlreadyExisted: false,
     sharedStateReplaced: false,
     existingStateMutated: false,
@@ -68522,15 +68519,13 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
     rendererInitialized: false,
     rendererStarted: false,
     mapAttached: false,
-    drawingEnabled: false,
+    drawingStarted: false,
     layerCount: 0,
     domMutated: false,
     leafletMutated: false,
     startupWired: false,
-    runtimeBehaviorChanged: false,
-    blockedBehavior,
-    preservedSystems,
-    safetyFlags
+    gameplayChanged: false,
+    runtimeBehaviorChanged: false
   };
 }
 
@@ -69299,6 +69294,50 @@ function runCustom25DVisualInertStateContainerManualConsoleTest(options = {}) {
     };
   }
 
+  if (options.dryRunOnly === true) {
+    return {
+      ok: true,
+      phase: 383,
+      helperName: "runCustom25DVisualInertStateContainerManualConsoleTest",
+      manualOnly: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys: [],
+      safariSafeFixPhase: 387,
+      jsonSafeResult: true,
+      deepReportEmbeddingAvoided: true,
+      allowed: true,
+      blocked: false,
+      dryRunOnly: true,
+      wouldCreateStateContainer: !stateExistsBefore,
+      reason: "dry-run-only",
+      creationHelperAvailable: true,
+      creationHelperInvoked: false,
+      creationResult: null,
+      stateExistsBefore,
+      stateExistsAfter: stateExistsBefore,
+      stateContainerExistsAfterTest: stateExistsBefore,
+      inertDefaultsMatchAfterTest: false,
+      stateContainerCreated: false,
+      stateCreatedByThisRun: false,
+      stateContainerAlreadyExisted: stateExistsBefore,
+      sharedStateReplaced: false,
+      existingStateMutated: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      layerCount: 0,
+      domMutated: false,
+      leafletMutated: false,
+      startupWired: false,
+      gameplayChanged: false,
+      runtimeBehaviorChanged: false
+    };
+  }
+
   const creationResult = createCustom25DVisualInertManualRendererStateContainer(options);
   const stateAfterObject =
     windowExists && typeof window.custom25DVisualManualRendererState !== "undefined"
@@ -69325,6 +69364,10 @@ function runCustom25DVisualInertStateContainerManualConsoleTest(options = {}) {
     ? {
         allowed: creationResult.allowed === true,
         blocked: creationResult.blocked === true,
+        safariSafeFixPhase:
+          typeof creationResult.safariSafeFixPhase === "number"
+            ? creationResult.safariSafeFixPhase
+            : null,
         reason:
           typeof creationResult.reason === "string" ? creationResult.reason : null,
         failedRequirement:
@@ -69353,10 +69396,11 @@ function runCustom25DVisualInertStateContainerManualConsoleTest(options = {}) {
     deepReportEmbeddingAvoided: true,
     allowed: !!(creationResult && creationResult.allowed === true),
     blocked: !(creationResult && creationResult.allowed === true),
+    dryRunOnly: false,
     reason:
       (creationResult && creationResult.reason) ||
       (creationResult && creationResult.allowed === true
-        ? "manual-console-test-completed"
+      ? "manual-console-test-completed"
         : "manual-console-test-blocked"),
     creationHelperAvailable: true,
     creationHelperInvoked: true,
@@ -69564,21 +69608,20 @@ function getCustom25DVisualInertStateContainerManualConsoleTestReport(
     rendererInitialized: false,
     rendererStarted: false,
     mapAttached:
-      isObjectState && typeof existingState.mapAttached === "boolean"
-        ? existingState.mapAttached
+      isObjectState && typeof existingStateObject.mapAttached === "boolean"
+        ? existingStateObject.mapAttached
         : false,
     drawingEnabled:
-      isObjectState && typeof existingState.drawingEnabled === "boolean"
-        ? existingState.drawingEnabled
+      isObjectState && typeof existingStateObject.drawingEnabled === "boolean"
+        ? existingStateObject.drawingEnabled
         : false,
     layerCount:
-      isObjectState && typeof existingState.layerCount === "number"
-        ? existingState.layerCount
+      isObjectState && typeof existingStateObject.layerCount === "number"
+        ? existingStateObject.layerCount
         : 0,
     domMutated: false,
     leafletMutated: false,
     startupWired: false,
-    runtimeBehaviorChanged: false,
     requiredManualOptions,
     suggestedConsoleCommand: `window.GrowGoCustom25DVisualManualTests.runCustom25DVisualInertStateContainerManualConsoleTest(${JSON.stringify(requiredManualOptions, null, 2)})`,
     blockers,
@@ -69671,6 +69714,65 @@ function getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport(
     blockedBehavior: (report && report.blockedBehavior) || blockedBehavior,
     preservedSystems: (report && report.preservedSystems) || preservedSystems,
     safetyFlags: (report && report.safetyFlags) || safetyFlags
+  };
+}
+
+function getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "allowCustom25DVisualInertStateContainerCreation",
+    "confirmManualStateContainerCreationOnly",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noStartupWiring",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation",
+    "runManualConsoleTest",
+    "confirmManualConsoleTestOnly"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined" && window;
+  const stateExistsBefore =
+    !!(
+      windowExists &&
+      typeof window.custom25DVisualManualRendererState !== "undefined"
+    );
+  const creationHelperAvailable =
+    typeof createCustom25DVisualInertManualRendererStateContainer === "function";
+  const runHelperAvailable =
+    typeof runCustom25DVisualInertStateContainerManualConsoleTest === "function";
+
+  return {
+    ok: creationHelperAvailable && runHelperAvailable,
+    blocked: missingRequiredOptionKeys.length > 0,
+    allowed: missingRequiredOptionKeys.length === 0,
+    phase: 387,
+    helperName:
+      "getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport",
+    requiredOptionKeys,
+    missingRequiredOptionKeys,
+    stateExistsBefore,
+    creationHelperAvailable,
+    runHelperAvailable,
+    safariSafeFixPhase: 387,
+    jsonSafeResult: true,
+    rendererInstanceCreated: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false
   };
 }
 
@@ -74402,6 +74504,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport
             : null
       ),
+    getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -75623,6 +75734,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport:
         typeof namespace.getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport ===
+        "function",
+      getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport:
+        typeof namespace.getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
