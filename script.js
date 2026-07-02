@@ -1872,6 +1872,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualExtractedHelperReconciliationCloseoutReport
             : null
       ),
+    getCustom25DVisualExtractedHelperReconciliationAcceptanceReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceReport",
+        () =>
+          typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReport ===
+          "function"
+            ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReport
+            : null
+      ),
+    getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport",
+        () =>
+          typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport ===
+          "function"
+            ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport
+            : null
+      ),
+    getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport",
+        () =>
+          typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport ===
+          "function"
+            ? getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport
+            : null
+      ),
     getCustom25DVisualPassiveHelperLoadPathReport:
       createNamespaceWrapper(
         "getCustom25DVisualPassiveHelperLoadPathReport",
@@ -64417,6 +64444,508 @@ function getCustom25DVisualExtractedHelperReconciliationCloseoutReport(
   };
 }
 
+function getCustom25DVisualExtractedHelperReconciliationAcceptanceReport(
+  options = {}
+) {
+  const reconciliation =
+    typeof getCustom25DVisualExtractedHelperReconciliationReport === "function"
+      ? getCustom25DVisualExtractedHelperReconciliationReport(options)
+      : null;
+  const readiness =
+    typeof getCustom25DVisualExtractedHelperReconciliationReadinessReport ===
+    "function"
+      ? getCustom25DVisualExtractedHelperReconciliationReadinessReport(options)
+      : null;
+  const requiredOptionKeys =
+    (readiness && Array.isArray(readiness.requiredOptionKeys)
+      ? readiness.requiredOptionKeys
+      : null) ||
+    (reconciliation && Array.isArray(reconciliation.requiredOptionKeys)
+      ? reconciliation.requiredOptionKeys
+      : null) || [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (readiness && readiness.blockedBehavior) ||
+    (reconciliation && reconciliation.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (readiness && readiness.preservedSystems) ||
+    (reconciliation && reconciliation.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (readiness && readiness.safetyFlags) ||
+    (reconciliation && reconciliation.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const acceptedDedupedExtractedHelpers =
+    reconciliation && Array.isArray(reconciliation.dedupedExpectedExtractedHelpers)
+      ? reconciliation.dedupedExpectedExtractedHelpers
+      : [];
+  const historicalOverlapHelpers =
+    reconciliation && Array.isArray(reconciliation.duplicateRiskHelpers)
+      ? reconciliation.duplicateRiskHelpers
+      : [];
+  const missingExtractedHelpers =
+    reconciliation && Array.isArray(reconciliation.missingExtractedHelpers)
+      ? reconciliation.missingExtractedHelpers
+      : [];
+  const overlapAcceptedAsBookkeepingOnly = !!(
+    reconciliation &&
+    missingExtractedHelpers.length === 0 &&
+    historicalOverlapHelpers.length > 0
+  );
+  const activeDuplicateCodeBlockers =
+    missingExtractedHelpers.length > 0 ? [...historicalOverlapHelpers] : [];
+  const sourceOfTruthAccepted = !!(
+    reconciliation &&
+    missingExtractedHelpers.length === 0 &&
+    activeDuplicateCodeBlockers.length === 0
+  );
+  const readyForNextBundledPassiveMove = !!(
+    sourceOfTruthAccepted &&
+    readiness &&
+    readiness.readyForBroadExtraction === false
+  );
+  const blockers = [];
+  if (!reconciliation) {
+    blockers.push("phase367-reconciliation-report-unavailable");
+  }
+  if (!readiness) {
+    blockers.push("phase367-readiness-report-unavailable");
+  }
+  if (missingExtractedHelpers.length > 0) {
+    blockers.push("missing-extracted-helpers-remain");
+  }
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 368,
+      helperName:
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      phase367ReconciliationAvailable: !!reconciliation,
+      phase367ReadinessAvailable: !!readiness,
+      acceptedDedupedExtractedHelpers,
+      historicalOverlapHelpers,
+      overlapAcceptedAsBookkeepingOnly,
+      missingExtractedHelpers,
+      activeDuplicateCodeBlockers,
+      sourceOfTruthAccepted,
+      readyForNextBundledPassiveMove,
+      extractionPerformed: false,
+      filesCreated: false,
+      codeMoved: false,
+      importsExportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      immediateBroadExtractionBlocked: true,
+      nextRecommendedStep:
+        "if-acceptance-is-clean-return-to-one-bundled-passive-move-of-at-most-three-helpers",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 368,
+    helperName: "getCustom25DVisualExtractedHelperReconciliationAcceptanceReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    phase367ReconciliationAvailable: !!reconciliation,
+    phase367ReadinessAvailable: !!readiness,
+    acceptedDedupedExtractedHelpers,
+    historicalOverlapHelpers,
+    overlapAcceptedAsBookkeepingOnly,
+    missingExtractedHelpers,
+    activeDuplicateCodeBlockers,
+    sourceOfTruthAccepted,
+    readyForNextBundledPassiveMove,
+    extractionPerformed: false,
+    filesCreated: false,
+    codeMoved: false,
+    importsExportsAdded: false,
+    loadingOrderChanged: false,
+    runtimeBehaviorChanged: false,
+    immediateBroadExtractionBlocked: true,
+    nextRecommendedStep:
+      "if-acceptance-is-clean-return-to-one-bundled-passive-move-of-at-most-three-helpers",
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport(
+  options = {}
+) {
+  const acceptance =
+    typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReport ===
+    "function"
+      ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReport(options)
+      : null;
+  const requiredOptionKeys =
+    acceptance && Array.isArray(acceptance.requiredOptionKeys)
+      ? acceptance.requiredOptionKeys
+      : [
+          "manual",
+          "developerIntent",
+          "localDevOnly",
+          "browserConsoleOnly",
+          "explicitOptionsOnly",
+          "allowManualRendererStateContainerShell",
+          "noStartupWiring",
+          "noBackendChanges",
+          "noPersistence",
+          "noAutomaticInvocation"
+        ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    acceptance && acceptance.blockedBehavior
+      ? acceptance.blockedBehavior
+      : {
+          rendererCreation: true,
+          rendererInitialization: true,
+          rendererRun: true,
+          mapAttachment: true,
+          drawing: true,
+          domCreation: true,
+          startupWiring: true,
+          automaticInvocation: true,
+          gameplayChanges: true,
+          pinChanges: true,
+          uiChanges: true,
+          backendChanges: true,
+          storageWrites: true,
+          networkAccess: true
+        };
+  const preservedSystems =
+    acceptance && acceptance.preservedSystems
+      ? acceptance.preservedSystems
+      : {
+          existingLeafletMapBehavior: true,
+          osmBehavior: true,
+          gameplay: true,
+          pins: true,
+          playerMarker: true,
+          captureRadius: true,
+          ui: true,
+          backend: true,
+          storage: true,
+          network: true
+        };
+  const safetyFlags =
+    acceptance && acceptance.safetyFlags
+      ? acceptance.safetyFlags
+      : {
+          custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+          landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+          landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+          dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+        };
+  const blockers = acceptance && Array.isArray(acceptance.blockers)
+    ? [...acceptance.blockers]
+    : [];
+  if (!acceptance) {
+    blockers.push("phase368-acceptance-report-unavailable");
+  }
+  const readyForOneLaterBundledMove = !!(
+    acceptance &&
+    acceptance.sourceOfTruthAccepted === true &&
+    Array.isArray(acceptance.missingExtractedHelpers) &&
+    acceptance.missingExtractedHelpers.length === 0 &&
+    Array.isArray(acceptance.activeDuplicateCodeBlockers) &&
+    acceptance.activeDuplicateCodeBlockers.length === 0
+  );
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 368,
+      helperName:
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      readinessOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      readyForOneLaterBundledPassiveMove: readyForOneLaterBundledMove,
+      readyForBroadExtraction: false,
+      runtimeExtractionBlocked: true,
+      startupExtractionBlocked: true,
+      mapExtractionBlocked: true,
+      gameplayExtractionBlocked: true,
+      sharedStateExtractionBlocked: true,
+      drawingExtractionBlocked: true,
+      domExtractionBlocked: true,
+      backendStorageNetworkExtractionBlocked: true,
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 368,
+    helperName:
+      "getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    readyForOneLaterBundledPassiveMove: readyForOneLaterBundledMove,
+    readyForBroadExtraction: false,
+    runtimeExtractionBlocked: true,
+    startupExtractionBlocked: true,
+    mapExtractionBlocked: true,
+    gameplayExtractionBlocked: true,
+    sharedStateExtractionBlocked: true,
+    drawingExtractionBlocked: true,
+    domExtractionBlocked: true,
+    backendStorageNetworkExtractionBlocked: true,
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport(
+  options = {}
+) {
+  const acceptance =
+    typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReport ===
+    "function"
+      ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReport(options)
+      : null;
+  const readiness =
+    typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport ===
+    "function"
+      ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport(
+          options
+        )
+      : null;
+  const requiredOptionKeys =
+    (readiness && Array.isArray(readiness.requiredOptionKeys)
+      ? readiness.requiredOptionKeys
+      : null) ||
+    (acceptance && Array.isArray(acceptance.requiredOptionKeys)
+      ? acceptance.requiredOptionKeys
+      : null) || [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (readiness && readiness.blockedBehavior) ||
+    (acceptance && acceptance.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (readiness && readiness.preservedSystems) ||
+    (acceptance && acceptance.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (readiness && readiness.safetyFlags) ||
+    (acceptance && acceptance.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const blockers = [];
+  if (!acceptance) {
+    blockers.push("phase368-acceptance-report-unavailable");
+  }
+  if (!readiness) {
+    blockers.push("phase368-acceptance-readiness-report-unavailable");
+  }
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 368,
+      helperName:
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      closeoutOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      acceptanceReportingOnly: true,
+      helperDeclarationsMovedThisPhase: false,
+      filesCreated: false,
+      indexHtmlChangedThisPhase: false,
+      passiveReportsFileChangedThisPhase: false,
+      nextMoveAllowedOnlyWhenAcceptanceReadinessClean: true,
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 368,
+    helperName:
+      "getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    acceptanceReportingOnly: true,
+    helperDeclarationsMovedThisPhase: false,
+    filesCreated: false,
+    indexHtmlChangedThisPhase: false,
+    passiveReportsFileChangedThisPhase: false,
+    nextMoveAllowedOnlyWhenAcceptanceReadinessClean: true,
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function getCustom25DVisualPassiveHelperLoadPathReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -66902,6 +67431,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualExtractedHelperReconciliationCloseoutReport
             : null
       ),
+    getCustom25DVisualExtractedHelperReconciliationAcceptanceReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceReport",
+        () =>
+          typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReport ===
+          "function"
+            ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReport
+            : null
+      ),
+    getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport",
+        () =>
+          typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport ===
+          "function"
+            ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport
+            : null
+      ),
+    getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport",
+        () =>
+          typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport ===
+          "function"
+            ? getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererPassiveValidationSummaryPlanReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryPlanReport",
@@ -67890,6 +68446,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualExtractedHelperReconciliationCloseoutReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationCloseoutReport ===
+        "function",
+      getCustom25DVisualExtractedHelperReconciliationAcceptanceReport:
+        typeof namespace.getCustom25DVisualExtractedHelperReconciliationAcceptanceReport ===
+        "function",
+      getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport:
+        typeof namespace.getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport ===
+        "function",
+      getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport:
+        typeof namespace.getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport ===
         "function",
       getCustom25DVisualExtractedPassiveReportsFileHealthReport:
         typeof namespace.getCustom25DVisualExtractedPassiveReportsFileHealthReport ===
