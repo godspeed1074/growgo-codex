@@ -1919,7 +1919,542 @@
     };
   }
 
-  passiveReportsNamespace.helpersMoved = 10;
+  function getCustom25DVisualBundledPassiveMoveHealthReport(options = {}) {
+    const requiredOptionKeys = [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+    const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+    const reasonByKey = {
+      manual: "manual-flag-required",
+      developerIntent: "developer-intent-required",
+      localDevOnly: "local-dev-only-required",
+      browserConsoleOnly: "browser-console-only-required",
+      explicitOptionsOnly: "explicit-options-only-required",
+      allowManualRendererStateContainerShell:
+        "manual-renderer-state-container-shell-not-allowed",
+      noStartupWiring: "no-startup-wiring-acknowledgement-required",
+      noBackendChanges: "no-backend-changes-acknowledgement-required",
+      noPersistence: "no-persistence-acknowledgement-required",
+      noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+    };
+    const blockedBehavior = {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+    const preservedSystems = {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+    const safetyFlags = {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+    const passiveReportsNamespace =
+      globalScope &&
+      globalScope.GrowGoCustom25DVisualPassiveReports &&
+      typeof globalScope.GrowGoCustom25DVisualPassiveReports === "object"
+        ? globalScope.GrowGoCustom25DVisualPassiveReports
+        : null;
+    const manualNamespace =
+      globalScope &&
+      globalScope.GrowGoCustom25DVisualManualTests &&
+      typeof globalScope.GrowGoCustom25DVisualManualTests === "object"
+        ? globalScope.GrowGoCustom25DVisualManualTests
+        : null;
+    const phase359MovedHelpers = [
+      "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
+      "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport"
+    ];
+    const phase361MovedHelpers = [
+      "getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport",
+      "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport"
+    ];
+    const phase364MovedHelpers = [];
+    const phase365MovedHelpers = [
+      "getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport",
+      "getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport",
+      "getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport"
+    ];
+    const expectedMovedHelpers = [
+      ...phase359MovedHelpers,
+      ...phase361MovedHelpers,
+      ...phase364MovedHelpers,
+      ...phase365MovedHelpers
+    ];
+    const availableMovedHelpers = expectedMovedHelpers.filter(
+      (name) => globalScope && typeof globalScope[name] === "function"
+    );
+    const missingMovedHelpers = expectedMovedHelpers.filter(
+      (name) => !(globalScope && typeof globalScope[name] === "function")
+    );
+    const phase359MovedHelpersAvailable = phase359MovedHelpers.every(
+      (name) => globalScope && typeof globalScope[name] === "function"
+    );
+    const phase361MovedHelpersAvailable = phase361MovedHelpers.every(
+      (name) => globalScope && typeof globalScope[name] === "function"
+    );
+    const phase364MovedHelpersAvailable = phase364MovedHelpers.every(
+      (name) => globalScope && typeof globalScope[name] === "function"
+    );
+    const phase365MovedHelpersAvailable = phase365MovedHelpers.every(
+      (name) => globalScope && typeof globalScope[name] === "function"
+    );
+    const manualNamespaceExposureExpected =
+      !!manualNamespace &&
+      expectedMovedHelpers.every((name) => typeof manualNamespace[name] === "function");
+    const helperPresenceRegistryExpected = manualNamespaceExposureExpected;
+    const passiveFileAbsenceFailSafeExpected = true;
+    const blockers = [];
+    if (!passiveReportsNamespace) {
+      blockers.push("passive-reports-namespace-unavailable");
+    }
+    if (
+      !passiveReportsNamespace ||
+      passiveReportsNamespace.phase358LoadPathAvailable !== true
+    ) {
+      blockers.push("phase358-load-path-marker-unavailable");
+    }
+    if (!phase359MovedHelpersAvailable) {
+      blockers.push("phase359-moved-helpers-unavailable");
+    }
+    if (!phase361MovedHelpersAvailable) {
+      blockers.push("phase361-moved-helpers-unavailable");
+    }
+    if (!phase365MovedHelpersAvailable) {
+      blockers.push("phase365-moved-helpers-unavailable");
+    }
+    if (!manualNamespaceExposureExpected) {
+      blockers.push("manual-namespace-moved-helper-exposure-unavailable");
+    }
+    if (!helperPresenceRegistryExpected) {
+      blockers.push("helper-presence-registry-expectations-unavailable");
+    }
+
+    if (missingKey) {
+      return {
+        ok: true,
+        phase: 366,
+        helperName: "getCustom25DVisualBundledPassiveMoveHealthReport",
+        allowed: false,
+        blocked: true,
+        passive: true,
+        reportOnly: true,
+        reason: reasonByKey[missingKey] || "required-option-missing",
+        failedRequirement: missingKey,
+        requiredOptionKeys,
+        passiveReportsNamespaceAvailable: !!passiveReportsNamespace,
+        phase358LoadPathAvailable:
+          !!(passiveReportsNamespace && passiveReportsNamespace.phase358LoadPathAvailable === true),
+        expectedMovedHelpers,
+        availableMovedHelpers,
+        missingMovedHelpers,
+        phase359MovedHelpersAvailable,
+        phase361MovedHelpersAvailable,
+        phase364MovedHelpersAvailable,
+        phase365MovedHelpersAvailable,
+        manualNamespaceExposureExpected,
+        helperPresenceRegistryExpected,
+        passiveFileAbsenceFailSafeExpected,
+        extractionPerformed: false,
+        filesCreated: false,
+        codeMoved: false,
+        importsExportsAdded: false,
+        loadingOrderChanged: false,
+        runtimeBehaviorChanged: false,
+        immediateBroadExtractionBlocked: true,
+        nextRecommendedStep:
+          "health-check-passed-then-consider-at-most-one-later-bundled-passive-helper-move",
+        blockers,
+        blockedBehavior,
+        preservedSystems,
+        safetyFlags
+      };
+    }
+
+    return {
+      ok: true,
+      phase: 366,
+      helperName: "getCustom25DVisualBundledPassiveMoveHealthReport",
+      allowed: true,
+      blocked: false,
+      passive: true,
+      reportOnly: true,
+      reason: null,
+      failedRequirement: null,
+      requiredOptionKeys,
+      passiveReportsNamespaceAvailable: !!passiveReportsNamespace,
+      phase358LoadPathAvailable:
+        !!(passiveReportsNamespace && passiveReportsNamespace.phase358LoadPathAvailable === true),
+      expectedMovedHelpers,
+      availableMovedHelpers,
+      missingMovedHelpers,
+      phase359MovedHelpersAvailable,
+      phase361MovedHelpersAvailable,
+      phase364MovedHelpersAvailable,
+      phase365MovedHelpersAvailable,
+      manualNamespaceExposureExpected,
+      helperPresenceRegistryExpected,
+      passiveFileAbsenceFailSafeExpected,
+      extractionPerformed: false,
+      filesCreated: false,
+      codeMoved: false,
+      importsExportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      immediateBroadExtractionBlocked: true,
+      nextRecommendedStep:
+        "health-check-passed-then-consider-at-most-one-later-bundled-passive-helper-move",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  function getCustom25DVisualBundledPassiveMoveReadinessReport(options = {}) {
+    const health =
+      typeof globalScope.getCustom25DVisualBundledPassiveMoveHealthReport === "function"
+        ? globalScope.getCustom25DVisualBundledPassiveMoveHealthReport(options)
+        : null;
+    const requiredOptionKeys =
+      health && Array.isArray(health.requiredOptionKeys)
+        ? health.requiredOptionKeys
+        : [
+            "manual",
+            "developerIntent",
+            "localDevOnly",
+            "browserConsoleOnly",
+            "explicitOptionsOnly",
+            "allowManualRendererStateContainerShell",
+            "noStartupWiring",
+            "noBackendChanges",
+            "noPersistence",
+            "noAutomaticInvocation"
+          ];
+    const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+    const reasonByKey = {
+      manual: "manual-flag-required",
+      developerIntent: "developer-intent-required",
+      localDevOnly: "local-dev-only-required",
+      browserConsoleOnly: "browser-console-only-required",
+      explicitOptionsOnly: "explicit-options-only-required",
+      allowManualRendererStateContainerShell:
+        "manual-renderer-state-container-shell-not-allowed",
+      noStartupWiring: "no-startup-wiring-acknowledgement-required",
+      noBackendChanges: "no-backend-changes-acknowledgement-required",
+      noPersistence: "no-persistence-acknowledgement-required",
+      noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+    };
+    const blockedBehavior =
+      health && health.blockedBehavior
+        ? health.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            rendererRun: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          };
+    const preservedSystems =
+      health && health.preservedSystems
+        ? health.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          };
+    const safetyFlags =
+      health && health.safetyFlags
+        ? health.safetyFlags
+        : {
+            custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          };
+    const laterMoveCandidates = [
+      "getCustom25DVisualExtractedPassiveReportsFileHealthReport",
+      "getCustom25DVisualExtractedPassiveReportsFileReadinessReport",
+      "getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport"
+    ];
+    const availableLaterMoveCandidates = laterMoveCandidates.filter(
+      (name) => globalScope && typeof globalScope[name] === "function"
+    );
+    const missingLaterMoveCandidates = laterMoveCandidates.filter(
+      (name) => !(globalScope && typeof globalScope[name] === "function")
+    );
+    const blockers = health && Array.isArray(health.blockers) ? [...health.blockers] : [];
+    if (!health) {
+      blockers.push("phase366-health-report-unavailable");
+    }
+    const readyForOneLaterBundledMove = !!(
+      health &&
+      health.passiveReportsNamespaceAvailable === true &&
+      health.phase358LoadPathAvailable === true &&
+      health.phase359MovedHelpersAvailable === true &&
+      health.phase361MovedHelpersAvailable === true &&
+      health.phase365MovedHelpersAvailable === true &&
+      health.manualNamespaceExposureExpected === true &&
+      health.helperPresenceRegistryExpected === true &&
+      availableLaterMoveCandidates.length === laterMoveCandidates.length
+    );
+
+    if (missingKey) {
+      return {
+        ok: true,
+        phase: 366,
+        helperName: "getCustom25DVisualBundledPassiveMoveReadinessReport",
+        allowed: false,
+        blocked: true,
+        passive: true,
+        reportOnly: true,
+        readinessOnly: true,
+        reason: reasonByKey[missingKey] || "required-option-missing",
+        failedRequirement: missingKey,
+        requiredOptionKeys,
+        readyForOneLaterBundledPassiveMove: readyForOneLaterBundledMove,
+        readyForBroadExtraction: false,
+        laterMoveCandidates,
+        availableLaterMoveCandidates,
+        missingLaterMoveCandidates,
+        runtimeExtractionBlocked: true,
+        startupExtractionBlocked: true,
+        mapExtractionBlocked: true,
+        gameplayExtractionBlocked: true,
+        sharedStateExtractionBlocked: true,
+        drawingExtractionBlocked: true,
+        domExtractionBlocked: true,
+        backendStorageNetworkExtractionBlocked: true,
+        blockers,
+        blockedBehavior,
+        preservedSystems,
+        safetyFlags
+      };
+    }
+
+    return {
+      ok: true,
+      phase: 366,
+      helperName: "getCustom25DVisualBundledPassiveMoveReadinessReport",
+      allowed: true,
+      blocked: false,
+      passive: true,
+      reportOnly: true,
+      readinessOnly: true,
+      reason: null,
+      failedRequirement: null,
+      requiredOptionKeys,
+      readyForOneLaterBundledPassiveMove: readyForOneLaterBundledMove,
+      readyForBroadExtraction: false,
+      laterMoveCandidates,
+      availableLaterMoveCandidates,
+      missingLaterMoveCandidates,
+      runtimeExtractionBlocked: true,
+      startupExtractionBlocked: true,
+      mapExtractionBlocked: true,
+      gameplayExtractionBlocked: true,
+      sharedStateExtractionBlocked: true,
+      drawingExtractionBlocked: true,
+      domExtractionBlocked: true,
+      backendStorageNetworkExtractionBlocked: true,
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  function getCustom25DVisualBundledPassiveMoveHealthCloseoutReport(options = {}) {
+    const health =
+      typeof globalScope.getCustom25DVisualBundledPassiveMoveHealthReport === "function"
+        ? globalScope.getCustom25DVisualBundledPassiveMoveHealthReport(options)
+        : null;
+    const readiness =
+      typeof globalScope.getCustom25DVisualBundledPassiveMoveReadinessReport ===
+      "function"
+        ? globalScope.getCustom25DVisualBundledPassiveMoveReadinessReport(options)
+        : null;
+    const requiredOptionKeys =
+      (readiness && Array.isArray(readiness.requiredOptionKeys)
+        ? readiness.requiredOptionKeys
+        : null) ||
+      (health && Array.isArray(health.requiredOptionKeys) ? health.requiredOptionKeys : null) || [
+        "manual",
+        "developerIntent",
+        "localDevOnly",
+        "browserConsoleOnly",
+        "explicitOptionsOnly",
+        "allowManualRendererStateContainerShell",
+        "noStartupWiring",
+        "noBackendChanges",
+        "noPersistence",
+        "noAutomaticInvocation"
+      ];
+    const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+    const reasonByKey = {
+      manual: "manual-flag-required",
+      developerIntent: "developer-intent-required",
+      localDevOnly: "local-dev-only-required",
+      browserConsoleOnly: "browser-console-only-required",
+      explicitOptionsOnly: "explicit-options-only-required",
+      allowManualRendererStateContainerShell:
+        "manual-renderer-state-container-shell-not-allowed",
+      noStartupWiring: "no-startup-wiring-acknowledgement-required",
+      noBackendChanges: "no-backend-changes-acknowledgement-required",
+      noPersistence: "no-persistence-acknowledgement-required",
+      noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+    };
+    const blockedBehavior =
+      (readiness && readiness.blockedBehavior) ||
+      (health && health.blockedBehavior) || {
+        rendererCreation: true,
+        rendererInitialization: true,
+        rendererRun: true,
+        mapAttachment: true,
+        drawing: true,
+        domCreation: true,
+        startupWiring: true,
+        automaticInvocation: true,
+        gameplayChanges: true,
+        pinChanges: true,
+        uiChanges: true,
+        backendChanges: true,
+        storageWrites: true,
+        networkAccess: true
+      };
+    const preservedSystems =
+      (readiness && readiness.preservedSystems) ||
+      (health && health.preservedSystems) || {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true,
+        storage: true,
+        network: true
+      };
+    const safetyFlags =
+      (readiness && readiness.safetyFlags) ||
+      (health && health.safetyFlags) || {
+        custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      };
+    const blockers = [];
+    if (!health) {
+      blockers.push("phase366-health-report-unavailable");
+    }
+    if (!readiness) {
+      blockers.push("phase366-readiness-report-unavailable");
+    }
+
+    if (missingKey) {
+      return {
+        ok: true,
+        phase: 366,
+        helperName: "getCustom25DVisualBundledPassiveMoveHealthCloseoutReport",
+        allowed: false,
+        blocked: true,
+        passive: true,
+        reportOnly: true,
+        closeoutOnly: true,
+        reason: reasonByKey[missingKey] || "required-option-missing",
+        failedRequirement: missingKey,
+        requiredOptionKeys,
+        healthReportingOnly: true,
+        helperDeclarationsMovedThisPhase: false,
+        filesCreated: false,
+        indexHtmlChangedThisPhase: false,
+        passiveReportsFileChangedThisPhase: false,
+        bundledMoveSafeRhythmConfirmed: true,
+        safeRhythm:
+          "bundled-move-of-up-to-3-passive-helpers-plus-same-phase-verification-plus-health-checkpoint-every-couple-of-bundled-moves",
+        blockers,
+        blockedBehavior,
+        preservedSystems,
+        safetyFlags
+      };
+    }
+
+    return {
+      ok: true,
+      phase: 366,
+      helperName: "getCustom25DVisualBundledPassiveMoveHealthCloseoutReport",
+      allowed: true,
+      blocked: false,
+      passive: true,
+      reportOnly: true,
+      closeoutOnly: true,
+      reason: null,
+      failedRequirement: null,
+      requiredOptionKeys,
+      healthReportingOnly: true,
+      helperDeclarationsMovedThisPhase: false,
+      filesCreated: false,
+      indexHtmlChangedThisPhase: false,
+      passiveReportsFileChangedThisPhase: false,
+      bundledMoveSafeRhythmConfirmed: true,
+      safeRhythm:
+        "bundled-move-of-up-to-3-passive-helpers-plus-same-phase-verification-plus-health-checkpoint-every-couple-of-bundled-moves",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  passiveReportsNamespace.helpersMoved = 13;
   passiveReportsNamespace.movedHelperNames = [
     "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
     "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport",
@@ -1930,7 +2465,10 @@
     "getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport",
     "getCustom25DVisualExtractedPassiveReportsFileHealthReport",
     "getCustom25DVisualExtractedPassiveReportsFileReadinessReport",
-    "getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport"
+    "getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport",
+    "getCustom25DVisualBundledPassiveMoveHealthReport",
+    "getCustom25DVisualBundledPassiveMoveReadinessReport",
+    "getCustom25DVisualBundledPassiveMoveHealthCloseoutReport"
   ];
   passiveReportsNamespace.getCustom25DVisualFirstPassiveExtractionCandidatePlanReport =
     getCustom25DVisualFirstPassiveExtractionCandidatePlanReport;
@@ -1952,6 +2490,12 @@
     getCustom25DVisualExtractedPassiveReportsFileReadinessReport;
   passiveReportsNamespace.getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport =
     getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport;
+  passiveReportsNamespace.getCustom25DVisualBundledPassiveMoveHealthReport =
+    getCustom25DVisualBundledPassiveMoveHealthReport;
+  passiveReportsNamespace.getCustom25DVisualBundledPassiveMoveReadinessReport =
+    getCustom25DVisualBundledPassiveMoveReadinessReport;
+  passiveReportsNamespace.getCustom25DVisualBundledPassiveMoveHealthCloseoutReport =
+    getCustom25DVisualBundledPassiveMoveHealthCloseoutReport;
 
   globalScope.getCustom25DVisualFirstPassiveExtractionCandidatePlanReport =
     getCustom25DVisualFirstPassiveExtractionCandidatePlanReport;
@@ -1973,6 +2517,12 @@
     getCustom25DVisualExtractedPassiveReportsFileReadinessReport;
   globalScope.getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport =
     getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport;
+  globalScope.getCustom25DVisualBundledPassiveMoveHealthReport =
+    getCustom25DVisualBundledPassiveMoveHealthReport;
+  globalScope.getCustom25DVisualBundledPassiveMoveReadinessReport =
+    getCustom25DVisualBundledPassiveMoveReadinessReport;
+  globalScope.getCustom25DVisualBundledPassiveMoveHealthCloseoutReport =
+    getCustom25DVisualBundledPassiveMoveHealthCloseoutReport;
 
   globalScope.GrowGoCustom25DVisualPassiveReports = passiveReportsNamespace;
 })(
