@@ -63409,6 +63409,8 @@ function getCustom25DVisualFinalBundledPassiveHelperMoveCloseoutReport(options =
       filesCreated: false,
       phase358LoadMarkerAvailable:
         !!(passiveReportsNamespace && passiveReportsNamespace.phase358LoadPathAvailable === true),
+      referenceFixPhase: 385,
+      previouslyMovedHelpersRemainPresentDefined: true,
       previouslyMovedHelpersRemainPresent,
       movedHelpersAvailableOnWindow,
       movedHelpersAvailableInManualNamespace,
@@ -63451,6 +63453,8 @@ function getCustom25DVisualFinalBundledPassiveHelperMoveCloseoutReport(options =
     filesCreated: false,
     phase358LoadMarkerAvailable:
       !!(passiveReportsNamespace && passiveReportsNamespace.phase358LoadPathAvailable === true),
+    referenceFixPhase: 385,
+    previouslyMovedHelpersRemainPresentDefined: true,
     previouslyMovedHelpersRemainPresent,
     movedHelpersAvailableOnWindow,
     movedHelpersAvailableInManualNamespace,
@@ -70793,9 +70797,13 @@ function getCustom25DVisualPostReconciliationBundledPassiveHelperMoveCloseoutRep
     "getCustom25DVisualExtractedPassiveReportsFileReadinessReport",
     "getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport"
   ];
-  const previousMovedHelpersRemainPresent = previousMovedHelpers.every(
-    (name) => typeof globalThis !== "undefined" && typeof globalThis[name] === "function"
-  );
+  const previouslyMovedHelpersRemainPresent = Array.isArray(previousMovedHelpers)
+    ? previousMovedHelpers.every(
+        (name) =>
+          typeof globalThis !== "undefined" &&
+          typeof globalThis[name] === "function"
+      )
+    : false;
   const movedHelpersAvailableOnWindow = movedHelpers.every(
     (name) => typeof globalThis !== "undefined" && typeof globalThis[name] === "function"
   );
@@ -70811,7 +70819,7 @@ function getCustom25DVisualPostReconciliationBundledPassiveHelperMoveCloseoutRep
   if (!passiveReportsNamespace || passiveReportsNamespace.phase358LoadPathAvailable !== true) {
     blockers.push("phase358-load-marker-unavailable");
   }
-  if (!previousMovedHelpersRemainPresent) {
+  if (!previouslyMovedHelpersRemainPresent) {
     blockers.push("previously-moved-helpers-unavailable-on-window");
   }
   if (!movedHelpersAvailableOnWindow) {
