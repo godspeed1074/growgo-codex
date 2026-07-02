@@ -846,12 +846,393 @@
     };
   }
 
-  passiveReportsNamespace.helpersMoved = 4;
+  function getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport(
+    options = {}
+  ) {
+    const closeout =
+      typeof globalScope.getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport ===
+      "function"
+        ? globalScope.getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport(
+            options
+          )
+        : null;
+    const requiredOptionKeys =
+      closeout && Array.isArray(closeout.requiredOptionKeys)
+        ? closeout.requiredOptionKeys
+        : [
+            "manual",
+            "developerIntent",
+            "localDevOnly",
+            "browserConsoleOnly",
+            "explicitOptionsOnly",
+            "allowManualRendererStateContainerShell",
+            "noStartupWiring",
+            "noBackendChanges",
+            "noPersistence",
+            "noAutomaticInvocation"
+          ];
+    const missingKey =
+      requiredOptionKeys.find((key) => options[key] !== true) || null;
+    const reasonByKey = {
+      manual: "manual-flag-required",
+      developerIntent: "developer-intent-required",
+      localDevOnly: "local-dev-only-required",
+      browserConsoleOnly: "browser-console-only-required",
+      explicitOptionsOnly: "explicit-options-only-required",
+      allowManualRendererStateContainerShell:
+        "manual-renderer-state-container-shell-not-allowed",
+      noStartupWiring: "no-startup-wiring-acknowledgement-required",
+      noBackendChanges: "no-backend-changes-acknowledgement-required",
+      noPersistence: "no-persistence-acknowledgement-required",
+      noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+    };
+    const blockedBehavior =
+      closeout && closeout.blockedBehavior
+        ? closeout.blockedBehavior
+        : {
+            rendererCreation: true,
+            rendererInitialization: true,
+            rendererRun: true,
+            mapAttachment: true,
+            drawing: true,
+            domCreation: true,
+            startupWiring: true,
+            automaticInvocation: true,
+            gameplayChanges: true,
+            pinChanges: true,
+            uiChanges: true,
+            backendChanges: true,
+            storageWrites: true,
+            networkAccess: true
+          };
+    const preservedSystems =
+      closeout && closeout.preservedSystems
+        ? closeout.preservedSystems
+        : {
+            existingLeafletMapBehavior: true,
+            osmBehavior: true,
+            gameplay: true,
+            pins: true,
+            playerMarker: true,
+            captureRadius: true,
+            ui: true,
+            backend: true,
+            storage: true,
+            network: true
+          };
+    const safetyFlags =
+      closeout && closeout.safetyFlags
+        ? closeout.safetyFlags
+        : {
+            custom25DMap: globalScope.ENABLE_CUSTOM_25D_MAP === false,
+            landmarkTestMarkers:
+              globalScope.ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+            landmarkSampleData:
+              globalScope.ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+            dinosaurSitesAuData:
+              globalScope.ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+          };
+    const blockers = [];
+    if (!closeout) {
+      blockers.push("phase360-sequence-closeout-report-unavailable");
+    }
+
+    if (missingKey) {
+      return {
+        ok: true,
+        phase: 360,
+        helperName:
+          "getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport",
+        allowed: false,
+        blocked: true,
+        passive: true,
+        reportOnly: true,
+        selfReviewOnly: true,
+        reason: reasonByKey[missingKey] || "required-option-missing",
+        failedRequirement: missingKey,
+        requiredOptionKeys,
+        phaseAddsOnlyCloseoutSelfReviewHelpers: true,
+        helperDeclarationsMovedThisPhase: false,
+        filesCreated: false,
+        indexHtmlChangedThisPhase: false,
+        passiveReportsFileChangedThisPhase: false,
+        importsExportsAdded: false,
+        buildToolingChanged: false,
+        loadingOrderChanged: false,
+        runtimeBehaviorChanged: false,
+        rendererBehaviorChanged: false,
+        mapBehaviorChanged: false,
+        drawingBehaviorChanged: false,
+        domBehaviorChanged: false,
+        leafletBehaviorChanged: false,
+        backendStorageNetworkBehaviorChanged: false,
+        gameplayBehaviorChanged: false,
+        osmBehaviorChanged: false,
+        pinsBehaviorChanged: false,
+        playerMarkerBehaviorChanged: false,
+        sharedStateBehaviorChanged: false,
+        safetyFlagsRemainFalse:
+          safetyFlags.custom25DMap === true &&
+          safetyFlags.landmarkTestMarkers === true &&
+          safetyFlags.landmarkSampleData === true &&
+          safetyFlags.dinosaurSitesAuData === true,
+        rollbackNote:
+          "remove only the two Phase 360 helper declarations and their namespace and helper-presence registry entries",
+        blockers,
+        blockedBehavior,
+        preservedSystems,
+        safetyFlags
+      };
+    }
+
+    return {
+      ok: true,
+      phase: 360,
+      helperName:
+        "getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport",
+      allowed: true,
+      blocked: false,
+      passive: true,
+      reportOnly: true,
+      selfReviewOnly: true,
+      reason: null,
+      failedRequirement: null,
+      requiredOptionKeys,
+      phaseAddsOnlyCloseoutSelfReviewHelpers: true,
+      helperDeclarationsMovedThisPhase: false,
+      filesCreated: false,
+      indexHtmlChangedThisPhase: false,
+      passiveReportsFileChangedThisPhase: false,
+      importsExportsAdded: false,
+      buildToolingChanged: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      rendererBehaviorChanged: false,
+      mapBehaviorChanged: false,
+      drawingBehaviorChanged: false,
+      domBehaviorChanged: false,
+      leafletBehaviorChanged: false,
+      backendStorageNetworkBehaviorChanged: false,
+      gameplayBehaviorChanged: false,
+      osmBehaviorChanged: false,
+      pinsBehaviorChanged: false,
+      playerMarkerBehaviorChanged: false,
+      sharedStateBehaviorChanged: false,
+      safetyFlagsRemainFalse:
+        safetyFlags.custom25DMap === true &&
+        safetyFlags.landmarkTestMarkers === true &&
+        safetyFlags.landmarkSampleData === true &&
+        safetyFlags.dinosaurSitesAuData === true,
+      rollbackNote:
+        "remove only the two Phase 360 helper declarations and their namespace and helper-presence registry entries",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  function getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport(
+    options = {}
+  ) {
+    const phase361Closeout =
+      typeof globalScope.getCustom25DVisualSecondPassiveHelperMoveCloseoutReport ===
+      "function"
+        ? globalScope.getCustom25DVisualSecondPassiveHelperMoveCloseoutReport(
+            options
+          )
+        : null;
+    const phase361SelfReview =
+      typeof globalScope.getCustom25DVisualSecondPassiveHelperMoveSelfReviewReport ===
+      "function"
+        ? globalScope.getCustom25DVisualSecondPassiveHelperMoveSelfReviewReport(
+            options
+          )
+        : null;
+    const requiredOptionKeys =
+      (phase361Closeout && Array.isArray(phase361Closeout.requiredOptionKeys)
+        ? phase361Closeout.requiredOptionKeys
+        : null) ||
+      (phase361SelfReview && Array.isArray(phase361SelfReview.requiredOptionKeys)
+        ? phase361SelfReview.requiredOptionKeys
+        : null) || [
+        "manual",
+        "developerIntent",
+        "localDevOnly",
+        "browserConsoleOnly",
+        "explicitOptionsOnly",
+        "allowManualRendererStateContainerShell",
+        "noStartupWiring",
+        "noBackendChanges",
+        "noPersistence",
+        "noAutomaticInvocation"
+      ];
+    const missingKey =
+      requiredOptionKeys.find((key) => options[key] !== true) || null;
+    const reasonByKey = {
+      manual: "manual-flag-required",
+      developerIntent: "developer-intent-required",
+      localDevOnly: "local-dev-only-required",
+      browserConsoleOnly: "browser-console-only-required",
+      explicitOptionsOnly: "explicit-options-only-required",
+      allowManualRendererStateContainerShell:
+        "manual-renderer-state-container-shell-not-allowed",
+      noStartupWiring: "no-startup-wiring-acknowledgement-required",
+      noBackendChanges: "no-backend-changes-acknowledgement-required",
+      noPersistence: "no-persistence-acknowledgement-required",
+      noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+    };
+    const phase359MovedHelpersExpected = [
+      "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
+      "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport"
+    ];
+    const phase361MovedHelpersExpected = [
+      "getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport",
+      "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport"
+    ];
+    const blockedBehavior =
+      (phase361Closeout && phase361Closeout.blockedBehavior) ||
+      (phase361SelfReview && phase361SelfReview.blockedBehavior) || {
+        rendererCreation: true,
+        rendererInitialization: true,
+        rendererRun: true,
+        mapAttachment: true,
+        drawing: true,
+        domCreation: true,
+        startupWiring: true,
+        automaticInvocation: true,
+        gameplayChanges: true,
+        pinChanges: true,
+        uiChanges: true,
+        backendChanges: true,
+        storageWrites: true,
+        networkAccess: true
+      };
+    const preservedSystems =
+      (phase361Closeout && phase361Closeout.preservedSystems) ||
+      (phase361SelfReview && phase361SelfReview.preservedSystems) || {
+        existingLeafletMapBehavior: true,
+        osmBehavior: true,
+        gameplay: true,
+        pins: true,
+        playerMarker: true,
+        captureRadius: true,
+        ui: true,
+        backend: true,
+        storage: true,
+        network: true
+      };
+    const safetyFlags =
+      (phase361Closeout && phase361Closeout.safetyFlags) ||
+      (phase361SelfReview && phase361SelfReview.safetyFlags) || {
+        custom25DMap: globalScope.ENABLE_CUSTOM_25D_MAP === false,
+        landmarkTestMarkers:
+          globalScope.ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+        landmarkSampleData:
+          globalScope.ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+        dinosaurSitesAuData:
+          globalScope.ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+      };
+    const blockers = [];
+    if (!phase361Closeout) {
+      blockers.push("phase361-closeout-report-unavailable");
+    }
+    if (!phase361SelfReview) {
+      blockers.push("phase361-self-review-report-unavailable");
+    }
+    if (
+      phase361Closeout &&
+      Array.isArray(phase361Closeout.movedHelpers) &&
+      phase361MovedHelpersExpected.some(
+        (name) => !phase361Closeout.movedHelpers.includes(name)
+      )
+    ) {
+      blockers.push("phase361-moved-helper-set-mismatch");
+    }
+
+    if (missingKey) {
+      return {
+        ok: true,
+        phase: 362,
+        helperName:
+          "getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport",
+        allowed: false,
+        blocked: true,
+        passive: true,
+        reportOnly: true,
+        closeoutOnly: true,
+        reason: reasonByKey[missingKey] || "required-option-missing",
+        failedRequirement: missingKey,
+        requiredOptionKeys,
+        phase361CloseoutAvailable: !!phase361Closeout,
+        phase361SelfReviewAvailable: !!phase361SelfReview,
+        phase359MovedHelpersExpected,
+        phase359MovedHelpersExpectedFile: "custom25d-visual-passive-reports.js",
+        phase361MovedHelpersExpected,
+        phase361MovedHelpersExpectedFile: "custom25d-visual-passive-reports.js",
+        additionalHelpersMovedThisPhase: false,
+        filesCreated: false,
+        codeMoved: false,
+        importsExportsAdded: false,
+        loadingOrderChanged: false,
+        runtimeBehaviorChanged: false,
+        immediateBroadExtractionBlocked: true,
+        indexHtmlUntouchedThisPhase: true,
+        passiveReportsFileUntouchedThisPhase: true,
+        nextRecommendedStep:
+          "continue-the-safe-rhythm-by-planning-at-most-one-to-two-passive-helper-moves-next",
+        blockers,
+        blockedBehavior,
+        preservedSystems,
+        safetyFlags
+      };
+    }
+
+    return {
+      ok: true,
+      phase: 362,
+      helperName:
+        "getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport",
+      allowed: true,
+      blocked: false,
+      passive: true,
+      reportOnly: true,
+      closeoutOnly: true,
+      reason: null,
+      failedRequirement: null,
+      requiredOptionKeys,
+      phase361CloseoutAvailable: !!phase361Closeout,
+      phase361SelfReviewAvailable: !!phase361SelfReview,
+      phase359MovedHelpersExpected,
+      phase359MovedHelpersExpectedFile: "custom25d-visual-passive-reports.js",
+      phase361MovedHelpersExpected,
+      phase361MovedHelpersExpectedFile: "custom25d-visual-passive-reports.js",
+      additionalHelpersMovedThisPhase: false,
+      filesCreated: false,
+      codeMoved: false,
+      importsExportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      immediateBroadExtractionBlocked: true,
+      indexHtmlUntouchedThisPhase: true,
+      passiveReportsFileUntouchedThisPhase: true,
+      nextRecommendedStep:
+        "continue-the-safe-rhythm-by-planning-at-most-one-to-two-passive-helper-moves-next",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  passiveReportsNamespace.helpersMoved = 6;
   passiveReportsNamespace.movedHelperNames = [
     "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
     "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport",
     "getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport",
-    "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport"
+    "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport",
+    "getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport",
+    "getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport"
   ];
   passiveReportsNamespace.getCustom25DVisualFirstPassiveExtractionCandidatePlanReport =
     getCustom25DVisualFirstPassiveExtractionCandidatePlanReport;
@@ -861,6 +1242,10 @@
     getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport;
   passiveReportsNamespace.getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport =
     getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport;
+  passiveReportsNamespace.getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport =
+    getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport;
+  passiveReportsNamespace.getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport =
+    getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport;
 
   globalScope.getCustom25DVisualFirstPassiveExtractionCandidatePlanReport =
     getCustom25DVisualFirstPassiveExtractionCandidatePlanReport;
@@ -870,6 +1255,10 @@
     getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport;
   globalScope.getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport =
     getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport;
+  globalScope.getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport =
+    getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport;
+  globalScope.getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport =
+    getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport;
 
   globalScope.GrowGoCustom25DVisualPassiveReports = passiveReportsNamespace;
 })(
