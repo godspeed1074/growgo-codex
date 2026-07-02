@@ -2284,6 +2284,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererLifecycleReadinessReport
             : null
       ),
+    getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -70625,6 +70634,164 @@ function getCustom25DVisualManualRendererLifecycleReadinessReport(options = {}) 
   };
 }
 
+function getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "planningOnly",
+    "reportOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleFieldAddition",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const plannedLifecycleStateFields = [
+    "lifecycle",
+    "lifecycle.status",
+    "lifecycle.flags",
+    "lifecycle.timestamps"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined" && window;
+  const stateObject =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined"
+      ? window.custom25DVisualManualRendererState
+      : undefined;
+  const stateContainerExists = typeof stateObject !== "undefined";
+  const isObjectState = !!stateObject && typeof stateObject === "object";
+  const lifecycleFieldPresent =
+    isObjectState &&
+    Object.prototype.hasOwnProperty.call(stateObject, "lifecycle");
+  const lifecycleStatusFieldPresent =
+    lifecycleFieldPresent &&
+    !!stateObject.lifecycle &&
+    typeof stateObject.lifecycle === "object" &&
+    Object.prototype.hasOwnProperty.call(stateObject.lifecycle, "status");
+  const lifecycleFlagsFieldPresent =
+    lifecycleFieldPresent &&
+    !!stateObject.lifecycle &&
+    typeof stateObject.lifecycle === "object" &&
+    Object.prototype.hasOwnProperty.call(stateObject.lifecycle, "flags");
+  const lifecycleTimestampsFieldPresent =
+    lifecycleFieldPresent &&
+    !!stateObject.lifecycle &&
+    typeof stateObject.lifecycle === "object" &&
+    Object.prototype.hasOwnProperty.call(stateObject.lifecycle, "timestamps");
+  const creationHelperAvailable =
+    typeof createCustom25DVisualInertManualRendererStateContainer === "function";
+  const manualRunHelperAvailable =
+    typeof runCustom25DVisualInertStateContainerManualConsoleTest === "function";
+  const lifecycleReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererLifecycleReadinessReport === "function";
+  const inertStateFieldsCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInertStateFieldsCloseoutReport ===
+    "function";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 393,
+      helperName:
+        "getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport",
+      planningOnly: true,
+      reportOnly: true,
+      passive: true,
+      jsonSafeResult: true,
+      lifecycleStateFieldsReadinessOnly: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerExists,
+      lifecycleFieldPresent: false,
+      lifecycleStatusFieldPresent: false,
+      lifecycleFlagsFieldPresent: false,
+      lifecycleTimestampsFieldPresent: false,
+      plannedLifecycleStateFields,
+      plannedLifecycleStateFieldCount: plannedLifecycleStateFields.length,
+      fieldsAddedThisPhase: false,
+      fieldsMutatedThisPhase: false,
+      lifecycleFieldsAddedThisPhase: false,
+      futureLifecycleFieldsArePlanningOnly: true,
+      creationHelperAvailable,
+      manualRunHelperAvailable,
+      lifecycleReadinessHelperAvailable,
+      inertStateFieldsCloseoutHelperAvailable,
+      stateCreatedByReadiness: false,
+      stateMutatedByReadiness: false,
+      creationHelperInvokedByReadiness: false,
+      runHelperInvokedByReadiness: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 393,
+    helperName:
+      "getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport",
+    planningOnly: true,
+    reportOnly: true,
+    passive: true,
+    jsonSafeResult: true,
+    lifecycleStateFieldsReadinessOnly: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateContainerExists,
+    lifecycleFieldPresent,
+    lifecycleStatusFieldPresent,
+    lifecycleFlagsFieldPresent,
+    lifecycleTimestampsFieldPresent,
+    plannedLifecycleStateFields,
+    plannedLifecycleStateFieldCount: plannedLifecycleStateFields.length,
+    fieldsAddedThisPhase: false,
+    fieldsMutatedThisPhase: false,
+    lifecycleFieldsAddedThisPhase: false,
+    futureLifecycleFieldsArePlanningOnly: true,
+    creationHelperAvailable,
+    manualRunHelperAvailable,
+    lifecycleReadinessHelperAvailable,
+    inertStateFieldsCloseoutHelperAvailable,
+    stateCreatedByReadiness: false,
+    stateMutatedByReadiness: false,
+    creationHelperInvokedByReadiness: false,
+    runHelperInvokedByReadiness: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false
+  };
+}
+
 function getCustom25DVisualExtractedHelperReconciliationReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -75407,6 +75574,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererLifecycleReadinessReport
             : null
       ),
+    getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -76646,6 +76822,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererLifecycleReadinessReport:
         typeof namespace.getCustom25DVisualManualRendererLifecycleReadinessReport ===
+        "function",
+      getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
