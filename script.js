@@ -2248,6 +2248,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererStateFieldsReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateFieldsReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateFieldsReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateFieldsReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -69924,6 +69933,158 @@ function getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport(
   };
 }
 
+function getCustom25DVisualManualRendererStateFieldsReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "planningOnly",
+    "reportOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const plannedFields = [
+    "viewport",
+    "camera",
+    "tiles",
+    "layers",
+    "style",
+    "metrics",
+    "lastManualCheckAt"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const creationHelperAvailable =
+    typeof createCustom25DVisualInertManualRendererStateContainer === "function";
+  const manualRunHelperAvailable =
+    typeof runCustom25DVisualInertStateContainerManualConsoleTest === "function";
+  const manualReportHelperAvailable =
+    typeof getCustom25DVisualInertStateContainerManualConsoleTestReport === "function";
+  const safariSafeCloseoutHelperAvailable =
+    typeof getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport ===
+    "function";
+  const windowExists = typeof window !== "undefined" && window;
+  const stateObject =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined"
+      ? window.custom25DVisualManualRendererState
+      : undefined;
+  const stateContainerExists = typeof stateObject !== "undefined";
+  const isObjectState = !!stateObject && typeof stateObject === "object";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 389,
+      helperName: "getCustom25DVisualManualRendererStateFieldsReadinessReport",
+      planningOnly: true,
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      creationHelperAvailable,
+      manualRunHelperAvailable,
+      manualReportHelperAvailable,
+      safariSafeCloseoutHelperAvailable,
+      stateContainerExists,
+      observedCreated: null,
+      observedInitialized: null,
+      observedRunning: null,
+      observedMapAttached: null,
+      observedDrawingEnabled: null,
+      observedLayerCount: 0,
+      plannedFieldCount: plannedFields.length,
+      plannedFields,
+      fieldsAddedThisPhase: false,
+      fieldsMutatedThisPhase: false,
+      futureFieldsArePlanningOnly: true,
+      stateCreatedByReadiness: false,
+      stateMutatedByReadiness: false,
+      creationHelperInvokedByReadiness: false,
+      runHelperInvokedByReadiness: false,
+      rendererInstanceCreated: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 389,
+    helperName: "getCustom25DVisualManualRendererStateFieldsReadinessReport",
+    planningOnly: true,
+    reportOnly: true,
+    passive: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    creationHelperAvailable,
+    manualRunHelperAvailable,
+    manualReportHelperAvailable,
+    safariSafeCloseoutHelperAvailable,
+    stateContainerExists,
+    observedCreated:
+      isObjectState && typeof stateObject.created === "boolean"
+        ? stateObject.created
+        : null,
+    observedInitialized:
+      isObjectState && typeof stateObject.initialized === "boolean"
+        ? stateObject.initialized
+        : null,
+    observedRunning:
+      isObjectState && typeof stateObject.running === "boolean"
+        ? stateObject.running
+        : null,
+    observedMapAttached:
+      isObjectState && typeof stateObject.mapAttached === "boolean"
+        ? stateObject.mapAttached
+        : null,
+    observedDrawingEnabled:
+      isObjectState && typeof stateObject.drawingEnabled === "boolean"
+        ? stateObject.drawingEnabled
+        : null,
+    observedLayerCount:
+      isObjectState && typeof stateObject.layerCount === "number"
+        ? stateObject.layerCount
+        : 0,
+    plannedFieldCount: plannedFields.length,
+    plannedFields,
+    fieldsAddedThisPhase: false,
+    fieldsMutatedThisPhase: false,
+    futureFieldsArePlanningOnly: true,
+    stateCreatedByReadiness: false,
+    stateMutatedByReadiness: false,
+    creationHelperInvokedByReadiness: false,
+    runHelperInvokedByReadiness: false,
+    rendererInstanceCreated: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false
+  };
+}
+
 function getCustom25DVisualExtractedHelperReconciliationReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -74670,6 +74831,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererStateFieldsReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateFieldsReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateFieldsReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateFieldsReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -75897,6 +76067,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport:
         typeof namespace.getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererStateFieldsReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererStateFieldsReadinessReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
