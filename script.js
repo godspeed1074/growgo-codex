@@ -2275,6 +2275,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererInertStateFieldsCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererLifecycleReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -70466,6 +70475,156 @@ function getCustom25DVisualManualRendererInertStateFieldsCloseoutReport(
   };
 }
 
+function getCustom25DVisualManualRendererLifecycleReadinessReport(options = {}) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "planningOnly",
+    "reportOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const plannedLifecycleStages = [
+    "created",
+    "initialized",
+    "attached",
+    "running",
+    "stopped",
+    "disposed"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined" && window;
+  const stateObject =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined"
+      ? window.custom25DVisualManualRendererState
+      : undefined;
+  const stateContainerExists = typeof stateObject !== "undefined";
+  const isObjectState = !!stateObject && typeof stateObject === "object";
+  const creationHelperAvailable =
+    typeof createCustom25DVisualInertManualRendererStateContainer === "function";
+  const manualRunHelperAvailable =
+    typeof runCustom25DVisualInertStateContainerManualConsoleTest === "function";
+  const inertStateFieldsReportHelperAvailable =
+    typeof getCustom25DVisualManualRendererInertStateFieldsReport === "function";
+  const inertStateFieldsCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInertStateFieldsCloseoutReport ===
+    "function";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 392,
+      helperName: "getCustom25DVisualManualRendererLifecycleReadinessReport",
+      planningOnly: true,
+      reportOnly: true,
+      passive: true,
+      jsonSafeResult: true,
+      lifecycleReadinessOnly: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerExists,
+      observedInitialized: null,
+      observedRunning: null,
+      observedRendererInstanceExists: false,
+      observedMapAttached: null,
+      observedDrawingEnabled: null,
+      plannedLifecycleStages,
+      plannedLifecycleStageCount: plannedLifecycleStages.length,
+      lifecycleStagesAddedThisPhase: false,
+      lifecycleMutatedThisPhase: false,
+      futureLifecycleIsPlanningOnly: true,
+      creationHelperAvailable,
+      manualRunHelperAvailable,
+      inertStateFieldsReportHelperAvailable,
+      inertStateFieldsCloseoutHelperAvailable,
+      stateCreatedByReadiness: false,
+      stateMutatedByReadiness: false,
+      creationHelperInvokedByReadiness: false,
+      runHelperInvokedByReadiness: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 392,
+    helperName: "getCustom25DVisualManualRendererLifecycleReadinessReport",
+    planningOnly: true,
+    reportOnly: true,
+    passive: true,
+    jsonSafeResult: true,
+    lifecycleReadinessOnly: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateContainerExists,
+    observedInitialized:
+      isObjectState && typeof stateObject.initialized === "boolean"
+        ? stateObject.initialized
+        : null,
+    observedRunning:
+      isObjectState && typeof stateObject.running === "boolean"
+        ? stateObject.running
+        : null,
+    observedRendererInstanceExists:
+      isObjectState && stateObject.rendererInstance !== null,
+    observedMapAttached:
+      isObjectState && typeof stateObject.mapAttached === "boolean"
+        ? stateObject.mapAttached
+        : null,
+    observedDrawingEnabled:
+      isObjectState && typeof stateObject.drawingEnabled === "boolean"
+        ? stateObject.drawingEnabled
+        : null,
+    plannedLifecycleStages,
+    plannedLifecycleStageCount: plannedLifecycleStages.length,
+    lifecycleStagesAddedThisPhase: false,
+    lifecycleMutatedThisPhase: false,
+    futureLifecycleIsPlanningOnly: true,
+    creationHelperAvailable,
+    manualRunHelperAvailable,
+    inertStateFieldsReportHelperAvailable,
+    inertStateFieldsCloseoutHelperAvailable,
+    stateCreatedByReadiness: false,
+    stateMutatedByReadiness: false,
+    creationHelperInvokedByReadiness: false,
+    runHelperInvokedByReadiness: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false
+  };
+}
+
 function getCustom25DVisualExtractedHelperReconciliationReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -75239,6 +75398,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererInertStateFieldsCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererLifecycleReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -76475,6 +76643,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererInertStateFieldsCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererInertStateFieldsCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererLifecycleReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererLifecycleReadinessReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
