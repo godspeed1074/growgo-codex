@@ -2257,6 +2257,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererStateFieldsReadinessReport
             : null
       ),
+    getCustom25DVisualManualRendererInertStateFieldsReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInertStateFieldsReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInertStateFieldsReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInertStateFieldsReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -68506,7 +68515,38 @@ function createCustom25DVisualInertManualRendererStateContainer(options = {}) {
     rendererInstance: null,
     map: null,
     mapReference: null,
+    viewport: {
+      attached: false,
+      width: 0,
+      height: 0,
+      pixelRatio: 1
+    },
+    camera: {
+      initialized: false,
+      center: null,
+      zoom: null,
+      bearing: 0,
+      pitch: 0
+    },
+    tiles: {
+      enabled: false,
+      loaded: false,
+      requestedCount: 0,
+      loadedCount: 0
+    },
     layers: [],
+    style: {
+      activeStyle: null,
+      styleLoaded: false,
+      palette: null
+    },
+    metrics: {
+      frameCount: 0,
+      drawCount: 0,
+      lastFrameMs: 0,
+      lastDrawMs: 0
+    },
+    lastManualCheckAt: null,
     lastManualAction: "inert-state-container-created",
     lastError: null
   };
@@ -70076,6 +70116,169 @@ function getCustom25DVisualManualRendererStateFieldsReadinessReport(
     stateMutatedByReadiness: false,
     creationHelperInvokedByReadiness: false,
     runHelperInvokedByReadiness: false,
+    rendererInstanceCreated: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false
+  };
+}
+
+function getCustom25DVisualManualRendererInertStateFieldsReport(options = {}) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined" && window;
+  const stateObject =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined"
+      ? window.custom25DVisualManualRendererState
+      : undefined;
+  const stateContainerExists = typeof stateObject !== "undefined";
+  const isObjectState = !!stateObject && typeof stateObject === "object";
+  const viewportFieldPresent =
+    isObjectState &&
+    !!stateObject.viewport &&
+    typeof stateObject.viewport === "object";
+  const cameraFieldPresent =
+    isObjectState && !!stateObject.camera && typeof stateObject.camera === "object";
+  const tilesFieldPresent =
+    isObjectState && !!stateObject.tiles && typeof stateObject.tiles === "object";
+  const layersFieldPresent = isObjectState && Array.isArray(stateObject.layers);
+  const styleFieldPresent =
+    isObjectState && !!stateObject.style && typeof stateObject.style === "object";
+  const metricsFieldPresent =
+    isObjectState && !!stateObject.metrics && typeof stateObject.metrics === "object";
+  const lastManualCheckAtFieldPresent =
+    isObjectState &&
+    Object.prototype.hasOwnProperty.call(stateObject, "lastManualCheckAt");
+  const inertFieldDefaultsMatch = !!(
+    viewportFieldPresent &&
+    stateObject.viewport.attached === false &&
+    stateObject.viewport.width === 0 &&
+    stateObject.viewport.height === 0 &&
+    stateObject.viewport.pixelRatio === 1 &&
+    cameraFieldPresent &&
+    stateObject.camera.initialized === false &&
+    stateObject.camera.center === null &&
+    stateObject.camera.zoom === null &&
+    stateObject.camera.bearing === 0 &&
+    stateObject.camera.pitch === 0 &&
+    tilesFieldPresent &&
+    stateObject.tiles.enabled === false &&
+    stateObject.tiles.loaded === false &&
+    stateObject.tiles.requestedCount === 0 &&
+    stateObject.tiles.loadedCount === 0 &&
+    layersFieldPresent &&
+    stateObject.layers.length === 0 &&
+    styleFieldPresent &&
+    stateObject.style.activeStyle === null &&
+    stateObject.style.styleLoaded === false &&
+    stateObject.style.palette === null &&
+    metricsFieldPresent &&
+    stateObject.metrics.frameCount === 0 &&
+    stateObject.metrics.drawCount === 0 &&
+    stateObject.metrics.lastFrameMs === 0 &&
+    stateObject.metrics.lastDrawMs === 0 &&
+    lastManualCheckAtFieldPresent &&
+    stateObject.lastManualCheckAt === null
+  );
+  const creationHelperAvailable =
+    typeof createCustom25DVisualInertManualRendererStateContainer === "function";
+  const manualRunHelperAvailable =
+    typeof runCustom25DVisualInertStateContainerManualConsoleTest === "function";
+  const manualReportHelperAvailable =
+    typeof getCustom25DVisualInertStateContainerManualConsoleTestReport === "function";
+  const safariSafeCloseoutHelperAvailable =
+    typeof getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport ===
+    "function";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 390,
+      helperName: "getCustom25DVisualManualRendererInertStateFieldsReport",
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerExists,
+      viewportFieldPresent: false,
+      cameraFieldPresent: false,
+      tilesFieldPresent: false,
+      layersFieldPresent: false,
+      styleFieldPresent: false,
+      metricsFieldPresent: false,
+      lastManualCheckAtFieldPresent: false,
+      inertFieldDefaultsMatch: false,
+      fieldsAddedToNewCreationPath: true,
+      creationHelperAvailable,
+      manualRunHelperAvailable,
+      manualReportHelperAvailable,
+      safariSafeCloseoutHelperAvailable,
+      stateCreatedByReport: false,
+      stateMutatedByReport: false,
+      creationHelperInvokedByReport: false,
+      runHelperInvokedByReport: false,
+      rendererInstanceCreated: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 390,
+    helperName: "getCustom25DVisualManualRendererInertStateFieldsReport",
+    reportOnly: true,
+    passive: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateContainerExists,
+    viewportFieldPresent,
+    cameraFieldPresent,
+    tilesFieldPresent,
+    layersFieldPresent,
+    styleFieldPresent,
+    metricsFieldPresent,
+    lastManualCheckAtFieldPresent,
+    inertFieldDefaultsMatch,
+    fieldsAddedToNewCreationPath: true,
+    creationHelperAvailable,
+    manualRunHelperAvailable,
+    manualReportHelperAvailable,
+    safariSafeCloseoutHelperAvailable,
+    stateCreatedByReport: false,
+    stateMutatedByReport: false,
+    creationHelperInvokedByReport: false,
+    runHelperInvokedByReport: false,
     rendererInstanceCreated: false,
     mapAttached: false,
     drawingStarted: false,
@@ -74840,6 +75043,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererStateFieldsReadinessReport
             : null
       ),
+    getCustom25DVisualManualRendererInertStateFieldsReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInertStateFieldsReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInertStateFieldsReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInertStateFieldsReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -76070,6 +76282,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererStateFieldsReadinessReport:
         typeof namespace.getCustom25DVisualManualRendererStateFieldsReadinessReport ===
+        "function",
+      getCustom25DVisualManualRendererInertStateFieldsReport:
+        typeof namespace.getCustom25DVisualManualRendererInertStateFieldsReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
