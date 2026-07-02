@@ -2373,6 +2373,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererInitializationContractShellReport
             : null
       ),
+    getCustom25DVisualManualRendererInitializationContractShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationContractShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationContractShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationContractShellCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -31509,6 +31518,114 @@ function getCustom25DVisualManualRendererInitializationContractShellReport(
     initializationAuthorizesRendererCreation: false,
     initializationAuthorizesRendererStart: false,
     defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererInitializationContractShellCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "closeoutOnly",
+    "reportOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined" && window;
+  const stateContainerExists =
+    !!(
+      windowExists &&
+      typeof window.custom25DVisualManualRendererState !== "undefined"
+    );
+  const initializationContractShellHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractShell ===
+    "function";
+  const initializationContractShellReportHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractShellReport ===
+    "function";
+  const initializationContractReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractReadinessReport ===
+    "function";
+  const initializationShellHelperAvailable =
+    typeof initializeCustom25DVisualManualRendererShell === "function";
+  const initializationShellCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationShellCloseoutReport ===
+    "function";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 401,
+      helperName:
+        "getCustom25DVisualManualRendererInitializationContractShellCloseoutReport",
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      jsonSafeResult: true
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 401,
+    helperName:
+      "getCustom25DVisualManualRendererInitializationContractShellCloseoutReport",
+    closeoutOnly: true,
+    reportOnly: true,
+    passive: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    phase400InitializationContractShellClosedOut: true,
+    initializationContractShellHelperAvailable,
+    initializationContractShellReportHelperAvailable,
+    initializationContractReadinessHelperAvailable,
+    initializationShellHelperAvailable,
+    initializationShellCloseoutHelperAvailable,
+    initializationContractShellAddedInPhase400: true,
+    contractShellInvokedByCloseout: false,
+    initializationShellInvokedByCloseout: false,
+    initializationPerformedByCloseout: false,
+    stateContainerExists,
+    stateCreatedByCloseout: false,
+    stateMutatedByCloseout: false,
+    lifecycleMutatedByCloseout: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    initializationAuthorizesRendererCreation: false,
+    initializationAuthorizesRendererStart: false,
+    futureInitializationStillBlocked: true,
+    defaultDecision: "blocked",
+    nextRecommendedPhase: "manual-renderer-initialization-guard-readiness"
   };
 }
 
@@ -76992,6 +77109,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererInitializationContractShellReport
             : null
       ),
+    getCustom25DVisualManualRendererInitializationContractShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationContractShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationContractShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationContractShellCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -78261,6 +78387,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererInitializationContractShellReport:
         typeof namespace.getCustom25DVisualManualRendererInitializationContractShellReport ===
+        "function",
+      getCustom25DVisualManualRendererInitializationContractShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererInitializationContractShellCloseoutReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
