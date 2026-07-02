@@ -2382,6 +2382,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererInitializationContractShellCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererInitializationGuardReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationGuardReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationGuardReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationGuardReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -31626,6 +31635,151 @@ function getCustom25DVisualManualRendererInitializationContractShellCloseoutRepo
     futureInitializationStillBlocked: true,
     defaultDecision: "blocked",
     nextRecommendedPhase: "manual-renderer-initialization-guard-readiness"
+  };
+}
+
+function getCustom25DVisualManualRendererInitializationGuardReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "planningOnly",
+    "readinessOnly",
+    "reportOnly",
+    "confirmNoGuardCreation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined" && window;
+  const stateContainer =
+    windowExists &&
+    typeof window.custom25DVisualManualRendererState !== "undefined"
+      ? window.custom25DVisualManualRendererState
+      : null;
+  const stateContainerExists = !!stateContainer;
+  const lifecycle =
+    stateContainer && typeof stateContainer.lifecycle === "object"
+      ? stateContainer.lifecycle
+      : null;
+  const lifecycleFlags =
+    lifecycle && typeof lifecycle.flags === "object" ? lifecycle.flags : null;
+  const observedLifecycleStatus =
+    lifecycle && typeof lifecycle.status === "string" ? lifecycle.status : null;
+  const observedLifecycleCreatedFlag =
+    !!(lifecycleFlags && lifecycleFlags.created === true);
+  const observedLifecycleInitializedFlag =
+    !!(lifecycleFlags && lifecycleFlags.initialized === true);
+  const observedLifecycleRunningFlag =
+    !!(lifecycleFlags && lifecycleFlags.running === true);
+  const initializationContractShellHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractShell ===
+    "function";
+  const initializationContractShellReportHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractShellReport ===
+    "function";
+  const initializationContractShellCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractShellCloseoutReport ===
+    "function";
+  const initializationContractReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationContractReadinessReport ===
+    "function";
+  const initializationShellHelperAvailable =
+    typeof initializeCustom25DVisualManualRendererShell === "function";
+  const initializationShellCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationShellCloseoutReport ===
+    "function";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 402,
+      helperName:
+        "getCustom25DVisualManualRendererInitializationGuardReadinessReport",
+      blocked: true,
+      allowed: false,
+      missingRequiredOptionKeys,
+      requiredOptionKeys,
+      jsonSafeResult: true
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 402,
+    helperName:
+      "getCustom25DVisualManualRendererInitializationGuardReadinessReport",
+    planningOnly: true,
+    readinessOnly: true,
+    reportOnly: true,
+    passive: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    initializationGuardReadinessOnly: true,
+    initializationGuardAddedThisPhase: false,
+    realGuardFunctionCreated: false,
+    plannedInitializationGuardName:
+      "canInitializeCustom25DVisualManualRenderer",
+    plannedContractName:
+      "custom25DVisualManualRendererInitializationContract",
+    plannedEntryPoint: "initializeCustom25DVisualManualRendererShell",
+    plannedRequiredStateContainerName: "custom25DVisualManualRendererState",
+    plannedRequiredLifecycleStatus: "created",
+    plannedBlockedDefault: true,
+    plannedAllowsRendererCreation: false,
+    plannedAllowsRendererStart: false,
+    initializationContractShellHelperAvailable,
+    initializationContractShellReportHelperAvailable,
+    initializationContractShellCloseoutHelperAvailable,
+    initializationContractReadinessHelperAvailable,
+    initializationShellHelperAvailable,
+    initializationShellCloseoutHelperAvailable,
+    stateContainerExists,
+    observedLifecycleStatus,
+    observedLifecycleCreatedFlag,
+    observedLifecycleInitializedFlag,
+    observedLifecycleRunningFlag,
+    contractShellInvokedByReadiness: false,
+    initializationShellInvokedByReadiness: false,
+    initializationPerformedByReadiness: false,
+    stateCreatedByReadiness: false,
+    stateMutatedByReadiness: false,
+    lifecycleMutatedByReadiness: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    initializationAuthorizesRendererCreation: false,
+    initializationAuthorizesRendererStart: false,
+    futureInitializationStillBlocked: true,
+    defaultDecision: "blocked",
+    nextRecommendedPhase: "manual-renderer-initialization-guard-shell"
   };
 }
 
@@ -77118,6 +77272,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererInitializationContractShellCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererInitializationGuardReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationGuardReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationGuardReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationGuardReadinessReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -78390,6 +78553,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererInitializationContractShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererInitializationContractShellCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererInitializationGuardReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererInitializationGuardReadinessReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
