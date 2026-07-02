@@ -32571,7 +32571,6 @@ function getCustom25DVisualManualRendererInitializationPreflightShellReport(
     defaultDecision: "blocked"
   };
 }
-
 function getCustom25DVisualManualRendererStateContainerPlanReport(options = {}) {
   const initializationShellCloseout =
     typeof getCustom25DVisualManualRendererInitializationShellCloseoutReport === "function"
