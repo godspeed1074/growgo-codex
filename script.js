@@ -2043,6 +2043,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualRendererStateContainerPlanNextStepReport
             : null
       ),
+    getCustom25DVisualInertStateContainerContractPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerContractPlanReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerContractPlanReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerContractPlanReport
+            : null
+      ),
+    getCustom25DVisualInertStateContainerContractReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerContractReadinessReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerContractReadinessReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerContractReadinessReport
+            : null
+      ),
+    getCustom25DVisualInertStateContainerContractPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerContractPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerContractPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerContractPlanCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -65984,6 +66011,505 @@ function getCustom25DVisualRendererStateContainerPlanNextStepReport(options = {}
   };
 }
 
+function getCustom25DVisualInertStateContainerContractPlanReport(options = {}) {
+  const planCloseout =
+    typeof getCustom25DVisualRendererStateContainerPlanCloseoutReport === "function"
+      ? getCustom25DVisualRendererStateContainerPlanCloseoutReport(options)
+      : null;
+  const planSelfReview =
+    typeof getCustom25DVisualRendererStateContainerPlanSelfReviewReport === "function"
+      ? getCustom25DVisualRendererStateContainerPlanSelfReviewReport(options)
+      : null;
+  const planNextStep =
+    typeof getCustom25DVisualRendererStateContainerPlanNextStepReport === "function"
+      ? getCustom25DVisualRendererStateContainerPlanNextStepReport(options)
+      : null;
+  const requiredOptionKeys =
+    (planNextStep && Array.isArray(planNextStep.requiredOptionKeys) && planNextStep.requiredOptionKeys) ||
+    (planSelfReview &&
+      Array.isArray(planSelfReview.requiredOptionKeys) &&
+      planSelfReview.requiredOptionKeys) ||
+    (planCloseout && Array.isArray(planCloseout.requiredOptionKeys) && planCloseout.requiredOptionKeys) || [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (planNextStep && planNextStep.blockedBehavior) ||
+    (planSelfReview && planSelfReview.blockedBehavior) ||
+    (planCloseout && planCloseout.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (planNextStep && planNextStep.preservedSystems) ||
+    (planSelfReview && planSelfReview.preservedSystems) ||
+    (planCloseout && planCloseout.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (planNextStep && planNextStep.safetyFlags) ||
+    (planSelfReview && planSelfReview.safetyFlags) ||
+    (planCloseout && planCloseout.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const phase376CloseoutAvailable = !!planCloseout;
+  const phase376SelfReviewAvailable = !!planSelfReview;
+  const phase376NextStepAvailable = !!planNextStep;
+  const plannedInitialState = {
+    created: false,
+    initialized: false,
+    running: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    layerCount: 0,
+    rendererInstance: null,
+    mapReference: null,
+    layers: [],
+    lastManualAction: null,
+    lastError: null
+  };
+  const blockedRuntimeAreas =
+    (planCloseout &&
+      Array.isArray(planCloseout.blockedRuntimeAreas) &&
+      planCloseout.blockedRuntimeAreas) || [
+      "renderer-init-start-run",
+      "map-attachment",
+      "drawing",
+      "dom-mutation",
+      "leaflet-mutation",
+      "shared-state-mutation",
+      "backend-storage-network",
+      "gameplay-pins-player-marker-osm"
+    ];
+  const blockers = [];
+  if (!phase376CloseoutAvailable) blockers.push("phase376-closeout-unavailable");
+  if (!phase376SelfReviewAvailable) blockers.push("phase376-self-review-unavailable");
+  if (!phase376NextStepAvailable) blockers.push("phase376-next-step-unavailable");
+  const safestNextMilestone =
+    phase376NextStepAvailable &&
+    planNextStep &&
+    planNextStep.recommendedNextRendererMilestone === "inertStateContainerContractPlan"
+      ? "manualRendererStateSchemaReadiness"
+      : "pauseForManualReview";
+  const nextRecommendedStep =
+    safestNextMilestone === "manualRendererStateSchemaReadiness"
+      ? "prepare-passive-manual-renderer-state-schema-readiness-phase"
+      : "pause-for-manual-review-before-state-schema-readiness";
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 377,
+      helperName: "getCustom25DVisualInertStateContainerContractPlanReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      phase376CloseoutAvailable,
+      phase376SelfReviewAvailable,
+      phase376NextStepAvailable,
+      plannedStateContainerName: "custom25DVisualManualRendererState",
+      plannedContractOnly: true,
+      plannedInitialState,
+      stateContainerCreated: false,
+      sharedStateCreated: false,
+      sharedStateReplaced: false,
+      sharedStateMutated: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domMutated: false,
+      leafletMutated: false,
+      startupWired: false,
+      runtimeBehaviorChanged: false,
+      safestNextMilestone,
+      blockedRuntimeAreas,
+      blockers,
+      nextRecommendedStep,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 377,
+    helperName: "getCustom25DVisualInertStateContainerContractPlanReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    phase376CloseoutAvailable,
+    phase376SelfReviewAvailable,
+    phase376NextStepAvailable,
+    plannedStateContainerName: "custom25DVisualManualRendererState",
+    plannedContractOnly: true,
+    plannedInitialState,
+    stateContainerCreated: false,
+    sharedStateCreated: false,
+    sharedStateReplaced: false,
+    sharedStateMutated: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domMutated: false,
+    leafletMutated: false,
+    startupWired: false,
+    runtimeBehaviorChanged: false,
+    safestNextMilestone,
+    blockedRuntimeAreas,
+    blockers,
+    nextRecommendedStep,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualInertStateContainerContractReadinessReport(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualInertStateContainerContractPlanReport === "function"
+      ? getCustom25DVisualInertStateContainerContractPlanReport(options)
+      : null;
+  const requiredOptionKeys =
+    (contractPlan &&
+      Array.isArray(contractPlan.requiredOptionKeys) &&
+      contractPlan.requiredOptionKeys) || [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (contractPlan && contractPlan.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (contractPlan && contractPlan.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (contractPlan && contractPlan.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const blockers = [];
+  if (!contractPlan) blockers.push("phase377-contract-plan-unavailable");
+  const recommendedNextRendererMilestone =
+    blockers.length === 0 ? "manualRendererStateSchemaReadiness" : "pauseForManualReview";
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 377,
+      helperName: "getCustom25DVisualInertStateContainerContractReadinessReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      readinessOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      contractPlanAvailable: !!contractPlan,
+      readyForManualRendererStateSchemaReadiness:
+        recommendedNextRendererMilestone === "manualRendererStateSchemaReadiness",
+      stateContainerCreationBlocked: true,
+      broadRuntimeBehaviorBlocked: true,
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 377,
+    helperName: "getCustom25DVisualInertStateContainerContractReadinessReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    contractPlanAvailable: !!contractPlan,
+    readyForManualRendererStateSchemaReadiness:
+      recommendedNextRendererMilestone === "manualRendererStateSchemaReadiness",
+    stateContainerCreationBlocked: true,
+    broadRuntimeBehaviorBlocked: true,
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualInertStateContainerContractPlanCloseoutReport(options = {}) {
+  const contractPlan =
+    typeof getCustom25DVisualInertStateContainerContractPlanReport === "function"
+      ? getCustom25DVisualInertStateContainerContractPlanReport(options)
+      : null;
+  const readiness =
+    typeof getCustom25DVisualInertStateContainerContractReadinessReport === "function"
+      ? getCustom25DVisualInertStateContainerContractReadinessReport(options)
+      : null;
+  const requiredOptionKeys =
+    (readiness && Array.isArray(readiness.requiredOptionKeys) && readiness.requiredOptionKeys) ||
+    (contractPlan &&
+      Array.isArray(contractPlan.requiredOptionKeys) &&
+      contractPlan.requiredOptionKeys) || [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (readiness && readiness.blockedBehavior) ||
+    (contractPlan && contractPlan.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (readiness && readiness.preservedSystems) ||
+    (contractPlan && contractPlan.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (readiness && readiness.safetyFlags) ||
+    (contractPlan && contractPlan.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const blockers = [];
+  if (!contractPlan) blockers.push("phase377-contract-plan-unavailable");
+  if (!readiness) blockers.push("phase377-readiness-report-unavailable");
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 377,
+      helperName: "getCustom25DVisualInertStateContainerContractPlanCloseoutReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      closeoutOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      contractPlanningOnly: true,
+      stateContainerCreated: false,
+      sharedStateCreated: false,
+      sharedStateReplaced: false,
+      sharedStateMutated: false,
+      helperDeclarationsMovedThisPhase: false,
+      filesCreated: false,
+      indexHtmlChangedThisPhase: false,
+      passiveReportsFileChangedThisPhase: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingEnabled: false,
+      domMutated: false,
+      leafletMutated: false,
+      startupWired: false,
+      runtimeBehaviorChanged: false,
+      rollbackNote:
+        "remove only the three Phase 377 helper declarations and their namespace/registry entries",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 377,
+    helperName: "getCustom25DVisualInertStateContainerContractPlanCloseoutReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    contractPlanningOnly: true,
+    stateContainerCreated: false,
+    sharedStateCreated: false,
+    sharedStateReplaced: false,
+    sharedStateMutated: false,
+    helperDeclarationsMovedThisPhase: false,
+    filesCreated: false,
+    indexHtmlChangedThisPhase: false,
+    passiveReportsFileChangedThisPhase: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingEnabled: false,
+    domMutated: false,
+    leafletMutated: false,
+    startupWired: false,
+    runtimeBehaviorChanged: false,
+    rollbackNote:
+      "remove only the three Phase 377 helper declarations and their namespace/registry entries",
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function getCustom25DVisualExtractedHelperReconciliationReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -70521,6 +71047,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualRendererStateContainerPlanNextStepReport
             : null
       ),
+    getCustom25DVisualInertStateContainerContractPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerContractPlanReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerContractPlanReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerContractPlanReport
+            : null
+      ),
+    getCustom25DVisualInertStateContainerContractReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerContractReadinessReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerContractReadinessReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerContractReadinessReport
+            : null
+      ),
+    getCustom25DVisualInertStateContainerContractPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualInertStateContainerContractPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualInertStateContainerContractPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualInertStateContainerContractPlanCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -71679,6 +72232,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualRendererStateContainerPlanNextStepReport:
         typeof namespace.getCustom25DVisualRendererStateContainerPlanNextStepReport ===
+        "function",
+      getCustom25DVisualInertStateContainerContractPlanReport:
+        typeof namespace.getCustom25DVisualInertStateContainerContractPlanReport ===
+        "function",
+      getCustom25DVisualInertStateContainerContractReadinessReport:
+        typeof namespace.getCustom25DVisualInertStateContainerContractReadinessReport ===
+        "function",
+      getCustom25DVisualInertStateContainerContractPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualInertStateContainerContractPlanCloseoutReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
