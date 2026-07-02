@@ -1822,6 +1822,32 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport
             : null
       ),
+    getCustom25DVisualPostReconciliationMoveHealthReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPostReconciliationMoveHealthReport",
+        () =>
+          typeof getCustom25DVisualPostReconciliationMoveHealthReport === "function"
+            ? getCustom25DVisualPostReconciliationMoveHealthReport
+            : null
+      ),
+    getCustom25DVisualPostReconciliationMoveReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPostReconciliationMoveReadinessReport",
+        () =>
+          typeof getCustom25DVisualPostReconciliationMoveReadinessReport ===
+          "function"
+            ? getCustom25DVisualPostReconciliationMoveReadinessReport
+            : null
+      ),
+    getCustom25DVisualPostReconciliationMoveHealthCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPostReconciliationMoveHealthCloseoutReport",
+        () =>
+          typeof getCustom25DVisualPostReconciliationMoveHealthCloseoutReport ===
+          "function"
+            ? getCustom25DVisualPostReconciliationMoveHealthCloseoutReport
+            : null
+      ),
     getCustom25DVisualBundledPassiveHelperMoveCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualBundledPassiveHelperMoveCloseoutReport",
@@ -64856,6 +64882,516 @@ function getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewR
   };
 }
 
+function getCustom25DVisualPostReconciliationMoveHealthReport(options = {}) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "allowManualRendererStateContainerShell",
+    "noStartupWiring",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior = {
+    rendererCreation: true,
+    rendererInitialization: true,
+    rendererRun: true,
+    mapAttachment: true,
+    drawing: true,
+    domCreation: true,
+    startupWiring: true,
+    automaticInvocation: true,
+    gameplayChanges: true,
+    pinChanges: true,
+    uiChanges: true,
+    backendChanges: true,
+    storageWrites: true,
+    networkAccess: true
+  };
+  const preservedSystems = {
+    existingLeafletMapBehavior: true,
+    osmBehavior: true,
+    gameplay: true,
+    pins: true,
+    playerMarker: true,
+    captureRadius: true,
+    ui: true,
+    backend: true,
+    storage: true,
+    network: true
+  };
+  const safetyFlags = {
+    custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+    landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+    landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+    dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+  };
+  const passiveReportsNamespace =
+    typeof window !== "undefined" &&
+    window &&
+    window.GrowGoCustom25DVisualPassiveReports &&
+    typeof window.GrowGoCustom25DVisualPassiveReports === "object"
+      ? window.GrowGoCustom25DVisualPassiveReports
+      : null;
+  const manualNamespace =
+    typeof window !== "undefined" &&
+    window &&
+    window.GrowGoCustom25DVisualManualTests &&
+    typeof window.GrowGoCustom25DVisualManualTests === "object"
+      ? window.GrowGoCustom25DVisualManualTests
+      : null;
+  const acceptance =
+    typeof getCustom25DVisualExtractedHelperReconciliationAcceptanceReport ===
+    "function"
+      ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReport(options)
+      : null;
+  const phase359MovedHelpers = [
+    "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
+    "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport"
+  ];
+  const phase361MovedHelpers = [
+    "getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport",
+    "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport"
+  ];
+  const acceptedDedupedSet =
+    acceptance && Array.isArray(acceptance.acceptedDedupedExtractedHelpers)
+      ? acceptance.acceptedDedupedExtractedHelpers
+      : [
+          "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
+          "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport",
+          "getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport",
+          "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport",
+          "getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport",
+          "getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport",
+          "getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport"
+        ];
+  const phase369MovedHelpers = [
+    "getCustom25DVisualExtractedPassiveReportsFileHealthReport",
+    "getCustom25DVisualExtractedPassiveReportsFileReadinessReport",
+    "getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport"
+  ];
+  const expectedMovedHelpers = Array.from(
+    new Set([...phase359MovedHelpers, ...phase361MovedHelpers, ...acceptedDedupedSet, ...phase369MovedHelpers])
+  );
+  const availableMovedHelpers = expectedMovedHelpers.filter(
+    (name) => typeof globalThis !== "undefined" && typeof globalThis[name] === "function"
+  );
+  const missingMovedHelpers = expectedMovedHelpers.filter(
+    (name) => !(typeof globalThis !== "undefined" && typeof globalThis[name] === "function")
+  );
+  const passiveNamespaceMovedHelpers =
+    passiveReportsNamespace && Array.isArray(passiveReportsNamespace.movedHelperNames)
+      ? passiveReportsNamespace.movedHelperNames
+      : [];
+  const manualNamespaceExposureExpected =
+    !!manualNamespace &&
+    expectedMovedHelpers.every((name) => typeof manualNamespace[name] === "function");
+  const helperPresenceRegistryExpected = manualNamespaceExposureExpected;
+  const movedHelpersExpectedInPassiveReportsFile =
+    passiveNamespaceMovedHelpers.length > 0 &&
+    expectedMovedHelpers.every((name) => passiveNamespaceMovedHelpers.includes(name));
+  const passiveFileAbsenceFailSafeExpected = true;
+  const blockers = [];
+  if (!passiveReportsNamespace) {
+    blockers.push("passive-reports-namespace-unavailable");
+  }
+  if (
+    !passiveReportsNamespace ||
+    passiveReportsNamespace.phase358LoadPathAvailable !== true
+  ) {
+    blockers.push("phase358-load-path-marker-unavailable");
+  }
+  if (missingMovedHelpers.length > 0) {
+    blockers.push("expected-moved-helpers-missing");
+  }
+  if (!movedHelpersExpectedInPassiveReportsFile) {
+    blockers.push("passive-reports-file-moved-helper-list-incomplete");
+  }
+  if (!manualNamespaceExposureExpected) {
+    blockers.push("manual-namespace-moved-helper-exposure-unavailable");
+  }
+  if (!helperPresenceRegistryExpected) {
+    blockers.push("helper-presence-registry-expectations-unavailable");
+  }
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 370,
+      helperName: "getCustom25DVisualPostReconciliationMoveHealthReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      statusOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      passiveReportsNamespaceAvailable: !!passiveReportsNamespace,
+      phase358LoadPathAvailable:
+        !!(passiveReportsNamespace && passiveReportsNamespace.phase358LoadPathAvailable === true),
+      expectedMovedHelpers,
+      availableMovedHelpers,
+      missingMovedHelpers,
+      movedHelpersExpectedInPassiveReportsFile,
+      manualNamespaceExposureExpected,
+      helperPresenceRegistryExpected,
+      passiveFileAbsenceFailSafeExpected,
+      extractionPerformed: false,
+      filesCreated: false,
+      codeMoved: false,
+      importsExportsAdded: false,
+      loadingOrderChanged: false,
+      runtimeBehaviorChanged: false,
+      immediateBroadExtractionBlocked: true,
+      nextRecommendedStep:
+        "if-health-is-clean-allow-at-most-one-later-bundled-passive-move-then-pause-to-reassess-density",
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 370,
+    helperName: "getCustom25DVisualPostReconciliationMoveHealthReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    statusOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    passiveReportsNamespaceAvailable: !!passiveReportsNamespace,
+    phase358LoadPathAvailable:
+      !!(passiveReportsNamespace && passiveReportsNamespace.phase358LoadPathAvailable === true),
+    expectedMovedHelpers,
+    availableMovedHelpers,
+    missingMovedHelpers,
+    movedHelpersExpectedInPassiveReportsFile,
+    manualNamespaceExposureExpected,
+    helperPresenceRegistryExpected,
+    passiveFileAbsenceFailSafeExpected,
+    extractionPerformed: false,
+    filesCreated: false,
+    codeMoved: false,
+    importsExportsAdded: false,
+    loadingOrderChanged: false,
+    runtimeBehaviorChanged: false,
+    immediateBroadExtractionBlocked: true,
+    nextRecommendedStep:
+      "if-health-is-clean-allow-at-most-one-later-bundled-passive-move-then-pause-to-reassess-density",
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualPostReconciliationMoveReadinessReport(options = {}) {
+  const health =
+    typeof getCustom25DVisualPostReconciliationMoveHealthReport === "function"
+      ? getCustom25DVisualPostReconciliationMoveHealthReport(options)
+      : null;
+  const requiredOptionKeys =
+    health && Array.isArray(health.requiredOptionKeys)
+      ? health.requiredOptionKeys
+      : [
+          "manual",
+          "developerIntent",
+          "localDevOnly",
+          "browserConsoleOnly",
+          "explicitOptionsOnly",
+          "allowManualRendererStateContainerShell",
+          "noStartupWiring",
+          "noBackendChanges",
+          "noPersistence",
+          "noAutomaticInvocation"
+        ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (health && health.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (health && health.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (health && health.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const blockers = health && Array.isArray(health.blockers) ? [...health.blockers] : [];
+  if (!health) {
+    blockers.push("phase370-health-report-unavailable");
+  }
+  const readyForOneLaterBundledPassiveMove = !!(
+    health &&
+    health.passiveReportsNamespaceAvailable === true &&
+    health.phase358LoadPathAvailable === true &&
+    Array.isArray(health.missingMovedHelpers) &&
+    health.missingMovedHelpers.length === 0 &&
+    health.manualNamespaceExposureExpected === true &&
+    health.helperPresenceRegistryExpected === true
+  );
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 370,
+      helperName: "getCustom25DVisualPostReconciliationMoveReadinessReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      readinessOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      readyForOneLaterBundledPassiveMove,
+      readyForBroadExtraction: false,
+      pauseAfterOneMoreBundledMoveToReassessDensity: true,
+      runtimeExtractionBlocked: true,
+      startupExtractionBlocked: true,
+      mapExtractionBlocked: true,
+      gameplayExtractionBlocked: true,
+      sharedStateExtractionBlocked: true,
+      drawingExtractionBlocked: true,
+      domExtractionBlocked: true,
+      backendStorageNetworkExtractionBlocked: true,
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 370,
+    helperName: "getCustom25DVisualPostReconciliationMoveReadinessReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    readyForOneLaterBundledPassiveMove,
+    readyForBroadExtraction: false,
+    pauseAfterOneMoreBundledMoveToReassessDensity: true,
+    runtimeExtractionBlocked: true,
+    startupExtractionBlocked: true,
+    mapExtractionBlocked: true,
+    gameplayExtractionBlocked: true,
+    sharedStateExtractionBlocked: true,
+    drawingExtractionBlocked: true,
+    domExtractionBlocked: true,
+    backendStorageNetworkExtractionBlocked: true,
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
+function getCustom25DVisualPostReconciliationMoveHealthCloseoutReport(options = {}) {
+  const health =
+    typeof getCustom25DVisualPostReconciliationMoveHealthReport === "function"
+      ? getCustom25DVisualPostReconciliationMoveHealthReport(options)
+      : null;
+  const readiness =
+    typeof getCustom25DVisualPostReconciliationMoveReadinessReport === "function"
+      ? getCustom25DVisualPostReconciliationMoveReadinessReport(options)
+      : null;
+  const requiredOptionKeys =
+    (readiness && Array.isArray(readiness.requiredOptionKeys)
+      ? readiness.requiredOptionKeys
+      : null) ||
+    (health && Array.isArray(health.requiredOptionKeys) ? health.requiredOptionKeys : null) || [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly",
+      "allowManualRendererStateContainerShell",
+      "noStartupWiring",
+      "noBackendChanges",
+      "noPersistence",
+      "noAutomaticInvocation"
+    ];
+  const missingKey = requiredOptionKeys.find((key) => options[key] !== true) || null;
+  const reasonByKey = {
+    manual: "manual-flag-required",
+    developerIntent: "developer-intent-required",
+    localDevOnly: "local-dev-only-required",
+    browserConsoleOnly: "browser-console-only-required",
+    explicitOptionsOnly: "explicit-options-only-required",
+    allowManualRendererStateContainerShell:
+      "manual-renderer-state-container-shell-not-allowed",
+    noStartupWiring: "no-startup-wiring-acknowledgement-required",
+    noBackendChanges: "no-backend-changes-acknowledgement-required",
+    noPersistence: "no-persistence-acknowledgement-required",
+    noAutomaticInvocation: "no-automatic-invocation-acknowledgement-required"
+  };
+  const blockedBehavior =
+    (readiness && readiness.blockedBehavior) ||
+    (health && health.blockedBehavior) || {
+      rendererCreation: true,
+      rendererInitialization: true,
+      rendererRun: true,
+      mapAttachment: true,
+      drawing: true,
+      domCreation: true,
+      startupWiring: true,
+      automaticInvocation: true,
+      gameplayChanges: true,
+      pinChanges: true,
+      uiChanges: true,
+      backendChanges: true,
+      storageWrites: true,
+      networkAccess: true
+    };
+  const preservedSystems =
+    (readiness && readiness.preservedSystems) ||
+    (health && health.preservedSystems) || {
+      existingLeafletMapBehavior: true,
+      osmBehavior: true,
+      gameplay: true,
+      pins: true,
+      playerMarker: true,
+      captureRadius: true,
+      ui: true,
+      backend: true,
+      storage: true,
+      network: true
+    };
+  const safetyFlags =
+    (readiness && readiness.safetyFlags) ||
+    (health && health.safetyFlags) || {
+      custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
+      landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
+      landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
+      dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
+    };
+  const blockers = [];
+  if (!health) {
+    blockers.push("phase370-health-report-unavailable");
+  }
+  if (!readiness) {
+    blockers.push("phase370-readiness-report-unavailable");
+  }
+
+  if (missingKey) {
+    return {
+      ok: true,
+      phase: 370,
+      helperName: "getCustom25DVisualPostReconciliationMoveHealthCloseoutReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      closeoutOnly: true,
+      reason: reasonByKey[missingKey] || "required-option-missing",
+      failedRequirement: missingKey,
+      requiredOptionKeys,
+      healthReportingOnly: true,
+      helperDeclarationsMovedThisPhase: false,
+      filesCreated: false,
+      indexHtmlChangedThisPhase: false,
+      passiveReportsFileChangedThisPhase: false,
+      safeRhythmPreserved: true,
+      blockers,
+      blockedBehavior,
+      preservedSystems,
+      safetyFlags
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 370,
+    helperName: "getCustom25DVisualPostReconciliationMoveHealthCloseoutReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    closeoutOnly: true,
+    reason: null,
+    failedRequirement: null,
+    requiredOptionKeys,
+    healthReportingOnly: true,
+    helperDeclarationsMovedThisPhase: false,
+    filesCreated: false,
+    indexHtmlChangedThisPhase: false,
+    passiveReportsFileChangedThisPhase: false,
+    safeRhythmPreserved: true,
+    blockers,
+    blockedBehavior,
+    preservedSystems,
+    safetyFlags
+  };
+}
+
 function getCustom25DVisualPassiveHelperLoadPathReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -67779,6 +68315,32 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport
             : null
       ),
+    getCustom25DVisualPostReconciliationMoveHealthReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPostReconciliationMoveHealthReport",
+        () =>
+          typeof getCustom25DVisualPostReconciliationMoveHealthReport === "function"
+            ? getCustom25DVisualPostReconciliationMoveHealthReport
+            : null
+      ),
+    getCustom25DVisualPostReconciliationMoveReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPostReconciliationMoveReadinessReport",
+        () =>
+          typeof getCustom25DVisualPostReconciliationMoveReadinessReport ===
+          "function"
+            ? getCustom25DVisualPostReconciliationMoveReadinessReport
+            : null
+      ),
+    getCustom25DVisualPostReconciliationMoveHealthCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualPostReconciliationMoveHealthCloseoutReport",
+        () =>
+          typeof getCustom25DVisualPostReconciliationMoveHealthCloseoutReport ===
+          "function"
+            ? getCustom25DVisualPostReconciliationMoveHealthCloseoutReport
+            : null
+      ),
     getCustom25DVisualPassiveHelperLoadPathReport:
       createNamespaceWrapper(
         "getCustom25DVisualPassiveHelperLoadPathReport",
@@ -68428,6 +68990,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport:
         typeof namespace.getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport ===
+        "function",
+      getCustom25DVisualPostReconciliationMoveHealthReport:
+        typeof namespace.getCustom25DVisualPostReconciliationMoveHealthReport ===
+        "function",
+      getCustom25DVisualPostReconciliationMoveReadinessReport:
+        typeof namespace.getCustom25DVisualPostReconciliationMoveReadinessReport ===
+        "function",
+      getCustom25DVisualPostReconciliationMoveHealthCloseoutReport:
+        typeof namespace.getCustom25DVisualPostReconciliationMoveHealthCloseoutReport ===
         "function",
       getCustom25DVisualPassiveHelperLoadPathReport:
         typeof namespace.getCustom25DVisualPassiveHelperLoadPathReport ===
