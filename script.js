@@ -452,6 +452,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? applyCustom25DVisualManualRendererStateFieldContractShell
             : null
       ),
+    getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport
+            : null
+      ),
+    getCustom25DVisualManualRendererStateFieldContractNextReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateFieldContractNextReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateFieldContractNextReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateFieldContractNextReadinessReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -37836,6 +37854,359 @@ function applyCustom25DVisualManualRendererStateFieldContractShell(options = {})
     startupWired: false,
     gameplayChanged: false,
     backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "passiveOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoDomChange",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noStorageChanges",
+    "noPersistence",
+    "noNetwork",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const stateFieldContractShellHelperAvailable =
+    typeof applyCustom25DVisualManualRendererStateFieldContractShell === "function";
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExists =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined";
+  const state = stateContainerExists
+    ? window.custom25DVisualManualRendererState
+    : null;
+  const phase423MutationDetected =
+    !!(
+      state &&
+      state.manualStateMutationApplied === true &&
+      state.manualStateMutationPhase === 423
+    );
+  const phase423MutationFieldsValid =
+    !!(
+      state &&
+      state.manualStateMutationApplied === true &&
+      state.manualStateMutationPhase === 423 &&
+      state.manualStateMutationShellOnly === true &&
+      typeof state.manualStateMutationCount === "number" &&
+      state.manualStateMutationCount >= 1 &&
+      state.lastManualStateMutationStatus === "state-mutation-shell-applied"
+    );
+  const phase426MutationDetected =
+    !!(
+      state &&
+      state.manualSecondStateMutationApplied === true &&
+      state.manualSecondStateMutationPhase === 426
+    );
+  const phase426MutationFieldsValid =
+    !!(
+      state &&
+      state.manualSecondStateMutationApplied === true &&
+      state.manualSecondStateMutationPhase === 426 &&
+      state.manualSecondStateMutationShellOnly === true &&
+      typeof state.manualSecondStateMutationCount === "number" &&
+      state.manualSecondStateMutationCount >= 1 &&
+      state.lastManualSecondStateMutationStatus ===
+        "second-state-mutation-shell-applied"
+    );
+  const phase429FieldContractDetected =
+    !!(
+      state &&
+      state.manualRendererFieldContractApplied === true &&
+      state.manualRendererFieldContractPhase === 429
+    );
+  const phase429FieldContractFieldsValid =
+    !!(
+      state &&
+      state.manualRendererFieldContractApplied === true &&
+      state.manualRendererFieldContractPhase === 429 &&
+      state.manualRendererFieldContractShellOnly === true &&
+      state.manualRendererFieldContractStatus ===
+        "state-field-contract-shell-applied"
+    );
+  const protectedFieldsStillInert =
+    !!(
+      state &&
+      state.initialized === false &&
+      state.rendererInstance === null &&
+      state.rendererCreated === false &&
+      state.rendererInitialized === false &&
+      state.rendererStarted === false &&
+      state.mapAttached === false &&
+      state.drawingEnabled === false &&
+      state.startupWired === false &&
+      state.gameplayChanged === false &&
+      state.backendStorageNetworkChanged === false
+    );
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 430,
+      helperName:
+        "getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateFieldContractShellHelperAvailable,
+      stateContainerExists,
+      phase423MutationDetected: false,
+      phase423MutationFieldsValid: false,
+      phase426MutationDetected: false,
+      phase426MutationFieldsValid: false,
+      phase429FieldContractDetected: false,
+      phase429FieldContractFieldsValid: false,
+      protectedFieldsStillInert: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      closeoutStatus: "blocked",
+      defaultDecision: "blocked"
+    };
+  }
+
+  if (!stateContainerExists) {
+    return {
+      ok: false,
+      phase: 430,
+      helperName:
+        "getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys: [],
+      stateFieldContractShellHelperAvailable,
+      stateContainerExists: false,
+      phase423MutationDetected: false,
+      phase423MutationFieldsValid: false,
+      phase426MutationDetected: false,
+      phase426MutationFieldsValid: false,
+      phase429FieldContractDetected: false,
+      phase429FieldContractFieldsValid: false,
+      protectedFieldsStillInert: false,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      closeoutStatus: "state-container-missing",
+      defaultDecision: "blocked"
+    };
+  }
+
+  return {
+    ok:
+      phase423MutationFieldsValid &&
+      phase426MutationFieldsValid &&
+      phase429FieldContractFieldsValid &&
+      protectedFieldsStillInert,
+    phase: 430,
+    helperName:
+      "getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateFieldContractShellHelperAvailable,
+    stateContainerExists: true,
+    phase423MutationDetected,
+    phase423MutationFieldsValid,
+    phase426MutationDetected,
+    phase426MutationFieldsValid,
+    phase429FieldContractDetected,
+    phase429FieldContractFieldsValid,
+    protectedFieldsStillInert,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    closeoutStatus:
+      phase423MutationFieldsValid &&
+      phase426MutationFieldsValid &&
+      phase429FieldContractFieldsValid &&
+      protectedFieldsStillInert
+        ? "state-field-contract-shell-closed-out"
+        : "state-field-contract-shell-needs-review",
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererStateFieldContractNextReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "passiveOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoDomChange",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noStorageChanges",
+    "noPersistence",
+    "noNetwork",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const phase430CloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport ===
+    "function";
+  const closeoutReport = phase430CloseoutHelperAvailable
+    ? getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport(options)
+    : null;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 430,
+      helperName:
+        "getCustom25DVisualManualRendererStateFieldContractNextReadinessReport",
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      phase430CloseoutHelperAvailable,
+      stateContainerExists:
+        !!(closeoutReport && closeoutReport.stateContainerExists === true),
+      phase423MutationDetected: false,
+      phase423MutationFieldsValid: false,
+      phase426MutationDetected: false,
+      phase426MutationFieldsValid: false,
+      phase429FieldContractDetected: false,
+      phase429FieldContractFieldsValid: false,
+      protectedFieldsStillInert: false,
+      plannedNextPhase: 431,
+      plannedNextStepAllowedNow: false,
+      plannedNextStepRequiresSeparatePhase: true,
+      plannedNextStepMustStayInert: true,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      closeoutStatus: "blocked",
+      defaultDecision: "blocked"
+    };
+  }
+
+  const stateContainerExists =
+    !!(closeoutReport && closeoutReport.stateContainerExists === true);
+  const phase423MutationDetected =
+    !!(closeoutReport && closeoutReport.phase423MutationDetected === true);
+  const phase423MutationFieldsValid =
+    !!(closeoutReport && closeoutReport.phase423MutationFieldsValid === true);
+  const phase426MutationDetected =
+    !!(closeoutReport && closeoutReport.phase426MutationDetected === true);
+  const phase426MutationFieldsValid =
+    !!(closeoutReport && closeoutReport.phase426MutationFieldsValid === true);
+  const phase429FieldContractDetected =
+    !!(closeoutReport && closeoutReport.phase429FieldContractDetected === true);
+  const phase429FieldContractFieldsValid =
+    !!(closeoutReport && closeoutReport.phase429FieldContractFieldsValid === true);
+  const protectedFieldsStillInert =
+    !!(closeoutReport && closeoutReport.protectedFieldsStillInert === true);
+
+  return {
+    ok:
+      phase430CloseoutHelperAvailable &&
+      phase423MutationFieldsValid &&
+      phase426MutationFieldsValid &&
+      phase429FieldContractFieldsValid &&
+      protectedFieldsStillInert,
+    phase: 430,
+    helperName:
+      "getCustom25DVisualManualRendererStateFieldContractNextReadinessReport",
+    reportOnly: true,
+    passive: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    phase430CloseoutHelperAvailable,
+    stateContainerExists,
+    phase423MutationDetected,
+    phase423MutationFieldsValid,
+    phase426MutationDetected,
+    phase426MutationFieldsValid,
+    phase429FieldContractDetected,
+    phase429FieldContractFieldsValid,
+    protectedFieldsStillInert,
+    plannedNextPhase: 431,
+    plannedNextStepAllowedNow: false,
+    plannedNextStepRequiresSeparatePhase: true,
+    plannedNextStepMustStayInert: true,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    closeoutStatus:
+      phase423MutationFieldsValid &&
+      phase426MutationFieldsValid &&
+      phase429FieldContractFieldsValid &&
+      protectedFieldsStillInert
+        ? "state-field-contract-next-readiness-documented"
+        : "state-field-contract-next-readiness-needs-review",
     defaultDecision: "blocked"
   };
 }
@@ -81327,6 +81698,24 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? applyCustom25DVisualManualRendererStateFieldContractShell
             : null
       ),
+    getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport
+            : null
+      ),
+    getCustom25DVisualManualRendererStateFieldContractNextReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateFieldContractNextReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateFieldContractNextReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateFieldContractNextReadinessReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -83786,6 +84175,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       applyCustom25DVisualManualRendererStateFieldContractShell:
         typeof namespace.applyCustom25DVisualManualRendererStateFieldContractShell ===
+        "function",
+      getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererStateFieldContractNextReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererStateFieldContractNextReadinessReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
