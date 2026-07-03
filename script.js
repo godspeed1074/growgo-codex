@@ -2552,6 +2552,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererPlanningHandoffSummaryReport
             : null
       ),
+    getCustom25DVisualManualRendererStateCreationReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateCreationReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateCreationReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateCreationReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -34432,6 +34450,209 @@ function getCustom25DVisualManualRendererPlanningHandoffSummaryReport(
     planningRiskBoundaryClosedOut,
     planningHandoffSummaryStatus: "planning-handoff-summary-ready",
     currentPlanningRiskCloseoutStatus: "planning-risk-closed-out",
+    futurePlanningOnlyWorkAllowed: true,
+    futureImplementationWorkBlocked: true,
+    futureInitializationAuthorizedNow: false,
+    futureInitializationStillBlocked: true,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererStateCreationReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "stateCreationReadinessOnly",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoSequenceCloseoutInvocation",
+    "confirmNoHandoffPlanInvocation",
+    "confirmNoNextStepReadinessInvocation",
+    "confirmNoPlanningBoundaryInvocation",
+    "confirmNoRiskReviewInvocation",
+    "confirmNoRiskCloseoutInvocation",
+    "confirmNoPlanningHandoffInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const planningHandoffSummaryHelperAvailable =
+    typeof getCustom25DVisualManualRendererPlanningHandoffSummaryReport ===
+    "function";
+  const planningRiskBoundaryClosedOut = planningHandoffSummaryHelperAvailable;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 419,
+      helperName:
+        "getCustom25DVisualManualRendererStateCreationReadinessReport",
+      blocked: true,
+      allowed: false,
+      stateCreationReadinessOnly: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      defaultDecision: "blocked",
+      jsonSafeResult: true
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 419,
+    helperName:
+      "getCustom25DVisualManualRendererStateCreationReadinessReport",
+    reportOnly: true,
+    passive: true,
+    stateCreationReadinessOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    planningHandoffSummaryHelperAvailable,
+    planningRiskBoundaryClosedOut,
+    planningHandoffSummaryStatus: "planning-handoff-summary-ready",
+    stateCreationReadinessStatus: "state-creation-readiness-report-ready",
+    futureStateContainerCreationAllowedNow: false,
+    futureStateContainerCreationStillRequiresSeparatePhase: true,
+    futurePlanningOnlyWorkAllowed: true,
+    futureImplementationWorkBlocked: true,
+    futureInitializationAuthorizedNow: false,
+    futureInitializationStillBlocked: true,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "stateCreationReadinessOnly",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoSequenceCloseoutInvocation",
+    "confirmNoHandoffPlanInvocation",
+    "confirmNoNextStepReadinessInvocation",
+    "confirmNoPlanningBoundaryInvocation",
+    "confirmNoRiskReviewInvocation",
+    "confirmNoRiskCloseoutInvocation",
+    "confirmNoPlanningHandoffInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const stateCreationReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererStateCreationReadinessReport ===
+    "function";
+  const planningHandoffSummaryHelperAvailable =
+    typeof getCustom25DVisualManualRendererPlanningHandoffSummaryReport ===
+    "function";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 419,
+      helperName:
+        "getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport",
+      blocked: true,
+      allowed: false,
+      stateCreationReadinessCloseoutOnly: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      defaultDecision: "blocked",
+      jsonSafeResult: true
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 419,
+    helperName:
+      "getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    stateCreationReadinessCloseoutOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateCreationReadinessHelperAvailable,
+    planningHandoffSummaryHelperAvailable,
+    stateCreationReadinessStatus: "state-creation-readiness-report-ready",
+    stateCreationReadinessCloseoutStatus:
+      "state-creation-readiness-closed-out",
+    futureStateContainerCreationAllowedNow: false,
+    futureStateContainerCreationStillRequiresSeparatePhase: true,
     futurePlanningOnlyWorkAllowed: true,
     futureImplementationWorkBlocked: true,
     futureInitializationAuthorizedNow: false,
@@ -80106,6 +80327,24 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererPlanningHandoffSummaryReport
             : null
       ),
+    getCustom25DVisualManualRendererStateCreationReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateCreationReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateCreationReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateCreationReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -81435,6 +81674,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererPlanningHandoffSummaryReport:
         typeof namespace.getCustom25DVisualManualRendererPlanningHandoffSummaryReport ===
+        "function",
+      getCustom25DVisualManualRendererStateCreationReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererStateCreationReadinessReport ===
+        "function",
+      getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
