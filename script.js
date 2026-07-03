@@ -2525,6 +2525,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererPlanningBoundaryReport
             : null
       ),
+    getCustom25DVisualManualRendererPlanningRiskReviewReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererPlanningRiskReviewReport",
+        () =>
+          typeof getCustom25DVisualManualRendererPlanningRiskReviewReport ===
+          "function"
+            ? getCustom25DVisualManualRendererPlanningRiskReviewReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -33929,6 +33938,198 @@ function getCustom25DVisualManualRendererPlanningBoundaryReport(options = {}) {
     stateCreatedByPlanningBoundary: false,
     stateMutatedByPlanningBoundary: false,
     lifecycleMutatedByPlanningBoundary: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererPlanningRiskReviewReport(options = {}) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "riskReviewOnly",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoSequenceCloseoutInvocation",
+    "confirmNoHandoffPlanInvocation",
+    "confirmNoNextStepReadinessInvocation",
+    "confirmNoPlanningBoundaryInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const phase415PlanningBoundaryHelperAvailable =
+    typeof getCustom25DVisualManualRendererPlanningBoundaryReport === "function";
+  const phase414NextStepReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationNextStepReadinessReport ===
+    "function";
+  const phase413HandoffPlanHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationHandoffPlanReport ===
+    "function";
+  const phase412SequenceCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationSequenceCloseoutReport ===
+    "function";
+  const phase411SequenceSummaryHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationSequenceSummaryReport ===
+    "function";
+  const phase410InitializationLockHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationLockReport ===
+    "function";
+  const phase409AuthorizationChecklistHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationAuthorizationChecklistReport ===
+    "function";
+  const phase408InitializationGateReviewHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationGateReviewReport ===
+    "function";
+  const phase407PreflightCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightCloseoutReport ===
+    "function";
+  const phase406PreflightShellHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightShellReport ===
+    "function";
+  const phase406PreflightHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightReport ===
+    "function";
+  const phase406PreflightReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightReadinessReport ===
+    "function";
+  const planningBoundaryActive =
+    phase406PreflightReadinessHelperAvailable &&
+    phase406PreflightHelperAvailable &&
+    phase406PreflightShellHelperAvailable &&
+    phase407PreflightCloseoutHelperAvailable &&
+    phase408InitializationGateReviewHelperAvailable &&
+    phase409AuthorizationChecklistHelperAvailable &&
+    phase410InitializationLockHelperAvailable &&
+    phase411SequenceSummaryHelperAvailable &&
+    phase412SequenceCloseoutHelperAvailable &&
+    phase413HandoffPlanHelperAvailable &&
+    phase414NextStepReadinessHelperAvailable &&
+    phase415PlanningBoundaryHelperAvailable;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 416,
+      helperName: "getCustom25DVisualManualRendererPlanningRiskReviewReport",
+      blocked: true,
+      allowed: false,
+      riskReviewOnly: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      defaultDecision: "blocked",
+      jsonSafeResult: true
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 416,
+    helperName: "getCustom25DVisualManualRendererPlanningRiskReviewReport",
+    reportOnly: true,
+    passive: true,
+    riskReviewOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    phase415PlanningBoundaryHelperAvailable,
+    phase414NextStepReadinessHelperAvailable,
+    phase413HandoffPlanHelperAvailable,
+    phase412SequenceCloseoutHelperAvailable,
+    phase411SequenceSummaryHelperAvailable,
+    phase410InitializationLockHelperAvailable,
+    phase409AuthorizationChecklistHelperAvailable,
+    phase408InitializationGateReviewHelperAvailable,
+    phase407PreflightCloseoutHelperAvailable,
+    phase406PreflightShellHelperAvailable,
+    phase406PreflightHelperAvailable,
+    phase406PreflightReadinessHelperAvailable,
+    planningBoundaryActive,
+    currentRiskReviewStatus: planningBoundaryActive
+      ? "planning-risk-review-active"
+      : "not-ready",
+    futureInitializationAuthorizedNow: false,
+    futureInitializationStillBlocked: true,
+    planningOnlyWorkAllowed: planningBoundaryActive,
+    implementationWorkBlocked: true,
+    reviewedRiskCategories: [
+      "stateLifecycleRisk",
+      "rendererStartupRisk",
+      "mapAttachmentRisk",
+      "drawingRisk",
+      "startupWiringRisk",
+      "gameplayRegressionRisk",
+      "backendStorageNetworkRisk"
+    ],
+    blockedRiskyWorkTypes: [
+      "stateCreation",
+      "stateMutation",
+      "rendererInstanceCreation",
+      "rendererInitialization",
+      "rendererStart",
+      "mapAttachment",
+      "drawing",
+      "startupWiring",
+      "gameplayChange",
+      "backendStorageNetworkChange"
+    ],
+    recommendedSafeFollowupTypes: [
+      "manualPlanningOnly",
+      "contractReviewOnly",
+      "stateContainerReviewOnly",
+      "readinessReportOnly",
+      "closeoutReportOnly"
+    ],
+    preflightInvokedByRiskReview: false,
+    closeoutInvokedByRiskReview: false,
+    gateReviewInvokedByRiskReview: false,
+    authorizationChecklistInvokedByRiskReview: false,
+    lockReportInvokedByRiskReview: false,
+    sequenceSummaryInvokedByRiskReview: false,
+    sequenceCloseoutInvokedByRiskReview: false,
+    handoffPlanInvokedByRiskReview: false,
+    nextStepReadinessInvokedByRiskReview: false,
+    planningBoundaryInvokedByRiskReview: false,
+    guardInvokedByRiskReview: false,
+    contractShellInvokedByRiskReview: false,
+    initializationShellInvokedByRiskReview: false,
+    initializationPerformedByRiskReview: false,
+    stateCreatedByRiskReview: false,
+    stateMutatedByRiskReview: false,
+    lifecycleMutatedByRiskReview: false,
     rendererInstanceCreated: false,
     rendererInitialized: false,
     rendererStarted: false,
@@ -79572,6 +79773,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererPlanningBoundaryReport
             : null
       ),
+    getCustom25DVisualManualRendererPlanningRiskReviewReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererPlanningRiskReviewReport",
+        () =>
+          typeof getCustom25DVisualManualRendererPlanningRiskReviewReport ===
+          "function"
+            ? getCustom25DVisualManualRendererPlanningRiskReviewReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -80892,6 +81102,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererPlanningBoundaryReport:
         typeof namespace.getCustom25DVisualManualRendererPlanningBoundaryReport ===
+        "function",
+      getCustom25DVisualManualRendererPlanningRiskReviewReport:
+        typeof namespace.getCustom25DVisualManualRendererPlanningRiskReviewReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
