@@ -2489,6 +2489,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererInitializationSequenceSummaryReport
             : null
       ),
+    getCustom25DVisualManualRendererInitializationSequenceCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationSequenceCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationSequenceCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationSequenceCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -33236,6 +33245,148 @@ function getCustom25DVisualManualRendererInitializationSequenceSummaryReport(
     stateCreatedBySequenceSummary: false,
     stateMutatedBySequenceSummary: false,
     lifecycleMutatedBySequenceSummary: false,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererInitializationSequenceCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "sequenceCloseoutOnly",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const phase406PreflightReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightReadinessReport ===
+    "function";
+  const phase406PreflightHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightReport ===
+    "function";
+  const phase406PreflightShellHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightShellReport ===
+    "function";
+  const phase407PreflightCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationPreflightCloseoutReport ===
+    "function";
+  const phase408InitializationGateReviewHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationGateReviewReport ===
+    "function";
+  const phase409AuthorizationChecklistHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationAuthorizationChecklistReport ===
+    "function";
+  const phase410InitializationLockHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationLockReport ===
+    "function";
+  const phase411SequenceSummaryHelperAvailable =
+    typeof getCustom25DVisualManualRendererInitializationSequenceSummaryReport ===
+    "function";
+  const initializationSafetySequenceCloseoutComplete =
+    phase406PreflightReadinessHelperAvailable &&
+    phase406PreflightHelperAvailable &&
+    phase406PreflightShellHelperAvailable &&
+    phase407PreflightCloseoutHelperAvailable &&
+    phase408InitializationGateReviewHelperAvailable &&
+    phase409AuthorizationChecklistHelperAvailable &&
+    phase410InitializationLockHelperAvailable &&
+    phase411SequenceSummaryHelperAvailable;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 412,
+      helperName:
+        "getCustom25DVisualManualRendererInitializationSequenceCloseoutReport",
+      blocked: true,
+      allowed: false,
+      sequenceCloseoutOnly: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      defaultDecision: "blocked",
+      jsonSafeResult: true
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 412,
+    helperName:
+      "getCustom25DVisualManualRendererInitializationSequenceCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    sequenceCloseoutOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    phase406PreflightReadinessHelperAvailable,
+    phase406PreflightHelperAvailable,
+    phase406PreflightShellHelperAvailable,
+    phase407PreflightCloseoutHelperAvailable,
+    phase408InitializationGateReviewHelperAvailable,
+    phase409AuthorizationChecklistHelperAvailable,
+    phase410InitializationLockHelperAvailable,
+    phase411SequenceSummaryHelperAvailable,
+    initializationSafetySequenceCloseoutComplete,
+    currentInitializationCloseoutStatus:
+      initializationSafetySequenceCloseoutComplete
+        ? "closed-out-and-locked"
+        : "incomplete-and-locked",
+    futureInitializationAuthorizedNow: false,
+    futureInitializationStillBlocked: true,
+    sequenceCloseoutReadyForFutureManualReview:
+      initializationSafetySequenceCloseoutComplete,
+    preflightInvokedBySequenceCloseout: false,
+    closeoutInvokedBySequenceCloseout: false,
+    gateReviewInvokedBySequenceCloseout: false,
+    authorizationChecklistInvokedBySequenceCloseout: false,
+    lockReportInvokedBySequenceCloseout: false,
+    sequenceSummaryInvokedBySequenceCloseout: false,
+    guardInvokedBySequenceCloseout: false,
+    contractShellInvokedBySequenceCloseout: false,
+    initializationShellInvokedBySequenceCloseout: false,
+    initializationPerformedBySequenceCloseout: false,
+    stateCreatedBySequenceCloseout: false,
+    stateMutatedBySequenceCloseout: false,
+    lifecycleMutatedBySequenceCloseout: false,
     rendererInstanceCreated: false,
     rendererInitialized: false,
     rendererStarted: false,
@@ -78843,6 +78994,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererInitializationSequenceSummaryReport
             : null
       ),
+    getCustom25DVisualManualRendererInitializationSequenceCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererInitializationSequenceCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererInitializationSequenceCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererInitializationSequenceCloseoutReport
+            : null
+      ),
     getCustom25DVisualExtractedHelperReconciliationReport:
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
@@ -80151,6 +80311,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererInitializationSequenceSummaryReport:
         typeof namespace.getCustom25DVisualManualRendererInitializationSequenceSummaryReport ===
+        "function",
+      getCustom25DVisualManualRendererInitializationSequenceCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererInitializationSequenceCloseoutReport ===
         "function",
       getCustom25DVisualExtractedHelperReconciliationReport:
         typeof namespace.getCustom25DVisualExtractedHelperReconciliationReport ===
