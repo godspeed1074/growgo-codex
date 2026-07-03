@@ -382,6 +382,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererStateMutationShellSelfReviewReport
             : null
       ),
+    getCustom25DVisualManualRendererNextStateMutationReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererNextStateMutationReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererNextStateMutationReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererNextStateMutationReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -36318,6 +36336,298 @@ function getCustom25DVisualManualRendererStateMutationShellSelfReviewReport(
     selfReviewStatus: safelyClosedOut
       ? "state-mutation-shell-self-review-passed"
       : "state-mutation-shell-self-review-needs-review",
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererNextStateMutationReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "allowNextManualRendererStateMutationReadiness",
+    "confirmReadOnly",
+    "confirmNoStateMutation",
+    "confirmNoStateContainerCreation",
+    "confirmNoStateContainerReplacement",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const stateMutationShellCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererStateMutationShellCloseoutReport ===
+    "function";
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExists =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined";
+  const stateContainer = stateContainerExists
+    ? window.custom25DVisualManualRendererState
+    : null;
+  const phase423MutationDetected =
+    !!(
+      stateContainer &&
+      stateContainer.manualStateMutationApplied === true &&
+      stateContainer.manualStateMutationPhase === 423
+    );
+  const mutationFieldsValid =
+    !!(
+      stateContainer &&
+      stateContainer.manualStateMutationApplied === true &&
+      stateContainer.manualStateMutationPhase === 423 &&
+      stateContainer.manualStateMutationShellOnly === true &&
+      typeof stateContainer.manualStateMutationCount === "number" &&
+      stateContainer.manualStateMutationCount >= 1 &&
+      stateContainer.lastManualStateMutationStatus === "state-mutation-shell-applied"
+    );
+  const protectedFieldsStillInert =
+    !!(
+      stateContainer &&
+      stateContainer.initialized === false &&
+      stateContainer.rendererInstance === null &&
+      stateContainer.rendererCreated === false &&
+      stateContainer.rendererInitialized === false &&
+      stateContainer.rendererStarted === false &&
+      stateContainer.mapAttached === false &&
+      stateContainer.drawingEnabled === false &&
+      stateContainer.startupWired === false &&
+      stateContainer.layerCount === 0 &&
+      Array.isArray(stateContainer.layers) &&
+      stateContainer.lifecycleStatus === "state-container-created" &&
+      stateContainer.implementationAuthorized === false &&
+      stateContainer.initializationAuthorized === false &&
+      stateContainer.drawingAuthorized === false &&
+      stateContainer.gameplayChanged === false &&
+      stateContainer.backendStorageNetworkChanged === false
+    );
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 425,
+      helperName:
+        "getCustom25DVisualManualRendererNextStateMutationReadinessReport",
+      allowed: false,
+      blocked: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerExists,
+      phase423MutationDetected: false,
+      mutationFieldsValid: false,
+      protectedFieldsStillInert: false,
+      plannedNextMutationPhase: 426,
+      plannedNextMutationAllowedNow: false,
+      plannedNextMutationRequiresSeparatePhase: true,
+      plannedNextMutationMustUseExistingStateContainerOnly: true,
+      plannedNextMutationMustNotCreateOrReplaceStateContainer: true,
+      readinessStatus: "blocked",
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
+    };
+  }
+
+  if (!stateContainerExists) {
+    return {
+      ok: false,
+      phase: 425,
+      helperName:
+        "getCustom25DVisualManualRendererNextStateMutationReadinessReport",
+      allowed: false,
+      blocked: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys: [],
+      stateContainerExists: false,
+      phase423MutationDetected: false,
+      mutationFieldsValid: false,
+      protectedFieldsStillInert: false,
+      plannedNextMutationPhase: 426,
+      plannedNextMutationAllowedNow: false,
+      plannedNextMutationRequiresSeparatePhase: true,
+      plannedNextMutationMustUseExistingStateContainerOnly: true,
+      plannedNextMutationMustNotCreateOrReplaceStateContainer: true,
+      readinessStatus: "state-container-missing",
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
+    };
+  }
+
+  return {
+    ok: mutationFieldsValid && protectedFieldsStillInert,
+    phase: 425,
+    helperName:
+      "getCustom25DVisualManualRendererNextStateMutationReadinessReport",
+    allowed: true,
+    blocked: false,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateContainerExists: true,
+    phase423MutationDetected,
+    mutationFieldsValid,
+    protectedFieldsStillInert,
+    plannedNextMutationPhase: 426,
+    plannedNextMutationAllowedNow: false,
+    plannedNextMutationRequiresSeparatePhase: true,
+    plannedNextMutationMustUseExistingStateContainerOnly: true,
+    plannedNextMutationMustNotCreateOrReplaceStateContainer: true,
+    readinessStatus:
+      mutationFieldsValid && protectedFieldsStillInert
+        ? "next-state-mutation-readiness-documented"
+        : "next-state-mutation-readiness-needs-review",
+    stateMutationShellCloseoutHelperAvailable,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "allowNextManualRendererStateMutationReadiness",
+    "confirmReadOnly",
+    "confirmNoStateMutation",
+    "confirmNoStateContainerCreation",
+    "confirmNoStateContainerReplacement",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const readinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererNextStateMutationReadinessReport ===
+    "function";
+  const readinessReport = readinessHelperAvailable
+    ? getCustom25DVisualManualRendererNextStateMutationReadinessReport(options)
+    : null;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 425,
+      helperName:
+        "getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport",
+      allowed: false,
+      blocked: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerExists:
+        !!(readinessReport && readinessReport.stateContainerExists === true),
+      phase423MutationDetected: false,
+      mutationFieldsValid: false,
+      protectedFieldsStillInert: false,
+      plannedNextMutationPhase: 426,
+      plannedNextMutationAllowedNow: false,
+      plannedNextMutationRequiresSeparatePhase: true,
+      plannedNextMutationMustUseExistingStateContainerOnly: true,
+      plannedNextMutationMustNotCreateOrReplaceStateContainer: true,
+      closeoutStatus: "blocked",
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
+    };
+  }
+
+  const stateContainerExists =
+    !!(readinessReport && readinessReport.stateContainerExists === true);
+  const phase423MutationDetected =
+    !!(readinessReport && readinessReport.phase423MutationDetected === true);
+  const mutationFieldsValid =
+    !!(readinessReport && readinessReport.mutationFieldsValid === true);
+  const protectedFieldsStillInert =
+    !!(readinessReport && readinessReport.protectedFieldsStillInert === true);
+  const readinessSafelyDocumented =
+    !!(
+      readinessReport &&
+      readinessReport.allowed === true &&
+      readinessReport.readinessStatus === "next-state-mutation-readiness-documented" &&
+      mutationFieldsValid &&
+      protectedFieldsStillInert
+    );
+
+  return {
+    ok: readinessHelperAvailable && readinessSafelyDocumented,
+    phase: 425,
+    helperName:
+      "getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport",
+    allowed: true,
+    blocked: false,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateContainerExists,
+    phase423MutationDetected,
+    mutationFieldsValid,
+    protectedFieldsStillInert,
+    plannedNextMutationPhase: 426,
+    plannedNextMutationAllowedNow: false,
+    plannedNextMutationRequiresSeparatePhase: true,
+    plannedNextMutationMustUseExistingStateContainerOnly: true,
+    plannedNextMutationMustNotCreateOrReplaceStateContainer: true,
+    closeoutStatus: readinessSafelyDocumented
+      ? "next-state-mutation-readiness-closed-out"
+      : "next-state-mutation-readiness-needs-review",
+    readinessHelperAvailable,
     rendererInstanceCreated: false,
     rendererInitialized: false,
     rendererStarted: false,
@@ -79747,6 +80057,24 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererStateMutationShellSelfReviewReport
             : null
       ),
+    getCustom25DVisualManualRendererNextStateMutationReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererNextStateMutationReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererNextStateMutationReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererNextStateMutationReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -82182,6 +82510,12 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererStateMutationShellSelfReviewReport:
         typeof namespace.getCustom25DVisualManualRendererStateMutationShellSelfReviewReport ===
+        "function",
+      getCustom25DVisualManualRendererNextStateMutationReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererNextStateMutationReadinessReport ===
+        "function",
+      getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
