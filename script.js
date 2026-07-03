@@ -330,6 +330,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? createCustom25DVisualManualRendererStateContainerShell
             : null
       ),
+    getCustom25DVisualManualRendererStateContainerShellVerificationReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateContainerShellVerificationReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateContainerShellVerificationReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -2568,6 +2577,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           typeof getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport ===
           "function"
             ? getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport
+            : null
+      ),
+    getCustom25DVisualManualRendererStateContainerShellVerificationReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateContainerShellVerificationReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateContainerShellVerificationReport
             : null
       ),
     getCustom25DVisualExtractedHelperReconciliationReport:
@@ -35044,6 +35062,252 @@ function createCustom25DVisualManualRendererStateContainerShell(options = {}) {
   };
 }
 
+function getCustom25DVisualManualRendererStateContainerShellVerificationReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "stateContainerShellVerificationOnly",
+    "stateContainerShellCloseoutOnly",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoSequenceCloseoutInvocation",
+    "confirmNoHandoffPlanInvocation",
+    "confirmNoNextStepReadinessInvocation",
+    "confirmNoPlanningBoundaryInvocation",
+    "confirmNoRiskReviewInvocation",
+    "confirmNoRiskCloseoutInvocation",
+    "confirmNoPlanningHandoffInvocation",
+    "confirmNoStateCreationReadinessInvocation",
+    "confirmNoStateContainerCreationInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const stateContainerCreationHelperAvailable =
+    typeof createCustom25DVisualManualRendererStateContainerShell === "function";
+  const stateContainerName = "custom25DVisualManualRendererState";
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExists =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined";
+  const stateContainer = stateContainerExists
+    ? window.custom25DVisualManualRendererState
+    : null;
+  const observedCreatedByPhase =
+    stateContainer && typeof stateContainer.createdByPhase === "number"
+      ? stateContainer.createdByPhase
+      : null;
+  const observedStateContainerShellOnly =
+    !!(stateContainer && stateContainer.stateContainerShellOnly === true);
+  const observedInert = !!(stateContainer && stateContainer.inert === true);
+  const observedInitialized =
+    stateContainer && typeof stateContainer.initialized === "boolean"
+      ? stateContainer.initialized
+      : null;
+  const observedRendererInstanceIsNull =
+    !!(stateContainer && stateContainer.rendererInstance === null);
+  const observedRendererCreated =
+    stateContainer && typeof stateContainer.rendererCreated === "boolean"
+      ? stateContainer.rendererCreated
+      : null;
+  const observedRendererInitialized =
+    stateContainer && typeof stateContainer.rendererInitialized === "boolean"
+      ? stateContainer.rendererInitialized
+      : null;
+  const observedRendererStarted =
+    stateContainer && typeof stateContainer.rendererStarted === "boolean"
+      ? stateContainer.rendererStarted
+      : null;
+  const observedMapAttached =
+    stateContainer && typeof stateContainer.mapAttached === "boolean"
+      ? stateContainer.mapAttached
+      : null;
+  const observedDrawingEnabled =
+    stateContainer && typeof stateContainer.drawingEnabled === "boolean"
+      ? stateContainer.drawingEnabled
+      : null;
+  const observedStartupWired =
+    stateContainer && typeof stateContainer.startupWired === "boolean"
+      ? stateContainer.startupWired
+      : null;
+  const observedLayerCount =
+    stateContainer && typeof stateContainer.layerCount === "number"
+      ? stateContainer.layerCount
+      : null;
+  const observedLayersArray =
+    stateContainer ? Array.isArray(stateContainer.layers) : false;
+  const observedLifecycleStatus =
+    stateContainer && typeof stateContainer.lifecycleStatus === "string"
+      ? stateContainer.lifecycleStatus
+      : null;
+  const observedImplementationAuthorized =
+    stateContainer && typeof stateContainer.implementationAuthorized === "boolean"
+      ? stateContainer.implementationAuthorized
+      : null;
+  const observedInitializationAuthorized =
+    stateContainer && typeof stateContainer.initializationAuthorized === "boolean"
+      ? stateContainer.initializationAuthorized
+      : null;
+  const observedDrawingAuthorized =
+    stateContainer && typeof stateContainer.drawingAuthorized === "boolean"
+      ? stateContainer.drawingAuthorized
+      : null;
+  const observedGameplayChanged =
+    stateContainer && typeof stateContainer.gameplayChanged === "boolean"
+      ? stateContainer.gameplayChanged
+      : null;
+  const observedBackendStorageNetworkChanged =
+    stateContainer &&
+    typeof stateContainer.backendStorageNetworkChanged === "boolean"
+      ? stateContainer.backendStorageNetworkChanged
+      : null;
+  const stateContainerShellVerified =
+    stateContainerExists &&
+    observedCreatedByPhase === 420 &&
+    !!(stateContainer && stateContainer.stateContainerName === stateContainerName) &&
+    observedStateContainerShellOnly === true &&
+    observedInert === true &&
+    observedInitialized === false &&
+    observedRendererInstanceIsNull === true &&
+    observedRendererCreated === false &&
+    observedRendererInitialized === false &&
+    observedRendererStarted === false &&
+    observedMapAttached === false &&
+    observedDrawingEnabled === false &&
+    observedStartupWired === false &&
+    observedLayerCount === 0 &&
+    observedLayersArray === true &&
+    observedLifecycleStatus === "state-container-created" &&
+    observedImplementationAuthorized === false &&
+    observedInitializationAuthorized === false &&
+    observedDrawingAuthorized === false &&
+    observedGameplayChanged === false &&
+    observedBackendStorageNetworkChanged === false;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 421,
+      helperName:
+        "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
+      reportOnly: true,
+      passive: true,
+      stateContainerShellVerificationOnly: true,
+      jsonSafeResult: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerCreationHelperAvailable,
+      stateContainerName,
+      stateContainerExists,
+      observedCreatedByPhase,
+      observedStateContainerShellOnly,
+      observedInert,
+      observedInitialized,
+      observedRendererInstanceIsNull,
+      observedRendererCreated,
+      observedRendererInitialized,
+      observedRendererStarted,
+      observedMapAttached,
+      observedDrawingEnabled,
+      observedStartupWired,
+      observedLayerCount,
+      observedLayersArray,
+      observedLifecycleStatus,
+      observedImplementationAuthorized,
+      observedInitializationAuthorized,
+      observedDrawingAuthorized,
+      observedGameplayChanged,
+      observedBackendStorageNetworkChanged,
+      stateContainerShellVerified: false,
+      stateContainerShellVerificationStatus: "blocked",
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 421,
+    helperName:
+      "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
+    reportOnly: true,
+    passive: true,
+    stateContainerShellVerificationOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateContainerCreationHelperAvailable,
+    stateContainerName,
+    stateContainerExists,
+    observedCreatedByPhase,
+    observedStateContainerShellOnly,
+    observedInert,
+    observedInitialized,
+    observedRendererInstanceIsNull,
+    observedRendererCreated,
+    observedRendererInitialized,
+    observedRendererStarted,
+    observedMapAttached,
+    observedDrawingEnabled,
+    observedStartupWired,
+    observedLayerCount,
+    observedLayersArray,
+    observedLifecycleStatus,
+    observedImplementationAuthorized,
+    observedInitializationAuthorized,
+    observedDrawingAuthorized,
+    observedGameplayChanged,
+    observedBackendStorageNetworkChanged,
+    stateContainerShellVerified,
+    stateContainerShellVerificationStatus: "state-container-shell-verified",
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
+  };
+}
+
 function getCustom25DVisualManualRendererStateContainerShellCloseoutReport(options = {}) {
   const requiredOptionKeys = [
     "manual",
@@ -35051,148 +35315,151 @@ function getCustom25DVisualManualRendererStateContainerShellCloseoutReport(optio
     "localDevOnly",
     "browserConsoleOnly",
     "explicitOptionsOnly",
-    "allowManualRendererStateContainerShell",
-    "noStartupWiring",
+    "reportOnly",
+    "stateContainerShellVerificationOnly",
+    "stateContainerShellCloseoutOnly",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoSequenceCloseoutInvocation",
+    "confirmNoHandoffPlanInvocation",
+    "confirmNoNextStepReadinessInvocation",
+    "confirmNoPlanningBoundaryInvocation",
+    "confirmNoRiskReviewInvocation",
+    "confirmNoRiskCloseoutInvocation",
+    "confirmNoPlanningHandoffInvocation",
+    "confirmNoStateCreationReadinessInvocation",
+    "confirmNoStateContainerCreationInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
     "noBackendChanges",
     "noPersistence",
     "noAutomaticInvocation"
   ];
-  const noOptionResult =
-    typeof createCustom25DVisualManualRendererStateContainerShell === "function"
-      ? createCustom25DVisualManualRendererStateContainerShell()
-      : null;
-  const allowedManualResult =
-    typeof createCustom25DVisualManualRendererStateContainerShell === "function"
-      ? createCustom25DVisualManualRendererStateContainerShell({
-          manual: true,
-          developerIntent: true,
-          localDevOnly: true,
-          browserConsoleOnly: true,
-          explicitOptionsOnly: true,
-          allowManualRendererStateContainerShell: true,
-          noStartupWiring: true,
-          noBackendChanges: true,
-          noPersistence: true,
-          noAutomaticInvocation: true
-        })
-      : null;
-  const contractReadiness =
-    typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
-    "function"
-      ? getCustom25DVisualManualRendererStateContainerContractReadinessReport(options)
-      : null;
-  const stateContainerPlan =
-    typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
-      ? getCustom25DVisualManualRendererStateContainerPlanReport(options)
-      : null;
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const stateContainerShellVerificationHelperAvailable =
+    typeof getCustom25DVisualManualRendererStateContainerShellVerificationReport ===
+    "function";
+  const stateContainerCreationHelperAvailable =
+    typeof createCustom25DVisualManualRendererStateContainerShell === "function";
+  const stateContainerName = "custom25DVisualManualRendererState";
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExists =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined";
+  const stateContainer = stateContainerExists
+    ? window.custom25DVisualManualRendererState
+    : null;
+  const stateContainerShellVerified =
+    stateContainerExists &&
+    !!(stateContainer && stateContainer.createdByPhase === 420) &&
+    !!(stateContainer && stateContainer.stateContainerName === stateContainerName) &&
+    !!(stateContainer && stateContainer.stateContainerShellOnly === true) &&
+    !!(stateContainer && stateContainer.inert === true) &&
+    !!(stateContainer && stateContainer.initialized === false) &&
+    !!(stateContainer && stateContainer.rendererInstance === null) &&
+    !!(stateContainer && stateContainer.rendererCreated === false) &&
+    !!(stateContainer && stateContainer.rendererInitialized === false) &&
+    !!(stateContainer && stateContainer.rendererStarted === false) &&
+    !!(stateContainer && stateContainer.mapAttached === false) &&
+    !!(stateContainer && stateContainer.drawingEnabled === false) &&
+    !!(stateContainer && stateContainer.startupWired === false) &&
+    !!(stateContainer && stateContainer.layerCount === 0) &&
+    !!(stateContainer && Array.isArray(stateContainer.layers)) &&
+    !!(stateContainer && stateContainer.lifecycleStatus === "state-container-created") &&
+    !!(stateContainer && stateContainer.implementationAuthorized === false) &&
+    !!(stateContainer && stateContainer.initializationAuthorized === false) &&
+    !!(stateContainer && stateContainer.drawingAuthorized === false) &&
+    !!(stateContainer && stateContainer.gameplayChanged === false) &&
+    !!(stateContainer && stateContainer.backendStorageNetworkChanged === false);
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 421,
+      helperName:
+        "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      stateContainerShellCloseoutOnly: true,
+      jsonSafeResult: true,
+      blocked: true,
+      allowed: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateContainerShellVerificationHelperAvailable,
+      stateContainerCreationHelperAvailable,
+      stateContainerName,
+      stateContainerExists,
+      stateContainerShellVerified: false,
+      stateContainerShellCloseoutStatus: "blocked",
+      futureStateMutationStillRequiresSeparatePhase: true,
+      futureRendererCreationStillBlocked: true,
+      futureInitializationStillBlocked: true,
+      futureMapAttachmentStillBlocked: true,
+      futureDrawingStillBlocked: true,
+      futureStartupWiringStillBlocked: true,
+      rendererInstanceCreated: false,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
+    };
+  }
 
   return {
-    phase: 284,
-    name: "custom-25d-visual-manual-renderer-state-container-shell-closeout",
     ok: true,
-    inert: true,
-    passive: true,
+    phase: 421,
+    helperName:
+      "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
     reportOnly: true,
-    stateContainerShellCloseout: true,
-    plannedStateContainerName: "custom25DVisualManualRendererState",
-    futureSharedStateContainerReady: false,
-    sharedStateContainerCreated: false,
-    windowStateContainerCreated: false,
-    sharedStateMutated: false,
-    rendererCreated: false,
-    rendererInitialized: false,
-    rendererRunning: false,
-    mapAttached: false,
-    drawingEnabled: false,
-    domCreated: false,
-    startupWired: false,
-    layerCount: 0,
-    defaultNoOptionBlocked:
-      !!(
-        noOptionResult &&
-        noOptionResult.allowed === false &&
-        noOptionResult.stateContainerCreated === false &&
-        noOptionResult.state === null
-      ),
-    explicitManualLocalDevPathReturnsLocalInertState:
-      !!(
-        allowedManualResult &&
-        allowedManualResult.allowed === true &&
-        allowedManualResult.stateContainerCreated === true &&
-        allowedManualResult.stateContainerShared === false &&
-        allowedManualResult.stateContainerAttachedToWindow === false &&
-        allowedManualResult.sharedStateMutated === false
-      ),
-    noSharedGlobalWindowStateContainerCreated: true,
+    passive: true,
+    stateContainerShellCloseoutOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
     requiredOptionKeys,
-    stateContainerAuthorizesRendererCreation: false,
-    stateContainerAuthorizesRendererStart: false,
-    stateContainerAuthorizesMapAttachment: false,
-    stateContainerAuthorizesDrawing: false,
-    stateContainerAuthorizesSharedStateCreation: false,
-    reviewedHelpers: {
-      stateContainerShell:
-        typeof createCustom25DVisualManualRendererStateContainerShell === "function",
-      stateContainerContractReadiness:
-        typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
-        "function",
-      stateContainerPlan:
-        typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
-    },
-    blockedBehavior:
-      contractReadiness && contractReadiness.blockedBehavior
-        ? contractReadiness.blockedBehavior
-        : stateContainerPlan && stateContainerPlan.blockedBehavior
-          ? stateContainerPlan.blockedBehavior
-          : {
-              rendererCreation: true,
-              rendererInitialization: true,
-              mapAttachment: true,
-              drawing: true,
-              domCreation: true,
-              startupWiring: true,
-              automaticInvocation: true,
-              gameplayChanges: true,
-              pinChanges: true,
-              uiChanges: true,
-              backendChanges: true,
-              storageWrites: true,
-              networkAccess: true
-            },
-    preservedSystems:
-      contractReadiness && contractReadiness.preservedSystems
-        ? contractReadiness.preservedSystems
-        : stateContainerPlan && stateContainerPlan.preservedSystems
-          ? stateContainerPlan.preservedSystems
-          : {
-              existingLeafletMapBehavior: true,
-              osmBehavior: true,
-              gameplay: true,
-              pins: true,
-              playerMarker: true,
-              captureRadius: true,
-              ui: true,
-              backend: true,
-              storage: true,
-              network: true
-            },
-    nextStep: "manual-renderer-shared-state-container-plan",
-    safetyFlags:
-      contractReadiness && contractReadiness.safetyFlags
-        ? contractReadiness.safetyFlags
-        : stateContainerPlan && stateContainerPlan.safetyFlags
-          ? stateContainerPlan.safetyFlags
-          : {
-              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
-              landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
-              landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
-              dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
-            },
-    notes: [
-      "Passive manual renderer state container shell closeout report only.",
-      "Confirms the default/no-option path remains blocked and inert.",
-      "Confirms the explicit manual/local-dev path returns local inert state data only, without creating shared or window state."
-    ]
+    missingRequiredOptionKeys: [],
+    stateContainerShellVerificationHelperAvailable,
+    stateContainerCreationHelperAvailable,
+    stateContainerName,
+    stateContainerExists,
+    stateContainerShellVerified,
+    stateContainerShellCloseoutStatus: "state-container-shell-closed-out",
+    futureStateMutationStillRequiresSeparatePhase: true,
+    futureRendererCreationStillBlocked: true,
+    futureInitializationStillBlocked: true,
+    futureMapAttachmentStillBlocked: true,
+    futureDrawingStillBlocked: true,
+    futureStartupWiringStillBlocked: true,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
   };
 }
 
@@ -78561,6 +78828,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? createCustom25DVisualManualRendererStateContainerShell
             : null
       ),
+    getCustom25DVisualManualRendererStateContainerShellVerificationReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
+        () =>
+          typeof getCustom25DVisualManualRendererStateContainerShellVerificationReport ===
+          "function"
+            ? getCustom25DVisualManualRendererStateContainerShellVerificationReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -80979,6 +81255,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         typeof namespace.getCustom25DVisualManualRendererStateContainerContractReadinessReport === "function",
       createCustom25DVisualManualRendererStateContainerShell:
         typeof namespace.createCustom25DVisualManualRendererStateContainerShell === "function",
+      getCustom25DVisualManualRendererStateContainerShellVerificationReport:
+        typeof namespace.getCustom25DVisualManualRendererStateContainerShellVerificationReport ===
+        "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
       getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport:
