@@ -34861,185 +34861,186 @@ function getCustom25DVisualManualRendererStateContainerContractReadinessReport(
 }
 
 function createCustom25DVisualManualRendererStateContainerShell(options = {}) {
-  const contractReadiness =
-    typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
-    "function"
-      ? getCustom25DVisualManualRendererStateContainerContractReadinessReport(options)
-      : null;
-  const stateContainerPlan =
-    typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
-      ? getCustom25DVisualManualRendererStateContainerPlanReport(options)
-      : null;
-
-  const requiredSignals = [
-    {
-      key: "manual",
-      passed: options.manual === true,
-      reason: "manual-flag-required"
-    },
-    {
-      key: "developerIntent",
-      passed: options.developerIntent === true,
-      reason: "developer-intent-required"
-    },
-    {
-      key: "localDevOnly",
-      passed: options.localDevOnly === true,
-      reason: "local-dev-only-required"
-    },
-    {
-      key: "browserConsoleOnly",
-      passed: options.browserConsoleOnly === true,
-      reason: "browser-console-only-required"
-    },
-    {
-      key: "explicitOptionsOnly",
-      passed: options.explicitOptionsOnly === true,
-      reason: "explicit-options-only-required"
-    },
-    {
-      key: "allowManualRendererStateContainerShell",
-      passed: options.allowManualRendererStateContainerShell === true,
-      reason: "manual-renderer-state-container-shell-not-allowed"
-    },
-    {
-      key: "noStartupWiring",
-      passed: options.noStartupWiring === true,
-      reason: "no-startup-wiring-acknowledgement-required"
-    },
-    {
-      key: "noBackendChanges",
-      passed: options.noBackendChanges === true,
-      reason: "no-backend-changes-acknowledgement-required"
-    },
-    {
-      key: "noPersistence",
-      passed: options.noPersistence === true,
-      reason: "no-persistence-acknowledgement-required"
-    },
-    {
-      key: "noAutomaticInvocation",
-      passed: options.noAutomaticInvocation === true,
-      reason: "no-automatic-invocation-acknowledgement-required"
-    }
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "stateContainerShellOnly",
+    "allowManualRendererStateContainerCreation",
+    "confirmStateCreationIsInert",
+    "confirmNoPreflightInvocation",
+    "confirmNoCloseoutInvocation",
+    "confirmNoGateReviewInvocation",
+    "confirmNoAuthorizationChecklistInvocation",
+    "confirmNoLockReportInvocation",
+    "confirmNoSequenceSummaryInvocation",
+    "confirmNoSequenceCloseoutInvocation",
+    "confirmNoHandoffPlanInvocation",
+    "confirmNoNextStepReadinessInvocation",
+    "confirmNoPlanningBoundaryInvocation",
+    "confirmNoRiskReviewInvocation",
+    "confirmNoRiskCloseoutInvocation",
+    "confirmNoPlanningHandoffInvocation",
+    "confirmNoStateCreationReadinessInvocation",
+    "confirmNoGuardInvocation",
+    "confirmNoLifecycleMutation",
+    "confirmNoContractShellInvocation",
+    "confirmNoInitializationInvocation",
+    "confirmNoRendererInstanceCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
   ];
-  const firstFailure = requiredSignals.find((signal) => !signal.passed) || null;
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const stateCreationReadinessCloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport ===
+    "function";
+  const stateContainerName = "custom25DVisualManualRendererState";
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExistedBefore =
+    windowExists && typeof window.custom25DVisualManualRendererState !== "undefined";
 
-  if (firstFailure) {
+  if (missingRequiredOptionKeys.length > 0) {
     return {
-      phase: 283,
-      name: "custom-25d-visual-manual-renderer-state-container-shell",
-      ok: true,
+      ok: false,
+      phase: 420,
+      helperName: "createCustom25DVisualManualRendererStateContainerShell",
+      manual: options.manual === true,
+      localDevOnly: options.localDevOnly === true,
+      browserConsoleOnly: options.browserConsoleOnly === true,
+      stateContainerShellOnly: true,
+      jsonSafeResult: true,
+      blocked: true,
       allowed: false,
-      ready: false,
-      inert: true,
-      manualOnly: true,
-      sharedStateMutated: false,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      stateCreationReadinessCloseoutHelperAvailable,
+      stateContainerName,
+      stateContainerExistedBefore,
       stateContainerCreated: false,
-      stateContainerShared: false,
-      stateContainerAttachedToWindow: false,
-      plannedStateContainerName: "custom25DVisualManualRendererState",
+      stateContainerAlreadyExisted: stateContainerExistedBefore,
+      stateContainerExistsAfter: stateContainerExistedBefore,
+      lifecycleStatus: stateContainerExistedBefore ? "state-container-created" : null,
+      inert: true,
       state: null,
-      stateContainerAuthorizesRendererCreation: false,
-      stateContainerAuthorizesRendererStart: false,
-      stateContainerAuthorizesMapAttachment: false,
-      stateContainerAuthorizesDrawing: false,
-      rendererCreated: false,
+      rendererInstanceCreated: false,
       rendererInitialized: false,
-      rendererRunning: false,
+      rendererStarted: false,
       mapAttached: false,
-      drawingEnabled: false,
-      domCreated: false,
+      drawingStarted: false,
       startupWired: false,
-      layerCount: 0,
-      reason: firstFailure.reason,
-      failedRequirement: firstFailure.key,
-      reviewedHelpers: {
-        stateContainerContractReadiness:
-          typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
-          "function",
-        stateContainerPlan:
-          typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
-      },
-      safetyFlags:
-        contractReadiness && contractReadiness.safetyFlags
-          ? contractReadiness.safetyFlags
-          : stateContainerPlan && stateContainerPlan.safetyFlags
-            ? stateContainerPlan.safetyFlags
-            : {
-                custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
-                landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
-                landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
-                dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
-              },
-      notes: [
-        "Manual/local-dev inert renderer state container shell creator.",
-        "Returns a blocked result by default until the explicit safe manual signals are provided.",
-        "Does not create any live/shared/global state container when blocked."
-      ]
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
     };
   }
 
-  return {
-    phase: 283,
-    name: "custom-25d-visual-manual-renderer-state-container-shell",
-    ok: true,
-    allowed: true,
-    ready: false,
-    inert: true,
-    manualOnly: true,
-    sharedStateMutated: false,
-    stateContainerCreated: true,
-    stateContainerShared: false,
-    stateContainerAttachedToWindow: false,
-    plannedStateContainerName: "custom25DVisualManualRendererState",
-    state: {
-      rendererCreated: false,
+  if (stateContainerExistedBefore) {
+    const existingState = window.custom25DVisualManualRendererState;
+    return {
+      ok: true,
+      phase: 420,
+      helperName: "createCustom25DVisualManualRendererStateContainerShell",
+      manual: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      stateContainerShellOnly: true,
+      jsonSafeResult: true,
+      blocked: false,
+      allowed: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys: [],
+      stateCreationReadinessCloseoutHelperAvailable,
+      stateContainerName,
+      stateContainerExistedBefore: true,
+      stateContainerCreated: false,
+      stateContainerAlreadyExisted: true,
+      stateContainerExistsAfter: true,
+      lifecycleStatus:
+        existingState && typeof existingState.lifecycleStatus === "string"
+          ? existingState.lifecycleStatus
+          : "state-container-created",
+      inert: true,
+      rendererInstanceCreated: false,
       rendererInitialized: false,
-      rendererRunning: false,
+      rendererStarted: false,
       mapAttached: false,
-      drawingEnabled: false,
-      domCreated: false,
+      drawingStarted: false,
       startupWired: false,
-      layerCount: 0
-    },
-    stateContainerAuthorizesRendererCreation: false,
-    stateContainerAuthorizesRendererStart: false,
-    stateContainerAuthorizesMapAttachment: false,
-    stateContainerAuthorizesDrawing: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      defaultDecision: "blocked"
+    };
+  }
+
+  const inertState = {
+    createdByPhase: 420,
+    stateContainerName: "custom25DVisualManualRendererState",
+    stateContainerShellOnly: true,
+    inert: true,
+    initialized: false,
+    rendererInstance: null,
     rendererCreated: false,
     rendererInitialized: false,
-    rendererRunning: false,
+    rendererStarted: false,
     mapAttached: false,
     drawingEnabled: false,
-    domCreated: false,
     startupWired: false,
     layerCount: 0,
-    reason: "manual-renderer-state-container-shell-created-as-inert-local-data-only",
-    failedRequirement: null,
-    reviewedHelpers: {
-      stateContainerContractReadiness:
-        typeof getCustom25DVisualManualRendererStateContainerContractReadinessReport ===
-        "function",
-      stateContainerPlan:
-        typeof getCustom25DVisualManualRendererStateContainerPlanReport === "function"
-    },
-    safetyFlags:
-      contractReadiness && contractReadiness.safetyFlags
-        ? contractReadiness.safetyFlags
-        : stateContainerPlan && stateContainerPlan.safetyFlags
-          ? stateContainerPlan.safetyFlags
-          : {
-              custom25DMap: ENABLE_CUSTOM_25D_MAP === false,
-              landmarkTestMarkers: ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS === false,
-              landmarkSampleData: ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA === false,
-              dinosaurSitesAuData: ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA === false
-            },
-    notes: [
-      "Manual/local-dev inert renderer state container shell creator.",
-      "Returns local inert state data only when the explicit safe manual signals are provided.",
-      "Does not create any live/shared/global state container or attach anything to window."
-    ]
+    layers: [],
+    lifecycleStatus: "state-container-created",
+    implementationAuthorized: false,
+    initializationAuthorized: false,
+    drawingAuthorized: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false
+  };
+
+  if (windowExists) {
+    window.custom25DVisualManualRendererState = inertState;
+  }
+
+  return {
+    ok: true,
+    phase: 420,
+    helperName: "createCustom25DVisualManualRendererStateContainerShell",
+    manual: true,
+    localDevOnly: true,
+    browserConsoleOnly: true,
+    stateContainerShellOnly: true,
+    jsonSafeResult: true,
+    blocked: false,
+    allowed: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    stateCreationReadinessCloseoutHelperAvailable,
+    stateContainerName,
+    stateContainerExistedBefore: false,
+    stateContainerCreated: windowExists,
+    stateContainerAlreadyExisted: false,
+    stateContainerExistsAfter:
+      windowExists && typeof window.custom25DVisualManualRendererState !== "undefined",
+    lifecycleStatus: inertState.lifecycleStatus,
+    inert: true,
+    rendererInstanceCreated: false,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    defaultDecision: "blocked"
   };
 }
 
