@@ -559,6 +559,33 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport
             : null
       ),
+    getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport
+            : null
+      ),
+    getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -39756,6 +39783,7 @@ function getCustom25DVisualManualRendererPostInstanceShellReadinessReport(
       passive: true,
       reportOnly: true,
       readinessOnly: true,
+      jsonSafeResult: true,
       requiredOptionKeys,
       missingRequiredOptionKeys,
       closeoutHelperAvailable,
@@ -39788,6 +39816,7 @@ function getCustom25DVisualManualRendererPostInstanceShellReadinessReport(
     passive: true,
     reportOnly: true,
     readinessOnly: true,
+    jsonSafeResult: true,
     requiredOptionKeys,
     missingRequiredOptionKeys: [],
     closeoutHelperAvailable,
@@ -39909,6 +39938,366 @@ function getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport(
     noStartupWiring: true,
     noDomGameplayBackendStorageNetworkChange: true,
     plannedNextPhase: 436
+  };
+}
+
+function getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "phase436",
+    "readinessOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceShellCreation",
+    "confirmNoLifecycleMethodShellCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStopBehavior",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoDomMutation",
+    "confirmNoGameplayChange",
+    "confirmNoBackendStorageNetworkChange",
+    "confirmNoPersistence",
+    "confirmNoRuntimeBehaviorChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const phase435CloseoutHelperAvailable =
+    typeof getCustom25DVisualManualRendererInstanceShellCloseoutReport ===
+    "function";
+  const phase435ReadinessHelperAvailable =
+    typeof getCustom25DVisualManualRendererPostInstanceShellReadinessReport ===
+    "function";
+  const phase435TransitionPlanHelperAvailable =
+    typeof getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport ===
+    "function";
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExists =
+    windowExists &&
+    typeof window.custom25DVisualManualRendererState !== "undefined";
+  const state = stateContainerExists
+    ? window.custom25DVisualManualRendererState
+    : null;
+  const shell = state && state.rendererInstanceShell ? state.rendererInstanceShell : null;
+  const rendererInstanceShellExists = !!shell;
+  const rendererInstanceShellInert =
+    !!(
+      shell &&
+      shell.phaseCreated === 434 &&
+      shell.shellType === "manual-renderer-instance-shell" &&
+      shell.inert === true &&
+      shell.initialized === false &&
+      shell.started === false &&
+      shell.mapAttached === false &&
+      shell.drawingStarted === false &&
+      shell.startupWired === false &&
+      shell.gameplayChanged === false &&
+      shell.backendStorageNetworkChanged === false &&
+      shell.createdAtManualOnly === true
+    );
+  const lifecycleMethodsDetected =
+    !!(
+      shell &&
+      (typeof shell.initialize === "function" ||
+        typeof shell.start === "function" ||
+        typeof shell.stop === "function" ||
+        typeof shell.attachMap === "function" ||
+        typeof shell.drawFrame === "function")
+    );
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 436,
+      helperName:
+        "getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      readinessOnly: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      phase435CloseoutHelperAvailable,
+      phase435ReadinessHelperAvailable,
+      phase435TransitionPlanHelperAvailable,
+      stateContainerExists,
+      rendererInstanceShellExists,
+      rendererInstanceShellInert: false,
+      lifecycleMethodsDetected: false,
+      readinessStatus: "blocked",
+      lifecycleMethodShellPlanningAllowedNext: false,
+      lifecycleMethodShellCreationAllowedNow: false,
+      mustRemainManualOnly: true,
+      mustRemainInert: true,
+      mustNotCreateLifecycleMethods: true,
+      mustNotInitializeRenderer: true,
+      mustNotStartRenderer: true,
+      mustNotAttachMap: true,
+      mustNotDraw: true,
+      mustNotWireStartup: true,
+      mustNotChangeDomGameplayBackendStorageNetwork: true,
+      plannedNextPhase: 437,
+      plannedNextStep: "manual-renderer-lifecycle-method-shell-foundation"
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 436,
+    helperName:
+      "getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    readinessOnly: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    phase435CloseoutHelperAvailable,
+    phase435ReadinessHelperAvailable,
+    phase435TransitionPlanHelperAvailable,
+    stateContainerExists,
+    rendererInstanceShellExists,
+    rendererInstanceShellInert,
+    lifecycleMethodsDetected,
+    readinessStatus: "manual-renderer-lifecycle-method-shell-readiness-planned",
+    lifecycleMethodShellPlanningAllowedNext: true,
+    lifecycleMethodShellCreationAllowedNow: false,
+    mustRemainManualOnly: true,
+    mustRemainInert: true,
+    mustNotCreateLifecycleMethods: true,
+    mustNotInitializeRenderer: true,
+    mustNotStartRenderer: true,
+    mustNotAttachMap: true,
+    mustNotDraw: true,
+    mustNotWireStartup: true,
+    mustNotChangeDomGameplayBackendStorageNetwork: true,
+    plannedNextPhase: 437,
+    plannedNextStep: "manual-renderer-lifecycle-method-shell-foundation"
+  };
+}
+
+function getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "phase436",
+    "riskBoundaryOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceShellCreation",
+    "confirmNoLifecycleMethodShellCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStopBehavior",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoDomMutation",
+    "confirmNoGameplayChange",
+    "confirmNoBackendStorageNetworkChange",
+    "confirmNoPersistence",
+    "confirmNoRuntimeBehaviorChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 436,
+      helperName:
+        "getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      riskBoundaryOnly: true,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      riskBoundaryStatus: "blocked",
+      nextExcitingBoundary: "manual-renderer-lifecycle-method-shell-creation",
+      nextExcitingBoundaryAllowedNow: false,
+      futureLifecycleMethodShellMustBeSeparatePhase: true,
+      futureLifecycleMethodShellMustStayInert: true,
+      futureLifecycleMethodShellMustBeManualOnly: true,
+      futureLifecycleMethodShellMustNotInitializeRenderer: true,
+      futureLifecycleMethodShellMustNotStartRenderer: true,
+      futureLifecycleMethodShellMustNotAttachMap: true,
+      futureLifecycleMethodShellMustNotDraw: true,
+      futureLifecycleMethodShellMustNotWireStartup: true,
+      futureLifecycleMethodShellMustNotChangeDomGameplayBackendStorageNetwork: true,
+      plannedNextPhase: 437
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 436,
+    helperName:
+      "getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    riskBoundaryOnly: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    riskBoundaryStatus:
+      "manual-renderer-lifecycle-method-shell-boundary-documented",
+    nextExcitingBoundary: "manual-renderer-lifecycle-method-shell-creation",
+    nextExcitingBoundaryAllowedNow: false,
+    futureLifecycleMethodShellMustBeSeparatePhase: true,
+    futureLifecycleMethodShellMustStayInert: true,
+    futureLifecycleMethodShellMustBeManualOnly: true,
+    futureLifecycleMethodShellMustNotInitializeRenderer: true,
+    futureLifecycleMethodShellMustNotStartRenderer: true,
+    futureLifecycleMethodShellMustNotAttachMap: true,
+    futureLifecycleMethodShellMustNotDraw: true,
+    futureLifecycleMethodShellMustNotWireStartup: true,
+    futureLifecycleMethodShellMustNotChangeDomGameplayBackendStorageNetwork: true,
+    plannedNextPhase: 437
+  };
+}
+
+function getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "phase436",
+    "transitionPlanOnly",
+    "confirmNoStateCreation",
+    "confirmNoStateMutation",
+    "confirmNoRendererInstanceShellCreation",
+    "confirmNoLifecycleMethodShellCreation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStopBehavior",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoDomMutation",
+    "confirmNoGameplayChange",
+    "confirmNoBackendStorageNetworkChange",
+    "confirmNoPersistence",
+    "confirmNoRuntimeBehaviorChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 436,
+      helperName:
+        "getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport",
+      allowed: false,
+      blocked: true,
+      passive: true,
+      reportOnly: true,
+      transitionPlanOnly: true,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      transitionStatus: "blocked",
+      previousMilestone: "manual-renderer-instance-shell-foundation",
+      currentMilestone: "manual-renderer-lifecycle-method-shell-planning",
+      nextMilestone: "manual-renderer-lifecycle-method-shell-foundation",
+      lifecycleMethodShellCreationAllowedNow: false,
+      lifecycleMethodShellCreationRequiresSeparatePhase: true,
+      lifecycleMethodShellMustStayInert: true,
+      plannedLifecycleMethodNames: [
+        "initialize",
+        "start",
+        "stop",
+        "attachMap",
+        "drawFrame"
+      ],
+      plannedLifecycleMethodNamesAreDocumentationOnly: true,
+      noLifecycleMethodsCreated: true,
+      noStateCreation: true,
+      noStateMutation: true,
+      noRendererInitialization: true,
+      noRendererStart: true,
+      noRendererStopBehavior: true,
+      noMapAttachment: true,
+      noDrawing: true,
+      noStartupWiring: true,
+      noDomGameplayBackendStorageNetworkChange: true,
+      plannedNextPhase: 437
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 436,
+    helperName:
+      "getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport",
+    allowed: true,
+    blocked: false,
+    passive: true,
+    reportOnly: true,
+    transitionPlanOnly: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    transitionStatus:
+      "post-instance-shell-to-lifecycle-method-shell-foundation-planned",
+    previousMilestone: "manual-renderer-instance-shell-foundation",
+    currentMilestone: "manual-renderer-lifecycle-method-shell-planning",
+    nextMilestone: "manual-renderer-lifecycle-method-shell-foundation",
+    lifecycleMethodShellCreationAllowedNow: false,
+    lifecycleMethodShellCreationRequiresSeparatePhase: true,
+    lifecycleMethodShellMustStayInert: true,
+    plannedLifecycleMethodNames: [
+      "initialize",
+      "start",
+      "stop",
+      "attachMap",
+      "drawFrame"
+    ],
+    plannedLifecycleMethodNamesAreDocumentationOnly: true,
+    noLifecycleMethodsCreated: true,
+    noStateCreation: true,
+    noStateMutation: true,
+    noRendererInitialization: true,
+    noRendererStart: true,
+    noRendererStopBehavior: true,
+    noMapAttachment: true,
+    noDrawing: true,
+    noStartupWiring: true,
+    noDomGameplayBackendStorageNetworkChange: true,
+    plannedNextPhase: 437
   };
 }
 
@@ -83506,6 +83895,33 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport
             : null
       ),
+    getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport
+            : null
+      ),
+    getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport
+            : null
+      ),
+    getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -86001,6 +86417,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport:
         typeof namespace.getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport ===
+        "function",
+      getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport ===
+        "function",
+      getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport:
+        typeof namespace.getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport ===
+        "function",
+      getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport:
+        typeof namespace.getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
