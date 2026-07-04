@@ -524,6 +524,14 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport
             : null
       ),
+    createCustom25DVisualManualRendererInstanceShell:
+      createNamespaceWrapper(
+        "createCustom25DVisualManualRendererInstanceShell",
+        () =>
+          typeof createCustom25DVisualManualRendererInstanceShell === "function"
+            ? createCustom25DVisualManualRendererInstanceShell
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -39339,6 +39347,182 @@ function getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport(
     gameplayChanged: false,
     backendStorageNetworkChanged: false,
     defaultDecision: "blocked"
+  };
+}
+
+function createCustom25DVisualManualRendererInstanceShell(options = {}) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "allowCustom25DVisualManualRendererInstanceShellCreation",
+    "confirmManualRendererInstanceShellCreationOnly",
+    "confirmExistingManualStateContainerOnly",
+    "confirmNoStateContainerReplacement",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStartupWiring",
+    "confirmNoGameplayChange",
+    "noBackendChanges",
+    "noPersistence",
+    "noAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined";
+  const stateContainerExistsBefore =
+    windowExists &&
+    typeof window.custom25DVisualManualRendererState !== "undefined";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 434,
+      helperName: "createCustom25DVisualManualRendererInstanceShell",
+      allowed: false,
+      blocked: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      defaultDecision: "blocked",
+      jsonSafeResult: true,
+      manualOnly: true,
+      localDevOnly: true,
+      existingStateContainerRequired: true,
+      stateContainerExistsBefore,
+      stateContainerExistsAfter: stateContainerExistsBefore,
+      stateContainerReplaced: false,
+      rendererInstanceShellCreated: false,
+      rendererInstanceShellAlreadyExisted: false,
+      rendererInstanceShellExistsAfter: false,
+      rendererInstanceShellCreatedByThisCall: false,
+      rendererInstanceShellInert: true,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      domMutated: false,
+      leafletMutated: false,
+      runtimeBehaviorChanged: false
+    };
+  }
+
+  if (!stateContainerExistsBefore) {
+    return {
+      ok: false,
+      phase: 434,
+      helperName: "createCustom25DVisualManualRendererInstanceShell",
+      allowed: false,
+      blocked: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys: [],
+      defaultDecision: "blocked",
+      jsonSafeResult: true,
+      manualOnly: true,
+      localDevOnly: true,
+      existingStateContainerRequired: true,
+      stateContainerExistsBefore: false,
+      stateContainerExistsAfter: false,
+      stateContainerReplaced: false,
+      rendererInstanceShellCreated: false,
+      rendererInstanceShellAlreadyExisted: false,
+      rendererInstanceShellExistsAfter: false,
+      rendererInstanceShellCreatedByThisCall: false,
+      rendererInstanceShellInert: true,
+      rendererInitialized: false,
+      rendererStarted: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      domMutated: false,
+      leafletMutated: false,
+      runtimeBehaviorChanged: false
+    };
+  }
+
+  const state = window.custom25DVisualManualRendererState;
+  const rendererInstanceShellAlreadyExisted =
+    !!(state && typeof state.rendererInstanceShell === "object" && state.rendererInstanceShell);
+  let rendererInstanceShellCreatedByThisCall = false;
+
+  if (!rendererInstanceShellAlreadyExisted) {
+    state.rendererInstanceShell = {
+      phaseCreated: 434,
+      shellType: "manual-renderer-instance-shell",
+      inert: true,
+      initialized: false,
+      started: false,
+      mapAttached: false,
+      drawingStarted: false,
+      startupWired: false,
+      gameplayChanged: false,
+      backendStorageNetworkChanged: false,
+      createdAtManualOnly: true
+    };
+    rendererInstanceShellCreatedByThisCall = true;
+  }
+
+  const rendererInstanceShellExistsAfter =
+    !!(
+      state &&
+      typeof state.rendererInstanceShell === "object" &&
+      state.rendererInstanceShell
+    );
+  const rendererInstanceShellInert =
+    !!(
+      rendererInstanceShellExistsAfter &&
+      state.rendererInstanceShell.inert === true &&
+      state.rendererInstanceShell.initialized === false &&
+      state.rendererInstanceShell.started === false &&
+      state.rendererInstanceShell.mapAttached === false &&
+      state.rendererInstanceShell.drawingStarted === false &&
+      state.rendererInstanceShell.startupWired === false &&
+      state.rendererInstanceShell.gameplayChanged === false &&
+      state.rendererInstanceShell.backendStorageNetworkChanged === false &&
+      state.rendererInstanceShell.createdAtManualOnly === true
+    );
+
+  return {
+    ok: true,
+    phase: 434,
+    helperName: "createCustom25DVisualManualRendererInstanceShell",
+    allowed: true,
+    blocked: false,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    defaultDecision: "blocked",
+    jsonSafeResult: true,
+    manualOnly: true,
+    localDevOnly: true,
+    existingStateContainerRequired: true,
+    stateContainerExistsBefore: true,
+    stateContainerExistsAfter:
+      typeof window.custom25DVisualManualRendererState !== "undefined",
+    stateContainerReplaced: false,
+    rendererInstanceShellCreated: rendererInstanceShellCreatedByThisCall,
+    rendererInstanceShellAlreadyExisted,
+    rendererInstanceShellExistsAfter,
+    rendererInstanceShellCreatedByThisCall,
+    rendererInstanceShellInert,
+    rendererInitialized: false,
+    rendererStarted: false,
+    mapAttached: false,
+    drawingStarted: false,
+    startupWired: false,
+    gameplayChanged: false,
+    backendStorageNetworkChanged: false,
+    domMutated: false,
+    leafletMutated: false,
+    runtimeBehaviorChanged: false
   };
 }
 
@@ -82901,6 +83085,14 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport
             : null
       ),
+    createCustom25DVisualManualRendererInstanceShell:
+      createNamespaceWrapper(
+        "createCustom25DVisualManualRendererInstanceShell",
+        () =>
+          typeof createCustom25DVisualManualRendererInstanceShell === "function"
+            ? createCustom25DVisualManualRendererInstanceShell
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -85384,6 +85576,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport:
         typeof namespace.getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport ===
+        "function",
+      createCustom25DVisualManualRendererInstanceShell:
+        typeof namespace.createCustom25DVisualManualRendererInstanceShell ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
