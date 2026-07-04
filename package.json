@@ -1,0 +1,10 @@
+{
+  "name": "growgo-codex",
+  "private": true,
+  "scripts": {
+    "test:custom25d:webkit": "PLAYWRIGHT_BROWSERS_PATH=.playwright-browsers node tests/custom25d-manual-webkit-check.js"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}
