@@ -703,6 +703,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -41193,6 +41202,191 @@ function getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlan
     shellPlanStatus:
       "manual-callable-lifecycle-control-shell-plan-documented",
     readyForFutureManualControlShell,
+    manualControlShellCreated: false,
+    manualControlsCreated: false,
+    lifecycleMethodsInvoked: false,
+    rendererInitialized: false,
+    mapAttached: false,
+    frameDrawn: false,
+    sharedStateMutated: false,
+    runtimeBehaviorChanged: false,
+    domTouched: false,
+    startupWired: false,
+    gameplayChanged: false,
+    storageTouched: false,
+    networkTouched: false,
+    plannedFutureShellShape,
+    blockerNotes,
+    safetyNotes
+  };
+}
+
+function getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "closeoutOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const foundationHelperExists =
+    typeof createCustom25DVisualManualRendererCallableLifecycleMethodPlaceholderFoundation ===
+    "function";
+  const placeholderCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport ===
+    "function";
+  const placeholderReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport ===
+    "function";
+  const manualControlPlanHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualControlPlanReport ===
+    "function";
+  const manualControlReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualControlReadinessReport ===
+    "function";
+  const manualControlShellPlanHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport ===
+    "function";
+  const plannedFutureShellShape = {
+    shellType: "manual-only-callable-lifecycle-control-shell",
+    controls: [
+      "manualInitialize",
+      "manualStart",
+      "manualStop",
+      "manualAttachMap",
+      "manualDrawFrame"
+    ],
+    defaultMode: "inert",
+    startupWiring: false,
+    domControls: false,
+    eventListeners: false,
+    mapAttachment: false,
+    drawing: false,
+    stateMutation: false
+  };
+  const blockerNotes = [];
+
+  if (!foundationHelperExists) {
+    blockerNotes.push("Phase 440 foundation helper is missing.");
+  }
+  if (!placeholderCloseoutHelperExists) {
+    blockerNotes.push("Phase 441 placeholder closeout helper is missing.");
+  }
+  if (!placeholderReadinessHelperExists) {
+    blockerNotes.push("Phase 442 placeholder readiness helper is missing.");
+  }
+  if (!manualControlPlanHelperExists) {
+    blockerNotes.push("Phase 443 manual control plan helper is missing.");
+  }
+  if (!manualControlReadinessHelperExists) {
+    blockerNotes.push("Phase 444 manual control readiness helper is missing.");
+  }
+  if (!manualControlShellPlanHelperExists) {
+    blockerNotes.push("Phase 445 manual control shell plan helper is missing.");
+  }
+  if (missingRequiredOptionKeys.length > 0) {
+    blockerNotes.push("Required explicit safety options are missing.");
+  }
+
+  const safetyNotes = [
+    "This phase only closes out the documented future manual control shell plan.",
+    "No manual control shell is created in this phase.",
+    "No manual controls are created in this phase.",
+    "No lifecycle methods are invoked in this phase.",
+    "No DOM, Leaflet, gameplay, backend, storage, network, or startup behavior changes are introduced."
+  ];
+  const shellPlanClosedOut =
+    missingRequiredOptionKeys.length === 0 &&
+    foundationHelperExists &&
+    placeholderCloseoutHelperExists &&
+    placeholderReadinessHelperExists &&
+    manualControlPlanHelperExists &&
+    manualControlReadinessHelperExists &&
+    manualControlShellPlanHelperExists;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 446,
+      helperName:
+        "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      foundationHelperExists,
+      placeholderCloseoutHelperExists,
+      placeholderReadinessHelperExists,
+      manualControlPlanHelperExists,
+      manualControlReadinessHelperExists,
+      manualControlShellPlanHelperExists,
+      plannedManualControlBoundaryName:
+        "custom25DVisualManualRendererCallableLifecycleManualControls",
+      plannedManualControlShellName:
+        "custom25DVisualManualRendererCallableLifecycleManualControlShell",
+      closeoutStatus: "blocked",
+      shellPlanClosedOut: false,
+      manualControlShellCreated: false,
+      manualControlsCreated: false,
+      lifecycleMethodsInvoked: false,
+      rendererInitialized: false,
+      mapAttached: false,
+      frameDrawn: false,
+      sharedStateMutated: false,
+      runtimeBehaviorChanged: false,
+      domTouched: false,
+      startupWired: false,
+      gameplayChanged: false,
+      storageTouched: false,
+      networkTouched: false,
+      plannedFutureShellShape,
+      blockerNotes,
+      safetyNotes
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 446,
+    helperName:
+      "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    foundationHelperExists,
+    placeholderCloseoutHelperExists,
+    placeholderReadinessHelperExists,
+    manualControlPlanHelperExists,
+    manualControlReadinessHelperExists,
+    manualControlShellPlanHelperExists,
+    plannedManualControlBoundaryName:
+      "custom25DVisualManualRendererCallableLifecycleManualControls",
+    plannedManualControlShellName:
+      "custom25DVisualManualRendererCallableLifecycleManualControlShell",
+    closeoutStatus:
+      "manual-callable-lifecycle-control-shell-plan-closeout-documented",
+    shellPlanClosedOut,
     manualControlShellCreated: false,
     manualControlsCreated: false,
     lifecycleMethodsInvoked: false,
@@ -86518,6 +86712,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -89061,6 +89264,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport:
         typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport ===
+        "function",
+      getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
