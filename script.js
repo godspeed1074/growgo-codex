@@ -865,6 +865,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -46470,6 +46479,423 @@ function getCustom25DVisualManualRendererCallableLifecycleManualControlsComplete
   };
 }
 
+function getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "closeoutOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStop",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const shellName =
+    "custom25DVisualManualRendererCallableLifecycleManualControlShell";
+  const manualControlsCompleteHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport ===
+    "function";
+  const manualInitializeCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellCloseoutReport ===
+    "function";
+  const manualInitializeReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellReadinessReport ===
+    "function";
+  const manualStartCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellCloseoutReport ===
+    "function";
+  const manualStartReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellReadinessReport ===
+    "function";
+  const manualStopCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellCloseoutReport ===
+    "function";
+  const manualStopReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessReport ===
+    "function";
+  const manualStopReadinessCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessCloseoutReport ===
+    "function";
+  const manualAttachMapCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellCloseoutReport ===
+    "function";
+  const manualAttachMapReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessReport ===
+    "function";
+  const manualAttachMapReadinessCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessCloseoutReport ===
+    "function";
+  const manualDrawFrameCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellCloseoutReport ===
+    "function";
+  const manualDrawFrameReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessReport ===
+    "function";
+  const manualDrawFrameReadinessCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessCloseoutReport ===
+    "function";
+  const shellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualControlShell ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualControlShell !== null;
+  const shell = shellExists
+    ? custom25DVisualManualRendererCallableLifecycleManualControlShell
+    : null;
+  const shellInert =
+    !!(
+      shell &&
+      shell.inert === true &&
+      shell.runtimeBehaviorChanged === false &&
+      shell.lifecycleMethodsInvoked === false &&
+      shell.startupWiring === false &&
+      shell.domControls === false &&
+      shell.eventListeners === false &&
+      shell.mapAttachment === false &&
+      shell.drawing === false &&
+      shell.stateMutation === false
+    );
+  const manualOnly = !!(shell && shell.manualOnly === true);
+  const controlsExist = !!(shell && shell.controls);
+  const manualInitializeSlotIsFunction =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualInitialize === "function"
+    );
+  const manualStartSlotIsFunction =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualStart === "function"
+    );
+  const manualStopSlotIsFunction =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualStop === "function"
+    );
+  const manualAttachMapSlotIsFunction =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualAttachMap === "function"
+    );
+  const manualDrawFrameSlotIsFunction =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualDrawFrame === "function"
+    );
+  const manualInitializeAppearsReportOnly =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualInitialize === "function" &&
+      shell.controls.manualInitialize.name ===
+        "custom25DVisualManualRendererManualInitializeControlShell"
+    );
+  const manualStartAppearsReportOnly =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualStart === "function" &&
+      shell.controls.manualStart.name ===
+        "custom25DVisualManualRendererManualStartControlShell"
+    );
+  const manualStopAppearsReportOnly =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualStop === "function" &&
+      shell.controls.manualStop.name ===
+        "custom25DVisualManualRendererManualStopControlShell"
+    );
+  const manualAttachMapAppearsReportOnly =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualAttachMap === "function" &&
+      shell.controls.manualAttachMap.name ===
+        "custom25DVisualManualRendererManualAttachMapControlShell"
+    );
+  const manualDrawFrameAppearsReportOnly =
+    !!(
+      shell &&
+      shell.controls &&
+      typeof shell.controls.manualDrawFrame === "function" &&
+      shell.controls.manualDrawFrame.name ===
+        "custom25DVisualManualRendererManualDrawFrameControlShell"
+    );
+  const allFiveManualLifecycleControlSlotsExist =
+    manualInitializeSlotIsFunction &&
+    manualStartSlotIsFunction &&
+    manualStopSlotIsFunction &&
+    manualAttachMapSlotIsFunction &&
+    manualDrawFrameSlotIsFunction;
+  const allFiveManualControlsRemainReportOnly =
+    manualInitializeAppearsReportOnly &&
+    manualStartAppearsReportOnly &&
+    manualStopAppearsReportOnly &&
+    manualAttachMapAppearsReportOnly &&
+    manualDrawFrameAppearsReportOnly;
+  const blockerNotes = [];
+
+  if (!manualControlsCompleteHelperExists) {
+    blockerNotes.push("Phase 463 manual controls complete helper is missing.");
+  }
+  if (!manualInitializeCloseoutHelperExists) {
+    blockerNotes.push("manualInitialize closeout helper is missing.");
+  }
+  if (!manualInitializeReadinessHelperExists) {
+    blockerNotes.push("manualInitialize readiness helper is missing.");
+  }
+  if (!manualStartCloseoutHelperExists) {
+    blockerNotes.push("manualStart closeout helper is missing.");
+  }
+  if (!manualStartReadinessHelperExists) {
+    blockerNotes.push("manualStart readiness helper is missing.");
+  }
+  if (!manualStopCloseoutHelperExists) {
+    blockerNotes.push("manualStop closeout helper is missing.");
+  }
+  if (!manualStopReadinessHelperExists) {
+    blockerNotes.push("manualStop readiness helper is missing.");
+  }
+  if (!manualStopReadinessCloseoutHelperExists) {
+    blockerNotes.push("manualStop readiness closeout helper is missing.");
+  }
+  if (!manualAttachMapCloseoutHelperExists) {
+    blockerNotes.push("manualAttachMap closeout helper is missing.");
+  }
+  if (!manualAttachMapReadinessHelperExists) {
+    blockerNotes.push("manualAttachMap readiness helper is missing.");
+  }
+  if (!manualAttachMapReadinessCloseoutHelperExists) {
+    blockerNotes.push("manualAttachMap readiness closeout helper is missing.");
+  }
+  if (!manualDrawFrameCloseoutHelperExists) {
+    blockerNotes.push("manualDrawFrame closeout helper is missing.");
+  }
+  if (!manualDrawFrameReadinessHelperExists) {
+    blockerNotes.push("manualDrawFrame readiness helper is missing.");
+  }
+  if (!manualDrawFrameReadinessCloseoutHelperExists) {
+    blockerNotes.push("manualDrawFrame readiness closeout helper is missing.");
+  }
+  if (!shellExists) {
+    blockerNotes.push("The manual control shell object is missing.");
+  }
+  if (!controlsExist) {
+    blockerNotes.push("The manual control shell controls object is missing.");
+  }
+  if (!manualInitializeSlotIsFunction) {
+    blockerNotes.push("manualInitialize is not present as an inert function shell.");
+  }
+  if (!manualStartSlotIsFunction) {
+    blockerNotes.push("manualStart is not present as an inert function shell.");
+  }
+  if (!manualStopSlotIsFunction) {
+    blockerNotes.push("manualStop is not present as an inert function shell.");
+  }
+  if (!manualAttachMapSlotIsFunction) {
+    blockerNotes.push("manualAttachMap is not present as an inert function shell.");
+  }
+  if (!manualDrawFrameSlotIsFunction) {
+    blockerNotes.push("manualDrawFrame is not present as an inert function shell.");
+  }
+  if (!allFiveManualControlsRemainReportOnly) {
+    blockerNotes.push("One or more manual lifecycle controls no longer matches the inert report-only shell pattern.");
+  }
+  if (missingRequiredOptionKeys.length > 0) {
+    blockerNotes.push("Required explicit safety options are missing.");
+  }
+
+  const safetyNotes = [
+    "This helper is passive and report-only.",
+    "All five manual lifecycle controls are inspected only.",
+    "No manual lifecycle control is invoked in this phase.",
+    "No renderer lifecycle method is invoked in this phase.",
+    "No live Leaflet map instance is read or required in this phase.",
+    "No drawing occurs and no shared renderer state is mutated in this phase."
+  ];
+  const manualControlsCompleteCloseout =
+    missingRequiredOptionKeys.length === 0 &&
+    manualControlsCompleteHelperExists &&
+    manualInitializeCloseoutHelperExists &&
+    manualInitializeReadinessHelperExists &&
+    manualStartCloseoutHelperExists &&
+    manualStartReadinessHelperExists &&
+    manualStopCloseoutHelperExists &&
+    manualStopReadinessHelperExists &&
+    manualStopReadinessCloseoutHelperExists &&
+    manualAttachMapCloseoutHelperExists &&
+    manualAttachMapReadinessHelperExists &&
+    manualAttachMapReadinessCloseoutHelperExists &&
+    manualDrawFrameCloseoutHelperExists &&
+    manualDrawFrameReadinessHelperExists &&
+    manualDrawFrameReadinessCloseoutHelperExists &&
+    shellExists &&
+    shellInert &&
+    manualOnly &&
+    controlsExist &&
+    allFiveManualLifecycleControlSlotsExist &&
+    allFiveManualControlsRemainReportOnly;
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 464,
+      helperName:
+        "getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      shellName,
+      manualControlsCompleteHelperExists,
+      shellExists,
+      shellInert,
+      manualOnly,
+      controlsExist,
+      allFiveManualLifecycleControlSlotsExist,
+      manualInitializeCloseoutHelperExists,
+      manualInitializeReadinessHelperExists,
+      manualStartCloseoutHelperExists,
+      manualStartReadinessHelperExists,
+      manualStopCloseoutHelperExists,
+      manualStopReadinessHelperExists,
+      manualStopReadinessCloseoutHelperExists,
+      manualAttachMapCloseoutHelperExists,
+      manualAttachMapReadinessHelperExists,
+      manualAttachMapReadinessCloseoutHelperExists,
+      manualDrawFrameCloseoutHelperExists,
+      manualDrawFrameReadinessHelperExists,
+      manualDrawFrameReadinessCloseoutHelperExists,
+      manualInitializeSlotIsFunction,
+      manualStartSlotIsFunction,
+      manualStopSlotIsFunction,
+      manualAttachMapSlotIsFunction,
+      manualDrawFrameSlotIsFunction,
+      manualInitializeAppearsReportOnly,
+      manualStartAppearsReportOnly,
+      manualStopAppearsReportOnly,
+      manualAttachMapAppearsReportOnly,
+      manualDrawFrameAppearsReportOnly,
+      allFiveManualControlsRemainReportOnly,
+      manualControlsCompleteCloseout: false,
+      reportOnlyCloseout: false,
+      manualInitializeInvoked: false,
+      manualStartInvoked: false,
+      manualStopInvoked: false,
+      manualAttachMapInvoked: false,
+      manualDrawFrameInvoked: false,
+      lifecycleMethodsInvoked: false,
+      liveLeafletMapRead: false,
+      rendererStopped: false,
+      rendererStarted: false,
+      rendererInitialized: false,
+      mapAttached: false,
+      frameDrawn: false,
+      sharedStateMutated: false,
+      runtimeBehaviorChanged: false,
+      domTouched: false,
+      startupWired: false,
+      gameplayChanged: false,
+      storageTouched: false,
+      networkTouched: false,
+      closeoutStatus: "blocked",
+      blockerNotes,
+      safetyNotes
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 464,
+    helperName:
+      "getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    shellName,
+    manualControlsCompleteHelperExists,
+    shellExists,
+    shellInert,
+    manualOnly,
+    controlsExist,
+    allFiveManualLifecycleControlSlotsExist,
+    manualInitializeCloseoutHelperExists,
+    manualInitializeReadinessHelperExists,
+    manualStartCloseoutHelperExists,
+    manualStartReadinessHelperExists,
+    manualStopCloseoutHelperExists,
+    manualStopReadinessHelperExists,
+    manualStopReadinessCloseoutHelperExists,
+    manualAttachMapCloseoutHelperExists,
+    manualAttachMapReadinessHelperExists,
+    manualAttachMapReadinessCloseoutHelperExists,
+    manualDrawFrameCloseoutHelperExists,
+    manualDrawFrameReadinessHelperExists,
+    manualDrawFrameReadinessCloseoutHelperExists,
+    manualInitializeSlotIsFunction,
+    manualStartSlotIsFunction,
+    manualStopSlotIsFunction,
+    manualAttachMapSlotIsFunction,
+    manualDrawFrameSlotIsFunction,
+    manualInitializeAppearsReportOnly,
+    manualStartAppearsReportOnly,
+    manualStopAppearsReportOnly,
+    manualAttachMapAppearsReportOnly,
+    manualDrawFrameAppearsReportOnly,
+    allFiveManualControlsRemainReportOnly,
+    manualControlsCompleteCloseout,
+    reportOnlyCloseout: manualControlsCompleteCloseout,
+    manualInitializeInvoked: false,
+    manualStartInvoked: false,
+    manualStopInvoked: false,
+    manualAttachMapInvoked: false,
+    manualDrawFrameInvoked: false,
+    lifecycleMethodsInvoked: false,
+    liveLeafletMapRead: false,
+    rendererStopped: false,
+    rendererStarted: false,
+    rendererInitialized: false,
+    mapAttached: false,
+    frameDrawn: false,
+    sharedStateMutated: false,
+    runtimeBehaviorChanged: false,
+    domTouched: false,
+    startupWired: false,
+    gameplayChanged: false,
+    storageTouched: false,
+    networkTouched: false,
+    closeoutStatus:
+      "manual-callable-lifecycle-controls-complete-closeout-documented",
+    blockerNotes,
+    safetyNotes
+  };
+}
+
 custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualDrawFrame =
   function custom25DVisualManualRendererManualDrawFrameControlShell(
     options = {}
@@ -92026,6 +92452,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -94623,6 +95058,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport:
         typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport ===
+        "function",
+      getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
