@@ -1117,6 +1117,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -54053,6 +54062,369 @@ function getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePer
   };
 }
 
+function getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "closeoutOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStop",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const permissionEvaluationPlanHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanReport ===
+    "function";
+  const permissionEvaluationPlanCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanCloseoutReport ===
+    "function";
+  const permissionEvaluationShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluation ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluation !==
+      null;
+  const permissionEvaluationShellCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellCloseoutReport ===
+    "function";
+  const permissionEvaluationShellReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessReport ===
+    "function";
+  const permissionEvaluationShellReadinessCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessCloseoutReport ===
+    "function";
+  const permissionEvaluationContractPlanHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanReport ===
+    "function";
+  const permissionEvaluationContractPlanCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanCloseoutReport ===
+    "function";
+  const permissionEvaluationContractShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContract ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContract !==
+      null;
+  const permissionEvaluationContractShellCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellCloseoutReport ===
+    "function";
+  const permissionEvaluationContractShellReadinessHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessReport ===
+    "function";
+  const permissionEvaluationContractShellReadinessCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessCloseoutReport ===
+    "function";
+  const permissionEvaluatorPlanHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanReport ===
+    "function";
+  const permissionEvaluatorPlanCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport ===
+    "function";
+  const evaluatorShellExists =
+    typeof evaluateCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermission ===
+    "function";
+  const gateShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionGate ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGate !== null;
+  const gateContractShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionGateContract ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGateContract !==
+      null;
+  const permissionEvaluationShellIsPassiveReportOnlyDataOnly = !!(
+    permissionEvaluationShellExists &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluation.passive ===
+      true &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluation.reportOnly ===
+      true &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluation.permissionEvaluationShellOnly ===
+      true
+  );
+  const permissionEvaluationContractShellIsPassiveReportOnlyDataOnly = !!(
+    permissionEvaluationContractShellExists &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContract.passive ===
+      true &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContract.reportOnly ===
+      true &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContract.contractShellOnly ===
+      true
+  );
+  const permissionEvaluationContractShellContractEnforcedFalse = !!(
+    permissionEvaluationContractShellExists &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContract.contractEnforced ===
+      false
+  );
+  const evaluatorShellReport = evaluatorShellExists
+    ? evaluateCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermission(
+        options
+      )
+    : null;
+  const evaluatorShellReturnsDenyReportOnly = !!(
+    evaluatorShellReport &&
+    evaluatorShellReport.passive === true &&
+    evaluatorShellReport.reportOnly === true &&
+    evaluatorShellReport.decision === "deny" &&
+    evaluatorShellReport.allowed === false &&
+    evaluatorShellReport.denied === true &&
+    evaluatorShellReport.permissionEvaluationBehaviorCreated === false &&
+    evaluatorShellReport.contractEnforced === false &&
+    evaluatorShellReport.callableFunctionCreated === false &&
+    evaluatorShellReport.lifecycleExecutionEnabled === false &&
+    evaluatorShellReport.manualControlInvocationAllowed === false
+  );
+  const closeoutSummary = [
+    "The Phase 480 permission evaluation plan helper exists.",
+    "The Phase 481 permission evaluation plan closeout helper exists.",
+    "The Phase 482 permission evaluation shell object exists.",
+    "The Phase 482 permission evaluation shell closeout helper exists.",
+    "The Phase 483 permission evaluation shell readiness helper exists.",
+    "The Phase 484 permission evaluation shell readiness closeout helper exists.",
+    "The Phase 485 permission evaluation contract plan helper exists.",
+    "The Phase 486 permission evaluation contract plan closeout helper exists.",
+    "The Phase 487 permission evaluation contract shell object exists.",
+    "The Phase 487 permission evaluation contract shell closeout helper exists.",
+    "The Phase 488 permission evaluation contract shell readiness helper exists.",
+    "The Phase 489 permission evaluation contract shell readiness closeout helper exists.",
+    "The Phase 490 permission evaluator plan helper exists.",
+    "The Phase 491 permission evaluator plan closeout helper exists.",
+    "The evaluator shell function exists.",
+    "The evaluator shell returns deny and remains report-only when inspected.",
+    "The evaluator shell does not create permission evaluation behavior.",
+    "The evaluator shell does not enforce the permission evaluation contract.",
+    "The evaluator shell does not create a callable function.",
+    "The gate shell exists.",
+    "The existing gate contract shell exists.",
+    "The permission evaluation shell remains passive, report-only, and data-only.",
+    "The permission evaluation contract shell remains passive, report-only, and data-only.",
+    "The permission evaluation contract shell is not enforced.",
+    "Lifecycle execution remains disabled.",
+    "Manual control invocation remains disallowed.",
+    "No lifecycle controls were invoked.",
+    "No startup, UI, DOM, timer, listener, backend, storage, network, or gameplay wiring occurred.",
+    "No map attachment occurred.",
+    "No drawing occurred.",
+    "No runtime behavior changed."
+  ];
+  const blockerNotes = [];
+
+  if (!permissionEvaluationPlanHelperExists) {
+    blockerNotes.push("The permission evaluation plan helper is missing.");
+  }
+  if (!permissionEvaluationPlanCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation plan closeout helper is missing."
+    );
+  }
+  if (!permissionEvaluationShellExists) {
+    blockerNotes.push("The permission evaluation shell object is missing.");
+  }
+  if (!permissionEvaluationShellCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation shell closeout helper is missing."
+    );
+  }
+  if (!permissionEvaluationShellReadinessHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation shell readiness helper is missing."
+    );
+  }
+  if (!permissionEvaluationShellReadinessCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation shell readiness closeout helper is missing."
+    );
+  }
+  if (!permissionEvaluationContractPlanHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation contract plan helper is missing."
+    );
+  }
+  if (!permissionEvaluationContractPlanCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation contract plan closeout helper is missing."
+    );
+  }
+  if (!permissionEvaluationContractShellExists) {
+    blockerNotes.push(
+      "The permission evaluation contract shell object is missing."
+    );
+  }
+  if (!permissionEvaluationContractShellCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation contract shell closeout helper is missing."
+    );
+  }
+  if (!permissionEvaluationContractShellReadinessHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation contract shell readiness helper is missing."
+    );
+  }
+  if (!permissionEvaluationContractShellReadinessCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluation contract shell readiness closeout helper is missing."
+    );
+  }
+  if (!permissionEvaluatorPlanHelperExists) {
+    blockerNotes.push("The permission evaluator plan helper is missing.");
+  }
+  if (!permissionEvaluatorPlanCloseoutHelperExists) {
+    blockerNotes.push(
+      "The permission evaluator plan closeout helper is missing."
+    );
+  }
+  if (!evaluatorShellExists) {
+    blockerNotes.push("The permission evaluator shell function is missing.");
+  }
+  if (!gateShellExists) {
+    blockerNotes.push("The execution gate shell object is missing.");
+  }
+  if (!gateContractShellExists) {
+    blockerNotes.push("The execution gate contract shell object is missing.");
+  }
+  if (missingRequiredOptionKeys.length > 0) {
+    blockerNotes.push("Required explicit safety options are missing.");
+  }
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 492,
+      helperName:
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      closeoutOnly: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      permissionEvaluationPlanHelperExists,
+      permissionEvaluationPlanCloseoutHelperExists,
+      permissionEvaluationShellExists,
+      permissionEvaluationShellCloseoutHelperExists,
+      permissionEvaluationShellReadinessHelperExists,
+      permissionEvaluationShellReadinessCloseoutHelperExists,
+      permissionEvaluationContractPlanHelperExists,
+      permissionEvaluationContractPlanCloseoutHelperExists,
+      permissionEvaluationContractShellExists,
+      permissionEvaluationContractShellCloseoutHelperExists,
+      permissionEvaluationContractShellReadinessHelperExists,
+      permissionEvaluationContractShellReadinessCloseoutHelperExists,
+      permissionEvaluatorPlanHelperExists,
+      permissionEvaluatorPlanCloseoutHelperExists,
+      evaluatorShellExists,
+      evaluatorShellReturnsDenyReportOnly,
+      gateShellExists,
+      gateContractShellExists,
+      permissionEvaluationShellIsPassiveReportOnlyDataOnly,
+      permissionEvaluationContractShellIsPassiveReportOnlyDataOnly,
+      permissionEvaluationContractShellContractEnforcedFalse,
+      evaluatorCreated: true,
+      evaluatorShellOnly: true,
+      permissionEvaluationBehaviorCreated: false,
+      contractEnforced: false,
+      callableFunctionCreated: false,
+      lifecycleExecutionEnabled: false,
+      manualControlInvocationAllowed: false,
+      decision: "deny",
+      denied: true,
+      manualInitializeInvoked: false,
+      manualStartInvoked: false,
+      manualStopInvoked: false,
+      manualAttachMapInvoked: false,
+      manualDrawFrameInvoked: false,
+      startupWiringOccurred: false,
+      uiWiringOccurred: false,
+      domWiringOccurred: false,
+      timerWiringOccurred: false,
+      listenerWiringOccurred: false,
+      backendStorageNetworkGameplayWiringOccurred: false,
+      mapAttached: false,
+      drawingOccurred: false,
+      runtimeBehaviorChanged: false,
+      closeoutSummary,
+      closeoutStatus: "blocked",
+      blockerNotes
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 492,
+    helperName:
+      "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    closeoutOnly: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    permissionEvaluationPlanHelperExists,
+    permissionEvaluationPlanCloseoutHelperExists,
+    permissionEvaluationShellExists,
+    permissionEvaluationShellCloseoutHelperExists,
+    permissionEvaluationShellReadinessHelperExists,
+    permissionEvaluationShellReadinessCloseoutHelperExists,
+    permissionEvaluationContractPlanHelperExists,
+    permissionEvaluationContractPlanCloseoutHelperExists,
+    permissionEvaluationContractShellExists,
+    permissionEvaluationContractShellCloseoutHelperExists,
+    permissionEvaluationContractShellReadinessHelperExists,
+    permissionEvaluationContractShellReadinessCloseoutHelperExists,
+    permissionEvaluatorPlanHelperExists,
+    permissionEvaluatorPlanCloseoutHelperExists,
+    evaluatorShellExists,
+    evaluatorShellReturnsDenyReportOnly,
+    gateShellExists,
+    gateContractShellExists,
+    permissionEvaluationShellIsPassiveReportOnlyDataOnly,
+    permissionEvaluationContractShellIsPassiveReportOnlyDataOnly,
+    permissionEvaluationContractShellContractEnforcedFalse,
+    evaluatorCreated: true,
+    evaluatorShellOnly: true,
+    permissionEvaluationBehaviorCreated: false,
+    contractEnforced: false,
+    callableFunctionCreated: false,
+    lifecycleExecutionEnabled: false,
+    manualControlInvocationAllowed: false,
+    decision: "deny",
+    denied: true,
+    manualInitializeInvoked: false,
+    manualStartInvoked: false,
+    manualStopInvoked: false,
+    manualAttachMapInvoked: false,
+    manualDrawFrameInvoked: false,
+    startupWiringOccurred: false,
+    uiWiringOccurred: false,
+    domWiringOccurred: false,
+    timerWiringOccurred: false,
+    listenerWiringOccurred: false,
+    backendStorageNetworkGameplayWiringOccurred: false,
+    mapAttached: false,
+    drawingOccurred: false,
+    runtimeBehaviorChanged: false,
+    closeoutSummary,
+    closeoutStatus:
+      "manual-callable-lifecycle-execution-gate-permission-evaluator-shell-closeout-documented",
+    blockerNotes
+  };
+}
+
 const custom25DVisualManualRendererCallableLifecycleManualExecutionBridge = {
   bridgeName:
     "custom25DVisualManualRendererCallableLifecycleManualExecutionBridge",
@@ -54224,6 +54596,62 @@ const custom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissio
     futureEvaluatorDefaultDecision: "deny",
     runtimeBehaviorChanged: false
   };
+
+function evaluateCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermission(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStop",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+
+  return {
+    ok: missingRequiredOptionKeys.length === 0,
+    phase: 492,
+    evaluatorName:
+      "evaluateCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermission",
+    evaluatorCreated: true,
+    evaluatorShellOnly: true,
+    passive: true,
+    reportOnly: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys,
+    permissionEvaluationBehaviorCreated: false,
+    contractEnforced: false,
+    callableFunctionCreated: false,
+    lifecycleExecutionEnabled: false,
+    manualControlInvocationAllowed: false,
+    decision: "deny",
+    allowed: false,
+    denied: true,
+    denialReason: "permission_evaluator_shell_only",
+    manualInitializeInvoked: false,
+    manualStartInvoked: false,
+    manualStopInvoked: false,
+    manualAttachMapInvoked: false,
+    manualDrawFrameInvoked: false,
+    mapAttached: false,
+    drawingOccurred: false,
+    runtimeBehaviorChanged: false
+  };
+}
 
 custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualDrawFrame =
   function custom25DVisualManualRendererManualDrawFrameControlShell(
@@ -100033,6 +100461,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -102714,6 +103151,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
