@@ -667,6 +667,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -40575,6 +40584,162 @@ function getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutRep
     startupWired: false,
     callbacksHooksTimersListenersAdded: false,
     defaultDecision: "blocked"
+  };
+}
+
+function getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "readinessOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange"
+  ];
+  const lifecyclePlaceholderNamesExpected = [
+    "initialize",
+    "start",
+    "stop",
+    "attachMap",
+    "drawFrame"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const windowExists = typeof window !== "undefined";
+  const phase440FoundationExists =
+    typeof createCustom25DVisualManualRendererCallableLifecycleMethodPlaceholderFoundation ===
+    "function";
+  const phase441CloseoutExists =
+    typeof getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport ===
+    "function";
+  const stateContainerExists =
+    windowExists &&
+    typeof window.custom25DVisualManualRendererState !== "undefined";
+  const state = stateContainerExists
+    ? window.custom25DVisualManualRendererState
+    : null;
+  const rendererInstanceShell =
+    state && state.rendererInstanceShell ? state.rendererInstanceShell : null;
+  const lifecycleMethodShell =
+    rendererInstanceShell && rendererInstanceShell.lifecycleMethodShell
+      ? rendererInstanceShell.lifecycleMethodShell
+      : null;
+  const lifecycleMethodShellExists = !!lifecycleMethodShell;
+  const lifecyclePlaceholderNamesFound = lifecycleMethodShell
+    ? lifecyclePlaceholderNamesExpected.filter(
+        (methodName) => typeof lifecycleMethodShell[methodName] !== "undefined"
+      )
+    : [];
+  const missingPlaceholderMethods = lifecyclePlaceholderNamesExpected.filter(
+    (methodName) => lifecyclePlaceholderNamesFound.indexOf(methodName) === -1
+  );
+  const allExpectedLifecyclePlaceholdersFound =
+    missingPlaceholderMethods.length === 0;
+  const lifecyclePlaceholdersCallable =
+    lifecycleMethodShellExists &&
+    lifecyclePlaceholderNamesExpected.every(
+      (methodName) => typeof lifecycleMethodShell[methodName] === "function"
+    );
+  const lifecyclePlaceholdersRemainInert =
+    !!(
+      lifecycleMethodShell &&
+      lifecycleMethodShell.inert === true &&
+      lifecycleMethodShell.manualOnly === true &&
+      lifecycleMethodShell.rendererInitialized === false &&
+      lifecycleMethodShell.rendererStarted === false &&
+      lifecycleMethodShell.rendererStopped === false &&
+      lifecycleMethodShell.mapAttached === false &&
+      lifecycleMethodShell.drawingStarted === false &&
+      lifecycleMethodShell.startupWired === false &&
+      lifecycleMethodShell.domMutated === false &&
+      lifecycleMethodShell.leafletMutated === false &&
+      lifecycleMethodShell.gameplayChanged === false &&
+      lifecycleMethodShell.backendStorageNetworkChanged === false &&
+      lifecycleMethodShell.persistenceChanged === false &&
+      lifecycleMethodShell.runtimeBehaviorChanged === false
+    );
+  const readinessStatus =
+    phase440FoundationExists &&
+    phase441CloseoutExists &&
+    lifecycleMethodShellExists &&
+    allExpectedLifecyclePlaceholdersFound &&
+    lifecyclePlaceholdersCallable &&
+    lifecyclePlaceholdersRemainInert
+      ? "callable-lifecycle-placeholder-readiness-documented"
+      : "callable-lifecycle-placeholder-readiness-incomplete";
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      allowed: false,
+      blocked: true,
+      phase: 442,
+      helperName:
+        "getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport",
+      jsonSafeResult: true,
+      reportOnly: true,
+      passive: true,
+      readinessStatus: "blocked",
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      phase440FoundationExists,
+      phase441CloseoutExists,
+      lifecycleMethodShellExists,
+      lifecyclePlaceholderNamesExpected,
+      lifecyclePlaceholderNamesFound: [],
+      allExpectedLifecyclePlaceholdersFound: false,
+      lifecyclePlaceholdersCallable: false,
+      lifecyclePlaceholdersRemainInert: false,
+      callableLifecycleInvocationAllowedNow: false,
+      rendererInitializationAllowedNow: false,
+      mapAttachmentAllowedNow: false,
+      drawingAllowedNow: false,
+      stateMutationAllowedNow: false,
+      noDomLeafletGameplayBackendStorageNetworkChange: true,
+      currentMilestone: "manual-renderer-callable-lifecycle-placeholder-closeout",
+      nextMilestone: "manual-renderer-callable-lifecycle-placeholder-readiness"
+    };
+  }
+
+  return {
+    ok: true,
+    allowed: true,
+    blocked: false,
+    phase: 442,
+    helperName:
+      "getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport",
+    jsonSafeResult: true,
+    reportOnly: true,
+    passive: true,
+    readinessStatus,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    phase440FoundationExists,
+    phase441CloseoutExists,
+    lifecycleMethodShellExists,
+    lifecyclePlaceholderNamesExpected,
+    lifecyclePlaceholderNamesFound,
+    allExpectedLifecyclePlaceholdersFound,
+    lifecyclePlaceholdersCallable,
+    lifecyclePlaceholdersRemainInert,
+    callableLifecycleInvocationAllowedNow: false,
+    rendererInitializationAllowedNow: false,
+    mapAttachmentAllowedNow: false,
+    drawingAllowedNow: false,
+    stateMutationAllowedNow: false,
+    noDomLeafletGameplayBackendStorageNetworkChange: true,
+    currentMilestone: "manual-renderer-callable-lifecycle-placeholder-closeout",
+    nextMilestone: "manual-renderer-callable-lifecycle-placeholder-readiness"
   };
 }
 
@@ -85848,6 +86013,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -88379,6 +88553,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport:
+        typeof namespace.getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
