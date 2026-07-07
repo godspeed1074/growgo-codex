@@ -919,6 +919,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -48602,6 +48611,216 @@ function getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeS
   };
 }
 
+function getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "planningOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStop",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const plannedGateName =
+    "custom25DVisualManualRendererCallableLifecycleManualExecutionGate";
+  const plannedGatePurpose =
+    "future manual-only safety gate for lifecycle callable execution";
+  const requiredPreconditions = [
+    "bridge shell exists",
+    "all five manual lifecycle control slots exist",
+    "bridge readiness closeout exists"
+  ];
+  const blockedRuntimeEffects = [
+    "startup wiring",
+    "UI controls",
+    "timers",
+    "listeners",
+    "DOM",
+    "Leaflet",
+    "gameplay",
+    "backend",
+    "storage",
+    "network",
+    "map attachment",
+    "drawing",
+    "automatic execution"
+  ];
+  const bridgeShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionBridge ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionBridge !== null;
+  const bridgeShell = bridgeShellExists
+    ? custom25DVisualManualRendererCallableLifecycleManualExecutionBridge
+    : null;
+  const bridgeReadinessCloseoutExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport ===
+    "function";
+  const controlShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualControlShell ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualControlShell !== null;
+  const controlsExist =
+    !!(
+      controlShellExists &&
+      custom25DVisualManualRendererCallableLifecycleManualControlShell.controls
+    );
+  const allFiveManualLifecycleControlSlotsExist =
+    !!(
+      controlShellExists &&
+      custom25DVisualManualRendererCallableLifecycleManualControlShell.controls &&
+      typeof custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualInitialize ===
+        "function" &&
+      typeof custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualStart ===
+        "function" &&
+      typeof custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualStop ===
+        "function" &&
+      typeof custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualAttachMap ===
+        "function" &&
+      typeof custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualDrawFrame ===
+        "function"
+    );
+  const blockerNotes = [];
+
+  if (!bridgeShellExists) {
+    blockerNotes.push("The manual execution bridge shell object is missing.");
+  }
+  if (!bridgeReadinessCloseoutExists) {
+    blockerNotes.push("The bridge readiness closeout helper is missing.");
+  }
+  if (!controlShellExists) {
+    blockerNotes.push("The manual control shell object is missing.");
+  }
+  if (!controlsExist) {
+    blockerNotes.push("The manual control shell controls object is missing.");
+  }
+  if (!allFiveManualLifecycleControlSlotsExist) {
+    blockerNotes.push("Not all five manual lifecycle control slots currently exist.");
+  }
+  if (missingRequiredOptionKeys.length > 0) {
+    blockerNotes.push("Required explicit safety options are missing.");
+  }
+
+  const safetyNotes = [
+    "This helper is passive and report-only.",
+    "The callable execution gate is planned only in this phase.",
+    "No callable execution gate or function is created in this phase.",
+    "Lifecycle execution remains disabled in this phase.",
+    "No manual lifecycle control is invoked in this phase.",
+    "No map is attached and no drawing occurs in this phase."
+  ];
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 470,
+      helperName:
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport",
+      reportOnly: true,
+      passive: true,
+      planningOnly: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      callableExecutionGatePlanned: true,
+      callableExecutionGateCreated: false,
+      callableFunctionCreated: false,
+      lifecycleExecutionEnabled: false,
+      manualControlInvocationAllowed: false,
+      plannedGateName,
+      plannedGatePurpose,
+      requiredPreconditions,
+      blockedRuntimeEffects,
+      bridgeShellExists,
+      bridgeReadinessCloseoutExists,
+      controlShellExists,
+      controlsExist,
+      allFiveManualLifecycleControlSlotsExist,
+      manualInitializeInvoked: false,
+      manualStartInvoked: false,
+      manualStopInvoked: false,
+      manualAttachMapInvoked: false,
+      manualDrawFrameInvoked: false,
+      lifecycleMethodsInvoked: false,
+      mapAttached: false,
+      frameDrawn: false,
+      liveLeafletMapRead: false,
+      sharedStateMutated: false,
+      runtimeBehaviorChanged: false,
+      domTouched: false,
+      gameplayChanged: false,
+      storageTouched: false,
+      networkTouched: false,
+      planStatus: "blocked",
+      blockerNotes,
+      safetyNotes
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 470,
+    helperName:
+      "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport",
+    reportOnly: true,
+    passive: true,
+    planningOnly: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    callableExecutionGatePlanned: true,
+    callableExecutionGateCreated: false,
+    callableFunctionCreated: false,
+    lifecycleExecutionEnabled: false,
+    manualControlInvocationAllowed: false,
+    plannedGateName,
+    plannedGatePurpose,
+    requiredPreconditions,
+    blockedRuntimeEffects,
+    bridgeShellExists,
+    bridgeReadinessCloseoutExists,
+    controlShellExists,
+    controlsExist,
+    allFiveManualLifecycleControlSlotsExist,
+    manualInitializeInvoked: false,
+    manualStartInvoked: false,
+    manualStopInvoked: false,
+    manualAttachMapInvoked: false,
+    manualDrawFrameInvoked: false,
+    lifecycleMethodsInvoked: false,
+    mapAttached: false,
+    frameDrawn: false,
+    liveLeafletMapRead: false,
+    sharedStateMutated: false,
+    runtimeBehaviorChanged: false,
+    domTouched: false,
+    gameplayChanged: false,
+    storageTouched: false,
+    networkTouched: false,
+    planStatus:
+      "manual-callable-lifecycle-execution-gate-plan-documented",
+    blockerNotes,
+    safetyNotes
+  };
+}
+
 const custom25DVisualManualRendererCallableLifecycleManualExecutionBridge = {
   bridgeName:
     "custom25DVisualManualRendererCallableLifecycleManualExecutionBridge",
@@ -94246,6 +94465,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -96861,6 +97089,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport:
+        typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
