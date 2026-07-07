@@ -982,6 +982,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -50091,6 +50100,206 @@ function getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateCon
   };
 }
 
+function getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport(
+  options = {}
+) {
+  const requiredOptionKeys = [
+    "manual",
+    "developerIntent",
+    "localDevOnly",
+    "browserConsoleOnly",
+    "explicitOptionsOnly",
+    "reportOnly",
+    "closeoutOnly",
+    "confirmNoLifecycleInvocation",
+    "confirmNoRendererInitialization",
+    "confirmNoRendererStart",
+    "confirmNoRendererStop",
+    "confirmNoMapAttachment",
+    "confirmNoDrawing",
+    "confirmNoStateMutation",
+    "confirmNoDomLeafletGameplayBackendStorageNetworkChange",
+    "confirmNoAutomaticInvocation"
+  ];
+  const missingRequiredOptionKeys = requiredOptionKeys.filter(
+    (key) => options[key] !== true
+  );
+  const gateContractShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionGateContract ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGateContract !==
+      null;
+  const gateContractPlanHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanReport ===
+    "function";
+  const gateContractPlanCloseoutHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport ===
+    "function";
+  const gateShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionGate ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionGate !== null;
+  const bridgeShellExists =
+    typeof custom25DVisualManualRendererCallableLifecycleManualExecutionBridge ===
+    "object" &&
+    custom25DVisualManualRendererCallableLifecycleManualExecutionBridge !== null;
+  const manualControlsCompleteHelperExists =
+    typeof getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport ===
+    "function";
+  const blockedControls = [
+    "manualInitialize",
+    "manualStart",
+    "manualStop",
+    "manualAttachMap",
+    "manualDrawFrame"
+  ];
+  const closeoutSummary = [
+    "The contract shell exists as inert data only.",
+    "The contract is not enforced.",
+    "No permission evaluation behavior was created.",
+    "No callable execution function exists.",
+    "No lifecycle execution is possible.",
+    "No lifecycle controls were invoked.",
+    "No map was attached.",
+    "No drawing occurred.",
+    "No DOM, Leaflet, gameplay, backend, storage, network, startup, timer, listener, UI, or runtime behavior changed."
+  ];
+  const blockerNotes = [];
+
+  if (!gateContractShellExists) {
+    blockerNotes.push("The execution gate contract shell object is missing.");
+  }
+  if (!gateContractPlanHelperExists) {
+    blockerNotes.push("The execution gate contract plan helper is missing.");
+  }
+  if (!gateContractPlanCloseoutHelperExists) {
+    blockerNotes.push(
+      "The execution gate contract plan closeout helper is missing."
+    );
+  }
+  if (!gateShellExists) {
+    blockerNotes.push("The execution gate shell object is missing.");
+  }
+  if (!bridgeShellExists) {
+    blockerNotes.push("The execution bridge shell object is missing.");
+  }
+  if (!manualControlsCompleteHelperExists) {
+    blockerNotes.push("The manual controls complete helper is missing.");
+  }
+  if (missingRequiredOptionKeys.length > 0) {
+    blockerNotes.push("Required explicit safety options are missing.");
+  }
+
+  if (missingRequiredOptionKeys.length > 0) {
+    return {
+      ok: false,
+      phase: 477,
+      helperName:
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport",
+      reportOnly: true,
+      passive: true,
+      closeoutOnly: true,
+      contractShellCloseoutOnly: true,
+      blocked: true,
+      allowed: false,
+      jsonSafeResult: true,
+      requiredOptionKeys,
+      missingRequiredOptionKeys,
+      gateContractShellExists,
+      gateContractPlanHelperExists,
+      gateContractPlanCloseoutHelperExists,
+      gateShellExists,
+      bridgeShellExists,
+      manualControlsCompleteHelperExists,
+      contractCreated: gateContractShellExists,
+      contractEnforced: false,
+      permissionEvaluationCreated: false,
+      callableFunctionCreated: false,
+      callableGateBehaviorCreated: false,
+      lifecycleExecutionEnabled: false,
+      manualControlInvocationAllowed: false,
+      allowedControls: [],
+      blockedControls,
+      startupWiring: false,
+      uiControls: false,
+      timers: false,
+      listeners: false,
+      automaticExecution: false,
+      mapAttachmentAllowed: false,
+      drawingAllowed: false,
+      domMutationAllowed: false,
+      backendAccessAllowed: false,
+      storageAccessAllowed: false,
+      networkAccessAllowed: false,
+      gameplayChangesAllowed: false,
+      mapAttached: false,
+      drawingOccurred: false,
+      manualInitializeInvoked: false,
+      manualStartInvoked: false,
+      manualStopInvoked: false,
+      manualAttachMapInvoked: false,
+      manualDrawFrameInvoked: false,
+      closeoutSummary,
+      closeoutStatus: "blocked",
+      blockerNotes
+    };
+  }
+
+  return {
+    ok: true,
+    phase: 477,
+    helperName:
+      "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport",
+    reportOnly: true,
+    passive: true,
+    closeoutOnly: true,
+    contractShellCloseoutOnly: true,
+    blocked: false,
+    allowed: true,
+    jsonSafeResult: true,
+    requiredOptionKeys,
+    missingRequiredOptionKeys: [],
+    gateContractShellExists,
+    gateContractPlanHelperExists,
+    gateContractPlanCloseoutHelperExists,
+    gateShellExists,
+    bridgeShellExists,
+    manualControlsCompleteHelperExists,
+    contractCreated: gateContractShellExists,
+    contractEnforced: false,
+    permissionEvaluationCreated: false,
+    callableFunctionCreated: false,
+    callableGateBehaviorCreated: false,
+    lifecycleExecutionEnabled: false,
+    manualControlInvocationAllowed: false,
+    allowedControls: [],
+    blockedControls,
+    startupWiring: false,
+    uiControls: false,
+    timers: false,
+    listeners: false,
+    automaticExecution: false,
+    mapAttachmentAllowed: false,
+    drawingAllowed: false,
+    domMutationAllowed: false,
+    backendAccessAllowed: false,
+    storageAccessAllowed: false,
+    networkAccessAllowed: false,
+    gameplayChangesAllowed: false,
+    mapAttached: false,
+    drawingOccurred: false,
+    manualInitializeInvoked: false,
+    manualStartInvoked: false,
+    manualStopInvoked: false,
+    manualAttachMapInvoked: false,
+    manualDrawFrameInvoked: false,
+    closeoutSummary,
+    closeoutStatus:
+      "manual-callable-lifecycle-execution-gate-contract-shell-closeout-documented",
+    blockerNotes
+  };
+}
+
 const custom25DVisualManualRendererCallableLifecycleManualExecutionBridge = {
   bridgeName:
     "custom25DVisualManualRendererCallableLifecycleManualExecutionBridge",
@@ -50158,6 +50367,61 @@ const custom25DVisualManualRendererCallableLifecycleManualExecutionGate = {
   safetySummary:
     "Execution gate shell exists as inert data only and cannot execute lifecycle controls."
 };
+
+const custom25DVisualManualRendererCallableLifecycleManualExecutionGateContract =
+  {
+    phase: 477,
+    contractName:
+      "custom25DVisualManualRendererCallableLifecycleManualExecutionGateContract",
+    shellOnly: true,
+    passive: true,
+    inert: true,
+    contractCreated: true,
+    contractEnforced: false,
+    permissionEvaluationCreated: false,
+    callableFunctionCreated: false,
+    callableGateBehaviorCreated: false,
+    lifecycleExecutionEnabled: false,
+    manualControlInvocationAllowed: false,
+    requiredOptions: [
+      "manual",
+      "developerIntent",
+      "localDevOnly",
+      "browserConsoleOnly",
+      "explicitOptionsOnly"
+    ],
+    requiredOptionValues: {
+      manual: true,
+      developerIntent: true,
+      localDevOnly: true,
+      browserConsoleOnly: true,
+      explicitOptionsOnly: true
+    },
+    allowedControls: [],
+    blockedControls: [
+      "manualInitialize",
+      "manualStart",
+      "manualStop",
+      "manualAttachMap",
+      "manualDrawFrame"
+    ],
+    blockedRuntimeEffects: [
+      "startupWiring",
+      "uiControls",
+      "timers",
+      "listeners",
+      "automaticExecution",
+      "mapAttachment",
+      "drawing",
+      "domMutation",
+      "backendAccess",
+      "storageAccess",
+      "networkAccess",
+      "gameplayChanges"
+    ],
+    safetySummary:
+      "Execution gate contract shell exists as inert data only and is not enforced."
+  };
 
 custom25DVisualManualRendererCallableLifecycleManualControlShell.controls.manualDrawFrame =
   function custom25DVisualManualRendererManualDrawFrameControlShell(
@@ -95832,6 +96096,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport
             : null
       ),
+    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport:
+      createNamespaceWrapper(
+        "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport",
+        () =>
+          typeof getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport ===
+          "function"
+            ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport
+            : null
+      ),
     getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
@@ -98468,6 +98741,9 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
         "function",
       getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport ===
+        "function",
+      getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport:
+        typeof namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport ===
         "function",
       getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
         typeof namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport === "function",
