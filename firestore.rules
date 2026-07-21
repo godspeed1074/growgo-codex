@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(playerId) {
+      return isSignedIn() && request.auth.uid == playerId;
+    }
+
+    // Public profile visibility is intentionally deferred to a later review.
+    // No public profile reads are granted in this foundation pass.
+    match /players/{playerId} {
+      allow read, write: if false;
+    }
+
+    // This collection is intended to hold a curated player-owned read model.
+    // Clients may only get their own document and may not write any
+    // authoritative game state directly.
+    match /playerPrivate/{playerId} {
+      allow get: if isOwner(playerId);
+      allow list: if false;
+      allow create, update, delete: if false;
+
+      match /{document=**} {
+        allow read, write: if false;
+      }
+    }
+
+    // Authoritative server-managed state such as XP, coins, rewards, inventory,
+    // quest progress, capture history, collectible ownership, plot ownership,
+    // marketplace ownership, and progression must remain server-only.
+    match /captureRequests/{requestKey} {
+      // Internal anti-replay and deferred-eligibility evidence is server-only.
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "growgo-firebase-functions",
+  "private": true,
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test tests/**/*.test.mjs",
+    "test:authoritative-cache:emulator": "node --test tests/firestore-authoritative-pin-cache-emulator.test.mjs",
+    "test:authoritative-acquisition:emulator": "node --test tests/authoritative-pin-acquisition-emulator-e2e.test.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3"
+  }
+}

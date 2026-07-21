@@ -7,3 +7,15 @@ GrowGo/
 *.log
 .npm-cache/
 .playwright-browsers/
+functions/node_modules/
+functions/lib/
+firebase-debug.log
+firebase-debug.*.log
+.firebase/
+.firebaserc.local
+.env
+.env.local
+.env.*.local
+*.local.env
+*.service-account.json
+service-account*.json
