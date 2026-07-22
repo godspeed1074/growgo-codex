@@ -1,14 +1,22 @@
-import { HttpsError, onCall } from "firebase-functions/v2/https";
+import {
+  HttpsError,
+  onCall,
+  type CallableRequest
+} from "firebase-functions/v2/https";
 
 import { runtimeConfig } from "../config/runtimeConfig";
 import {
   type PlayerSnapshotRequest,
+  type PlayerDocument
 } from "../domain/players/playerTypes";
 import {
   getPlayerDocumentRef,
   readStoredPlayerDocument,
   serializePlayerSnapshot
 } from "../domain/players/playerStore";
+import {
+  requireDevelopmentBackendCapabilityAccess
+} from "../security/developmentBackendCapabilityGuard";
 import {
   requireAppCheckIfEnabled,
   requireAuthenticated
@@ -18,20 +26,24 @@ import {
   assertAllowedKeys
 } from "../validation/requestValidation";
 
-export const getPlayerSnapshot = onCall(
-  {
-    region: runtimeConfig.region,
-    enforceAppCheck: runtimeConfig.appCheck.enforceOnCallable
+export const GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY =
+  "player_snapshot" as const;
+
+export interface GetPlayerSnapshotHandlerDependencies {
+  requireDevelopmentCapabilityAccess(params: {
+    capability: typeof GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY;
+  }): void;
+  readPlayer(uid: string): Promise<PlayerDocument>;
+}
+
+const defaultGetPlayerSnapshotHandlerDependencies: GetPlayerSnapshotHandlerDependencies = {
+  requireDevelopmentCapabilityAccess(params) {
+    requireDevelopmentBackendCapabilityAccess({
+      capability: params.capability
+    });
   },
-  async (request) => {
-    const authContext = requireAuthenticated(request);
-    requireAppCheckIfEnabled(request);
-
-    const payload = asObject(request.data, "getPlayerSnapshot payload");
-    assertAllowedKeys(payload, [], "getPlayerSnapshot payload");
-
-    const _validatedRequest: PlayerSnapshotRequest = {};
-    const snapshot = await getPlayerDocumentRef(authContext.uid).get();
+  async readPlayer(uid: string): Promise<PlayerDocument> {
+    const snapshot = await getPlayerDocumentRef(uid).get();
 
     if (!snapshot.exists) {
       throw new HttpsError(
@@ -40,7 +52,25 @@ export const getPlayerSnapshot = onCall(
       );
     }
 
-    const player = readStoredPlayerDocument(snapshot.data());
+    return readStoredPlayerDocument(snapshot.data());
+  }
+};
+
+export function createGetPlayerSnapshotHandler(
+  dependencies: GetPlayerSnapshotHandlerDependencies = defaultGetPlayerSnapshotHandlerDependencies
+) {
+  return async (request: CallableRequest<unknown>) => {
+    const authContext = requireAuthenticated(request);
+    requireAppCheckIfEnabled(request);
+    dependencies.requireDevelopmentCapabilityAccess({
+      capability: GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY
+    });
+
+    const payload = asObject(request.data, "getPlayerSnapshot payload");
+    assertAllowedKeys(payload, [], "getPlayerSnapshot payload");
+
+    const _validatedRequest: PlayerSnapshotRequest = {};
+    const player = await dependencies.readPlayer(authContext.uid);
 
     return {
       ok: true,
@@ -51,5 +81,13 @@ export const getPlayerSnapshot = onCall(
         verified: authContext.appCheckVerified
       }
     };
-  }
+  };
+}
+
+export const getPlayerSnapshot = onCall(
+  {
+    region: runtimeConfig.region,
+    enforceAppCheck: runtimeConfig.appCheck.enforceOnCallable
+  },
+  createGetPlayerSnapshotHandler()
 );
