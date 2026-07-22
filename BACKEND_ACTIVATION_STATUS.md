@@ -719,3 +719,81 @@ No new infrastructure is added in this phase.
   - Phase 5 still requires explicit user authorization
   - any later guarded consumer beyond `getPlayerSnapshot` must be separately justified
   - `capturePin` remains blocked until persistent idempotency reservation and emulator evidence are complete
+
+## 15. Phase 5 Result
+
+- Phase 5 objective:
+  - verify the current development-backend activation boundary across authentication, guarded snapshot access, capture safety, canonical pin identity, replay handling, and idempotency blockers without widening runtime activation
+- Authentication verification result:
+  - `bootstrapPlayer` still requires Firebase Authentication before idempotency reservation or player writes
+  - `getPlayerSnapshot` still requires Firebase Authentication before development capability evaluation
+  - `capturePin` still requires Firebase Authentication before payload validation, persistence, or authoritative verification
+  - App Check behavior remains unchanged and unenforced by default
+  - client-safe denials continue to avoid exposing internal environment or flag details
+- Snapshot verification result:
+  - `getPlayerSnapshot` remains the only guarded runtime consumer
+  - default configuration still denies snapshot access
+  - valid development-only configuration still reaches the existing owner-scoped snapshot logic
+  - beta and production still deny even with flags set to true
+  - project mismatch and invalid emulator identity still deny
+  - denial still occurs before any Firestore read
+  - the snapshot response shape remains unchanged
+  - owner UID isolation remains covered by the local emulator integration path
+- Capture verification result:
+  - `capturePin` remains unguarded by the development backend capability gate in this phase
+  - malformed payloads still reject before persistence and authoritative verification
+  - capture remains `eligibility-deferred`
+  - `accepted` remains `false`
+  - `rewardGranted` remains `false`
+  - identical replay remains deterministic and local
+  - conflicting request reuse still rejects safely
+  - cross-player reuse remains isolated by authenticated UID scoping
+  - no totals mutation or reward grant was introduced
+- Canonical identity verification result:
+  - canonical pin identity remains derived server-side from canonical source identity
+  - malformed, legacy, unsupported, mismatched, unavailable, invalid, and out-of-range canonical inputs still reject safely
+  - equivalent canonical inputs still resolve consistently
+  - client-provided arbitrary IDs still cannot bypass verification
+  - remote authoritative transport still remains disabled by default fail-closed gates
+- Exact idempotency classification:
+  - incomplete but safely blockable
+  - current repository evidence still shows `reserveIdempotencySlot(...)` is a stub only
+  - current explicit result remains:
+    - `supported: false`
+    - `strategy: "firestore-transaction-todo"`
+    - `reservationState: "not-attempted"`
+    - `duplicateRequestDetected: false`
+  - replay and conflict protection exists for deferred capture request recording, but persistent reservation atomicity is not yet implemented
+  - capture must therefore remain blocked from any broader activation beyond the current deferred scaffold
+- Any implementation completed:
+  - no persistent idempotency reservation implementation was added in this phase
+  - one narrow test seam was added to `bootstrapPlayer` so authentication order can be verified without live services
+- Remaining blocker:
+  - Firestore-backed persistent idempotency reservation remains incomplete
+  - concurrent duplicate-attempt atomicity, uncertain-persistence fail-closed behavior, and emulator-backed reservation verification remain future work
+- Focused tests added:
+  - `functions/tests/backend-activation-phase5-verification.test.mjs`
+- Focused verification coverage added:
+  - unauthenticated `bootstrapPlayer` rejects before idempotency reservation and player transaction
+  - authenticated `bootstrapPlayer` preserves its existing response shape while idempotency remains explicitly unsupported
+  - unauthenticated `capturePin` rejects before payload validation, persistence, or authoritative verification
+  - malformed `capturePin` payload rejects before persistence and authoritative verification
+  - idempotency reservation remains explicitly incomplete and fail closed
+  - `capturePin` remains unguarded by the development backend capability gate
+- Emulator tests still pending for Phase 6:
+  - persistent idempotency reservation transaction semantics once implemented
+  - concurrent duplicate-attempt arbitration against a real emulator-backed store
+  - uncertain-persistence fail-closed behavior once a reservation ledger exists
+- Explicit no-client-integration statement:
+  - no client integration was added
+  - no live Firebase traffic was enabled
+  - no additional runtime consumer was connected
+- Explicit no-reward statement:
+  - no reward behavior changed
+  - no totals mutation was introduced
+  - no capture acceptance was enabled
+- Phase 5 closeout: PASS
+- Phase 6 authorization boundary:
+  - any future persistent idempotency implementation still requires explicit user authorization
+  - any future `capturePin` runtime activation still requires emulator-backed reservation evidence
+  - no beta, production, client, or live transport activation is authorized by this phase

@@ -1,8 +1,9 @@
-import { onCall } from "firebase-functions/v2/https";
+import { onCall, type CallableRequest } from "firebase-functions/v2/https";
 import { Timestamp } from "firebase-admin/firestore";
 
 import { runtimeConfig } from "../config/runtimeConfig";
 import {
+  type PlayerDocument,
   type PlayerBootstrapRequest,
   serverAuthoritativePlayerFields
 } from "../domain/players/playerTypes";
@@ -27,35 +28,34 @@ import {
   requireRequestId
 } from "../validation/requestValidation";
 
-export const bootstrapPlayer = onCall(
-  {
-    region: runtimeConfig.region,
-    enforceAppCheck: runtimeConfig.appCheck.enforceOnCallable
+export interface BootstrapPlayerTransactionResult {
+  created: boolean;
+  player: PlayerDocument;
+}
+
+export interface BootstrapPlayerHandlerDependencies {
+  reserveIdempotency(params: {
+    requestId: string;
+    uid: string;
+  }): Promise<Awaited<ReturnType<typeof reserveIdempotencySlot>>>;
+  runBootstrapTransaction(uid: string): Promise<BootstrapPlayerTransactionResult>;
+}
+
+const defaultBootstrapPlayerHandlerDependencies: BootstrapPlayerHandlerDependencies = {
+  async reserveIdempotency(params) {
+    return reserveIdempotencySlot(
+      buildIdempotencyEnvelope({
+        requestId: params.requestId,
+        operation: "bootstrapPlayer",
+        uid: params.uid
+      })
+    );
   },
-  async (request) => {
-    const authContext = requireAuthenticated(request);
-    requireAppCheckIfEnabled(request);
-
-    const payload = asObject(request.data, "bootstrapPlayer payload");
-    assertAllowedKeys(payload, ["requestId"], "bootstrapPlayer payload");
-
-    const validatedRequest: PlayerBootstrapRequest = {
-      requestId: requireRequestId(payload.requestId)
-    };
-    const { requestId } = validatedRequest;
-
-    const idempotency = buildIdempotencyEnvelope({
-      requestId,
-      operation: "bootstrapPlayer",
-      uid: authContext.uid
-    });
-    const idempotencyReservation = await reserveIdempotencySlot(idempotency);
-
-    // requestId is validated now for future persistent request-ledger support,
-    // but this phase only guarantees safe bootstrap semantics for a single uid.
+  async runBootstrapTransaction(uid: string): Promise<BootstrapPlayerTransactionResult> {
     const db = getAdminFirestore();
-    const playerRef = getPlayerDocumentRef(authContext.uid);
-    const bootstrapResult = await db.runTransaction(async (transaction) => {
+    const playerRef = getPlayerDocumentRef(uid);
+
+    return db.runTransaction(async (transaction) => {
       const snapshot = await transaction.get(playerRef);
       const now = Timestamp.now();
 
@@ -84,6 +84,39 @@ export const bootstrapPlayer = onCall(
         }
       };
     });
+  }
+};
+
+export function createBootstrapPlayerHandler(
+  dependencies: BootstrapPlayerHandlerDependencies = defaultBootstrapPlayerHandlerDependencies
+) {
+  return async (request: CallableRequest<unknown>) => {
+    const authContext = requireAuthenticated(request);
+    requireAppCheckIfEnabled(request);
+
+    const payload = asObject(request.data, "bootstrapPlayer payload");
+    assertAllowedKeys(payload, ["requestId"], "bootstrapPlayer payload");
+
+    const validatedRequest: PlayerBootstrapRequest = {
+      requestId: requireRequestId(payload.requestId)
+    };
+    const { requestId } = validatedRequest;
+
+    const idempotency = buildIdempotencyEnvelope({
+      requestId,
+      operation: "bootstrapPlayer",
+      uid: authContext.uid
+    });
+    const idempotencyReservation = await dependencies.reserveIdempotency({
+      requestId,
+      uid: authContext.uid
+    });
+
+    // requestId is validated now for future persistent request-ledger support,
+    // but this phase only guarantees safe bootstrap semantics for a single uid.
+    const bootstrapResult = await dependencies.runBootstrapTransaction(
+      authContext.uid
+    );
 
     return {
       ok: true,
@@ -100,5 +133,13 @@ export const bootstrapPlayer = onCall(
         serverAuthoritativePlayerFields.slice(),
       rewardAuthority: runtimeConfig.serverAuthority.rewardComputation
     };
-  }
+  };
+}
+
+export const bootstrapPlayer = onCall(
+  {
+    region: runtimeConfig.region,
+    enforceAppCheck: runtimeConfig.appCheck.enforceOnCallable
+  },
+  createBootstrapPlayerHandler()
 );
