@@ -41,14 +41,22 @@ export function buildNegativeAuthoritativeSourceCacheRecord(params: {
   cachedAt: Date;
   expiresAt: Date;
 }): AuthoritativeSourceCacheRecord {
-  return {
+  const record: Extract<AuthoritativeSourceCacheRecord, { kind: "negative" }> = {
     kind: "negative",
     code: params.code,
     retryable: params.retryable,
-    retryAfterSeconds: params.retryAfterSeconds,
     cachedAt: params.cachedAt.toISOString(),
     expiresAt: params.expiresAt.toISOString()
   };
+
+  if (params.retryAfterSeconds !== undefined) {
+    return {
+      ...record,
+      retryAfterSeconds: params.retryAfterSeconds
+    };
+  }
+
+  return record;
 }
 
 export function validateAuthoritativeSourceCacheRecord(params: {
