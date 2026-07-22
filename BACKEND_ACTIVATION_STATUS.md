@@ -567,3 +567,97 @@ No new infrastructure is added in this phase.
   - Phase 3 still requires explicit user authorization
   - contract-level allow must not be treated as runtime activation
   - authoritative-pin acquisition, pin capture acceptance, and client connectivity all remain disabled until a later phase connects a guarded runtime consumer
+
+## 13. Phase 3 Result
+
+- Phase 3 objective: define the first passive runtime-consumer authorization plan for the Phase 2 development backend activation evaluator without wiring it into any callable, service, store, transport, or client path.
+- Verified current no-consumer state:
+  - no runtime callable or server entry point imports `functions/src/config/developmentBackendActivation.ts`
+  - no runtime callable or server entry point imports the Phase 3 passive authorization helper
+  - the Phase 2 evaluator remains pure and environment-variable-backed only
+  - all Phase 2 flags still default to disabled
+  - beta remains denied
+  - production remains denied
+  - emulator mode does not bypass identity or flag checks
+- Implemented passive helper module:
+  - `functions/src/config/developmentBackendRuntimeConsumerAuthorization.ts`
+- Passive authorization-state model:
+  - `not_applicable`
+  - `candidate_identified`
+  - `authorization_blocked`
+  - `ready_for_future_wiring`
+  - no `active` state exists
+- Candidate consumer inventory:
+  - authentication
+    - `bootstrapPlayerCallable`
+    - `getPlayerSnapshotCallable`
+    - `capturePinCallable`
+  - player snapshot
+    - `bootstrapPlayerCallable`
+    - `getPlayerSnapshotCallable`
+  - pin capture
+    - `capturePinCallable`
+  - authoritative pin acquisition
+    - `capturePinCallable`
+    - `authoritativePinAcquisitionService`
+- Proposed future evaluator wiring points:
+  - `bootstrapPlayer`: immediately after `requireAuthenticated(request)` and before request payload validation
+  - `getPlayerSnapshot`: immediately after `requireAuthenticated(request)` and before request payload validation
+  - `capturePin`: immediately after `requireAuthenticated(request)` and before capture payload validation
+  - authoritative acquisition service: only as a secondary fail-closed layer beneath a guarded public callable boundary
+- Required future evaluation order:
+  1. callable invocation received
+  2. Firebase Authentication validated where required
+  3. development environment identity validated
+  4. global development backend flag evaluated
+  5. capability-specific flag evaluated
+  6. capability-specific input validation performed
+  7. existing domain logic invoked
+  8. existing fail-closed result returned
+- Denial contract:
+  - existing missing-auth behavior remains `unauthenticated`
+  - future environment/flag/prerequisite denials should remain client-safe and use `failed-precondition`
+  - stable passive prerequisite reason codes include:
+    - `phase2_contract_incomplete`
+    - `evaluator_unavailable`
+    - `environment_scope_not_fail_closed`
+    - `auth_guard_missing`
+    - `idempotency_reservation_incomplete`
+    - `idempotency_emulator_coverage_incomplete`
+    - `future_implementation_authorization_missing`
+    - `ready_for_future_wiring`
+  - stable not-applicable reason codes include:
+    - `unknown_capability`
+    - `unknown_consumer`
+    - `consumer_capability_mismatch`
+- Authoritative-pin consumer recommendation:
+  - use a minimum layered approach
+  - primary future guard: `capturePin` callable boundary
+  - secondary future guard: authoritative acquisition service boundary
+  - do not expose a new public acquisition callable in this section
+  - preserve one transport request maximum, zero automatic retries, existing timeout, cache behavior, canonical verification, and production/beta denial
+- Authentication consumer recommendation:
+  - `bootstrapPlayer`, `getPlayerSnapshot`, and `capturePin` should all keep Firebase Authentication mandatory
+  - the future authentication capability flag should control development-backend availability only
+  - disabled flags must not bypass, weaken, or downgrade identity verification
+- Capture consumer recommendation and blockers:
+  - future `capturePin` evaluator wiring belongs at the public callable boundary before payload validation
+  - capture must remain blocked from runtime wiring until persistent idempotency reservation is implemented
+  - capture must remain blocked until that reservation path is emulator-tested
+  - deferred-only, replay-protected, non-rewarding semantics must remain unchanged
+- Snapshot consumer recommendation:
+  - `bootstrapPlayer` and `getPlayerSnapshot` are the only approved future player-surface consumers in this section
+  - both remain owner-scoped, scaffold-safe, minimal, and isolated to the verified development environment
+- Tests added:
+  - `functions/tests/development-backend-runtime-consumer-authorization.test.mjs`
+- Explicit no-runtime-wiring statement:
+  - no callable was modified
+  - no runtime evaluator consumer was connected
+  - no backend capability became active
+  - no client integration was added
+  - no production or beta behavior changed
+- Phase 3 closeout: PASS
+- Phase 4 authorization boundary:
+  - Phase 4 still requires explicit user authorization
+  - any future evaluator wiring must remain development-only and fail closed
+  - runtime consumer implementation must remain separate from this passive planning section
