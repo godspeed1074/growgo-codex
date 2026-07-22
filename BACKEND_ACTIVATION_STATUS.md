@@ -1,5 +1,10 @@
 # GrowGo Backend Activation Status
 
+- Current section status as of 2026-07-22: `PASS`
+- Current private-alpha readiness decision as of 2026-07-22: `READY_WITH_EXPLICIT_BLOCKERS`
+- Current next authorization boundary:
+  - separate explicit authorization is still required before any real client integration, development deployment, or tester-facing alpha launch work begins
+
 ## 1. Phase 1 Result
 
 - Phase 1 purpose: complete a passive Development Backend Activation and Private Alpha Readiness audit without activating backend traffic, client integration, or production behavior.
@@ -1320,3 +1325,189 @@ No new infrastructure is added in this phase.
 - Phase 8 authorization boundary:
   - Phase 8 still requires separate explicit user authorization
   - no deployment, client activation, reward activation, totals mutation, beta activation, production activation, or live authoritative transport activation is authorized by this phase
+
+## 19. Phase 8 Result
+
+- Phase 8 objective:
+  - perform the final private-alpha readiness review and close out the Development Backend Activation and Private Alpha Readiness section without deploying, connecting the real client, enabling live traffic, widening callable access, or altering production-denying behavior
+- Final verification baseline on 2026-07-22:
+  - focused safety verification: `75 passed, 0 failed, 0 skipped`
+  - emulator-backed verification: `18 passed, 0 failed, 0 skipped`
+  - full backend suite: `151 passed, 0 failed, 0 skipped`
+  - typecheck: passed
+- Final readiness decision:
+  - `READY_WITH_EXPLICIT_BLOCKERS`
+  - interpretation:
+    - the backend section is verified and can support a small invited development alpha only after a separate explicitly authorized client/deployment step satisfies the documented alpha blockers
+    - testers cannot use the system yet because no approved frontend integration or development deployment exists
+- Acceptance-criteria matrix:
+  - Authentication
+    1. Firebase Authentication is mandatory: `PASS`
+    2. Unauthenticated calls reject: `PASS`
+    3. Auth cannot be bypassed by feature flags: `PASS`
+    4. Stable UID isolates player data: `PASS`
+    5. Private-alpha account policy is defined or remains an explicit blocker: `BLOCKED`
+  - Environment isolation
+    6. Development environment identity is explicit: `PASS`
+    7. Project identity must match `growgo-development`: `PASS`
+    8. Emulator mode remains loopback-only: `PASS`
+    9. Beta denies: `PASS`
+    10. Production denies: `PASS`
+    11. Missing or invalid environment config denies: `PASS`
+  - Player state
+    12. Bootstrap is authenticated and idempotent: `PASS`
+    13. Snapshot is owner-scoped: `PASS`
+    14. Snapshot defaults denied: `PASS`
+    15. Allowed snapshot shape is stable: `PASS`
+    16. Snapshot denied path performs no Firestore read: `PASS`
+    17. No cross-player snapshot access: `PASS`
+  - Capture safety
+    18. Capture input validation remains server-side: `PASS`
+    19. Canonical pin identity is verified server-side: `PASS`
+    20. Persistent idempotency is atomic: `PASS`
+    21. Replay is deterministic: `PASS`
+    22. Conflict rejects safely: `PASS`
+    23. Concurrency produces one reservation and one deferred request: `PASS`
+    24. Cross-player idempotency remains isolated: `PASS`
+    25. Capture remains deferred: `PASS`
+    26. No rewards: `PASS`
+    27. No points, coins, XP, or totals mutation: `PASS`
+    28. Capture is not yet exposed to a real client: `NOT_YET_ACTIVATED`
+  - Authoritative pins
+    29. Provider request count remains bounded: `PASS`
+    30. Retry count remains zero: `PASS`
+    31. Timeout remains bounded: `PASS`
+    32. Cache behavior remains deterministic: `PASS`
+    33. Remote transport remains disabled by default: `PASS`
+    34. Production and beta cannot enable it: `PASS`
+  - Cost and operations
+    35. Per-operation read/write budgets are documented: `PASS`
+    36. Snapshot polling is bounded: `PASS`
+    37. Capture rate is bounded: `PASS`
+    38. Cross-player quota isolation exists: `PASS`
+    39. Logging excludes secrets, raw payloads, precise coordinates, and fingerprints: `PASS`
+    40. Log volume is bounded: `PASS`
+    41. Emergency disable overrides allow: `PASS`
+    42. Rollback is non-destructive: `PASS`
+    43. Rollback preserves deferred data and idempotency records: `PASS`
+    44. Approximate A$20 ceiling remains the operational target: `PASS`
+  - Integration readiness
+    45. Emulator suite passes fully: `PASS`
+    46. No emulator-backed relevant tests are skipped: `PASS`
+    47. No metadata-service lookup occurs: `PASS`
+    48. No live Firebase project contact occurs during tests: `PASS`
+    49. Callable export surface is unchanged: `PASS`
+    50. No unauthorized runtime consumer exists: `PASS`
+    51. No production deployment occurred: `PASS`
+    52. No client integration exists yet: `NOT_YET_ACTIVATED`
+    53. Private-alpha deployment steps are documented: `PASS`
+    54. Rollback steps are documented: `PASS`
+    55. Go/no-go authority remains explicit: `PASS`
+- Verified backend capabilities:
+  - authenticated bootstrap, guarded snapshot, and authenticated deferred capture callable boundaries
+  - stable owner-scoped player snapshots with deny-before-read safeguards
+  - canonical authoritative pin verification and deterministic canonical pin identity handling
+  - persistent Firestore-backed capture idempotency reservation with replay and conflict isolation
+  - deterministic concurrency behavior for first/replay/conflict capture requests
+  - cross-player player-state and idempotency isolation
+  - loopback-only emulator identity validation
+  - development-only environment isolation and project-identity matching
+  - bounded per-operation cost budgets and process-local secondary quota safeguards
+  - structured low-volume observability with redaction and replay-log suppression
+  - global and operation-specific emergency disablement
+  - non-destructive rollback back to passive fail-closed backend behavior
+- Intentionally inactive capabilities:
+  - real client integration
+  - real frontend hosting
+  - live development deployment
+  - invited-account or allowlist enforcement
+  - client-side feature flags
+  - capture client access
+  - reward and totals processing
+  - remote authoritative transport
+  - App Check enforcement
+  - beta environment activation
+  - production environment activation
+- Remaining item classifications:
+  - Alpha blockers:
+    - approved development frontend integration does not yet exist
+    - development deployment has not occurred
+    - invited-account or allowlist policy is not yet selected
+    - approved Firebase web configuration has not yet been connected
+    - allowed domains for the future development frontend have not yet been approved and configured
+    - server environment variables for a real invited alpha have not yet been set in a deployed environment
+  - Post-alpha requirements:
+    - reward processing
+    - totals mutation
+    - App Check enforcement
+    - remote authoritative transport
+    - beta environment
+    - production environment
+    - public alpha
+    - scaling beyond a small invited group
+  - Optional hardening:
+    - stronger globally authoritative rate limiting beyond the current process-local secondary safeguard
+    - richer cost dashboards and automated alerting review workflows
+    - tighter allowlist tooling and operational runbooks
+  - Intentionally deferred:
+    - client-side capture activation
+    - anonymous-auth policy decision if invited-account auth is selected instead
+    - broader frontend feature-flag orchestration
+- Safe private-alpha operating model:
+  - invited testers only
+  - development Firebase project only
+  - separate development-hosted frontend later
+  - no public URL until explicitly approved
+  - no production or beta data
+  - stable authenticated users only
+  - snapshot access explicitly enabled only for the alpha
+  - capture left internal or disabled unless separately authorized
+  - no rewards or totals processing
+  - emergency disable available
+  - rollback verified
+  - conservative tester count managed manually with cost monitoring
+- Deployment-readiness checklist for a later explicit launch step:
+  1. confirm project `growgo-development`
+  2. confirm billing visibility and budget-alert coverage
+  3. confirm approved Firebase web configuration
+  4. confirm authorized domains
+  5. choose invited-account or allowlist policy
+  6. decide whether anonymous auth is prohibited
+  7. configure development-only server environment variables
+  8. keep beta and production flags disabled
+  9. deploy only the required development functions
+  10. host the development frontend separately
+  11. connect the frontend only to `growgo-development`
+  12. enable only the approved capabilities
+  13. test emergency disable
+  14. test rollback
+  15. verify logs and cost after the first tester session
+  16. stop immediately on abnormal cost, error rate, or access behavior
+- Rollback checklist:
+  1. disable the global development backend flag
+  2. enable emergency disable if required
+  3. confirm guarded snapshot denies
+  4. confirm capture remains unavailable
+  5. confirm remote authoritative transport remains disabled
+  6. stop or remove the development frontend deployment if needed
+  7. preserve player, deferred capture, cache, and idempotency records
+  8. verify no beta or production access
+  9. run the focused rollback tests
+  10. record the incident or rollback reason
+- Cost ceiling and monitoring expectations:
+  - approximate monthly target remains `A$20`
+  - treat this as an operational planning ceiling rather than a guarantee
+  - monitor reads, writes, snapshot polling frequency, capture request frequency, and any future development deployment logs manually during a small invited alpha
+- Emergency-disable summary:
+  - ordinary allow is overridden by the global emergency disable flag
+  - snapshot-specific emergency disable can deny before any player read
+  - rollback can return the backend to passive fail-closed behavior without deleting deferred records or idempotency reservations
+- Explicit no-deployment statement:
+  - no deployment occurred in Phase 8
+- Explicit no-client-integration statement:
+  - no browser or real game-client integration was added in Phase 8
+- Final backend activation section closeout:
+  - closeout state: `PASS`
+  - backend activation section status: complete and closed at the documentation/review boundary
+  - next authorization boundary:
+    - any real invited-tester path still requires a separate explicit user-authorized client/deployment section
