@@ -45,9 +45,11 @@ All production gates remain false.
 
 ## Runtime evidence
 
-- focused tests: 54 passed, 0 failed
+- verified focused command: `cd functions && npm test` (`pretest` rebuilds `functions/lib` first)
+- focused tests: 56 passed, 0 failed, 4 skipped
 - emulator E2E harness exists
-- emulator execution safely skipped because no safe local emulator was running
+- emulator-backed integration tests safely skip when no safe local emulator was running
+- metadata-service access is not required for the normal focused test path
 
 ## Deferred future decisions
 
