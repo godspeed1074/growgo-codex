@@ -1,6 +1,4 @@
 import { HttpsError, onCall, type CallableRequest } from "firebase-functions/v2/https";
-import { Timestamp } from "firebase-admin/firestore";
-
 import { runtimeConfig } from "../config/runtimeConfig";
 import {
   type CapturePinRequest,
@@ -9,14 +7,7 @@ import {
 } from "../domain/captures/captureTypes";
 import {
   buildCaptureRequestFingerprint,
-  buildCaptureRequestKey,
-  buildDeferredCaptureRequestDocument,
-  buildInitialDeferredCaptureResponse,
-  buildReplayDeferredCaptureResponse,
-  getCaptureRequestDocumentRef,
-  normalizeCapturePinRequest,
-  readStoredCaptureRequestDocument,
-  type CaptureRequestDocument
+  normalizeCapturePinRequest
 } from "../domain/captures/captureRequestStore";
 import { getPlayerDocumentRef } from "../domain/players/playerStore";
 import {
@@ -34,6 +25,10 @@ import {
 import {
   createNoopAuthoritativeSourceCache
 } from "../domain/pins/authoritativePinCache";
+import {
+  type DeferredCaptureIdempotencyReservationDecision,
+  reserveDeferredCaptureIdempotencySlot
+} from "../idempotency/idempotency";
 import {
   requireAppCheckIfEnabled,
   requireAuthenticated
@@ -59,12 +54,11 @@ export interface CapturePinVerificationEvidence {
 
 export interface CapturePinPersistence {
   ensurePlayerExists(uid: string): Promise<void>;
-  getStoredRequest(requestKey: string): Promise<CaptureRequestDocument | null>;
-  createDeferredRequest(params: {
+  reserveDeferredRequest(params: {
     uid: string;
     requestFingerprint: string;
     request: ReturnType<typeof normalizeCapturePinRequest>;
-  }): Promise<void>;
+  }): Promise<DeferredCaptureIdempotencyReservationDecision>;
 }
 
 export interface CapturePinHandlerDependencies {
@@ -101,31 +95,12 @@ const defaultCapturePinDependencies: CapturePinHandlerDependencies = {
         );
       }
     },
-    async getStoredRequest(
-      requestKey: string
-    ): Promise<CaptureRequestDocument | null> {
-      const requestSnapshot = await getCaptureRequestDocumentRef(requestKey).get();
-      if (!requestSnapshot.exists) {
-        return null;
-      }
-
-      return readStoredCaptureRequestDocument(requestSnapshot.data());
-    },
-    async createDeferredRequest(params: {
+    async reserveDeferredRequest(params: {
       uid: string;
       requestFingerprint: string;
       request: ReturnType<typeof normalizeCapturePinRequest>;
-    }): Promise<void> {
-      await getCaptureRequestDocumentRef(
-        buildCaptureRequestKey(params.uid, params.request.requestId)
-      ).create(
-        buildDeferredCaptureRequestDocument({
-          uid: params.uid,
-          requestFingerprint: params.requestFingerprint,
-          request: params.request,
-          now: Timestamp.now()
-        })
-      );
+    }): Promise<DeferredCaptureIdempotencyReservationDecision> {
+      return reserveDeferredCaptureIdempotencySlot(params);
     }
   }
 };
@@ -218,15 +193,7 @@ export async function processValidatedCapturePinRequest(params: {
   dependencies: CapturePinHandlerDependencies;
 }): Promise<CapturePinDeferredResponse> {
   const { uid, normalizedRequest, dependencies } = params;
-  const requestKey = buildCaptureRequestKey(uid, normalizedRequest.requestId);
-  const requestFingerprint = buildCaptureRequestFingerprint(uid, normalizedRequest);
-
   await dependencies.persistence.ensurePlayerExists(uid);
-
-  const existingRequest = await dependencies.persistence.getStoredRequest(requestKey);
-  if (existingRequest) {
-    return resolveStoredRequestOutcome(existingRequest, uid, requestFingerprint);
-  }
 
   await resolveCapturePinVerificationEvidence({
     normalizedRequest,
@@ -234,66 +201,14 @@ export async function processValidatedCapturePinRequest(params: {
       dependencies.authoritativePinSourceProvider
   });
 
-  try {
-    await dependencies.persistence.createDeferredRequest({
-      uid,
-      requestFingerprint,
-      request: normalizedRequest
-    });
-  } catch (error) {
-    if (isAlreadyExistsError(error)) {
-      const storedAfterConflict =
-        await dependencies.persistence.getStoredRequest(requestKey);
+  const requestFingerprint = buildCaptureRequestFingerprint(uid, normalizedRequest);
+  const reservation = await dependencies.persistence.reserveDeferredRequest({
+    uid,
+    requestFingerprint,
+    request: normalizedRequest
+  });
 
-      if (!storedAfterConflict) {
-        throw new HttpsError(
-          "internal",
-          "Capture request ledger creation raced with another writer and the stored document could not be reloaded."
-        );
-      }
-
-      return resolveStoredRequestOutcome(
-        storedAfterConflict,
-        uid,
-        requestFingerprint
-      );
-    }
-
-    throw error;
-  }
-
-  return buildInitialDeferredCaptureResponse(normalizedRequest);
-}
-
-function resolveStoredRequestOutcome(
-  storedRequest: CaptureRequestDocument,
-  uid: string,
-  requestFingerprint: string
-): CapturePinDeferredResponse {
-  if (storedRequest.uid !== uid) {
-    throw new HttpsError(
-      "internal",
-      "Stored capture request uid does not match the authenticated caller."
-    );
-  }
-
-  if (storedRequest.requestFingerprint !== requestFingerprint) {
-    throw new HttpsError(
-      "already-exists",
-      "A different capture request already used this requestId for the authenticated player."
-    );
-  }
-
-  return buildReplayDeferredCaptureResponse(storedRequest);
-}
-
-function isAlreadyExistsError(error: unknown): boolean {
-  const code =
-    typeof error === "object" && error !== null && "code" in error
-      ? String((error as { code?: unknown }).code)
-      : "";
-
-  return code === "6" || code === "already-exists";
+  return reservation.response;
 }
 
 function buildCapturePinResponse(params: {

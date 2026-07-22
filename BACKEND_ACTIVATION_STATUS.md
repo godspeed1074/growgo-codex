@@ -127,9 +127,25 @@
 
 - `functions/src/idempotency/idempotency.ts`
   - request envelope exists
-  - reservation support remains incomplete
-  - TODO remains for Firestore-backed reservation transaction
-  - current result:
+  - deterministic reservation key uses authenticated UID, server-defined operation, and requestId
+  - persistent Firestore-backed capture reservation transaction is implemented for deferred `capturePin`
+  - bootstrap reservation path remains intentionally unsupported
+  - capture reservation document stores:
+    - authenticated UID
+    - operation identifier
+    - idempotency key
+    - deterministic request fingerprint
+    - reservation state
+    - created timestamp
+    - updated timestamp
+    - `captureRequestKey`
+    - deferred response metadata
+  - retention decision:
+    - reservation state: `capture-deferred`
+    - retention days: `30`
+    - reservation reuse remains denied unless the exact reservation is replayed
+    - no cleanup job is implemented in this phase
+  - bootstrap result remains:
     - `supported: false`
     - `strategy: "firestore-transaction-todo"`
     - `reservationState: "not-attempted"`
@@ -182,7 +198,7 @@
   - scaffold rules/config contract
   - emulator-backed integration coverage
 
-Unimplemented functionality is not treated as complete in this inventory. In particular, full persistent idempotency reservation remains incomplete.
+Unimplemented functionality is not treated as complete in this inventory. Persistent capture idempotency reservation is now implemented, but capture activation, rewards, totals mutation, and client integration remain unauthorized.
 
 ## 3. Development-Only Activation Boundary
 
@@ -416,7 +432,6 @@ No new infrastructure is added in this phase.
 
 - beta isolation contract is incomplete
 - production isolation contract is incomplete
-- capture idempotency is only partial because `reserveIdempotencySlot(...)` remains TODO
 - four emulator-backed integration tests are skipped when no safe local emulators are available
 - development client integration is not implemented
 - authentication access model for invited alpha still needs an explicit decision
@@ -424,6 +439,7 @@ No new infrastructure is added in this phase.
 - production authorization remains absent
 - no development activation flags are implemented yet
 - no production deployment or runtime activation path is authorized
+- capture remains deferred, non-rewarding, and not client-activated despite the completed reservation path
 
 ## 11. Eight-Phase Bounded Section Plan
 
@@ -642,8 +658,8 @@ No new infrastructure is added in this phase.
   - disabled flags must not bypass, weaken, or downgrade identity verification
 - Capture consumer recommendation and blockers:
   - future `capturePin` evaluator wiring belongs at the public callable boundary before payload validation
-  - capture must remain blocked from runtime wiring until persistent idempotency reservation is implemented
-  - capture must remain blocked until that reservation path is emulator-tested
+  - persistent idempotency reservation and emulator-backed transaction proof are now complete prerequisites
+  - capture must still remain blocked from runtime wiring until a later explicit activation phase authorizes it
   - deferred-only, replay-protected, non-rewarding semantics must remain unchanged
 - Snapshot consumer recommendation:
   - `bootstrapPlayer` and `getPlayerSnapshot` are the only approved future player-surface consumers in this section
@@ -797,3 +813,104 @@ No new infrastructure is added in this phase.
   - any future persistent idempotency implementation still requires explicit user authorization
   - any future `capturePin` runtime activation still requires emulator-backed reservation evidence
   - no beta, production, client, or live transport activation is authorized by this phase
+
+## 16. Phase 5A Result
+
+- Phase 5A objective:
+  - implement and verify the minimum persistent Firestore-backed idempotency reservation required for safe deferred `capturePin` testing without activating capture, rewards, totals mutation, client integration, or live Firebase traffic
+- Reservation schema and scope:
+  - one deterministic reservation document per authenticated UID + server-defined operation + requestId
+  - collection: `idempotency`
+  - operation scope for this phase: `capturePin`
+  - minimum stored fields:
+    - `uid`
+    - `operation`
+    - `idempotencyKey`
+    - `requestFingerprint`
+    - `reservationState`
+    - `createdAt`
+    - `updatedAt`
+    - `captureRequestKey`
+    - deferred response metadata
+- Deterministic fingerprint contract:
+  - derived only from validated capture intent fields that materially affect the deferred result
+  - stable across equivalent requests
+  - unaffected by object key order
+  - excludes server timestamps, random values, process-local state, and client-supplied reward fields
+- Transaction behavior implemented:
+  - first request:
+    - creates exactly one reservation
+    - creates exactly one deferred `captureRequests` document
+    - returns the first deferred result
+  - exact replay:
+    - reuses the existing reservation
+    - creates no second `captureRequests` document
+    - returns the stored deferred outcome deterministically
+  - conflicting replay:
+    - preserves the original reservation unchanged
+    - creates no second deferred request
+    - rejects with `already-exists`
+  - uncertain non-callable transaction failure:
+    - fails closed with `internal`
+    - grants no reward
+    - mutates no totals
+- Concurrency verification result:
+  - emulator-backed duplicate race:
+    - one first-request result
+    - one replay result
+    - one reservation
+    - one deferred capture-request write
+  - emulator-backed conflicting race:
+    - one winning reservation
+    - one `already-exists` conflict
+    - one deferred capture-request write
+- Cross-player and operation isolation:
+  - same requestId used by different authenticated players remains isolated
+  - reservation keys remain isolated by operation scope
+- Retention decision:
+  - retain reservations for `30` days
+  - do not allow reservation reuse after cleanup ambiguity
+  - scheduled cleanup remains out of scope for this phase
+- Cost implications:
+  - one direct reservation document read path
+  - one reservation document write path
+  - one deferred capture-request write path for first request only
+  - no collection scans
+  - no reward writes
+  - no totals writes
+  - no scheduled cleanup or background loops
+- Emulator verification result on 2026-07-22:
+  - targeted localhost-only emulator tests passed:
+    - `capturePin records deferred requests with persistent reservation, replay, and conflict protection`
+    - `capturePin concurrent identical requests produce one first result, one replay result, and one reservation`
+    - `capturePin concurrent conflicting requests reserve once and reject the conflicting replay safely`
+  - full backend suite result after Phase 5A:
+    - `119 passed, 0 failed, 3 skipped`
+- Focused files changed for Phase 5A:
+  - `functions/src/idempotency/idempotency.ts`
+  - `functions/src/api/capturePin.ts`
+  - `functions/tests/backend-activation-phase5-verification.test.mjs`
+  - `functions/tests/capture-authoritative-verification.test.mjs`
+  - `functions/tests/capture-idempotency.test.mjs`
+  - `functions/tests/capture-emulator.integration.test.mjs`
+  - `functions/tests/authoritative-pin-infrastructure-integration.test.mjs`
+  - `BACKEND_ACTIVATION_STATUS.md`
+- Explicit non-activation confirmation:
+  - `capturePin` is still not activated for clients
+  - `accepted` remains `false`
+  - `rewardGranted` remains `false`
+  - no player totals mutation was added
+  - no new callable export was added
+  - no development capability guard was added to `capturePin`
+  - authoritative transport remains disabled by default
+  - no beta or production activation is authorized
+- Remaining blockers after Phase 5A:
+  - development client integration remains absent
+  - broader runtime consumer activation beyond `getPlayerSnapshot` remains unauthorized
+  - beta and production isolation remain incomplete
+  - cleanup scheduling remains unimplemented
+- Phase 5A closeout: PASS
+- Phase 6 authorization boundary:
+  - Phase 6 still requires separate explicit user authorization
+  - any later runtime activation of `capturePin` must remain development-only and fail closed
+  - any later client integration, reward writes, totals mutation, beta enablement, production enablement, or live authoritative transport enablement remains unauthorized by this phase

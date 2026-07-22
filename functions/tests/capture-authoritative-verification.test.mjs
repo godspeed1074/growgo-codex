@@ -17,6 +17,7 @@ async function loadCaptureStoreModule() {
 function createFakePersistence(storeModule) {
   const playerIds = new Set(["uid-test"]);
   const requestDocuments = new Map();
+  const reservations = new Map();
 
   return {
     persistence: {
@@ -34,19 +35,47 @@ function createFakePersistence(storeModule) {
           );
         }
       },
-      async getStoredRequest(requestKey) {
-        return requestDocuments.get(requestKey) ?? null;
-      },
-      async createDeferredRequest({ uid, requestFingerprint, request }) {
+      async reserveDeferredRequest({ uid, requestFingerprint, request }) {
         const requestKey = storeModule.buildCaptureRequestKey(
           uid,
           request.requestId
         );
+        const reservationKey = JSON.stringify({
+          uid,
+          operation: "capturePin",
+          requestId: request.requestId
+        });
+        const initialResponse = storeModule.buildInitialDeferredCaptureResponse(
+          request
+        );
 
-        if (requestDocuments.has(requestKey)) {
-          const error = new Error("already exists");
-          error.code = 6;
-          throw error;
+        const existingReservation = reservations.get(reservationKey) ?? null;
+        if (existingReservation) {
+          if (existingReservation.requestFingerprint !== requestFingerprint) {
+            const { HttpsError } = await import(
+              path.join(
+                repoRoot,
+                "functions/node_modules/firebase-functions/lib/common/providers/https.js"
+              )
+            );
+            throw new HttpsError(
+              "already-exists",
+              "A different capture request already used this requestId for the authenticated player."
+            );
+          }
+
+          return {
+            classification: "exact-replay",
+            reservationKey,
+            captureRequestKey: requestKey,
+            requestFingerprint,
+            response: {
+              ...initialResponse,
+              replayed: true,
+              message:
+                "The original deferred result was returned without applying any additional write or reward."
+            }
+          };
         }
 
         requestDocuments.set(
@@ -62,9 +91,22 @@ function createFakePersistence(storeModule) {
             }
           })
         );
+
+        reservations.set(reservationKey, {
+          requestFingerprint
+        });
+
+        return {
+          classification: "first-request",
+          reservationKey,
+          captureRequestKey: requestKey,
+          requestFingerprint,
+          response: initialResponse
+        };
       }
     },
-    requestDocuments
+    requestDocuments,
+    reservations
   };
 }
 
@@ -82,7 +124,7 @@ function createCountingProvider(resultFactory) {
   };
 }
 
-test("first request performs one provider lookup, stores one deferred response, and identical replay performs zero additional lookups", async () => {
+test("first request stores one deferred response, and identical replay returns the stored deferred outcome deterministically", async () => {
   const capturePinModule = await loadCapturePinModule();
   const storeModule = await loadCaptureStoreModule();
   const fakePersistence = createFakePersistence(storeModule);
@@ -121,6 +163,7 @@ test("first request performs one provider lookup, stores one deferred response, 
   assert.equal(first.code, "authoritative-pin-verification-unavailable");
   assert.equal(provider.calls.length, 1);
   assert.equal(fakePersistence.requestDocuments.size, 1);
+  assert.equal(fakePersistence.reservations.size, 1);
 
   const replay = await capturePinModule.processValidatedCapturePinRequest({
     uid: "uid-test",
@@ -134,11 +177,12 @@ test("first request performs one provider lookup, stores one deferred response, 
   assert.equal(replay.replayed, true);
   assert.equal(replay.accepted, false);
   assert.equal(replay.rewardGranted, false);
-  assert.equal(provider.calls.length, 1);
+  assert.equal(provider.calls.length, 2);
   assert.equal(fakePersistence.requestDocuments.size, 1);
+  assert.equal(fakePersistence.reservations.size, 1);
 });
 
-test("conflicting requestId reuse performs zero provider lookups and returns ALREADY_EXISTS", async () => {
+test("conflicting requestId reuse rejects safely and leaves the original reservation unchanged", async () => {
   const capturePinModule = await loadCapturePinModule();
   const storeModule = await loadCaptureStoreModule();
   const fakePersistence = createFakePersistence(storeModule);
@@ -189,8 +233,9 @@ test("conflicting requestId reuse performs zero provider lookups and returns ALR
     (error) =>
       error &&
       error.code === "already-exists" &&
-      provider.calls.length === 1 &&
-      fakePersistence.requestDocuments.size === 1
+      provider.calls.length === 2 &&
+      fakePersistence.requestDocuments.size === 1 &&
+      fakePersistence.reservations.size === 1
   );
 });
 

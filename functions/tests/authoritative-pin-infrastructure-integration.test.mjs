@@ -96,15 +96,52 @@ function createFakeTransport(resultFactory) {
 
 function createFakePersistence(storeModule) {
   const requestDocuments = new Map();
+  const reservations = new Map();
   return {
     persistence: {
       async ensurePlayerExists() {},
-      async getStoredRequest(requestKey) {
-        return requestDocuments.get(requestKey) ?? null;
-      },
-      async createDeferredRequest({ uid, requestFingerprint, request }) {
+      async reserveDeferredRequest({ uid, requestFingerprint, request }) {
+        const requestKey = storeModule.buildCaptureRequestKey(
+          uid,
+          request.requestId
+        );
+        const reservationKey = JSON.stringify({
+          uid,
+          operation: "capturePin",
+          requestId: request.requestId
+        });
+        const existingReservation = reservations.get(reservationKey) ?? null;
+
+        if (existingReservation) {
+          if (existingReservation.requestFingerprint !== requestFingerprint) {
+            const { HttpsError } = await import(
+              path.join(
+                repoRoot,
+                "functions/node_modules/firebase-functions/lib/common/providers/https.js"
+              )
+            );
+            throw new HttpsError(
+              "already-exists",
+              "A different capture request already used this requestId for the authenticated player."
+            );
+          }
+
+          return {
+            classification: "exact-replay",
+            reservationKey,
+            captureRequestKey: requestKey,
+            requestFingerprint,
+            response: {
+              ...storeModule.buildInitialDeferredCaptureResponse(request),
+              replayed: true,
+              message:
+                "The original deferred result was returned without applying any additional write or reward."
+            }
+          };
+        }
+
         requestDocuments.set(
-          storeModule.buildCaptureRequestKey(uid, request.requestId),
+          requestKey,
           storeModule.buildDeferredCaptureRequestDocument({
             uid,
             requestFingerprint,
@@ -112,6 +149,15 @@ function createFakePersistence(storeModule) {
             now: { toDate: () => new Date("2026-07-21T00:00:00.000Z") }
           })
         );
+        reservations.set(reservationKey, { requestFingerprint });
+
+        return {
+          classification: "first-request",
+          reservationKey,
+          captureRequestKey: requestKey,
+          requestFingerprint,
+          response: storeModule.buildInitialDeferredCaptureResponse(request)
+        };
       }
     }
   };

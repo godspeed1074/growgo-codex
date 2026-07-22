@@ -51,11 +51,8 @@ function createNoopCaptureDependencies() {
       async ensurePlayerExists() {
         throw new Error("player lookup should not be called");
       },
-      async getStoredRequest() {
-        throw new Error("request lookup should not be called");
-      },
-      async createDeferredRequest() {
-        throw new Error("request create should not be called");
+      async reserveDeferredRequest() {
+        throw new Error("request reservation should not be called");
       }
     }
   };
@@ -174,8 +171,7 @@ test("capturePin unauthenticated request rejects before validation, persistence,
   const captureModule = await loadCaptureModule();
   let providerCalled = false;
   let ensurePlayerCalled = false;
-  let getStoredCalled = false;
-  let createCalled = false;
+  let reserveCalled = false;
   const handler = captureModule.createCapturePinHandler({
     authoritativePinSourceProvider: {
       async getSourceGeometry() {
@@ -187,12 +183,9 @@ test("capturePin unauthenticated request rejects before validation, persistence,
       async ensurePlayerExists() {
         ensurePlayerCalled = true;
       },
-      async getStoredRequest() {
-        getStoredCalled = true;
-        return null;
-      },
-      async createDeferredRequest() {
-        createCalled = true;
+      async reserveDeferredRequest() {
+        reserveCalled = true;
+        throw new Error("reservation should not run");
       }
     }
   });
@@ -223,16 +216,14 @@ test("capturePin unauthenticated request rejects before validation, persistence,
 
   assert.equal(providerCalled, false);
   assert.equal(ensurePlayerCalled, false);
-  assert.equal(getStoredCalled, false);
-  assert.equal(createCalled, false);
+  assert.equal(reserveCalled, false);
 });
 
 test("capturePin malformed payload rejects before persistence and authoritative verification", async () => {
   const captureModule = await loadCaptureModule();
   let providerCalled = false;
   let ensurePlayerCalled = false;
-  let getStoredCalled = false;
-  let createCalled = false;
+  let reserveCalled = false;
   const handler = captureModule.createCapturePinHandler({
     authoritativePinSourceProvider: {
       async getSourceGeometry() {
@@ -244,12 +235,9 @@ test("capturePin malformed payload rejects before persistence and authoritative 
       async ensurePlayerExists() {
         ensurePlayerCalled = true;
       },
-      async getStoredRequest() {
-        getStoredCalled = true;
-        return null;
-      },
-      async createDeferredRequest() {
-        createCalled = true;
+      async reserveDeferredRequest() {
+        reserveCalled = true;
+        throw new Error("reservation should not run");
       }
     }
   });
@@ -274,11 +262,10 @@ test("capturePin malformed payload rejects before persistence and authoritative 
 
   assert.equal(providerCalled, false);
   assert.equal(ensurePlayerCalled, false);
-  assert.equal(getStoredCalled, false);
-  assert.equal(createCalled, false);
+  assert.equal(reserveCalled, false);
 });
 
-test("idempotency reservation remains explicitly incomplete and fail-closed for Phase 5", async () => {
+test("bootstrapPlayer idempotency path remains unchanged while capture reservation support is now available separately", async () => {
   const idempotencyModule = await loadIdempotencyModule();
   const originalFetch = globalThis.fetch;
   let fetchCalled = false;
@@ -301,6 +288,14 @@ test("idempotency reservation remains explicitly incomplete and fail-closed for 
       operation: "capturePin",
       uid: "phase5-player-001"
     });
+    assert.deepEqual(
+      idempotencyModule.buildIdempotencyReservationKey(envelope),
+      idempotencyModule.buildIdempotencyReservationKey({
+        requestId: "phase5-idempotency-001",
+        operation: "capturePin",
+        uid: "phase5-player-001"
+      })
+    );
     assert.deepEqual(reservation, {
       supported: false,
       strategy: "firestore-transaction-todo",

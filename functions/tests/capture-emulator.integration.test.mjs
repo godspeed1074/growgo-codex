@@ -78,7 +78,22 @@ async function ensureLocalEmulatorsAvailable(t) {
   return true;
 }
 
-test("capturePin records deferred requests with replay and conflict protection", async (t) => {
+function findCaptureRequests(entries, { uid, requestId }) {
+  return entries.filter(
+    (entry) => entry.data.uid === uid && entry.data.requestId === requestId
+  );
+}
+
+function findIdempotencyReservations(entries, { uid, requestId }) {
+  return entries.filter(
+    (entry) =>
+      entry.data.uid === uid &&
+      entry.data.operation === "capturePin" &&
+      entry.data.idempotencyKey === requestId
+  );
+}
+
+test("capturePin records deferred requests with persistent reservation, replay, and conflict protection", async (t) => {
   if (!(await ensureLocalEmulatorsAvailable(t))) {
     return;
   }
@@ -131,6 +146,7 @@ test("capturePin records deferred requests with replay and conflict protection",
   assert.equal(firstCapture.body.result.rewardGranted, false);
 
   const captureRequestsAfterFirst = await listCollection("captureRequests");
+  const idempotencyAfterFirst = await listCollection("idempotency");
   const firstLedger = captureRequestsAfterFirst.find(
     (entry) =>
       entry.data.uid === firstUser.localId &&
@@ -144,6 +160,20 @@ test("capturePin records deferred requests with replay and conflict protection",
     firstLedger.data.eligibilityCode,
     "authoritative-pin-verification-unavailable"
   );
+  const firstReservation = findIdempotencyReservations(idempotencyAfterFirst, {
+    uid: firstUser.localId,
+    requestId: basePayload.requestId
+  });
+  assert.equal(firstReservation.length, 1);
+  assert.equal(firstReservation[0].data.requestFingerprint.length, 64);
+  assert.equal(firstReservation[0].data.reservationState, "capture-deferred");
+  assert.equal(firstReservation[0].data.captureRequestKey, firstLedger.id);
+  assert.equal(firstReservation[0].data.retentionDays, 30);
+  assert.equal(firstReservation[0].data.response.ok, false);
+  assert.equal(firstReservation[0].data.response.accepted, false);
+  assert.equal(firstReservation[0].data.response.rewardGranted, false);
+  assert.equal(firstReservation[0].data.response.requestId, basePayload.requestId);
+  assert.equal(firstReservation[0].data.response.pinId, basePayload.pinId);
 
   const playerAfterFirstCapture = (
     await listCollection("players")
@@ -160,12 +190,19 @@ test("capturePin records deferred requests with replay and conflict protection",
   assert.equal(replayCapture.body.result.rewardGranted, false);
 
   const captureRequestsAfterReplay = await listCollection("captureRequests");
+  const idempotencyAfterReplay = await listCollection("idempotency");
   assert.equal(
-    captureRequestsAfterReplay.filter(
-      (entry) =>
-        entry.data.uid === firstUser.localId &&
-        entry.data.requestId === basePayload.requestId
-    ).length,
+    findCaptureRequests(captureRequestsAfterReplay, {
+      uid: firstUser.localId,
+      requestId: basePayload.requestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfterReplay, {
+      uid: firstUser.localId,
+      requestId: basePayload.requestId
+    }).length,
     1
   );
 
@@ -215,28 +252,47 @@ test("capturePin records deferred requests with replay and conflict protection",
   assert.equal(rewardInjection.body.error.status, "INVALID_ARGUMENT");
 
   const captureRequestsAfter = await listCollection("captureRequests");
+  const idempotencyAfter = await listCollection("idempotency");
   assert.equal(
-    captureRequestsAfter.filter(
-      (entry) =>
-        entry.data.uid === firstUser.localId &&
-        entry.data.requestId === basePayload.requestId
-    ).length,
+    findCaptureRequests(captureRequestsAfter, {
+      uid: firstUser.localId,
+      requestId: basePayload.requestId
+    }).length,
     1
   );
   assert.equal(
-    captureRequestsAfter.filter(
-      (entry) =>
-        entry.data.uid === firstUser.localId &&
-        entry.data.requestId === "capture-test-002"
-    ).length,
+    findCaptureRequests(captureRequestsAfter, {
+      uid: firstUser.localId,
+      requestId: "capture-test-002"
+    }).length,
     1
   );
   assert.equal(
-    captureRequestsAfter.filter(
-      (entry) =>
-        entry.data.uid === secondUser.localId &&
-        entry.data.requestId === basePayload.requestId
-    ).length,
+    findCaptureRequests(captureRequestsAfter, {
+      uid: secondUser.localId,
+      requestId: basePayload.requestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: firstUser.localId,
+      requestId: basePayload.requestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: firstUser.localId,
+      requestId: "capture-test-002"
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: secondUser.localId,
+      requestId: basePayload.requestId
+    }).length,
     1
   );
 
@@ -245,7 +301,153 @@ test("capturePin records deferred requests with replay and conflict protection",
   assert.ok(playersAfter.some((entry) => entry.id === secondUser.localId));
 
   assert.equal((await listCollection("captures")).length, capturesBefore.length);
-  assert.equal((await listCollection("idempotency")).length, idempotencyBefore.length);
+  assert.equal(idempotencyAfter.length, idempotencyBefore.length + 3);
+  assert.equal((await listCollection("requests")).length, requestsBefore.length);
+  assert.equal((await listCollection("playerPrivate")).length, playerPrivateBefore.length);
+});
+
+test("capturePin concurrent identical requests produce one first result, one replay result, and one reservation", async (t) => {
+  if (!(await ensureLocalEmulatorsAvailable(t))) {
+    return;
+  }
+
+  const captureRequestsBefore = await listCollection("captureRequests");
+  const capturesBefore = await listCollection("captures");
+  const idempotencyBefore = await listCollection("idempotency");
+  const requestsBefore = await listCollection("requests");
+  const playerPrivateBefore = await listCollection("playerPrivate");
+
+  const user = await createAnonymousUser();
+  const bootstrap = await callFunction("bootstrapPlayer", user.idToken, {
+    requestId: "capture-concurrency-bootstrap-001"
+  });
+  assert.equal(bootstrap.status, 200);
+
+  const payload = {
+    requestId: "capture-concurrency-same-001",
+    pinId: "test-pin-concurrency-001",
+    latitude: -38.45,
+    longitude: 145.24,
+    accuracyMetres: 10,
+    clientCapturedAt: "2026-07-21T00:00:00.000Z"
+  };
+
+  const [firstResponse, secondResponse] = await Promise.all([
+    callFunction("capturePin", user.idToken, payload),
+    callFunction("capturePin", user.idToken, payload)
+  ]);
+
+  const responses = [firstResponse, secondResponse];
+  assert.deepEqual(
+    responses.map((entry) => entry.status).sort((left, right) => left - right),
+    [200, 200]
+  );
+  assert.equal(
+    responses.filter((entry) => entry.body.result.replayed === false).length,
+    1
+  );
+  assert.equal(
+    responses.filter((entry) => entry.body.result.replayed === true).length,
+    1
+  );
+
+  const captureRequestsAfter = await listCollection("captureRequests");
+  const idempotencyAfter = await listCollection("idempotency");
+  assert.equal(
+    findCaptureRequests(captureRequestsAfter, {
+      uid: user.localId,
+      requestId: payload.requestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: user.localId,
+      requestId: payload.requestId
+    }).length,
+    1
+  );
+  assert.equal(captureRequestsAfter.length, captureRequestsBefore.length + 1);
+  assert.equal(idempotencyAfter.length, idempotencyBefore.length + 1);
+  assert.equal((await listCollection("captures")).length, capturesBefore.length);
+  assert.equal((await listCollection("requests")).length, requestsBefore.length);
+  assert.equal((await listCollection("playerPrivate")).length, playerPrivateBefore.length);
+});
+
+test("capturePin concurrent conflicting requests reserve once and reject the conflicting replay safely", async (t) => {
+  if (!(await ensureLocalEmulatorsAvailable(t))) {
+    return;
+  }
+
+  const captureRequestsBefore = await listCollection("captureRequests");
+  const capturesBefore = await listCollection("captures");
+  const idempotencyBefore = await listCollection("idempotency");
+  const requestsBefore = await listCollection("requests");
+  const playerPrivateBefore = await listCollection("playerPrivate");
+
+  const user = await createAnonymousUser();
+  const bootstrap = await callFunction("bootstrapPlayer", user.idToken, {
+    requestId: "capture-concurrency-bootstrap-002"
+  });
+  assert.equal(bootstrap.status, 200);
+
+  const sharedRequestId = "capture-concurrency-conflict-001";
+  const [firstResponse, secondResponse] = await Promise.all([
+    callFunction("capturePin", user.idToken, {
+      requestId: sharedRequestId,
+      pinId: "test-pin-conflict-001",
+      latitude: -38.45,
+      longitude: 145.24,
+      accuracyMetres: 10,
+      clientCapturedAt: "2026-07-21T00:00:00.000Z"
+    }),
+    callFunction("capturePin", user.idToken, {
+      requestId: sharedRequestId,
+      pinId: "test-pin-conflict-002",
+      latitude: -38.45,
+      longitude: 145.24,
+      accuracyMetres: 10,
+      clientCapturedAt: "2026-07-21T00:00:00.000Z"
+    })
+  ]);
+
+  const responses = [firstResponse, secondResponse];
+  assert.equal(
+    responses.filter((entry) => entry.status === 200).length,
+    1
+  );
+  assert.equal(
+    responses.filter((entry) => entry.status === 409).length,
+    1
+  );
+  assert.equal(
+    responses.find((entry) => entry.status === 409)?.body.error.status,
+    "ALREADY_EXISTS"
+  );
+  assert.equal(
+    responses.find((entry) => entry.status === 200)?.body.result.replayed,
+    false
+  );
+
+  const captureRequestsAfter = await listCollection("captureRequests");
+  const idempotencyAfter = await listCollection("idempotency");
+  assert.equal(
+    findCaptureRequests(captureRequestsAfter, {
+      uid: user.localId,
+      requestId: sharedRequestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: user.localId,
+      requestId: sharedRequestId
+    }).length,
+    1
+  );
+  assert.equal(captureRequestsAfter.length, captureRequestsBefore.length + 1);
+  assert.equal(idempotencyAfter.length, idempotencyBefore.length + 1);
+  assert.equal((await listCollection("captures")).length, capturesBefore.length);
   assert.equal((await listCollection("requests")).length, requestsBefore.length);
   assert.equal((await listCollection("playerPrivate")).length, playerPrivateBefore.length);
 });
