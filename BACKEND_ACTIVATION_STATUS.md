@@ -498,3 +498,72 @@ No new infrastructure is added in this phase.
 - required tests: full approved backend verification matrix and explicit open-risk review
 - stopping condition: either private-alpha readiness is approved or blockers are explicitly recorded
 - phase type: closeout
+
+## 12. Phase 2 Result
+
+- Phase 2 objective: define the minimum typed development-only environment identity and fail-closed feature-flag contract needed for later activation without connecting any runtime consumer.
+- Implemented configuration module:
+  - `functions/src/config/developmentBackendActivation.ts`
+- Implemented environment contract:
+  - declared environment name
+  - validated environment name
+  - declared project identity
+  - expected development project identity
+  - emulator mode
+  - validated loopback emulator identity
+  - runtimeActivationPermitted contract value
+- Implemented feature-flag contract:
+  - `developmentBackendEnabled`
+  - `developmentAuthenticationEnabled`
+  - `developmentAuthoritativePinAcquisitionEnabled`
+  - `developmentPinCaptureEnabled`
+  - `developmentPlayerSnapshotEnabled`
+- Exact defaults:
+  - every flag defaults to disabled
+  - missing values parse as disabled
+  - invalid values parse as disabled
+  - only explicit string `true` enables a flag
+  - explicit string `false` disables a flag
+- Evaluation order:
+  1. parse declared environment
+  2. validate environment name
+  3. validate project identity
+  4. validate emulator identity when present
+  5. require development environment
+  6. require global development backend flag
+  7. require capability-specific flag
+  8. return allow or deny with a stable reason code
+- Stable reason codes:
+  - `environment_missing`
+  - `environment_unknown`
+  - `project_missing`
+  - `project_mismatch`
+  - `emulator_host_invalid`
+  - `environment_not_development`
+  - `backend_flag_disabled`
+  - `capability_flag_disabled`
+  - `allowed`
+- Beta and production denial:
+  - beta remains denied even with all flags true
+  - production remains denied even with all flags true
+  - no project, emulator, or flag combination enables runtime activation outside development
+- Emulator behavior:
+  - emulator mode is permitted only for development
+  - loopback-only emulator host validation is reused
+  - emulator mode does not bypass project checks
+  - emulator mode does not bypass the global backend flag
+  - emulator mode does not bypass capability-specific flags
+- Tests added:
+  - `functions/tests/development-backend-activation.test.mjs`
+- Remaining non-activation boundary:
+  - no callable imports or consumes the evaluator
+  - no Firebase Admin initialization is triggered by the evaluator
+  - no Firestore access occurs
+  - no external service calls occur
+  - no client integration exists
+  - no feature is active
+- Phase 2 closeout: PASS
+- Phase 3 authorization boundary:
+  - Phase 3 still requires explicit user authorization
+  - contract-level allow must not be treated as runtime activation
+  - authoritative-pin acquisition, pin capture acceptance, and client connectivity all remain disabled until a later phase connects a guarded runtime consumer
