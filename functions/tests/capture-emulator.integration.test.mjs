@@ -52,7 +52,7 @@ async function isReachable(url) {
   try {
     const response = await fetch(url, {
       method: "GET",
-      signal: AbortSignal.timeout(1000)
+      signal: AbortSignal.timeout(3000)
     });
     return response.status >= 100;
   } catch {

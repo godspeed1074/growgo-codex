@@ -914,3 +914,145 @@ No new infrastructure is added in this phase.
   - Phase 6 still requires separate explicit user authorization
   - any later runtime activation of `capturePin` must remain development-only and fail closed
   - any later client integration, reward writes, totals mutation, beta enablement, production enablement, or live authoritative transport enablement remains unauthorized by this phase
+
+## 17. Phase 6 Result
+
+- Phase 6 objective:
+  - prove the broader development-only GrowGo backend path through the local Firebase emulator suite without connecting the real client, deploying, enabling rewards, enabling totals mutation, enabling beta or production, or enabling unrestricted authoritative transport
+- Emulator environment used on 2026-07-22:
+  - reused the existing loopback-only local Firebase emulator suite
+  - verified project identity remained `growgo-development`
+  - verified loopback-only ports:
+    - Emulator UI `4002`
+    - Hub `4402`
+    - Logging `4502`
+    - Functions `5003`
+    - Firestore `8088`
+    - Auth `9099`
+    - Storage `9199`
+    - Eventarc `9299`
+  - verified emulator discovery through the local Hub endpoint only
+  - no live Firebase project access was used
+- Guarded runtime consumer evidence:
+  - `getPlayerSnapshot` remains the only guarded runtime consumer
+  - `bootstrapPlayer` still does not import the development runtime guard
+  - `capturePin` still does not import the development runtime guard
+  - `functions/src/index.ts` export surface remains unchanged:
+    - `bootstrapPlayer`
+    - `getPlayerSnapshot`
+    - `capturePin`
+- Journey A — authenticated player bootstrap:
+  - unauthenticated `bootstrapPlayer` emulator invocation rejects with `401` / `UNAUTHENTICATED`
+  - authenticated bootstrap creates exactly one owner-scoped player scaffold for a new UID
+  - duplicate bootstrap for the same UID remains safe and does not create a duplicate player document
+  - cross-player bootstrap isolation was re-verified with two emulator Auth users
+  - bootstrap still does not persist capture requests, reward writes, totals writes, or capture reservations
+- Journey B — guarded snapshot:
+  - default or missing development flags still deny `getPlayerSnapshot` with `FAILED_PRECONDITION`
+  - denied path still occurs before any Firestore read
+  - explicit valid development configuration still reaches the existing owner-scoped snapshot contract
+  - the allowed path still returns only the authenticated owner snapshot
+  - beta and production denial behavior remains covered by the Phase 4/5 guard suite and remains fail closed
+  - project mismatch and invalid emulator identity denial behavior remains covered and unchanged
+- Journey C — canonical deferred capture:
+  - malformed capture input still rejects safely before persistence
+  - canonical mismatch and authoritative evidence mismatch still reject safely
+  - valid canonical capture intent still performs server-side canonical verification
+  - authoritative remote transport still remains disabled by default
+  - first valid deferred capture still writes:
+    - exactly one idempotency reservation
+    - exactly one deferred `captureRequests` document
+  - no reward write, no totals write, and no accepted capture path was enabled
+- Journey D — concurrency and isolation:
+  - concurrent identical capture requests still produce:
+    - one first result
+    - one replay result
+    - one reservation
+    - one deferred capture-request write
+  - concurrent conflicting capture requests still produce:
+    - one winning reservation
+    - one safe conflict rejection
+    - no duplicate deferred request write
+  - same idempotency key across different authenticated UIDs remains isolated
+  - retry behavior remains deterministic and deferred-only
+- Journey E — environment isolation:
+  - development identity with exact project match may pass eligible checks only when required flags are explicitly true
+  - missing environment still denies
+  - unknown environment still denies
+  - project mismatch still denies
+  - beta still denies
+  - production still denies
+  - emulator presence alone still does not imply development authorization
+  - flags remain required in emulator mode
+  - non-loopback emulator identity still denies
+  - no test contacted another Firebase project
+- Exact read/write accounting proven in emulator-backed coverage:
+  - bootstrap:
+    - new player bootstrap creates one player document for that UID
+    - duplicate bootstrap updates the existing player scaffold without creating another player document
+    - no capture reservation or deferred capture-request write occurs during bootstrap
+  - snapshot:
+    - denied path Firestore reads remain zero
+    - allowed path performs the minimal owner-scoped player read
+    - no snapshot writes occur
+  - first capture:
+    - one idempotency reservation
+    - one deferred capture request
+    - zero reward writes
+    - zero totals writes
+  - replay:
+    - no duplicate deferred capture write
+    - no reward write
+    - no totals write
+  - conflict:
+    - no reservation overwrite
+    - no extra deferred capture write
+- Emulator-backed tests added or strengthened for Phase 6:
+  - `functions/tests/player-emulator.integration.test.mjs`
+  - `functions/tests/player-snapshot-development-guard-emulator.integration.test.mjs`
+  - `functions/tests/capture-emulator.integration.test.mjs`
+  - `functions/tests/authoritative-pin-acquisition-emulator-e2e.test.mjs`
+  - `functions/tests/firestore-authoritative-pin-cache-emulator.test.mjs`
+- Narrow verified defect repaired during Phase 6:
+  - `functions/src/domain/pins/authoritativePinCache.ts`
+  - negative cache records now omit `retryAfterSeconds` unless it is explicitly defined, which keeps Firestore emulator writes valid without widening runtime behavior
+- Emulator execution results:
+  - targeted localhost-only emulator-backed verification on 2026-07-22:
+    - `18 passed, 0 failed, 0 skipped`
+  - full backend suite with emulators available after Phase 6:
+    - `134 passed, 0 failed, 0 skipped`
+  - relevant emulator-backed player and authoritative-acquisition tests executed rather than skipping
+- Skipped versus executed status:
+  - no relevant Phase 6 emulator-backed test remained skipped in the final verified run
+  - no remaining skip is required to justify the Phase 6 result
+- No-live-project evidence:
+  - all verified emulator endpoints were `127.0.0.1`
+  - local emulator discovery was read from the Hub endpoint only
+  - no metadata-service lookup was introduced
+  - no live Firebase project read or write occurred
+- Explicit no-client-integration statement:
+  - no real GrowGo client was connected
+  - no browser or runtime consumer integration was added
+  - no renderer file or `script.js` change was made
+- Explicit no-reward statement:
+  - `accepted` remains `false`
+  - `rewardGranted` remains `false`
+  - no XP, coins, points, totals, inventory, or ownership mutation was enabled
+- Remaining blockers after Phase 6:
+  - development client integration remains absent
+  - `capturePin` remains unavailable to the real client
+  - reward activation and totals mutation remain unauthorized
+  - beta and production activation remain unauthorized
+  - remote authoritative transport remains disabled by default
+  - operational cost, quota, rollback, and broader safeguard work still belongs to Phase 7
+- Focused files changed for Phase 6:
+  - `functions/src/domain/pins/authoritativePinCache.ts`
+  - `functions/tests/authoritative-pin-acquisition-emulator-e2e.test.mjs`
+  - `functions/tests/capture-emulator.integration.test.mjs`
+  - `functions/tests/player-emulator.integration.test.mjs`
+  - `functions/tests/player-snapshot-development-guard-emulator.integration.test.mjs`
+  - `BACKEND_ACTIVATION_STATUS.md`
+- Phase 6 closeout: PASS
+- Phase 7 authorization boundary:
+  - Phase 7 still requires separate explicit user authorization
+  - no deployment, client activation, reward activation, totals mutation, beta activation, production activation, or live authoritative transport activation is authorized by this phase
