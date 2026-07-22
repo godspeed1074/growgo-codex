@@ -1056,3 +1056,267 @@ No new infrastructure is added in this phase.
 - Phase 7 authorization boundary:
   - Phase 7 still requires separate explicit user authorization
   - no deployment, client activation, reward activation, totals mutation, beta activation, production activation, or live authoritative transport activation is authorized by this phase
+
+## 18. Phase 7 Result
+
+- Phase 7 objective:
+  - implement the minimum development-only operational safeguards for bounded cost, rate limiting, low-volume observability, emergency disablement, and rollback verification without widening backend access
+- Monthly cost ceiling used for this section:
+  - approximate ceiling: `A$20`
+  - treated as a planning estimate rather than a guarantee
+  - preferred controls remain:
+    - bounded reads
+    - bounded writes
+    - zero collection scans
+    - zero automatic retry storms
+    - zero per-frame or per-map-pan backend traffic
+    - transport still disabled by default
+- Implemented operational safeguard contract:
+  - `functions/src/config/developmentBackendOperationalSafeguards.ts`
+  - operation identifiers:
+    - `bootstrap_player`
+    - `player_snapshot`
+    - `pin_capture`
+    - `authoritative_pin_acquisition`
+  - contract sections:
+    - per-operation cost budgets
+    - process-local rate-limit defaults
+    - observability event names
+    - structured redaction helper
+    - replay-log emission suppression
+    - emergency-disable flags
+    - rollback states
+    - runtime safeguard decision evaluator
+- Rate-limit storage decision:
+  - storage kind: `process_local_secondary_safeguard`
+  - globally authoritative: `false`
+  - Firestore reads per check: `0`
+  - Firestore writes per check: `0`
+  - global hot document introduced: `false`
+  - cleanup job required: `false`
+  - rationale:
+    - Phase 7 intentionally keeps rate limiting process-local and secondary so the private-alpha backend avoids a new shared Firestore hot document, avoids collection scans, and avoids scheduled cleanup work before later rollout decisions
+- Development-only rate-limit defaults:
+  - `bootstrap_player`
+    - max requests: `3`
+    - window: `300 seconds`
+    - scope: authenticated UID
+  - `player_snapshot`
+    - max requests: `12`
+    - window: `60 seconds`
+    - scope: authenticated UID
+  - `pin_capture`
+    - max requests: `6`
+    - window: `300 seconds`
+    - scope: authenticated UID
+  - `authoritative_pin_acquisition`
+    - max requests: `6`
+    - window: `300 seconds`
+    - scope: authenticated UID
+- Cross-player quota isolation:
+  - rate-limit keys are process-local and scoped by `operation + authenticated UID`
+  - the same player can exceed the bounded snapshot window and be denied
+  - a second player remains unaffected by the first player’s quota state
+  - no player can move another player into an exceeded state through shared quota storage
+- Per-operation cost budgets:
+  - `bootstrapPlayer`
+    - denied path: `0 reads / 0 writes`
+    - first request: `1 read / 1 write`
+    - duplicate bootstrap: `1 read / 1 write`
+    - provider calls: `0`
+    - transport attempts: `0`
+  - `getPlayerSnapshot`
+    - denied path: `0 reads / 0 writes`
+    - allowed path: `1 read / 0 writes`
+    - provider calls: `0`
+    - transport attempts: `0`
+  - `capturePin`
+    - denied path: `0 reads / 0 writes`
+    - first deferred request: `2 reads / 2 writes`
+      - one player-existence read
+      - one idempotency reservation read
+      - one deferred capture-request write
+      - one idempotency reservation write
+    - exact replay: `2 reads / 0 writes`
+    - conflict: `2 reads / 0 writes`
+    - reward writes: `0`
+    - totals writes: `0`
+    - provider calls with current disabled transport path: `0`
+    - transport attempts with current disabled transport path: `0`
+  - authoritative pin acquisition contract:
+    - denied path: `0 reads / 0 writes / 0 provider calls / 0 transport attempts`
+    - bounded active path maximum: `1 cache read / 1 cache write / 1 provider call / 1 transport attempt`
+    - timeout: `5000 ms`
+    - automatic retries: `0`
+    - result-size bound:
+      - one canonical source reference
+      - one ordered way geometry payload
+- Observability contract:
+  - stable event names:
+    - `capability_denied`
+    - `authentication_rejected`
+    - `snapshot_allowed`
+    - `snapshot_denied`
+    - `capture_deferred`
+    - `capture_replayed`
+    - `capture_conflict`
+    - `rate_limit_denied`
+    - `authoritative_cache_hit`
+    - `authoritative_cache_miss`
+    - `authoritative_transport_blocked`
+    - `emergency_disable_active`
+    - `rollback_state_active`
+  - stable safeguard reason codes:
+    - `allowed`
+    - `development_access_denied`
+    - `operational_safeguards_disabled`
+    - `emergency_disable_active`
+    - `rollback_state_active`
+    - `rate_limit_exceeded`
+    - `rate_limit_state_unavailable`
+  - logging levels:
+    - `off`
+    - `minimal`
+    - `redacted`
+  - structured log payload:
+    - schema version `1`
+    - bounded to `512` bytes maximum
+    - contains:
+      - event name
+      - operation
+      - reason
+      - logging level
+      - optional hashed UID prefix only
+  - replay observability flood control:
+    - in-memory emission gate suppresses repeated replay events for the same dedupe key within one minute
+- Redaction rules verified:
+  - authentication tokens are excluded
+  - secrets are excluded
+  - raw fingerprints are excluded
+  - precise coordinates are excluded
+  - raw payload objects are excluded
+  - only a short SHA-256 UID prefix may remain when a UID is supplied
+- Emergency-disable contract:
+  - global safeguard enable flag:
+    - `GROWGO_DEVELOPMENT_OPERATIONAL_SAFEGUARDS_ENABLED`
+  - global emergency disable flag:
+    - `GROWGO_DEVELOPMENT_BACKEND_EMERGENCY_DISABLED`
+  - operation-specific emergency-disable flags:
+    - `GROWGO_DEVELOPMENT_AUTHENTICATION_EMERGENCY_DISABLED`
+    - `GROWGO_DEVELOPMENT_PLAYER_SNAPSHOT_EMERGENCY_DISABLED`
+    - `GROWGO_DEVELOPMENT_PIN_CAPTURE_EMERGENCY_DISABLED`
+    - `GROWGO_DEVELOPMENT_AUTHORITATIVE_PIN_ACQUISITION_EMERGENCY_DISABLED`
+  - required behavior:
+    - missing safeguard enable flag denies
+    - invalid flag values deny
+    - global emergency disable overrides all true flags
+    - snapshot emergency disable denies before Firestore read
+    - beta remains denied
+    - production remains denied
+- Rollback contract:
+  - rollback state env var:
+    - `GROWGO_DEVELOPMENT_BACKEND_ROLLBACK_STATE`
+  - supported states:
+    - `normal_fail_closed`
+    - `development_enabled`
+    - `emergency_disabled`
+    - `rollback_in_progress`
+    - `rolled_back_to_passive_foundation`
+  - required rollback behavior:
+    - development access disabled unless rollback state is explicitly `development_enabled`
+    - snapshot remains callable but deny-only after authentication when rollback is not development-enabled
+    - existing deferred capture records remain intact
+    - existing idempotency reservations remain intact
+    - no database migration required
+    - no destructive cleanup required
+    - rollback verification remains testable through pure decision evaluation
+- Narrow runtime integration added:
+  - modified file:
+    - `functions/src/api/getPlayerSnapshot.ts`
+  - integration order is now:
+    1. `requireAuthenticated(request)`
+    2. existing App Check check
+    3. existing development capability guard
+    4. new operational safeguard guard
+    5. payload validation
+    6. owner-scoped player read
+  - no other callable imports the operational safeguard module
+  - `bootstrapPlayer` remains unchanged
+  - `capturePin` remains unchanged
+  - callable export surface remains unchanged
+- Emulator verification result on 2026-07-22:
+  - reused the existing loopback-only emulator suite for `growgo-development`
+  - focused localhost-only emulator-backed verification:
+    - `18 passed, 0 failed, 0 skipped`
+  - full backend suite with emulators available after Phase 7:
+    - `151 passed, 0 failed, 0 skipped`
+  - relevant emulator-backed integration tests executed rather than skipping
+  - no live Firebase project read or write occurred
+- Tests added for Phase 7:
+  - `functions/tests/development-backend-operational-safeguards.test.mjs`
+  - `functions/tests/get-player-snapshot-operational-safeguards.test.mjs`
+- Existing tests updated for Phase 7:
+  - `functions/tests/get-player-snapshot-development-guard.test.mjs`
+  - `functions/tests/player-emulator.integration.test.mjs`
+  - `functions/tests/capture-emulator.integration.test.mjs`
+- Focused verification categories proven:
+  - missing safeguard enable flag denies with bounded defaults
+  - invalid or missing rollback state fails closed
+  - global emergency disable overrides all enables
+  - snapshot-specific emergency disable overrides allows
+  - snapshot polling limit is bounded
+  - cross-player quota isolation holds
+  - rate-limit uncertainty fails closed
+  - no global hot-document design is introduced
+  - cost budgets stay exact and bounded
+  - observability events and reason codes are stable
+  - structured logging redacts sensitive values and stays bounded
+  - replay-log flood suppression works for repeated replay outcomes
+  - operational safeguard denial occurs before Firestore reads
+  - allowed snapshot execution preserves the response shape
+  - only `getPlayerSnapshot` imports the operational safeguard module
+- Exact no-activation evidence:
+  - no new callable export was added
+  - no new public callable was added
+  - no new runtime consumer beyond the already guarded snapshot path was connected
+  - `capturePin` remained unavailable to clients
+  - `capturePin` remained deferred and non-rewarding
+  - `accepted` remained `false`
+  - `rewardGranted` remained `false`
+  - no XP, coins, points, totals, inventory, or ownership mutation was introduced
+  - authoritative remote transport remained disabled by default
+  - Firestore rules were unchanged
+  - Storage rules were unchanged
+  - no client integration was added
+  - beta remained fail closed
+  - production remained fail closed
+- Remaining blockers after Phase 7:
+  - real GrowGo client integration remains absent
+  - `capturePin` still remains unavailable to unrestricted clients
+  - reward activation and totals mutation remain unauthorized
+  - live authoritative transport remains disabled
+  - beta activation remains unauthorized
+  - production activation remains unauthorized
+  - process-local rate limiting is intentionally secondary and not globally authoritative across instances
+  - no deployment or staged rollout has occurred
+- Explicit no-client-integration statement:
+  - no browser or game-client integration was added
+  - no real player traffic was enabled
+  - no renderer or `script.js` change was made
+- Explicit no-reward statement:
+  - no reward write was added
+  - no totals write was added
+  - no capture acceptance was enabled
+- Focused files changed for Phase 7:
+  - `functions/src/config/developmentBackendOperationalSafeguards.ts`
+  - `functions/src/api/getPlayerSnapshot.ts`
+  - `functions/tests/development-backend-operational-safeguards.test.mjs`
+  - `functions/tests/get-player-snapshot-operational-safeguards.test.mjs`
+  - `functions/tests/get-player-snapshot-development-guard.test.mjs`
+  - `functions/tests/player-emulator.integration.test.mjs`
+  - `functions/tests/capture-emulator.integration.test.mjs`
+  - `BACKEND_ACTIVATION_STATUS.md`
+- Phase 7 closeout: PASS
+- Phase 8 authorization boundary:
+  - Phase 8 still requires separate explicit user authorization
+  - no deployment, client activation, reward activation, totals mutation, beta activation, production activation, or live authoritative transport activation is authorized by this phase

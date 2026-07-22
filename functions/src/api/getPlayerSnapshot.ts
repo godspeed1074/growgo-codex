@@ -6,6 +6,9 @@ import {
 
 import { runtimeConfig } from "../config/runtimeConfig";
 import {
+  requireDevelopmentBackendOperationalSafeguardAccess
+} from "../config/developmentBackendOperationalSafeguards";
+import {
   type PlayerSnapshotRequest,
   type PlayerDocument
 } from "../domain/players/playerTypes";
@@ -33,6 +36,7 @@ export interface GetPlayerSnapshotHandlerDependencies {
   requireDevelopmentCapabilityAccess(params: {
     capability: typeof GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY;
   }): void;
+  requireOperationalSafeguardAccess(params: { uid: string }): void;
   readPlayer(uid: string): Promise<PlayerDocument>;
 }
 
@@ -40,6 +44,12 @@ const defaultGetPlayerSnapshotHandlerDependencies: GetPlayerSnapshotHandlerDepen
   requireDevelopmentCapabilityAccess(params) {
     requireDevelopmentBackendCapabilityAccess({
       capability: params.capability
+    });
+  },
+  requireOperationalSafeguardAccess(params) {
+    requireDevelopmentBackendOperationalSafeguardAccess({
+      operation: "player_snapshot",
+      uid: params.uid
     });
   },
   async readPlayer(uid: string): Promise<PlayerDocument> {
@@ -64,6 +74,9 @@ export function createGetPlayerSnapshotHandler(
     requireAppCheckIfEnabled(request);
     dependencies.requireDevelopmentCapabilityAccess({
       capability: GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY
+    });
+    dependencies.requireOperationalSafeguardAccess({
+      uid: authContext.uid
     });
 
     const payload = asObject(request.data, "getPlayerSnapshot payload");
