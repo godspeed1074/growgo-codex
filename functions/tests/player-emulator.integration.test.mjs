@@ -198,6 +198,10 @@ test("player bootstrap and snapshot stay isolated per authenticated uid", async 
       process.env.GROWGO_DEVELOPMENT_BACKEND_ENABLED,
     GROWGO_DEVELOPMENT_PLAYER_SNAPSHOT_ENABLED:
       process.env.GROWGO_DEVELOPMENT_PLAYER_SNAPSHOT_ENABLED,
+    GROWGO_DEVELOPMENT_OPERATIONAL_SAFEGUARDS_ENABLED:
+      process.env.GROWGO_DEVELOPMENT_OPERATIONAL_SAFEGUARDS_ENABLED,
+    GROWGO_DEVELOPMENT_BACKEND_ROLLBACK_STATE:
+      process.env.GROWGO_DEVELOPMENT_BACKEND_ROLLBACK_STATE,
     FIRESTORE_EMULATOR_HOST: process.env.FIRESTORE_EMULATOR_HOST,
     GCLOUD_PROJECT: process.env.GCLOUD_PROJECT,
     GOOGLE_CLOUD_PROJECT: process.env.GOOGLE_CLOUD_PROJECT
@@ -207,6 +211,8 @@ test("player bootstrap and snapshot stay isolated per authenticated uid", async 
   process.env.GROWGO_BACKEND_PROJECT_ID = projectId;
   process.env.GROWGO_DEVELOPMENT_BACKEND_ENABLED = "true";
   process.env.GROWGO_DEVELOPMENT_PLAYER_SNAPSHOT_ENABLED = "true";
+  process.env.GROWGO_DEVELOPMENT_OPERATIONAL_SAFEGUARDS_ENABLED = "true";
+  process.env.GROWGO_DEVELOPMENT_BACKEND_ROLLBACK_STATE = "development_enabled";
   process.env.FIRESTORE_EMULATOR_HOST = "127.0.0.1:8088";
   process.env.GCLOUD_PROJECT = projectId;
   process.env.GOOGLE_CLOUD_PROJECT = projectId;

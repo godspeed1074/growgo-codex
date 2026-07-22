@@ -61,6 +61,7 @@ test("unauthenticated request is rejected before activation evaluation", async (
     requireDevelopmentCapabilityAccess() {
       guardCalled = true;
     },
+    requireOperationalSafeguardAccess() {},
     async readPlayer() {
       readCalled = true;
       throw new Error("read should not occur");
@@ -203,6 +204,7 @@ test("valid development identity plus both required flags allows the callable to
   let readCallCount = 0;
   const handler = snapshotModule.createGetPlayerSnapshotHandler({
     requireDevelopmentCapabilityAccess() {},
+    requireOperationalSafeguardAccess() {},
     async readPlayer(uid) {
       readCallCount += 1;
       assert.equal(uid, "test-player-001");
@@ -248,6 +250,7 @@ test("denial occurs before any Firestore read", async () => {
         })
       });
     },
+    requireOperationalSafeguardAccess() {},
     async readPlayer() {
       readCallCount += 1;
       throw new Error("read should not occur");
@@ -271,6 +274,7 @@ test("allowed execution preserves the existing response shape", async () => {
   const now = Timestamp.fromDate(new Date("2026-07-22T01:00:00.000Z"));
   const handler = snapshotModule.createGetPlayerSnapshotHandler({
     requireDevelopmentCapabilityAccess() {},
+    requireOperationalSafeguardAccess() {},
     async readPlayer() {
       return playerStore.buildDefaultPlayerDocument(now);
     }
@@ -392,6 +396,7 @@ test("no live Firebase project is contacted by the denied callable path", async 
         })
       });
     },
+    requireOperationalSafeguardAccess() {},
     async readPlayer() {
       readCallCount += 1;
       throw new Error("live read should not occur");

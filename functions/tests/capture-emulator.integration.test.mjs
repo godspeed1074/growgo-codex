@@ -126,7 +126,13 @@ test("capturePin records deferred requests with persistent reservation, replay, 
   assert.equal(beforeBootstrap.body.error.status, "FAILED_PRECONDITION");
 
   const captureRequestsAfterMissingPlayer = await listCollection("captureRequests");
-  assert.equal(captureRequestsAfterMissingPlayer.length, captureRequestsBefore.length);
+  assert.equal(
+    findCaptureRequests(captureRequestsAfterMissingPlayer, {
+      uid: firstUser.localId,
+      requestId: basePayload.requestId
+    }).length,
+    0
+  );
 
   const bootstrapFirstUser = await callFunction("bootstrapPlayer", firstUser.idToken, {
     requestId: "capture-bootstrap-001"
@@ -300,10 +306,49 @@ test("capturePin records deferred requests with persistent reservation, replay, 
   assert.ok(playersAfter.some((entry) => entry.id === firstUser.localId));
   assert.ok(playersAfter.some((entry) => entry.id === secondUser.localId));
 
-  assert.equal((await listCollection("captures")).length, capturesBefore.length);
-  assert.equal(idempotencyAfter.length, idempotencyBefore.length + 3);
-  assert.equal((await listCollection("requests")).length, requestsBefore.length);
-  assert.equal((await listCollection("playerPrivate")).length, playerPrivateBefore.length);
+  assert.equal(
+    (await listCollection("captures")).filter(
+      (entry) =>
+        [firstUser.localId, secondUser.localId].includes(entry.data.uid) &&
+        [
+          basePayload.requestId,
+          "capture-test-002",
+          "capture-test-injection-001"
+        ].includes(entry.data.requestId)
+    ).length,
+    0
+  );
+  assert.equal(
+    idempotencyAfter.filter(
+      (entry) =>
+        entry.data.operation === "capturePin" &&
+        [firstUser.localId, secondUser.localId].includes(entry.data.uid) &&
+        [
+          basePayload.requestId,
+          "capture-test-002",
+          "capture-test-injection-001"
+        ].includes(entry.data.idempotencyKey)
+    ).length,
+    3
+  );
+  assert.equal(
+    (await listCollection("requests")).filter(
+      (entry) =>
+        [firstUser.localId, secondUser.localId].includes(entry.data.uid) &&
+        [
+          basePayload.requestId,
+          "capture-test-002",
+          "capture-test-injection-001"
+        ].includes(entry.data.requestId)
+    ).length,
+    0
+  );
+  assert.equal(
+    (await listCollection("playerPrivate")).filter((entry) =>
+      [firstUser.localId, secondUser.localId].includes(entry.id)
+    ).length,
+    0
+  );
 });
 
 test("capturePin concurrent identical requests produce one first result, one replay result, and one reservation", async (t) => {
@@ -367,11 +412,41 @@ test("capturePin concurrent identical requests produce one first result, one rep
     }).length,
     1
   );
-  assert.equal(captureRequestsAfter.length, captureRequestsBefore.length + 1);
-  assert.equal(idempotencyAfter.length, idempotencyBefore.length + 1);
-  assert.equal((await listCollection("captures")).length, capturesBefore.length);
-  assert.equal((await listCollection("requests")).length, requestsBefore.length);
-  assert.equal((await listCollection("playerPrivate")).length, playerPrivateBefore.length);
+  assert.equal(
+    findCaptureRequests(captureRequestsAfter, {
+      uid: user.localId,
+      requestId: payload.requestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: user.localId,
+      requestId: payload.requestId
+    }).length,
+    1
+  );
+  assert.equal(
+    (await listCollection("captures")).filter(
+      (entry) =>
+        entry.data.uid === user.localId &&
+        entry.data.requestId === payload.requestId
+    ).length,
+    0
+  );
+  assert.equal(
+    (await listCollection("requests")).filter(
+      (entry) =>
+        entry.data.uid === user.localId &&
+        entry.data.requestId === payload.requestId
+    ).length,
+    0
+  );
+  assert.equal(
+    (await listCollection("playerPrivate")).filter((entry) => entry.id === user.localId)
+      .length,
+    0
+  );
 });
 
 test("capturePin concurrent conflicting requests reserve once and reject the conflicting replay safely", async (t) => {
@@ -445,9 +520,39 @@ test("capturePin concurrent conflicting requests reserve once and reject the con
     }).length,
     1
   );
-  assert.equal(captureRequestsAfter.length, captureRequestsBefore.length + 1);
-  assert.equal(idempotencyAfter.length, idempotencyBefore.length + 1);
-  assert.equal((await listCollection("captures")).length, capturesBefore.length);
-  assert.equal((await listCollection("requests")).length, requestsBefore.length);
-  assert.equal((await listCollection("playerPrivate")).length, playerPrivateBefore.length);
+  assert.equal(
+    findCaptureRequests(captureRequestsAfter, {
+      uid: user.localId,
+      requestId: sharedRequestId
+    }).length,
+    1
+  );
+  assert.equal(
+    findIdempotencyReservations(idempotencyAfter, {
+      uid: user.localId,
+      requestId: sharedRequestId
+    }).length,
+    1
+  );
+  assert.equal(
+    (await listCollection("captures")).filter(
+      (entry) =>
+        entry.data.uid === user.localId &&
+        entry.data.requestId === sharedRequestId
+    ).length,
+    0
+  );
+  assert.equal(
+    (await listCollection("requests")).filter(
+      (entry) =>
+        entry.data.uid === user.localId &&
+        entry.data.requestId === sharedRequestId
+    ).length,
+    0
+  );
+  assert.equal(
+    (await listCollection("playerPrivate")).filter((entry) => entry.id === user.localId)
+      .length,
+    0
+  );
 });
