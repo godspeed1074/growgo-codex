@@ -661,3 +661,61 @@ No new infrastructure is added in this phase.
   - Phase 4 still requires explicit user authorization
   - any future evaluator wiring must remain development-only and fail closed
   - runtime consumer implementation must remain separate from this passive planning section
+
+## 14. Phase 4 Result
+
+- Phase 4 objective: implement the first tightly controlled, development-only, fail-closed runtime consumer of the Phase 2 activation evaluator.
+- Selected first runtime consumer:
+  - `getPlayerSnapshot`
+- Selection rationale:
+  - read-only is lower risk than `bootstrapPlayer`
+  - snapshot flow performs minimal Firestore activity
+  - snapshot flow does not depend on incomplete idempotency reservation
+  - snapshot flow does not invoke authoritative-pin transport
+  - existing Firebase Authentication was already mandatory
+- Implemented runtime guard:
+  - `functions/src/security/developmentBackendCapabilityGuard.ts`
+  - selected capability: `player_snapshot`
+  - callable error code: `failed-precondition`
+  - client-safe message: `This development backend capability is not available in the current environment.`
+- Exact callable integration order:
+  1. callable request received
+  2. `requireAuthenticated(request)`
+  3. existing App Check guard evaluation
+  4. development backend capability guard
+  5. existing payload validation
+  6. existing player snapshot logic
+  7. existing response returned
+- Default fail-closed behavior:
+  - with normal current configuration, `getPlayerSnapshot` now denies after authentication
+  - denial occurs before any Firestore read
+  - no snapshot data is returned
+  - no production or beta activation is possible
+- Development allow-path behavior:
+  - allow requires valid development environment identity
+  - allow requires matching development project identity
+  - allow requires loopback-safe emulator identity when emulator mode is declared
+  - allow requires `GROWGO_DEVELOPMENT_BACKEND_ENABLED === "true"`
+  - allow requires `GROWGO_DEVELOPMENT_PLAYER_SNAPSHOT_ENABLED === "true"`
+  - allow preserves the existing snapshot response shape
+- Evidence that no other consumer was wired:
+  - only `functions/src/api/getPlayerSnapshot.ts` imports the runtime guard
+  - `bootstrapPlayer` does not import the runtime guard
+  - `capturePin` does not import the runtime guard
+  - `functions/src/index.ts` remains unchanged
+- Capture and authoritative-pin non-activation evidence:
+  - `capturePin` remains deferred-only and unchanged
+  - authoritative-pin transport remains disabled
+  - persistent idempotency reservation remains incomplete, so `capturePin` is still not an approved runtime consumer
+- Tests added:
+  - `functions/tests/get-player-snapshot-development-guard.test.mjs`
+- Explicit no-client-integration statement:
+  - no client integration exists
+  - no live Firebase traffic was enabled
+  - no backend capability became broadly active
+  - this phase only guarded one server-side callable
+- Phase 4 closeout: PASS
+- Phase 5 authorization boundary:
+  - Phase 5 still requires explicit user authorization
+  - any later guarded consumer beyond `getPlayerSnapshot` must be separately justified
+  - `capturePin` remains blocked until persistent idempotency reservation and emulator evidence are complete
