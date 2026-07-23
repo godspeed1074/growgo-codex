@@ -24,6 +24,7 @@ import {
   requireAppCheckIfEnabled,
   requireAuthenticated
 } from "../security/requireAuthenticated";
+import { requireInvitedUserAccess } from "../security/requireInvitedUserAccess";
 import {
   asObject,
   assertAllowedKeys
@@ -33,6 +34,7 @@ export const GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY =
   "player_snapshot" as const;
 
 export interface GetPlayerSnapshotHandlerDependencies {
+  requireInvitedUserAccess(request: CallableRequest<unknown>): void;
   requireDevelopmentCapabilityAccess(params: {
     capability: typeof GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY;
   }): void;
@@ -41,6 +43,9 @@ export interface GetPlayerSnapshotHandlerDependencies {
 }
 
 const defaultGetPlayerSnapshotHandlerDependencies: GetPlayerSnapshotHandlerDependencies = {
+  requireInvitedUserAccess(request) {
+    requireInvitedUserAccess(request);
+  },
   requireDevelopmentCapabilityAccess(params) {
     requireDevelopmentBackendCapabilityAccess({
       capability: params.capability
@@ -67,15 +72,21 @@ const defaultGetPlayerSnapshotHandlerDependencies: GetPlayerSnapshotHandlerDepen
 };
 
 export function createGetPlayerSnapshotHandler(
-  dependencies: GetPlayerSnapshotHandlerDependencies = defaultGetPlayerSnapshotHandlerDependencies
+  dependencies: Partial<GetPlayerSnapshotHandlerDependencies> = defaultGetPlayerSnapshotHandlerDependencies
 ) {
+  const resolvedDependencies: GetPlayerSnapshotHandlerDependencies = {
+    ...defaultGetPlayerSnapshotHandlerDependencies,
+    ...dependencies
+  };
+
   return async (request: CallableRequest<unknown>) => {
     const authContext = requireAuthenticated(request);
     requireAppCheckIfEnabled(request);
-    dependencies.requireDevelopmentCapabilityAccess({
+    resolvedDependencies.requireInvitedUserAccess(request);
+    resolvedDependencies.requireDevelopmentCapabilityAccess({
       capability: GET_PLAYER_SNAPSHOT_DEVELOPMENT_BACKEND_CAPABILITY
     });
-    dependencies.requireOperationalSafeguardAccess({
+    resolvedDependencies.requireOperationalSafeguardAccess({
       uid: authContext.uid
     });
 
@@ -83,7 +94,7 @@ export function createGetPlayerSnapshotHandler(
     assertAllowedKeys(payload, [], "getPlayerSnapshot payload");
 
     const _validatedRequest: PlayerSnapshotRequest = {};
-    const player = await dependencies.readPlayer(authContext.uid);
+    const player = await resolvedDependencies.readPlayer(authContext.uid);
 
     return {
       ok: true,

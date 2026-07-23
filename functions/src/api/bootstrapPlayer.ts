@@ -22,6 +22,7 @@ import {
   requireAppCheckIfEnabled,
   requireAuthenticated
 } from "../security/requireAuthenticated";
+import { requireInvitedUserAccess } from "../security/requireInvitedUserAccess";
 import {
   asObject,
   assertAllowedKeys,
@@ -34,6 +35,7 @@ export interface BootstrapPlayerTransactionResult {
 }
 
 export interface BootstrapPlayerHandlerDependencies {
+  requireInvitedUserAccess(request: CallableRequest<unknown>): void;
   reserveIdempotency(params: {
     requestId: string;
     uid: string;
@@ -42,6 +44,9 @@ export interface BootstrapPlayerHandlerDependencies {
 }
 
 const defaultBootstrapPlayerHandlerDependencies: BootstrapPlayerHandlerDependencies = {
+  requireInvitedUserAccess(request) {
+    requireInvitedUserAccess(request);
+  },
   async reserveIdempotency(params) {
     return reserveIdempotencySlot(
       buildIdempotencyEnvelope({
@@ -88,11 +93,17 @@ const defaultBootstrapPlayerHandlerDependencies: BootstrapPlayerHandlerDependenc
 };
 
 export function createBootstrapPlayerHandler(
-  dependencies: BootstrapPlayerHandlerDependencies = defaultBootstrapPlayerHandlerDependencies
+  dependencies: Partial<BootstrapPlayerHandlerDependencies> = defaultBootstrapPlayerHandlerDependencies
 ) {
+  const resolvedDependencies: BootstrapPlayerHandlerDependencies = {
+    ...defaultBootstrapPlayerHandlerDependencies,
+    ...dependencies
+  };
+
   return async (request: CallableRequest<unknown>) => {
     const authContext = requireAuthenticated(request);
     requireAppCheckIfEnabled(request);
+    resolvedDependencies.requireInvitedUserAccess(request);
 
     const payload = asObject(request.data, "bootstrapPlayer payload");
     assertAllowedKeys(payload, ["requestId"], "bootstrapPlayer payload");
@@ -107,14 +118,14 @@ export function createBootstrapPlayerHandler(
       operation: "bootstrapPlayer",
       uid: authContext.uid
     });
-    const idempotencyReservation = await dependencies.reserveIdempotency({
+    const idempotencyReservation = await resolvedDependencies.reserveIdempotency({
       requestId,
       uid: authContext.uid
     });
 
     // requestId is validated now for future persistent request-ledger support,
     // but this phase only guarantees safe bootstrap semantics for a single uid.
-    const bootstrapResult = await dependencies.runBootstrapTransaction(
+    const bootstrapResult = await resolvedDependencies.runBootstrapTransaction(
       authContext.uid
     );
 
