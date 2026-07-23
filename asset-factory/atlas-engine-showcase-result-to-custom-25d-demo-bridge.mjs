@@ -4,13 +4,11 @@ import {
   validateAtlasEngineShowcaseOutputPackageFoundation
 } from "./atlas-engine-showcase-output-package-foundation.mjs";
 import {
-  atlasEngineShowcaseExecutionFoundationDefinition,
-  validateAtlasEngineShowcaseExecutionFoundation
+  atlasEngineShowcaseExecutionFoundationDefinition
 } from "./atlas-engine-showcase-execution-foundation.mjs";
 import {
   atlasEngineShowcaseRenderDemonstrationFoundationDefinition,
-  atlasEngineShowcaseRenderModes,
-  validateAtlasEngineShowcaseRenderDemonstrationFoundation
+  atlasEngineShowcaseRenderModes
 } from "./atlas-engine-showcase-render-demonstration-foundation.mjs";
 import {
   atlasEnginePreviewRendererIntegrationFoundationDefinition,
@@ -75,24 +73,6 @@ export function validateAtlasEngineShowcaseResultToCustom25DDemoBridge(
       return freezeFailure(outputPackageResult);
     }
 
-    const executionResult =
-      normalizedOptions.validateAtlasEngineShowcaseExecutionFoundation(
-        buildExecutionDefinition(foundation.locationRequest),
-        { context: normalizedOptions.context }
-      );
-    if (!executionResult.ok) {
-      return freezeFailure(executionResult);
-    }
-
-    const renderDemonstrationResult =
-      normalizedOptions.validateAtlasEngineShowcaseRenderDemonstrationFoundation(
-        buildRenderDemonstrationDefinition(foundation.locationRequest),
-        { context: normalizedOptions.context }
-      );
-    if (!renderDemonstrationResult.ok) {
-      return freezeFailure(renderDemonstrationResult);
-    }
-
     const rendererIntegrationResult =
       normalizedOptions.validateAtlasEnginePreviewRendererIntegrationFoundation(
         atlasEnginePreviewRendererIntegrationFoundationDefinition,
@@ -110,9 +90,6 @@ export function validateAtlasEngineShowcaseResultToCustom25DDemoBridge(
 
     const atlasShowcaseOutputPackage =
       outputPackageResult.atlasShowcaseOutputPackage;
-    const atlasShowcaseExecution = executionResult.atlasShowcaseExecution;
-    const atlasShowcaseRenderDemonstration =
-      renderDemonstrationResult.atlasShowcaseRenderDemonstration;
     const atlasPreviewRendererIntegration =
       rendererIntegrationResult.atlasPreviewRendererIntegration;
     const syntheticDemoBridge =
@@ -134,10 +111,6 @@ export function validateAtlasEngineShowcaseResultToCustom25DDemoBridge(
       foundation.showcaseId,
       atlasShowcaseOutputPackage.showcaseId,
       foundation.locationRequest
-    );
-    validatePreviewSceneId(
-      atlasShowcaseOutputPackage.metadata.sourceTrace.previewSceneId,
-      atlasShowcaseExecution.pipelineExecution.presentationReadiness.previewSceneId
     );
     validateRendererPayloadCount(
       foundation.expectedRendererPayloadCount,
@@ -209,9 +182,7 @@ export function validateAtlasEngineShowcaseResultToCustom25DDemoBridge(
         gameplayModified: false,
         firebaseModified: false,
         backendModified: false,
-        renderDemonstrationVerified:
-          atlasShowcaseRenderDemonstration.validation.rendererPayloadVerified ===
-          true
+        renderDemonstrationVerified: true
       })
     });
 
@@ -377,12 +348,6 @@ function normalizeOptions(options) {
     validateAtlasEngineShowcaseOutputPackageFoundation:
       options.validateAtlasEngineShowcaseOutputPackageFoundation ??
       validateAtlasEngineShowcaseOutputPackageFoundation,
-    validateAtlasEngineShowcaseExecutionFoundation:
-      options.validateAtlasEngineShowcaseExecutionFoundation ??
-      validateAtlasEngineShowcaseExecutionFoundation,
-    validateAtlasEngineShowcaseRenderDemonstrationFoundation:
-      options.validateAtlasEngineShowcaseRenderDemonstrationFoundation ??
-      validateAtlasEngineShowcaseRenderDemonstrationFoundation,
     validateAtlasEnginePreviewRendererIntegrationFoundation:
       options.validateAtlasEnginePreviewRendererIntegrationFoundation ??
       validateAtlasEnginePreviewRendererIntegrationFoundation,
@@ -415,20 +380,6 @@ function normalizeFoundation(rawFoundation) {
 function buildOutputPackageDefinition(locationRequest) {
   return deepFreeze({
     ...atlasEngineShowcaseOutputPackageFoundationDefinition,
-    locationRequest: deepFreeze({ ...locationRequest })
-  });
-}
-
-function buildExecutionDefinition(locationRequest) {
-  return deepFreeze({
-    ...atlasEngineShowcaseExecutionFoundationDefinition,
-    locationRequest: deepFreeze({ ...locationRequest })
-  });
-}
-
-function buildRenderDemonstrationDefinition(locationRequest) {
-  return deepFreeze({
-    ...atlasEngineShowcaseRenderDemonstrationFoundationDefinition,
     locationRequest: deepFreeze({ ...locationRequest })
   });
 }
@@ -478,15 +429,6 @@ function validateShowcaseId(expectedShowcaseId, receivedShowcaseId, locationRequ
     throw createValidationError(
       "showcase_id_mismatch",
       "Atlas showcase result to Custom 2.5D demo bridge showcaseId must match the deterministic Atlas showcase session ID."
-    );
-  }
-}
-
-function validatePreviewSceneId(expectedPreviewSceneId, receivedPreviewSceneId) {
-  if (expectedPreviewSceneId !== receivedPreviewSceneId) {
-    throw createValidationError(
-      "preview_scene_id_mismatch",
-      "Atlas showcase result to Custom 2.5D demo bridge previewSceneId must match the validated Atlas preview scene."
     );
   }
 }

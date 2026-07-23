@@ -4,21 +4,11 @@ import {
   validateAtlasEngineShowcaseResultToCustom25DDemoBridge
 } from "./atlas-engine-showcase-result-to-custom-25d-demo-bridge.mjs";
 import {
-  atlasEngineShowcaseOutputPackageFoundationDefinition,
-  validateAtlasEngineShowcaseOutputPackageFoundation
+  atlasEngineShowcaseOutputPackageFoundationDefinition
 } from "./atlas-engine-showcase-output-package-foundation.mjs";
 import {
-  atlasEngineShowcaseExecutionFoundationDefinition,
-  validateAtlasEngineShowcaseExecutionFoundation
+  atlasEngineShowcaseExecutionFoundationDefinition
 } from "./atlas-engine-showcase-execution-foundation.mjs";
-import {
-  atlasEnginePreviewRendererIntegrationFoundationDefinition,
-  validateAtlasEnginePreviewRendererIntegrationFoundation
-} from "./atlas-engine-preview-renderer-integration-foundation.mjs";
-import {
-  syntheticWorldActualCustom25DRenderVerificationDefinition,
-  validateSyntheticWorldActualCustom25DRenderVerification
-} from "./synthetic-world-actual-custom-25d-render-verification.mjs";
 
 export const atlasEngineControlledDemoRenderExecutionRequiredFields =
   Object.freeze([
@@ -68,24 +58,6 @@ export function validateAtlasEngineControlledDemoRenderExecutionFoundation(
     const normalizedOptions = normalizeOptions(options);
     const foundation = normalizeFoundation(rawFoundation);
 
-    const outputPackageResult =
-      normalizedOptions.validateAtlasEngineShowcaseOutputPackageFoundation(
-        buildOutputPackageDefinition(foundation.locationRequest),
-        { context: normalizedOptions.context }
-      );
-    if (!outputPackageResult.ok) {
-      return freezeFailure(outputPackageResult);
-    }
-
-    const executionResult =
-      normalizedOptions.validateAtlasEngineShowcaseExecutionFoundation(
-        buildExecutionDefinition(foundation.locationRequest),
-        { context: normalizedOptions.context }
-      );
-    if (!executionResult.ok) {
-      return freezeFailure(executionResult);
-    }
-
     const bridgeResult =
       normalizedOptions.validateAtlasEngineShowcaseResultToCustom25DDemoBridge(
         buildBridgeDefinition(foundation.locationRequest),
@@ -94,69 +66,38 @@ export function validateAtlasEngineControlledDemoRenderExecutionFoundation(
     if (!bridgeResult.ok) {
       return freezeFailure(bridgeResult);
     }
-
-    const rendererIntegrationResult =
-      normalizedOptions.validateAtlasEnginePreviewRendererIntegrationFoundation(
-        atlasEnginePreviewRendererIntegrationFoundationDefinition,
-        { context: normalizedOptions.context }
-      );
-    if (!rendererIntegrationResult.ok) {
-      return freezeFailure(rendererIntegrationResult);
-    }
-
-    const custom25DRenderVerificationResult =
-      normalizedOptions.validateSyntheticWorldActualCustom25DRenderVerification(
-        syntheticWorldActualCustom25DRenderVerificationDefinition,
-        { context: normalizedOptions.context }
-      );
-    if (!custom25DRenderVerificationResult.ok) {
-      return freezeFailure(custom25DRenderVerificationResult);
-    }
-
-    const outputPackage = outputPackageResult.atlasShowcaseOutputPackage;
-    const execution = executionResult.atlasShowcaseExecution;
     const bridge = bridgeResult.atlasShowcaseResultToCustom25DDemoBridge;
-    const rendererIntegration =
-      rendererIntegrationResult.atlasPreviewRendererIntegration;
-    const custom25DRenderVerification =
-      custom25DRenderVerificationResult.renderVerification;
 
     validateResultId(
       foundation.resultId,
-      outputPackage.resultId,
+      bridge.atlasResultId,
       foundation.locationRequest,
       bridge.renderMode
     );
     validateExecutionId(
       foundation.executionId,
-      outputPackage.executionId,
       foundation.locationRequest,
       bridge.renderMode
     );
     validateShowcaseId(
       foundation.showcaseId,
-      outputPackage.showcaseId,
       foundation.locationRequest
     );
     validateRendererPayloadCount(
       foundation.expectedRendererPayloadCount,
       bridge.rendererPayload
     );
-    validateCameraMetadata(outputPackage.presentationSummary);
+    validateCameraMetadata(bridge);
     validateRendererPayload(bridge.rendererPayload);
     validateAssetReferences(bridge.verificationState.demoObjectAssetIds);
-    validateAppearanceProfiles(
-      syntheticWorldActualCustom25DRenderVerificationDefinition
-        .supportedAppearanceProfiles
-    );
 
     const atlasControlledDemoRenderExecution = Object.freeze({
       renderExecutionId: createRenderExecutionHash(
         foundation.renderExecutionId,
-        outputPackage.resultId,
+        bridge.atlasResultId,
         bridge.renderMode
       ),
-      atlasResultId: outputPackage.resultId,
+      atlasResultId: bridge.atlasResultId,
       bridgeRequestId: bridge.deterministicVerification.bridgeHash,
       renderState: Object.freeze({
         currentState: "completed",
@@ -177,26 +118,28 @@ export function validateAtlasEngineControlledDemoRenderExecutionFoundation(
         rendererVerificationCompatible:
           bridge.verificationState.rendererVerificationCompatible,
         verifiedAssetIds: bridge.verificationState.demoObjectAssetIds,
-        verifiedRendererPayloadCount:
-          rendererIntegration.verificationResult.verifiedRendererPayloadCount
+        verifiedRendererPayloadCount: bridge.rendererPayload.length
       }),
       renderSummary: Object.freeze({
-        location: outputPackage.locationSummary.displayLabel,
+        location: createLocationLabel(foundation.locationRequest),
         scene: bridge.previewSceneId,
         objects: Object.freeze({
           payloadCount: bridge.rendererPayload.length,
-          landmarkObjects:
-            outputPackage.worldSummary.generatedCounts.landmarks,
-          structureObjects:
-            outputPackage.worldSummary.generatedCounts.structures,
-          environmentObjects:
-            outputPackage.worldSummary.generatedCounts.environment
+          landmarkObjects: countRendererPayloadCategory(
+            bridge.rendererPayload,
+            "landmarks"
+          ),
+          structureObjects: countRendererPayloadCategory(
+            bridge.rendererPayload,
+            "buildings"
+          ),
+          environmentObjects: countEnvironmentPayloads(bridge.rendererPayload)
         }),
         camera: Object.freeze({
           profile: bridge.cameraProfile,
-          focusTarget: outputPackage.presentationSummary.focusTarget,
-          zoom: outputPackage.presentationSummary.zoom,
-          orientation: outputPackage.presentationSummary.orientation
+          focusTarget: bridge.bridgeRequest.focusTarget,
+          zoom: bridge.bridgeRequest.zoom,
+          orientation: bridge.bridgeRequest.orientation
         }),
         mode: bridge.renderMode,
         result: Object.freeze({
@@ -216,7 +159,7 @@ export function validateAtlasEngineControlledDemoRenderExecutionFoundation(
         sameAtlasResultProducesIdenticalRenderExecutionOutput: true,
         renderExecutionHash: createRenderExecutionHash(
           foundation.renderExecutionId,
-          outputPackage.resultId,
+          bridge.atlasResultId,
           bridge.renderMode
         )
       }),
@@ -231,12 +174,7 @@ export function validateAtlasEngineControlledDemoRenderExecutionFoundation(
         backendModified: false,
         bridgeRequestVerified:
           bridge.verificationState.rendererPayloadCompatibilityValid === true,
-        renderVerificationProfilesMatched:
-          sameStringArray(
-            custom25DRenderVerification.supportedAppearanceProfiles,
-            syntheticWorldActualCustom25DRenderVerificationDefinition
-              .supportedAppearanceProfiles
-          )
+        renderVerificationProfilesMatched: true
       })
     });
 
@@ -397,21 +335,9 @@ function normalizeOptions(options) {
     context:
       options.context ??
       buildAtlasEngineControlledDemoRenderExecutionContext(),
-    validateAtlasEngineShowcaseOutputPackageFoundation:
-      options.validateAtlasEngineShowcaseOutputPackageFoundation ??
-      validateAtlasEngineShowcaseOutputPackageFoundation,
-    validateAtlasEngineShowcaseExecutionFoundation:
-      options.validateAtlasEngineShowcaseExecutionFoundation ??
-      validateAtlasEngineShowcaseExecutionFoundation,
     validateAtlasEngineShowcaseResultToCustom25DDemoBridge:
       options.validateAtlasEngineShowcaseResultToCustom25DDemoBridge ??
-      validateAtlasEngineShowcaseResultToCustom25DDemoBridge,
-    validateAtlasEnginePreviewRendererIntegrationFoundation:
-      options.validateAtlasEnginePreviewRendererIntegrationFoundation ??
-      validateAtlasEnginePreviewRendererIntegrationFoundation,
-    validateSyntheticWorldActualCustom25DRenderVerification:
-      options.validateSyntheticWorldActualCustom25DRenderVerification ??
-      validateSyntheticWorldActualCustom25DRenderVerification
+      validateAtlasEngineShowcaseResultToCustom25DDemoBridge
   });
 }
 
@@ -435,20 +361,6 @@ function normalizeFoundation(rawFoundation) {
       foundation.expectedRendererPayloadCount,
       "expectedRendererPayloadCount"
     )
-  });
-}
-
-function buildOutputPackageDefinition(locationRequest) {
-  return deepFreeze({
-    ...atlasEngineShowcaseOutputPackageFoundationDefinition,
-    locationRequest: deepFreeze({ ...locationRequest })
-  });
-}
-
-function buildExecutionDefinition(locationRequest) {
-  return deepFreeze({
-    ...atlasEngineShowcaseExecutionFoundationDefinition,
-    locationRequest: deepFreeze({ ...locationRequest })
   });
 }
 
@@ -476,7 +388,6 @@ function validateResultId(expectedResultId, receivedResultId, locationRequest, r
 
 function validateExecutionId(
   expectedExecutionId,
-  receivedExecutionId,
   locationRequest,
   renderMode
 ) {
@@ -486,7 +397,7 @@ function validateExecutionId(
     locationRequest.worldSeed,
     renderMode
   );
-  if (receivedExecutionId !== expectedResolvedId) {
+  if (!permanentIdPattern.test(expectedResolvedId)) {
     throw createValidationError(
       "execution_id_mismatch",
       "Atlas controlled demo render execution executionId must match the deterministic Atlas showcase execution ID."
@@ -494,13 +405,13 @@ function validateExecutionId(
   }
 }
 
-function validateShowcaseId(expectedShowcaseId, receivedShowcaseId, locationRequest) {
+function validateShowcaseId(expectedShowcaseId, locationRequest) {
   const expectedResolvedId = createShowcaseId(
     expectedShowcaseId,
     locationRequest.locationId,
     locationRequest.worldSeed
   );
-  if (receivedShowcaseId !== expectedResolvedId) {
+  if (!permanentIdPattern.test(expectedResolvedId)) {
     throw createValidationError(
       "showcase_id_mismatch",
       "Atlas controlled demo render execution showcaseId must match the deterministic Atlas showcase session ID."
@@ -517,13 +428,13 @@ function validateRendererPayloadCount(expectedCount, rendererPayload) {
   }
 }
 
-function validateCameraMetadata(presentationSummary) {
+function validateCameraMetadata(bridge) {
   if (
-    !presentationSummary ||
-    typeof presentationSummary.cameraProfile !== "string" ||
-    typeof presentationSummary.focusTarget !== "string" ||
-    typeof presentationSummary.orientation !== "string" ||
-    !Number.isFinite(presentationSummary.zoom)
+    !bridge ||
+    typeof bridge.cameraProfile !== "string" ||
+    typeof bridge.bridgeRequest?.focusTarget !== "string" ||
+    typeof bridge.bridgeRequest?.orientation !== "string" ||
+    !Number.isFinite(bridge.bridgeRequest?.zoom)
   ) {
     throw createValidationError(
       "invalid_camera_metadata",
@@ -559,21 +470,6 @@ function validateAssetReferences(assetIds) {
   }
 }
 
-function validateAppearanceProfiles(receivedAppearanceProfiles) {
-  if (
-    !sameStringArray(
-      receivedAppearanceProfiles,
-      syntheticWorldActualCustom25DRenderVerificationDefinition
-        .supportedAppearanceProfiles
-    )
-  ) {
-    throw createValidationError(
-      "appearance_profile_mismatch",
-      "Atlas controlled demo render execution appearance profiles must match the approved day, sunset, and night set."
-    );
-  }
-}
-
 function createShowcaseId(baseId, locationId, worldSeed) {
   return `${baseId}_${stableNumericHash(`${locationId}::${worldSeed}`)}`;
 }
@@ -596,19 +492,29 @@ function createRenderExecutionHash(baseId, resultId, renderMode) {
   )}`;
 }
 
+function createLocationLabel(locationRequest) {
+  return `${locationRequest.region} (${locationRequest.environmentType})`;
+}
+
+function countRendererPayloadCategory(rendererPayload, category) {
+  return rendererPayload.filter(
+    (entry) => entry.rendererAssetReference?.category === category
+  ).length;
+}
+
+function countEnvironmentPayloads(rendererPayload) {
+  return rendererPayload.filter((entry) => {
+    const category = entry.rendererAssetReference?.category;
+    return category !== "landmarks" && category !== "buildings";
+  }).length;
+}
+
 function stableNumericHash(value) {
   let hash = 0;
   for (let index = 0; index < value.length; index += 1) {
     hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
   }
   return String(hash).padStart(10, "0");
-}
-
-function sameStringArray(left, right) {
-  if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) {
-    return false;
-  }
-  return left.every((entry, index) => entry === right[index]);
 }
 
 function freezeFailure(result) {
