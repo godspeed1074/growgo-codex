@@ -93,7 +93,8 @@ export const coreWorldPlacementRules = deepFreeze([
         "ROAD_STRAIGHT_SMALL_001",
         "ROAD_CURVE_SMALL_001",
         "ROAD_INTERSECTION_SMALL_001",
-        "TRAIL_PATH_SMALL_001"
+        "TRAIL_PATH_SMALL_001",
+        "FOOTPATH_SMALL_001"
       ],
       incompatibleAssetIds: []
     }
@@ -123,8 +124,10 @@ export const coreWorldPlacementRules = deepFreeze([
         "ROCK_SMALL_001",
         "TREE_EUCALYPTUS_001",
         "TREE_PINE_001",
+        "TREE_NATIVE_SMALL_001",
         "BUSH_NATIVE_001",
-        "ROCK_COASTAL_001"
+        "ROCK_COASTAL_001",
+        "GRASS_PATCH_001"
       ],
       incompatibleAssetIds: []
     }
@@ -152,8 +155,11 @@ export const coreWorldPlacementRules = deepFreeze([
         "BUILDING_HOUSE_SMALL_001",
         "BUILDING_SHOP_SMALL_001",
         "BUILDING_HOUSE_SMALL_COASTAL_001",
+        "BUILDING_HOUSE_WEATHERBOARD_001",
+        "BUILDING_HOUSE_SUBURBAN_001",
         "BUILDING_BAKERY_SMALL_001",
-        "BUILDING_GAS_STATION_SMALL_001"
+        "BUILDING_GAS_STATION_SMALL_001",
+        "BUILDING_SHOP_GENERAL_001"
       ],
       incompatibleAssetIds: ["ROAD_INTERSECTION_001"]
     }
@@ -180,8 +186,10 @@ export const coreWorldPlacementRules = deepFreeze([
       allowedAssetIds: [
         "DECORATION_SIGN_BASIC_001",
         "SIGN_BASIC_001",
+        "SIGN_GENERIC_001",
         "FENCE_WOOD_001",
-        "LAMP_POST_BASIC_001"
+        "LAMP_POST_BASIC_001",
+        "BENCH_PARK_001"
       ],
       incompatibleAssetIds: []
     }

@@ -65,6 +65,46 @@ export const starterSeedComponents = deepFreeze([
     "windows",
     "coastal_house_window_shutter"
   ),
+  createComponentRecord(
+    "WEATHERBOARD_HOUSE_WALL_PANEL_001",
+    "walls",
+    "weatherboard_house_wall_panel"
+  ),
+  createComponentRecord(
+    "WEATHERBOARD_HOUSE_ROOF_GABLE_001",
+    "roofs",
+    "weatherboard_house_roof_gable"
+  ),
+  createComponentRecord(
+    "WEATHERBOARD_HOUSE_DOOR_BASIC_001",
+    "doors",
+    "weatherboard_house_door_basic"
+  ),
+  createComponentRecord(
+    "WEATHERBOARD_HOUSE_WINDOW_BASIC_001",
+    "windows",
+    "weatherboard_house_window_basic"
+  ),
+  createComponentRecord(
+    "SUBURBAN_HOUSE_WALL_PANEL_001",
+    "walls",
+    "suburban_house_wall_panel"
+  ),
+  createComponentRecord(
+    "SUBURBAN_HOUSE_ROOF_HIP_001",
+    "roofs",
+    "suburban_house_roof_hip"
+  ),
+  createComponentRecord(
+    "SUBURBAN_HOUSE_DOOR_BASIC_001",
+    "doors",
+    "suburban_house_door_basic"
+  ),
+  createComponentRecord(
+    "SUBURBAN_HOUSE_WINDOW_WIDE_001",
+    "windows",
+    "suburban_house_window_wide"
+  ),
   createComponentRecord("BAKERY_WALL_PANEL_001", "walls", "bakery_wall_panel"),
   createComponentRecord("BAKERY_ROOF_GABLE_001", "roofs", "bakery_roof_gable"),
   createComponentRecord("BAKERY_DOOR_GLASS_001", "doors", "bakery_door_glass"),
@@ -100,6 +140,31 @@ export const starterSeedComponents = deepFreeze([
     "gas_station_pump_icon"
   ),
   createComponentRecord(
+    "SHOP_GENERAL_WALL_PANEL_001",
+    "walls",
+    "shop_general_wall_panel"
+  ),
+  createComponentRecord(
+    "SHOP_GENERAL_ROOF_FLAT_001",
+    "roofs",
+    "shop_general_roof_flat"
+  ),
+  createComponentRecord(
+    "SHOP_GENERAL_DOOR_GLASS_001",
+    "doors",
+    "shop_general_door_glass"
+  ),
+  createComponentRecord(
+    "SHOP_GENERAL_WINDOW_DISPLAY_001",
+    "windows",
+    "shop_general_window_display"
+  ),
+  createComponentRecord(
+    "SHOP_GENERAL_SIGN_PANEL_001",
+    "windows",
+    "shop_general_sign_panel"
+  ),
+  createComponentRecord(
     "ROAD_STRAIGHT_SMALL_SEGMENT_001",
     "road_pieces",
     "road_straight_small"
@@ -118,6 +183,11 @@ export const starterSeedComponents = deepFreeze([
     "TRAIL_PATH_SMALL_SEGMENT_001",
     "road_pieces",
     "trail_path_small"
+  ),
+  createComponentRecord(
+    "FOOTPATH_SMALL_SEGMENT_001",
+    "road_pieces",
+    "footpath_small"
   ),
   createComponentRecord(
     "TREE_EUCALYPTUS_TRUNK_001",
@@ -140,6 +210,16 @@ export const starterSeedComponents = deepFreeze([
     "tree_pine_canopy"
   ),
   createComponentRecord(
+    "TREE_NATIVE_SMALL_TRUNK_001",
+    "vegetation_pieces",
+    "tree_native_small_trunk"
+  ),
+  createComponentRecord(
+    "TREE_NATIVE_SMALL_CANOPY_001",
+    "vegetation_pieces",
+    "tree_native_small_canopy"
+  ),
+  createComponentRecord(
     "BUSH_NATIVE_CLUSTER_001",
     "vegetation_pieces",
     "bush_native_cluster"
@@ -149,12 +229,27 @@ export const starterSeedComponents = deepFreeze([
     "terrain_pieces",
     "rock_coastal_form"
   ),
+  createComponentRecord(
+    "GRASS_PATCH_CLUSTER_001",
+    "vegetation_pieces",
+    "grass_patch_cluster"
+  ),
   createComponentRecord("SIGN_BASIC_PANEL_001", "windows", "sign_basic_panel"),
+  createComponentRecord(
+    "SIGN_GENERIC_PANEL_001",
+    "windows",
+    "sign_generic_panel"
+  ),
   createComponentRecord("FENCE_WOOD_PANEL_001", "walls", "fence_wood_panel"),
   createComponentRecord(
     "LAMP_POST_POLE_001",
     "terrain_pieces",
     "lamp_post_pole"
+  ),
+  createComponentRecord(
+    "BENCH_PARK_SEAT_001",
+    "terrain_pieces",
+    "bench_park_seat"
   )
 ]);
 
@@ -164,6 +259,18 @@ export const starterSeedAssets = deepFreeze([
     "COASTAL_HOUSE_ROOF_GABLE_001",
     "COASTAL_HOUSE_DOOR_BASIC_001",
     "COASTAL_HOUSE_WINDOW_SHUTTER_001"
+  ]),
+  createAssetRecord("BUILDING_HOUSE_WEATHERBOARD_001", "buildings", [
+    "WEATHERBOARD_HOUSE_WALL_PANEL_001",
+    "WEATHERBOARD_HOUSE_ROOF_GABLE_001",
+    "WEATHERBOARD_HOUSE_DOOR_BASIC_001",
+    "WEATHERBOARD_HOUSE_WINDOW_BASIC_001"
+  ]),
+  createAssetRecord("BUILDING_HOUSE_SUBURBAN_001", "buildings", [
+    "SUBURBAN_HOUSE_WALL_PANEL_001",
+    "SUBURBAN_HOUSE_ROOF_HIP_001",
+    "SUBURBAN_HOUSE_DOOR_BASIC_001",
+    "SUBURBAN_HOUSE_WINDOW_WIDE_001"
   ]),
   findRequiredRecord(coreWorldSeedAssets, "assetId", "BUILDING_SHOP_SMALL_001"),
   createAssetRecord("BUILDING_BAKERY_SMALL_001", "buildings", [
@@ -180,6 +287,13 @@ export const starterSeedAssets = deepFreeze([
     "GAS_STATION_WINDOW_BASIC_001",
     "GAS_STATION_PUMP_ICON_001"
   ]),
+  createAssetRecord("BUILDING_SHOP_GENERAL_001", "buildings", [
+    "SHOP_GENERAL_WALL_PANEL_001",
+    "SHOP_GENERAL_ROOF_FLAT_001",
+    "SHOP_GENERAL_DOOR_GLASS_001",
+    "SHOP_GENERAL_WINDOW_DISPLAY_001",
+    "SHOP_GENERAL_SIGN_PANEL_001"
+  ]),
   createAssetRecord("ROAD_STRAIGHT_SMALL_001", "roads", [
     "ROAD_STRAIGHT_SMALL_SEGMENT_001"
   ]),
@@ -192,6 +306,9 @@ export const starterSeedAssets = deepFreeze([
   createAssetRecord("TRAIL_PATH_SMALL_001", "roads", [
     "TRAIL_PATH_SMALL_SEGMENT_001"
   ]),
+  createAssetRecord("FOOTPATH_SMALL_001", "roads", [
+    "FOOTPATH_SMALL_SEGMENT_001"
+  ]),
   createAssetRecord("TREE_EUCALYPTUS_001", "nature", [
     "TREE_EUCALYPTUS_TRUNK_001",
     "TREE_EUCALYPTUS_CANOPY_001"
@@ -200,12 +317,23 @@ export const starterSeedAssets = deepFreeze([
     "TREE_PINE_TRUNK_001",
     "TREE_PINE_CANOPY_001"
   ]),
+  createAssetRecord("TREE_NATIVE_SMALL_001", "nature", [
+    "TREE_NATIVE_SMALL_TRUNK_001",
+    "TREE_NATIVE_SMALL_CANOPY_001"
+  ]),
   createAssetRecord("BUSH_NATIVE_001", "nature", ["BUSH_NATIVE_CLUSTER_001"]),
   createAssetRecord("ROCK_COASTAL_001", "nature", ["ROCK_COASTAL_FORM_001"]),
+  createAssetRecord("GRASS_PATCH_001", "nature", ["GRASS_PATCH_CLUSTER_001"]),
   createAssetRecord("SIGN_BASIC_001", "decorations", ["SIGN_BASIC_PANEL_001"]),
+  createAssetRecord("SIGN_GENERIC_001", "decorations", [
+    "SIGN_GENERIC_PANEL_001"
+  ]),
   createAssetRecord("FENCE_WOOD_001", "decorations", ["FENCE_WOOD_PANEL_001"]),
   createAssetRecord("LAMP_POST_BASIC_001", "decorations", [
     "LAMP_POST_POLE_001"
+  ]),
+  createAssetRecord("BENCH_PARK_001", "decorations", [
+    "BENCH_PARK_SEAT_001"
   ])
 ]);
 
@@ -218,6 +346,26 @@ export const starterSeedRecipes = deepFreeze([
       "COASTAL_HOUSE_ROOF_GABLE_001",
       "COASTAL_HOUSE_DOOR_BASIC_001",
       "COASTAL_HOUSE_WINDOW_SHUTTER_001"
+    ]
+  ),
+  createRecipeRecord(
+    "BUILDING_HOUSE_WEATHERBOARD_RECIPE_001",
+    "building_house_weatherboard",
+    [
+      "WEATHERBOARD_HOUSE_WALL_PANEL_001",
+      "WEATHERBOARD_HOUSE_ROOF_GABLE_001",
+      "WEATHERBOARD_HOUSE_DOOR_BASIC_001",
+      "WEATHERBOARD_HOUSE_WINDOW_BASIC_001"
+    ]
+  ),
+  createRecipeRecord(
+    "BUILDING_HOUSE_SUBURBAN_RECIPE_001",
+    "building_house_suburban",
+    [
+      "SUBURBAN_HOUSE_WALL_PANEL_001",
+      "SUBURBAN_HOUSE_ROOF_HIP_001",
+      "SUBURBAN_HOUSE_DOOR_BASIC_001",
+      "SUBURBAN_HOUSE_WINDOW_WIDE_001"
     ]
   ),
   findRequiredRecord(
@@ -243,6 +391,13 @@ export const starterSeedRecipes = deepFreeze([
       "GAS_STATION_PUMP_ICON_001"
     ]
   ),
+  createRecipeRecord("BUILDING_SHOP_GENERAL_RECIPE_001", "building_shop_general", [
+    "SHOP_GENERAL_WALL_PANEL_001",
+    "SHOP_GENERAL_ROOF_FLAT_001",
+    "SHOP_GENERAL_DOOR_GLASS_001",
+    "SHOP_GENERAL_WINDOW_DISPLAY_001",
+    "SHOP_GENERAL_SIGN_PANEL_001"
+  ]),
   createRecipeRecord("ROAD_STRAIGHT_SMALL_RECIPE_001", "road_straight_small", [
     "ROAD_STRAIGHT_SMALL_SEGMENT_001"
   ]),
@@ -257,6 +412,9 @@ export const starterSeedRecipes = deepFreeze([
   createRecipeRecord("TRAIL_PATH_SMALL_RECIPE_001", "trail_path_small", [
     "TRAIL_PATH_SMALL_SEGMENT_001"
   ]),
+  createRecipeRecord("FOOTPATH_SMALL_RECIPE_001", "footpath_small", [
+    "FOOTPATH_SMALL_SEGMENT_001"
+  ]),
   createRecipeRecord("TREE_EUCALYPTUS_RECIPE_001", "tree_eucalyptus", [
     "TREE_EUCALYPTUS_TRUNK_001",
     "TREE_EUCALYPTUS_CANOPY_001"
@@ -265,20 +423,33 @@ export const starterSeedRecipes = deepFreeze([
     "TREE_PINE_TRUNK_001",
     "TREE_PINE_CANOPY_001"
   ]),
+  createRecipeRecord("TREE_NATIVE_SMALL_RECIPE_001", "tree_native_small", [
+    "TREE_NATIVE_SMALL_TRUNK_001",
+    "TREE_NATIVE_SMALL_CANOPY_001"
+  ]),
   createRecipeRecord("BUSH_NATIVE_RECIPE_001", "bush_native", [
     "BUSH_NATIVE_CLUSTER_001"
   ]),
   createRecipeRecord("ROCK_COASTAL_RECIPE_001", "rock_coastal", [
     "ROCK_COASTAL_FORM_001"
   ]),
+  createRecipeRecord("GRASS_PATCH_RECIPE_001", "grass_patch", [
+    "GRASS_PATCH_CLUSTER_001"
+  ]),
   createRecipeRecord("SIGN_BASIC_RECIPE_001", "sign_basic", [
     "SIGN_BASIC_PANEL_001"
+  ]),
+  createRecipeRecord("SIGN_GENERIC_RECIPE_001", "sign_generic", [
+    "SIGN_GENERIC_PANEL_001"
   ]),
   createRecipeRecord("FENCE_WOOD_RECIPE_001", "fence_wood", [
     "FENCE_WOOD_PANEL_001"
   ]),
   createRecipeRecord("LAMP_POST_BASIC_RECIPE_001", "lamp_post_basic", [
     "LAMP_POST_POLE_001"
+  ]),
+  createRecipeRecord("BENCH_PARK_RECIPE_001", "bench_park", [
+    "BENCH_PARK_SEAT_001"
   ])
 ]);
 
@@ -292,6 +463,28 @@ export const starterSeedManifests = deepFreeze([
       "COASTAL_HOUSE_ROOF_GABLE_001",
       "COASTAL_HOUSE_DOOR_BASIC_001",
       "COASTAL_HOUSE_WINDOW_SHUTTER_001"
+    ]
+  ),
+  createManifestRecord(
+    "BUILDING_HOUSE_WEATHERBOARD_001",
+    "buildings",
+    "BUILDING_HOUSE_WEATHERBOARD_RECIPE_001",
+    [
+      "WEATHERBOARD_HOUSE_WALL_PANEL_001",
+      "WEATHERBOARD_HOUSE_ROOF_GABLE_001",
+      "WEATHERBOARD_HOUSE_DOOR_BASIC_001",
+      "WEATHERBOARD_HOUSE_WINDOW_BASIC_001"
+    ]
+  ),
+  createManifestRecord(
+    "BUILDING_HOUSE_SUBURBAN_001",
+    "buildings",
+    "BUILDING_HOUSE_SUBURBAN_RECIPE_001",
+    [
+      "SUBURBAN_HOUSE_WALL_PANEL_001",
+      "SUBURBAN_HOUSE_ROOF_HIP_001",
+      "SUBURBAN_HOUSE_DOOR_BASIC_001",
+      "SUBURBAN_HOUSE_WINDOW_WIDE_001"
     ]
   ),
   findRequiredRecord(
@@ -324,6 +517,18 @@ export const starterSeedManifests = deepFreeze([
     ]
   ),
   createManifestRecord(
+    "BUILDING_SHOP_GENERAL_001",
+    "buildings",
+    "BUILDING_SHOP_GENERAL_RECIPE_001",
+    [
+      "SHOP_GENERAL_WALL_PANEL_001",
+      "SHOP_GENERAL_ROOF_FLAT_001",
+      "SHOP_GENERAL_DOOR_GLASS_001",
+      "SHOP_GENERAL_WINDOW_DISPLAY_001",
+      "SHOP_GENERAL_SIGN_PANEL_001"
+    ]
+  ),
+  createManifestRecord(
     "ROAD_STRAIGHT_SMALL_001",
     "roads",
     "ROAD_STRAIGHT_SMALL_RECIPE_001",
@@ -348,6 +553,12 @@ export const starterSeedManifests = deepFreeze([
     ["TRAIL_PATH_SMALL_SEGMENT_001"]
   ),
   createManifestRecord(
+    "FOOTPATH_SMALL_001",
+    "roads",
+    "FOOTPATH_SMALL_RECIPE_001",
+    ["FOOTPATH_SMALL_SEGMENT_001"]
+  ),
+  createManifestRecord(
     "TREE_EUCALYPTUS_001",
     "nature",
     "TREE_EUCALYPTUS_RECIPE_001",
@@ -359,6 +570,12 @@ export const starterSeedManifests = deepFreeze([
     "TREE_PINE_RECIPE_001",
     ["TREE_PINE_TRUNK_001", "TREE_PINE_CANOPY_001"]
   ),
+  createManifestRecord(
+    "TREE_NATIVE_SMALL_001",
+    "nature",
+    "TREE_NATIVE_SMALL_RECIPE_001",
+    ["TREE_NATIVE_SMALL_TRUNK_001", "TREE_NATIVE_SMALL_CANOPY_001"]
+  ),
   createManifestRecord("BUSH_NATIVE_001", "nature", "BUSH_NATIVE_RECIPE_001", [
     "BUSH_NATIVE_CLUSTER_001"
   ]),
@@ -368,11 +585,20 @@ export const starterSeedManifests = deepFreeze([
     "ROCK_COASTAL_RECIPE_001",
     ["ROCK_COASTAL_FORM_001"]
   ),
+  createManifestRecord("GRASS_PATCH_001", "nature", "GRASS_PATCH_RECIPE_001", [
+    "GRASS_PATCH_CLUSTER_001"
+  ]),
   createManifestRecord(
     "SIGN_BASIC_001",
     "decorations",
     "SIGN_BASIC_RECIPE_001",
     ["SIGN_BASIC_PANEL_001"]
+  ),
+  createManifestRecord(
+    "SIGN_GENERIC_001",
+    "decorations",
+    "SIGN_GENERIC_RECIPE_001",
+    ["SIGN_GENERIC_PANEL_001"]
   ),
   createManifestRecord(
     "FENCE_WOOD_001",
@@ -385,6 +611,12 @@ export const starterSeedManifests = deepFreeze([
     "decorations",
     "LAMP_POST_BASIC_RECIPE_001",
     ["LAMP_POST_POLE_001"]
+  ),
+  createManifestRecord(
+    "BENCH_PARK_001",
+    "decorations",
+    "BENCH_PARK_RECIPE_001",
+    ["BENCH_PARK_SEAT_001"]
   )
 ]);
 
