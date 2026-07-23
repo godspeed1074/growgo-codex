@@ -89,7 +89,11 @@ export const coreWorldPlacementRules = deepFreeze([
         "ROAD_STRAIGHT_001",
         "ROAD_CURVE_001",
         "ROAD_INTERSECTION_001",
-        "TRAIL_PATH_001"
+        "TRAIL_PATH_001",
+        "ROAD_STRAIGHT_SMALL_001",
+        "ROAD_CURVE_SMALL_001",
+        "ROAD_INTERSECTION_SMALL_001",
+        "TRAIL_PATH_SMALL_001"
       ],
       incompatibleAssetIds: []
     }
@@ -113,7 +117,15 @@ export const coreWorldPlacementRules = deepFreeze([
       clusterSpacingMetres: 1.5
     },
     {
-      allowedAssetIds: ["TREE_BASIC_001", "BUSH_BASIC_001", "ROCK_SMALL_001"],
+      allowedAssetIds: [
+        "TREE_BASIC_001",
+        "BUSH_BASIC_001",
+        "ROCK_SMALL_001",
+        "TREE_EUCALYPTUS_001",
+        "TREE_PINE_001",
+        "BUSH_NATIVE_001",
+        "ROCK_COASTAL_001"
+      ],
       incompatibleAssetIds: []
     }
   ),
@@ -136,7 +148,13 @@ export const coreWorldPlacementRules = deepFreeze([
       clusterSpacingMetres: 3
     },
     {
-      allowedAssetIds: ["BUILDING_HOUSE_SMALL_001", "BUILDING_SHOP_SMALL_001"],
+      allowedAssetIds: [
+        "BUILDING_HOUSE_SMALL_001",
+        "BUILDING_SHOP_SMALL_001",
+        "BUILDING_HOUSE_SMALL_COASTAL_001",
+        "BUILDING_BAKERY_SMALL_001",
+        "BUILDING_GAS_STATION_SMALL_001"
+      ],
       incompatibleAssetIds: ["ROAD_INTERSECTION_001"]
     }
   ),
@@ -159,7 +177,12 @@ export const coreWorldPlacementRules = deepFreeze([
       clusterSpacingMetres: 1
     },
     {
-      allowedAssetIds: ["DECORATION_SIGN_BASIC_001"],
+      allowedAssetIds: [
+        "DECORATION_SIGN_BASIC_001",
+        "SIGN_BASIC_001",
+        "FENCE_WOOD_001",
+        "LAMP_POST_BASIC_001"
+      ],
       incompatibleAssetIds: []
     }
   )
