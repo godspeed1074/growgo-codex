@@ -1783,3 +1783,131 @@ No new infrastructure is added in this phase.
 - Next authorization boundary:
   - Client Phase 1 still requires separate explicit authorization
   - this Section 1 audit does not authorize Firebase client initialization, sign-in UI, backend invocation, deployment, capture activation, or renderer activation
+
+## 21. Development Alpha Single-Phase Delivery Result
+
+- Objective:
+  - implement the smallest real server-backed invited development alpha path on a single feature branch without enabling capture, rewards, totals, beta, production, remote authoritative transport, or renderer runtime execution
+- Gate A — Audit and exact implementation plan:
+  - `PASS`
+  - current browser client remains a static non-module page with `script.js?v=cards14`
+  - Firebase Web SDK was absent before this phase
+  - no Vercel deployment config existed before this phase
+  - existing backend callable surface remained limited to:
+    - `bootstrapPlayer`
+    - `getPlayerSnapshot`
+    - `capturePin`
+  - selected minimum invited-alpha architecture for this phase:
+    - development-only Firebase browser sidecar
+    - Google sign-in for invited users
+    - server-authoritative allowlist prepared inside existing authenticated callables
+    - no new callable surface
+    - no capture client integration
+- Gate B — Development client foundation and authentication:
+  - `PASS`
+  - added a dedicated browser sidecar module:
+    - `client/development-alpha-app.mjs`
+    - `client/development-alpha-contract.mjs`
+    - `client/development-alpha-controller.mjs`
+    - `client/development-alpha-runtime.mjs`
+  - client contract is fail-closed:
+    - only `development` may initialize
+    - project id must equal `growgo-development`
+    - `beta`, `production`, `unknown`, missing config, or mismatched project id deny initialization
+    - emulator mode requires exact loopback endpoints only:
+      - Auth `127.0.0.1:9099`
+      - Functions `127.0.0.1:5003`
+      - Firestore `127.0.0.1:8088`
+    - live mode denies mixed emulator config
+    - Firebase initialization is singleton-bounded
+  - minimal authentication UI now exists as an isolated floating status panel
+  - anonymous auth remains absent from the client path
+  - renderer lifecycle remains untouched
+- Gate C — Bootstrap and snapshot integration:
+  - `PASS`
+  - the client sidecar can invoke only:
+    - `bootstrapPlayer`
+    - `getPlayerSnapshot`
+  - no `capturePin` client path was added
+  - no polling loop was added
+  - snapshot refresh remains bounded and manual after the initial signed-in path
+  - bootstrap is bounded to one automatic attempt per authenticated UID per page session
+  - backend-side invited-user enforcement was prepared through a narrow server-side guard:
+    - `functions/src/security/requireInvitedUserAccess.ts`
+  - invited access contract:
+    - explicit enforcement env var:
+      - `GROWGO_DEVELOPMENT_INVITED_ALPHA_ENFORCED=true`
+    - explicit allowlist env var:
+      - `GROWGO_DEVELOPMENT_ALLOWED_EMAILS`
+    - provider restriction env var:
+      - `GROWGO_DEVELOPMENT_ALLOWED_AUTH_PROVIDER`
+    - default provider when enforced:
+      - `google.com`
+    - enforced allowlist remains fail-closed for:
+      - missing email
+      - unverified email
+      - non-Google provider
+      - missing allowlist
+      - non-allowlisted email
+  - invited-user enforcement remains prepared but not activated by default in this branch
+- Gate D — Emulator verification and deployment preparation:
+  - `PASS_WITH_BLOCKERS`
+  - focused client contract/controller tests passed
+  - focused backend invite and callable guard tests passed
+  - Vercel preparation added:
+    - `vercel.json`
+    - static no-store headers for `index.html`, `/client/**`, and a future `development-alpha-client-config.js`
+  - no deployment was performed
+  - real browser Firebase configuration is still missing and remains a required blocker before live development deployment approval
+- Gate E — Hosted-alpha readiness closeout:
+  - readiness decision:
+    - `READY_WITH_BLOCKERS`
+  - completed in this phase:
+    - fail-closed client environment contract
+    - singleton Firebase initialization path
+    - minimal sign-in/sign-out/status UI
+    - bootstrap and snapshot client adapters only
+    - prepared server-authoritative invited-user enforcement
+    - Vercel static configuration preparation
+  - still blocked before deployment approval:
+    - real Firebase development web config values:
+      - `apiKey`
+      - `authDomain`
+      - `projectId`
+      - `storageBucket`
+      - `messagingSenderId`
+      - `appId`
+      - optional `measurementId`
+    - Firebase web-app registration confirmation for `growgo-development`
+    - authorized development domains
+    - explicit invited-user allowlist values
+    - Vercel project connection
+    - explicit deployment approval
+  - development-only client capabilities now prepared:
+    - Google sign-in
+    - invited-user denial handling
+    - `bootstrapPlayer`
+    - guarded `getPlayerSnapshot`
+    - minimal account/backend status rendering
+  - capabilities still disabled:
+    - `capturePin`
+    - rewards
+    - points
+    - coins mutation
+    - XP mutation
+    - totals mutation
+    - authoritative remote transport
+    - beta
+    - production
+    - renderer activation
+- Verification completed in this phase:
+  - root client tests:
+    - `8 passed, 0 failed`
+  - focused backend invite/callable tests:
+    - `28 passed, 0 failed`
+- Explicit no-deployment statement:
+  - no Firebase deployment occurred in this phase
+  - no Vercel deployment occurred in this phase
+  - no live Firebase project traffic was intentionally initiated from this phase's local verification
+- Exact next approval boundary:
+  - provide the real development Firebase web configuration and confirm Vercel connection readiness, then request explicit development-only deployment approval
