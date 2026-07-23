@@ -7,6 +7,8 @@ export function createDevelopmentAlphaController(dependencies) {
   let initPromise = null;
   let runtime = null;
   let authUnsubscribe = null;
+  let initialAuthResolution = null;
+  let initialAuthSettled = false;
   let lastBootstrapUid = null;
   let snapshotInFlight = false;
   let snapshotRequestCount = 0;
@@ -28,6 +30,7 @@ export function createDevelopmentAlphaController(dependencies) {
 
     publish({
       initializationStatus: "initializing",
+      authStatus: "restoring",
       genericError: null
     });
 
@@ -56,14 +59,14 @@ export function createDevelopmentAlphaController(dependencies) {
       }
 
       runtime = await deps.createRuntime(runtimeContract);
-      authUnsubscribe = runtime.onAuthStateChanged(handleAuthStateChanged);
-
-      publish({
-        initializationStatus: "initialized",
-        authStatus: "signed-out",
-        genericError: null
+      const initialAuthStateReady = new Promise((resolve) => {
+        initialAuthResolution = resolve;
       });
+      authUnsubscribe = runtime.onAuthStateChanged((user) =>
+        handleAuthStateChanged(user)
+      );
 
+      await initialAuthStateReady;
       return runtime;
     })().catch((error) => {
       publish({
@@ -172,11 +175,16 @@ export function createDevelopmentAlphaController(dependencies) {
   }
 
   async function handleAuthStateChanged(user) {
+    if (!initialAuthSettled) {
+      initialAuthSettled = true;
+    }
+
     if (!user) {
       lastBootstrapUid = null;
       snapshotInFlight = false;
       snapshotRequestCount = 0;
       publish({
+        initializationStatus: "initialized",
         user: null,
         authStatus: "signed-out",
         invitedStatus: "unknown",
@@ -184,10 +192,12 @@ export function createDevelopmentAlphaController(dependencies) {
         snapshotStatus: "idle",
         playerSnapshot: null
       });
+      resolveInitialAuthState();
       return;
     }
 
     publish({
+      initializationStatus: "initialized",
       user: sanitizeUser(user),
       authStatus: "signed-in",
       invitedStatus: evaluateClientInviteMirror(user, deps.readConfig()),
@@ -218,6 +228,7 @@ export function createDevelopmentAlphaController(dependencies) {
           snapshotStatus: "idle",
           genericError: deps.toClientSafeError(error)
         });
+        resolveInitialAuthState();
         return;
       }
 
@@ -226,6 +237,8 @@ export function createDevelopmentAlphaController(dependencies) {
         genericError: deps.toClientSafeError(error)
       });
     }
+
+    resolveInitialAuthState();
   }
 
   function dispose() {
@@ -245,6 +258,13 @@ export function createDevelopmentAlphaController(dependencies) {
     },
     dispose
   });
+
+  function resolveInitialAuthState() {
+    if (typeof initialAuthResolution === "function") {
+      initialAuthResolution();
+      initialAuthResolution = null;
+    }
+  }
 }
 
 function buildInitialState() {

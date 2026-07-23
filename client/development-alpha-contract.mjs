@@ -1,4 +1,5 @@
 export const GROWGO_DEVELOPMENT_PROJECT_ID = "growgo-development";
+export const GROWGO_DEVELOPMENT_EMULATOR_TEST_EMAIL = "test@growgo.local";
 
 export const developmentAlphaEnvironmentNames = Object.freeze([
   "development",
@@ -28,6 +29,7 @@ export function validateDevelopmentAlphaClientConfig(rawConfig) {
   const connectionMode = normalizeConnectionMode(config.connectionMode);
   const firebase = asRecord(config.firebase);
   const emulator = asRecord(config.emulator);
+  const emulatorAuth = asRecord(config.emulatorAuth);
   const projectId = readTrimmedString(firebase.projectId);
 
   if (environment !== "development") {
@@ -74,6 +76,10 @@ export function validateDevelopmentAlphaClientConfig(rawConfig) {
       appId: readTrimmedString(firebase.appId),
       measurementId: readTrimmedString(firebase.measurementId)
     }),
+    emulatorAuth: Object.freeze({
+      email: readTrimmedString(emulatorAuth.email),
+      password: readTrimmedString(emulatorAuth.password)
+    }),
     emulator:
       emulatorValidation.normalized == null
         ? null
@@ -93,9 +99,38 @@ export function buildDevelopmentAlphaRuntimeContract(rawConfig) {
     expectedProjectId: validation.expectedProjectId,
     projectId: validation.firebase.projectId,
     firebase: validation.firebase,
+    emulatorAuth: validation.emulatorAuth,
     blockedReasons: validation.blockedReasons,
     missingFirebaseFields: validation.missingFirebaseFields,
     emulator: validation.emulator
+  });
+}
+
+export function resolveDevelopmentAlphaSignInPlan(runtimeContract) {
+  if (runtimeContract?.connectionMode === "emulator") {
+    const email = runtimeContract?.emulatorAuth?.email ?? null;
+    const password = runtimeContract?.emulatorAuth?.password ?? null;
+
+    if (
+      email === GROWGO_DEVELOPMENT_EMULATOR_TEST_EMAIL &&
+      typeof password === "string" &&
+      password.length > 0
+    ) {
+      return Object.freeze({
+        mode: "emulator-password",
+        email,
+        password
+      });
+    }
+
+    return Object.freeze({
+      mode: "blocked",
+      reason: "emulator-password-auth-missing"
+    });
+  }
+
+  return Object.freeze({
+    mode: "google-popup"
   });
 }
 

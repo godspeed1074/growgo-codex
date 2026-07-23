@@ -2,6 +2,7 @@
   "name": "growgo-codex",
   "private": true,
   "scripts": {
+    "emulator:start:dev-alpha:persistent": "firebase emulators:start --project growgo-development --only auth,firestore,functions,storage --import=.firebase/emulator-data/development-alpha --export-on-exit=.firebase/emulator-data/development-alpha",
     "test:custom25d:webkit": "PLAYWRIGHT_BROWSERS_PATH=.playwright-browsers node tests/custom25d-manual-webkit-check.js"
   },
   "devDependencies": {

@@ -56,6 +56,13 @@ function createHarness(options = {}) {
       return {
         onAuthStateChanged(callback) {
           authCallback = callback;
+          queueMicrotask(() => {
+            callback(
+              Object.prototype.hasOwnProperty.call(options, "initialUser")
+                ? options.initialUser
+                : null
+            );
+          });
           return () => {};
         },
         async signIn() {
@@ -146,6 +153,30 @@ test("signed-in flow bootstraps once and bounds snapshot refreshes", async () =>
   assert.equal(harness.getSnapshotCount(), 2);
   assert.equal(harness.getCaptureCount(), 0);
   assert.equal(harness.getRendererActivationCount(), 0);
+});
+
+test("startup waits for the first restored auth state instead of publishing initialized signed-out early", async () => {
+  const restoredUser = {
+    uid: "uid-restored",
+    email: "player@example.com",
+    emailVerified: true,
+    providerData: [{ providerId: "google.com" }]
+  };
+  const harness = createHarness({
+    initialUser: restoredUser
+  });
+
+  await harness.controller.ensureInitialized();
+
+  const initializedStates = harness.renderStates.filter(
+    (state) => state.initializationStatus === "initialized"
+  );
+
+  assert.ok(initializedStates.length > 0);
+  assert.equal(initializedStates[0].authStatus, "signed-in");
+  assert.equal(initializedStates[0].user?.uid, restoredUser.uid);
+  assert.equal(harness.getBootstrapCount(), 1);
+  assert.equal(harness.getSnapshotCount(), 1);
 });
 
 test("unauthorized backend denial moves auth state to unauthorized", async () => {

@@ -3,13 +3,15 @@ import {
   getApps,
   getApp
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { resolveDevelopmentAlphaSignInPlan } from "./development-alpha-contract.mjs";
 import {
   connectAuthEmulator,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
-  browserSessionPersistence,
+  browserLocalPersistence,
   setPersistence,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut as firebaseSignOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
@@ -38,8 +40,6 @@ export async function createDevelopmentAlphaFirebaseRuntime(runtimeContract) {
   const auth = getAuth(app);
   const functions = getFunctions(app, "australia-southeast1");
 
-  await setPersistence(auth, browserSessionPersistence);
-
   if (runtimeContract.connectionMode === "emulator" && !emulatorConnectionsApplied) {
     connectAuthEmulator(
       auth,
@@ -54,6 +54,8 @@ export async function createDevelopmentAlphaFirebaseRuntime(runtimeContract) {
     emulatorConnectionsApplied = true;
   }
 
+  await setPersistence(auth, browserLocalPersistence);
+
   const provider = new GoogleAuthProvider();
 
   return {
@@ -61,6 +63,23 @@ export async function createDevelopmentAlphaFirebaseRuntime(runtimeContract) {
       return onAuthStateChanged(auth, callback);
     },
     async signIn() {
+      const signInPlan = resolveDevelopmentAlphaSignInPlan(runtimeContract);
+
+      if (signInPlan.mode === "emulator-password") {
+        await signInWithEmailAndPassword(
+          auth,
+          signInPlan.email,
+          signInPlan.password
+        );
+        return;
+      }
+
+      if (signInPlan.mode === "blocked") {
+        throw new Error(
+          "Local emulator sign-in is unavailable until the development emulator password is configured."
+        );
+      }
+
       await signInWithPopup(auth, provider);
     },
     async signOut() {
