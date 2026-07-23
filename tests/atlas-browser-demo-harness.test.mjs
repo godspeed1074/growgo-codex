@@ -1,0 +1,227 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import path from "node:path";
+
+const harnessModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "client",
+    "atlas-browser-demo-harness.mjs"
+  )
+);
+const previewMountModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "atlas-engine-first-manual-browser-visible-preview-mount.mjs"
+  )
+);
+
+function stableNumericHash(value) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return String(hash).padStart(10, "0");
+}
+
+function createMockCanvasContext() {
+  return {
+    commands: [],
+    fillStyle: "",
+    font: "",
+    textAlign: "",
+    fillRect(...args) {
+      this.commands.push(["fillRect", ...args]);
+    },
+    beginPath() {
+      this.commands.push(["beginPath"]);
+    },
+    moveTo(...args) {
+      this.commands.push(["moveTo", ...args]);
+    },
+    lineTo(...args) {
+      this.commands.push(["lineTo", ...args]);
+    },
+    closePath() {
+      this.commands.push(["closePath"]);
+    },
+    fill() {
+      this.commands.push(["fill"]);
+    },
+    arc(...args) {
+      this.commands.push(["arc", ...args]);
+    },
+    fillText(...args) {
+      this.commands.push(["fillText", ...args]);
+    },
+    clearRect(...args) {
+      this.commands.push(["clearRect", ...args]);
+    }
+  };
+}
+
+function createMockElement(id = "") {
+  return {
+    id,
+    hidden: false,
+    textContent: "",
+    className: "",
+    dataset: {},
+    children: [],
+    listeners: new Map(),
+    appendChild(child) {
+      this.children.push(child);
+      child.parentNode = this;
+      return child;
+    },
+    removeChild(child) {
+      const index = this.children.indexOf(child);
+      if (index >= 0) {
+        this.children.splice(index, 1);
+      }
+      child.parentNode = null;
+      return child;
+    },
+    addEventListener(type, handler) {
+      this.listeners.set(type, handler);
+    },
+    click() {
+      const handler = this.listeners.get("click");
+      if (handler) {
+        handler();
+      }
+    },
+    setAttribute(name, value) {
+      this[name] = value;
+    }
+  };
+}
+
+function createMockDocument() {
+  const elements = new Map([
+    ["atlasPreviewContainer", createMockElement("atlasPreviewContainer")],
+    ["atlasPreviewCanvasHost", createMockElement("atlasPreviewCanvasHost")],
+    ["atlasPreviewShowButton", createMockElement("atlasPreviewShowButton")],
+    ["atlasPreviewHideButton", createMockElement("atlasPreviewHideButton")],
+    ["atlasPreviewStatus", createMockElement("atlasPreviewStatus")]
+  ]);
+
+  return {
+    getElementById(id) {
+      return elements.get(id) ?? null;
+    },
+    createElement(tagName) {
+      if (tagName !== "canvas") {
+        return createMockElement();
+      }
+      const context = createMockCanvasContext();
+      return {
+        ...createMockElement(),
+        tagName: "CANVAS",
+        width: 0,
+        height: 0,
+        getContext(type) {
+          return type === "2d" ? context : null;
+        },
+        _context: context
+      };
+    }
+  };
+}
+
+function buildPreviewMountOptions() {
+  const foundation =
+    previewMountModule.atlasEngineFirstManualBrowserVisiblePreviewMountFoundationDefinition;
+  const lightingMode = "day_showcase";
+  const drawSessionId = `${foundation.drawSessionId}_${stableNumericHash(
+    "ATLAS_FIRST_VISIBLE_CANVAS_DRAW_RESULT_001_0123456789::day_showcase::draw"
+  )}`;
+  const captureId = `${foundation.drawResultId}_${stableNumericHash(
+    `${drawSessionId}::${lightingMode}::visible-capture`
+  )}`;
+
+  return {
+    validateAtlasEngineFirstVisibleCanvasDrawResultFoundation: () => ({
+      ok: true,
+      atlasFirstVisibleCanvasDrawResult: {
+        captureId,
+        drawSessionId,
+        canvasResult: {
+          exists: true,
+          width: 1280,
+          height: 720,
+          pixelRatio: 1,
+          lightingMode,
+          drawCommandCount: 4,
+          drawCommandsExecuted: true
+        },
+        frameResult: {
+          frameProduced: true,
+          visibleState: "verified-visible",
+          objectCount: 11,
+          deterministicOutput: true
+        },
+        verificationState: {
+          currentState: "verified",
+          cleanupSuccessful: true
+        }
+      }
+    })
+  };
+}
+
+test("Atlas browser demo harness mounts and draws a visible placeholder preview", () => {
+  const document = createMockDocument();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions()
+  });
+
+  assert.equal(result.ok, true);
+
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showPreview();
+  assert.equal(shown.ok, true);
+  assert.equal(
+    harness.elements.previewContainer.dataset.previewVisible,
+    "true"
+  );
+  assert.equal(harness.elements.canvasContainer.children.length, 1);
+  assert.ok(harness.canvas._context.commands.length > 0);
+});
+
+test("Atlas browser demo harness hides and cleans up the preview", () => {
+  const document = createMockDocument();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions()
+  });
+  const harness = result.atlasBrowserDemoHarness;
+
+  harness.showPreview();
+  const cleanup = harness.hidePreview();
+
+  assert.equal(cleanup.ok, true);
+  assert.equal(harness.elements.previewContainer.hidden, true);
+  assert.equal(harness.elements.canvasContainer.children.length, 0);
+});
+
+test("Atlas browser demo harness rejects duplicate activation safely", () => {
+  const document = createMockDocument();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions()
+  });
+  const harness = result.atlasBrowserDemoHarness;
+
+  const first = harness.showPreview();
+  const second = harness.showPreview();
+
+  assert.equal(first.ok, true);
+  assert.equal(second.ok, false);
+  assert.equal(second.previewMountResult, null);
+  assert.match(harness.elements.status.textContent, /prevents duplicate/i);
+});
