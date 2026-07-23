@@ -4,6 +4,7 @@
 - Current private-alpha readiness decision as of 2026-07-22: `READY_WITH_EXPLICIT_BLOCKERS`
 - Current next authorization boundary:
   - separate explicit authorization is still required before any real client integration, development deployment, or tester-facing alpha launch work begins
+  - Development Alpha Client Integration Authorization Section 1 remains audit-and-plan only and does not authorize Client Phase 1 implementation
 
 ## 1. Phase 1 Result
 
@@ -1511,3 +1512,274 @@ No new infrastructure is added in this phase.
   - backend activation section status: complete and closed at the documentation/review boundary
   - next authorization boundary:
     - any real invited-tester path still requires a separate explicit user-authorized client/deployment section
+
+## 20. Development Alpha Client Integration Authorization — Section 1 Result
+
+- Section 1 objective:
+  - perform a documentation-only architecture audit and safety-boundary plan for the minimum development-only client and deployment path required to let a very small invited tester group use the already verified backend later
+- Audit status:
+  - complete
+  - no runtime code, tests, Firebase configuration, rules, client HTML, CSS, or renderer files were changed
+- Current client architecture:
+  - entry HTML file: `index.html`
+  - main JavaScript entry point: `script.js?v=cards14`
+  - architecture style:
+    - classic non-module browser script
+    - no bundler output is currently required for the main client
+    - external browser libraries are loaded by CDN script tags:
+      - Leaflet
+      - QRCode.js
+      - html5-qrcode
+  - package manager:
+    - npm, evidenced by root `package-lock.json`
+  - root package usage:
+    - no frontend build pipeline is present
+    - root `package.json` only carries the Playwright helper used for Custom 2.5D checks
+  - hosting assumptions today:
+    - static-file serving works locally
+    - no Firebase Hosting or Vercel client deployment configuration is active in this section
+  - service-worker state:
+    - manifest exists
+    - no service-worker registration or lifecycle wiring was found
+- Current Firebase client state:
+  - no Firebase Web SDK import exists in `index.html` or `script.js`
+  - no `initializeApp`, `getAuth`, `getFunctions`, `getFirestore`, or callable client adapter exists
+  - no Firebase client configuration values are present in the current browser client
+  - no emulator client wiring exists
+  - no environment-selection mechanism for a Firebase client exists
+  - backend project identity remains server-side and foundation-side only:
+    - project alias `dev`
+    - project id `growgo-development`
+- Current authentication state:
+  - no frontend authentication flow exists
+  - no sign-in UI exists
+  - no anonymous-auth client path exists
+  - no email/password, email-link, or Google sign-in client flow exists
+  - current player identity is local-only and browser-generated:
+    - player name, avatar, public ID, progression, and related profile state are stored in `localStorage`
+    - this local player state is not authoritative for backend identity and must not be trusted as backend UID
+- Current backend access state:
+  - frontend currently does not invoke Firebase callable functions
+  - frontend currently does not read or write Firestore through a client SDK
+  - frontend currently does not connect to Auth, Functions, or Firestore emulators
+  - no hard-coded Firebase function endpoint URLs were found
+  - current network usage in the browser remains unrelated to Firebase client activation:
+    - Overpass API fetches
+    - trusted UTC time fetch
+    - OpenStreetMap tile loading
+- Existing backend constraints re-confirmed:
+  - development project identity remains `growgo-development`
+  - beta remains denied
+  - production remains denied
+  - `getPlayerSnapshot` remains the only development-guarded runtime consumer
+  - snapshot access still defaults denied
+  - capture remains unavailable to clients
+  - capture remains deferred and non-rewarding
+  - remote authoritative transport remains disabled
+  - emergency disable overrides ordinary allow
+  - rollback remains non-destructive
+- Identified safety risks:
+  - accidental introduction of Firebase web config without a fail-closed environment contract
+  - accidental project switching between development, beta, and production
+  - trusting local browser player identity instead of Firebase Authentication UID
+  - repeated automatic bootstrap calls on load
+  - automatic snapshot polling loops
+  - client-side exposure of capture before separate authorization
+  - coupling backend initialization to existing renderer, map, or lifecycle startup
+  - accidental use of anonymous auth for unrestricted public account creation
+  - accidental mixed live/emulator session behavior
+  - accidental inclusion of production config in a static client file
+- Recommended tester access model:
+  - recommended first-alpha model:
+    - Google sign-in for invited users plus a server-authoritative allowlist
+  - rationale:
+    - stable UID ownership
+    - easy revocation by removing allowlist access
+    - lower support burden than managing manual passwords
+    - clearer beginner-safe operations than email-link flows
+    - no public anonymous account creation
+  - enforcement boundary:
+    - server-side allowlist must be authoritative
+    - optional client-side mirror may improve UX but must not be trusted
+  - explicit non-recommendation:
+    - anonymous auth remains disabled for this first invited alpha unless separately justified and authorized
+- Fail-closed client environment contract:
+  - environment names:
+    - `development`
+    - `beta`
+    - `production`
+    - `unknown`
+  - required behavior:
+    - only `development` may initialize in this section
+    - missing environment denies initialization
+    - `unknown` denies initialization
+    - `beta` denies initialization
+    - `production` denies initialization
+    - development project id must exactly equal `growgo-development`
+    - project mismatch denies initialization
+    - Firebase initialization must occur at most once
+    - no URL-parameter environment switching
+    - no silent fallback to default credentials or default project discovery
+    - no hard-coded production configuration
+- Firebase web-configuration requirements:
+  - real development values must later be provided or explicitly authorized for:
+    - `apiKey`
+    - `authDomain`
+    - `projectId`
+    - `storageBucket`
+    - `messagingSenderId`
+    - `appId`
+    - optional `measurementId`
+  - required surrounding setup:
+    - approved Firebase web app registration
+    - approved authorized domains
+    - explicit emulator host mapping for local-only testing
+  - clarifications:
+    - Firebase web config is not a server secret
+    - service-account credentials and private keys must never enter the client
+    - no beta or production config values may be introduced in this section
+- Emulator client plan:
+  - explicit local-development mode only
+  - exact expected loopback endpoints:
+    - Auth emulator: `127.0.0.1:9099`
+    - Functions emulator: `127.0.0.1:5003`
+    - Firestore emulator: `127.0.0.1:8088`
+  - requirements:
+    - loopback hosts only
+    - no LAN hosts
+    - no public hosts
+    - no live fallback
+    - no emulator auto-detection
+    - missing emulator must deny local client integration testing
+    - client must never connect to emulator and live services in one session
+- Initial capability boundary:
+  - candidate capabilities for a first client-facing development path:
+    - authenticated `bootstrapPlayer`
+    - guarded `getPlayerSnapshot`
+  - must remain inactive:
+    - `capturePin`
+    - reward processing
+    - points, coins, XP, or totals mutation from the client path
+    - authoritative remote pin acquisition
+    - beta
+    - production
+  - bootstrap and snapshot should precede capture because:
+    - bootstrap establishes stable owner-scoped player state
+    - snapshot proves authenticated environment and backend identity without gameplay mutation
+    - capture remains riskier due to idempotency, canonical verification, future activation pressure, and reward adjacency
+- Minimum client state model:
+  - Firebase initialization status
+  - explicit environment resolution status
+  - authenticated or signed-out status
+  - authenticated UID
+  - backend capability status
+  - bootstrap status
+  - snapshot loading status
+  - snapshot error status
+  - emergency-disabled status
+  - explicit signed-out state
+  - prohibited state patterns:
+    - no trusting UID from `localStorage`
+    - no manual auth-token persistence
+    - no raw backend error dumps
+    - no repeated auto-retry loops
+    - no unbounded snapshot polling
+    - no coupling backend initialization to renderer activation
+- Intended invocation order for a later implementation:
+  1. load the existing GrowGo client
+  2. keep renderer and runtime gates unchanged
+  3. resolve the explicit development environment
+  4. validate project identity
+  5. initialize Firebase once
+  6. connect to emulators only in explicit local mode
+  7. authenticate an invited user
+  8. confirm server-side allowlist eligibility
+  9. call `bootstrapPlayer` once
+  10. call guarded `getPlayerSnapshot`
+  11. render only minimal account/backend status
+  12. do not call capture
+  13. do not enable rewards
+  14. do not activate renderer lifecycle
+  - failure behavior:
+    - every failed step must stop later steps and surface only client-safe status
+- Hosting assessment and recommendation:
+  - compared options:
+    - existing local static server
+    - Firebase Hosting development site
+    - Vercel development deployment
+    - another repository-supported option
+  - recommended first development-only hosting path:
+    - Firebase Hosting development site
+  - reason:
+    - simplest project identity alignment with `growgo-development`
+    - authorized-domain handling remains in one ecosystem
+    - easier development-only rollback and environment isolation than adding a second platform immediately
+    - lower risk of accidental cross-environment drift than Vercel-first setup for a beginner solo workflow
+  - existing local static serving remains best for local-only emulator testing, not invited testers
+- App Check assessment:
+  - local emulator development:
+    - optional hardening
+  - first tiny invited alpha:
+    - post-alpha requirement for the smallest controlled rollout
+  - later beta:
+    - required before broader access
+  - production:
+    - required before broader access
+  - this section does not enable App Check
+- Short implementation roadmap:
+  - Client Phase 1:
+    - development environment and Firebase initialization contract
+  - Client Phase 2:
+    - local Auth emulator integration with test-only sign-in
+  - Client Phase 3:
+    - invited-account and server-authoritative allowlist contract
+  - Client Phase 4:
+    - authenticated bootstrap client adapter
+  - Client Phase 5:
+    - guarded snapshot client adapter and minimal status UI
+  - Client Phase 6:
+    - controlled end-to-end emulator verification
+  - Client Phase 7:
+    - development deployment configuration and rollback rehearsal
+  - Client Phase 8:
+    - small invited-alpha readiness closeout
+- Blocker classification:
+  - Immediate blockers:
+    - real Firebase development web config
+    - Firebase web app registration confirmation
+    - authorized domains
+    - chosen authentication provider
+    - tester allowlist model
+    - explicit client environment contract
+  - Implementation prerequisites:
+    - emulator client wiring
+    - bootstrap adapter
+    - snapshot adapter
+    - hosting choice confirmation
+    - server environment variables for development deployment
+  - Post-alpha requirements:
+    - capture adapter
+    - reward processing
+    - App Check enforcement
+    - beta
+    - production
+  - Optional hardening:
+    - broader allowlist tooling
+    - tighter rollout monitoring and frontend feature-flag controls
+  - Intentionally deferred:
+    - anonymous-auth policy only if later reconsidered
+    - client capture activation
+    - broader gameplay-facing backend exposure
+- Explicit no-runtime-change statement:
+  - no client runtime change was made in Section 1
+  - no backend runtime change was made in Section 1
+  - no callable export changed
+  - no renderer gate changed
+- Explicit no-deployment statement:
+  - no deployment occurred in Section 1
+  - no live traffic was enabled
+- Section 1 completion decision:
+  - `PASS`
+- Next authorization boundary:
+  - Client Phase 1 still requires separate explicit authorization
+  - this Section 1 audit does not authorize Firebase client initialization, sign-in UI, backend invocation, deployment, capture activation, or renderer activation
