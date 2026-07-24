@@ -82,13 +82,15 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     options.expandedSettlementPreview
   );
   let currentPresentationProfile = "neighbourhood";
+  let currentStyleReviewMode = false;
   let currentLightingProfile =
     expandedSettlementPreview?.visualStyling?.activeLightingProfile ?? "day";
   let renderableExpandedSettlementPreview = buildRenderableExpandedSettlementPreview(
     expandedSettlementPreview,
     {
       presentationProfile: currentPresentationProfile,
-      lightingProfile: currentLightingProfile
+      lightingProfile: currentLightingProfile,
+      styleReviewMode: currentStyleReviewMode
     }
   );
   let mounted = false;
@@ -215,7 +217,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       {
         presentationProfile: currentPresentationProfile,
-        lightingProfile: currentLightingProfile
+        lightingProfile: currentLightingProfile,
+        styleReviewMode: currentStyleReviewMode
       }
     );
     return renderableExpandedSettlementPreview;
@@ -375,9 +378,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     setStatus(
       elements.status,
       renderableExpandedSettlementPreview
-        ? renderableExpandedSettlementPreview.validationResult.objectsResolve
-          ? `Settlement world visible with neighbourhood-scale scene ${renderableExpandedSettlementPreview.sceneId}.`
-          : `Settlement world visible with fallback-safe scene ${renderableExpandedSettlementPreview.sceneId}.`
+        ? renderableExpandedSettlementPreview.visualStyling?.styleReviewMode === true
+          ? `Settlement style review visible with ${renderableExpandedSettlementPreview.sceneId}.`
+          : renderableExpandedSettlementPreview.validationResult.objectsResolve
+            ? `Settlement world visible with neighbourhood-scale scene ${renderableExpandedSettlementPreview.sceneId}.`
+            : `Settlement world visible with fallback-safe scene ${renderableExpandedSettlementPreview.sceneId}.`
       : coastalWorldShowcase
         ? coastalWorldShowcase.verificationResult.realGlbBackedSceneValid
           ? `Coastal world visible with assembled real GLB-backed scene ${coastalWorldShowcase.sceneId}.`
@@ -914,6 +919,24 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentPresentationProfile = normalizeSettlementPresentationProfile(
           presentationProfile
         );
+        currentStyleReviewMode = false;
+        syncRenderableExpandedSettlementPreview();
+        currentPoiPresentationState = buildPoiPresentationState(
+          renderableExpandedSettlementPreview,
+          currentPoiState,
+          currentPoiContentMetadata
+        );
+        refreshCaptureSessionState();
+        activeVisualSourceSummary = buildVisualSourceSummary({
+          expandedSettlementPreview: renderableExpandedSettlementPreview,
+          coastalWorldShowcase,
+          visibilityState: mounted ? "visible" : "hidden"
+        });
+        redrawExpandedSettlementPreviewIfMounted();
+        return this.currentDemoPresentationState();
+      },
+      setSettlementStyleReviewMode(enabled = true) {
+        currentStyleReviewMode = enabled === true;
         syncRenderableExpandedSettlementPreview();
         currentPoiPresentationState = buildPoiPresentationState(
           renderableExpandedSettlementPreview,
@@ -973,12 +996,34 @@ export function createAtlasBrowserDemoHarness(options = {}) {
             objectInstanceCount: activePreview.objectInstances.length
           }),
           activePresentationProfile: activePreview.visualScaling.activePresentationProfile,
+          styleReviewMode: activePreview.visualStyling?.styleReviewMode === true,
           cameraProfile: deepFreeze({
             cameraProfile: activePreview.cameraState.cameraProfile,
             activeCompositionProfile:
               activePreview.cameraState.activeCompositionProfile,
             previewZoomProfile: activePreview.cameraState.previewZoomProfile,
             targetAsset: activePreview.cameraState.targetAsset
+          }),
+          styleReviewProfile: deepFreeze({
+            mode:
+              activePreview.visualStyling?.styleReviewMode === true
+                ? "review-only"
+                : "standard-preview",
+            cameraProfile:
+              activePreview.presentationSummary?.styleReviewProfile?.cameraProfile ??
+              null,
+            colourProfile:
+              activePreview.presentationSummary?.styleReviewProfile?.colourProfile ??
+              null,
+            depthLayeringPreview:
+              activePreview.presentationSummary?.styleReviewProfile
+                ?.depthLayeringPreview ?? null,
+            terrainPresentationPreview:
+              activePreview.presentationSummary?.styleReviewProfile
+                ?.terrainPresentationPreview ?? null,
+            lightingPreview:
+              activePreview.presentationSummary?.styleReviewProfile
+                ?.lightingPreview ?? null
           }),
           lightingProfile: deepFreeze({
             activeProfile:
@@ -1446,6 +1491,8 @@ export function drawExpandedSettlementPreview(
   const styling = expandedSettlementPreview.visualStyling ?? {};
   const lightingProfile = expandedSettlementPreview.visualStyling?.activeLightingProfile ?? "day";
   const overlayAlpha = lightingProfile === "night" ? 0.86 : 0.8;
+  const styleReviewProfile =
+    expandedSettlementPreview.presentationSummary?.styleReviewProfile ?? null;
 
   drawExpandedSettlementBackdrop(drawContext, {
     width,
@@ -1493,6 +1540,16 @@ export function drawExpandedSettlementPreview(
     if (projectedObject) {
       renderedObjects.push(projectedObject);
     }
+  }
+
+  if (styleReviewProfile?.enabled === true) {
+    drawExpandedSettlementStyleReviewOverlay(drawContext, {
+      width,
+      height,
+      palette,
+      styleReviewProfile,
+      cameraState: resolvedCameraState
+    });
   }
 
   drawCapturePresentationMarkers(
@@ -2010,6 +2067,51 @@ function drawExpandedSettlementBackdrop(
       height * 0.006
     );
   }
+}
+
+function drawExpandedSettlementStyleReviewOverlay(
+  drawContext,
+  { width, height, palette, styleReviewProfile, cameraState }
+) {
+  drawContext.fillStyle = withAlpha("#0d2133", 0.78);
+  drawContext.fillRect(width * 0.67, height * 0.07, width * 0.28, height * 0.24);
+  drawContext.fillStyle = "#f4fbff";
+  drawContext.font = "bold 14px sans-serif";
+  drawContext.textAlign = "left";
+  drawContext.fillText("STYLE REVIEW", width * 0.69, height * 0.11);
+  drawContext.font = "12px sans-serif";
+  drawContext.fillText(
+    `${styleReviewProfile.cameraProfile} :: ${cameraState.activeCompositionProfile}`,
+    width * 0.69,
+    height * 0.145
+  );
+  drawContext.fillText(
+    `${styleReviewProfile.colourProfile} :: ${styleReviewProfile.lightingPreview}`,
+    width * 0.69,
+    height * 0.175
+  );
+  drawContext.fillText(
+    `${styleReviewProfile.depthLayeringPreview} :: ${styleReviewProfile.terrainPresentationPreview}`,
+    width * 0.69,
+    height * 0.205
+  );
+  drawContext.fillText(
+    "existing coastal assets only",
+    width * 0.69,
+    height * 0.235
+  );
+
+  const swatches = [
+    palette.ground,
+    palette.vegetation,
+    palette.road,
+    palette.building,
+    palette.lighthouse
+  ];
+  swatches.forEach((color, index) => {
+    drawContext.fillStyle = color;
+    drawContext.fillRect(width * 0.69 + index * 24, height * 0.25, 16, 10);
+  });
 }
 
 function drawExpandedSettlementReadabilityGuides(
@@ -4529,7 +4631,8 @@ function buildRenderableExpandedSettlementPreview(
   expandedSettlementPreview,
   {
     presentationProfile = "neighbourhood",
-    lightingProfile = "day"
+    lightingProfile = "day",
+    styleReviewMode = false
   } = {}
 ) {
   if (!expandedSettlementPreview) {
@@ -4555,13 +4658,35 @@ function buildRenderableExpandedSettlementPreview(
       activePresentationProfile: "close_exploration_profile",
       activeZoomProfile: "close",
       activeCompositionProfile: "close_property"
+    }),
+    style_review: Object.freeze({
+      activePresentationProfile: "style_review_presentation_profile",
+      activeZoomProfile: "normal",
+      activeCompositionProfile: "style_review_scene"
     })
   });
-  const mapping = presentationProfileMapping[normalizedPresentationProfile];
+  const mapping = styleReviewMode === true
+    ? presentationProfileMapping.style_review
+    : presentationProfileMapping[normalizedPresentationProfile];
   const visibleObjectCount = filterExpandedSettlementInstancesByZoom(
     expandedSettlementPreview.objectInstances ?? [],
     mapping.activeZoomProfile
   ).length;
+  const styleReviewProfile = deepFreeze({
+    enabled: styleReviewMode === true,
+    cameraProfile:
+      styleReviewMode === true ? "style_review_camera_profile" : null,
+    colourProfile:
+      styleReviewMode === true
+        ? `coastal_review_${normalizedLightingProfile}_palette`
+        : null,
+    depthLayeringPreview:
+      styleReviewMode === true ? "foreground-midground-background-stack" : null,
+    terrainPresentationPreview:
+      styleReviewMode === true ? "coastline-ground-yard-banding" : null,
+    lightingPreview:
+      styleReviewMode === true ? `${normalizedLightingProfile}_review_lighting` : null
+  });
 
   return deepFreeze({
     ...expandedSettlementPreview,
@@ -4577,7 +4702,8 @@ function buildRenderableExpandedSettlementPreview(
     }),
     visualStyling: deepFreeze({
       ...expandedSettlementPreview.visualStyling,
-      activeLightingProfile: normalizedLightingProfile
+      activeLightingProfile: normalizedLightingProfile,
+      styleReviewMode: styleReviewMode === true
     }),
     presentationSummary: deepFreeze({
       ...expandedSettlementPreview.presentationSummary,
@@ -4585,10 +4711,15 @@ function buildRenderableExpandedSettlementPreview(
       activeZoomProfile: mapping.activeZoomProfile,
       activeCompositionProfile: mapping.activeCompositionProfile,
       activeLightingProfile: normalizedLightingProfile,
-      visibleObjectCount
+      visibleObjectCount,
+      styleReviewProfile
     }),
     cameraState: deepFreeze({
       ...expandedSettlementPreview.cameraState,
+      cameraProfile:
+        styleReviewMode === true
+          ? "style_review_camera_profile"
+          : expandedSettlementPreview.cameraState.cameraProfile,
       activeCompositionProfile: mapping.activeCompositionProfile,
       activeZoomProfile: mapping.activeZoomProfile,
       previewZoomProfile: mapping.activeZoomProfile
@@ -4607,7 +4738,10 @@ function buildVisualSourceSummary({
 }) {
   if (expandedSettlementPreview) {
     return deepFreeze({
-      sourceType: "expanded-settlement-scene",
+      sourceType:
+        expandedSettlementPreview.visualStyling?.styleReviewMode === true
+          ? "expanded-settlement-style-review"
+          : "expanded-settlement-scene",
       sceneId: expandedSettlementPreview.sceneId,
       worldId: expandedSettlementPreview.worldId,
       objectInstanceCount: expandedSettlementPreview.objectInstances.length,
@@ -4617,6 +4751,8 @@ function buildVisualSourceSummary({
       densityProfile: expandedSettlementPreview.visualScaling?.densityProfile ?? null,
       presentationProfile:
         expandedSettlementPreview.visualScaling?.activePresentationProfile ?? null,
+      styleReviewMode:
+        expandedSettlementPreview.visualStyling?.styleReviewMode === true,
       previewZoomProfile:
         expandedSettlementPreview.visualScaling?.activeZoomProfile ??
         expandedSettlementPreview.cameraState?.previewZoomProfile ??

@@ -549,6 +549,7 @@
           <p id="atlasPreviewObjectCountLabel" class="atlas-demo-state-line" data-priority="detail">Object instances: waiting for selection</p>
           <p id="atlasPreviewVisibilityLabel" class="atlas-demo-state-line" data-priority="detail">Visibility: hidden</p>
           <p id="atlasPresentationProfileLabel" class="atlas-demo-state-line" data-priority="detail">Presentation profile: waiting for selection</p>
+          <p id="atlasStyleReviewLabel" class="atlas-demo-state-line" data-priority="accent">Style review: inactive</p>
           <p id="atlasLightingProfileLabel" class="atlas-demo-state-line" data-priority="detail">Lighting profile: waiting for selection</p>
         </section>
 
@@ -598,6 +599,7 @@
             <button id="atlasPresentationOverviewButton" type="button">Overview View</button>
             <button id="atlasPresentationNeighbourhoodButton" type="button">Neighbourhood View</button>
             <button id="atlasPresentationCloseButton" type="button">Close Exploration View</button>
+            <button id="atlasStyleReviewButton" type="button">Style Review Mode</button>
           </div>
           <div class="atlas-demo-map-move-controls">
             <button id="atlasLightingDayButton" type="button">Day</button>
@@ -697,6 +699,7 @@
     const previewObjectCountLabel = document.getElementById("atlasPreviewObjectCountLabel");
     const previewVisibilityLabel = document.getElementById("atlasPreviewVisibilityLabel");
     const presentationProfileLabel = document.getElementById("atlasPresentationProfileLabel");
+    const styleReviewLabel = document.getElementById("atlasStyleReviewLabel");
     const lightingProfileLabel = document.getElementById("atlasLightingProfileLabel");
     const routingRegionLabel = document.getElementById("atlasRoutingRegionLabel");
     const routingSelectionLabel = document.getElementById("atlasRoutingSelectionLabel");
@@ -712,6 +715,7 @@
     const presentationOverviewButton = document.getElementById("atlasPresentationOverviewButton");
     const presentationNeighbourhoodButton = document.getElementById("atlasPresentationNeighbourhoodButton");
     const presentationCloseButton = document.getElementById("atlasPresentationCloseButton");
+    const styleReviewButton = document.getElementById("atlasStyleReviewButton");
     const lightingDayButton = document.getElementById("atlasLightingDayButton");
     const lightingSunsetButton = document.getElementById("atlasLightingSunsetButton");
     const lightingNightButton = document.getElementById("atlasLightingNightButton");
@@ -768,6 +772,10 @@
         presentationProfileLabel.textContent =
           `Presentation profile: ${summary.presentationProfile ?? "none selected"}`;
       }
+      if (styleReviewLabel) {
+        styleReviewLabel.textContent =
+          `Style review: ${summary.styleReviewMode === true ? "active" : "inactive"}`;
+      }
     };
 
     const updateDemoPresentationLabels = (demoPresentationState) => {
@@ -784,6 +792,12 @@
       if (lightingProfileLabel) {
         lightingProfileLabel.textContent =
           `Lighting profile: ${demoPresentationState.lightingProfile?.activeProfile ?? "none selected"}`;
+      }
+      if (styleReviewLabel) {
+        styleReviewLabel.textContent =
+          demoPresentationState.styleReviewMode === true
+            ? `Style review: ${demoPresentationState.styleReviewProfile?.cameraProfile ?? "review-only"} / ${demoPresentationState.styleReviewProfile?.colourProfile ?? "coastal review"}`
+            : "Style review: inactive";
       }
       if (worldCameraLabel && demoPresentationState.cameraProfile) {
         worldCameraLabel.textContent =
@@ -1970,6 +1984,45 @@
           }
         };
 
+        const applyStyleReviewMode = (enabled = true) => {
+          const harness = resolveOverlayHarness();
+          if (!harness?.setSettlementStyleReviewMode) {
+            return;
+          }
+          const demoPresentationState =
+            harness.setSettlementStyleReviewMode(enabled);
+          const currentVisualSource =
+            window.__atlasBrowserDemoState?.activeVisualSource ?? {};
+          const nextVisualSource = {
+            ...harness.currentVisualSourceSummary(),
+            sourceType:
+              currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? "combined-map-world-overlay"
+                : harness.currentVisualSourceSummary().sourceType,
+            visibilityState:
+              currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? currentVisualSource.visibilityState
+                : harness.currentVisualSourceSummary().visibilityState,
+            active:
+              (currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? currentVisualSource.visibilityState
+                : harness.currentVisualSourceSummary().visibilityState) ===
+              "visible"
+          };
+          updateVisualSourceLabels(nextVisualSource);
+          updateDemoPresentationLabels(demoPresentationState);
+          updatePoiPresentationLabels(harness.currentSettlementPoiPresentationState?.());
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            activeVisualSource: nextVisualSource
+          });
+          if (status) {
+            status.textContent = enabled
+              ? "Style review mode enabled for the coastal 2.5D scene."
+              : "Style review mode disabled.";
+          }
+        };
+
         const setDemoControlsDisabled = (disabled) => {
           if (presentationOverviewButton) {
             presentationOverviewButton.disabled = disabled;
@@ -1979,6 +2032,9 @@
           }
           if (presentationCloseButton) {
             presentationCloseButton.disabled = disabled;
+          }
+          if (styleReviewButton) {
+            styleReviewButton.disabled = disabled;
           }
           if (lightingDayButton) {
             lightingDayButton.disabled = disabled;
@@ -2333,6 +2389,10 @@
         });
         presentationCloseButton?.addEventListener("click", () => {
           applyPresentationProfile("close");
+        });
+        styleReviewButton?.addEventListener("click", () => {
+          const currentState = resolveOverlayHarness()?.currentDemoPresentationState?.();
+          applyStyleReviewMode(currentState?.styleReviewMode !== true);
         });
         lightingDayButton?.addEventListener("click", () => {
           applyLightingProfile("day");

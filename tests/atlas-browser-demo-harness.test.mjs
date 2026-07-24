@@ -1087,6 +1087,32 @@ test("Atlas browser demo harness supports final presentation and lighting demo c
   assert.equal(nightState.validationResult.demoReady, true);
   assert.equal(nightState.validationResult.poiInteractionReady, true);
 
+  const styleReviewState = harness.setSettlementStyleReviewMode(true);
+  assert.equal(styleReviewState.styleReviewMode, true);
+  assert.equal(
+    styleReviewState.activePresentationProfile,
+    "style_review_presentation_profile"
+  );
+  assert.equal(
+    styleReviewState.cameraProfile.activeCompositionProfile,
+    "style_review_scene"
+  );
+  assert.equal(
+    styleReviewState.styleReviewProfile.cameraProfile,
+    "style_review_camera_profile"
+  );
+  assert.equal(
+    harness.currentVisualSourceSummary().sourceType,
+    "expanded-settlement-style-review"
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("STYLE REVIEW")
+    )
+  );
+
   const closeState = harness.setSettlementPresentationProfile("close");
   assert.equal(
     closeState.activePresentationProfile,
@@ -1103,4 +1129,7 @@ test("Atlas browser demo harness supports final presentation and lighting demo c
     harness.currentSettlementPoiPresentationState().labelState.zoomProfile,
     "close"
   );
+
+  const standardState = harness.setSettlementStyleReviewMode(false);
+  assert.equal(standardState.styleReviewMode, false);
 });
