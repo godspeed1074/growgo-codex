@@ -1,0 +1,29 @@
+{
+  "assetId": "ROAD_COASTAL_001",
+  "assetFamilyId": "COASTAL_INFRASTRUCTURE_FAMILY_001",
+  "recipeReference": "ROAD_COASTAL_RECIPE_001",
+  "collections": [
+    "GEOMETRY",
+    "MATERIALS",
+    "LOD0",
+    "LOD1",
+    "LOD2",
+    "LOD3",
+    "EXPORT"
+  ],
+  "lodOutputs": {
+    "close": "ROAD_COASTAL_001_LOD_CLOSE.glb",
+    "gameplay": "ROAD_COASTAL_001_LOD_GAMEPLAY.glb",
+    "map": "ROAD_COASTAL_001_LOD_MAP.glb",
+    "distantSilhouette": "ROAD_COASTAL_001_LOD_DISTANT_SILHOUETTE.glb"
+  },
+  "executionTarget": "local-blender-python",
+  "components": [
+    "ROAD_SURFACE_COASTAL_001",
+    "ROAD_EDGE_COASTAL_001",
+    "ROAD_SHOULDER_COASTAL_001",
+    "ROAD_MARKING_COASTAL_001",
+    "ROAD_CONNECTOR_STRAIGHT_001",
+    "ROAD_CONNECTOR_CURVE_001"
+  ]
+}
