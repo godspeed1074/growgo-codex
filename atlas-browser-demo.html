@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlas Browser Demo</title>
+  <title>Coastal Starter World Browser Showcase</title>
   <style>
     :root {
       color-scheme: light;
@@ -121,17 +121,17 @@
 <body>
   <main class="atlas-demo-shell">
     <header class="atlas-demo-header">
-      <h1>Atlas Placeholder Preview</h1>
+      <h1>Coastal Starter World Showcase</h1>
       <span>Manual-only browser demo</span>
     </header>
 
     <div class="atlas-demo-controls">
-      <button id="atlasPreviewShowButton" type="button">Show Atlas Preview</button>
-      <button id="atlasPreviewHideButton" type="button">Hide/Close Preview</button>
+      <button id="atlasPreviewShowButton" type="button">Show Coastal World</button>
+      <button id="atlasPreviewHideButton" type="button">Hide Coastal World</button>
     </div>
 
     <p id="atlasPreviewStatus" class="atlas-demo-status" aria-live="polite">
-      Atlas preview loading...
+      Coastal world showcase loading...
     </p>
 
     <section
@@ -173,7 +173,7 @@
       }
       if (status) {
         status.textContent =
-          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to view the placeholder scene.";
+          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to view the coastal showcase scene.";
       }
       if (showButton) {
         showButton.disabled = true;
@@ -187,8 +187,28 @@
       setLaunchMode();
     } else {
       try {
-        const { createAtlasBrowserDemoHarness } = await import("./client/atlas-browser-demo-harness.mjs");
-        const harness = createAtlasBrowserDemoHarness();
+        const [{ createAtlasBrowserDemoHarness }, { createCoastalStarterWorldBrowserShowcase }] =
+          await Promise.all([
+            import("./client/atlas-browser-demo-harness.mjs"),
+            import("./asset-factory/coastal-starter-world-browser-showcase.mjs")
+          ]);
+        const coastalWorldShowcase =
+          await createCoastalStarterWorldBrowserShowcase({
+            existsSync() {
+              return true;
+            },
+            async loadArrayBuffer(candidatePath) {
+              const response = await fetch(candidatePath);
+              if (!response.ok) {
+                throw new Error(`Unable to load coastal showcase asset ${candidatePath}.`);
+              }
+              return response.arrayBuffer();
+            },
+            allowFallbackShowcase: true
+          });
+        const harness = createAtlasBrowserDemoHarness({
+          coastalWorldShowcase
+        });
         if (!harness.ok) {
           if (status) {
             status.textContent = harness.message;
@@ -207,6 +227,7 @@
         }
 
         window.atlasBrowserDemoHarness = harness.atlasBrowserDemoHarness;
+        window.coastalStarterWorldBrowserShowcase = coastalWorldShowcase;
       } catch (error) {
         setLaunchMode();
         console.error(error);

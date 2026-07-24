@@ -58,6 +58,14 @@ const realGroundMeshRenderTestModule = await import(
     "ground-coastal-grass-real-glb-mesh-visual-render-test.mjs"
   )
 );
+const coastalShowcaseModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "coastal-starter-world-browser-showcase.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -365,6 +373,17 @@ async function buildRealGroundMeshRenderTest() {
   );
 }
 
+async function buildCoastalWorldShowcase() {
+  return coastalShowcaseModule.createCoastalStarterWorldBrowserShowcase({
+    existsSync() {
+      return true;
+    },
+    loadArrayBuffer() {
+      return Promise.resolve(createSyntheticGlb());
+    }
+  });
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", async () => {
   const document = createMockDocument();
   const realGroundRuntimeLoader = await buildRealGroundRuntimeLoader();
@@ -458,4 +477,43 @@ test("Atlas browser demo harness rejects duplicate activation safely", () => {
   assert.equal(second.ok, false);
   assert.equal(second.previewMountResult, null);
   assert.match(harness.elements.status.textContent, /prevents duplicate/i);
+});
+
+test("Atlas browser demo harness displays the assembled coastal world showcase when real GLB-backed scene data is available", async () => {
+  const document = createMockDocument();
+  const coastalWorldShowcase = await buildCoastalWorldShowcase();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions(),
+    coastalWorldShowcase
+  });
+
+  assert.equal(result.ok, true);
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showCoastalWorld();
+
+  assert.equal(shown.ok, true);
+  assert.equal(harness.elements.previewContainer.dataset.previewVisible, "true");
+  assert.match(harness.elements.status.textContent, /assembled real GLB-backed scene/i);
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        command[1] === "LIGHTHOUSE_ISLAND_ROCKY_001"
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        command[1] === "BUILDING_COASTAL_COTTAGE_001"
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        command[1] === "ROAD_COASTAL_001"
+    )
+  );
 });

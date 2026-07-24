@@ -16,6 +16,9 @@ import {
 import {
   createGroundCoastalGrassRealGlbMeshVisualRenderTest
 } from "../asset-factory/ground-coastal-grass-real-glb-mesh-visual-render-test.mjs";
+import {
+  validateCoastalStarterWorldBrowserShowcase
+} from "../asset-factory/coastal-starter-world-browser-showcase.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -23,6 +26,14 @@ export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "ROAD_PLACEHOLDER",
   "TREE_PLACEHOLDER"
 ]);
+
+const coastalShowcasePlacementByAssetId = Object.freeze({
+  GROUND_COASTAL_GRASS_001: Object.freeze({ x: 0, y: 0, scale: 320 }),
+  TREE_EUCALYPTUS_001: Object.freeze({ x: -150, y: -28, scale: 110 }),
+  ROAD_COASTAL_001: Object.freeze({ x: 0, y: 120, scale: 260 }),
+  BUILDING_COASTAL_COTTAGE_001: Object.freeze({ x: 120, y: 56, scale: 150 }),
+  LIGHTHOUSE_ISLAND_ROCKY_001: Object.freeze({ x: 250, y: -94, scale: 172 })
+});
 
 export function createAtlasBrowserDemoHarness(options = {}) {
   const documentRef = options.document ?? globalThis.document;
@@ -67,8 +78,16 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     options.realGroundMeshRenderTest,
     realGroundRuntimeLoader
   );
+  const coastalWorldShowcase = resolveCoastalWorldShowcase(
+    options.coastalWorldShowcase
+  );
 
-  setStatus(elements.status, "Atlas preview ready. Use Show Atlas Preview.");
+  setStatus(
+    elements.status,
+    coastalWorldShowcase
+      ? "Coastal world ready. Use Show Coastal World."
+      : "Atlas preview ready. Use Show Atlas Preview."
+  );
   setContainerVisibility(elements.previewContainer, false);
 
   const showHandler = () => {
@@ -106,20 +125,31 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       mounted = true;
     }
 
-    drawAtlasPlaceholderScene(drawContext, {
-      width: canvas.width,
-      height: canvas.height,
-      placeholders: atlasBrowserDemoPlaceholderObjects,
-      realGroundPreviewBinding,
-      realGroundRenderBinding,
-      realGroundMeshPreview,
-      realGroundRuntimeLoader,
-      realGroundMeshRenderTest
-    });
+    if (coastalWorldShowcase) {
+      drawCoastalWorldShowcase(drawContext, coastalWorldShowcase, {
+        width: canvas.width,
+        height: canvas.height
+      });
+    } else {
+      drawAtlasPlaceholderScene(drawContext, {
+        width: canvas.width,
+        height: canvas.height,
+        placeholders: atlasBrowserDemoPlaceholderObjects,
+        realGroundPreviewBinding,
+        realGroundRenderBinding,
+        realGroundMeshPreview,
+        realGroundRuntimeLoader,
+        realGroundMeshRenderTest
+      });
+    }
     setContainerVisibility(elements.previewContainer, true);
     setStatus(
       elements.status,
-      realGroundMeshRenderTest?.verificationResult.actualGlbGeometryRendered
+      coastalWorldShowcase
+        ? coastalWorldShowcase.verificationResult.realGlbBackedSceneValid
+          ? `Coastal world visible with assembled real GLB-backed scene ${coastalWorldShowcase.sceneId}.`
+          : `Coastal world visible with assembled fallback-safe scene ${coastalWorldShowcase.sceneId}.`
+        : realGroundMeshRenderTest?.verificationResult.actualGlbGeometryRendered
         ? `Atlas preview visible with rendered GLB mesh ${realGroundMeshRenderTest.assetId}.`
         : realGroundRuntimeLoader?.validationResult.glbAvailable
         ? `Atlas preview visible with runtime GLB mesh ${realGroundRuntimeLoader.assetId}.`
@@ -135,6 +165,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     return Object.freeze({
       ok: true,
       previewMountResult: mountResult.previewMountResult,
+      coastalWorldShowcase,
       realGroundPreviewBinding,
       realGroundRenderBinding,
       realGroundMeshPreview,
@@ -164,11 +195,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   elements.showButton.addEventListener("click", showHandler);
   elements.hideButton.addEventListener("click", hideHandler);
 
-  return Object.freeze({
-    ok: true,
-    errorCode: null,
-    message: null,
-    atlasBrowserDemoHarness: Object.freeze({
+    return Object.freeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      atlasBrowserDemoHarness: Object.freeze({
       previewSessionId: "atlas-browser-demo-harness",
       canvas,
       elements: Object.freeze({
@@ -180,6 +211,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       }),
       showPreview: showHandler,
       hidePreview: hideHandler,
+      showCoastalWorld: showHandler,
+      hideCoastalWorld: hideHandler,
       currentMountState() {
         return previewSession?.currentMountState?.() ?? "created";
       }
@@ -336,6 +369,157 @@ export function clearAtlasPlaceholderScene(drawContext, width, height) {
   if (drawContext && typeof drawContext.clearRect === "function") {
     drawContext.clearRect(0, 0, width, height);
   }
+}
+
+export function drawCoastalWorldShowcase(
+  drawContext,
+  showcase,
+  { width = 960, height = 540 } = {}
+) {
+  if (!drawContext || typeof drawContext.fillRect !== "function") {
+    throw new Error("Coastal world showcase draw requires a 2D canvas context.");
+  }
+
+  const activeLightingProfile =
+    showcase?.lightingProfile?.activeProfile?.toLowerCase?.() ?? "day";
+  const palette = resolveLightingPalette(activeLightingProfile);
+
+  drawContext.fillStyle = palette.sky;
+  drawContext.fillRect(0, 0, width, height);
+  drawContext.fillStyle = palette.sea;
+  drawContext.fillRect(0, height * 0.42, width, height * 0.16);
+  drawContext.fillStyle = palette.ground;
+  drawContext.fillRect(0, height * 0.58, width, height * 0.42);
+
+  const renderablesByAssetId = new Map(
+    (showcase.renderables ?? []).map((renderable) => [renderable.assetId, renderable])
+  );
+
+  drawContext.fillStyle = "#163046";
+  drawContext.font = "bold 18px sans-serif";
+  drawContext.textAlign = "left";
+  drawContext.fillText(showcase.showcaseId, width * 0.03, height * 0.08);
+  drawContext.font = "13px sans-serif";
+  drawContext.fillText(
+    `${showcase.cameraProfile.cameraProfile} :: ${showcase.lightingProfile.activeProfile}`,
+    width * 0.03,
+    height * 0.115
+  );
+
+  for (const assetInstance of showcase.assetInstances ?? []) {
+    const placement =
+      coastalShowcasePlacementByAssetId[assetInstance.assetId] ??
+      coastalShowcasePlacementByAssetId.GROUND_COASTAL_GRASS_001;
+    const renderable = renderablesByAssetId.get(assetInstance.assetId) ?? null;
+    if (!renderable) {
+      continue;
+    }
+    drawShowcaseRenderable(drawContext, {
+      width,
+      height,
+      assetInstance,
+      renderable,
+      placement,
+      palette
+    });
+  }
+
+  drawContext.fillStyle = "#163046";
+  drawContext.font = "12px sans-serif";
+  drawContext.textAlign = "left";
+  drawContext.fillText(
+    showcase.verificationResult.realGlbBackedSceneValid
+      ? "real GLB-backed coastal showcase"
+      : "fallback-safe coastal showcase",
+    width * 0.03,
+    height * 0.96
+  );
+}
+
+function drawShowcaseRenderable(
+  drawContext,
+  { width, height, assetInstance, renderable, placement, palette }
+) {
+  const fillStyle = resolveAssetFillStyle(
+    renderable.primaryMaterial,
+    assetInstance.assetId,
+    palette
+  );
+  const baseOriginX = width * 0.5 + placement.x;
+  const baseOriginY = height * 0.62 + placement.y;
+
+  drawContext.fillStyle = fillStyle;
+  drawContext.beginPath();
+  renderable.projectedVertices.forEach((vertex, index) => {
+    const x = baseOriginX + (vertex.x - 0.5) * placement.scale;
+    const y = baseOriginY - vertex.y * placement.scale * 0.72;
+    if (index === 0) {
+      drawContext.moveTo(x, y);
+    } else {
+      drawContext.lineTo(x, y);
+    }
+  });
+  drawContext.closePath();
+  drawContext.fill();
+
+  drawContext.fillStyle = "#163046";
+  drawContext.font = "bold 12px sans-serif";
+  drawContext.textAlign = "center";
+  drawContext.fillText(
+    assetInstance.assetId,
+    baseOriginX,
+    baseOriginY - placement.scale * 0.86
+  );
+}
+
+function resolveLightingPalette(profile) {
+  if (profile === "sunset") {
+    return Object.freeze({
+      sky: "#f6c7a0",
+      sea: "#7da2c4",
+      ground: "#c2b27d",
+      vegetation: "#6d8a46",
+      road: "#6d625a",
+      building: "#f3d4b6",
+      lighthouse: "#f1eee6"
+    });
+  }
+  if (profile === "night") {
+    return Object.freeze({
+      sky: "#1d2940",
+      sea: "#29445e",
+      ground: "#4f6446",
+      vegetation: "#537647",
+      road: "#545a61",
+      building: "#d8c4a4",
+      lighthouse: "#ece8de"
+    });
+  }
+  return Object.freeze({
+    sky: "#d7ecff",
+    sea: "#8fc0df",
+    ground: "#8dd17e",
+    vegetation: "#5a8f46",
+    road: "#6b7078",
+    building: "#f0d4b0",
+    lighthouse: "#e8ebef"
+  });
+}
+
+function resolveAssetFillStyle(primaryMaterial, assetId, palette) {
+  if (/grass/i.test(primaryMaterial) || /GROUND_COASTAL_GRASS/i.test(assetId)) {
+    return palette.ground;
+  }
+  if (/tree|leaf/i.test(primaryMaterial) || /TREE_EUCALYPTUS/i.test(assetId)) {
+    return palette.vegetation;
+  }
+  if (/road|asphalt/i.test(primaryMaterial) || /ROAD_COASTAL/i.test(assetId)) {
+    return palette.road;
+  }
+  if (/lighthouse/i.test(primaryMaterial) || /LIGHTHOUSE_ISLAND_ROCKY/i.test(assetId)) {
+    return palette.lighthouse;
+  }
+  return palette.building;
 }
 
 export function drawProjectedGroundMesh(drawContext, { width, height, meshData, fillStyle = "#4d9b57" }) {
@@ -628,6 +812,33 @@ function resolveRealGroundMeshRenderTest(rawBinding, runtimeLoaderDefinition) {
   } catch {
     return null;
   }
+}
+
+function resolveCoastalWorldShowcase(rawShowcase) {
+  if (!rawShowcase) {
+    return null;
+  }
+
+  if (
+    rawShowcase.showcaseId &&
+    rawShowcase.sceneId &&
+    Array.isArray(rawShowcase.assetInstances) &&
+    rawShowcase.cameraProfile &&
+    rawShowcase.lightingProfile &&
+    rawShowcase.displayState &&
+    rawShowcase.verificationResult
+  ) {
+    return Object.freeze(rawShowcase);
+  }
+
+  const validation = validateCoastalStarterWorldBrowserShowcase(
+    rawShowcase.definition ?? rawShowcase
+  );
+  if (!validation.ok) {
+    return null;
+  }
+
+  return Object.freeze(validation.coastalStarterWorldBrowserShowcase.showcase);
 }
 
 function stableNumericHash(value) {
