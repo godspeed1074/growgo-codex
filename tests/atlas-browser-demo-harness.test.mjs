@@ -714,6 +714,18 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     selection.sessionExperienceState.currentObjective,
     "Inspect LIGHTHOUSE_ISLAND_ROCKY_001 and choose whether to capture or discover it."
   );
+  assert.equal(
+    selection.landmarkShowcaseState.assetId,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
+    selection.landmarkShowcaseState.showcaseState,
+    "landmark-detail-showcase"
+  );
+  assert.equal(
+    selection.landmarkShowcaseState.focusCamera.targetAsset,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
 
   const toggledExplorationMode = harness.toggleSettlementExplorationMode();
@@ -727,11 +739,17 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   );
 
   const playerState = harness.focusSettlementPlayerPresence();
+  const playerFocusedLandmarkShowcaseState =
+    harness.currentSettlementLandmarkShowcaseState();
   assert.equal(playerState.visibilityState, "player-focused");
   assert.equal(playerState.cameraFocus.targetAsset, "PLAYER_MARKER");
   assert.equal(
     harness.currentSettlementPlayerMapState().cameraFocus.currentState,
     "player-focused"
+  );
+  assert.equal(
+    playerFocusedLandmarkShowcaseState.validationResult.cameraFocusValid,
+    true
   );
 
   const playerInteractionState = harness.interactWithSelectedSettlementObject();
@@ -763,6 +781,8 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementCaptureSessionSummaryState();
   const explorationProgressPresentationState =
     harness.currentSettlementExplorationProgressPresentationState();
+  const captureLandmarkShowcaseState =
+    harness.currentSettlementLandmarkShowcaseState();
   assert.equal(
     capturePresentationState.validationResult.captureStateConsistencyValid,
     true
@@ -801,6 +821,14 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     explorationProgressPresentationState.validationResult.uiUpdatesAfterCaptureValid,
     true
   );
+  assert.equal(
+    captureLandmarkShowcaseState.captureState,
+    "captured-session"
+  );
+  assert.equal(
+    captureLandmarkShowcaseState.validationResult.captureStateSyncValid,
+    true
+  );
   const returnedDetail = harness.closeSettlementAssetDetailPreview();
   assert.equal(returnedDetail.detailState, "returning-to-map-view");
   assert.equal(
@@ -832,6 +860,8 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   const discoveryState = harness.discoverSelectedSettlementObject();
   const discoveryProgressPresentationState =
     harness.currentSettlementExplorationProgressPresentationState();
+  const discoveryLandmarkShowcaseState =
+    harness.currentSettlementLandmarkShowcaseState();
   assert.equal(discoveryState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(
     discoveryState.discoveryState,
@@ -853,6 +883,14 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     discoveryProgressPresentationState.validationResult.uiUpdatesAfterDiscoveryValid,
     true
   );
+  assert.equal(
+    discoveryLandmarkShowcaseState.discoveryState,
+    "discovered-persistent"
+  );
+  assert.equal(
+    discoveryLandmarkShowcaseState.validationResult.discoveryStateSyncValid,
+    true
+  );
   const clearedDiscovery = harness.clearSettlementDiscoveryState();
   assert.equal(clearedDiscovery.discoveryState, "discovery-idle");
   assert.equal(
@@ -862,6 +900,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     harness.currentSettlementExplorationProgressPresentationState().activeDiscoveryTarget,
     null
+  );
+  assert.equal(
+    harness.currentSettlementLandmarkShowcaseState().discoveryState,
+    "discovery-idle"
   );
 
   const returned = harness.closeSettlementAssetDetailPreview();

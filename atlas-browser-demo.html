@@ -491,6 +491,20 @@
             </div>
           </div>
 
+          <div class="atlas-demo-state-group">
+            <div class="atlas-demo-section-heading">
+              <h3>Landmark Showcase</h3>
+              <p>Keep the lighthouse front and center with a focused landmark view that stays in sync with discovery and capture.</p>
+            </div>
+            <div class="atlas-demo-state-grid">
+              <p id="atlasLandmarkShowcaseLabel" class="atlas-demo-state-line" data-priority="primary">Landmark showcase: waiting for lighthouse selection</p>
+              <p id="atlasLandmarkAssetLabel" class="atlas-demo-state-line" data-priority="accent">Landmark asset: none selected</p>
+              <p id="atlasLandmarkCameraLabel" class="atlas-demo-state-line" data-priority="detail">Landmark camera: waiting for lighthouse selection</p>
+              <p id="atlasLandmarkDiscoverySyncLabel" class="atlas-demo-state-line" data-priority="detail">Landmark discovery sync: waiting for lighthouse selection</p>
+              <p id="atlasLandmarkCaptureSyncLabel" class="atlas-demo-state-line" data-priority="detail">Landmark capture sync: waiting for lighthouse selection</p>
+            </div>
+          </div>
+
           <div class="atlas-demo-map-move-controls">
             <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
             <button id="atlasExplorationModeToggleButton" type="button">Toggle Exploration Mode</button>
@@ -615,6 +629,11 @@
     const explorationDiscoveredListLabel = document.getElementById("atlasExplorationDiscoveredListLabel");
     const capturePresentationLabel = document.getElementById("atlasCapturePresentationLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
+    const landmarkShowcaseLabel = document.getElementById("atlasLandmarkShowcaseLabel");
+    const landmarkAssetLabel = document.getElementById("atlasLandmarkAssetLabel");
+    const landmarkCameraLabel = document.getElementById("atlasLandmarkCameraLabel");
+    const landmarkDiscoverySyncLabel = document.getElementById("atlasLandmarkDiscoverySyncLabel");
+    const landmarkCaptureSyncLabel = document.getElementById("atlasLandmarkCaptureSyncLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
     const poiPresentationLabel = document.getElementById("atlasPoiPresentationLabel");
     const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
@@ -1014,6 +1033,50 @@
       }
       discoveryLabel.textContent =
         `Discovery: ${discoveryState.discoveryState} / ${discoveryState.assetId ?? "no target"} / discovered ${discoveryState.discoveredObjectIds?.length ?? 0}`;
+    };
+
+    const updateLandmarkShowcaseLabels = (landmarkShowcaseState) => {
+      if (!landmarkShowcaseLabel) {
+        return;
+      }
+      if (!landmarkShowcaseState || !landmarkShowcaseState.assetId) {
+        landmarkShowcaseLabel.textContent =
+          "Landmark showcase: waiting for lighthouse selection";
+        if (landmarkAssetLabel) {
+          landmarkAssetLabel.textContent = "Landmark asset: none selected";
+        }
+        if (landmarkCameraLabel) {
+          landmarkCameraLabel.textContent =
+            "Landmark camera: waiting for lighthouse selection";
+        }
+        if (landmarkDiscoverySyncLabel) {
+          landmarkDiscoverySyncLabel.textContent =
+            "Landmark discovery sync: waiting for lighthouse selection";
+        }
+        if (landmarkCaptureSyncLabel) {
+          landmarkCaptureSyncLabel.textContent =
+            "Landmark capture sync: waiting for lighthouse selection";
+        }
+        return;
+      }
+      landmarkShowcaseLabel.textContent =
+        `Landmark showcase: ${landmarkShowcaseState.showcaseState} / ${landmarkShowcaseState.landmarkTitle ?? landmarkShowcaseState.assetId}`;
+      if (landmarkAssetLabel) {
+        landmarkAssetLabel.textContent =
+          `Landmark asset: ${landmarkShowcaseState.assetId}`;
+      }
+      if (landmarkCameraLabel) {
+        landmarkCameraLabel.textContent =
+          `Landmark camera: ${landmarkShowcaseState.focusCamera?.currentState ?? "inactive"} / ${landmarkShowcaseState.focusCamera?.previewCameraProfile ?? "no profile"} focused on ${landmarkShowcaseState.focusCamera?.targetAsset ?? "none"}`;
+      }
+      if (landmarkDiscoverySyncLabel) {
+        landmarkDiscoverySyncLabel.textContent =
+          `Landmark discovery sync: ${landmarkShowcaseState.discoveryState}`;
+      }
+      if (landmarkCaptureSyncLabel) {
+        landmarkCaptureSyncLabel.textContent =
+          `Landmark capture sync: ${landmarkShowcaseState.captureState}`;
+      }
     };
 
     const updatePoiLabels = (poiState) => {
@@ -1453,7 +1516,9 @@
               harness.currentSettlementDiscoveryState?.() ??
               combinedOverlay.discoveryState,
             explorationProgressPresentationState:
-              harness.currentSettlementExplorationProgressPresentationState?.() ?? null
+              harness.currentSettlementExplorationProgressPresentationState?.() ?? null,
+            landmarkShowcaseState:
+              harness.currentSettlementLandmarkShowcaseState?.() ?? null
           });
           updateVisualSourceLabels(activeVisualSource);
           updatePoiLabels(
@@ -1503,6 +1568,9 @@
           updateDiscoveryLabels(
             harness.currentSettlementDiscoveryState?.() ??
               combinedOverlay.discoveryState
+          );
+          updateLandmarkShowcaseLabels(
+            harness.currentSettlementLandmarkShowcaseState?.() ?? null
           );
           updateHarnessDemoState();
           return window.__atlasBrowserDemoState;
@@ -1755,12 +1823,17 @@
                     selection.detailPreviewState,
                     selection.poiContentMetadata
                   );
+                  updateLandmarkShowcaseLabels(
+                    selection.landmarkShowcaseState ?? null
+                  );
                   setBrowserDemoState({
                     ...(window.__atlasBrowserDemoState ?? {}),
                     poiState: selection.poiState,
                     poiContentMetadata: selection.poiContentMetadata,
                     poiPresentationState: selection.poiPresentationState,
-                    detailPreviewState: selection.detailPreviewState
+                    detailPreviewState: selection.detailPreviewState,
+                    landmarkShowcaseState:
+                      selection.landmarkShowcaseState ?? null
                   });
                 }
                 return;
@@ -1941,6 +2014,9 @@
           syncInteractionStateToBrowserState(interactionState);
           updateDetailPreviewLabels(detailState, harness.currentSettlementPoiContentMetadata());
           updateSessionExperienceLabels(sessionExperienceState, interactionState);
+          updateLandmarkShowcaseLabels(
+            harness.currentSettlementLandmarkShowcaseState?.() ?? null
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             poiContentMetadata: harness.currentSettlementPoiContentMetadata(),
@@ -1948,7 +2024,9 @@
             detailPreviewState: detailState,
             sessionExperienceState,
             selectedOverlayObject: null,
-            overlayInteractionState: interactionState
+            overlayInteractionState: interactionState,
+            landmarkShowcaseState:
+              harness.currentSettlementLandmarkShowcaseState?.() ?? null
           });
           if (status) {
             status.textContent = "Returned to the map overview.";
@@ -1968,10 +2046,15 @@
             sessionExperienceState,
             harness.currentSettlementInteractionState()
           );
+          updateLandmarkShowcaseLabels(
+            harness.currentSettlementLandmarkShowcaseState?.() ?? null
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             playerState,
-            sessionExperienceState
+            sessionExperienceState,
+            landmarkShowcaseState:
+              harness.currentSettlementLandmarkShowcaseState?.() ?? null
           });
           if (status) {
             status.textContent = "Focused the player presence in the world view.";
@@ -1991,10 +2074,15 @@
             sessionExperienceState,
             harness.currentSettlementInteractionState()
           );
+          updateLandmarkShowcaseLabels(
+            harness.currentSettlementLandmarkShowcaseState?.() ?? null
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             playerInteractionState,
-            sessionExperienceState
+            sessionExperienceState,
+            landmarkShowcaseState:
+              harness.currentSettlementLandmarkShowcaseState?.() ?? null
           });
           if (status) {
             status.textContent =
@@ -2022,6 +2110,8 @@
             harness.currentSettlementCapturePresentationState();
           const explorationProgressPresentationState =
             harness.currentSettlementExplorationProgressPresentationState();
+          const landmarkShowcaseState =
+            harness.currentSettlementLandmarkShowcaseState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
           updateExplorationSummaryLabels(
@@ -2033,6 +2123,7 @@
             harness.currentSettlementInteractionState()
           );
           updateCapturePresentationLabels(capturePresentationState);
+          updateLandmarkShowcaseLabels(landmarkShowcaseState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
@@ -2040,7 +2131,8 @@
             captureSessionSummaryState,
             sessionExperienceState,
             capturePresentationState,
-            explorationProgressPresentationState
+            explorationProgressPresentationState,
+            landmarkShowcaseState
           });
           if (status) {
             status.textContent =
@@ -2065,10 +2157,15 @@
             sessionExperienceState,
             harness.currentSettlementInteractionState()
           );
+          updateLandmarkShowcaseLabels(
+            harness.currentSettlementLandmarkShowcaseState?.() ?? null
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             playerState,
-            sessionExperienceState
+            sessionExperienceState,
+            landmarkShowcaseState:
+              harness.currentSettlementLandmarkShowcaseState?.() ?? null
           });
           if (status) {
             status.textContent = "Returned to the world overview.";
@@ -2088,10 +2185,15 @@
             sessionExperienceState,
             harness.currentSettlementInteractionState()
           );
+          updateLandmarkShowcaseLabels(
+            harness.currentSettlementLandmarkShowcaseState?.() ?? null
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             playerInteractionState,
-            sessionExperienceState
+            sessionExperienceState,
+            landmarkShowcaseState:
+              harness.currentSettlementLandmarkShowcaseState?.() ?? null
           });
           if (status) {
             status.textContent = "Cleared world interaction state.";
@@ -2114,6 +2216,8 @@
             harness.currentSettlementCapturePresentationState();
           const explorationProgressPresentationState =
             harness.currentSettlementExplorationProgressPresentationState();
+          const landmarkShowcaseState =
+            harness.currentSettlementLandmarkShowcaseState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
           updateExplorationSummaryLabels(
@@ -2125,6 +2229,7 @@
             harness.currentSettlementInteractionState()
           );
           updateCapturePresentationLabels(capturePresentationState);
+          updateLandmarkShowcaseLabels(landmarkShowcaseState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
@@ -2132,7 +2237,8 @@
             captureSessionSummaryState,
             sessionExperienceState,
             capturePresentationState,
-            explorationProgressPresentationState
+            explorationProgressPresentationState,
+            landmarkShowcaseState
           });
           if (status) {
             status.textContent = "Cleared capture session state.";
@@ -2151,6 +2257,8 @@
             harness.currentSettlementSessionExperienceState();
           const explorationProgressPresentationState =
             harness.currentSettlementExplorationProgressPresentationState();
+          const landmarkShowcaseState =
+            harness.currentSettlementLandmarkShowcaseState();
           updateDiscoveryLabels(discoveryState);
           updateExplorationSummaryLabels(
             captureSessionSummaryState,
@@ -2160,12 +2268,14 @@
             sessionExperienceState,
             harness.currentSettlementInteractionState()
           );
+          updateLandmarkShowcaseLabels(landmarkShowcaseState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             discoveryState,
             captureSessionSummaryState,
             sessionExperienceState,
-            explorationProgressPresentationState
+            explorationProgressPresentationState,
+            landmarkShowcaseState
           });
           if (status) {
             status.textContent =
@@ -2189,6 +2299,8 @@
             harness.currentSettlementSessionExperienceState();
           const explorationProgressPresentationState =
             harness.currentSettlementExplorationProgressPresentationState();
+          const landmarkShowcaseState =
+            harness.currentSettlementLandmarkShowcaseState();
           updateDiscoveryLabels(discoveryState);
           updateExplorationSummaryLabels(
             captureSessionSummaryState,
@@ -2198,12 +2310,14 @@
             sessionExperienceState,
             harness.currentSettlementInteractionState()
           );
+          updateLandmarkShowcaseLabels(landmarkShowcaseState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             discoveryState,
             captureSessionSummaryState,
             sessionExperienceState,
-            explorationProgressPresentationState
+            explorationProgressPresentationState,
+            landmarkShowcaseState
           });
           if (status) {
             status.textContent = "Cleared discovery state.";

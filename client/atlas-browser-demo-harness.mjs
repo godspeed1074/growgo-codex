@@ -155,6 +155,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentSessionExperienceState,
       currentPoiContentMetadata
     );
+  let currentLandmarkShowcaseState = createDefaultLandmarkShowcaseState(
+    expandedSettlementPreview,
+    currentOverlayInteractionState,
+    currentPoiContentMetadata,
+    currentAssetDetailPreviewState,
+    currentDiscoveryState,
+    currentCaptureState
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -246,6 +254,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentSessionExperienceState,
         currentPoiContentMetadata
       );
+    currentLandmarkShowcaseState = buildLandmarkShowcaseState(
+      renderableExpandedSettlementPreview,
+      currentOverlayInteractionState,
+      currentPoiContentMetadata,
+      currentAssetDetailPreviewState,
+      currentDiscoveryState,
+      currentCaptureState
+    );
   };
 
   const refreshExplorationProgressPresentationState = () => {
@@ -257,6 +273,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentSessionExperienceState,
         currentPoiContentMetadata
       );
+    currentLandmarkShowcaseState = buildLandmarkShowcaseState(
+      renderableExpandedSettlementPreview,
+      currentOverlayInteractionState,
+      currentPoiContentMetadata,
+      currentAssetDetailPreviewState,
+      currentDiscoveryState,
+      currentCaptureState
+    );
   };
 
   const showHandler = () => {
@@ -526,7 +550,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       capturePresentationState: currentCapturePresentationState,
       discoveryState: currentDiscoveryState,
       explorationProgressPresentationState:
-        currentExplorationProgressPresentationState
+        currentExplorationProgressPresentationState,
+      landmarkShowcaseState: currentLandmarkShowcaseState
     });
   };
 
@@ -775,6 +800,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementExplorationProgressPresentationState() {
         return currentExplorationProgressPresentationState;
+      },
+      currentSettlementLandmarkShowcaseState() {
+        return currentLandmarkShowcaseState;
       },
       currentSettlementCapturePresentationState() {
         return currentCapturePresentationState;
@@ -2395,6 +2423,48 @@ function createDefaultExplorationProgressPresentationState(
   );
 }
 
+function createDefaultLandmarkShowcaseState(
+  expandedSettlementPreview,
+  interactionState,
+  poiContentMetadata,
+  detailPreviewState,
+  discoveryState,
+  captureState
+) {
+  if (
+    !expandedSettlementPreview ||
+    !interactionState ||
+    !detailPreviewState ||
+    !discoveryState ||
+    !captureState
+  ) {
+    return deepFreeze({
+      landmarkId: "LANDMARK_SHOWCASE_INACTIVE",
+      assetId: null,
+      showcaseState: "landmark-showcase-idle",
+      focusCamera: null,
+      discoveryState: "discovery-idle",
+      captureState: "capture-idle",
+      detailPresentationState: "map-overview",
+      validationResult: deepFreeze({
+        landmarkIdentityValid: true,
+        cameraFocusValid: true,
+        discoveryStateSyncValid: true,
+        captureStateSyncValid: true,
+        cleanupResetValid: true
+      })
+    });
+  }
+  return buildLandmarkShowcaseState(
+    expandedSettlementPreview,
+    interactionState,
+    poiContentMetadata,
+    detailPreviewState,
+    discoveryState,
+    captureState
+  );
+}
+
 function createDefaultDiscoveryState(
   expandedSettlementPreview,
   playerState
@@ -3351,6 +3421,103 @@ function buildExplorationProgressPresentationState(
       cleanupResetBehaviorValid:
         captureSessionSummaryState.totalObjects >= captureSessionSummaryState.capturedObjects &&
         captureSessionSummaryState.totalObjects >= captureSessionSummaryState.discoveredObjects
+    })
+  });
+}
+
+function buildLandmarkShowcaseState(
+  expandedSettlementPreview,
+  interactionState,
+  poiContentMetadata,
+  detailPreviewState,
+  discoveryState,
+  captureState
+) {
+  if (
+    !expandedSettlementPreview ||
+    !interactionState ||
+    !detailPreviewState ||
+    !discoveryState ||
+    !captureState
+  ) {
+    return createDefaultLandmarkShowcaseState(
+      expandedSettlementPreview,
+      interactionState,
+      poiContentMetadata,
+      detailPreviewState,
+      discoveryState,
+      captureState
+    );
+  }
+  const selectedAssetId = interactionState.selectedObject?.assetId ?? null;
+  const isLandmark = selectedAssetId === "LIGHTHOUSE_ISLAND_ROCKY_001";
+  const title =
+    isLandmark
+      ? poiContentMetadata?.title ?? resolvePoiLabelFromAssetId(selectedAssetId)
+      : null;
+  const showcaseState =
+    !isLandmark
+      ? "landmark-showcase-idle"
+      : captureState.captureState === "captured-session"
+        ? "landmark-captured-showcase"
+        : discoveryState.discoveryState === "discovered-persistent"
+          ? "landmark-discovered-showcase"
+          : detailPreviewState.detailState === "focused-detail-preview"
+            ? "landmark-detail-showcase"
+            : "landmark-focused-showcase";
+  return deepFreeze({
+    landmarkId:
+      isLandmark && interactionState.selectedObject?.instanceId
+        ? `${expandedSettlementPreview.sceneId}::landmark-showcase::${interactionState.selectedObject.instanceId}`
+        : `${expandedSettlementPreview.sceneId}::landmark-showcase::idle`,
+    assetId: isLandmark ? selectedAssetId : null,
+    landmarkTitle: title,
+    showcaseState,
+    focusCamera:
+      !isLandmark
+        ? null
+        : deepFreeze({
+            currentState:
+              detailPreviewState.detailState === "focused-detail-preview"
+                ? "landmark-detail-focus"
+                : "landmark-world-focus",
+            targetAsset: selectedAssetId,
+            focusPoint: deepFreeze({
+              ...(detailPreviewState.cameraProfile?.focusPoint ??
+                interactionState.cameraFocus?.focusPoint ??
+                expandedSettlementPreview.cameraState.focusPoint)
+            }),
+            previewCameraProfile:
+              detailPreviewState.cameraProfile?.previewCameraProfile ??
+              expandedSettlementPreview.cameraState.cameraProfile,
+            synchronizedWithMap:
+              detailPreviewState.cameraProfile?.synchronizedWithMap ??
+              interactionState.cameraFocus?.synchronizedWithMap ??
+              true
+          }),
+    discoveryState: isLandmark ? discoveryState.discoveryState : "discovery-idle",
+    captureState: isLandmark ? captureState.captureState : "capture-idle",
+    detailPresentationState: isLandmark ? detailPreviewState.detailState : "map-overview",
+    validationResult: deepFreeze({
+      landmarkIdentityValid:
+        !isLandmark ||
+        poiContentMetadata?.category === "landmark" ||
+        interactionState.selectedObject?.category === "landmark",
+      cameraFocusValid:
+        !isLandmark ||
+        interactionState.cameraFocus?.targetAsset === "LIGHTHOUSE_ISLAND_ROCKY_001",
+      discoveryStateSyncValid:
+        !isLandmark ||
+        (discoveryState.assetId == null ||
+          discoveryState.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001"),
+      captureStateSyncValid:
+        !isLandmark ||
+        (captureState.targetAssetId == null ||
+          captureState.targetAssetId === "LIGHTHOUSE_ISLAND_ROCKY_001"),
+      cleanupResetValid:
+        isLandmark ||
+        (detailPreviewState.detailState === "map-overview" &&
+          discoveryState.discoveryState === "discovery-idle")
     })
   });
 }
