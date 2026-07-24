@@ -312,17 +312,17 @@ def write_asset_metadata(output_dir):
         ],
         "appearanceProfiles": {
             "day": {
-                "lightActive": false,
+                "lightActive": False,
                 "glassTint": "cool_blue",
                 "skyBlend": "clear_day"
             },
             "sunset": {
-                "lightActive": false,
+                "lightActive": False,
                 "glassTint": "warm_gold",
                 "skyBlend": "sunset_orange"
             },
             "night": {
-                "lightActive": true,
+                "lightActive": True,
                 "glassTint": "bright_beacon",
                 "skyBlend": "deep_navy"
             },
