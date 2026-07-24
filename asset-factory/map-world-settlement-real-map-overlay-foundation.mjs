@@ -19,6 +19,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "mapBaseLayer",
   "settlementLayer",
   "alignmentState",
+  "poiState",
   "interactionState",
   "detailState",
   "playerState",
@@ -114,6 +115,9 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         settlementScene.validationResult.deterministicSceneOutputValid === true,
       overlayMode: "map-and-settlement-combined-view"
     }),
+    poiState: createMapWorldSettlementPoiState({
+      settlementScene
+    }),
     interactionState: createMapWorldSettlementOverlayInteractionState({
       settlementScene,
       mapWorldLiveMapFoundation
@@ -170,6 +174,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       deterministicPlacementValid:
         settlementScene.validationResult.deterministicSceneOutputValid === true,
       objectIdentityValid: true,
+      poiIdentityValid: true,
       selectionPersistenceValid: true,
       cameraFocusValid: true,
       detailPreviewValid: true,
@@ -263,6 +268,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation objectIdentityValid must be true."
       );
     }
+    if (!overlay.validationResult.poiIdentityValid) {
+      throw createValidationError(
+        "poi_identity_invalid",
+        "Map world settlement real map overlay foundation poiIdentityValid must be true."
+      );
+    }
     if (!overlay.validationResult.selectionPersistenceValid) {
       throw createValidationError(
         "selection_persistence_invalid",
@@ -315,6 +326,17 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       throw createValidationError(
         "interaction_mode_invalid",
         "Map world settlement real map overlay foundation interaction mode must remain map-overlay-selection."
+      );
+    }
+    if (
+      overlay.poiState.validationResult.poiIdentityValid !== true ||
+      overlay.poiState.validationResult.playerProximityValid !== true ||
+      overlay.poiState.validationResult.deterministicPlacementValid !== true ||
+      overlay.poiState.validationResult.cleanupValid !== true
+    ) {
+      throw createValidationError(
+        "poi_state_invalid",
+        "Map world settlement real map overlay foundation POI state must remain valid."
       );
     }
     if (
@@ -400,6 +422,7 @@ function normalizeOverlay(rawOverlay) {
     mapBaseLayer: deepFreeze(asPlainObject(overlay.mapBaseLayer, "mapBaseLayer")),
     settlementLayer: deepFreeze(asPlainObject(overlay.settlementLayer, "settlementLayer")),
     alignmentState: deepFreeze(asPlainObject(overlay.alignmentState, "alignmentState")),
+    poiState: deepFreeze(asPlainObject(overlay.poiState, "poiState")),
     interactionState: deepFreeze(asPlainObject(overlay.interactionState, "interactionState")),
     detailState: deepFreeze(asPlainObject(overlay.detailState, "detailState")),
     playerState: deepFreeze(asPlainObject(overlay.playerState, "playerState")),
@@ -468,6 +491,55 @@ export function createMapWorldSettlementOverlayInteractionState({
         Number.isFinite(focusPoint.y),
       cleanupValid: true,
       deterministicBehaviourValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementPoiState({
+  settlementScene,
+  targetObject = null,
+  playerState = null,
+  interactionState = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedTarget = resolveSelectableOverlayObject(selectableObjects, targetObject);
+  const poiType = resolvedTarget?.poiType ?? null;
+  const distance =
+    resolvedTarget == null || playerState?.position == null
+      ? null
+      : Number(
+          Math.hypot(
+            resolvedTarget.position.x - playerState.position.x,
+            resolvedTarget.position.y - playerState.position.y
+          ).toFixed(3)
+        );
+  const withinPoiRange = distance == null || distance <= 84;
+  const resolvedInteractionState =
+    interactionState ??
+    (resolvedTarget == null
+      ? "poi-idle"
+      : withinPoiRange
+        ? "poi-resolved"
+        : "poi-out-of-range");
+
+  return deepFreeze({
+    poiId:
+      resolvedTarget == null
+        ? `${settlementScene.sceneId}::poi::idle`
+        : `${settlementScene.sceneId}::poi::${resolvedTarget.instanceId}`,
+    assetId: resolvedTarget?.assetId ?? null,
+    poiType,
+    position: deepFreeze({
+      ...(resolvedTarget?.position ?? settlementScene.cameraProfile.focusPoint)
+    }),
+    interactionState: resolvedInteractionState,
+    validationResult: deepFreeze({
+      poiIdentityValid:
+        resolvedTarget == null ||
+        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
+      playerProximityValid: withinPoiRange,
+      deterministicPlacementValid: true,
+      cleanupValid: true
     })
   });
 }
@@ -600,17 +672,23 @@ export function createMapWorldSettlementPlayerInteractionState({
   targetObject = null,
   interactionState = null
 }) {
+  const poiState = createMapWorldSettlementPoiState({
+    settlementScene,
+    targetObject,
+    playerState
+  });
   const selectableObjects = collectSelectableOverlayObjects(settlementScene);
   const resolvedTarget = resolveSelectableOverlayObject(selectableObjects, targetObject);
-  const distance =
-    resolvedTarget == null || playerState?.position == null
+  const distance = poiState.validationResult.playerProximityValid
+    ? resolvedTarget == null || playerState?.position == null
       ? null
       : Number(
           Math.hypot(
             resolvedTarget.position.x - playerState.position.x,
             resolvedTarget.position.y - playerState.position.y
           ).toFixed(3)
-        );
+        )
+    : null;
   const withinRange = distance != null && distance <= 72;
   const resolvedInteractionState =
     interactionState ??
@@ -634,10 +712,13 @@ export function createMapWorldSettlementPlayerInteractionState({
       playerObjectAlignmentValid:
         resolvedTarget == null ||
         settlementScene.worldId === mapWorldLiveMapFoundation.activeWorldId,
-      interactionDistanceValid: resolvedTarget == null || withinRange,
+      interactionDistanceValid:
+        resolvedTarget == null ||
+        (poiState.validationResult.playerProximityValid === true && withinRange),
       objectIdentityValid:
         resolvedTarget == null ||
-        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
+        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId) &&
+        poiState.validationResult.poiIdentityValid === true,
       cleanupValid: true,
       deterministicBehaviourValid: true
     })
@@ -654,6 +735,11 @@ export function createMapWorldSettlementDiscoveryState({
 }) {
   const selectableObjects = collectSelectableOverlayObjects(settlementScene);
   const resolvedTarget = resolveSelectableOverlayObject(selectableObjects, targetObject);
+  const poiState = createMapWorldSettlementPoiState({
+    settlementScene,
+    targetObject,
+    playerState
+  });
   const discoveredIds = new Set(
     Array.isArray(discoveredObjectIds)
       ? discoveredObjectIds.map((value) => String(value))
@@ -668,7 +754,10 @@ export function createMapWorldSettlementDiscoveryState({
             resolvedTarget.position.y - playerState.position.y
           ).toFixed(3)
         );
-  const withinDiscoveryRange = distance != null && distance <= 84;
+  const withinDiscoveryRange =
+    poiState.validationResult.playerProximityValid === true &&
+    distance != null &&
+    distance <= 84;
   const alreadyDiscovered =
     resolvedTarget != null && discoveredIds.has(String(resolvedTarget.instanceId));
   const resolvedDiscoveryState =
@@ -718,7 +807,8 @@ export function createMapWorldSettlementDiscoveryState({
       playerProximityValid: resolvedTarget == null || withinDiscoveryRange,
       objectIdentityValid:
         resolvedTarget == null ||
-        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
+        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId) &&
+        poiState.validationResult.poiIdentityValid === true,
       deterministicDiscoveryResultValid: true,
       cleanupValid: true
     })
@@ -757,9 +847,23 @@ function collectSelectablePlacements(instances, category) {
         instanceId: instance.instanceId,
         assetId: instance.assetId,
         category,
+        poiType: resolvePoiType(category),
         position: resolveInstancePosition(instance)
       })
     );
+}
+
+function resolvePoiType(category) {
+  if (category === "landmark") {
+    return "landmark";
+  }
+  if (category === "building") {
+    return "building";
+  }
+  if (category === "vegetation") {
+    return "nature";
+  }
+  return "infrastructure";
 }
 
 function resolveSelectableOverlayObject(selectableObjects, candidate) {

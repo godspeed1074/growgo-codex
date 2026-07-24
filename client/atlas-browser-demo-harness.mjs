@@ -87,6 +87,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   let currentOverlayInteractionState = createDefaultOverlayInteractionState(
     expandedSettlementPreview
   );
+  let currentPoiState = createDefaultPoiState(expandedSettlementPreview);
   let currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
     expandedSettlementPreview
   );
@@ -228,6 +229,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
       expandedSettlementPreview
     );
+    currentPoiState = createDefaultPoiState(expandedSettlementPreview);
     currentPlayerMapState = createDefaultPlayerMapState(
       expandedSettlementPreview
     );
@@ -321,6 +323,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       currentOverlayInteractionState.selectedObject
     );
+    currentPoiState = buildPoiState(
+      expandedSettlementPreview,
+      currentOverlayInteractionState.selectedObject,
+      currentPlayerMapState
+    );
     currentPlayerInteractionState = buildPlayerInteractionState(
       expandedSettlementPreview,
       currentPlayerMapState,
@@ -348,6 +355,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         assetId: resolvedObject.assetId,
         category: resolvedObject.category
       }),
+      poiState: currentPoiState,
       interactionState: currentOverlayInteractionState,
       detailPreviewState: currentAssetDetailPreviewState,
       playerInteractionState: currentPlayerInteractionState,
@@ -382,6 +390,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
           expandedSettlementPreview
         );
+        currentPoiState = createDefaultPoiState(expandedSettlementPreview);
         currentPlayerMapState = createDefaultPlayerMapState(
           expandedSettlementPreview
         );
@@ -409,6 +418,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementInteractionState() {
         return currentOverlayInteractionState;
+      },
+      currentSettlementPoiState() {
+        return currentPoiState;
       },
       openSettlementAssetDetailPreview() {
         currentAssetDetailPreviewState = buildAssetDetailPreviewState(
@@ -1513,6 +1525,25 @@ function createDefaultAssetDetailPreviewState(expandedSettlementPreview) {
   });
 }
 
+function createDefaultPoiState(expandedSettlementPreview) {
+  if (!expandedSettlementPreview) {
+    return deepFreeze({
+      poiId: "WORLD_POI_INACTIVE",
+      assetId: null,
+      poiType: null,
+      position: null,
+      interactionState: "poi-idle",
+      validationResult: deepFreeze({
+        poiIdentityValid: true,
+        playerProximityValid: true,
+        deterministicPlacementValid: true,
+        cleanupValid: true
+      })
+    });
+  }
+  return buildPoiState(expandedSettlementPreview, null, null);
+}
+
 function createDefaultPlayerMapState(expandedSettlementPreview) {
   if (!expandedSettlementPreview) {
     return deepFreeze({
@@ -1676,6 +1707,83 @@ function buildAssetDetailPreviewState(
       ].includes(resolvedDetailState),
       cleanupValid: true,
       mapSynchronizationValid: true
+    })
+  });
+}
+
+function buildPoiState(
+  expandedSettlementPreview,
+  selectedObject = null,
+  playerState = null
+) {
+  if (!expandedSettlementPreview) {
+    return createDefaultPoiState(expandedSettlementPreview);
+  }
+  const resolvedPoiPosition =
+    selectedObject == null
+      ? null
+      : selectedObject.center
+        ? {
+            x: selectedObject.center.x,
+            y: selectedObject.center.y
+          }
+        : selectedObject.position
+          ? {
+              x: selectedObject.position.x,
+              y: selectedObject.position.y
+            }
+          : typeof selectedObject.x === "number" &&
+              typeof selectedObject.y === "number" &&
+              typeof selectedObject.width === "number" &&
+              typeof selectedObject.height === "number"
+            ? {
+                x: selectedObject.x + selectedObject.width / 2,
+                y: selectedObject.y + selectedObject.height / 2
+              }
+            : null;
+  const poiType =
+    selectedObject?.category === "landmark"
+      ? "landmark"
+      : selectedObject?.category === "building"
+        ? "building"
+        : selectedObject?.category === "vegetation"
+          ? "nature"
+          : selectedObject?.category === "road"
+            ? "infrastructure"
+            : null;
+  const distance =
+    resolvedPoiPosition == null || playerState?.position == null
+      ? null
+      : Number(
+          Math.hypot(
+            resolvedPoiPosition.x - playerState.position.x,
+            resolvedPoiPosition.y - playerState.position.y
+          ).toFixed(3)
+        );
+  return deepFreeze({
+    poiId:
+      selectedObject == null
+        ? `${expandedSettlementPreview.sceneId}::poi::idle`
+        : `${expandedSettlementPreview.sceneId}::poi::${selectedObject.instanceId}`,
+    assetId: selectedObject?.assetId ?? null,
+    poiType,
+    position:
+      resolvedPoiPosition == null
+        ? null
+        : deepFreeze({ ...resolvedPoiPosition }),
+    interactionState:
+      selectedObject == null
+        ? "poi-idle"
+        : distance == null || distance <= 84
+          ? "poi-resolved"
+          : "poi-out-of-range",
+    validationResult: deepFreeze({
+      poiIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      playerProximityValid: distance == null || distance <= 84,
+      deterministicPlacementValid: true,
+      cleanupValid: true
     })
   });
 }

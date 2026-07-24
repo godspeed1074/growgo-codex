@@ -637,6 +637,8 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
 
   assert.equal(selection.ok, true);
   assert.equal(selection.selectedObject.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(selection.poiState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(selection.poiState.poiType, "landmark");
   assert.equal(selection.detailPreviewState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(selection.detailPreviewState.detailState, "focused-detail-preview");
   assert.equal(

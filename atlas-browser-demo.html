@@ -278,6 +278,7 @@
       <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
       <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
+      <p id="atlasPoiLabel">POI: waiting for world object</p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
         <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
@@ -379,6 +380,7 @@
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
+    const poiLabel = document.getElementById("atlasPoiLabel");
     const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
     const playerInteractButton = document.getElementById("atlasPlayerInteractButton");
     const worldOverviewButton = document.getElementById("atlasWorldOverviewButton");
@@ -560,6 +562,18 @@
       }
       discoveryLabel.textContent =
         `Discovery: ${discoveryState.discoveryState} / ${discoveryState.assetId ?? "no target"} / discovered ${discoveryState.discoveredObjectIds?.length ?? 0}`;
+    };
+
+    const updatePoiLabels = (poiState) => {
+      if (!poiLabel) {
+        return;
+      }
+      if (!poiState || !poiState.poiId) {
+        poiLabel.textContent = "POI: waiting for world object";
+        return;
+      }
+      poiLabel.textContent =
+        `POI: ${poiState.poiType ?? "none"} / ${poiState.assetId ?? "no asset"} / ${poiState.interactionState}`;
     };
 
     const resolveOverlayHarness = () =>
@@ -888,9 +902,11 @@
                 }
                 if (selection.ok) {
                   syncInteractionStateToBrowserState(selection.interactionState);
+                  updatePoiLabels(selection.poiState);
                   updateDetailPreviewLabels(selection.detailPreviewState);
                   setBrowserDemoState({
                     ...(window.__atlasBrowserDemoState ?? {}),
+                    poiState: selection.poiState,
                     detailPreviewState: selection.detailPreviewState
                   });
                 }
@@ -1003,6 +1019,7 @@
                   sourceType: "combined-map-world-overlay"
                 },
                 combinedOverlay,
+                poiState: combinedOverlay.poiState,
                 overlayInteractionState: combinedOverlay.interactionState,
                 selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
                 detailPreviewState: combinedOverlay.detailState,
@@ -1014,6 +1031,7 @@
                 ...visualSourceSummary,
                 sourceType: "combined-map-world-overlay"
               });
+              updatePoiLabels(combinedOverlay.poiState);
               updateOverlayInteractionLabels(combinedOverlay.interactionState);
               updateDetailPreviewLabels(combinedOverlay.detailState);
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
@@ -1070,6 +1088,7 @@
               status: hidden.message,
               lastError: null,
               activeVisualSource: visualSourceSummary,
+              poiState: null,
               selectedOverlayObject: null,
               overlayInteractionState: null,
               detailPreviewState: null,
@@ -1078,6 +1097,7 @@
               discoveryState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
+            updatePoiLabels(null);
             updateDetailPreviewLabels(null);
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
