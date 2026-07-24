@@ -615,17 +615,23 @@ export function drawExpandedSettlementPreview(
   );
   const scaling = expandedSettlementPreview.visualScaling ?? {};
   const styling = expandedSettlementPreview.visualStyling ?? {};
+  const overlayAlpha = 0.58;
 
-  drawContext.fillStyle = palette.sky;
+  drawContext.fillStyle = withAlpha(palette.sky, overlayAlpha * 0.48);
   drawContext.fillRect(0, 0, width, height);
-  drawContext.fillStyle = palette.coastline ?? palette.sea;
+  drawContext.fillStyle = withAlpha(palette.coastline ?? palette.sea, overlayAlpha * 0.72);
   drawContext.fillRect(0, height * 0.18, width, height * 0.07);
-  drawContext.fillStyle = palette.sea;
+  drawContext.fillStyle = withAlpha(palette.sea, overlayAlpha * 0.62);
   drawContext.fillRect(0, height * 0.25, width, height * 0.13);
-  drawContext.fillStyle = palette.ground;
+  drawContext.fillStyle = withAlpha(palette.ground, overlayAlpha * 0.56);
   drawContext.fillRect(0, height * 0.38, width, height * 0.62);
   drawContext.fillStyle =
-    styling.terrainAppearance?.yardColor ?? styling.terrainAppearance?.accentColor ?? "#B8D99A";
+    withAlpha(
+      styling.terrainAppearance?.yardColor ??
+        styling.terrainAppearance?.accentColor ??
+        "#B8D99A",
+      overlayAlpha * 0.52
+    );
   drawContext.fillRect(width * 0.06, height * 0.56, width * 0.88, height * 0.18);
 
   drawContext.fillStyle = "#163046";
@@ -739,6 +745,23 @@ function resolveExpandedSettlementPalette(expandedSettlementPreview) {
     return deepFreeze({ ...scenePalette });
   }
   return resolveLightingPalette(activeLightingProfile);
+}
+
+function withAlpha(color, alpha) {
+  if (typeof color !== "string") {
+    return color;
+  }
+  const normalized = color.trim();
+  const resolvedAlpha = Math.max(0, Math.min(1, Number(alpha)));
+  const hexMatch = normalized.match(/^#([0-9a-f]{6})$/i);
+  if (!hexMatch) {
+    return normalized;
+  }
+  const hex = hexMatch[1];
+  const red = Number.parseInt(hex.slice(0, 2), 16);
+  const green = Number.parseInt(hex.slice(2, 4), 16);
+  const blue = Number.parseInt(hex.slice(4, 6), 16);
+  return `rgba(${red}, ${green}, ${blue}, ${resolvedAlpha})`;
 }
 
 function resolveAssetFillStyle(primaryMaterial, assetId, palette) {
