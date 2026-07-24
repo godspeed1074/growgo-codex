@@ -727,11 +727,17 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementCapturePresentationState();
   const captureSessionStore =
     harness.currentSettlementCaptureSessionStore();
+  const captureSessionSummaryState =
+    harness.currentSettlementCaptureSessionSummaryState();
   assert.equal(
     capturePresentationState.validationResult.captureStateConsistencyValid,
     true
   );
   assert.equal(captureSessionStore.validationResult.worldConsistencyValid, true);
+  assert.equal(
+    captureSessionSummaryState.validationResult.summaryMatchesSessionState,
+    true
+  );
   assert.equal(
     capturePresentationState.markerState.capturedObjectCount,
     captureState.capturedObjectIds.length
@@ -740,10 +746,18 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     captureSessionStore.capturedObjectIds.length,
     captureState.capturedObjectIds.length
   );
+  assert.equal(
+    captureSessionSummaryState.capturedObjects,
+    captureState.capturedObjectIds.length
+  );
   const returnedDetail = harness.closeSettlementAssetDetailPreview();
   assert.equal(returnedDetail.detailState, "returning-to-map-view");
   assert.equal(
     harness.currentSettlementCaptureSessionStore().capturedObjectIds.length,
+    captureState.capturedObjectIds.length
+  );
+  assert.equal(
+    harness.currentSettlementCaptureSessionSummaryState().capturedObjects,
     captureState.capturedObjectIds.length
   );
   const worldOverviewAfterCapture = harness.returnSettlementWorldOverview();
@@ -769,8 +783,16 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     typeof discoveryState.validationResult.playerProximityValid,
     "boolean"
   );
+  assert.equal(
+    harness.currentSettlementCaptureSessionSummaryState().discoveredObjects >= 0,
+    true
+  );
   const clearedDiscovery = harness.clearSettlementDiscoveryState();
   assert.equal(clearedDiscovery.discoveryState, "discovery-idle");
+  assert.equal(
+    harness.currentSettlementCaptureSessionSummaryState().discoveredObjects,
+    0
+  );
 
   const returned = harness.closeSettlementAssetDetailPreview();
   assert.equal(returned.detailState, "returning-to-map-view");

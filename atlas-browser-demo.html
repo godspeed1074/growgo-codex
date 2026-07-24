@@ -279,6 +279,8 @@
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
       <p id="atlasCaptureLabel">Capture: waiting for nearby object</p>
       <p id="atlasCaptureSessionLabel">Capture session: waiting for world session</p>
+      <p id="atlasExplorationSummaryLabel">Exploration summary: waiting for world session</p>
+      <p id="atlasExplorationCapturedListLabel">Captured objects: none yet</p>
       <p id="atlasCapturePresentationLabel">Capture feedback: waiting for captured marker</p>
       <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
       <p id="atlasPoiLabel">POI: waiting for world object</p>
@@ -406,6 +408,8 @@
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const captureLabel = document.getElementById("atlasCaptureLabel");
     const captureSessionLabel = document.getElementById("atlasCaptureSessionLabel");
+    const explorationSummaryLabel = document.getElementById("atlasExplorationSummaryLabel");
+    const explorationCapturedListLabel = document.getElementById("atlasExplorationCapturedListLabel");
     const capturePresentationLabel = document.getElementById("atlasCapturePresentationLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
@@ -647,6 +651,30 @@
       }
       captureSessionLabel.textContent =
         `Capture session: ${captureSessionStore.sessionState} / world ${captureSessionStore.worldId ?? "none"} / captured ${captureSessionStore.capturedObjectIds?.length ?? 0}`;
+    };
+
+    const updateExplorationSummaryLabels = (captureSessionSummaryState) => {
+      if (explorationSummaryLabel) {
+        if (!captureSessionSummaryState || !captureSessionSummaryState.sessionSummaryId) {
+          explorationSummaryLabel.textContent =
+            "Exploration summary: waiting for world session";
+        } else {
+          explorationSummaryLabel.textContent =
+            `Exploration summary: ${captureSessionSummaryState.capturedObjects}/${captureSessionSummaryState.totalObjects} captured / ${captureSessionSummaryState.discoveredObjects} discovered / ${captureSessionSummaryState.completionPercent}% complete`;
+        }
+      }
+      if (explorationCapturedListLabel) {
+        if (
+          !captureSessionSummaryState ||
+          !Array.isArray(captureSessionSummaryState.capturedObjectAssetIds) ||
+          captureSessionSummaryState.capturedObjectAssetIds.length === 0
+        ) {
+          explorationCapturedListLabel.textContent = "Captured objects: none yet";
+        } else {
+          explorationCapturedListLabel.textContent =
+            `Captured objects: ${captureSessionSummaryState.capturedObjectAssetIds.join(", ")}`;
+        }
+      }
     };
 
     const updateCapturePresentationLabels = (capturePresentationState) => {
@@ -1300,6 +1328,7 @@
                 playerInteractionState: combinedOverlay.playerInteractionState,
                 captureState: combinedOverlay.captureState,
                 captureSessionStore: combinedOverlay.captureSessionStore,
+                captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
                 capturePresentationState: combinedOverlay.capturePresentationState,
                 discoveryState: combinedOverlay.discoveryState
               });
@@ -1317,6 +1346,7 @@
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
               updateCaptureLabels(combinedOverlay.captureState);
               updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
+              updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
               updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
               updateHarnessDemoState();
@@ -1387,6 +1417,7 @@
               detailPreviewState: null,
               playerState: null,
               playerInteractionState: null,
+              captureSessionSummaryState: null,
               discoveryState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
@@ -1395,6 +1426,7 @@
             updateDetailPreviewLabels(null);
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
+            updateExplorationSummaryLabels(null);
             updateCaptureLabels(null);
             updateDiscoveryLabels(null);
             if (lightingProfileLabel) {
@@ -1493,15 +1525,19 @@
           const captureState = harness.captureSelectedSettlementObject();
           const captureSessionStore =
             harness.currentSettlementCaptureSessionStore();
+          const captureSessionSummaryState =
+            harness.currentSettlementCaptureSessionSummaryState();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
+          updateExplorationSummaryLabels(captureSessionSummaryState);
           updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
             captureSessionStore,
+            captureSessionSummaryState,
             capturePresentationState
           });
           if (status) {
@@ -1554,15 +1590,19 @@
           const captureState = harness.clearSettlementCaptureState();
           const captureSessionStore =
             harness.currentSettlementCaptureSessionStore();
+          const captureSessionSummaryState =
+            harness.currentSettlementCaptureSessionSummaryState();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
+          updateExplorationSummaryLabels(captureSessionSummaryState);
           updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
             captureSessionStore,
+            captureSessionSummaryState,
             capturePresentationState
           });
           if (status) {
@@ -1576,10 +1616,14 @@
             return;
           }
           const discoveryState = harness.discoverSelectedSettlementObject();
+          const captureSessionSummaryState =
+            harness.currentSettlementCaptureSessionSummaryState();
           updateDiscoveryLabels(discoveryState);
+          updateExplorationSummaryLabels(captureSessionSummaryState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            discoveryState
+            discoveryState,
+            captureSessionSummaryState
           });
           if (status) {
             status.textContent =
@@ -1597,10 +1641,14 @@
             return;
           }
           const discoveryState = harness.clearSettlementDiscoveryState();
+          const captureSessionSummaryState =
+            harness.currentSettlementCaptureSessionSummaryState();
           updateDiscoveryLabels(discoveryState);
+          updateExplorationSummaryLabels(captureSessionSummaryState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            discoveryState
+            discoveryState,
+            captureSessionSummaryState
           });
           if (status) {
             status.textContent = "Cleared discovery state.";
@@ -1677,6 +1725,7 @@
             playerInteractionState: combinedOverlay.playerInteractionState,
             captureState: combinedOverlay.captureState,
             captureSessionStore: combinedOverlay.captureSessionStore,
+            captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
             capturePresentationState: combinedOverlay.capturePresentationState,
             discoveryState: combinedOverlay.discoveryState
           });
@@ -1694,6 +1743,7 @@
           updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
           updateCaptureLabels(combinedOverlay.captureState);
           updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
+          updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
           updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
           updateDiscoveryLabels(combinedOverlay.discoveryState);
           updateHarnessDemoState();

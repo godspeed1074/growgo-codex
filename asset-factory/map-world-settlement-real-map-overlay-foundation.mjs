@@ -29,6 +29,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "playerInteractionState",
   "captureState",
   "captureSessionStore",
+  "captureSessionSummaryState",
   "capturePresentationState",
   "discoveryState",
   "cameraSync",
@@ -100,6 +101,21 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     playerState,
     captureState
   });
+  const discoveryState = createMapWorldSettlementDiscoveryState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState: createMapWorldSettlementPlayerMapState({
+      settlementScene,
+      mapWorldLiveMapFoundation
+    })
+  });
+  const captureSessionSummaryState =
+    createMapWorldSettlementCaptureSessionSummaryState({
+      settlementScene,
+      playerState,
+      captureSessionStore,
+      discoveryState
+    });
   const capturePresentationState = createMapWorldSettlementCapturePresentationState({
     settlementScene,
     captureState,
@@ -180,15 +196,9 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     playerInteractionState,
     captureState,
     captureSessionStore,
+    captureSessionSummaryState,
     capturePresentationState,
-    discoveryState: createMapWorldSettlementDiscoveryState({
-      settlementScene,
-      mapWorldLiveMapFoundation,
-      playerState: createMapWorldSettlementPlayerMapState({
-        settlementScene,
-        mapWorldLiveMapFoundation
-      })
-    }),
+    discoveryState,
     cameraSync: deepFreeze({
       synchronized: true,
       mapZoomLevel: mapWorldLiveMapFoundation.zoomLevel,
@@ -228,6 +238,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       playerInteractionValid: true,
       captureInteractionValid: true,
       captureSessionValid: true,
+      captureSessionSummaryValid: true,
       capturePresentationValid: true,
       discoveryValid: true,
       mapVisibleUnderlayValid: true,
@@ -504,6 +515,16 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       );
     }
     if (
+      overlay.captureSessionSummaryState.validationResult.summaryMatchesSessionState !== true ||
+      overlay.captureSessionSummaryState.validationResult.deterministicOutputValid !== true ||
+      overlay.captureSessionSummaryState.validationResult.cleanupResetBehaviorValid !== true
+    ) {
+      throw createValidationError(
+        "capture_session_summary_state_invalid",
+        "Map world settlement real map overlay foundation capture session summary state must remain valid."
+      );
+    }
+    if (
       overlay.capturePresentationState.validationResult.captureStateConsistencyValid !== true ||
       overlay.capturePresentationState.validationResult.presentationStateConsistencyValid !==
         true ||
@@ -582,6 +603,9 @@ function normalizeOverlay(rawOverlay) {
     captureState: deepFreeze(asPlainObject(overlay.captureState, "captureState")),
     captureSessionStore: deepFreeze(
       asPlainObject(overlay.captureSessionStore, "captureSessionStore")
+    ),
+    captureSessionSummaryState: deepFreeze(
+      asPlainObject(overlay.captureSessionSummaryState, "captureSessionSummaryState")
     ),
     capturePresentationState: deepFreeze(
       asPlainObject(overlay.capturePresentationState, "capturePresentationState")
@@ -1390,6 +1414,89 @@ export function createMapWorldSettlementCaptureSessionStore({
           selectableObjects.some((entry) => entry.instanceId === objectId)
         ),
       deterministicRestoreValid: true,
+      cleanupResetBehaviorValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementCaptureSessionSummaryState({
+  settlementScene,
+  playerState = null,
+  captureSessionStore = null,
+  discoveryState = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedPlayerState =
+    playerState ??
+    deepFreeze({
+      playerId: "PLAYER_CAPTURE_SUMMARY_DEFAULT",
+      worldId: settlementScene.worldId
+    });
+  const resolvedCaptureSessionStore =
+    captureSessionStore ??
+    createMapWorldSettlementCaptureSessionStore({
+      settlementScene,
+      playerState: resolvedPlayerState
+    });
+  const resolvedDiscoveryState =
+    discoveryState ??
+    createMapWorldSettlementDiscoveryState({
+      settlementScene,
+      mapWorldLiveMapFoundation: {
+        activeWorldId: settlementScene.worldId
+      },
+      playerState: {
+        playerId: resolvedPlayerState.playerId,
+        worldId: resolvedPlayerState.worldId ?? settlementScene.worldId,
+        position: { x: 0, y: 0 }
+      }
+    });
+  const totalObjects = selectableObjects.length;
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(resolvedCaptureSessionStore.capturedObjectIds)
+        ? resolvedCaptureSessionStore.capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const discoveredObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(resolvedDiscoveryState.discoveredObjectIds)
+        ? resolvedDiscoveryState.discoveredObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const exploredObjectIds = deepFreeze(
+    [...new Set([...capturedObjectIds, ...discoveredObjectIds])].sort()
+  );
+  const completionPercent =
+    totalObjects === 0
+      ? 0
+      : Number(((exploredObjectIds.length / totalObjects) * 100).toFixed(2));
+  const capturedObjectAssetIds = deepFreeze(
+    capturedObjectIds
+      .map(
+        (objectId) =>
+          selectableObjects.find((entry) => entry.instanceId === objectId)?.assetId ?? null
+      )
+      .filter((assetId) => typeof assetId === "string")
+  );
+
+  return deepFreeze({
+    sessionSummaryId: `${settlementScene.worldId}::${resolvedPlayerState.playerId}::capture-summary`,
+    worldId: settlementScene.worldId,
+    playerId: resolvedPlayerState.playerId,
+    totalObjects,
+    capturedObjects: capturedObjectIds.length,
+    discoveredObjects: discoveredObjectIds.length,
+    completionPercent,
+    capturedObjectAssetIds,
+    discoveredPoiCount: discoveredObjectIds.length,
+    validationResult: deepFreeze({
+      summaryMatchesSessionState:
+        capturedObjectIds.length === resolvedCaptureSessionStore.capturedObjectIds.length &&
+        discoveredObjectIds.length === resolvedDiscoveryState.discoveredObjectIds.length,
+      deterministicOutputValid: true,
       cleanupResetBehaviorValid: true
     })
   });

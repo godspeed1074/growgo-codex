@@ -110,6 +110,19 @@ test("map world settlement real map overlay foundation validates a combined map 
     overlay.captureSessionStore.validationResult.worldConsistencyValid,
     true
   );
+  assert.equal(overlay.captureSessionSummaryState.worldId, overlay.worldId);
+  assert.equal(
+    overlay.captureSessionSummaryState.playerId,
+    overlay.playerState.playerId
+  );
+  assert.equal(overlay.captureSessionSummaryState.totalObjects > 0, true);
+  assert.equal(overlay.captureSessionSummaryState.capturedObjects, 0);
+  assert.equal(overlay.captureSessionSummaryState.discoveredObjects, 0);
+  assert.equal(overlay.captureSessionSummaryState.completionPercent, 0);
+  assert.equal(
+    overlay.captureSessionSummaryState.validationResult.summaryMatchesSessionState,
+    true
+  );
   assert.equal(
     overlay.capturePresentationState.captureEffectState,
     "capture-highlight-idle"
@@ -195,6 +208,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.playerInteractionState, second.playerInteractionState);
   assert.deepEqual(first.captureState, second.captureState);
   assert.deepEqual(first.captureSessionStore, second.captureSessionStore);
+  assert.deepEqual(first.captureSessionSummaryState, second.captureSessionSummaryState);
   assert.deepEqual(first.capturePresentationState, second.capturePresentationState);
   assert.deepEqual(first.poiState, second.poiState);
   assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
@@ -445,6 +459,60 @@ test("overlay capture session store persists captured objects deterministically"
     captureSessionStore.capturedObjectIds.length,
     captureState.capturedObjectIds.length
   );
+});
+
+test("overlay capture session summary state reflects exploration progress deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+  const captureState = moduleUnderTest.createMapWorldSettlementCaptureState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001"
+  });
+  const captureSessionStore =
+    moduleUnderTest.createMapWorldSettlementCaptureSessionStore({
+      settlementScene,
+      playerState,
+      captureState
+    });
+  const discoveryState = moduleUnderTest.createMapWorldSettlementDiscoveryState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001",
+    discoveredObjectIds: captureState.capturedObjectIds
+  });
+  const captureSessionSummaryState =
+    moduleUnderTest.createMapWorldSettlementCaptureSessionSummaryState({
+      settlementScene,
+      playerState,
+      captureSessionStore,
+      discoveryState
+    });
+
+  assert.equal(
+    captureSessionSummaryState.validationResult.summaryMatchesSessionState,
+    true
+  );
+  assert.equal(captureSessionSummaryState.worldId, settlementScene.worldId);
+  assert.equal(captureSessionSummaryState.playerId, playerState.playerId);
+  assert.equal(captureSessionSummaryState.totalObjects > 0, true);
+  assert.equal(captureSessionSummaryState.capturedObjects >= 0, true);
+  assert.equal(captureSessionSummaryState.discoveredObjects >= 0, true);
+  assert.equal(captureSessionSummaryState.completionPercent >= 0, true);
 });
 
 test("overlay POI state resolves reusable world object metadata deterministically", async () => {

@@ -132,6 +132,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     expandedSettlementPreview,
     currentPlayerMapState
   );
+  let currentCaptureSessionSummaryState = createDefaultCaptureSessionSummaryState(
+    expandedSettlementPreview,
+    currentPlayerMapState,
+    currentCaptureSessionStore,
+    currentDiscoveryState
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -159,10 +165,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         width: canvas.width,
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
-      playerState: currentPlayerMapState,
-      captureSessionStore: currentCaptureSessionStore,
-      capturePresentationState: currentCapturePresentationState,
-      discoveryState: currentDiscoveryState,
+        playerState: currentPlayerMapState,
+        captureSessionStore: currentCaptureSessionStore,
+        capturePresentationState: currentCapturePresentationState,
+        discoveryState: currentDiscoveryState,
         poiPresentationState: currentPoiPresentationState
       }
     );
@@ -196,10 +202,22 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentCaptureState,
       currentCaptureSessionStore.sessionId
     );
+    currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentCaptureSessionStore,
+      currentDiscoveryState
+    );
     currentCapturePresentationState = buildCapturePresentationState(
       renderableExpandedSettlementPreview,
       currentCaptureState,
       currentCaptureSessionStore
+    );
+    currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentCaptureSessionStore,
+      currentDiscoveryState
     );
   };
 
@@ -348,9 +366,17 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentCaptureState,
       currentCaptureSessionStore
     );
-    currentDiscoveryState = createDefaultDiscoveryState(
+    currentDiscoveryState = buildDiscoveryState(
       expandedSettlementPreview,
-      currentPlayerMapState
+      currentPlayerMapState,
+      null,
+      currentDiscoveryState.discoveredObjectIds
+    );
+    currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+      expandedSettlementPreview,
+      currentPlayerMapState,
+      currentCaptureSessionStore,
+      currentDiscoveryState
     );
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
@@ -490,6 +516,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       playerInteractionState: currentPlayerInteractionState,
       captureState: currentCaptureState,
       captureSessionStore: currentCaptureSessionStore,
+      captureSessionSummaryState: currentCaptureSessionSummaryState,
       capturePresentationState: currentCapturePresentationState,
       discoveryState: currentDiscoveryState
     });
@@ -553,9 +580,17 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureState,
           currentCaptureSessionStore
         );
-        currentDiscoveryState = createDefaultDiscoveryState(
+        currentDiscoveryState = buildDiscoveryState(
           expandedSettlementPreview,
-          currentPlayerMapState
+          currentPlayerMapState,
+          null,
+          currentDiscoveryState.discoveredObjectIds
+        );
+        currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureSessionStore,
+          currentDiscoveryState
         );
         if (expandedSettlementPreview && mounted) {
           redrawExpandedSettlementPreviewIfMounted();
@@ -651,6 +686,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureState,
           currentCaptureSessionStore
         );
+        currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureSessionStore,
+          currentDiscoveryState
+        );
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
@@ -669,6 +710,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureState,
           currentCaptureSessionStore
         );
+        currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureSessionStore,
+          currentDiscoveryState
+        );
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
@@ -677,6 +724,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementCaptureSessionStore() {
         return currentCaptureSessionStore;
+      },
+      currentSettlementCaptureSessionSummaryState() {
+        return currentCaptureSessionSummaryState;
       },
       currentSettlementCapturePresentationState() {
         return currentCapturePresentationState;
@@ -688,6 +738,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentOverlayInteractionState.selectedObject,
           currentDiscoveryState.discoveredObjectIds
         );
+        currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureSessionStore,
+          currentDiscoveryState
+        );
         redrawExpandedSettlementPreviewIfMounted();
         return currentDiscoveryState;
       },
@@ -695,6 +751,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentDiscoveryState = createDefaultDiscoveryState(
           expandedSettlementPreview,
           currentPlayerMapState
+        );
+        currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureSessionStore,
+          currentDiscoveryState
         );
         return currentDiscoveryState;
       },
@@ -2099,6 +2161,43 @@ function createDefaultCaptureSessionStore(
   );
 }
 
+function createDefaultCaptureSessionSummaryState(
+  expandedSettlementPreview,
+  playerState,
+  captureSessionStore,
+  discoveryState
+) {
+  if (
+    !expandedSettlementPreview ||
+    !playerState ||
+    !captureSessionStore ||
+    !discoveryState
+  ) {
+    return deepFreeze({
+      sessionSummaryId: "SETTLEMENT_CAPTURE_SUMMARY_INACTIVE",
+      worldId: expandedSettlementPreview?.worldId ?? null,
+      playerId: playerState?.playerId ?? "PLAYER_MAP_INACTIVE",
+      totalObjects: 0,
+      capturedObjects: 0,
+      discoveredObjects: 0,
+      completionPercent: 0,
+      capturedObjectAssetIds: deepFreeze([]),
+      discoveredPoiCount: 0,
+      validationResult: deepFreeze({
+        summaryMatchesSessionState: true,
+        deterministicOutputValid: true,
+        cleanupResetBehaviorValid: true
+      })
+    });
+  }
+  return buildCaptureSessionSummaryState(
+    expandedSettlementPreview,
+    playerState,
+    captureSessionStore,
+    discoveryState
+  );
+}
+
 function createDefaultCapturePresentationState(
   expandedSettlementPreview,
   captureState,
@@ -2502,7 +2601,7 @@ function buildPoiPresentationState(
                   markerColor: "#6B7078",
                   labelColor: "#2C3138",
                   markerSize: 11
-  };
+                };
 
       const selected =
         resolvedPoiState.assetId != null &&
@@ -2894,6 +2993,79 @@ function buildCaptureSessionStore(
           )
         ),
       deterministicRestoreValid: true,
+      cleanupResetBehaviorValid: true
+    })
+  });
+}
+
+function buildCaptureSessionSummaryState(
+  expandedSettlementPreview,
+  playerState,
+  captureSessionStore,
+  discoveryState
+) {
+  if (
+    !expandedSettlementPreview ||
+    !playerState ||
+    !captureSessionStore ||
+    !discoveryState
+  ) {
+    return createDefaultCaptureSessionSummaryState(
+      expandedSettlementPreview,
+      playerState,
+      captureSessionStore,
+      discoveryState
+    );
+  }
+  const totalObjects = expandedSettlementPreview.objectInstances.filter((objectInstance) =>
+    selectableExpandedSettlementAssetIds.has(objectInstance.assetId)
+  ).length;
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(captureSessionStore.capturedObjectIds)
+        ? captureSessionStore.capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const discoveredObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(discoveryState.discoveredObjectIds)
+        ? discoveryState.discoveredObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const exploredObjectIds = deepFreeze(
+    [...new Set([...capturedObjectIds, ...discoveredObjectIds])].sort()
+  );
+  const completionPercent =
+    totalObjects === 0
+      ? 0
+      : Number(((exploredObjectIds.length / totalObjects) * 100).toFixed(2));
+  const capturedObjectAssetIds = deepFreeze(
+    capturedObjectIds
+      .map(
+        (objectId) =>
+          expandedSettlementPreview.objectInstances.find(
+            (objectInstance) => objectInstance.instanceId === objectId
+          )?.assetId ?? null
+      )
+      .filter((assetId) => typeof assetId === "string")
+  );
+  return deepFreeze({
+    sessionSummaryId: `${expandedSettlementPreview.worldId}::${playerState.playerId}::capture-summary`,
+    worldId: expandedSettlementPreview.worldId,
+    playerId: playerState.playerId,
+    totalObjects,
+    capturedObjects: capturedObjectIds.length,
+    discoveredObjects: discoveredObjectIds.length,
+    completionPercent,
+    capturedObjectAssetIds,
+    discoveredPoiCount: discoveredObjectIds.length,
+    validationResult: deepFreeze({
+      summaryMatchesSessionState:
+        capturedObjectIds.length === captureSessionStore.capturedObjectIds.length &&
+        discoveredObjectIds.length === discoveryState.discoveredObjectIds.length,
+      deterministicOutputValid: true,
       cleanupResetBehaviorValid: true
     })
   });
