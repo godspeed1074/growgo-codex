@@ -163,6 +163,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     currentDiscoveryState,
     currentCaptureState
   );
+  let currentLocationExperienceState = createDefaultLocationExperienceState(
+    expandedSettlementPreview,
+    currentPlayerMapState,
+    currentPoiState,
+    currentExplorationProgressPresentationState,
+    currentLandmarkShowcaseState,
+    currentSessionExperienceState
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -262,6 +270,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentDiscoveryState,
       currentCaptureState
     );
+    currentLocationExperienceState = buildLocationExperienceState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentPoiState,
+      currentExplorationProgressPresentationState,
+      currentLandmarkShowcaseState,
+      currentSessionExperienceState
+    );
   };
 
   const refreshExplorationProgressPresentationState = () => {
@@ -280,6 +296,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentAssetDetailPreviewState,
       currentDiscoveryState,
       currentCaptureState
+    );
+    currentLocationExperienceState = buildLocationExperienceState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentPoiState,
+      currentExplorationProgressPresentationState,
+      currentLandmarkShowcaseState,
+      currentSessionExperienceState
     );
   };
 
@@ -551,7 +575,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       discoveryState: currentDiscoveryState,
       explorationProgressPresentationState:
         currentExplorationProgressPresentationState,
-      landmarkShowcaseState: currentLandmarkShowcaseState
+      landmarkShowcaseState: currentLandmarkShowcaseState,
+      locationExperienceState: currentLocationExperienceState
     });
   };
 
@@ -803,6 +828,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementLandmarkShowcaseState() {
         return currentLandmarkShowcaseState;
+      },
+      currentSettlementLocationExperienceState() {
+        return currentLocationExperienceState;
       },
       currentSettlementCapturePresentationState() {
         return currentCapturePresentationState;
@@ -2465,6 +2493,50 @@ function createDefaultLandmarkShowcaseState(
   );
 }
 
+function createDefaultLocationExperienceState(
+  expandedSettlementPreview,
+  playerState,
+  poiState,
+  explorationProgressPresentationState,
+  landmarkShowcaseState,
+  sessionExperienceState
+) {
+  if (
+    !expandedSettlementPreview ||
+    !playerState ||
+    !poiState ||
+    !explorationProgressPresentationState ||
+    !landmarkShowcaseState ||
+    !sessionExperienceState
+  ) {
+    return deepFreeze({
+      locationId: "FIRST_LOCATION_EXPERIENCE_INACTIVE",
+      worldId: expandedSettlementPreview?.worldId ?? null,
+      playerState: null,
+      poiState: null,
+      explorationState: null,
+      landmarkState: null,
+      validationResult: deepFreeze({
+        startupFlowValid: true,
+        playerStateValid: true,
+        poiSelectionValid: true,
+        discoveryValid: true,
+        captureValid: true,
+        landmarkShowcaseValid: true,
+        cleanupResetValid: true
+      })
+    });
+  }
+  return buildLocationExperienceState(
+    expandedSettlementPreview,
+    playerState,
+    poiState,
+    explorationProgressPresentationState,
+    landmarkShowcaseState,
+    sessionExperienceState
+  );
+}
+
 function createDefaultDiscoveryState(
   expandedSettlementPreview,
   playerState
@@ -3518,6 +3590,97 @@ function buildLandmarkShowcaseState(
         isLandmark ||
         (detailPreviewState.detailState === "map-overview" &&
           discoveryState.discoveryState === "discovery-idle")
+    })
+  });
+}
+
+function buildLocationExperienceState(
+  expandedSettlementPreview,
+  playerState,
+  poiState,
+  explorationProgressPresentationState,
+  landmarkShowcaseState,
+  sessionExperienceState
+) {
+  if (
+    !expandedSettlementPreview ||
+    !playerState ||
+    !poiState ||
+    !explorationProgressPresentationState ||
+    !landmarkShowcaseState ||
+    !sessionExperienceState
+  ) {
+    return createDefaultLocationExperienceState(
+      expandedSettlementPreview,
+      playerState,
+      poiState,
+      explorationProgressPresentationState,
+      landmarkShowcaseState,
+      sessionExperienceState
+    );
+  }
+  const hasActivePoi = typeof poiState.assetId === "string" && poiState.assetId.length > 0;
+  return deepFreeze({
+    locationId:
+      `${expandedSettlementPreview.worldId}::${expandedSettlementPreview.sceneId}::first-location`,
+    worldId: expandedSettlementPreview.worldId,
+    playerState: deepFreeze({
+      playerId: playerState.playerId,
+      worldId: playerState.worldId,
+      visibilityState: playerState.visibilityState,
+      coordinate: deepFreeze({ ...playerState.coordinate }),
+      focusState: playerState.cameraFocus.currentState,
+      targetAsset: playerState.cameraFocus.targetAsset
+    }),
+    poiState: deepFreeze({
+      poiId: poiState.poiId,
+      assetId: poiState.assetId,
+      poiType: poiState.poiType,
+      interactionState: poiState.interactionState
+    }),
+    explorationState: deepFreeze({
+      capturedCount: explorationProgressPresentationState.capturedCount,
+      discoveredCount: explorationProgressPresentationState.discoveredCount,
+      totalWorldObjects: explorationProgressPresentationState.totalWorldObjects,
+      completionPercent: explorationProgressPresentationState.completionPercent,
+      activeDiscoveryTarget:
+        explorationProgressPresentationState.activeDiscoveryTarget == null
+          ? null
+          : deepFreeze({
+              ...explorationProgressPresentationState.activeDiscoveryTarget
+            }),
+      currentExplorationObjective:
+        explorationProgressPresentationState.currentExplorationObjective
+    }),
+    landmarkState: deepFreeze({
+      landmarkId: landmarkShowcaseState.landmarkId,
+      assetId: landmarkShowcaseState.assetId,
+      showcaseState: landmarkShowcaseState.showcaseState,
+      discoveryState: landmarkShowcaseState.discoveryState,
+      captureState: landmarkShowcaseState.captureState
+    }),
+    validationResult: deepFreeze({
+      startupFlowValid:
+        typeof expandedSettlementPreview.worldId === "string" &&
+        typeof expandedSettlementPreview.sceneId === "string",
+      playerStateValid:
+        playerState.worldId === expandedSettlementPreview.worldId &&
+        typeof playerState.playerId === "string",
+      poiSelectionValid:
+        !hasActivePoi ||
+        expandedSettlementPreview.objectInstances.some(
+          (objectInstance) => objectInstance.assetId === poiState.assetId
+        ),
+      discoveryValid:
+        explorationProgressPresentationState.validationResult.uiUpdatesAfterDiscoveryValid === true,
+      captureValid:
+        explorationProgressPresentationState.validationResult.uiUpdatesAfterCaptureValid === true,
+      landmarkShowcaseValid:
+        landmarkShowcaseState.validationResult.landmarkIdentityValid === true &&
+        landmarkShowcaseState.validationResult.cameraFocusValid === true,
+      cleanupResetValid:
+        sessionExperienceState.validationResult.cleanupValid === true &&
+        landmarkShowcaseState.validationResult.cleanupResetValid === true
     })
   });
 }

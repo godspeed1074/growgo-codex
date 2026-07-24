@@ -726,6 +726,18 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     selection.landmarkShowcaseState.focusCamera.targetAsset,
     "LIGHTHOUSE_ISLAND_ROCKY_001"
   );
+  assert.equal(
+    selection.locationExperienceState.worldId,
+    expandedSettlementScene.worldId
+  );
+  assert.equal(
+    selection.locationExperienceState.poiState.assetId,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
+    selection.locationExperienceState.validationResult.poiSelectionValid,
+    true
+  );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
 
   const toggledExplorationMode = harness.toggleSettlementExplorationMode();
@@ -822,6 +834,14 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     true
   );
   assert.equal(
+    harness.currentSettlementLocationExperienceState().landmarkState.captureState,
+    "captured-session"
+  );
+  assert.equal(
+    harness.currentSettlementLocationExperienceState().explorationState.capturedCount,
+    captureSessionSummaryState.capturedObjects
+  );
+  assert.equal(
     captureLandmarkShowcaseState.captureState,
     "captured-session"
   );
@@ -884,6 +904,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     true
   );
   assert.equal(
+    harness.currentSettlementLocationExperienceState().explorationState.activeDiscoveryTarget?.assetId,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
     discoveryLandmarkShowcaseState.discoveryState,
     "discovered-persistent"
   );
@@ -900,6 +924,14 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     harness.currentSettlementExplorationProgressPresentationState().activeDiscoveryTarget,
     null
+  );
+  assert.equal(
+    harness.currentSettlementLocationExperienceState().landmarkState.discoveryState,
+    "discovery-idle"
+  );
+  assert.equal(
+    harness.currentSettlementLocationExperienceState().validationResult.cleanupResetValid,
+    true
   );
   assert.equal(
     harness.currentSettlementLandmarkShowcaseState().discoveryState,
