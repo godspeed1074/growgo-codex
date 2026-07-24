@@ -88,6 +88,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     expandedSettlementPreview
   );
   let currentPoiState = createDefaultPoiState(expandedSettlementPreview);
+  let currentPoiContentMetadata = createDefaultPoiContentMetadata(
+    expandedSettlementPreview
+  );
   let currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
     expandedSettlementPreview
   );
@@ -230,6 +233,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview
     );
     currentPoiState = createDefaultPoiState(expandedSettlementPreview);
+    currentPoiContentMetadata = createDefaultPoiContentMetadata(
+      expandedSettlementPreview
+    );
     currentPlayerMapState = createDefaultPlayerMapState(
       expandedSettlementPreview
     );
@@ -328,6 +334,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentOverlayInteractionState.selectedObject,
       currentPlayerMapState
     );
+    currentPoiContentMetadata = buildPoiContentMetadata(
+      expandedSettlementPreview,
+      currentPoiState
+    );
     currentPlayerInteractionState = buildPlayerInteractionState(
       expandedSettlementPreview,
       currentPlayerMapState,
@@ -356,6 +366,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         category: resolvedObject.category
       }),
       poiState: currentPoiState,
+      poiContentMetadata: currentPoiContentMetadata,
       interactionState: currentOverlayInteractionState,
       detailPreviewState: currentAssetDetailPreviewState,
       playerInteractionState: currentPlayerInteractionState,
@@ -391,6 +402,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview
         );
         currentPoiState = createDefaultPoiState(expandedSettlementPreview);
+        currentPoiContentMetadata = createDefaultPoiContentMetadata(
+          expandedSettlementPreview
+        );
         currentPlayerMapState = createDefaultPlayerMapState(
           expandedSettlementPreview
         );
@@ -421,6 +435,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementPoiState() {
         return currentPoiState;
+      },
+      currentSettlementPoiContentMetadata() {
+        return currentPoiContentMetadata;
       },
       openSettlementAssetDetailPreview() {
         currentAssetDetailPreviewState = buildAssetDetailPreviewState(
@@ -1544,6 +1561,30 @@ function createDefaultPoiState(expandedSettlementPreview) {
   return buildPoiState(expandedSettlementPreview, null, null);
 }
 
+function createDefaultPoiContentMetadata(expandedSettlementPreview) {
+  if (!expandedSettlementPreview) {
+    return deepFreeze({
+      poiContentId: "WORLD_POI_CONTENT_INACTIVE",
+      poiId: "WORLD_POI_INACTIVE",
+      title: null,
+      description: null,
+      category: null,
+      interactionProfile: null,
+      discoveryProfile: null,
+      validationResult: deepFreeze({
+        poiIdentityValid: true,
+        metadataConsistencyValid: true,
+        deterministicOutputValid: true,
+        cleanupValid: true
+      })
+    });
+  }
+  return buildPoiContentMetadata(
+    expandedSettlementPreview,
+    createDefaultPoiState(expandedSettlementPreview)
+  );
+}
+
 function createDefaultPlayerMapState(expandedSettlementPreview) {
   if (!expandedSettlementPreview) {
     return deepFreeze({
@@ -1783,6 +1824,119 @@ function buildPoiState(
         selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
       playerProximityValid: distance == null || distance <= 84,
       deterministicPlacementValid: true,
+      cleanupValid: true
+    })
+  });
+}
+
+function buildPoiContentMetadata(
+  expandedSettlementPreview,
+  poiState = null
+) {
+  if (!expandedSettlementPreview) {
+    return createDefaultPoiContentMetadata(expandedSettlementPreview);
+  }
+  const resolvedPoiState =
+    poiState ?? createDefaultPoiState(expandedSettlementPreview);
+  const selectedObject = expandedSettlementPreview.objectInstances.find(
+    (objectInstance) => objectInstance.assetId === resolvedPoiState.assetId
+  ) ?? null;
+  const category =
+    resolvedPoiState.poiType ??
+    (selectedObject?.category === "vegetation"
+      ? "nature"
+      : selectedObject?.category ?? null);
+  const profile =
+    selectedObject == null
+      ? null
+      : Object.freeze({
+          LIGHTHOUSE_ISLAND_ROCKY_001: {
+            title: "Rocky Point Lighthouse",
+            description:
+              "A coastal landmark preview with viewpoint, discovery, and landmark-only interaction metadata.",
+            category: "landmark",
+            interactionProfile: deepFreeze({
+              mode: "viewpoint-inspect",
+              supportsFocusPreview: true,
+              supportsPlayerInteraction: true
+            }),
+            discoveryProfile: deepFreeze({
+              mode: "landmark-discovery",
+              persistsWithinSession: true,
+              revealsDetailPreview: true
+            })
+          },
+          BUILDING_COASTAL_COTTAGE_001: {
+            title: "Coastal Cottage",
+            description:
+              "A residential preview object with passive inspection metadata for detail and discovery views.",
+            category: "building",
+            interactionProfile: deepFreeze({
+              mode: "residence-inspect",
+              supportsFocusPreview: true,
+              supportsPlayerInteraction: true
+            }),
+            discoveryProfile: deepFreeze({
+              mode: "residential-discovery",
+              persistsWithinSession: true,
+              revealsDetailPreview: true
+            })
+          },
+          TREE_EUCALYPTUS_001: {
+            title: "Eucalyptus Tree",
+            description:
+              "A passive nature point of interest with reusable metadata for discovery and close inspection.",
+            category: "nature",
+            interactionProfile: deepFreeze({
+              mode: "nature-inspect",
+              supportsFocusPreview: true,
+              supportsPlayerInteraction: true
+            }),
+            discoveryProfile: deepFreeze({
+              mode: "nature-discovery",
+              persistsWithinSession: true,
+              revealsDetailPreview: true
+            })
+          },
+          ROAD_COASTAL_001: {
+            title: "Coastal Road",
+            description:
+              "A passive infrastructure point of interest that exposes route-focused metadata without gameplay activation.",
+            category: "infrastructure",
+            interactionProfile: deepFreeze({
+              mode: "route-inspect",
+              supportsFocusPreview: true,
+              supportsPlayerInteraction: true
+            }),
+            discoveryProfile: deepFreeze({
+              mode: "infrastructure-discovery",
+              persistsWithinSession: true,
+              revealsDetailPreview: true
+            })
+          }
+        })[selectedObject.assetId] ?? null;
+
+  return deepFreeze({
+    poiContentId:
+      selectedObject == null
+        ? `${expandedSettlementPreview.sceneId}::poi-content::idle`
+        : `${expandedSettlementPreview.sceneId}::poi-content::${selectedObject.instanceId}`,
+    poiId: resolvedPoiState.poiId,
+    title: profile?.title ?? null,
+    description: profile?.description ?? null,
+    category: profile?.category ?? category,
+    interactionProfile: profile?.interactionProfile ?? null,
+    discoveryProfile: profile?.discoveryProfile ?? null,
+    validationResult: deepFreeze({
+      poiIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      metadataConsistencyValid:
+        selectedObject == null ||
+        (profile != null &&
+          profile.category ===
+            (resolvedPoiState.poiType ?? profile.category)),
+      deterministicOutputValid: true,
       cleanupValid: true
     })
   });

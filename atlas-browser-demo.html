@@ -301,6 +301,9 @@
       <p id="atlasDetailPreviewLabel">Detail preview: waiting for selection</p>
       <p id="atlasDetailAssetLabel">Asset: none selected</p>
       <p id="atlasDetailTypeLabel">Asset type: none selected</p>
+      <p id="atlasDetailPoiTitleLabel">POI title: waiting for selection</p>
+      <p id="atlasDetailPoiDescriptionLabel">POI description: waiting for selection</p>
+      <p id="atlasDetailPoiCategoryLabel">POI category: waiting for selection</p>
       <p id="atlasDetailCameraLabel">Detail camera: waiting for selection</p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasDetailReturnButton" type="button">Return to Map View</button>
@@ -396,6 +399,9 @@
     const detailPreviewLabel = document.getElementById("atlasDetailPreviewLabel");
     const detailAssetLabel = document.getElementById("atlasDetailAssetLabel");
     const detailTypeLabel = document.getElementById("atlasDetailTypeLabel");
+    const detailPoiTitleLabel = document.getElementById("atlasDetailPoiTitleLabel");
+    const detailPoiDescriptionLabel = document.getElementById("atlasDetailPoiDescriptionLabel");
+    const detailPoiCategoryLabel = document.getElementById("atlasDetailPoiCategoryLabel");
     const detailCameraLabel = document.getElementById("atlasDetailCameraLabel");
     const detailReturnButton = document.getElementById("atlasDetailReturnButton");
 
@@ -606,7 +612,7 @@
       updateOverlayInteractionLabels(interactionState);
     };
 
-    const updateDetailPreviewLabels = (detailPreviewState) => {
+    const updateDetailPreviewLabels = (detailPreviewState, poiContentMetadata = null) => {
       if (!detailPanel) {
         return;
       }
@@ -625,6 +631,16 @@
         if (detailTypeLabel) {
           detailTypeLabel.textContent = "Asset type: none selected";
         }
+        if (detailPoiTitleLabel) {
+          detailPoiTitleLabel.textContent = "POI title: waiting for selection";
+        }
+        if (detailPoiDescriptionLabel) {
+          detailPoiDescriptionLabel.textContent =
+            "POI description: waiting for selection";
+        }
+        if (detailPoiCategoryLabel) {
+          detailPoiCategoryLabel.textContent = "POI category: waiting for selection";
+        }
         if (detailCameraLabel) {
           detailCameraLabel.textContent = "Detail camera: waiting for selection";
         }
@@ -642,6 +658,18 @@
       if (detailTypeLabel) {
         detailTypeLabel.textContent =
           `Asset type: ${detailPreviewState.assetType ?? "none selected"}`;
+      }
+      if (detailPoiTitleLabel) {
+        detailPoiTitleLabel.textContent =
+          `POI title: ${poiContentMetadata?.title ?? "none selected"}`;
+      }
+      if (detailPoiDescriptionLabel) {
+        detailPoiDescriptionLabel.textContent =
+          `POI description: ${poiContentMetadata?.description ?? "none selected"}`;
+      }
+      if (detailPoiCategoryLabel) {
+        detailPoiCategoryLabel.textContent =
+          `POI category: ${poiContentMetadata?.category ?? "none selected"}`;
       }
       if (detailCameraLabel) {
         detailCameraLabel.textContent =
@@ -903,10 +931,14 @@
                 if (selection.ok) {
                   syncInteractionStateToBrowserState(selection.interactionState);
                   updatePoiLabels(selection.poiState);
-                  updateDetailPreviewLabels(selection.detailPreviewState);
+                  updateDetailPreviewLabels(
+                    selection.detailPreviewState,
+                    selection.poiContentMetadata
+                  );
                   setBrowserDemoState({
                     ...(window.__atlasBrowserDemoState ?? {}),
                     poiState: selection.poiState,
+                    poiContentMetadata: selection.poiContentMetadata,
                     detailPreviewState: selection.detailPreviewState
                   });
                 }
@@ -1020,6 +1052,7 @@
                 },
                 combinedOverlay,
                 poiState: combinedOverlay.poiState,
+                poiContentMetadata: combinedOverlay.poiContentMetadata,
                 overlayInteractionState: combinedOverlay.interactionState,
                 selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
                 detailPreviewState: combinedOverlay.detailState,
@@ -1033,7 +1066,10 @@
               });
               updatePoiLabels(combinedOverlay.poiState);
               updateOverlayInteractionLabels(combinedOverlay.interactionState);
-              updateDetailPreviewLabels(combinedOverlay.detailState);
+              updateDetailPreviewLabels(
+                combinedOverlay.detailState,
+                combinedOverlay.poiContentMetadata
+              );
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
             }
@@ -1089,6 +1125,7 @@
               lastError: null,
               activeVisualSource: visualSourceSummary,
               poiState: null,
+              poiContentMetadata: null,
               selectedOverlayObject: null,
               overlayInteractionState: null,
               detailPreviewState: null,
@@ -1114,9 +1151,10 @@
           harness.clearSettlementInteraction();
           const interactionState = harness.currentSettlementInteractionState();
           syncInteractionStateToBrowserState(interactionState);
-          updateDetailPreviewLabels(detailState);
+          updateDetailPreviewLabels(detailState, harness.currentSettlementPoiContentMetadata());
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
+            poiContentMetadata: harness.currentSettlementPoiContentMetadata(),
             detailPreviewState: detailState,
             selectedOverlayObject: null,
             overlayInteractionState: interactionState

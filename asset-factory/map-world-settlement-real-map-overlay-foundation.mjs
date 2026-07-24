@@ -20,6 +20,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "settlementLayer",
   "alignmentState",
   "poiState",
+  "poiContentMetadata",
   "interactionState",
   "detailState",
   "playerState",
@@ -118,6 +119,9 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     poiState: createMapWorldSettlementPoiState({
       settlementScene
     }),
+    poiContentMetadata: createMapWorldSettlementPoiContentMetadata({
+      settlementScene
+    }),
     interactionState: createMapWorldSettlementOverlayInteractionState({
       settlementScene,
       mapWorldLiveMapFoundation
@@ -175,6 +179,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         settlementScene.validationResult.deterministicSceneOutputValid === true,
       objectIdentityValid: true,
       poiIdentityValid: true,
+      poiContentMetadataValid: true,
       selectionPersistenceValid: true,
       cameraFocusValid: true,
       detailPreviewValid: true,
@@ -274,6 +279,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation poiIdentityValid must be true."
       );
     }
+    if (!overlay.validationResult.poiContentMetadataValid) {
+      throw createValidationError(
+        "poi_content_metadata_invalid",
+        "Map world settlement real map overlay foundation poiContentMetadataValid must be true."
+      );
+    }
     if (!overlay.validationResult.selectionPersistenceValid) {
       throw createValidationError(
         "selection_persistence_invalid",
@@ -337,6 +348,17 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       throw createValidationError(
         "poi_state_invalid",
         "Map world settlement real map overlay foundation POI state must remain valid."
+      );
+    }
+    if (
+      overlay.poiContentMetadata.validationResult.poiIdentityValid !== true ||
+      overlay.poiContentMetadata.validationResult.metadataConsistencyValid !== true ||
+      overlay.poiContentMetadata.validationResult.deterministicOutputValid !== true ||
+      overlay.poiContentMetadata.validationResult.cleanupValid !== true
+    ) {
+      throw createValidationError(
+        "poi_content_metadata_state_invalid",
+        "Map world settlement real map overlay foundation POI content metadata must remain valid."
       );
     }
     if (
@@ -423,6 +445,9 @@ function normalizeOverlay(rawOverlay) {
     settlementLayer: deepFreeze(asPlainObject(overlay.settlementLayer, "settlementLayer")),
     alignmentState: deepFreeze(asPlainObject(overlay.alignmentState, "alignmentState")),
     poiState: deepFreeze(asPlainObject(overlay.poiState, "poiState")),
+    poiContentMetadata: deepFreeze(
+      asPlainObject(overlay.poiContentMetadata, "poiContentMetadata")
+    ),
     interactionState: deepFreeze(asPlainObject(overlay.interactionState, "interactionState")),
     detailState: deepFreeze(asPlainObject(overlay.detailState, "detailState")),
     playerState: deepFreeze(asPlainObject(overlay.playerState, "playerState")),
@@ -539,6 +564,120 @@ export function createMapWorldSettlementPoiState({
         selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
       playerProximityValid: withinPoiRange,
       deterministicPlacementValid: true,
+      cleanupValid: true
+    })
+  });
+}
+
+const poiContentMetadataProfilesByAssetId = Object.freeze({
+  LIGHTHOUSE_ISLAND_ROCKY_001: Object.freeze({
+    title: "Rocky Point Lighthouse",
+    description:
+      "A coastal landmark lookout with strong visibility across the shoreline and nearby roads.",
+    category: "landmark",
+    interactionProfile: Object.freeze({
+      mode: "viewpoint-inspect",
+      rangeBand: "nearby",
+      cameraBehavior: "focus-landmark"
+    }),
+    discoveryProfile: Object.freeze({
+      mode: "landmark-discovery",
+      persistence: "session",
+      emphasis: "high-visibility"
+    })
+  }),
+  BUILDING_COASTAL_COTTAGE_001: Object.freeze({
+    title: "Coastal Cottage",
+    description:
+      "A small residential point of interest facing the local road network and settlement edge.",
+    category: "building",
+    interactionProfile: Object.freeze({
+      mode: "residence-inspect",
+      rangeBand: "nearby",
+      cameraBehavior: "focus-building"
+    }),
+    discoveryProfile: Object.freeze({
+      mode: "residential-discovery",
+      persistence: "session",
+      emphasis: "neighbourhood-anchor"
+    })
+  }),
+  TREE_EUCALYPTUS_001: Object.freeze({
+    title: "Eucalyptus Tree",
+    description:
+      "A native vegetation marker used to shape the coastal streetscape and green edges of the settlement.",
+    category: "nature",
+    interactionProfile: Object.freeze({
+      mode: "nature-inspect",
+      rangeBand: "nearby",
+      cameraBehavior: "focus-nature"
+    }),
+    discoveryProfile: Object.freeze({
+      mode: "nature-discovery",
+      persistence: "session",
+      emphasis: "environmental"
+    })
+  }),
+  ROAD_COASTAL_001: Object.freeze({
+    title: "Coastal Road",
+    description:
+      "A connected infrastructure corridor that organizes movement through the coastal neighbourhood.",
+    category: "infrastructure",
+    interactionProfile: Object.freeze({
+      mode: "route-inspect",
+      rangeBand: "adjacent",
+      cameraBehavior: "focus-infrastructure"
+    }),
+    discoveryProfile: Object.freeze({
+      mode: "infrastructure-discovery",
+      persistence: "session",
+      emphasis: "network-context"
+    })
+  })
+});
+
+export function createMapWorldSettlementPoiContentMetadata({
+  settlementScene,
+  poiState = null,
+  targetObject = null
+}) {
+  const resolvedPoiState =
+    poiState ??
+    createMapWorldSettlementPoiState({
+      settlementScene,
+      targetObject
+    });
+  const profile = poiContentMetadataProfilesByAssetId[resolvedPoiState.assetId] ?? null;
+  const title = profile?.title ?? null;
+  const description = profile?.description ?? null;
+  const category = profile?.category ?? resolvedPoiState.poiType ?? null;
+  const interactionProfile = profile?.interactionProfile ?? null;
+  const discoveryProfile = profile?.discoveryProfile ?? null;
+
+  return deepFreeze({
+    poiContentId:
+      resolvedPoiState.poiId === `${settlementScene.sceneId}::poi::idle`
+        ? `${settlementScene.sceneId}::poi-content::idle`
+        : `${settlementScene.sceneId}::poi-content::${resolvedPoiState.poiId}`,
+    poiId: resolvedPoiState.poiId,
+    title,
+    description,
+    category,
+    interactionProfile: interactionProfile ? deepFreeze({ ...interactionProfile }) : null,
+    discoveryProfile: discoveryProfile ? deepFreeze({ ...discoveryProfile }) : null,
+    validationResult: deepFreeze({
+      poiIdentityValid:
+        resolvedPoiState.assetId == null ||
+        Object.prototype.hasOwnProperty.call(
+          poiContentMetadataProfilesByAssetId,
+          resolvedPoiState.assetId
+        ),
+      metadataConsistencyValid:
+        resolvedPoiState.assetId == null ||
+        (category === resolvedPoiState.poiType &&
+          typeof title === "string" &&
+          typeof description === "string"),
+      deterministicOutputValid: true,
       cleanupValid: true
     })
   });

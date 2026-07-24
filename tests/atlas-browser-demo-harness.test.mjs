@@ -639,6 +639,15 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(selection.selectedObject.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(selection.poiState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(selection.poiState.poiType, "landmark");
+  assert.equal(
+    selection.poiContentMetadata.title,
+    "Rocky Point Lighthouse"
+  );
+  assert.equal(selection.poiContentMetadata.category, "landmark");
+  assert.equal(
+    selection.poiContentMetadata.discoveryProfile.mode,
+    "landmark-discovery"
+  );
   assert.equal(selection.detailPreviewState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(selection.detailPreviewState.detailState, "focused-detail-preview");
   assert.equal(
@@ -656,6 +665,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     harness.currentSettlementAssetDetailPreviewState().detailState,
     "focused-detail-preview"
+  );
+  assert.equal(
+    harness.currentSettlementPoiContentMetadata().title,
+    "Rocky Point Lighthouse"
   );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
 
@@ -692,6 +705,7 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(returned.detailState, "returning-to-map-view");
   const cleared = harness.clearSettlementInteraction();
   assert.equal(cleared.selectedObject, null);
+  assert.equal(harness.currentSettlementPoiContentMetadata().title, null);
   assert.equal(
     harness.currentSettlementAssetDetailPreviewState().detailState,
     "map-overview"

@@ -99,6 +99,13 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.playerInteractionState.validationResult.objectIdentityValid, true);
   assert.equal(overlay.poiState.poiType, null);
   assert.equal(overlay.poiState.interactionState, "poi-idle");
+  assert.equal(overlay.poiContentMetadata.poiId, overlay.poiState.poiId);
+  assert.equal(overlay.poiContentMetadata.title, null);
+  assert.equal(overlay.poiContentMetadata.category, null);
+  assert.equal(
+    overlay.poiContentMetadata.validationResult.metadataConsistencyValid,
+    true
+  );
   assert.equal(overlay.discoveryState.playerId, overlay.playerState.playerId);
   assert.equal(overlay.discoveryState.discoveryState, "discovery-idle");
   assert.deepEqual(overlay.discoveryState.discoveredObjectIds, []);
@@ -140,6 +147,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.playerState, second.playerState);
   assert.deepEqual(first.playerInteractionState, second.playerInteractionState);
   assert.deepEqual(first.poiState, second.poiState);
+  assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
   assert.deepEqual(first.discoveryState, second.discoveryState);
 });
 
@@ -296,6 +304,49 @@ test("overlay POI state resolves reusable world object metadata deterministicall
   assert.equal(poiState.poiType, "landmark");
   assert.equal(poiState.validationResult.poiIdentityValid, true);
   assert.equal(poiState.validationResult.deterministicPlacementValid, true);
+});
+
+test("overlay POI content metadata resolves reusable detail and discovery profiles deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+  const poiState = moduleUnderTest.createMapWorldSettlementPoiState({
+    settlementScene,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001",
+    playerState
+  });
+
+  const poiContentMetadata =
+    moduleUnderTest.createMapWorldSettlementPoiContentMetadata({
+      settlementScene,
+      poiState
+    });
+
+  assert.equal(poiContentMetadata.poiId, poiState.poiId);
+  assert.equal(poiContentMetadata.title, "Rocky Point Lighthouse");
+  assert.equal(poiContentMetadata.category, "landmark");
+  assert.equal(poiContentMetadata.interactionProfile.mode, "viewpoint-inspect");
+  assert.equal(poiContentMetadata.discoveryProfile.mode, "landmark-discovery");
+  assert.equal(poiContentMetadata.validationResult.poiIdentityValid, true);
+  assert.equal(
+    poiContentMetadata.validationResult.metadataConsistencyValid,
+    true
+  );
+  assert.equal(
+    poiContentMetadata.validationResult.deterministicOutputValid,
+    true
+  );
 });
 
 test("overlay discovery state persists discovered nearby objects deterministically during the session", async () => {
