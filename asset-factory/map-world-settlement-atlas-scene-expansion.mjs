@@ -21,6 +21,8 @@ export const mapWorldSettlementAtlasSceneExpansionRequiredFields = Object.freeze
   "buildingInstances",
   "vegetationInstances",
   "landmarkInstances",
+  "visualScaling",
+  "presentationSummary",
   "cameraProfile",
   "validationResult"
 ]);
@@ -77,6 +79,22 @@ export async function createMapWorldSettlementAtlasSceneExpansion(
     buildingInstances,
     coastlineArea
   );
+  const visualScaling = buildVisualScaling(
+    settlement,
+    roadInstances,
+    buildingInstances,
+    vegetationInstances,
+    cameraProfile
+  );
+  const presentationSummary = buildPresentationSummary(
+    settlement,
+    roadInstances,
+    buildingInstances,
+    vegetationInstances,
+    landmarkInstances,
+    coastlineArea,
+    visualScaling
+  );
 
   const scene = deepFreeze({
     sceneId: createSceneId(
@@ -89,6 +107,8 @@ export async function createMapWorldSettlementAtlasSceneExpansion(
     buildingInstances,
     vegetationInstances,
     landmarkInstances,
+    visualScaling,
+    presentationSummary,
     cameraProfile,
     validationResult: buildValidationResult(
       settlement,
@@ -221,6 +241,12 @@ export function validateMapWorldSettlementAtlasSceneExpansion(rawScene) {
         "Map world settlement Atlas scene expansion coastlineRelationshipValid must be true."
       );
     }
+    if (!scene.validationResult.cameraConsistencyValid) {
+      throw createValidationError(
+        "camera_consistency_invalid",
+        "Map world settlement Atlas scene expansion cameraConsistencyValid must be true."
+      );
+    }
 
     return Object.freeze({
       ok: true,
@@ -313,12 +339,91 @@ function buildCameraProfile(
     orientation: "north-up",
     viewpointMode: "settlement-overlook",
     zoomLevel: Number(visualLayerAttachment.cameraState.previewZoomLevel ?? 15),
+    previewZoomProfile: "normal",
+    availableZoomProfiles: deepFreeze(["far", "normal", "close"]),
     mapCenterCoordinate: deepFreeze({
       latitude: previewFoundation.coordinate.latitude,
       longitude: previewFoundation.coordinate.longitude
     }),
     coastlineFocusY: maxCoastY,
     previewVisibilityState: previewFoundation.previewScene.visibilityState
+  });
+}
+
+function buildVisualScaling(
+  settlement,
+  roadInstances,
+  buildingInstances,
+  vegetationInstances,
+  cameraProfile
+) {
+  const densityProfile =
+    settlement.settlementSummary.residentialBlockCount >= 3 &&
+    buildingInstances.length >= 12 &&
+    vegetationInstances.length >= 24
+      ? "suburban_coastal"
+      : "sparse_coastal";
+  const blockScale = densityProfile === "suburban_coastal" ? 1.35 : 1.1;
+  const cameraScale = densityProfile === "suburban_coastal" ? 1.18 : 1;
+  const baseZoom = Number(cameraProfile.zoomLevel);
+
+  return deepFreeze({
+    densityProfile,
+    blockScale,
+    cameraScale,
+    previewZoomProfile: deepFreeze({
+      activeProfile: "normal",
+      far: deepFreeze({
+        profileId: "far",
+        targetZoomLevel: Math.max(10, baseZoom - 2),
+        emphasis: deepFreeze(["roads", "blocks", "coastline"]),
+        detailMode: "network"
+      }),
+      normal: deepFreeze({
+        profileId: "normal",
+        targetZoomLevel: baseZoom,
+        emphasis: deepFreeze(["houses", "trees", "yards"]),
+        detailMode: "neighbourhood"
+      }),
+      close: deepFreeze({
+        profileId: "close",
+        targetZoomLevel: Math.min(19, baseZoom + 2),
+        emphasis: deepFreeze(["asset-details"]),
+        detailMode: "asset"
+      })
+    }),
+    roadContinuityWeight: roundNumber(
+      settlement.settlementSummary.roadSegmentCount /
+        Math.max(1, settlement.settlementSummary.intersectionCount)
+    ),
+    houseSpacingTarget: roundNumber(
+      averageNearestNeighbourDistance(buildingInstances)
+    ),
+    treeDistributionTarget: roundNumber(
+      averageNearestNeighbourDistance(vegetationInstances)
+    )
+  });
+}
+
+function buildPresentationSummary(
+  settlement,
+  roadInstances,
+  buildingInstances,
+  vegetationInstances,
+  landmarkInstances,
+  coastlineArea,
+  visualScaling
+) {
+  const coastlineBoundary = coastlineArea?.boundaryPoints ?? [];
+  return deepFreeze({
+    residentialBlockCount: settlement.settlementSummary.residentialBlockCount,
+    residentialLotCount: settlement.settlementSummary.residentialLotCount,
+    roadContinuitySegments: roadInstances.length,
+    houseSpacingAverage: visualScaling.houseSpacingTarget,
+    treeDistributionAverage: visualScaling.treeDistributionTarget,
+    coastlineBoundaryPointCount: coastlineBoundary.length,
+    lighthouseCoastRelationshipPreserved:
+      landmarkInstances.length === 1 && coastlineBoundary.length >= 2
   });
 }
 
@@ -374,6 +479,11 @@ function buildValidationResult(
     coastlineRelationshipValid: lighthouseValid,
     multipleHousesSupported: buildingInstances.length >= 2,
     multipleTreesSupported: vegetationInstances.length >= 2,
+    cameraConsistencyValid:
+      Number.isFinite(cameraProfile.zoomLevel) &&
+      cameraProfile.previewZoomProfile === "normal" &&
+      Array.isArray(cameraProfile.availableZoomProfiles) &&
+      cameraProfile.availableZoomProfiles.length === 3,
     cameraProfileValid:
       supportedCameraProfiles.has(cameraProfile.cameraProfile) &&
       cameraProfile.orientation === "north-up"
@@ -406,6 +516,10 @@ function normalizeScene(rawScene) {
     buildingInstances: normalizeArray(scene.buildingInstances, "buildingInstances"),
     vegetationInstances: normalizeArray(scene.vegetationInstances, "vegetationInstances"),
     landmarkInstances: normalizeArray(scene.landmarkInstances, "landmarkInstances"),
+    visualScaling: deepFreeze(asPlainObject(scene.visualScaling, "visualScaling")),
+    presentationSummary: deepFreeze(
+      asPlainObject(scene.presentationSummary, "presentationSummary")
+    ),
     cameraProfile: deepFreeze(asPlainObject(scene.cameraProfile, "cameraProfile")),
     validationResult: deepFreeze(asPlainObject(scene.validationResult, "validationResult")),
     mapWorldRealLocationPreview: deepFreeze(
@@ -449,6 +563,36 @@ function stableHash(value) {
     hash = Math.imul(hash, 16777619);
   }
   return hash >>> 0;
+}
+
+function averageNearestNeighbourDistance(instances) {
+  if (!Array.isArray(instances) || instances.length < 2) {
+    return 0;
+  }
+  const positions = instances
+    .map((instance) => instance.position)
+    .filter((point) => point && Number.isFinite(point.x) && Number.isFinite(point.y));
+  if (positions.length < 2) {
+    return 0;
+  }
+  let distanceTotal = 0;
+  for (let index = 0; index < positions.length; index += 1) {
+    let nearest = Number.POSITIVE_INFINITY;
+    for (let candidateIndex = 0; candidateIndex < positions.length; candidateIndex += 1) {
+      if (index === candidateIndex) {
+        continue;
+      }
+      const deltaX = positions[index].x - positions[candidateIndex].x;
+      const deltaY = positions[index].y - positions[candidateIndex].y;
+      nearest = Math.min(nearest, Math.hypot(deltaX, deltaY));
+    }
+    distanceTotal += nearest;
+  }
+  return distanceTotal / positions.length;
+}
+
+function roundNumber(value) {
+  return Math.round(value * 100) / 100;
 }
 
 function createValidationError(code, message) {

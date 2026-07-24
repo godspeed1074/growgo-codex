@@ -519,11 +519,27 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
     sceneId: scene.sceneId,
     worldId: scene.worldId,
     objectInstances,
+    visualScaling: deepFreeze({
+      densityProfile: scene.visualScaling?.densityProfile ?? "sparse_coastal",
+      blockScale: Number(scene.visualScaling?.blockScale ?? 1),
+      cameraScale: Number(scene.visualScaling?.cameraScale ?? 1),
+      previewZoomProfile: deepFreeze({
+        ...(scene.visualScaling?.previewZoomProfile ?? {})
+      })
+    }),
+    presentationSummary: deepFreeze({
+      ...(scene.presentationSummary ?? {})
+    }),
     cameraState: deepFreeze({
       cameraProfile: scene.cameraProfile.cameraProfile,
       focusAssetId: scene.cameraProfile.focusAssetId,
       orientation: scene.cameraProfile.orientation,
       previewZoomLevel: scene.cameraProfile.zoomLevel,
+      previewZoomProfile:
+        scene.visualScaling?.previewZoomProfile?.activeProfile ??
+        scene.cameraProfile.previewZoomProfile ??
+        "normal",
+      cameraScale: Number(scene.visualScaling?.cameraScale ?? 1),
       mapCenterCoordinate: deepFreeze({
         ...scene.cameraProfile.mapCenterCoordinate
       })
@@ -562,6 +578,7 @@ export function drawExpandedSettlementPreview(
   const bounds = computeExpandedSettlementBounds(
     collectExpandedSettlementPoints(objectInstances)
   );
+  const scaling = expandedSettlementPreview.visualScaling ?? {};
 
   drawContext.fillStyle = palette.sky;
   drawContext.fillRect(0, 0, width, height);
@@ -576,20 +593,25 @@ export function drawExpandedSettlementPreview(
   drawContext.fillText(expandedSettlementPreview.sceneId, width * 0.03, height * 0.08);
   drawContext.font = "13px sans-serif";
   drawContext.fillText(
-    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId}`,
+    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId} :: ${expandedSettlementPreview.cameraState.previewZoomProfile}`,
     width * 0.03,
     height * 0.115
   );
 
   for (const instance of objectInstances) {
-    drawExpandedSettlementInstance(drawContext, instance, bounds, { width, height, palette });
+    drawExpandedSettlementInstance(drawContext, instance, bounds, {
+      width,
+      height,
+      palette,
+      scaling
+    });
   }
 
   drawContext.fillStyle = "#163046";
   drawContext.font = "12px sans-serif";
   drawContext.textAlign = "left";
   drawContext.fillText(
-    `${expandedSettlementPreview.objectInstances.length} scene objects :: focus ${expandedSettlementPreview.cameraState.focusAssetId}`,
+    `${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${expandedSettlementPreview.cameraState.focusAssetId}`,
     width * 0.03,
     height * 0.96
   );
@@ -681,12 +703,32 @@ function resolveAssetFillStyle(primaryMaterial, assetId, palette) {
   return palette.building;
 }
 
-function drawExpandedSettlementInstance(drawContext, instance, bounds, { width, height, palette }) {
+function drawExpandedSettlementInstance(
+  drawContext,
+  instance,
+  bounds,
+  { width, height, palette, scaling }
+) {
   if (instance.category === "road") {
-    const start = projectExpandedSettlementPoint(instance.geometry.start, bounds, width, height);
-    const end = projectExpandedSettlementPoint(instance.geometry.end, bounds, width, height);
+    const start = projectExpandedSettlementPoint(
+      instance.geometry.start,
+      bounds,
+      width,
+      height,
+      scaling
+    );
+    const end = projectExpandedSettlementPoint(
+      instance.geometry.end,
+      bounds,
+      width,
+      height,
+      scaling
+    );
     drawContext.strokeStyle = palette.road;
-    drawContext.lineWidth = Math.max(4, (instance.geometry.width ?? 8) * 1.2);
+    drawContext.lineWidth = Math.max(
+      4,
+      (instance.geometry.width ?? 8) * 1.2 * Number(scaling?.blockScale ?? 1)
+    );
     if (typeof drawContext.stroke === "function") {
       drawContext.beginPath();
       drawContext.moveTo(start.x, start.y);
@@ -704,35 +746,59 @@ function drawExpandedSettlementInstance(drawContext, instance, bounds, { width, 
     return;
   }
 
-  const projected = projectExpandedSettlementPoint(instance.position, bounds, width, height);
+  const projected = projectExpandedSettlementPoint(
+    instance.position,
+    bounds,
+    width,
+    height,
+    scaling
+  );
   if (instance.category === "vegetation") {
     drawContext.fillStyle = palette.vegetation;
     drawContext.beginPath();
-    drawContext.arc(projected.x, projected.y, 7, 0, Math.PI * 2);
+    drawContext.arc(
+      projected.x,
+      projected.y,
+      Math.max(6, 7 * Number(scaling?.blockScale ?? 1)),
+      0,
+      Math.PI * 2
+    );
     drawContext.fill();
     return;
   }
 
   if (instance.category === "landmark") {
     drawContext.fillStyle = palette.lighthouse;
-    drawContext.fillRect(projected.x - 8, projected.y - 36, 16, 36);
+    const lighthouseScale = Number(scaling?.cameraScale ?? 1);
+    drawContext.fillRect(
+      projected.x - 8 * lighthouseScale,
+      projected.y - 36 * lighthouseScale,
+      16 * lighthouseScale,
+      36 * lighthouseScale
+    );
     drawContext.fillStyle = "#bd2d2d";
     drawContext.beginPath();
-    drawContext.moveTo(projected.x - 12, projected.y - 36);
-    drawContext.lineTo(projected.x, projected.y - 52);
-    drawContext.lineTo(projected.x + 12, projected.y - 36);
+    drawContext.moveTo(projected.x - 12 * lighthouseScale, projected.y - 36 * lighthouseScale);
+    drawContext.lineTo(projected.x, projected.y - 52 * lighthouseScale);
+    drawContext.lineTo(projected.x + 12 * lighthouseScale, projected.y - 36 * lighthouseScale);
     drawContext.closePath();
     drawContext.fill();
     return;
   }
 
+  const houseScale = Number(scaling?.blockScale ?? 1);
   drawContext.fillStyle = palette.building;
-  drawContext.fillRect(projected.x - 12, projected.y - 12, 24, 18);
+  drawContext.fillRect(
+    projected.x - 12 * houseScale,
+    projected.y - 12 * houseScale,
+    24 * houseScale,
+    18 * houseScale
+  );
   drawContext.fillStyle = "#7d4d35";
   drawContext.beginPath();
-  drawContext.moveTo(projected.x - 15, projected.y - 12);
-  drawContext.lineTo(projected.x, projected.y - 24);
-  drawContext.lineTo(projected.x + 15, projected.y - 12);
+  drawContext.moveTo(projected.x - 15 * houseScale, projected.y - 12 * houseScale);
+  drawContext.lineTo(projected.x, projected.y - 24 * houseScale);
+  drawContext.lineTo(projected.x + 15 * houseScale, projected.y - 12 * houseScale);
   drawContext.closePath();
   drawContext.fill();
 }
@@ -766,12 +832,16 @@ function computeExpandedSettlementBounds(points) {
   });
 }
 
-function projectExpandedSettlementPoint(point, bounds, width, height) {
+function projectExpandedSettlementPoint(point, bounds, width, height, scaling = null) {
   const normalizedX = (point.x - bounds.minX) / bounds.spanX;
   const normalizedY = (point.y - bounds.minY) / bounds.spanY;
+  const cameraScale = Number(scaling?.cameraScale ?? 1);
+  const blockScale = Number(scaling?.blockScale ?? 1);
+  const scaledX = 0.5 + (normalizedX - 0.5) / cameraScale;
+  const scaledY = 0.5 + (normalizedY - 0.5) / Math.max(1, blockScale);
   return deepFreeze({
-    x: width * 0.08 + normalizedX * width * 0.84,
-    y: height * 0.82 - normalizedY * height * 0.46
+    x: width * 0.08 + scaledX * width * 0.84,
+    y: height * 0.82 - scaledY * height * 0.46
   });
 }
 
@@ -1090,6 +1160,9 @@ function buildVisualSourceSummary({
       sceneId: expandedSettlementPreview.sceneId,
       worldId: expandedSettlementPreview.worldId,
       objectInstanceCount: expandedSettlementPreview.objectInstances.length,
+      densityProfile: expandedSettlementPreview.visualScaling?.densityProfile ?? null,
+      previewZoomProfile:
+        expandedSettlementPreview.cameraState?.previewZoomProfile ?? null,
       visibilityState,
       active:
         visibilityState === "visible" &&

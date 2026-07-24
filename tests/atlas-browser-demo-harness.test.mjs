@@ -557,6 +557,14 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
   assert.equal(shown.ok, true);
   assert.equal(harness.elements.previewContainer.dataset.previewVisible, "true");
   assert.match(harness.elements.status.textContent, /neighbourhood-scale scene/i);
+  assert.equal(
+    harness.currentVisualSourceSummary().densityProfile,
+    "suburban_coastal"
+  );
+  assert.equal(
+    harness.currentVisualSourceSummary().previewZoomProfile,
+    "normal"
+  );
   assert.ok(
     harness.canvas._context.commands.some(
       (command) =>
@@ -569,6 +577,20 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
       (command) =>
         command[0] === "fillText" &&
         String(command[1]).includes("45 scene objects")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("suburban_coastal")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("normal")
     )
   );
   assert.ok(

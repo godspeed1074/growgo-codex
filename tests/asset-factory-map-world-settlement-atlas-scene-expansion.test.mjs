@@ -68,12 +68,24 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.equal(scene.landmarkInstances.length, 1);
   assert.equal(scene.cameraProfile.cameraProfile, "atlas-coastal-settlement-overlook");
   assert.equal(scene.cameraProfile.orientation, "north-up");
+  assert.equal(scene.cameraProfile.previewZoomProfile, "normal");
+  assert.deepEqual(scene.cameraProfile.availableZoomProfiles, ["far", "normal", "close"]);
+  assert.equal(scene.visualScaling.densityProfile, "suburban_coastal");
+  assert.ok(scene.visualScaling.blockScale > 1);
+  assert.ok(scene.visualScaling.cameraScale > 1);
+  assert.equal(scene.visualScaling.previewZoomProfile.activeProfile, "normal");
+  assert.ok(scene.visualScaling.previewZoomProfile.far);
+  assert.ok(scene.visualScaling.previewZoomProfile.normal);
+  assert.ok(scene.visualScaling.previewZoomProfile.close);
+  assert.ok(scene.presentationSummary.residentialBlockCount >= 1);
+  assert.ok(scene.presentationSummary.roadContinuitySegments >= 8);
   assert.equal(scene.validationResult.assetReferencesValid, true);
   assert.equal(scene.validationResult.placementValidity, true);
   assert.equal(scene.validationResult.deterministicSceneOutputValid, true);
   assert.equal(scene.validationResult.objectCountLimitsValid, true);
   assert.equal(scene.validationResult.connectedRoadNetworkValid, true);
   assert.equal(scene.validationResult.coastlineRelationshipValid, true);
+  assert.equal(scene.validationResult.cameraConsistencyValid, true);
 });
 
 test("same map coordinate and seed produce the same deterministic Atlas settlement scene", async () => {
@@ -100,6 +112,8 @@ test("same map coordinate and seed produce the same deterministic Atlas settleme
     first.vegetationInstances.map((instance) => instance.position),
     second.vegetationInstances.map((instance) => instance.position)
   );
+  assert.deepEqual(first.visualScaling, second.visualScaling);
+  assert.deepEqual(first.presentationSummary, second.presentationSummary);
 });
 
 test("map world settlement Atlas scene expansion rejects invalid object count limits safely", async () => {
