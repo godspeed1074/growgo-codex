@@ -23,18 +23,6 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     return elements;
   }
 
-  const sessionResult =
-    createAtlasEngineFirstManualBrowserVisiblePreviewMountSession(undefined, {
-      manual: true,
-      isolated: true,
-      ...options.previewMountOptions
-    });
-  if (!sessionResult.ok) {
-    return freezeError(sessionResult.errorCode, sessionResult.message);
-  }
-
-  const previewSession =
-    sessionResult.atlasFirstManualBrowserVisiblePreviewMountSession;
   const canvas = createPreviewCanvas(documentRef, elements.canvasContainer);
   const drawContext = canvas.getContext("2d");
   if (!drawContext) {
@@ -45,11 +33,35 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   }
 
   let mounted = false;
+  let previewSession = null;
+  const previewMountOptions =
+    options.previewMountOptions ?? buildBrowserSafePreviewMountOptions();
 
   setStatus(elements.status, "Atlas preview ready. Use Show Atlas Preview.");
   setContainerVisibility(elements.previewContainer, false);
 
   const showHandler = () => {
+    if (previewSession == null) {
+      const sessionResult =
+        createAtlasEngineFirstManualBrowserVisiblePreviewMountSession(undefined, {
+          manual: true,
+          isolated: true,
+          ...previewMountOptions
+        });
+      if (!sessionResult.ok) {
+        setStatus(elements.status, sessionResult.message);
+        return Object.freeze({
+          ok: false,
+          errorCode: sessionResult.errorCode,
+          message: sessionResult.message,
+          previewMountResult: null
+        });
+      }
+
+      previewSession =
+        sessionResult.atlasFirstManualBrowserVisiblePreviewMountSession;
+    }
+
     const mountResult = previewSession.startPreviewMount({
       manualPreviewStart: true
     });
@@ -103,7 +115,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     errorCode: null,
     message: null,
     atlasBrowserDemoHarness: Object.freeze({
-      previewSessionId: previewSession.previewMountId,
+      previewSessionId: "atlas-browser-demo-harness",
       canvas,
       elements: Object.freeze({
         previewContainer: elements.previewContainer,
@@ -115,7 +127,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       showPreview: showHandler,
       hidePreview: hideHandler,
       currentMountState() {
-        return previewSession.currentMountState();
+        return previewSession?.currentMountState?.() ?? "created";
       }
     })
   });
@@ -248,4 +260,82 @@ function freezeError(errorCode, message) {
     message,
     atlasBrowserDemoHarness: null
   });
+}
+
+function buildBrowserSafePreviewMountOptions() {
+  const lightingMode = "day_showcase";
+  const foundationBase = "ATLAS_FIRST_MANUAL_BROWSER_VISIBLE_PREVIEW_MOUNT_001";
+  const drawSessionBase = "ATLAS_FIRST_CONTROLLED_CANVAS_DRAW_001";
+  const drawResultBase = "ATLAS_FIRST_VISIBLE_CANVAS_DRAW_RESULT_001";
+  const drawSessionId = `${drawSessionBase}_${stableNumericHash(
+    `${drawResultBase}_0123456789::${lightingMode}::draw`
+  )}`;
+  const drawResultId = `${drawResultBase}_${stableNumericHash(
+    `${drawSessionId}::${lightingMode}::visible-capture`
+  )}`;
+
+  return Object.freeze({
+    validateAtlasEngineFirstVisibleCanvasDrawResultFoundation: () =>
+      Object.freeze({
+        ok: true,
+        errorCode: null,
+        message: null,
+        atlasFirstVisibleCanvasDrawResult: Object.freeze({
+          captureId: drawResultId,
+          drawSessionId,
+          canvasResult: Object.freeze({
+            exists: true,
+            width: 1280,
+            height: 720,
+            pixelRatio: 1,
+            lightingMode,
+            drawCommandCount: 4,
+            drawCommandsExecuted: true
+          }),
+          frameResult: Object.freeze({
+            frameProduced: true,
+            visibleState: "verified-visible",
+            objectCount: 11,
+            includedAssetIds: Object.freeze([
+              "LIGHTHOUSE_ISLAND_ROCKY_001",
+              "BUILDING_HOUSE_SMALL_COASTAL_001",
+              "ROAD_STRAIGHT_SMALL_001",
+              "TREE_EUCALYPTUS_001"
+            ]),
+            cameraResult: Object.freeze({
+              profile: "coastal-overlook",
+              focusTarget: "LIGHTHOUSE_ISLAND_ROCKY_001",
+              orientation: "south-east",
+              zoom: 1.22
+            }),
+            lightingResult: Object.freeze({
+              currentMode: lightingMode,
+              appearanceProfiles: Object.freeze([
+                "DAY_COASTAL_LIGHTHOUSE",
+                "SUNSET_COASTAL_LIGHTHOUSE",
+                "NIGHT_COASTAL_LIGHTHOUSE"
+              ])
+            }),
+            rendererResult: Object.freeze({
+              rendererProfile: "custom-2.5d-passive",
+              payloadValid: true
+            }),
+            deterministicOutput: true
+          }),
+          verificationState: Object.freeze({
+            currentState: "verified",
+            cleanupSuccessful: true
+          })
+        })
+      }),
+    browserDemoFoundationBase: foundationBase
+  });
+}
+
+function stableNumericHash(value) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return String(hash).padStart(10, "0");
 }

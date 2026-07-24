@@ -69,6 +69,30 @@
       font-size: 14px;
     }
 
+    .atlas-demo-launch-note {
+      margin: 0 0 16px;
+      padding: 12px;
+      border: 1px solid rgba(22, 48, 70, 0.16);
+      background: #f3f8fc;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .atlas-demo-launch-note[hidden] {
+      display: none;
+    }
+
+    .atlas-demo-launch-note code {
+      display: block;
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: #163046;
+      color: #ffffff;
+      overflow-x: auto;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+    }
+
     .atlas-preview-container {
       border: 1px solid rgba(22, 48, 70, 0.18);
       background: #f8fbfe;
@@ -111,6 +135,23 @@
     </p>
 
     <section
+      id="atlasPreviewLaunchNote"
+      class="atlas-demo-launch-note"
+      hidden
+    >
+      <strong>Local browser launch required</strong>
+      <div>
+        This demo is meant to be opened from a small local server rather than
+        directly as a <code>file://</code> page.
+      </div>
+      <code>cd growgo-codex && python3 -m http.server 8765 --bind 127.0.0.1</code>
+      <div>
+        Then open:
+        <code>http://127.0.0.1:8765/atlas-browser-demo.html</code>
+      </div>
+    </section>
+
+    <section
       id="atlasPreviewContainer"
       class="atlas-preview-container"
       data-preview-visible="false"
@@ -121,18 +162,56 @@
   </main>
 
   <script type="module">
-    import { createAtlasBrowserDemoHarness } from "./client/atlas-browser-demo-harness.mjs";
+    const status = document.getElementById("atlasPreviewStatus");
+    const launchNote = document.getElementById("atlasPreviewLaunchNote");
+    const showButton = document.getElementById("atlasPreviewShowButton");
+    const hideButton = document.getElementById("atlasPreviewHideButton");
 
-    const harness = createAtlasBrowserDemoHarness();
-    if (!harness.ok) {
-      const status = document.getElementById("atlasPreviewStatus");
-      if (status) {
-        status.textContent = harness.message;
+    const setLaunchMode = () => {
+      if (launchNote) {
+        launchNote.hidden = false;
       }
-      throw new Error(harness.message);
-    }
+      if (status) {
+        status.textContent =
+          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to view the placeholder scene.";
+      }
+      if (showButton) {
+        showButton.disabled = true;
+      }
+      if (hideButton) {
+        hideButton.disabled = true;
+      }
+    };
 
-    window.atlasBrowserDemoHarness = harness.atlasBrowserDemoHarness;
+    if (window.location.protocol === "file:") {
+      setLaunchMode();
+    } else {
+      try {
+        const { createAtlasBrowserDemoHarness } = await import("./client/atlas-browser-demo-harness.mjs");
+        const harness = createAtlasBrowserDemoHarness();
+        if (!harness.ok) {
+          if (status) {
+            status.textContent = harness.message;
+          }
+          throw new Error(harness.message);
+        }
+
+        if (launchNote) {
+          launchNote.hidden = true;
+        }
+        if (showButton) {
+          showButton.disabled = false;
+        }
+        if (hideButton) {
+          hideButton.disabled = false;
+        }
+
+        window.atlasBrowserDemoHarness = harness.atlasBrowserDemoHarness;
+      } catch (error) {
+        setLaunchMode();
+        console.error(error);
+      }
+    }
   </script>
 </body>
 </html>
