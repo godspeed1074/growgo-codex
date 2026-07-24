@@ -42,6 +42,14 @@ const realGroundMeshPreviewModule = await import(
     "ground-coastal-grass-real-glb-mesh-preview-integration.mjs"
   )
 );
+const realGroundRuntimeLoaderModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "ground-coastal-grass-minimal-glb-runtime-loader.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -296,14 +304,62 @@ function buildRealGroundMeshPreview({ glbExists = true } = {}) {
   return result.realGlbMeshPreview.definition;
 }
 
-test("Atlas browser demo harness mounts and draws a visible placeholder preview", () => {
+function createSyntheticGlb({ materialNames = ["GrassBase", "GrassDetail"] } = {}) {
+  const json = JSON.stringify({
+    asset: { version: "2.0" },
+    scenes: [{ nodes: [0] }],
+    nodes: [{ mesh: 0 }],
+    meshes: [
+      {
+        primitives: [{ attributes: { POSITION: 0 }, material: 0 }]
+      }
+    ],
+    materials: materialNames.map((name) => ({ name }))
+  });
+  const jsonBytes = new TextEncoder().encode(json);
+  const paddedJsonLength = Math.ceil(jsonBytes.length / 4) * 4;
+  const totalLength = 12 + 8 + paddedJsonLength;
+  const arrayBuffer = new ArrayBuffer(totalLength);
+  const view = new DataView(arrayBuffer);
+  view.setUint32(0, 0x46546c67, true);
+  view.setUint32(4, 2, true);
+  view.setUint32(8, totalLength, true);
+  view.setUint32(12, paddedJsonLength, true);
+  view.setUint32(16, 0x4e4f534a, true);
+  new Uint8Array(arrayBuffer, 20, paddedJsonLength).set(jsonBytes);
+  return arrayBuffer;
+}
+
+async function buildRealGroundRuntimeLoader() {
+  const definition =
+    realGroundRuntimeLoaderModule.groundCoastalGrassMinimalGlbRuntimeLoaderDefinition;
+  const result =
+    await realGroundRuntimeLoaderModule.loadGroundCoastalGrassMinimalGlbRuntimeLoader(
+      definition,
+      {
+        existsSync(candidatePath) {
+          return candidatePath === definition.glbReference.glbPath;
+        },
+        loadArrayBuffer() {
+          return Promise.resolve(createSyntheticGlb());
+        }
+      }
+    );
+
+  assert.equal(result.ok, true);
+  return result.glbRuntimeLoader.definition;
+}
+
+test("Atlas browser demo harness mounts and draws a visible placeholder preview", async () => {
   const document = createMockDocument();
+  const realGroundRuntimeLoader = await buildRealGroundRuntimeLoader();
   const result = harnessModule.createAtlasBrowserDemoHarness({
     document,
     previewMountOptions: buildPreviewMountOptions(),
     realGroundPreviewBinding: buildRealGroundPreviewBinding(),
     realGroundRenderBinding: buildRealGroundRenderBinding(),
-    realGroundMeshPreview: buildRealGroundMeshPreview()
+    realGroundMeshPreview: buildRealGroundMeshPreview(),
+    realGroundRuntimeLoader
   });
 
   assert.equal(result.ok, true);
@@ -315,7 +371,7 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
     harness.elements.previewContainer.dataset.previewVisible,
     "true"
   );
-  assert.match(harness.elements.status.textContent, /real GLB mesh geometry/i);
+  assert.match(harness.elements.status.textContent, /runtime GLB mesh/i);
   assert.equal(harness.elements.canvasContainer.children.length, 1);
   assert.ok(harness.canvas._context.commands.length > 0);
   assert.ok(
@@ -327,6 +383,12 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
   assert.ok(
     harness.canvas._context.commands.some(
       (command) => command[0] === "lineTo"
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" && String(command[1]).includes("runtime-glb-mesh-preview")
     )
   );
 });
