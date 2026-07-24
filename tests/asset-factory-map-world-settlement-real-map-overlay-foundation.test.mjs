@@ -97,6 +97,11 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.playerInteractionState.playerId, overlay.playerState.playerId);
   assert.equal(overlay.playerInteractionState.interactionState, "world-idle");
   assert.equal(overlay.playerInteractionState.validationResult.objectIdentityValid, true);
+  assert.equal(overlay.captureState.playerId, overlay.playerState.playerId);
+  assert.equal(overlay.captureState.captureState, "capture-idle");
+  assert.equal(overlay.captureState.captureAnimationState, "capture-animation-idle");
+  assert.deepEqual(overlay.captureState.capturedObjectIds, []);
+  assert.equal(overlay.captureState.validationResult.targetIdentityValid, true);
   assert.equal(overlay.poiState.poiType, null);
   assert.equal(overlay.poiState.interactionState, "poi-idle");
   assert.equal(overlay.poiContentMetadata.poiId, overlay.poiState.poiId);
@@ -142,6 +147,7 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.validationResult.cameraFocusValid, true);
   assert.equal(overlay.validationResult.detailPreviewValid, true);
   assert.equal(overlay.validationResult.playerPresenceValid, true);
+  assert.equal(overlay.validationResult.captureInteractionValid, true);
   assert.equal(overlay.validationResult.mapVisibleUnderlayValid, true);
   assert.equal(overlay.validationResult.combinedViewReady, true);
 });
@@ -167,6 +173,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.detailState, second.detailState);
   assert.deepEqual(first.playerState, second.playerState);
   assert.deepEqual(first.playerInteractionState, second.playerInteractionState);
+  assert.deepEqual(first.captureState, second.captureState);
   assert.deepEqual(first.poiState, second.poiState);
   assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
   assert.deepEqual(first.poiLocationMetadata, second.poiLocationMetadata);
@@ -299,6 +306,43 @@ test("overlay player interaction state validates nearby object interaction deter
   assert.equal(playerInteractionState.validationResult.playerObjectAlignmentValid, true);
   assert.equal(playerInteractionState.validationResult.objectIdentityValid, true);
   assert.equal(playerInteractionState.validationResult.deterministicBehaviourValid, true);
+});
+
+test("overlay capture state validates session capture results deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+
+  const captureState = moduleUnderTest.createMapWorldSettlementCaptureState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001"
+  });
+
+  assert.equal(captureState.playerId, playerState.playerId);
+  assert.equal(captureState.targetAssetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.ok(
+    [
+      "capture-out-of-range",
+      "captured-session"
+    ].includes(captureState.captureState)
+  );
+  assert.equal(typeof captureState.captureRange, "number");
+  assert.equal(typeof captureState.validationResult.playerProximityValid, "boolean");
+  assert.equal(captureState.validationResult.targetIdentityValid, true);
+  assert.equal(captureState.validationResult.deterministicCaptureResultValid, true);
 });
 
 test("overlay POI state resolves reusable world object metadata deterministically", async () => {

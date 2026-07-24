@@ -27,6 +27,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "detailState",
   "playerState",
   "playerInteractionState",
+  "captureState",
   "discoveryState",
   "cameraSync",
   "validationResult"
@@ -161,6 +162,14 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         mapWorldLiveMapFoundation
       })
     }),
+    captureState: createMapWorldSettlementCaptureState({
+      settlementScene,
+      mapWorldLiveMapFoundation,
+      playerState: createMapWorldSettlementPlayerMapState({
+        settlementScene,
+        mapWorldLiveMapFoundation
+      })
+    }),
     discoveryState: createMapWorldSettlementDiscoveryState({
       settlementScene,
       mapWorldLiveMapFoundation,
@@ -206,6 +215,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       detailPreviewValid: true,
       playerPresenceValid: true,
       playerInteractionValid: true,
+      captureInteractionValid: true,
       discoveryValid: true,
       mapVisibleUnderlayValid: true,
       combinedViewReady: true
@@ -348,6 +358,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation playerInteractionValid must be true."
       );
     }
+    if (!overlay.validationResult.captureInteractionValid) {
+      throw createValidationError(
+        "capture_interaction_invalid",
+        "Map world settlement real map overlay foundation captureInteractionValid must be true."
+      );
+    }
     if (!overlay.validationResult.discoveryValid) {
       throw createValidationError(
         "discovery_invalid",
@@ -453,6 +469,17 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       );
     }
     if (
+      overlay.captureState.validationResult.playerProximityValid !== true ||
+      overlay.captureState.validationResult.targetIdentityValid !== true ||
+      overlay.captureState.validationResult.deterministicCaptureResultValid !== true ||
+      overlay.captureState.validationResult.cleanupValid !== true
+    ) {
+      throw createValidationError(
+        "capture_state_invalid",
+        "Map world settlement real map overlay foundation capture state must remain valid."
+      );
+    }
+    if (
       overlay.discoveryState.validationResult.playerProximityValid !== true ||
       overlay.discoveryState.validationResult.objectIdentityValid !== true ||
       overlay.discoveryState.validationResult.deterministicDiscoveryResultValid !== true ||
@@ -516,6 +543,7 @@ function normalizeOverlay(rawOverlay) {
     playerInteractionState: deepFreeze(
       asPlainObject(overlay.playerInteractionState, "playerInteractionState")
     ),
+    captureState: deepFreeze(asPlainObject(overlay.captureState, "captureState")),
     discoveryState: deepFreeze(asPlainObject(overlay.discoveryState, "discoveryState")),
     cameraSync: deepFreeze(asPlainObject(overlay.cameraSync, "cameraSync")),
     validationResult: deepFreeze(asPlainObject(overlay.validationResult, "validationResult")),
@@ -1178,6 +1206,94 @@ export function createMapWorldSettlementPlayerInteractionState({
         poiState.validationResult.poiIdentityValid === true,
       cleanupValid: true,
       deterministicBehaviourValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementCaptureState({
+  settlementScene,
+  mapWorldLiveMapFoundation,
+  playerState = null,
+  targetObject = null,
+  capturedObjectIds = []
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedPlayerState =
+    playerState ??
+    createMapWorldSettlementPlayerMapState({
+      settlementScene,
+      mapWorldLiveMapFoundation,
+      focusMode: "player-focused"
+    });
+  const resolvedTarget = resolveSelectableOverlayObject(selectableObjects, targetObject);
+  const sessionCapturedIds = deepFreeze(
+    [...new Set(
+      Array.isArray(capturedObjectIds)
+        ? capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const captureDistance =
+    resolvedTarget?.position == null
+      ? null
+      : Number(
+          Math.hypot(
+            resolvedTarget.position.x - resolvedPlayerState.position.x,
+            resolvedTarget.position.y - resolvedPlayerState.position.y
+          ).toFixed(3)
+        );
+  const withinCaptureRange =
+    captureDistance != null && captureDistance <= 72;
+  const alreadyCaptured =
+    resolvedTarget != null &&
+    sessionCapturedIds.includes(String(resolvedTarget.instanceId));
+  const nextCapturedObjectIds =
+    resolvedTarget != null && withinCaptureRange && !alreadyCaptured
+      ? deepFreeze([...new Set([
+          ...sessionCapturedIds,
+          String(resolvedTarget.instanceId)
+        ])].sort())
+      : sessionCapturedIds;
+  const capturedThisSession =
+    resolvedTarget != null &&
+    nextCapturedObjectIds.includes(String(resolvedTarget.instanceId));
+
+  return deepFreeze({
+    captureId:
+      resolvedTarget == null
+        ? `${settlementScene.sceneId}::capture::idle`
+        : `${settlementScene.sceneId}::capture::${resolvedPlayerState.playerId}::${resolvedTarget.instanceId}`,
+    playerId: resolvedPlayerState.playerId,
+    targetObjectId: resolvedTarget?.instanceId ?? null,
+    targetAssetId: resolvedTarget?.assetId ?? null,
+    captureState:
+      resolvedTarget == null
+        ? "capture-idle"
+        : capturedThisSession
+          ? "captured-session"
+          : withinCaptureRange
+            ? "capture-ready"
+            : "capture-out-of-range",
+    captureDistance,
+    captureRange: 72,
+    captureAnimationState:
+      resolvedTarget == null
+        ? "capture-animation-idle"
+        : capturedThisSession
+          ? "capture-placeholder-pulse"
+          : withinCaptureRange
+            ? "capture-placeholder-armed"
+            : "capture-placeholder-blocked",
+    capturedObjectIds: nextCapturedObjectIds,
+    validationResult: deepFreeze({
+      playerProximityValid: resolvedTarget == null || withinCaptureRange || !capturedThisSession,
+      targetIdentityValid:
+        resolvedTarget == null ||
+        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
+      deterministicCaptureResultValid:
+        resolvedTarget == null ||
+        settlementScene.worldId === resolvedPlayerState.worldId,
+      cleanupValid: true
     })
   });
 }

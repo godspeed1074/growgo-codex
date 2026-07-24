@@ -715,6 +715,17 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   const clearedInteraction = harness.clearSettlementPlayerInteraction();
   assert.equal(clearedInteraction.interactionState, "world-idle");
 
+  const captureState = harness.captureSelectedSettlementObject();
+  assert.equal(captureState.targetAssetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(typeof captureState.captureRange, "number");
+  assert.equal(
+    typeof captureState.validationResult.playerProximityValid,
+    "boolean"
+  );
+  assert.equal(captureState.validationResult.targetIdentityValid, true);
+  const clearedCapture = harness.clearSettlementCaptureState();
+  assert.equal(clearedCapture.captureState, "capture-idle");
+
   const discoveryState = harness.discoverSelectedSettlementObject();
   assert.equal(discoveryState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(

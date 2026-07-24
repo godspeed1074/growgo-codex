@@ -114,6 +114,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     expandedSettlementPreview,
     currentPlayerMapState
   );
+  let currentCaptureState = createDefaultCaptureState(
+    expandedSettlementPreview,
+    currentPlayerMapState
+  );
   let currentDiscoveryState = createDefaultDiscoveryState(
     expandedSettlementPreview,
     currentPlayerMapState
@@ -290,6 +294,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       currentPlayerMapState
     );
+    currentCaptureState = createDefaultCaptureState(
+      expandedSettlementPreview,
+      currentPlayerMapState
+    );
     currentDiscoveryState = createDefaultDiscoveryState(
       expandedSettlementPreview,
       currentPlayerMapState
@@ -413,6 +421,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       interactionState: currentOverlayInteractionState,
       detailPreviewState: currentAssetDetailPreviewState,
       playerInteractionState: currentPlayerInteractionState,
+      captureState: currentCaptureState,
       discoveryState: currentDiscoveryState
     });
   };
@@ -455,6 +464,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview
         );
         currentPlayerInteractionState = createDefaultPlayerInteractionState(
+          expandedSettlementPreview,
+          currentPlayerMapState
+        );
+        currentCaptureState = createDefaultCaptureState(
           expandedSettlementPreview,
           currentPlayerMapState
         );
@@ -533,6 +546,25 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementPlayerInteractionState() {
         return currentPlayerInteractionState;
+      },
+      captureSelectedSettlementObject() {
+        currentCaptureState = buildCaptureState(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState.selectedObject,
+          currentCaptureState.capturedObjectIds
+        );
+        return currentCaptureState;
+      },
+      clearSettlementCaptureState() {
+        currentCaptureState = createDefaultCaptureState(
+          expandedSettlementPreview,
+          currentPlayerMapState
+        );
+        return currentCaptureState;
+      },
+      currentSettlementCaptureState() {
+        return currentCaptureState;
       },
       discoverSelectedSettlementObject() {
         currentDiscoveryState = buildDiscoveryState(
@@ -1884,6 +1916,32 @@ function createDefaultPlayerInteractionState(
   return buildPlayerInteractionState(expandedSettlementPreview, playerState, null);
 }
 
+function createDefaultCaptureState(
+  expandedSettlementPreview,
+  playerState
+) {
+  if (!expandedSettlementPreview || !playerState) {
+    return deepFreeze({
+      captureId: "SETTLEMENT_CAPTURE_INACTIVE",
+      playerId: playerState?.playerId ?? "PLAYER_MAP_INACTIVE",
+      targetObjectId: null,
+      targetAssetId: null,
+      captureState: "capture-idle",
+      captureDistance: null,
+      captureRange: 72,
+      captureAnimationState: "capture-animation-idle",
+      capturedObjectIds: deepFreeze([]),
+      validationResult: deepFreeze({
+        playerProximityValid: true,
+        targetIdentityValid: true,
+        deterministicCaptureResultValid: true,
+        cleanupValid: true
+      })
+    });
+  }
+  return buildCaptureState(expandedSettlementPreview, playerState, null, []);
+}
+
 function createDefaultDiscoveryState(
   expandedSettlementPreview,
   playerState
@@ -2519,6 +2577,88 @@ function buildPlayerInteractionState(
         selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
       cleanupValid: true,
       deterministicBehaviourValid: true
+    })
+  });
+}
+
+function buildCaptureState(
+  expandedSettlementPreview,
+  playerState,
+  selectedObject = null,
+  existingCapturedObjectIds = []
+) {
+  if (!expandedSettlementPreview || !playerState) {
+    return createDefaultCaptureState(expandedSettlementPreview, playerState);
+  }
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(existingCapturedObjectIds)
+        ? existingCapturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const captureDistance =
+    selectedObject?.position == null && selectedObject?.center == null
+      ? null
+      : Number(
+          Math.hypot(
+            (selectedObject.center?.x ?? selectedObject.position.x) - playerState.position.x,
+            (selectedObject.center?.y ?? selectedObject.position.y) - playerState.position.y
+          ).toFixed(3)
+        );
+  const withinCaptureRange =
+    captureDistance != null && captureDistance <= 72;
+  const alreadyCaptured =
+    selectedObject != null &&
+    capturedObjectIds.includes(String(selectedObject.instanceId));
+  const nextCapturedObjectIds =
+    selectedObject != null && withinCaptureRange && !alreadyCaptured
+      ? deepFreeze(
+          [...new Set([...capturedObjectIds, String(selectedObject.instanceId)])].sort()
+        )
+      : capturedObjectIds;
+  const capturedThisSession =
+    selectedObject != null &&
+    nextCapturedObjectIds.includes(String(selectedObject.instanceId));
+  return deepFreeze({
+    captureId:
+      selectedObject == null
+        ? `${expandedSettlementPreview.sceneId}::capture::idle`
+        : `${expandedSettlementPreview.sceneId}::capture::${playerState.playerId}::${selectedObject.instanceId}`,
+    playerId: playerState.playerId,
+    targetObjectId: selectedObject?.instanceId ?? null,
+    targetAssetId: selectedObject?.assetId ?? null,
+    captureState:
+      selectedObject == null
+        ? "capture-idle"
+        : capturedThisSession
+          ? "captured-session"
+          : withinCaptureRange
+            ? "capture-ready"
+            : "capture-out-of-range",
+    captureDistance,
+    captureRange: 72,
+    captureAnimationState:
+      selectedObject == null
+        ? "capture-animation-idle"
+        : capturedThisSession
+          ? "capture-placeholder-pulse"
+          : withinCaptureRange
+            ? "capture-placeholder-armed"
+            : "capture-placeholder-blocked",
+    capturedObjectIds: nextCapturedObjectIds,
+    validationResult: deepFreeze({
+      playerProximityValid:
+        selectedObject == null ||
+        withinCaptureRange ||
+        !capturedThisSession,
+      targetIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      deterministicCaptureResultValid:
+        selectedObject == null ||
+        expandedSettlementPreview.worldId === playerState.worldId,
+      cleanupValid: true
     })
   });
 }

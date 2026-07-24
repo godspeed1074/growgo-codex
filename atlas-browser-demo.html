@@ -277,14 +277,17 @@
       <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
       <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
+      <p id="atlasCaptureLabel">Capture: waiting for nearby object</p>
       <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
       <p id="atlasPoiLabel">POI: waiting for world object</p>
       <p id="atlasPoiPresentationLabel">POI presentation: waiting for world layer</p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
         <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
+        <button id="atlasCaptureButton" type="button">Capture Selected</button>
         <button id="atlasWorldOverviewButton" type="button">World Overview</button>
         <button id="atlasInteractionClearButton" type="button">Clear Interaction</button>
+        <button id="atlasCaptureClearButton" type="button">Clear Capture</button>
         <button id="atlasDiscoverButton" type="button">Discover Selected</button>
         <button id="atlasDiscoveryClearButton" type="button">Clear Discovery</button>
       </div>
@@ -399,13 +402,16 @@
     const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
+    const captureLabel = document.getElementById("atlasCaptureLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
     const poiPresentationLabel = document.getElementById("atlasPoiPresentationLabel");
     const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
     const playerInteractButton = document.getElementById("atlasPlayerInteractButton");
+    const captureButton = document.getElementById("atlasCaptureButton");
     const worldOverviewButton = document.getElementById("atlasWorldOverviewButton");
     const interactionClearButton = document.getElementById("atlasInteractionClearButton");
+    const captureClearButton = document.getElementById("atlasCaptureClearButton");
     const discoverButton = document.getElementById("atlasDiscoverButton");
     const discoveryClearButton = document.getElementById("atlasDiscoveryClearButton");
     const previewSourceLabel = document.getElementById("atlasPreviewSourceLabel");
@@ -614,6 +620,18 @@
         `Interaction: ${playerInteractionState.interactionState} / ${playerInteractionState.targetAssetId ?? "no target"} / distance ${playerInteractionState.interactionDistance ?? "n/a"}`;
     };
 
+    const updateCaptureLabels = (captureState) => {
+      if (!captureLabel) {
+        return;
+      }
+      if (!captureState || !captureState.playerId) {
+        captureLabel.textContent = "Capture: waiting for nearby object";
+        return;
+      }
+      captureLabel.textContent =
+        `Capture: ${captureState.captureState} / ${captureState.targetAssetId ?? "no target"} / captured ${captureState.capturedObjectIds?.length ?? 0} / animation ${captureState.captureAnimationState ?? "idle"}`;
+    };
+
     const updateDiscoveryLabels = (discoveryState) => {
       if (!discoveryLabel) {
         return;
@@ -801,11 +819,17 @@
       if (playerInteractButton) {
         playerInteractButton.disabled = true;
       }
+      if (captureButton) {
+        captureButton.disabled = true;
+      }
       if (worldOverviewButton) {
         worldOverviewButton.disabled = true;
       }
       if (interactionClearButton) {
         interactionClearButton.disabled = true;
+      }
+      if (captureClearButton) {
+        captureClearButton.disabled = true;
       }
       if (discoverButton) {
         discoverButton.disabled = true;
@@ -1204,11 +1228,17 @@
             if (playerInteractButton) {
               playerInteractButton.disabled = false;
             }
+            if (captureButton) {
+              captureButton.disabled = false;
+            }
             if (worldOverviewButton) {
               worldOverviewButton.disabled = false;
             }
             if (interactionClearButton) {
               interactionClearButton.disabled = false;
+            }
+            if (captureClearButton) {
+              captureClearButton.disabled = false;
             }
             if (discoverButton) {
               discoverButton.disabled = false;
@@ -1238,6 +1268,7 @@
                 detailPreviewState: combinedOverlay.detailState,
                 playerState: combinedOverlay.playerState,
                 playerInteractionState: combinedOverlay.playerInteractionState,
+                captureState: combinedOverlay.captureState,
                 discoveryState: combinedOverlay.discoveryState
               });
               updateVisualSourceLabels({
@@ -1252,6 +1283,7 @@
                 combinedOverlay.poiContentMetadata
               );
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
+              updateCaptureLabels(combinedOverlay.captureState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
               updateHarnessDemoState();
             }
@@ -1288,11 +1320,17 @@
             if (playerInteractButton) {
               playerInteractButton.disabled = true;
             }
+            if (captureButton) {
+              captureButton.disabled = true;
+            }
             if (worldOverviewButton) {
               worldOverviewButton.disabled = true;
             }
             if (interactionClearButton) {
               interactionClearButton.disabled = true;
+            }
+            if (captureClearButton) {
+              captureClearButton.disabled = true;
             }
             if (discoverButton) {
               discoverButton.disabled = true;
@@ -1323,6 +1361,7 @@
             updateDetailPreviewLabels(null);
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
+            updateCaptureLabels(null);
             updateDiscoveryLabels(null);
             if (lightingProfileLabel) {
               lightingProfileLabel.textContent = "Lighting profile: waiting for selection";
@@ -1412,6 +1451,27 @@
           }
         });
 
+        captureButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const captureState = harness.captureSelectedSettlementObject();
+          updateCaptureLabels(captureState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            captureState
+          });
+          if (status) {
+            status.textContent =
+              captureState.captureState === "captured-session"
+                ? `${captureState.targetAssetId} is now captured for this session.`
+                : captureState.targetAssetId
+                  ? `${captureState.targetAssetId} is out of capture range.`
+                  : "Select a world object first.";
+          }
+        });
+
         worldOverviewButton?.addEventListener("click", () => {
           const harness = resolveOverlayHarness();
           if (!harness) {
@@ -1441,6 +1501,22 @@
           });
           if (status) {
             status.textContent = "Cleared world interaction state.";
+          }
+        });
+
+        captureClearButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const captureState = harness.clearSettlementCaptureState();
+          updateCaptureLabels(captureState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            captureState
+          });
+          if (status) {
+            status.textContent = "Cleared capture session state.";
           }
         });
 
@@ -1549,6 +1625,7 @@
             detailPreviewState: combinedOverlay.detailState,
             playerState: combinedOverlay.playerState,
             playerInteractionState: combinedOverlay.playerInteractionState,
+            captureState: combinedOverlay.captureState,
             discoveryState: combinedOverlay.discoveryState
           });
           updateVisualSourceLabels({
@@ -1563,6 +1640,7 @@
             combinedOverlay.poiContentMetadata
           );
           updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
+          updateCaptureLabels(combinedOverlay.captureState);
           updateDiscoveryLabels(combinedOverlay.discoveryState);
           updateHarnessDemoState();
           setDemoControlsDisabled(false);
