@@ -23,6 +23,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "detailState",
   "playerState",
   "playerInteractionState",
+  "discoveryState",
   "cameraSync",
   "validationResult"
 ]);
@@ -133,6 +134,14 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         mapWorldLiveMapFoundation
       })
     }),
+    discoveryState: createMapWorldSettlementDiscoveryState({
+      settlementScene,
+      mapWorldLiveMapFoundation,
+      playerState: createMapWorldSettlementPlayerMapState({
+        settlementScene,
+        mapWorldLiveMapFoundation
+      })
+    }),
     cameraSync: deepFreeze({
       synchronized: true,
       mapZoomLevel: mapWorldLiveMapFoundation.zoomLevel,
@@ -166,6 +175,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       detailPreviewValid: true,
       playerPresenceValid: true,
       playerInteractionValid: true,
+      discoveryValid: true,
       mapVisibleUnderlayValid: true,
       combinedViewReady: true
     }),
@@ -283,6 +293,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation playerInteractionValid must be true."
       );
     }
+    if (!overlay.validationResult.discoveryValid) {
+      throw createValidationError(
+        "discovery_invalid",
+        "Map world settlement real map overlay foundation discoveryValid must be true."
+      );
+    }
     if (!overlay.validationResult.mapVisibleUnderlayValid) {
       throw createValidationError(
         "map_visible_underlay_invalid",
@@ -336,6 +352,17 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation player interaction state must remain valid."
       );
     }
+    if (
+      overlay.discoveryState.validationResult.playerProximityValid !== true ||
+      overlay.discoveryState.validationResult.objectIdentityValid !== true ||
+      overlay.discoveryState.validationResult.deterministicDiscoveryResultValid !== true ||
+      overlay.discoveryState.validationResult.cleanupValid !== true
+    ) {
+      throw createValidationError(
+        "discovery_state_invalid",
+        "Map world settlement real map overlay foundation discovery state must remain valid."
+      );
+    }
 
     return Object.freeze({
       ok: true,
@@ -379,6 +406,7 @@ function normalizeOverlay(rawOverlay) {
     playerInteractionState: deepFreeze(
       asPlainObject(overlay.playerInteractionState, "playerInteractionState")
     ),
+    discoveryState: deepFreeze(asPlainObject(overlay.discoveryState, "discoveryState")),
     cameraSync: deepFreeze(asPlainObject(overlay.cameraSync, "cameraSync")),
     validationResult: deepFreeze(asPlainObject(overlay.validationResult, "validationResult")),
     mapWorldLiveMapFoundation: deepFreeze(
@@ -612,6 +640,87 @@ export function createMapWorldSettlementPlayerInteractionState({
         selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
       cleanupValid: true,
       deterministicBehaviourValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementDiscoveryState({
+  settlementScene,
+  mapWorldLiveMapFoundation,
+  playerState,
+  targetObject = null,
+  discoveryState = null,
+  discoveredObjectIds = []
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedTarget = resolveSelectableOverlayObject(selectableObjects, targetObject);
+  const discoveredIds = new Set(
+    Array.isArray(discoveredObjectIds)
+      ? discoveredObjectIds.map((value) => String(value))
+      : []
+  );
+  const distance =
+    resolvedTarget == null || playerState?.position == null
+      ? null
+      : Number(
+          Math.hypot(
+            resolvedTarget.position.x - playerState.position.x,
+            resolvedTarget.position.y - playerState.position.y
+          ).toFixed(3)
+        );
+  const withinDiscoveryRange = distance != null && distance <= 84;
+  const alreadyDiscovered =
+    resolvedTarget != null && discoveredIds.has(String(resolvedTarget.instanceId));
+  const resolvedDiscoveryState =
+    discoveryState ??
+    (resolvedTarget == null
+      ? "discovery-idle"
+      : alreadyDiscovered
+        ? "discovered-persistent"
+        : withinDiscoveryRange
+          ? "discovered-nearby"
+          : "discovery-out-of-range");
+  const nextDiscoveredObjectIds =
+    resolvedTarget != null && withinDiscoveryRange
+      ? deepFreeze(
+          [...new Set([...discoveredIds, String(resolvedTarget.instanceId)])].sort()
+        )
+      : deepFreeze([...discoveredIds].sort());
+
+  return deepFreeze({
+    discoveryId:
+      resolvedTarget == null
+        ? `${settlementScene.sceneId}::discovery::idle`
+        : `${settlementScene.sceneId}::discovery::${playerState.playerId}::${resolvedTarget.instanceId}`,
+    playerId: playerState.playerId,
+    objectId: resolvedTarget?.instanceId ?? null,
+    assetId: resolvedTarget?.assetId ?? null,
+    discoveryState: resolvedDiscoveryState,
+    discoveredObjectIds: nextDiscoveredObjectIds,
+    discoveryDistance: distance,
+    cameraFocus: deepFreeze({
+      currentState:
+        resolvedTarget != null && withinDiscoveryRange
+          ? "discovery-focused"
+          : "world-overview",
+      focusPoint: deepFreeze(
+        resolvedTarget != null && withinDiscoveryRange
+          ? { ...resolvedTarget.position }
+          : { ...settlementScene.cameraProfile.focusPoint }
+      ),
+      targetAsset:
+        resolvedTarget != null && withinDiscoveryRange
+          ? resolvedTarget.assetId
+          : settlementScene.cameraProfile.targetAsset,
+      synchronizedWithMap: true
+    }),
+    validationResult: deepFreeze({
+      playerProximityValid: resolvedTarget == null || withinDiscoveryRange,
+      objectIdentityValid:
+        resolvedTarget == null ||
+        selectableObjects.some((entry) => entry.instanceId === resolvedTarget.instanceId),
+      deterministicDiscoveryResultValid: true,
+      cleanupValid: true
     })
   });
 }

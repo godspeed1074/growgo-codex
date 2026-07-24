@@ -97,6 +97,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     expandedSettlementPreview,
     currentPlayerMapState
   );
+  let currentDiscoveryState = createDefaultDiscoveryState(
+    expandedSettlementPreview,
+    currentPlayerMapState
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -231,6 +235,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       currentPlayerMapState
     );
+    currentDiscoveryState = createDefaultDiscoveryState(
+      expandedSettlementPreview,
+      currentPlayerMapState
+    );
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
@@ -342,7 +350,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       }),
       interactionState: currentOverlayInteractionState,
       detailPreviewState: currentAssetDetailPreviewState,
-      playerInteractionState: currentPlayerInteractionState
+      playerInteractionState: currentPlayerInteractionState,
+      discoveryState: currentDiscoveryState
     });
   };
 
@@ -377,6 +386,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview
         );
         currentPlayerInteractionState = createDefaultPlayerInteractionState(
+          expandedSettlementPreview,
+          currentPlayerMapState
+        );
+        currentDiscoveryState = createDefaultDiscoveryState(
           expandedSettlementPreview,
           currentPlayerMapState
         );
@@ -473,6 +486,38 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementPlayerInteractionState() {
         return currentPlayerInteractionState;
+      },
+      discoverSelectedSettlementObject() {
+        currentDiscoveryState = buildDiscoveryState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState.selectedObject,
+          currentDiscoveryState.discoveredObjectIds
+        );
+        if (expandedSettlementPreview && mounted) {
+          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
+            drawContext,
+            expandedSettlementPreview,
+            {
+              width: canvas.width,
+              height: canvas.height,
+              interactionState: currentOverlayInteractionState,
+              playerState: currentPlayerMapState,
+              discoveryState: currentDiscoveryState
+            }
+          );
+        }
+        return currentDiscoveryState;
+      },
+      clearSettlementDiscoveryState() {
+        currentDiscoveryState = createDefaultDiscoveryState(
+          expandedSettlementPreview,
+          currentPlayerMapState
+        );
+        return currentDiscoveryState;
+      },
+      currentSettlementDiscoveryState() {
+        return currentDiscoveryState;
       },
       currentSettlementSelectableObjects() {
         return deepFreeze(
@@ -837,7 +882,13 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
 export function drawExpandedSettlementPreview(
   drawContext,
   expandedSettlementPreview,
-  { width = 960, height = 540, interactionState = null, playerState = null } = {}
+  {
+    width = 960,
+    height = 540,
+    interactionState = null,
+    playerState = null,
+    discoveryState = null
+  } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
     throw new Error("Expanded settlement preview draw requires a 2D canvas context.");
@@ -849,8 +900,16 @@ export function drawExpandedSettlementPreview(
     interactionState ?? createDefaultOverlayInteractionState(expandedSettlementPreview);
   const resolvedPlayerState =
     playerState ?? createDefaultPlayerMapState(expandedSettlementPreview);
+  const resolvedDiscoveryState =
+    discoveryState ?? createDefaultDiscoveryState(expandedSettlementPreview, resolvedPlayerState);
   const resolvedCameraState =
-    resolvedPlayerState?.cameraFocus?.currentState === "player-focused"
+    resolvedDiscoveryState?.cameraFocus?.currentState === "discovery-focused"
+      ? {
+          ...expandedSettlementPreview.cameraState,
+          focusPoint: resolvedDiscoveryState.cameraFocus.focusPoint,
+          targetAsset: resolvedDiscoveryState.cameraFocus.targetAsset
+        }
+      : resolvedPlayerState?.cameraFocus?.currentState === "player-focused"
       ? {
           ...expandedSettlementPreview.cameraState,
           focusPoint: resolvedPlayerState.cameraFocus.focusPoint,
@@ -1500,6 +1559,31 @@ function createDefaultPlayerInteractionState(
   return buildPlayerInteractionState(expandedSettlementPreview, playerState, null);
 }
 
+function createDefaultDiscoveryState(
+  expandedSettlementPreview,
+  playerState
+) {
+  if (!expandedSettlementPreview || !playerState) {
+    return deepFreeze({
+      discoveryId: "WORLD_DISCOVERY_INACTIVE",
+      playerId: playerState?.playerId ?? "PLAYER_MAP_INACTIVE",
+      objectId: null,
+      assetId: null,
+      discoveryState: "discovery-idle",
+      discoveredObjectIds: deepFreeze([]),
+      discoveryDistance: null,
+      cameraFocus: null,
+      validationResult: deepFreeze({
+        playerProximityValid: true,
+        objectIdentityValid: true,
+        deterministicDiscoveryResultValid: true,
+        cleanupValid: true
+      })
+    });
+  }
+  return buildDiscoveryState(expandedSettlementPreview, playerState, null, []);
+}
+
 function buildOverlayInteractionState(
   expandedSettlementPreview,
   { selectedObject = null, hoveredObject = null } = {}
@@ -1702,6 +1786,87 @@ function buildPlayerInteractionState(
         selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
       cleanupValid: true,
       deterministicBehaviourValid: true
+    })
+  });
+}
+
+function buildDiscoveryState(
+  expandedSettlementPreview,
+  playerState,
+  selectedObject = null,
+  existingDiscoveredObjectIds = []
+) {
+  if (!expandedSettlementPreview || !playerState) {
+    return createDefaultDiscoveryState(expandedSettlementPreview, playerState);
+  }
+  const discoveredIds = new Set(
+    Array.isArray(existingDiscoveredObjectIds)
+      ? existingDiscoveredObjectIds.map((value) => String(value))
+      : []
+  );
+  const discoveryDistance =
+    selectedObject?.position == null && selectedObject?.center == null
+      ? null
+      : Number(
+          Math.hypot(
+            (selectedObject.center?.x ?? selectedObject.position.x) - playerState.position.x,
+            (selectedObject.center?.y ?? selectedObject.position.y) - playerState.position.y
+          ).toFixed(3)
+        );
+  const withinDiscoveryRange =
+    discoveryDistance != null && discoveryDistance <= 84;
+  const discoveredObjectIds =
+    selectedObject != null && withinDiscoveryRange
+      ? deepFreeze(
+          [...new Set([...discoveredIds, String(selectedObject.instanceId)])].sort()
+        )
+      : deepFreeze([...discoveredIds].sort());
+  const isDiscovered =
+    selectedObject != null && discoveredObjectIds.includes(String(selectedObject.instanceId));
+  return deepFreeze({
+    discoveryId:
+      selectedObject == null
+        ? `${expandedSettlementPreview.sceneId}::discovery::idle`
+        : `${expandedSettlementPreview.sceneId}::discovery::${playerState.playerId}::${selectedObject.instanceId}`,
+    playerId: playerState.playerId,
+    objectId: selectedObject?.instanceId ?? null,
+    assetId: selectedObject?.assetId ?? null,
+    discoveryState:
+      selectedObject == null
+        ? "discovery-idle"
+        : isDiscovered
+          ? "discovered-persistent"
+          : withinDiscoveryRange
+            ? "discovered-nearby"
+            : "discovery-out-of-range",
+    discoveredObjectIds,
+    discoveryDistance,
+    cameraFocus: deepFreeze({
+      currentState:
+        selectedObject != null && withinDiscoveryRange
+          ? "discovery-focused"
+          : "world-overview",
+      focusPoint: deepFreeze(
+        selectedObject != null && withinDiscoveryRange
+          ? {
+              x: selectedObject.center?.x ?? selectedObject.position.x,
+              y: selectedObject.center?.y ?? selectedObject.position.y
+            }
+          : { ...expandedSettlementPreview.cameraState.focusPoint }
+      ),
+      targetAsset:
+        selectedObject != null && withinDiscoveryRange
+          ? selectedObject.assetId
+          : expandedSettlementPreview.cameraState.targetAsset,
+      synchronizedWithMap: true
+    }),
+    validationResult: deepFreeze({
+      playerProximityValid: selectedObject == null || withinDiscoveryRange,
+      objectIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      deterministicDiscoveryResultValid: true,
+      cleanupValid: true
     })
   });
 }

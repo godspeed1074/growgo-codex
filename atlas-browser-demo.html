@@ -277,11 +277,14 @@
       <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
       <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
+      <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
         <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
         <button id="atlasWorldOverviewButton" type="button">World Overview</button>
         <button id="atlasInteractionClearButton" type="button">Clear Interaction</button>
+        <button id="atlasDiscoverButton" type="button">Discover Selected</button>
+        <button id="atlasDiscoveryClearButton" type="button">Clear Discovery</button>
       </div>
     </section>
 
@@ -375,10 +378,13 @@
     const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
+    const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
     const playerInteractButton = document.getElementById("atlasPlayerInteractButton");
     const worldOverviewButton = document.getElementById("atlasWorldOverviewButton");
     const interactionClearButton = document.getElementById("atlasInteractionClearButton");
+    const discoverButton = document.getElementById("atlasDiscoverButton");
+    const discoveryClearButton = document.getElementById("atlasDiscoveryClearButton");
     const previewSourceLabel = document.getElementById("atlasPreviewSourceLabel");
     const previewSceneLabel = document.getElementById("atlasPreviewSceneLabel");
     const previewWorldLabel = document.getElementById("atlasPreviewWorldLabel");
@@ -544,6 +550,18 @@
         `Interaction: ${playerInteractionState.interactionState} / ${playerInteractionState.targetAssetId ?? "no target"} / distance ${playerInteractionState.interactionDistance ?? "n/a"}`;
     };
 
+    const updateDiscoveryLabels = (discoveryState) => {
+      if (!discoveryLabel) {
+        return;
+      }
+      if (!discoveryState || !discoveryState.playerId) {
+        discoveryLabel.textContent = "Discovery: waiting for nearby object";
+        return;
+      }
+      discoveryLabel.textContent =
+        `Discovery: ${discoveryState.discoveryState} / ${discoveryState.assetId ?? "no target"} / discovered ${discoveryState.discoveredObjectIds?.length ?? 0}`;
+    };
+
     const resolveOverlayHarness = () =>
       window.mapWorldRealLocationPreviewAttachment?.atlasBrowserDemoHarness ?? null;
 
@@ -655,6 +673,12 @@
       }
       if (interactionClearButton) {
         interactionClearButton.disabled = true;
+      }
+      if (discoverButton) {
+        discoverButton.disabled = true;
+      }
+      if (discoveryClearButton) {
+        discoveryClearButton.disabled = true;
       }
       setMovementDisabled(true);
       updateVisualSourceLabels({
@@ -959,6 +983,12 @@
             if (interactionClearButton) {
               interactionClearButton.disabled = false;
             }
+            if (discoverButton) {
+              discoverButton.disabled = false;
+            }
+            if (discoveryClearButton) {
+              discoveryClearButton.disabled = false;
+            }
             window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
             window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
             window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
@@ -977,7 +1007,8 @@
                 selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
                 detailPreviewState: combinedOverlay.detailState,
                 playerState: combinedOverlay.playerState,
-                playerInteractionState: combinedOverlay.playerInteractionState
+                playerInteractionState: combinedOverlay.playerInteractionState,
+                discoveryState: combinedOverlay.discoveryState
               });
               updateVisualSourceLabels({
                 ...visualSourceSummary,
@@ -986,6 +1017,7 @@
               updateOverlayInteractionLabels(combinedOverlay.interactionState);
               updateDetailPreviewLabels(combinedOverlay.detailState);
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
+              updateDiscoveryLabels(combinedOverlay.discoveryState);
             }
           })().catch((error) => {
             setBrowserDemoState({
@@ -1025,6 +1057,12 @@
             if (interactionClearButton) {
               interactionClearButton.disabled = true;
             }
+            if (discoverButton) {
+              discoverButton.disabled = true;
+            }
+            if (discoveryClearButton) {
+              discoveryClearButton.disabled = true;
+            }
             window.mapWorldRealLocationPreview = hidden.mapWorldRealLocationPreview;
             const visualSourceSummary =
               hidden.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
@@ -1036,12 +1074,14 @@
               overlayInteractionState: null,
               detailPreviewState: null,
               playerState: null,
-              playerInteractionState: null
+              playerInteractionState: null,
+              discoveryState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
             updateDetailPreviewLabels(null);
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
+            updateDiscoveryLabels(null);
           }
         });
 
@@ -1132,6 +1172,43 @@
           });
           if (status) {
             status.textContent = "Cleared world interaction state.";
+          }
+        });
+
+        discoverButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const discoveryState = harness.discoverSelectedSettlementObject();
+          updateDiscoveryLabels(discoveryState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            discoveryState
+          });
+          if (status) {
+            status.textContent =
+              discoveryState.discoveryState === "discovered-persistent"
+                ? `${discoveryState.assetId} is now discovered for this session.`
+                : discoveryState.assetId
+                  ? `${discoveryState.assetId} is too far away to discover.`
+                  : "Select a world object first.";
+          }
+        });
+
+        discoveryClearButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const discoveryState = harness.clearSettlementDiscoveryState();
+          updateDiscoveryLabels(discoveryState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            discoveryState
+          });
+          if (status) {
+            status.textContent = "Cleared discovery state.";
           }
         });
 
