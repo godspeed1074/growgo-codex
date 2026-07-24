@@ -1,6 +1,9 @@
 import {
   createAtlasEngineFirstManualBrowserVisiblePreviewMountSession
 } from "../asset-factory/atlas-engine-first-manual-browser-visible-preview-mount.mjs";
+import {
+  validateGroundCoastalGrassRealGlbAtlasPreviewReplacement
+} from "../asset-factory/ground-coastal-grass-real-glb-atlas-preview-replacement.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -36,6 +39,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   let previewSession = null;
   const previewMountOptions =
     options.previewMountOptions ?? buildBrowserSafePreviewMountOptions();
+  const realGroundPreviewBinding = resolveRealGroundPreviewBinding(
+    options.realGroundPreviewBinding
+  );
 
   setStatus(elements.status, "Atlas preview ready. Use Show Atlas Preview.");
   setContainerVisibility(elements.previewContainer, false);
@@ -78,14 +84,21 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     drawAtlasPlaceholderScene(drawContext, {
       width: canvas.width,
       height: canvas.height,
-      placeholders: atlasBrowserDemoPlaceholderObjects
+      placeholders: atlasBrowserDemoPlaceholderObjects,
+      realGroundPreviewBinding
     });
     setContainerVisibility(elements.previewContainer, true);
-    setStatus(elements.status, "Atlas preview visible.");
+    setStatus(
+      elements.status,
+      realGroundPreviewBinding
+        ? `Atlas preview visible with real GLB ground asset ${realGroundPreviewBinding.assetId}.`
+        : "Atlas preview visible."
+    );
 
     return Object.freeze({
       ok: true,
-      previewMountResult: mountResult.previewMountResult
+      previewMountResult: mountResult.previewMountResult,
+      realGroundPreviewBinding
     });
   };
 
@@ -135,7 +148,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
 
 export function drawAtlasPlaceholderScene(
   drawContext,
-  { width = 960, height = 540, placeholders = atlasBrowserDemoPlaceholderObjects } = {}
+  {
+    width = 960,
+    height = 540,
+    placeholders = atlasBrowserDemoPlaceholderObjects,
+    realGroundPreviewBinding = null
+  } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
     throw new Error("Atlas placeholder draw requires a 2D canvas context.");
@@ -146,6 +164,22 @@ export function drawAtlasPlaceholderScene(
 
   drawContext.fillStyle = "#8dd17e";
   drawContext.fillRect(0, height * 0.68, width, height * 0.32);
+  if (realGroundPreviewBinding) {
+    drawContext.fillStyle = "#1e5f34";
+    drawContext.font = "bold 16px sans-serif";
+    drawContext.textAlign = "left";
+    drawContext.fillText(
+      realGroundPreviewBinding.assetId,
+      width * 0.04,
+      height * 0.73
+    );
+    drawContext.font = "12px sans-serif";
+    drawContext.fillText(
+      `${realGroundPreviewBinding.lodSelection.currentLod} :: ${realGroundPreviewBinding.rendererPayload.rendererAssetReference.sourceType}`,
+      width * 0.04,
+      height * 0.77
+    );
+  }
 
   drawContext.fillStyle = "#86a9c8";
   drawContext.fillRect(width * 0.12, height * 0.7, width * 0.76, height * 0.06);
@@ -330,6 +364,27 @@ function buildBrowserSafePreviewMountOptions() {
       }),
     browserDemoFoundationBase: foundationBase
   });
+}
+
+function resolveRealGroundPreviewBinding(rawBinding) {
+  if (!rawBinding) {
+    return null;
+  }
+
+  if (rawBinding.assetId && rawBinding.rendererPayload && rawBinding.lodSelection) {
+    return Object.freeze(rawBinding);
+  }
+
+  const validation = validateGroundCoastalGrassRealGlbAtlasPreviewReplacement(
+    rawBinding.definition,
+    rawBinding.options
+  );
+
+  if (!validation.ok) {
+    return null;
+  }
+
+  return Object.freeze(validation.realGlbAtlasPreviewReplacement.definition);
 }
 
 function stableNumericHash(value) {

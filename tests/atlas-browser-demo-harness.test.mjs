@@ -18,6 +18,14 @@ const previewMountModule = await import(
     "atlas-engine-first-manual-browser-visible-preview-mount.mjs"
   )
 );
+const realGroundPreviewModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "ground-coastal-grass-real-glb-atlas-preview-replacement.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -173,11 +181,39 @@ function buildPreviewMountOptions() {
   };
 }
 
+function buildRealGroundPreviewBinding() {
+  const definition =
+    realGroundPreviewModule.groundCoastalGrassRealGlbAtlasPreviewReplacementDefinition;
+  const existingPaths = [
+    definition.importReference.glbPath,
+    definition.importReference.manifestReference,
+    definition.importReference.metadataReference,
+    definition.rendererPayload.lodGlb,
+    "asset-factory-workspace/production/COASTAL_GROUND_FAMILY_001/export/GROUND_COASTAL_GRASS_001_LOD_GAMEPLAY.glb",
+    "asset-factory-workspace/production/COASTAL_GROUND_FAMILY_001/export/GROUND_COASTAL_GRASS_001_LOD_MAP.glb",
+    "asset-factory-workspace/production/COASTAL_GROUND_FAMILY_001/export/GROUND_COASTAL_GRASS_001_LOD_DISTANT_SILHOUETTE.glb"
+  ];
+
+  const result =
+    realGroundPreviewModule.validateGroundCoastalGrassRealGlbAtlasPreviewReplacement(
+      definition,
+      {
+        existsSync(candidatePath) {
+          return existingPaths.includes(candidatePath);
+        }
+      }
+    );
+
+  assert.equal(result.ok, true);
+  return result.realGlbAtlasPreviewReplacement.definition;
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", () => {
   const document = createMockDocument();
   const result = harnessModule.createAtlasBrowserDemoHarness({
     document,
-    previewMountOptions: buildPreviewMountOptions()
+    previewMountOptions: buildPreviewMountOptions(),
+    realGroundPreviewBinding: buildRealGroundPreviewBinding()
   });
 
   assert.equal(result.ok, true);
@@ -189,8 +225,15 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
     harness.elements.previewContainer.dataset.previewVisible,
     "true"
   );
+  assert.match(harness.elements.status.textContent, /real GLB ground asset/i);
   assert.equal(harness.elements.canvasContainer.children.length, 1);
   assert.ok(harness.canvas._context.commands.length > 0);
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" && command[1] === "GROUND_COASTAL_GRASS_001"
+    )
+  );
 });
 
 test("Atlas browser demo harness hides and cleans up the preview", () => {
