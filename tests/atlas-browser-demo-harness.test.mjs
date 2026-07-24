@@ -565,6 +565,10 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     harness.currentVisualSourceSummary().previewZoomProfile,
     "normal"
   );
+  assert.equal(
+    harness.currentVisualSourceSummary().visibleObjectCount,
+    45
+  );
   assert.ok(
     harness.canvas._context.commands.some(
       (command) =>
@@ -576,7 +580,7 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     harness.canvas._context.commands.some(
       (command) =>
         command[0] === "fillText" &&
-        String(command[1]).includes("45 scene objects")
+        String(command[1]).includes("45/45 scene objects")
     )
   );
   assert.ok(

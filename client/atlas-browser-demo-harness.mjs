@@ -523,6 +523,11 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
       densityProfile: scene.visualScaling?.densityProfile ?? "sparse_coastal",
       blockScale: Number(scene.visualScaling?.blockScale ?? 1),
       cameraScale: Number(scene.visualScaling?.cameraScale ?? 1),
+      activeZoomProfile: scene.visualScaling?.activeZoomProfile ?? "normal",
+      visibleObjectCount: Number(scene.visualScaling?.visibleObjectCount ?? objectInstances.length),
+      zoomTransitionMetadata: deepFreeze({
+        ...(scene.visualScaling?.zoomTransitionMetadata ?? {})
+      }),
       previewZoomProfile: deepFreeze({
         ...(scene.visualScaling?.previewZoomProfile ?? {})
       })
@@ -539,6 +544,7 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
         scene.visualScaling?.previewZoomProfile?.activeProfile ??
         scene.cameraProfile.previewZoomProfile ??
         "normal",
+      activeZoomProfile: scene.visualScaling?.activeZoomProfile ?? "normal",
       cameraScale: Number(scene.visualScaling?.cameraScale ?? 1),
       mapCenterCoordinate: deepFreeze({
         ...scene.cameraProfile.mapCenterCoordinate
@@ -556,7 +562,10 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
         objectInstances.length === 45,
       cameraWorks: scene.validationResult.cameraProfileValid === true,
       visibilityToggleWorks: true,
-      deterministicOutput: scene.validationResult.deterministicSceneOutputValid === true
+      deterministicOutput: scene.validationResult.deterministicSceneOutputValid === true,
+      visibleObjectCount:
+        Number(scene.visualScaling?.visibleObjectCount ?? objectInstances.length),
+      correctLodSelection: scene.validationResult.correctLodSelection === true
     }),
     expandedSettlementScene: scene
   });
@@ -572,11 +581,19 @@ export function drawExpandedSettlementPreview(
   }
 
   const palette = resolveLightingPalette("day");
+  const zoomProfile = resolveExpandedSettlementZoomProfile(expandedSettlementPreview);
   const objectInstances = sortExpandedSettlementInstances(
-    expandedSettlementPreview.objectInstances ?? []
+    filterExpandedSettlementInstancesByZoom(
+      expandedSettlementPreview.objectInstances ?? [],
+      zoomProfile
+    )
   );
   const bounds = computeExpandedSettlementBounds(
-    collectExpandedSettlementPoints(objectInstances)
+    collectExpandedSettlementPoints(
+      objectInstances.length > 0
+        ? objectInstances
+        : expandedSettlementPreview.objectInstances ?? []
+    )
   );
   const scaling = expandedSettlementPreview.visualScaling ?? {};
 
@@ -593,7 +610,7 @@ export function drawExpandedSettlementPreview(
   drawContext.fillText(expandedSettlementPreview.sceneId, width * 0.03, height * 0.08);
   drawContext.font = "13px sans-serif";
   drawContext.fillText(
-    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId} :: ${expandedSettlementPreview.cameraState.previewZoomProfile}`,
+    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId} :: ${zoomProfile}`,
     width * 0.03,
     height * 0.115
   );
@@ -611,7 +628,7 @@ export function drawExpandedSettlementPreview(
   drawContext.font = "12px sans-serif";
   drawContext.textAlign = "left";
   drawContext.fillText(
-    `${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${expandedSettlementPreview.cameraState.focusAssetId}`,
+    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${expandedSettlementPreview.cameraState.focusAssetId}`,
     width * 0.03,
     height * 0.96
   );
@@ -854,6 +871,26 @@ function sortExpandedSettlementInstances(objectInstances) {
     }
     return String(left.instanceId).localeCompare(String(right.instanceId));
   });
+}
+
+function resolveExpandedSettlementZoomProfile(expandedSettlementPreview) {
+  return (
+    expandedSettlementPreview?.visualScaling?.activeZoomProfile ??
+    expandedSettlementPreview?.cameraState?.activeZoomProfile ??
+    expandedSettlementPreview?.cameraState?.previewZoomProfile ??
+    "normal"
+  );
+}
+
+function filterExpandedSettlementInstancesByZoom(objectInstances, zoomProfile) {
+  const visibleCategoriesByProfile = Object.freeze({
+    far: new Set(["road", "landmark"]),
+    normal: new Set(["road", "building", "vegetation", "landmark"]),
+    close: new Set(["building", "vegetation", "landmark"])
+  });
+  const allowedCategories =
+    visibleCategoriesByProfile[zoomProfile] ?? visibleCategoriesByProfile.normal;
+  return objectInstances.filter((instance) => allowedCategories.has(instance.category));
 }
 
 export function drawProjectedGroundMesh(drawContext, { width, height, meshData, fillStyle = "#4d9b57" }) {
@@ -1160,9 +1197,14 @@ function buildVisualSourceSummary({
       sceneId: expandedSettlementPreview.sceneId,
       worldId: expandedSettlementPreview.worldId,
       objectInstanceCount: expandedSettlementPreview.objectInstances.length,
+      visibleObjectCount:
+        expandedSettlementPreview.visualScaling?.visibleObjectCount ??
+        expandedSettlementPreview.objectInstances.length,
       densityProfile: expandedSettlementPreview.visualScaling?.densityProfile ?? null,
       previewZoomProfile:
-        expandedSettlementPreview.cameraState?.previewZoomProfile ?? null,
+        expandedSettlementPreview.visualScaling?.activeZoomProfile ??
+        expandedSettlementPreview.cameraState?.previewZoomProfile ??
+        null,
       visibilityState,
       active:
         visibilityState === "visible" &&

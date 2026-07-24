@@ -74,17 +74,40 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.ok(scene.visualScaling.blockScale > 1);
   assert.ok(scene.visualScaling.cameraScale > 1);
   assert.equal(scene.visualScaling.previewZoomProfile.activeProfile, "normal");
+  assert.equal(scene.visualScaling.activeZoomProfile, "normal");
+  assert.equal(scene.visualScaling.visibleObjectCount, 45);
   assert.ok(scene.visualScaling.previewZoomProfile.far);
   assert.ok(scene.visualScaling.previewZoomProfile.normal);
   assert.ok(scene.visualScaling.previewZoomProfile.close);
+  assert.deepEqual(
+    scene.visualScaling.previewZoomProfile.far.visibleCategories,
+    ["road", "landmark"]
+  );
+  assert.deepEqual(
+    scene.visualScaling.previewZoomProfile.normal.visibleCategories,
+    ["road", "building", "vegetation", "landmark"]
+  );
+  assert.deepEqual(
+    scene.visualScaling.previewZoomProfile.close.visibleCategories,
+    ["building", "vegetation", "landmark"]
+  );
+  assert.equal(
+    scene.visualScaling.zoomTransitionMetadata.activeLodSelection,
+    "LOD_GAMEPLAY"
+  );
   assert.ok(scene.presentationSummary.residentialBlockCount >= 1);
   assert.ok(scene.presentationSummary.roadContinuitySegments >= 8);
+  assert.equal(scene.presentationSummary.visibleObjectCount, 45);
+  assert.equal(scene.presentationSummary.activeZoomProfile, "normal");
   assert.equal(scene.validationResult.assetReferencesValid, true);
   assert.equal(scene.validationResult.placementValidity, true);
   assert.equal(scene.validationResult.deterministicSceneOutputValid, true);
   assert.equal(scene.validationResult.objectCountLimitsValid, true);
   assert.equal(scene.validationResult.connectedRoadNetworkValid, true);
   assert.equal(scene.validationResult.coastlineRelationshipValid, true);
+  assert.equal(scene.validationResult.zoomDeterminismValid, true);
+  assert.equal(scene.validationResult.visibleObjectLimitsValid, true);
+  assert.equal(scene.validationResult.correctLodSelection, true);
   assert.equal(scene.validationResult.cameraConsistencyValid, true);
 });
 
