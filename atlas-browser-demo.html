@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Map World Real Map Display</title>
+  <title>Map World Real Location Preview</title>
   <style>
     :root {
       color-scheme: light;
@@ -202,7 +202,7 @@
 <body>
   <main class="atlas-demo-shell">
     <header class="atlas-demo-header">
-      <h1>Map World Real Map Display</h1>
+      <h1>Map World Real Location Preview</h1>
       <span>Manual-only browser demo</span>
     </header>
 
@@ -226,17 +226,18 @@
     <section class="atlas-demo-world-panel" aria-label="World layer state">
       <p id="atlasWorldLayerLabel">World layer: hidden</p>
       <p id="atlasWorldCameraLabel">World camera: waiting for coordinate</p>
+      <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
     </section>
 
     <div class="atlas-demo-controls">
-      <button id="atlasPreviewLoadButton" type="button">Load Fixed Test Coordinate</button>
-      <button id="atlasPreviewShowButton" type="button">Activate World From Map Location</button>
-      <button id="atlasPreviewToggleButton" type="button">Toggle World Layer</button>
-      <button id="atlasPreviewHideButton" type="button">Hide Coastal World</button>
+      <button id="atlasPreviewLoadButton" type="button">Initialize Interactive Map</button>
+      <button id="atlasPreviewShowButton" type="button">Select Current Map Position</button>
+      <button id="atlasPreviewToggleButton" type="button">Load Generated World Preview</button>
+      <button id="atlasPreviewHideButton" type="button">Hide World Preview</button>
     </div>
 
     <p id="atlasPreviewStatus" class="atlas-demo-status" aria-live="polite">
-      Map world real map display loading...
+      Map world real location preview loading...
     </p>
 
     <section
@@ -282,11 +283,13 @@
     const mapZoomLabel = document.getElementById("atlasMapZoomLabel");
     const worldLayerLabel = document.getElementById("atlasWorldLayerLabel");
     const worldCameraLabel = document.getElementById("atlasWorldCameraLabel");
+    const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
 
-    const updateWorldLayerLabels = (visualLayer) => {
-      if (!visualLayer) {
+    const updatePreviewLabels = (preview) => {
+      if (!preview) {
         return;
       }
+      const visualLayer = preview.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment;
       const display = visualLayer.mapWorldRealMapDisplay;
       if (mapCenterLabel) {
         mapCenterLabel.textContent =
@@ -302,6 +305,10 @@
       if (worldCameraLabel) {
         worldCameraLabel.textContent =
           `World camera: ${visualLayer.cameraState.previewCameraProfile} focused on ${visualLayer.cameraState.previewFocusAssetId} at zoom ${visualLayer.cameraState.previewZoomLevel}`;
+      }
+      if (worldPreviewLabel) {
+        worldPreviewLabel.textContent =
+          `Preview: ${preview.resolvedWorld.worldId} @ ${preview.coordinate.latitude.toFixed(6)}, ${preview.coordinate.longitude.toFixed(6)}`;
       }
     };
 
@@ -340,11 +347,11 @@
     } else {
       try {
         const moduleVersion = "2026-07-24-01";
-        const [{ createMapWorldLiveMapSession }] =
+        const [{ createMapWorldRealLocationPreviewSession }] =
           await Promise.all([
-            import(`./asset-factory/map-world-live-map-foundation.mjs?v=${moduleVersion}`)
+            import(`./asset-factory/map-world-real-location-preview-foundation.mjs?v=${moduleVersion}`)
           ]);
-        const liveMapSession = createMapWorldLiveMapSession({
+        const previewSession = createMapWorldRealLocationPreviewSession({
           loaderOptions: {
             existsSync() {
               return true;
@@ -379,32 +386,32 @@
 
         if (status) {
           status.textContent =
-            "Ready to initialize the interactive map, pan or zoom it, and resolve a coastal world from the current position.";
+            "Ready to initialize the interactive map, select the current position, and load a generated world preview from it.";
         }
 
         loadButton?.addEventListener("click", async () => {
-          const loaded = await liveMapSession.initializeInteractiveMap();
+          const loaded = await previewSession.initializeInteractiveMap();
           if (status) {
             status.textContent = loaded.message;
           }
           if (loaded.ok) {
-            updateWorldLayerLabels(loaded.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            updatePreviewLabels(loaded.mapWorldRealLocationPreview);
             if (showButton) {
               showButton.disabled = false;
             }
             if (toggleButton) {
-              toggleButton.disabled = false;
+              toggleButton.disabled = true;
             }
             if (hideButton) {
               hideButton.disabled = true;
             }
             setMovementDisabled(false);
-            window.mapWorldLiveMapFoundation = loaded.mapWorldLiveMapFoundation;
+            window.mapWorldRealLocationPreview = loaded.mapWorldRealLocationPreview;
           }
         });
 
         const moveMapCenter = async (latitudeDelta, longitudeDelta) => {
-          const moved = await liveMapSession.panMapBy({
+          const moved = await previewSession.panMapBy({
             latitudeDelta,
             longitudeDelta
           });
@@ -412,25 +419,31 @@
             status.textContent = moved.message;
           }
           if (moved.ok) {
-            updateWorldLayerLabels(moved.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            updatePreviewLabels(moved.mapWorldRealLocationPreview);
+            if (toggleButton) {
+              toggleButton.disabled = true;
+            }
             if (hideButton) {
               hideButton.disabled = true;
             }
-            window.mapWorldLiveMapFoundation = moved.mapWorldLiveMapFoundation;
+            window.mapWorldRealLocationPreview = moved.mapWorldRealLocationPreview;
           }
         };
 
         const zoomMap = async (zoomDelta) => {
-          const zoomed = await liveMapSession.zoomMapBy(zoomDelta);
+          const zoomed = await previewSession.zoomMapBy(zoomDelta);
           if (status) {
             status.textContent = zoomed.message;
           }
           if (zoomed.ok) {
-            updateWorldLayerLabels(zoomed.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            updatePreviewLabels(zoomed.mapWorldRealLocationPreview);
+            if (toggleButton) {
+              toggleButton.disabled = true;
+            }
             if (hideButton) {
               hideButton.disabled = true;
             }
-            window.mapWorldLiveMapFoundation = zoomed.mapWorldLiveMapFoundation;
+            window.mapWorldRealLocationPreview = zoomed.mapWorldRealLocationPreview;
           }
         };
 
@@ -483,50 +496,52 @@
         }
 
         showButton?.addEventListener("click", () => {
-          const activated = liveMapSession.activateVisualLayer();
+          const activated = previewSession.selectCurrentMapPositionAsPreviewLocation();
           if (status) {
             status.textContent = activated.message;
           }
-          if (activated.ok && hideButton) {
-            hideButton.disabled = false;
-          }
           if (activated.ok) {
-            updateWorldLayerLabels(activated.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
-            window.mapWorldLiveMapFoundation =
-              activated.mapWorldLiveMapFoundation;
-            window.mapWorldLiveMapPreviewAttachment =
-              activated.atlasPreviewAttachment;
+            updatePreviewLabels(activated.mapWorldRealLocationPreview);
+            if (toggleButton) {
+              toggleButton.disabled = false;
+            }
+            if (hideButton) {
+              hideButton.disabled = true;
+            }
+            window.mapWorldRealLocationPreview = activated.mapWorldRealLocationPreview;
           }
         });
 
         toggleButton?.addEventListener("click", () => {
-          const toggled =
-            liveMapSession.currentLiveMapFoundation()?.mapWorldVisualLayerAttachment?.visibilityState.visible === true
-              ? liveMapSession.hideVisualLayer()
-              : liveMapSession.activateVisualLayer();
+          const toggled = previewSession.loadGeneratedWorldPreview();
           if (status) {
             status.textContent = toggled.message;
           }
           if (toggled.ok) {
-            updateWorldLayerLabels(toggled.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            updatePreviewLabels(toggled.mapWorldRealLocationPreview);
             if (hideButton) {
-              hideButton.disabled =
-                toggled.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment.visibilityState.visible !== true;
+              hideButton.disabled = false;
             }
+            window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
+            window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
           }
         });
 
         hideButton?.addEventListener("click", () => {
-          const hidden = liveMapSession.hideVisualLayer();
+          const hidden = previewSession.hidePreviewLayer();
           if (status) {
             status.textContent = hidden.message;
           }
           if (hidden.ok) {
-            updateWorldLayerLabels(hidden.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            updatePreviewLabels(hidden.mapWorldRealLocationPreview);
+            if (hideButton) {
+              hideButton.disabled = true;
+            }
+            window.mapWorldRealLocationPreview = hidden.mapWorldRealLocationPreview;
           }
         });
 
-        window.mapWorldLiveMapSession = liveMapSession;
+        window.mapWorldRealLocationPreviewSession = previewSession;
       } catch (error) {
         window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
