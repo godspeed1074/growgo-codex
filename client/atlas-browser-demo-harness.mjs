@@ -176,6 +176,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     coastalWorldShowcase,
     visibilityState: "hidden"
   });
+  let currentWorldExpansionDemoRoutingState =
+    createDefaultWorldExpansionDemoRoutingState();
 
   setStatus(
     elements.status,
@@ -999,6 +1001,21 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentVisualSourceSummary() {
         return activeVisualSourceSummary;
+      },
+      setWorldExpansionDemoRoutingState(pipelineValidationState = null) {
+        currentWorldExpansionDemoRoutingState = buildWorldExpansionDemoRoutingState(
+          pipelineValidationState,
+          activeVisualSourceSummary
+        );
+        return currentWorldExpansionDemoRoutingState;
+      },
+      clearWorldExpansionDemoRoutingState() {
+        currentWorldExpansionDemoRoutingState =
+          createDefaultWorldExpansionDemoRoutingState();
+        return currentWorldExpansionDemoRoutingState;
+      },
+      currentWorldExpansionDemoRoutingState() {
+        return currentWorldExpansionDemoRoutingState;
       },
       currentMountState() {
         return previewSession?.currentMountState?.() ?? "created";
@@ -4499,6 +4516,82 @@ function buildVisualSourceSummary({
     objectInstanceCount: atlasBrowserDemoPlaceholderObjects.length,
     visibilityState,
     active: visibilityState === "visible"
+  });
+}
+
+function createDefaultWorldExpansionDemoRoutingState() {
+  return deepFreeze({
+    activeRegion: null,
+    regionType: null,
+    mapDataRoute: null,
+    sceneRoute: null,
+    pipelineStatus: "waiting-for-pipeline-validation",
+    validationResult: deepFreeze({
+      coastalWorldUnchangedValid: false,
+      demoStateMatchesPipelineStateValid: false,
+      cleanupResetValid: true,
+      pipelineValidationReady: false
+    })
+  });
+}
+
+function buildWorldExpansionDemoRoutingState(
+  pipelineValidationState,
+  activeVisualSourceSummary
+) {
+  if (!pipelineValidationState) {
+    return createDefaultWorldExpansionDemoRoutingState();
+  }
+
+  const sceneMatchesVisualSource =
+    !activeVisualSourceSummary?.sceneId ||
+    activeVisualSourceSummary.sceneId === pipelineValidationState.sceneOutput?.sceneId;
+  const worldMatchesVisualSource =
+    !activeVisualSourceSummary?.worldId ||
+    activeVisualSourceSummary.worldId ===
+      pipelineValidationState.planningFoundation?.activeWorldLocation?.worldId;
+
+  return deepFreeze({
+    activeRegion: pipelineValidationState.regionResolution?.worldRegionId ?? null,
+    regionType: pipelineValidationState.regionResolution?.regionType ?? null,
+    mapDataRoute: deepFreeze({
+      mapDataRouteId: pipelineValidationState.mapDataRoute?.mapDataRouteId ?? null,
+      providerProfileId:
+        pipelineValidationState.mapDataRoute?.providerProfile?.providerProfileId ??
+        null,
+      providerMode:
+        pipelineValidationState.mapDataRoute?.providerProfile?.providerMode ?? null,
+      mapFixtureProfileId:
+        pipelineValidationState.mapDataRoute?.mapFixtureProfile
+          ?.mapFixtureProfileId ?? null
+    }),
+    sceneRoute: deepFreeze({
+      sceneRouteId: pipelineValidationState.sceneRoute?.sceneRouteId ?? null,
+      sceneAssemblyId:
+        pipelineValidationState.sceneRoute?.sceneProfile?.sceneAssemblyId ?? null,
+      settlementGeneratorId:
+        pipelineValidationState.sceneRoute?.settlementProfile?.generatorId ?? null
+    }),
+    pipelineStatus:
+      pipelineValidationState.validationResult?.fullChainValid === true
+        ? "validated-active"
+        : "validation-incomplete",
+    validationResult: deepFreeze({
+      coastalWorldUnchangedValid:
+        pipelineValidationState.validationResult?.coastalLocationUnchangedValid ===
+        true,
+      demoStateMatchesPipelineStateValid:
+        pipelineValidationState.validationResult?.chainIdentityConsistencyValid ===
+          true &&
+        sceneMatchesVisualSource &&
+        worldMatchesVisualSource,
+      cleanupResetValid: true,
+      pipelineValidationReady:
+        pipelineValidationState.validationResult?.fullChainValid === true &&
+        pipelineValidationState.validationResult?.deterministicOutputValid ===
+          true &&
+        pipelineValidationState.validationResult?.fallbackSafetyValid === true
+    })
   });
 }
 

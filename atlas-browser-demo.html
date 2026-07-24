@@ -548,6 +548,17 @@
           <p id="atlasLightingProfileLabel" class="atlas-demo-state-line" data-priority="detail">Lighting profile: waiting for selection</p>
         </section>
 
+        <section class="atlas-demo-source-panel" aria-label="World expansion routing state">
+          <header class="atlas-demo-section-heading">
+            <h2>Expansion Routing</h2>
+            <p>Expose the validated region, scene route, and map data route for the active world without changing generation behavior.</p>
+          </header>
+          <p id="atlasRoutingRegionLabel" class="atlas-demo-state-line" data-priority="primary">Active region: waiting for pipeline validation</p>
+          <p id="atlasRoutingSceneRouteLabel" class="atlas-demo-state-line" data-priority="detail">Scene route: waiting for pipeline validation</p>
+          <p id="atlasRoutingMapDataLabel" class="atlas-demo-state-line" data-priority="detail">Map data profile: waiting for pipeline validation</p>
+          <p id="atlasRoutingPipelineStatusLabel" class="atlas-demo-state-line" data-priority="accent">Pipeline status: waiting for pipeline validation</p>
+        </section>
+
         <section id="atlasDetailPanel" class="atlas-demo-source-panel" aria-label="Selected asset detail" hidden>
           <header class="atlas-demo-section-heading">
             <h2>Selected Object Detail</h2>
@@ -675,6 +686,10 @@
     const previewVisibilityLabel = document.getElementById("atlasPreviewVisibilityLabel");
     const presentationProfileLabel = document.getElementById("atlasPresentationProfileLabel");
     const lightingProfileLabel = document.getElementById("atlasLightingProfileLabel");
+    const routingRegionLabel = document.getElementById("atlasRoutingRegionLabel");
+    const routingSceneRouteLabel = document.getElementById("atlasRoutingSceneRouteLabel");
+    const routingMapDataLabel = document.getElementById("atlasRoutingMapDataLabel");
+    const routingPipelineStatusLabel = document.getElementById("atlasRoutingPipelineStatusLabel");
     const demoStateLabel = document.getElementById("atlasDemoStateLabel");
     const presentationOverviewButton = document.getElementById("atlasPresentationOverviewButton");
     const presentationNeighbourhoodButton = document.getElementById("atlasPresentationNeighbourhoodButton");
@@ -755,6 +770,44 @@
       if (worldCameraLabel && demoPresentationState.cameraProfile) {
         worldCameraLabel.textContent =
           `World camera: ${demoPresentationState.cameraProfile.activeCompositionProfile} / ${demoPresentationState.cameraProfile.previewZoomProfile} focused on ${demoPresentationState.cameraProfile.targetAsset}`;
+      }
+    };
+
+    const updateExpansionRoutingLabels = (routingState) => {
+      if (!routingState) {
+        if (routingRegionLabel) {
+          routingRegionLabel.textContent =
+            "Active region: waiting for pipeline validation";
+        }
+        if (routingSceneRouteLabel) {
+          routingSceneRouteLabel.textContent =
+            "Scene route: waiting for pipeline validation";
+        }
+        if (routingMapDataLabel) {
+          routingMapDataLabel.textContent =
+            "Map data profile: waiting for pipeline validation";
+        }
+        if (routingPipelineStatusLabel) {
+          routingPipelineStatusLabel.textContent =
+            "Pipeline status: waiting for pipeline validation";
+        }
+        return;
+      }
+      if (routingRegionLabel) {
+        routingRegionLabel.textContent =
+          `Active region: ${routingState.activeRegion ?? "none"} / ${routingState.regionType ?? "none"}`;
+      }
+      if (routingSceneRouteLabel) {
+        routingSceneRouteLabel.textContent =
+          `Scene route: ${routingState.sceneRoute?.sceneRouteId ?? "none"} / ${routingState.sceneRoute?.sceneAssemblyId ?? "none"} / ${routingState.sceneRoute?.settlementGeneratorId ?? "none"}`;
+      }
+      if (routingMapDataLabel) {
+        routingMapDataLabel.textContent =
+          `Map data profile: ${routingState.mapDataRoute?.mapDataRouteId ?? "none"} / ${routingState.mapDataRoute?.providerProfileId ?? "none"} / ${routingState.mapDataRoute?.mapFixtureProfileId ?? "none"}`;
+      }
+      if (routingPipelineStatusLabel) {
+        routingPipelineStatusLabel.textContent =
+          `Pipeline status: ${routingState.pipelineStatus} / demo match ${routingState.validationResult?.demoStateMatchesPipelineStateValid === true ? "ready" : "pending"} / coastal unchanged ${routingState.validationResult?.coastalWorldUnchangedValid === true ? "yes" : "no"}`;
       }
     };
 
@@ -1398,12 +1451,17 @@
             mapWorldSettlementAtlasSceneExpansionDefinition
           },
           {
+            createWorldExpansionPipelineValidationFoundation,
+            worldExpansionPipelineValidationFoundationDefinition
+          },
+          {
             buildMapWorldSettlementRealMapOverlayFoundation
           }
         ] =
           await Promise.all([
             import(`./asset-factory/map-world-real-location-preview-foundation.mjs?v=${moduleVersion}`),
             import(`./asset-factory/map-world-settlement-atlas-scene-expansion.mjs?v=${moduleVersion}`),
+            import(`./asset-factory/world-expansion-pipeline-validation-foundation.mjs?v=${moduleVersion}`),
             import(`./asset-factory/map-world-settlement-real-map-overlay-foundation.mjs?v=${moduleVersion}`)
           ]);
         const previewSession = createMapWorldRealLocationPreviewSession({
@@ -1418,12 +1476,67 @@
           }
         });
         let expandedSettlementPreview = null;
+        const worldExpansionPipelineValidation =
+          await createWorldExpansionPipelineValidationFoundation(
+            worldExpansionPipelineValidationFoundationDefinition,
+            {
+              existsSync() {
+                return true;
+              },
+              async loadArrayBuffer() {
+                return createSyntheticGlb();
+              },
+              allowFallbackShowcase: true
+            }
+          );
         setBrowserDemoState({
           status: "ready",
           lastError: null,
-          activeVisualSource: buildEmptyVisualSourceState()
+          activeVisualSource: buildEmptyVisualSourceState(),
+          worldExpansionDemoRoutingState: null
         });
         updateVisualSourceLabels(window.__atlasBrowserDemoState.activeVisualSource);
+        updateExpansionRoutingLabels(
+          worldExpansionPipelineValidation
+            ? {
+                activeRegion:
+                  worldExpansionPipelineValidation.regionResolution.worldRegionId,
+                regionType:
+                  worldExpansionPipelineValidation.regionResolution.regionType,
+                mapDataRoute: {
+                  mapDataRouteId:
+                    worldExpansionPipelineValidation.mapDataRoute.mapDataRouteId,
+                  providerProfileId:
+                    worldExpansionPipelineValidation.mapDataRoute.providerProfile
+                      .providerProfileId,
+                  mapFixtureProfileId:
+                    worldExpansionPipelineValidation.mapDataRoute.mapFixtureProfile
+                      .mapFixtureProfileId
+                },
+                sceneRoute: {
+                  sceneRouteId:
+                    worldExpansionPipelineValidation.sceneRoute.sceneRouteId,
+                  sceneAssemblyId:
+                    worldExpansionPipelineValidation.sceneRoute.sceneProfile
+                      .sceneAssemblyId,
+                  settlementGeneratorId:
+                    worldExpansionPipelineValidation.sceneRoute.settlementProfile
+                      .generatorId
+                },
+                pipelineStatus:
+                  worldExpansionPipelineValidation.validationResult.fullChainValid ===
+                  true
+                    ? "validated-active"
+                    : "validation-incomplete",
+                validationResult: {
+                  coastalWorldUnchangedValid:
+                    worldExpansionPipelineValidation.validationResult
+                      .coastalLocationUnchangedValid === true,
+                  demoStateMatchesPipelineStateValid: false
+                }
+              }
+            : null
+        );
 
         if (launchNote) {
           launchNote.hidden = true;
@@ -1490,9 +1603,14 @@
             discoveryState: null,
             explorationProgressPresentationState: null,
             landmarkShowcaseState: null,
-            locationExperienceState: null
+            locationExperienceState: null,
+            worldExpansionDemoRoutingState: null
           });
+          if (atlasPreviewAttachment?.atlasBrowserDemoHarness?.clearWorldExpansionDemoRoutingState) {
+            atlasPreviewAttachment.atlasBrowserDemoHarness.clearWorldExpansionDemoRoutingState();
+          }
           updateVisualSourceLabels(nextState.activeVisualSource);
+          updateExpansionRoutingLabels(null);
           updatePoiLabels(null);
           updatePoiPresentationLabels(null);
           updateOverlayInteractionLabels({
@@ -1550,6 +1668,10 @@
                 mapWorldRealLocationPreview.mapWorldLiveMapFoundation,
               settlementScene
             });
+          const demoRoutingState =
+            harness.setWorldExpansionDemoRoutingState?.(
+              worldExpansionPipelineValidation
+            ) ?? null;
           const harnessVisualSource = harness.currentVisualSourceSummary();
           const currentVisualSource =
             window.__atlasBrowserDemoState?.activeVisualSource ??
@@ -1624,9 +1746,11 @@
             landmarkShowcaseState:
               harness.currentSettlementLandmarkShowcaseState?.() ?? null,
             locationExperienceState:
-              harness.currentSettlementLocationExperienceState?.() ?? null
+              harness.currentSettlementLocationExperienceState?.() ?? null,
+            worldExpansionDemoRoutingState: demoRoutingState
           });
           updateVisualSourceLabels(activeVisualSource);
+          updateExpansionRoutingLabels(demoRoutingState);
           updatePoiLabels(
             harness.currentSettlementPoiState?.() ?? combinedOverlay.poiState
           );

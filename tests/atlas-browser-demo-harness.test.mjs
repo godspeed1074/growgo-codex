@@ -74,6 +74,14 @@ const expandedSettlementSceneModule = await import(
     "map-world-settlement-atlas-scene-expansion.mjs"
   )
 );
+const worldExpansionPipelineValidationModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "world-expansion-pipeline-validation-foundation.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -407,6 +415,21 @@ async function buildExpandedSettlementScene() {
   );
 }
 
+async function buildWorldExpansionPipelineValidation() {
+  return worldExpansionPipelineValidationModule.createWorldExpansionPipelineValidationFoundation(
+    worldExpansionPipelineValidationModule.worldExpansionPipelineValidationFoundationDefinition,
+    {
+      existsSync() {
+        return true;
+      },
+      loadArrayBuffer() {
+        return Promise.resolve(createSyntheticGlb());
+      },
+      allowFallbackShowcase: true
+    }
+  );
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", async () => {
   const document = createMockDocument();
   const realGroundRuntimeLoader = await buildRealGroundRuntimeLoader();
@@ -625,6 +648,57 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     harness.canvas._context.commands.some(
       (command) => command[0] === "arc"
     )
+  );
+});
+
+test("Atlas browser demo harness exposes and clears world expansion routing state without changing preview behavior", async () => {
+  const document = createMockDocument();
+  const expandedSettlementScene = await buildExpandedSettlementScene();
+  const pipelineValidation = await buildWorldExpansionPipelineValidation();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions(),
+    expandedSettlementPreview: expandedSettlementScene
+  });
+
+  assert.equal(result.ok, true);
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showCoastalWorld();
+  assert.equal(shown.ok, true);
+
+  const routingState =
+    harness.setWorldExpansionDemoRoutingState(pipelineValidation);
+
+  assert.equal(routingState.activeRegion, pipelineValidation.regionResolution.worldRegionId);
+  assert.equal(routingState.regionType, "coastal");
+  assert.equal(
+    routingState.sceneRoute.sceneRouteId,
+    pipelineValidation.sceneRoute.sceneRouteId
+  );
+  assert.equal(
+    routingState.mapDataRoute.mapDataRouteId,
+    pipelineValidation.mapDataRoute.mapDataRouteId
+  );
+  assert.equal(routingState.pipelineStatus, "validated-active");
+  assert.equal(
+    routingState.validationResult.coastalWorldUnchangedValid,
+    true
+  );
+  assert.equal(
+    routingState.validationResult.demoStateMatchesPipelineStateValid,
+    true
+  );
+  assert.equal(
+    routingState.validationResult.pipelineValidationReady,
+    true
+  );
+
+  const cleared = harness.clearWorldExpansionDemoRoutingState();
+  assert.equal(cleared.pipelineStatus, "waiting-for-pipeline-validation");
+  assert.equal(cleared.activeRegion, null);
+  assert.equal(
+    harness.currentWorldExpansionDemoRoutingState().validationResult.cleanupResetValid,
+    true
   );
 });
 
