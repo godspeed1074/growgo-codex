@@ -18,6 +18,22 @@ const previewMountModule = await import(
     "atlas-engine-first-manual-browser-visible-preview-mount.mjs"
   )
 );
+const previewSessionModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "map-world-real-location-preview-foundation.mjs"
+  )
+);
+const expandedSettlementSceneModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "map-world-settlement-atlas-scene-expansion.mjs"
+  )
+);
 
 function createSyntheticGlb({
   materialNames = ["MapAttachmentMaterialA", "MapAttachmentMaterialB"]
@@ -206,6 +222,21 @@ function buildPreviewMountOptions() {
   };
 }
 
+async function buildExpandedSettlementScene() {
+  return expandedSettlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+    expandedSettlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+    {
+      existsSync() {
+        return true;
+      },
+      loadArrayBuffer() {
+        return Promise.resolve(createSyntheticGlb());
+      },
+      allowFallbackShowcase: true
+    }
+  );
+}
+
 test("map world to Atlas scene attachment foundation connects a resolved map world to the Atlas preview path", async () => {
   const attachment =
     await moduleUnderTest.createMapWorldToAtlasSceneAttachmentFoundation(
@@ -257,10 +288,12 @@ test("map world to Atlas scene attachment attaches to the Atlas preview harness 
         allowFallbackShowcase: true
       }
     );
+  const expandedSettlementScene = await buildExpandedSettlementScene();
 
   const attached = moduleUnderTest.attachMapWorldToAtlasPreview(attachment, {
     document: createMockDocument(),
-    previewMountOptions: buildPreviewMountOptions()
+    previewMountOptions: buildPreviewMountOptions(),
+    expandedSettlementPreview: expandedSettlementScene
   });
 
   assert.equal(attached.ok, true);
@@ -268,11 +301,19 @@ test("map world to Atlas scene attachment attaches to the Atlas preview harness 
   const shown = harness.showCoastalWorld();
   assert.equal(shown.ok, true);
   assert.equal(harness.elements.previewContainer.dataset.previewVisible, "true");
-  assert.match(harness.elements.status.textContent, /coastal world visible/i);
+  assert.match(harness.elements.status.textContent, /neighbourhood-scale scene/i);
   assert.ok(
     harness.canvas._context.commands.some(
       (command) =>
-        command[0] === "fillText" && command[1] === "LIGHTHOUSE_ISLAND_ROCKY_001"
+        command[0] === "fillText" &&
+        String(command[1]).includes("ATLAS_SETTLEMENT_SCENE_")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("45 scene objects")
     )
   );
 
@@ -280,4 +321,48 @@ test("map world to Atlas scene attachment attaches to the Atlas preview harness 
   assert.equal(hidden.ok, true);
   assert.equal(harness.elements.previewContainer.dataset.previewVisible, "false");
   assert.match(harness.elements.status.textContent, /hidden/i);
+});
+
+test("real-location preview session forwards the expanded settlement scene into the active preview source", async () => {
+  const loaderOptions = {
+    ...buildLoaderOptions(),
+    allowFallbackShowcase: true
+  };
+  const session = previewSessionModule.createMapWorldRealLocationPreviewSession({
+    loaderOptions
+  });
+  const initialized = await session.initializeInteractiveMap();
+  assert.equal(initialized.ok, true);
+
+  const selected = session.selectCurrentMapPositionAsPreviewLocation();
+  assert.equal(selected.ok, true);
+
+  const expandedSettlementScene = await buildExpandedSettlementScene();
+  const loaded = session.loadGeneratedWorldPreview({
+    expandedSettlementPreview: expandedSettlementScene,
+    document: createMockDocument(),
+    previewMountOptions: buildPreviewMountOptions()
+  });
+
+  assert.equal(loaded.ok, true);
+  assert.equal(
+    loaded.mapWorldRealLocationPreview.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment.visibilityState.currentState,
+    "visible"
+  );
+  assert.equal(
+    loaded.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary().sourceType,
+    "expanded-settlement-scene"
+  );
+  assert.equal(
+    loaded.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary().sceneId,
+    expandedSettlementScene.sceneId
+  );
+  assert.equal(
+    loaded.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary().worldId,
+    expandedSettlementScene.worldId
+  );
+  assert.equal(
+    loaded.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary().objectInstanceCount,
+    45
+  );
 });

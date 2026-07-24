@@ -66,6 +66,14 @@ const coastalShowcaseModule = await import(
     "coastal-starter-world-browser-showcase.mjs"
   )
 );
+const expandedSettlementSceneModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "map-world-settlement-atlas-scene-expansion.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -384,6 +392,21 @@ async function buildCoastalWorldShowcase() {
   });
 }
 
+async function buildExpandedSettlementScene() {
+  return expandedSettlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+    expandedSettlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+    {
+      existsSync() {
+        return true;
+      },
+      loadArrayBuffer() {
+        return Promise.resolve(createSyntheticGlb());
+      },
+      allowFallbackShowcase: true
+    }
+  );
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", async () => {
   const document = createMockDocument();
   const realGroundRuntimeLoader = await buildRealGroundRuntimeLoader();
@@ -514,6 +537,43 @@ test("Atlas browser demo harness displays the assembled coastal world showcase w
       (command) =>
         command[0] === "fillText" &&
         command[1] === "ROAD_COASTAL_001"
+    )
+  );
+});
+
+test("Atlas browser demo harness prefers the expanded settlement preview and draws the neighbourhood-scale scene", async () => {
+  const document = createMockDocument();
+  const expandedSettlementScene = await buildExpandedSettlementScene();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions(),
+    expandedSettlementPreview: expandedSettlementScene
+  });
+
+  assert.equal(result.ok, true);
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showCoastalWorld();
+
+  assert.equal(shown.ok, true);
+  assert.equal(harness.elements.previewContainer.dataset.previewVisible, "true");
+  assert.match(harness.elements.status.textContent, /neighbourhood-scale scene/i);
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("ATLAS_SETTLEMENT_SCENE_")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("45 scene objects")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) => command[0] === "arc"
     )
   );
 });

@@ -77,6 +77,20 @@
       font-size: 14px;
     }
 
+    .atlas-demo-source-panel {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 12px;
+      border: 1px solid rgba(22, 48, 70, 0.16);
+      background: #f6fbff;
+    }
+
+    .atlas-demo-source-panel p {
+      margin: 0;
+      font-size: 14px;
+    }
+
     .atlas-demo-map-move-controls {
       display: flex;
       gap: 8px;
@@ -229,6 +243,14 @@
       <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
     </section>
 
+    <section class="atlas-demo-source-panel" aria-label="Active preview source">
+      <p id="atlasPreviewSourceLabel">Preview source: waiting for selection</p>
+      <p id="atlasPreviewSceneLabel">Scene: waiting for selection</p>
+      <p id="atlasPreviewWorldLabel">World: waiting for selection</p>
+      <p id="atlasPreviewObjectCountLabel">Object instances: waiting for selection</p>
+      <p id="atlasPreviewVisibilityLabel">Visibility: hidden</p>
+    </section>
+
     <div class="atlas-demo-controls">
       <button id="atlasPreviewLoadButton" type="button">Initialize Interactive Map</button>
       <button id="atlasPreviewShowButton" type="button">Select Current Map Position</button>
@@ -268,6 +290,28 @@
   </main>
 
   <script type="module">
+    const createSyntheticGlb = () => {
+      const json = JSON.stringify({
+        asset: { version: "2.0" },
+        scenes: [{ nodes: [0] }],
+        nodes: [{ mesh: 0 }],
+        meshes: [{ primitives: [{ attributes: { POSITION: 0 }, material: 0 }] }],
+        materials: [{ name: "AtlasDemoMaterialA" }, { name: "AtlasDemoMaterialB" }]
+      });
+      const jsonBytes = new TextEncoder().encode(json);
+      const paddedJsonLength = Math.ceil(jsonBytes.length / 4) * 4;
+      const totalLength = 12 + 8 + paddedJsonLength;
+      const arrayBuffer = new ArrayBuffer(totalLength);
+      const view = new DataView(arrayBuffer);
+      view.setUint32(0, 0x46546c67, true);
+      view.setUint32(4, 2, true);
+      view.setUint32(8, totalLength, true);
+      view.setUint32(12, paddedJsonLength, true);
+      view.setUint32(16, 0x4e4f534a, true);
+      new Uint8Array(arrayBuffer, 20, paddedJsonLength).set(jsonBytes);
+      return arrayBuffer;
+    };
+
     const status = document.getElementById("atlasPreviewStatus");
     const launchNote = document.getElementById("atlasPreviewLaunchNote");
     const loadButton = document.getElementById("atlasPreviewLoadButton");
@@ -284,6 +328,43 @@
     const worldLayerLabel = document.getElementById("atlasWorldLayerLabel");
     const worldCameraLabel = document.getElementById("atlasWorldCameraLabel");
     const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
+    const previewSourceLabel = document.getElementById("atlasPreviewSourceLabel");
+    const previewSceneLabel = document.getElementById("atlasPreviewSceneLabel");
+    const previewWorldLabel = document.getElementById("atlasPreviewWorldLabel");
+    const previewObjectCountLabel = document.getElementById("atlasPreviewObjectCountLabel");
+    const previewVisibilityLabel = document.getElementById("atlasPreviewVisibilityLabel");
+
+    const setBrowserDemoState = (patch = {}) => {
+      const previousState = window.__atlasBrowserDemoState ?? {};
+      const nextState = { ...previousState, ...patch };
+      window.__atlasBrowserDemoState = nextState;
+      return nextState;
+    };
+
+    const updateVisualSourceLabels = (summary) => {
+      if (!summary) {
+        return;
+      }
+      if (previewSourceLabel) {
+        previewSourceLabel.textContent = `Preview source: ${summary.sourceType}`;
+      }
+      if (previewSceneLabel) {
+        previewSceneLabel.textContent =
+          `Scene: ${summary.sceneId ?? "none selected"}`;
+      }
+      if (previewWorldLabel) {
+        previewWorldLabel.textContent =
+          `World: ${summary.worldId ?? "none selected"}`;
+      }
+      if (previewObjectCountLabel) {
+        previewObjectCountLabel.textContent =
+          `Object instances: ${summary.objectInstanceCount ?? 0}`;
+      }
+      if (previewVisibilityLabel) {
+        previewVisibilityLabel.textContent =
+          `Visibility: ${summary.visibilityState}${summary.active ? " (active)" : ""}`;
+      }
+    };
 
     const updatePreviewLabels = (preview) => {
       if (!preview) {
@@ -340,32 +421,57 @@
         hideButton.disabled = true;
       }
       setMovementDisabled(true);
+      updateVisualSourceLabels({
+        sourceType: "launch-required",
+        sceneId: null,
+        worldId: null,
+        objectInstanceCount: 0,
+        visibilityState: "hidden",
+        active: false
+      });
     };
 
     if (window.location.protocol === "file:") {
       setLaunchMode();
     } else {
       try {
-        const moduleVersion = "2026-07-24-01";
-        const [{ createMapWorldRealLocationPreviewSession }] =
+        const moduleVersion = "2026-07-24-02";
+        const [
+          { createMapWorldRealLocationPreviewSession },
+          {
+            createMapWorldSettlementAtlasSceneExpansion,
+            mapWorldSettlementAtlasSceneExpansionDefinition
+          }
+        ] =
           await Promise.all([
-            import(`./asset-factory/map-world-real-location-preview-foundation.mjs?v=${moduleVersion}`)
+            import(`./asset-factory/map-world-real-location-preview-foundation.mjs?v=${moduleVersion}`),
+            import(`./asset-factory/map-world-settlement-atlas-scene-expansion.mjs?v=${moduleVersion}`)
           ]);
         const previewSession = createMapWorldRealLocationPreviewSession({
           loaderOptions: {
             existsSync() {
               return true;
             },
-            async loadArrayBuffer(candidatePath) {
-              const response = await fetch(candidatePath);
-              if (!response.ok) {
-                throw new Error(`Unable to load coastal showcase asset ${candidatePath}.`);
-              }
-              return response.arrayBuffer();
+            async loadArrayBuffer() {
+              return createSyntheticGlb();
             },
             allowFallbackShowcase: true
           }
         });
+        let expandedSettlementPreview = null;
+        setBrowserDemoState({
+          status: "ready",
+          lastError: null,
+          activeVisualSource: {
+            sourceType: "none",
+            sceneId: null,
+            worldId: null,
+            objectInstanceCount: 0,
+            visibilityState: "hidden",
+            active: false
+          }
+        });
+        updateVisualSourceLabels(window.__atlasBrowserDemoState.activeVisualSource);
 
         if (launchNote) {
           launchNote.hidden = true;
@@ -394,6 +500,7 @@
           if (status) {
             status.textContent = loaded.message;
           }
+          setBrowserDemoState({ status: loaded.message, lastError: null });
           if (loaded.ok) {
             updatePreviewLabels(loaded.mapWorldRealLocationPreview);
             if (showButton) {
@@ -418,6 +525,7 @@
           if (status) {
             status.textContent = moved.message;
           }
+          setBrowserDemoState({ status: moved.message, lastError: null });
           if (moved.ok) {
             updatePreviewLabels(moved.mapWorldRealLocationPreview);
             if (toggleButton) {
@@ -435,6 +543,7 @@
           if (status) {
             status.textContent = zoomed.message;
           }
+          setBrowserDemoState({ status: zoomed.message, lastError: null });
           if (zoomed.ok) {
             updatePreviewLabels(zoomed.mapWorldRealLocationPreview);
             if (toggleButton) {
@@ -500,6 +609,7 @@
           if (status) {
             status.textContent = activated.message;
           }
+          setBrowserDemoState({ status: activated.message, lastError: null });
           if (activated.ok) {
             updatePreviewLabels(activated.mapWorldRealLocationPreview);
             if (toggleButton) {
@@ -513,18 +623,58 @@
         });
 
         toggleButton?.addEventListener("click", () => {
-          const toggled = previewSession.loadGeneratedWorldPreview();
-          if (status) {
-            status.textContent = toggled.message;
-          }
-          if (toggled.ok) {
-            updatePreviewLabels(toggled.mapWorldRealLocationPreview);
-            if (hideButton) {
-              hideButton.disabled = false;
+          void (async () => {
+            expandedSettlementPreview ??=
+              await createMapWorldSettlementAtlasSceneExpansion(
+                mapWorldSettlementAtlasSceneExpansionDefinition,
+                {
+                  existsSync() {
+                    return true;
+                  },
+                  async loadArrayBuffer() {
+                    return createSyntheticGlb();
+                  },
+                  allowFallbackShowcase: true
+                }
+              );
+
+            const toggled = previewSession.loadGeneratedWorldPreview({
+              expandedSettlementPreview
+            });
+            if (status) {
+              status.textContent = toggled.message;
             }
-            window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
-            window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
-          }
+            setBrowserDemoState({ status: toggled.message, lastError: null });
+            if (toggled.ok) {
+              updatePreviewLabels(toggled.mapWorldRealLocationPreview);
+              if (hideButton) {
+                hideButton.disabled = false;
+              }
+              window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
+              window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
+              window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
+              const visualSourceSummary =
+                toggled.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
+              setBrowserDemoState({
+                status: toggled.message,
+                lastError: null,
+                activeVisualSource: visualSourceSummary
+              });
+              updateVisualSourceLabels(visualSourceSummary);
+            }
+          })().catch((error) => {
+            setBrowserDemoState({
+              status: error.message,
+              lastError: {
+                name: error?.name ?? "Error",
+                message: error.message
+              }
+            });
+            window.__lastAtlasBrowserDemoError = error;
+            if (status) {
+              status.textContent = error.message;
+            }
+          });
         });
 
         hideButton?.addEventListener("click", () => {
@@ -532,20 +682,35 @@
           if (status) {
             status.textContent = hidden.message;
           }
+          setBrowserDemoState({ status: hidden.message, lastError: null });
           if (hidden.ok) {
             updatePreviewLabels(hidden.mapWorldRealLocationPreview);
             if (hideButton) {
               hideButton.disabled = true;
             }
             window.mapWorldRealLocationPreview = hidden.mapWorldRealLocationPreview;
+            const visualSourceSummary =
+              hidden.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
+            setBrowserDemoState({
+              status: hidden.message,
+              lastError: null,
+              activeVisualSource: visualSourceSummary
+            });
+            updateVisualSourceLabels(visualSourceSummary);
           }
         });
 
         window.mapWorldRealLocationPreviewSession = previewSession;
       } catch (error) {
+        setBrowserDemoState({
+          status: error.message,
+          lastError: {
+            name: error?.name ?? "Error",
+            message: error.message
+          }
+        });
         window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
-        console.error(error);
       }
     }
   </script>

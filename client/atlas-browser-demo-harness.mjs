@@ -12,6 +12,13 @@ export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "TREE_PLACEHOLDER"
 ]);
 
+const expandedSettlementCategoryOrder = Object.freeze([
+  "road",
+  "vegetation",
+  "building",
+  "landmark"
+]);
+
 const coastalShowcasePlacementByAssetId = Object.freeze({
   GROUND_COASTAL_GRASS_001: Object.freeze({ x: 0, y: 0, scale: 320 }),
   TREE_EUCALYPTUS_001: Object.freeze({ x: -150, y: -28, scale: 110 }),
@@ -43,8 +50,6 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     );
   }
 
-  let mounted = false;
-  let previewSession = null;
   const previewMountOptions =
     options.previewMountOptions ?? buildBrowserSafePreviewMountOptions();
   const realGroundPreviewBinding = resolveRealGroundPreviewBinding(
@@ -66,12 +71,24 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   const coastalWorldShowcase = resolveCoastalWorldShowcase(
     options.coastalWorldShowcase
   );
+  const expandedSettlementPreview = resolveExpandedSettlementPreview(
+    options.expandedSettlementPreview
+  );
+  let mounted = false;
+  let previewSession = null;
+  let activeVisualSourceSummary = buildVisualSourceSummary({
+    expandedSettlementPreview,
+    coastalWorldShowcase,
+    visibilityState: "hidden"
+  });
 
   setStatus(
     elements.status,
-    coastalWorldShowcase
-      ? "Coastal world ready. Use Show Coastal World."
-      : "Atlas preview ready. Use Show Atlas Preview."
+    expandedSettlementPreview
+      ? "Settlement world ready. Use Show Coastal World."
+      : coastalWorldShowcase
+        ? "Coastal world ready. Use Show Coastal World."
+        : "Atlas preview ready. Use Show Atlas Preview."
   );
   setContainerVisibility(elements.previewContainer, false);
 
@@ -110,7 +127,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       mounted = true;
     }
 
-    if (coastalWorldShowcase) {
+    if (expandedSettlementPreview) {
+      drawExpandedSettlementPreview(drawContext, expandedSettlementPreview, {
+        width: canvas.width,
+        height: canvas.height
+      });
+    } else if (coastalWorldShowcase) {
       drawCoastalWorldShowcase(drawContext, coastalWorldShowcase, {
         width: canvas.width,
         height: canvas.height
@@ -130,7 +152,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     setContainerVisibility(elements.previewContainer, true);
     setStatus(
       elements.status,
-      coastalWorldShowcase
+      expandedSettlementPreview
+        ? expandedSettlementPreview.validationResult.objectsResolve
+          ? `Settlement world visible with neighbourhood-scale scene ${expandedSettlementPreview.sceneId}.`
+          : `Settlement world visible with fallback-safe scene ${expandedSettlementPreview.sceneId}.`
+      : coastalWorldShowcase
         ? coastalWorldShowcase.verificationResult.realGlbBackedSceneValid
           ? `Coastal world visible with assembled real GLB-backed scene ${coastalWorldShowcase.sceneId}.`
           : `Coastal world visible with assembled fallback-safe scene ${coastalWorldShowcase.sceneId}.`
@@ -146,10 +172,17 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           ? `Atlas preview visible with real GLB ground asset ${realGroundPreviewBinding.assetId}.`
         : "Atlas preview visible."
     );
+    activeVisualSourceSummary = buildVisualSourceSummary({
+      expandedSettlementPreview,
+      coastalWorldShowcase,
+      visibilityState: "visible"
+    });
 
     return Object.freeze({
       ok: true,
       previewMountResult: mountResult.previewMountResult,
+      visualSourceSummary: activeVisualSourceSummary,
+      expandedSettlementPreview,
       coastalWorldShowcase,
       realGroundPreviewBinding,
       realGroundRenderBinding,
@@ -164,6 +197,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
+    activeVisualSourceSummary = buildVisualSourceSummary({
+      expandedSettlementPreview,
+      coastalWorldShowcase,
+      visibilityState: "hidden"
+    });
 
     if (mounted && typeof elements.canvasContainer.removeChild === "function") {
       try {
@@ -198,6 +236,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       hidePreview: hideHandler,
       showCoastalWorld: showHandler,
       hideCoastalWorld: hideHandler,
+      currentVisualSourceSummary() {
+        return activeVisualSourceSummary;
+      },
       currentMountState() {
         return previewSession?.currentMountState?.() ?? "created";
       }
@@ -421,6 +462,139 @@ export function drawCoastalWorldShowcase(
   );
 }
 
+export function createExpandedSettlementVisualPreviewBinding(rawScene) {
+  if (
+    !rawScene ||
+    !rawScene.sceneId ||
+    !rawScene.worldId ||
+    !Array.isArray(rawScene.roadInstances) ||
+    !Array.isArray(rawScene.buildingInstances) ||
+    !Array.isArray(rawScene.vegetationInstances) ||
+    !Array.isArray(rawScene.landmarkInstances) ||
+    !rawScene.cameraProfile ||
+    !rawScene.validationResult
+  ) {
+    return null;
+  }
+
+  const scene = rawScene;
+  const roadInstances = (scene.roadInstances ?? []).map((instance) =>
+    deepFreeze({
+      instanceId: instance.instanceId,
+      assetId: instance.assetId,
+      category: "road",
+      orientation: instance.orientation,
+      geometry: deepFreeze({
+        start: deepFreeze({ ...instance.start }),
+        end: deepFreeze({ ...instance.end }),
+        width: instance.width
+      })
+    })
+  );
+  const placementToObject = (instance, category) =>
+    deepFreeze({
+      instanceId: instance.instanceId,
+      assetId: instance.assetId,
+      category,
+      orientation: instance.orientation,
+      position: deepFreeze({ ...instance.position }),
+      footprint: deepFreeze({ ...instance.footprint })
+    });
+
+  const objectInstances = deepFreeze([
+    ...roadInstances,
+    ...(scene.buildingInstances ?? []).map((instance) =>
+      placementToObject(instance, "building")
+    ),
+    ...(scene.vegetationInstances ?? []).map((instance) =>
+      placementToObject(instance, "vegetation")
+    ),
+    ...(scene.landmarkInstances ?? []).map((instance) =>
+      placementToObject(instance, "landmark")
+    )
+  ]);
+
+  return deepFreeze({
+    previewId: createExpandedSettlementPreviewId(scene.sceneId, scene.worldId),
+    sceneId: scene.sceneId,
+    worldId: scene.worldId,
+    objectInstances,
+    cameraState: deepFreeze({
+      cameraProfile: scene.cameraProfile.cameraProfile,
+      focusAssetId: scene.cameraProfile.focusAssetId,
+      orientation: scene.cameraProfile.orientation,
+      previewZoomLevel: scene.cameraProfile.zoomLevel,
+      mapCenterCoordinate: deepFreeze({
+        ...scene.cameraProfile.mapCenterCoordinate
+      })
+    }),
+    visibilityState: deepFreeze({
+      currentState: "hidden",
+      visible: false,
+      allowedStates: deepFreeze(["hidden", "visible", "closed"])
+    }),
+    validationResult: deepFreeze({
+      sceneLoads: scene.validationResult.assetReferencesValid === true,
+      objectsResolve:
+        scene.validationResult.assetReferencesValid === true &&
+        objectInstances.length === 45,
+      cameraWorks: scene.validationResult.cameraProfileValid === true,
+      visibilityToggleWorks: true,
+      deterministicOutput: scene.validationResult.deterministicSceneOutputValid === true
+    }),
+    expandedSettlementScene: scene
+  });
+}
+
+export function drawExpandedSettlementPreview(
+  drawContext,
+  expandedSettlementPreview,
+  { width = 960, height = 540 } = {}
+) {
+  if (!drawContext || typeof drawContext.fillRect !== "function") {
+    throw new Error("Expanded settlement preview draw requires a 2D canvas context.");
+  }
+
+  const palette = resolveLightingPalette("day");
+  const objectInstances = sortExpandedSettlementInstances(
+    expandedSettlementPreview.objectInstances ?? []
+  );
+  const bounds = computeExpandedSettlementBounds(
+    collectExpandedSettlementPoints(objectInstances)
+  );
+
+  drawContext.fillStyle = palette.sky;
+  drawContext.fillRect(0, 0, width, height);
+  drawContext.fillStyle = palette.sea;
+  drawContext.fillRect(0, height * 0.18, width, height * 0.2);
+  drawContext.fillStyle = palette.ground;
+  drawContext.fillRect(0, height * 0.38, width, height * 0.62);
+
+  drawContext.fillStyle = "#163046";
+  drawContext.font = "bold 18px sans-serif";
+  drawContext.textAlign = "left";
+  drawContext.fillText(expandedSettlementPreview.sceneId, width * 0.03, height * 0.08);
+  drawContext.font = "13px sans-serif";
+  drawContext.fillText(
+    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId}`,
+    width * 0.03,
+    height * 0.115
+  );
+
+  for (const instance of objectInstances) {
+    drawExpandedSettlementInstance(drawContext, instance, bounds, { width, height, palette });
+  }
+
+  drawContext.fillStyle = "#163046";
+  drawContext.font = "12px sans-serif";
+  drawContext.textAlign = "left";
+  drawContext.fillText(
+    `${expandedSettlementPreview.objectInstances.length} scene objects :: focus ${expandedSettlementPreview.cameraState.focusAssetId}`,
+    width * 0.03,
+    height * 0.96
+  );
+}
+
 function drawShowcaseRenderable(
   drawContext,
   { width, height, assetInstance, renderable, placement, palette }
@@ -505,6 +679,111 @@ function resolveAssetFillStyle(primaryMaterial, assetId, palette) {
     return palette.lighthouse;
   }
   return palette.building;
+}
+
+function drawExpandedSettlementInstance(drawContext, instance, bounds, { width, height, palette }) {
+  if (instance.category === "road") {
+    const start = projectExpandedSettlementPoint(instance.geometry.start, bounds, width, height);
+    const end = projectExpandedSettlementPoint(instance.geometry.end, bounds, width, height);
+    drawContext.strokeStyle = palette.road;
+    drawContext.lineWidth = Math.max(4, (instance.geometry.width ?? 8) * 1.2);
+    if (typeof drawContext.stroke === "function") {
+      drawContext.beginPath();
+      drawContext.moveTo(start.x, start.y);
+      drawContext.lineTo(end.x, end.y);
+      drawContext.stroke();
+    } else {
+      drawContext.fillStyle = palette.road;
+      drawContext.fillRect(
+        Math.min(start.x, end.x),
+        Math.min(start.y, end.y),
+        Math.max(6, Math.abs(end.x - start.x)),
+        Math.max(6, Math.abs(end.y - start.y))
+      );
+    }
+    return;
+  }
+
+  const projected = projectExpandedSettlementPoint(instance.position, bounds, width, height);
+  if (instance.category === "vegetation") {
+    drawContext.fillStyle = palette.vegetation;
+    drawContext.beginPath();
+    drawContext.arc(projected.x, projected.y, 7, 0, Math.PI * 2);
+    drawContext.fill();
+    return;
+  }
+
+  if (instance.category === "landmark") {
+    drawContext.fillStyle = palette.lighthouse;
+    drawContext.fillRect(projected.x - 8, projected.y - 36, 16, 36);
+    drawContext.fillStyle = "#bd2d2d";
+    drawContext.beginPath();
+    drawContext.moveTo(projected.x - 12, projected.y - 36);
+    drawContext.lineTo(projected.x, projected.y - 52);
+    drawContext.lineTo(projected.x + 12, projected.y - 36);
+    drawContext.closePath();
+    drawContext.fill();
+    return;
+  }
+
+  drawContext.fillStyle = palette.building;
+  drawContext.fillRect(projected.x - 12, projected.y - 12, 24, 18);
+  drawContext.fillStyle = "#7d4d35";
+  drawContext.beginPath();
+  drawContext.moveTo(projected.x - 15, projected.y - 12);
+  drawContext.lineTo(projected.x, projected.y - 24);
+  drawContext.lineTo(projected.x + 15, projected.y - 12);
+  drawContext.closePath();
+  drawContext.fill();
+}
+
+function collectExpandedSettlementPoints(objectInstances) {
+  const points = [];
+  for (const instance of objectInstances) {
+    if (instance.category === "road") {
+      points.push(instance.geometry.start, instance.geometry.end);
+    } else if (instance.position) {
+      points.push(instance.position);
+    }
+  }
+  return points;
+}
+
+function computeExpandedSettlementBounds(points) {
+  const xValues = points.map((point) => point.x);
+  const yValues = points.map((point) => point.y);
+  const minX = Math.min(...xValues);
+  const maxX = Math.max(...xValues);
+  const minY = Math.min(...yValues);
+  const maxY = Math.max(...yValues);
+  return deepFreeze({
+    minX,
+    maxX,
+    minY,
+    maxY,
+    spanX: Math.max(1, maxX - minX),
+    spanY: Math.max(1, maxY - minY)
+  });
+}
+
+function projectExpandedSettlementPoint(point, bounds, width, height) {
+  const normalizedX = (point.x - bounds.minX) / bounds.spanX;
+  const normalizedY = (point.y - bounds.minY) / bounds.spanY;
+  return deepFreeze({
+    x: width * 0.08 + normalizedX * width * 0.84,
+    y: height * 0.82 - normalizedY * height * 0.46
+  });
+}
+
+function sortExpandedSettlementInstances(objectInstances) {
+  return [...objectInstances].sort((left, right) => {
+    const leftIndex = expandedSettlementCategoryOrder.indexOf(left.category);
+    const rightIndex = expandedSettlementCategoryOrder.indexOf(right.category);
+    if (leftIndex !== rightIndex) {
+      return leftIndex - rightIndex;
+    }
+    return String(left.instanceId).localeCompare(String(right.instanceId));
+  });
 }
 
 export function drawProjectedGroundMesh(drawContext, { width, height, meshData, fillStyle = "#4d9b57" }) {
@@ -780,10 +1059,86 @@ function resolveCoastalWorldShowcase(rawShowcase) {
   return Object.freeze(validation.coastalStarterWorldBrowserShowcase.showcase);
 }
 
+function resolveExpandedSettlementPreview(rawPreview) {
+  if (!rawPreview) {
+    return null;
+  }
+
+  if (
+    rawPreview.previewId &&
+    rawPreview.sceneId &&
+    rawPreview.worldId &&
+    Array.isArray(rawPreview.objectInstances) &&
+    rawPreview.cameraState &&
+    rawPreview.visibilityState &&
+    rawPreview.validationResult
+  ) {
+    return deepFreeze(rawPreview);
+  }
+
+  return createExpandedSettlementVisualPreviewBinding(rawPreview);
+}
+
+function buildVisualSourceSummary({
+  expandedSettlementPreview,
+  coastalWorldShowcase,
+  visibilityState
+}) {
+  if (expandedSettlementPreview) {
+    return deepFreeze({
+      sourceType: "expanded-settlement-scene",
+      sceneId: expandedSettlementPreview.sceneId,
+      worldId: expandedSettlementPreview.worldId,
+      objectInstanceCount: expandedSettlementPreview.objectInstances.length,
+      visibilityState,
+      active:
+        visibilityState === "visible" &&
+        expandedSettlementPreview.validationResult.objectsResolve === true
+    });
+  }
+
+  if (coastalWorldShowcase) {
+    return deepFreeze({
+      sourceType: "coastal-showcase-scene",
+      sceneId: coastalWorldShowcase.sceneId,
+      worldId: coastalWorldShowcase.worldId,
+      objectInstanceCount: coastalWorldShowcase.assetInstances.length,
+      visibilityState,
+      active:
+        visibilityState === "visible" &&
+        coastalWorldShowcase.verificationResult.realGlbBackedSceneValid === true
+    });
+  }
+
+  return deepFreeze({
+    sourceType: "placeholder-scene",
+    sceneId: null,
+    worldId: null,
+    objectInstanceCount: atlasBrowserDemoPlaceholderObjects.length,
+    visibilityState,
+    active: visibilityState === "visible"
+  });
+}
+
+function createExpandedSettlementPreviewId(sceneId, worldId) {
+  const hash = stableNumericHash(`${sceneId}::${worldId}`);
+  return `MAP_WORLD_SETTLEMENT_VISUAL_PREVIEW_${hash}`;
+}
+
 function stableNumericHash(value) {
   let hash = 0;
   for (let index = 0; index < value.length; index += 1) {
     hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
   }
   return String(hash).padStart(10, "0");
+}
+
+function deepFreeze(value) {
+  if (!value || typeof value !== "object" || Object.isFrozen(value)) {
+    return value;
+  }
+  for (const nestedValue of Object.values(value)) {
+    deepFreeze(nestedValue);
+  }
+  return Object.freeze(value);
 }
