@@ -114,6 +114,19 @@ test("map world settlement real map overlay foundation validates a combined map 
     overlay.poiLocationMetadata.validationResult.coordinateConsistencyValid,
     true
   );
+  assert.equal(
+    overlay.poiPresentationState.poiMarkerState.activeMarkerId,
+    null
+  );
+  assert.ok(overlay.poiPresentationState.poiMarkerState.visibleMarkerCount > 0);
+  assert.equal(
+    overlay.poiPresentationState.visibilityState.currentState,
+    "visible"
+  );
+  assert.equal(
+    overlay.poiPresentationState.validationResult.zoomVisibilityValid,
+    true
+  );
   assert.equal(overlay.discoveryState.playerId, overlay.playerState.playerId);
   assert.equal(overlay.discoveryState.discoveryState, "discovery-idle");
   assert.deepEqual(overlay.discoveryState.discoveredObjectIds, []);
@@ -157,6 +170,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.poiState, second.poiState);
   assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
   assert.deepEqual(first.poiLocationMetadata, second.poiLocationMetadata);
+  assert.deepEqual(first.poiPresentationState, second.poiPresentationState);
   assert.deepEqual(first.discoveryState, second.discoveryState);
 });
 
@@ -411,6 +425,76 @@ test("overlay POI location metadata resolves reusable spatial metadata determini
   );
   assert.equal(
     poiLocationMetadata.validationResult.deterministicPlacementValid,
+    true
+  );
+});
+
+test("overlay POI presentation state resolves reusable marker and label presentation deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+  const poiState = moduleUnderTest.createMapWorldSettlementPoiState({
+    settlementScene,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001",
+    playerState
+  });
+  const poiContentMetadata =
+    moduleUnderTest.createMapWorldSettlementPoiContentMetadata({
+      settlementScene,
+      poiState
+    });
+  const poiLocationMetadata =
+    moduleUnderTest.createMapWorldSettlementPoiLocationMetadata({
+      settlementScene,
+      poiState,
+      poiContentMetadata
+    });
+  const poiPresentationState =
+    moduleUnderTest.createMapWorldSettlementPoiPresentationState({
+      settlementScene,
+      poiState,
+      poiContentMetadata,
+      poiLocationMetadata
+    });
+
+  assert.equal(
+    poiPresentationState.poiMarkerState.activeMarkerId,
+    poiState.poiId
+  );
+  assert.ok(poiPresentationState.poiMarkerState.visibleMarkerCount > 0);
+  assert.equal(
+    poiPresentationState.selectedStyle.currentState,
+    "selected-poi-emphasis"
+  );
+  assert.equal(
+    poiPresentationState.labelState.selectedLabelId,
+    poiState.poiId
+  );
+  assert.equal(
+    poiPresentationState.visibilityState.currentState,
+    "visible"
+  );
+  assert.equal(
+    poiPresentationState.validationResult.poiIdentityValid,
+    true
+  );
+  assert.equal(
+    poiPresentationState.validationResult.zoomVisibilityValid,
+    true
+  );
+  assert.equal(
+    poiPresentationState.validationResult.selectionStateValid,
     true
   );
 });

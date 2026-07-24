@@ -279,6 +279,7 @@
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
       <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
       <p id="atlasPoiLabel">POI: waiting for world object</p>
+      <p id="atlasPoiPresentationLabel">POI presentation: waiting for world layer</p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
         <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
@@ -384,6 +385,7 @@
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
+    const poiPresentationLabel = document.getElementById("atlasPoiPresentationLabel");
     const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
     const playerInteractButton = document.getElementById("atlasPlayerInteractButton");
     const worldOverviewButton = document.getElementById("atlasWorldOverviewButton");
@@ -580,6 +582,23 @@
       }
       poiLabel.textContent =
         `POI: ${poiState.poiType ?? "none"} / ${poiState.assetId ?? "no asset"} / ${poiState.interactionState}`;
+    };
+
+    const updatePoiPresentationLabels = (poiPresentationState) => {
+      if (!poiPresentationLabel) {
+        return;
+      }
+      if (
+        !poiPresentationState ||
+        !poiPresentationState.poiMarkerState ||
+        !Array.isArray(poiPresentationState.poiMarkerState.markers)
+      ) {
+        poiPresentationLabel.textContent =
+          "POI presentation: waiting for world layer";
+        return;
+      }
+      poiPresentationLabel.textContent =
+        `POI presentation: ${poiPresentationState.visibilityState.currentState} / markers ${poiPresentationState.visibilityState.visibleMarkerCount} / labels ${poiPresentationState.visibilityState.visibleLabelCount} / zoom ${poiPresentationState.labelState.zoomProfile}`;
     };
 
     const resolveOverlayHarness = () =>
@@ -931,6 +950,7 @@
                 if (selection.ok) {
                   syncInteractionStateToBrowserState(selection.interactionState);
                   updatePoiLabels(selection.poiState);
+                  updatePoiPresentationLabels(selection.poiPresentationState);
                   updateDetailPreviewLabels(
                     selection.detailPreviewState,
                     selection.poiContentMetadata
@@ -939,6 +959,7 @@
                     ...(window.__atlasBrowserDemoState ?? {}),
                     poiState: selection.poiState,
                     poiContentMetadata: selection.poiContentMetadata,
+                    poiPresentationState: selection.poiPresentationState,
                     detailPreviewState: selection.detailPreviewState
                   });
                 }
@@ -1053,6 +1074,7 @@
                 combinedOverlay,
                 poiState: combinedOverlay.poiState,
                 poiContentMetadata: combinedOverlay.poiContentMetadata,
+                poiPresentationState: combinedOverlay.poiPresentationState,
                 overlayInteractionState: combinedOverlay.interactionState,
                 selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
                 detailPreviewState: combinedOverlay.detailState,
@@ -1065,6 +1087,7 @@
                 sourceType: "combined-map-world-overlay"
               });
               updatePoiLabels(combinedOverlay.poiState);
+              updatePoiPresentationLabels(combinedOverlay.poiPresentationState);
               updateOverlayInteractionLabels(combinedOverlay.interactionState);
               updateDetailPreviewLabels(
                 combinedOverlay.detailState,
@@ -1126,6 +1149,7 @@
               activeVisualSource: visualSourceSummary,
               poiState: null,
               poiContentMetadata: null,
+              poiPresentationState: null,
               selectedOverlayObject: null,
               overlayInteractionState: null,
               detailPreviewState: null,
@@ -1135,6 +1159,7 @@
             });
             updateVisualSourceLabels(visualSourceSummary);
             updatePoiLabels(null);
+            updatePoiPresentationLabels(null);
             updateDetailPreviewLabels(null);
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
@@ -1155,6 +1180,7 @@
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             poiContentMetadata: harness.currentSettlementPoiContentMetadata(),
+            poiPresentationState: harness.currentSettlementPoiPresentationState(),
             detailPreviewState: detailState,
             selectedOverlayObject: null,
             overlayInteractionState: interactionState

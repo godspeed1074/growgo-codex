@@ -4,6 +4,9 @@ import {
 import {
   validateCoastalStarterWorldBrowserShowcase
 } from "../asset-factory/coastal-starter-world-browser-showcase.mjs";
+import {
+  createMapWorldSettlementPoiPresentationState
+} from "../asset-factory/map-world-settlement-real-map-overlay-foundation.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -91,6 +94,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   let currentPoiContentMetadata = createDefaultPoiContentMetadata(
     expandedSettlementPreview
   );
+  let currentPoiPresentationState = createDefaultPoiPresentationState(
+    expandedSettlementPreview
+  );
   let currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
     expandedSettlementPreview
   );
@@ -161,7 +167,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         width: canvas.width,
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
-        playerState: currentPlayerMapState
+        playerState: currentPlayerMapState,
+        poiPresentationState: currentPoiPresentationState
       });
     } else if (coastalWorldShowcase) {
       drawCoastalWorldShowcase(drawContext, coastalWorldShowcase, {
@@ -234,6 +241,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     );
     currentPoiState = createDefaultPoiState(expandedSettlementPreview);
     currentPoiContentMetadata = createDefaultPoiContentMetadata(
+      expandedSettlementPreview
+    );
+    currentPoiPresentationState = createDefaultPoiPresentationState(
       expandedSettlementPreview
     );
     currentPlayerMapState = createDefaultPlayerMapState(
@@ -338,6 +348,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       currentPoiState
     );
+    currentPoiPresentationState = buildPoiPresentationState(
+      expandedSettlementPreview,
+      currentPoiState,
+      currentPoiContentMetadata
+    );
     currentPlayerInteractionState = buildPlayerInteractionState(
       expandedSettlementPreview,
       currentPlayerMapState,
@@ -349,9 +364,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       {
         width: canvas.width,
         height: canvas.height,
-        interactionState: currentOverlayInteractionState
-        ,
-        playerState: currentPlayerMapState
+        interactionState: currentOverlayInteractionState,
+        playerState: currentPlayerMapState,
+        poiPresentationState: currentPoiPresentationState
       }
     );
     const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
@@ -367,6 +382,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       }),
       poiState: currentPoiState,
       poiContentMetadata: currentPoiContentMetadata,
+      poiPresentationState: currentPoiPresentationState,
       interactionState: currentOverlayInteractionState,
       detailPreviewState: currentAssetDetailPreviewState,
       playerInteractionState: currentPlayerInteractionState,
@@ -405,6 +421,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentPoiContentMetadata = createDefaultPoiContentMetadata(
           expandedSettlementPreview
         );
+        currentPoiPresentationState = createDefaultPoiPresentationState(
+          expandedSettlementPreview
+        );
         currentPlayerMapState = createDefaultPlayerMapState(
           expandedSettlementPreview
         );
@@ -424,7 +443,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
               width: canvas.width,
               height: canvas.height,
               interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState
+              playerState: currentPlayerMapState,
+              poiPresentationState: currentPoiPresentationState
             }
           );
         }
@@ -438,6 +458,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementPoiContentMetadata() {
         return currentPoiContentMetadata;
+      },
+      currentSettlementPoiPresentationState() {
+        return currentPoiPresentationState;
       },
       openSettlementAssetDetailPreview() {
         currentAssetDetailPreviewState = buildAssetDetailPreviewState(
@@ -470,7 +493,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
               width: canvas.width,
               height: canvas.height,
               interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState
+              playerState: currentPlayerMapState,
+              poiPresentationState: currentPoiPresentationState
             }
           );
         }
@@ -489,7 +513,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
               width: canvas.width,
               height: canvas.height,
               interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState
+              playerState: currentPlayerMapState,
+              poiPresentationState: currentPoiPresentationState
             }
           );
         }
@@ -532,7 +557,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
               height: canvas.height,
               interactionState: currentOverlayInteractionState,
               playerState: currentPlayerMapState,
-              discoveryState: currentDiscoveryState
+              discoveryState: currentDiscoveryState,
+              poiPresentationState: currentPoiPresentationState
             }
           );
         }
@@ -916,7 +942,8 @@ export function drawExpandedSettlementPreview(
     height = 540,
     interactionState = null,
     playerState = null,
-    discoveryState = null
+    discoveryState = null,
+    poiPresentationState = null
   } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
@@ -931,6 +958,8 @@ export function drawExpandedSettlementPreview(
     playerState ?? createDefaultPlayerMapState(expandedSettlementPreview);
   const resolvedDiscoveryState =
     discoveryState ?? createDefaultDiscoveryState(expandedSettlementPreview, resolvedPlayerState);
+  const resolvedPoiPresentationState =
+    poiPresentationState ?? createDefaultPoiPresentationState(expandedSettlementPreview);
   const resolvedCameraState =
     resolvedDiscoveryState?.cameraFocus?.currentState === "discovery-focused"
       ? {
@@ -1030,6 +1059,22 @@ export function drawExpandedSettlementPreview(
     drawContext.beginPath();
     drawContext.arc(projectedPlayer.x, projectedPlayer.y, 3, 0, Math.PI * 2);
     drawContext.fill();
+  }
+
+  const poiMarkers = resolvedPoiPresentationState?.poiMarkerState?.markers ?? [];
+  for (const marker of poiMarkers) {
+    if (!marker.visible || !marker.position) {
+      continue;
+    }
+    const projectedMarker = projectExpandedSettlementPoint(
+      marker.position,
+      bounds,
+      width,
+      height,
+      scaling,
+      resolvedCameraState
+    );
+    drawPoiPresentationMarker(drawContext, projectedMarker, marker);
   }
 
   drawContext.fillStyle = "#163046";
@@ -1585,6 +1630,43 @@ function createDefaultPoiContentMetadata(expandedSettlementPreview) {
   );
 }
 
+function createDefaultPoiPresentationState(expandedSettlementPreview) {
+  if (!expandedSettlementPreview) {
+    return deepFreeze({
+      poiMarkerState: deepFreeze({
+        activeMarkerId: null,
+        markers: deepFreeze([]),
+        visibleMarkerCount: 0
+      }),
+      selectedStyle: deepFreeze({
+        currentState: "default-poi-style",
+        poiId: null,
+        accentColor: null,
+        haloRadius: 0
+      }),
+      labelState: deepFreeze({
+        zoomProfile: "normal",
+        visiblePoiIds: deepFreeze([]),
+        selectedLabelId: null
+      }),
+      visibilityState: deepFreeze({
+        currentState: "hidden",
+        visibleMarkerCount: 0,
+        visibleLabelCount: 0,
+        mapLayerVisible: false
+      }),
+      validationResult: deepFreeze({
+        poiIdentityValid: true,
+        zoomVisibilityValid: true,
+        selectionStateValid: true,
+        deterministicPresentationValid: true,
+        cleanupValid: true
+      })
+    });
+  }
+  return buildPoiPresentationState(expandedSettlementPreview);
+}
+
 function createDefaultPlayerMapState(expandedSettlementPreview) {
   if (!expandedSettlementPreview) {
     return deepFreeze({
@@ -1940,6 +2022,82 @@ function buildPoiContentMetadata(
       cleanupValid: true
     })
   });
+}
+
+function buildPoiPresentationState(
+  expandedSettlementPreview,
+  poiState = null,
+  poiContentMetadata = null
+) {
+  if (!expandedSettlementPreview) {
+    return createDefaultPoiPresentationState(expandedSettlementPreview);
+  }
+  return createMapWorldSettlementPoiPresentationState({
+    settlementScene:
+      expandedSettlementPreview.expandedSettlementScene ?? expandedSettlementPreview,
+    poiState,
+    poiContentMetadata
+  });
+}
+
+function drawPoiPresentationMarker(drawContext, projectedMarker, marker) {
+  const markerSize = Number(marker.markerSize ?? 10);
+  if (marker.selected) {
+    drawContext.strokeStyle = marker.markerColor;
+    if (typeof drawContext.stroke === "function") {
+      drawContext.beginPath();
+      drawContext.arc(projectedMarker.x, projectedMarker.y, markerSize + 5, 0, Math.PI * 2);
+      drawContext.stroke();
+    }
+  }
+  drawContext.fillStyle = marker.markerColor;
+  if (marker.markerShape === "diamond") {
+    drawContext.beginPath();
+    drawContext.moveTo(projectedMarker.x, projectedMarker.y - markerSize);
+    drawContext.lineTo(projectedMarker.x + markerSize, projectedMarker.y);
+    drawContext.lineTo(projectedMarker.x, projectedMarker.y + markerSize);
+    drawContext.lineTo(projectedMarker.x - markerSize, projectedMarker.y);
+    drawContext.closePath();
+    drawContext.fill();
+  } else if (marker.markerShape === "square") {
+    drawContext.fillRect(
+      projectedMarker.x - markerSize,
+      projectedMarker.y - markerSize,
+      markerSize * 2,
+      markerSize * 2
+    );
+  } else if (marker.markerShape === "line") {
+    if (typeof drawContext.stroke === "function") {
+      drawContext.strokeStyle = marker.markerColor;
+      drawContext.lineWidth = Math.max(3, markerSize / 2);
+      drawContext.beginPath();
+      drawContext.moveTo(projectedMarker.x - markerSize, projectedMarker.y);
+      drawContext.lineTo(projectedMarker.x + markerSize, projectedMarker.y);
+      drawContext.stroke();
+    } else {
+      drawContext.fillRect(
+        projectedMarker.x - markerSize,
+        projectedMarker.y - 2,
+        markerSize * 2,
+        4
+      );
+    }
+  } else {
+    drawContext.beginPath();
+    drawContext.arc(projectedMarker.x, projectedMarker.y, markerSize, 0, Math.PI * 2);
+    drawContext.fill();
+  }
+
+  if (marker.labelVisible && typeof marker.label === "string" && marker.label.length > 0) {
+    drawContext.fillStyle = marker.labelColor ?? "#163046";
+    drawContext.font = marker.selected ? "bold 12px sans-serif" : "11px sans-serif";
+    drawContext.textAlign = "center";
+    drawContext.fillText(
+      marker.label,
+      projectedMarker.x,
+      projectedMarker.y - markerSize - 8
+    );
+  }
 }
 
 function buildPlayerMapState(

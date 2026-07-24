@@ -643,6 +643,14 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     selection.poiContentMetadata.title,
     "Rocky Point Lighthouse"
   );
+  assert.equal(
+    selection.poiPresentationState.selectedStyle.currentState,
+    "selected-poi-emphasis"
+  );
+  assert.equal(
+    selection.poiPresentationState.visibilityState.currentState,
+    "visible"
+  );
   assert.equal(selection.poiContentMetadata.category, "landmark");
   assert.equal(
     selection.poiContentMetadata.discoveryProfile.mode,
@@ -669,6 +677,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     harness.currentSettlementPoiContentMetadata().title,
     "Rocky Point Lighthouse"
+  );
+  assert.equal(
+    harness.currentSettlementPoiPresentationState().poiMarkerState.activeMarkerId,
+    selection.poiState.poiId
   );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
 
@@ -706,6 +718,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   const cleared = harness.clearSettlementInteraction();
   assert.equal(cleared.selectedObject, null);
   assert.equal(harness.currentSettlementPoiContentMetadata().title, null);
+  assert.equal(
+    harness.currentSettlementPoiPresentationState().selectedStyle.currentState,
+    "default-poi-style"
+  );
   assert.equal(
     harness.currentSettlementAssetDetailPreviewState().detailState,
     "map-overview"

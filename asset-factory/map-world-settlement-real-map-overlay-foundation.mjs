@@ -22,6 +22,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "poiState",
   "poiContentMetadata",
   "poiLocationMetadata",
+  "poiPresentationState",
   "interactionState",
   "detailState",
   "playerState",
@@ -70,6 +71,12 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     settlementScene,
     poiState,
     poiContentMetadata
+  });
+  const poiPresentationState = createMapWorldSettlementPoiPresentationState({
+    settlementScene,
+    poiState,
+    poiContentMetadata,
+    poiLocationMetadata
   });
 
   const overlay = deepFreeze({
@@ -133,6 +140,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     poiState,
     poiContentMetadata,
     poiLocationMetadata,
+    poiPresentationState,
     interactionState: createMapWorldSettlementOverlayInteractionState({
       settlementScene,
       mapWorldLiveMapFoundation
@@ -192,6 +200,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       poiIdentityValid: true,
       poiContentMetadataValid: true,
       poiLocationMetadataValid: true,
+      poiPresentationStateValid: true,
       selectionPersistenceValid: true,
       cameraFocusValid: true,
       detailPreviewValid: true,
@@ -303,6 +312,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation poiLocationMetadataValid must be true."
       );
     }
+    if (!overlay.validationResult.poiPresentationStateValid) {
+      throw createValidationError(
+        "poi_presentation_state_invalid",
+        "Map world settlement real map overlay foundation poiPresentationStateValid must be true."
+      );
+    }
     if (!overlay.validationResult.selectionPersistenceValid) {
       throw createValidationError(
         "selection_persistence_invalid",
@@ -388,6 +403,18 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       throw createValidationError(
         "poi_location_metadata_state_invalid",
         "Map world settlement real map overlay foundation POI location metadata must remain valid."
+      );
+    }
+    if (
+      overlay.poiPresentationState.validationResult.poiIdentityValid !== true ||
+      overlay.poiPresentationState.validationResult.zoomVisibilityValid !== true ||
+      overlay.poiPresentationState.validationResult.selectionStateValid !== true ||
+      overlay.poiPresentationState.validationResult.deterministicPresentationValid !== true ||
+      overlay.poiPresentationState.validationResult.cleanupValid !== true
+    ) {
+      throw createValidationError(
+        "poi_presentation_state_invalid",
+        "Map world settlement real map overlay foundation POI presentation state must remain valid."
       );
     }
     if (
@@ -479,6 +506,9 @@ function normalizeOverlay(rawOverlay) {
     ),
     poiLocationMetadata: deepFreeze(
       asPlainObject(overlay.poiLocationMetadata, "poiLocationMetadata")
+    ),
+    poiPresentationState: deepFreeze(
+      asPlainObject(overlay.poiPresentationState, "poiPresentationState")
     ),
     interactionState: deepFreeze(asPlainObject(overlay.interactionState, "interactionState")),
     detailState: deepFreeze(asPlainObject(overlay.detailState, "detailState")),
@@ -807,6 +837,165 @@ export function createMapWorldSettlementPoiLocationMetadata({
           (resolvedTarget.category !== "road" ||
             accessibility?.zone === "infrastructure-alignment")),
       deterministicPlacementValid: true,
+      cleanupValid: true
+    })
+  });
+}
+
+const poiCategoryPresentationProfiles = Object.freeze({
+  landmark: Object.freeze({
+    markerShape: "diamond",
+    markerColor: "#D4534A",
+    labelColor: "#6E1F1B",
+    markerSize: 15
+  }),
+  building: Object.freeze({
+    markerShape: "square",
+    markerColor: "#3F6EA8",
+    labelColor: "#183A63",
+    markerSize: 12
+  }),
+  nature: Object.freeze({
+    markerShape: "circle",
+    markerColor: "#4D8A45",
+    labelColor: "#214C1D",
+    markerSize: 10
+  }),
+  infrastructure: Object.freeze({
+    markerShape: "line",
+    markerColor: "#6B7078",
+    labelColor: "#2C3138",
+    markerSize: 11
+  })
+});
+
+const poiLabelVisibilityByZoomProfile = Object.freeze({
+  far: Object.freeze(["landmark", "infrastructure"]),
+  normal: Object.freeze(["landmark", "building"]),
+  close: Object.freeze(["landmark", "building", "nature", "infrastructure"])
+});
+
+export function createMapWorldSettlementPoiPresentationState({
+  settlementScene,
+  poiState = null,
+  poiContentMetadata = null,
+  poiLocationMetadata = null,
+  zoomProfile = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const activeZoomProfile =
+    zoomProfile ??
+    normalizePoiPresentationZoomProfile(
+      settlementScene.visualScaling?.activeZoomProfile
+    );
+  const visibleLabelCategories =
+    poiLabelVisibilityByZoomProfile[activeZoomProfile] ??
+    poiLabelVisibilityByZoomProfile.normal;
+  const resolvedPoiState =
+    poiState ?? createMapWorldSettlementPoiState({ settlementScene });
+  const resolvedPoiContentMetadata =
+    poiContentMetadata ??
+    createMapWorldSettlementPoiContentMetadata({
+      settlementScene,
+      poiState: resolvedPoiState
+    });
+  const resolvedPoiLocationMetadata =
+    poiLocationMetadata ??
+    createMapWorldSettlementPoiLocationMetadata({
+      settlementScene,
+      poiState: resolvedPoiState,
+      poiContentMetadata: resolvedPoiContentMetadata
+    });
+  const selectedPoiId = resolvedPoiState.assetId == null ? null : resolvedPoiState.poiId;
+
+  const markers = selectableObjects.map((selectableObject) => {
+    const locationMetadata = createMapWorldSettlementPoiLocationMetadata({
+      settlementScene,
+      targetObject: selectableObject
+    });
+    const contentMetadata = createMapWorldSettlementPoiContentMetadata({
+      settlementScene,
+      targetObject: selectableObject
+    });
+    const profile =
+      poiCategoryPresentationProfiles[contentMetadata.category] ??
+      poiCategoryPresentationProfiles.infrastructure;
+    const selected = locationMetadata.poiId === selectedPoiId;
+    const visible = locationMetadata.position != null;
+    const labelVisible =
+      selected ||
+      visibleLabelCategories.includes(contentMetadata.category ?? "infrastructure");
+    return deepFreeze({
+      poiId: locationMetadata.poiId,
+      assetId: selectableObject.assetId,
+      category: contentMetadata.category,
+      position: locationMetadata.position,
+      markerShape: profile.markerShape,
+      markerColor: profile.markerColor,
+      labelColor: profile.labelColor,
+      markerSize: selected ? profile.markerSize + 4 : profile.markerSize,
+      label: contentMetadata.title,
+      selected,
+      visible,
+      labelVisible
+    });
+  });
+
+  const visibleMarkers = markers.filter((marker) => marker.visible);
+  const visibleLabels = markers.filter((marker) => marker.visible && marker.labelVisible);
+
+  return deepFreeze({
+    poiMarkerState: deepFreeze({
+      activeMarkerId: selectedPoiId,
+      markers: deepFreeze(markers),
+      visibleMarkerCount: visibleMarkers.length
+    }),
+    selectedStyle: deepFreeze({
+      currentState: selectedPoiId ? "selected-poi-emphasis" : "default-poi-style",
+      poiId: selectedPoiId,
+      accentColor:
+        selectedPoiId != null
+          ? resolvedPoiContentMetadata.category === "landmark"
+            ? "#FFF2A8"
+            : "#FFF7D6"
+          : null,
+      haloRadius:
+        selectedPoiId != null
+          ? Number(
+              ((visibleMarkers.find((marker) => marker.poiId === selectedPoiId)?.markerSize ?? 12) + 6)
+                .toFixed(2)
+            )
+          : 0
+    }),
+    labelState: deepFreeze({
+      zoomProfile: activeZoomProfile,
+      visiblePoiIds: deepFreeze(visibleLabels.map((marker) => marker.poiId)),
+      selectedLabelId: selectedPoiId
+    }),
+    visibilityState: deepFreeze({
+      currentState: visibleMarkers.length > 0 ? "visible" : "hidden",
+      visibleMarkerCount: visibleMarkers.length,
+      visibleLabelCount: visibleLabels.length,
+      mapLayerVisible: visibleMarkers.length > 0
+    }),
+    validationResult: deepFreeze({
+      poiIdentityValid: markers.every(
+        (marker) =>
+          typeof marker.poiId === "string" &&
+          typeof marker.assetId === "string" &&
+          typeof marker.category === "string"
+      ),
+      zoomVisibilityValid:
+        visibleLabels.every(
+          (marker) =>
+            marker.selected === true ||
+            visibleLabelCategories.includes(marker.category)
+        ) && ["far", "normal", "close"].includes(activeZoomProfile),
+      selectionStateValid:
+        selectedPoiId == null ||
+        markers.some((marker) => marker.poiId === selectedPoiId && marker.selected === true),
+      deterministicPresentationValid:
+        resolvedPoiLocationMetadata.worldId === settlementScene.worldId,
       cleanupValid: true
     })
   });
@@ -1171,6 +1360,13 @@ function resolveSelectableOverlayObject(selectableObjects, candidate) {
     }
   }
   return null;
+}
+
+function normalizePoiPresentationZoomProfile(value) {
+  if (value === "far" || value === "close") {
+    return value;
+  }
+  return "normal";
 }
 
 function resolveInstancePosition(instance) {
