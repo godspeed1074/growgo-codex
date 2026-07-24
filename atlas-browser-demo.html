@@ -187,10 +187,11 @@
       setLaunchMode();
     } else {
       try {
+        const moduleVersion = "2026-07-24-01";
         const [{ createAtlasBrowserDemoHarness }, { createCoastalStarterWorldBrowserShowcase }] =
           await Promise.all([
-            import("./client/atlas-browser-demo-harness.mjs"),
-            import("./asset-factory/coastal-starter-world-browser-showcase.mjs")
+            import(`./client/atlas-browser-demo-harness.mjs?v=${moduleVersion}`),
+            import(`./asset-factory/coastal-starter-world-browser-showcase.mjs?v=${moduleVersion}`)
           ]);
         const coastalWorldShowcase =
           await createCoastalStarterWorldBrowserShowcase({
@@ -229,6 +230,7 @@
         window.atlasBrowserDemoHarness = harness.atlasBrowserDemoHarness;
         window.coastalStarterWorldBrowserShowcase = coastalWorldShowcase;
       } catch (error) {
+        window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
         console.error(error);
       }

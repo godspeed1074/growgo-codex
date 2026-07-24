@@ -1,14 +1,3 @@
-import { existsSync as defaultExistsSync } from "node:fs";
-import { readFile as defaultReadFile } from "node:fs/promises";
-import {
-  groundCoastalGrassRealGlbMeshPreviewIntegrationDefinition,
-  validateGroundCoastalGrassRealGlbMeshPreviewIntegration
-} from "./ground-coastal-grass-real-glb-mesh-preview-integration.mjs";
-import {
-  groundCoastalGrassRealGlbRendererPreviewTestDefinition,
-  validateGroundCoastalGrassRealGlbRendererPreviewTest
-} from "./ground-coastal-grass-real-glb-renderer-preview-test.mjs";
-
 export const groundCoastalGrassMinimalGlbRuntimeLoaderRequiredFields = Object.freeze([
   "glbRuntimeLoadId",
   "assetId",
@@ -94,6 +83,7 @@ const supportedLodKeys = new Set([
   "LOD_MAP",
   "LOD_DISTANT_SILHOUETTE"
 ]);
+const defaultExistsSync = () => false;
 
 export function createGroundCoastalGrassMinimalGlbRuntimeLoader(
   rawDefinition = groundCoastalGrassMinimalGlbRuntimeLoaderDefinition
@@ -109,26 +99,12 @@ export async function loadGroundCoastalGrassMinimalGlbRuntimeLoader(
     const normalizedOptions = normalizeOptions(options);
     const definition = normalizeRuntimeLoaderDefinition(rawDefinition);
 
-    const meshPreviewResult =
-      normalizedOptions.validateGroundCoastalGrassRealGlbMeshPreviewIntegration(
-        normalizedOptions.meshPreviewDefinition,
-        {
-          existsSync: normalizedOptions.existsSync,
-          rendererPreviewDefinition: normalizedOptions.rendererPreviewDefinition
-        }
-      );
-    const meshPreviewDefinition = meshPreviewResult.ok
-      ? meshPreviewResult.realGlbMeshPreview.definition
-      : normalizeMeshPreviewFallback(normalizedOptions.meshPreviewDefinition);
-
-    const rendererPreviewResult =
-      normalizedOptions.validateGroundCoastalGrassRealGlbRendererPreviewTest(
-        normalizedOptions.rendererPreviewDefinition,
-        { existsSync: normalizedOptions.existsSync }
-      );
-    const rendererPreviewDefinition = rendererPreviewResult.ok
-      ? rendererPreviewResult.realGlbRendererPreview.definition
-      : normalizeRendererPreviewFallback(normalizedOptions.rendererPreviewDefinition);
+    const meshPreviewDefinition = normalizeMeshPreviewFallback(
+      normalizedOptions.meshPreviewDefinition
+    );
+    const rendererPreviewDefinition = normalizeRendererPreviewFallback(
+      normalizedOptions.rendererPreviewDefinition
+    );
 
     validateCompatibility(
       definition,
@@ -213,21 +189,9 @@ export async function loadGroundCoastalGrassMinimalGlbRuntimeLoader(
 function normalizeOptions(options) {
   return Object.freeze({
     meshPreviewDefinition:
-      options.meshPreviewDefinition ??
-      groundCoastalGrassRealGlbMeshPreviewIntegrationDefinition,
+      options.meshPreviewDefinition ?? createDefaultMeshPreviewDefinition(),
     rendererPreviewDefinition:
-      options.rendererPreviewDefinition ??
-      groundCoastalGrassRealGlbRendererPreviewTestDefinition,
-    validateGroundCoastalGrassRealGlbMeshPreviewIntegration:
-      typeof options.validateGroundCoastalGrassRealGlbMeshPreviewIntegration ===
-      "function"
-        ? options.validateGroundCoastalGrassRealGlbMeshPreviewIntegration
-        : validateGroundCoastalGrassRealGlbMeshPreviewIntegration,
-    validateGroundCoastalGrassRealGlbRendererPreviewTest:
-      typeof options.validateGroundCoastalGrassRealGlbRendererPreviewTest ===
-      "function"
-        ? options.validateGroundCoastalGrassRealGlbRendererPreviewTest
-        : validateGroundCoastalGrassRealGlbRendererPreviewTest,
+      options.rendererPreviewDefinition ?? createDefaultRendererPreviewDefinition(),
     existsSync:
       typeof options.existsSync === "function" ? options.existsSync : defaultExistsSync,
     loadArrayBuffer:
@@ -238,7 +202,15 @@ function normalizeOptions(options) {
 }
 
 function createDefaultLoadArrayBuffer(readFileOverride) {
-  const readFile = typeof readFileOverride === "function" ? readFileOverride : defaultReadFile;
+  const readFile =
+    typeof readFileOverride === "function"
+      ? readFileOverride
+      : async () => {
+          throw createValidationError(
+            "array_buffer_loader_required",
+            "Runtime GLB loader requires loadArrayBuffer or readFile in this environment."
+          );
+        };
   return async (glbPath) => {
     const fileBuffer = await readFile(glbPath);
     return fileBuffer.buffer.slice(
@@ -246,6 +218,25 @@ function createDefaultLoadArrayBuffer(readFileOverride) {
       fileBuffer.byteOffset + fileBuffer.byteLength
     );
   };
+}
+
+function createDefaultMeshPreviewDefinition() {
+  return deepFreeze({
+    assetId: "GROUND_COASTAL_GRASS_001",
+    glbReference: {
+      glbPath:
+        "asset-factory-workspace/production/COASTAL_GROUND_FAMILY_001/export/GROUND_COASTAL_GRASS_001_LOD_GAMEPLAY.glb"
+    }
+  });
+}
+
+function createDefaultRendererPreviewDefinition() {
+  return deepFreeze({
+    assetId: "GROUND_COASTAL_GRASS_001",
+    lodSelection: {
+      availableLods: ["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP", "LOD_DISTANT_SILHOUETTE"]
+    }
+  });
 }
 
 function validateCompatibility(definition, meshPreviewDefinition, rendererPreviewDefinition) {

@@ -1,10 +1,3 @@
-import { existsSync as defaultExistsSync } from "node:fs";
-import { readFile as defaultReadFile } from "node:fs/promises";
-import {
-  lighthouseIslandRockyGlbImportBridgeFoundationDefinition,
-  validateLighthouseIslandRockyGlbImportBridgeFoundation
-} from "./lighthouse-island-rocky-glb-import-bridge-foundation.mjs";
-
 export const lighthouseIslandRockyRuntimePreviewBindingRequiredFields =
   Object.freeze([
     "glbRuntimeLoadId",
@@ -108,6 +101,7 @@ const supportedLodKeys = new Set([
 ]);
 const supportedAppearanceProfiles = new Set(["day", "sunset", "night"]);
 const supportedViewpointValues = new Set(["low", "medium", "high"]);
+const defaultExistsSync = () => false;
 
 export async function loadLighthouseIslandRockyRuntimePreviewBinding(
   rawDefinition = lighthouseIslandRockyRuntimePreviewBindingDefinition,
@@ -123,15 +117,8 @@ export async function loadLighthouseIslandRockyRuntimePreviewBinding(
         : createDefaultArrayBufferLoader(options.readFile);
 
     const importBridgeDefinition =
-      options.importBridgeDefinition ??
-      lighthouseIslandRockyGlbImportBridgeFoundationDefinition;
-    const importBridgeResult =
-      validateLighthouseIslandRockyGlbImportBridgeFoundation(importBridgeDefinition, {
-        existsSync
-      });
-    const importBridge = importBridgeResult.ok
-      ? importBridgeResult.glbImportBridge.foundation
-      : normalizeImportBridgeFallback(importBridgeDefinition);
+      options.importBridgeDefinition ?? createDefaultImportBridgeDefinition(definition);
+    const importBridge = normalizeImportBridgeFallback(importBridgeDefinition);
 
     validateCompatibility(definition, importBridge);
 
@@ -348,7 +335,15 @@ function parseBinaryGlb(arrayBuffer) {
 }
 
 function createDefaultArrayBufferLoader(readFileOverride) {
-  const readFile = typeof readFileOverride === "function" ? readFileOverride : defaultReadFile;
+  const readFile =
+    typeof readFileOverride === "function"
+      ? readFileOverride
+      : async () => {
+          throw createValidationError(
+            "array_buffer_loader_required",
+            "Lighthouse runtime preview binding requires loadArrayBuffer or readFile in this environment."
+          );
+        };
   return async (filePath) => {
     const fileBuffer = await readFile(filePath);
     return fileBuffer.buffer.slice(
@@ -356,6 +351,31 @@ function createDefaultArrayBufferLoader(readFileOverride) {
       fileBuffer.byteOffset + fileBuffer.byteLength
     );
   };
+}
+
+function createDefaultImportBridgeDefinition(definition) {
+  return deepFreeze({
+    glbRegistration: {
+      assetId: definition.assetId,
+      lodReferences: {
+        LOD_GAMEPLAY: definition.glbReference.glbPath
+      }
+    },
+    runtimePreviewBinding: {
+      renderPayload: {
+        rendererProfile: definition.renderResult.rendererProfile
+      },
+      lodSelector: {
+        gameplay: definition.glbReference.lodKey
+      },
+      supportedAppearanceProfiles: [...definition.lighthouseMetadata.supportedAppearanceProfiles],
+      landmarkMetadata: {
+        viewpointValue: definition.lighthouseMetadata.viewpointValue,
+        questEligibility: definition.lighthouseMetadata.questEligibility,
+        captureEligibility: definition.lighthouseMetadata.captureEligibility
+      }
+    }
+  });
 }
 
 function normalizeImportBridgeFallback(rawDefinition) {

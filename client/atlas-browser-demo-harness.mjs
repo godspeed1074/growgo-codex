@@ -2,21 +2,6 @@ import {
   createAtlasEngineFirstManualBrowserVisiblePreviewMountSession
 } from "../asset-factory/atlas-engine-first-manual-browser-visible-preview-mount.mjs";
 import {
-  validateGroundCoastalGrassRealGlbAtlasPreviewReplacement
-} from "../asset-factory/ground-coastal-grass-real-glb-atlas-preview-replacement.mjs";
-import {
-  validateGroundCoastalGrassRealGlbRendererPreviewTest
-} from "../asset-factory/ground-coastal-grass-real-glb-renderer-preview-test.mjs";
-import {
-  validateGroundCoastalGrassRealGlbMeshPreviewIntegration
-} from "../asset-factory/ground-coastal-grass-real-glb-mesh-preview-integration.mjs";
-import {
-  createGroundCoastalGrassMinimalGlbRuntimeLoader
-} from "../asset-factory/ground-coastal-grass-minimal-glb-runtime-loader.mjs";
-import {
-  createGroundCoastalGrassRealGlbMeshVisualRenderTest
-} from "../asset-factory/ground-coastal-grass-real-glb-mesh-visual-render-test.mjs";
-import {
   validateCoastalStarterWorldBrowserShowcase
 } from "../asset-factory/coastal-starter-world-browser-showcase.mjs";
 
@@ -711,17 +696,7 @@ function resolveRealGroundPreviewBinding(rawBinding) {
   if (rawBinding.assetId && rawBinding.rendererPayload && rawBinding.lodSelection) {
     return Object.freeze(rawBinding);
   }
-
-  const validation = validateGroundCoastalGrassRealGlbAtlasPreviewReplacement(
-    rawBinding.definition,
-    rawBinding.options
-  );
-
-  if (!validation.ok) {
-    return null;
-  }
-
-  return Object.freeze(validation.realGlbAtlasPreviewReplacement.definition);
+  return null;
 }
 
 function resolveRealGroundRenderBinding(rawBinding) {
@@ -732,17 +707,7 @@ function resolveRealGroundRenderBinding(rawBinding) {
   if (rawBinding.assetId && rawBinding.renderPayload && rawBinding.lodSelection) {
     return Object.freeze(rawBinding);
   }
-
-  const validation = validateGroundCoastalGrassRealGlbRendererPreviewTest(
-    rawBinding.definition,
-    rawBinding.options
-  );
-
-  if (!validation.ok) {
-    return null;
-  }
-
-  return Object.freeze(validation.realGlbRendererPreview.definition);
+  return null;
 }
 
 function resolveRealGroundMeshPreview(rawBinding) {
@@ -753,17 +718,7 @@ function resolveRealGroundMeshPreview(rawBinding) {
   if (rawBinding.assetId && rawBinding.meshData && rawBinding.renderResult) {
     return Object.freeze(rawBinding);
   }
-
-  const validation = validateGroundCoastalGrassRealGlbMeshPreviewIntegration(
-    rawBinding.definition,
-    rawBinding.options
-  );
-
-  if (!validation.ok) {
-    return null;
-  }
-
-  return Object.freeze(validation.realGlbMeshPreview.definition);
+  return null;
 }
 
 function resolveRealGroundRuntimeLoader(rawBinding) {
@@ -779,14 +734,7 @@ function resolveRealGroundRuntimeLoader(rawBinding) {
   ) {
     return Object.freeze(rawBinding);
   }
-
-  try {
-    return Object.freeze(
-      createGroundCoastalGrassMinimalGlbRuntimeLoader(rawBinding.definition)
-    );
-  } catch {
-    return null;
-  }
+  return null;
 }
 
 function resolveRealGroundMeshRenderTest(rawBinding, runtimeLoaderDefinition) {
@@ -802,16 +750,7 @@ function resolveRealGroundMeshRenderTest(rawBinding, runtimeLoaderDefinition) {
   ) {
     return Object.freeze(rawBinding);
   }
-
-  try {
-    return Object.freeze(
-      createGroundCoastalGrassRealGlbMeshVisualRenderTest(
-        rawBinding?.definition ?? runtimeLoaderDefinition
-      )
-    );
-  } catch {
-    return null;
-  }
+  return null;
 }
 
 function resolveCoastalWorldShowcase(rawShowcase) {

@@ -1,10 +1,3 @@
-import { existsSync as defaultExistsSync } from "node:fs";
-import { readFile as defaultReadFile } from "node:fs/promises";
-import {
-  roadCoastalGlbImportBridgeFoundationDefinition,
-  validateRoadCoastalGlbImportBridgeFoundation
-} from "./road-coastal-glb-import-bridge-foundation.mjs";
-
 export const roadCoastalRuntimePreviewBindingRequiredFields = Object.freeze([
   "glbRuntimeLoadId",
   "assetId",
@@ -88,6 +81,7 @@ const supportedLodKeys = new Set([
   "LOD_MAP",
   "LOD_DISTANT_SILHOUETTE"
 ]);
+const defaultExistsSync = () => false;
 
 export async function loadRoadCoastalRuntimePreviewBinding(
   rawDefinition = roadCoastalRuntimePreviewBindingDefinition,
@@ -103,14 +97,8 @@ export async function loadRoadCoastalRuntimePreviewBinding(
         : createDefaultArrayBufferLoader(options.readFile);
 
     const importBridgeDefinition =
-      options.importBridgeDefinition ?? roadCoastalGlbImportBridgeFoundationDefinition;
-    const importBridgeResult = validateRoadCoastalGlbImportBridgeFoundation(
-      importBridgeDefinition,
-      { existsSync }
-    );
-    const importBridge = importBridgeResult.ok
-      ? importBridgeResult.glbImportBridge.foundation
-      : normalizeImportBridgeFallback(importBridgeDefinition);
+      options.importBridgeDefinition ?? createDefaultImportBridgeDefinition(definition);
+    const importBridge = normalizeImportBridgeFallback(importBridgeDefinition);
 
     validateCompatibility(definition, importBridge);
 
@@ -295,7 +283,15 @@ function parseBinaryGlb(arrayBuffer) {
 }
 
 function createDefaultArrayBufferLoader(readFileOverride) {
-  const readFile = typeof readFileOverride === "function" ? readFileOverride : defaultReadFile;
+  const readFile =
+    typeof readFileOverride === "function"
+      ? readFileOverride
+      : async () => {
+          throw createValidationError(
+            "array_buffer_loader_required",
+            "Road runtime preview binding requires loadArrayBuffer or readFile in this environment."
+          );
+        };
   return async (filePath) => {
     const fileBuffer = await readFile(filePath);
     return fileBuffer.buffer.slice(
@@ -303,6 +299,25 @@ function createDefaultArrayBufferLoader(readFileOverride) {
       fileBuffer.byteOffset + fileBuffer.byteLength
     );
   };
+}
+
+function createDefaultImportBridgeDefinition(definition) {
+  return deepFreeze({
+    glbRegistration: {
+      assetId: definition.assetId,
+      lodReferences: {
+        LOD_GAMEPLAY: definition.glbReference.glbPath
+      }
+    },
+    runtimePreviewBinding: {
+      renderPayload: {
+        rendererProfile: definition.renderResult.rendererProfile
+      },
+      lodSelector: {
+        gameplay: definition.glbReference.lodKey
+      }
+    }
+  });
 }
 
 function normalizeImportBridgeFallback(rawDefinition) {
