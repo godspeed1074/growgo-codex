@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Map World Browser Activation</title>
+  <title>Map World Real Map Display</title>
   <style>
     :root {
       color-scheme: light;
@@ -47,6 +47,35 @@
       gap: 12px;
       flex-wrap: wrap;
       margin-bottom: 16px;
+    }
+
+    .atlas-demo-map-panel {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 12px;
+      border: 1px solid rgba(22, 48, 70, 0.16);
+      background: #f3f8fc;
+    }
+
+    .atlas-demo-map-panel p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .atlas-demo-map-move-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .atlas-demo-map-move-controls button {
+      border: 1px solid #163046;
+      background: #ffffff;
+      color: #163046;
+      padding: 10px 12px;
+      font: inherit;
+      cursor: pointer;
     }
 
     .atlas-demo-controls button {
@@ -121,18 +150,29 @@
 <body>
   <main class="atlas-demo-shell">
     <header class="atlas-demo-header">
-      <h1>Map World Browser Activation</h1>
+      <h1>Map World Real Map Display</h1>
       <span>Manual-only browser demo</span>
     </header>
 
+    <section class="atlas-demo-map-panel" aria-label="Map position controls">
+      <p id="atlasMapCenterLabel">Center: waiting for fixed test coordinate</p>
+      <p id="atlasMapZoomLabel">Zoom: 14</p>
+      <div class="atlas-demo-map-move-controls">
+        <button id="atlasMapNorthButton" type="button">Move North</button>
+        <button id="atlasMapSouthButton" type="button">Move South</button>
+        <button id="atlasMapWestButton" type="button">Move West</button>
+        <button id="atlasMapEastButton" type="button">Move East</button>
+      </div>
+    </section>
+
     <div class="atlas-demo-controls">
-      <button id="atlasPreviewLoadButton" type="button">Load Test Map World</button>
-      <button id="atlasPreviewShowButton" type="button">Activate Coastal World</button>
+      <button id="atlasPreviewLoadButton" type="button">Load Fixed Test Coordinate</button>
+      <button id="atlasPreviewShowButton" type="button">Activate World From Map Location</button>
       <button id="atlasPreviewHideButton" type="button">Hide Coastal World</button>
     </div>
 
     <p id="atlasPreviewStatus" class="atlas-demo-status" aria-live="polite">
-      Map world browser activation loading...
+      Map world real map display loading...
     </p>
 
     <section
@@ -165,8 +205,35 @@
   <script type="module">
     const status = document.getElementById("atlasPreviewStatus");
     const launchNote = document.getElementById("atlasPreviewLaunchNote");
+    const loadButton = document.getElementById("atlasPreviewLoadButton");
     const showButton = document.getElementById("atlasPreviewShowButton");
     const hideButton = document.getElementById("atlasPreviewHideButton");
+    const northButton = document.getElementById("atlasMapNorthButton");
+    const southButton = document.getElementById("atlasMapSouthButton");
+    const westButton = document.getElementById("atlasMapWestButton");
+    const eastButton = document.getElementById("atlasMapEastButton");
+    const mapCenterLabel = document.getElementById("atlasMapCenterLabel");
+    const mapZoomLabel = document.getElementById("atlasMapZoomLabel");
+
+    const updateMapLabels = (display) => {
+      if (!display) {
+        return;
+      }
+      if (mapCenterLabel) {
+        mapCenterLabel.textContent =
+          `Center: ${display.centerCoordinate.latitude.toFixed(6)}, ${display.centerCoordinate.longitude.toFixed(6)}`;
+      }
+      if (mapZoomLabel) {
+        mapZoomLabel.textContent = `Zoom: ${display.zoomLevel}`;
+      }
+    };
+
+    const setMovementDisabled = (disabled) => {
+      northButton && (northButton.disabled = disabled);
+      southButton && (southButton.disabled = disabled);
+      westButton && (westButton.disabled = disabled);
+      eastButton && (eastButton.disabled = disabled);
+    };
 
     const setLaunchMode = () => {
       if (launchNote) {
@@ -174,9 +241,8 @@
       }
       if (status) {
         status.textContent =
-          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to load and activate the coastal map world scene.";
+          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to load a map position and activate the coastal world scene from it.";
       }
-      const loadButton = document.getElementById("atlasPreviewLoadButton");
       if (showButton) {
         showButton.disabled = true;
       }
@@ -186,6 +252,7 @@
       if (hideButton) {
         hideButton.disabled = true;
       }
+      setMovementDisabled(true);
     };
 
     if (window.location.protocol === "file:") {
@@ -193,11 +260,11 @@
     } else {
       try {
         const moduleVersion = "2026-07-24-01";
-        const [{ createMapWorldBrowserActivationSession }] =
+        const [{ createMapWorldRealMapDisplaySession }] =
           await Promise.all([
-            import(`./asset-factory/map-world-browser-activation-foundation.mjs?v=${moduleVersion}`)
+            import(`./asset-factory/map-world-real-map-display-foundation.mjs?v=${moduleVersion}`)
           ]);
-        const activationSession = createMapWorldBrowserActivationSession({
+        const displaySession = createMapWorldRealMapDisplaySession({
           loaderOptions: {
             existsSync() {
               return true;
@@ -225,30 +292,63 @@
         if (hideButton) {
           hideButton.disabled = true;
         }
+        setMovementDisabled(true);
 
         if (status) {
           status.textContent =
-            "Ready to load a deterministic test map world. Use Load Test Map World first.";
+            "Ready to load the fixed test coordinate, move the map center, and activate a world from that map location.";
         }
 
         loadButton?.addEventListener("click", async () => {
-          const loaded = await activationSession.loadTestMapWorld();
+          const loaded = await displaySession.loadFixedTestCoordinate();
           if (status) {
             status.textContent = loaded.message;
           }
           if (loaded.ok) {
+            updateMapLabels(loaded.mapWorldRealMapDisplay);
             if (showButton) {
               showButton.disabled = false;
             }
             if (hideButton) {
               hideButton.disabled = true;
             }
-            window.mapWorldBrowserActivation = loaded.mapWorldBrowserActivation;
+            setMovementDisabled(false);
+            window.mapWorldRealMapDisplay = loaded.mapWorldRealMapDisplay;
           }
         });
 
+        const moveMapCenter = async (latitudeDelta, longitudeDelta) => {
+          const moved = await displaySession.moveMapCenter({
+            latitudeDelta,
+            longitudeDelta
+          });
+          if (status) {
+            status.textContent = moved.message;
+          }
+          if (moved.ok) {
+            updateMapLabels(moved.mapWorldRealMapDisplay);
+            if (hideButton) {
+              hideButton.disabled = true;
+            }
+            window.mapWorldRealMapDisplay = moved.mapWorldRealMapDisplay;
+          }
+        };
+
+        northButton?.addEventListener("click", () => {
+          void moveMapCenter(0.001, 0);
+        });
+        southButton?.addEventListener("click", () => {
+          void moveMapCenter(-0.001, 0);
+        });
+        westButton?.addEventListener("click", () => {
+          void moveMapCenter(0, -0.001);
+        });
+        eastButton?.addEventListener("click", () => {
+          void moveMapCenter(0, 0.001);
+        });
+
         showButton?.addEventListener("click", () => {
-          const activated = activationSession.activateCoastalWorld();
+          const activated = displaySession.activateWorldFromMapLocation();
           if (status) {
             status.textContent = activated.message;
           }
@@ -256,19 +356,20 @@
             hideButton.disabled = false;
           }
           if (activated.ok) {
-            window.mapWorldBrowserActivationAttachment =
+            updateMapLabels(activated.mapWorldRealMapDisplay);
+            window.mapWorldRealMapDisplayAttachment =
               activated.atlasPreviewAttachment;
           }
         });
 
         hideButton?.addEventListener("click", () => {
-          const hidden = activationSession.hideCoastalWorld();
+          const hidden = displaySession.hideWorld();
           if (status) {
             status.textContent = hidden.message;
           }
         });
 
-        window.mapWorldBrowserActivationSession = activationSession;
+        window.mapWorldRealMapDisplaySession = displaySession;
       } catch (error) {
         window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
