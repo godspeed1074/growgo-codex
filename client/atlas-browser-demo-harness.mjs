@@ -118,6 +118,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     expandedSettlementPreview,
     currentPlayerMapState
   );
+  let currentCapturePresentationState = createDefaultCapturePresentationState(
+    expandedSettlementPreview,
+    currentCaptureState
+  );
   let currentDiscoveryState = createDefaultDiscoveryState(
     expandedSettlementPreview,
     currentPlayerMapState
@@ -150,6 +154,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
         playerState: currentPlayerMapState,
+        capturePresentationState: currentCapturePresentationState,
         discoveryState: currentDiscoveryState,
         poiPresentationState: currentPoiPresentationState
       }
@@ -209,6 +214,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
         playerState: currentPlayerMapState,
+        capturePresentationState: currentCapturePresentationState,
         poiPresentationState: currentPoiPresentationState
       });
     } else if (coastalWorldShowcase) {
@@ -422,6 +428,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       detailPreviewState: currentAssetDetailPreviewState,
       playerInteractionState: currentPlayerInteractionState,
       captureState: currentCaptureState,
+      capturePresentationState: currentCapturePresentationState,
       discoveryState: currentDiscoveryState
     });
   };
@@ -470,6 +477,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentCaptureState = createDefaultCaptureState(
           expandedSettlementPreview,
           currentPlayerMapState
+        );
+        currentCapturePresentationState = createDefaultCapturePresentationState(
+          expandedSettlementPreview,
+          currentCaptureState
         );
         currentDiscoveryState = createDefaultDiscoveryState(
           expandedSettlementPreview,
@@ -554,6 +565,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentOverlayInteractionState.selectedObject,
           currentCaptureState.capturedObjectIds
         );
+        currentCapturePresentationState = buildCapturePresentationState(
+          renderableExpandedSettlementPreview,
+          currentCaptureState
+        );
+        redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
       clearSettlementCaptureState() {
@@ -561,10 +577,18 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview,
           currentPlayerMapState
         );
+        currentCapturePresentationState = createDefaultCapturePresentationState(
+          expandedSettlementPreview,
+          currentCaptureState
+        );
+        redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
       currentSettlementCaptureState() {
         return currentCaptureState;
+      },
+      currentSettlementCapturePresentationState() {
+        return currentCapturePresentationState;
       },
       discoverSelectedSettlementObject() {
         currentDiscoveryState = buildDiscoveryState(
@@ -1049,6 +1073,7 @@ export function drawExpandedSettlementPreview(
     height = 540,
     interactionState = null,
     playerState = null,
+    capturePresentationState = null,
     discoveryState = null,
     poiPresentationState = null
   } = {}
@@ -1063,6 +1088,12 @@ export function drawExpandedSettlementPreview(
     interactionState ?? createDefaultOverlayInteractionState(expandedSettlementPreview);
   const resolvedPlayerState =
     playerState ?? createDefaultPlayerMapState(expandedSettlementPreview);
+  const resolvedCapturePresentationState =
+    capturePresentationState ??
+    createDefaultCapturePresentationState(
+      expandedSettlementPreview,
+      createDefaultCaptureState(expandedSettlementPreview, resolvedPlayerState)
+    );
   const resolvedDiscoveryState =
     discoveryState ?? createDefaultDiscoveryState(expandedSettlementPreview, resolvedPlayerState);
   const resolvedPoiPresentationState =
@@ -1162,6 +1193,12 @@ export function drawExpandedSettlementPreview(
     }
   }
 
+  drawCapturePresentationMarkers(
+    drawContext,
+    renderedObjects,
+    resolvedCapturePresentationState
+  );
+
   if (resolvedPlayerState?.position) {
     const projectedPlayer = projectExpandedSettlementPoint(
       resolvedPlayerState.position,
@@ -1201,7 +1238,7 @@ export function drawExpandedSettlementPreview(
   drawContext.font = "12px sans-serif";
   drawContext.textAlign = "left";
   drawContext.fillText(
-    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${resolvedPlayerState.cameraFocus?.currentState === "player-focused" ? "PLAYER_MARKER" : resolvedInteractionState.cameraFocus?.targetAsset ?? expandedSettlementPreview.cameraState.targetAsset}`,
+    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${resolvedPlayerState.cameraFocus?.currentState === "player-focused" ? "PLAYER_MARKER" : resolvedInteractionState.cameraFocus?.targetAsset ?? expandedSettlementPreview.cameraState.targetAsset} :: captured ${resolvedCapturePresentationState.markerState?.capturedObjectCount ?? 0}`,
     width * 0.03,
     height * 0.96
   );
@@ -1942,6 +1979,35 @@ function createDefaultCaptureState(
   return buildCaptureState(expandedSettlementPreview, playerState, null, []);
 }
 
+function createDefaultCapturePresentationState(
+  expandedSettlementPreview,
+  captureState
+) {
+  if (!expandedSettlementPreview || !captureState) {
+    return deepFreeze({
+      capturePresentationId: "SETTLEMENT_CAPTURE_PRESENTATION_INACTIVE",
+      targetObjectId: null,
+      captureEffectState: "capture-highlight-idle",
+      markerState: deepFreeze({
+        currentState: "capture-marker-hidden",
+        targetObjectId: null,
+        targetAssetId: null,
+        capturedObjectIds: deepFreeze([]),
+        capturedObjectCount: 0,
+        markerIcon: "capture-idle-ring",
+        markerColor: "#7D8B9A"
+      }),
+      validationResult: deepFreeze({
+        captureStateConsistencyValid: true,
+        presentationStateConsistencyValid: true,
+        cleanupValid: true,
+        deterministicDisplayValid: true
+      })
+    });
+  }
+  return buildCapturePresentationState(expandedSettlementPreview, captureState);
+}
+
 function createDefaultDiscoveryState(
   expandedSettlementPreview,
   playerState
@@ -2661,6 +2727,124 @@ function buildCaptureState(
       cleanupValid: true
     })
   });
+}
+
+function buildCapturePresentationState(
+  expandedSettlementPreview,
+  captureState
+) {
+  if (!expandedSettlementPreview || !captureState) {
+    return createDefaultCapturePresentationState(expandedSettlementPreview, captureState);
+  }
+  const targetObject =
+    expandedSettlementPreview.objectInstances.find(
+      (objectInstance) => objectInstance.instanceId === captureState.targetObjectId
+    ) ?? null;
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(captureState.capturedObjectIds)
+        ? captureState.capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  return deepFreeze({
+    capturePresentationId:
+      targetObject == null
+        ? `${expandedSettlementPreview.sceneId}::capture-presentation::idle`
+        : `${expandedSettlementPreview.sceneId}::capture-presentation::${targetObject.instanceId}`,
+    targetObjectId: targetObject?.instanceId ?? null,
+    captureEffectState:
+      captureState.captureState === "captured-session"
+        ? "capture-highlight-active"
+        : captureState.captureState === "capture-ready"
+          ? "capture-highlight-armed"
+          : captureState.captureState === "capture-out-of-range"
+            ? "capture-highlight-blocked"
+            : "capture-highlight-idle",
+    markerState: deepFreeze({
+      currentState:
+        capturedObjectIds.length > 0
+          ? "captured-marker-visible"
+          : targetObject != null
+            ? "capture-target-marker-visible"
+            : "capture-marker-hidden",
+      targetObjectId: targetObject?.instanceId ?? null,
+      targetAssetId: targetObject?.assetId ?? null,
+      capturedObjectIds,
+      capturedObjectCount: capturedObjectIds.length,
+      markerIcon:
+        captureState.captureState === "captured-session"
+          ? "captured-poi-marker"
+          : captureState.captureState === "capture-ready"
+            ? "capture-ready-ring"
+            : captureState.captureState === "capture-out-of-range"
+              ? "capture-blocked-ring"
+              : "capture-idle-ring",
+      markerColor:
+        captureState.captureState === "captured-session"
+          ? "#F2C94C"
+          : captureState.captureState === "capture-ready"
+            ? "#49B675"
+            : captureState.captureState === "capture-out-of-range"
+              ? "#A94A4A"
+              : "#7D8B9A"
+    }),
+    validationResult: deepFreeze({
+      captureStateConsistencyValid:
+        captureState.targetObjectId == null ||
+        targetObject?.instanceId === captureState.targetObjectId,
+      presentationStateConsistencyValid:
+        capturedObjectIds.length >= 0 &&
+        (captureState.captureState !== "captured-session" ||
+          capturedObjectIds.includes(String(captureState.targetObjectId))),
+      cleanupValid: true,
+      deterministicDisplayValid: true
+    })
+  });
+}
+
+function drawCapturePresentationMarkers(
+  drawContext,
+  renderedObjects,
+  capturePresentationState
+) {
+  if (!capturePresentationState?.markerState) {
+    return;
+  }
+  const capturedObjectIds = new Set(
+    capturePresentationState.markerState.capturedObjectIds ?? []
+  );
+  const targetObjectId = capturePresentationState.targetObjectId;
+  for (const renderedObject of renderedObjects) {
+    const centerX = renderedObject.x + renderedObject.width / 2;
+    const centerY = renderedObject.y + renderedObject.height / 2;
+    if (capturedObjectIds.has(String(renderedObject.instanceId))) {
+      if (typeof drawContext.stroke === "function") {
+        drawContext.strokeStyle = "#F2C94C";
+        drawContext.lineWidth = 3;
+        drawContext.beginPath();
+        drawContext.arc(centerX, centerY, Math.max(renderedObject.width, renderedObject.height) * 0.42, 0, Math.PI * 2);
+        drawContext.stroke();
+      }
+      drawContext.fillStyle = "#F2C94C";
+      drawContext.beginPath();
+      drawContext.arc(centerX, renderedObject.y - 10, 7, 0, Math.PI * 2);
+      drawContext.fill();
+      drawContext.fillStyle = "#163046";
+      drawContext.font = "bold 10px sans-serif";
+      drawContext.textAlign = "center";
+      drawContext.fillText("C", centerX, renderedObject.y - 6.5);
+    } else if (targetObjectId != null && renderedObject.instanceId === targetObjectId) {
+      if (typeof drawContext.stroke === "function") {
+        drawContext.strokeStyle =
+          capturePresentationState.markerState.markerColor ?? "#7D8B9A";
+        drawContext.lineWidth = 2;
+        drawContext.beginPath();
+        drawContext.arc(centerX, centerY, Math.max(renderedObject.width, renderedObject.height) * 0.36, 0, Math.PI * 2);
+        drawContext.stroke();
+      }
+    }
+  }
 }
 
 function buildDiscoveryState(

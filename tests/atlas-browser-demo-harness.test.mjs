@@ -723,8 +723,22 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     "boolean"
   );
   assert.equal(captureState.validationResult.targetIdentityValid, true);
+  const capturePresentationState =
+    harness.currentSettlementCapturePresentationState();
+  assert.equal(
+    capturePresentationState.validationResult.captureStateConsistencyValid,
+    true
+  );
+  assert.equal(
+    capturePresentationState.markerState.capturedObjectCount,
+    captureState.capturedObjectIds.length
+  );
   const clearedCapture = harness.clearSettlementCaptureState();
   assert.equal(clearedCapture.captureState, "capture-idle");
+  assert.equal(
+    harness.currentSettlementCapturePresentationState().captureEffectState,
+    "capture-highlight-idle"
+  );
 
   const discoveryState = harness.discoverSelectedSettlementObject();
   assert.equal(discoveryState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");

@@ -278,6 +278,7 @@
       <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
       <p id="atlasCaptureLabel">Capture: waiting for nearby object</p>
+      <p id="atlasCapturePresentationLabel">Capture feedback: waiting for captured marker</p>
       <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
       <p id="atlasPoiLabel">POI: waiting for world object</p>
       <p id="atlasPoiPresentationLabel">POI presentation: waiting for world layer</p>
@@ -403,6 +404,7 @@
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const captureLabel = document.getElementById("atlasCaptureLabel");
+    const capturePresentationLabel = document.getElementById("atlasCapturePresentationLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
     const poiPresentationLabel = document.getElementById("atlasPoiPresentationLabel");
@@ -630,6 +632,19 @@
       }
       captureLabel.textContent =
         `Capture: ${captureState.captureState} / ${captureState.targetAssetId ?? "no target"} / captured ${captureState.capturedObjectIds?.length ?? 0} / animation ${captureState.captureAnimationState ?? "idle"}`;
+    };
+
+    const updateCapturePresentationLabels = (capturePresentationState) => {
+      if (!capturePresentationLabel) {
+        return;
+      }
+      if (!capturePresentationState || !capturePresentationState.markerState) {
+        capturePresentationLabel.textContent =
+          "Capture feedback: waiting for captured marker";
+        return;
+      }
+      capturePresentationLabel.textContent =
+        `Capture feedback: ${capturePresentationState.captureEffectState} / ${capturePresentationState.markerState.currentState} / target ${capturePresentationState.markerState.targetAssetId ?? "none"} / captured ${capturePresentationState.markerState.capturedObjectCount ?? 0}`;
     };
 
     const updateDiscoveryLabels = (discoveryState) => {
@@ -1269,6 +1284,7 @@
                 playerState: combinedOverlay.playerState,
                 playerInteractionState: combinedOverlay.playerInteractionState,
                 captureState: combinedOverlay.captureState,
+                capturePresentationState: combinedOverlay.capturePresentationState,
                 discoveryState: combinedOverlay.discoveryState
               });
               updateVisualSourceLabels({
@@ -1284,6 +1300,7 @@
               );
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
               updateCaptureLabels(combinedOverlay.captureState);
+              updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
               updateHarnessDemoState();
             }
@@ -1457,10 +1474,14 @@
             return;
           }
           const captureState = harness.captureSelectedSettlementObject();
+          const capturePresentationState =
+            harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
+          updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            captureState
+            captureState,
+            capturePresentationState
           });
           if (status) {
             status.textContent =
@@ -1510,10 +1531,14 @@
             return;
           }
           const captureState = harness.clearSettlementCaptureState();
+          const capturePresentationState =
+            harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
+          updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            captureState
+            captureState,
+            capturePresentationState
           });
           if (status) {
             status.textContent = "Cleared capture session state.";
@@ -1626,6 +1651,7 @@
             playerState: combinedOverlay.playerState,
             playerInteractionState: combinedOverlay.playerInteractionState,
             captureState: combinedOverlay.captureState,
+            capturePresentationState: combinedOverlay.capturePresentationState,
             discoveryState: combinedOverlay.discoveryState
           });
           updateVisualSourceLabels({
@@ -1641,6 +1667,7 @@
           );
           updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
           updateCaptureLabels(combinedOverlay.captureState);
+          updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
           updateDiscoveryLabels(combinedOverlay.discoveryState);
           updateHarnessDemoState();
           setDemoControlsDisabled(false);

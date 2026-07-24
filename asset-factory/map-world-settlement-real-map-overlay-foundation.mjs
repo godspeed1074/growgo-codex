@@ -28,6 +28,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "playerState",
   "playerInteractionState",
   "captureState",
+  "capturePresentationState",
   "discoveryState",
   "cameraSync",
   "validationResult"
@@ -170,6 +171,17 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         mapWorldLiveMapFoundation
       })
     }),
+    capturePresentationState: createMapWorldSettlementCapturePresentationState({
+      settlementScene,
+      captureState: createMapWorldSettlementCaptureState({
+        settlementScene,
+        mapWorldLiveMapFoundation,
+        playerState: createMapWorldSettlementPlayerMapState({
+          settlementScene,
+          mapWorldLiveMapFoundation
+        })
+      })
+    }),
     discoveryState: createMapWorldSettlementDiscoveryState({
       settlementScene,
       mapWorldLiveMapFoundation,
@@ -216,6 +228,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       playerPresenceValid: true,
       playerInteractionValid: true,
       captureInteractionValid: true,
+      capturePresentationValid: true,
       discoveryValid: true,
       mapVisibleUnderlayValid: true,
       combinedViewReady: true
@@ -480,6 +493,18 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       );
     }
     if (
+      overlay.capturePresentationState.validationResult.captureStateConsistencyValid !== true ||
+      overlay.capturePresentationState.validationResult.presentationStateConsistencyValid !==
+        true ||
+      overlay.capturePresentationState.validationResult.cleanupValid !== true ||
+      overlay.capturePresentationState.validationResult.deterministicDisplayValid !== true
+    ) {
+      throw createValidationError(
+        "capture_presentation_state_invalid",
+        "Map world settlement real map overlay foundation capture presentation state must remain valid."
+      );
+    }
+    if (
       overlay.discoveryState.validationResult.playerProximityValid !== true ||
       overlay.discoveryState.validationResult.objectIdentityValid !== true ||
       overlay.discoveryState.validationResult.deterministicDiscoveryResultValid !== true ||
@@ -544,6 +569,9 @@ function normalizeOverlay(rawOverlay) {
       asPlainObject(overlay.playerInteractionState, "playerInteractionState")
     ),
     captureState: deepFreeze(asPlainObject(overlay.captureState, "captureState")),
+    capturePresentationState: deepFreeze(
+      asPlainObject(overlay.capturePresentationState, "capturePresentationState")
+    ),
     discoveryState: deepFreeze(asPlainObject(overlay.discoveryState, "discoveryState")),
     cameraSync: deepFreeze(asPlainObject(overlay.cameraSync, "cameraSync")),
     validationResult: deepFreeze(asPlainObject(overlay.validationResult, "validationResult")),
@@ -1294,6 +1322,95 @@ export function createMapWorldSettlementCaptureState({
         resolvedTarget == null ||
         settlementScene.worldId === resolvedPlayerState.worldId,
       cleanupValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementCapturePresentationState({
+  settlementScene,
+  captureState = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedCaptureState =
+    captureState ??
+    createMapWorldSettlementCaptureState({
+      settlementScene,
+      mapWorldLiveMapFoundation: {
+        activeWorldId: settlementScene.worldId
+      },
+      playerState: {
+        playerId: "PLAYER_CAPTURE_PRESENTATION_DEFAULT",
+        worldId: settlementScene.worldId,
+        position: { x: 0, y: 0 }
+      }
+    });
+  const resolvedTarget = resolveSelectableOverlayObject(
+    selectableObjects,
+    resolvedCaptureState.targetObjectId ?? resolvedCaptureState.targetAssetId ?? null
+  );
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(resolvedCaptureState.capturedObjectIds)
+        ? resolvedCaptureState.capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  const capturedCount = capturedObjectIds.length;
+  const captureEffectState =
+    resolvedCaptureState.captureState === "captured-session"
+      ? "capture-highlight-active"
+      : resolvedCaptureState.captureState === "capture-ready"
+        ? "capture-highlight-armed"
+        : resolvedCaptureState.captureState === "capture-out-of-range"
+          ? "capture-highlight-blocked"
+          : "capture-highlight-idle";
+  const markerState = deepFreeze({
+    currentState:
+      capturedCount > 0
+        ? "captured-marker-visible"
+        : resolvedTarget != null
+          ? "capture-target-marker-visible"
+          : "capture-marker-hidden",
+    targetObjectId: resolvedTarget?.instanceId ?? null,
+    targetAssetId: resolvedTarget?.assetId ?? null,
+    capturedObjectIds,
+    capturedObjectCount: capturedCount,
+    markerIcon:
+      resolvedCaptureState.captureState === "captured-session"
+        ? "captured-poi-marker"
+        : resolvedCaptureState.captureState === "capture-ready"
+          ? "capture-ready-ring"
+          : resolvedCaptureState.captureState === "capture-out-of-range"
+            ? "capture-blocked-ring"
+            : "capture-idle-ring",
+    markerColor:
+      resolvedCaptureState.captureState === "captured-session"
+        ? "#F2C94C"
+        : resolvedCaptureState.captureState === "capture-ready"
+          ? "#49B675"
+          : resolvedCaptureState.captureState === "capture-out-of-range"
+            ? "#A94A4A"
+            : "#7D8B9A"
+  });
+
+  return deepFreeze({
+    capturePresentationId:
+      resolvedTarget == null
+        ? `${settlementScene.sceneId}::capture-presentation::idle`
+        : `${settlementScene.sceneId}::capture-presentation::${resolvedTarget.instanceId}`,
+    targetObjectId: resolvedTarget?.instanceId ?? null,
+    captureEffectState,
+    markerState,
+    validationResult: deepFreeze({
+      captureStateConsistencyValid:
+        resolvedCaptureState.targetObjectId == null ||
+        resolvedTarget?.instanceId === resolvedCaptureState.targetObjectId,
+      presentationStateConsistencyValid:
+        markerState.capturedObjectCount === markerState.capturedObjectIds.length &&
+        (resolvedCaptureState.captureState !== "captured-session" ||
+          markerState.currentState === "captured-marker-visible"),
+      cleanupValid: true,
+      deterministicDisplayValid: true
     })
   });
 }
