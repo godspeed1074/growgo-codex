@@ -70,6 +70,29 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.equal(scene.cameraProfile.orientation, "north-up");
   assert.equal(scene.cameraProfile.previewZoomProfile, "normal");
   assert.deepEqual(scene.cameraProfile.availableZoomProfiles, ["far", "normal", "close"]);
+  assert.deepEqual(scene.cameraProfile.availableCompositionProfiles, [
+    "far_overview",
+    "normal_neighbourhood",
+    "close_property"
+  ]);
+  assert.equal(scene.cameraProfile.activeCompositionProfile, "normal_neighbourhood");
+  assert.equal(scene.cameraProfile.targetAsset, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.ok(Number.isFinite(scene.cameraProfile.focusPoint.x));
+  assert.ok(Number.isFinite(scene.cameraProfile.focusPoint.y));
+  assert.equal(scene.cameraProfile.tilt, 28);
+  assert.equal(scene.cameraProfile.viewportComposition.anchor, "centered-neighbourhood");
+  assert.equal(
+    scene.cameraProfile.cameraCompositionProfiles.far_overview.targetZoomProfile,
+    "far"
+  );
+  assert.equal(
+    scene.cameraProfile.cameraCompositionProfiles.normal_neighbourhood.targetZoomProfile,
+    "normal"
+  );
+  assert.equal(
+    scene.cameraProfile.cameraCompositionProfiles.close_property.targetZoomProfile,
+    "close"
+  );
   assert.equal(scene.visualScaling.densityProfile, "suburban_coastal");
   assert.ok(scene.visualScaling.blockScale > 1);
   assert.ok(scene.visualScaling.cameraScale > 1);
@@ -99,6 +122,7 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.ok(scene.presentationSummary.roadContinuitySegments >= 8);
   assert.equal(scene.presentationSummary.visibleObjectCount, 45);
   assert.equal(scene.presentationSummary.activeZoomProfile, "normal");
+  assert.equal(scene.presentationSummary.activeCompositionProfile, "normal_neighbourhood");
   assert.equal(scene.validationResult.assetReferencesValid, true);
   assert.equal(scene.validationResult.placementValidity, true);
   assert.equal(scene.validationResult.deterministicSceneOutputValid, true);
@@ -108,6 +132,9 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.equal(scene.validationResult.zoomDeterminismValid, true);
   assert.equal(scene.validationResult.visibleObjectLimitsValid, true);
   assert.equal(scene.validationResult.correctLodSelection, true);
+  assert.equal(scene.validationResult.deterministicCameraOutputValid, true);
+  assert.equal(scene.validationResult.zoomTransitionConsistencyValid, true);
+  assert.equal(scene.validationResult.focusAssetConsistencyValid, true);
   assert.equal(scene.validationResult.cameraConsistencyValid, true);
 });
 

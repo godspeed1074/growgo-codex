@@ -580,6 +580,13 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     harness.canvas._context.commands.some(
       (command) =>
         command[0] === "fillText" &&
+        String(command[1]).includes("normal_neighbourhood")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
         String(command[1]).includes("45/45 scene objects")
     )
   );

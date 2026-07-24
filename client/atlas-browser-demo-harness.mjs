@@ -538,6 +538,10 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
     cameraState: deepFreeze({
       cameraProfile: scene.cameraProfile.cameraProfile,
       focusAssetId: scene.cameraProfile.focusAssetId,
+      targetAsset: scene.cameraProfile.targetAsset ?? scene.cameraProfile.focusAssetId,
+      focusPoint: deepFreeze({
+        ...(scene.cameraProfile.focusPoint ?? {})
+      }),
       orientation: scene.cameraProfile.orientation,
       previewZoomLevel: scene.cameraProfile.zoomLevel,
       previewZoomProfile:
@@ -546,6 +550,15 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
         "normal",
       activeZoomProfile: scene.visualScaling?.activeZoomProfile ?? "normal",
       cameraScale: Number(scene.visualScaling?.cameraScale ?? 1),
+      tilt: Number(scene.cameraProfile.tilt ?? 0),
+      activeCompositionProfile:
+        scene.cameraProfile.activeCompositionProfile ?? "normal_neighbourhood",
+      viewportComposition: deepFreeze({
+        ...(scene.cameraProfile.viewportComposition ?? {})
+      }),
+      cameraCompositionProfiles: deepFreeze({
+        ...(scene.cameraProfile.cameraCompositionProfiles ?? {})
+      }),
       mapCenterCoordinate: deepFreeze({
         ...scene.cameraProfile.mapCenterCoordinate
       })
@@ -610,7 +623,7 @@ export function drawExpandedSettlementPreview(
   drawContext.fillText(expandedSettlementPreview.sceneId, width * 0.03, height * 0.08);
   drawContext.font = "13px sans-serif";
   drawContext.fillText(
-    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId} :: ${zoomProfile}`,
+    `${expandedSettlementPreview.cameraState.cameraProfile} :: ${expandedSettlementPreview.worldId} :: ${zoomProfile} :: ${expandedSettlementPreview.cameraState.activeCompositionProfile}`,
     width * 0.03,
     height * 0.115
   );
@@ -620,7 +633,8 @@ export function drawExpandedSettlementPreview(
       width,
       height,
       palette,
-      scaling
+      scaling,
+      cameraState: expandedSettlementPreview.cameraState
     });
   }
 
@@ -628,7 +642,7 @@ export function drawExpandedSettlementPreview(
   drawContext.font = "12px sans-serif";
   drawContext.textAlign = "left";
   drawContext.fillText(
-    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${expandedSettlementPreview.cameraState.focusAssetId}`,
+    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${expandedSettlementPreview.cameraState.targetAsset}`,
     width * 0.03,
     height * 0.96
   );
@@ -724,7 +738,7 @@ function drawExpandedSettlementInstance(
   drawContext,
   instance,
   bounds,
-  { width, height, palette, scaling }
+  { width, height, palette, scaling, cameraState }
 ) {
   if (instance.category === "road") {
     const start = projectExpandedSettlementPoint(
@@ -732,14 +746,16 @@ function drawExpandedSettlementInstance(
       bounds,
       width,
       height,
-      scaling
+      scaling,
+      cameraState
     );
     const end = projectExpandedSettlementPoint(
       instance.geometry.end,
       bounds,
       width,
       height,
-      scaling
+      scaling,
+      cameraState
     );
     drawContext.strokeStyle = palette.road;
     drawContext.lineWidth = Math.max(
@@ -768,7 +784,8 @@ function drawExpandedSettlementInstance(
     bounds,
     width,
     height,
-    scaling
+    scaling,
+    cameraState
   );
   if (instance.category === "vegetation") {
     drawContext.fillStyle = palette.vegetation;
@@ -849,13 +866,32 @@ function computeExpandedSettlementBounds(points) {
   });
 }
 
-function projectExpandedSettlementPoint(point, bounds, width, height, scaling = null) {
+function projectExpandedSettlementPoint(
+  point,
+  bounds,
+  width,
+  height,
+  scaling = null,
+  cameraState = null
+) {
   const normalizedX = (point.x - bounds.minX) / bounds.spanX;
   const normalizedY = (point.y - bounds.minY) / bounds.spanY;
   const cameraScale = Number(scaling?.cameraScale ?? 1);
   const blockScale = Number(scaling?.blockScale ?? 1);
-  const scaledX = 0.5 + (normalizedX - 0.5) / cameraScale;
-  const scaledY = 0.5 + (normalizedY - 0.5) / Math.max(1, blockScale);
+  const viewportCenterX = Number(cameraState?.viewportComposition?.centerX ?? 0.5);
+  const viewportCenterY = Number(cameraState?.viewportComposition?.centerY ?? 0.58);
+  const focusPoint = cameraState?.focusPoint;
+  const focusNormalizedX =
+    focusPoint && Number.isFinite(focusPoint.x)
+      ? (focusPoint.x - bounds.minX) / bounds.spanX
+      : 0.5;
+  const focusNormalizedY =
+    focusPoint && Number.isFinite(focusPoint.y)
+      ? (focusPoint.y - bounds.minY) / bounds.spanY
+      : 0.5;
+  const scaledX = viewportCenterX + ((normalizedX - focusNormalizedX) / cameraScale);
+  const scaledY =
+    viewportCenterY - ((focusNormalizedY - normalizedY) / Math.max(1, blockScale));
   return deepFreeze({
     x: width * 0.08 + scaledX * width * 0.84,
     y: height * 0.82 - scaledY * height * 0.46

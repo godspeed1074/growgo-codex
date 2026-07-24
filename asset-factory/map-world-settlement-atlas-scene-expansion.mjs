@@ -93,7 +93,8 @@ export async function createMapWorldSettlementAtlasSceneExpansion(
     vegetationInstances,
     landmarkInstances,
     coastlineArea,
-    visualScaling
+    visualScaling,
+    cameraProfile
   );
 
   const scene = deepFreeze({
@@ -332,15 +333,44 @@ function buildCameraProfile(
     coastlineBoundary.length > 0
       ? Math.max(...coastlineBoundary.map((point) => point.y))
       : null;
+  const buildingFocusPoint = calculateCentroid(
+    buildingInstances.map((instance) => instance.position)
+  );
+  const landmarkFocusPoint =
+    landmarkInstances[0]?.position != null
+      ? deepFreeze({ ...landmarkInstances[0].position })
+      : null;
+  const focusPoint = buildSettlementFocusPoint({
+    buildingFocusPoint,
+    landmarkFocusPoint,
+    coastlineFocusY: maxCoastY
+  });
+  const cameraCompositionProfiles = buildCameraCompositionProfiles({
+    zoomLevel: Number(visualLayerAttachment.cameraState.previewZoomLevel ?? 15),
+    focusPoint,
+    focusAssetId: focusAsset?.assetId ?? "LIGHTHOUSE_ISLAND_ROCKY_001"
+  });
 
   return deepFreeze({
     cameraProfile: "atlas-coastal-settlement-overlook",
     focusAssetId: focusAsset?.assetId ?? "LIGHTHOUSE_ISLAND_ROCKY_001",
+    targetAsset: focusAsset?.assetId ?? "LIGHTHOUSE_ISLAND_ROCKY_001",
+    focusPoint,
     orientation: "north-up",
     viewpointMode: "settlement-overlook",
     zoomLevel: Number(visualLayerAttachment.cameraState.previewZoomLevel ?? 15),
     previewZoomProfile: "normal",
     availableZoomProfiles: deepFreeze(["far", "normal", "close"]),
+    availableCompositionProfiles: deepFreeze([
+      "far_overview",
+      "normal_neighbourhood",
+      "close_property"
+    ]),
+    activeCompositionProfile: "normal_neighbourhood",
+    cameraCompositionProfiles,
+    cameraScale: cameraCompositionProfiles.normal_neighbourhood.cameraScale,
+    tilt: cameraCompositionProfiles.normal_neighbourhood.tilt,
+    viewportComposition: cameraCompositionProfiles.normal_neighbourhood.viewportComposition,
     mapCenterCoordinate: deepFreeze({
       latitude: previewFoundation.coordinate.latitude,
       longitude: previewFoundation.coordinate.longitude
@@ -446,7 +476,8 @@ function buildPresentationSummary(
   vegetationInstances,
   landmarkInstances,
   coastlineArea,
-  visualScaling
+  visualScaling,
+  cameraProfile
 ) {
   const coastlineBoundary = coastlineArea?.boundaryPoints ?? [];
   return deepFreeze({
@@ -459,6 +490,7 @@ function buildPresentationSummary(
     visibleObjectCount: visualScaling.visibleObjectCount,
     activeZoomProfile: visualScaling.activeZoomProfile,
     activeLodSelection: visualScaling.zoomTransitionMetadata.activeLodSelection,
+    activeCompositionProfile: cameraProfile.activeCompositionProfile,
     lighthouseCoastRelationshipPreserved:
       landmarkInstances.length === 1 && coastlineBoundary.length >= 2
   });
@@ -523,11 +555,23 @@ function buildValidationResult(
       ["LOD_MAP", "LOD_GAMEPLAY", "LOD_CLOSE"].includes(
         cameraProfile.previewZoomProfile === "normal" ? "LOD_GAMEPLAY" : "LOD_MAP"
       ),
+    deterministicCameraOutputValid:
+      cameraProfile.focusPoint != null &&
+      Number.isFinite(cameraProfile.focusPoint.x) &&
+      Number.isFinite(cameraProfile.focusPoint.y),
+    zoomTransitionConsistencyValid:
+      cameraProfile.cameraCompositionProfiles?.far_overview?.targetZoomProfile === "far" &&
+      cameraProfile.cameraCompositionProfiles?.normal_neighbourhood?.targetZoomProfile === "normal" &&
+      cameraProfile.cameraCompositionProfiles?.close_property?.targetZoomProfile === "close",
+    focusAssetConsistencyValid:
+      cameraProfile.focusAssetId === cameraProfile.targetAsset,
     cameraConsistencyValid:
       Number.isFinite(cameraProfile.zoomLevel) &&
       cameraProfile.previewZoomProfile === "normal" &&
       Array.isArray(cameraProfile.availableZoomProfiles) &&
-      cameraProfile.availableZoomProfiles.length === 3,
+      cameraProfile.availableZoomProfiles.length === 3 &&
+      Array.isArray(cameraProfile.availableCompositionProfiles) &&
+      cameraProfile.availableCompositionProfiles.length === 3,
     cameraProfileValid:
       supportedCameraProfiles.has(cameraProfile.cameraProfile) &&
       cameraProfile.orientation === "north-up"
@@ -653,6 +697,108 @@ function resolveActiveZoomProfile(zoomLevel, previewZoomProfile, preferredProfil
     return "close";
   }
   return "normal";
+}
+
+function buildCameraCompositionProfiles({
+  zoomLevel,
+  focusPoint,
+  focusAssetId
+}) {
+  return deepFreeze({
+    far_overview: deepFreeze({
+      profileId: "far_overview",
+      targetZoomProfile: "far",
+      targetAsset: "LIGHTHOUSE_ISLAND_ROCKY_001",
+      focusPoint,
+      cameraScale: 0.92,
+      tilt: 18,
+      viewportComposition: deepFreeze({
+        anchor: "upper-third",
+        centerX: 0.5,
+        centerY: 0.61,
+        coastlineVisibilityBias: "high",
+        roadReadabilityBias: "high",
+        residentialBlockCentering: "medium"
+      }),
+      zoomLevel: Math.max(10, zoomLevel - 2)
+    }),
+    normal_neighbourhood: deepFreeze({
+      profileId: "normal_neighbourhood",
+      targetZoomProfile: "normal",
+      targetAsset: focusAssetId,
+      focusPoint,
+      cameraScale: 1.18,
+      tilt: 28,
+      viewportComposition: deepFreeze({
+        anchor: "centered-neighbourhood",
+        centerX: 0.52,
+        centerY: 0.57,
+        coastlineVisibilityBias: "medium",
+        roadReadabilityBias: "high",
+        residentialBlockCentering: "high"
+      }),
+      zoomLevel
+    }),
+    close_property: deepFreeze({
+      profileId: "close_property",
+      targetZoomProfile: "close",
+      targetAsset: focusAssetId,
+      focusPoint,
+      cameraScale: 1.32,
+      tilt: 36,
+      viewportComposition: deepFreeze({
+        anchor: "lower-middle-detail",
+        centerX: 0.54,
+        centerY: 0.54,
+        coastlineVisibilityBias: "low",
+        roadReadabilityBias: "medium",
+        residentialBlockCentering: "high"
+      }),
+      zoomLevel: Math.min(19, zoomLevel + 2)
+    })
+  });
+}
+
+function buildSettlementFocusPoint({
+  buildingFocusPoint,
+  landmarkFocusPoint,
+  coastlineFocusY
+}) {
+  const fallbackPoint = landmarkFocusPoint ?? buildingFocusPoint ?? deepFreeze({ x: 0, y: 0 });
+  if (!buildingFocusPoint || !landmarkFocusPoint) {
+    return fallbackPoint;
+  }
+  const weightedPoint = deepFreeze({
+    x: roundNumber((buildingFocusPoint.x * 0.65) + (landmarkFocusPoint.x * 0.35)),
+    y: roundNumber((buildingFocusPoint.y * 0.7) + (landmarkFocusPoint.y * 0.3))
+  });
+  if (!Number.isFinite(coastlineFocusY)) {
+    return weightedPoint;
+  }
+  return deepFreeze({
+    x: weightedPoint.x,
+    y: roundNumber(Math.max(weightedPoint.y, coastlineFocusY - 140))
+  });
+}
+
+function calculateCentroid(points) {
+  const validPoints = points.filter(
+    (point) => point && Number.isFinite(point.x) && Number.isFinite(point.y)
+  );
+  if (validPoints.length === 0) {
+    return null;
+  }
+  const totals = validPoints.reduce(
+    (accumulator, point) => ({
+      x: accumulator.x + point.x,
+      y: accumulator.y + point.y
+    }),
+    { x: 0, y: 0 }
+  );
+  return deepFreeze({
+    x: roundNumber(totals.x / validPoints.length),
+    y: roundNumber(totals.y / validPoints.length)
+  });
 }
 
 function computeVisibleObjectCount({
