@@ -307,14 +307,14 @@ export function createAtlasEngineFirstManualBrowserVisiblePreviewMountSession(
           });
         }
 
-        closed = true;
-        mountState = "closed";
+        mounted = false;
+        mountState = "unmounted";
 
         return Object.freeze({
           ok: true,
           cleanupPerformed: true,
           cleanupStatus:
-            "atlas-first-manual-browser-visible-preview-mount-session-closed",
+            "atlas-first-manual-browser-visible-preview-mount-session-unmounted",
           releasedStateCount: previewMount.displayResult.placeholderObjects.length,
           affectedLiveRuntime: false
         });

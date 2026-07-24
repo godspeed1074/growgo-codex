@@ -1188,7 +1188,7 @@
       setLaunchMode();
     } else {
       try {
-        const moduleVersion = "2026-07-24-02";
+        const moduleVersion = "2026-07-24-03";
         const [
           { createMapWorldRealLocationPreviewSession },
           {
@@ -1322,20 +1322,38 @@
           return nextState;
         };
 
-        const applyLoadedGeneratedWorldPreview = ({
-          mapWorldRealLocationPreview,
-          atlasPreviewAttachment,
-          settlementScene,
-          statusMessage
-        }) => {
+        const syncOverlayAttachmentStateFromHarness = ({
+          mapWorldRealLocationPreview = window.mapWorldRealLocationPreview,
+          atlasPreviewAttachment = window.mapWorldRealLocationPreviewAttachment,
+          settlementScene = window.mapWorldSettlementAtlasSceneExpansion,
+          statusMessage = null,
+          visibilityOverride = null
+        } = {}) => {
+          const harness = atlasPreviewAttachment?.atlasBrowserDemoHarness;
+          if (!mapWorldRealLocationPreview || !harness || !settlementScene) {
+            return clearOverlayAttachmentState({
+              mapWorldRealLocationPreview,
+              statusMessage
+            });
+          }
+
           const combinedOverlay =
             buildMapWorldSettlementRealMapOverlayFoundation({
               mapWorldLiveMapFoundation:
                 mapWorldRealLocationPreview.mapWorldLiveMapFoundation,
               settlementScene
             });
-          const visualSourceSummary =
-            atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
+          const harnessVisualSource = harness.currentVisualSourceSummary();
+          const activeVisualSource = {
+            ...harnessVisualSource,
+            sourceType: "combined-map-world-overlay",
+            visibilityState:
+              visibilityOverride ?? harnessVisualSource.visibilityState,
+            active:
+              visibilityOverride == null
+                ? harnessVisualSource.active
+                : visibilityOverride === "visible"
+          };
 
           updatePreviewLabels(mapWorldRealLocationPreview);
           updateCombinedOverlayLabels(combinedOverlay);
@@ -1345,50 +1363,114 @@
           window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
 
           setBrowserDemoState({
-            status: statusMessage,
+            ...(window.__atlasBrowserDemoState ?? {}),
+            status: statusMessage ?? window.__atlasBrowserDemoState?.status ?? "ready",
             lastError: null,
-            activeVisualSource: {
-              ...visualSourceSummary,
-              sourceType: "combined-map-world-overlay"
-            },
+            activeVisualSource,
             combinedOverlay,
-            poiState: combinedOverlay.poiState,
-            poiContentMetadata: combinedOverlay.poiContentMetadata,
-            poiPresentationState: combinedOverlay.poiPresentationState,
-            overlayInteractionState: combinedOverlay.interactionState,
-            selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
-            detailPreviewState: combinedOverlay.detailState,
-            playerState: combinedOverlay.playerState,
-            playerInteractionState: combinedOverlay.playerInteractionState,
-            captureState: combinedOverlay.captureState,
-            captureSessionStore: combinedOverlay.captureSessionStore,
-            captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
-            sessionExperienceState: combinedOverlay.sessionExperienceState,
-            capturePresentationState: combinedOverlay.capturePresentationState,
-            discoveryState: combinedOverlay.discoveryState
+            poiState: harness.currentSettlementPoiState?.() ?? combinedOverlay.poiState,
+            poiContentMetadata:
+              harness.currentSettlementPoiContentMetadata?.() ??
+              combinedOverlay.poiContentMetadata,
+            poiPresentationState:
+              harness.currentSettlementPoiPresentationState?.() ??
+              combinedOverlay.poiPresentationState,
+            overlayInteractionState:
+              harness.currentSettlementInteractionState?.() ??
+              combinedOverlay.interactionState,
+            selectedOverlayObject:
+              harness.currentSettlementInteractionState?.()?.selectedObject ??
+              combinedOverlay.interactionState.selectedObject,
+            detailPreviewState:
+              harness.currentSettlementAssetDetailPreviewState?.() ??
+              combinedOverlay.detailState,
+            playerState:
+              harness.currentSettlementPlayerMapState?.() ?? combinedOverlay.playerState,
+            playerInteractionState:
+              harness.currentSettlementPlayerInteractionState?.() ??
+              combinedOverlay.playerInteractionState,
+            captureState:
+              harness.currentSettlementCaptureState?.() ?? combinedOverlay.captureState,
+            captureSessionStore:
+              harness.currentSettlementCaptureSessionStore?.() ??
+              combinedOverlay.captureSessionStore,
+            captureSessionSummaryState:
+              harness.currentSettlementCaptureSessionSummaryState?.() ??
+              combinedOverlay.captureSessionSummaryState,
+            sessionExperienceState:
+              harness.currentSettlementSessionExperienceState?.() ??
+              combinedOverlay.sessionExperienceState,
+            capturePresentationState:
+              harness.currentSettlementCapturePresentationState?.() ??
+              combinedOverlay.capturePresentationState,
+            discoveryState:
+              harness.currentSettlementDiscoveryState?.() ??
+              combinedOverlay.discoveryState
           });
-          updateVisualSourceLabels({
-            ...visualSourceSummary,
-            sourceType: "combined-map-world-overlay"
-          });
-          updatePoiLabels(combinedOverlay.poiState);
-          updatePoiPresentationLabels(combinedOverlay.poiPresentationState);
-          updateOverlayInteractionLabels(combinedOverlay.interactionState);
+          updateVisualSourceLabels(activeVisualSource);
+          updatePoiLabels(
+            harness.currentSettlementPoiState?.() ?? combinedOverlay.poiState
+          );
+          updatePoiPresentationLabels(
+            harness.currentSettlementPoiPresentationState?.() ??
+              combinedOverlay.poiPresentationState
+          );
+          updateOverlayInteractionLabels(
+            harness.currentSettlementInteractionState?.() ??
+              combinedOverlay.interactionState
+          );
           updateDetailPreviewLabels(
-            combinedOverlay.detailState,
-            combinedOverlay.poiContentMetadata
+            harness.currentSettlementAssetDetailPreviewState?.() ??
+              combinedOverlay.detailState,
+            harness.currentSettlementPoiContentMetadata?.() ??
+              combinedOverlay.poiContentMetadata
           );
-          updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
-          updateCaptureLabels(combinedOverlay.captureState);
-          updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
-          updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
+          updatePlayerInteractionLabels(
+            harness.currentSettlementPlayerInteractionState?.() ??
+              combinedOverlay.playerInteractionState
+          );
+          updateCaptureLabels(
+            harness.currentSettlementCaptureState?.() ??
+              combinedOverlay.captureState
+          );
+          updateCaptureSessionLabels(
+            harness.currentSettlementCaptureSessionStore?.() ??
+              combinedOverlay.captureSessionStore
+          );
+          updateExplorationSummaryLabels(
+            harness.currentSettlementCaptureSessionSummaryState?.() ??
+              combinedOverlay.captureSessionSummaryState
+          );
           updateSessionExperienceLabels(
-            combinedOverlay.sessionExperienceState,
-            combinedOverlay.interactionState
+            harness.currentSettlementSessionExperienceState?.() ??
+              combinedOverlay.sessionExperienceState,
+            harness.currentSettlementInteractionState?.() ??
+              combinedOverlay.interactionState
           );
-          updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
-          updateDiscoveryLabels(combinedOverlay.discoveryState);
+          updateCapturePresentationLabels(
+            harness.currentSettlementCapturePresentationState?.() ??
+              combinedOverlay.capturePresentationState
+          );
+          updateDiscoveryLabels(
+            harness.currentSettlementDiscoveryState?.() ??
+              combinedOverlay.discoveryState
+          );
           updateHarnessDemoState();
+          return window.__atlasBrowserDemoState;
+        };
+
+        const applyLoadedGeneratedWorldPreview = ({
+          mapWorldRealLocationPreview,
+          atlasPreviewAttachment,
+          settlementScene,
+          statusMessage
+        }) => {
+          syncOverlayAttachmentStateFromHarness({
+            mapWorldRealLocationPreview,
+            atlasPreviewAttachment,
+            settlementScene,
+            statusMessage
+          });
         };
 
         const applyPresentationProfile = (presentationProfile) => {
@@ -1521,16 +1603,30 @@
           }
           setBrowserDemoState({ status: zoomed.message, lastError: null });
           if (zoomed.ok) {
-            clearOverlayAttachmentState({
-              mapWorldRealLocationPreview: zoomed.mapWorldRealLocationPreview,
-              statusMessage: zoomed.message
-            });
-            updatePreviewLabels(zoomed.mapWorldRealLocationPreview);
-            if (toggleButton) {
-              toggleButton.disabled = true;
-            }
-            if (hideButton) {
-              hideButton.disabled = true;
+            if (
+              window.mapWorldRealLocationPreviewAttachment?.atlasBrowserDemoHarness &&
+              window.__atlasBrowserDemoState?.activeVisualSource?.sourceType ===
+                "combined-map-world-overlay"
+            ) {
+              syncOverlayAttachmentStateFromHarness({
+                mapWorldRealLocationPreview: zoomed.mapWorldRealLocationPreview,
+                statusMessage: zoomed.message
+              });
+              if (hideButton) {
+                hideButton.disabled = false;
+              }
+            } else {
+              clearOverlayAttachmentState({
+                mapWorldRealLocationPreview: zoomed.mapWorldRealLocationPreview,
+                statusMessage: zoomed.message
+              });
+              updatePreviewLabels(zoomed.mapWorldRealLocationPreview);
+              if (toggleButton) {
+                toggleButton.disabled = true;
+              }
+              if (hideButton) {
+                hideButton.disabled = true;
+              }
             }
             window.mapWorldRealLocationPreview = zoomed.mapWorldRealLocationPreview;
           }
@@ -1747,47 +1843,17 @@
           }
           setBrowserDemoState({ status: hidden.message, lastError: null });
           if (hidden.ok) {
-            clearOverlayAttachmentState({
+            syncOverlayAttachmentStateFromHarness({
               mapWorldRealLocationPreview: hidden.mapWorldRealLocationPreview,
-              statusMessage: hidden.message
+              statusMessage: hidden.message,
+              visibilityOverride: "hidden"
             });
-            if (hideButton) {
-              hideButton.disabled = true;
-            }
-            setDemoControlsDisabled(true);
-            if (playerFocusButton) {
-              playerFocusButton.disabled = true;
-            }
-            if (playerInteractButton) {
-              playerInteractButton.disabled = true;
-            }
-            if (captureButton) {
-              captureButton.disabled = true;
-            }
-            if (worldOverviewButton) {
-              worldOverviewButton.disabled = true;
-            }
-            if (interactionClearButton) {
-              interactionClearButton.disabled = true;
-            }
-            if (captureClearButton) {
-              captureClearButton.disabled = true;
-            }
-            if (discoverButton) {
-              discoverButton.disabled = true;
-            }
-            if (discoveryClearButton) {
-              discoveryClearButton.disabled = true;
-            }
             const visualSourceSummary = {
               ...currentVisualSource,
               visibilityState: "hidden",
               active: false
             };
             updateVisualSourceLabels(visualSourceSummary);
-            if (lightingProfileLabel) {
-              lightingProfileLabel.textContent = "Lighting profile: waiting for selection";
-            }
             if (demoStateLabel) {
               demoStateLabel.textContent = "Demo state: world preview hidden";
             }

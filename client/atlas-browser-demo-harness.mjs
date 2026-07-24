@@ -340,55 +340,6 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   const hideHandler = () => {
     clearAtlasPlaceholderScene(drawContext, canvas.width, canvas.height);
     lastExpandedSettlementLayout = null;
-    currentOverlayInteractionState = createDefaultOverlayInteractionState(
-      expandedSettlementPreview
-    );
-    currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
-      expandedSettlementPreview
-    );
-    currentPoiState = createDefaultPoiState(expandedSettlementPreview);
-    currentPoiContentMetadata = createDefaultPoiContentMetadata(
-      expandedSettlementPreview
-    );
-    currentPoiPresentationState = createDefaultPoiPresentationState(
-      expandedSettlementPreview
-    );
-    currentPlayerMapState = createDefaultPlayerMapState(
-      expandedSettlementPreview
-    );
-    currentPlayerInteractionState = createDefaultPlayerInteractionState(
-      expandedSettlementPreview,
-      currentPlayerMapState
-    );
-    currentCaptureState = buildCaptureState(
-      expandedSettlementPreview,
-      currentPlayerMapState,
-      null,
-      currentCaptureSessionStore.capturedObjectIds
-    );
-    currentCaptureSessionStore = buildCaptureSessionStore(
-      expandedSettlementPreview,
-      currentPlayerMapState,
-      currentCaptureState,
-      currentCaptureSessionStore.sessionId
-    );
-    currentCapturePresentationState = buildCapturePresentationState(
-      expandedSettlementPreview,
-      currentCaptureState,
-      currentCaptureSessionStore
-    );
-    currentDiscoveryState = buildDiscoveryState(
-      expandedSettlementPreview,
-      currentPlayerMapState,
-      null,
-      currentDiscoveryState.discoveredObjectIds
-    );
-    currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
-      expandedSettlementPreview,
-      currentPlayerMapState,
-      currentCaptureSessionStore,
-      currentDiscoveryState
-    );
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
@@ -466,6 +417,13 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         selectedObject: resolvedObject,
         hoveredObject: resolvedObject
       }
+    );
+    currentPlayerMapState = buildPlayerMapState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState?.cameraFocus?.currentState === "player-focused"
+        ? "player-focused"
+        : "world-overview",
+      resolvedObject
     );
     currentAssetDetailPreviewState = buildAssetDetailPreviewState(
       renderableExpandedSettlementPreview,
@@ -658,9 +616,16 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         return currentAssetDetailPreviewState;
       },
       focusSettlementPlayerPresence() {
+        const selectedPreviewObject =
+          renderableExpandedSettlementPreview?.objectInstances?.find(
+            (objectInstance) =>
+              objectInstance.instanceId ===
+              currentOverlayInteractionState.selectedObject?.instanceId
+          ) ?? currentOverlayInteractionState.selectedObject;
         currentPlayerMapState = buildPlayerMapState(
           renderableExpandedSettlementPreview,
-          "player-focused"
+          "player-focused",
+          selectedPreviewObject
         );
         refreshCaptureSessionState();
         redrawExpandedSettlementPreviewIfMounted();
@@ -2880,7 +2845,8 @@ function drawPoiPresentationMarker(drawContext, projectedMarker, marker) {
 
 function buildPlayerMapState(
   expandedSettlementPreview,
-  focusMode = "world-overview"
+  focusMode = "world-overview",
+  anchorObject = null
 ) {
   if (!expandedSettlementPreview) {
     return createDefaultPlayerMapState(expandedSettlementPreview);
@@ -2888,13 +2854,29 @@ function buildPlayerMapState(
   const seed = stableNumericHash(
     `${expandedSettlementPreview.worldId}::${expandedSettlementPreview.sceneId}::player`
   );
-  const offsetX = ((seed % 17) - 8) * 4;
-  const offsetY = (((Math.floor(seed / 17)) % 17) - 8) * 3;
+  const anchorPoint =
+    anchorObject?.center != null
+      ? anchorObject.center
+      : anchorObject?.position != null
+        ? anchorObject.position
+        : null;
+  const offsetX =
+    anchorPoint == null
+      ? ((seed % 17) - 8) * 4
+      : ((seed % 5) - 2) * 6;
+  const offsetY =
+    anchorPoint == null
+      ? (((Math.floor(seed / 17)) % 17) - 8) * 3
+      : (((Math.floor(seed / 5)) % 5) - 2) * 6;
   const latitudeOffset = Number((((seed % 9) - 4) * 0.000018).toFixed(6));
   const longitudeOffset = Number(((((Math.floor(seed / 9)) % 9) - 4) * 0.000018).toFixed(6));
   const playerPosition = deepFreeze({
-    x: Number((expandedSettlementPreview.cameraState.focusPoint.x + offsetX).toFixed(3)),
-    y: Number((expandedSettlementPreview.cameraState.focusPoint.y + offsetY).toFixed(3))
+    x: Number(
+      ((anchorPoint?.x ?? expandedSettlementPreview.cameraState.focusPoint.x) + offsetX).toFixed(3)
+    ),
+    y: Number(
+      ((anchorPoint?.y ?? expandedSettlementPreview.cameraState.focusPoint.y) + offsetY).toFixed(3)
+    )
   });
   const resolvedFocusMode =
     focusMode === "player-focused" ? "player-focused" : "world-overview";
@@ -2947,27 +2929,33 @@ function buildPlayerInteractionState(
   if (!expandedSettlementPreview || !playerState) {
     return createDefaultPlayerInteractionState(expandedSettlementPreview, playerState);
   }
+  const resolvedSelectedObject = resolveExpandedSettlementObject(
+    expandedSettlementPreview,
+    selectedObject
+  );
   const interactionDistance =
-    selectedObject?.position == null && selectedObject?.center == null
+    resolvedSelectedObject?.position == null && resolvedSelectedObject?.center == null
       ? null
       : Number(
           Math.hypot(
-            (selectedObject.center?.x ?? selectedObject.position.x) - playerState.position.x,
-            (selectedObject.center?.y ?? selectedObject.position.y) - playerState.position.y
+            (resolvedSelectedObject.center?.x ?? resolvedSelectedObject.position.x) -
+              playerState.position.x,
+            (resolvedSelectedObject.center?.y ?? resolvedSelectedObject.position.y) -
+              playerState.position.y
           ).toFixed(3)
         );
   const withinInteractionRange =
     interactionDistance != null && interactionDistance <= 72;
   return deepFreeze({
     interactionId:
-      selectedObject == null
+      resolvedSelectedObject == null
         ? `${expandedSettlementPreview.sceneId}::player-interaction::idle`
-        : `${expandedSettlementPreview.sceneId}::player-interaction::${playerState.playerId}::${selectedObject.instanceId}`,
+        : `${expandedSettlementPreview.sceneId}::player-interaction::${playerState.playerId}::${resolvedSelectedObject.instanceId}`,
     playerId: playerState.playerId,
-    targetObjectId: selectedObject?.instanceId ?? null,
-    targetAssetId: selectedObject?.assetId ?? null,
+    targetObjectId: resolvedSelectedObject?.instanceId ?? null,
+    targetAssetId: resolvedSelectedObject?.assetId ?? null,
     interactionState:
-      selectedObject == null
+      resolvedSelectedObject == null
         ? "world-idle"
         : withinInteractionRange
           ? "object-interaction-ready"
@@ -2975,13 +2963,13 @@ function buildPlayerInteractionState(
     interactionDistance,
     validationResult: deepFreeze({
       playerObjectAlignmentValid:
-        selectedObject == null ||
+        resolvedSelectedObject == null ||
         expandedSettlementPreview.worldId === playerState.worldId,
       interactionDistanceValid:
-        selectedObject == null || withinInteractionRange,
+        resolvedSelectedObject == null || withinInteractionRange,
       objectIdentityValid:
-        selectedObject == null ||
-        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+        resolvedSelectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(resolvedSelectedObject.assetId),
       cleanupValid: true,
       deterministicBehaviourValid: true
     })
@@ -2997,6 +2985,10 @@ function buildCaptureState(
   if (!expandedSettlementPreview || !playerState) {
     return createDefaultCaptureState(expandedSettlementPreview, playerState);
   }
+  const resolvedSelectedObject = resolveExpandedSettlementObject(
+    expandedSettlementPreview,
+    selectedObject
+  );
   const capturedObjectIds = deepFreeze(
     [...new Set(
       Array.isArray(existingCapturedObjectIds)
@@ -3005,38 +2997,40 @@ function buildCaptureState(
     )].sort()
   );
   const captureDistance =
-    selectedObject?.position == null && selectedObject?.center == null
+    resolvedSelectedObject?.position == null && resolvedSelectedObject?.center == null
       ? null
       : Number(
           Math.hypot(
-            (selectedObject.center?.x ?? selectedObject.position.x) - playerState.position.x,
-            (selectedObject.center?.y ?? selectedObject.position.y) - playerState.position.y
+            (resolvedSelectedObject.center?.x ?? resolvedSelectedObject.position.x) -
+              playerState.position.x,
+            (resolvedSelectedObject.center?.y ?? resolvedSelectedObject.position.y) -
+              playerState.position.y
           ).toFixed(3)
         );
   const withinCaptureRange =
     captureDistance != null && captureDistance <= 72;
   const alreadyCaptured =
-    selectedObject != null &&
-    capturedObjectIds.includes(String(selectedObject.instanceId));
+    resolvedSelectedObject != null &&
+    capturedObjectIds.includes(String(resolvedSelectedObject.instanceId));
   const nextCapturedObjectIds =
-    selectedObject != null && withinCaptureRange && !alreadyCaptured
+    resolvedSelectedObject != null && withinCaptureRange && !alreadyCaptured
       ? deepFreeze(
-          [...new Set([...capturedObjectIds, String(selectedObject.instanceId)])].sort()
+          [...new Set([...capturedObjectIds, String(resolvedSelectedObject.instanceId)])].sort()
         )
       : capturedObjectIds;
   const capturedThisSession =
-    selectedObject != null &&
-    nextCapturedObjectIds.includes(String(selectedObject.instanceId));
+    resolvedSelectedObject != null &&
+    nextCapturedObjectIds.includes(String(resolvedSelectedObject.instanceId));
   return deepFreeze({
     captureId:
-      selectedObject == null
+      resolvedSelectedObject == null
         ? `${expandedSettlementPreview.sceneId}::capture::idle`
-        : `${expandedSettlementPreview.sceneId}::capture::${playerState.playerId}::${selectedObject.instanceId}`,
+        : `${expandedSettlementPreview.sceneId}::capture::${playerState.playerId}::${resolvedSelectedObject.instanceId}`,
     playerId: playerState.playerId,
-    targetObjectId: selectedObject?.instanceId ?? null,
-    targetAssetId: selectedObject?.assetId ?? null,
+    targetObjectId: resolvedSelectedObject?.instanceId ?? null,
+    targetAssetId: resolvedSelectedObject?.assetId ?? null,
     captureState:
-      selectedObject == null
+      resolvedSelectedObject == null
         ? "capture-idle"
         : capturedThisSession
           ? "captured-session"
@@ -3056,14 +3050,14 @@ function buildCaptureState(
     capturedObjectIds: nextCapturedObjectIds,
     validationResult: deepFreeze({
       playerProximityValid:
-        selectedObject == null ||
+        resolvedSelectedObject == null ||
         withinCaptureRange ||
         !capturedThisSession,
       targetIdentityValid:
-        selectedObject == null ||
-        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+        resolvedSelectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(resolvedSelectedObject.assetId),
       deterministicCaptureResultValid:
-        selectedObject == null ||
+        resolvedSelectedObject == null ||
         expandedSettlementPreview.worldId === playerState.worldId,
       cleanupValid: true
     })
@@ -3387,40 +3381,47 @@ function buildDiscoveryState(
   if (!expandedSettlementPreview || !playerState) {
     return createDefaultDiscoveryState(expandedSettlementPreview, playerState);
   }
+  const resolvedSelectedObject = resolveExpandedSettlementObject(
+    expandedSettlementPreview,
+    selectedObject
+  );
   const discoveredIds = new Set(
     Array.isArray(existingDiscoveredObjectIds)
       ? existingDiscoveredObjectIds.map((value) => String(value))
       : []
   );
   const discoveryDistance =
-    selectedObject?.position == null && selectedObject?.center == null
+    resolvedSelectedObject?.position == null && resolvedSelectedObject?.center == null
       ? null
       : Number(
           Math.hypot(
-            (selectedObject.center?.x ?? selectedObject.position.x) - playerState.position.x,
-            (selectedObject.center?.y ?? selectedObject.position.y) - playerState.position.y
+            (resolvedSelectedObject.center?.x ?? resolvedSelectedObject.position.x) -
+              playerState.position.x,
+            (resolvedSelectedObject.center?.y ?? resolvedSelectedObject.position.y) -
+              playerState.position.y
           ).toFixed(3)
         );
   const withinDiscoveryRange =
     discoveryDistance != null && discoveryDistance <= 84;
   const discoveredObjectIds =
-    selectedObject != null && withinDiscoveryRange
+    resolvedSelectedObject != null && withinDiscoveryRange
       ? deepFreeze(
-          [...new Set([...discoveredIds, String(selectedObject.instanceId)])].sort()
+          [...new Set([...discoveredIds, String(resolvedSelectedObject.instanceId)])].sort()
         )
       : deepFreeze([...discoveredIds].sort());
   const isDiscovered =
-    selectedObject != null && discoveredObjectIds.includes(String(selectedObject.instanceId));
+    resolvedSelectedObject != null &&
+    discoveredObjectIds.includes(String(resolvedSelectedObject.instanceId));
   return deepFreeze({
     discoveryId:
-      selectedObject == null
+      resolvedSelectedObject == null
         ? `${expandedSettlementPreview.sceneId}::discovery::idle`
-        : `${expandedSettlementPreview.sceneId}::discovery::${playerState.playerId}::${selectedObject.instanceId}`,
+        : `${expandedSettlementPreview.sceneId}::discovery::${playerState.playerId}::${resolvedSelectedObject.instanceId}`,
     playerId: playerState.playerId,
-    objectId: selectedObject?.instanceId ?? null,
-    assetId: selectedObject?.assetId ?? null,
+    objectId: resolvedSelectedObject?.instanceId ?? null,
+    assetId: resolvedSelectedObject?.assetId ?? null,
     discoveryState:
-      selectedObject == null
+      resolvedSelectedObject == null
         ? "discovery-idle"
         : isDiscovered
           ? "discovered-persistent"
@@ -3431,32 +3432,45 @@ function buildDiscoveryState(
     discoveryDistance,
     cameraFocus: deepFreeze({
       currentState:
-        selectedObject != null && withinDiscoveryRange
+        resolvedSelectedObject != null && withinDiscoveryRange
           ? "discovery-focused"
           : "world-overview",
       focusPoint: deepFreeze(
-        selectedObject != null && withinDiscoveryRange
+        resolvedSelectedObject != null && withinDiscoveryRange
           ? {
-              x: selectedObject.center?.x ?? selectedObject.position.x,
-              y: selectedObject.center?.y ?? selectedObject.position.y
+              x: resolvedSelectedObject.center?.x ?? resolvedSelectedObject.position.x,
+              y: resolvedSelectedObject.center?.y ?? resolvedSelectedObject.position.y
             }
           : { ...expandedSettlementPreview.cameraState.focusPoint }
       ),
       targetAsset:
-        selectedObject != null && withinDiscoveryRange
-          ? selectedObject.assetId
+        resolvedSelectedObject != null && withinDiscoveryRange
+          ? resolvedSelectedObject.assetId
           : expandedSettlementPreview.cameraState.targetAsset,
       synchronizedWithMap: true
     }),
     validationResult: deepFreeze({
-      playerProximityValid: selectedObject == null || withinDiscoveryRange,
+      playerProximityValid: resolvedSelectedObject == null || withinDiscoveryRange,
       objectIdentityValid:
-        selectedObject == null ||
-        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+        resolvedSelectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(resolvedSelectedObject.assetId),
       deterministicDiscoveryResultValid: true,
       cleanupValid: true
     })
   });
+}
+
+function resolveExpandedSettlementObject(expandedSettlementPreview, objectReference = null) {
+  if (!expandedSettlementPreview || !objectReference) {
+    return objectReference ?? null;
+  }
+  return (
+    expandedSettlementPreview.objectInstances.find(
+      (objectInstance) =>
+        objectInstance.instanceId === objectReference.instanceId ||
+        objectInstance.assetId === objectReference.assetId
+    ) ?? objectReference
+  );
 }
 
 function resolveSelectableObjectAtCanvasPoint(layout, x, y) {

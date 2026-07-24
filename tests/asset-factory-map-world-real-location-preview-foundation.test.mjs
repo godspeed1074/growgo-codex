@@ -277,4 +277,22 @@ test("real map positions now create world previews through the preview session",
   const hidden = session.hidePreviewLayer();
   assert.equal(hidden.ok, true);
   assert.equal(hidden.mapWorldRealLocationPreview.previewScene.visibilityState, "hidden");
+
+  const reloadedPreview = session.loadGeneratedWorldPreview({
+    document: createMockDocument(),
+    previewMountOptions: buildPreviewMountOptions()
+  });
+  assert.equal(reloadedPreview.ok, true);
+  assert.equal(
+    reloadedPreview.mapWorldRealLocationPreview.previewScene.visibilityState,
+    "visible"
+  );
+
+  const zoomed = await session.zoomMapBy(1);
+  assert.equal(zoomed.ok, true);
+  assert.equal(zoomed.mapWorldRealLocationPreview.previewScene.visibilityState, "visible");
+  assert.equal(
+    zoomed.mapWorldRealLocationPreview.resolvedWorld.worldId,
+    reloadedPreview.mapWorldRealLocationPreview.resolvedWorld.worldId
+  );
 });

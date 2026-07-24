@@ -266,22 +266,6 @@ export function createMapWorldRealMapDisplaySession(options = {}) {
         );
       }
 
-      if (attachedPreview?.atlasBrowserDemoHarness) {
-        const cleanup = attachedPreview.atlasBrowserDemoHarness.hideCoastalWorld();
-        if (!cleanup.ok) {
-          currentState = "failed";
-          return Object.freeze({
-            ok: false,
-            errorCode: cleanup.errorCode ?? "cleanup_failed",
-            message:
-              cleanup.message ??
-              "Unable to hide active coastal world before changing zoom level.",
-            displayState: currentState,
-            mapWorldRealMapDisplay: currentDisplay
-          });
-        }
-      }
-
       const nextDefinition = deepFreeze({
         ...currentDefinition,
         zoomLevel: normalizeZoomLevel(zoomLevel)
@@ -289,8 +273,12 @@ export function createMapWorldRealMapDisplaySession(options = {}) {
 
       currentDisplay = await buildDisplay(nextDefinition);
       currentDefinition = nextDefinition;
-      attachedPreview = null;
-      currentState = "loaded";
+      currentState =
+        attachedPreview == null
+          ? "loaded"
+          : currentState === "hidden"
+            ? "hidden"
+            : "activated";
 
       return Object.freeze({
         ok: true,

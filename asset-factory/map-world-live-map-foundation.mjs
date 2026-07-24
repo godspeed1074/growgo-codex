@@ -23,6 +23,17 @@ export async function createMapWorldLiveMapFoundation(
   options = {}
 ) {
   const visualLayer = await createMapWorldVisualLayerAttachment(rawDefinition, options);
+  const foundation = buildLiveMapFoundationFromVisualLayerAttachment(visualLayer);
+
+  const validation = validateMapWorldLiveMapFoundation(foundation);
+  if (!validation.ok) {
+    throw createValidationError(validation.errorCode, validation.message);
+  }
+
+  return foundation;
+}
+
+function buildLiveMapFoundationFromVisualLayerAttachment(visualLayer) {
   const foundation = deepFreeze({
     mapInstanceId: createMapInstanceId(
       visualLayer.mapId,
@@ -51,12 +62,6 @@ export async function createMapWorldLiveMapFoundation(
     }),
     mapWorldVisualLayerAttachment: visualLayer
   });
-
-  const validation = validateMapWorldLiveMapFoundation(foundation);
-  if (!validation.ok) {
-    throw createValidationError(validation.errorCode, validation.message);
-  }
-
   return foundation;
 }
 
@@ -129,27 +134,13 @@ export function createMapWorldLiveMapSession(options = {}) {
   let currentFoundation = null;
 
   async function syncFoundation(visualLayerAttachment) {
-    currentFoundation = await createMapWorldLiveMapFoundation(
-      {
-        ...mapWorldLiveMapFoundationDefinition,
-        mapId: visualLayerAttachment.mapId,
-        centerCoordinate: deepFreeze({
-          ...visualLayerAttachment.mapWorldRealMapDisplay.centerCoordinate
-        }),
-        zoomLevel: visualLayerAttachment.mapWorldRealMapDisplay.zoomLevel,
-        worldId: mapWorldLiveMapFoundationDefinition.worldId,
-        bounds: deepFreeze({
-          ...visualLayerAttachment.mapWorldRealMapDisplay.worldAttachment.worldLocationResolver.bounds
-        }),
-        seed:
-          visualLayerAttachment.mapWorldRealMapDisplay.worldAttachment
-            .worldLocationResolver.seed,
-        terrainType:
-          visualLayerAttachment.mapWorldRealMapDisplay.worldAttachment
-            .worldLocationResolver.terrainType
-      },
-      options.loaderOptions ?? {}
+    currentFoundation = buildLiveMapFoundationFromVisualLayerAttachment(
+      visualLayerAttachment
     );
+    const validation = validateMapWorldLiveMapFoundation(currentFoundation);
+    if (!validation.ok) {
+      throw createValidationError(validation.errorCode, validation.message);
+    }
     return currentFoundation;
   }
 

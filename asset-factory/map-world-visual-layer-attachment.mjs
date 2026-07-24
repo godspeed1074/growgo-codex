@@ -200,7 +200,6 @@ export function createMapWorldVisualLayerSession(options = {}) {
       if (!zoomed.ok) {
         return zoomed;
       }
-      currentVisibilityState = "hidden";
       const attachment = await syncFromDisplay(zoomed.mapWorldRealMapDisplay);
       return Object.freeze({
         ok: true,

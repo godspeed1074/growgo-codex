@@ -23,11 +23,22 @@ export async function createMapWorldRealLocationPreviewFoundation(
   options = {}
 ) {
   const liveMapFoundation = await createMapWorldLiveMapFoundation(rawDefinition, options);
+  const foundation = buildPreviewFoundationFromLiveMapFoundation(liveMapFoundation);
+
+  const validation = validateMapWorldRealLocationPreviewFoundation(foundation);
+  if (!validation.ok) {
+    throw createValidationError(validation.errorCode, validation.message);
+  }
+
+  return foundation;
+}
+
+function buildPreviewFoundationFromLiveMapFoundation(liveMapFoundation) {
   const visualLayer = liveMapFoundation.mapWorldVisualLayerAttachment;
   const mapDisplay = visualLayer.mapWorldRealMapDisplay;
   const worldAttachment = mapDisplay.worldAttachment;
 
-  const foundation = deepFreeze({
+  return deepFreeze({
     locationPreviewId: createLocationPreviewId(
       liveMapFoundation.mapInstanceId,
       liveMapFoundation.activeWorldId,
@@ -73,13 +84,6 @@ export async function createMapWorldRealLocationPreviewFoundation(
     }),
     mapWorldLiveMapFoundation: liveMapFoundation
   });
-
-  const validation = validateMapWorldRealLocationPreviewFoundation(foundation);
-  if (!validation.ok) {
-    throw createValidationError(validation.errorCode, validation.message);
-  }
-
-  return foundation;
 }
 
 export function validateMapWorldRealLocationPreviewFoundation(rawFoundation) {
@@ -151,27 +155,11 @@ export function createMapWorldRealLocationPreviewSession(options = {}) {
   let currentPreview = null;
 
   async function syncPreview(liveMapFoundation) {
-    currentPreview = await createMapWorldRealLocationPreviewFoundation(
-      {
-        ...mapWorldRealLocationPreviewFoundationDefinition,
-        mapId: liveMapFoundation.mapWorldVisualLayerAttachment.mapId,
-        centerCoordinate: deepFreeze({
-          ...liveMapFoundation.centerCoordinate
-        }),
-        zoomLevel: liveMapFoundation.zoomLevel,
-        worldId: mapWorldRealLocationPreviewFoundationDefinition.worldId,
-        bounds: deepFreeze({
-          ...liveMapFoundation.bounds
-        }),
-        seed:
-          liveMapFoundation.mapWorldVisualLayerAttachment.mapWorldRealMapDisplay
-            .worldAttachment.worldLocationResolver.seed,
-        terrainType:
-          liveMapFoundation.mapWorldVisualLayerAttachment.mapWorldRealMapDisplay
-            .worldAttachment.worldLocationResolver.terrainType
-      },
-      options.loaderOptions ?? {}
-    );
+    currentPreview = buildPreviewFoundationFromLiveMapFoundation(liveMapFoundation);
+    const validation = validateMapWorldRealLocationPreviewFoundation(currentPreview);
+    if (!validation.ok) {
+      throw createValidationError(validation.errorCode, validation.message);
+    }
     return currentPreview;
   }
 

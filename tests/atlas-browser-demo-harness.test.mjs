@@ -483,6 +483,11 @@ test("Atlas browser demo harness hides and cleans up the preview", () => {
   assert.equal(cleanup.ok, true);
   assert.equal(harness.elements.previewContainer.hidden, true);
   assert.equal(harness.elements.canvasContainer.children.length, 0);
+
+  const reshown = harness.showPreview();
+  assert.equal(reshown.ok, true);
+  assert.equal(harness.elements.previewContainer.dataset.previewVisible, "true");
+  assert.equal(harness.elements.canvasContainer.children.length, 1);
 });
 
 test("Atlas browser demo harness rejects duplicate activation safely", () => {
@@ -744,9 +749,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   const captureState = harness.captureSelectedSettlementObject();
   assert.equal(captureState.targetAssetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(typeof captureState.captureRange, "number");
+  assert.equal(captureState.captureState, "captured-session");
   assert.equal(
-    typeof captureState.validationResult.playerProximityValid,
-    "boolean"
+    captureState.validationResult.playerProximityValid,
+    true
   );
   assert.equal(captureState.validationResult.targetIdentityValid, true);
   const capturePresentationState =
@@ -808,11 +814,16 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     "capture-highlight-idle"
   );
 
+  harness.focusSettlementPlayerPresence();
   const discoveryState = harness.discoverSelectedSettlementObject();
   assert.equal(discoveryState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(
-    typeof discoveryState.validationResult.playerProximityValid,
-    "boolean"
+    discoveryState.discoveryState,
+    "discovered-persistent"
+  );
+  assert.equal(
+    discoveryState.validationResult.playerProximityValid,
+    true
   );
   assert.equal(
     harness.currentSettlementCaptureSessionSummaryState().discoveredObjects >= 0,
@@ -836,7 +847,7 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   );
   assert.equal(
     harness.currentSettlementSessionExperienceState().currentObjective,
-    "Select a nearby point of interest to begin exploring the world."
+    "Continue exploring nearby objects to grow the current session survey."
   );
   assert.equal(
     harness.currentSettlementAssetDetailPreviewState().detailState,
