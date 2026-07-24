@@ -87,6 +87,10 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.interactionState.interactionMode, "map-overlay-selection");
   assert.equal(overlay.interactionState.cameraFocus.currentState, "world-anchor");
   assert.equal(overlay.interactionState.validationResult.objectIdentityValid, true);
+  assert.equal(overlay.detailState.selectedObjectId, null);
+  assert.equal(overlay.detailState.assetId, null);
+  assert.equal(overlay.detailState.detailState, "map-overview");
+  assert.equal(overlay.detailState.validationResult.previewStateValid, true);
   assert.equal(overlay.cameraSync.synchronized, true);
   assert.equal(overlay.cameraSync.previewCameraProfile, "atlas-coastal-settlement-overlook");
   assert.equal(overlay.validationResult.coordinateAlignmentValid, true);
@@ -97,6 +101,7 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.validationResult.objectIdentityValid, true);
   assert.equal(overlay.validationResult.selectionPersistenceValid, true);
   assert.equal(overlay.validationResult.cameraFocusValid, true);
+  assert.equal(overlay.validationResult.detailPreviewValid, true);
   assert.equal(overlay.validationResult.mapVisibleUnderlayValid, true);
   assert.equal(overlay.validationResult.combinedViewReady, true);
 });
@@ -119,6 +124,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.mapBaseLayer.centerCoordinate, second.mapBaseLayer.centerCoordinate);
   assert.deepEqual(first.cameraSync, second.cameraSync);
   assert.deepEqual(first.interactionState, second.interactionState);
+  assert.deepEqual(first.detailState, second.detailState);
 });
 
 test("overlay foundation can be built from existing live map and settlement scene state", async () => {
@@ -166,4 +172,29 @@ test("overlay interaction state can deterministically select supported overlay o
   assert.equal(interactionState.cameraFocus.synchronizedWithMap, true);
   assert.equal(interactionState.validationResult.objectIdentityValid, true);
   assert.equal(interactionState.validationResult.deterministicBehaviourValid, true);
+});
+
+test("overlay detail preview state can focus a supported selected asset and preserve map sync", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+
+  const detailState = moduleUnderTest.createMapWorldSettlementOverlayAssetDetailState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    selectedObject: "BUILDING_COASTAL_COTTAGE_001"
+  });
+
+  assert.equal(detailState.assetId, "BUILDING_COASTAL_COTTAGE_001");
+  assert.equal(detailState.assetType, "building");
+  assert.equal(detailState.detailState, "focused-detail-preview");
+  assert.equal(detailState.cameraProfile.currentState, "detail-focused");
+  assert.equal(detailState.validationResult.selectedAssetIdentityValid, true);
+  assert.equal(detailState.validationResult.mapSynchronizationValid, true);
 });

@@ -637,6 +637,8 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
 
   assert.equal(selection.ok, true);
   assert.equal(selection.selectedObject.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(selection.detailPreviewState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(selection.detailPreviewState.detailState, "focused-detail-preview");
   assert.equal(
     harness.currentSettlementInteractionState().cameraFocus.targetAsset,
     "LIGHTHOUSE_ISLAND_ROCKY_001"
@@ -645,5 +647,22 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementInteractionState().cameraFocus.currentState,
     "selected-object"
   );
+  assert.equal(
+    harness.currentSettlementAssetDetailPreviewState().assetId,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
+    harness.currentSettlementAssetDetailPreviewState().detailState,
+    "focused-detail-preview"
+  );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
+
+  const returned = harness.closeSettlementAssetDetailPreview();
+  assert.equal(returned.detailState, "returning-to-map-view");
+  const cleared = harness.clearSettlementInteraction();
+  assert.equal(cleared.selectedObject, null);
+  assert.equal(
+    harness.currentSettlementAssetDetailPreviewState().detailState,
+    "map-overview"
+  );
 });

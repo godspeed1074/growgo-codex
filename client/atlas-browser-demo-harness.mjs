@@ -87,6 +87,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   let currentOverlayInteractionState = createDefaultOverlayInteractionState(
     expandedSettlementPreview
   );
+  let currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
+    expandedSettlementPreview
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -210,6 +213,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     currentOverlayInteractionState = createDefaultOverlayInteractionState(
       expandedSettlementPreview
     );
+    currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
+      expandedSettlementPreview
+    );
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
@@ -288,6 +294,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         hoveredObject: resolvedObject
       }
     );
+    currentAssetDetailPreviewState = buildAssetDetailPreviewState(
+      expandedSettlementPreview,
+      currentOverlayInteractionState.selectedObject
+    );
     lastExpandedSettlementLayout = drawExpandedSettlementPreview(
       drawContext,
       expandedSettlementPreview,
@@ -308,7 +318,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         assetId: resolvedObject.assetId,
         category: resolvedObject.category
       }),
-      interactionState: currentOverlayInteractionState
+      interactionState: currentOverlayInteractionState,
+      detailPreviewState: currentAssetDetailPreviewState
     });
   };
 
@@ -336,6 +347,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentOverlayInteractionState = createDefaultOverlayInteractionState(
           expandedSettlementPreview
         );
+        currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
+          expandedSettlementPreview
+        );
         if (expandedSettlementPreview && mounted) {
           lastExpandedSettlementLayout = drawExpandedSettlementPreview(
             drawContext,
@@ -351,6 +365,24 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementInteractionState() {
         return currentOverlayInteractionState;
+      },
+      openSettlementAssetDetailPreview() {
+        currentAssetDetailPreviewState = buildAssetDetailPreviewState(
+          expandedSettlementPreview,
+          currentOverlayInteractionState.selectedObject
+        );
+        return currentAssetDetailPreviewState;
+      },
+      closeSettlementAssetDetailPreview() {
+        currentAssetDetailPreviewState = buildAssetDetailPreviewState(
+          expandedSettlementPreview,
+          null,
+          "returning-to-map-view"
+        );
+        return currentAssetDetailPreviewState;
+      },
+      currentSettlementAssetDetailPreviewState() {
+        return currentAssetDetailPreviewState;
       },
       currentSettlementSelectableObjects() {
         return deepFreeze(
@@ -1269,6 +1301,40 @@ function createDefaultOverlayInteractionState(expandedSettlementPreview) {
   });
 }
 
+function createDefaultAssetDetailPreviewState(expandedSettlementPreview) {
+  return deepFreeze({
+    detailPreviewId:
+      expandedSettlementPreview == null
+        ? "expanded-settlement-detail-preview::inactive"
+        : `${expandedSettlementPreview.sceneId}::detail-preview::idle`,
+    selectedObjectId: null,
+    assetId: null,
+    assetType: null,
+    cameraProfile:
+      expandedSettlementPreview == null
+        ? null
+        : deepFreeze({
+            currentState: "world-anchor",
+            targetAsset: expandedSettlementPreview.cameraState.targetAsset,
+            focusPoint: deepFreeze({
+              ...expandedSettlementPreview.cameraState.focusPoint
+            }),
+            synchronizedWithMap: true,
+            mapCenterCoordinate: deepFreeze({
+              ...expandedSettlementPreview.cameraState.mapCenterCoordinate
+            }),
+            previewCameraProfile: expandedSettlementPreview.cameraState.cameraProfile
+          }),
+    detailState: "map-overview",
+    validationResult: deepFreeze({
+      selectedAssetIdentityValid: true,
+      previewStateValid: true,
+      cleanupValid: true,
+      mapSynchronizationValid: true
+    })
+  });
+}
+
 function buildOverlayInteractionState(
   expandedSettlementPreview,
   { selectedObject = null, hoveredObject = null } = {}
@@ -1311,6 +1377,56 @@ function buildOverlayInteractionState(
       cameraFocusValid: true,
       cleanupValid: true,
       deterministicBehaviourValid: true
+    })
+  });
+}
+
+function buildAssetDetailPreviewState(
+  expandedSettlementPreview,
+  selectedObject = null,
+  detailStateOverride = null
+) {
+  if (!expandedSettlementPreview) {
+    return createDefaultAssetDetailPreviewState(expandedSettlementPreview);
+  }
+  const resolvedDetailState =
+    detailStateOverride ??
+    (selectedObject ? "focused-detail-preview" : "map-overview");
+  return deepFreeze({
+    detailPreviewId:
+      selectedObject == null
+        ? `${expandedSettlementPreview.sceneId}::detail-preview::idle`
+        : `${expandedSettlementPreview.sceneId}::detail-preview::${selectedObject.instanceId}`,
+    selectedObjectId: selectedObject?.instanceId ?? null,
+    assetId: selectedObject?.assetId ?? null,
+    assetType: selectedObject?.category ?? null,
+    cameraProfile: deepFreeze({
+      currentState: selectedObject ? "detail-focused" : "world-anchor",
+      targetAsset:
+        selectedObject?.assetId ?? expandedSettlementPreview.cameraState.targetAsset,
+      focusPoint: deepFreeze({
+        ...(selectedObject?.center ??
+          selectedObject?.position ??
+          expandedSettlementPreview.cameraState.focusPoint)
+      }),
+      synchronizedWithMap: true,
+      mapCenterCoordinate: deepFreeze({
+        ...expandedSettlementPreview.cameraState.mapCenterCoordinate
+      }),
+      previewCameraProfile: expandedSettlementPreview.cameraState.cameraProfile
+    }),
+    detailState: resolvedDetailState,
+    validationResult: deepFreeze({
+      selectedAssetIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      previewStateValid: [
+        "map-overview",
+        "focused-detail-preview",
+        "returning-to-map-view"
+      ].includes(resolvedDetailState),
+      cleanupValid: true,
+      mapSynchronizationValid: true
     })
   });
 }

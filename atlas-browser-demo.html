@@ -267,6 +267,16 @@
       <p id="atlasPreviewVisibilityLabel">Visibility: hidden</p>
     </section>
 
+    <section id="atlasDetailPanel" class="atlas-demo-source-panel" aria-label="Selected asset detail" hidden>
+      <p id="atlasDetailPreviewLabel">Detail preview: waiting for selection</p>
+      <p id="atlasDetailAssetLabel">Asset: none selected</p>
+      <p id="atlasDetailTypeLabel">Asset type: none selected</p>
+      <p id="atlasDetailCameraLabel">Detail camera: waiting for selection</p>
+      <div class="atlas-demo-map-move-controls">
+        <button id="atlasDetailReturnButton" type="button">Return to Map View</button>
+      </div>
+    </section>
+
     <div class="atlas-demo-controls">
       <button id="atlasPreviewLoadButton" type="button">Initialize Interactive Map</button>
       <button id="atlasPreviewShowButton" type="button">Select Current Map Position</button>
@@ -341,6 +351,12 @@
     const previewWorldLabel = document.getElementById("atlasPreviewWorldLabel");
     const previewObjectCountLabel = document.getElementById("atlasPreviewObjectCountLabel");
     const previewVisibilityLabel = document.getElementById("atlasPreviewVisibilityLabel");
+    const detailPanel = document.getElementById("atlasDetailPanel");
+    const detailPreviewLabel = document.getElementById("atlasDetailPreviewLabel");
+    const detailAssetLabel = document.getElementById("atlasDetailAssetLabel");
+    const detailTypeLabel = document.getElementById("atlasDetailTypeLabel");
+    const detailCameraLabel = document.getElementById("atlasDetailCameraLabel");
+    const detailReturnButton = document.getElementById("atlasDetailReturnButton");
 
     const setBrowserDemoState = (patch = {}) => {
       const previousState = window.__atlasBrowserDemoState ?? {};
@@ -477,6 +493,49 @@
         overlayInteractionState: interactionState
       });
       updateOverlayInteractionLabels(interactionState);
+    };
+
+    const updateDetailPreviewLabels = (detailPreviewState) => {
+      if (!detailPanel) {
+        return;
+      }
+      if (
+        !detailPreviewState ||
+        detailPreviewState.detailState === "map-overview" ||
+        detailPreviewState.detailState === "returning-to-map-view"
+      ) {
+        detailPanel.hidden = true;
+        if (detailPreviewLabel) {
+          detailPreviewLabel.textContent = "Detail preview: waiting for selection";
+        }
+        if (detailAssetLabel) {
+          detailAssetLabel.textContent = "Asset: none selected";
+        }
+        if (detailTypeLabel) {
+          detailTypeLabel.textContent = "Asset type: none selected";
+        }
+        if (detailCameraLabel) {
+          detailCameraLabel.textContent = "Detail camera: waiting for selection";
+        }
+        return;
+      }
+      detailPanel.hidden = false;
+      if (detailPreviewLabel) {
+        detailPreviewLabel.textContent =
+          `Detail preview: ${detailPreviewState.detailState}`;
+      }
+      if (detailAssetLabel) {
+        detailAssetLabel.textContent =
+          `Asset: ${detailPreviewState.assetId ?? "none selected"}`;
+      }
+      if (detailTypeLabel) {
+        detailTypeLabel.textContent =
+          `Asset type: ${detailPreviewState.assetType ?? "none selected"}`;
+      }
+      if (detailCameraLabel) {
+        detailCameraLabel.textContent =
+          `Detail camera: ${detailPreviewState.cameraProfile?.currentState ?? "world-anchor"} / ${detailPreviewState.cameraProfile?.previewCameraProfile ?? "atlas-coastal-settlement-overlook"}`;
+      }
     };
 
     const setMovementDisabled = (disabled) => {
@@ -714,6 +773,11 @@
                 }
                 if (selection.ok) {
                   syncInteractionStateToBrowserState(selection.interactionState);
+                  updateDetailPreviewLabels(selection.detailPreviewState);
+                  setBrowserDemoState({
+                    ...(window.__atlasBrowserDemoState ?? {}),
+                    detailPreviewState: selection.detailPreviewState
+                  });
                 }
                 return;
               }
@@ -807,13 +871,15 @@
                 },
                 combinedOverlay,
                 overlayInteractionState: combinedOverlay.interactionState,
-                selectedOverlayObject: combinedOverlay.interactionState.selectedObject
+                selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
+                detailPreviewState: combinedOverlay.detailState
               });
               updateVisualSourceLabels({
                 ...visualSourceSummary,
                 sourceType: "combined-map-world-overlay"
               });
               updateOverlayInteractionLabels(combinedOverlay.interactionState);
+              updateDetailPreviewLabels(combinedOverlay.detailState);
             }
           })().catch((error) => {
             setBrowserDemoState({
@@ -849,9 +915,32 @@
               lastError: null,
               activeVisualSource: visualSourceSummary,
               selectedOverlayObject: null,
-              overlayInteractionState: null
+              overlayInteractionState: null,
+              detailPreviewState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
+            updateDetailPreviewLabels(null);
+          }
+        });
+
+        detailReturnButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const detailState = harness.closeSettlementAssetDetailPreview();
+          harness.clearSettlementInteraction();
+          const interactionState = harness.currentSettlementInteractionState();
+          syncInteractionStateToBrowserState(interactionState);
+          updateDetailPreviewLabels(detailState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            detailPreviewState: detailState,
+            selectedOverlayObject: null,
+            overlayInteractionState: interactionState
+          });
+          if (status) {
+            status.textContent = "Returned to the map overview.";
           }
         });
 
