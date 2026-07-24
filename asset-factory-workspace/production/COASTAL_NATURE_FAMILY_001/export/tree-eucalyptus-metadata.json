@@ -1,0 +1,28 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "collections": [
+    "GEOMETRY",
+    "MATERIALS",
+    "LOD0",
+    "LOD1",
+    "LOD2",
+    "LOD3",
+    "EXPORT"
+  ],
+  "lodOutputs": {
+    "close": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+    "gameplay": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+    "map": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
+    "distantSilhouette": "TREE_EUCALYPTUS_001_LOD_DISTANT_SILHOUETTE.glb"
+  },
+  "executionTarget": "local-blender-python",
+  "components": [
+    "TREE_TRUNK_EUCALYPTUS_001",
+    "TREE_BRANCH_SMALL_001",
+    "TREE_BRANCH_LARGE_001",
+    "TREE_CANOPY_EUCALYPTUS_001",
+    "TREE_LEAF_CLUSTER_001"
+  ]
+}

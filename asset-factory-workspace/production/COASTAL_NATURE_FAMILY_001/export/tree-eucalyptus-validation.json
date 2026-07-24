@@ -1,0 +1,11 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "sceneContractValidated": true,
+  "trunkGeometryGenerated": true,
+  "branchStructureGenerated": true,
+  "canopyGeometryGenerated": true,
+  "leafMaterialsGenerated": true,
+  "lodOutputsPrepared": true,
+  "exportPrepared": true,
+  "localBlenderExecutionRequired": true
+}
