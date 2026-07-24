@@ -915,8 +915,17 @@
           }
           const demoPresentationState =
             harness.setSettlementPresentationProfile(presentationProfile);
-          updateVisualSourceLabels(harness.currentVisualSourceSummary());
+          const currentVisualSource =
+            window.__atlasBrowserDemoState?.activeVisualSource ?? {};
+          updateVisualSourceLabels({
+            ...harness.currentVisualSourceSummary(),
+            sourceType:
+              currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? "combined-map-world-overlay"
+                : harness.currentVisualSourceSummary().sourceType
+          });
           updateDemoPresentationLabels(demoPresentationState);
+          updatePoiPresentationLabels(harness.currentSettlementPoiPresentationState?.());
           if (status) {
             status.textContent =
               `Switched settlement presentation to ${demoPresentationState.activePresentationProfile}.`;
@@ -930,8 +939,17 @@
           }
           const demoPresentationState =
             harness.setSettlementLightingProfile(lightingProfile);
-          updateVisualSourceLabels(harness.currentVisualSourceSummary());
+          const currentVisualSource =
+            window.__atlasBrowserDemoState?.activeVisualSource ?? {};
+          updateVisualSourceLabels({
+            ...harness.currentVisualSourceSummary(),
+            sourceType:
+              currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? "combined-map-world-overlay"
+                : harness.currentVisualSourceSummary().sourceType
+          });
           updateDemoPresentationLabels(demoPresentationState);
+          updatePoiPresentationLabels(harness.currentSettlementPoiPresentationState?.());
           if (status) {
             status.textContent =
               `Switched settlement lighting to ${demoPresentationState.lightingProfile.activeProfile}.`;

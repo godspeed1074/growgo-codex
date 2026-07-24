@@ -772,6 +772,10 @@ test("Atlas browser demo harness supports final presentation and lighting demo c
     "overview_presentation_profile"
   );
   assert.equal(harness.currentVisualSourceSummary().previewZoomProfile, "far");
+  assert.equal(
+    harness.currentSettlementPoiPresentationState().labelState.zoomProfile,
+    "far"
+  );
 
   const nightState = harness.setSettlementLightingProfile("night");
   assert.equal(nightState.lightingProfile.activeProfile, "night");
@@ -790,4 +794,8 @@ test("Atlas browser demo harness supports final presentation and lighting demo c
     "close_exploration_profile"
   );
   assert.equal(harness.currentVisualSourceSummary().previewZoomProfile, "close");
+  assert.equal(
+    harness.currentSettlementPoiPresentationState().labelState.zoomProfile,
+    "close"
+  );
 });

@@ -566,6 +566,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           presentationProfile
         );
         syncRenderableExpandedSettlementPreview();
+        currentPoiPresentationState = buildPoiPresentationState(
+          renderableExpandedSettlementPreview,
+          currentPoiState,
+          currentPoiContentMetadata
+        );
         activeVisualSourceSummary = buildVisualSourceSummary({
           expandedSettlementPreview: renderableExpandedSettlementPreview,
           coastalWorldShowcase,
@@ -577,6 +582,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       setSettlementLightingProfile(lightingProfile = "day") {
         currentLightingProfile = normalizeSettlementLightingProfile(lightingProfile);
         syncRenderableExpandedSettlementPreview();
+        currentPoiPresentationState = buildPoiPresentationState(
+          renderableExpandedSettlementPreview,
+          currentPoiState,
+          currentPoiContentMetadata
+        );
         activeVisualSourceSummary = buildVisualSourceSummary({
           expandedSettlementPreview: renderableExpandedSettlementPreview,
           coastalWorldShowcase,
