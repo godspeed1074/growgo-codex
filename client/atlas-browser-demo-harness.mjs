@@ -81,6 +81,16 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   const expandedSettlementPreview = resolveExpandedSettlementPreview(
     options.expandedSettlementPreview
   );
+  let currentPresentationProfile = "neighbourhood";
+  let currentLightingProfile =
+    expandedSettlementPreview?.visualStyling?.activeLightingProfile ?? "day";
+  let renderableExpandedSettlementPreview = buildRenderableExpandedSettlementPreview(
+    expandedSettlementPreview,
+    {
+      presentationProfile: currentPresentationProfile,
+      lightingProfile: currentLightingProfile
+    }
+  );
   let mounted = false;
   let previewSession = null;
   let lastExpandedSettlementLayout = null;
@@ -124,6 +134,36 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   );
   setContainerVisibility(elements.previewContainer, false);
 
+  const redrawExpandedSettlementPreviewIfMounted = () => {
+    if (!renderableExpandedSettlementPreview || !mounted) {
+      return null;
+    }
+    lastExpandedSettlementLayout = drawExpandedSettlementPreview(
+      drawContext,
+      renderableExpandedSettlementPreview,
+      {
+        width: canvas.width,
+        height: canvas.height,
+        interactionState: currentOverlayInteractionState,
+        playerState: currentPlayerMapState,
+        discoveryState: currentDiscoveryState,
+        poiPresentationState: currentPoiPresentationState
+      }
+    );
+    return lastExpandedSettlementLayout;
+  };
+
+  const syncRenderableExpandedSettlementPreview = () => {
+    renderableExpandedSettlementPreview = buildRenderableExpandedSettlementPreview(
+      expandedSettlementPreview,
+      {
+        presentationProfile: currentPresentationProfile,
+        lightingProfile: currentLightingProfile
+      }
+    );
+    return renderableExpandedSettlementPreview;
+  };
+
   const showHandler = () => {
     if (previewSession == null) {
       const sessionResult =
@@ -159,8 +199,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       mounted = true;
     }
 
-    if (expandedSettlementPreview) {
-      lastExpandedSettlementLayout = drawExpandedSettlementPreview(drawContext, expandedSettlementPreview, {
+    if (renderableExpandedSettlementPreview) {
+      lastExpandedSettlementLayout = drawExpandedSettlementPreview(drawContext, renderableExpandedSettlementPreview, {
         width: canvas.width,
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
@@ -187,10 +227,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     setContainerVisibility(elements.previewContainer, true);
     setStatus(
       elements.status,
-      expandedSettlementPreview
-        ? expandedSettlementPreview.validationResult.objectsResolve
-          ? `Settlement world visible with neighbourhood-scale scene ${expandedSettlementPreview.sceneId}.`
-          : `Settlement world visible with fallback-safe scene ${expandedSettlementPreview.sceneId}.`
+      renderableExpandedSettlementPreview
+        ? renderableExpandedSettlementPreview.validationResult.objectsResolve
+          ? `Settlement world visible with neighbourhood-scale scene ${renderableExpandedSettlementPreview.sceneId}.`
+          : `Settlement world visible with fallback-safe scene ${renderableExpandedSettlementPreview.sceneId}.`
       : coastalWorldShowcase
         ? coastalWorldShowcase.verificationResult.realGlbBackedSceneValid
           ? `Coastal world visible with assembled real GLB-backed scene ${coastalWorldShowcase.sceneId}.`
@@ -208,7 +248,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         : "Atlas preview visible."
     );
     activeVisualSourceSummary = buildVisualSourceSummary({
-      expandedSettlementPreview,
+      expandedSettlementPreview: renderableExpandedSettlementPreview,
       coastalWorldShowcase,
       visibilityState: "visible"
     });
@@ -217,7 +257,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       ok: true,
       previewMountResult: mountResult.previewMountResult,
       visualSourceSummary: activeVisualSourceSummary,
-      expandedSettlementPreview,
+      expandedSettlementPreview: renderableExpandedSettlementPreview,
       coastalWorldShowcase,
       realGroundPreviewBinding,
       realGroundRenderBinding,
@@ -258,7 +298,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
     activeVisualSourceSummary = buildVisualSourceSummary({
-      expandedSettlementPreview,
+      expandedSettlementPreview: renderableExpandedSettlementPreview,
       coastalWorldShowcase,
       visibilityState: "hidden"
     });
@@ -291,7 +331,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       y
     );
     currentOverlayInteractionState = buildOverlayInteractionState(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       {
         selectedObject: currentOverlayInteractionState.selectedObject,
         hoveredObject: resolvedObject
@@ -326,46 +366,36 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       );
     }
     currentOverlayInteractionState = buildOverlayInteractionState(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       {
         selectedObject: resolvedObject,
         hoveredObject: resolvedObject
       }
     );
     currentAssetDetailPreviewState = buildAssetDetailPreviewState(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       currentOverlayInteractionState.selectedObject
     );
     currentPoiState = buildPoiState(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       currentOverlayInteractionState.selectedObject,
       currentPlayerMapState
     );
     currentPoiContentMetadata = buildPoiContentMetadata(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       currentPoiState
     );
     currentPoiPresentationState = buildPoiPresentationState(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       currentPoiState,
       currentPoiContentMetadata
     );
     currentPlayerInteractionState = buildPlayerInteractionState(
-      expandedSettlementPreview,
+      renderableExpandedSettlementPreview,
       currentPlayerMapState,
       currentOverlayInteractionState.selectedObject
     );
-    lastExpandedSettlementLayout = drawExpandedSettlementPreview(
-      drawContext,
-      expandedSettlementPreview,
-      {
-        width: canvas.width,
-        height: canvas.height,
-        interactionState: currentOverlayInteractionState,
-        playerState: currentPlayerMapState,
-        poiPresentationState: currentPoiPresentationState
-      }
-    );
+    redrawExpandedSettlementPreviewIfMounted();
     const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
     setStatus(elements.status, message);
     return Object.freeze({
@@ -433,17 +463,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentPlayerMapState
         );
         if (expandedSettlementPreview && mounted) {
-          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
-            drawContext,
-            expandedSettlementPreview,
-            {
-              width: canvas.width,
-              height: canvas.height,
-              interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState,
-              poiPresentationState: currentPoiPresentationState
-            }
-          );
+          redrawExpandedSettlementPreviewIfMounted();
         }
         return currentOverlayInteractionState;
       },
@@ -479,42 +499,18 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       focusSettlementPlayerPresence() {
         currentPlayerMapState = buildPlayerMapState(
-          expandedSettlementPreview,
+          renderableExpandedSettlementPreview,
           "player-focused"
         );
-        if (expandedSettlementPreview && mounted) {
-          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
-            drawContext,
-            expandedSettlementPreview,
-            {
-              width: canvas.width,
-              height: canvas.height,
-              interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState,
-              poiPresentationState: currentPoiPresentationState
-            }
-          );
-        }
+        redrawExpandedSettlementPreviewIfMounted();
         return currentPlayerMapState;
       },
       returnSettlementWorldOverview() {
         currentPlayerMapState = buildPlayerMapState(
-          expandedSettlementPreview,
+          renderableExpandedSettlementPreview,
           "world-overview"
         );
-        if (expandedSettlementPreview && mounted) {
-          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
-            drawContext,
-            expandedSettlementPreview,
-            {
-              width: canvas.width,
-              height: canvas.height,
-              interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState,
-              poiPresentationState: currentPoiPresentationState
-            }
-          );
-        }
+        redrawExpandedSettlementPreviewIfMounted();
         return currentPlayerMapState;
       },
       currentSettlementPlayerMapState() {
@@ -540,25 +536,12 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       discoverSelectedSettlementObject() {
         currentDiscoveryState = buildDiscoveryState(
-          expandedSettlementPreview,
+          renderableExpandedSettlementPreview,
           currentPlayerMapState,
           currentOverlayInteractionState.selectedObject,
           currentDiscoveryState.discoveredObjectIds
         );
-        if (expandedSettlementPreview && mounted) {
-          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
-            drawContext,
-            expandedSettlementPreview,
-            {
-              width: canvas.width,
-              height: canvas.height,
-              interactionState: currentOverlayInteractionState,
-              playerState: currentPlayerMapState,
-              discoveryState: currentDiscoveryState,
-              poiPresentationState: currentPoiPresentationState
-            }
-          );
-        }
+        redrawExpandedSettlementPreviewIfMounted();
         return currentDiscoveryState;
       },
       clearSettlementDiscoveryState() {
@@ -577,6 +560,83 @@ export function createAtlasBrowserDemoHarness(options = {}) {
             selectableExpandedSettlementAssetIds.has(object.assetId)
           )
         );
+      },
+      setSettlementPresentationProfile(presentationProfile = "neighbourhood") {
+        currentPresentationProfile = normalizeSettlementPresentationProfile(
+          presentationProfile
+        );
+        syncRenderableExpandedSettlementPreview();
+        activeVisualSourceSummary = buildVisualSourceSummary({
+          expandedSettlementPreview: renderableExpandedSettlementPreview,
+          coastalWorldShowcase,
+          visibilityState: mounted ? "visible" : "hidden"
+        });
+        redrawExpandedSettlementPreviewIfMounted();
+        return this.currentDemoPresentationState();
+      },
+      setSettlementLightingProfile(lightingProfile = "day") {
+        currentLightingProfile = normalizeSettlementLightingProfile(lightingProfile);
+        syncRenderableExpandedSettlementPreview();
+        activeVisualSourceSummary = buildVisualSourceSummary({
+          expandedSettlementPreview: renderableExpandedSettlementPreview,
+          coastalWorldShowcase,
+          visibilityState: mounted ? "visible" : "hidden"
+        });
+        redrawExpandedSettlementPreviewIfMounted();
+        return this.currentDemoPresentationState();
+      },
+      currentDemoPresentationState() {
+        const activePreview =
+          renderableExpandedSettlementPreview ?? expandedSettlementPreview ?? null;
+        if (!activePreview) {
+          return deepFreeze({
+            demoState: "placeholder-ready",
+            activeWorld: null,
+            activePresentationProfile: null,
+            cameraProfile: null,
+            lightingProfile: null,
+            validationResult: deepFreeze({
+              demoReady: false,
+              deterministicSceneLoading: false,
+              objectVisibilityReady: false,
+              poiInteractionReady: false,
+              cleanupReady: true
+            })
+          });
+        }
+        return deepFreeze({
+          demoState: mounted ? "world-preview-visible" : "world-preview-ready",
+          activeWorld: deepFreeze({
+            worldId: activePreview.worldId,
+            sceneId: activePreview.sceneId,
+            objectInstanceCount: activePreview.objectInstances.length
+          }),
+          activePresentationProfile: activePreview.visualScaling.activePresentationProfile,
+          cameraProfile: deepFreeze({
+            cameraProfile: activePreview.cameraState.cameraProfile,
+            activeCompositionProfile:
+              activePreview.cameraState.activeCompositionProfile,
+            previewZoomProfile: activePreview.cameraState.previewZoomProfile,
+            targetAsset: activePreview.cameraState.targetAsset
+          }),
+          lightingProfile: deepFreeze({
+            activeProfile:
+              activePreview.visualStyling.activeLightingProfile ?? currentLightingProfile,
+            availableProfiles: deepFreeze([
+              ...(activePreview.visualStyling.availableLightingProfiles ?? [])
+            ])
+          }),
+          validationResult: deepFreeze({
+            demoReady: true,
+            deterministicSceneLoading:
+              activePreview.validationResult.deterministicOutput === true,
+            objectVisibilityReady:
+              activePreview.validationResult.objectsResolve === true,
+            poiInteractionReady:
+              activePreview.validationResult.objectsResolve === true,
+            cleanupReady: true
+          })
+        });
       },
       currentVisualSourceSummary() {
         return activeVisualSourceSummary;
@@ -2909,6 +2969,103 @@ function resolveExpandedSettlementPreview(rawPreview) {
   }
 
   return createExpandedSettlementVisualPreviewBinding(rawPreview);
+}
+
+function normalizeSettlementPresentationProfile(profile) {
+  switch (profile) {
+    case "overview":
+    case "neighbourhood":
+    case "close":
+      return profile;
+    default:
+      return "neighbourhood";
+  }
+}
+
+function normalizeSettlementLightingProfile(profile) {
+  switch (profile) {
+    case "day":
+    case "sunset":
+    case "night":
+      return profile;
+    default:
+      return "day";
+  }
+}
+
+function buildRenderableExpandedSettlementPreview(
+  expandedSettlementPreview,
+  {
+    presentationProfile = "neighbourhood",
+    lightingProfile = "day"
+  } = {}
+) {
+  if (!expandedSettlementPreview) {
+    return null;
+  }
+
+  const normalizedPresentationProfile =
+    normalizeSettlementPresentationProfile(presentationProfile);
+  const normalizedLightingProfile =
+    normalizeSettlementLightingProfile(lightingProfile);
+  const presentationProfileMapping = Object.freeze({
+    overview: Object.freeze({
+      activePresentationProfile: "overview_presentation_profile",
+      activeZoomProfile: "far",
+      activeCompositionProfile: "far_overview"
+    }),
+    neighbourhood: Object.freeze({
+      activePresentationProfile: "neighbourhood_presentation_profile",
+      activeZoomProfile: "normal",
+      activeCompositionProfile: "normal_neighbourhood"
+    }),
+    close: Object.freeze({
+      activePresentationProfile: "close_exploration_profile",
+      activeZoomProfile: "close",
+      activeCompositionProfile: "close_property"
+    })
+  });
+  const mapping = presentationProfileMapping[normalizedPresentationProfile];
+  const visibleObjectCount = filterExpandedSettlementInstancesByZoom(
+    expandedSettlementPreview.objectInstances ?? [],
+    mapping.activeZoomProfile
+  ).length;
+
+  return deepFreeze({
+    ...expandedSettlementPreview,
+    visualScaling: deepFreeze({
+      ...expandedSettlementPreview.visualScaling,
+      activePresentationProfile: mapping.activePresentationProfile,
+      activeZoomProfile: mapping.activeZoomProfile,
+      visibleObjectCount,
+      previewZoomProfile: deepFreeze({
+        ...(expandedSettlementPreview.visualScaling?.previewZoomProfile ?? {}),
+        activeProfile: mapping.activeZoomProfile
+      })
+    }),
+    visualStyling: deepFreeze({
+      ...expandedSettlementPreview.visualStyling,
+      activeLightingProfile: normalizedLightingProfile
+    }),
+    presentationSummary: deepFreeze({
+      ...expandedSettlementPreview.presentationSummary,
+      activePresentationProfile: mapping.activePresentationProfile,
+      activeZoomProfile: mapping.activeZoomProfile,
+      activeCompositionProfile: mapping.activeCompositionProfile,
+      activeLightingProfile: normalizedLightingProfile,
+      visibleObjectCount
+    }),
+    cameraState: deepFreeze({
+      ...expandedSettlementPreview.cameraState,
+      activeCompositionProfile: mapping.activeCompositionProfile,
+      activeZoomProfile: mapping.activeZoomProfile,
+      previewZoomProfile: mapping.activeZoomProfile
+    }),
+    validationResult: deepFreeze({
+      ...expandedSettlementPreview.validationResult,
+      visibleObjectCount
+    })
+  });
 }
 
 function buildVisualSourceSummary({

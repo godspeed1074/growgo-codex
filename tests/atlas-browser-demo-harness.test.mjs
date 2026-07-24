@@ -745,3 +745,49 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     "world-overview"
   );
 });
+
+test("Atlas browser demo harness supports final presentation and lighting demo controls", async () => {
+  const document = createMockDocument();
+  const expandedSettlementScene = await buildExpandedSettlementScene();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions(),
+    expandedSettlementPreview: expandedSettlementScene
+  });
+
+  assert.equal(result.ok, true);
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showCoastalWorld();
+  assert.equal(shown.ok, true);
+
+  const overviewState = harness.setSettlementPresentationProfile("overview");
+  assert.equal(
+    overviewState.activePresentationProfile,
+    "overview_presentation_profile"
+  );
+  assert.equal(overviewState.cameraProfile.activeCompositionProfile, "far_overview");
+  assert.equal(overviewState.cameraProfile.previewZoomProfile, "far");
+  assert.equal(
+    harness.currentVisualSourceSummary().presentationProfile,
+    "overview_presentation_profile"
+  );
+  assert.equal(harness.currentVisualSourceSummary().previewZoomProfile, "far");
+
+  const nightState = harness.setSettlementLightingProfile("night");
+  assert.equal(nightState.lightingProfile.activeProfile, "night");
+  assert.equal(nightState.validationResult.demoReady, true);
+  assert.equal(nightState.validationResult.poiInteractionReady, true);
+
+  const closeState = harness.setSettlementPresentationProfile("close");
+  assert.equal(
+    closeState.activePresentationProfile,
+    "close_exploration_profile"
+  );
+  assert.equal(closeState.cameraProfile.activeCompositionProfile, "close_property");
+  assert.equal(closeState.cameraProfile.previewZoomProfile, "close");
+  assert.equal(
+    harness.currentVisualSourceSummary().presentationProfile,
+    "close_exploration_profile"
+  );
+  assert.equal(harness.currentVisualSourceSummary().previewZoomProfile, "close");
+});

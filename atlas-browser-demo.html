@@ -296,6 +296,8 @@
       <p id="atlasPreviewWorldLabel">World: waiting for selection</p>
       <p id="atlasPreviewObjectCountLabel">Object instances: waiting for selection</p>
       <p id="atlasPreviewVisibilityLabel">Visibility: hidden</p>
+      <p id="atlasPresentationProfileLabel">Presentation profile: waiting for selection</p>
+      <p id="atlasLightingProfileLabel">Lighting profile: waiting for selection</p>
     </section>
 
     <section id="atlasDetailPanel" class="atlas-demo-source-panel" aria-label="Selected asset detail" hidden>
@@ -317,6 +319,20 @@
       <button id="atlasPreviewToggleButton" type="button">Load Generated World Preview</button>
       <button id="atlasPreviewHideButton" type="button">Hide World Preview</button>
     </div>
+
+    <section class="atlas-demo-source-panel" aria-label="Demo presentation controls">
+      <p id="atlasDemoStateLabel">Demo state: waiting for generated world</p>
+      <div class="atlas-demo-map-move-controls">
+        <button id="atlasPresentationOverviewButton" type="button">Overview View</button>
+        <button id="atlasPresentationNeighbourhoodButton" type="button">Neighbourhood View</button>
+        <button id="atlasPresentationCloseButton" type="button">Close Exploration View</button>
+      </div>
+      <div class="atlas-demo-map-move-controls">
+        <button id="atlasLightingDayButton" type="button">Day</button>
+        <button id="atlasLightingSunsetButton" type="button">Sunset</button>
+        <button id="atlasLightingNightButton" type="button">Night</button>
+      </div>
+    </section>
 
     <p id="atlasPreviewStatus" class="atlas-demo-status" aria-live="polite">
       Map world real location preview loading...
@@ -397,6 +413,15 @@
     const previewWorldLabel = document.getElementById("atlasPreviewWorldLabel");
     const previewObjectCountLabel = document.getElementById("atlasPreviewObjectCountLabel");
     const previewVisibilityLabel = document.getElementById("atlasPreviewVisibilityLabel");
+    const presentationProfileLabel = document.getElementById("atlasPresentationProfileLabel");
+    const lightingProfileLabel = document.getElementById("atlasLightingProfileLabel");
+    const demoStateLabel = document.getElementById("atlasDemoStateLabel");
+    const presentationOverviewButton = document.getElementById("atlasPresentationOverviewButton");
+    const presentationNeighbourhoodButton = document.getElementById("atlasPresentationNeighbourhoodButton");
+    const presentationCloseButton = document.getElementById("atlasPresentationCloseButton");
+    const lightingDayButton = document.getElementById("atlasLightingDayButton");
+    const lightingSunsetButton = document.getElementById("atlasLightingSunsetButton");
+    const lightingNightButton = document.getElementById("atlasLightingNightButton");
     const detailPanel = document.getElementById("atlasDetailPanel");
     const detailPreviewLabel = document.getElementById("atlasDetailPreviewLabel");
     const detailAssetLabel = document.getElementById("atlasDetailAssetLabel");
@@ -436,6 +461,31 @@
       if (previewVisibilityLabel) {
         previewVisibilityLabel.textContent =
           `Visibility: ${summary.visibilityState}${summary.active ? " (active)" : ""}`;
+      }
+      if (presentationProfileLabel) {
+        presentationProfileLabel.textContent =
+          `Presentation profile: ${summary.presentationProfile ?? "none selected"}`;
+      }
+    };
+
+    const updateDemoPresentationLabels = (demoPresentationState) => {
+      if (!demoPresentationState) {
+        return;
+      }
+      if (demoStateLabel) {
+        demoStateLabel.textContent = `Demo state: ${demoPresentationState.demoState}`;
+      }
+      if (presentationProfileLabel) {
+        presentationProfileLabel.textContent =
+          `Presentation profile: ${demoPresentationState.activePresentationProfile ?? "none selected"}`;
+      }
+      if (lightingProfileLabel) {
+        lightingProfileLabel.textContent =
+          `Lighting profile: ${demoPresentationState.lightingProfile?.activeProfile ?? "none selected"}`;
+      }
+      if (worldCameraLabel && demoPresentationState.cameraProfile) {
+        worldCameraLabel.textContent =
+          `World camera: ${demoPresentationState.cameraProfile.activeCompositionProfile} / ${demoPresentationState.cameraProfile.previewZoomProfile} focused on ${demoPresentationState.cameraProfile.targetAsset}`;
       }
     };
 
@@ -491,6 +541,10 @@
         active: overlay.validationResult.combinedViewReady === true
       });
       updatePlayerPresenceLabels(overlay.playerState);
+      if (presentationProfileLabel) {
+        presentationProfileLabel.textContent =
+          `Presentation profile: ${overlay.settlementLayer.activePresentationProfile ?? "neighbourhood_presentation_profile"}`;
+      }
     };
 
     const updateOverlayInteractionLabels = (interactionState) => {
@@ -723,6 +777,24 @@
       if (hideButton) {
         hideButton.disabled = true;
       }
+      if (presentationOverviewButton) {
+        presentationOverviewButton.disabled = true;
+      }
+      if (presentationNeighbourhoodButton) {
+        presentationNeighbourhoodButton.disabled = true;
+      }
+      if (presentationCloseButton) {
+        presentationCloseButton.disabled = true;
+      }
+      if (lightingDayButton) {
+        lightingDayButton.disabled = true;
+      }
+      if (lightingSunsetButton) {
+        lightingSunsetButton.disabled = true;
+      }
+      if (lightingNightButton) {
+        lightingNightButton.disabled = true;
+      }
       if (playerFocusButton) {
         playerFocusButton.disabled = true;
       }
@@ -750,6 +822,12 @@
         visibilityState: "hidden",
         active: false
       });
+      if (lightingProfileLabel) {
+        lightingProfileLabel.textContent = "Lighting profile: waiting for selection";
+      }
+      if (demoStateLabel) {
+        demoStateLabel.textContent = "Demo state: waiting for generated world";
+      }
     };
 
     if (window.location.protocol === "file:") {
@@ -819,6 +897,67 @@
           status.textContent =
             "Ready to initialize the interactive map, select the current position, and load a generated world preview from it.";
         }
+
+        const updateHarnessDemoState = () => {
+          const harness = resolveOverlayHarness();
+          if (!harness?.currentDemoPresentationState) {
+            return null;
+          }
+          const demoPresentationState = harness.currentDemoPresentationState();
+          updateDemoPresentationLabels(demoPresentationState);
+          return demoPresentationState;
+        };
+
+        const applyPresentationProfile = (presentationProfile) => {
+          const harness = resolveOverlayHarness();
+          if (!harness?.setSettlementPresentationProfile) {
+            return;
+          }
+          const demoPresentationState =
+            harness.setSettlementPresentationProfile(presentationProfile);
+          updateVisualSourceLabels(harness.currentVisualSourceSummary());
+          updateDemoPresentationLabels(demoPresentationState);
+          if (status) {
+            status.textContent =
+              `Switched settlement presentation to ${demoPresentationState.activePresentationProfile}.`;
+          }
+        };
+
+        const applyLightingProfile = (lightingProfile) => {
+          const harness = resolveOverlayHarness();
+          if (!harness?.setSettlementLightingProfile) {
+            return;
+          }
+          const demoPresentationState =
+            harness.setSettlementLightingProfile(lightingProfile);
+          updateVisualSourceLabels(harness.currentVisualSourceSummary());
+          updateDemoPresentationLabels(demoPresentationState);
+          if (status) {
+            status.textContent =
+              `Switched settlement lighting to ${demoPresentationState.lightingProfile.activeProfile}.`;
+          }
+        };
+
+        const setDemoControlsDisabled = (disabled) => {
+          if (presentationOverviewButton) {
+            presentationOverviewButton.disabled = disabled;
+          }
+          if (presentationNeighbourhoodButton) {
+            presentationNeighbourhoodButton.disabled = disabled;
+          }
+          if (presentationCloseButton) {
+            presentationCloseButton.disabled = disabled;
+          }
+          if (lightingDayButton) {
+            lightingDayButton.disabled = disabled;
+          }
+          if (lightingSunsetButton) {
+            lightingSunsetButton.disabled = disabled;
+          }
+          if (lightingNightButton) {
+            lightingNightButton.disabled = disabled;
+          }
+        };
 
         loadButton?.addEventListener("click", async () => {
           const loaded = await previewSession.initializeInteractiveMap();
@@ -1040,6 +1179,7 @@
             if (hideButton) {
               hideButton.disabled = false;
             }
+            setDemoControlsDisabled(false);
             if (playerFocusButton) {
               playerFocusButton.disabled = false;
             }
@@ -1095,6 +1235,7 @@
               );
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
+              updateHarnessDemoState();
             }
           })().catch((error) => {
             setBrowserDemoState({
@@ -1122,6 +1263,7 @@
             if (hideButton) {
               hideButton.disabled = true;
             }
+            setDemoControlsDisabled(true);
             if (playerFocusButton) {
               playerFocusButton.disabled = true;
             }
@@ -1164,7 +1306,32 @@
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
             updateDiscoveryLabels(null);
+            if (lightingProfileLabel) {
+              lightingProfileLabel.textContent = "Lighting profile: waiting for selection";
+            }
+            if (demoStateLabel) {
+              demoStateLabel.textContent = "Demo state: world preview hidden";
+            }
           }
+        });
+
+        presentationOverviewButton?.addEventListener("click", () => {
+          applyPresentationProfile("overview");
+        });
+        presentationNeighbourhoodButton?.addEventListener("click", () => {
+          applyPresentationProfile("neighbourhood");
+        });
+        presentationCloseButton?.addEventListener("click", () => {
+          applyPresentationProfile("close");
+        });
+        lightingDayButton?.addEventListener("click", () => {
+          applyLightingProfile("day");
+        });
+        lightingSunsetButton?.addEventListener("click", () => {
+          applyLightingProfile("sunset");
+        });
+        lightingNightButton?.addEventListener("click", () => {
+          applyLightingProfile("night");
         });
 
         detailReturnButton?.addEventListener("click", () => {
@@ -1293,6 +1460,139 @@
           });
           if (status) {
             status.textContent = "Cleared discovery state.";
+          }
+        });
+
+        const openIntoGeneratedWorldDemo = async () => {
+          const loaded = await previewSession.initializeInteractiveMap();
+          if (!loaded.ok) {
+            throw new Error(loaded.message);
+          }
+          updatePreviewLabels(loaded.mapWorldRealLocationPreview);
+          window.mapWorldRealLocationPreview = loaded.mapWorldRealLocationPreview;
+
+          const selected = previewSession.selectCurrentMapPositionAsPreviewLocation();
+          if (!selected.ok) {
+            throw new Error(selected.message);
+          }
+          updatePreviewLabels(selected.mapWorldRealLocationPreview);
+          window.mapWorldRealLocationPreview = selected.mapWorldRealLocationPreview;
+
+          expandedSettlementPreview ??=
+            await createMapWorldSettlementAtlasSceneExpansion(
+              mapWorldSettlementAtlasSceneExpansionDefinition,
+              {
+                existsSync() {
+                  return true;
+                },
+                async loadArrayBuffer() {
+                  return createSyntheticGlb();
+                },
+                allowFallbackShowcase: true
+              }
+            );
+
+          const loadedWorld = previewSession.loadGeneratedWorldPreview({
+            expandedSettlementPreview
+          });
+          if (!loadedWorld.ok) {
+            throw new Error(loadedWorld.message);
+          }
+
+          const combinedOverlay =
+            buildMapWorldSettlementRealMapOverlayFoundation({
+              mapWorldLiveMapFoundation:
+                loadedWorld.mapWorldRealLocationPreview.mapWorldLiveMapFoundation,
+              settlementScene: expandedSettlementPreview
+            });
+
+          updatePreviewLabels(loadedWorld.mapWorldRealLocationPreview);
+          updateCombinedOverlayLabels(combinedOverlay);
+          window.mapWorldRealLocationPreview = loadedWorld.mapWorldRealLocationPreview;
+          window.mapWorldRealLocationPreviewAttachment = loadedWorld.atlasPreviewAttachment;
+          window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
+          window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
+
+          const visualSourceSummary =
+            loadedWorld.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
+          setBrowserDemoState({
+            status: loadedWorld.message,
+            lastError: null,
+            activeVisualSource: {
+              ...visualSourceSummary,
+              sourceType: "combined-map-world-overlay"
+            },
+            combinedOverlay,
+            poiState: combinedOverlay.poiState,
+            poiContentMetadata: combinedOverlay.poiContentMetadata,
+            poiPresentationState: combinedOverlay.poiPresentationState,
+            overlayInteractionState: combinedOverlay.interactionState,
+            selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
+            detailPreviewState: combinedOverlay.detailState,
+            playerState: combinedOverlay.playerState,
+            playerInteractionState: combinedOverlay.playerInteractionState,
+            discoveryState: combinedOverlay.discoveryState
+          });
+          updateVisualSourceLabels({
+            ...visualSourceSummary,
+            sourceType: "combined-map-world-overlay"
+          });
+          updatePoiLabels(combinedOverlay.poiState);
+          updatePoiPresentationLabels(combinedOverlay.poiPresentationState);
+          updateOverlayInteractionLabels(combinedOverlay.interactionState);
+          updateDetailPreviewLabels(
+            combinedOverlay.detailState,
+            combinedOverlay.poiContentMetadata
+          );
+          updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
+          updateDiscoveryLabels(combinedOverlay.discoveryState);
+          updateHarnessDemoState();
+          setDemoControlsDisabled(false);
+          if (showButton) {
+            showButton.disabled = false;
+          }
+          if (toggleButton) {
+            toggleButton.disabled = false;
+          }
+          if (hideButton) {
+            hideButton.disabled = false;
+          }
+          if (playerFocusButton) {
+            playerFocusButton.disabled = false;
+          }
+          if (playerInteractButton) {
+            playerInteractButton.disabled = false;
+          }
+          if (worldOverviewButton) {
+            worldOverviewButton.disabled = false;
+          }
+          if (interactionClearButton) {
+            interactionClearButton.disabled = false;
+          }
+          if (discoverButton) {
+            discoverButton.disabled = false;
+          }
+          if (discoveryClearButton) {
+            discoveryClearButton.disabled = false;
+          }
+          setMovementDisabled(false);
+          if (status) {
+            status.textContent =
+              "Generated coastal neighbourhood loaded directly into the interactive map demo.";
+          }
+        };
+
+        void openIntoGeneratedWorldDemo().catch((error) => {
+          setBrowserDemoState({
+            status: error.message,
+            lastError: {
+              name: error?.name ?? "Error",
+              message: error.message
+            }
+          });
+          window.__lastAtlasBrowserDemoError = error;
+          if (status) {
+            status.textContent = error.message;
           }
         });
 
