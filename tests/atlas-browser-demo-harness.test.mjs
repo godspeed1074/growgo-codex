@@ -562,6 +562,10 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     "suburban_coastal"
   );
   assert.equal(
+    harness.currentVisualSourceSummary().presentationProfile,
+    "neighbourhood_presentation_profile"
+  );
+  assert.equal(
     harness.currentVisualSourceSummary().previewZoomProfile,
     "normal"
   );
@@ -589,6 +593,13 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
       (command) =>
         command[0] === "fillText" &&
         String(command[1]).includes("45/45 scene objects")
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "fillText" &&
+        String(command[1]).includes("neighbourhood_presentation_profile")
     )
   );
   assert.ok(

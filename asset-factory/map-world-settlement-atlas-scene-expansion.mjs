@@ -401,13 +401,14 @@ function buildVisualScaling(
     vegetationInstances.length >= 24
       ? "suburban_coastal"
       : "sparse_coastal";
-  const blockScale = densityProfile === "suburban_coastal" ? 1.35 : 1.1;
-  const cameraScale = densityProfile === "suburban_coastal" ? 1.18 : 1;
+  const blockScale = densityProfile === "suburban_coastal" ? 1.22 : 1.04;
+  const cameraScale = densityProfile === "suburban_coastal" ? 1.1 : 0.98;
   const baseZoom = Number(cameraProfile.zoomLevel);
   const previewZoomProfile = deepFreeze({
     activeProfile: "normal",
     far: deepFreeze({
       profileId: "far",
+      presentationProfileId: "overview_presentation_profile",
       targetZoomLevel: Math.max(10, baseZoom - 2),
       emphasis: deepFreeze(["roads", "blocks", "coastline"]),
       detailMode: "network",
@@ -417,6 +418,7 @@ function buildVisualScaling(
     }),
     normal: deepFreeze({
       profileId: "normal",
+      presentationProfileId: "neighbourhood_presentation_profile",
       targetZoomLevel: baseZoom,
       emphasis: deepFreeze(["houses", "trees", "yards"]),
       detailMode: "neighbourhood",
@@ -426,6 +428,7 @@ function buildVisualScaling(
     }),
     close: deepFreeze({
       profileId: "close",
+      presentationProfileId: "close_exploration_profile",
       targetZoomLevel: Math.min(19, baseZoom + 2),
       emphasis: deepFreeze(["asset-details"]),
       detailMode: "asset",
@@ -439,6 +442,8 @@ function buildVisualScaling(
     previewZoomProfile,
     cameraProfile.previewZoomProfile
   );
+  const activeProfileConfig =
+    previewZoomProfile[activeZoomProfile] ?? previewZoomProfile.normal;
   const visibleObjectCount = computeVisibleObjectCount({
     activeZoomProfile,
     roadInstances,
@@ -464,15 +469,35 @@ function buildVisualScaling(
       activeLodSelection:
         previewZoomProfile[activeZoomProfile]?.lodSelection ?? "LOD_GAMEPLAY"
     }),
+    activePresentationProfile: activeProfileConfig.presentationProfileId,
     roadContinuityWeight: roundNumber(
       settlement.settlementSummary.roadSegmentCount /
         Math.max(1, settlement.settlementSummary.intersectionCount)
     ),
+    roadSpacingTarget: roundNumber(
+      averageRoadSpacingDistance(roadInstances)
+    ),
+    lotSpacingTarget: roundNumber(
+      averageNearestNeighbourDistance(buildingInstances)
+    ),
     houseSpacingTarget: roundNumber(
       averageNearestNeighbourDistance(buildingInstances)
     ),
+    houseDistributionTarget: roundNumber(
+      buildingInstances.length /
+        Math.max(1, settlement.settlementSummary.residentialBlockCount)
+    ),
     treeDistributionTarget: roundNumber(
       averageNearestNeighbourDistance(vegetationInstances)
+    ),
+    poiSpacingTarget: roundNumber(
+      averageNearestNeighbourDistance([
+        ...buildingInstances,
+        ...vegetationInstances,
+        ...(settlement.landmarkPlacements ?? []).map((placement) => ({
+          position: placement.position
+        }))
+      ])
     )
   });
 }
@@ -493,14 +518,48 @@ function buildPresentationSummary(
     residentialBlockCount: settlement.settlementSummary.residentialBlockCount,
     residentialLotCount: settlement.settlementSummary.residentialLotCount,
     roadContinuitySegments: roadInstances.length,
+    roadSpacingAverage: visualScaling.roadSpacingTarget,
+    lotSpacingAverage: visualScaling.lotSpacingTarget,
     houseSpacingAverage: visualScaling.houseSpacingTarget,
+    houseDistributionAverage: visualScaling.houseDistributionTarget,
     treeDistributionAverage: visualScaling.treeDistributionTarget,
+    poiSpacingAverage: visualScaling.poiSpacingTarget,
     coastlineBoundaryPointCount: coastlineBoundary.length,
     visibleObjectCount: visualScaling.visibleObjectCount,
     activeZoomProfile: visualScaling.activeZoomProfile,
+    activePresentationProfile: visualScaling.activePresentationProfile,
     activeLodSelection: visualScaling.zoomTransitionMetadata.activeLodSelection,
     activeCompositionProfile: cameraProfile.activeCompositionProfile,
     activeLightingProfile: visualStyling.activeLightingProfile,
+    presentationProfiles: deepFreeze({
+      overview: deepFreeze({
+        profileId: "overview_presentation_profile",
+        focus: "coastline-road-block-structure",
+        blockBoundaryVisibility: "high",
+        coastlineSeparation: "high",
+        landmarkVisibility: "high"
+      }),
+      neighbourhood: deepFreeze({
+        profileId: "neighbourhood_presentation_profile",
+        focus: "houses-trees-road-frontage",
+        blockBoundaryVisibility: "medium",
+        coastlineSeparation: "medium",
+        landmarkVisibility: "high"
+      }),
+      closeExploration: deepFreeze({
+        profileId: "close_exploration_profile",
+        focus: "property-detail-poi-selection",
+        blockBoundaryVisibility: "low",
+        coastlineSeparation: "low",
+        landmarkVisibility: "medium"
+      })
+    }),
+    mapReadability: deepFreeze({
+      neighbourhoodStructure: "high",
+      blockBoundaries: "high",
+      coastlineSeparation: coastlineBoundary.length >= 2 ? "high" : "medium",
+      landmarkVisibility: "high"
+    }),
     lighthouseCoastRelationshipPreserved:
       landmarkInstances.length === 1 && coastlineBoundary.length >= 2
   });
@@ -694,6 +753,24 @@ function averageNearestNeighbourDistance(instances) {
     distanceTotal += nearest;
   }
   return distanceTotal / positions.length;
+}
+
+function averageRoadSpacingDistance(roadInstances) {
+  if (!Array.isArray(roadInstances) || roadInstances.length < 2) {
+    return 0;
+  }
+  const midpoints = roadInstances
+    .map((instance) => {
+      if (!instance?.start || !instance?.end) {
+        return null;
+      }
+      return {
+        x: (instance.start.x + instance.end.x) / 2,
+        y: (instance.start.y + instance.end.y) / 2
+      };
+    })
+    .filter(Boolean);
+  return averageNearestNeighbourDistance(midpoints.map((position) => ({ position })));
 }
 
 function resolveActiveZoomProfile(zoomLevel, previewZoomProfile, preferredProfile = "normal") {

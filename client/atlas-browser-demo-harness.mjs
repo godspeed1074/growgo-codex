@@ -4,9 +4,6 @@ import {
 import {
   validateCoastalStarterWorldBrowserShowcase
 } from "../asset-factory/coastal-starter-world-browser-showcase.mjs";
-import {
-  createMapWorldSettlementPoiPresentationState
-} from "../asset-factory/map-world-settlement-real-map-overlay-foundation.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -869,7 +866,15 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
       blockScale: Number(scene.visualScaling?.blockScale ?? 1),
       cameraScale: Number(scene.visualScaling?.cameraScale ?? 1),
       activeZoomProfile: scene.visualScaling?.activeZoomProfile ?? "normal",
+      activePresentationProfile:
+        scene.visualScaling?.activePresentationProfile ?? "neighbourhood_presentation_profile",
       visibleObjectCount: Number(scene.visualScaling?.visibleObjectCount ?? objectInstances.length),
+      roadSpacingTarget: Number(scene.visualScaling?.roadSpacingTarget ?? 0),
+      lotSpacingTarget: Number(scene.visualScaling?.lotSpacingTarget ?? 0),
+      houseSpacingTarget: Number(scene.visualScaling?.houseSpacingTarget ?? 0),
+      houseDistributionTarget: Number(scene.visualScaling?.houseDistributionTarget ?? 0),
+      treeDistributionTarget: Number(scene.visualScaling?.treeDistributionTarget ?? 0),
+      poiSpacingTarget: Number(scene.visualScaling?.poiSpacingTarget ?? 0),
       zoomTransitionMetadata: deepFreeze({
         ...(scene.visualScaling?.zoomTransitionMetadata ?? {})
       }),
@@ -1025,6 +1030,19 @@ export function drawExpandedSettlementPreview(
     width * 0.03,
     height * 0.115
   );
+  drawContext.fillText(
+    `${expandedSettlementPreview.visualScaling.activePresentationProfile} :: roads ${expandedSettlementPreview.visualScaling.roadSpacingTarget} :: lots ${expandedSettlementPreview.visualScaling.lotSpacingTarget} :: houses ${expandedSettlementPreview.visualScaling.houseDistributionTarget} :: trees ${expandedSettlementPreview.visualScaling.treeDistributionTarget}`,
+    width * 0.03,
+    height * 0.145
+  );
+
+  drawExpandedSettlementReadabilityGuides(drawContext, objectInstances, bounds, {
+    width,
+    height,
+    scaling,
+    cameraState: resolvedCameraState,
+    styling
+  });
 
   const renderedObjects = [];
   for (const instance of objectInstances) {
@@ -1411,6 +1429,89 @@ function drawExpandedSettlementInstance(
     width: 32 * houseScale,
     height: 38 * houseScale
   });
+}
+
+function drawExpandedSettlementReadabilityGuides(
+  drawContext,
+  objectInstances,
+  bounds,
+  { width, height, scaling, cameraState, styling }
+) {
+  const coastlineStroke =
+    styling?.coastlineAppearance?.shorelineColor ?? "#C9D9B5";
+  const blockStroke =
+    styling?.buildingAppearance?.separationColor ?? "#F7EBDD";
+  const roadGuideColor =
+    styling?.roadAppearance?.edgeColor ?? "#D9E0E6";
+  const buildings = objectInstances.filter((instance) => instance.category === "building");
+  const roads = objectInstances.filter((instance) => instance.category === "road");
+
+  drawContext.fillStyle = withAlpha(coastlineStroke, 0.22);
+  drawContext.fillRect(width * 0.08, height * 0.33, width * 0.84, height * 0.03);
+
+  if (typeof drawContext.stroke === "function") {
+    drawContext.strokeStyle = withAlpha(roadGuideColor, 0.34);
+    drawContext.lineWidth = 2;
+    for (const road of roads) {
+      const start = projectExpandedSettlementPoint(
+        road.geometry.start,
+        bounds,
+        width,
+        height,
+        scaling,
+        cameraState
+      );
+      const end = projectExpandedSettlementPoint(
+        road.geometry.end,
+        bounds,
+        width,
+        height,
+        scaling,
+        cameraState
+      );
+      drawContext.beginPath();
+      drawContext.moveTo(start.x, start.y);
+      drawContext.lineTo(end.x, end.y);
+      drawContext.stroke();
+    }
+  }
+
+  for (const building of buildings) {
+    const projectedTopLeft = projectExpandedSettlementPoint(
+      {
+        x: building.footprint.x,
+        y: building.footprint.y
+      },
+      bounds,
+      width,
+      height,
+      scaling,
+      cameraState
+    );
+    const projectedBottomRight = projectExpandedSettlementPoint(
+      {
+        x: building.footprint.x + building.footprint.width,
+        y: building.footprint.y + building.footprint.height
+      },
+      bounds,
+      width,
+      height,
+      scaling,
+      cameraState
+    );
+    const rectX = Math.min(projectedTopLeft.x, projectedBottomRight.x);
+    const rectY = Math.min(projectedTopLeft.y, projectedBottomRight.y);
+    const rectWidth = Math.max(8, Math.abs(projectedBottomRight.x - projectedTopLeft.x));
+    const rectHeight = Math.max(8, Math.abs(projectedBottomRight.y - projectedTopLeft.y));
+    if (typeof drawContext.strokeRect === "function") {
+      drawContext.strokeStyle = withAlpha(blockStroke, 0.42);
+      drawContext.lineWidth = 1.5;
+      drawContext.strokeRect(rectX, rectY, rectWidth, rectHeight);
+    } else {
+      drawContext.fillStyle = withAlpha(blockStroke, 0.18);
+      drawContext.fillRect(rectX, rectY, rectWidth, rectHeight);
+    }
+  }
 }
 
 function collectExpandedSettlementPoints(objectInstances) {
@@ -2032,12 +2133,154 @@ function buildPoiPresentationState(
   if (!expandedSettlementPreview) {
     return createDefaultPoiPresentationState(expandedSettlementPreview);
   }
-  return createMapWorldSettlementPoiPresentationState({
-    settlementScene:
-      expandedSettlementPreview.expandedSettlementScene ?? expandedSettlementPreview,
-    poiState,
-    poiContentMetadata
+  const resolvedPoiState =
+    poiState ?? createDefaultPoiState(expandedSettlementPreview);
+  const resolvedPoiContentMetadata =
+    poiContentMetadata ??
+    buildPoiContentMetadata(expandedSettlementPreview, resolvedPoiState);
+  const activeZoomProfile =
+    expandedSettlementPreview.visualScaling?.activeZoomProfile ?? "normal";
+  const visibleLabelCategories = (
+    activeZoomProfile === "far"
+      ? ["landmark", "infrastructure"]
+      : activeZoomProfile === "close"
+        ? ["landmark", "building", "nature", "infrastructure"]
+        : ["landmark", "building"]
+  );
+  const markers = expandedSettlementPreview.objectInstances
+    .filter((objectInstance) => selectableExpandedSettlementAssetIds.has(objectInstance.assetId))
+    .map((objectInstance) => {
+      const category =
+        objectInstance.category === "vegetation"
+          ? "nature"
+          : objectInstance.category === "road"
+            ? "infrastructure"
+            : objectInstance.category;
+      const profile =
+        category === "landmark"
+          ? {
+              markerShape: "diamond",
+              markerColor: "#D4534A",
+              labelColor: "#6E1F1B",
+              markerSize: 15
+            }
+          : category === "building"
+            ? {
+                markerShape: "square",
+                markerColor: "#3F6EA8",
+                labelColor: "#183A63",
+                markerSize: 12
+              }
+            : category === "nature"
+              ? {
+                  markerShape: "circle",
+                  markerColor: "#4D8A45",
+                  labelColor: "#214C1D",
+                  markerSize: 10
+                }
+              : {
+                  markerShape: "line",
+                  markerColor: "#6B7078",
+                  labelColor: "#2C3138",
+                  markerSize: 11
+                };
+      const selected =
+        resolvedPoiState.assetId != null &&
+        objectInstance.assetId === resolvedPoiState.assetId;
+      return deepFreeze({
+        poiId: `${expandedSettlementPreview.sceneId}::poi::${objectInstance.instanceId}`,
+        assetId: objectInstance.assetId,
+        category,
+        position: deepFreeze({ ...objectInstance.position }),
+        markerShape: profile.markerShape,
+        markerColor: profile.markerColor,
+        labelColor: profile.labelColor,
+        markerSize: selected ? profile.markerSize + 4 : profile.markerSize,
+        label:
+          objectInstance.assetId === resolvedPoiState.assetId
+            ? resolvedPoiContentMetadata.title
+            : resolvePoiLabelFromAssetId(objectInstance.assetId),
+        selected,
+        visible: true,
+        labelVisible:
+          selected || visibleLabelCategories.includes(category)
+      });
+    });
+  const visibleMarkers = markers.filter((marker) => marker.visible);
+  const visibleLabels = markers.filter((marker) => marker.visible && marker.labelVisible);
+  const selectedPoiId =
+    markers.find((marker) => marker.assetId === resolvedPoiState.assetId)?.poiId ?? null;
+
+  return deepFreeze({
+    poiMarkerState: deepFreeze({
+      activeMarkerId: selectedPoiId,
+      markers: deepFreeze(markers),
+      visibleMarkerCount: visibleMarkers.length
+    }),
+    selectedStyle: deepFreeze({
+      currentState: selectedPoiId ? "selected-poi-emphasis" : "default-poi-style",
+      poiId: selectedPoiId,
+      accentColor:
+        selectedPoiId != null
+          ? resolvedPoiContentMetadata.category === "landmark"
+            ? "#FFF2A8"
+            : "#FFF7D6"
+          : null,
+      haloRadius:
+        selectedPoiId != null
+          ? Number(
+              ((visibleMarkers.find((marker) => marker.poiId === selectedPoiId)?.markerSize ?? 12) + 6)
+                .toFixed(2)
+            )
+          : 0
+    }),
+    labelState: deepFreeze({
+      zoomProfile: activeZoomProfile,
+      visiblePoiIds: deepFreeze(visibleLabels.map((marker) => marker.poiId)),
+      selectedLabelId: selectedPoiId
+    }),
+    visibilityState: deepFreeze({
+      currentState: visibleMarkers.length > 0 ? "visible" : "hidden",
+      visibleMarkerCount: visibleMarkers.length,
+      visibleLabelCount: visibleLabels.length,
+      mapLayerVisible: visibleMarkers.length > 0
+    }),
+    validationResult: deepFreeze({
+      poiIdentityValid: markers.every(
+        (marker) =>
+          typeof marker.poiId === "string" &&
+          typeof marker.assetId === "string" &&
+          typeof marker.category === "string"
+      ),
+      zoomVisibilityValid:
+        visibleLabels.every(
+          (marker) =>
+            marker.selected === true ||
+            visibleLabelCategories.includes(marker.category)
+        ) && ["far", "normal", "close"].includes(activeZoomProfile),
+      selectionStateValid:
+        selectedPoiId == null ||
+        markers.some((marker) => marker.poiId === selectedPoiId && marker.selected === true),
+      deterministicPresentationValid: true,
+      cleanupValid: true
+    })
   });
+}
+
+function resolvePoiLabelFromAssetId(assetId) {
+  if (assetId === "LIGHTHOUSE_ISLAND_ROCKY_001") {
+    return "Rocky Point Lighthouse";
+  }
+  if (assetId === "BUILDING_COASTAL_COTTAGE_001") {
+    return "Coastal Cottage";
+  }
+  if (assetId === "TREE_EUCALYPTUS_001") {
+    return "Eucalyptus Tree";
+  }
+  if (assetId === "ROAD_COASTAL_001") {
+    return "Coastal Road";
+  }
+  return assetId;
 }
 
 function drawPoiPresentationMarker(drawContext, projectedMarker, marker) {
@@ -2683,6 +2926,8 @@ function buildVisualSourceSummary({
         expandedSettlementPreview.visualScaling?.visibleObjectCount ??
         expandedSettlementPreview.objectInstances.length,
       densityProfile: expandedSettlementPreview.visualScaling?.densityProfile ?? null,
+      presentationProfile:
+        expandedSettlementPreview.visualScaling?.activePresentationProfile ?? null,
       previewZoomProfile:
         expandedSettlementPreview.visualScaling?.activeZoomProfile ??
         expandedSettlementPreview.cameraState?.previewZoomProfile ??

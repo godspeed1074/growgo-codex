@@ -98,7 +98,17 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.ok(scene.visualScaling.cameraScale > 1);
   assert.equal(scene.visualScaling.previewZoomProfile.activeProfile, "normal");
   assert.equal(scene.visualScaling.activeZoomProfile, "normal");
+  assert.equal(
+    scene.visualScaling.activePresentationProfile,
+    "neighbourhood_presentation_profile"
+  );
   assert.equal(scene.visualScaling.visibleObjectCount, 45);
+  assert.ok(scene.visualScaling.roadSpacingTarget > 0);
+  assert.ok(scene.visualScaling.lotSpacingTarget > 0);
+  assert.ok(scene.visualScaling.houseSpacingTarget > 0);
+  assert.ok(scene.visualScaling.houseDistributionTarget > 0);
+  assert.ok(scene.visualScaling.treeDistributionTarget > 0);
+  assert.ok(scene.visualScaling.poiSpacingTarget > 0);
   assert.equal(scene.visualStyling.styleProfileId, "coastal_settlement_reference_polish");
   assert.equal(scene.visualStyling.activeLightingProfile, "day");
   assert.deepEqual(scene.visualStyling.availableLightingProfiles, ["day", "sunset", "night"]);
@@ -131,8 +141,26 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.ok(scene.presentationSummary.roadContinuitySegments >= 8);
   assert.equal(scene.presentationSummary.visibleObjectCount, 45);
   assert.equal(scene.presentationSummary.activeZoomProfile, "normal");
+  assert.equal(
+    scene.presentationSummary.activePresentationProfile,
+    "neighbourhood_presentation_profile"
+  );
   assert.equal(scene.presentationSummary.activeCompositionProfile, "normal_neighbourhood");
   assert.equal(scene.presentationSummary.activeLightingProfile, "day");
+  assert.equal(
+    scene.presentationSummary.presentationProfiles.overview.profileId,
+    "overview_presentation_profile"
+  );
+  assert.equal(
+    scene.presentationSummary.presentationProfiles.neighbourhood.profileId,
+    "neighbourhood_presentation_profile"
+  );
+  assert.equal(
+    scene.presentationSummary.presentationProfiles.closeExploration.profileId,
+    "close_exploration_profile"
+  );
+  assert.equal(scene.presentationSummary.mapReadability.blockBoundaries, "high");
+  assert.equal(scene.presentationSummary.mapReadability.landmarkVisibility, "high");
   assert.equal(scene.validationResult.assetReferencesValid, true);
   assert.equal(scene.validationResult.placementValidity, true);
   assert.equal(scene.validationResult.deterministicSceneOutputValid, true);
