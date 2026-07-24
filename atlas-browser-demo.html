@@ -63,6 +63,20 @@
       font-size: 14px;
     }
 
+    .atlas-demo-world-panel {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 12px;
+      border: 1px solid rgba(22, 48, 70, 0.16);
+      background: #f8fbfe;
+    }
+
+    .atlas-demo-world-panel p {
+      margin: 0;
+      font-size: 14px;
+    }
+
     .atlas-demo-map-move-controls {
       display: flex;
       gap: 8px;
@@ -165,9 +179,15 @@
       </div>
     </section>
 
+    <section class="atlas-demo-world-panel" aria-label="World layer state">
+      <p id="atlasWorldLayerLabel">World layer: hidden</p>
+      <p id="atlasWorldCameraLabel">World camera: waiting for coordinate</p>
+    </section>
+
     <div class="atlas-demo-controls">
       <button id="atlasPreviewLoadButton" type="button">Load Fixed Test Coordinate</button>
       <button id="atlasPreviewShowButton" type="button">Activate World From Map Location</button>
+      <button id="atlasPreviewToggleButton" type="button">Toggle World Layer</button>
       <button id="atlasPreviewHideButton" type="button">Hide Coastal World</button>
     </div>
 
@@ -207,6 +227,7 @@
     const launchNote = document.getElementById("atlasPreviewLaunchNote");
     const loadButton = document.getElementById("atlasPreviewLoadButton");
     const showButton = document.getElementById("atlasPreviewShowButton");
+    const toggleButton = document.getElementById("atlasPreviewToggleButton");
     const hideButton = document.getElementById("atlasPreviewHideButton");
     const northButton = document.getElementById("atlasMapNorthButton");
     const southButton = document.getElementById("atlasMapSouthButton");
@@ -214,17 +235,28 @@
     const eastButton = document.getElementById("atlasMapEastButton");
     const mapCenterLabel = document.getElementById("atlasMapCenterLabel");
     const mapZoomLabel = document.getElementById("atlasMapZoomLabel");
+    const worldLayerLabel = document.getElementById("atlasWorldLayerLabel");
+    const worldCameraLabel = document.getElementById("atlasWorldCameraLabel");
 
-    const updateMapLabels = (display) => {
-      if (!display) {
+    const updateWorldLayerLabels = (visualLayer) => {
+      if (!visualLayer) {
         return;
       }
+      const display = visualLayer.mapWorldRealMapDisplay;
       if (mapCenterLabel) {
         mapCenterLabel.textContent =
           `Center: ${display.centerCoordinate.latitude.toFixed(6)}, ${display.centerCoordinate.longitude.toFixed(6)}`;
       }
       if (mapZoomLabel) {
         mapZoomLabel.textContent = `Zoom: ${display.zoomLevel}`;
+      }
+      if (worldLayerLabel) {
+        worldLayerLabel.textContent =
+          `World layer: ${visualLayer.visibilityState.currentState} (${visualLayer.worldId})`;
+      }
+      if (worldCameraLabel) {
+        worldCameraLabel.textContent =
+          `World camera: ${visualLayer.cameraState.previewCameraProfile} focused on ${visualLayer.cameraState.previewFocusAssetId} at zoom ${visualLayer.cameraState.previewZoomLevel}`;
       }
     };
 
@@ -246,6 +278,9 @@
       if (showButton) {
         showButton.disabled = true;
       }
+      if (toggleButton) {
+        toggleButton.disabled = true;
+      }
       if (loadButton) {
         loadButton.disabled = true;
       }
@@ -260,11 +295,11 @@
     } else {
       try {
         const moduleVersion = "2026-07-24-01";
-        const [{ createMapWorldRealMapDisplaySession }] =
+        const [{ createMapWorldVisualLayerSession }] =
           await Promise.all([
-            import(`./asset-factory/map-world-real-map-display-foundation.mjs?v=${moduleVersion}`)
+            import(`./asset-factory/map-world-visual-layer-attachment.mjs?v=${moduleVersion}`)
           ]);
-        const displaySession = createMapWorldRealMapDisplaySession({
+        const visualLayerSession = createMapWorldVisualLayerSession({
           loaderOptions: {
             existsSync() {
               return true;
@@ -289,6 +324,9 @@
         if (showButton) {
           showButton.disabled = true;
         }
+        if (toggleButton) {
+          toggleButton.disabled = true;
+        }
         if (hideButton) {
           hideButton.disabled = true;
         }
@@ -296,29 +334,32 @@
 
         if (status) {
           status.textContent =
-            "Ready to load the fixed test coordinate, move the map center, and activate a world from that map location.";
+            "Ready to load the fixed test coordinate, move the map center, and sync a visible Atlas world layer to that map position.";
         }
 
         loadButton?.addEventListener("click", async () => {
-          const loaded = await displaySession.loadFixedTestCoordinate();
+          const loaded = await visualLayerSession.loadFixedTestCoordinate();
           if (status) {
             status.textContent = loaded.message;
           }
           if (loaded.ok) {
-            updateMapLabels(loaded.mapWorldRealMapDisplay);
+            updateWorldLayerLabels(loaded.mapWorldVisualLayerAttachment);
             if (showButton) {
               showButton.disabled = false;
+            }
+            if (toggleButton) {
+              toggleButton.disabled = false;
             }
             if (hideButton) {
               hideButton.disabled = true;
             }
             setMovementDisabled(false);
-            window.mapWorldRealMapDisplay = loaded.mapWorldRealMapDisplay;
+            window.mapWorldVisualLayerAttachment = loaded.mapWorldVisualLayerAttachment;
           }
         });
 
         const moveMapCenter = async (latitudeDelta, longitudeDelta) => {
-          const moved = await displaySession.moveMapCenter({
+          const moved = await visualLayerSession.moveMapCenter({
             latitudeDelta,
             longitudeDelta
           });
@@ -326,11 +367,11 @@
             status.textContent = moved.message;
           }
           if (moved.ok) {
-            updateMapLabels(moved.mapWorldRealMapDisplay);
+            updateWorldLayerLabels(moved.mapWorldVisualLayerAttachment);
             if (hideButton) {
               hideButton.disabled = true;
             }
-            window.mapWorldRealMapDisplay = moved.mapWorldRealMapDisplay;
+            window.mapWorldVisualLayerAttachment = moved.mapWorldVisualLayerAttachment;
           }
         };
 
@@ -348,7 +389,7 @@
         });
 
         showButton?.addEventListener("click", () => {
-          const activated = displaySession.activateWorldFromMapLocation();
+          const activated = visualLayerSession.activateVisualLayer();
           if (status) {
             status.textContent = activated.message;
           }
@@ -356,20 +397,39 @@
             hideButton.disabled = false;
           }
           if (activated.ok) {
-            updateMapLabels(activated.mapWorldRealMapDisplay);
-            window.mapWorldRealMapDisplayAttachment =
+            updateWorldLayerLabels(activated.mapWorldVisualLayerAttachment);
+            window.mapWorldVisualLayerAttachment =
+              activated.mapWorldVisualLayerAttachment;
+            window.mapWorldVisualLayerPreviewAttachment =
               activated.atlasPreviewAttachment;
           }
         });
 
-        hideButton?.addEventListener("click", () => {
-          const hidden = displaySession.hideWorld();
+        toggleButton?.addEventListener("click", () => {
+          const toggled = visualLayerSession.toggleWorldLayer();
           if (status) {
-            status.textContent = hidden.message;
+            status.textContent = toggled.message;
+          }
+          if (toggled.ok) {
+            updateWorldLayerLabels(toggled.mapWorldVisualLayerAttachment);
+            if (hideButton) {
+              hideButton.disabled =
+                toggled.mapWorldVisualLayerAttachment.visibilityState.visible !== true;
+            }
           }
         });
 
-        window.mapWorldRealMapDisplaySession = displaySession;
+        hideButton?.addEventListener("click", () => {
+          const hidden = visualLayerSession.hideVisualLayer();
+          if (status) {
+            status.textContent = hidden.message;
+          }
+          if (hidden.ok) {
+            updateWorldLayerLabels(hidden.mapWorldVisualLayerAttachment);
+          }
+        });
+
+        window.mapWorldVisualLayerSession = visualLayerSession;
       } catch (error) {
         window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
