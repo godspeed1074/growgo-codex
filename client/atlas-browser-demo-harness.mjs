@@ -138,6 +138,15 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     currentCaptureSessionStore,
     currentDiscoveryState
   );
+  let currentExplorationMode = "free_exploration";
+  let currentSessionExperienceState = createDefaultSessionExperienceState(
+    expandedSettlementPreview,
+    currentPlayerMapState,
+    currentOverlayInteractionState,
+    currentPoiState,
+    currentCaptureSessionSummaryState,
+    currentExplorationMode
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -213,11 +222,13 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentCaptureState,
       currentCaptureSessionStore
     );
-    currentCaptureSessionSummaryState = buildCaptureSessionSummaryState(
+    currentSessionExperienceState = buildSessionExperienceState(
       renderableExpandedSettlementPreview,
       currentPlayerMapState,
-      currentCaptureSessionStore,
-      currentDiscoveryState
+      currentOverlayInteractionState,
+      currentPoiState,
+      currentCaptureSessionSummaryState,
+      currentExplorationMode
     );
   };
 
@@ -496,6 +507,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentCaptureState,
       currentCaptureSessionStore
     );
+    currentSessionExperienceState = buildSessionExperienceState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentOverlayInteractionState,
+      currentPoiState,
+      currentCaptureSessionSummaryState,
+      currentExplorationMode
+    );
     redrawExpandedSettlementPreviewIfMounted();
     const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
     setStatus(elements.status, message);
@@ -517,6 +536,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       captureState: currentCaptureState,
       captureSessionStore: currentCaptureSessionStore,
       captureSessionSummaryState: currentCaptureSessionSummaryState,
+      sessionExperienceState: currentSessionExperienceState,
       capturePresentationState: currentCapturePresentationState,
       discoveryState: currentDiscoveryState
     });
@@ -591,6 +611,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentPlayerMapState,
           currentCaptureSessionStore,
           currentDiscoveryState
+        );
+        currentSessionExperienceState = buildSessionExperienceState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState,
+          currentPoiState,
+          currentCaptureSessionSummaryState,
+          currentExplorationMode
         );
         if (expandedSettlementPreview && mounted) {
           redrawExpandedSettlementPreviewIfMounted();
@@ -692,6 +720,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionStore,
           currentDiscoveryState
         );
+        currentSessionExperienceState = buildSessionExperienceState(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState,
+          currentPoiState,
+          currentCaptureSessionSummaryState,
+          currentExplorationMode
+        );
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
@@ -716,6 +752,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionStore,
           currentDiscoveryState
         );
+        currentSessionExperienceState = buildSessionExperienceState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState,
+          currentPoiState,
+          currentCaptureSessionSummaryState,
+          currentExplorationMode
+        );
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
@@ -727,6 +771,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementCaptureSessionSummaryState() {
         return currentCaptureSessionSummaryState;
+      },
+      currentSettlementSessionExperienceState() {
+        return currentSessionExperienceState;
       },
       currentSettlementCapturePresentationState() {
         return currentCapturePresentationState;
@@ -744,6 +791,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionStore,
           currentDiscoveryState
         );
+        currentSessionExperienceState = buildSessionExperienceState(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState,
+          currentPoiState,
+          currentCaptureSessionSummaryState,
+          currentExplorationMode
+        );
         redrawExpandedSettlementPreviewIfMounted();
         return currentDiscoveryState;
       },
@@ -758,10 +813,33 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionStore,
           currentDiscoveryState
         );
+        currentSessionExperienceState = buildSessionExperienceState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState,
+          currentPoiState,
+          currentCaptureSessionSummaryState,
+          currentExplorationMode
+        );
         return currentDiscoveryState;
       },
       currentSettlementDiscoveryState() {
         return currentDiscoveryState;
+      },
+      toggleSettlementExplorationMode() {
+        currentExplorationMode =
+          currentExplorationMode === "free_exploration"
+            ? "guided_exploration"
+            : "free_exploration";
+        currentSessionExperienceState = buildSessionExperienceState(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState,
+          currentPoiState,
+          currentCaptureSessionSummaryState,
+          currentExplorationMode
+        );
+        return currentSessionExperienceState;
       },
       currentSettlementSelectableObjects() {
         return deepFreeze(
@@ -2198,6 +2276,44 @@ function createDefaultCaptureSessionSummaryState(
   );
 }
 
+function createDefaultSessionExperienceState(
+  expandedSettlementPreview,
+  playerState,
+  interactionState,
+  poiState,
+  captureSessionSummaryState,
+  explorationMode = "free_exploration"
+) {
+  if (
+    !expandedSettlementPreview ||
+    !playerState ||
+    !interactionState ||
+    !poiState ||
+    !captureSessionSummaryState
+  ) {
+    return deepFreeze({
+      sessionState: "exploration-session-idle",
+      activeWorld: null,
+      explorationMode:
+        explorationMode === "guided_exploration" ? "guided_exploration" : "free_exploration",
+      currentObjective: "Initialize a world preview to begin exploring.",
+      validationResult: deepFreeze({
+        stateSynchronizationValid: true,
+        cleanupValid: true,
+        deterministicSessionFlowValid: true
+      })
+    });
+  }
+  return buildSessionExperienceState(
+    expandedSettlementPreview,
+    playerState,
+    interactionState,
+    poiState,
+    captureSessionSummaryState,
+    explorationMode
+  );
+}
+
 function createDefaultCapturePresentationState(
   expandedSettlementPreview,
   captureState,
@@ -3067,6 +3183,64 @@ function buildCaptureSessionSummaryState(
         discoveredObjectIds.length === discoveryState.discoveredObjectIds.length,
       deterministicOutputValid: true,
       cleanupResetBehaviorValid: true
+    })
+  });
+}
+
+function buildSessionExperienceState(
+  expandedSettlementPreview,
+  playerState,
+  interactionState,
+  poiState,
+  captureSessionSummaryState,
+  explorationMode = "free_exploration"
+) {
+  if (
+    !expandedSettlementPreview ||
+    !playerState ||
+    !interactionState ||
+    !poiState ||
+    !captureSessionSummaryState
+  ) {
+    return createDefaultSessionExperienceState(
+      expandedSettlementPreview,
+      playerState,
+      interactionState,
+      poiState,
+      captureSessionSummaryState,
+      explorationMode
+    );
+  }
+  const normalizedExplorationMode =
+    explorationMode === "guided_exploration" ? "guided_exploration" : "free_exploration";
+  const selectedAssetId = interactionState.selectedObject?.assetId ?? null;
+  const currentObjective =
+    selectedAssetId != null
+      ? `Inspect ${selectedAssetId} and choose whether to capture or discover it.`
+      : captureSessionSummaryState.completionPercent >= 100
+        ? "Review the completed world survey and revisit notable points of interest."
+        : captureSessionSummaryState.capturedObjects === 0 &&
+            captureSessionSummaryState.discoveredObjects === 0
+          ? "Select a nearby point of interest to begin exploring the world."
+          : "Continue exploring nearby objects to grow the current session survey.";
+  return deepFreeze({
+    sessionState: "exploration-session-active",
+    activeWorld: deepFreeze({
+      worldId: expandedSettlementPreview.worldId,
+      sceneId: expandedSettlementPreview.sceneId,
+      playerId: playerState.playerId
+    }),
+    explorationMode: normalizedExplorationMode,
+    currentObjective,
+    validationResult: deepFreeze({
+      stateSynchronizationValid:
+        playerState.worldId === expandedSettlementPreview.worldId &&
+        captureSessionSummaryState.worldId === expandedSettlementPreview.worldId &&
+        (poiState.assetId == null ||
+          interactionState.selectedObject == null ||
+          poiState.assetId === interactionState.selectedObject.assetId),
+      cleanupValid: true,
+      deterministicSessionFlowValid: true
     })
   });
 }

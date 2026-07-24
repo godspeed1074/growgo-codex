@@ -32,6 +32,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "captureSessionSummaryState",
   "capturePresentationState",
   "discoveryState",
+  "sessionExperienceState",
   "cameraSync",
   "validationResult"
 ]);
@@ -116,6 +117,22 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       captureSessionStore,
       discoveryState
     });
+  const interactionState = createMapWorldSettlementOverlayInteractionState({
+    settlementScene,
+    mapWorldLiveMapFoundation
+  });
+  const detailState = createMapWorldSettlementOverlayAssetDetailState({
+    settlementScene,
+    mapWorldLiveMapFoundation
+  });
+  const sessionExperienceState =
+    createMapWorldSettlementSessionExperienceState({
+      settlementScene,
+      playerState,
+      interactionState,
+      poiState,
+      captureSessionSummaryState
+    });
   const capturePresentationState = createMapWorldSettlementCapturePresentationState({
     settlementScene,
     captureState,
@@ -184,14 +201,8 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     poiContentMetadata,
     poiLocationMetadata,
     poiPresentationState,
-    interactionState: createMapWorldSettlementOverlayInteractionState({
-      settlementScene,
-      mapWorldLiveMapFoundation
-    }),
-    detailState: createMapWorldSettlementOverlayAssetDetailState({
-      settlementScene,
-      mapWorldLiveMapFoundation
-    }),
+    interactionState,
+    detailState,
     playerState,
     playerInteractionState,
     captureState,
@@ -199,6 +210,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     captureSessionSummaryState,
     capturePresentationState,
     discoveryState,
+    sessionExperienceState,
     cameraSync: deepFreeze({
       synchronized: true,
       mapZoomLevel: mapWorldLiveMapFoundation.zoomLevel,
@@ -241,6 +253,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       captureSessionSummaryValid: true,
       capturePresentationValid: true,
       discoveryValid: true,
+      sessionExperienceValid: true,
       mapVisibleUnderlayValid: true,
       combinedViewReady: true
     }),
@@ -525,6 +538,16 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       );
     }
     if (
+      overlay.sessionExperienceState.validationResult.stateSynchronizationValid !== true ||
+      overlay.sessionExperienceState.validationResult.cleanupValid !== true ||
+      overlay.sessionExperienceState.validationResult.deterministicSessionFlowValid !== true
+    ) {
+      throw createValidationError(
+        "session_experience_state_invalid",
+        "Map world settlement real map overlay foundation session experience state must remain valid."
+      );
+    }
+    if (
       overlay.capturePresentationState.validationResult.captureStateConsistencyValid !== true ||
       overlay.capturePresentationState.validationResult.presentationStateConsistencyValid !==
         true ||
@@ -611,6 +634,9 @@ function normalizeOverlay(rawOverlay) {
       asPlainObject(overlay.capturePresentationState, "capturePresentationState")
     ),
     discoveryState: deepFreeze(asPlainObject(overlay.discoveryState, "discoveryState")),
+    sessionExperienceState: deepFreeze(
+      asPlainObject(overlay.sessionExperienceState, "sessionExperienceState")
+    ),
     cameraSync: deepFreeze(asPlainObject(overlay.cameraSync, "cameraSync")),
     validationResult: deepFreeze(asPlainObject(overlay.validationResult, "validationResult")),
     mapWorldLiveMapFoundation: deepFreeze(
@@ -1498,6 +1524,74 @@ export function createMapWorldSettlementCaptureSessionSummaryState({
         discoveredObjectIds.length === resolvedDiscoveryState.discoveredObjectIds.length,
       deterministicOutputValid: true,
       cleanupResetBehaviorValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementSessionExperienceState({
+  settlementScene,
+  playerState = null,
+  interactionState = null,
+  poiState = null,
+  captureSessionSummaryState = null,
+  explorationMode = "free_exploration"
+}) {
+  const resolvedPlayerState =
+    playerState ??
+    deepFreeze({
+      playerId: "PLAYER_SESSION_EXPERIENCE_DEFAULT",
+      worldId: settlementScene.worldId
+    });
+  const resolvedInteractionState =
+    interactionState ??
+    createMapWorldSettlementOverlayInteractionState({
+      settlementScene,
+      mapWorldLiveMapFoundation: {
+        centerCoordinate: settlementScene.cameraProfile.mapCenterCoordinate
+      }
+    });
+  const resolvedPoiState =
+    poiState ??
+    createMapWorldSettlementPoiState({
+      settlementScene
+    });
+  const resolvedCaptureSessionSummaryState =
+    captureSessionSummaryState ??
+    createMapWorldSettlementCaptureSessionSummaryState({
+      settlementScene,
+      playerState: resolvedPlayerState
+    });
+  const normalizedExplorationMode =
+    explorationMode === "guided_exploration" ? "guided_exploration" : "free_exploration";
+  const selectedAssetId = resolvedInteractionState.selectedObject?.assetId ?? null;
+  const currentObjective =
+    selectedAssetId != null
+      ? `Inspect ${selectedAssetId} and decide whether to capture or discover it.`
+      : resolvedCaptureSessionSummaryState.completionPercent >= 100
+        ? "Session survey complete. Review captured and discovered objects."
+        : resolvedCaptureSessionSummaryState.capturedObjects === 0 &&
+            resolvedCaptureSessionSummaryState.discoveredObjects === 0
+          ? "Select a nearby point of interest to begin exploring the world."
+          : "Continue exploring nearby objects to expand the current session survey.";
+
+  return deepFreeze({
+    sessionState: "exploration-session-active",
+    activeWorld: deepFreeze({
+      worldId: settlementScene.worldId,
+      sceneId: settlementScene.sceneId,
+      playerId: resolvedPlayerState.playerId
+    }),
+    explorationMode: normalizedExplorationMode,
+    currentObjective,
+    validationResult: deepFreeze({
+      stateSynchronizationValid:
+        resolvedPlayerState.worldId === settlementScene.worldId &&
+        resolvedCaptureSessionSummaryState.worldId === settlementScene.worldId &&
+        (resolvedPoiState.assetId == null ||
+          resolvedPoiState.assetId === selectedAssetId ||
+          selectedAssetId == null),
+      cleanupValid: true,
+      deterministicSessionFlowValid: true
     })
   });
 }

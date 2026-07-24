@@ -276,6 +276,10 @@
       <p id="atlasWorldCameraLabel">World camera: waiting for coordinate</p>
       <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
       <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
+      <p id="atlasSessionStateLabel">Session: waiting for world preview</p>
+      <p id="atlasExplorationModeLabel">Exploration mode: waiting for world preview</p>
+      <p id="atlasCurrentObjectiveLabel">Current objective: waiting for world preview</p>
+      <p id="atlasSelectedObjectLabel">Selected object: none</p>
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
       <p id="atlasCaptureLabel">Capture: waiting for nearby object</p>
       <p id="atlasCaptureSessionLabel">Capture session: waiting for world session</p>
@@ -287,6 +291,7 @@
       <p id="atlasPoiPresentationLabel">POI presentation: waiting for world layer</p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
+        <button id="atlasExplorationModeToggleButton" type="button">Toggle Exploration Mode</button>
         <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
         <button id="atlasCaptureButton" type="button">Capture Selected</button>
         <button id="atlasWorldOverviewButton" type="button">World Overview</button>
@@ -405,6 +410,10 @@
     const worldCameraLabel = document.getElementById("atlasWorldCameraLabel");
     const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
+    const sessionStateLabel = document.getElementById("atlasSessionStateLabel");
+    const explorationModeLabel = document.getElementById("atlasExplorationModeLabel");
+    const currentObjectiveLabel = document.getElementById("atlasCurrentObjectiveLabel");
+    const selectedObjectLabel = document.getElementById("atlasSelectedObjectLabel");
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const captureLabel = document.getElementById("atlasCaptureLabel");
     const captureSessionLabel = document.getElementById("atlasCaptureSessionLabel");
@@ -415,6 +424,7 @@
     const poiLabel = document.getElementById("atlasPoiLabel");
     const poiPresentationLabel = document.getElementById("atlasPoiPresentationLabel");
     const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
+    const explorationModeToggleButton = document.getElementById("atlasExplorationModeToggleButton");
     const playerInteractButton = document.getElementById("atlasPlayerInteractButton");
     const captureButton = document.getElementById("atlasCaptureButton");
     const worldOverviewButton = document.getElementById("atlasWorldOverviewButton");
@@ -503,6 +513,33 @@
       }
     };
 
+    const updateSessionExperienceLabels = (sessionExperienceState, interactionState = null) => {
+      if (sessionStateLabel) {
+        sessionStateLabel.textContent =
+          !sessionExperienceState
+            ? "Session: waiting for world preview"
+            : `Session: ${sessionExperienceState.sessionState} / ${sessionExperienceState.activeWorld?.worldId ?? "no world"}`;
+      }
+      if (explorationModeLabel) {
+        explorationModeLabel.textContent =
+          !sessionExperienceState
+            ? "Exploration mode: waiting for world preview"
+            : `Exploration mode: ${sessionExperienceState.explorationMode}`;
+      }
+      if (currentObjectiveLabel) {
+        currentObjectiveLabel.textContent =
+          !sessionExperienceState
+            ? "Current objective: waiting for world preview"
+            : `Current objective: ${sessionExperienceState.currentObjective}`;
+      }
+      if (selectedObjectLabel) {
+        selectedObjectLabel.textContent =
+          interactionState?.selectedObject?.assetId
+            ? `Selected object: ${interactionState.selectedObject.assetId}`
+            : "Selected object: none";
+      }
+    };
+
     const updatePreviewLabels = (preview) => {
       if (!preview) {
         return;
@@ -559,6 +596,10 @@
         presentationProfileLabel.textContent =
           `Presentation profile: ${overlay.settlementLayer.activePresentationProfile ?? "neighbourhood_presentation_profile"}`;
       }
+      updateSessionExperienceLabels(
+        overlay.sessionExperienceState,
+        overlay.interactionState
+      );
     };
 
     const updateOverlayInteractionLabels = (interactionState) => {
@@ -759,6 +800,10 @@
         overlayInteractionState: interactionState
       });
       updateOverlayInteractionLabels(interactionState);
+      updateSessionExperienceLabels(
+        currentState.sessionExperienceState ?? null,
+        interactionState
+      );
     };
 
     const updateDetailPreviewLabels = (detailPreviewState, poiContentMetadata = null) => {
@@ -1057,6 +1102,9 @@
           if (lightingNightButton) {
             lightingNightButton.disabled = disabled;
           }
+          if (explorationModeToggleButton) {
+            explorationModeToggleButton.disabled = disabled;
+          }
         };
 
         loadButton?.addEventListener("click", async () => {
@@ -1329,6 +1377,7 @@
                 captureState: combinedOverlay.captureState,
                 captureSessionStore: combinedOverlay.captureSessionStore,
                 captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
+                sessionExperienceState: combinedOverlay.sessionExperienceState,
                 capturePresentationState: combinedOverlay.capturePresentationState,
                 discoveryState: combinedOverlay.discoveryState
               });
@@ -1347,6 +1396,10 @@
               updateCaptureLabels(combinedOverlay.captureState);
               updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
               updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
+              updateSessionExperienceLabels(
+                combinedOverlay.sessionExperienceState,
+                combinedOverlay.interactionState
+              );
               updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
               updateHarnessDemoState();
@@ -1418,6 +1471,7 @@
               playerState: null,
               playerInteractionState: null,
               captureSessionSummaryState: null,
+              sessionExperienceState: null,
               discoveryState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
@@ -1427,6 +1481,7 @@
             updatePlayerPresenceLabels(null);
             updatePlayerInteractionLabels(null);
             updateExplorationSummaryLabels(null);
+            updateSessionExperienceLabels(null, null);
             updateCaptureLabels(null);
             updateDiscoveryLabels(null);
             if (lightingProfileLabel) {
@@ -1465,13 +1520,17 @@
           const detailState = harness.closeSettlementAssetDetailPreview();
           harness.clearSettlementInteraction();
           const interactionState = harness.currentSettlementInteractionState();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           syncInteractionStateToBrowserState(interactionState);
           updateDetailPreviewLabels(detailState, harness.currentSettlementPoiContentMetadata());
+          updateSessionExperienceLabels(sessionExperienceState, interactionState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             poiContentMetadata: harness.currentSettlementPoiContentMetadata(),
             poiPresentationState: harness.currentSettlementPoiPresentationState(),
             detailPreviewState: detailState,
+            sessionExperienceState,
             selectedOverlayObject: null,
             overlayInteractionState: interactionState
           });
@@ -1486,10 +1545,17 @@
             return;
           }
           const playerState = harness.focusSettlementPlayerPresence();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           updatePlayerPresenceLabels(playerState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            playerState
+            playerState,
+            sessionExperienceState
           });
           if (status) {
             status.textContent = "Focused the player presence in the world view.";
@@ -1502,10 +1568,17 @@
             return;
           }
           const playerInteractionState = harness.interactWithSelectedSettlementObject();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           updatePlayerInteractionLabels(playerInteractionState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            playerInteractionState
+            playerInteractionState,
+            sessionExperienceState
           });
           if (status) {
             status.textContent =
@@ -1527,17 +1600,24 @@
             harness.currentSettlementCaptureSessionStore();
           const captureSessionSummaryState =
             harness.currentSettlementCaptureSessionSummaryState();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
           updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
             captureSessionStore,
             captureSessionSummaryState,
+            sessionExperienceState,
             capturePresentationState
           });
           if (status) {
@@ -1556,10 +1636,17 @@
             return;
           }
           const playerState = harness.returnSettlementWorldOverview();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           updatePlayerPresenceLabels(playerState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            playerState
+            playerState,
+            sessionExperienceState
           });
           if (status) {
             status.textContent = "Returned to the world overview.";
@@ -1572,10 +1659,17 @@
             return;
           }
           const playerInteractionState = harness.clearSettlementPlayerInteraction();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           updatePlayerInteractionLabels(playerInteractionState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
-            playerInteractionState
+            playerInteractionState,
+            sessionExperienceState
           });
           if (status) {
             status.textContent = "Cleared world interaction state.";
@@ -1592,17 +1686,24 @@
             harness.currentSettlementCaptureSessionStore();
           const captureSessionSummaryState =
             harness.currentSettlementCaptureSessionSummaryState();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
           updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
             captureSessionStore,
             captureSessionSummaryState,
+            sessionExperienceState,
             capturePresentationState
           });
           if (status) {
@@ -1618,12 +1719,19 @@
           const discoveryState = harness.discoverSelectedSettlementObject();
           const captureSessionSummaryState =
             harness.currentSettlementCaptureSessionSummaryState();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           updateDiscoveryLabels(discoveryState);
           updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             discoveryState,
-            captureSessionSummaryState
+            captureSessionSummaryState,
+            sessionExperienceState
           });
           if (status) {
             status.textContent =
@@ -1643,15 +1751,46 @@
           const discoveryState = harness.clearSettlementDiscoveryState();
           const captureSessionSummaryState =
             harness.currentSettlementCaptureSessionSummaryState();
+          const sessionExperienceState =
+            harness.currentSettlementSessionExperienceState();
           updateDiscoveryLabels(discoveryState);
           updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            harness.currentSettlementInteractionState()
+          );
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             discoveryState,
-            captureSessionSummaryState
+            captureSessionSummaryState,
+            sessionExperienceState
           });
           if (status) {
             status.textContent = "Cleared discovery state.";
+          }
+        });
+
+        explorationModeToggleButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const sessionExperienceState =
+            harness.toggleSettlementExplorationMode();
+          const interactionState = harness.currentSettlementInteractionState();
+          updateSessionExperienceLabels(
+            sessionExperienceState,
+            interactionState
+          );
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            sessionExperienceState,
+            overlayInteractionState: interactionState,
+            selectedOverlayObject: interactionState?.selectedObject ?? null
+          });
+          if (status) {
+            status.textContent =
+              `Exploration mode changed to ${sessionExperienceState.explorationMode}.`;
           }
         });
 
@@ -1726,6 +1865,7 @@
             captureState: combinedOverlay.captureState,
             captureSessionStore: combinedOverlay.captureSessionStore,
             captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
+            sessionExperienceState: combinedOverlay.sessionExperienceState,
             capturePresentationState: combinedOverlay.capturePresentationState,
             discoveryState: combinedOverlay.discoveryState
           });
@@ -1744,6 +1884,10 @@
           updateCaptureLabels(combinedOverlay.captureState);
           updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
           updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
+          updateSessionExperienceLabels(
+            combinedOverlay.sessionExperienceState,
+            combinedOverlay.interactionState
+          );
           updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
           updateDiscoveryLabels(combinedOverlay.discoveryState);
           updateHarnessDemoState();

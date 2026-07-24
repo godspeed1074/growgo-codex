@@ -693,7 +693,33 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementPoiPresentationState().poiMarkerState.activeMarkerId,
     selection.poiState.poiId
   );
+  assert.equal(
+    selection.sessionExperienceState.sessionState,
+    "exploration-session-active"
+  );
+  assert.equal(
+    selection.sessionExperienceState.activeWorld.worldId,
+    expandedSettlementScene.worldId
+  );
+  assert.equal(
+    selection.sessionExperienceState.explorationMode,
+    "free_exploration"
+  );
+  assert.equal(
+    selection.sessionExperienceState.currentObjective,
+    "Inspect LIGHTHOUSE_ISLAND_ROCKY_001 and choose whether to capture or discover it."
+  );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
+
+  const toggledExplorationMode = harness.toggleSettlementExplorationMode();
+  assert.equal(
+    toggledExplorationMode.explorationMode,
+    "guided_exploration"
+  );
+  assert.equal(
+    harness.currentSettlementSessionExperienceState().explorationMode,
+    "guided_exploration"
+  );
 
   const playerState = harness.focusSettlementPlayerPresence();
   assert.equal(playerState.visibilityState, "player-focused");
@@ -736,6 +762,11 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(captureSessionStore.validationResult.worldConsistencyValid, true);
   assert.equal(
     captureSessionSummaryState.validationResult.summaryMatchesSessionState,
+    true
+  );
+  assert.equal(
+    harness.currentSettlementSessionExperienceState().validationResult
+      .stateSynchronizationValid,
     true
   );
   assert.equal(
@@ -802,6 +833,10 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     harness.currentSettlementPoiPresentationState().selectedStyle.currentState,
     "default-poi-style"
+  );
+  assert.equal(
+    harness.currentSettlementSessionExperienceState().currentObjective,
+    "Select a nearby point of interest to begin exploring the world."
   );
   assert.equal(
     harness.currentSettlementAssetDetailPreviewState().detailState,

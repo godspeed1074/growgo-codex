@@ -124,6 +124,38 @@ test("map world settlement real map overlay foundation validates a combined map 
     true
   );
   assert.equal(
+    overlay.sessionExperienceState.sessionState,
+    "exploration-session-active"
+  );
+  assert.equal(
+    overlay.sessionExperienceState.activeWorld.worldId,
+    overlay.worldId
+  );
+  assert.equal(
+    overlay.sessionExperienceState.activeWorld.sceneId,
+    overlay.sceneId
+  );
+  assert.equal(
+    overlay.sessionExperienceState.explorationMode,
+    "free_exploration"
+  );
+  assert.equal(
+    overlay.sessionExperienceState.currentObjective,
+    "Select a nearby point of interest to begin exploring the world."
+  );
+  assert.equal(
+    overlay.sessionExperienceState.validationResult.stateSynchronizationValid,
+    true
+  );
+  assert.equal(
+    overlay.sessionExperienceState.validationResult.cleanupValid,
+    true
+  );
+  assert.equal(
+    overlay.sessionExperienceState.validationResult.deterministicSessionFlowValid,
+    true
+  );
+  assert.equal(
     overlay.capturePresentationState.captureEffectState,
     "capture-highlight-idle"
   );
@@ -181,6 +213,7 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.validationResult.detailPreviewValid, true);
   assert.equal(overlay.validationResult.playerPresenceValid, true);
   assert.equal(overlay.validationResult.captureInteractionValid, true);
+  assert.equal(overlay.validationResult.sessionExperienceValid, true);
   assert.equal(overlay.validationResult.mapVisibleUnderlayValid, true);
   assert.equal(overlay.validationResult.combinedViewReady, true);
 });
@@ -209,6 +242,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.captureState, second.captureState);
   assert.deepEqual(first.captureSessionStore, second.captureSessionStore);
   assert.deepEqual(first.captureSessionSummaryState, second.captureSessionSummaryState);
+  assert.deepEqual(first.sessionExperienceState, second.sessionExperienceState);
   assert.deepEqual(first.capturePresentationState, second.capturePresentationState);
   assert.deepEqual(first.poiState, second.poiState);
   assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
@@ -237,6 +271,71 @@ test("overlay foundation can be built from existing live map and settlement scen
   assert.equal(overlay.sceneId, settlementScene.sceneId);
   assert.equal(overlay.settlementLayer.objectInstanceCount, 45);
   assert.equal(overlay.alignmentState.overlayMode, "map-and-settlement-combined-view");
+});
+
+test("overlay session experience state stays deterministic for selection-aware exploration flow", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+  const interactionState =
+    moduleUnderTest.createMapWorldSettlementOverlayInteractionState({
+      settlementScene,
+      mapWorldLiveMapFoundation,
+      selectedObject: "LIGHTHOUSE_ISLAND_ROCKY_001"
+    });
+  const poiState = moduleUnderTest.createMapWorldSettlementPoiState({
+    settlementScene,
+    selectedObject: interactionState.selectedObject,
+    playerCoordinate: playerState.coordinate
+  });
+  const captureSessionSummaryState =
+    moduleUnderTest.createMapWorldSettlementCaptureSessionSummaryState({
+      settlementScene,
+      playerState
+    });
+
+  const sessionExperienceState =
+    moduleUnderTest.createMapWorldSettlementSessionExperienceState({
+      settlementScene,
+      playerState,
+      interactionState,
+      poiState,
+      captureSessionSummaryState,
+      explorationMode: "guided_exploration"
+    });
+
+  assert.equal(
+    sessionExperienceState.activeWorld.worldId,
+    settlementScene.worldId
+  );
+  assert.equal(
+    sessionExperienceState.activeWorld.playerId,
+    playerState.playerId
+  );
+  assert.equal(sessionExperienceState.explorationMode, "guided_exploration");
+  assert.equal(
+    sessionExperienceState.currentObjective,
+    "Inspect LIGHTHOUSE_ISLAND_ROCKY_001 and decide whether to capture or discover it."
+  );
+  assert.equal(
+    sessionExperienceState.validationResult.stateSynchronizationValid,
+    true
+  );
+  assert.equal(
+    sessionExperienceState.validationResult.deterministicSessionFlowValid,
+    true
+  );
 });
 
 test("overlay interaction state can deterministically select supported overlay objects", async () => {
