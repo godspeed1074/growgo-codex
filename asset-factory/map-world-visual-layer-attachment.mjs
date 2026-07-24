@@ -195,6 +195,22 @@ export function createMapWorldVisualLayerSession(options = {}) {
       });
     },
 
+    async setMapZoomLevel(zoomLevel) {
+      const zoomed = await displaySession.setMapZoomLevel(zoomLevel);
+      if (!zoomed.ok) {
+        return zoomed;
+      }
+      currentVisibilityState = "hidden";
+      const attachment = await syncFromDisplay(zoomed.mapWorldRealMapDisplay);
+      return Object.freeze({
+        ok: true,
+        errorCode: null,
+        message: zoomed.message,
+        visualLayerState: currentVisibilityState,
+        mapWorldVisualLayerAttachment: attachment
+      });
+    },
+
     activateVisualLayer(browserOptions = {}) {
       const activated = displaySession.activateWorldFromMapLocation(browserOptions);
       if (!activated.ok) {

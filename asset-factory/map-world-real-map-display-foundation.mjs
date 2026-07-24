@@ -252,6 +252,55 @@ export function createMapWorldRealMapDisplaySession(options = {}) {
       });
     },
 
+    async setMapZoomLevel(zoomLevel) {
+      if (closed) {
+        return freezeFailure(
+          "session_closed",
+          "Map world real map display session is already closed."
+        );
+      }
+      if (!currentDefinition) {
+        return freezeFailure(
+          "map_definition_missing",
+          "Map world real map display definition is unavailable."
+        );
+      }
+
+      if (attachedPreview?.atlasBrowserDemoHarness) {
+        const cleanup = attachedPreview.atlasBrowserDemoHarness.hideCoastalWorld();
+        if (!cleanup.ok) {
+          currentState = "failed";
+          return Object.freeze({
+            ok: false,
+            errorCode: cleanup.errorCode ?? "cleanup_failed",
+            message:
+              cleanup.message ??
+              "Unable to hide active coastal world before changing zoom level.",
+            displayState: currentState,
+            mapWorldRealMapDisplay: currentDisplay
+          });
+        }
+      }
+
+      const nextDefinition = deepFreeze({
+        ...currentDefinition,
+        zoomLevel: normalizeZoomLevel(zoomLevel)
+      });
+
+      currentDisplay = await buildDisplay(nextDefinition);
+      currentDefinition = nextDefinition;
+      attachedPreview = null;
+      currentState = "loaded";
+
+      return Object.freeze({
+        ok: true,
+        errorCode: null,
+        message: `Map zoom changed to ${currentDisplay.zoomLevel}.`,
+        displayState: currentState,
+        mapWorldRealMapDisplay: currentDisplay
+      });
+    },
+
     activateWorldFromMapLocation(browserOptions = {}) {
       if (closed) {
         return freezeFailure(

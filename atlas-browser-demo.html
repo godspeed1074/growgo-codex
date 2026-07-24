@@ -92,6 +92,44 @@
       cursor: pointer;
     }
 
+    .atlas-demo-map-surface {
+      position: relative;
+      min-height: 180px;
+      border: 1px solid rgba(22, 48, 70, 0.2);
+      background:
+        linear-gradient(0deg, rgba(22, 48, 70, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22, 48, 70, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, #edf6fd 0%, #dcecf8 100%);
+      background-size: 24px 24px, 24px 24px, 100% 100%;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      cursor: grab;
+    }
+
+    .atlas-demo-map-surface[data-dragging="true"] {
+      cursor: grabbing;
+    }
+
+    .atlas-demo-map-marker {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #163046;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 0 2px rgba(22, 48, 70, 0.12);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .atlas-demo-map-help {
+      font-size: 13px;
+      color: #33546d;
+    }
+
     .atlas-demo-controls button {
       border: 1px solid #163046;
       background: #163046;
@@ -171,6 +209,12 @@
     <section class="atlas-demo-map-panel" aria-label="Map position controls">
       <p id="atlasMapCenterLabel">Center: waiting for fixed test coordinate</p>
       <p id="atlasMapZoomLabel">Zoom: 14</p>
+      <div id="atlasInteractiveMapSurface" class="atlas-demo-map-surface" data-dragging="false">
+        <div class="atlas-demo-map-marker" aria-hidden="true"></div>
+      </div>
+      <p class="atlas-demo-map-help">
+        Drag to pan the local map foundation. Use the mouse wheel to zoom.
+      </p>
       <div class="atlas-demo-map-move-controls">
         <button id="atlasMapNorthButton" type="button">Move North</button>
         <button id="atlasMapSouthButton" type="button">Move South</button>
@@ -233,6 +277,7 @@
     const southButton = document.getElementById("atlasMapSouthButton");
     const westButton = document.getElementById("atlasMapWestButton");
     const eastButton = document.getElementById("atlasMapEastButton");
+    const mapSurface = document.getElementById("atlasInteractiveMapSurface");
     const mapCenterLabel = document.getElementById("atlasMapCenterLabel");
     const mapZoomLabel = document.getElementById("atlasMapZoomLabel");
     const worldLayerLabel = document.getElementById("atlasWorldLayerLabel");
@@ -295,11 +340,11 @@
     } else {
       try {
         const moduleVersion = "2026-07-24-01";
-        const [{ createMapWorldVisualLayerSession }] =
+        const [{ createMapWorldLiveMapSession }] =
           await Promise.all([
-            import(`./asset-factory/map-world-visual-layer-attachment.mjs?v=${moduleVersion}`)
+            import(`./asset-factory/map-world-live-map-foundation.mjs?v=${moduleVersion}`)
           ]);
-        const visualLayerSession = createMapWorldVisualLayerSession({
+        const liveMapSession = createMapWorldLiveMapSession({
           loaderOptions: {
             existsSync() {
               return true;
@@ -334,16 +379,16 @@
 
         if (status) {
           status.textContent =
-            "Ready to load the fixed test coordinate, move the map center, and sync a visible Atlas world layer to that map position.";
+            "Ready to initialize the interactive map, pan or zoom it, and resolve a coastal world from the current position.";
         }
 
         loadButton?.addEventListener("click", async () => {
-          const loaded = await visualLayerSession.loadFixedTestCoordinate();
+          const loaded = await liveMapSession.initializeInteractiveMap();
           if (status) {
             status.textContent = loaded.message;
           }
           if (loaded.ok) {
-            updateWorldLayerLabels(loaded.mapWorldVisualLayerAttachment);
+            updateWorldLayerLabels(loaded.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
             if (showButton) {
               showButton.disabled = false;
             }
@@ -354,12 +399,12 @@
               hideButton.disabled = true;
             }
             setMovementDisabled(false);
-            window.mapWorldVisualLayerAttachment = loaded.mapWorldVisualLayerAttachment;
+            window.mapWorldLiveMapFoundation = loaded.mapWorldLiveMapFoundation;
           }
         });
 
         const moveMapCenter = async (latitudeDelta, longitudeDelta) => {
-          const moved = await visualLayerSession.moveMapCenter({
+          const moved = await liveMapSession.panMapBy({
             latitudeDelta,
             longitudeDelta
           });
@@ -367,11 +412,25 @@
             status.textContent = moved.message;
           }
           if (moved.ok) {
-            updateWorldLayerLabels(moved.mapWorldVisualLayerAttachment);
+            updateWorldLayerLabels(moved.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
             if (hideButton) {
               hideButton.disabled = true;
             }
-            window.mapWorldVisualLayerAttachment = moved.mapWorldVisualLayerAttachment;
+            window.mapWorldLiveMapFoundation = moved.mapWorldLiveMapFoundation;
+          }
+        };
+
+        const zoomMap = async (zoomDelta) => {
+          const zoomed = await liveMapSession.zoomMapBy(zoomDelta);
+          if (status) {
+            status.textContent = zoomed.message;
+          }
+          if (zoomed.ok) {
+            updateWorldLayerLabels(zoomed.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            if (hideButton) {
+              hideButton.disabled = true;
+            }
+            window.mapWorldLiveMapFoundation = zoomed.mapWorldLiveMapFoundation;
           }
         };
 
@@ -388,8 +447,43 @@
           void moveMapCenter(0, 0.001);
         });
 
+        if (mapSurface) {
+          let dragStart = null;
+
+          mapSurface.addEventListener("pointerdown", (event) => {
+            dragStart = { x: event.clientX, y: event.clientY };
+            mapSurface.dataset.dragging = "true";
+          });
+
+          mapSurface.addEventListener("pointerup", async (event) => {
+            if (!dragStart) {
+              return;
+            }
+            const deltaX = event.clientX - dragStart.x;
+            const deltaY = event.clientY - dragStart.y;
+            dragStart = null;
+            mapSurface.dataset.dragging = "false";
+            const longitudeDelta = Number((deltaX / 1000).toFixed(6));
+            const latitudeDelta = Number((-deltaY / 1000).toFixed(6));
+            if (longitudeDelta !== 0 || latitudeDelta !== 0) {
+              await moveMapCenter(latitudeDelta, longitudeDelta);
+            }
+          });
+
+          mapSurface.addEventListener("pointerleave", () => {
+            dragStart = null;
+            mapSurface.dataset.dragging = "false";
+          });
+
+          mapSurface.addEventListener("wheel", (event) => {
+            event.preventDefault();
+            const zoomDelta = event.deltaY < 0 ? 1 : -1;
+            void zoomMap(zoomDelta);
+          }, { passive: false });
+        }
+
         showButton?.addEventListener("click", () => {
-          const activated = visualLayerSession.activateVisualLayer();
+          const activated = liveMapSession.activateVisualLayer();
           if (status) {
             status.textContent = activated.message;
           }
@@ -397,39 +491,42 @@
             hideButton.disabled = false;
           }
           if (activated.ok) {
-            updateWorldLayerLabels(activated.mapWorldVisualLayerAttachment);
-            window.mapWorldVisualLayerAttachment =
-              activated.mapWorldVisualLayerAttachment;
-            window.mapWorldVisualLayerPreviewAttachment =
+            updateWorldLayerLabels(activated.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
+            window.mapWorldLiveMapFoundation =
+              activated.mapWorldLiveMapFoundation;
+            window.mapWorldLiveMapPreviewAttachment =
               activated.atlasPreviewAttachment;
           }
         });
 
         toggleButton?.addEventListener("click", () => {
-          const toggled = visualLayerSession.toggleWorldLayer();
+          const toggled =
+            liveMapSession.currentLiveMapFoundation()?.mapWorldVisualLayerAttachment?.visibilityState.visible === true
+              ? liveMapSession.hideVisualLayer()
+              : liveMapSession.activateVisualLayer();
           if (status) {
             status.textContent = toggled.message;
           }
           if (toggled.ok) {
-            updateWorldLayerLabels(toggled.mapWorldVisualLayerAttachment);
+            updateWorldLayerLabels(toggled.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
             if (hideButton) {
               hideButton.disabled =
-                toggled.mapWorldVisualLayerAttachment.visibilityState.visible !== true;
+                toggled.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment.visibilityState.visible !== true;
             }
           }
         });
 
         hideButton?.addEventListener("click", () => {
-          const hidden = visualLayerSession.hideVisualLayer();
+          const hidden = liveMapSession.hideVisualLayer();
           if (status) {
             status.textContent = hidden.message;
           }
           if (hidden.ok) {
-            updateWorldLayerLabels(hidden.mapWorldVisualLayerAttachment);
+            updateWorldLayerLabels(hidden.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment);
           }
         });
 
-        window.mapWorldVisualLayerSession = visualLayerSession;
+        window.mapWorldLiveMapSession = liveMapSession;
       } catch (error) {
         window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
