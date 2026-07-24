@@ -887,13 +887,16 @@
       }
     };
 
-    const updateCombinedOverlayLabels = (overlay) => {
+    const updateCombinedOverlayLabels = (
+      overlay,
+      { visibilityState = "visible" } = {}
+    ) => {
       if (!overlay) {
         return;
       }
       if (worldLayerLabel) {
         worldLayerLabel.textContent =
-          `World layer: combined overlay visible on map (${overlay.worldId})`;
+          `World layer: combined overlay ${visibilityState} on map (${overlay.worldId})`;
       }
       if (activeWorldLabel) {
         activeWorldLabel.textContent =
@@ -912,8 +915,10 @@
         sceneId: overlay.sceneId,
         worldId: overlay.worldId,
         objectInstanceCount: overlay.settlementLayer.objectInstanceCount,
-        visibilityState: "visible",
-        active: overlay.validationResult.combinedViewReady === true
+        visibilityState,
+        active:
+          visibilityState === "visible" &&
+          overlay.validationResult.combinedViewReady === true
       });
       updatePlayerPresenceLabels(overlay.playerState);
       if (presentationProfileLabel) {
@@ -1546,19 +1551,25 @@
               settlementScene
             });
           const harnessVisualSource = harness.currentVisualSourceSummary();
+          const currentVisualSource =
+            window.__atlasBrowserDemoState?.activeVisualSource ??
+            buildEmptyVisualSourceState();
+          const resolvedVisibilityState =
+            visibilityOverride ??
+            (currentVisualSource.sourceType === "combined-map-world-overlay"
+              ? currentVisualSource.visibilityState
+              : "visible");
           const activeVisualSource = {
             ...harnessVisualSource,
             sourceType: "combined-map-world-overlay",
-            visibilityState:
-              visibilityOverride ?? harnessVisualSource.visibilityState,
-            active:
-              visibilityOverride == null
-                ? harnessVisualSource.active
-                : visibilityOverride === "visible"
+            visibilityState: resolvedVisibilityState,
+            active: resolvedVisibilityState === "visible"
           };
 
           updatePreviewLabels(mapWorldRealLocationPreview);
-          updateCombinedOverlayLabels(combinedOverlay);
+          updateCombinedOverlayLabels(combinedOverlay, {
+            visibilityState: resolvedVisibilityState
+          });
           window.mapWorldRealLocationPreview = mapWorldRealLocationPreview;
           window.mapWorldRealLocationPreviewAttachment = atlasPreviewAttachment;
           window.mapWorldSettlementAtlasSceneExpansion = settlementScene;
@@ -1684,7 +1695,8 @@
             mapWorldRealLocationPreview,
             atlasPreviewAttachment,
             settlementScene,
-            statusMessage
+            statusMessage,
+            visibilityOverride: "visible"
           });
         };
 
@@ -1697,15 +1709,29 @@
             harness.setSettlementPresentationProfile(presentationProfile);
           const currentVisualSource =
             window.__atlasBrowserDemoState?.activeVisualSource ?? {};
-          updateVisualSourceLabels({
+          const nextVisualSource = {
             ...harness.currentVisualSourceSummary(),
             sourceType:
               currentVisualSource.sourceType === "combined-map-world-overlay"
                 ? "combined-map-world-overlay"
-                : harness.currentVisualSourceSummary().sourceType
-          });
+                : harness.currentVisualSourceSummary().sourceType,
+            visibilityState:
+              currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? currentVisualSource.visibilityState
+                : harness.currentVisualSourceSummary().visibilityState,
+            active:
+              (currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? currentVisualSource.visibilityState
+                : harness.currentVisualSourceSummary().visibilityState) ===
+              "visible"
+          };
+          updateVisualSourceLabels(nextVisualSource);
           updateDemoPresentationLabels(demoPresentationState);
           updatePoiPresentationLabels(harness.currentSettlementPoiPresentationState?.());
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            activeVisualSource: nextVisualSource
+          });
           if (status) {
             status.textContent =
               `Switched settlement presentation to ${demoPresentationState.activePresentationProfile}.`;
@@ -1721,15 +1747,29 @@
             harness.setSettlementLightingProfile(lightingProfile);
           const currentVisualSource =
             window.__atlasBrowserDemoState?.activeVisualSource ?? {};
-          updateVisualSourceLabels({
+          const nextVisualSource = {
             ...harness.currentVisualSourceSummary(),
             sourceType:
               currentVisualSource.sourceType === "combined-map-world-overlay"
                 ? "combined-map-world-overlay"
-                : harness.currentVisualSourceSummary().sourceType
-          });
+                : harness.currentVisualSourceSummary().sourceType,
+            visibilityState:
+              currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? currentVisualSource.visibilityState
+                : harness.currentVisualSourceSummary().visibilityState,
+            active:
+              (currentVisualSource.sourceType === "combined-map-world-overlay"
+                ? currentVisualSource.visibilityState
+                : harness.currentVisualSourceSummary().visibilityState) ===
+              "visible"
+          };
+          updateVisualSourceLabels(nextVisualSource);
           updateDemoPresentationLabels(demoPresentationState);
           updatePoiPresentationLabels(harness.currentSettlementPoiPresentationState?.());
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            activeVisualSource: nextVisualSource
+          });
           if (status) {
             status.textContent =
               `Switched settlement lighting to ${demoPresentationState.lightingProfile.activeProfile}.`;
@@ -2073,6 +2113,12 @@
               statusMessage: hidden.message,
               visibilityOverride: "hidden"
             });
+            if (window.mapWorldSettlementRealMapOverlayFoundation) {
+              updateCombinedOverlayLabels(
+                window.mapWorldSettlementRealMapOverlayFoundation,
+                { visibilityState: "hidden" }
+              );
+            }
             const visualSourceSummary = {
               ...currentVisualSource,
               visibilityState: "hidden",

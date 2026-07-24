@@ -282,4 +282,12 @@ test("map world real map display session supports loading, moving center, activa
   const hidden = session.hideWorld();
   assert.equal(hidden.ok, true);
   assert.equal(session.currentDisplayState(), "hidden");
+
+  const reactivated = session.activateWorldFromMapLocation({
+    document: createMockDocument(),
+    previewMountOptions: buildPreviewMountOptions()
+  });
+  assert.equal(reactivated.ok, true);
+  assert.equal(session.currentDisplayState(), "activated");
+  assert.match(reactivated.message, /from map location/i);
 });

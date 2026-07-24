@@ -354,6 +354,9 @@ export function createMapWorldRealMapDisplaySession(options = {}) {
 
       const hidden = attachedPreview.atlasBrowserDemoHarness.hideCoastalWorld();
       currentState = hidden.ok ? "hidden" : "failed";
+      if (hidden.ok) {
+        attachedPreview = null;
+      }
 
       return Object.freeze({
         ok: hidden.ok,
