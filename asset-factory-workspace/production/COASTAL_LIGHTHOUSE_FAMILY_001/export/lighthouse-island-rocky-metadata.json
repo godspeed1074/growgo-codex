@@ -1,0 +1,60 @@
+{
+  "assetId": "LIGHTHOUSE_ISLAND_ROCKY_001",
+  "assetFamilyId": "COASTAL_LIGHTHOUSE_FAMILY_001",
+  "recipeReference": "LIGHTHOUSE_ISLAND_ROCKY_RECIPE_001",
+  "collections": [
+    "GEOMETRY",
+    "MATERIALS",
+    "LOD0",
+    "LOD1",
+    "LOD2",
+    "LOD3",
+    "EXPORT"
+  ],
+  "lodOutputs": {
+    "close": "LIGHTHOUSE_ISLAND_ROCKY_001_LOD_CLOSE.glb",
+    "gameplay": "LIGHTHOUSE_ISLAND_ROCKY_001_LOD_GAMEPLAY.glb",
+    "map": "LIGHTHOUSE_ISLAND_ROCKY_001_LOD_MAP.glb",
+    "distantSilhouette": "LIGHTHOUSE_ISLAND_ROCKY_001_LOD_DISTANT_SILHOUETTE.glb"
+  },
+  "executionTarget": "local-blender-python",
+  "components": [
+    "LIGHTHOUSE_TOWER_BASE_001",
+    "LIGHTHOUSE_TOWER_BODY_001",
+    "LIGHTHOUSE_TOWER_TOP_001",
+    "LIGHTHOUSE_LANTERN_BASE_001",
+    "LIGHTHOUSE_GLASS_RING_001",
+    "LIGHTHOUSE_LANTERN_LIGHT_001",
+    "LIGHTHOUSE_ROOF_CAP_001",
+    "LIGHTHOUSE_ROCK_BASE_001",
+    "LIGHTHOUSE_PATH_ENTRY_001",
+    "LIGHTHOUSE_FENCE_001"
+  ],
+  "featureSet": [
+    "tower geometry",
+    "lantern room",
+    "roof",
+    "balcony components",
+    "rocky base",
+    "path",
+    "fence",
+    "materials"
+  ],
+  "appearanceProfiles": {
+    "day": {
+      "lightActive": false,
+      "glassTint": "cool_blue",
+      "skyBlend": "clear_day"
+    },
+    "sunset": {
+      "lightActive": false,
+      "glassTint": "warm_gold",
+      "skyBlend": "sunset_orange"
+    },
+    "night": {
+      "lightActive": true,
+      "glassTint": "bright_beacon",
+      "skyBlend": "deep_navy"
+    }
+  }
+}
