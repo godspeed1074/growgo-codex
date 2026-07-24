@@ -34,6 +34,14 @@ const realGroundRenderModule = await import(
     "ground-coastal-grass-real-glb-renderer-preview-test.mjs"
   )
 );
+const realGroundMeshPreviewModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "ground-coastal-grass-real-glb-mesh-preview-integration.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -251,13 +259,51 @@ function buildRealGroundRenderBinding({ glbExists = true } = {}) {
   return result.realGlbRendererPreview.definition;
 }
 
+function buildRealGroundMeshPreview({ glbExists = true } = {}) {
+  const definition =
+    realGroundMeshPreviewModule.groundCoastalGrassRealGlbMeshPreviewIntegrationDefinition;
+  const existingPaths = glbExists
+    ? [
+        definition.glbReference.glbPath,
+        definition.glbReference.manifestReference,
+        definition.glbReference.metadataReference
+      ]
+    : [];
+
+  const result =
+    realGroundMeshPreviewModule.validateGroundCoastalGrassRealGlbMeshPreviewIntegration(
+      {
+        ...definition,
+        loadState: {
+          ...definition.loadState,
+          currentState: glbExists ? "loaded" : "requested"
+        },
+        validationResult: {
+          ...definition.validationResult,
+          glbAvailable: glbExists,
+          meshLoaded: glbExists,
+          materialsLoaded: glbExists
+        }
+      },
+      {
+        existsSync(candidatePath) {
+          return existingPaths.includes(candidatePath);
+        }
+      }
+    );
+
+  assert.equal(result.ok, true);
+  return result.realGlbMeshPreview.definition;
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", () => {
   const document = createMockDocument();
   const result = harnessModule.createAtlasBrowserDemoHarness({
     document,
     previewMountOptions: buildPreviewMountOptions(),
     realGroundPreviewBinding: buildRealGroundPreviewBinding(),
-    realGroundRenderBinding: buildRealGroundRenderBinding()
+    realGroundRenderBinding: buildRealGroundRenderBinding(),
+    realGroundMeshPreview: buildRealGroundMeshPreview()
   });
 
   assert.equal(result.ok, true);
@@ -269,13 +315,18 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
     harness.elements.previewContainer.dataset.previewVisible,
     "true"
   );
-  assert.match(harness.elements.status.textContent, /real GLB ground render asset/i);
+  assert.match(harness.elements.status.textContent, /real GLB mesh geometry/i);
   assert.equal(harness.elements.canvasContainer.children.length, 1);
   assert.ok(harness.canvas._context.commands.length > 0);
   assert.ok(
     harness.canvas._context.commands.some(
       (command) =>
         command[0] === "fillText" && command[1] === "GROUND_COASTAL_GRASS_001"
+    )
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) => command[0] === "lineTo"
     )
   );
 });

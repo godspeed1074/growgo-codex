@@ -7,6 +7,9 @@ import {
 import {
   validateGroundCoastalGrassRealGlbRendererPreviewTest
 } from "../asset-factory/ground-coastal-grass-real-glb-renderer-preview-test.mjs";
+import {
+  validateGroundCoastalGrassRealGlbMeshPreviewIntegration
+} from "../asset-factory/ground-coastal-grass-real-glb-mesh-preview-integration.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -47,6 +50,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   );
   const realGroundRenderBinding = resolveRealGroundRenderBinding(
     options.realGroundRenderBinding
+  );
+  const realGroundMeshPreview = resolveRealGroundMeshPreview(
+    options.realGroundMeshPreview
   );
 
   setStatus(elements.status, "Atlas preview ready. Use Show Atlas Preview.");
@@ -92,12 +98,15 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       height: canvas.height,
       placeholders: atlasBrowserDemoPlaceholderObjects,
       realGroundPreviewBinding,
-      realGroundRenderBinding
+      realGroundRenderBinding,
+      realGroundMeshPreview
     });
     setContainerVisibility(elements.previewContainer, true);
     setStatus(
       elements.status,
-      realGroundRenderBinding?.verificationResult.glbExists
+      realGroundMeshPreview?.validationResult.glbAvailable
+        ? `Atlas preview visible with real GLB mesh geometry ${realGroundMeshPreview.assetId}.`
+        : realGroundRenderBinding?.verificationResult.glbExists
         ? `Atlas preview visible with real GLB ground render asset ${realGroundRenderBinding.assetId}.`
         : realGroundPreviewBinding
           ? `Atlas preview visible with real GLB ground asset ${realGroundPreviewBinding.assetId}.`
@@ -108,7 +117,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       ok: true,
       previewMountResult: mountResult.previewMountResult,
       realGroundPreviewBinding,
-      realGroundRenderBinding
+      realGroundRenderBinding,
+      realGroundMeshPreview
     });
   };
 
@@ -163,7 +173,8 @@ export function drawAtlasPlaceholderScene(
     height = 540,
     placeholders = atlasBrowserDemoPlaceholderObjects,
     realGroundPreviewBinding = null,
-    realGroundRenderBinding = null
+    realGroundRenderBinding = null,
+    realGroundMeshPreview = null
   } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
@@ -176,6 +187,9 @@ export function drawAtlasPlaceholderScene(
   drawContext.fillStyle = "#8dd17e";
   drawContext.fillRect(0, height * 0.68, width, height * 0.32);
   const activeGroundBinding =
+    realGroundMeshPreview?.validationResult.glbAvailable === true
+      ? realGroundMeshPreview
+      : 
     realGroundRenderBinding?.verificationResult.glbExists === true
       ? realGroundRenderBinding
       : realGroundPreviewBinding;
@@ -191,14 +205,26 @@ export function drawAtlasPlaceholderScene(
     );
     drawContext.font = "12px sans-serif";
     drawContext.fillText(
-      `${activeGroundBinding.lodSelection.currentLod} :: ${
-        activeGroundBinding.renderPayload?.rendererAssetReference?.sourceType ??
-        activeGroundBinding.rendererPayload.rendererAssetReference.sourceType
-      }`,
+      `${resolveGroundBindingLodLabel(activeGroundBinding)} :: ${resolveGroundBindingSourceLabel(
+        activeGroundBinding
+      )}`,
       width * 0.04,
       height * 0.77
     );
-    if (realGroundRenderBinding?.verificationResult.glbExists === true) {
+    if (realGroundMeshPreview?.validationResult.glbAvailable === true) {
+      drawProjectedGroundMesh(drawContext, {
+        width,
+        height,
+        meshData: realGroundMeshPreview.meshData
+      });
+      drawContext.fillStyle = "#133046";
+      drawContext.font = "11px sans-serif";
+      drawContext.fillText(
+        `${realGroundMeshPreview.renderResult.displayMode}`,
+        width * 0.04,
+        height * 0.84
+      );
+    } else if (realGroundRenderBinding?.verificationResult.glbExists === true) {
       drawContext.fillStyle = "#5ebf68";
       drawContext.fillRect(width * 0.04, height * 0.79, width * 0.26, height * 0.025);
       drawContext.fillStyle = "#133046";
@@ -254,6 +280,47 @@ export function clearAtlasPlaceholderScene(drawContext, width, height) {
   if (drawContext && typeof drawContext.clearRect === "function") {
     drawContext.clearRect(0, 0, width, height);
   }
+}
+
+export function drawProjectedGroundMesh(drawContext, { width, height, meshData }) {
+  if (!drawContext || !meshData || !Array.isArray(meshData.projectedVertices)) {
+    return;
+  }
+
+  const scaleX = width * 0.28;
+  const scaleY = height * 0.1;
+  const originX = width * 0.04;
+  const originY = height * 0.8;
+
+  drawContext.fillStyle = "#4d9b57";
+  drawContext.beginPath();
+  meshData.projectedVertices.forEach((vertex, index) => {
+    const x = originX + vertex.x * scaleX;
+    const y = originY - vertex.y * scaleY;
+    if (index === 0) {
+      drawContext.moveTo(x, y);
+    } else {
+      drawContext.lineTo(x, y);
+    }
+  });
+  drawContext.closePath();
+  drawContext.fill();
+}
+
+function resolveGroundBindingLodLabel(activeGroundBinding) {
+  return (
+    activeGroundBinding?.lodSelection?.currentLod ??
+    activeGroundBinding?.glbReference?.lodKey ??
+    "LOD_UNSPECIFIED"
+  );
+}
+
+function resolveGroundBindingSourceLabel(activeGroundBinding) {
+  return (
+    activeGroundBinding?.renderPayload?.rendererAssetReference?.sourceType ??
+    activeGroundBinding?.renderResult?.displayMode ??
+    "preview-source-unspecified"
+  );
 }
 
 function resolveElements(documentRef, options) {
@@ -436,6 +503,27 @@ function resolveRealGroundRenderBinding(rawBinding) {
   }
 
   return Object.freeze(validation.realGlbRendererPreview.definition);
+}
+
+function resolveRealGroundMeshPreview(rawBinding) {
+  if (!rawBinding) {
+    return null;
+  }
+
+  if (rawBinding.assetId && rawBinding.meshData && rawBinding.renderResult) {
+    return Object.freeze(rawBinding);
+  }
+
+  const validation = validateGroundCoastalGrassRealGlbMeshPreviewIntegration(
+    rawBinding.definition,
+    rawBinding.options
+  );
+
+  if (!validation.ok) {
+    return null;
+  }
+
+  return Object.freeze(validation.realGlbMeshPreview.definition);
 }
 
 function stableNumericHash(value) {
