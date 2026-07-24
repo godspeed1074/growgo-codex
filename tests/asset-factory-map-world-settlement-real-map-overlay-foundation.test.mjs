@@ -106,6 +106,14 @@ test("map world settlement real map overlay foundation validates a combined map 
     overlay.poiContentMetadata.validationResult.metadataConsistencyValid,
     true
   );
+  assert.equal(overlay.poiLocationMetadata.poiId, overlay.poiState.poiId);
+  assert.equal(overlay.poiLocationMetadata.worldId, overlay.worldId);
+  assert.equal(overlay.poiLocationMetadata.position, null);
+  assert.equal(overlay.poiLocationMetadata.bounds, null);
+  assert.equal(
+    overlay.poiLocationMetadata.validationResult.coordinateConsistencyValid,
+    true
+  );
   assert.equal(overlay.discoveryState.playerId, overlay.playerState.playerId);
   assert.equal(overlay.discoveryState.discoveryState, "discovery-idle");
   assert.deepEqual(overlay.discoveryState.discoveredObjectIds, []);
@@ -148,6 +156,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.playerInteractionState, second.playerInteractionState);
   assert.deepEqual(first.poiState, second.poiState);
   assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
+  assert.deepEqual(first.poiLocationMetadata, second.poiLocationMetadata);
   assert.deepEqual(first.discoveryState, second.discoveryState);
 });
 
@@ -345,6 +354,63 @@ test("overlay POI content metadata resolves reusable detail and discovery profil
   );
   assert.equal(
     poiContentMetadata.validationResult.deterministicOutputValid,
+    true
+  );
+});
+
+test("overlay POI location metadata resolves reusable spatial metadata deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+  const poiState = moduleUnderTest.createMapWorldSettlementPoiState({
+    settlementScene,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001",
+    playerState
+  });
+  const poiContentMetadata =
+    moduleUnderTest.createMapWorldSettlementPoiContentMetadata({
+      settlementScene,
+      poiState
+    });
+  const poiLocationMetadata =
+    moduleUnderTest.createMapWorldSettlementPoiLocationMetadata({
+      settlementScene,
+      poiState,
+      poiContentMetadata
+    });
+
+  assert.equal(poiLocationMetadata.poiId, poiState.poiId);
+  assert.equal(poiLocationMetadata.worldId, settlementScene.worldId);
+  assert.ok(Number.isFinite(poiLocationMetadata.position.x));
+  assert.ok(Number.isFinite(poiLocationMetadata.position.y));
+  assert.ok(poiLocationMetadata.bounds);
+  assert.equal(poiLocationMetadata.bounds.shape, "point-radius");
+  assert.equal(typeof poiLocationMetadata.orientation, "string");
+  assert.equal(
+    poiLocationMetadata.accessibility.zone,
+    "landmark-positioning"
+  );
+  assert.equal(
+    poiLocationMetadata.validationResult.coordinateConsistencyValid,
+    true
+  );
+  assert.equal(
+    poiLocationMetadata.validationResult.objectAlignmentValid,
+    true
+  );
+  assert.equal(
+    poiLocationMetadata.validationResult.deterministicPlacementValid,
     true
   );
 });

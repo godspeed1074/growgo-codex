@@ -21,6 +21,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "alignmentState",
   "poiState",
   "poiContentMetadata",
+  "poiLocationMetadata",
   "interactionState",
   "detailState",
   "playerState",
@@ -58,6 +59,19 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
   mapWorldLiveMapFoundation,
   settlementScene
 }) {
+  const poiState = createMapWorldSettlementPoiState({
+    settlementScene
+  });
+  const poiContentMetadata = createMapWorldSettlementPoiContentMetadata({
+    settlementScene,
+    poiState
+  });
+  const poiLocationMetadata = createMapWorldSettlementPoiLocationMetadata({
+    settlementScene,
+    poiState,
+    poiContentMetadata
+  });
+
   const overlay = deepFreeze({
     overlayId: createOverlayId(
       mapWorldLiveMapFoundation.activeWorldId,
@@ -116,12 +130,9 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         settlementScene.validationResult.deterministicSceneOutputValid === true,
       overlayMode: "map-and-settlement-combined-view"
     }),
-    poiState: createMapWorldSettlementPoiState({
-      settlementScene
-    }),
-    poiContentMetadata: createMapWorldSettlementPoiContentMetadata({
-      settlementScene
-    }),
+    poiState,
+    poiContentMetadata,
+    poiLocationMetadata,
     interactionState: createMapWorldSettlementOverlayInteractionState({
       settlementScene,
       mapWorldLiveMapFoundation
@@ -180,6 +191,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       objectIdentityValid: true,
       poiIdentityValid: true,
       poiContentMetadataValid: true,
+      poiLocationMetadataValid: true,
       selectionPersistenceValid: true,
       cameraFocusValid: true,
       detailPreviewValid: true,
@@ -285,6 +297,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation poiContentMetadataValid must be true."
       );
     }
+    if (!overlay.validationResult.poiLocationMetadataValid) {
+      throw createValidationError(
+        "poi_location_metadata_invalid",
+        "Map world settlement real map overlay foundation poiLocationMetadataValid must be true."
+      );
+    }
     if (!overlay.validationResult.selectionPersistenceValid) {
       throw createValidationError(
         "selection_persistence_invalid",
@@ -359,6 +377,17 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       throw createValidationError(
         "poi_content_metadata_state_invalid",
         "Map world settlement real map overlay foundation POI content metadata must remain valid."
+      );
+    }
+    if (
+      overlay.poiLocationMetadata.validationResult.coordinateConsistencyValid !== true ||
+      overlay.poiLocationMetadata.validationResult.objectAlignmentValid !== true ||
+      overlay.poiLocationMetadata.validationResult.deterministicPlacementValid !== true ||
+      overlay.poiLocationMetadata.validationResult.cleanupValid !== true
+    ) {
+      throw createValidationError(
+        "poi_location_metadata_state_invalid",
+        "Map world settlement real map overlay foundation POI location metadata must remain valid."
       );
     }
     if (
@@ -447,6 +476,9 @@ function normalizeOverlay(rawOverlay) {
     poiState: deepFreeze(asPlainObject(overlay.poiState, "poiState")),
     poiContentMetadata: deepFreeze(
       asPlainObject(overlay.poiContentMetadata, "poiContentMetadata")
+    ),
+    poiLocationMetadata: deepFreeze(
+      asPlainObject(overlay.poiLocationMetadata, "poiLocationMetadata")
     ),
     interactionState: deepFreeze(asPlainObject(overlay.interactionState, "interactionState")),
     detailState: deepFreeze(asPlainObject(overlay.detailState, "detailState")),
@@ -678,6 +710,103 @@ export function createMapWorldSettlementPoiContentMetadata({
           typeof title === "string" &&
           typeof description === "string"),
       deterministicOutputValid: true,
+      cleanupValid: true
+    })
+  });
+}
+
+export function createMapWorldSettlementPoiLocationMetadata({
+  settlementScene,
+  poiState = null,
+  poiContentMetadata = null,
+  targetObject = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedPoiState =
+    poiState ??
+    createMapWorldSettlementPoiState({
+      settlementScene,
+      targetObject
+    });
+  const resolvedPoiContentMetadata =
+    poiContentMetadata ??
+    createMapWorldSettlementPoiContentMetadata({
+      settlementScene,
+      poiState: resolvedPoiState,
+      targetObject
+    });
+  const resolvedTarget =
+    resolveSelectableOverlayObject(selectableObjects, targetObject) ??
+    resolveSelectableOverlayObject(selectableObjects, resolvedPoiState.assetId);
+  const bounds = resolveInstanceBounds(resolvedTarget);
+  const position =
+    resolvedTarget?.position == null
+      ? null
+      : deepFreeze({ ...resolvedTarget.position });
+  const accessibility =
+    resolvedTarget == null
+      ? null
+      : deepFreeze({
+          zone:
+            resolvedPoiContentMetadata.category === "landmark"
+              ? "landmark-positioning"
+              : resolvedPoiContentMetadata.category === "building"
+                ? "building-footprint"
+                : resolvedPoiContentMetadata.category === "nature"
+                  ? "vegetation-placement-zone"
+                  : "infrastructure-alignment",
+          traversal:
+            resolvedTarget.category === "road"
+              ? "adjacent-only"
+              : resolvedTarget.roadFacing
+                ? "roadside-access"
+                : "view-only",
+          placementContext:
+            resolvedTarget.validArea ??
+            (resolvedTarget.category === "landmark"
+              ? "coastline"
+              : resolvedTarget.category === "vegetation"
+                ? "vegetation-zone"
+                : resolvedTarget.category === "road"
+                  ? "road-corridor"
+                  : "lot-footprint")
+        });
+
+  return deepFreeze({
+    poiLocationId:
+      resolvedPoiState.poiId === `${settlementScene.sceneId}::poi::idle`
+        ? `${settlementScene.sceneId}::poi-location::idle`
+        : `${settlementScene.sceneId}::poi-location::${resolvedPoiState.poiId}`,
+    poiId: resolvedPoiState.poiId,
+    worldId: settlementScene.worldId,
+    position,
+    bounds,
+    orientation: resolvedTarget?.orientation ?? null,
+    accessibility,
+    validationResult: deepFreeze({
+      coordinateConsistencyValid:
+        position == null ||
+        (Number.isFinite(position.x) &&
+          Number.isFinite(position.y) &&
+          bounds != null &&
+          Number.isFinite(bounds.minX) &&
+          Number.isFinite(bounds.minY) &&
+          Number.isFinite(bounds.maxX) &&
+          Number.isFinite(bounds.maxY)),
+      objectAlignmentValid:
+        resolvedTarget == null ||
+        (resolvedPoiContentMetadata.poiId === resolvedPoiState.poiId &&
+          typeof resolvedTarget.assetId === "string" &&
+          resolvedTarget.assetId === resolvedPoiState.assetId &&
+          (resolvedTarget.category !== "building" ||
+            bounds?.shape === "footprint") &&
+          (resolvedTarget.category !== "landmark" ||
+            resolvedPoiContentMetadata.category === "landmark") &&
+          (resolvedTarget.category !== "vegetation" ||
+            accessibility?.zone === "vegetation-placement-zone") &&
+          (resolvedTarget.category !== "road" ||
+            accessibility?.zone === "infrastructure-alignment")),
+      deterministicPlacementValid: true,
       cleanupValid: true
     })
   });
@@ -987,7 +1116,18 @@ function collectSelectablePlacements(instances, category) {
         assetId: instance.assetId,
         category,
         poiType: resolvePoiType(category),
-        position: resolveInstancePosition(instance)
+        position: resolveInstancePosition(instance),
+        bounds: resolveInstanceBounds(instance),
+        orientation: instance.orientation ?? null,
+        footprint: instance.footprint ? deepFreeze({ ...instance.footprint }) : null,
+        roadFacing: Boolean(instance.roadFacing),
+        validArea: instance.validArea ?? null,
+        start:
+          instance.start != null ? deepFreeze({ ...instance.start }) : null,
+        end:
+          instance.end != null ? deepFreeze({ ...instance.end }) : null,
+        width:
+          Number.isFinite(instance.width) ? Number(instance.width) : null
       })
     );
 }
@@ -1044,6 +1184,69 @@ function resolveInstancePosition(instance) {
     });
   }
   return deepFreeze({ x: 0, y: 0 });
+}
+
+function resolveInstanceBounds(instance) {
+  if (
+    instance?.footprint &&
+    Number.isFinite(instance.footprint.x) &&
+    Number.isFinite(instance.footprint.y) &&
+    Number.isFinite(instance.footprint.width) &&
+    Number.isFinite(instance.footprint.height)
+  ) {
+    const minX = Number(instance.footprint.x.toFixed(3));
+    const minY = Number(instance.footprint.y.toFixed(3));
+    const maxX = Number((instance.footprint.x + instance.footprint.width).toFixed(3));
+    const maxY = Number((instance.footprint.y + instance.footprint.height).toFixed(3));
+    return deepFreeze({
+      minX,
+      minY,
+      maxX,
+      maxY,
+      width: Number(instance.footprint.width.toFixed(3)),
+      height: Number(instance.footprint.height.toFixed(3)),
+      shape: "footprint"
+    });
+  }
+  if (
+    instance?.start &&
+    instance?.end &&
+    Number.isFinite(instance.start.x) &&
+    Number.isFinite(instance.start.y) &&
+    Number.isFinite(instance.end.x) &&
+    Number.isFinite(instance.end.y)
+  ) {
+    const halfWidth = Number.isFinite(instance.width) ? Number(instance.width) / 2 : 6;
+    const minX = Number((Math.min(instance.start.x, instance.end.x) - halfWidth).toFixed(3));
+    const minY = Number((Math.min(instance.start.y, instance.end.y) - halfWidth).toFixed(3));
+    const maxX = Number((Math.max(instance.start.x, instance.end.x) + halfWidth).toFixed(3));
+    const maxY = Number((Math.max(instance.start.y, instance.end.y) + halfWidth).toFixed(3));
+    return deepFreeze({
+      minX,
+      minY,
+      maxX,
+      maxY,
+      width: Number((maxX - minX).toFixed(3)),
+      height: Number((maxY - minY).toFixed(3)),
+      shape: "corridor"
+    });
+  }
+  if (
+    instance?.position &&
+    Number.isFinite(instance.position.x) &&
+    Number.isFinite(instance.position.y)
+  ) {
+    return deepFreeze({
+      minX: Number((instance.position.x - 6).toFixed(3)),
+      minY: Number((instance.position.y - 6).toFixed(3)),
+      maxX: Number((instance.position.x + 6).toFixed(3)),
+      maxY: Number((instance.position.y + 6).toFixed(3)),
+      width: 12,
+      height: 12,
+      shape: "point-radius"
+    });
+  }
+  return null;
 }
 
 function createOverlayId(worldId, sceneId, zoomLevel) {
