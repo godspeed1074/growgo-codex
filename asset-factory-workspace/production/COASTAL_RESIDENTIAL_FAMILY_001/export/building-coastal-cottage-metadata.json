@@ -1,0 +1,48 @@
+{
+  "assetId": "BUILDING_COASTAL_COTTAGE_001",
+  "assetFamilyId": "COASTAL_RESIDENTIAL_FAMILY_001",
+  "recipeReference": "BUILDING_COASTAL_COTTAGE_RECIPE_001",
+  "collections": [
+    "GEOMETRY",
+    "MATERIALS",
+    "LOD0",
+    "LOD1",
+    "LOD2",
+    "LOD3",
+    "EXPORT"
+  ],
+  "lodOutputs": {
+    "close": "BUILDING_COASTAL_COTTAGE_001_LOD_CLOSE.glb",
+    "gameplay": "BUILDING_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb",
+    "map": "BUILDING_COASTAL_COTTAGE_001_LOD_MAP.glb",
+    "distantSilhouette": "BUILDING_COASTAL_COTTAGE_001_LOD_DISTANT_SILHOUETTE.glb"
+  },
+  "executionTarget": "local-blender-python",
+  "components": [
+    "WALL_COASTAL_WHITE_001",
+    "WALL_COASTAL_TIMBER_001",
+    "WALL_COASTAL_BLUE_001",
+    "ROOF_GABLE_COASTAL_001",
+    "ROOF_HIP_COASTAL_001",
+    "ROOF_VERANDAH_COASTAL_001",
+    "DOOR_COASTAL_FRONT_001",
+    "WINDOW_COASTAL_STANDARD_001",
+    "VERANDAH_SMALL_001",
+    "DECK_WOOD_SMALL_001"
+  ],
+  "orientationSupport": [
+    "north",
+    "south",
+    "east",
+    "west"
+  ],
+  "featureSet": [
+    "wall geometry",
+    "roof geometry",
+    "windows",
+    "doors",
+    "verandah",
+    "deck",
+    "fence elements"
+  ]
+}
