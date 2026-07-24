@@ -140,6 +140,23 @@
       z-index: 3;
     }
 
+    .atlas-demo-player-marker {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #0b2f4a;
+      border: 2px solid #f3fbff;
+      box-shadow: 0 0 0 2px rgba(11, 47, 74, 0.18);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .atlas-demo-player-marker[hidden] {
+      display: none;
+    }
+
     .atlas-demo-map-help {
       font-size: 13px;
       color: #33546d;
@@ -233,6 +250,7 @@
       <p id="atlasMapZoomLabel">Zoom: 14</p>
       <div id="atlasInteractiveMapSurface" class="atlas-demo-map-surface" data-dragging="false">
         <div class="atlas-demo-map-marker" aria-hidden="true"></div>
+        <div id="atlasPlayerMarker" class="atlas-demo-player-marker" aria-hidden="true" hidden></div>
         <section
           id="atlasPreviewContainer"
           class="atlas-preview-container"
@@ -257,6 +275,11 @@
       <p id="atlasWorldLayerLabel">World layer: hidden</p>
       <p id="atlasWorldCameraLabel">World camera: waiting for coordinate</p>
       <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
+      <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
+      <div class="atlas-demo-map-move-controls">
+        <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
+        <button id="atlasWorldOverviewButton" type="button">World Overview</button>
+      </div>
     </section>
 
     <section class="atlas-demo-source-panel" aria-label="Active preview source">
@@ -343,9 +366,13 @@
     const mapSurface = document.getElementById("atlasInteractiveMapSurface");
     const mapCenterLabel = document.getElementById("atlasMapCenterLabel");
     const mapZoomLabel = document.getElementById("atlasMapZoomLabel");
+    const playerMarker = document.getElementById("atlasPlayerMarker");
     const worldLayerLabel = document.getElementById("atlasWorldLayerLabel");
     const worldCameraLabel = document.getElementById("atlasWorldCameraLabel");
     const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
+    const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
+    const playerFocusButton = document.getElementById("atlasPlayerFocusButton");
+    const worldOverviewButton = document.getElementById("atlasWorldOverviewButton");
     const previewSourceLabel = document.getElementById("atlasPreviewSourceLabel");
     const previewSceneLabel = document.getElementById("atlasPreviewSceneLabel");
     const previewWorldLabel = document.getElementById("atlasPreviewWorldLabel");
@@ -441,6 +468,7 @@
         visibilityState: "visible",
         active: overlay.validationResult.combinedViewReady === true
       });
+      updatePlayerPresenceLabels(overlay.playerState);
     };
 
     const updateOverlayInteractionLabels = (interactionState) => {
@@ -462,6 +490,39 @@
         worldPreviewLabel.textContent = selectedObject
           ? `Preview: selected ${selectedObject.assetId} in ${cameraFocus.sceneId ?? "settlement scene"}`
           : `Preview: combined map + settlement overlay for ${cameraFocus.sceneId ?? "settlement scene"}`;
+      }
+    };
+
+    const updatePlayerMarker = (playerState) => {
+      if (!playerMarker || !playerState?.mapMarkerOffset) {
+        if (playerMarker) {
+          playerMarker.hidden = true;
+        }
+        return;
+      }
+      playerMarker.hidden = playerState.visibilityState === "hidden";
+      playerMarker.style.left = `calc(50% + ${playerState.mapMarkerOffset.x}px)`;
+      playerMarker.style.top = `calc(50% + ${playerState.mapMarkerOffset.y}px)`;
+    };
+
+    const updatePlayerPresenceLabels = (playerState) => {
+      updatePlayerMarker(playerState);
+      if (!playerStateLabel) {
+        return;
+      }
+      if (!playerState || !playerState.coordinate) {
+        playerStateLabel.textContent = "Player: waiting for world preview";
+        return;
+      }
+      playerStateLabel.textContent =
+        `Player: ${playerState.playerId} at ${playerState.coordinate.latitude.toFixed(6)}, ${playerState.coordinate.longitude.toFixed(6)} (${playerState.visibilityState})`;
+      if (worldCameraLabel) {
+        worldCameraLabel.textContent =
+          `World camera: ${playerState.cameraFocus.currentState} focused on ${playerState.cameraFocus.targetAsset}`;
+      }
+      if (worldPreviewLabel) {
+        worldPreviewLabel.textContent =
+          `Preview: player in ${playerState.worldId} at ${playerState.position.x.toFixed(1)}, ${playerState.position.y.toFixed(1)}`;
       }
     };
 
@@ -564,6 +625,12 @@
       }
       if (hideButton) {
         hideButton.disabled = true;
+      }
+      if (playerFocusButton) {
+        playerFocusButton.disabled = true;
+      }
+      if (worldOverviewButton) {
+        worldOverviewButton.disabled = true;
       }
       setMovementDisabled(true);
       updateVisualSourceLabels({
@@ -853,13 +920,19 @@
                   settlementScene: expandedSettlementPreview
                 });
               updateCombinedOverlayLabels(combinedOverlay);
-              if (hideButton) {
-                hideButton.disabled = false;
-              }
-              window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
-              window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
-              window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
-              window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
+            if (hideButton) {
+              hideButton.disabled = false;
+            }
+            if (playerFocusButton) {
+              playerFocusButton.disabled = false;
+            }
+            if (worldOverviewButton) {
+              worldOverviewButton.disabled = false;
+            }
+            window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
+            window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
+            window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
+            window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
               const visualSourceSummary =
                 toggled.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
               setBrowserDemoState({
@@ -872,7 +945,8 @@
                 combinedOverlay,
                 overlayInteractionState: combinedOverlay.interactionState,
                 selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
-                detailPreviewState: combinedOverlay.detailState
+                detailPreviewState: combinedOverlay.detailState,
+                playerState: combinedOverlay.playerState
               });
               updateVisualSourceLabels({
                 ...visualSourceSummary,
@@ -907,6 +981,12 @@
             if (hideButton) {
               hideButton.disabled = true;
             }
+            if (playerFocusButton) {
+              playerFocusButton.disabled = true;
+            }
+            if (worldOverviewButton) {
+              worldOverviewButton.disabled = true;
+            }
             window.mapWorldRealLocationPreview = hidden.mapWorldRealLocationPreview;
             const visualSourceSummary =
               hidden.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
@@ -916,10 +996,12 @@
               activeVisualSource: visualSourceSummary,
               selectedOverlayObject: null,
               overlayInteractionState: null,
-              detailPreviewState: null
+              detailPreviewState: null,
+              playerState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
             updateDetailPreviewLabels(null);
+            updatePlayerPresenceLabels(null);
           }
         });
 
@@ -941,6 +1023,38 @@
           });
           if (status) {
             status.textContent = "Returned to the map overview.";
+          }
+        });
+
+        playerFocusButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const playerState = harness.focusSettlementPlayerPresence();
+          updatePlayerPresenceLabels(playerState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            playerState
+          });
+          if (status) {
+            status.textContent = "Focused the player presence in the world view.";
+          }
+        });
+
+        worldOverviewButton?.addEventListener("click", () => {
+          const harness = resolveOverlayHarness();
+          if (!harness) {
+            return;
+          }
+          const playerState = harness.returnSettlementWorldOverview();
+          updatePlayerPresenceLabels(playerState);
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            playerState
+          });
+          if (status) {
+            status.textContent = "Returned to the world overview.";
           }
         });
 

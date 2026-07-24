@@ -21,6 +21,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "alignmentState",
   "interactionState",
   "detailState",
+  "playerState",
   "cameraSync",
   "validationResult"
 ]);
@@ -119,6 +120,10 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       settlementScene,
       mapWorldLiveMapFoundation
     }),
+    playerState: createMapWorldSettlementPlayerMapState({
+      settlementScene,
+      mapWorldLiveMapFoundation
+    }),
     cameraSync: deepFreeze({
       synchronized: true,
       mapZoomLevel: mapWorldLiveMapFoundation.zoomLevel,
@@ -150,6 +155,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       selectionPersistenceValid: true,
       cameraFocusValid: true,
       detailPreviewValid: true,
+      playerPresenceValid: true,
       mapVisibleUnderlayValid: true,
       combinedViewReady: true
     }),
@@ -255,6 +261,12 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation detailPreviewValid must be true."
       );
     }
+    if (!overlay.validationResult.playerPresenceValid) {
+      throw createValidationError(
+        "player_presence_invalid",
+        "Map world settlement real map overlay foundation playerPresenceValid must be true."
+      );
+    }
     if (!overlay.validationResult.mapVisibleUnderlayValid) {
       throw createValidationError(
         "map_visible_underlay_invalid",
@@ -282,6 +294,18 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       throw createValidationError(
         "detail_state_invalid",
         "Map world settlement real map overlay foundation detail preview state must remain valid."
+      );
+    }
+    if (
+      overlay.playerState.validationResult.coordinateConsistencyValid !== true ||
+      overlay.playerState.validationResult.worldAlignmentValid !== true ||
+      overlay.playerState.validationResult.cameraBehaviorValid !== true ||
+      overlay.playerState.validationResult.cleanupValid !== true ||
+      overlay.playerState.validationResult.deterministicPlacementValid !== true
+    ) {
+      throw createValidationError(
+        "player_state_invalid",
+        "Map world settlement real map overlay foundation player state must remain valid."
       );
     }
 
@@ -323,6 +347,7 @@ function normalizeOverlay(rawOverlay) {
     alignmentState: deepFreeze(asPlainObject(overlay.alignmentState, "alignmentState")),
     interactionState: deepFreeze(asPlainObject(overlay.interactionState, "interactionState")),
     detailState: deepFreeze(asPlainObject(overlay.detailState, "detailState")),
+    playerState: deepFreeze(asPlainObject(overlay.playerState, "playerState")),
     cameraSync: deepFreeze(asPlainObject(overlay.cameraSync, "cameraSync")),
     validationResult: deepFreeze(asPlainObject(overlay.validationResult, "validationResult")),
     mapWorldLiveMapFoundation: deepFreeze(
@@ -440,6 +465,81 @@ export function createMapWorldSettlementOverlayAssetDetailState({
         Number.isFinite(cameraProfile.mapCenterCoordinate.longitude)
     })
   });
+}
+
+export function createMapWorldSettlementPlayerMapState({
+  settlementScene,
+  mapWorldLiveMapFoundation,
+  focusMode = "world-overview"
+}) {
+  const playerSeed = stableOverlayNumericHash(
+    `${settlementScene.worldId}::${settlementScene.sceneId}::player`
+  );
+  const offsetX = ((playerSeed % 19) - 9) * 4;
+  const offsetY = (((Math.floor(playerSeed / 19)) % 19) - 9) * 3;
+  const latitudeOffset = Number((((playerSeed % 11) - 5) * 0.000018).toFixed(6));
+  const longitudeOffset = Number(((((Math.floor(playerSeed / 11)) % 11) - 5) * 0.000018).toFixed(6));
+  const coordinate = deepFreeze({
+    latitude: Number(
+      (mapWorldLiveMapFoundation.centerCoordinate.latitude + latitudeOffset).toFixed(6)
+    ),
+    longitude: Number(
+      (mapWorldLiveMapFoundation.centerCoordinate.longitude + longitudeOffset).toFixed(6)
+    )
+  });
+  const position = deepFreeze({
+    x: Number((settlementScene.cameraProfile.focusPoint.x + offsetX).toFixed(3)),
+    y: Number((settlementScene.cameraProfile.focusPoint.y + offsetY).toFixed(3))
+  });
+  const resolvedFocusMode =
+    focusMode === "player-focused" ? "player-focused" : "world-overview";
+
+  return deepFreeze({
+    playerId: `PLAYER_MAP_${playerSeed}`,
+    coordinate,
+    worldId: settlementScene.worldId,
+    position,
+    visibilityState:
+      resolvedFocusMode === "player-focused" ? "player-focused" : "world-visible",
+    cameraFocus: deepFreeze({
+      currentState: resolvedFocusMode,
+      focusPoint: deepFreeze(
+        resolvedFocusMode === "player-focused"
+          ? { ...position }
+          : { ...settlementScene.cameraProfile.focusPoint }
+      ),
+      targetAsset:
+        resolvedFocusMode === "player-focused"
+          ? "PLAYER_MARKER"
+          : settlementScene.cameraProfile.targetAsset,
+      synchronizedWithMap: true
+    }),
+    mapMarkerOffset: deepFreeze({
+      x: ((playerSeed % 7) - 3) * 12,
+      y: (((Math.floor(playerSeed / 7)) % 7) - 3) * 10
+    }),
+    validationResult: deepFreeze({
+      coordinateConsistencyValid:
+        Number.isFinite(coordinate.latitude) &&
+        Number.isFinite(coordinate.longitude),
+      worldAlignmentValid:
+        settlementScene.worldId === mapWorldLiveMapFoundation.activeWorldId,
+      cameraBehaviorValid:
+        Number.isFinite(position.x) &&
+        Number.isFinite(position.y) &&
+        ["world-overview", "player-focused"].includes(resolvedFocusMode),
+      cleanupValid: true,
+      deterministicPlacementValid: true
+    })
+  });
+}
+
+function stableOverlayNumericHash(value) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return hash;
 }
 
 function collectSelectableOverlayObjects(settlementScene) {

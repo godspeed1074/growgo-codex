@@ -91,6 +91,9 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.detailState.assetId, null);
   assert.equal(overlay.detailState.detailState, "map-overview");
   assert.equal(overlay.detailState.validationResult.previewStateValid, true);
+  assert.equal(overlay.playerState.worldId, overlay.worldId);
+  assert.equal(overlay.playerState.visibilityState, "world-visible");
+  assert.equal(overlay.playerState.validationResult.coordinateConsistencyValid, true);
   assert.equal(overlay.cameraSync.synchronized, true);
   assert.equal(overlay.cameraSync.previewCameraProfile, "atlas-coastal-settlement-overlook");
   assert.equal(overlay.validationResult.coordinateAlignmentValid, true);
@@ -102,6 +105,7 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.validationResult.selectionPersistenceValid, true);
   assert.equal(overlay.validationResult.cameraFocusValid, true);
   assert.equal(overlay.validationResult.detailPreviewValid, true);
+  assert.equal(overlay.validationResult.playerPresenceValid, true);
   assert.equal(overlay.validationResult.mapVisibleUnderlayValid, true);
   assert.equal(overlay.validationResult.combinedViewReady, true);
 });
@@ -125,6 +129,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.cameraSync, second.cameraSync);
   assert.deepEqual(first.interactionState, second.interactionState);
   assert.deepEqual(first.detailState, second.detailState);
+  assert.deepEqual(first.playerState, second.playerState);
 });
 
 test("overlay foundation can be built from existing live map and settlement scene state", async () => {
@@ -197,4 +202,29 @@ test("overlay detail preview state can focus a supported selected asset and pres
   assert.equal(detailState.cameraProfile.currentState, "detail-focused");
   assert.equal(detailState.validationResult.selectedAssetIdentityValid, true);
   assert.equal(detailState.validationResult.mapSynchronizationValid, true);
+});
+
+test("overlay player map state can deterministically place and focus player presence", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+
+  assert.equal(playerState.worldId, settlementScene.worldId);
+  assert.equal(playerState.visibilityState, "player-focused");
+  assert.equal(playerState.cameraFocus.currentState, "player-focused");
+  assert.equal(playerState.cameraFocus.targetAsset, "PLAYER_MARKER");
+  assert.equal(playerState.validationResult.coordinateConsistencyValid, true);
+  assert.equal(playerState.validationResult.deterministicPlacementValid, true);
 });

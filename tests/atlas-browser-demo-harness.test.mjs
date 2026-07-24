@@ -665,4 +665,19 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementAssetDetailPreviewState().detailState,
     "map-overview"
   );
+
+  const playerState = harness.focusSettlementPlayerPresence();
+  assert.equal(playerState.visibilityState, "player-focused");
+  assert.equal(playerState.cameraFocus.targetAsset, "PLAYER_MARKER");
+  assert.equal(
+    harness.currentSettlementPlayerMapState().cameraFocus.currentState,
+    "player-focused"
+  );
+
+  const worldOverview = harness.returnSettlementWorldOverview();
+  assert.equal(worldOverview.visibilityState, "world-visible");
+  assert.equal(
+    harness.currentSettlementPlayerMapState().cameraFocus.currentState,
+    "world-overview"
+  );
 });

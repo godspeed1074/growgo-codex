@@ -90,6 +90,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   let currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
     expandedSettlementPreview
   );
+  let currentPlayerMapState = createDefaultPlayerMapState(
+    expandedSettlementPreview
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -145,7 +148,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       lastExpandedSettlementLayout = drawExpandedSettlementPreview(drawContext, expandedSettlementPreview, {
         width: canvas.width,
         height: canvas.height,
-        interactionState: currentOverlayInteractionState
+        interactionState: currentOverlayInteractionState,
+        playerState: currentPlayerMapState
       });
     } else if (coastalWorldShowcase) {
       drawCoastalWorldShowcase(drawContext, coastalWorldShowcase, {
@@ -214,6 +218,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview
     );
     currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
+      expandedSettlementPreview
+    );
+    currentPlayerMapState = createDefaultPlayerMapState(
       expandedSettlementPreview
     );
     const cleanup = previewSession.unmountPreview();
@@ -305,6 +312,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         width: canvas.width,
         height: canvas.height,
         interactionState: currentOverlayInteractionState
+        ,
+        playerState: currentPlayerMapState
       }
     );
     const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
@@ -350,6 +359,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         currentAssetDetailPreviewState = createDefaultAssetDetailPreviewState(
           expandedSettlementPreview
         );
+        currentPlayerMapState = createDefaultPlayerMapState(
+          expandedSettlementPreview
+        );
         if (expandedSettlementPreview && mounted) {
           lastExpandedSettlementLayout = drawExpandedSettlementPreview(
             drawContext,
@@ -357,7 +369,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
             {
               width: canvas.width,
               height: canvas.height,
-              interactionState: currentOverlayInteractionState
+              interactionState: currentOverlayInteractionState,
+              playerState: currentPlayerMapState
             }
           );
         }
@@ -383,6 +396,47 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementAssetDetailPreviewState() {
         return currentAssetDetailPreviewState;
+      },
+      focusSettlementPlayerPresence() {
+        currentPlayerMapState = buildPlayerMapState(
+          expandedSettlementPreview,
+          "player-focused"
+        );
+        if (expandedSettlementPreview && mounted) {
+          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
+            drawContext,
+            expandedSettlementPreview,
+            {
+              width: canvas.width,
+              height: canvas.height,
+              interactionState: currentOverlayInteractionState,
+              playerState: currentPlayerMapState
+            }
+          );
+        }
+        return currentPlayerMapState;
+      },
+      returnSettlementWorldOverview() {
+        currentPlayerMapState = buildPlayerMapState(
+          expandedSettlementPreview,
+          "world-overview"
+        );
+        if (expandedSettlementPreview && mounted) {
+          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
+            drawContext,
+            expandedSettlementPreview,
+            {
+              width: canvas.width,
+              height: canvas.height,
+              interactionState: currentOverlayInteractionState,
+              playerState: currentPlayerMapState
+            }
+          );
+        }
+        return currentPlayerMapState;
+      },
+      currentSettlementPlayerMapState() {
+        return currentPlayerMapState;
       },
       currentSettlementSelectableObjects() {
         return deepFreeze(
@@ -747,7 +801,7 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
 export function drawExpandedSettlementPreview(
   drawContext,
   expandedSettlementPreview,
-  { width = 960, height = 540, interactionState = null } = {}
+  { width = 960, height = 540, interactionState = null, playerState = null } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
     throw new Error("Expanded settlement preview draw requires a 2D canvas context.");
@@ -757,6 +811,22 @@ export function drawExpandedSettlementPreview(
   const zoomProfile = resolveExpandedSettlementZoomProfile(expandedSettlementPreview);
   const resolvedInteractionState =
     interactionState ?? createDefaultOverlayInteractionState(expandedSettlementPreview);
+  const resolvedPlayerState =
+    playerState ?? createDefaultPlayerMapState(expandedSettlementPreview);
+  const resolvedCameraState =
+    resolvedPlayerState?.cameraFocus?.currentState === "player-focused"
+      ? {
+          ...expandedSettlementPreview.cameraState,
+          focusPoint: resolvedPlayerState.cameraFocus.focusPoint,
+          targetAsset: resolvedPlayerState.cameraFocus.targetAsset
+        }
+      : resolvedInteractionState.cameraFocus
+        ? {
+            ...expandedSettlementPreview.cameraState,
+            focusPoint: resolvedInteractionState.cameraFocus.focusPoint,
+            targetAsset: resolvedInteractionState.cameraFocus.targetAsset
+          }
+        : expandedSettlementPreview.cameraState;
   const selectedObjectId = resolvedInteractionState?.selectedObject?.instanceId ?? null;
   const objectInstances = sortExpandedSettlementInstances(
     filterExpandedSettlementInstancesByZoom(
@@ -810,13 +880,7 @@ export function drawExpandedSettlementPreview(
       height,
       palette,
       scaling,
-      cameraState: resolvedInteractionState.cameraFocus
-        ? {
-            ...expandedSettlementPreview.cameraState,
-            focusPoint: resolvedInteractionState.cameraFocus.focusPoint,
-            targetAsset: resolvedInteractionState.cameraFocus.targetAsset
-          }
-        : expandedSettlementPreview.cameraState,
+      cameraState: resolvedCameraState,
       styling,
       selected: instance.instanceId === selectedObjectId
     });
@@ -825,11 +889,30 @@ export function drawExpandedSettlementPreview(
     }
   }
 
+  if (resolvedPlayerState?.position) {
+    const projectedPlayer = projectExpandedSettlementPoint(
+      resolvedPlayerState.position,
+      bounds,
+      width,
+      height,
+      scaling,
+      resolvedCameraState
+    );
+    drawContext.fillStyle = "#0b2f4a";
+    drawContext.beginPath();
+    drawContext.arc(projectedPlayer.x, projectedPlayer.y, 7, 0, Math.PI * 2);
+    drawContext.fill();
+    drawContext.fillStyle = "#f3fbff";
+    drawContext.beginPath();
+    drawContext.arc(projectedPlayer.x, projectedPlayer.y, 3, 0, Math.PI * 2);
+    drawContext.fill();
+  }
+
   drawContext.fillStyle = "#163046";
   drawContext.font = "12px sans-serif";
   drawContext.textAlign = "left";
   drawContext.fillText(
-    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${resolvedInteractionState.cameraFocus?.targetAsset ?? expandedSettlementPreview.cameraState.targetAsset}`,
+    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${resolvedPlayerState.cameraFocus?.currentState === "player-focused" ? "PLAYER_MARKER" : resolvedInteractionState.cameraFocus?.targetAsset ?? expandedSettlementPreview.cameraState.targetAsset}`,
     width * 0.03,
     height * 0.96
   );
@@ -1335,6 +1418,28 @@ function createDefaultAssetDetailPreviewState(expandedSettlementPreview) {
   });
 }
 
+function createDefaultPlayerMapState(expandedSettlementPreview) {
+  if (!expandedSettlementPreview) {
+    return deepFreeze({
+      playerId: "PLAYER_MAP_INACTIVE",
+      coordinate: null,
+      worldId: null,
+      position: null,
+      visibilityState: "hidden",
+      cameraFocus: null,
+      mapMarkerOffset: deepFreeze({ x: 0, y: 0 }),
+      validationResult: deepFreeze({
+        coordinateConsistencyValid: true,
+        worldAlignmentValid: true,
+        cameraBehaviorValid: true,
+        cleanupValid: true,
+        deterministicPlacementValid: true
+      })
+    });
+  }
+  return buildPlayerMapState(expandedSettlementPreview, "world-overview");
+}
+
 function buildOverlayInteractionState(
   expandedSettlementPreview,
   { selectedObject = null, hoveredObject = null } = {}
@@ -1427,6 +1532,67 @@ function buildAssetDetailPreviewState(
       ].includes(resolvedDetailState),
       cleanupValid: true,
       mapSynchronizationValid: true
+    })
+  });
+}
+
+function buildPlayerMapState(
+  expandedSettlementPreview,
+  focusMode = "world-overview"
+) {
+  if (!expandedSettlementPreview) {
+    return createDefaultPlayerMapState(expandedSettlementPreview);
+  }
+  const seed = stableNumericHash(
+    `${expandedSettlementPreview.worldId}::${expandedSettlementPreview.sceneId}::player`
+  );
+  const offsetX = ((seed % 17) - 8) * 4;
+  const offsetY = (((Math.floor(seed / 17)) % 17) - 8) * 3;
+  const latitudeOffset = Number((((seed % 9) - 4) * 0.000018).toFixed(6));
+  const longitudeOffset = Number(((((Math.floor(seed / 9)) % 9) - 4) * 0.000018).toFixed(6));
+  const playerPosition = deepFreeze({
+    x: Number((expandedSettlementPreview.cameraState.focusPoint.x + offsetX).toFixed(3)),
+    y: Number((expandedSettlementPreview.cameraState.focusPoint.y + offsetY).toFixed(3))
+  });
+  const resolvedFocusMode =
+    focusMode === "player-focused" ? "player-focused" : "world-overview";
+  return deepFreeze({
+    playerId: `PLAYER_MAP_${seed}`,
+    coordinate: deepFreeze({
+      latitude: Number(
+        (expandedSettlementPreview.cameraState.mapCenterCoordinate.latitude + latitudeOffset).toFixed(6)
+      ),
+      longitude: Number(
+        (expandedSettlementPreview.cameraState.mapCenterCoordinate.longitude + longitudeOffset).toFixed(6)
+      )
+    }),
+    worldId: expandedSettlementPreview.worldId,
+    position: playerPosition,
+    visibilityState:
+      resolvedFocusMode === "player-focused" ? "player-focused" : "world-visible",
+    cameraFocus: deepFreeze({
+      currentState: resolvedFocusMode,
+      focusPoint: deepFreeze(
+        resolvedFocusMode === "player-focused"
+          ? { ...playerPosition }
+          : { ...expandedSettlementPreview.cameraState.focusPoint }
+      ),
+      targetAsset:
+        resolvedFocusMode === "player-focused"
+          ? "PLAYER_MARKER"
+          : expandedSettlementPreview.cameraState.targetAsset,
+      synchronizedWithMap: true
+    }),
+    mapMarkerOffset: deepFreeze({
+      x: ((seed % 7) - 3) * 12,
+      y: (((Math.floor(seed / 7)) % 7) - 3) * 10
+    }),
+    validationResult: deepFreeze({
+      coordinateConsistencyValid: true,
+      worldAlignmentValid: true,
+      cameraBehaviorValid: true,
+      cleanupValid: true,
+      deterministicPlacementValid: true
     })
   });
 }
