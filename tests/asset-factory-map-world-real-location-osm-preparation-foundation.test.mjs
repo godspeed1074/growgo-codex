@@ -51,7 +51,7 @@ function buildLoaderOptions() {
   };
 }
 
-test("map world real location OSM preparation foundation creates a synthetic provider map-data package for the world resolver", async () => {
+test("map world real location OSM preparation foundation creates a local fixture provider map-data package for the world resolver", async () => {
   const foundation =
     await moduleUnderTest.createMapWorldRealLocationOsmPreparationFoundation(
       moduleUnderTest.mapWorldRealLocationOsmPreparationFoundationDefinition,
@@ -62,12 +62,16 @@ test("map world real location OSM preparation foundation creates a synthetic pro
     moduleUnderTest.validateMapWorldRealLocationOsmPreparationFoundation(foundation);
 
   assert.equal(result.ok, true);
-  assert.match(foundation.mapDataId, /^MAP_DATA_INPUT_/);
-  assert.equal(foundation.providerBoundary.currentProvider.providerKind, "synthetic_map_provider");
+  assert.match(foundation.mapDataId, /^LOCAL_REAL_MAP_DATA_/);
+  assert.equal(
+    foundation.providerBoundary.currentProvider.providerKind,
+    "local_fixture_map_provider"
+  );
   assert.equal(foundation.providerBoundary.providerContract.futureOsmCompatibility, true);
   assert.equal(foundation.coordinate.latitude, foundation.worldResolver.worldLocationResolver.latitude);
   assert.equal(foundation.coordinate.longitude, foundation.worldResolver.worldLocationResolver.longitude);
   assert.ok(foundation.roads.length >= 1);
+  assert.equal(foundation.localMapDataAdapter.providerId, "LOCAL_FIXTURE_MAP_PROVIDER_001");
   assert.equal(foundation.validationResult.providerContractValid, true);
 });
 

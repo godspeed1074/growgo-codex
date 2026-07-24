@@ -14,6 +14,10 @@ import {
   validateMapWorldRealLocationPreviewFoundation
 } from "./map-world-real-location-preview-foundation.mjs";
 import {
+  createMapWorldLocalRealMapDataAdapterFoundation,
+  validateMapWorldLocalRealMapDataAdapterFoundation
+} from "./map-world-local-real-map-data-adapter-foundation.mjs";
+import {
   validateCoastalSettlementGeneratorFoundation
 } from "./coastal-settlement-generator-foundation.mjs";
 
@@ -32,7 +36,7 @@ export const mapWorldRealLocationOsmPreparationFoundationDefinition = deepFreeze
 });
 
 const supportedProviderKinds = new Set([
-  "synthetic_map_provider",
+  "local_fixture_map_provider",
   "future_osm_provider"
 ]);
 
@@ -40,90 +44,35 @@ export async function createMapWorldRealLocationOsmPreparationFoundation(
   rawDefinition = mapWorldRealLocationOsmPreparationFoundationDefinition,
   options = {}
 ) {
-  const liveMapFoundation = await createMapWorldLiveMapFoundation(rawDefinition, options);
-  const previewFoundation = await createMapWorldRealLocationPreviewFoundation(
-    rawDefinition,
-    options
-  );
-
-  const resolver = await createMapCoordinateWorldResolverFoundation(
-    {
-      ...mapCoordinateWorldResolverFoundationDefinition,
-      worldId: mapCoordinateWorldResolverFoundationDefinition.worldId,
-      latitude: previewFoundation.coordinate.latitude,
-      longitude: previewFoundation.coordinate.longitude,
-      bounds: deepFreeze({
-        minLatitude:
-          previewFoundation.coordinate.latitude -
-          coordinateSpanFromWorldBounds(liveMapFoundation.bounds.maxY - liveMapFoundation.bounds.minY),
-        minLongitude:
-          previewFoundation.coordinate.longitude -
-          coordinateSpanFromWorldBounds(liveMapFoundation.bounds.maxX - liveMapFoundation.bounds.minX),
-        maxLatitude:
-          previewFoundation.coordinate.latitude +
-          coordinateSpanFromWorldBounds(liveMapFoundation.bounds.maxY - liveMapFoundation.bounds.minY),
-        maxLongitude:
-          previewFoundation.coordinate.longitude +
-          coordinateSpanFromWorldBounds(liveMapFoundation.bounds.maxX - liveMapFoundation.bounds.minX),
-        ...liveMapFoundation.bounds
-      }),
-      seed:
-        previewFoundation.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment
-          .mapWorldRealMapDisplay.worldAttachment.worldLocationResolver.seed,
-      terrainType: previewFoundation.resolvedWorld.terrainType
-    },
-    options
-  );
+  const localMapDataAdapter =
+    await createMapWorldLocalRealMapDataAdapterFoundation(rawDefinition, options);
+  const liveMapFoundation = localMapDataAdapter.mapWorldLiveMapFoundation;
+  const previewFoundation = localMapDataAdapter.mapWorldRealLocationPreview;
+  const resolver = localMapDataAdapter.worldResolver;
 
   const roadHints = deepFreeze(
-    resolver.settlement.roadNetwork.roadSegments.map((roadSegment) =>
-      deepFreeze({
-        roadSegmentId: roadSegment.roadSegmentId,
-        assetId: roadSegment.assetId,
-        roadType: roadSegment.roadType,
-        orientation: roadSegment.orientation,
-        start: deepFreeze({ ...roadSegment.start }),
-        end: deepFreeze({ ...roadSegment.end }),
-        width: roadSegment.width
-      })
-    )
+    localMapDataAdapter.roads.map((roadSegment) => deepFreeze({ ...roadSegment }))
   );
 
   const terrainHints = deepFreeze({
-    terrainType: resolver.worldLocationResolver.terrainType,
-    coastalProfile: deepFreeze({
-      ...resolver.settlement.coastalProfile
-    }),
-    vegetationDensity: resolver.settlement.coastalProfile.vegetationDensity,
-    shorelineOrientation: resolver.settlement.coastalProfile.shorelineOrientation
+    ...localMapDataAdapter.terrainHints
   });
 
   const landmarkHints = deepFreeze(
-    previewFoundation.previewScene.assetInstances
-      .filter((assetInstance) =>
-        assetInstance.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001" ||
-        assetInstance.assetId === "BUILDING_COASTAL_COTTAGE_001"
-      )
-      .map((assetInstance) =>
-        deepFreeze({
-          assetId: assetInstance.assetId,
-          role:
-            assetInstance.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001"
-              ? "landmark_hint"
-              : "structure_hint"
-        })
-      )
+    localMapDataAdapter.landmarkHints.map((landmarkHint) =>
+      deepFreeze({ ...landmarkHint })
+    )
   );
 
   const providerBoundary = deepFreeze({
     currentProvider: deepFreeze({
-      providerKind: "synthetic_map_provider",
-      providerId: "SYNTHETIC_MAP_PROVIDER_001",
+      providerKind: "local_fixture_map_provider",
+      providerId: localMapDataAdapter.providerId,
       liveNetworkAllowed: false,
       deterministicSource: true
     }),
     compatibleProviders: deepFreeze([
-      "synthetic_map_provider",
+      "local_fixture_map_provider",
       "future_osm_provider"
     ]),
     providerContract: deepFreeze({
@@ -136,27 +85,23 @@ export async function createMapWorldRealLocationOsmPreparationFoundation(
         "landmarkHints"
       ]),
       futureOsmCompatibility: true,
-      fallbackProviderKind: "synthetic_map_provider"
+      fallbackProviderKind: "local_fixture_map_provider"
     })
   });
 
   const foundation = deepFreeze({
-    mapDataId: createMapDataId(
-      providerBoundary.currentProvider.providerId,
-      resolver.worldLocationResolver.worldId,
-      previewFoundation.coordinate
-    ),
+    mapDataId: localMapDataAdapter.mapDataId,
     coordinate: deepFreeze({
-      latitude: previewFoundation.coordinate.latitude,
-      longitude: previewFoundation.coordinate.longitude
+      ...localMapDataAdapter.coordinate
     }),
     bounds: deepFreeze({
-      ...resolver.worldLocationResolver.bounds
+      ...localMapDataAdapter.bounds
     }),
     roads: roadHints,
     terrainHints,
     landmarkHints,
     providerBoundary,
+    localMapDataAdapter,
     worldResolver: resolver,
     mapWorldLiveMapFoundation: liveMapFoundation,
     mapWorldRealLocationPreview: previewFoundation,
@@ -165,10 +110,12 @@ export async function createMapWorldRealLocationOsmPreparationFoundation(
       deterministicOutputValid:
         previewFoundation.validationResult.deterministicOutputValid &&
         resolver.validationResult.sameCoordinateSameWorld,
-      providerContractValid: validateProviderBoundary(providerBoundary),
+      providerContractValid:
+        validateProviderBoundary(providerBoundary) &&
+        localMapDataAdapter.validationResult.providerContractValid,
       coordinateConsistencyValid:
-        previewFoundation.coordinate.latitude === resolver.worldLocationResolver.latitude &&
-        previewFoundation.coordinate.longitude === resolver.worldLocationResolver.longitude,
+        localMapDataAdapter.coordinate.latitude === resolver.worldLocationResolver.latitude &&
+        localMapDataAdapter.coordinate.longitude === resolver.worldLocationResolver.longitude,
       fallbackBehaviorValid:
         liveMapFoundation.validationResult.fallbackBehaviorPreserved === true &&
         providerBoundary.currentProvider.liveNetworkAllowed === false
@@ -205,6 +152,17 @@ export function validateMapWorldRealLocationOsmPreparationFoundation(rawFoundati
         liveMapValidation.errorCode ?? "live_map_invalid",
         liveMapValidation.message ??
           "Map world real location OSM preparation foundation requires a valid live map foundation."
+      );
+    }
+
+    const localMapDataValidation = validateMapWorldLocalRealMapDataAdapterFoundation(
+      foundation.localMapDataAdapter
+    );
+    if (!localMapDataValidation.ok) {
+      throw createValidationError(
+        localMapDataValidation.errorCode ?? "local_map_data_invalid",
+        localMapDataValidation.message ??
+          "Map world real location OSM preparation foundation requires a valid local map data adapter."
       );
     }
 
@@ -274,20 +232,6 @@ export function validateMapWorldRealLocationOsmPreparationFoundation(rawFoundati
   }
 }
 
-function coordinateSpanFromWorldBounds(worldSpan) {
-  return Number((Math.max(Number(worldSpan) || 0, 1) / 100000).toFixed(6));
-}
-
-function createMapDataId(providerId, worldId, coordinate) {
-  const hash = stableHash(
-    `${providerId}::${worldId}::${coordinate.latitude.toFixed(6)}::${coordinate.longitude.toFixed(6)}`
-  )
-    .toString(16)
-    .toUpperCase()
-    .padStart(8, "0");
-  return `MAP_DATA_INPUT_${hash}`;
-}
-
 function validateProviderBoundary(providerBoundary) {
   const currentProvider = providerBoundary?.currentProvider;
   const contract = providerBoundary?.providerContract;
@@ -297,7 +241,7 @@ function validateProviderBoundary(providerBoundary) {
   if (!supportedProviderKinds.has(currentProvider.providerKind)) {
     return false;
   }
-  if (currentProvider.providerKind !== "synthetic_map_provider") {
+  if (currentProvider.providerKind !== "local_fixture_map_provider") {
     return false;
   }
   if (currentProvider.liveNetworkAllowed !== false) {
@@ -306,7 +250,7 @@ function validateProviderBoundary(providerBoundary) {
   if (contract.futureOsmCompatibility !== true) {
     return false;
   }
-  if (contract.fallbackProviderKind !== "synthetic_map_provider") {
+  if (contract.fallbackProviderKind !== "local_fixture_map_provider") {
     return false;
   }
   return Array.isArray(contract.requiredFields) && contract.requiredFields.length >= 6;
@@ -334,6 +278,9 @@ function normalizeFoundation(rawFoundation) {
     terrainHints: deepFreeze(asPlainObject(foundation.terrainHints, "terrainHints")),
     landmarkHints: normalizeArray(foundation.landmarkHints, "landmarkHints"),
     providerBoundary: deepFreeze(asPlainObject(foundation.providerBoundary, "providerBoundary")),
+    localMapDataAdapter: deepFreeze(
+      asPlainObject(foundation.localMapDataAdapter, "localMapDataAdapter")
+    ),
     worldResolver: deepFreeze(asPlainObject(foundation.worldResolver, "worldResolver")),
     mapWorldLiveMapFoundation: deepFreeze(
       asPlainObject(foundation.mapWorldLiveMapFoundation, "mapWorldLiveMapFoundation")
@@ -372,15 +319,6 @@ function asPlainObject(value, fieldName) {
     throw createValidationError("invalid_object", `${fieldName} must be an object.`);
   }
   return value;
-}
-
-function stableHash(value) {
-  let hash = 2166136261;
-  for (let index = 0; index < value.length; index += 1) {
-    hash ^= value.charCodeAt(index);
-    hash = Math.imul(hash, 16777619);
-  }
-  return hash >>> 0;
 }
 
 function createValidationError(code, message) {
