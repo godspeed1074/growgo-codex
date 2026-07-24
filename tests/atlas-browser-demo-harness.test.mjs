@@ -761,6 +761,8 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementCaptureSessionStore();
   const captureSessionSummaryState =
     harness.currentSettlementCaptureSessionSummaryState();
+  const explorationProgressPresentationState =
+    harness.currentSettlementExplorationProgressPresentationState();
   assert.equal(
     capturePresentationState.validationResult.captureStateConsistencyValid,
     true
@@ -786,6 +788,18 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     captureSessionSummaryState.capturedObjects,
     captureState.capturedObjectIds.length
+  );
+  assert.equal(
+    explorationProgressPresentationState.capturedCount,
+    captureSessionSummaryState.capturedObjects
+  );
+  assert.equal(
+    explorationProgressPresentationState.totalWorldObjects,
+    captureSessionSummaryState.totalObjects
+  );
+  assert.equal(
+    explorationProgressPresentationState.validationResult.uiUpdatesAfterCaptureValid,
+    true
   );
   const returnedDetail = harness.closeSettlementAssetDetailPreview();
   assert.equal(returnedDetail.detailState, "returning-to-map-view");
@@ -816,6 +830,8 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
 
   harness.focusSettlementPlayerPresence();
   const discoveryState = harness.discoverSelectedSettlementObject();
+  const discoveryProgressPresentationState =
+    harness.currentSettlementExplorationProgressPresentationState();
   assert.equal(discoveryState.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
   assert.equal(
     discoveryState.discoveryState,
@@ -829,11 +845,23 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
     harness.currentSettlementCaptureSessionSummaryState().discoveredObjects >= 0,
     true
   );
+  assert.equal(
+    discoveryProgressPresentationState.activeDiscoveryTarget?.assetId,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
+    discoveryProgressPresentationState.validationResult.uiUpdatesAfterDiscoveryValid,
+    true
+  );
   const clearedDiscovery = harness.clearSettlementDiscoveryState();
   assert.equal(clearedDiscovery.discoveryState, "discovery-idle");
   assert.equal(
     harness.currentSettlementCaptureSessionSummaryState().discoveredObjects,
     0
+  );
+  assert.equal(
+    harness.currentSettlementExplorationProgressPresentationState().activeDiscoveryTarget,
+    null
   );
 
   const returned = harness.closeSettlementAssetDetailPreview();

@@ -479,11 +479,14 @@
             <div class="atlas-demo-state-grid">
               <p id="atlasCaptureLabel" class="atlas-demo-state-line" data-priority="progress">Capture: waiting for nearby object</p>
               <p id="atlasCaptureSessionLabel" class="atlas-demo-state-line" data-priority="progress">Capture session: waiting for world session</p>
+              <p id="atlasExplorationCountsLabel" class="atlas-demo-state-line" data-priority="progress">Exploration counts: waiting for world session</p>
               <p id="atlasCaptureProgressLabel" class="atlas-demo-state-line" data-priority="progress">Capture progress: waiting for world session</p>
               <p id="atlasDiscoveryLabel" class="atlas-demo-state-line" data-priority="progress">Discovery: waiting for nearby object</p>
               <p id="atlasDiscoveryProgressLabel" class="atlas-demo-state-line" data-priority="progress">Discovery progress: waiting for world session</p>
               <p id="atlasExplorationSummaryLabel" class="atlas-demo-state-line" data-priority="progress">Exploration summary: waiting for world session</p>
+              <p id="atlasExplorationTargetLabel" class="atlas-demo-state-line" data-priority="accent">Active discovery target: none</p>
               <p id="atlasExplorationCapturedListLabel" class="atlas-demo-state-line" data-priority="detail">Captured objects: none yet</p>
+              <p id="atlasExplorationDiscoveredListLabel" class="atlas-demo-state-line" data-priority="detail">Discovered objects: none yet</p>
               <p id="atlasCapturePresentationLabel" class="atlas-demo-state-line" data-priority="detail">Capture feedback: waiting for captured marker</p>
             </div>
           </div>
@@ -603,10 +606,13 @@
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const captureLabel = document.getElementById("atlasCaptureLabel");
     const captureSessionLabel = document.getElementById("atlasCaptureSessionLabel");
+    const explorationCountsLabel = document.getElementById("atlasExplorationCountsLabel");
     const captureProgressLabel = document.getElementById("atlasCaptureProgressLabel");
     const discoveryProgressLabel = document.getElementById("atlasDiscoveryProgressLabel");
     const explorationSummaryLabel = document.getElementById("atlasExplorationSummaryLabel");
+    const explorationTargetLabel = document.getElementById("atlasExplorationTargetLabel");
     const explorationCapturedListLabel = document.getElementById("atlasExplorationCapturedListLabel");
+    const explorationDiscoveredListLabel = document.getElementById("atlasExplorationDiscoveredListLabel");
     const capturePresentationLabel = document.getElementById("atlasCapturePresentationLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
@@ -909,7 +915,36 @@
         `Capture session: ${captureSessionStore.sessionState} / world ${captureSessionStore.worldId ?? "none"} / captured ${captureSessionStore.capturedObjectIds?.length ?? 0}`;
     };
 
-    const updateExplorationSummaryLabels = (captureSessionSummaryState) => {
+    const updateExplorationSummaryLabels = (
+      captureSessionSummaryState,
+      explorationProgressPresentationState = null
+    ) => {
+      const progressState =
+        explorationProgressPresentationState ??
+        (!captureSessionSummaryState || !captureSessionSummaryState.sessionSummaryId
+          ? null
+          : {
+              capturedCount: captureSessionSummaryState.capturedObjects,
+              discoveredCount: captureSessionSummaryState.discoveredObjects,
+              totalWorldObjects: captureSessionSummaryState.totalObjects,
+              completionPercent: captureSessionSummaryState.completionPercent,
+              activeDiscoveryTarget: null,
+              capturedPoiIndicators: Array.isArray(captureSessionSummaryState.capturedObjectAssetIds)
+                ? captureSessionSummaryState.capturedObjectAssetIds.map((assetId) => ({
+                    assetId,
+                    title: assetId,
+                    indicatorState: "captured"
+                  }))
+                : [],
+              discoveredPoiIndicators: [],
+              currentExplorationObjective: null
+            });
+      if (explorationCountsLabel) {
+        explorationCountsLabel.textContent =
+          !progressState
+            ? "Exploration counts: waiting for world session"
+            : `Exploration counts: ${progressState.capturedCount} captured / ${progressState.discoveredCount} discovered / ${progressState.totalWorldObjects} total`;
+      }
       if (explorationSummaryLabel) {
         if (!captureSessionSummaryState || !captureSessionSummaryState.sessionSummaryId) {
           explorationSummaryLabel.textContent =
@@ -931,17 +966,28 @@
             ? "Discovery progress: waiting for world session"
             : `Discovery progress: ${captureSessionSummaryState.discoveredObjects} objects discovered in this session`;
       }
+      if (explorationTargetLabel) {
+        explorationTargetLabel.textContent =
+          !progressState?.activeDiscoveryTarget
+            ? "Active discovery target: none"
+            : `Active discovery target: ${progressState.activeDiscoveryTarget.title} (${progressState.activeDiscoveryTarget.discoveryState})`;
+      }
       if (explorationCapturedListLabel) {
-        if (
-          !captureSessionSummaryState ||
-          !Array.isArray(captureSessionSummaryState.capturedObjectAssetIds) ||
-          captureSessionSummaryState.capturedObjectAssetIds.length === 0
-        ) {
+        if (!progressState || !Array.isArray(progressState.capturedPoiIndicators) || progressState.capturedPoiIndicators.length === 0) {
           explorationCapturedListLabel.textContent = "Captured objects: none yet";
         } else {
           explorationCapturedListLabel.textContent =
-            `Captured objects: ${captureSessionSummaryState.capturedObjectAssetIds.join(", ")}`;
+            `Captured objects: ${progressState.capturedPoiIndicators.map((indicator) => indicator.title).join(", ")}`;
         }
+      }
+      if (explorationDiscoveredListLabel) {
+        const discoveredOnly = Array.isArray(progressState?.discoveredPoiIndicators)
+          ? progressState.discoveredPoiIndicators
+          : [];
+        explorationDiscoveredListLabel.textContent =
+          discoveredOnly.length === 0
+            ? "Discovered objects: none yet"
+            : `Discovered objects: ${discoveredOnly.map((indicator) => `${indicator.title} (${indicator.indicatorState})`).join(", ")}`;
       }
     };
 
@@ -1405,7 +1451,9 @@
               combinedOverlay.capturePresentationState,
             discoveryState:
               harness.currentSettlementDiscoveryState?.() ??
-              combinedOverlay.discoveryState
+              combinedOverlay.discoveryState,
+            explorationProgressPresentationState:
+              harness.currentSettlementExplorationProgressPresentationState?.() ?? null
           });
           updateVisualSourceLabels(activeVisualSource);
           updatePoiLabels(
@@ -1439,7 +1487,8 @@
           );
           updateExplorationSummaryLabels(
             harness.currentSettlementCaptureSessionSummaryState?.() ??
-              combinedOverlay.captureSessionSummaryState
+              combinedOverlay.captureSessionSummaryState,
+            harness.currentSettlementExplorationProgressPresentationState?.() ?? null
           );
           updateSessionExperienceLabels(
             harness.currentSettlementSessionExperienceState?.() ??
@@ -1971,9 +2020,14 @@
             harness.currentSettlementSessionExperienceState();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
+          const explorationProgressPresentationState =
+            harness.currentSettlementExplorationProgressPresentationState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
-          updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateExplorationSummaryLabels(
+            captureSessionSummaryState,
+            explorationProgressPresentationState
+          );
           updateSessionExperienceLabels(
             sessionExperienceState,
             harness.currentSettlementInteractionState()
@@ -1985,7 +2039,8 @@
             captureSessionStore,
             captureSessionSummaryState,
             sessionExperienceState,
-            capturePresentationState
+            capturePresentationState,
+            explorationProgressPresentationState
           });
           if (status) {
             status.textContent =
@@ -2057,9 +2112,14 @@
             harness.currentSettlementSessionExperienceState();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
+          const explorationProgressPresentationState =
+            harness.currentSettlementExplorationProgressPresentationState();
           updateCaptureLabels(captureState);
           updateCaptureSessionLabels(captureSessionStore);
-          updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateExplorationSummaryLabels(
+            captureSessionSummaryState,
+            explorationProgressPresentationState
+          );
           updateSessionExperienceLabels(
             sessionExperienceState,
             harness.currentSettlementInteractionState()
@@ -2071,7 +2131,8 @@
             captureSessionStore,
             captureSessionSummaryState,
             sessionExperienceState,
-            capturePresentationState
+            capturePresentationState,
+            explorationProgressPresentationState
           });
           if (status) {
             status.textContent = "Cleared capture session state.";
@@ -2088,8 +2149,13 @@
             harness.currentSettlementCaptureSessionSummaryState();
           const sessionExperienceState =
             harness.currentSettlementSessionExperienceState();
+          const explorationProgressPresentationState =
+            harness.currentSettlementExplorationProgressPresentationState();
           updateDiscoveryLabels(discoveryState);
-          updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateExplorationSummaryLabels(
+            captureSessionSummaryState,
+            explorationProgressPresentationState
+          );
           updateSessionExperienceLabels(
             sessionExperienceState,
             harness.currentSettlementInteractionState()
@@ -2098,7 +2164,8 @@
             ...(window.__atlasBrowserDemoState ?? {}),
             discoveryState,
             captureSessionSummaryState,
-            sessionExperienceState
+            sessionExperienceState,
+            explorationProgressPresentationState
           });
           if (status) {
             status.textContent =
@@ -2120,8 +2187,13 @@
             harness.currentSettlementCaptureSessionSummaryState();
           const sessionExperienceState =
             harness.currentSettlementSessionExperienceState();
+          const explorationProgressPresentationState =
+            harness.currentSettlementExplorationProgressPresentationState();
           updateDiscoveryLabels(discoveryState);
-          updateExplorationSummaryLabels(captureSessionSummaryState);
+          updateExplorationSummaryLabels(
+            captureSessionSummaryState,
+            explorationProgressPresentationState
+          );
           updateSessionExperienceLabels(
             sessionExperienceState,
             harness.currentSettlementInteractionState()
@@ -2130,7 +2202,8 @@
             ...(window.__atlasBrowserDemoState ?? {}),
             discoveryState,
             captureSessionSummaryState,
-            sessionExperienceState
+            sessionExperienceState,
+            explorationProgressPresentationState
           });
           if (status) {
             status.textContent = "Cleared discovery state.";

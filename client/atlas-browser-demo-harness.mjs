@@ -147,6 +147,14 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     currentCaptureSessionSummaryState,
     currentExplorationMode
   );
+  let currentExplorationProgressPresentationState =
+    createDefaultExplorationProgressPresentationState(
+      expandedSettlementPreview,
+      currentCaptureSessionSummaryState,
+      currentDiscoveryState,
+      currentSessionExperienceState,
+      currentPoiContentMetadata
+    );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -230,6 +238,25 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentCaptureSessionSummaryState,
       currentExplorationMode
     );
+    currentExplorationProgressPresentationState =
+      buildExplorationProgressPresentationState(
+        renderableExpandedSettlementPreview,
+        currentCaptureSessionSummaryState,
+        currentDiscoveryState,
+        currentSessionExperienceState,
+        currentPoiContentMetadata
+      );
+  };
+
+  const refreshExplorationProgressPresentationState = () => {
+    currentExplorationProgressPresentationState =
+      buildExplorationProgressPresentationState(
+        renderableExpandedSettlementPreview,
+        currentCaptureSessionSummaryState,
+        currentDiscoveryState,
+        currentSessionExperienceState,
+        currentPoiContentMetadata
+      );
   };
 
   const showHandler = () => {
@@ -473,6 +500,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentCaptureSessionSummaryState,
       currentExplorationMode
     );
+    refreshExplorationProgressPresentationState();
     redrawExpandedSettlementPreviewIfMounted();
     const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
     setStatus(elements.status, message);
@@ -496,7 +524,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       captureSessionSummaryState: currentCaptureSessionSummaryState,
       sessionExperienceState: currentSessionExperienceState,
       capturePresentationState: currentCapturePresentationState,
-      discoveryState: currentDiscoveryState
+      discoveryState: currentDiscoveryState,
+      explorationProgressPresentationState:
+        currentExplorationProgressPresentationState
     });
   };
 
@@ -578,6 +608,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionSummaryState,
           currentExplorationMode
         );
+        refreshExplorationProgressPresentationState();
         if (expandedSettlementPreview && mounted) {
           redrawExpandedSettlementPreviewIfMounted();
         }
@@ -693,6 +724,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionSummaryState,
           currentExplorationMode
         );
+        refreshExplorationProgressPresentationState();
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
@@ -725,6 +757,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionSummaryState,
           currentExplorationMode
         );
+        refreshExplorationProgressPresentationState();
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
@@ -739,6 +772,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementSessionExperienceState() {
         return currentSessionExperienceState;
+      },
+      currentSettlementExplorationProgressPresentationState() {
+        return currentExplorationProgressPresentationState;
       },
       currentSettlementCapturePresentationState() {
         return currentCapturePresentationState;
@@ -764,6 +800,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionSummaryState,
           currentExplorationMode
         );
+        refreshExplorationProgressPresentationState();
         redrawExpandedSettlementPreviewIfMounted();
         return currentDiscoveryState;
       },
@@ -786,6 +823,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionSummaryState,
           currentExplorationMode
         );
+        refreshExplorationProgressPresentationState();
         return currentDiscoveryState;
       },
       currentSettlementDiscoveryState() {
@@ -804,6 +842,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentCaptureSessionSummaryState,
           currentExplorationMode
         );
+        refreshExplorationProgressPresentationState();
         return currentSessionExperienceState;
       },
       currentSettlementSelectableObjects() {
@@ -2313,6 +2352,49 @@ function createDefaultCapturePresentationState(
   );
 }
 
+function createDefaultExplorationProgressPresentationState(
+  expandedSettlementPreview,
+  captureSessionSummaryState,
+  discoveryState,
+  sessionExperienceState,
+  poiContentMetadata = null
+) {
+  if (
+    !expandedSettlementPreview ||
+    !captureSessionSummaryState ||
+    !discoveryState ||
+    !sessionExperienceState
+  ) {
+    return deepFreeze({
+      explorationProgressPresentationId:
+        "EXPLORATION_PROGRESS_PRESENTATION_INACTIVE",
+      capturedCount: 0,
+      discoveredCount: 0,
+      totalWorldObjects: 0,
+      completionPercent: 0,
+      activeDiscoveryTarget: null,
+      capturedPoiIndicators: deepFreeze([]),
+      discoveredPoiIndicators: deepFreeze([]),
+      currentExplorationObjective:
+        sessionExperienceState?.currentObjective ??
+        "Initialize a world preview to begin exploring.",
+      validationResult: deepFreeze({
+        summaryMatchesSessionState: true,
+        uiUpdatesAfterDiscoveryValid: true,
+        uiUpdatesAfterCaptureValid: true,
+        cleanupResetBehaviorValid: true
+      })
+    });
+  }
+  return buildExplorationProgressPresentationState(
+    expandedSettlementPreview,
+    captureSessionSummaryState,
+    discoveryState,
+    sessionExperienceState,
+    poiContentMetadata
+  );
+}
+
 function createDefaultDiscoveryState(
   expandedSettlementPreview,
   playerState
@@ -3177,6 +3259,98 @@ function buildCaptureSessionSummaryState(
         discoveredObjectIds.length === discoveryState.discoveredObjectIds.length,
       deterministicOutputValid: true,
       cleanupResetBehaviorValid: true
+    })
+  });
+}
+
+function buildExplorationProgressPresentationState(
+  expandedSettlementPreview,
+  captureSessionSummaryState,
+  discoveryState,
+  sessionExperienceState,
+  poiContentMetadata = null
+) {
+  if (
+    !expandedSettlementPreview ||
+    !captureSessionSummaryState ||
+    !discoveryState ||
+    !sessionExperienceState
+  ) {
+    return createDefaultExplorationProgressPresentationState(
+      expandedSettlementPreview,
+      captureSessionSummaryState,
+      discoveryState,
+      sessionExperienceState,
+      poiContentMetadata
+    );
+  }
+  const capturedAssetIds = Array.isArray(captureSessionSummaryState.capturedObjectAssetIds)
+    ? captureSessionSummaryState.capturedObjectAssetIds
+    : [];
+  const discoveredObjectIds = Array.isArray(discoveryState.discoveredObjectIds)
+    ? discoveryState.discoveredObjectIds.map((value) => String(value))
+    : [];
+  const discoveredAssetIds = deepFreeze(
+    discoveredObjectIds
+      .map(
+        (objectId) =>
+          expandedSettlementPreview.objectInstances.find(
+            (objectInstance) => objectInstance.instanceId === objectId
+          )?.assetId ?? null
+      )
+      .filter((assetId) => typeof assetId === "string")
+  );
+  const activeDiscoveryTarget =
+    discoveryState.discoveryState === "discovered-persistent" &&
+    discoveryState.assetId != null
+      ? deepFreeze({
+          assetId: discoveryState.assetId,
+          title:
+            poiContentMetadata?.title && poiContentMetadata.assetId === discoveryState.assetId
+              ? poiContentMetadata.title
+              : resolvePoiLabelFromAssetId(discoveryState.assetId),
+          discoveryState: discoveryState.discoveryState
+        })
+      : null;
+  return deepFreeze({
+    explorationProgressPresentationId:
+      `${expandedSettlementPreview.sceneId}::exploration-progress-presentation`,
+    capturedCount: captureSessionSummaryState.capturedObjects,
+    discoveredCount: captureSessionSummaryState.discoveredObjects,
+    totalWorldObjects: captureSessionSummaryState.totalObjects,
+    completionPercent: captureSessionSummaryState.completionPercent,
+    activeDiscoveryTarget,
+    capturedPoiIndicators: deepFreeze(
+      capturedAssetIds.map((assetId) =>
+        deepFreeze({
+          assetId,
+          title: resolvePoiLabelFromAssetId(assetId),
+          indicatorState: "captured"
+        })
+      )
+    ),
+    discoveredPoiIndicators: deepFreeze(
+      discoveredAssetIds.map((assetId) =>
+        deepFreeze({
+          assetId,
+          title: resolvePoiLabelFromAssetId(assetId),
+          indicatorState: capturedAssetIds.includes(assetId) ? "captured" : "discovered"
+        })
+      )
+    ),
+    currentExplorationObjective: sessionExperienceState.currentObjective,
+    validationResult: deepFreeze({
+      summaryMatchesSessionState:
+        captureSessionSummaryState.capturedObjects === capturedAssetIds.length &&
+        captureSessionSummaryState.discoveredObjects === discoveredObjectIds.length,
+      uiUpdatesAfterDiscoveryValid:
+        discoveryState.discoveryState !== "discovered-persistent" ||
+        activeDiscoveryTarget?.assetId === discoveryState.assetId,
+      uiUpdatesAfterCaptureValid:
+        capturedAssetIds.length === captureSessionSummaryState.capturedObjects,
+      cleanupResetBehaviorValid:
+        captureSessionSummaryState.totalObjects >= captureSessionSummaryState.capturedObjects &&
+        captureSessionSummaryState.totalObjects >= captureSessionSummaryState.discoveredObjects
     })
   });
 }
