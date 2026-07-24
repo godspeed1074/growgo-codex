@@ -69,14 +69,29 @@ test("local real map data adapter builds deterministic local fixture map-shaped 
     foundation.coordinate.longitude,
     foundation.worldResolver.worldLocationResolver.longitude
   );
-  assert.ok(foundation.roads.length >= 3);
-  assert.ok(foundation.landAreas.length >= 3);
-  assert.ok(foundation.buildingHints.length >= 1);
-  assert.ok(foundation.vegetationHints.length >= 1);
+  assert.equal(foundation.terrainHints.densityProfile, "suburban_coastal");
+  assert.ok(foundation.roads.length >= 8);
+  assert.ok(foundation.landAreas.length >= 5);
+  assert.ok(foundation.buildingHints.length >= 12);
+  assert.ok(foundation.vegetationHints.length >= 24);
   assert.ok(foundation.landmarkHints.length >= 1);
   assert.equal(foundation.validationResult.mapDataContractValid, true);
+  assert.equal(foundation.validationResult.performanceSafeObjectCountsValid, true);
   assert.equal(foundation.validationResult.placementValidityPreserved, true);
   assert.equal(foundation.validationResult.assetReferenceValidityPreserved, true);
+  assert.equal(foundation.worldResolver.settlement.residentialBlocks.length, 3);
+  assert.equal(
+    foundation.worldResolver.settlement.roadNetwork.roadSegments.length,
+    foundation.roads.length
+  );
+  assert.equal(
+    foundation.worldResolver.settlement.buildingPlacements.length,
+    foundation.buildingHints.length
+  );
+  assert.equal(
+    foundation.worldResolver.settlement.vegetationPlacements.length,
+    foundation.vegetationHints.length
+  );
   assert.ok(
     foundation.landAreas.some((area) => area.areaType === "coastline_boundary")
   );
@@ -127,4 +142,41 @@ test("local real map data adapter rejects invalid provider contract safely", asy
 
   assert.equal(result.ok, false);
   assert.equal(result.errorCode, "map_data_contract_invalid");
+});
+
+test("density profiles scale the neighbourhood deterministically from sparse to town coastal", async () => {
+  const sparse = await moduleUnderTest.createMapWorldLocalRealMapDataAdapterFoundation(
+    {
+      ...moduleUnderTest.mapWorldLocalRealMapDataAdapterFoundationDefinition,
+      densityProfile: "sparse_coastal"
+    },
+    buildLoaderOptions()
+  );
+  const suburban = await moduleUnderTest.createMapWorldLocalRealMapDataAdapterFoundation(
+    {
+      ...moduleUnderTest.mapWorldLocalRealMapDataAdapterFoundationDefinition,
+      densityProfile: "suburban_coastal"
+    },
+    buildLoaderOptions()
+  );
+  const town = await moduleUnderTest.createMapWorldLocalRealMapDataAdapterFoundation(
+    {
+      ...moduleUnderTest.mapWorldLocalRealMapDataAdapterFoundationDefinition,
+      densityProfile: "town_coastal"
+    },
+    buildLoaderOptions()
+  );
+
+  assert.equal(sparse.terrainHints.densityProfile, "sparse_coastal");
+  assert.equal(suburban.terrainHints.densityProfile, "suburban_coastal");
+  assert.equal(town.terrainHints.densityProfile, "town_coastal");
+  assert.ok(sparse.roads.length < suburban.roads.length);
+  assert.ok(suburban.roads.length < town.roads.length);
+  assert.ok(sparse.buildingHints.length < suburban.buildingHints.length);
+  assert.ok(suburban.buildingHints.length < town.buildingHints.length);
+  assert.ok(sparse.vegetationHints.length < suburban.vegetationHints.length);
+  assert.ok(suburban.vegetationHints.length < town.vegetationHints.length);
+  assert.equal(sparse.validationResult.performanceSafeObjectCountsValid, true);
+  assert.equal(suburban.validationResult.performanceSafeObjectCountsValid, true);
+  assert.equal(town.validationResult.performanceSafeObjectCountsValid, true);
 });

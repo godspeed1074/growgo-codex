@@ -32,6 +32,12 @@ export const mapWorldLocalRealMapDataAdapterFoundationDefinition = deepFreeze({
   ...mapWorldRealLocationPreviewFoundationDefinition
 });
 
+const supportedDensityProfiles = new Set([
+  "sparse_coastal",
+  "suburban_coastal",
+  "town_coastal"
+]);
+
 export async function createMapWorldLocalRealMapDataAdapterFoundation(
   rawDefinition = mapWorldLocalRealMapDataAdapterFoundationDefinition,
   options = {}
@@ -41,7 +47,7 @@ export async function createMapWorldLocalRealMapDataAdapterFoundation(
     rawDefinition,
     options
   );
-  const fixtureContext = buildFixtureContext(liveMapFoundation, previewFoundation);
+  const fixtureContext = buildFixtureContext(rawDefinition, liveMapFoundation, previewFoundation);
   const roads = buildRoadsFromFixture(fixtureContext);
   const landAreas = buildLandAreasFromFixture(fixtureContext);
   const buildingHints = buildBuildingHints(fixtureContext, landAreas, roads);
@@ -120,16 +126,21 @@ export async function createMapWorldLocalRealMapDataAdapterFoundation(
       fallbackBehaviorValid:
         liveMapFoundation.validationResult.fallbackBehaviorPreserved === true,
       localFixtureDataValid:
-        roads.length >= 3 &&
-        landAreas.length >= 3 &&
-        buildingHints.length >= 1 &&
-        vegetationHints.length >= 1 &&
+        roads.length >= 5 &&
+        landAreas.length >= 5 &&
+        buildingHints.length >= 6 &&
+        vegetationHints.length >= 6 &&
         landmarkHints.length >= 1,
       mapDataContractValid:
         roads.every((road) => Array.isArray(road.connectedIntersectionIds)) &&
         landAreas.every((area) => Array.isArray(area.boundaryPoints)) &&
         buildingHints.every((hint) => typeof hint.facing === "string") &&
         vegetationHints.every((hint) => typeof hint.density === "string"),
+      performanceSafeObjectCountsValid:
+        roads.length <= 12 &&
+        buildingHints.length <= 20 &&
+        vegetationHints.length <= 40 &&
+        worldResolver.settlement.settlementSummary.generatedAssetCount <= 80,
       placementValidityPreserved:
         worldResolver.settlement.validationResult.placementValidity === true,
       assetReferenceValidityPreserved:
@@ -223,6 +234,12 @@ export function validateMapWorldLocalRealMapDataAdapterFoundation(rawFoundation)
         "Map world local real map data adapter mapDataContractValid must be true."
       );
     }
+    if (!foundation.validationResult.performanceSafeObjectCountsValid) {
+      throw createValidationError(
+        "performance_safe_counts_invalid",
+        "Map world local real map data adapter performanceSafeObjectCountsValid must be true."
+      );
+    }
     if (!foundation.validationResult.placementValidityPreserved) {
       throw createValidationError(
         "placement_validity_invalid",
@@ -283,18 +300,15 @@ function buildResolverDefinition(liveMapFoundation, previewFoundation, mapFixtur
   });
 }
 
-function buildFixtureContext(liveMapFoundation, previewFoundation) {
+function buildFixtureContext(rawDefinition, liveMapFoundation, previewFoundation) {
   const bounds = liveMapFoundation.bounds;
   const seed =
     previewFoundation.mapWorldLiveMapFoundation.mapWorldVisualLayerAttachment
       .mapWorldRealMapDisplay.worldAttachment.worldLocationResolver.seed;
-  const width = bounds.maxX - bounds.minX;
+  const densityProfile = selectDensityProfile(rawDefinition);
+  const densityConfig = buildDensityProfileConfig(densityProfile, bounds);
   const height = bounds.maxY - bounds.minY;
-  const shorelineY = roundNumber(bounds.minY + height * 0.72);
-  const mainRoadY = roundNumber(bounds.minY + height * 0.52);
-  const northRoadY = roundNumber(bounds.minY + height * 0.34);
-  const westSpurX = roundNumber(bounds.minX + width * 0.28);
-  const eastSpurX = roundNumber(bounds.minX + width * 0.66);
+  const shorelineY = roundNumber(bounds.minY + height * densityConfig.shorelineRatio);
 
   return deepFreeze({
     bounds: deepFreeze({ ...bounds }),
@@ -303,210 +317,172 @@ function buildFixtureContext(liveMapFoundation, previewFoundation) {
       longitude: previewFoundation.coordinate.longitude
     }),
     seed,
-    shorelineY,
-    mainRoadY,
-    northRoadY,
-    westSpurX,
-    eastSpurX
+    densityProfile,
+    densityConfig,
+    shorelineY
   });
 }
 
 function buildRoadsFromFixture(fixtureContext) {
-  const roads = [
-    deepFreeze({
-      roadSegmentId: "LOCAL_MAP_ROAD_SEGMENT_001",
-      roadClass: "coastal_collector",
-      orientation: "east-west",
-      start: deepFreeze({
-        x: fixtureContext.bounds.minX + 48,
-        y: fixtureContext.mainRoadY
-      }),
-      end: deepFreeze({
-        x: fixtureContext.bounds.maxX - 64,
-        y: fixtureContext.mainRoadY
-      }),
-      width: 28,
-      connectedIntersectionIds: deepFreeze([
-        "LOCAL_MAP_INTERSECTION_001",
-        "LOCAL_MAP_INTERSECTION_002"
-      ])
-    }),
-    deepFreeze({
-      roadSegmentId: "LOCAL_MAP_ROAD_SEGMENT_002",
-      roadClass: "residential_spur",
-      orientation: "north-south",
-      start: deepFreeze({
-        x: fixtureContext.westSpurX,
-        y: fixtureContext.mainRoadY
-      }),
-      end: deepFreeze({
-        x: fixtureContext.westSpurX,
-        y: fixtureContext.northRoadY
-      }),
-      width: 18,
-      connectedIntersectionIds: deepFreeze([
-        "LOCAL_MAP_INTERSECTION_001",
-        "LOCAL_MAP_INTERSECTION_003"
-      ])
-    }),
-    deepFreeze({
-      roadSegmentId: "LOCAL_MAP_ROAD_SEGMENT_003",
-      roadClass: "residential_spur",
-      orientation: "north-south",
-      start: deepFreeze({
-        x: fixtureContext.eastSpurX,
-        y: fixtureContext.mainRoadY
-      }),
-      end: deepFreeze({
-        x: fixtureContext.eastSpurX,
-        y: fixtureContext.northRoadY
-      }),
-      width: 18,
-      connectedIntersectionIds: deepFreeze([
-        "LOCAL_MAP_INTERSECTION_002",
-        "LOCAL_MAP_INTERSECTION_003"
-      ])
-    }),
-    deepFreeze({
-      roadSegmentId: "LOCAL_MAP_ROAD_SEGMENT_004",
-      roadClass: "coastal_view_road",
-      orientation: "east-west",
-      start: deepFreeze({
-        x: fixtureContext.westSpurX,
-        y: fixtureContext.northRoadY
-      }),
-      end: deepFreeze({
-        x: fixtureContext.eastSpurX,
-        y: fixtureContext.northRoadY
-      }),
-      width: 20,
-      connectedIntersectionIds: deepFreeze([
-        "LOCAL_MAP_INTERSECTION_003"
-      ])
-    })
-  ];
+  const eastWestRoads = fixtureContext.densityConfig.eastWestRoadYs.map((roadY, rowIndex) => {
+    const roadSegmentId = `LOCAL_MAP_ROAD_SEGMENT_${String(rowIndex + 1).padStart(3, "0")}`;
+    const connectedIntersectionIds = fixtureContext.densityConfig.northSouthRoadXs.map(
+      (_, columnIndex) =>
+        `LOCAL_MAP_INTERSECTION_${String(rowIndex * fixtureContext.densityConfig.northSouthRoadXs.length + columnIndex + 1).padStart(3, "0")}`
+    );
+    const roadClass =
+      rowIndex === fixtureContext.densityConfig.eastWestRoadYs.length - 1
+        ? "coastal_view_road"
+        : "residential_row_road";
 
-  return deepFreeze(roads);
+    return deepFreeze({
+      roadSegmentId,
+      roadClass,
+      orientation: "east-west",
+      start: deepFreeze({
+        x: fixtureContext.bounds.minX + 42,
+        y: roadY
+      }),
+      end: deepFreeze({
+        x: fixtureContext.bounds.maxX - 46,
+        y: roadY
+      }),
+      width: roadClass === "coastal_view_road" ? 22 : 26,
+      connectedIntersectionIds: deepFreeze(connectedIntersectionIds)
+    });
+  });
+
+  const eastWestCount = eastWestRoads.length;
+  const northSouthRoads = fixtureContext.densityConfig.northSouthRoadXs.map((roadX, columnIndex) =>
+    deepFreeze({
+      roadSegmentId: `LOCAL_MAP_ROAD_SEGMENT_${String(eastWestCount + columnIndex + 1).padStart(3, "0")}`,
+      roadClass: "residential_spur",
+      orientation: "north-south",
+      start: deepFreeze({
+        x: roadX,
+        y: fixtureContext.densityConfig.eastWestRoadYs[0]
+      }),
+      end: deepFreeze({
+        x: roadX,
+        y: fixtureContext.densityConfig.eastWestRoadYs[fixtureContext.densityConfig.eastWestRoadYs.length - 1]
+      }),
+      width: 18,
+      connectedIntersectionIds: deepFreeze(
+        fixtureContext.densityConfig.eastWestRoadYs.map(
+          (_, rowIndex) =>
+            `LOCAL_MAP_INTERSECTION_${String(rowIndex * fixtureContext.densityConfig.northSouthRoadXs.length + columnIndex + 1).padStart(3, "0")}`
+        )
+      )
+    })
+  );
+
+  return deepFreeze([...eastWestRoads, ...northSouthRoads]);
 }
 
 function buildLandAreasFromFixture(fixtureContext) {
-  const { minX, minY, maxX, maxY } = fixtureContext.bounds;
-  const midX = roundNumber((minX + maxX) / 2);
-  return deepFreeze(
-    [
-      deepFreeze({
-        landAreaId: "LOCAL_MAP_LAND_AREA_RESIDENTIAL_001",
-        areaType: "residential_neighbourhood",
-        boundaryPoints: deepFreeze([
-          deepFreeze({ x: minX + 48, y: minY + 88 }),
-          deepFreeze({ x: midX - 24, y: minY + 88 }),
-          deepFreeze({ x: midX - 24, y: fixtureContext.mainRoadY - 42 }),
-          deepFreeze({ x: minX + 48, y: fixtureContext.mainRoadY - 42 })
-        ])
-      }),
-      deepFreeze({
-        landAreaId: "LOCAL_MAP_LAND_AREA_RESIDENTIAL_002",
-        areaType: "residential_neighbourhood",
-        boundaryPoints: deepFreeze([
-          deepFreeze({ x: midX + 24, y: minY + 88 }),
-          deepFreeze({ x: maxX - 56, y: minY + 88 }),
-          deepFreeze({ x: maxX - 56, y: fixtureContext.mainRoadY - 42 }),
-          deepFreeze({ x: midX + 24, y: fixtureContext.mainRoadY - 42 })
-        ])
-      }),
-      deepFreeze({
-        landAreaId: "LOCAL_MAP_LAND_AREA_COASTLINE_001",
-        areaType: "coastline_boundary",
-        boundaryPoints: deepFreeze([
-          deepFreeze({ x: minX, y: fixtureContext.shorelineY }),
-          deepFreeze({ x: maxX, y: fixtureContext.shorelineY }),
-          deepFreeze({ x: maxX, y: maxY }),
-          deepFreeze({ x: minX, y: maxY })
-        ])
-      }),
-      deepFreeze({
-        landAreaId: "LOCAL_MAP_LAND_AREA_FORESHORE_001",
-        areaType: "foreshore_transition",
-        boundaryPoints: deepFreeze([
-          deepFreeze({ x: minX + 32, y: fixtureContext.shorelineY - 52 }),
-          deepFreeze({ x: maxX - 32, y: fixtureContext.shorelineY - 52 }),
-          deepFreeze({ x: maxX - 32, y: fixtureContext.shorelineY + 26 }),
-          deepFreeze({ x: minX + 32, y: fixtureContext.shorelineY + 26 })
-        ])
-      })
-    ]
+  const { minX, maxX, maxY } = fixtureContext.bounds;
+  const residentialAreas = fixtureContext.densityConfig.residentialAreaBands.map((band, index) =>
+    deepFreeze({
+      landAreaId: `LOCAL_MAP_LAND_AREA_RESIDENTIAL_${String(index + 1).padStart(3, "0")}`,
+      areaType: "residential_neighbourhood",
+      boundaryPoints: deepFreeze([
+        deepFreeze({ x: band.minX, y: band.minY }),
+        deepFreeze({ x: band.maxX, y: band.minY }),
+        deepFreeze({ x: band.maxX, y: band.maxY }),
+        deepFreeze({ x: band.minX, y: band.maxY })
+      ])
+    })
   );
+
+  return deepFreeze([
+    ...residentialAreas,
+    deepFreeze({
+      landAreaId: "LOCAL_MAP_LAND_AREA_COASTLINE_001",
+      areaType: "coastline_boundary",
+      boundaryPoints: deepFreeze([
+        deepFreeze({ x: fixtureContext.bounds.minX, y: fixtureContext.shorelineY }),
+        deepFreeze({ x: maxX, y: fixtureContext.shorelineY }),
+        deepFreeze({ x: maxX, y: maxY }),
+        deepFreeze({ x: fixtureContext.bounds.minX, y: maxY })
+      ])
+    }),
+    deepFreeze({
+      landAreaId: "LOCAL_MAP_LAND_AREA_FORESHORE_001",
+      areaType: "foreshore_transition",
+      boundaryPoints: deepFreeze([
+        deepFreeze({ x: fixtureContext.bounds.minX + 28, y: fixtureContext.shorelineY - 54 }),
+        deepFreeze({ x: maxX - 28, y: fixtureContext.shorelineY - 54 }),
+        deepFreeze({ x: maxX - 28, y: fixtureContext.shorelineY + 24 }),
+        deepFreeze({ x: fixtureContext.bounds.minX + 28, y: fixtureContext.shorelineY + 24 })
+      ])
+    })
+  ]);
 }
 
 function buildBuildingHints(fixtureContext, landAreas, roads) {
-  const mainRoad = roads.find((road) => road.roadSegmentId === "LOCAL_MAP_ROAD_SEGMENT_001");
-  const upperRoad = roads.find((road) => road.roadSegmentId === "LOCAL_MAP_ROAD_SEGMENT_004");
-  const leftArea = landAreas.find((area) => area.landAreaId === "LOCAL_MAP_LAND_AREA_RESIDENTIAL_001");
-  const rightArea = landAreas.find((area) => area.landAreaId === "LOCAL_MAP_LAND_AREA_RESIDENTIAL_002");
-  const leftDescriptors = [
-    {
-      position: { x: fixtureContext.bounds.minX + 162, y: fixtureContext.mainRoadY - 98 },
-      frontageRoadSegmentId: mainRoad.roadSegmentId
-    },
-    {
-      position: { x: fixtureContext.westSpurX + 94, y: fixtureContext.northRoadY - 58 },
-      frontageRoadSegmentId: upperRoad.roadSegmentId
-    }
-  ];
-  const rightDescriptors = [
-    {
-      position: { x: fixtureContext.eastSpurX - 92, y: fixtureContext.northRoadY - 56 },
-      frontageRoadSegmentId: upperRoad.roadSegmentId
-    },
-    {
-      position: { x: fixtureContext.bounds.maxX - 154, y: fixtureContext.mainRoadY - 96 },
-      frontageRoadSegmentId: mainRoad.roadSegmentId
-    }
-  ];
+  const residentialRoads = roads.filter((road) => road.roadClass === "residential_row_road");
+  const residentialAreas = landAreas.filter((area) => area.areaType === "residential_neighbourhood");
+  const rowOffsets = [];
 
   return deepFreeze(
-    [...leftDescriptors, ...rightDescriptors].map((descriptor, index) => {
-      const residentialAreaId = index < leftDescriptors.length ? leftArea.landAreaId : rightArea.landAreaId;
-      const width = 72;
-      const depth = 60;
-      return deepFreeze({
-        buildingHintId: `LOCAL_MAP_BUILDING_HINT_${String(index + 1).padStart(3, "0")}`,
-        assetId: "BUILDING_COASTAL_COTTAGE_001",
-        lotId: `COASTAL_SETTLEMENT_LOT_${String(index + 1).padStart(3, "0")}`,
-        frontageRoadSegmentId: descriptor.frontageRoadSegmentId,
-        position: deepFreeze(descriptor.position),
-        width: 132,
-        depth: 148,
-        buildingWidth: width,
-        buildingDepth: depth,
-        facing: "south",
-        residentialAreaId
-      });
-    })
+    fixtureContext.densityConfig.buildingRows.flatMap((row, rowIndex) =>
+      row.centerXs.map((centerX, columnIndex) => {
+        const rowRoad = residentialRoads[row.roadIndex];
+        const residentialAreaId = resolveResidentialAreaId(residentialAreas, centerX);
+        const index = rowOffsets.push(0) - 1;
+        const buildingWidth = row.variant === "compact" ? 66 : 72;
+        const buildingDepth = row.variant === "compact" ? 56 : 60;
+        const lotWidth = row.variant === "compact" ? 118 : 128;
+        const lotDepth = row.variant === "compact" ? 94 : 108;
+        const position = {
+          x: centerX,
+          y: roundNumber(rowRoad.start.y - (row.variant === "compact" ? 54 : 58))
+        };
+
+        return deepFreeze({
+          buildingHintId: `LOCAL_MAP_BUILDING_HINT_${String(index + 1).padStart(3, "0")}`,
+          assetId: "BUILDING_COASTAL_COTTAGE_001",
+          lotId: `COASTAL_SETTLEMENT_LOT_${String(index + 1).padStart(3, "0")}`,
+          frontageRoadSegmentId: rowRoad.roadSegmentId,
+          position: deepFreeze(position),
+          width: lotWidth,
+          depth: lotDepth,
+          buildingWidth,
+          buildingDepth,
+          facing: "south",
+          residentialAreaId
+        });
+      })
+    )
   );
 }
 
 function buildVegetationHints(fixtureContext, landAreas, buildingHints) {
-  const leftArea = landAreas.find((area) => area.landAreaId === "LOCAL_MAP_LAND_AREA_RESIDENTIAL_001");
-  const rightArea = landAreas.find((area) => area.landAreaId === "LOCAL_MAP_LAND_AREA_RESIDENTIAL_002");
+  const perLotOffsets =
+    fixtureContext.densityConfig.treesPerLot === 1
+      ? [{ x: -22, y: -18, density: "moderate" }]
+      : [
+          { x: -24, y: -18, density: "moderate" },
+          { x: 24, y: -14, density: "light" }
+        ];
 
   return deepFreeze(
-    buildingHints.map((hint, index) => {
-      const offsetX = index % 2 === 0 ? -28 : 28;
-      const offsetY = -40;
-      return deepFreeze({
-        vegetationHintId: `LOCAL_MAP_VEGETATION_HINT_${String(index + 1).padStart(3, "0")}`,
-        assetId: "TREE_EUCALYPTUS_001",
-        position: deepFreeze({
-          x: roundNumber(hint.position.x + offsetX),
-          y: roundNumber(hint.position.y + offsetY)
-        }),
-        density: index < 2 ? "moderate" : "light",
-        vegetationAreaId:
-          index < 2 ? leftArea.landAreaId : rightArea.landAreaId,
-        lotId: hint.lotId
-      });
-    })
+    buildingHints.flatMap((hint, buildingIndex) =>
+      perLotOffsets.map((offset, treeIndex) => {
+        const index = buildingIndex * perLotOffsets.length + treeIndex;
+        return deepFreeze({
+          vegetationHintId: `LOCAL_MAP_VEGETATION_HINT_${String(index + 1).padStart(3, "0")}`,
+          assetId: "TREE_EUCALYPTUS_001",
+          position: deepFreeze({
+            x: roundNumber(hint.position.x + offset.x),
+            y: roundNumber(hint.position.y + offset.y)
+          }),
+          density: offset.density,
+          vegetationAreaId: hint.residentialAreaId,
+          lotId: hint.lotId
+        });
+      })
+    )
   );
 }
 
@@ -517,8 +493,14 @@ function buildTerrainHints(fixtureContext) {
       shorelineOrientation: "east-west",
       settlementBand: "foreshore",
       windExposure: "medium",
-      vegetationDensity: "moderate"
+      vegetationDensity:
+        fixtureContext.densityProfile === "sparse_coastal"
+          ? "low"
+          : fixtureContext.densityProfile === "town_coastal"
+            ? "dense"
+            : "moderate"
     }),
+    densityProfile: fixtureContext.densityProfile,
     source: "local_fixture_map_data",
     coordinate: fixtureContext.coordinate,
     coastlineBoundaryId: "LOCAL_MAP_LAND_AREA_COASTLINE_001",
@@ -530,17 +512,15 @@ function buildLandmarkHints(fixtureContext, assetInstances) {
   const lighthouseAsset = assetInstances.find(
     (assetInstance) => assetInstance.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001"
   );
-  const lighthousePosition = deepFreeze({
-    x: roundNumber(fixtureContext.bounds.maxX - 132),
-    y: roundNumber(fixtureContext.shorelineY + 58)
-  });
-
   return deepFreeze([
     deepFreeze({
       landmarkHintId: "LOCAL_MAP_LANDMARK_HINT_001",
       assetId: "LIGHTHOUSE_ISLAND_ROCKY_001",
       hintType: "landmark",
-      position: lighthousePosition,
+      position: deepFreeze({
+        x: roundNumber(fixtureContext.bounds.maxX - 136),
+        y: roundNumber(fixtureContext.shorelineY + 56)
+      }),
       source: "local_fixture_map_data",
       landmarkValue: "high",
       questEligible: true,
@@ -549,6 +529,89 @@ function buildLandmarkHints(fixtureContext, assetInstances) {
       sourceAssetId: lighthouseAsset?.assetId ?? "LIGHTHOUSE_ISLAND_ROCKY_001"
     })
   ]);
+}
+
+function selectDensityProfile(rawDefinition) {
+  const requestedProfile =
+    rawDefinition && typeof rawDefinition === "object" ? rawDefinition.densityProfile : null;
+  if (requestedProfile == null) {
+    return "suburban_coastal";
+  }
+  if (typeof requestedProfile !== "string" || !supportedDensityProfiles.has(requestedProfile)) {
+    throw createValidationError(
+      "density_profile_invalid",
+      "Map world local real map data adapter densityProfile must be sparse_coastal, suburban_coastal, or town_coastal."
+    );
+  }
+  return requestedProfile;
+}
+
+function buildDensityProfileConfig(densityProfile, bounds) {
+  const { minX, minY, maxX, maxY } = bounds;
+  const width = maxX - minX;
+  const height = maxY - minY;
+
+  const configs = {
+    sparse_coastal: deepFreeze({
+      shorelineRatio: 0.76,
+      eastWestRoadYs: [roundNumber(minY + height * 0.31), roundNumber(minY + height * 0.49), roundNumber(minY + height * 0.68)],
+      northSouthRoadXs: [roundNumber(minX + width * 0.32), roundNumber(minX + width * 0.62)],
+      buildingRows: [
+        { roadIndex: 0, centerXs: [150, 430, 740], variant: "standard" },
+        { roadIndex: 1, centerXs: [220, 540, 820], variant: "standard" }
+      ],
+      treesPerLot: 1,
+      residentialAreaBands: [
+        { minX: minX + 52, minY: minY + 78, maxX: minX + width * 0.36, maxY: minY + height * 0.59 },
+        { minX: minX + width * 0.36 + 12, minY: minY + 78, maxX: minX + width * 0.68, maxY: minY + height * 0.59 },
+        { minX: minX + width * 0.68 + 12, minY: minY + 78, maxX: maxX - 54, maxY: minY + height * 0.59 }
+      ]
+    }),
+    suburban_coastal: deepFreeze({
+      shorelineRatio: 0.82,
+      eastWestRoadYs: [180, 300, 420, 535],
+      northSouthRoadXs: [roundNumber(minX + width * 0.18), roundNumber(minX + width * 0.34), roundNumber(minX + width * 0.52), roundNumber(minX + width * 0.70)],
+      buildingRows: [
+        { roadIndex: 0, centerXs: [96, 246, 406], variant: "compact" },
+        { roadIndex: 1, centerXs: [108, 258, 418, 588], variant: "standard" },
+        { roadIndex: 2, centerXs: [120, 280, 430, 590, 810], variant: "standard" }
+      ],
+      treesPerLot: 2,
+      residentialAreaBands: [
+        { minX: minX + 46, minY: minY + 68, maxX: minX + width * 0.30, maxY: minY + height * 0.63 },
+        { minX: minX + width * 0.30 + 14, minY: minY + 68, maxX: minX + width * 0.60, maxY: minY + height * 0.63 },
+        { minX: minX + width * 0.60 + 14, minY: minY + 68, maxX: maxX - 48, maxY: minY + height * 0.63 }
+      ]
+    }),
+    town_coastal: deepFreeze({
+      shorelineRatio: 0.84,
+      eastWestRoadYs: [145, 255, 365, 475, 570],
+      northSouthRoadXs: [roundNumber(minX + width * 0.15), roundNumber(minX + width * 0.29), roundNumber(minX + width * 0.44), roundNumber(minX + width * 0.59), roundNumber(minX + width * 0.75)],
+      buildingRows: [
+        { roadIndex: 0, centerXs: [72, 211, 350, 494, 643], variant: "compact" },
+        { roadIndex: 1, centerXs: [90, 230, 370, 514, 663], variant: "compact" },
+        { roadIndex: 2, centerXs: [80, 350, 500, 640, 840], variant: "compact" },
+        { roadIndex: 3, centerXs: [220, 360, 500, 660, 860], variant: "standard" }
+      ],
+      treesPerLot: 2,
+      residentialAreaBands: [
+        { minX: minX + 42, minY: minY + 60, maxX: minX + width * 0.24, maxY: minY + height * 0.65 },
+        { minX: minX + width * 0.24 + 12, minY: minY + 60, maxX: minX + width * 0.47, maxY: minY + height * 0.65 },
+        { minX: minX + width * 0.47 + 12, minY: minY + 60, maxX: minX + width * 0.70, maxY: minY + height * 0.65 },
+        { minX: minX + width * 0.70 + 12, minY: minY + 60, maxX: maxX - 42, maxY: minY + height * 0.65 }
+      ]
+    })
+  };
+
+  return configs[densityProfile];
+}
+
+function resolveResidentialAreaId(residentialAreas, centerX) {
+  const matchingArea = residentialAreas.find((area) => {
+    const xs = area.boundaryPoints.map((point) => point.x);
+    return centerX >= Math.min(...xs) && centerX <= Math.max(...xs);
+  });
+  return matchingArea?.landAreaId ?? residentialAreas[residentialAreas.length - 1]?.landAreaId ?? "LOCAL_MAP_LAND_AREA_RESIDENTIAL_001";
 }
 
 function buildIntersectionLookup(roads) {
