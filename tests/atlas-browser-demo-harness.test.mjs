@@ -569,6 +569,7 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     harness.currentVisualSourceSummary().visibleObjectCount,
     45
   );
+  assert.equal(expandedSettlementScene.visualStyling.activeLightingProfile, "day");
   assert.ok(
     harness.canvas._context.commands.some(
       (command) =>

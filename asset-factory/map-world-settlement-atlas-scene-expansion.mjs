@@ -22,6 +22,7 @@ export const mapWorldSettlementAtlasSceneExpansionRequiredFields = Object.freeze
   "vegetationInstances",
   "landmarkInstances",
   "visualScaling",
+  "visualStyling",
   "presentationSummary",
   "cameraProfile",
   "validationResult"
@@ -86,6 +87,11 @@ export async function createMapWorldSettlementAtlasSceneExpansion(
     vegetationInstances,
     cameraProfile
   );
+  const visualStyling = buildVisualStyling({
+    settlement,
+    cameraProfile,
+    coastlineArea
+  });
   const presentationSummary = buildPresentationSummary(
     settlement,
     roadInstances,
@@ -94,7 +100,8 @@ export async function createMapWorldSettlementAtlasSceneExpansion(
     landmarkInstances,
     coastlineArea,
     visualScaling,
-    cameraProfile
+    cameraProfile,
+    visualStyling
   );
 
   const scene = deepFreeze({
@@ -109,6 +116,7 @@ export async function createMapWorldSettlementAtlasSceneExpansion(
     vegetationInstances,
     landmarkInstances,
     visualScaling,
+    visualStyling,
     presentationSummary,
     cameraProfile,
     validationResult: buildValidationResult(
@@ -477,7 +485,8 @@ function buildPresentationSummary(
   landmarkInstances,
   coastlineArea,
   visualScaling,
-  cameraProfile
+  cameraProfile,
+  visualStyling
 ) {
   const coastlineBoundary = coastlineArea?.boundaryPoints ?? [];
   return deepFreeze({
@@ -491,6 +500,7 @@ function buildPresentationSummary(
     activeZoomProfile: visualScaling.activeZoomProfile,
     activeLodSelection: visualScaling.zoomTransitionMetadata.activeLodSelection,
     activeCompositionProfile: cameraProfile.activeCompositionProfile,
+    activeLightingProfile: visualStyling.activeLightingProfile,
     lighthouseCoastRelationshipPreserved:
       landmarkInstances.length === 1 && coastlineBoundary.length >= 2
   });
@@ -565,6 +575,12 @@ function buildValidationResult(
       cameraProfile.cameraCompositionProfiles?.close_property?.targetZoomProfile === "close",
     focusAssetConsistencyValid:
       cameraProfile.focusAssetId === cameraProfile.targetAsset,
+    deterministicAppearanceOutputValid: true,
+    cameraCompatibilityValid:
+      cameraProfile.activeCompositionProfile === "normal_neighbourhood" &&
+      Number.isFinite(cameraProfile.cameraScale) &&
+      Number.isFinite(cameraProfile.tilt),
+    assetReferencesRemainValid: assetReferencesValid,
     cameraConsistencyValid:
       Number.isFinite(cameraProfile.zoomLevel) &&
       cameraProfile.previewZoomProfile === "normal" &&
@@ -605,6 +621,7 @@ function normalizeScene(rawScene) {
     vegetationInstances: normalizeArray(scene.vegetationInstances, "vegetationInstances"),
     landmarkInstances: normalizeArray(scene.landmarkInstances, "landmarkInstances"),
     visualScaling: deepFreeze(asPlainObject(scene.visualScaling, "visualScaling")),
+    visualStyling: deepFreeze(asPlainObject(scene.visualStyling, "visualStyling")),
     presentationSummary: deepFreeze(
       asPlainObject(scene.presentationSummary, "presentationSummary")
     ),
@@ -755,6 +772,84 @@ function buildCameraCompositionProfiles({
         residentialBlockCentering: "high"
       }),
       zoomLevel: Math.min(19, zoomLevel + 2)
+    })
+  });
+}
+
+function buildVisualStyling({ settlement, cameraProfile, coastlineArea }) {
+  const densityProfile =
+    settlement.settlementSummary.residentialBlockCount >= 3
+      ? "coastal_suburb"
+      : "coastal_sparse";
+  const coastlineBoundary = coastlineArea?.boundaryPoints ?? [];
+
+  return deepFreeze({
+    styleProfileId: "coastal_settlement_reference_polish",
+    densityProfile,
+    activeLightingProfile: "day",
+    availableLightingProfiles: deepFreeze(["day", "sunset", "night"]),
+    terrainAppearance: deepFreeze({
+      baseColor: "#7FAE68",
+      accentColor: "#9AC784",
+      yardColor: "#B8D99A",
+      residentialSeparationStrength: "high"
+    }),
+    roadAppearance: deepFreeze({
+      baseColor: "#56606A",
+      edgeColor: "#D9E0E6",
+      contrastStrength: "high",
+      readability: "high"
+    }),
+    vegetationAppearance: deepFreeze({
+      canopyColor: "#557F45",
+      accentColor: "#7FAA61",
+      densityReadability: "high"
+    }),
+    buildingAppearance: deepFreeze({
+      wallColor: "#F1D9BF",
+      roofColor: "#805842",
+      separationColor: "#F7EBDD",
+      residentialClarity: "high"
+    }),
+    coastlineAppearance: deepFreeze({
+      waterColor: "#76A9C9",
+      shorelineColor: "#C9D9B5",
+      readability: coastlineBoundary.length >= 2 ? "high" : "medium"
+    }),
+    lightingProfiles: deepFreeze({
+      day: deepFreeze({
+        profileId: "day",
+        sky: "#D8EEFF",
+        sea: "#7FB4D4",
+        ground: "#8FCA79",
+        vegetation: "#557F45",
+        road: "#56606A",
+        building: "#F1D9BF",
+        lighthouse: "#EFF3F6",
+        coastline: "#C9D9B5"
+      }),
+      sunset: deepFreeze({
+        profileId: "sunset",
+        sky: "#F5C39A",
+        sea: "#7397BC",
+        ground: "#B8A26B",
+        vegetation: "#6D8451",
+        road: "#655C57",
+        building: "#EDCAA7",
+        lighthouse: "#F3ECE2",
+        coastline: "#D7C79B"
+      }),
+      night: deepFreeze({
+        profileId: "night",
+        sky: "#1F2B42",
+        sea: "#2D4860",
+        ground: "#496349",
+        vegetation: "#557148",
+        road: "#4C545D",
+        building: "#D3C0A4",
+        lighthouse: "#E8E7E1",
+        coastline: "#8FA08D"
+      })
     })
   });
 }

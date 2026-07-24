@@ -532,6 +532,9 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
         ...(scene.visualScaling?.previewZoomProfile ?? {})
       })
     }),
+    visualStyling: deepFreeze({
+      ...(scene.visualStyling ?? {})
+    }),
     presentationSummary: deepFreeze({
       ...(scene.presentationSummary ?? {})
     }),
@@ -578,7 +581,9 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
       deterministicOutput: scene.validationResult.deterministicSceneOutputValid === true,
       visibleObjectCount:
         Number(scene.visualScaling?.visibleObjectCount ?? objectInstances.length),
-      correctLodSelection: scene.validationResult.correctLodSelection === true
+      correctLodSelection: scene.validationResult.correctLodSelection === true,
+      deterministicAppearanceOutputValid:
+        scene.validationResult.deterministicAppearanceOutputValid === true
     }),
     expandedSettlementScene: scene
   });
@@ -593,7 +598,7 @@ export function drawExpandedSettlementPreview(
     throw new Error("Expanded settlement preview draw requires a 2D canvas context.");
   }
 
-  const palette = resolveLightingPalette("day");
+  const palette = resolveExpandedSettlementPalette(expandedSettlementPreview);
   const zoomProfile = resolveExpandedSettlementZoomProfile(expandedSettlementPreview);
   const objectInstances = sortExpandedSettlementInstances(
     filterExpandedSettlementInstancesByZoom(
@@ -609,13 +614,19 @@ export function drawExpandedSettlementPreview(
     )
   );
   const scaling = expandedSettlementPreview.visualScaling ?? {};
+  const styling = expandedSettlementPreview.visualStyling ?? {};
 
   drawContext.fillStyle = palette.sky;
   drawContext.fillRect(0, 0, width, height);
+  drawContext.fillStyle = palette.coastline ?? palette.sea;
+  drawContext.fillRect(0, height * 0.18, width, height * 0.07);
   drawContext.fillStyle = palette.sea;
-  drawContext.fillRect(0, height * 0.18, width, height * 0.2);
+  drawContext.fillRect(0, height * 0.25, width, height * 0.13);
   drawContext.fillStyle = palette.ground;
   drawContext.fillRect(0, height * 0.38, width, height * 0.62);
+  drawContext.fillStyle =
+    styling.terrainAppearance?.yardColor ?? styling.terrainAppearance?.accentColor ?? "#B8D99A";
+  drawContext.fillRect(width * 0.06, height * 0.56, width * 0.88, height * 0.18);
 
   drawContext.fillStyle = "#163046";
   drawContext.font = "bold 18px sans-serif";
@@ -634,7 +645,8 @@ export function drawExpandedSettlementPreview(
       height,
       palette,
       scaling,
-      cameraState: expandedSettlementPreview.cameraState
+      cameraState: expandedSettlementPreview.cameraState,
+      styling
     });
   }
 
@@ -718,6 +730,17 @@ function resolveLightingPalette(profile) {
   });
 }
 
+function resolveExpandedSettlementPalette(expandedSettlementPreview) {
+  const activeLightingProfile =
+    expandedSettlementPreview?.visualStyling?.activeLightingProfile ?? "day";
+  const lightingProfiles = expandedSettlementPreview?.visualStyling?.lightingProfiles ?? {};
+  const scenePalette = lightingProfiles[activeLightingProfile];
+  if (scenePalette) {
+    return deepFreeze({ ...scenePalette });
+  }
+  return resolveLightingPalette(activeLightingProfile);
+}
+
 function resolveAssetFillStyle(primaryMaterial, assetId, palette) {
   if (/grass/i.test(primaryMaterial) || /GROUND_COASTAL_GRASS/i.test(assetId)) {
     return palette.ground;
@@ -738,7 +761,7 @@ function drawExpandedSettlementInstance(
   drawContext,
   instance,
   bounds,
-  { width, height, palette, scaling, cameraState }
+  { width, height, palette, scaling, cameraState, styling }
 ) {
   if (instance.category === "road") {
     const start = projectExpandedSettlementPoint(
@@ -757,7 +780,8 @@ function drawExpandedSettlementInstance(
       scaling,
       cameraState
     );
-    drawContext.strokeStyle = palette.road;
+    drawContext.strokeStyle =
+      styling?.roadAppearance?.baseColor ?? palette.road;
     drawContext.lineWidth = Math.max(
       4,
       (instance.geometry.width ?? 8) * 1.2 * Number(scaling?.blockScale ?? 1)
@@ -768,7 +792,8 @@ function drawExpandedSettlementInstance(
       drawContext.lineTo(end.x, end.y);
       drawContext.stroke();
     } else {
-      drawContext.fillStyle = palette.road;
+      drawContext.fillStyle =
+        styling?.roadAppearance?.baseColor ?? palette.road;
       drawContext.fillRect(
         Math.min(start.x, end.x),
         Math.min(start.y, end.y),
@@ -776,6 +801,10 @@ function drawExpandedSettlementInstance(
         Math.max(6, Math.abs(end.y - start.y))
       );
     }
+    drawContext.fillStyle =
+      styling?.roadAppearance?.edgeColor ?? "#D9E0E6";
+    drawContext.fillRect(start.x - 1, start.y - 1, 2, 2);
+    drawContext.fillRect(end.x - 1, end.y - 1, 2, 2);
     return;
   }
 
@@ -788,7 +817,8 @@ function drawExpandedSettlementInstance(
     cameraState
   );
   if (instance.category === "vegetation") {
-    drawContext.fillStyle = palette.vegetation;
+    drawContext.fillStyle =
+      styling?.vegetationAppearance?.canopyColor ?? palette.vegetation;
     drawContext.beginPath();
     drawContext.arc(
       projected.x,
@@ -802,6 +832,10 @@ function drawExpandedSettlementInstance(
   }
 
   if (instance.category === "landmark") {
+    drawContext.fillStyle = styling?.coastlineAppearance?.shorelineColor ?? palette.coastline ?? "#C9D9B5";
+    drawContext.beginPath();
+    drawContext.arc(projected.x, projected.y + 6, 18 * Number(scaling?.cameraScale ?? 1), 0, Math.PI * 2);
+    drawContext.fill();
     drawContext.fillStyle = palette.lighthouse;
     const lighthouseScale = Number(scaling?.cameraScale ?? 1);
     drawContext.fillRect(
@@ -817,24 +851,41 @@ function drawExpandedSettlementInstance(
     drawContext.lineTo(projected.x + 12 * lighthouseScale, projected.y - 36 * lighthouseScale);
     drawContext.closePath();
     drawContext.fill();
+    drawContext.strokeStyle = "#FFF6D6";
+    if (typeof drawContext.stroke === "function") {
+      drawContext.beginPath();
+      drawContext.moveTo(projected.x, projected.y - 44 * lighthouseScale);
+      drawContext.lineTo(projected.x + 24 * lighthouseScale, projected.y - 36 * lighthouseScale);
+      drawContext.stroke();
+    }
     return;
   }
 
   const houseScale = Number(scaling?.blockScale ?? 1);
-  drawContext.fillStyle = palette.building;
+  drawContext.fillStyle =
+    styling?.buildingAppearance?.wallColor ?? palette.building;
   drawContext.fillRect(
     projected.x - 12 * houseScale,
     projected.y - 12 * houseScale,
     24 * houseScale,
     18 * houseScale
   );
-  drawContext.fillStyle = "#7d4d35";
+  drawContext.fillStyle =
+    styling?.buildingAppearance?.roofColor ?? "#7d4d35";
   drawContext.beginPath();
   drawContext.moveTo(projected.x - 15 * houseScale, projected.y - 12 * houseScale);
   drawContext.lineTo(projected.x, projected.y - 24 * houseScale);
   drawContext.lineTo(projected.x + 15 * houseScale, projected.y - 12 * houseScale);
   drawContext.closePath();
   drawContext.fill();
+  drawContext.fillStyle =
+    styling?.buildingAppearance?.separationColor ?? "#F7EBDD";
+  drawContext.fillRect(
+    projected.x - 16 * houseScale,
+    projected.y + 8 * houseScale,
+    32 * houseScale,
+    3 * houseScale
+  );
 }
 
 function collectExpandedSettlementPoints(objectInstances) {

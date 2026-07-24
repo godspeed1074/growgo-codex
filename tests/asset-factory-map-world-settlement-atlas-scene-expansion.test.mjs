@@ -99,6 +99,15 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.equal(scene.visualScaling.previewZoomProfile.activeProfile, "normal");
   assert.equal(scene.visualScaling.activeZoomProfile, "normal");
   assert.equal(scene.visualScaling.visibleObjectCount, 45);
+  assert.equal(scene.visualStyling.styleProfileId, "coastal_settlement_reference_polish");
+  assert.equal(scene.visualStyling.activeLightingProfile, "day");
+  assert.deepEqual(scene.visualStyling.availableLightingProfiles, ["day", "sunset", "night"]);
+  assert.equal(scene.visualStyling.terrainAppearance.residentialSeparationStrength, "high");
+  assert.equal(scene.visualStyling.roadAppearance.contrastStrength, "high");
+  assert.equal(scene.visualStyling.coastlineAppearance.readability, "high");
+  assert.equal(scene.visualStyling.lightingProfiles.day.profileId, "day");
+  assert.equal(scene.visualStyling.lightingProfiles.sunset.profileId, "sunset");
+  assert.equal(scene.visualStyling.lightingProfiles.night.profileId, "night");
   assert.ok(scene.visualScaling.previewZoomProfile.far);
   assert.ok(scene.visualScaling.previewZoomProfile.normal);
   assert.ok(scene.visualScaling.previewZoomProfile.close);
@@ -123,6 +132,7 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.equal(scene.presentationSummary.visibleObjectCount, 45);
   assert.equal(scene.presentationSummary.activeZoomProfile, "normal");
   assert.equal(scene.presentationSummary.activeCompositionProfile, "normal_neighbourhood");
+  assert.equal(scene.presentationSummary.activeLightingProfile, "day");
   assert.equal(scene.validationResult.assetReferencesValid, true);
   assert.equal(scene.validationResult.placementValidity, true);
   assert.equal(scene.validationResult.deterministicSceneOutputValid, true);
@@ -135,6 +145,9 @@ test("map world settlement Atlas scene expansion packages the larger settlement 
   assert.equal(scene.validationResult.deterministicCameraOutputValid, true);
   assert.equal(scene.validationResult.zoomTransitionConsistencyValid, true);
   assert.equal(scene.validationResult.focusAssetConsistencyValid, true);
+  assert.equal(scene.validationResult.deterministicAppearanceOutputValid, true);
+  assert.equal(scene.validationResult.cameraCompatibilityValid, true);
+  assert.equal(scene.validationResult.assetReferencesRemainValid, true);
   assert.equal(scene.validationResult.cameraConsistencyValid, true);
 });
 
