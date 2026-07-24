@@ -93,6 +93,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   let currentPlayerMapState = createDefaultPlayerMapState(
     expandedSettlementPreview
   );
+  let currentPlayerInteractionState = createDefaultPlayerInteractionState(
+    expandedSettlementPreview,
+    currentPlayerMapState
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -223,6 +227,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     currentPlayerMapState = createDefaultPlayerMapState(
       expandedSettlementPreview
     );
+    currentPlayerInteractionState = createDefaultPlayerInteractionState(
+      expandedSettlementPreview,
+      currentPlayerMapState
+    );
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
@@ -305,6 +313,11 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       currentOverlayInteractionState.selectedObject
     );
+    currentPlayerInteractionState = buildPlayerInteractionState(
+      expandedSettlementPreview,
+      currentPlayerMapState,
+      currentOverlayInteractionState.selectedObject
+    );
     lastExpandedSettlementLayout = drawExpandedSettlementPreview(
       drawContext,
       expandedSettlementPreview,
@@ -328,7 +341,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         category: resolvedObject.category
       }),
       interactionState: currentOverlayInteractionState,
-      detailPreviewState: currentAssetDetailPreviewState
+      detailPreviewState: currentAssetDetailPreviewState,
+      playerInteractionState: currentPlayerInteractionState
     });
   };
 
@@ -361,6 +375,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         );
         currentPlayerMapState = createDefaultPlayerMapState(
           expandedSettlementPreview
+        );
+        currentPlayerInteractionState = createDefaultPlayerInteractionState(
+          expandedSettlementPreview,
+          currentPlayerMapState
         );
         if (expandedSettlementPreview && mounted) {
           lastExpandedSettlementLayout = drawExpandedSettlementPreview(
@@ -437,6 +455,24 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       },
       currentSettlementPlayerMapState() {
         return currentPlayerMapState;
+      },
+      interactWithSelectedSettlementObject() {
+        currentPlayerInteractionState = buildPlayerInteractionState(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentOverlayInteractionState.selectedObject
+        );
+        return currentPlayerInteractionState;
+      },
+      clearSettlementPlayerInteraction() {
+        currentPlayerInteractionState = createDefaultPlayerInteractionState(
+          expandedSettlementPreview,
+          currentPlayerMapState
+        );
+        return currentPlayerInteractionState;
+      },
+      currentSettlementPlayerInteractionState() {
+        return currentPlayerInteractionState;
       },
       currentSettlementSelectableObjects() {
         return deepFreeze(
@@ -1440,6 +1476,30 @@ function createDefaultPlayerMapState(expandedSettlementPreview) {
   return buildPlayerMapState(expandedSettlementPreview, "world-overview");
 }
 
+function createDefaultPlayerInteractionState(
+  expandedSettlementPreview,
+  playerState
+) {
+  if (!expandedSettlementPreview || !playerState) {
+    return deepFreeze({
+      interactionId: "PLAYER_WORLD_INTERACTION_INACTIVE",
+      playerId: playerState?.playerId ?? "PLAYER_MAP_INACTIVE",
+      targetObjectId: null,
+      targetAssetId: null,
+      interactionState: "world-idle",
+      interactionDistance: null,
+      validationResult: deepFreeze({
+        playerObjectAlignmentValid: true,
+        interactionDistanceValid: true,
+        objectIdentityValid: true,
+        cleanupValid: true,
+        deterministicBehaviourValid: true
+      })
+    });
+  }
+  return buildPlayerInteractionState(expandedSettlementPreview, playerState, null);
+}
+
 function buildOverlayInteractionState(
   expandedSettlementPreview,
   { selectedObject = null, hoveredObject = null } = {}
@@ -1593,6 +1653,55 @@ function buildPlayerMapState(
       cameraBehaviorValid: true,
       cleanupValid: true,
       deterministicPlacementValid: true
+    })
+  });
+}
+
+function buildPlayerInteractionState(
+  expandedSettlementPreview,
+  playerState,
+  selectedObject = null
+) {
+  if (!expandedSettlementPreview || !playerState) {
+    return createDefaultPlayerInteractionState(expandedSettlementPreview, playerState);
+  }
+  const interactionDistance =
+    selectedObject?.position == null && selectedObject?.center == null
+      ? null
+      : Number(
+          Math.hypot(
+            (selectedObject.center?.x ?? selectedObject.position.x) - playerState.position.x,
+            (selectedObject.center?.y ?? selectedObject.position.y) - playerState.position.y
+          ).toFixed(3)
+        );
+  const withinInteractionRange =
+    interactionDistance != null && interactionDistance <= 72;
+  return deepFreeze({
+    interactionId:
+      selectedObject == null
+        ? `${expandedSettlementPreview.sceneId}::player-interaction::idle`
+        : `${expandedSettlementPreview.sceneId}::player-interaction::${playerState.playerId}::${selectedObject.instanceId}`,
+    playerId: playerState.playerId,
+    targetObjectId: selectedObject?.instanceId ?? null,
+    targetAssetId: selectedObject?.assetId ?? null,
+    interactionState:
+      selectedObject == null
+        ? "world-idle"
+        : withinInteractionRange
+          ? "object-interaction-ready"
+          : "object-out-of-range",
+    interactionDistance,
+    validationResult: deepFreeze({
+      playerObjectAlignmentValid:
+        selectedObject == null ||
+        expandedSettlementPreview.worldId === playerState.worldId,
+      interactionDistanceValid:
+        selectedObject == null || withinInteractionRange,
+      objectIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      cleanupValid: true,
+      deterministicBehaviourValid: true
     })
   });
 }

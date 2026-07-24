@@ -94,6 +94,9 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.playerState.worldId, overlay.worldId);
   assert.equal(overlay.playerState.visibilityState, "world-visible");
   assert.equal(overlay.playerState.validationResult.coordinateConsistencyValid, true);
+  assert.equal(overlay.playerInteractionState.playerId, overlay.playerState.playerId);
+  assert.equal(overlay.playerInteractionState.interactionState, "world-idle");
+  assert.equal(overlay.playerInteractionState.validationResult.objectIdentityValid, true);
   assert.equal(overlay.cameraSync.synchronized, true);
   assert.equal(overlay.cameraSync.previewCameraProfile, "atlas-coastal-settlement-overlook");
   assert.equal(overlay.validationResult.coordinateAlignmentValid, true);
@@ -130,6 +133,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.interactionState, second.interactionState);
   assert.deepEqual(first.detailState, second.detailState);
   assert.deepEqual(first.playerState, second.playerState);
+  assert.deepEqual(first.playerInteractionState, second.playerInteractionState);
 });
 
 test("overlay foundation can be built from existing live map and settlement scene state", async () => {
@@ -227,4 +231,34 @@ test("overlay player map state can deterministically place and focus player pres
   assert.equal(playerState.cameraFocus.targetAsset, "PLAYER_MARKER");
   assert.equal(playerState.validationResult.coordinateConsistencyValid, true);
   assert.equal(playerState.validationResult.deterministicPlacementValid, true);
+});
+
+test("overlay player interaction state validates nearby object interaction deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+
+  const playerInteractionState = moduleUnderTest.createMapWorldSettlementPlayerInteractionState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001"
+  });
+
+  assert.equal(playerInteractionState.playerId, playerState.playerId);
+  assert.equal(playerInteractionState.targetAssetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(playerInteractionState.validationResult.playerObjectAlignmentValid, true);
+  assert.equal(playerInteractionState.validationResult.objectIdentityValid, true);
+  assert.equal(playerInteractionState.validationResult.deterministicBehaviourValid, true);
 });

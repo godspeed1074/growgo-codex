@@ -657,6 +657,26 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   );
   assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
 
+  const playerState = harness.focusSettlementPlayerPresence();
+  assert.equal(playerState.visibilityState, "player-focused");
+  assert.equal(playerState.cameraFocus.targetAsset, "PLAYER_MARKER");
+  assert.equal(
+    harness.currentSettlementPlayerMapState().cameraFocus.currentState,
+    "player-focused"
+  );
+
+  const playerInteractionState = harness.interactWithSelectedSettlementObject();
+  assert.equal(
+    playerInteractionState.targetAssetId,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
+    typeof playerInteractionState.validationResult.interactionDistanceValid,
+    "boolean"
+  );
+  const clearedInteraction = harness.clearSettlementPlayerInteraction();
+  assert.equal(clearedInteraction.interactionState, "world-idle");
+
   const returned = harness.closeSettlementAssetDetailPreview();
   assert.equal(returned.detailState, "returning-to-map-view");
   const cleared = harness.clearSettlementInteraction();
@@ -664,14 +684,6 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(
     harness.currentSettlementAssetDetailPreviewState().detailState,
     "map-overview"
-  );
-
-  const playerState = harness.focusSettlementPlayerPresence();
-  assert.equal(playerState.visibilityState, "player-focused");
-  assert.equal(playerState.cameraFocus.targetAsset, "PLAYER_MARKER");
-  assert.equal(
-    harness.currentSettlementPlayerMapState().cameraFocus.currentState,
-    "player-focused"
   );
 
   const worldOverview = harness.returnSettlementWorldOverview();
