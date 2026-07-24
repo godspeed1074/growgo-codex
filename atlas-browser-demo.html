@@ -31,15 +31,40 @@
 
     .atlas-demo-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 16px;
       margin-bottom: 16px;
     }
 
+    .atlas-demo-header-copy {
+      display: grid;
+      gap: 6px;
+    }
+
     .atlas-demo-header h1 {
       margin: 0;
       font-size: 28px;
+    }
+
+    .atlas-demo-header p {
+      margin: 0;
+      max-width: 52ch;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #47627a;
+    }
+
+    .atlas-demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(22, 48, 70, 0.16);
+      background: #f4f9fd;
+      color: #163046;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
     .atlas-demo-controls {
@@ -49,11 +74,27 @@
       margin-bottom: 16px;
     }
 
+    .atlas-demo-controls button,
+    .atlas-demo-map-move-controls button {
+      border-radius: 6px;
+    }
+
+    .atlas-demo-experience-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.95fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .atlas-demo-stack {
+      display: grid;
+      gap: 16px;
+    }
+
     .atlas-demo-map-panel {
       display: grid;
       gap: 12px;
-      margin-bottom: 16px;
-      padding: 12px;
+      padding: 16px;
       border: 1px solid rgba(22, 48, 70, 0.16);
       background: #f3f8fc;
     }
@@ -65,9 +106,8 @@
 
     .atlas-demo-world-panel {
       display: grid;
-      gap: 10px;
-      margin-bottom: 16px;
-      padding: 12px;
+      gap: 14px;
+      padding: 16px;
       border: 1px solid rgba(22, 48, 70, 0.16);
       background: #f8fbfe;
     }
@@ -80,8 +120,7 @@
     .atlas-demo-source-panel {
       display: grid;
       gap: 8px;
-      margin-bottom: 16px;
-      padding: 12px;
+      padding: 16px;
       border: 1px solid rgba(22, 48, 70, 0.16);
       background: #f6fbff;
     }
@@ -95,6 +134,66 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+    }
+
+    .atlas-demo-section-heading {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+    }
+
+    .atlas-demo-section-heading h2,
+    .atlas-demo-section-heading h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .atlas-demo-section-heading p {
+      margin: 0;
+      color: #4d687f;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .atlas-demo-state-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .atlas-demo-state-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .atlas-demo-state-line {
+      margin: 0;
+      padding: 10px 12px;
+      border: 1px solid rgba(22, 48, 70, 0.1);
+      background: rgba(255, 255, 255, 0.72);
+      color: #1f3a52;
+      line-height: 1.45;
+    }
+
+    .atlas-demo-state-line[data-priority="primary"] {
+      background: #ffffff;
+      border-color: rgba(22, 48, 70, 0.16);
+      font-weight: 600;
+    }
+
+    .atlas-demo-state-line[data-priority="accent"] {
+      background: #edf7ff;
+      border-color: rgba(30, 104, 154, 0.18);
+    }
+
+    .atlas-demo-state-line[data-priority="progress"] {
+      background: #f3fbf5;
+      border-color: rgba(44, 112, 76, 0.16);
+    }
+
+    .atlas-demo-state-line[data-priority="detail"] {
+      background: #fbfdff;
+      border-color: rgba(22, 48, 70, 0.08);
     }
 
     .atlas-demo-map-move-controls button {
@@ -236,94 +335,43 @@
       background: transparent;
       opacity: 0.88;
     }
+
+    @media (max-width: 860px) {
+      body {
+        align-items: stretch;
+        justify-content: stretch;
+      }
+
+      .atlas-demo-shell {
+        width: auto;
+        min-height: 100vh;
+        margin: 0;
+        padding: 18px;
+      }
+
+      .atlas-demo-header {
+        flex-direction: column;
+      }
+
+      .atlas-demo-experience-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <main class="atlas-demo-shell">
     <header class="atlas-demo-header">
-      <h1>Map World Real Location Preview</h1>
-      <span>Manual-only browser demo</span>
+      <div class="atlas-demo-header-copy">
+        <h1>Map World Real Location Preview</h1>
+        <p>
+          Explore a generated coastal neighbourhood on top of the interactive map,
+          then inspect, discover, and capture nearby world objects without leaving
+          the prototype flow.
+        </p>
+      </div>
+      <span class="atlas-demo-badge">Manual-only browser demo</span>
     </header>
-
-    <section class="atlas-demo-map-panel" aria-label="Map position controls">
-      <p id="atlasMapCenterLabel">Center: waiting for fixed test coordinate</p>
-      <p id="atlasMapZoomLabel">Zoom: 14</p>
-      <div id="atlasInteractiveMapSurface" class="atlas-demo-map-surface" data-dragging="false">
-        <div class="atlas-demo-map-marker" aria-hidden="true"></div>
-        <div id="atlasPlayerMarker" class="atlas-demo-player-marker" aria-hidden="true" hidden></div>
-        <section
-          id="atlasPreviewContainer"
-          class="atlas-preview-container"
-          data-preview-visible="false"
-          hidden
-        >
-          <div id="atlasPreviewCanvasHost" class="atlas-preview-canvas-host"></div>
-        </section>
-      </div>
-      <p class="atlas-demo-map-help">
-        Drag to pan the local map foundation. Use the mouse wheel to zoom.
-      </p>
-      <div class="atlas-demo-map-move-controls">
-        <button id="atlasMapNorthButton" type="button">Move North</button>
-        <button id="atlasMapSouthButton" type="button">Move South</button>
-        <button id="atlasMapWestButton" type="button">Move West</button>
-        <button id="atlasMapEastButton" type="button">Move East</button>
-      </div>
-    </section>
-
-    <section class="atlas-demo-world-panel" aria-label="World layer state">
-      <p id="atlasWorldLayerLabel">World layer: hidden</p>
-      <p id="atlasWorldCameraLabel">World camera: waiting for coordinate</p>
-      <p id="atlasWorldPreviewLabel">Preview: waiting for map position</p>
-      <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
-      <p id="atlasSessionStateLabel">Session: waiting for world preview</p>
-      <p id="atlasExplorationModeLabel">Exploration mode: waiting for world preview</p>
-      <p id="atlasCurrentObjectiveLabel">Current objective: waiting for world preview</p>
-      <p id="atlasSelectedObjectLabel">Selected object: none</p>
-      <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
-      <p id="atlasCaptureLabel">Capture: waiting for nearby object</p>
-      <p id="atlasCaptureSessionLabel">Capture session: waiting for world session</p>
-      <p id="atlasExplorationSummaryLabel">Exploration summary: waiting for world session</p>
-      <p id="atlasExplorationCapturedListLabel">Captured objects: none yet</p>
-      <p id="atlasCapturePresentationLabel">Capture feedback: waiting for captured marker</p>
-      <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
-      <p id="atlasPoiLabel">POI: waiting for world object</p>
-      <p id="atlasPoiPresentationLabel">POI presentation: waiting for world layer</p>
-      <div class="atlas-demo-map-move-controls">
-        <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
-        <button id="atlasExplorationModeToggleButton" type="button">Toggle Exploration Mode</button>
-        <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
-        <button id="atlasCaptureButton" type="button">Capture Selected</button>
-        <button id="atlasWorldOverviewButton" type="button">World Overview</button>
-        <button id="atlasInteractionClearButton" type="button">Clear Interaction</button>
-        <button id="atlasCaptureClearButton" type="button">Clear Capture</button>
-        <button id="atlasDiscoverButton" type="button">Discover Selected</button>
-        <button id="atlasDiscoveryClearButton" type="button">Clear Discovery</button>
-      </div>
-    </section>
-
-    <section class="atlas-demo-source-panel" aria-label="Active preview source">
-      <p id="atlasPreviewSourceLabel">Preview source: waiting for selection</p>
-      <p id="atlasPreviewSceneLabel">Scene: waiting for selection</p>
-      <p id="atlasPreviewWorldLabel">World: waiting for selection</p>
-      <p id="atlasPreviewObjectCountLabel">Object instances: waiting for selection</p>
-      <p id="atlasPreviewVisibilityLabel">Visibility: hidden</p>
-      <p id="atlasPresentationProfileLabel">Presentation profile: waiting for selection</p>
-      <p id="atlasLightingProfileLabel">Lighting profile: waiting for selection</p>
-    </section>
-
-    <section id="atlasDetailPanel" class="atlas-demo-source-panel" aria-label="Selected asset detail" hidden>
-      <p id="atlasDetailPreviewLabel">Detail preview: waiting for selection</p>
-      <p id="atlasDetailAssetLabel">Asset: none selected</p>
-      <p id="atlasDetailTypeLabel">Asset type: none selected</p>
-      <p id="atlasDetailPoiTitleLabel">POI title: waiting for selection</p>
-      <p id="atlasDetailPoiDescriptionLabel">POI description: waiting for selection</p>
-      <p id="atlasDetailPoiCategoryLabel">POI category: waiting for selection</p>
-      <p id="atlasDetailCameraLabel">Detail camera: waiting for selection</p>
-      <div class="atlas-demo-map-move-controls">
-        <button id="atlasDetailReturnButton" type="button">Return to Map View</button>
-      </div>
-    </section>
 
     <div class="atlas-demo-controls">
       <button id="atlasPreviewLoadButton" type="button">Initialize Interactive Map</button>
@@ -331,20 +379,6 @@
       <button id="atlasPreviewToggleButton" type="button">Load Generated World Preview</button>
       <button id="atlasPreviewHideButton" type="button">Hide World Preview</button>
     </div>
-
-    <section class="atlas-demo-source-panel" aria-label="Demo presentation controls">
-      <p id="atlasDemoStateLabel">Demo state: waiting for generated world</p>
-      <div class="atlas-demo-map-move-controls">
-        <button id="atlasPresentationOverviewButton" type="button">Overview View</button>
-        <button id="atlasPresentationNeighbourhoodButton" type="button">Neighbourhood View</button>
-        <button id="atlasPresentationCloseButton" type="button">Close Exploration View</button>
-      </div>
-      <div class="atlas-demo-map-move-controls">
-        <button id="atlasLightingDayButton" type="button">Day</button>
-        <button id="atlasLightingSunsetButton" type="button">Sunset</button>
-        <button id="atlasLightingNightButton" type="button">Night</button>
-      </div>
-    </section>
 
     <p id="atlasPreviewStatus" class="atlas-demo-status" aria-live="polite">
       Map world real location preview loading...
@@ -364,6 +398,157 @@
       <div>
         Then open:
         <code>http://127.0.0.1:8765/atlas-browser-demo.html</code>
+      </div>
+    </section>
+
+    <section class="atlas-demo-experience-grid" aria-label="Atlas prototype experience">
+      <div class="atlas-demo-stack">
+        <section class="atlas-demo-map-panel" aria-label="Map position controls">
+          <header class="atlas-demo-section-heading">
+            <h2>Map Controls</h2>
+            <p>Pan, zoom, and choose the current map position to generate the active world.</p>
+          </header>
+          <p id="atlasMapCenterLabel" class="atlas-demo-state-line" data-priority="primary">Center: waiting for fixed test coordinate</p>
+          <p id="atlasMapZoomLabel" class="atlas-demo-state-line" data-priority="detail">Zoom: 14</p>
+          <div id="atlasInteractiveMapSurface" class="atlas-demo-map-surface" data-dragging="false">
+            <div class="atlas-demo-map-marker" aria-hidden="true"></div>
+            <div id="atlasPlayerMarker" class="atlas-demo-player-marker" aria-hidden="true" hidden></div>
+            <section
+              id="atlasPreviewContainer"
+              class="atlas-preview-container"
+              data-preview-visible="false"
+              hidden
+            >
+              <div id="atlasPreviewCanvasHost" class="atlas-preview-canvas-host"></div>
+            </section>
+          </div>
+          <p class="atlas-demo-map-help">
+            Drag to pan the local map foundation. Use the mouse wheel to zoom.
+          </p>
+          <div class="atlas-demo-map-move-controls">
+            <button id="atlasMapNorthButton" type="button">Move North</button>
+            <button id="atlasMapSouthButton" type="button">Move South</button>
+            <button id="atlasMapWestButton" type="button">Move West</button>
+            <button id="atlasMapEastButton" type="button">Move East</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="atlas-demo-stack">
+        <section class="atlas-demo-world-panel" aria-label="World layer state">
+          <header class="atlas-demo-section-heading">
+            <h2>World Session</h2>
+            <p>Track the active world, your current focus, and how the exploration session is progressing.</p>
+          </header>
+
+          <div class="atlas-demo-state-group">
+            <div class="atlas-demo-section-heading">
+              <h3>World Status</h3>
+              <p>The active world, current camera focus, and current position in the prototype flow.</p>
+            </div>
+            <div class="atlas-demo-state-grid">
+              <p id="atlasWorldLayerLabel" class="atlas-demo-state-line" data-priority="primary">World layer: hidden</p>
+              <p id="atlasActiveWorldLabel" class="atlas-demo-state-line" data-priority="accent">Active world: waiting for world preview</p>
+              <p id="atlasWorldCameraLabel" class="atlas-demo-state-line" data-priority="detail">World camera: waiting for coordinate</p>
+              <p id="atlasWorldPreviewLabel" class="atlas-demo-state-line" data-priority="detail">Preview: waiting for map position</p>
+              <p id="atlasPlayerStateLabel" class="atlas-demo-state-line" data-priority="accent">Player: waiting for world preview</p>
+              <p id="atlasSessionStateLabel" class="atlas-demo-state-line" data-priority="accent">Session: waiting for world preview</p>
+              <p id="atlasExplorationModeLabel" class="atlas-demo-state-line" data-priority="accent">Exploration mode: waiting for world preview</p>
+              <p id="atlasCurrentObjectiveLabel" class="atlas-demo-state-line" data-priority="primary">Current objective: waiting for world preview</p>
+            </div>
+          </div>
+
+          <div class="atlas-demo-state-group">
+            <div class="atlas-demo-section-heading">
+              <h3>Selected POI</h3>
+              <p>See what is currently selected and whether it is ready for interaction.</p>
+            </div>
+            <div class="atlas-demo-state-grid">
+              <p id="atlasSelectedObjectLabel" class="atlas-demo-state-line" data-priority="primary">Selected POI / object: none</p>
+              <p id="atlasPoiLabel" class="atlas-demo-state-line" data-priority="detail">POI: waiting for world object</p>
+              <p id="atlasPoiPresentationLabel" class="atlas-demo-state-line" data-priority="detail">POI presentation: waiting for world layer</p>
+              <p id="atlasPlayerInteractionLabel" class="atlas-demo-state-line" data-priority="detail">Interaction: waiting for selection</p>
+            </div>
+          </div>
+
+          <div class="atlas-demo-state-group">
+            <div class="atlas-demo-section-heading">
+              <h3>Exploration Progress</h3>
+              <p>Review capture and discovery progress while keeping session feedback visible.</p>
+            </div>
+            <div class="atlas-demo-state-grid">
+              <p id="atlasCaptureLabel" class="atlas-demo-state-line" data-priority="progress">Capture: waiting for nearby object</p>
+              <p id="atlasCaptureSessionLabel" class="atlas-demo-state-line" data-priority="progress">Capture session: waiting for world session</p>
+              <p id="atlasCaptureProgressLabel" class="atlas-demo-state-line" data-priority="progress">Capture progress: waiting for world session</p>
+              <p id="atlasDiscoveryLabel" class="atlas-demo-state-line" data-priority="progress">Discovery: waiting for nearby object</p>
+              <p id="atlasDiscoveryProgressLabel" class="atlas-demo-state-line" data-priority="progress">Discovery progress: waiting for world session</p>
+              <p id="atlasExplorationSummaryLabel" class="atlas-demo-state-line" data-priority="progress">Exploration summary: waiting for world session</p>
+              <p id="atlasExplorationCapturedListLabel" class="atlas-demo-state-line" data-priority="detail">Captured objects: none yet</p>
+              <p id="atlasCapturePresentationLabel" class="atlas-demo-state-line" data-priority="detail">Capture feedback: waiting for captured marker</p>
+            </div>
+          </div>
+
+          <div class="atlas-demo-map-move-controls">
+            <button id="atlasPlayerFocusButton" type="button">Focus Player</button>
+            <button id="atlasExplorationModeToggleButton" type="button">Toggle Exploration Mode</button>
+            <button id="atlasPlayerInteractButton" type="button">Interact With Selected</button>
+            <button id="atlasCaptureButton" type="button">Capture Selected</button>
+            <button id="atlasWorldOverviewButton" type="button">World Overview</button>
+            <button id="atlasInteractionClearButton" type="button">Clear Interaction</button>
+            <button id="atlasCaptureClearButton" type="button">Clear Capture</button>
+            <button id="atlasDiscoverButton" type="button">Discover Selected</button>
+            <button id="atlasDiscoveryClearButton" type="button">Clear Discovery</button>
+          </div>
+        </section>
+
+        <section class="atlas-demo-source-panel" aria-label="Active preview source">
+          <header class="atlas-demo-section-heading">
+            <h2>Preview Source</h2>
+            <p>Confirm which world scene is active, how many objects are in view, and which presentation profile is applied.</p>
+          </header>
+          <p id="atlasPreviewSourceLabel" class="atlas-demo-state-line" data-priority="primary">Preview source: waiting for selection</p>
+          <p id="atlasPreviewSceneLabel" class="atlas-demo-state-line" data-priority="detail">Scene: waiting for selection</p>
+          <p id="atlasPreviewWorldLabel" class="atlas-demo-state-line" data-priority="detail">World: waiting for selection</p>
+          <p id="atlasPreviewObjectCountLabel" class="atlas-demo-state-line" data-priority="detail">Object instances: waiting for selection</p>
+          <p id="atlasPreviewVisibilityLabel" class="atlas-demo-state-line" data-priority="detail">Visibility: hidden</p>
+          <p id="atlasPresentationProfileLabel" class="atlas-demo-state-line" data-priority="detail">Presentation profile: waiting for selection</p>
+          <p id="atlasLightingProfileLabel" class="atlas-demo-state-line" data-priority="detail">Lighting profile: waiting for selection</p>
+        </section>
+
+        <section id="atlasDetailPanel" class="atlas-demo-source-panel" aria-label="Selected asset detail" hidden>
+          <header class="atlas-demo-section-heading">
+            <h2>Selected Object Detail</h2>
+            <p>Inspect the active POI or object without leaving the current map and world session.</p>
+          </header>
+          <p id="atlasDetailPreviewLabel" class="atlas-demo-state-line" data-priority="primary">Detail preview: waiting for selection</p>
+          <p id="atlasDetailAssetLabel" class="atlas-demo-state-line" data-priority="detail">Asset: none selected</p>
+          <p id="atlasDetailTypeLabel" class="atlas-demo-state-line" data-priority="detail">Asset type: none selected</p>
+          <p id="atlasDetailPoiTitleLabel" class="atlas-demo-state-line" data-priority="accent">POI title: waiting for selection</p>
+          <p id="atlasDetailPoiDescriptionLabel" class="atlas-demo-state-line" data-priority="detail">POI description: waiting for selection</p>
+          <p id="atlasDetailPoiCategoryLabel" class="atlas-demo-state-line" data-priority="detail">POI category: waiting for selection</p>
+          <p id="atlasDetailCameraLabel" class="atlas-demo-state-line" data-priority="detail">Detail camera: waiting for selection</p>
+          <div class="atlas-demo-map-move-controls">
+            <button id="atlasDetailReturnButton" type="button">Return to Map View</button>
+          </div>
+        </section>
+
+        <section class="atlas-demo-source-panel" aria-label="Demo presentation controls">
+          <header class="atlas-demo-section-heading">
+            <h2>Presentation Controls</h2>
+            <p>Switch between overview, neighbourhood, and close views while keeping the world session intact.</p>
+          </header>
+          <p id="atlasDemoStateLabel" class="atlas-demo-state-line" data-priority="primary">Demo state: waiting for generated world</p>
+          <div class="atlas-demo-map-move-controls">
+            <button id="atlasPresentationOverviewButton" type="button">Overview View</button>
+            <button id="atlasPresentationNeighbourhoodButton" type="button">Neighbourhood View</button>
+            <button id="atlasPresentationCloseButton" type="button">Close Exploration View</button>
+          </div>
+          <div class="atlas-demo-map-move-controls">
+            <button id="atlasLightingDayButton" type="button">Day</button>
+            <button id="atlasLightingSunsetButton" type="button">Sunset</button>
+            <button id="atlasLightingNightButton" type="button">Night</button>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -407,6 +592,7 @@
     const mapZoomLabel = document.getElementById("atlasMapZoomLabel");
     const playerMarker = document.getElementById("atlasPlayerMarker");
     const worldLayerLabel = document.getElementById("atlasWorldLayerLabel");
+    const activeWorldLabel = document.getElementById("atlasActiveWorldLabel");
     const worldCameraLabel = document.getElementById("atlasWorldCameraLabel");
     const worldPreviewLabel = document.getElementById("atlasWorldPreviewLabel");
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
@@ -417,6 +603,8 @@
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const captureLabel = document.getElementById("atlasCaptureLabel");
     const captureSessionLabel = document.getElementById("atlasCaptureSessionLabel");
+    const captureProgressLabel = document.getElementById("atlasCaptureProgressLabel");
+    const discoveryProgressLabel = document.getElementById("atlasDiscoveryProgressLabel");
     const explorationSummaryLabel = document.getElementById("atlasExplorationSummaryLabel");
     const explorationCapturedListLabel = document.getElementById("atlasExplorationCapturedListLabel");
     const capturePresentationLabel = document.getElementById("atlasCapturePresentationLabel");
@@ -520,6 +708,12 @@
             ? "Session: waiting for world preview"
             : `Session: ${sessionExperienceState.sessionState} / ${sessionExperienceState.activeWorld?.worldId ?? "no world"}`;
       }
+      if (activeWorldLabel) {
+        activeWorldLabel.textContent =
+          !sessionExperienceState
+            ? "Active world: waiting for world preview"
+            : `Active world: ${sessionExperienceState.activeWorld?.worldId ?? "no world"} / scene ${sessionExperienceState.activeWorld?.sceneId ?? "no scene"}`;
+      }
       if (explorationModeLabel) {
         explorationModeLabel.textContent =
           !sessionExperienceState
@@ -535,8 +729,8 @@
       if (selectedObjectLabel) {
         selectedObjectLabel.textContent =
           interactionState?.selectedObject?.assetId
-            ? `Selected object: ${interactionState.selectedObject.assetId}`
-            : "Selected object: none";
+            ? `Selected POI / object: ${interactionState.selectedObject.assetId}`
+            : "Selected POI / object: none";
       }
     };
 
@@ -557,6 +751,10 @@
         worldLayerLabel.textContent =
           `World layer: ${visualLayer.visibilityState.currentState} (${visualLayer.worldId})`;
       }
+      if (activeWorldLabel) {
+        activeWorldLabel.textContent =
+          `Active world: ${preview.resolvedWorld.worldId} / coordinate ${preview.coordinate.latitude.toFixed(6)}, ${preview.coordinate.longitude.toFixed(6)}`;
+      }
       if (worldCameraLabel) {
         worldCameraLabel.textContent =
           `World camera: ${visualLayer.cameraState.previewCameraProfile} focused on ${visualLayer.cameraState.previewFocusAssetId} at zoom ${visualLayer.cameraState.previewZoomLevel}`;
@@ -574,6 +772,10 @@
       if (worldLayerLabel) {
         worldLayerLabel.textContent =
           `World layer: combined overlay visible on map (${overlay.worldId})`;
+      }
+      if (activeWorldLabel) {
+        activeWorldLabel.textContent =
+          `Active world: ${overlay.worldId} / scene ${overlay.sceneId}`;
       }
       if (worldCameraLabel) {
         worldCameraLabel.textContent =
@@ -612,6 +814,10 @@
         worldLayerLabel.textContent = selectedObject
           ? `World layer: combined overlay visible with ${selectedObject.assetId} selected`
           : "World layer: combined overlay visible on map";
+      }
+      if (activeWorldLabel) {
+        activeWorldLabel.textContent =
+          `Active world: ${cameraFocus.worldId ?? window.__atlasBrowserDemoState?.combinedOverlay?.worldId ?? "no world"} / scene ${cameraFocus.sceneId ?? "settlement scene"}`;
       }
       if (worldCameraLabel) {
         worldCameraLabel.textContent =
@@ -703,6 +909,18 @@
           explorationSummaryLabel.textContent =
             `Exploration summary: ${captureSessionSummaryState.capturedObjects}/${captureSessionSummaryState.totalObjects} captured / ${captureSessionSummaryState.discoveredObjects} discovered / ${captureSessionSummaryState.completionPercent}% complete`;
         }
+      }
+      if (captureProgressLabel) {
+        captureProgressLabel.textContent =
+          !captureSessionSummaryState || !captureSessionSummaryState.sessionSummaryId
+            ? "Capture progress: waiting for world session"
+            : `Capture progress: ${captureSessionSummaryState.capturedObjects} of ${captureSessionSummaryState.totalObjects} objects captured`;
+      }
+      if (discoveryProgressLabel) {
+        discoveryProgressLabel.textContent =
+          !captureSessionSummaryState || !captureSessionSummaryState.sessionSummaryId
+            ? "Discovery progress: waiting for world session"
+            : `Discovery progress: ${captureSessionSummaryState.discoveredObjects} objects discovered in this session`;
       }
       if (explorationCapturedListLabel) {
         if (
