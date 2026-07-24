@@ -69,8 +69,20 @@ test("local real map data adapter builds deterministic local fixture map-shaped 
     foundation.coordinate.longitude,
     foundation.worldResolver.worldLocationResolver.longitude
   );
-  assert.ok(foundation.roads.length >= 1);
+  assert.ok(foundation.roads.length >= 3);
+  assert.ok(foundation.landAreas.length >= 3);
+  assert.ok(foundation.buildingHints.length >= 1);
+  assert.ok(foundation.vegetationHints.length >= 1);
   assert.ok(foundation.landmarkHints.length >= 1);
+  assert.equal(foundation.validationResult.mapDataContractValid, true);
+  assert.equal(foundation.validationResult.placementValidityPreserved, true);
+  assert.equal(foundation.validationResult.assetReferenceValidityPreserved, true);
+  assert.ok(
+    foundation.landAreas.some((area) => area.areaType === "coastline_boundary")
+  );
+  assert.ok(
+    foundation.roads.some((road) => road.connectedIntersectionIds.length >= 1)
+  );
 });
 
 test("same local map-shaped input resolves to the same world deterministically", async () => {
@@ -86,6 +98,9 @@ test("same local map-shaped input resolves to the same world deterministically",
   assert.equal(first.mapDataId, second.mapDataId);
   assert.deepEqual(first.coordinate, second.coordinate);
   assert.deepEqual(first.roads, second.roads);
+  assert.deepEqual(first.landAreas, second.landAreas);
+  assert.deepEqual(first.buildingHints, second.buildingHints);
+  assert.deepEqual(first.vegetationHints, second.vegetationHints);
   assert.equal(
     first.worldResolver.worldLocationResolver.worldId,
     second.worldResolver.worldLocationResolver.worldId
@@ -102,7 +117,7 @@ test("local real map data adapter rejects invalid provider contract safely", asy
     ...foundation,
     validationResult: {
       ...foundation.validationResult,
-      providerContractValid: false
+      mapDataContractValid: false
     }
   };
 
@@ -111,5 +126,5 @@ test("local real map data adapter rejects invalid provider contract safely", asy
   );
 
   assert.equal(result.ok, false);
-  assert.equal(result.errorCode, "provider_contract_invalid");
+  assert.equal(result.errorCode, "map_data_contract_invalid");
 });
