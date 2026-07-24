@@ -210,10 +210,13 @@
       min-height: 320px;
       border: 1px solid rgba(22, 48, 70, 0.2);
       background:
+        radial-gradient(circle at 74% 14%, rgba(255, 255, 255, 0.45) 0, rgba(255, 255, 255, 0) 22%),
+        linear-gradient(180deg, rgba(125, 169, 196, 0.26) 0%, rgba(125, 169, 196, 0) 22%),
         linear-gradient(0deg, rgba(22, 48, 70, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(22, 48, 70, 0.05) 1px, transparent 1px),
-        linear-gradient(180deg, #edf6fd 0%, #dcecf8 100%);
-      background-size: 24px 24px, 24px 24px, 100% 100%;
+        linear-gradient(180deg, #edf6fd 0%, #dcecf8 32%, #dce7d1 32%, #d8e5ca 100%);
+      background-size: 100% 100%, 100% 100%, 24px 24px, 24px 24px, 100% 100%;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
       overflow: hidden;
       touch-action: none;
       user-select: none;
@@ -333,7 +336,8 @@
       display: block;
       border: 0;
       background: transparent;
-      opacity: 0.88;
+      opacity: 0.96;
+      filter: saturate(1.04) contrast(1.02);
     }
 
     @media (max-width: 860px) {

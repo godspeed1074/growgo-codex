@@ -649,6 +649,19 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
       (command) => command[0] === "arc"
     )
   );
+  assert.ok(
+    harness.canvas._context.commands.filter(
+      (command) => command[0] === "fillRect"
+    ).length >= 12
+  );
+  assert.ok(
+    harness.canvas._context.commands.some(
+      (command) =>
+        command[0] === "lineTo" &&
+        Number.isFinite(command[1]) &&
+        Number.isFinite(command[2])
+    )
+  );
 });
 
 test("Atlas browser demo harness exposes and clears world expansion routing state without changing preview behavior", async () => {

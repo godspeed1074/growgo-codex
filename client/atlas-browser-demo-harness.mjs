@@ -1444,24 +1444,16 @@ export function drawExpandedSettlementPreview(
   );
   const scaling = expandedSettlementPreview.visualScaling ?? {};
   const styling = expandedSettlementPreview.visualStyling ?? {};
-  const overlayAlpha = 0.58;
+  const lightingProfile = expandedSettlementPreview.visualStyling?.activeLightingProfile ?? "day";
+  const overlayAlpha = lightingProfile === "night" ? 0.86 : 0.8;
 
-  drawContext.fillStyle = withAlpha(palette.sky, overlayAlpha * 0.48);
-  drawContext.fillRect(0, 0, width, height);
-  drawContext.fillStyle = withAlpha(palette.coastline ?? palette.sea, overlayAlpha * 0.72);
-  drawContext.fillRect(0, height * 0.18, width, height * 0.07);
-  drawContext.fillStyle = withAlpha(palette.sea, overlayAlpha * 0.62);
-  drawContext.fillRect(0, height * 0.25, width, height * 0.13);
-  drawContext.fillStyle = withAlpha(palette.ground, overlayAlpha * 0.56);
-  drawContext.fillRect(0, height * 0.38, width, height * 0.62);
-  drawContext.fillStyle =
-    withAlpha(
-      styling.terrainAppearance?.yardColor ??
-        styling.terrainAppearance?.accentColor ??
-        "#B8D99A",
-      overlayAlpha * 0.52
-    );
-  drawContext.fillRect(width * 0.06, height * 0.56, width * 0.88, height * 0.18);
+  drawExpandedSettlementBackdrop(drawContext, {
+    width,
+    height,
+    palette,
+    styling,
+    overlayAlpha
+  });
 
   drawContext.fillStyle = "#163046";
   drawContext.font = "bold 18px sans-serif";
@@ -1704,6 +1696,30 @@ function drawExpandedSettlementInstance(
       (instance.geometry.width ?? 8) * 1.2 * Number(scaling?.blockScale ?? 1)
     );
     if (typeof drawContext.stroke === "function") {
+      drawContext.strokeStyle = withAlpha("#0d2235", 0.16);
+      drawContext.lineWidth = Math.max(
+        8,
+        (instance.geometry.width ?? 8) * 1.7 * Number(scaling?.blockScale ?? 1)
+      );
+      drawContext.beginPath();
+      drawContext.moveTo(start.x, start.y + 5);
+      drawContext.lineTo(end.x, end.y + 5);
+      drawContext.stroke();
+
+      drawContext.strokeStyle =
+        styling?.roadAppearance?.baseColor ?? palette.road;
+      drawContext.lineWidth = Math.max(
+        4,
+        (instance.geometry.width ?? 8) * 1.2 * Number(scaling?.blockScale ?? 1)
+      );
+      drawContext.beginPath();
+      drawContext.moveTo(start.x, start.y);
+      drawContext.lineTo(end.x, end.y);
+      drawContext.stroke();
+
+      drawContext.strokeStyle =
+        styling?.roadAppearance?.edgeColor ?? "#D9E0E6";
+      drawContext.lineWidth = Math.max(1.5, Number(scaling?.blockScale ?? 1));
       drawContext.beginPath();
       drawContext.moveTo(start.x, start.y);
       drawContext.lineTo(end.x, end.y);
@@ -1753,6 +1769,21 @@ function drawExpandedSettlementInstance(
   );
   if (instance.category === "vegetation") {
     const radius = Math.max(6, 7 * Number(scaling?.blockScale ?? 1));
+    drawContext.fillStyle = withAlpha("#173923", 0.16);
+    drawContext.beginPath();
+    drawContext.arc(projected.x + 2, projected.y + radius * 0.85, radius * 1.04, 0, Math.PI * 2);
+    drawContext.fill();
+    drawContext.fillStyle =
+      styling?.vegetationAppearance?.accentColor ?? "#7FAA61";
+    drawContext.beginPath();
+    drawContext.arc(
+      projected.x - radius * 0.46,
+      projected.y - radius * 0.12,
+      radius * 0.8,
+      0,
+      Math.PI * 2
+    );
+    drawContext.fill();
     drawContext.fillStyle =
       styling?.vegetationAppearance?.canopyColor ?? palette.vegetation;
     drawContext.beginPath();
@@ -1760,6 +1791,16 @@ function drawExpandedSettlementInstance(
       projected.x,
       projected.y,
       radius,
+      0,
+      Math.PI * 2
+    );
+    drawContext.fill();
+    drawContext.fillStyle = withAlpha("#f2f8ef", 0.28);
+    drawContext.beginPath();
+    drawContext.arc(
+      projected.x + radius * 0.24,
+      projected.y - radius * 0.34,
+      radius * 0.34,
       0,
       Math.PI * 2
     );
@@ -1783,6 +1824,13 @@ function drawExpandedSettlementInstance(
   }
 
   if (instance.category === "landmark") {
+    drawContext.fillStyle = withAlpha("#193142", 0.15);
+    drawContext.fillRect(
+      projected.x - 20 * Number(scaling?.cameraScale ?? 1),
+      projected.y + 10,
+      42 * Number(scaling?.cameraScale ?? 1),
+      10 * Number(scaling?.cameraScale ?? 1)
+    );
     drawContext.fillStyle = styling?.coastlineAppearance?.shorelineColor ?? palette.coastline ?? "#C9D9B5";
     drawContext.beginPath();
     drawContext.arc(projected.x, projected.y + 6, 18 * Number(scaling?.cameraScale ?? 1), 0, Math.PI * 2);
@@ -1794,6 +1842,13 @@ function drawExpandedSettlementInstance(
       projected.y - 36 * lighthouseScale,
       16 * lighthouseScale,
       36 * lighthouseScale
+    );
+    drawContext.fillStyle = withAlpha("#ffffff", 0.42);
+    drawContext.fillRect(
+      projected.x - 2 * lighthouseScale,
+      projected.y - 33 * lighthouseScale,
+      3 * lighthouseScale,
+      28 * lighthouseScale
     );
     drawContext.fillStyle = "#bd2d2d";
     drawContext.beginPath();
@@ -1833,6 +1888,13 @@ function drawExpandedSettlementInstance(
   }
 
   const houseScale = Number(scaling?.blockScale ?? 1);
+  drawContext.fillStyle = withAlpha("#183244", 0.14);
+  drawContext.fillRect(
+    projected.x - 18 * houseScale,
+    projected.y + 9 * houseScale,
+    34 * houseScale,
+    5 * houseScale
+  );
   drawContext.fillStyle =
     styling?.buildingAppearance?.wallColor ?? palette.building;
   drawContext.fillRect(
@@ -1840,6 +1902,13 @@ function drawExpandedSettlementInstance(
     projected.y - 12 * houseScale,
     24 * houseScale,
     18 * houseScale
+  );
+  drawContext.fillStyle = withAlpha("#ffffff", 0.24);
+  drawContext.fillRect(
+    projected.x - 10 * houseScale,
+    projected.y - 10 * houseScale,
+    7 * houseScale,
+    12 * houseScale
   );
   drawContext.fillStyle =
     styling?.buildingAppearance?.roofColor ?? "#7d4d35";
@@ -1878,6 +1947,69 @@ function drawExpandedSettlementInstance(
     width: 32 * houseScale,
     height: 38 * houseScale
   });
+}
+
+function drawExpandedSettlementBackdrop(
+  drawContext,
+  { width, height, palette, styling, overlayAlpha }
+) {
+  const coastlineColor =
+    styling?.coastlineAppearance?.shorelineColor ?? palette.coastline ?? "#C9D9B5";
+  const yardColor =
+    styling?.terrainAppearance?.yardColor ??
+    styling?.terrainAppearance?.accentColor ??
+    "#B8D99A";
+
+  drawContext.fillStyle = withAlpha(palette.sky, overlayAlpha * 0.92);
+  drawContext.fillRect(0, 0, width, height);
+  drawContext.fillStyle = withAlpha("#ffffff", 0.12);
+  drawContext.fillRect(0, 0, width, height * 0.16);
+
+  drawContext.fillStyle = withAlpha(palette.sea, overlayAlpha * 0.82);
+  drawContext.fillRect(0, height * 0.19, width, height * 0.18);
+  drawContext.fillStyle = withAlpha("#ffffff", 0.18);
+  drawContext.fillRect(width * 0.04, height * 0.235, width * 0.92, height * 0.01);
+  drawContext.fillRect(width * 0.12, height * 0.275, width * 0.74, height * 0.008);
+
+  drawContext.fillStyle = withAlpha(coastlineColor, overlayAlpha * 0.9);
+  drawContext.beginPath();
+  drawContext.moveTo(0, height * 0.37);
+  drawContext.lineTo(width * 0.22, height * 0.345);
+  drawContext.lineTo(width * 0.44, height * 0.36);
+  drawContext.lineTo(width * 0.7, height * 0.335);
+  drawContext.lineTo(width, height * 0.355);
+  drawContext.lineTo(width, height * 0.405);
+  drawContext.lineTo(0, height * 0.43);
+  drawContext.closePath();
+  drawContext.fill();
+
+  drawContext.fillStyle = withAlpha(palette.ground, overlayAlpha * 0.88);
+  drawContext.beginPath();
+  drawContext.moveTo(0, height * 0.4);
+  drawContext.lineTo(width, height * 0.36);
+  drawContext.lineTo(width, height);
+  drawContext.lineTo(0, height);
+  drawContext.closePath();
+  drawContext.fill();
+
+  drawContext.fillStyle = withAlpha(yardColor, overlayAlpha * 0.68);
+  drawContext.beginPath();
+  drawContext.moveTo(width * 0.05, height * 0.57);
+  drawContext.lineTo(width * 0.93, height * 0.5);
+  drawContext.lineTo(width * 0.95, height * 0.73);
+  drawContext.lineTo(width * 0.07, height * 0.78);
+  drawContext.closePath();
+  drawContext.fill();
+
+  drawContext.fillStyle = withAlpha("#ffffff", 0.08);
+  for (let bandIndex = 0; bandIndex < 4; bandIndex += 1) {
+    drawContext.fillRect(
+      width * 0.08,
+      height * (0.49 + bandIndex * 0.08),
+      width * 0.84,
+      height * 0.006
+    );
+  }
 }
 
 function drawExpandedSettlementReadabilityGuides(
