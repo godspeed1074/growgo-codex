@@ -13,7 +13,8 @@ export const coastalSettlementGeneratorFoundationRequiredFields = Object.freeze(
 export const coastalSettlementSupportedAssets = Object.freeze([
   "BUILDING_COASTAL_COTTAGE_001",
   "TREE_EUCALYPTUS_001",
-  "ROAD_COASTAL_001"
+  "ROAD_COASTAL_001",
+  "LIGHTHOUSE_ISLAND_ROCKY_001"
 ]);
 
 export const coastalSettlementGeneratorFoundationDefinition = deepFreeze({
@@ -49,29 +50,79 @@ export async function createCoastalSettlementGeneratorFoundation(
   const definition = normalizeDefinition(rawDefinition);
   const coastalScene = await createCoastalStarterWorldRealAssetSceneAssembly(options);
   const assetCatalog = buildAssetCatalog(coastalScene.assetInstances);
-  const roadNetwork = buildRoadNetwork(definition);
-  const residentialLots = buildResidentialLots(definition, roadNetwork);
-  const assetPlacements = buildAssetPlacements(definition, residentialLots, roadNetwork, assetCatalog);
+  const mapFixtureData = definition.mapFixtureData;
+  const roadNetwork = mapFixtureData
+    ? buildRoadNetworkFromMapFixture(mapFixtureData, assetCatalog)
+    : buildRoadNetwork(definition);
+  const residentialBlocks = mapFixtureData
+    ? buildResidentialBlocksFromMapFixture(mapFixtureData)
+    : buildResidentialBlocksFromLots(
+        buildResidentialLots(definition, roadNetwork)
+      );
+  const residentialLots = mapFixtureData
+    ? buildResidentialLotsFromMapFixture(mapFixtureData, residentialBlocks)
+    : buildResidentialLots(definition, roadNetwork);
+  const buildingPlacements = mapFixtureData
+    ? buildBuildingPlacementsFromMapFixture(
+        definition,
+        mapFixtureData,
+        residentialLots,
+        assetCatalog
+      )
+    : buildBuildingPlacements(definition, residentialLots, assetCatalog);
+  const vegetationPlacements = mapFixtureData
+    ? buildVegetationPlacementsFromMapFixture(
+        definition,
+        mapFixtureData,
+        residentialLots,
+        roadNetwork,
+        assetCatalog
+      )
+    : buildVegetationPlacements(definition, residentialLots, roadNetwork, assetCatalog);
+  const landmarkPlacements = mapFixtureData
+    ? buildLandmarkPlacementsFromMapFixture(definition, mapFixtureData, assetCatalog)
+    : [];
+  const assetPlacements = buildAssetPlacementsFromCollections(
+    definition,
+    roadNetwork,
+    assetCatalog,
+    buildingPlacements,
+    vegetationPlacements,
+    landmarkPlacements
+  );
   const settlement = deepFreeze({
     worldRegionId: definition.worldRegionId,
     bounds: definition.bounds,
     seed: definition.seed,
     terrainType: definition.terrainType,
     coastalProfile: definition.coastalProfile,
+    mapFixtureDriven: Boolean(mapFixtureData),
     roadNetwork,
+    residentialBlocks,
     residentialLots,
+    buildingPlacements,
+    vegetationPlacements,
+    landmarkPlacements,
     assetPlacements,
     validationResult: buildValidationResult(
       definition,
+      residentialBlocks,
       residentialLots,
       roadNetwork,
+      buildingPlacements,
+      vegetationPlacements,
+      landmarkPlacements,
       assetPlacements,
       assetCatalog
     ),
     settlementSummary: buildSettlementSummary(
       definition,
+      residentialBlocks,
       residentialLots,
       roadNetwork,
+      buildingPlacements,
+      vegetationPlacements,
+      landmarkPlacements,
       assetPlacements
     )
   });
@@ -120,6 +171,12 @@ export function validateCoastalSettlementGeneratorFoundation(rawSettlement) {
       throw createValidationError(
         "asset_reference_invalid",
         "Coastal settlement generator assetReferenceValidity must be true."
+      );
+    }
+    if (!settlement.validationResult.settlementMatchesMapFixture) {
+      throw createValidationError(
+        "map_fixture_match_invalid",
+        "Coastal settlement generator settlementMatchesMapFixture must be true."
       );
     }
 
@@ -229,6 +286,49 @@ function buildRoadNetwork(definition) {
   });
 }
 
+function buildRoadNetworkFromMapFixture(mapFixtureData, assetCatalog) {
+  const roadSegments = deepFreeze(
+    mapFixtureData.roads.map((road, index) =>
+      deepFreeze({
+        roadSegmentId:
+          road.roadSegmentId ??
+          `COASTAL_SETTLEMENT_ROAD_SEGMENT_${String(index + 1).padStart(3, "0")}`,
+        assetId: "ROAD_COASTAL_001",
+        roadType: road.roadClass ?? "fixture_local_road",
+        orientation: road.orientation,
+        start: deepFreeze({ ...road.start }),
+        end: deepFreeze({ ...road.end }),
+        width: Number(road.width) || 18
+      })
+    )
+  );
+
+  const intersections = deepFreeze(
+    collectIntersectionIds(mapFixtureData.roads).map((intersectionId) =>
+      deepFreeze({
+        intersectionId,
+        position: resolveIntersectionPosition(intersectionId, roadSegments, mapFixtureData.roads),
+        connectedRoadSegmentIds: deepFreeze(
+          roadSegments
+            .filter((segment) =>
+              (mapFixtureData.roads.find((road) => road.roadSegmentId === segment.roadSegmentId)
+                ?.connectedIntersectionIds ?? []).includes(intersectionId)
+            )
+            .map((segment) => segment.roadSegmentId)
+        ),
+        orientation: "fixture_intersection"
+      })
+    )
+  );
+
+  return deepFreeze({
+    roadSegments,
+    intersections,
+    orientation: roadSegments[0]?.orientation ?? "east-west",
+    sourceAssetId: assetCatalog.get("ROAD_COASTAL_001")?.assetId ?? "ROAD_COASTAL_001"
+  });
+}
+
 function buildResidentialLots(definition, roadNetwork) {
   const mainRoad = roadNetwork.roadSegments[0];
   const westLane = roadNetwork.roadSegments[1];
@@ -277,7 +377,63 @@ function buildResidentialLots(definition, roadNetwork) {
   );
 }
 
-function buildAssetPlacements(definition, residentialLots, roadNetwork, assetCatalog) {
+function buildResidentialBlocksFromLots(residentialLots) {
+  return deepFreeze(
+    residentialLots.map((lot, index) =>
+      deepFreeze({
+        blockId: `COASTAL_SETTLEMENT_BLOCK_${String(index + 1).padStart(3, "0")}`,
+        lotIds: deepFreeze([lot.lotId]),
+        areaType: "residential_block",
+        frontageRoadSegmentId: lot.frontageRoadSegmentId
+      })
+    )
+  );
+}
+
+function buildResidentialBlocksFromMapFixture(mapFixtureData) {
+  const residentialAreas = mapFixtureData.landAreas.filter(
+    (area) => area.areaType === "residential_neighbourhood"
+  );
+  return deepFreeze(
+    residentialAreas.map((area, index) =>
+      deepFreeze({
+        blockId: `COASTAL_SETTLEMENT_BLOCK_${String(index + 1).padStart(3, "0")}`,
+        lotIds: deepFreeze(
+          mapFixtureData.buildingHints
+            .filter((hint) => hint.residentialAreaId === area.landAreaId)
+            .map((hint) => hint.lotId)
+        ),
+        areaType: area.areaType,
+        frontageRoadSegmentId:
+          mapFixtureData.buildingHints.find((hint) => hint.residentialAreaId === area.landAreaId)
+            ?.frontageRoadSegmentId ?? null
+      })
+    )
+  );
+}
+
+function buildResidentialLotsFromMapFixture(mapFixtureData, residentialBlocks) {
+  return deepFreeze(
+    mapFixtureData.buildingHints.map((hint, index) =>
+      deepFreeze({
+        lotId: hint.lotId ?? `COASTAL_SETTLEMENT_LOT_${String(index + 1).padStart(3, "0")}`,
+        width: Number(hint.width) || 120,
+        depth: Number(hint.depth) || 160,
+        roadFrontage: Number(hint.width) || 120,
+        position: deepFreeze({
+          x: roundNumber(hint.position.x - (Number(hint.width) || 120) / 2),
+          y: roundNumber(hint.position.y - (Number(hint.depth) || 160) / 2)
+        }),
+        orientation: normalizeFacingOrDefault(hint.facing, "south"),
+        frontageRoadSegmentId: hint.frontageRoadSegmentId,
+        residentialBlockId:
+          residentialBlocks.find((block) => block.lotIds.includes(hint.lotId))?.blockId ?? null
+      })
+    )
+  );
+}
+
+function buildRoadPlacements(definition, roadNetwork, assetCatalog) {
   const placements = [];
 
   for (const roadSegment of roadNetwork.roadSegments) {
@@ -312,6 +468,12 @@ function buildAssetPlacements(definition, residentialLots, roadNetwork, assetCat
     );
   }
 
+  return placements;
+}
+
+function buildBuildingPlacements(definition, residentialLots, assetCatalog) {
+  const placements = [];
+
   for (const lot of residentialLots) {
     const buildingWidth = roundNumber(Math.min(96, lot.width * 0.58));
     const buildingDepth = roundNumber(Math.min(82, lot.depth * 0.48));
@@ -342,7 +504,15 @@ function buildAssetPlacements(definition, residentialLots, roadNetwork, assetCat
         roadFacing: true
       })
     );
+  }
 
+  return placements;
+}
+
+function buildVegetationPlacements(definition, residentialLots, roadNetwork, assetCatalog) {
+  const placements = [];
+
+  for (const lot of residentialLots) {
     const treeOffsets = [
       { x: 20, y: 28, suffix: "tree-west" },
       { x: lot.width - 20, y: 34, suffix: "tree-east" }
@@ -383,7 +553,121 @@ function buildAssetPlacements(definition, residentialLots, roadNetwork, assetCat
     }
   }
 
-  return deepFreeze(placements);
+  return placements;
+}
+
+function buildBuildingPlacementsFromMapFixture(definition, mapFixtureData, residentialLots, assetCatalog) {
+  return mapFixtureData.buildingHints.map((hint, index) => {
+    const lot = residentialLots.find((entry) => entry.lotId === hint.lotId);
+    const width = Number(hint.buildingWidth) || 96;
+    const depth = Number(hint.buildingDepth) || 82;
+    const footprint = deepFreeze({
+      minX: roundNumber(hint.position.x - width / 2),
+      minY: roundNumber(hint.position.y - depth / 2),
+      maxX: roundNumber(hint.position.x + width / 2),
+      maxY: roundNumber(hint.position.y + depth / 2)
+    });
+
+    return createPlacementEntry({
+      placementId: `COASTAL_SETTLEMENT_ASSET_${String(index + 1 + mapFixtureData.roads.length).padStart(3, "0")}`,
+      asset: assetCatalog.get(hint.assetId),
+      placementType: "residential_building",
+      position: deepFreeze({ ...hint.position }),
+      orientation: normalizeFacingOrDefault(hint.facing, "south"),
+      footprint,
+      parentId: lot?.lotId ?? hint.lotId,
+      deterministicKey: `${definition.seed}:${hint.buildingHintId}:building`,
+      roadFacing: true
+    });
+  });
+}
+
+function buildVegetationPlacementsFromMapFixture(
+  definition,
+  mapFixtureData,
+  residentialLots,
+  roadNetwork,
+  assetCatalog
+) {
+  const roadStartIndex = mapFixtureData.roads.length + mapFixtureData.buildingHints.length;
+  return mapFixtureData.vegetationHints.map((hint, index) => {
+    const treeRadius = hint.density === "moderate" ? 14 : 12;
+    const parentLot = residentialLots.find((lot) => lot.lotId === hint.lotId);
+    return createPlacementEntry({
+      placementId: `COASTAL_SETTLEMENT_ASSET_${String(roadStartIndex + index + 1).padStart(3, "0")}`,
+      asset: assetCatalog.get(hint.assetId),
+      placementType: "vegetation",
+      position: deepFreeze({ ...hint.position }),
+      orientation: "north",
+      footprint: deepFreeze({
+        minX: roundNumber(hint.position.x - treeRadius),
+        minY: roundNumber(hint.position.y - treeRadius),
+        maxX: roundNumber(hint.position.x + treeRadius),
+        maxY: roundNumber(hint.position.y + treeRadius)
+      }),
+      parentId: parentLot?.lotId ?? hint.vegetationHintId,
+      deterministicKey: `${definition.seed}:${hint.vegetationHintId}:vegetation`,
+      validArea:
+        hint.vegetationAreaId === "LOCAL_MAP_LAND_AREA_FORESHORE_001"
+          ? "foreshore"
+          : "rear-yard"
+    });
+  });
+}
+
+function buildLandmarkPlacementsFromMapFixture(definition, mapFixtureData, assetCatalog) {
+  const startIndex =
+    mapFixtureData.roads.length +
+    mapFixtureData.buildingHints.length +
+    mapFixtureData.vegetationHints.length;
+  return mapFixtureData.landmarkHints
+    .filter((hint) => hint.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001")
+    .map((hint, index) =>
+      createPlacementEntry({
+        placementId: `COASTAL_SETTLEMENT_ASSET_${String(startIndex + index + 1).padStart(3, "0")}`,
+        asset: assetCatalog.get("LIGHTHOUSE_ISLAND_ROCKY_001"),
+        placementType: "landmark",
+        position: deepFreeze({
+          x: roundNumber(hint.position.x),
+          y: roundNumber(hint.position.y)
+        }),
+        orientation: "north",
+        footprint: deepFreeze({
+          minX: roundNumber(hint.position.x - 28),
+          minY: roundNumber(hint.position.y - 28),
+          maxX: roundNumber(hint.position.x + 28),
+          maxY: roundNumber(hint.position.y + 28)
+        }),
+        parentId: hint.landmarkHintId,
+        deterministicKey: `${definition.seed}:${hint.landmarkHintId}:landmark`,
+        validArea: "coastline"
+      })
+    );
+}
+
+function buildAssetPlacementsFromCollections(
+  definition,
+  roadNetwork,
+  assetCatalog,
+  buildingPlacements,
+  vegetationPlacements,
+  landmarkPlacements
+) {
+  const roadPlacements = buildRoadPlacements(definition, roadNetwork, assetCatalog);
+  const combined = [
+    ...roadPlacements,
+    ...buildingPlacements,
+    ...vegetationPlacements,
+    ...landmarkPlacements
+  ];
+  return deepFreeze([
+    ...combined.map((placement, index) =>
+      deepFreeze({
+        ...placement,
+        placementId: `COASTAL_SETTLEMENT_ASSET_${String(index + 1).padStart(3, "0")}`
+      })
+    )
+  ]);
 }
 
 function createPlacementEntry({
@@ -415,16 +699,52 @@ function createPlacementEntry({
   });
 }
 
-function buildValidationResult(definition, residentialLots, roadNetwork, assetPlacements, assetCatalog) {
+function buildValidationResult(
+  definition,
+  residentialBlocks,
+  residentialLots,
+  roadNetwork,
+  buildingPlacements,
+  vegetationPlacements,
+  landmarkPlacements,
+  assetPlacements,
+  assetCatalog
+) {
   const roadAssetValid = roadNetwork.roadSegments.every((segment) => segment.assetId === "ROAD_COASTAL_001");
   const placementAssetValid = assetPlacements.every((placement) => assetCatalog.has(placement.assetId));
   const lotFacingValid = residentialLots.every((lot) => lot.orientation === "south");
-  const buildingFacingValid = assetPlacements
-    .filter((placement) => placement.assetId === "BUILDING_COASTAL_COTTAGE_001")
+  const buildingFacingValid = buildingPlacements
     .every((placement) => placement.orientation === "south" && placement.roadFacing);
-  const treesValid = assetPlacements
-    .filter((placement) => placement.assetId === "TREE_EUCALYPTUS_001")
-    .every((placement) => placement.validArea === "rear-yard");
+  const treesValid = vegetationPlacements.every((placement) =>
+    ["rear-yard", "foreshore"].includes(placement.validArea)
+  );
+  const landmarkValid = landmarkPlacements.every(
+    (placement) =>
+      placement.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001" && placement.validArea === "coastline"
+  );
+  const fixtureRoads = Array.isArray(definition.mapFixtureData?.roads)
+    ? definition.mapFixtureData.roads
+    : null;
+  const fixtureBuildings = Array.isArray(definition.mapFixtureData?.buildingHints)
+    ? definition.mapFixtureData.buildingHints
+    : null;
+  const fixtureVegetation = Array.isArray(definition.mapFixtureData?.vegetationHints)
+    ? definition.mapFixtureData.vegetationHints
+    : null;
+  const fixtureLandmarks = Array.isArray(definition.mapFixtureData?.landmarkHints)
+    ? definition.mapFixtureData.landmarkHints
+    : null;
+  const settlementMatchesFixture =
+    fixtureRoads == null
+      ? residentialBlocks.length >= 1 &&
+        buildingPlacements.length >= residentialLots.length &&
+        roadNetwork.intersections.length >= 1
+      : roadNetwork.roadSegments.length === fixtureRoads.length &&
+        buildingPlacements.length === fixtureBuildings.length &&
+        vegetationPlacements.length === fixtureVegetation.length &&
+        landmarkPlacements.length === fixtureLandmarks.length &&
+        residentialBlocks.length >= 1 &&
+        roadNetwork.intersections.length >= 1;
 
   return deepFreeze({
     deterministicOutput: true,
@@ -433,25 +753,38 @@ function buildValidationResult(definition, residentialLots, roadNetwork, assetPl
       lotFacingValid &&
       buildingFacingValid &&
       treesValid &&
+      landmarkValid &&
       validateOverlapSilently(residentialLots, assetPlacements, roadNetwork),
-    assetReferenceValidity: placementAssetValid
+    assetReferenceValidity: placementAssetValid,
+    settlementMatchesMapFixture: settlementMatchesFixture
   });
 }
 
-function buildSettlementSummary(definition, residentialLots, roadNetwork, assetPlacements) {
-  const cottages = assetPlacements.filter((placement) => placement.assetId === "BUILDING_COASTAL_COTTAGE_001").length;
-  const trees = assetPlacements.filter((placement) => placement.assetId === "TREE_EUCALYPTUS_001").length;
-  const roads = assetPlacements.filter((placement) => placement.assetId === "ROAD_COASTAL_001").length;
+function buildSettlementSummary(
+  definition,
+  residentialBlocks,
+  residentialLots,
+  roadNetwork,
+  buildingPlacements,
+  vegetationPlacements,
+  landmarkPlacements,
+  assetPlacements
+) {
+  const cottages = buildingPlacements.length;
+  const trees = vegetationPlacements.length;
+  const roads = roadNetwork.roadSegments.length;
   return deepFreeze({
     settlementId: `COASTAL_SETTLEMENT_${stableHash(`${definition.worldRegionId}:${definition.seed}`)
       .toString(16)
       .toUpperCase()
       .padStart(8, "0")}`,
+    residentialBlockCount: residentialBlocks.length,
     residentialLotCount: residentialLots.length,
     roadSegmentCount: roadNetwork.roadSegments.length,
     intersectionCount: roadNetwork.intersections.length,
     cottageCount: cottages,
     treeCount: trees,
+    landmarkCount: landmarkPlacements.length,
     roadAssetPlacementCount: roads,
     generatedAssetCount: assetPlacements.length,
     dominantOrientation: roadNetwork.orientation,
@@ -484,7 +817,11 @@ function normalizeDefinition(rawDefinition) {
     bounds,
     seed: normalizeString(definition.seed, "seed"),
     terrainType,
-    coastalProfile: normalizeCoastalProfile(definition.coastalProfile)
+    coastalProfile: normalizeCoastalProfile(definition.coastalProfile),
+    mapFixtureData:
+      definition.mapFixtureData == null
+        ? null
+        : deepFreeze(asPlainObject(definition.mapFixtureData, "mapFixtureData"))
   });
 }
 
@@ -504,17 +841,93 @@ function normalizeGeneratedSettlement(rawSettlement) {
   return deepFreeze({
     ...definition,
     roadNetwork,
+    residentialBlocks: deepFreeze(
+      (Array.isArray(settlement.residentialBlocks) ? settlement.residentialBlocks : []).map(
+        normalizeResidentialBlock
+      )
+    ),
     residentialLots,
+    buildingPlacements: deepFreeze(
+      (Array.isArray(settlement.buildingPlacements) ? settlement.buildingPlacements : []).map(
+        normalizePlacement
+      )
+    ),
+    vegetationPlacements: deepFreeze(
+      (Array.isArray(settlement.vegetationPlacements) ? settlement.vegetationPlacements : []).map(
+        normalizePlacement
+      )
+    ),
+    landmarkPlacements: deepFreeze(
+      (Array.isArray(settlement.landmarkPlacements) ? settlement.landmarkPlacements : []).map(
+        normalizePlacement
+      )
+    ),
     assetPlacements,
     validationResult: deepFreeze({
       deterministicOutput: Boolean(settlement.validationResult?.deterministicOutput),
       placementValidity: Boolean(settlement.validationResult?.placementValidity),
-      assetReferenceValidity: Boolean(settlement.validationResult?.assetReferenceValidity)
+      assetReferenceValidity: Boolean(settlement.validationResult?.assetReferenceValidity),
+      settlementMatchesMapFixture: Boolean(
+        settlement.validationResult?.settlementMatchesMapFixture
+      )
     }),
     settlementSummary: deepFreeze({
       ...asPlainObject(settlement.settlementSummary, "settlementSummary")
     })
   });
+}
+
+function normalizeResidentialBlock(rawBlock) {
+  const block = asPlainObject(rawBlock, "residentialBlock");
+  return deepFreeze({
+    blockId: normalizeString(block.blockId, "residentialBlock.blockId"),
+    lotIds: deepFreeze(
+      (Array.isArray(block.lotIds) ? block.lotIds : []).map((lotId, index) =>
+        normalizeString(lotId, `residentialBlock.lotIds[${index}]`)
+      )
+    ),
+    areaType: normalizeString(block.areaType, "residentialBlock.areaType"),
+    frontageRoadSegmentId:
+      block.frontageRoadSegmentId == null
+        ? null
+        : normalizeString(
+            block.frontageRoadSegmentId,
+            "residentialBlock.frontageRoadSegmentId"
+          )
+  });
+}
+
+function collectIntersectionIds(roads) {
+  return [
+    ...new Set(
+      roads.flatMap((road) =>
+        Array.isArray(road.connectedIntersectionIds) ? road.connectedIntersectionIds : []
+      )
+    )
+  ];
+}
+
+function resolveIntersectionPosition(intersectionId, roadSegments, fixtureRoads) {
+  const relatedSegments = roadSegments.filter((segment) =>
+    (fixtureRoads.find((road) => road.roadSegmentId === segment.roadSegmentId)
+      ?.connectedIntersectionIds ?? []).includes(intersectionId)
+  );
+  const averageX =
+    relatedSegments.reduce((sum, segment) => sum + (segment.start.x + segment.end.x) / 2, 0) /
+    Math.max(relatedSegments.length, 1);
+  const averageY =
+    relatedSegments.reduce((sum, segment) => sum + (segment.start.y + segment.end.y) / 2, 0) /
+    Math.max(relatedSegments.length, 1);
+  return deepFreeze({
+    x: roundNumber(averageX),
+    y: roundNumber(averageY)
+  });
+}
+
+function normalizeFacingOrDefault(value, fallback) {
+  const normalized =
+    typeof value === "string" && supportedFacing.has(value.trim()) ? value.trim() : fallback;
+  return normalized;
 }
 
 function normalizeBounds(rawBounds) {

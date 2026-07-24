@@ -152,7 +152,11 @@ function buildSettlementDefinition(definition, resolvedWorldId) {
       maxY: definition.bounds.maxY
     }),
     seed: definition.seed,
-    terrainType: definition.terrainType
+    terrainType: definition.terrainType,
+    mapFixtureData:
+      definition.mapFixtureData == null
+        ? null
+        : deepFreeze(asPlainObject(definition.mapFixtureData, "mapFixtureData"))
   });
 }
 
@@ -243,7 +247,11 @@ function normalizeDefinition(rawDefinition) {
     longitude,
     bounds,
     seed,
-    terrainType
+    terrainType,
+    mapFixtureData:
+      definition.mapFixtureData == null
+        ? null
+        : deepFreeze(asPlainObject(definition.mapFixtureData, "mapFixtureData"))
   });
 }
 
