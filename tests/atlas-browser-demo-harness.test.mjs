@@ -725,16 +725,39 @@ test("Atlas browser demo harness selects supported overlay objects deterministic
   assert.equal(captureState.validationResult.targetIdentityValid, true);
   const capturePresentationState =
     harness.currentSettlementCapturePresentationState();
+  const captureSessionStore =
+    harness.currentSettlementCaptureSessionStore();
   assert.equal(
     capturePresentationState.validationResult.captureStateConsistencyValid,
     true
   );
+  assert.equal(captureSessionStore.validationResult.worldConsistencyValid, true);
   assert.equal(
     capturePresentationState.markerState.capturedObjectCount,
     captureState.capturedObjectIds.length
   );
+  assert.equal(
+    captureSessionStore.capturedObjectIds.length,
+    captureState.capturedObjectIds.length
+  );
+  const returnedDetail = harness.closeSettlementAssetDetailPreview();
+  assert.equal(returnedDetail.detailState, "returning-to-map-view");
+  assert.equal(
+    harness.currentSettlementCaptureSessionStore().capturedObjectIds.length,
+    captureState.capturedObjectIds.length
+  );
+  const worldOverviewAfterCapture = harness.returnSettlementWorldOverview();
+  assert.equal(worldOverviewAfterCapture.visibilityState, "world-visible");
+  assert.equal(
+    harness.currentSettlementCaptureSessionStore().capturedObjectIds.length,
+    captureState.capturedObjectIds.length
+  );
   const clearedCapture = harness.clearSettlementCaptureState();
   assert.equal(clearedCapture.captureState, "capture-idle");
+  assert.equal(
+    harness.currentSettlementCaptureSessionStore().capturedObjectIds.length,
+    0
+  );
   assert.equal(
     harness.currentSettlementCapturePresentationState().captureEffectState,
     "capture-highlight-idle"

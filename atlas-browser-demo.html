@@ -278,6 +278,7 @@
       <p id="atlasPlayerStateLabel">Player: waiting for world preview</p>
       <p id="atlasPlayerInteractionLabel">Interaction: waiting for selection</p>
       <p id="atlasCaptureLabel">Capture: waiting for nearby object</p>
+      <p id="atlasCaptureSessionLabel">Capture session: waiting for world session</p>
       <p id="atlasCapturePresentationLabel">Capture feedback: waiting for captured marker</p>
       <p id="atlasDiscoveryLabel">Discovery: waiting for nearby object</p>
       <p id="atlasPoiLabel">POI: waiting for world object</p>
@@ -404,6 +405,7 @@
     const playerStateLabel = document.getElementById("atlasPlayerStateLabel");
     const playerInteractionLabel = document.getElementById("atlasPlayerInteractionLabel");
     const captureLabel = document.getElementById("atlasCaptureLabel");
+    const captureSessionLabel = document.getElementById("atlasCaptureSessionLabel");
     const capturePresentationLabel = document.getElementById("atlasCapturePresentationLabel");
     const discoveryLabel = document.getElementById("atlasDiscoveryLabel");
     const poiLabel = document.getElementById("atlasPoiLabel");
@@ -632,6 +634,19 @@
       }
       captureLabel.textContent =
         `Capture: ${captureState.captureState} / ${captureState.targetAssetId ?? "no target"} / captured ${captureState.capturedObjectIds?.length ?? 0} / animation ${captureState.captureAnimationState ?? "idle"}`;
+    };
+
+    const updateCaptureSessionLabels = (captureSessionStore) => {
+      if (!captureSessionLabel) {
+        return;
+      }
+      if (!captureSessionStore || !captureSessionStore.sessionId) {
+        captureSessionLabel.textContent =
+          "Capture session: waiting for world session";
+        return;
+      }
+      captureSessionLabel.textContent =
+        `Capture session: ${captureSessionStore.sessionState} / world ${captureSessionStore.worldId ?? "none"} / captured ${captureSessionStore.capturedObjectIds?.length ?? 0}`;
     };
 
     const updateCapturePresentationLabels = (capturePresentationState) => {
@@ -1284,6 +1299,7 @@
                 playerState: combinedOverlay.playerState,
                 playerInteractionState: combinedOverlay.playerInteractionState,
                 captureState: combinedOverlay.captureState,
+                captureSessionStore: combinedOverlay.captureSessionStore,
                 capturePresentationState: combinedOverlay.capturePresentationState,
                 discoveryState: combinedOverlay.discoveryState
               });
@@ -1300,6 +1316,7 @@
               );
               updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
               updateCaptureLabels(combinedOverlay.captureState);
+              updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
               updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
               updateDiscoveryLabels(combinedOverlay.discoveryState);
               updateHarnessDemoState();
@@ -1474,13 +1491,17 @@
             return;
           }
           const captureState = harness.captureSelectedSettlementObject();
+          const captureSessionStore =
+            harness.currentSettlementCaptureSessionStore();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
+          updateCaptureSessionLabels(captureSessionStore);
           updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
+            captureSessionStore,
             capturePresentationState
           });
           if (status) {
@@ -1531,13 +1552,17 @@
             return;
           }
           const captureState = harness.clearSettlementCaptureState();
+          const captureSessionStore =
+            harness.currentSettlementCaptureSessionStore();
           const capturePresentationState =
             harness.currentSettlementCapturePresentationState();
           updateCaptureLabels(captureState);
+          updateCaptureSessionLabels(captureSessionStore);
           updateCapturePresentationLabels(capturePresentationState);
           setBrowserDemoState({
             ...(window.__atlasBrowserDemoState ?? {}),
             captureState,
+            captureSessionStore,
             capturePresentationState
           });
           if (status) {
@@ -1651,6 +1676,7 @@
             playerState: combinedOverlay.playerState,
             playerInteractionState: combinedOverlay.playerInteractionState,
             captureState: combinedOverlay.captureState,
+            captureSessionStore: combinedOverlay.captureSessionStore,
             capturePresentationState: combinedOverlay.capturePresentationState,
             discoveryState: combinedOverlay.discoveryState
           });
@@ -1667,6 +1693,7 @@
           );
           updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
           updateCaptureLabels(combinedOverlay.captureState);
+          updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
           updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
           updateDiscoveryLabels(combinedOverlay.discoveryState);
           updateHarnessDemoState();

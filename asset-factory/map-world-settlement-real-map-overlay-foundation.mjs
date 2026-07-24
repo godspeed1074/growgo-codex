@@ -28,6 +28,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "playerState",
   "playerInteractionState",
   "captureState",
+  "captureSessionStore",
   "capturePresentationState",
   "discoveryState",
   "cameraSync",
@@ -62,6 +63,10 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
   mapWorldLiveMapFoundation,
   settlementScene
 }) {
+  const playerState = createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation
+  });
   const poiState = createMapWorldSettlementPoiState({
     settlementScene
   });
@@ -79,6 +84,26 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
     poiState,
     poiContentMetadata,
     poiLocationMetadata
+  });
+  const playerInteractionState = createMapWorldSettlementPlayerInteractionState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState
+  });
+  const captureState = createMapWorldSettlementCaptureState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState
+  });
+  const captureSessionStore = createMapWorldSettlementCaptureSessionStore({
+    settlementScene,
+    playerState,
+    captureState
+  });
+  const capturePresentationState = createMapWorldSettlementCapturePresentationState({
+    settlementScene,
+    captureState,
+    captureSessionStore
   });
 
   const overlay = deepFreeze({
@@ -151,37 +176,11 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       settlementScene,
       mapWorldLiveMapFoundation
     }),
-    playerState: createMapWorldSettlementPlayerMapState({
-      settlementScene,
-      mapWorldLiveMapFoundation
-    }),
-    playerInteractionState: createMapWorldSettlementPlayerInteractionState({
-      settlementScene,
-      mapWorldLiveMapFoundation,
-      playerState: createMapWorldSettlementPlayerMapState({
-        settlementScene,
-        mapWorldLiveMapFoundation
-      })
-    }),
-    captureState: createMapWorldSettlementCaptureState({
-      settlementScene,
-      mapWorldLiveMapFoundation,
-      playerState: createMapWorldSettlementPlayerMapState({
-        settlementScene,
-        mapWorldLiveMapFoundation
-      })
-    }),
-    capturePresentationState: createMapWorldSettlementCapturePresentationState({
-      settlementScene,
-      captureState: createMapWorldSettlementCaptureState({
-        settlementScene,
-        mapWorldLiveMapFoundation,
-        playerState: createMapWorldSettlementPlayerMapState({
-          settlementScene,
-          mapWorldLiveMapFoundation
-        })
-      })
-    }),
+    playerState,
+    playerInteractionState,
+    captureState,
+    captureSessionStore,
+    capturePresentationState,
     discoveryState: createMapWorldSettlementDiscoveryState({
       settlementScene,
       mapWorldLiveMapFoundation,
@@ -228,6 +227,7 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
       playerPresenceValid: true,
       playerInteractionValid: true,
       captureInteractionValid: true,
+      captureSessionValid: true,
       capturePresentationValid: true,
       discoveryValid: true,
       mapVisibleUnderlayValid: true,
@@ -493,6 +493,17 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
       );
     }
     if (
+      overlay.captureSessionStore.validationResult.worldConsistencyValid !== true ||
+      overlay.captureSessionStore.validationResult.objectIdentityValid !== true ||
+      overlay.captureSessionStore.validationResult.deterministicRestoreValid !== true ||
+      overlay.captureSessionStore.validationResult.cleanupResetBehaviorValid !== true
+    ) {
+      throw createValidationError(
+        "capture_session_store_invalid",
+        "Map world settlement real map overlay foundation capture session store must remain valid."
+      );
+    }
+    if (
       overlay.capturePresentationState.validationResult.captureStateConsistencyValid !== true ||
       overlay.capturePresentationState.validationResult.presentationStateConsistencyValid !==
         true ||
@@ -569,6 +580,9 @@ function normalizeOverlay(rawOverlay) {
       asPlainObject(overlay.playerInteractionState, "playerInteractionState")
     ),
     captureState: deepFreeze(asPlainObject(overlay.captureState, "captureState")),
+    captureSessionStore: deepFreeze(
+      asPlainObject(overlay.captureSessionStore, "captureSessionStore")
+    ),
     capturePresentationState: deepFreeze(
       asPlainObject(overlay.capturePresentationState, "capturePresentationState")
     ),
@@ -1326,9 +1340,65 @@ export function createMapWorldSettlementCaptureState({
   });
 }
 
+export function createMapWorldSettlementCaptureSessionStore({
+  settlementScene,
+  playerState = null,
+  captureState = null,
+  sessionId = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const resolvedPlayerState = playerState ?? deepFreeze({
+    playerId: "PLAYER_CAPTURE_SESSION_DEFAULT",
+    worldId: settlementScene.worldId
+  });
+  const resolvedCaptureState =
+    captureState ??
+    createMapWorldSettlementCaptureState({
+      settlementScene,
+      mapWorldLiveMapFoundation: {
+        activeWorldId: settlementScene.worldId
+      },
+      playerState: {
+        playerId: resolvedPlayerState.playerId,
+        worldId: resolvedPlayerState.worldId ?? settlementScene.worldId,
+        position: { x: 0, y: 0 }
+      }
+    });
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(resolvedCaptureState.capturedObjectIds)
+        ? resolvedCaptureState.capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+
+  return deepFreeze({
+    sessionId:
+      typeof sessionId === "string" && sessionId.length > 0
+        ? sessionId
+        : `${settlementScene.worldId}::${resolvedPlayerState.playerId}::capture-session`,
+    playerId: resolvedPlayerState.playerId,
+    worldId: resolvedPlayerState.worldId ?? settlementScene.worldId,
+    capturedObjectIds,
+    sessionState:
+      capturedObjectIds.length > 0 ? "capture-session-active" : "capture-session-idle",
+    validationResult: deepFreeze({
+      worldConsistencyValid:
+        (resolvedPlayerState.worldId ?? settlementScene.worldId) === settlementScene.worldId,
+      objectIdentityValid:
+        capturedObjectIds.every((objectId) =>
+          selectableObjects.some((entry) => entry.instanceId === objectId)
+        ),
+      deterministicRestoreValid: true,
+      cleanupResetBehaviorValid: true
+    })
+  });
+}
+
 export function createMapWorldSettlementCapturePresentationState({
   settlementScene,
-  captureState = null
+  captureState = null,
+  captureSessionStore = null
 }) {
   const selectableObjects = collectSelectableOverlayObjects(settlementScene);
   const resolvedCaptureState =
@@ -1344,14 +1414,24 @@ export function createMapWorldSettlementCapturePresentationState({
         position: { x: 0, y: 0 }
       }
     });
+  const resolvedCaptureSessionStore =
+    captureSessionStore ??
+    createMapWorldSettlementCaptureSessionStore({
+      settlementScene,
+      captureState: resolvedCaptureState,
+      playerState: {
+        playerId: resolvedCaptureState.playerId,
+        worldId: settlementScene.worldId
+      }
+    });
   const resolvedTarget = resolveSelectableOverlayObject(
     selectableObjects,
     resolvedCaptureState.targetObjectId ?? resolvedCaptureState.targetAssetId ?? null
   );
   const capturedObjectIds = deepFreeze(
     [...new Set(
-      Array.isArray(resolvedCaptureState.capturedObjectIds)
-        ? resolvedCaptureState.capturedObjectIds.map((value) => String(value))
+      Array.isArray(resolvedCaptureSessionStore.capturedObjectIds)
+        ? resolvedCaptureSessionStore.capturedObjectIds.map((value) => String(value))
         : []
     )].sort()
   );

@@ -102,6 +102,14 @@ test("map world settlement real map overlay foundation validates a combined map 
   assert.equal(overlay.captureState.captureAnimationState, "capture-animation-idle");
   assert.deepEqual(overlay.captureState.capturedObjectIds, []);
   assert.equal(overlay.captureState.validationResult.targetIdentityValid, true);
+  assert.equal(overlay.captureSessionStore.playerId, overlay.playerState.playerId);
+  assert.equal(overlay.captureSessionStore.worldId, overlay.worldId);
+  assert.equal(overlay.captureSessionStore.sessionState, "capture-session-idle");
+  assert.deepEqual(overlay.captureSessionStore.capturedObjectIds, []);
+  assert.equal(
+    overlay.captureSessionStore.validationResult.worldConsistencyValid,
+    true
+  );
   assert.equal(
     overlay.capturePresentationState.captureEffectState,
     "capture-highlight-idle"
@@ -186,6 +194,7 @@ test("same coordinate and zoom produce deterministic combined overlay output", a
   assert.deepEqual(first.playerState, second.playerState);
   assert.deepEqual(first.playerInteractionState, second.playerInteractionState);
   assert.deepEqual(first.captureState, second.captureState);
+  assert.deepEqual(first.captureSessionStore, second.captureSessionStore);
   assert.deepEqual(first.capturePresentationState, second.capturePresentationState);
   assert.deepEqual(first.poiState, second.poiState);
   assert.deepEqual(first.poiContentMetadata, second.poiContentMetadata);
@@ -397,6 +406,44 @@ test("overlay capture presentation state follows capture state deterministically
   assert.equal(
     capturePresentationState.markerState.capturedObjectCount,
     capturePresentationState.markerState.capturedObjectIds.length
+  );
+});
+
+test("overlay capture session store persists captured objects deterministically", async () => {
+  const mapWorldLiveMapFoundation = await liveMapModule.createMapWorldLiveMapFoundation(
+    liveMapModule.mapWorldLiveMapFoundationDefinition,
+    buildLoaderOptions()
+  );
+  const settlementScene =
+    await settlementSceneModule.createMapWorldSettlementAtlasSceneExpansion(
+      settlementSceneModule.mapWorldSettlementAtlasSceneExpansionDefinition,
+      buildLoaderOptions()
+    );
+  const playerState = moduleUnderTest.createMapWorldSettlementPlayerMapState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    focusMode: "player-focused"
+  });
+  const captureState = moduleUnderTest.createMapWorldSettlementCaptureState({
+    settlementScene,
+    mapWorldLiveMapFoundation,
+    playerState,
+    targetObject: "LIGHTHOUSE_ISLAND_ROCKY_001"
+  });
+  const captureSessionStore =
+    moduleUnderTest.createMapWorldSettlementCaptureSessionStore({
+      settlementScene,
+      playerState,
+      captureState
+    });
+
+  assert.equal(captureSessionStore.playerId, playerState.playerId);
+  assert.equal(captureSessionStore.worldId, settlementScene.worldId);
+  assert.equal(captureSessionStore.validationResult.worldConsistencyValid, true);
+  assert.equal(captureSessionStore.validationResult.objectIdentityValid, true);
+  assert.equal(
+    captureSessionStore.capturedObjectIds.length,
+    captureState.capturedObjectIds.length
   );
 });
 

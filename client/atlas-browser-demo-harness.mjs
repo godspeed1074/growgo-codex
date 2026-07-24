@@ -118,9 +118,15 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     expandedSettlementPreview,
     currentPlayerMapState
   );
+  let currentCaptureSessionStore = createDefaultCaptureSessionStore(
+    expandedSettlementPreview,
+    currentPlayerMapState,
+    currentCaptureState
+  );
   let currentCapturePresentationState = createDefaultCapturePresentationState(
     expandedSettlementPreview,
-    currentCaptureState
+    currentCaptureState,
+    currentCaptureSessionStore
   );
   let currentDiscoveryState = createDefaultDiscoveryState(
     expandedSettlementPreview,
@@ -153,9 +159,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         width: canvas.width,
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
-        playerState: currentPlayerMapState,
-        capturePresentationState: currentCapturePresentationState,
-        discoveryState: currentDiscoveryState,
+      playerState: currentPlayerMapState,
+      captureSessionStore: currentCaptureSessionStore,
+      capturePresentationState: currentCapturePresentationState,
+      discoveryState: currentDiscoveryState,
         poiPresentationState: currentPoiPresentationState
       }
     );
@@ -171,6 +178,29 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       }
     );
     return renderableExpandedSettlementPreview;
+  };
+
+  const refreshCaptureSessionState = () => {
+    if (!renderableExpandedSettlementPreview || !currentPlayerMapState) {
+      return;
+    }
+    currentCaptureState = buildCaptureState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentOverlayInteractionState.selectedObject,
+      currentCaptureSessionStore.capturedObjectIds
+    );
+    currentCaptureSessionStore = buildCaptureSessionStore(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentCaptureState,
+      currentCaptureSessionStore.sessionId
+    );
+    currentCapturePresentationState = buildCapturePresentationState(
+      renderableExpandedSettlementPreview,
+      currentCaptureState,
+      currentCaptureSessionStore
+    );
   };
 
   const showHandler = () => {
@@ -214,6 +244,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
         height: canvas.height,
         interactionState: currentOverlayInteractionState,
         playerState: currentPlayerMapState,
+        captureSessionStore: currentCaptureSessionStore,
         capturePresentationState: currentCapturePresentationState,
         poiPresentationState: currentPoiPresentationState
       });
@@ -300,9 +331,22 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       expandedSettlementPreview,
       currentPlayerMapState
     );
-    currentCaptureState = createDefaultCaptureState(
+    currentCaptureState = buildCaptureState(
       expandedSettlementPreview,
-      currentPlayerMapState
+      currentPlayerMapState,
+      null,
+      currentCaptureSessionStore.capturedObjectIds
+    );
+    currentCaptureSessionStore = buildCaptureSessionStore(
+      expandedSettlementPreview,
+      currentPlayerMapState,
+      currentCaptureState,
+      currentCaptureSessionStore.sessionId
+    );
+    currentCapturePresentationState = buildCapturePresentationState(
+      expandedSettlementPreview,
+      currentCaptureState,
+      currentCaptureSessionStore
     );
     currentDiscoveryState = createDefaultDiscoveryState(
       expandedSettlementPreview,
@@ -409,6 +453,23 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       currentPlayerMapState,
       currentOverlayInteractionState.selectedObject
     );
+    currentCaptureState = buildCaptureState(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentOverlayInteractionState.selectedObject,
+      currentCaptureSessionStore.capturedObjectIds
+    );
+    currentCaptureSessionStore = buildCaptureSessionStore(
+      renderableExpandedSettlementPreview,
+      currentPlayerMapState,
+      currentCaptureState,
+      currentCaptureSessionStore.sessionId
+    );
+    currentCapturePresentationState = buildCapturePresentationState(
+      renderableExpandedSettlementPreview,
+      currentCaptureState,
+      currentCaptureSessionStore
+    );
     redrawExpandedSettlementPreviewIfMounted();
     const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
     setStatus(elements.status, message);
@@ -428,6 +489,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       detailPreviewState: currentAssetDetailPreviewState,
       playerInteractionState: currentPlayerInteractionState,
       captureState: currentCaptureState,
+      captureSessionStore: currentCaptureSessionStore,
       capturePresentationState: currentCapturePresentationState,
       discoveryState: currentDiscoveryState
     });
@@ -474,13 +536,22 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview,
           currentPlayerMapState
         );
-        currentCaptureState = createDefaultCaptureState(
+        currentCaptureState = buildCaptureState(
           expandedSettlementPreview,
-          currentPlayerMapState
+          currentPlayerMapState,
+          null,
+          currentCaptureSessionStore.capturedObjectIds
+        );
+        currentCaptureSessionStore = buildCaptureSessionStore(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureState,
+          currentCaptureSessionStore.sessionId
         );
         currentCapturePresentationState = createDefaultCapturePresentationState(
           expandedSettlementPreview,
-          currentCaptureState
+          currentCaptureState,
+          currentCaptureSessionStore
         );
         currentDiscoveryState = createDefaultDiscoveryState(
           expandedSettlementPreview,
@@ -508,6 +579,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview,
           currentOverlayInteractionState.selectedObject
         );
+        refreshCaptureSessionState();
         return currentAssetDetailPreviewState;
       },
       closeSettlementAssetDetailPreview() {
@@ -516,6 +588,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           null,
           "returning-to-map-view"
         );
+        refreshCaptureSessionState();
         return currentAssetDetailPreviewState;
       },
       currentSettlementAssetDetailPreviewState() {
@@ -526,6 +599,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           renderableExpandedSettlementPreview,
           "player-focused"
         );
+        refreshCaptureSessionState();
         redrawExpandedSettlementPreviewIfMounted();
         return currentPlayerMapState;
       },
@@ -534,6 +608,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           renderableExpandedSettlementPreview,
           "world-overview"
         );
+        refreshCaptureSessionState();
         redrawExpandedSettlementPreviewIfMounted();
         return currentPlayerMapState;
       },
@@ -563,11 +638,18 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           renderableExpandedSettlementPreview,
           currentPlayerMapState,
           currentOverlayInteractionState.selectedObject,
-          currentCaptureState.capturedObjectIds
+          currentCaptureSessionStore.capturedObjectIds
+        );
+        currentCaptureSessionStore = buildCaptureSessionStore(
+          renderableExpandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureState,
+          currentCaptureSessionStore.sessionId
         );
         currentCapturePresentationState = buildCapturePresentationState(
           renderableExpandedSettlementPreview,
-          currentCaptureState
+          currentCaptureState,
+          currentCaptureSessionStore
         );
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
@@ -577,15 +659,24 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           expandedSettlementPreview,
           currentPlayerMapState
         );
+        currentCaptureSessionStore = createDefaultCaptureSessionStore(
+          expandedSettlementPreview,
+          currentPlayerMapState,
+          currentCaptureState
+        );
         currentCapturePresentationState = createDefaultCapturePresentationState(
           expandedSettlementPreview,
-          currentCaptureState
+          currentCaptureState,
+          currentCaptureSessionStore
         );
         redrawExpandedSettlementPreviewIfMounted();
         return currentCaptureState;
       },
       currentSettlementCaptureState() {
         return currentCaptureState;
+      },
+      currentSettlementCaptureSessionStore() {
+        return currentCaptureSessionStore;
       },
       currentSettlementCapturePresentationState() {
         return currentCapturePresentationState;
@@ -627,6 +718,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentPoiState,
           currentPoiContentMetadata
         );
+        refreshCaptureSessionState();
         activeVisualSourceSummary = buildVisualSourceSummary({
           expandedSettlementPreview: renderableExpandedSettlementPreview,
           coastalWorldShowcase,
@@ -643,6 +735,7 @@ export function createAtlasBrowserDemoHarness(options = {}) {
           currentPoiState,
           currentPoiContentMetadata
         );
+        refreshCaptureSessionState();
         activeVisualSourceSummary = buildVisualSourceSummary({
           expandedSettlementPreview: renderableExpandedSettlementPreview,
           coastalWorldShowcase,
@@ -1979,9 +2072,37 @@ function createDefaultCaptureState(
   return buildCaptureState(expandedSettlementPreview, playerState, null, []);
 }
 
+function createDefaultCaptureSessionStore(
+  expandedSettlementPreview,
+  playerState,
+  captureState
+) {
+  if (!expandedSettlementPreview || !playerState || !captureState) {
+    return deepFreeze({
+      sessionId: "SETTLEMENT_CAPTURE_SESSION_INACTIVE",
+      playerId: playerState?.playerId ?? "PLAYER_MAP_INACTIVE",
+      worldId: playerState?.worldId ?? expandedSettlementPreview?.worldId ?? null,
+      capturedObjectIds: deepFreeze([]),
+      sessionState: "capture-session-idle",
+      validationResult: deepFreeze({
+        worldConsistencyValid: true,
+        objectIdentityValid: true,
+        deterministicRestoreValid: true,
+        cleanupResetBehaviorValid: true
+      })
+    });
+  }
+  return buildCaptureSessionStore(
+    expandedSettlementPreview,
+    playerState,
+    captureState
+  );
+}
+
 function createDefaultCapturePresentationState(
   expandedSettlementPreview,
-  captureState
+  captureState,
+  captureSessionStore = null
 ) {
   if (!expandedSettlementPreview || !captureState) {
     return deepFreeze({
@@ -2005,7 +2126,11 @@ function createDefaultCapturePresentationState(
       })
     });
   }
-  return buildCapturePresentationState(expandedSettlementPreview, captureState);
+  return buildCapturePresentationState(
+    expandedSettlementPreview,
+    captureState,
+    captureSessionStore
+  );
 }
 
 function createDefaultDiscoveryState(
@@ -2377,7 +2502,8 @@ function buildPoiPresentationState(
                   markerColor: "#6B7078",
                   labelColor: "#2C3138",
                   markerSize: 11
-                };
+  };
+
       const selected =
         resolvedPoiState.assetId != null &&
         objectInstance.assetId === resolvedPoiState.assetId;
@@ -2729,21 +2855,80 @@ function buildCaptureState(
   });
 }
 
+function buildCaptureSessionStore(
+  expandedSettlementPreview,
+  playerState,
+  captureState,
+  existingSessionId = null
+) {
+  if (!expandedSettlementPreview || !playerState || !captureState) {
+    return createDefaultCaptureSessionStore(
+      expandedSettlementPreview,
+      playerState,
+      captureState
+    );
+  }
+  const capturedObjectIds = deepFreeze(
+    [...new Set(
+      Array.isArray(captureState.capturedObjectIds)
+        ? captureState.capturedObjectIds.map((value) => String(value))
+        : []
+    )].sort()
+  );
+  return deepFreeze({
+    sessionId:
+      typeof existingSessionId === "string" && existingSessionId.length > 0
+        ? existingSessionId
+        : `${expandedSettlementPreview.worldId}::${playerState.playerId}::capture-session`,
+    playerId: playerState.playerId,
+    worldId: expandedSettlementPreview.worldId,
+    capturedObjectIds,
+    sessionState:
+      capturedObjectIds.length > 0 ? "capture-session-active" : "capture-session-idle",
+    validationResult: deepFreeze({
+      worldConsistencyValid: expandedSettlementPreview.worldId === playerState.worldId,
+      objectIdentityValid:
+        capturedObjectIds.every((objectId) =>
+          expandedSettlementPreview.objectInstances.some(
+            (objectInstance) => objectInstance.instanceId === objectId
+          )
+        ),
+      deterministicRestoreValid: true,
+      cleanupResetBehaviorValid: true
+    })
+  });
+}
+
 function buildCapturePresentationState(
   expandedSettlementPreview,
-  captureState
+  captureState,
+  captureSessionStore = null
 ) {
   if (!expandedSettlementPreview || !captureState) {
-    return createDefaultCapturePresentationState(expandedSettlementPreview, captureState);
+    return createDefaultCapturePresentationState(
+      expandedSettlementPreview,
+      captureState,
+      captureSessionStore
+    );
   }
+  const resolvedCaptureSessionStore =
+    captureSessionStore ??
+    buildCaptureSessionStore(
+      expandedSettlementPreview,
+      {
+        playerId: captureState.playerId,
+        worldId: expandedSettlementPreview.worldId
+      },
+      captureState
+    );
   const targetObject =
     expandedSettlementPreview.objectInstances.find(
       (objectInstance) => objectInstance.instanceId === captureState.targetObjectId
     ) ?? null;
   const capturedObjectIds = deepFreeze(
     [...new Set(
-      Array.isArray(captureState.capturedObjectIds)
-        ? captureState.capturedObjectIds.map((value) => String(value))
+      Array.isArray(resolvedCaptureSessionStore.capturedObjectIds)
+        ? resolvedCaptureSessionStore.capturedObjectIds.map((value) => String(value))
         : []
     )].sort()
   );
