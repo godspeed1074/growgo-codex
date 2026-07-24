@@ -4,6 +4,9 @@ import {
 import {
   validateGroundCoastalGrassRealGlbAtlasPreviewReplacement
 } from "../asset-factory/ground-coastal-grass-real-glb-atlas-preview-replacement.mjs";
+import {
+  validateGroundCoastalGrassRealGlbRendererPreviewTest
+} from "../asset-factory/ground-coastal-grass-real-glb-renderer-preview-test.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -41,6 +44,9 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     options.previewMountOptions ?? buildBrowserSafePreviewMountOptions();
   const realGroundPreviewBinding = resolveRealGroundPreviewBinding(
     options.realGroundPreviewBinding
+  );
+  const realGroundRenderBinding = resolveRealGroundRenderBinding(
+    options.realGroundRenderBinding
   );
 
   setStatus(elements.status, "Atlas preview ready. Use Show Atlas Preview.");
@@ -85,20 +91,24 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       width: canvas.width,
       height: canvas.height,
       placeholders: atlasBrowserDemoPlaceholderObjects,
-      realGroundPreviewBinding
+      realGroundPreviewBinding,
+      realGroundRenderBinding
     });
     setContainerVisibility(elements.previewContainer, true);
     setStatus(
       elements.status,
-      realGroundPreviewBinding
-        ? `Atlas preview visible with real GLB ground asset ${realGroundPreviewBinding.assetId}.`
+      realGroundRenderBinding?.verificationResult.glbExists
+        ? `Atlas preview visible with real GLB ground render asset ${realGroundRenderBinding.assetId}.`
+        : realGroundPreviewBinding
+          ? `Atlas preview visible with real GLB ground asset ${realGroundPreviewBinding.assetId}.`
         : "Atlas preview visible."
     );
 
     return Object.freeze({
       ok: true,
       previewMountResult: mountResult.previewMountResult,
-      realGroundPreviewBinding
+      realGroundPreviewBinding,
+      realGroundRenderBinding
     });
   };
 
@@ -152,7 +162,8 @@ export function drawAtlasPlaceholderScene(
     width = 960,
     height = 540,
     placeholders = atlasBrowserDemoPlaceholderObjects,
-    realGroundPreviewBinding = null
+    realGroundPreviewBinding = null,
+    realGroundRenderBinding = null
   } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
@@ -164,21 +175,40 @@ export function drawAtlasPlaceholderScene(
 
   drawContext.fillStyle = "#8dd17e";
   drawContext.fillRect(0, height * 0.68, width, height * 0.32);
-  if (realGroundPreviewBinding) {
+  const activeGroundBinding =
+    realGroundRenderBinding?.verificationResult.glbExists === true
+      ? realGroundRenderBinding
+      : realGroundPreviewBinding;
+
+  if (activeGroundBinding) {
     drawContext.fillStyle = "#1e5f34";
     drawContext.font = "bold 16px sans-serif";
     drawContext.textAlign = "left";
     drawContext.fillText(
-      realGroundPreviewBinding.assetId,
+      activeGroundBinding.assetId,
       width * 0.04,
       height * 0.73
     );
     drawContext.font = "12px sans-serif";
     drawContext.fillText(
-      `${realGroundPreviewBinding.lodSelection.currentLod} :: ${realGroundPreviewBinding.rendererPayload.rendererAssetReference.sourceType}`,
+      `${activeGroundBinding.lodSelection.currentLod} :: ${
+        activeGroundBinding.renderPayload?.rendererAssetReference?.sourceType ??
+        activeGroundBinding.rendererPayload.rendererAssetReference.sourceType
+      }`,
       width * 0.04,
       height * 0.77
     );
+    if (realGroundRenderBinding?.verificationResult.glbExists === true) {
+      drawContext.fillStyle = "#5ebf68";
+      drawContext.fillRect(width * 0.04, height * 0.79, width * 0.26, height * 0.025);
+      drawContext.fillStyle = "#133046";
+      drawContext.font = "11px sans-serif";
+      drawContext.fillText(
+        `${realGroundRenderBinding.renderPayload.primaryGlb}`,
+        width * 0.04,
+        height * 0.84
+      );
+    }
   }
 
   drawContext.fillStyle = "#86a9c8";
@@ -385,6 +415,27 @@ function resolveRealGroundPreviewBinding(rawBinding) {
   }
 
   return Object.freeze(validation.realGlbAtlasPreviewReplacement.definition);
+}
+
+function resolveRealGroundRenderBinding(rawBinding) {
+  if (!rawBinding) {
+    return null;
+  }
+
+  if (rawBinding.assetId && rawBinding.renderPayload && rawBinding.lodSelection) {
+    return Object.freeze(rawBinding);
+  }
+
+  const validation = validateGroundCoastalGrassRealGlbRendererPreviewTest(
+    rawBinding.definition,
+    rawBinding.options
+  );
+
+  if (!validation.ok) {
+    return null;
+  }
+
+  return Object.freeze(validation.realGlbRendererPreview.definition);
 }
 
 function stableNumericHash(value) {

@@ -26,6 +26,14 @@ const realGroundPreviewModule = await import(
     "ground-coastal-grass-real-glb-atlas-preview-replacement.mjs"
   )
 );
+const realGroundRenderModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "ground-coastal-grass-real-glb-renderer-preview-test.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -208,12 +216,48 @@ function buildRealGroundPreviewBinding() {
   return result.realGlbAtlasPreviewReplacement.definition;
 }
 
+function buildRealGroundRenderBinding({ glbExists = true } = {}) {
+  const definition =
+    realGroundRenderModule.groundCoastalGrassRealGlbRendererPreviewTestDefinition;
+  const existingPaths = glbExists
+    ? [
+        definition.glbReference.glbPath,
+        definition.glbReference.manifestReference,
+        definition.glbReference.metadataReference
+      ]
+    : [];
+
+  const result =
+    realGroundRenderModule.validateGroundCoastalGrassRealGlbRendererPreviewTest(
+      {
+        ...definition,
+        renderState: {
+          ...definition.renderState,
+          realGeometryReady: glbExists
+        },
+        verificationResult: {
+          ...definition.verificationResult,
+          glbExists
+        }
+      },
+      {
+        existsSync(candidatePath) {
+          return existingPaths.includes(candidatePath);
+        }
+      }
+    );
+
+  assert.equal(result.ok, true);
+  return result.realGlbRendererPreview.definition;
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", () => {
   const document = createMockDocument();
   const result = harnessModule.createAtlasBrowserDemoHarness({
     document,
     previewMountOptions: buildPreviewMountOptions(),
-    realGroundPreviewBinding: buildRealGroundPreviewBinding()
+    realGroundPreviewBinding: buildRealGroundPreviewBinding(),
+    realGroundRenderBinding: buildRealGroundRenderBinding()
   });
 
   assert.equal(result.ok, true);
@@ -225,7 +269,7 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
     harness.elements.previewContainer.dataset.previewVisible,
     "true"
   );
-  assert.match(harness.elements.status.textContent, /real GLB ground asset/i);
+  assert.match(harness.elements.status.textContent, /real GLB ground render asset/i);
   assert.equal(harness.elements.canvasContainer.children.length, 1);
   assert.ok(harness.canvas._context.commands.length > 0);
   assert.ok(
@@ -234,6 +278,23 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
         command[0] === "fillText" && command[1] === "GROUND_COASTAL_GRASS_001"
     )
   );
+});
+
+test("Atlas browser demo harness keeps placeholder fallback when real GLB render binding is unavailable", () => {
+  const document = createMockDocument();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions(),
+    realGroundPreviewBinding: buildRealGroundPreviewBinding(),
+    realGroundRenderBinding: buildRealGroundRenderBinding({ glbExists: false })
+  });
+
+  assert.equal(result.ok, true);
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showPreview();
+
+  assert.equal(shown.ok, true);
+  assert.match(harness.elements.status.textContent, /real GLB ground asset/i);
 });
 
 test("Atlas browser demo harness hides and cleans up the preview", () => {
