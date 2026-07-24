@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coastal Starter World Browser Showcase</title>
+  <title>Map World Browser Activation</title>
   <style>
     :root {
       color-scheme: light;
@@ -121,17 +121,18 @@
 <body>
   <main class="atlas-demo-shell">
     <header class="atlas-demo-header">
-      <h1>Coastal Starter World Showcase</h1>
+      <h1>Map World Browser Activation</h1>
       <span>Manual-only browser demo</span>
     </header>
 
     <div class="atlas-demo-controls">
-      <button id="atlasPreviewShowButton" type="button">Show Coastal World</button>
+      <button id="atlasPreviewLoadButton" type="button">Load Test Map World</button>
+      <button id="atlasPreviewShowButton" type="button">Activate Coastal World</button>
       <button id="atlasPreviewHideButton" type="button">Hide Coastal World</button>
     </div>
 
     <p id="atlasPreviewStatus" class="atlas-demo-status" aria-live="polite">
-      Coastal world showcase loading...
+      Map world browser activation loading...
     </p>
 
     <section
@@ -173,10 +174,14 @@
       }
       if (status) {
         status.textContent =
-          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to view the coastal showcase scene.";
+          "Open this demo through http://127.0.0.1:8765/atlas-browser-demo.html to load and activate the coastal map world scene.";
       }
+      const loadButton = document.getElementById("atlasPreviewLoadButton");
       if (showButton) {
         showButton.disabled = true;
+      }
+      if (loadButton) {
+        loadButton.disabled = true;
       }
       if (hideButton) {
         hideButton.disabled = true;
@@ -188,13 +193,12 @@
     } else {
       try {
         const moduleVersion = "2026-07-24-01";
-        const [{ createAtlasBrowserDemoHarness }, { createCoastalStarterWorldBrowserShowcase }] =
+        const [{ createMapWorldBrowserActivationSession }] =
           await Promise.all([
-            import(`./client/atlas-browser-demo-harness.mjs?v=${moduleVersion}`),
-            import(`./asset-factory/coastal-starter-world-browser-showcase.mjs?v=${moduleVersion}`)
+            import(`./asset-factory/map-world-browser-activation-foundation.mjs?v=${moduleVersion}`)
           ]);
-        const coastalWorldShowcase =
-          await createCoastalStarterWorldBrowserShowcase({
+        const activationSession = createMapWorldBrowserActivationSession({
+          loaderOptions: {
             existsSync() {
               return true;
             },
@@ -206,29 +210,65 @@
               return response.arrayBuffer();
             },
             allowFallbackShowcase: true
-          });
-        const harness = createAtlasBrowserDemoHarness({
-          coastalWorldShowcase
-        });
-        if (!harness.ok) {
-          if (status) {
-            status.textContent = harness.message;
           }
-          throw new Error(harness.message);
-        }
+        });
 
         if (launchNote) {
           launchNote.hidden = true;
         }
+        if (loadButton) {
+          loadButton.disabled = false;
+        }
         if (showButton) {
-          showButton.disabled = false;
+          showButton.disabled = true;
         }
         if (hideButton) {
-          hideButton.disabled = false;
+          hideButton.disabled = true;
         }
 
-        window.atlasBrowserDemoHarness = harness.atlasBrowserDemoHarness;
-        window.coastalStarterWorldBrowserShowcase = coastalWorldShowcase;
+        if (status) {
+          status.textContent =
+            "Ready to load a deterministic test map world. Use Load Test Map World first.";
+        }
+
+        loadButton?.addEventListener("click", async () => {
+          const loaded = await activationSession.loadTestMapWorld();
+          if (status) {
+            status.textContent = loaded.message;
+          }
+          if (loaded.ok) {
+            if (showButton) {
+              showButton.disabled = false;
+            }
+            if (hideButton) {
+              hideButton.disabled = true;
+            }
+            window.mapWorldBrowserActivation = loaded.mapWorldBrowserActivation;
+          }
+        });
+
+        showButton?.addEventListener("click", () => {
+          const activated = activationSession.activateCoastalWorld();
+          if (status) {
+            status.textContent = activated.message;
+          }
+          if (activated.ok && hideButton) {
+            hideButton.disabled = false;
+          }
+          if (activated.ok) {
+            window.mapWorldBrowserActivationAttachment =
+              activated.atlasPreviewAttachment;
+          }
+        });
+
+        hideButton?.addEventListener("click", () => {
+          const hidden = activationSession.hideCoastalWorld();
+          if (status) {
+            status.textContent = hidden.message;
+          }
+        });
+
+        window.mapWorldBrowserActivationSession = activationSession;
       } catch (error) {
         window.__lastAtlasBrowserDemoError = error;
         setLaunchMode();
