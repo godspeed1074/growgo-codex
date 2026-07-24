@@ -554,9 +554,17 @@
             <p>Expose the validated region, scene route, and map data route for the active world without changing generation behavior.</p>
           </header>
           <p id="atlasRoutingRegionLabel" class="atlas-demo-state-line" data-priority="primary">Active region: waiting for pipeline validation</p>
+          <p id="atlasRoutingSelectionLabel" class="atlas-demo-state-line" data-priority="accent">Selected region preview: waiting for region selection</p>
+          <p id="atlasRoutingProfileLabel" class="atlas-demo-state-line" data-priority="detail">Selected profiles: waiting for region selection</p>
           <p id="atlasRoutingSceneRouteLabel" class="atlas-demo-state-line" data-priority="detail">Scene route: waiting for pipeline validation</p>
           <p id="atlasRoutingMapDataLabel" class="atlas-demo-state-line" data-priority="detail">Map data profile: waiting for pipeline validation</p>
           <p id="atlasRoutingPipelineStatusLabel" class="atlas-demo-state-line" data-priority="accent">Pipeline status: waiting for pipeline validation</p>
+          <div class="atlas-demo-map-move-controls">
+            <button id="atlasRegionCoastalButton" type="button">Coastal Preview</button>
+            <button id="atlasRegionSuburbanButton" type="button">Suburban Preview</button>
+            <button id="atlasRegionRuralButton" type="button">Rural Preview</button>
+            <button id="atlasRegionUrbanButton" type="button">Urban Preview</button>
+          </div>
         </section>
 
         <section id="atlasDetailPanel" class="atlas-demo-source-panel" aria-label="Selected asset detail" hidden>
@@ -687,9 +695,15 @@
     const presentationProfileLabel = document.getElementById("atlasPresentationProfileLabel");
     const lightingProfileLabel = document.getElementById("atlasLightingProfileLabel");
     const routingRegionLabel = document.getElementById("atlasRoutingRegionLabel");
+    const routingSelectionLabel = document.getElementById("atlasRoutingSelectionLabel");
+    const routingProfileLabel = document.getElementById("atlasRoutingProfileLabel");
     const routingSceneRouteLabel = document.getElementById("atlasRoutingSceneRouteLabel");
     const routingMapDataLabel = document.getElementById("atlasRoutingMapDataLabel");
     const routingPipelineStatusLabel = document.getElementById("atlasRoutingPipelineStatusLabel");
+    const regionCoastalButton = document.getElementById("atlasRegionCoastalButton");
+    const regionSuburbanButton = document.getElementById("atlasRegionSuburbanButton");
+    const regionRuralButton = document.getElementById("atlasRegionRuralButton");
+    const regionUrbanButton = document.getElementById("atlasRegionUrbanButton");
     const demoStateLabel = document.getElementById("atlasDemoStateLabel");
     const presentationOverviewButton = document.getElementById("atlasPresentationOverviewButton");
     const presentationNeighbourhoodButton = document.getElementById("atlasPresentationNeighbourhoodButton");
@@ -773,11 +787,22 @@
       }
     };
 
-    const updateExpansionRoutingLabels = (routingState) => {
-      if (!routingState) {
+    const updateExpansionRoutingLabels = (
+      selectionState,
+      pipelineValidationState = null
+    ) => {
+      if (!selectionState) {
         if (routingRegionLabel) {
           routingRegionLabel.textContent =
             "Active region: waiting for pipeline validation";
+        }
+        if (routingSelectionLabel) {
+          routingSelectionLabel.textContent =
+            "Selected region preview: waiting for region selection";
+        }
+        if (routingProfileLabel) {
+          routingProfileLabel.textContent =
+            "Selected profiles: waiting for region selection";
         }
         if (routingSceneRouteLabel) {
           routingSceneRouteLabel.textContent =
@@ -793,21 +818,33 @@
         }
         return;
       }
+      const activeRegion =
+        pipelineValidationState?.regionResolution ??
+        selectionState.activeRegionResolution ??
+        null;
       if (routingRegionLabel) {
         routingRegionLabel.textContent =
-          `Active region: ${routingState.activeRegion ?? "none"} / ${routingState.regionType ?? "none"}`;
+          `Active region: ${activeRegion?.worldRegionId ?? "none"} / ${activeRegion?.regionType ?? "none"}`;
+      }
+      if (routingSelectionLabel) {
+        routingSelectionLabel.textContent =
+          `Selected region preview: ${selectionState.selectedRegionType ?? "none"} / source ${selectionState.selectionSource ?? "none"}`;
+      }
+      if (routingProfileLabel) {
+        routingProfileLabel.textContent =
+          `Selected profiles: ${selectionState.selectedGenerationProfile?.generationProfileId ?? "none"} / ${selectionState.selectedAssetProfile?.assetProfileId ?? "none"}`;
       }
       if (routingSceneRouteLabel) {
         routingSceneRouteLabel.textContent =
-          `Scene route: ${routingState.sceneRoute?.sceneRouteId ?? "none"} / ${routingState.sceneRoute?.sceneAssemblyId ?? "none"} / ${routingState.sceneRoute?.settlementGeneratorId ?? "none"}`;
+          `Scene route: ${selectionState.sceneRoute?.sceneRouteId ?? "none"} / ${selectionState.sceneRoute?.sceneProfile?.sceneAssemblyId ?? "none"} / ${selectionState.sceneRoute?.settlementProfile?.generatorId ?? "none"}`;
       }
       if (routingMapDataLabel) {
         routingMapDataLabel.textContent =
-          `Map data profile: ${routingState.mapDataRoute?.mapDataRouteId ?? "none"} / ${routingState.mapDataRoute?.providerProfileId ?? "none"} / ${routingState.mapDataRoute?.mapFixtureProfileId ?? "none"}`;
+          `Map data profile: ${selectionState.mapDataRoute?.mapDataRouteId ?? "none"} / ${selectionState.mapDataRoute?.providerProfile?.providerProfileId ?? "none"} / ${selectionState.mapDataRoute?.mapFixtureProfile?.mapFixtureProfileId ?? "none"}`;
       }
       if (routingPipelineStatusLabel) {
         routingPipelineStatusLabel.textContent =
-          `Pipeline status: ${routingState.pipelineStatus} / demo match ${routingState.validationResult?.demoStateMatchesPipelineStateValid === true ? "ready" : "pending"} / coastal unchanged ${routingState.validationResult?.coastalWorldUnchangedValid === true ? "yes" : "no"}`;
+          `Pipeline status: ${selectionState.selectedRegionType === "coastal" ? "active-coastal-route" : "demo-preview-fallback"} / deterministic ${selectionState.validationResult?.deterministicRoutingValid === true ? "yes" : "no"} / fallback ${selectionState.validationResult?.safeFallbackValid === true ? "safe" : "pending"} / coastal unchanged ${selectionState.validationResult?.coastalUnchangedValid === true ? "yes" : "no"}`;
       }
     };
 
@@ -1455,6 +1492,11 @@
             worldExpansionPipelineValidationFoundationDefinition
           },
           {
+            createWorldExpansionRegionSelectionFoundation,
+            selectWorldExpansionRegionProfile,
+            worldExpansionRegionSelectionFoundationDefinition
+          },
+          {
             buildMapWorldSettlementRealMapOverlayFoundation
           }
         ] =
@@ -1462,6 +1504,7 @@
             import(`./asset-factory/map-world-real-location-preview-foundation.mjs?v=${moduleVersion}`),
             import(`./asset-factory/map-world-settlement-atlas-scene-expansion.mjs?v=${moduleVersion}`),
             import(`./asset-factory/world-expansion-pipeline-validation-foundation.mjs?v=${moduleVersion}`),
+            import(`./asset-factory/world-expansion-region-selection-foundation.mjs?v=${moduleVersion}`),
             import(`./asset-factory/map-world-settlement-real-map-overlay-foundation.mjs?v=${moduleVersion}`)
           ]);
         const previewSession = createMapWorldRealLocationPreviewSession({
@@ -1489,53 +1532,32 @@
               allowFallbackShowcase: true
             }
           );
+        const worldExpansionRegionSelectionFoundation =
+          await createWorldExpansionRegionSelectionFoundation(
+            worldExpansionRegionSelectionFoundationDefinition,
+            {
+              existsSync() {
+                return true;
+              },
+              async loadArrayBuffer() {
+                return createSyntheticGlb();
+              },
+              allowFallbackShowcase: true
+            }
+          );
+        let worldExpansionRegionSelectionState =
+          worldExpansionRegionSelectionFoundation;
         setBrowserDemoState({
           status: "ready",
           lastError: null,
           activeVisualSource: buildEmptyVisualSourceState(),
-          worldExpansionDemoRoutingState: null
+          worldExpansionDemoRoutingState: null,
+          worldExpansionRegionSelectionState
         });
         updateVisualSourceLabels(window.__atlasBrowserDemoState.activeVisualSource);
         updateExpansionRoutingLabels(
+          worldExpansionRegionSelectionState,
           worldExpansionPipelineValidation
-            ? {
-                activeRegion:
-                  worldExpansionPipelineValidation.regionResolution.worldRegionId,
-                regionType:
-                  worldExpansionPipelineValidation.regionResolution.regionType,
-                mapDataRoute: {
-                  mapDataRouteId:
-                    worldExpansionPipelineValidation.mapDataRoute.mapDataRouteId,
-                  providerProfileId:
-                    worldExpansionPipelineValidation.mapDataRoute.providerProfile
-                      .providerProfileId,
-                  mapFixtureProfileId:
-                    worldExpansionPipelineValidation.mapDataRoute.mapFixtureProfile
-                      .mapFixtureProfileId
-                },
-                sceneRoute: {
-                  sceneRouteId:
-                    worldExpansionPipelineValidation.sceneRoute.sceneRouteId,
-                  sceneAssemblyId:
-                    worldExpansionPipelineValidation.sceneRoute.sceneProfile
-                      .sceneAssemblyId,
-                  settlementGeneratorId:
-                    worldExpansionPipelineValidation.sceneRoute.settlementProfile
-                      .generatorId
-                },
-                pipelineStatus:
-                  worldExpansionPipelineValidation.validationResult.fullChainValid ===
-                  true
-                    ? "validated-active"
-                    : "validation-incomplete",
-                validationResult: {
-                  coastalWorldUnchangedValid:
-                    worldExpansionPipelineValidation.validationResult
-                      .coastalLocationUnchangedValid === true,
-                  demoStateMatchesPipelineStateValid: false
-                }
-              }
-            : null
         );
 
         if (launchNote) {
@@ -1604,13 +1626,17 @@
             explorationProgressPresentationState: null,
             landmarkShowcaseState: null,
             locationExperienceState: null,
-            worldExpansionDemoRoutingState: null
+            worldExpansionDemoRoutingState: null,
+            worldExpansionRegionSelectionState
           });
           if (atlasPreviewAttachment?.atlasBrowserDemoHarness?.clearWorldExpansionDemoRoutingState) {
             atlasPreviewAttachment.atlasBrowserDemoHarness.clearWorldExpansionDemoRoutingState();
           }
           updateVisualSourceLabels(nextState.activeVisualSource);
-          updateExpansionRoutingLabels(null);
+          updateExpansionRoutingLabels(
+            worldExpansionRegionSelectionState,
+            worldExpansionPipelineValidation
+          );
           updatePoiLabels(null);
           updatePoiPresentationLabels(null);
           updateOverlayInteractionLabels({
@@ -1747,10 +1773,14 @@
               harness.currentSettlementLandmarkShowcaseState?.() ?? null,
             locationExperienceState:
               harness.currentSettlementLocationExperienceState?.() ?? null,
-            worldExpansionDemoRoutingState: demoRoutingState
+            worldExpansionDemoRoutingState: demoRoutingState,
+            worldExpansionRegionSelectionState
           });
           updateVisualSourceLabels(activeVisualSource);
-          updateExpansionRoutingLabels(demoRoutingState);
+          updateExpansionRoutingLabels(
+            worldExpansionRegionSelectionState,
+            worldExpansionPipelineValidation
+          );
           updatePoiLabels(
             harness.currentSettlementPoiState?.() ?? combinedOverlay.poiState
           );
@@ -1808,6 +1838,42 @@
           updateHarnessDemoState();
           return window.__atlasBrowserDemoState;
         };
+
+        const applyRegionSelectionPreview = (selectedRegionType) => {
+          worldExpansionRegionSelectionState = selectWorldExpansionRegionProfile(
+            worldExpansionRegionSelectionFoundation,
+            selectedRegionType,
+            { selectionSource: "demo-region-selector" }
+          );
+          setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            worldExpansionRegionSelectionState
+          });
+          updateExpansionRoutingLabels(
+            worldExpansionRegionSelectionState,
+            worldExpansionPipelineValidation
+          );
+          if (status) {
+            status.textContent =
+              worldExpansionRegionSelectionState.selectedRegionType === "coastal"
+                ? "Coastal routing preview selected. The active world remains the current coastal world."
+                : `${worldExpansionRegionSelectionState.selectedRegionType} routing preview selected. The active world remains coastal while the route preview falls back safely.`;
+          }
+          return worldExpansionRegionSelectionState;
+        };
+
+        regionCoastalButton?.addEventListener("click", () =>
+          applyRegionSelectionPreview("coastal")
+        );
+        regionSuburbanButton?.addEventListener("click", () =>
+          applyRegionSelectionPreview("suburban")
+        );
+        regionRuralButton?.addEventListener("click", () =>
+          applyRegionSelectionPreview("rural")
+        );
+        regionUrbanButton?.addEventListener("click", () =>
+          applyRegionSelectionPreview("urban")
+        );
 
         const applyLoadedGeneratedWorldPreview = ({
           mapWorldRealLocationPreview,
