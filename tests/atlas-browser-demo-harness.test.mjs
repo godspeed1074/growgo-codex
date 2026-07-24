@@ -50,6 +50,14 @@ const realGroundRuntimeLoaderModule = await import(
     "ground-coastal-grass-minimal-glb-runtime-loader.mjs"
   )
 );
+const realGroundMeshRenderTestModule = await import(
+  path.resolve(
+    import.meta.dirname,
+    "..",
+    "asset-factory",
+    "ground-coastal-grass-real-glb-mesh-visual-render-test.mjs"
+  )
+);
 
 function stableNumericHash(value) {
   let hash = 0;
@@ -350,16 +358,25 @@ async function buildRealGroundRuntimeLoader() {
   return result.glbRuntimeLoader.definition;
 }
 
+async function buildRealGroundMeshRenderTest() {
+  const runtimeLoaderDefinition = await buildRealGroundRuntimeLoader();
+  return realGroundMeshRenderTestModule.createGroundCoastalGrassRealGlbMeshVisualRenderTest(
+    runtimeLoaderDefinition
+  );
+}
+
 test("Atlas browser demo harness mounts and draws a visible placeholder preview", async () => {
   const document = createMockDocument();
   const realGroundRuntimeLoader = await buildRealGroundRuntimeLoader();
+  const realGroundMeshRenderTest = await buildRealGroundMeshRenderTest();
   const result = harnessModule.createAtlasBrowserDemoHarness({
     document,
     previewMountOptions: buildPreviewMountOptions(),
     realGroundPreviewBinding: buildRealGroundPreviewBinding(),
     realGroundRenderBinding: buildRealGroundRenderBinding(),
     realGroundMeshPreview: buildRealGroundMeshPreview(),
-    realGroundRuntimeLoader
+    realGroundRuntimeLoader,
+    realGroundMeshRenderTest
   });
 
   assert.equal(result.ok, true);
@@ -371,7 +388,7 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
     harness.elements.previewContainer.dataset.previewVisible,
     "true"
   );
-  assert.match(harness.elements.status.textContent, /runtime GLB mesh/i);
+  assert.match(harness.elements.status.textContent, /rendered GLB mesh/i);
   assert.equal(harness.elements.canvasContainer.children.length, 1);
   assert.ok(harness.canvas._context.commands.length > 0);
   assert.ok(
@@ -388,8 +405,8 @@ test("Atlas browser demo harness mounts and draws a visible placeholder preview"
   assert.ok(
     harness.canvas._context.commands.some(
       (command) =>
-        command[0] === "fillText" && String(command[1]).includes("runtime-glb-mesh-preview")
-    )
+        command[0] === "fillText" && String(command[1]).includes("verified :: GrassBase")
+      )
   );
 });
 

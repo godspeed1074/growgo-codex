@@ -13,6 +13,9 @@ import {
 import {
   createGroundCoastalGrassMinimalGlbRuntimeLoader
 } from "../asset-factory/ground-coastal-grass-minimal-glb-runtime-loader.mjs";
+import {
+  createGroundCoastalGrassRealGlbMeshVisualRenderTest
+} from "../asset-factory/ground-coastal-grass-real-glb-mesh-visual-render-test.mjs";
 
 export const atlasBrowserDemoPlaceholderObjects = Object.freeze([
   "LIGHTHOUSE_PLACEHOLDER",
@@ -60,6 +63,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   const realGroundRuntimeLoader = resolveRealGroundRuntimeLoader(
     options.realGroundRuntimeLoader
   );
+  const realGroundMeshRenderTest = resolveRealGroundMeshRenderTest(
+    options.realGroundMeshRenderTest,
+    realGroundRuntimeLoader
+  );
 
   setStatus(elements.status, "Atlas preview ready. Use Show Atlas Preview.");
   setContainerVisibility(elements.previewContainer, false);
@@ -106,12 +113,15 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       realGroundPreviewBinding,
       realGroundRenderBinding,
       realGroundMeshPreview,
-      realGroundRuntimeLoader
+      realGroundRuntimeLoader,
+      realGroundMeshRenderTest
     });
     setContainerVisibility(elements.previewContainer, true);
     setStatus(
       elements.status,
-      realGroundRuntimeLoader?.validationResult.glbAvailable
+      realGroundMeshRenderTest?.verificationResult.actualGlbGeometryRendered
+        ? `Atlas preview visible with rendered GLB mesh ${realGroundMeshRenderTest.assetId}.`
+        : realGroundRuntimeLoader?.validationResult.glbAvailable
         ? `Atlas preview visible with runtime GLB mesh ${realGroundRuntimeLoader.assetId}.`
         : realGroundMeshPreview?.validationResult.glbAvailable
         ? `Atlas preview visible with real GLB mesh geometry ${realGroundMeshPreview.assetId}.`
@@ -128,7 +138,8 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       realGroundPreviewBinding,
       realGroundRenderBinding,
       realGroundMeshPreview,
-      realGroundRuntimeLoader
+      realGroundRuntimeLoader,
+      realGroundMeshRenderTest
     });
   };
 
@@ -185,7 +196,8 @@ export function drawAtlasPlaceholderScene(
     realGroundPreviewBinding = null,
     realGroundRenderBinding = null,
     realGroundMeshPreview = null,
-    realGroundRuntimeLoader = null
+    realGroundRuntimeLoader = null,
+    realGroundMeshRenderTest = null
   } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
@@ -198,6 +210,9 @@ export function drawAtlasPlaceholderScene(
   drawContext.fillStyle = "#8dd17e";
   drawContext.fillRect(0, height * 0.68, width, height * 0.32);
   const activeGroundBinding =
+    realGroundMeshRenderTest?.verificationResult?.actualGlbGeometryRendered === true
+      ? realGroundMeshRenderTest
+      :
     realGroundRuntimeLoader?.validationResult.glbAvailable === true
       ? realGroundRuntimeLoader
       :
@@ -225,7 +240,21 @@ export function drawAtlasPlaceholderScene(
       width * 0.04,
       height * 0.77
     );
-    if (realGroundRuntimeLoader?.validationResult.glbAvailable === true) {
+    if (realGroundMeshRenderTest?.verificationResult?.actualGlbGeometryRendered === true) {
+      drawProjectedGroundMesh(drawContext, {
+        width,
+        height,
+        meshData: realGroundMeshRenderTest.geometryPayload,
+        fillStyle: realGroundMeshRenderTest.materialPayload.fillStyle
+      });
+      drawContext.fillStyle = "#133046";
+      drawContext.font = "11px sans-serif";
+      drawContext.fillText(
+        `${realGroundMeshRenderTest.renderState.currentState} :: ${realGroundMeshRenderTest.materialPayload.primaryMaterial}`,
+        width * 0.04,
+        height * 0.84
+      );
+    } else if (realGroundRuntimeLoader?.validationResult.glbAvailable === true) {
       drawProjectedGroundMesh(drawContext, {
         width,
         height,
@@ -309,7 +338,7 @@ export function clearAtlasPlaceholderScene(drawContext, width, height) {
   }
 }
 
-export function drawProjectedGroundMesh(drawContext, { width, height, meshData }) {
+export function drawProjectedGroundMesh(drawContext, { width, height, meshData, fillStyle = "#4d9b57" }) {
   if (!drawContext || !meshData || !Array.isArray(meshData.projectedVertices)) {
     return;
   }
@@ -319,7 +348,7 @@ export function drawProjectedGroundMesh(drawContext, { width, height, meshData }
   const originX = width * 0.04;
   const originY = height * 0.8;
 
-  drawContext.fillStyle = "#4d9b57";
+  drawContext.fillStyle = fillStyle;
   drawContext.beginPath();
   meshData.projectedVertices.forEach((vertex, index) => {
     const x = originX + vertex.x * scaleX;
@@ -570,6 +599,31 @@ function resolveRealGroundRuntimeLoader(rawBinding) {
   try {
     return Object.freeze(
       createGroundCoastalGrassMinimalGlbRuntimeLoader(rawBinding.definition)
+    );
+  } catch {
+    return null;
+  }
+}
+
+function resolveRealGroundMeshRenderTest(rawBinding, runtimeLoaderDefinition) {
+  if (!rawBinding && !runtimeLoaderDefinition) {
+    return null;
+  }
+
+  if (
+    rawBinding?.assetId &&
+    rawBinding?.geometryPayload &&
+    rawBinding?.materialPayload &&
+    rawBinding?.verificationResult
+  ) {
+    return Object.freeze(rawBinding);
+  }
+
+  try {
+    return Object.freeze(
+      createGroundCoastalGrassRealGlbMeshVisualRenderTest(
+        rawBinding?.definition ?? runtimeLoaderDefinition
+      )
     );
   } catch {
     return null;
