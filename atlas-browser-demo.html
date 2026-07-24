@@ -651,6 +651,15 @@
       return nextState;
     };
 
+    const buildEmptyVisualSourceState = () => ({
+      sourceType: "none",
+      sceneId: null,
+      worldId: null,
+      objectInstanceCount: 0,
+      visibilityState: "hidden",
+      active: false
+    });
+
     const updateVisualSourceLabels = (summary) => {
       if (!summary) {
         return;
@@ -1210,14 +1219,7 @@
         setBrowserDemoState({
           status: "ready",
           lastError: null,
-          activeVisualSource: {
-            sourceType: "none",
-            sceneId: null,
-            worldId: null,
-            objectInstanceCount: 0,
-            visibilityState: "hidden",
-            active: false
-          }
+          activeVisualSource: buildEmptyVisualSourceState()
         });
         updateVisualSourceLabels(window.__atlasBrowserDemoState.activeVisualSource);
 
@@ -1251,6 +1253,142 @@
           const demoPresentationState = harness.currentDemoPresentationState();
           updateDemoPresentationLabels(demoPresentationState);
           return demoPresentationState;
+        };
+
+        const clearOverlayAttachmentState = ({
+          mapWorldRealLocationPreview = null,
+          statusMessage = null
+        } = {}) => {
+          window.mapWorldRealLocationPreviewAttachment = null;
+          window.mapWorldSettlementAtlasSceneExpansion = null;
+          window.mapWorldSettlementRealMapOverlayFoundation = null;
+          if (mapWorldRealLocationPreview) {
+            window.mapWorldRealLocationPreview = mapWorldRealLocationPreview;
+            updatePreviewLabels(mapWorldRealLocationPreview);
+          }
+          const nextState = setBrowserDemoState({
+            ...(window.__atlasBrowserDemoState ?? {}),
+            status: statusMessage ?? window.__atlasBrowserDemoState?.status ?? "ready",
+            lastError: null,
+            activeVisualSource: buildEmptyVisualSourceState(),
+            combinedOverlay: null,
+            poiState: null,
+            poiContentMetadata: null,
+            poiPresentationState: null,
+            overlayInteractionState: null,
+            selectedOverlayObject: null,
+            detailPreviewState: null,
+            playerState: null,
+            playerInteractionState: null,
+            captureState: null,
+            captureSessionStore: null,
+            captureSessionSummaryState: null,
+            sessionExperienceState: null,
+            capturePresentationState: null,
+            discoveryState: null
+          });
+          updateVisualSourceLabels(nextState.activeVisualSource);
+          updatePoiLabels(null);
+          updatePoiPresentationLabels(null);
+          updateOverlayInteractionLabels({
+            selectedObject: null,
+            cameraFocus: {
+              currentState: "world-anchor",
+              targetAsset: null,
+              worldId: mapWorldRealLocationPreview?.resolvedWorld?.worldId ?? null,
+              sceneId: null,
+              mapCenterCoordinate:
+                mapWorldRealLocationPreview?.mapWorldLiveMapFoundation?.centerCoordinate ?? {
+                  latitude: 0,
+                  longitude: 0
+                }
+            }
+          });
+          updateDetailPreviewLabels(null);
+          updatePlayerPresenceLabels(null);
+          updatePlayerInteractionLabels(null);
+          updateCaptureLabels(null);
+          updateCaptureSessionLabels(null);
+          updateExplorationSummaryLabels(null);
+          updateSessionExperienceLabels(null, null);
+          updateCapturePresentationLabels(null);
+          updateDiscoveryLabels(null);
+          if (lightingProfileLabel) {
+            lightingProfileLabel.textContent = "Lighting profile: waiting for selection";
+          }
+          if (demoStateLabel) {
+            demoStateLabel.textContent = "Demo state: waiting for generated world";
+          }
+          return nextState;
+        };
+
+        const applyLoadedGeneratedWorldPreview = ({
+          mapWorldRealLocationPreview,
+          atlasPreviewAttachment,
+          settlementScene,
+          statusMessage
+        }) => {
+          const combinedOverlay =
+            buildMapWorldSettlementRealMapOverlayFoundation({
+              mapWorldLiveMapFoundation:
+                mapWorldRealLocationPreview.mapWorldLiveMapFoundation,
+              settlementScene
+            });
+          const visualSourceSummary =
+            atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
+
+          updatePreviewLabels(mapWorldRealLocationPreview);
+          updateCombinedOverlayLabels(combinedOverlay);
+          window.mapWorldRealLocationPreview = mapWorldRealLocationPreview;
+          window.mapWorldRealLocationPreviewAttachment = atlasPreviewAttachment;
+          window.mapWorldSettlementAtlasSceneExpansion = settlementScene;
+          window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
+
+          setBrowserDemoState({
+            status: statusMessage,
+            lastError: null,
+            activeVisualSource: {
+              ...visualSourceSummary,
+              sourceType: "combined-map-world-overlay"
+            },
+            combinedOverlay,
+            poiState: combinedOverlay.poiState,
+            poiContentMetadata: combinedOverlay.poiContentMetadata,
+            poiPresentationState: combinedOverlay.poiPresentationState,
+            overlayInteractionState: combinedOverlay.interactionState,
+            selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
+            detailPreviewState: combinedOverlay.detailState,
+            playerState: combinedOverlay.playerState,
+            playerInteractionState: combinedOverlay.playerInteractionState,
+            captureState: combinedOverlay.captureState,
+            captureSessionStore: combinedOverlay.captureSessionStore,
+            captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
+            sessionExperienceState: combinedOverlay.sessionExperienceState,
+            capturePresentationState: combinedOverlay.capturePresentationState,
+            discoveryState: combinedOverlay.discoveryState
+          });
+          updateVisualSourceLabels({
+            ...visualSourceSummary,
+            sourceType: "combined-map-world-overlay"
+          });
+          updatePoiLabels(combinedOverlay.poiState);
+          updatePoiPresentationLabels(combinedOverlay.poiPresentationState);
+          updateOverlayInteractionLabels(combinedOverlay.interactionState);
+          updateDetailPreviewLabels(
+            combinedOverlay.detailState,
+            combinedOverlay.poiContentMetadata
+          );
+          updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
+          updateCaptureLabels(combinedOverlay.captureState);
+          updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
+          updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
+          updateSessionExperienceLabels(
+            combinedOverlay.sessionExperienceState,
+            combinedOverlay.interactionState
+          );
+          updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
+          updateDiscoveryLabels(combinedOverlay.discoveryState);
+          updateHarnessDemoState();
         };
 
         const applyPresentationProfile = (presentationProfile) => {
@@ -1332,6 +1470,10 @@
           }
           setBrowserDemoState({ status: loaded.message, lastError: null });
           if (loaded.ok) {
+            clearOverlayAttachmentState({
+              mapWorldRealLocationPreview: loaded.mapWorldRealLocationPreview,
+              statusMessage: loaded.message
+            });
             updatePreviewLabels(loaded.mapWorldRealLocationPreview);
             if (showButton) {
               showButton.disabled = false;
@@ -1357,6 +1499,10 @@
           }
           setBrowserDemoState({ status: moved.message, lastError: null });
           if (moved.ok) {
+            clearOverlayAttachmentState({
+              mapWorldRealLocationPreview: moved.mapWorldRealLocationPreview,
+              statusMessage: moved.message
+            });
             updatePreviewLabels(moved.mapWorldRealLocationPreview);
             if (toggleButton) {
               toggleButton.disabled = true;
@@ -1375,6 +1521,10 @@
           }
           setBrowserDemoState({ status: zoomed.message, lastError: null });
           if (zoomed.ok) {
+            clearOverlayAttachmentState({
+              mapWorldRealLocationPreview: zoomed.mapWorldRealLocationPreview,
+              statusMessage: zoomed.message
+            });
             updatePreviewLabels(zoomed.mapWorldRealLocationPreview);
             if (toggleButton) {
               toggleButton.disabled = true;
@@ -1499,6 +1649,10 @@
           }
           setBrowserDemoState({ status: activated.message, lastError: null });
           if (activated.ok) {
+            clearOverlayAttachmentState({
+              mapWorldRealLocationPreview: activated.mapWorldRealLocationPreview,
+              statusMessage: activated.message
+            });
             updatePreviewLabels(activated.mapWorldRealLocationPreview);
             if (toggleButton) {
               toggleButton.disabled = false;
@@ -1534,93 +1688,40 @@
             }
             setBrowserDemoState({ status: toggled.message, lastError: null });
             if (toggled.ok) {
-              updatePreviewLabels(toggled.mapWorldRealLocationPreview);
-              const combinedOverlay =
-                buildMapWorldSettlementRealMapOverlayFoundation({
-                  mapWorldLiveMapFoundation:
-                    toggled.mapWorldRealLocationPreview.mapWorldLiveMapFoundation,
-                  settlementScene: expandedSettlementPreview
-                });
-              updateCombinedOverlayLabels(combinedOverlay);
-            if (hideButton) {
-              hideButton.disabled = false;
-            }
-            setDemoControlsDisabled(false);
-            if (playerFocusButton) {
-              playerFocusButton.disabled = false;
-            }
-            if (playerInteractButton) {
-              playerInteractButton.disabled = false;
-            }
-            if (captureButton) {
-              captureButton.disabled = false;
-            }
-            if (worldOverviewButton) {
-              worldOverviewButton.disabled = false;
-            }
-            if (interactionClearButton) {
-              interactionClearButton.disabled = false;
-            }
-            if (captureClearButton) {
-              captureClearButton.disabled = false;
-            }
-            if (discoverButton) {
-              discoverButton.disabled = false;
-            }
-            if (discoveryClearButton) {
-              discoveryClearButton.disabled = false;
-            }
-            window.mapWorldRealLocationPreview = toggled.mapWorldRealLocationPreview;
-            window.mapWorldRealLocationPreviewAttachment = toggled.atlasPreviewAttachment;
-            window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
-            window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
-              const visualSourceSummary =
-                toggled.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
-              setBrowserDemoState({
-                status: toggled.message,
-                lastError: null,
-                activeVisualSource: {
-                  ...visualSourceSummary,
-                  sourceType: "combined-map-world-overlay"
-                },
-                combinedOverlay,
-                poiState: combinedOverlay.poiState,
-                poiContentMetadata: combinedOverlay.poiContentMetadata,
-                poiPresentationState: combinedOverlay.poiPresentationState,
-                overlayInteractionState: combinedOverlay.interactionState,
-                selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
-                detailPreviewState: combinedOverlay.detailState,
-                playerState: combinedOverlay.playerState,
-                playerInteractionState: combinedOverlay.playerInteractionState,
-                captureState: combinedOverlay.captureState,
-                captureSessionStore: combinedOverlay.captureSessionStore,
-                captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
-                sessionExperienceState: combinedOverlay.sessionExperienceState,
-                capturePresentationState: combinedOverlay.capturePresentationState,
-                discoveryState: combinedOverlay.discoveryState
+              applyLoadedGeneratedWorldPreview({
+                mapWorldRealLocationPreview: toggled.mapWorldRealLocationPreview,
+                atlasPreviewAttachment: toggled.atlasPreviewAttachment,
+                settlementScene: expandedSettlementPreview,
+                statusMessage: toggled.message
               });
-              updateVisualSourceLabels({
-                ...visualSourceSummary,
-                sourceType: "combined-map-world-overlay"
-              });
-              updatePoiLabels(combinedOverlay.poiState);
-              updatePoiPresentationLabels(combinedOverlay.poiPresentationState);
-              updateOverlayInteractionLabels(combinedOverlay.interactionState);
-              updateDetailPreviewLabels(
-                combinedOverlay.detailState,
-                combinedOverlay.poiContentMetadata
-              );
-              updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
-              updateCaptureLabels(combinedOverlay.captureState);
-              updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
-              updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
-              updateSessionExperienceLabels(
-                combinedOverlay.sessionExperienceState,
-                combinedOverlay.interactionState
-              );
-              updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
-              updateDiscoveryLabels(combinedOverlay.discoveryState);
-              updateHarnessDemoState();
+              if (hideButton) {
+                hideButton.disabled = false;
+              }
+              setDemoControlsDisabled(false);
+              if (playerFocusButton) {
+                playerFocusButton.disabled = false;
+              }
+              if (playerInteractButton) {
+                playerInteractButton.disabled = false;
+              }
+              if (captureButton) {
+                captureButton.disabled = false;
+              }
+              if (worldOverviewButton) {
+                worldOverviewButton.disabled = false;
+              }
+              if (interactionClearButton) {
+                interactionClearButton.disabled = false;
+              }
+              if (captureClearButton) {
+                captureClearButton.disabled = false;
+              }
+              if (discoverButton) {
+                discoverButton.disabled = false;
+              }
+              if (discoveryClearButton) {
+                discoveryClearButton.disabled = false;
+              }
             }
           })().catch((error) => {
             setBrowserDemoState({
@@ -1638,13 +1739,18 @@
         });
 
         hideButton?.addEventListener("click", () => {
+          const currentVisualSource =
+            window.__atlasBrowserDemoState?.activeVisualSource ?? buildEmptyVisualSourceState();
           const hidden = previewSession.hidePreviewLayer();
           if (status) {
             status.textContent = hidden.message;
           }
           setBrowserDemoState({ status: hidden.message, lastError: null });
           if (hidden.ok) {
-            updatePreviewLabels(hidden.mapWorldRealLocationPreview);
+            clearOverlayAttachmentState({
+              mapWorldRealLocationPreview: hidden.mapWorldRealLocationPreview,
+              statusMessage: hidden.message
+            });
             if (hideButton) {
               hideButton.disabled = true;
             }
@@ -1673,35 +1779,12 @@
             if (discoveryClearButton) {
               discoveryClearButton.disabled = true;
             }
-            window.mapWorldRealLocationPreview = hidden.mapWorldRealLocationPreview;
-            const visualSourceSummary =
-              hidden.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
-            setBrowserDemoState({
-              status: hidden.message,
-              lastError: null,
-              activeVisualSource: visualSourceSummary,
-              poiState: null,
-              poiContentMetadata: null,
-              poiPresentationState: null,
-              selectedOverlayObject: null,
-              overlayInteractionState: null,
-              detailPreviewState: null,
-              playerState: null,
-              playerInteractionState: null,
-              captureSessionSummaryState: null,
-              sessionExperienceState: null,
-              discoveryState: null
-            });
+            const visualSourceSummary = {
+              ...currentVisualSource,
+              visibilityState: "hidden",
+              active: false
+            };
             updateVisualSourceLabels(visualSourceSummary);
-            updatePoiLabels(null);
-            updatePoiPresentationLabels(null);
-            updateDetailPreviewLabels(null);
-            updatePlayerPresenceLabels(null);
-            updatePlayerInteractionLabels(null);
-            updateExplorationSummaryLabels(null);
-            updateSessionExperienceLabels(null, null);
-            updateCaptureLabels(null);
-            updateDiscoveryLabels(null);
             if (lightingProfileLabel) {
               lightingProfileLabel.textContent = "Lighting profile: waiting for selection";
             }
@@ -2047,68 +2130,12 @@
           if (!loadedWorld.ok) {
             throw new Error(loadedWorld.message);
           }
-
-          const combinedOverlay =
-            buildMapWorldSettlementRealMapOverlayFoundation({
-              mapWorldLiveMapFoundation:
-                loadedWorld.mapWorldRealLocationPreview.mapWorldLiveMapFoundation,
-              settlementScene: expandedSettlementPreview
-            });
-
-          updatePreviewLabels(loadedWorld.mapWorldRealLocationPreview);
-          updateCombinedOverlayLabels(combinedOverlay);
-          window.mapWorldRealLocationPreview = loadedWorld.mapWorldRealLocationPreview;
-          window.mapWorldRealLocationPreviewAttachment = loadedWorld.atlasPreviewAttachment;
-          window.mapWorldSettlementAtlasSceneExpansion = expandedSettlementPreview;
-          window.mapWorldSettlementRealMapOverlayFoundation = combinedOverlay;
-
-          const visualSourceSummary =
-            loadedWorld.atlasPreviewAttachment.atlasBrowserDemoHarness.currentVisualSourceSummary();
-          setBrowserDemoState({
-            status: loadedWorld.message,
-            lastError: null,
-            activeVisualSource: {
-              ...visualSourceSummary,
-              sourceType: "combined-map-world-overlay"
-            },
-            combinedOverlay,
-            poiState: combinedOverlay.poiState,
-            poiContentMetadata: combinedOverlay.poiContentMetadata,
-            poiPresentationState: combinedOverlay.poiPresentationState,
-            overlayInteractionState: combinedOverlay.interactionState,
-            selectedOverlayObject: combinedOverlay.interactionState.selectedObject,
-            detailPreviewState: combinedOverlay.detailState,
-            playerState: combinedOverlay.playerState,
-            playerInteractionState: combinedOverlay.playerInteractionState,
-            captureState: combinedOverlay.captureState,
-            captureSessionStore: combinedOverlay.captureSessionStore,
-            captureSessionSummaryState: combinedOverlay.captureSessionSummaryState,
-            sessionExperienceState: combinedOverlay.sessionExperienceState,
-            capturePresentationState: combinedOverlay.capturePresentationState,
-            discoveryState: combinedOverlay.discoveryState
+          applyLoadedGeneratedWorldPreview({
+            mapWorldRealLocationPreview: loadedWorld.mapWorldRealLocationPreview,
+            atlasPreviewAttachment: loadedWorld.atlasPreviewAttachment,
+            settlementScene: expandedSettlementPreview,
+            statusMessage: loadedWorld.message
           });
-          updateVisualSourceLabels({
-            ...visualSourceSummary,
-            sourceType: "combined-map-world-overlay"
-          });
-          updatePoiLabels(combinedOverlay.poiState);
-          updatePoiPresentationLabels(combinedOverlay.poiPresentationState);
-          updateOverlayInteractionLabels(combinedOverlay.interactionState);
-          updateDetailPreviewLabels(
-            combinedOverlay.detailState,
-            combinedOverlay.poiContentMetadata
-          );
-          updatePlayerInteractionLabels(combinedOverlay.playerInteractionState);
-          updateCaptureLabels(combinedOverlay.captureState);
-          updateCaptureSessionLabels(combinedOverlay.captureSessionStore);
-          updateExplorationSummaryLabels(combinedOverlay.captureSessionSummaryState);
-          updateSessionExperienceLabels(
-            combinedOverlay.sessionExperienceState,
-            combinedOverlay.interactionState
-          );
-          updateCapturePresentationLabels(combinedOverlay.capturePresentationState);
-          updateDiscoveryLabels(combinedOverlay.discoveryState);
-          updateHarnessDemoState();
           setDemoControlsDisabled(false);
           if (showButton) {
             showButton.disabled = false;
