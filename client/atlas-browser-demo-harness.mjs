@@ -19,6 +19,13 @@ const expandedSettlementCategoryOrder = Object.freeze([
   "landmark"
 ]);
 
+const selectableExpandedSettlementAssetIds = new Set([
+  "BUILDING_COASTAL_COTTAGE_001",
+  "TREE_EUCALYPTUS_001",
+  "ROAD_COASTAL_001",
+  "LIGHTHOUSE_ISLAND_ROCKY_001"
+]);
+
 const coastalShowcasePlacementByAssetId = Object.freeze({
   GROUND_COASTAL_GRASS_001: Object.freeze({ x: 0, y: 0, scale: 320 }),
   TREE_EUCALYPTUS_001: Object.freeze({ x: -150, y: -28, scale: 110 }),
@@ -76,6 +83,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   );
   let mounted = false;
   let previewSession = null;
+  let lastExpandedSettlementLayout = null;
+  let currentOverlayInteractionState = createDefaultOverlayInteractionState(
+    expandedSettlementPreview
+  );
   let activeVisualSourceSummary = buildVisualSourceSummary({
     expandedSettlementPreview,
     coastalWorldShowcase,
@@ -128,9 +139,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
     }
 
     if (expandedSettlementPreview) {
-      drawExpandedSettlementPreview(drawContext, expandedSettlementPreview, {
+      lastExpandedSettlementLayout = drawExpandedSettlementPreview(drawContext, expandedSettlementPreview, {
         width: canvas.width,
-        height: canvas.height
+        height: canvas.height,
+        interactionState: currentOverlayInteractionState
       });
     } else if (coastalWorldShowcase) {
       drawCoastalWorldShowcase(drawContext, coastalWorldShowcase, {
@@ -194,6 +206,10 @@ export function createAtlasBrowserDemoHarness(options = {}) {
 
   const hideHandler = () => {
     clearAtlasPlaceholderScene(drawContext, canvas.width, canvas.height);
+    lastExpandedSettlementLayout = null;
+    currentOverlayInteractionState = createDefaultOverlayInteractionState(
+      expandedSettlementPreview
+    );
     const cleanup = previewSession.unmountPreview();
     setContainerVisibility(elements.previewContainer, false);
     setStatus(elements.status, "Atlas preview hidden.");
@@ -218,6 +234,84 @@ export function createAtlasBrowserDemoHarness(options = {}) {
   elements.showButton.addEventListener("click", showHandler);
   elements.hideButton.addEventListener("click", hideHandler);
 
+  const hoverHandler = ({ x, y } = {}) => {
+    if (!expandedSettlementPreview || !lastExpandedSettlementLayout) {
+      return freezeSelectionFailure(
+        "overlay_interaction_unavailable",
+        "Expanded settlement overlay interaction is unavailable."
+      );
+    }
+    const resolvedObject = resolveSelectableObjectAtCanvasPoint(
+      lastExpandedSettlementLayout,
+      x,
+      y
+    );
+    currentOverlayInteractionState = buildOverlayInteractionState(
+      expandedSettlementPreview,
+      {
+        selectedObject: currentOverlayInteractionState.selectedObject,
+        hoveredObject: resolvedObject
+      }
+    );
+    return Object.freeze({
+      ok: true,
+      errorCode: null,
+      message: resolvedObject
+        ? `Hovering ${resolvedObject.assetId}.`
+        : "Overlay hover cleared.",
+      interactionState: currentOverlayInteractionState
+    });
+  };
+
+  const selectHandler = ({ x, y } = {}) => {
+    if (!expandedSettlementPreview || !lastExpandedSettlementLayout) {
+      return freezeSelectionFailure(
+        "overlay_interaction_unavailable",
+        "Expanded settlement overlay interaction is unavailable."
+      );
+    }
+    const resolvedObject = resolveSelectableObjectAtCanvasPoint(
+      lastExpandedSettlementLayout,
+      x,
+      y
+    );
+    if (!resolvedObject) {
+      return freezeSelectionFailure(
+        "overlay_object_not_found",
+        "No selectable settlement object was found at that map position."
+      );
+    }
+    currentOverlayInteractionState = buildOverlayInteractionState(
+      expandedSettlementPreview,
+      {
+        selectedObject: resolvedObject,
+        hoveredObject: resolvedObject
+      }
+    );
+    lastExpandedSettlementLayout = drawExpandedSettlementPreview(
+      drawContext,
+      expandedSettlementPreview,
+      {
+        width: canvas.width,
+        height: canvas.height,
+        interactionState: currentOverlayInteractionState
+      }
+    );
+    const message = `Selected ${resolvedObject.assetId} and focused the settlement camera.`;
+    setStatus(elements.status, message);
+    return Object.freeze({
+      ok: true,
+      errorCode: null,
+      message,
+      selectedObject: deepFreeze({
+        instanceId: resolvedObject.instanceId,
+        assetId: resolvedObject.assetId,
+        category: resolvedObject.category
+      }),
+      interactionState: currentOverlayInteractionState
+    });
+  };
+
     return Object.freeze({
       ok: true,
       errorCode: null,
@@ -236,6 +330,35 @@ export function createAtlasBrowserDemoHarness(options = {}) {
       hidePreview: hideHandler,
       showCoastalWorld: showHandler,
       hideCoastalWorld: hideHandler,
+      hoverSettlementObjectAtCanvasPoint: hoverHandler,
+      selectSettlementObjectAtCanvasPoint: selectHandler,
+      clearSettlementInteraction() {
+        currentOverlayInteractionState = createDefaultOverlayInteractionState(
+          expandedSettlementPreview
+        );
+        if (expandedSettlementPreview && mounted) {
+          lastExpandedSettlementLayout = drawExpandedSettlementPreview(
+            drawContext,
+            expandedSettlementPreview,
+            {
+              width: canvas.width,
+              height: canvas.height,
+              interactionState: currentOverlayInteractionState
+            }
+          );
+        }
+        return currentOverlayInteractionState;
+      },
+      currentSettlementInteractionState() {
+        return currentOverlayInteractionState;
+      },
+      currentSettlementSelectableObjects() {
+        return deepFreeze(
+          [...(lastExpandedSettlementLayout?.renderedObjects ?? [])].filter((object) =>
+            selectableExpandedSettlementAssetIds.has(object.assetId)
+          )
+        );
+      },
       currentVisualSourceSummary() {
         return activeVisualSourceSummary;
       },
@@ -592,7 +715,7 @@ export function createExpandedSettlementVisualPreviewBinding(rawScene) {
 export function drawExpandedSettlementPreview(
   drawContext,
   expandedSettlementPreview,
-  { width = 960, height = 540 } = {}
+  { width = 960, height = 540, interactionState = null } = {}
 ) {
   if (!drawContext || typeof drawContext.fillRect !== "function") {
     throw new Error("Expanded settlement preview draw requires a 2D canvas context.");
@@ -600,6 +723,9 @@ export function drawExpandedSettlementPreview(
 
   const palette = resolveExpandedSettlementPalette(expandedSettlementPreview);
   const zoomProfile = resolveExpandedSettlementZoomProfile(expandedSettlementPreview);
+  const resolvedInteractionState =
+    interactionState ?? createDefaultOverlayInteractionState(expandedSettlementPreview);
+  const selectedObjectId = resolvedInteractionState?.selectedObject?.instanceId ?? null;
   const objectInstances = sortExpandedSettlementInstances(
     filterExpandedSettlementInstancesByZoom(
       expandedSettlementPreview.objectInstances ?? [],
@@ -645,25 +771,42 @@ export function drawExpandedSettlementPreview(
     height * 0.115
   );
 
+  const renderedObjects = [];
   for (const instance of objectInstances) {
-    drawExpandedSettlementInstance(drawContext, instance, bounds, {
+    const projectedObject = drawExpandedSettlementInstance(drawContext, instance, bounds, {
       width,
       height,
       palette,
       scaling,
-      cameraState: expandedSettlementPreview.cameraState,
-      styling
+      cameraState: resolvedInteractionState.cameraFocus
+        ? {
+            ...expandedSettlementPreview.cameraState,
+            focusPoint: resolvedInteractionState.cameraFocus.focusPoint,
+            targetAsset: resolvedInteractionState.cameraFocus.targetAsset
+          }
+        : expandedSettlementPreview.cameraState,
+      styling,
+      selected: instance.instanceId === selectedObjectId
     });
+    if (projectedObject) {
+      renderedObjects.push(projectedObject);
+    }
   }
 
   drawContext.fillStyle = "#163046";
   drawContext.font = "12px sans-serif";
   drawContext.textAlign = "left";
   drawContext.fillText(
-    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${expandedSettlementPreview.cameraState.targetAsset}`,
+    `${objectInstances.length}/${expandedSettlementPreview.objectInstances.length} scene objects :: ${expandedSettlementPreview.visualScaling.densityProfile} :: focus ${resolvedInteractionState.cameraFocus?.targetAsset ?? expandedSettlementPreview.cameraState.targetAsset}`,
     width * 0.03,
     height * 0.96
   );
+
+  return deepFreeze({
+    bounds,
+    renderedObjects: deepFreeze(renderedObjects),
+    interactionState: resolvedInteractionState
+  });
 }
 
 function drawShowcaseRenderable(
@@ -784,7 +927,7 @@ function drawExpandedSettlementInstance(
   drawContext,
   instance,
   bounds,
-  { width, height, palette, scaling, cameraState, styling }
+  { width, height, palette, scaling, cameraState, styling, selected = false }
 ) {
   if (instance.category === "road") {
     const start = projectExpandedSettlementPoint(
@@ -828,7 +971,25 @@ function drawExpandedSettlementInstance(
       styling?.roadAppearance?.edgeColor ?? "#D9E0E6";
     drawContext.fillRect(start.x - 1, start.y - 1, 2, 2);
     drawContext.fillRect(end.x - 1, end.y - 1, 2, 2);
-    return;
+    if (selected) {
+      drawContext.strokeStyle = "#FFF2A8";
+      drawContext.lineWidth = Math.max(6, 6 * Number(scaling?.blockScale ?? 1));
+      if (typeof drawContext.stroke === "function") {
+        drawContext.beginPath();
+        drawContext.moveTo(start.x, start.y);
+        drawContext.lineTo(end.x, end.y);
+        drawContext.stroke();
+      }
+    }
+    return deepFreeze({
+      instanceId: instance.instanceId,
+      assetId: instance.assetId,
+      category: instance.category,
+      hitShape: "segment",
+      start,
+      end,
+      hitRadius: Math.max(10, (instance.geometry.width ?? 8) * 1.4)
+    });
   }
 
   const projected = projectExpandedSettlementPoint(
@@ -840,18 +1001,34 @@ function drawExpandedSettlementInstance(
     cameraState
   );
   if (instance.category === "vegetation") {
+    const radius = Math.max(6, 7 * Number(scaling?.blockScale ?? 1));
     drawContext.fillStyle =
       styling?.vegetationAppearance?.canopyColor ?? palette.vegetation;
     drawContext.beginPath();
     drawContext.arc(
       projected.x,
       projected.y,
-      Math.max(6, 7 * Number(scaling?.blockScale ?? 1)),
+      radius,
       0,
       Math.PI * 2
     );
     drawContext.fill();
-    return;
+    if (selected) {
+      drawContext.strokeStyle = "#FFF2A8";
+      if (typeof drawContext.stroke === "function") {
+        drawContext.beginPath();
+        drawContext.arc(projected.x, projected.y, radius + 4, 0, Math.PI * 2);
+        drawContext.stroke();
+      }
+    }
+    return deepFreeze({
+      instanceId: instance.instanceId,
+      assetId: instance.assetId,
+      category: instance.category,
+      hitShape: "circle",
+      center: projected,
+      hitRadius: radius + 4
+    });
   }
 
   if (instance.category === "landmark") {
@@ -881,7 +1058,27 @@ function drawExpandedSettlementInstance(
       drawContext.lineTo(projected.x + 24 * lighthouseScale, projected.y - 36 * lighthouseScale);
       drawContext.stroke();
     }
-    return;
+    if (selected) {
+      drawContext.strokeStyle = "#FFF2A8";
+      if (typeof drawContext.stroke === "function") {
+        drawContext.strokeRect(
+          projected.x - 14 * lighthouseScale,
+          projected.y - 56 * lighthouseScale,
+          28 * lighthouseScale,
+          68 * lighthouseScale
+        );
+      }
+    }
+    return deepFreeze({
+      instanceId: instance.instanceId,
+      assetId: instance.assetId,
+      category: instance.category,
+      hitShape: "rect",
+      x: projected.x - 14 * lighthouseScale,
+      y: projected.y - 56 * lighthouseScale,
+      width: 28 * lighthouseScale,
+      height: 68 * lighthouseScale
+    });
   }
 
   const houseScale = Number(scaling?.blockScale ?? 1);
@@ -909,6 +1106,27 @@ function drawExpandedSettlementInstance(
     32 * houseScale,
     3 * houseScale
   );
+  if (selected) {
+    drawContext.strokeStyle = "#FFF2A8";
+    if (typeof drawContext.stroke === "function") {
+      drawContext.strokeRect(
+        projected.x - 16 * houseScale,
+        projected.y - 26 * houseScale,
+        32 * houseScale,
+        38 * houseScale
+      );
+    }
+  }
+  return deepFreeze({
+    instanceId: instance.instanceId,
+    assetId: instance.assetId,
+    category: instance.category,
+    hitShape: "rect",
+    x: projected.x - 16 * houseScale,
+    y: projected.y - 26 * houseScale,
+    width: 32 * houseScale,
+    height: 38 * houseScale
+  });
 }
 
 function collectExpandedSettlementPoints(objectInstances) {
@@ -1001,6 +1219,184 @@ function filterExpandedSettlementInstancesByZoom(objectInstances, zoomProfile) {
   const allowedCategories =
     visibleCategoriesByProfile[zoomProfile] ?? visibleCategoriesByProfile.normal;
   return objectInstances.filter((instance) => allowedCategories.has(instance.category));
+}
+
+function createDefaultOverlayInteractionState(expandedSettlementPreview) {
+  if (!expandedSettlementPreview) {
+    return deepFreeze({
+      selectedObject: null,
+      hoverState: deepFreeze({
+        currentState: "idle",
+        hoveredObjectId: null
+      }),
+      interactionMode: "inactive",
+      cameraFocus: null,
+      validationResult: deepFreeze({
+        objectIdentityValid: true,
+        selectionPersistenceValid: true,
+        cameraFocusValid: true,
+        cleanupValid: true,
+        deterministicBehaviourValid: true
+      })
+    });
+  }
+  return deepFreeze({
+    selectedObject: null,
+    hoverState: deepFreeze({
+      currentState: "idle",
+      hoveredObjectId: null,
+      hoveredAssetId: null
+    }),
+    interactionMode: "map-overlay-selection",
+    cameraFocus: deepFreeze({
+      currentState: "world-anchor",
+      targetAsset: expandedSettlementPreview.cameraState.targetAsset,
+      focusPoint: deepFreeze({
+        ...expandedSettlementPreview.cameraState.focusPoint
+      }),
+      synchronizedWithMap: true,
+      mapCenterCoordinate: deepFreeze({
+        ...expandedSettlementPreview.cameraState.mapCenterCoordinate
+      })
+    }),
+    validationResult: deepFreeze({
+      objectIdentityValid: true,
+      selectionPersistenceValid: true,
+      cameraFocusValid: true,
+      cleanupValid: true,
+      deterministicBehaviourValid: true
+    })
+  });
+}
+
+function buildOverlayInteractionState(
+  expandedSettlementPreview,
+  { selectedObject = null, hoveredObject = null } = {}
+) {
+  const cameraFocusObject = selectedObject ?? hoveredObject ?? null;
+  return deepFreeze({
+    selectedObject:
+      selectedObject == null
+        ? null
+        : deepFreeze({
+            instanceId: selectedObject.instanceId,
+            assetId: selectedObject.assetId,
+            category: selectedObject.category
+          }),
+    hoverState: deepFreeze({
+      currentState: hoveredObject ? "hovering" : "idle",
+      hoveredObjectId: hoveredObject?.instanceId ?? null,
+      hoveredAssetId: hoveredObject?.assetId ?? null
+    }),
+    interactionMode: "map-overlay-selection",
+    cameraFocus: deepFreeze({
+      currentState: cameraFocusObject ? "selected-object" : "world-anchor",
+      targetAsset:
+        cameraFocusObject?.assetId ?? expandedSettlementPreview.cameraState.targetAsset,
+      focusPoint: deepFreeze({
+        ...(cameraFocusObject?.center ??
+          cameraFocusObject?.position ??
+          expandedSettlementPreview.cameraState.focusPoint)
+      }),
+      synchronizedWithMap: true,
+      mapCenterCoordinate: deepFreeze({
+        ...expandedSettlementPreview.cameraState.mapCenterCoordinate
+      })
+    }),
+    validationResult: deepFreeze({
+      objectIdentityValid:
+        selectedObject == null ||
+        selectableExpandedSettlementAssetIds.has(selectedObject.assetId),
+      selectionPersistenceValid: true,
+      cameraFocusValid: true,
+      cleanupValid: true,
+      deterministicBehaviourValid: true
+    })
+  });
+}
+
+function resolveSelectableObjectAtCanvasPoint(layout, x, y) {
+  if (!layout || !Array.isArray(layout.renderedObjects)) {
+    return null;
+  }
+  const candidates = layout.renderedObjects.filter((object) =>
+    selectableExpandedSettlementAssetIds.has(object.assetId)
+  );
+  const hitMatches = candidates.filter((object) =>
+    doesCanvasPointHitObject(object, x, y)
+  );
+  if (hitMatches.length === 0) {
+    return null;
+  }
+  return hitMatches.sort(compareSelectableObjects)[0];
+}
+
+function doesCanvasPointHitObject(object, x, y) {
+  if (!Number.isFinite(x) || !Number.isFinite(y)) {
+    return false;
+  }
+  if (object.hitShape === "circle") {
+    return Math.hypot(x - object.center.x, y - object.center.y) <= object.hitRadius;
+  }
+  if (object.hitShape === "rect") {
+    return (
+      x >= object.x &&
+      x <= object.x + object.width &&
+      y >= object.y &&
+      y <= object.y + object.height
+    );
+  }
+  if (object.hitShape === "segment") {
+    return pointToSegmentDistance(
+      x,
+      y,
+      object.start.x,
+      object.start.y,
+      object.end.x,
+      object.end.y
+    ) <= object.hitRadius;
+  }
+  return false;
+}
+
+function compareSelectableObjects(left, right) {
+  const priority = new Map([
+    ["landmark", 0],
+    ["building", 1],
+    ["vegetation", 2],
+    ["road", 3]
+  ]);
+  const leftPriority = priority.get(left.category) ?? 9;
+  const rightPriority = priority.get(right.category) ?? 9;
+  if (leftPriority !== rightPriority) {
+    return leftPriority - rightPriority;
+  }
+  return String(left.instanceId).localeCompare(String(right.instanceId));
+}
+
+function pointToSegmentDistance(px, py, x1, y1, x2, y2) {
+  const deltaX = x2 - x1;
+  const deltaY = y2 - y1;
+  if (deltaX === 0 && deltaY === 0) {
+    return Math.hypot(px - x1, py - y1);
+  }
+  const projected =
+    ((px - x1) * deltaX + (py - y1) * deltaY) /
+    (deltaX * deltaX + deltaY * deltaY);
+  const clamped = Math.max(0, Math.min(1, projected));
+  const closestX = x1 + clamped * deltaX;
+  const closestY = y1 + clamped * deltaY;
+  return Math.hypot(px - closestX, py - closestY);
+}
+
+function freezeSelectionFailure(errorCode, message) {
+  return Object.freeze({
+    ok: false,
+    errorCode,
+    message,
+    selectedObject: null,
+    interactionState: null
+  });
 }
 
 export function drawProjectedGroundMesh(drawContext, { width, height, meshData, fillStyle = "#4d9b57" }) {

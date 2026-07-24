@@ -611,3 +611,39 @@ test("Atlas browser demo harness prefers the expanded settlement preview and dra
     )
   );
 });
+
+test("Atlas browser demo harness selects supported overlay objects deterministically", async () => {
+  const document = createMockDocument();
+  const expandedSettlementScene = await buildExpandedSettlementScene();
+  const result = harnessModule.createAtlasBrowserDemoHarness({
+    document,
+    previewMountOptions: buildPreviewMountOptions(),
+    expandedSettlementPreview: expandedSettlementScene
+  });
+
+  assert.equal(result.ok, true);
+  const harness = result.atlasBrowserDemoHarness;
+  const shown = harness.showCoastalWorld();
+  assert.equal(shown.ok, true);
+  const lighthouseObject = harness
+    .currentSettlementSelectableObjects()
+    .find((object) => object.assetId === "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.ok(lighthouseObject);
+
+  const selection = harness.selectSettlementObjectAtCanvasPoint({
+    x: lighthouseObject.x + lighthouseObject.width / 2,
+    y: lighthouseObject.y + lighthouseObject.height / 2
+  });
+
+  assert.equal(selection.ok, true);
+  assert.equal(selection.selectedObject.assetId, "LIGHTHOUSE_ISLAND_ROCKY_001");
+  assert.equal(
+    harness.currentSettlementInteractionState().cameraFocus.targetAsset,
+    "LIGHTHOUSE_ISLAND_ROCKY_001"
+  );
+  assert.equal(
+    harness.currentSettlementInteractionState().cameraFocus.currentState,
+    "selected-object"
+  );
+  assert.match(harness.elements.status.textContent, /Selected LIGHTHOUSE_ISLAND_ROCKY_001/i);
+});

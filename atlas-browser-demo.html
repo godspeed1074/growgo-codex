@@ -427,6 +427,58 @@
       });
     };
 
+    const updateOverlayInteractionLabels = (interactionState) => {
+      if (!interactionState) {
+        return;
+      }
+      const selectedObject = interactionState.selectedObject;
+      const cameraFocus = interactionState.cameraFocus;
+      if (worldLayerLabel) {
+        worldLayerLabel.textContent = selectedObject
+          ? `World layer: combined overlay visible with ${selectedObject.assetId} selected`
+          : "World layer: combined overlay visible on map";
+      }
+      if (worldCameraLabel) {
+        worldCameraLabel.textContent =
+          `World camera: ${cameraFocus.currentState} focused on ${cameraFocus.targetAsset ?? "settlement overview"} at ${cameraFocus.mapCenterCoordinate.latitude.toFixed(6)}, ${cameraFocus.mapCenterCoordinate.longitude.toFixed(6)}`;
+      }
+      if (worldPreviewLabel) {
+        worldPreviewLabel.textContent = selectedObject
+          ? `Preview: selected ${selectedObject.assetId} in ${cameraFocus.sceneId ?? "settlement scene"}`
+          : `Preview: combined map + settlement overlay for ${cameraFocus.sceneId ?? "settlement scene"}`;
+      }
+    };
+
+    const resolveOverlayHarness = () =>
+      window.mapWorldRealLocationPreviewAttachment?.atlasBrowserDemoHarness ?? null;
+
+    const resolveCanvasCoordinatesFromMapEvent = (event) => {
+      if (!mapSurface) {
+        return null;
+      }
+      const rect = mapSurface.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) {
+        return null;
+      }
+      return {
+        x: Number((((event.clientX - rect.left) / rect.width) * 960).toFixed(2)),
+        y: Number((((event.clientY - rect.top) / rect.height) * 540).toFixed(2))
+      };
+    };
+
+    const syncInteractionStateToBrowserState = (interactionState) => {
+      if (!interactionState) {
+        return;
+      }
+      const currentState = window.__atlasBrowserDemoState ?? {};
+      setBrowserDemoState({
+        ...currentState,
+        selectedOverlayObject: interactionState.selectedObject,
+        overlayInteractionState: interactionState
+      });
+      updateOverlayInteractionLabels(interactionState);
+    };
+
     const setMovementDisabled = (disabled) => {
       northButton && (northButton.disabled = disabled);
       southButton && (southButton.disabled = disabled);
@@ -609,10 +661,32 @@
 
         if (mapSurface) {
           let dragStart = null;
+          let hoverFrame = null;
 
           mapSurface.addEventListener("pointerdown", (event) => {
             dragStart = { x: event.clientX, y: event.clientY };
             mapSurface.dataset.dragging = "true";
+          });
+
+          mapSurface.addEventListener("pointermove", (event) => {
+            const harness = resolveOverlayHarness();
+            if (!harness || mapSurface.dataset.dragging === "true") {
+              return;
+            }
+            if (hoverFrame != null) {
+              cancelAnimationFrame(hoverFrame);
+            }
+            hoverFrame = requestAnimationFrame(() => {
+              hoverFrame = null;
+              const canvasPoint = resolveCanvasCoordinatesFromMapEvent(event);
+              if (!canvasPoint) {
+                return;
+              }
+              const hovered = harness.hoverSettlementObjectAtCanvasPoint(canvasPoint);
+              if (hovered.ok) {
+                syncInteractionStateToBrowserState(hovered.interactionState);
+              }
+            });
           });
 
           mapSurface.addEventListener("pointerup", async (event) => {
@@ -625,6 +699,25 @@
             mapSurface.dataset.dragging = "false";
             const longitudeDelta = Number((deltaX / 1000).toFixed(6));
             const latitudeDelta = Number((-deltaY / 1000).toFixed(6));
+            const isTapSelection =
+              Math.abs(deltaX) < 6 &&
+              Math.abs(deltaY) < 6 &&
+              window.__atlasBrowserDemoState?.activeVisualSource?.sourceType ===
+                "combined-map-world-overlay";
+            if (isTapSelection) {
+              const harness = resolveOverlayHarness();
+              const canvasPoint = resolveCanvasCoordinatesFromMapEvent(event);
+              if (harness && canvasPoint) {
+                const selection = harness.selectSettlementObjectAtCanvasPoint(canvasPoint);
+                if (status) {
+                  status.textContent = selection.message;
+                }
+                if (selection.ok) {
+                  syncInteractionStateToBrowserState(selection.interactionState);
+                }
+                return;
+              }
+            }
             if (longitudeDelta !== 0 || latitudeDelta !== 0) {
               await moveMapCenter(latitudeDelta, longitudeDelta);
             }
@@ -633,6 +726,10 @@
           mapSurface.addEventListener("pointerleave", () => {
             dragStart = null;
             mapSurface.dataset.dragging = "false";
+            if (hoverFrame != null) {
+              cancelAnimationFrame(hoverFrame);
+              hoverFrame = null;
+            }
           });
 
           mapSurface.addEventListener("wheel", (event) => {
@@ -708,12 +805,15 @@
                   ...visualSourceSummary,
                   sourceType: "combined-map-world-overlay"
                 },
-                combinedOverlay
+                combinedOverlay,
+                overlayInteractionState: combinedOverlay.interactionState,
+                selectedOverlayObject: combinedOverlay.interactionState.selectedObject
               });
               updateVisualSourceLabels({
                 ...visualSourceSummary,
                 sourceType: "combined-map-world-overlay"
               });
+              updateOverlayInteractionLabels(combinedOverlay.interactionState);
             }
           })().catch((error) => {
             setBrowserDemoState({
@@ -747,7 +847,9 @@
             setBrowserDemoState({
               status: hidden.message,
               lastError: null,
-              activeVisualSource: visualSourceSummary
+              activeVisualSource: visualSourceSummary,
+              selectedOverlayObject: null,
+              overlayInteractionState: null
             });
             updateVisualSourceLabels(visualSourceSummary);
           }

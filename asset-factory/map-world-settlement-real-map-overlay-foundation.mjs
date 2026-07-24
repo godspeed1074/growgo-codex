@@ -19,6 +19,7 @@ export const mapWorldSettlementRealMapOverlayFoundationRequiredFields = Object.f
   "mapBaseLayer",
   "settlementLayer",
   "alignmentState",
+  "interactionState",
   "cameraSync",
   "validationResult"
 ]);
@@ -109,6 +110,10 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
         settlementScene.validationResult.deterministicSceneOutputValid === true,
       overlayMode: "map-and-settlement-combined-view"
     }),
+    interactionState: createMapWorldSettlementOverlayInteractionState({
+      settlementScene,
+      mapWorldLiveMapFoundation
+    }),
     cameraSync: deepFreeze({
       synchronized: true,
       mapZoomLevel: mapWorldLiveMapFoundation.zoomLevel,
@@ -136,6 +141,9 @@ export function buildMapWorldSettlementRealMapOverlayFoundation({
           true,
       deterministicPlacementValid:
         settlementScene.validationResult.deterministicSceneOutputValid === true,
+      objectIdentityValid: true,
+      selectionPersistenceValid: true,
+      cameraFocusValid: true,
       mapVisibleUnderlayValid: true,
       combinedViewReady: true
     }),
@@ -217,6 +225,24 @@ export function validateMapWorldSettlementRealMapOverlayFoundation(rawOverlay) {
         "Map world settlement real map overlay foundation deterministicPlacementValid must be true."
       );
     }
+    if (!overlay.validationResult.objectIdentityValid) {
+      throw createValidationError(
+        "object_identity_invalid",
+        "Map world settlement real map overlay foundation objectIdentityValid must be true."
+      );
+    }
+    if (!overlay.validationResult.selectionPersistenceValid) {
+      throw createValidationError(
+        "selection_persistence_invalid",
+        "Map world settlement real map overlay foundation selectionPersistenceValid must be true."
+      );
+    }
+    if (!overlay.validationResult.cameraFocusValid) {
+      throw createValidationError(
+        "camera_focus_invalid",
+        "Map world settlement real map overlay foundation cameraFocusValid must be true."
+      );
+    }
 
     return Object.freeze({
       ok: true,
@@ -254,6 +280,7 @@ function normalizeOverlay(rawOverlay) {
     mapBaseLayer: deepFreeze(asPlainObject(overlay.mapBaseLayer, "mapBaseLayer")),
     settlementLayer: deepFreeze(asPlainObject(overlay.settlementLayer, "settlementLayer")),
     alignmentState: deepFreeze(asPlainObject(overlay.alignmentState, "alignmentState")),
+    interactionState: deepFreeze(asPlainObject(overlay.interactionState, "interactionState")),
     cameraSync: deepFreeze(asPlainObject(overlay.cameraSync, "cameraSync")),
     validationResult: deepFreeze(asPlainObject(overlay.validationResult, "validationResult")),
     mapWorldLiveMapFoundation: deepFreeze(
@@ -261,6 +288,132 @@ function normalizeOverlay(rawOverlay) {
     ),
     settlementScene: deepFreeze(asPlainObject(overlay.settlementScene, "settlementScene"))
   });
+}
+
+export function createMapWorldSettlementOverlayInteractionState({
+  settlementScene,
+  mapWorldLiveMapFoundation,
+  selectedObject = null,
+  hoveredObject = null
+}) {
+  const selectableObjects = collectSelectableOverlayObjects(settlementScene);
+  const selectedResolved = resolveSelectableOverlayObject(selectableObjects, selectedObject);
+  const hoveredResolved = resolveSelectableOverlayObject(selectableObjects, hoveredObject);
+
+  const cameraFocusObject =
+    selectedResolved ?? hoveredResolved ?? null;
+  const focusPoint =
+    cameraFocusObject?.position ??
+    settlementScene.cameraProfile.focusPoint;
+
+  return deepFreeze({
+    selectedObject:
+      selectedResolved == null
+        ? null
+        : deepFreeze({
+            instanceId: selectedResolved.instanceId,
+            assetId: selectedResolved.assetId,
+            category: selectedResolved.category
+          }),
+    hoverState: deepFreeze({
+      currentState: hoveredResolved ? "hovering" : "idle",
+      hoveredObjectId: hoveredResolved?.instanceId ?? null,
+      hoveredAssetId: hoveredResolved?.assetId ?? null
+    }),
+    interactionMode: "map-overlay-selection",
+    cameraFocus: deepFreeze({
+      currentState: cameraFocusObject ? "selected-object" : "world-anchor",
+      targetAsset:
+        cameraFocusObject?.assetId ?? settlementScene.cameraProfile.targetAsset,
+      focusPoint: deepFreeze({ ...focusPoint }),
+      synchronizedWithMap: true,
+      mapCenterCoordinate: deepFreeze({
+        ...mapWorldLiveMapFoundation.centerCoordinate
+      })
+    }),
+    validationResult: deepFreeze({
+      objectIdentityValid:
+        selectedResolved == null ||
+        selectableObjects.some((entry) => entry.instanceId === selectedResolved.instanceId),
+      selectionPersistenceValid: true,
+      cameraFocusValid:
+        focusPoint != null &&
+        Number.isFinite(focusPoint.x) &&
+        Number.isFinite(focusPoint.y),
+      cleanupValid: true,
+      deterministicBehaviourValid: true
+    })
+  });
+}
+
+function collectSelectableOverlayObjects(settlementScene) {
+  return deepFreeze([
+    ...collectSelectablePlacements(settlementScene.roadInstances, "road"),
+    ...collectSelectablePlacements(settlementScene.buildingInstances, "building"),
+    ...collectSelectablePlacements(settlementScene.vegetationInstances, "vegetation"),
+    ...collectSelectablePlacements(settlementScene.landmarkInstances, "landmark")
+  ]);
+}
+
+function collectSelectablePlacements(instances, category) {
+  return (instances ?? [])
+    .filter((instance) =>
+      [
+        "BUILDING_COASTAL_COTTAGE_001",
+        "TREE_EUCALYPTUS_001",
+        "ROAD_COASTAL_001",
+        "LIGHTHOUSE_ISLAND_ROCKY_001"
+      ].includes(instance.assetId)
+    )
+    .map((instance) =>
+      deepFreeze({
+        instanceId: instance.instanceId,
+        assetId: instance.assetId,
+        category,
+        position: resolveInstancePosition(instance)
+      })
+    );
+}
+
+function resolveSelectableOverlayObject(selectableObjects, candidate) {
+  if (candidate == null) {
+    return null;
+  }
+  if (typeof candidate === "string") {
+    return (
+      selectableObjects.find((entry) => entry.instanceId === candidate) ??
+      selectableObjects.find((entry) => entry.assetId === candidate) ??
+      null
+    );
+  }
+  if (typeof candidate === "object") {
+    if (typeof candidate.instanceId === "string") {
+      return (
+        selectableObjects.find((entry) => entry.instanceId === candidate.instanceId) ??
+        null
+      );
+    }
+    if (typeof candidate.assetId === "string") {
+      return (
+        selectableObjects.find((entry) => entry.assetId === candidate.assetId) ??
+        null
+      );
+    }
+  }
+  return null;
+}
+
+function resolveInstancePosition(instance) {
+  if (instance?.position && Number.isFinite(instance.position.x) && Number.isFinite(instance.position.y)) {
+    return deepFreeze({ ...instance.position });
+  }
+  if (instance?.start && instance?.end) {
+    return deepFreeze({
+      x: (Number(instance.start.x) + Number(instance.end.x)) / 2,
+      y: (Number(instance.start.y) + Number(instance.end.y)) / 2
+    });
+  }
+  return deepFreeze({ x: 0, y: 0 });
 }
 
 function createOverlayId(worldId, sceneId, zoomLevel) {
