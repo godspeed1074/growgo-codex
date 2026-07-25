@@ -32,6 +32,10 @@ The purpose of this session is to prepare:
 4. the output directory plan
 5. the production safety rules
 
+Related follow-on validation document:
+
+- `GROWGO_SESSION_14_5_FIRST_ASSET_FACTORY_PROOF_VALIDATION_AND_REGISTRATION.md`
+
 ## 1. Source of Truth
 
 This Session 12 planning document is governed by:
