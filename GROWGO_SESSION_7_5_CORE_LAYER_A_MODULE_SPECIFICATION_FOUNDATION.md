@@ -26,6 +26,10 @@ The purpose of this session is to define:
 5. material and LOD expectations
 6. reuse and production readiness guidance
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_8_FIRST_BLENDER_PRODUCTION_BATCH_SPECIFICATION_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 7.5 planning document is governed by:
