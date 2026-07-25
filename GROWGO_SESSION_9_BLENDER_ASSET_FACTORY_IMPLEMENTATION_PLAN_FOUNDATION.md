@@ -30,6 +30,10 @@ The purpose of this session is to define:
 9. the validation workflow
 10. the export workflow
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_10_RECIPE_EXPANSION_BATCH_1_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 9 planning document is governed by:
