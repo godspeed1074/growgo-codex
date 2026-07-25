@@ -1,0 +1,25 @@
+{
+  "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+  "recipeReference": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+  "phase1Validation": {
+    "coreModuleIdsCorrect": true,
+    "socketsExist": true,
+    "scaleConsistent": true,
+    "styleMatchesPapercut2_5D": true,
+    "modulesAssembleCorrectly": true
+  },
+  "phase2Validation": {
+    "recipeResolves": true,
+    "socketsConnect": true,
+    "noOverlaps": true,
+    "correctOrientation": true,
+    "correctFootprint": true
+  },
+  "phase3Validation": {
+    "proofAssetExpanded": true,
+    "lodsPresent": true,
+    "metadataAttached": true,
+    "validationStatus": "passed"
+  },
+  "realBlenderExecutionOccurred": true
+}

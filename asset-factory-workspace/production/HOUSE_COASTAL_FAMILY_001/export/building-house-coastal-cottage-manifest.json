@@ -1,0 +1,7 @@
+{
+  "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+  "recipeReference": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+  "familyReference": "FAMILY_HOUSE_COASTAL",
+  "manifestVersion": "1.0.0",
+  "phase2ShellOutput": "HOUSE_COASTAL_COTTAGE_SHELL_TEST"
+}

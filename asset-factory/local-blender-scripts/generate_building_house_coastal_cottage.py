@@ -21,7 +21,7 @@ RECIPE_ID = "RECIPE_HOUSE_COASTAL_COTTAGE_001"
 FAMILY_ID = "FAMILY_HOUSE_COASTAL"
 SHELL_TEST_ID = "HOUSE_COASTAL_COTTAGE_SHELL_TEST"
 
-OUTPUT_DEFAULT = "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export"
+OUTPUT_DEFAULT = "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export"
 
 PHASE1_CORE_MODULES = [
     "MOD_FOUNDATION_STANDARD_RECT_001",
