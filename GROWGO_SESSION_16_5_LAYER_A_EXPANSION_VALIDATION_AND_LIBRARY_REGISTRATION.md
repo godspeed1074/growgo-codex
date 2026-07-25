@@ -33,6 +33,10 @@ This Session 16.5 validation document is based on:
 - `GROWGO_SESSION_14_5_FIRST_ASSET_FACTORY_PROOF_VALIDATION_AND_REGISTRATION.md`
 - the current export library under `asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export`
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_17_SECOND_RECIPE_ASSEMBLY_TEST_FOUNDATION.md`
+
 Reference note:
 
 - `GROWGO_SESSION_16_LAYER_A_EXPANSION_BATCH_1_PRODUCTION_RUN.md` was requested as a source document but is not present in the current repository, so validation was performed directly against the export library and the existing approved planning documents.
