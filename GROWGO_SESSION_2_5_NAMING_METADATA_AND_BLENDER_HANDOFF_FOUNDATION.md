@@ -29,6 +29,10 @@ The purpose of this session is to establish the permanent rules that future asse
 - material naming
 - metadata schema
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_3_FIRST_PRODUCTION_BATCH_PLANNING_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 2.5 document is governed by:
