@@ -1,0 +1,26 @@
+{
+  "assetId": "MOD_SERVICE_WINDOW_CAFE_001",
+  "category": "OPENING",
+  "family": "WINDOW_SERVICE_HOSPITALITY",
+  "variants": [
+    "full_width_service_window",
+    "split_service_display_window",
+    "compact_takeaway_hatch",
+    "bakery_display_counter_opening"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_STORE_GLASS_COASTAL_001",
+    "MAT_COUNTER_COASTAL_LIGHT_001",
+    "MAT_FRAME_WHITE_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_SERVICE_WINDOW_CAFE_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_SERVICE_WINDOW_CAFE_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_SERVICE_WINDOW_CAFE_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

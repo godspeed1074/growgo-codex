@@ -1,0 +1,27 @@
+{
+  "assetId": "MOD_CAFE_SIGN_STANDARD_001",
+  "category": "EXTERIOR",
+  "family": "SIGNAGE_COMMERCIAL_COASTAL",
+  "variants": [
+    "hanging_cafe_sign",
+    "wall_fascia_sign",
+    "vertical_side_sign",
+    "bakery_cafe_shared_panel"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_SIGN_COASTAL_CREAM_001",
+    "MAT_SIGN_COASTAL_BLUE_001",
+    "MAT_SIGN_COASTAL_RED_001",
+    "MAT_SIGN_FRAME_WHITE_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_CAFE_SIGN_STANDARD_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_CAFE_SIGN_STANDARD_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_CAFE_SIGN_STANDARD_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

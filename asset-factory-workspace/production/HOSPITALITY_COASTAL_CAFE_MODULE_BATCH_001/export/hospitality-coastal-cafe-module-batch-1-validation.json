@@ -1,0 +1,12 @@
+{
+  "batchId": "HOSPITALITY_COASTAL_CAFE_MODULE_BATCH_001",
+  "status": "passed",
+  "expectedModuleCount": 4,
+  "expectedExportCount": 12,
+  "duplicateModulesDetected": false,
+  "lodCoverage": [
+    "LOD_CLOSE",
+    "LOD_GAMEPLAY",
+    "LOD_MAP"
+  ]
+}

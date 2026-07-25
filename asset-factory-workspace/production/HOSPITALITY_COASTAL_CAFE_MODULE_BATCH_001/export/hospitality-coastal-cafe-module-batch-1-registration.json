@@ -1,0 +1,16 @@
+{
+  "batchId": "HOSPITALITY_COASTAL_CAFE_MODULE_BATCH_001",
+  "status": "SUCCESSFUL",
+  "registeredModules": [
+    "MOD_AWNING_COASTAL_CAFE_001",
+    "MOD_CAFE_SIGN_STANDARD_001",
+    "MOD_SERVICE_WINDOW_CAFE_001",
+    "MOD_OUTDOOR_TABLE_SEATING_COASTAL_001"
+  ],
+  "futureUnlocks": [
+    "BUILDING_CAFE_COASTAL_001",
+    "future coastal bakeries",
+    "future kiosks",
+    "future beach shops"
+  ]
+}

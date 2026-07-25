@@ -1,0 +1,27 @@
+{
+  "assetId": "MOD_OUTDOOR_TABLE_SEATING_COASTAL_001",
+  "category": "SITE_PROP",
+  "family": "HOSPITALITY_SEATING_COASTAL",
+  "variants": [
+    "two_seat_round_table_set",
+    "four_seat_square_table_set",
+    "bench_and_table_set",
+    "umbrella_table_variant"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_TABLE_TOP_COASTAL_001",
+    "MAT_CHAIR_COASTAL_WHITE_001",
+    "MAT_CHAIR_COASTAL_BLUE_001",
+    "MAT_UMBRELLA_COASTAL_STRIPE_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_OUTDOOR_TABLE_SEATING_COASTAL_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_OUTDOOR_TABLE_SEATING_COASTAL_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_OUTDOOR_TABLE_SEATING_COASTAL_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

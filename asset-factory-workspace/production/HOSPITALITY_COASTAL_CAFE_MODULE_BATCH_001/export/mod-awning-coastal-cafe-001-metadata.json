@@ -1,0 +1,26 @@
+{
+  "assetId": "MOD_AWNING_COASTAL_CAFE_001",
+  "category": "EXTERIOR",
+  "family": "AWNING_COMMERCIAL_COASTAL",
+  "variants": [
+    "shallow_cafe_awning",
+    "deep_seating_awning",
+    "corner_return_awning",
+    "striped_coastal_awning"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_AWNING_COASTAL_CANVAS_001",
+    "MAT_AWNING_FRAME_WHITE_001",
+    "MAT_AWNING_FRAME_COASTAL_BLUE_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_AWNING_COASTAL_CAFE_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_AWNING_COASTAL_CAFE_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_AWNING_COASTAL_CAFE_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}
