@@ -27,6 +27,10 @@ The purpose of this session is to define:
 6. module reuse analysis
 7. the recommended first production module set
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_11_FIRST_BLENDER_PRODUCTION_EXECUTION_PLAN_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 10 planning document is governed by:
