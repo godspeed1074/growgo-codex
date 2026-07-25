@@ -29,6 +29,10 @@ The purpose of this session is to define:
 8. export pipeline
 9. validation workflow
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_6_FIRST_RECIPE_EXPANSION_PLANNING_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 5 planning document is governed by:
