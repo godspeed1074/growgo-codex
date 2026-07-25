@@ -68,5 +68,18 @@ test("building house coastal cottage script contains phase outputs and validatio
   assert.match(script, /SOCKET_WINDOW_STANDARD/);
   assert.match(script, /SOCKET_DOOR_STANDARD/);
   assert.match(script, /SOCKET_ROOF_RIDGE/);
+  assert.match(script, /MOD_PATH_STANDARD_001/);
+  assert.match(script, /MOD_FENCE_STANDARD_001/);
+  assert.match(script, /MOD_GROUND_GRASS_STANDARD_001/);
+  assert.match(script, /MOD_BUSH_NATIVE_STANDARD_001/);
+  assert.match(script, /MOD_TREE_EUCALYPTUS_STANDARD_001/);
+  assert.match(script, /MOD_DRIVEWAY_STANDARD_SINGLE_001/);
+  assert.match(script, /MOD_FLOWERBED_STANDARD_001/);
+  assert.match(script, /MOD_VERANDAH_STANDARD_TIMBER_001/);
+  assert.match(script, /MOD_PORCH_COASTAL_SMALL_001/);
+  assert.match(script, /MOD_TRIM_STANDARD_COASTAL_001/);
+  assert.match(script, /MOD_CHIMNEY_COASTAL_SMALL_001/);
+  assert.match(script, /layer-a-expansion-batch-1-metadata\.json/);
+  assert.match(script, /layer-a-expansion-batch-1-validation\.json/);
   assert.match(script, /building-house-coastal-cottage-validation\.json/);
 });

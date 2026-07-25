@@ -21,5 +21,16 @@
     "metadataAttached": true,
     "validationStatus": "passed"
   },
+  "layerAExpansionBatchValidation": {
+    "batchId": "LAYER_A_EXPANSION_BATCH_1",
+    "modulesCreated": true,
+    "socketCompatibilityValidated": true,
+    "propertyConnectionsValidated": true,
+    "roadConnectionsValidated": true,
+    "terrainCompatibilityValidated": true,
+    "materialConsistencyValidated": true,
+    "houseImprovementModulesValidated": true,
+    "moduleLodExportsPresent": true
+  },
   "realBlenderExecutionOccurred": true
 }

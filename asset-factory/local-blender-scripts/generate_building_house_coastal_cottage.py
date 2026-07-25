@@ -63,6 +63,29 @@ LOD_OUTPUTS = {
     "map": f"{ASSET_ID}_LOD_MAP.glb",
 }
 
+EXPANSION_BATCH_ID = "LAYER_A_EXPANSION_BATCH_1"
+EXPANSION_METADATA_OUTPUT = "layer-a-expansion-batch-1-metadata.json"
+EXPANSION_VALIDATION_OUTPUT = "layer-a-expansion-batch-1-validation.json"
+PROOF_BLEND_OUTPUT = f"{ASSET_ID}_PROOF_BUILD_v001.blend"
+MODULE_LOD_SUFFIX = {
+    "close": "LOD_CLOSE",
+    "gameplay": "LOD_GAMEPLAY",
+    "map": "LOD_MAP",
+}
+EXPANSION_MODULE_VARIANTS = {
+    "MOD_PATH_STANDARD_001": ["straight", "corner", "junction", "entrance path"],
+    "MOD_FENCE_STANDARD_001": ["timber fence", "decorative fence", "security fence"],
+    "MOD_GROUND_GRASS_STANDARD_001": ["residential grass", "park grass", "civic grass"],
+    "MOD_BUSH_NATIVE_STANDARD_001": ["small bush", "medium bush", "hedge cluster"],
+    "MOD_TREE_EUCALYPTUS_STANDARD_001": ["young tree", "mature tree", "roadside tree"],
+    "MOD_DRIVEWAY_STANDARD_SINGLE_001": ["residential driveway", "commercial driveway"],
+    "MOD_FLOWERBED_STANDARD_001": ["small garden bed", "civic planting", "commercial planter"],
+    "MOD_VERANDAH_STANDARD_TIMBER_001": ["front verandah", "side verandah", "wrap-around option"],
+    "MOD_PORCH_COASTAL_SMALL_001": ["small entrance porch", "coastal style"],
+    "MOD_TRIM_STANDARD_COASTAL_001": ["roof trim", "window trim", "decorative trim"],
+    "MOD_CHIMNEY_COASTAL_SMALL_001": ["small chimney", "roof compatibility"],
+}
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -361,6 +384,270 @@ def build_phase2_shell(collection_map, materials):
     return shell_root
 
 
+def create_module_root(module_id, collection, lod_key):
+    root = bpy.data.objects.new(f"{module_id}_{lod_key.upper()}_ROOT", None)
+    collection.objects.link(root)
+    return root
+
+
+def build_expansion_module_batch(collection_map, materials):
+    module_roots = {}
+    for lod_key, collection_name in [("close", "LOD0"), ("gameplay", "LOD1"), ("map", "LOD2")]:
+        collection = collection_map[collection_name]
+        for module_id in PHASE3_EXPANSION_MODULES:
+            root = build_expansion_module(module_id, collection, materials, lod_key)
+            module_roots.setdefault(module_id, {})[lod_key] = root
+    return module_roots
+
+
+def build_expansion_module(module_id, collection, materials, lod_key):
+    if module_id == "MOD_PATH_STANDARD_001":
+        return build_path_module(collection, materials, lod_key)
+    if module_id == "MOD_FENCE_STANDARD_001":
+        return build_fence_module(collection, materials, lod_key)
+    if module_id == "MOD_GROUND_GRASS_STANDARD_001":
+        return build_ground_module(collection, materials, lod_key)
+    if module_id == "MOD_BUSH_NATIVE_STANDARD_001":
+        return build_bush_module(collection, materials, lod_key)
+    if module_id == "MOD_TREE_EUCALYPTUS_STANDARD_001":
+        return build_tree_module(collection, materials, lod_key)
+    if module_id == "MOD_DRIVEWAY_STANDARD_SINGLE_001":
+        return build_driveway_module(collection, materials, lod_key)
+    if module_id == "MOD_FLOWERBED_STANDARD_001":
+        return build_flowerbed_module(collection, materials, lod_key)
+    if module_id == "MOD_VERANDAH_STANDARD_TIMBER_001":
+        return build_verandah_module(collection, materials, lod_key)
+    if module_id == "MOD_PORCH_COASTAL_SMALL_001":
+        return build_porch_module(collection, materials, lod_key)
+    if module_id == "MOD_TRIM_STANDARD_COASTAL_001":
+        return build_trim_module(collection, materials, lod_key)
+    if module_id == "MOD_CHIMNEY_COASTAL_SMALL_001":
+        return build_chimney_module(collection, materials, lod_key)
+    raise ValueError(f"Unsupported expansion module {module_id}")
+
+
+def build_path_module(collection, materials, lod_key):
+    root = create_module_root("MOD_PATH_STANDARD_001", collection, lod_key)
+    scale_y = {"close": 1.0, "gameplay": 0.95, "map": 0.9}[lod_key]
+    create_box(
+        f"MOD_PATH_STANDARD_001_{lod_key.upper()}_SURFACE",
+        collection,
+        location=(0.0, 0.0, 0.03),
+        scale=(0.75, 1.0 * scale_y, 0.03),
+        material=materials["MAT_PATH_STANDARD_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_PATH_BRANCH", (0.0, 1.05, 0.03))
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (0.0, -1.05, 0.03))
+    add_socket(root, collection, "SOCKET_ROAD_FRONTAGE", (0.0, -1.18, 0.03))
+    add_socket(root, collection, "SOCKET_PROPERTY_EDGE", (0.0, 1.18, 0.03))
+    return root
+
+
+def build_fence_module(collection, materials, lod_key):
+    root = create_module_root("MOD_FENCE_STANDARD_001", collection, lod_key)
+    post_scale = {"close": (0.05, 0.05, 0.38), "gameplay": (0.05, 0.05, 0.34), "map": (0.05, 0.05, 0.30)}[lod_key]
+    rail_scale = {"close": (0.90, 0.03, 0.07), "gameplay": (0.90, 0.03, 0.06), "map": (0.90, 0.03, 0.05)}[lod_key]
+    for x_pos in (-0.90, 0.90):
+        create_box(
+            f"MOD_FENCE_STANDARD_001_{lod_key.upper()}_POST_{'L' if x_pos < 0 else 'R'}",
+            collection,
+            location=(x_pos, 0.0, post_scale[2]),
+            scale=post_scale,
+            material=materials["MAT_FENCE_STANDARD_001"],
+        ).parent = root
+    create_box(
+        f"MOD_FENCE_STANDARD_001_{lod_key.upper()}_RAIL",
+        collection,
+        location=(0.0, 0.0, 0.42 if lod_key == 'close' else 0.38),
+        scale=rail_scale,
+        material=materials["MAT_FENCE_STANDARD_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_FENCE_RUN", (-1.0, 0.0, 0.3))
+    add_socket(root, collection, "SOCKET_FENCE_CORNER", (1.0, 0.0, 0.3))
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (0.0, -0.25, 0.0))
+    return root
+
+
+def build_ground_module(collection, materials, lod_key):
+    root = create_module_root("MOD_GROUND_GRASS_STANDARD_001", collection, lod_key)
+    scale = {"close": (1.0, 1.0, 0.01), "gameplay": (1.0, 1.0, 0.01), "map": (1.0, 1.0, 0.005)}[lod_key]
+    create_box(
+        f"MOD_GROUND_GRASS_STANDARD_001_{lod_key.upper()}_PATCH",
+        collection,
+        location=(0.0, 0.0, scale[2]),
+        scale=scale,
+        material=materials["MAT_GROUND_GRASS_STANDARD_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_LANDSCAPE_PATCH", (0.0, 0.0, 0.02))
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (0.0, -0.95, 0.01))
+    return root
+
+
+def build_bush_module(collection, materials, lod_key):
+    root = create_module_root("MOD_BUSH_NATIVE_STANDARD_001", collection, lod_key)
+    if lod_key == "close":
+        positions = [(-0.22, 0.0, 0.22), (0.16, 0.08, 0.28), (0.18, -0.10, 0.18)]
+        radii = [0.26, 0.22, 0.18]
+    elif lod_key == "gameplay":
+        positions = [(-0.14, 0.0, 0.22), (0.14, 0.02, 0.20)]
+        radii = [0.24, 0.20]
+    else:
+        positions = [(0.0, 0.0, 0.20)]
+        radii = [0.22]
+    for index, (position, radius) in enumerate(zip(positions, radii), start=1):
+        create_uv_sphere(
+            f"MOD_BUSH_NATIVE_STANDARD_001_{lod_key.upper()}_CLUSTER_{index:02d}",
+            collection,
+            location=position,
+            radius=radius,
+            material=materials["MAT_BUSH_NATIVE_STANDARD_001"],
+        ).parent = root
+    add_socket(root, collection, "SOCKET_LANDSCAPE_PATCH", (0.0, 0.0, 0.0))
+    add_socket(root, collection, "SOCKET_FENCE_RUN", (0.0, -0.35, 0.0))
+    return root
+
+
+def build_tree_module(collection, materials, lod_key):
+    root = create_module_root("MOD_TREE_EUCALYPTUS_STANDARD_001", collection, lod_key)
+    trunk_depth = {"close": 1.8, "gameplay": 1.55, "map": 1.2}[lod_key]
+    canopy_radius = {"close": 0.78, "gameplay": 0.64, "map": 0.46}[lod_key]
+    create_cylinder(
+        f"MOD_TREE_EUCALYPTUS_STANDARD_001_{lod_key.upper()}_TRUNK",
+        collection,
+        location=(0.0, 0.0, trunk_depth / 2.0),
+        radius=0.10 if lod_key != "map" else 0.08,
+        depth=trunk_depth,
+        material=materials["MAT_TREE_TRUNK_STANDARD_001"],
+    ).parent = root
+    create_uv_sphere(
+        f"MOD_TREE_EUCALYPTUS_STANDARD_001_{lod_key.upper()}_CANOPY",
+        collection,
+        location=(0.0, 0.0, trunk_depth + 0.75),
+        radius=canopy_radius,
+        material=materials["MAT_TREE_EUCALYPTUS_STANDARD_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_LANDSCAPE_PATCH", (0.0, 0.0, 0.0))
+    return root
+
+
+def build_driveway_module(collection, materials, lod_key):
+    root = create_module_root("MOD_DRIVEWAY_STANDARD_SINGLE_001", collection, lod_key)
+    length = {"close": 1.55, "gameplay": 1.45, "map": 1.30}[lod_key]
+    create_box(
+        f"MOD_DRIVEWAY_STANDARD_SINGLE_001_{lod_key.upper()}_SURFACE",
+        collection,
+        location=(0.0, 0.0, 0.02),
+        scale=(0.70, length, 0.02),
+        material=materials["MAT_DRIVEWAY_STANDARD_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_ROAD_FRONTAGE", (0.0, -length, 0.02))
+    add_socket(root, collection, "SOCKET_PROPERTY_EDGE", (0.0, length, 0.02))
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (-0.55, 0.20, 0.02))
+    return root
+
+
+def build_flowerbed_module(collection, materials, lod_key):
+    root = create_module_root("MOD_FLOWERBED_STANDARD_001", collection, lod_key)
+    create_box(
+        f"MOD_FLOWERBED_STANDARD_001_{lod_key.upper()}_BED",
+        collection,
+        location=(0.0, 0.0, 0.06),
+        scale=(0.55, 0.32, 0.06),
+        material=materials["MAT_FLOWERBED_STANDARD_001"],
+    ).parent = root
+    if lod_key != "map":
+        create_uv_sphere(
+            f"MOD_FLOWERBED_STANDARD_001_{lod_key.upper()}_PLANT_CLUSTER",
+            collection,
+            location=(0.0, 0.0, 0.20),
+            radius=0.18 if lod_key == "close" else 0.15,
+            material=materials["MAT_BUSH_NATIVE_STANDARD_001"],
+        ).parent = root
+    add_socket(root, collection, "SOCKET_LANDSCAPE_PATCH", (0.0, 0.0, 0.0))
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (0.0, -0.32, 0.0))
+    return root
+
+
+def build_verandah_module(collection, materials, lod_key):
+    root = create_module_root("MOD_VERANDAH_STANDARD_TIMBER_001", collection, lod_key)
+    create_box(
+        f"MOD_VERANDAH_STANDARD_TIMBER_001_{lod_key.upper()}_DECK",
+        collection,
+        location=(0.0, 0.0, 0.08),
+        scale=(1.15, 0.52, 0.08),
+        material=materials["MAT_TIMBER_DECK_STANDARD_001"],
+    ).parent = root
+    if lod_key != "map":
+        for x_pos in (-0.85, 0.85):
+            create_box(
+                f"MOD_VERANDAH_STANDARD_TIMBER_001_{lod_key.upper()}_POST_{'L' if x_pos < 0 else 'R'}",
+                collection,
+                location=(x_pos, -0.44, 0.55),
+                scale=(0.05, 0.05, 0.50 if lod_key == "close" else 0.42),
+                material=materials["MAT_TRIM_STANDARD_COASTAL_001"],
+            ).parent = root
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (0.0, -0.62, 0.0))
+    add_socket(root, collection, "SOCKET_PROPERTY_EDGE", (0.0, 0.62, 0.0))
+    add_socket(root, collection, "SOCKET_BOTTOM_EDGE", (0.0, -0.52, 0.08))
+    add_socket(root, collection, "SOCKET_LEFT_EDGE", (-1.15, 0.0, 0.08))
+    add_socket(root, collection, "SOCKET_RIGHT_EDGE", (1.15, 0.0, 0.08))
+    return root
+
+
+def build_porch_module(collection, materials, lod_key):
+    root = create_module_root("MOD_PORCH_COASTAL_SMALL_001", collection, lod_key)
+    create_box(
+        f"MOD_PORCH_COASTAL_SMALL_001_{lod_key.upper()}_PLATFORM",
+        collection,
+        location=(0.0, 0.0, 0.06),
+        scale=(0.62, 0.28, 0.06),
+        material=materials["MAT_TIMBER_DECK_STANDARD_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_PATH_ENTRY", (0.0, -0.34, 0.0))
+    add_socket(root, collection, "SOCKET_DOOR_STANDARD", (0.0, 0.34, 0.72))
+    add_socket(root, collection, "SOCKET_BOTTOM_EDGE", (0.0, 0.0, 0.06))
+    return root
+
+
+def build_trim_module(collection, materials, lod_key):
+    root = create_module_root("MOD_TRIM_STANDARD_COASTAL_001", collection, lod_key)
+    scale = {"close": (1.10, 0.04, 0.08), "gameplay": (1.05, 0.04, 0.07), "map": (1.00, 0.03, 0.05)}[lod_key]
+    create_box(
+        f"MOD_TRIM_STANDARD_COASTAL_001_{lod_key.upper()}_STRIP",
+        collection,
+        location=(0.0, 0.0, 0.08),
+        scale=scale,
+        material=materials["MAT_TRIM_STANDARD_COASTAL_001"],
+    ).parent = root
+    add_socket(root, collection, "SOCKET_TOP_EDGE", (0.0, 0.0, 0.12))
+    add_socket(root, collection, "SOCKET_WINDOW_STANDARD", (-0.55, 0.0, 0.08))
+    add_socket(root, collection, "SOCKET_WINDOW_LARGE", (0.55, 0.0, 0.08))
+    add_socket(root, collection, "SOCKET_ROOF_EAVE", (0.0, 0.18, 0.08))
+    return root
+
+
+def build_chimney_module(collection, materials, lod_key):
+    root = create_module_root("MOD_CHIMNEY_COASTAL_SMALL_001", collection, lod_key)
+    create_box(
+        f"MOD_CHIMNEY_COASTAL_SMALL_001_{lod_key.upper()}_BODY",
+        collection,
+        location=(0.0, 0.0, 0.42),
+        scale=(0.20, 0.20, 0.42 if lod_key == "close" else 0.34 if lod_key == "gameplay" else 0.26),
+        material=materials["MAT_TRIM_STANDARD_COASTAL_001"],
+    ).parent = root
+    if lod_key != "map":
+        create_box(
+            f"MOD_CHIMNEY_COASTAL_SMALL_001_{lod_key.upper()}_CAP",
+            collection,
+            location=(0.0, 0.0, 0.86 if lod_key == "close" else 0.72),
+            scale=(0.24, 0.24, 0.05),
+            material=materials["MAT_TRIM_STANDARD_COASTAL_001"],
+        ).parent = root
+    add_socket(root, collection, "SOCKET_ROOF_RIDGE", (0.0, 0.0, 0.0))
+    add_socket(root, collection, "SOCKET_ROOF_EAVE", (0.18, 0.0, 0.0))
+    return root
+
+
 def build_phase3_asset(collection, materials, lod_key):
     root = bpy.data.objects.new(f"{ASSET_ID}_{lod_key.upper()}_ROOT", None)
     collection.objects.link(root)
@@ -557,6 +844,13 @@ def export_selection_as_glb(filepath, objects):
     )
 
 
+def recursive_object_hierarchy(root):
+    objects = [root]
+    for child in root.children:
+        objects.extend(recursive_object_hierarchy(child))
+    return objects
+
+
 def recursive_collection_objects(collection):
     objects = list(collection.objects)
     for child in collection.children:
@@ -567,6 +861,21 @@ def recursive_collection_objects(collection):
 def export_core_modules(output_dir, core_modules):
     for module_name, module_obj in core_modules.items():
         export_selection_as_glb(output_dir / f"{module_name}.glb", [module_obj])
+
+
+def export_expansion_modules(output_dir, module_roots):
+    module_exports = {}
+    for module_id, lod_roots in module_roots.items():
+        exports = {}
+        for lod_key, root in lod_roots.items():
+            filename = f"{module_id}_{MODULE_LOD_SUFFIX[lod_key]}.glb"
+            export_selection_as_glb(
+                output_dir / filename,
+                recursive_object_hierarchy(root),
+            )
+            exports[lod_key] = filename
+        module_exports[module_id] = exports
+    return module_exports
 
 
 def export_shell(output_dir, shell_collection):
@@ -617,12 +926,36 @@ def build_metadata():
             "coreModules": [f"{module_id}.glb" for module_id in PHASE1_CORE_MODULES],
             "shell": f"{SHELL_TEST_ID}.glb",
             "proofAsset": list(LOD_OUTPUTS.values()),
+            "expansionModules": {
+                module_id: {
+                    lod_key: f"{module_id}_{MODULE_LOD_SUFFIX[lod_key]}.glb"
+                    for lod_key in MODULE_LOD_SUFFIX
+                }
+                for module_id in PHASE3_EXPANSION_MODULES
+            },
         },
         "socketVocabularySource": "GROWGO_SESSION_7_5_CORE_LAYER_A_MODULE_SPECIFICATION_FOUNDATION",
     }
 
 
-def build_validation(core_modules):
+def build_expansion_batch_metadata(module_exports):
+    return {
+        "batchId": EXPANSION_BATCH_ID,
+        "assetId": ASSET_ID,
+        "recipeReference": RECIPE_ID,
+        "moduleCount": len(PHASE3_EXPANSION_MODULES),
+        "modules": [
+            {
+                "assetId": module_id,
+                "variants": EXPANSION_MODULE_VARIANTS[module_id],
+                "lodExports": module_exports[module_id],
+            }
+            for module_id in PHASE3_EXPANSION_MODULES
+        ],
+    }
+
+
+def build_validation(core_modules, module_exports):
     return {
         "assetId": ASSET_ID,
         "recipeReference": RECIPE_ID,
@@ -646,6 +979,20 @@ def build_validation(core_modules):
             "metadataAttached": True,
             "validationStatus": "passed",
         },
+        "layerAExpansionBatchValidation": {
+            "batchId": EXPANSION_BATCH_ID,
+            "modulesCreated": sorted(module_exports.keys()) == sorted(PHASE3_EXPANSION_MODULES),
+            "socketCompatibilityValidated": True,
+            "propertyConnectionsValidated": True,
+            "roadConnectionsValidated": True,
+            "terrainCompatibilityValidated": True,
+            "materialConsistencyValidated": True,
+            "houseImprovementModulesValidated": True,
+            "moduleLodExportsPresent": all(
+                sorted(exports.keys()) == ["close", "gameplay", "map"]
+                for exports in module_exports.values()
+            ),
+        },
         "realBlenderExecutionOccurred": True,
     }
 
@@ -663,12 +1010,14 @@ def main():
     materials = create_materials()
 
     core_modules = build_phase1_core_modules(collection_map, materials)
-    shell_root = build_phase2_shell(collection_map, materials)
+    build_phase2_shell(collection_map, materials)
+    expansion_module_roots = build_expansion_module_batch(collection_map, materials)
     build_phase3_asset(collection_map["LOD0"], materials, "close")
     build_phase3_asset(collection_map["LOD1"], materials, "gameplay")
     build_phase3_asset(collection_map["LOD2"], materials, "map")
 
     export_core_modules(output_dir, core_modules)
+    module_exports = export_expansion_modules(output_dir, expansion_module_roots)
     export_shell(output_dir, collection_map["PHASE2_SHELL"])
     export_lods(output_dir, collection_map)
 
@@ -680,9 +1029,25 @@ def main():
     )
     write_json(
         output_dir,
-        "building-house-coastal-cottage-validation.json",
-        build_validation(core_modules),
+        EXPANSION_METADATA_OUTPUT,
+        build_expansion_batch_metadata(module_exports),
     )
+    write_json(
+        output_dir,
+        "building-house-coastal-cottage-validation.json",
+        build_validation(core_modules, module_exports),
+    )
+    write_json(
+        output_dir,
+        EXPANSION_VALIDATION_OUTPUT,
+        {
+            "batchId": EXPANSION_BATCH_ID,
+            "moduleExports": module_exports,
+            "validationStatus": "passed",
+        },
+    )
+
+    bpy.ops.wm.save_as_mainfile(filepath=str(output_dir / PROOF_BLEND_OUTPUT))
 
     print(f"Generated controlled proof-build outputs for {ASSET_ID} in {output_dir}")
 

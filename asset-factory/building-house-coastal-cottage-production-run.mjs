@@ -46,6 +46,41 @@ export const buildingHouseCoastalCottageProductionRunDefinition = deepFreeze({
       "MOD_DOOR_STANDARD_RESIDENTIAL_001.glb",
       "MOD_ROOF_GABLE_STANDARD_001.glb"
     ]),
+    expansionModules: deepFreeze([
+      "MOD_PATH_STANDARD_001_LOD_CLOSE.glb",
+      "MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+      "MOD_PATH_STANDARD_001_LOD_MAP.glb",
+      "MOD_FENCE_STANDARD_001_LOD_CLOSE.glb",
+      "MOD_FENCE_STANDARD_001_LOD_GAMEPLAY.glb",
+      "MOD_FENCE_STANDARD_001_LOD_MAP.glb",
+      "MOD_GROUND_GRASS_STANDARD_001_LOD_CLOSE.glb",
+      "MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+      "MOD_GROUND_GRASS_STANDARD_001_LOD_MAP.glb",
+      "MOD_BUSH_NATIVE_STANDARD_001_LOD_CLOSE.glb",
+      "MOD_BUSH_NATIVE_STANDARD_001_LOD_GAMEPLAY.glb",
+      "MOD_BUSH_NATIVE_STANDARD_001_LOD_MAP.glb",
+      "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_CLOSE.glb",
+      "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+      "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_MAP.glb",
+      "MOD_DRIVEWAY_STANDARD_SINGLE_001_LOD_CLOSE.glb",
+      "MOD_DRIVEWAY_STANDARD_SINGLE_001_LOD_GAMEPLAY.glb",
+      "MOD_DRIVEWAY_STANDARD_SINGLE_001_LOD_MAP.glb",
+      "MOD_FLOWERBED_STANDARD_001_LOD_CLOSE.glb",
+      "MOD_FLOWERBED_STANDARD_001_LOD_GAMEPLAY.glb",
+      "MOD_FLOWERBED_STANDARD_001_LOD_MAP.glb",
+      "MOD_VERANDAH_STANDARD_TIMBER_001_LOD_CLOSE.glb",
+      "MOD_VERANDAH_STANDARD_TIMBER_001_LOD_GAMEPLAY.glb",
+      "MOD_VERANDAH_STANDARD_TIMBER_001_LOD_MAP.glb",
+      "MOD_PORCH_COASTAL_SMALL_001_LOD_CLOSE.glb",
+      "MOD_PORCH_COASTAL_SMALL_001_LOD_GAMEPLAY.glb",
+      "MOD_PORCH_COASTAL_SMALL_001_LOD_MAP.glb",
+      "MOD_TRIM_STANDARD_COASTAL_001_LOD_CLOSE.glb",
+      "MOD_TRIM_STANDARD_COASTAL_001_LOD_GAMEPLAY.glb",
+      "MOD_TRIM_STANDARD_COASTAL_001_LOD_MAP.glb",
+      "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_CLOSE.glb",
+      "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_GAMEPLAY.glb",
+      "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_MAP.glb"
+    ]),
     shell: "HOUSE_COASTAL_COTTAGE_SHELL_TEST.glb",
     proofAsset: deepFreeze([
       "BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_CLOSE.glb",
@@ -55,7 +90,10 @@ export const buildingHouseCoastalCottageProductionRunDefinition = deepFreeze({
     metadataFiles: deepFreeze([
       "building-house-coastal-cottage-manifest.json",
       "building-house-coastal-cottage-metadata.json",
-      "building-house-coastal-cottage-validation.json"
+      "building-house-coastal-cottage-validation.json",
+      "layer-a-expansion-batch-1-metadata.json",
+      "layer-a-expansion-batch-1-validation.json",
+      "BUILDING_HOUSE_COASTAL_COTTAGE_001_PROOF_BUILD_v001.blend"
     ])
   })
 });
@@ -141,6 +179,9 @@ export function inspectBuildingHouseCoastalCottageProductionOutputs(
       phase1CoreModulesPresent: fileStates
         .filter((state) => state.phase === "phase1")
         .every((state) => state.exists),
+      expansionModulesPresent: fileStates
+        .filter((state) => state.phase === "expansion")
+        .every((state) => state.exists),
       phase2ShellPresent: fileStates
         .filter((state) => state.phase === "phase2")
         .every((state) => state.exists),
@@ -156,6 +197,10 @@ function collectExpectedFileStates(outputDirectory, definition) {
 
   for (const filename of definition.expectedOutputs.coreModules) {
     states.push(freezeFileState("phase1", outputDirectory, filename));
+  }
+
+  for (const filename of definition.expectedOutputs.expansionModules) {
+    states.push(freezeFileState("expansion", outputDirectory, filename));
   }
 
   states.push(freezeFileState("phase2", outputDirectory, definition.expectedOutputs.shell));
@@ -214,6 +259,12 @@ function normalizeExpectedOutputs(rawExpectedOutputs) {
   return deepFreeze({
     coreModules: deepFreeze(
       normalizeStringArray(expectedOutputs.coreModules, "expectedOutputs.coreModules")
+    ),
+    expansionModules: deepFreeze(
+      normalizeStringArray(
+        expectedOutputs.expansionModules,
+        "expectedOutputs.expansionModules"
+      )
     ),
     shell: normalizeNonEmptyString(expectedOutputs.shell, "expectedOutputs.shell"),
     proofAsset: deepFreeze(

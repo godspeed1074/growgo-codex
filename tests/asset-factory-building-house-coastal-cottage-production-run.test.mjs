@@ -46,4 +46,25 @@ test("building house coastal cottage production run declares proof-build output 
     "BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb",
     "BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_MAP.glb",
   ]);
+  assert.equal(definition.expectedOutputs.expansionModules.length, 33);
+  assert.ok(
+    definition.expectedOutputs.expansionModules.includes(
+      "MOD_PATH_STANDARD_001_LOD_CLOSE.glb"
+    )
+  );
+  assert.ok(
+    definition.expectedOutputs.expansionModules.includes(
+      "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_MAP.glb"
+    )
+  );
+  assert.ok(
+    definition.expectedOutputs.metadataFiles.includes(
+      "layer-a-expansion-batch-1-metadata.json"
+    )
+  );
+  assert.ok(
+    definition.expectedOutputs.metadataFiles.includes(
+      "layer-a-expansion-batch-1-validation.json"
+    )
+  );
 });

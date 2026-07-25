@@ -1,105 +1,149 @@
 {
+  "batchId": "LAYER_A_EXPANSION_BATCH_1",
   "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
   "recipeReference": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
-  "familyReference": "FAMILY_HOUSE_COASTAL",
-  "phase1CoreModules": [
-    "MOD_FOUNDATION_STANDARD_RECT_001",
-    "MOD_WALL_WEATHERBOARD_WHITE_001",
-    "MOD_WALL_CORNER_STANDARD_001",
-    "MOD_WINDOW_RESIDENTIAL_STANDARD_001",
-    "MOD_DOOR_STANDARD_RESIDENTIAL_001",
-    "MOD_ROOF_GABLE_STANDARD_001"
-  ],
-  "phase3ExpansionModules": [
-    "MOD_CHIMNEY_COASTAL_SMALL_001",
-    "MOD_TRIM_STANDARD_COASTAL_001",
-    "MOD_VERANDAH_STANDARD_TIMBER_001",
-    "MOD_PORCH_COASTAL_SMALL_001",
-    "MOD_PATH_STANDARD_001",
-    "MOD_DRIVEWAY_STANDARD_SINGLE_001",
-    "MOD_FENCE_STANDARD_001",
-    "MOD_GROUND_GRASS_STANDARD_001",
-    "MOD_BUSH_NATIVE_STANDARD_001",
-    "MOD_TREE_EUCALYPTUS_STANDARD_001",
-    "MOD_FLOWERBED_STANDARD_001"
-  ],
-  "lodStatus": {
-    "close": true,
-    "gameplay": true,
-    "map": true
-  },
-  "outputFiles": {
-    "coreModules": [
-      "MOD_FOUNDATION_STANDARD_RECT_001.glb",
-      "MOD_WALL_WEATHERBOARD_WHITE_001.glb",
-      "MOD_WALL_CORNER_STANDARD_001.glb",
-      "MOD_WINDOW_RESIDENTIAL_STANDARD_001.glb",
-      "MOD_DOOR_STANDARD_RESIDENTIAL_001.glb",
-      "MOD_ROOF_GABLE_STANDARD_001.glb"
-    ],
-    "shell": "HOUSE_COASTAL_COTTAGE_SHELL_TEST.glb",
-    "proofAsset": [
-      "BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_CLOSE.glb",
-      "BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb",
-      "BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_MAP.glb"
-    ],
-    "expansionModules": {
-      "MOD_CHIMNEY_COASTAL_SMALL_001": {
+  "moduleCount": 11,
+  "modules": [
+    {
+      "assetId": "MOD_CHIMNEY_COASTAL_SMALL_001",
+      "variants": [
+        "small chimney",
+        "roof compatibility"
+      ],
+      "lodExports": {
         "close": "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_CLOSE.glb",
         "gameplay": "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_GAMEPLAY.glb",
         "map": "MOD_CHIMNEY_COASTAL_SMALL_001_LOD_MAP.glb"
-      },
-      "MOD_TRIM_STANDARD_COASTAL_001": {
+      }
+    },
+    {
+      "assetId": "MOD_TRIM_STANDARD_COASTAL_001",
+      "variants": [
+        "roof trim",
+        "window trim",
+        "decorative trim"
+      ],
+      "lodExports": {
         "close": "MOD_TRIM_STANDARD_COASTAL_001_LOD_CLOSE.glb",
         "gameplay": "MOD_TRIM_STANDARD_COASTAL_001_LOD_GAMEPLAY.glb",
         "map": "MOD_TRIM_STANDARD_COASTAL_001_LOD_MAP.glb"
-      },
-      "MOD_VERANDAH_STANDARD_TIMBER_001": {
+      }
+    },
+    {
+      "assetId": "MOD_VERANDAH_STANDARD_TIMBER_001",
+      "variants": [
+        "front verandah",
+        "side verandah",
+        "wrap-around option"
+      ],
+      "lodExports": {
         "close": "MOD_VERANDAH_STANDARD_TIMBER_001_LOD_CLOSE.glb",
         "gameplay": "MOD_VERANDAH_STANDARD_TIMBER_001_LOD_GAMEPLAY.glb",
         "map": "MOD_VERANDAH_STANDARD_TIMBER_001_LOD_MAP.glb"
-      },
-      "MOD_PORCH_COASTAL_SMALL_001": {
+      }
+    },
+    {
+      "assetId": "MOD_PORCH_COASTAL_SMALL_001",
+      "variants": [
+        "small entrance porch",
+        "coastal style"
+      ],
+      "lodExports": {
         "close": "MOD_PORCH_COASTAL_SMALL_001_LOD_CLOSE.glb",
         "gameplay": "MOD_PORCH_COASTAL_SMALL_001_LOD_GAMEPLAY.glb",
         "map": "MOD_PORCH_COASTAL_SMALL_001_LOD_MAP.glb"
-      },
-      "MOD_PATH_STANDARD_001": {
+      }
+    },
+    {
+      "assetId": "MOD_PATH_STANDARD_001",
+      "variants": [
+        "straight",
+        "corner",
+        "junction",
+        "entrance path"
+      ],
+      "lodExports": {
         "close": "MOD_PATH_STANDARD_001_LOD_CLOSE.glb",
         "gameplay": "MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
         "map": "MOD_PATH_STANDARD_001_LOD_MAP.glb"
-      },
-      "MOD_DRIVEWAY_STANDARD_SINGLE_001": {
+      }
+    },
+    {
+      "assetId": "MOD_DRIVEWAY_STANDARD_SINGLE_001",
+      "variants": [
+        "residential driveway",
+        "commercial driveway"
+      ],
+      "lodExports": {
         "close": "MOD_DRIVEWAY_STANDARD_SINGLE_001_LOD_CLOSE.glb",
         "gameplay": "MOD_DRIVEWAY_STANDARD_SINGLE_001_LOD_GAMEPLAY.glb",
         "map": "MOD_DRIVEWAY_STANDARD_SINGLE_001_LOD_MAP.glb"
-      },
-      "MOD_FENCE_STANDARD_001": {
+      }
+    },
+    {
+      "assetId": "MOD_FENCE_STANDARD_001",
+      "variants": [
+        "timber fence",
+        "decorative fence",
+        "security fence"
+      ],
+      "lodExports": {
         "close": "MOD_FENCE_STANDARD_001_LOD_CLOSE.glb",
         "gameplay": "MOD_FENCE_STANDARD_001_LOD_GAMEPLAY.glb",
         "map": "MOD_FENCE_STANDARD_001_LOD_MAP.glb"
-      },
-      "MOD_GROUND_GRASS_STANDARD_001": {
+      }
+    },
+    {
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "variants": [
+        "residential grass",
+        "park grass",
+        "civic grass"
+      ],
+      "lodExports": {
         "close": "MOD_GROUND_GRASS_STANDARD_001_LOD_CLOSE.glb",
         "gameplay": "MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
         "map": "MOD_GROUND_GRASS_STANDARD_001_LOD_MAP.glb"
-      },
-      "MOD_BUSH_NATIVE_STANDARD_001": {
+      }
+    },
+    {
+      "assetId": "MOD_BUSH_NATIVE_STANDARD_001",
+      "variants": [
+        "small bush",
+        "medium bush",
+        "hedge cluster"
+      ],
+      "lodExports": {
         "close": "MOD_BUSH_NATIVE_STANDARD_001_LOD_CLOSE.glb",
         "gameplay": "MOD_BUSH_NATIVE_STANDARD_001_LOD_GAMEPLAY.glb",
         "map": "MOD_BUSH_NATIVE_STANDARD_001_LOD_MAP.glb"
-      },
-      "MOD_TREE_EUCALYPTUS_STANDARD_001": {
+      }
+    },
+    {
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "variants": [
+        "young tree",
+        "mature tree",
+        "roadside tree"
+      ],
+      "lodExports": {
         "close": "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_CLOSE.glb",
         "gameplay": "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
         "map": "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_MAP.glb"
-      },
-      "MOD_FLOWERBED_STANDARD_001": {
+      }
+    },
+    {
+      "assetId": "MOD_FLOWERBED_STANDARD_001",
+      "variants": [
+        "small garden bed",
+        "civic planting",
+        "commercial planter"
+      ],
+      "lodExports": {
         "close": "MOD_FLOWERBED_STANDARD_001_LOD_CLOSE.glb",
         "gameplay": "MOD_FLOWERBED_STANDARD_001_LOD_GAMEPLAY.glb",
         "map": "MOD_FLOWERBED_STANDARD_001_LOD_MAP.glb"
       }
     }
-  },
-  "socketVocabularySource": "GROWGO_SESSION_7_5_CORE_LAYER_A_MODULE_SPECIFICATION_FOUNDATION"
+  ]
 }
