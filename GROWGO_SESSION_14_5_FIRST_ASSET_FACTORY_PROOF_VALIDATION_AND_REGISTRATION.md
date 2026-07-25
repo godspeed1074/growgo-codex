@@ -20,6 +20,10 @@ This is a documentation and validation session only.
 
 No new asset production is performed in this session.
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_15_LAYER_A_EXPANSION_BATCH_1_PRODUCTION_PLAN.md`
+
 ## 1. Source of Truth
 
 This validation document is based on:
