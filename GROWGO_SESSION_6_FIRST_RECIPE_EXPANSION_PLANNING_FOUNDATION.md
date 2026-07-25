@@ -26,6 +26,10 @@ The purpose of this session is to define:
 5. recommended production order
 6. factory validation coverage
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_7_LAYER_A_UNIVERSAL_MODULE_PRODUCTION_PLANNING_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 6 planning document is governed by:
