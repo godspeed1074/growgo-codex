@@ -1,0 +1,38 @@
+{
+  "batchId": "COASTAL_EXPANSION_MODULE_BATCH_1",
+  "status": "SUCCESSFUL",
+  "modulesCreated": [
+    "MOD_FOUNDATION_RAISED_COASTAL_001",
+    "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+    "MOD_DECK_TIMBER_COASTAL_001"
+  ],
+  "exports": {
+    "MOD_FOUNDATION_RAISED_COASTAL_001": {
+      "close": "MOD_FOUNDATION_RAISED_COASTAL_001_LOD_CLOSE.glb",
+      "gameplay": "MOD_FOUNDATION_RAISED_COASTAL_001_LOD_GAMEPLAY.glb",
+      "map": "MOD_FOUNDATION_RAISED_COASTAL_001_LOD_MAP.glb"
+    },
+    "MOD_WINDOW_RESIDENTIAL_LARGE_001": {
+      "close": "MOD_WINDOW_RESIDENTIAL_LARGE_001_LOD_CLOSE.glb",
+      "gameplay": "MOD_WINDOW_RESIDENTIAL_LARGE_001_LOD_GAMEPLAY.glb",
+      "map": "MOD_WINDOW_RESIDENTIAL_LARGE_001_LOD_MAP.glb"
+    },
+    "MOD_DECK_TIMBER_COASTAL_001": {
+      "close": "MOD_DECK_TIMBER_COASTAL_001_LOD_CLOSE.glb",
+      "gameplay": "MOD_DECK_TIMBER_COASTAL_001_LOD_GAMEPLAY.glb",
+      "map": "MOD_DECK_TIMBER_COASTAL_001_LOD_MAP.glb"
+    }
+  },
+  "validationResults": {
+    "geometry": "passed",
+    "modularity": "passed",
+    "style": "passed",
+    "technical": "passed"
+  },
+  "futureRecipeUnlocks": [
+    "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+    "future raised holiday houses",
+    "future waterfront homes",
+    "future cafes with larger glazing and deck frontage"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "assetId": "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+  "category": "OPENINGS",
+  "family": "WINDOW",
+  "variants": [
+    "large_single_window",
+    "double_panel_window",
+    "coastal_panoramic_window"
+  ],
+  "recipeCompatibility": [
+    "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_CAFE_SMALL_TOWN_001"
+  ],
+  "materialReferences": [
+    "MAT_WINDOW_FRAME_WHITE_001",
+    "MAT_WINDOW_FRAME_TIMBER_001",
+    "MAT_WINDOW_FRAME_DARK_001",
+    "MAT_STORE_GLASS_COASTAL_001"
+  ],
+  "lodExports": {
+    "close": "MOD_WINDOW_RESIDENTIAL_LARGE_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_WINDOW_RESIDENTIAL_LARGE_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_WINDOW_RESIDENTIAL_LARGE_001_LOD_MAP.glb"
+  },
+  "validationStatus": "passed"
+}

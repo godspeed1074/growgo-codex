@@ -1,0 +1,23 @@
+{
+  "assetId": "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+  "validationStatus": "passed",
+  "geometryValidation": {
+    "polygonBudgetWithinTarget": true,
+    "cleanTopology": true,
+    "correctScale": true
+  },
+  "modularityValidation": {
+    "socketsValidated": true,
+    "reuseReady": true,
+    "recipeCompatible": true
+  },
+  "styleValidation": {
+    "papercutStyleConsistent": true,
+    "coastalFamilyConsistent": true
+  },
+  "technicalValidation": {
+    "namingValidated": true,
+    "lodExportsValidated": true,
+    "metadataValidated": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "assetId": "MOD_FOUNDATION_RAISED_COASTAL_001",
+  "category": "STRUCTURE",
+  "family": "FOUNDATION",
+  "variants": [
+    "low_raised_coastal",
+    "medium_raised_coastal",
+    "coastal_stilt_foundation"
+  ],
+  "recipeCompatibility": [
+    "RECIPE_HOUSE_BEACH_BUNGALOW_001"
+  ],
+  "materialReferences": [
+    "MAT_FOUNDATION_STANDARD_001",
+    "MAT_TRIM_STANDARD_COASTAL_001",
+    "MAT_TIMBER_DECK_STANDARD_001"
+  ],
+  "lodExports": {
+    "close": "MOD_FOUNDATION_RAISED_COASTAL_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_FOUNDATION_RAISED_COASTAL_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_FOUNDATION_RAISED_COASTAL_001_LOD_MAP.glb"
+  },
+  "validationStatus": "passed"
+}

@@ -1,0 +1,24 @@
+{
+  "assetId": "MOD_DECK_TIMBER_COASTAL_001",
+  "category": "EXTERIOR",
+  "family": "DECK",
+  "variants": [
+    "small_deck",
+    "medium_deck",
+    "wrap_deck"
+  ],
+  "recipeCompatibility": [
+    "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+    "RECIPE_CAFE_SMALL_TOWN_001"
+  ],
+  "materialReferences": [
+    "MAT_TIMBER_DECK_STANDARD_001",
+    "MAT_TRIM_STANDARD_COASTAL_001"
+  ],
+  "lodExports": {
+    "close": "MOD_DECK_TIMBER_COASTAL_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_DECK_TIMBER_COASTAL_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_DECK_TIMBER_COASTAL_001_LOD_MAP.glb"
+  },
+  "validationStatus": "passed"
+}
