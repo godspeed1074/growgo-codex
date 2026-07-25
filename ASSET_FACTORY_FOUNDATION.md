@@ -1,5 +1,9 @@
 # GrowGo Modular Bible - Asset Factory Foundation
 
+Related design source of truth:
+
+- `GROWGO_MODULAR_BIBLE_DESIGN_FOUNDATION.md`
+
 ## Phase 1 Scope
 
 This document defines the permanent architecture contract for the GrowGo Asset Factory.
