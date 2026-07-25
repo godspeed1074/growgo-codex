@@ -35,6 +35,10 @@ The purpose of this session is to define:
 6. the validation checklist
 7. future reuse opportunities
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_9_BLENDER_ASSET_FACTORY_IMPLEMENTATION_PLAN_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 8 planning document is governed by:
