@@ -32,6 +32,10 @@ This Session 18 planning document is governed by:
 - `GROWGO_SESSION_15_LAYER_A_EXPANSION_BATCH_1_PRODUCTION_PLAN.md`
 - `GROWGO_SESSION_7_5_CORE_LAYER_A_MODULE_SPECIFICATION_FOUNDATION.md`
 
+Related follow-on validation document:
+
+- `GROWGO_SESSION_19_5_COASTAL_EXPANSION_VALIDATION_AND_LIBRARY_REGISTRATION.md`
+
 If a future planning document conflicts with these documents, those source documents remain authoritative unless explicitly updated.
 
 ## 2. Expansion Purpose
