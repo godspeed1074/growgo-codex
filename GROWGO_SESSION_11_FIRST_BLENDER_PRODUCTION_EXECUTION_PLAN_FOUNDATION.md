@@ -35,6 +35,10 @@ The purpose of this session is to define:
 6. validation gates
 7. commit checkpoints
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_12_FIRST_CONTROLLED_PRODUCTION_RUN_SETUP.md`
+
 ## 1. Source of Truth
 
 This Session 11 planning document is governed by:
