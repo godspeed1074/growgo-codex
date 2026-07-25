@@ -36,6 +36,10 @@ The purpose of this session is to define:
 8. LOD requirements
 9. the variant roadmap
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_5_BLENDER_ASSET_FACTORY_ARCHITECTURE_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 4 planning document is governed by:
