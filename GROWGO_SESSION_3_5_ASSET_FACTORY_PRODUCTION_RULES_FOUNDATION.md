@@ -27,6 +27,10 @@ The purpose of this session is to define:
 7. library growth rules
 8. approval gates
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_4_FIRST_RECIPE_PRODUCTION_PLANNING_FOUNDATION.md`
+
 ## 1. Source of Truth
 
 This Session 3.5 document is governed by:
