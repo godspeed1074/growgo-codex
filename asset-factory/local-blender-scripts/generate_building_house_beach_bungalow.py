@@ -213,31 +213,50 @@ def import_module(module_id, lod_key, collection, location, rotation=(0.0, 0.0, 
         raise FileNotFoundError(f"Missing required module export: {filepath}")
 
     existing_names = set(obj.name for obj in bpy.data.objects)
+
     bpy.ops.import_scene.gltf(filepath=str(filepath))
+
     imported_objects = [
         obj for obj in bpy.data.objects if obj.name not in existing_names
     ]
+
     if not imported_objects:
         raise RuntimeError(f"Blender did not import any objects from {filepath}")
 
-    root = create_empty(f"{module_id}_{lod_key.upper()}_INSTANCE", collection, location)
+    root = create_empty(
+        f"{module_id}_{lod_key.upper()}_INSTANCE",
+        collection,
+        location
+    )
+
     root.rotation_euler = rotation
     root.scale = scale
 
     for obj in imported_objects:
         for linked_collection in list(obj.users_collection):
             linked_collection.objects.unlink(obj)
+
         collection.objects.link(obj)
+
+    # Safely attach imported hierarchy
+    for obj in imported_objects:
         if obj.parent is None:
             obj.parent = root
         else:
             ancestor = obj.parent
-            while ancestor.parent is not None:
+
+            while (
+                ancestor.parent is not None
+                and ancestor.parent != ancestor
+            ):
                 ancestor = ancestor.parent
-            ancestor.parent = root
+
+            if ancestor != root:
+                ancestor.parent = root
 
     if parent is not None:
         root.parent = parent
+
     return root
 
 

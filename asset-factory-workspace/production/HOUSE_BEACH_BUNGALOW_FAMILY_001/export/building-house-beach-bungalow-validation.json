@@ -1,0 +1,13 @@
+{
+  "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+  "geometry": "PASS",
+  "recipeResolution": "PASS",
+  "moduleReuse": "PASS",
+  "style": "PASS",
+  "technical": "PASS",
+  "duplicateModulesAvoided": true,
+  "reusedModuleCount": 11,
+  "newModuleCount": 3,
+  "totalModuleCount": 14,
+  "reusePercentage": 79
+}
