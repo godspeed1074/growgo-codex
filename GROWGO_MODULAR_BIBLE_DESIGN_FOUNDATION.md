@@ -18,6 +18,10 @@ This session does not:
 
 The purpose of this session is to define the rules, naming systems, modular structure, approval process, and dependency model that all future GrowGo asset production must follow.
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_2_MODULAR_LIBRARY_AND_RECIPE_PLANNING.md`
+
 ## 1. Locked Visual Direction
 
 GrowGo uses a locked visual direction:
