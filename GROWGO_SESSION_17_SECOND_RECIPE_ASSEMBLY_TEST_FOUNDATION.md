@@ -36,6 +36,10 @@ This Session 17 planning document is governed by:
 - `GROWGO_SESSION_15_LAYER_A_EXPANSION_BATCH_1_PRODUCTION_PLAN.md`
 - `GROWGO_SESSION_9_BLENDER_ASSET_FACTORY_IMPLEMENTATION_PLAN_FOUNDATION.md`
 
+Related follow-on planning document:
+
+- `GROWGO_SESSION_18_COASTAL_BUNGALOW_MODULE_EXPANSION_FOUNDATION.md`
+
 If a future planning document conflicts with these documents, those source documents remain authoritative unless explicitly updated.
 
 ## 2. Reuse Validation Purpose
