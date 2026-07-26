@@ -1,0 +1,27 @@
+{
+  "validationId": "SUBURBAN_DISTRICT_001_PREVIEW_VALIDATION_001",
+  "consumerId": "SUBURBAN_DISTRICT_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "SUBURBAN_DISTRICT_001_PREVIEW_001",
+  "sceneId": "SUBURBAN_DISTRICT_001_PREVIEW_SCENE_001",
+  "checks": {
+    "blocksInsideBoundary": "PASS",
+    "streetBlocksResolve": "PASS",
+    "blocksDoNotOverlap": "PASS",
+    "roadsConnected": "PASS",
+    "zonesValid": "PASS",
+    "openSpaceConnected": "PASS",
+    "destinationReservesValid": "PASS",
+    "cameraProfileValid": "PASS",
+    "deterministicSourceMatches": "PASS",
+    "instanceReferenceModeValid": "PASS"
+  },
+  "summary": {
+    "validationPassed": true,
+    "blockCount": 4,
+    "lotCount": 108,
+    "roadConnectorCount": 5,
+    "zoneCount": 8,
+    "openSpaceCount": 3,
+    "destinationReserveCount": 3
+  }
+}
