@@ -49,9 +49,11 @@ test("suburban district preview consumer metadata resolves the district preview 
   assert.equal(metadata.landUseLayer.zoneCount, 8);
   assert.equal(metadata.openSpaceLayer.openSpaceCount, 3);
   assert.equal(metadata.destinationReserveLayer.reserveCount, 3);
+  assert.equal(metadata.seamLayer.seamId, "DISTRICT_SEAM_001");
+  assert.equal(metadata.pedestrianLayer.pedestrianLinkCount, 5);
   assert.equal(
     metadata.visualCaptureWorkflow.previewVersion,
-    "SESSION_58_DISTRICT_PREVIEW_CONSUMER"
+    "SESSION_60_DISTRICT_REFINEMENT_PASS"
   );
   assert.equal(
     metadata.visualCaptureWorkflow.topDown.cameraId,
@@ -71,6 +73,9 @@ test("suburban district preview consumer metadata resolves the district preview 
     metadata.performanceProfile.expectedConnectorInstances,
     5
   );
+  assert.equal(metadata.roadConnectorLayer.resolvedConnectors[0].start.x, -22);
+  assert.equal(metadata.roadConnectorLayer.readabilityEnhancements.hierarchyLineWeighting, true);
+  assert.equal(metadata.previewFidelityLayer.blockVisualHierarchy, "enhanced");
   for (const block of metadata.blockLayer.resolvedBlockInstances) {
     assert.equal(block.previewSceneId, "SUBURBAN_STREET_BLOCK_001_PREVIEW_SCENE_001");
     assert.equal(block.previewMode, "instance_reference_only");
@@ -88,6 +93,7 @@ test("suburban district preview consumer validation passes against the determini
   assert.equal(validation.summary.zoneCount, 8);
   assert.equal(validation.summary.openSpaceCount, 3);
   assert.equal(validation.summary.destinationReserveCount, 3);
+  assert.equal(validation.summary.pedestrianLinkCount, 5);
   assert.equal(validation.checks.blocksInsideBoundary, "PASS");
   assert.equal(validation.checks.streetBlocksResolve, "PASS");
   assert.equal(validation.checks.blocksDoNotOverlap, "PASS");
@@ -95,6 +101,11 @@ test("suburban district preview consumer validation passes against the determini
   assert.equal(validation.checks.zonesValid, "PASS");
   assert.equal(validation.checks.openSpaceConnected, "PASS");
   assert.equal(validation.checks.destinationReservesValid, "PASS");
+  assert.equal(validation.checks.seamTreatmentValid, "PASS");
+  assert.equal(validation.checks.pedestrianConnectivityValid, "PASS");
+  assert.equal(validation.checks.greenCorridorConnectivityValid, "PASS");
+  assert.equal(validation.checks.destinationAccessibilityValid, "PASS");
+  assert.equal(validation.checks.previewLayerCompletenessValid, "PASS");
   assert.equal(validation.checks.cameraProfileValid, "PASS");
   assert.equal(validation.checks.deterministicSourceMatches, "PASS");
   assert.equal(validation.checks.instanceReferenceModeValid, "PASS");

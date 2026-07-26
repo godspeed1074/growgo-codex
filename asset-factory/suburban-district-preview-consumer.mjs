@@ -156,7 +156,7 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       paddingMeters: 28
     }),
     visualCaptureWorkflow: freeze({
-      previewVersion: "SESSION_58_DISTRICT_PREVIEW_CONSUMER",
+      previewVersion: "SESSION_60_DISTRICT_REFINEMENT_PASS",
       districtSeed: preview.seedConfig.districtSeed,
       previewVersionSeedSignature:
         preview.validationResult.deterministicSignatureHash,
@@ -186,7 +186,8 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       lotCountEstimate: preview.lotCount,
       zoneCount: preview.landUseZones.length,
       openSpaceCount: preview.openSpacePlacements.length,
-      destinationReserveCount: preview.destinationReserves.length
+      destinationReserveCount: preview.destinationReserves.length,
+      seamPurpose: preview.seamTreatment.purpose
     }),
     blockLayer: freeze({
       placementMode: "block_preview_reference_plus_transform",
@@ -195,7 +196,12 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       blockInstanceCount: blockInstances.length,
       resolvedBlockInstances: blockInstances,
       showBlockBoundaries: true,
-      showBlockLabels: true
+      showBlockLabels: true,
+      visualHierarchy: freeze({
+        lotWeightedMassing: true,
+        edgeReserveAdjacencyHints: true,
+        rotationAlternationVisible: true
+      })
     }),
     roadConnectorLayer: freeze({
       connectorCount: preview.roadConnectors.length,
@@ -203,6 +209,11 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       showLocalRoads: true,
       showCollectorConnectors: true,
       showFutureArterialPlaceholders: true,
+      readabilityEnhancements: freeze({
+        hierarchyLineWeighting: true,
+        futureArterialEdgeEmphasis: true,
+        connectorLabelsVisible: true
+      }),
       resolvedConnectors: freeze(
         preview.roadConnectors.map((connector) =>
           freeze({
@@ -212,7 +223,36 @@ export function createSuburbanDistrictPreviewSceneMetadata(
             roadType: connector.roadType,
             direction: connector.direction,
             width: connector.width,
-            hierarchy: connector.hierarchy
+            hierarchy: connector.hierarchy,
+            start: connector.start,
+            end: connector.end
+          })
+        )
+      )
+    }),
+    seamLayer: freeze({
+      seamId: preview.seamTreatment.seamId,
+      seamType: preview.seamTreatment.seamType,
+      boundary: preview.seamTreatment.boundary,
+      supportedFunctions: preview.seamTreatment.supportedFunctions,
+      connectedZoneCount: preview.seamTreatment.connectedZoneIds.length,
+      connectedReserveCount: preview.seamTreatment.connectedReserveIds.length,
+      showSeamBoundary: true,
+      showSeamPurposeLabel: true
+    }),
+    pedestrianLayer: freeze({
+      pedestrianLinkCount: preview.pedestrianNetwork.length,
+      showPedestrianSpine: true,
+      showParkConnections: true,
+      showDestinationAccessPaths: true,
+      resolvedLinks: freeze(
+        preview.pedestrianNetwork.map((link) =>
+          freeze({
+            linkId: link.linkId,
+            linkType: link.linkType,
+            path: link.path,
+            connects: link.connects,
+            accessibilityRole: link.accessibilityRole
           })
         )
       )
@@ -221,6 +261,10 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       zoneCount: preview.landUseZones.length,
       showZoneBoundaries: true,
       showZoneLabels: true,
+      readabilityEnhancements: freeze({
+        districtSeamZoneEmphasis: true,
+        reserveEdgeLabels: true
+      }),
       resolvedZones: freeze(
         preview.landUseZones.map((zone) =>
           freeze({
@@ -244,6 +288,8 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       showReserves: true,
       showGreenCorridors: true,
       showWalkingLinks: true,
+      showSeamGreenSpine: true,
+      accessibilityHighlights: true,
       resolvedOpenSpaces: freeze(
         preview.openSpacePlacements.map((openSpace) =>
           freeze({
@@ -281,9 +327,18 @@ export function createSuburbanDistrictPreviewSceneMetadata(
       showBlockLabels: true,
       showRoadGraphMarkers: true,
       showZoneLabels: true,
+      showPedestrianMarkers: true,
+      showSeamMarkers: true,
       showValidationIndicators: true,
       passColour: "GREEN",
       failColour: "RED"
+    }),
+    previewFidelityLayer: freeze({
+      blockVisualHierarchy: "enhanced",
+      roadReadability: "hierarchy_weighted",
+      greenSpaceRepresentation: "seam_and_access_emphasized",
+      zoneReadability: "edge_and_central_labels",
+      angledInspectionUsefulness: "improved_preview_only"
     }),
     performanceProfile: freeze({
       reuseMode: "instance_reuse_only",
@@ -318,6 +373,18 @@ export function createSuburbanDistrictPreviewValidationReport(
   const openSpaceConnected = preview.validationResult.openSpaceValid === true;
   const destinationReservesValid =
     preview.validationResult.destinationReservesValid === true;
+  const seamTreatmentValid = preview.validationResult.seamTreatmentValid === true;
+  const pedestrianConnectivityValid =
+    preview.validationResult.pedestrianConnectivityValid === true;
+  const greenCorridorConnectivityValid =
+    preview.validationResult.greenCorridorConnectivityValid === true;
+  const destinationAccessibilityValid =
+    preview.validationResult.destinationAccessibilityValid === true;
+  const previewLayerCompletenessValid =
+    preview.validationResult.previewLayerCompletenessValid === true &&
+    preview.seamTreatment?.seamId === "DISTRICT_SEAM_001" &&
+    Array.isArray(preview.pedestrianNetwork) &&
+    preview.pedestrianNetwork.length > 0;
   const cameraProfileValid = validateCaptureProfiles(definition.previewCaptureProfiles);
   const deterministicSourceMatches =
     stableStringify(preview) ===
@@ -333,6 +400,11 @@ export function createSuburbanDistrictPreviewValidationReport(
     zonesValid: passFail(zonesValid),
     openSpaceConnected: passFail(openSpaceConnected),
     destinationReservesValid: passFail(destinationReservesValid),
+    seamTreatmentValid: passFail(seamTreatmentValid),
+    pedestrianConnectivityValid: passFail(pedestrianConnectivityValid),
+    greenCorridorConnectivityValid: passFail(greenCorridorConnectivityValid),
+    destinationAccessibilityValid: passFail(destinationAccessibilityValid),
+    previewLayerCompletenessValid: passFail(previewLayerCompletenessValid),
     cameraProfileValid: passFail(cameraProfileValid),
     deterministicSourceMatches: passFail(deterministicSourceMatches),
     instanceReferenceModeValid: passFail(instanceReferenceModeValid)
@@ -351,7 +423,8 @@ export function createSuburbanDistrictPreviewValidationReport(
       roadConnectorCount: preview.roadConnectors.length,
       zoneCount: preview.landUseZones.length,
       openSpaceCount: preview.openSpacePlacements.length,
-      destinationReserveCount: preview.destinationReserves.length
+      destinationReserveCount: preview.destinationReserves.length,
+      pedestrianLinkCount: preview.pedestrianNetwork.length
     })
   });
 }

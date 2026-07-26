@@ -186,6 +186,16 @@
       "direction": "east_west",
       "width": 16,
       "hierarchy": "collector_connection",
+      "start": {
+        "x": -22,
+        "y": -136,
+        "z": 0
+      },
+      "end": {
+        "x": 22,
+        "y": -136,
+        "z": 0
+      },
       "supportsPedestrianLink": true,
       "futureExpansionCompatible": true
     },
@@ -198,6 +208,16 @@
       "direction": "north_south",
       "width": 12,
       "hierarchy": "local_connection",
+      "start": {
+        "x": -168,
+        "y": -43,
+        "z": 0
+      },
+      "end": {
+        "x": -168,
+        "y": 43,
+        "z": 0
+      },
       "supportsPedestrianLink": true,
       "futureExpansionCompatible": true
     },
@@ -210,6 +230,16 @@
       "direction": "north_south",
       "width": 12,
       "hierarchy": "local_connection",
+      "start": {
+        "x": 168,
+        "y": -43,
+        "z": 0
+      },
+      "end": {
+        "x": 168,
+        "y": 43,
+        "z": 0
+      },
       "supportsPedestrianLink": true,
       "futureExpansionCompatible": true
     },
@@ -222,6 +252,16 @@
       "direction": "east_west",
       "width": 16,
       "hierarchy": "collector_connection",
+      "start": {
+        "x": -22,
+        "y": 136,
+        "z": 0
+      },
+      "end": {
+        "x": 22,
+        "y": 136,
+        "z": 0
+      },
       "supportsPedestrianLink": true,
       "futureExpansionCompatible": true
     },
@@ -234,10 +274,63 @@
       "direction": "east_west",
       "width": 22,
       "hierarchy": "future_arterial_connection",
+      "start": {
+        "x": 314,
+        "y": -136,
+        "z": 0
+      },
+      "end": {
+        "x": 370,
+        "y": -136,
+        "z": 0
+      },
       "supportsPedestrianLink": true,
       "futureExpansionCompatible": true
     }
   ],
+  "seamTreatment": {
+    "seamId": "DISTRICT_SEAM_001",
+    "seamType": "green_pedestrian_spine",
+    "boundary": {
+      "shape": "rect",
+      "x": -314,
+      "y": -43,
+      "width": 628,
+      "depth": 86,
+      "minX": -314,
+      "maxX": 314,
+      "minY": -43,
+      "maxY": 43
+    },
+    "purpose": "Resolve central block-row seam as usable green connector space.",
+    "supportedFunctions": [
+      "green_corridor",
+      "pedestrian_spine",
+      "park_edge_transition",
+      "collector_visibility_buffer"
+    ],
+    "connectedZoneIds": [
+      "ZONE_RES_001",
+      "ZONE_RES_002",
+      "ZONE_RES_003",
+      "ZONE_RES_004",
+      "ZONE_OPEN_001"
+    ],
+    "connectedOpenSpaceIds": [
+      "OPEN_SPACE_002",
+      "OPEN_SPACE_003"
+    ],
+    "connectedReserveIds": [
+      "RESERVE_001",
+      "RESERVE_002",
+      "RESERVE_003"
+    ],
+    "accessRules": {
+      "noUnusedGap": true,
+      "pedestrianAccessRequired": true,
+      "openSpaceContinuityRequired": true
+    }
+  },
   "landUseZones": [
     {
       "schemaId": "LAND_USE_ZONE_INSTANCE_001",
@@ -357,23 +450,25 @@
       "zoneType": "OPEN_SPACE",
       "boundary": {
         "shape": "rect",
-        "x": -30,
-        "y": -279,
-        "width": 60,
-        "depth": 180,
-        "minX": -30,
-        "maxX": 30,
-        "minY": -279,
-        "maxY": -99
+        "x": -314,
+        "y": -43,
+        "width": 628,
+        "depth": 86,
+        "minX": -314,
+        "maxX": 314,
+        "minY": -43,
+        "maxY": 43
       },
-      "purpose": "District green separation and walking connection.",
+      "purpose": "District seam corridor with green spine and pedestrian connection.",
       "allowedContent": [
         "green_corridor",
-        "walking_link"
+        "walking_link",
+        "pedestrian_spine"
       ],
       "placementRules": {
         "buffersResidentialBlocks": true,
-        "adjacentToCollectorsAllowed": true
+        "adjacentToCollectorsAllowed": true,
+        "seamTreatmentRequired": true
       },
       "densityCompatibility": [
         "LOW_DENSITY_SUBURBAN",
@@ -506,22 +601,24 @@
       "openSpaceType": "green_corridor",
       "position": {
         "x": 0,
-        "y": -187,
+        "y": 0,
         "z": 0
       },
       "size": {
-        "width": 60,
-        "depth": 180
+        "width": 628,
+        "depth": 86
       },
       "connectionRules": {
         "adjacentToCollectorPreferred": true,
         "supportsWalkingLink": true,
-        "buffersResidentialBlocks": true
+        "buffersResidentialBlocks": true,
+        "actsAsDistrictSeam": true
       },
       "futureAssetCompatibility": [
         "trees",
         "walking_path",
-        "reserve_edge"
+        "reserve_edge",
+        "pedestrian_spine"
       ]
     },
     {
@@ -529,18 +626,19 @@
       "openSpaceId": "OPEN_SPACE_003",
       "openSpaceType": "walking_link",
       "position": {
-        "x": 304,
-        "y": -203,
+        "x": 320,
+        "y": -161,
         "z": 0
       },
       "size": {
         "width": 32,
-        "depth": 144
+        "depth": 178
       },
       "connectionRules": {
         "adjacentToCollectorPreferred": true,
         "supportsWalkingLink": true,
-        "buffersResidentialBlocks": false
+        "buffersResidentialBlocks": false,
+        "connectsSeamToCommercialEdge": true
       },
       "futureAssetCompatibility": [
         "walking_path",
@@ -617,6 +715,119 @@
       }
     }
   ],
+  "pedestrianNetwork": [
+    {
+      "linkId": "PED_LINK_001",
+      "linkType": "district_seam_spine",
+      "path": [
+        {
+          "x": -300,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 300,
+          "y": 0,
+          "z": 0
+        }
+      ],
+      "connects": [
+        "ZONE_RES_001",
+        "ZONE_RES_002",
+        "ZONE_RES_003",
+        "ZONE_RES_004"
+      ],
+      "accessibilityRole": "primary_district_walk_link"
+    },
+    {
+      "linkId": "PED_LINK_002",
+      "linkType": "park_connection",
+      "path": [
+        {
+          "x": -310,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": -310,
+          "y": 259,
+          "z": 0
+        }
+      ],
+      "connects": [
+        "OPEN_SPACE_002",
+        "OPEN_SPACE_001",
+        "ZONE_PARK_001"
+      ],
+      "accessibilityRole": "park_access"
+    },
+    {
+      "linkId": "PED_LINK_003",
+      "linkType": "community_connection",
+      "path": [
+        {
+          "x": -302,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": -302,
+          "y": -267,
+          "z": 0
+        }
+      ],
+      "connects": [
+        "OPEN_SPACE_002",
+        "ZONE_COMMUNITY_001",
+        "RESERVE_001"
+      ],
+      "accessibilityRole": "community_access"
+    },
+    {
+      "linkId": "PED_LINK_004",
+      "linkType": "commercial_connection",
+      "path": [
+        {
+          "x": 320,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 320,
+          "y": -252,
+          "z": 0
+        }
+      ],
+      "connects": [
+        "OPEN_SPACE_002",
+        "OPEN_SPACE_003",
+        "ZONE_COMMERCIAL_001",
+        "RESERVE_002"
+      ],
+      "accessibilityRole": "commercial_access"
+    },
+    {
+      "linkId": "PED_LINK_005",
+      "linkType": "sports_connection",
+      "path": [
+        {
+          "x": 310,
+          "y": 0,
+          "z": 0
+        },
+        {
+          "x": 310,
+          "y": 262,
+          "z": 0
+        }
+      ],
+      "connects": [
+        "OPEN_SPACE_002",
+        "RESERVE_003"
+      ],
+      "accessibilityRole": "sports_access"
+    }
+  ],
   "lotCount": 108,
   "validationContract": {
     "checks": {
@@ -627,6 +838,11 @@
       "landUseDistributionValid": true,
       "openSpaceValid": true,
       "destinationReservesValid": true,
+      "seamTreatmentValid": true,
+      "pedestrianConnectivityValid": true,
+      "greenCorridorConnectivityValid": true,
+      "destinationAccessibilityValid": true,
+      "previewLayerCompletenessValid": true,
       "deterministicRebuildValid": true,
       "streamingBoundariesValid": true,
       "instanceReuseStrategyValid": true
@@ -640,10 +856,15 @@
     "landUseDistributionValid": true,
     "openSpaceValid": true,
     "destinationReservesValid": true,
+    "seamTreatmentValid": true,
+    "pedestrianConnectivityValid": true,
+    "greenCorridorConnectivityValid": true,
+    "destinationAccessibilityValid": true,
+    "previewLayerCompletenessValid": true,
     "deterministicRebuildValid": true,
     "streamingBoundariesValid": true,
     "instanceReuseStrategyValid": true,
-    "deterministicSignatureHash": 3403348121,
+    "deterministicSignatureHash": 3026203915,
     "validationPassed": true
   }
 }

@@ -13,9 +13,9 @@
     "paddingMeters": 28
   },
   "visualCaptureWorkflow": {
-    "previewVersion": "SESSION_58_DISTRICT_PREVIEW_CONSUMER",
+    "previewVersion": "SESSION_60_DISTRICT_REFINEMENT_PASS",
     "districtSeed": 10482,
-    "previewVersionSeedSignature": 3403348121,
+    "previewVersionSeedSignature": 3026203915,
     "validationResult": "PASS",
     "topDown": {
       "cameraId": "TOP_DOWN_DISTRICT_INSPECTION",
@@ -89,7 +89,8 @@
     "lotCountEstimate": 108,
     "zoneCount": 8,
     "openSpaceCount": 3,
-    "destinationReserveCount": 3
+    "destinationReserveCount": 3,
+    "seamPurpose": "Resolve central block-row seam as usable green connector space."
   },
   "blockLayer": {
     "placementMode": "block_preview_reference_plus_transform",
@@ -196,7 +197,12 @@
       }
     ],
     "showBlockBoundaries": true,
-    "showBlockLabels": true
+    "showBlockLabels": true,
+    "visualHierarchy": {
+      "lotWeightedMassing": true,
+      "edgeReserveAdjacencyHints": true,
+      "rotationAlternationVisible": true
+    }
   },
   "roadConnectorLayer": {
     "connectorCount": 5,
@@ -208,6 +214,11 @@
     "showLocalRoads": true,
     "showCollectorConnectors": true,
     "showFutureArterialPlaceholders": true,
+    "readabilityEnhancements": {
+      "hierarchyLineWeighting": true,
+      "futureArterialEdgeEmphasis": true,
+      "connectorLabelsVisible": true
+    },
     "resolvedConnectors": [
       {
         "connectorId": "CONNECTOR_001",
@@ -216,7 +227,17 @@
         "roadType": "collector_residential_street",
         "direction": "east_west",
         "width": 16,
-        "hierarchy": "collector_connection"
+        "hierarchy": "collector_connection",
+        "start": {
+          "x": -22,
+          "y": -136,
+          "z": 0
+        },
+        "end": {
+          "x": 22,
+          "y": -136,
+          "z": 0
+        }
       },
       {
         "connectorId": "CONNECTOR_002",
@@ -225,7 +246,17 @@
         "roadType": "local_residential_street",
         "direction": "north_south",
         "width": 12,
-        "hierarchy": "local_connection"
+        "hierarchy": "local_connection",
+        "start": {
+          "x": -168,
+          "y": -43,
+          "z": 0
+        },
+        "end": {
+          "x": -168,
+          "y": 43,
+          "z": 0
+        }
       },
       {
         "connectorId": "CONNECTOR_003",
@@ -234,7 +265,17 @@
         "roadType": "local_residential_street",
         "direction": "north_south",
         "width": 12,
-        "hierarchy": "local_connection"
+        "hierarchy": "local_connection",
+        "start": {
+          "x": 168,
+          "y": -43,
+          "z": 0
+        },
+        "end": {
+          "x": 168,
+          "y": 43,
+          "z": 0
+        }
       },
       {
         "connectorId": "CONNECTOR_004",
@@ -243,7 +284,17 @@
         "roadType": "collector_residential_street",
         "direction": "east_west",
         "width": 16,
-        "hierarchy": "collector_connection"
+        "hierarchy": "collector_connection",
+        "start": {
+          "x": -22,
+          "y": 136,
+          "z": 0
+        },
+        "end": {
+          "x": 22,
+          "y": 136,
+          "z": 0
+        }
       },
       {
         "connectorId": "CONNECTOR_005",
@@ -252,7 +303,161 @@
         "roadType": "future_arterial_connection",
         "direction": "east_west",
         "width": 22,
-        "hierarchy": "future_arterial_connection"
+        "hierarchy": "future_arterial_connection",
+        "start": {
+          "x": 314,
+          "y": -136,
+          "z": 0
+        },
+        "end": {
+          "x": 370,
+          "y": -136,
+          "z": 0
+        }
+      }
+    ]
+  },
+  "seamLayer": {
+    "seamId": "DISTRICT_SEAM_001",
+    "seamType": "green_pedestrian_spine",
+    "boundary": {
+      "shape": "rect",
+      "x": -314,
+      "y": -43,
+      "width": 628,
+      "depth": 86,
+      "minX": -314,
+      "maxX": 314,
+      "minY": -43,
+      "maxY": 43
+    },
+    "supportedFunctions": [
+      "green_corridor",
+      "pedestrian_spine",
+      "park_edge_transition",
+      "collector_visibility_buffer"
+    ],
+    "connectedZoneCount": 5,
+    "connectedReserveCount": 3,
+    "showSeamBoundary": true,
+    "showSeamPurposeLabel": true
+  },
+  "pedestrianLayer": {
+    "pedestrianLinkCount": 5,
+    "showPedestrianSpine": true,
+    "showParkConnections": true,
+    "showDestinationAccessPaths": true,
+    "resolvedLinks": [
+      {
+        "linkId": "PED_LINK_001",
+        "linkType": "district_seam_spine",
+        "path": [
+          {
+            "x": -300,
+            "y": 0,
+            "z": 0
+          },
+          {
+            "x": 300,
+            "y": 0,
+            "z": 0
+          }
+        ],
+        "connects": [
+          "ZONE_RES_001",
+          "ZONE_RES_002",
+          "ZONE_RES_003",
+          "ZONE_RES_004"
+        ],
+        "accessibilityRole": "primary_district_walk_link"
+      },
+      {
+        "linkId": "PED_LINK_002",
+        "linkType": "park_connection",
+        "path": [
+          {
+            "x": -310,
+            "y": 0,
+            "z": 0
+          },
+          {
+            "x": -310,
+            "y": 259,
+            "z": 0
+          }
+        ],
+        "connects": [
+          "OPEN_SPACE_002",
+          "OPEN_SPACE_001",
+          "ZONE_PARK_001"
+        ],
+        "accessibilityRole": "park_access"
+      },
+      {
+        "linkId": "PED_LINK_003",
+        "linkType": "community_connection",
+        "path": [
+          {
+            "x": -302,
+            "y": 0,
+            "z": 0
+          },
+          {
+            "x": -302,
+            "y": -267,
+            "z": 0
+          }
+        ],
+        "connects": [
+          "OPEN_SPACE_002",
+          "ZONE_COMMUNITY_001",
+          "RESERVE_001"
+        ],
+        "accessibilityRole": "community_access"
+      },
+      {
+        "linkId": "PED_LINK_004",
+        "linkType": "commercial_connection",
+        "path": [
+          {
+            "x": 320,
+            "y": 0,
+            "z": 0
+          },
+          {
+            "x": 320,
+            "y": -252,
+            "z": 0
+          }
+        ],
+        "connects": [
+          "OPEN_SPACE_002",
+          "OPEN_SPACE_003",
+          "ZONE_COMMERCIAL_001",
+          "RESERVE_002"
+        ],
+        "accessibilityRole": "commercial_access"
+      },
+      {
+        "linkId": "PED_LINK_005",
+        "linkType": "sports_connection",
+        "path": [
+          {
+            "x": 310,
+            "y": 0,
+            "z": 0
+          },
+          {
+            "x": 310,
+            "y": 262,
+            "z": 0
+          }
+        ],
+        "connects": [
+          "OPEN_SPACE_002",
+          "RESERVE_003"
+        ],
+        "accessibilityRole": "sports_access"
       }
     ]
   },
@@ -260,6 +465,10 @@
     "zoneCount": 8,
     "showZoneBoundaries": true,
     "showZoneLabels": true,
+    "readabilityEnhancements": {
+      "districtSeamZoneEmphasis": true,
+      "reserveEdgeLabels": true
+    },
     "resolvedZones": [
       {
         "zoneId": "ZONE_RES_001",
@@ -352,21 +561,22 @@
       {
         "zoneId": "ZONE_OPEN_001",
         "zoneType": "OPEN_SPACE",
-        "purpose": "District green separation and walking connection.",
+        "purpose": "District seam corridor with green spine and pedestrian connection.",
         "boundary": {
           "shape": "rect",
-          "x": -30,
-          "y": -279,
-          "width": 60,
-          "depth": 180,
-          "minX": -30,
-          "maxX": 30,
-          "minY": -279,
-          "maxY": -99
+          "x": -314,
+          "y": -43,
+          "width": 628,
+          "depth": 86,
+          "minX": -314,
+          "maxX": 314,
+          "minY": -43,
+          "maxY": 43
         },
         "placementRules": {
           "buffersResidentialBlocks": true,
-          "adjacentToCollectorsAllowed": true
+          "adjacentToCollectorsAllowed": true,
+          "seamTreatmentRequired": true
         },
         "displayColour": "OPEN_SPACE_GREEN",
         "previewMode": "zone_overlay"
@@ -445,6 +655,8 @@
     "showReserves": true,
     "showGreenCorridors": true,
     "showWalkingLinks": true,
+    "showSeamGreenSpine": true,
+    "accessibilityHighlights": true,
     "resolvedOpenSpaces": [
       {
         "openSpaceId": "OPEN_SPACE_001",
@@ -469,35 +681,37 @@
         "openSpaceType": "green_corridor",
         "position": {
           "x": 0,
-          "y": -187,
+          "y": 0,
           "z": 0
         },
         "size": {
-          "width": 60,
-          "depth": 180
+          "width": 628,
+          "depth": 86
         },
         "connectionRules": {
           "adjacentToCollectorPreferred": true,
           "supportsWalkingLink": true,
-          "buffersResidentialBlocks": true
+          "buffersResidentialBlocks": true,
+          "actsAsDistrictSeam": true
         }
       },
       {
         "openSpaceId": "OPEN_SPACE_003",
         "openSpaceType": "walking_link",
         "position": {
-          "x": 304,
-          "y": -203,
+          "x": 320,
+          "y": -161,
           "z": 0
         },
         "size": {
           "width": 32,
-          "depth": 144
+          "depth": 178
         },
         "connectionRules": {
           "adjacentToCollectorPreferred": true,
           "supportsWalkingLink": true,
-          "buffersResidentialBlocks": false
+          "buffersResidentialBlocks": false,
+          "connectsSeamToCommercialEdge": true
         }
       }
     ]
@@ -567,9 +781,18 @@
     "showBlockLabels": true,
     "showRoadGraphMarkers": true,
     "showZoneLabels": true,
+    "showPedestrianMarkers": true,
+    "showSeamMarkers": true,
     "showValidationIndicators": true,
     "passColour": "GREEN",
     "failColour": "RED"
+  },
+  "previewFidelityLayer": {
+    "blockVisualHierarchy": "enhanced",
+    "roadReadability": "hierarchy_weighted",
+    "greenSpaceRepresentation": "seam_and_access_emphasized",
+    "zoneReadability": "edge_and_central_labels",
+    "angledInspectionUsefulness": "improved_preview_only"
   },
   "performanceProfile": {
     "reuseMode": "instance_reuse_only",

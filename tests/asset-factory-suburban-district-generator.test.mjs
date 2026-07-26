@@ -67,6 +67,10 @@ test("district generation creates a valid 4-block connected suburban district", 
   assert.equal(preview.landUseZones.length, 8);
   assert.equal(preview.openSpacePlacements.length, 3);
   assert.equal(preview.destinationReserves.length, 3);
+  assert.equal(preview.seamTreatment.seamId, "DISTRICT_SEAM_001");
+  assert.equal(preview.pedestrianNetwork.length, 5);
+  assert.equal(preview.roadConnectors[0].start.x, -22);
+  assert.equal(preview.roadConnectors[0].end.x, 22);
   assert.ok(
     preview.landUseZones.some((zone) => zone.zoneType === "RESIDENTIAL_LOW_DENSITY")
   );
@@ -93,6 +97,11 @@ test("district generation creates a valid 4-block connected suburban district", 
   assert.equal(preview.validationResult.landUseDistributionValid, true);
   assert.equal(preview.validationResult.openSpaceValid, true);
   assert.equal(preview.validationResult.destinationReservesValid, true);
+  assert.equal(preview.validationResult.seamTreatmentValid, true);
+  assert.equal(preview.validationResult.pedestrianConnectivityValid, true);
+  assert.equal(preview.validationResult.greenCorridorConnectivityValid, true);
+  assert.equal(preview.validationResult.destinationAccessibilityValid, true);
+  assert.equal(preview.validationResult.previewLayerCompletenessValid, true);
   assert.equal(preview.validationResult.streamingBoundariesValid, true);
   assert.equal(preview.validationResult.instanceReuseStrategyValid, true);
   assert.equal(preview.validationResult.validationPassed, true);
@@ -120,6 +129,11 @@ test("district validation output reports pass status for the deterministic subur
   assert.equal(validation.checks.landUseDistributionValid, "PASS");
   assert.equal(validation.checks.openSpaceValid, "PASS");
   assert.equal(validation.checks.destinationReservesValid, "PASS");
+  assert.equal(validation.checks.seamTreatmentValid, "PASS");
+  assert.equal(validation.checks.pedestrianConnectivityValid, "PASS");
+  assert.equal(validation.checks.greenCorridorConnectivityValid, "PASS");
+  assert.equal(validation.checks.destinationAccessibilityValid, "PASS");
+  assert.equal(validation.checks.previewLayerCompletenessValid, "PASS");
   assert.equal(validation.checks.deterministicRebuildValid, "PASS");
   assert.equal(validation.checks.streamingBoundariesValid, "PASS");
   assert.equal(validation.checks.instanceReuseStrategyValid, "PASS");

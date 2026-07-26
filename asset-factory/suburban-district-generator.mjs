@@ -103,6 +103,8 @@ export const suburbanDistrictGeneratorDefaultInput = deepFreeze({
     blockSpacingY: 272,
     blockFootprintWidth: 292,
     blockFootprintDepth: 186,
+    seamCorridorDepth: 86,
+    seamSpineWidth: 56,
     connectorWidthLocal: 12,
     connectorWidthCollector: 16,
     connectorWidthArterial: 22
@@ -139,19 +141,38 @@ export function generateSuburbanDistrictPreview(
   const blockGrid = buildBlockGrid(input, themeProfile);
   const districtBounds = buildDistrictBounds(blockGrid, input);
   const blockPlacements = buildBlockPlacements(input, seedConfig, themeProfile, blockGrid);
-  const roadConnectors = buildRoadConnectors(input, themeProfile, blockPlacements);
+  const roadConnectors = buildRoadConnectors(
+    input,
+    themeProfile,
+    blockPlacements,
+    districtBounds
+  );
+  const seamTreatment = buildSeamTreatment(
+    input,
+    themeProfile,
+    blockPlacements,
+    districtBounds
+  );
   const landUseZones = buildLandUseZones(input, themeProfile, blockPlacements, districtBounds);
   const openSpacePlacements = buildOpenSpacePlacements(
     input,
     themeProfile,
     blockPlacements,
-    districtBounds
+    districtBounds,
+    seamTreatment
   );
   const destinationReserves = buildDestinationReserves(
     input,
     themeProfile,
     blockPlacements,
     districtBounds
+  );
+  const pedestrianNetwork = buildPedestrianNetwork(
+    input,
+    themeProfile,
+    districtBounds,
+    seamTreatment,
+    destinationReserves
   );
   const lotCount = blockPlacements.reduce(
     (sum, block) => sum + block.estimatedLotCount,
@@ -171,9 +192,11 @@ export function generateSuburbanDistrictPreview(
     blockGrid,
     blockPlacements: deepFreeze(blockPlacements),
     roadConnectors: deepFreeze(roadConnectors),
+    seamTreatment,
     landUseZones: deepFreeze(landUseZones),
     openSpacePlacements: deepFreeze(openSpacePlacements),
     destinationReserves: deepFreeze(destinationReserves),
+    pedestrianNetwork: deepFreeze(pedestrianNetwork),
     lotCount,
     validationContract: deepFreeze({
       checks: deepFreeze({
@@ -184,6 +207,11 @@ export function generateSuburbanDistrictPreview(
         landUseDistributionValid: true,
         openSpaceValid: true,
         destinationReservesValid: true,
+        seamTreatmentValid: true,
+        pedestrianConnectivityValid: true,
+        greenCorridorConnectivityValid: true,
+        destinationAccessibilityValid: true,
+        previewLayerCompletenessValid: true,
         deterministicRebuildValid: true,
         streamingBoundariesValid: true,
         instanceReuseStrategyValid: true
@@ -236,6 +264,19 @@ export function createSuburbanDistrictValidationOutput(
       openSpaceValid: passFail(preview.validationResult.openSpaceValid),
       destinationReservesValid: passFail(
         preview.validationResult.destinationReservesValid
+      ),
+      seamTreatmentValid: passFail(preview.validationResult.seamTreatmentValid),
+      pedestrianConnectivityValid: passFail(
+        preview.validationResult.pedestrianConnectivityValid
+      ),
+      greenCorridorConnectivityValid: passFail(
+        preview.validationResult.greenCorridorConnectivityValid
+      ),
+      destinationAccessibilityValid: passFail(
+        preview.validationResult.destinationAccessibilityValid
+      ),
+      previewLayerCompletenessValid: passFail(
+        preview.validationResult.previewLayerCompletenessValid
       ),
       deterministicRebuildValid: passFail(
         preview.validationResult.deterministicRebuildValid
@@ -304,6 +345,7 @@ export function validateSuburbanDistrictPreview(rawPreview) {
     validateZones(preview);
     validateOpenSpace(preview);
     validateDestinationReserves(preview);
+    validateSeamAndPedestrianNetwork(preview);
 
     if (!preview.validationResult.validationPassed) {
       throw createValidationError(
@@ -487,7 +529,7 @@ function attachConnectorRelationships(placements) {
   );
 }
 
-function buildRoadConnectors(input, themeProfile, blockPlacements) {
+function buildRoadConnectors(input, themeProfile, blockPlacements, districtBounds) {
   const connectors = [];
   const placementByCell = new Map(
     blockPlacements.map((placement) => [
@@ -509,7 +551,8 @@ function buildRoadConnectors(input, themeProfile, blockPlacements) {
           "collector_residential_street",
           "east_west",
           input.districtConfiguration.connectorWidthCollector,
-          "collector_connection"
+          "collector_connection",
+          connectorEndpoints(placement, east, "east_west")
         )
       );
     }
@@ -522,7 +565,8 @@ function buildRoadConnectors(input, themeProfile, blockPlacements) {
           "local_residential_street",
           "north_south",
           input.districtConfiguration.connectorWidthLocal,
-          "local_connection"
+          "local_connection",
+          connectorEndpoints(placement, south, "north_south")
         )
       );
     }
@@ -537,7 +581,19 @@ function buildRoadConnectors(input, themeProfile, blockPlacements) {
       "future_arterial_connection",
       "east_west",
       input.districtConfiguration.connectorWidthArterial,
-      "future_arterial_connection"
+      "future_arterial_connection",
+      {
+        start: deepFreeze({
+          x: roundNumber(eastMost.position.x + eastMost.blockFootprint.width / 2),
+          y: eastMost.position.y,
+          z: 0
+        }),
+        end: deepFreeze({
+          x: roundNumber(districtBounds.maxX - 24),
+          y: eastMost.position.y,
+          z: 0
+        })
+      }
     )
   );
 
@@ -551,7 +607,8 @@ function buildConnector(
   roadType,
   direction,
   width,
-  hierarchy
+  hierarchy,
+  endpoints
 ) {
   return deepFreeze({
     schemaId: roadConnectorSchemaId,
@@ -562,6 +619,8 @@ function buildConnector(
     direction,
     width,
     hierarchy,
+    start: endpoints.start,
+    end: endpoints.end,
     supportsPedestrianLink: true,
     futureExpansionCompatible: true
   });
@@ -592,19 +651,20 @@ function buildLandUseZones(input, themeProfile, blockPlacements, districtBounds)
     })
   );
 
-  const centralGreenX = roundNumber((districtBounds.minX + districtBounds.maxX) / 2 - 30);
+  const centralSeamBoundary = buildCentralSeamBoundary(input, districtBounds);
   const zones = [
     ...residentialZones,
     deepFreeze({
       schemaId: landUseZoneSchemaId,
       zoneId: "ZONE_OPEN_001",
       zoneType: "OPEN_SPACE",
-      boundary: boundaryRect(centralGreenX, districtBounds.minY + 40, 60, 180),
-      purpose: "District green separation and walking connection.",
-      allowedContent: deepFreeze(["green_corridor", "walking_link"]),
+      boundary: centralSeamBoundary,
+      purpose: "District seam corridor with green spine and pedestrian connection.",
+      allowedContent: deepFreeze(["green_corridor", "walking_link", "pedestrian_spine"]),
       placementRules: deepFreeze({
         buffersResidentialBlocks: true,
-        adjacentToCollectorsAllowed: true
+        adjacentToCollectorsAllowed: true,
+        seamTreatmentRequired: true
       }),
       densityCompatibility: deepFreeze(supportedDistrictThemeSeeds)
     }),
@@ -659,8 +719,15 @@ function buildLandUseZones(input, themeProfile, blockPlacements, districtBounds)
   return deepFreeze(zones);
 }
 
-function buildOpenSpacePlacements(input, themeProfile, blockPlacements, districtBounds) {
+function buildOpenSpacePlacements(
+  input,
+  themeProfile,
+  blockPlacements,
+  districtBounds,
+  seamTreatment
+) {
   const centerX = roundNumber((districtBounds.minX + districtBounds.maxX) / 2);
+  const seamBoundary = seamTreatment.boundary;
   return deepFreeze([
     {
       schemaId: openSpaceSchemaId,
@@ -679,25 +746,43 @@ function buildOpenSpacePlacements(input, themeProfile, blockPlacements, district
       schemaId: openSpaceSchemaId,
       openSpaceId: "OPEN_SPACE_002",
       openSpaceType: "green_corridor",
-      position: deepFreeze({ x: centerX, y: districtBounds.minY + 132, z: 0 }),
-      size: deepFreeze({ width: 60, depth: 180 }),
+      position: deepFreeze({
+        x: roundNumber((seamBoundary.minX + seamBoundary.maxX) / 2),
+        y: roundNumber((seamBoundary.minY + seamBoundary.maxY) / 2),
+        z: 0
+      }),
+      size: deepFreeze({
+        width: seamBoundary.width,
+        depth: seamBoundary.depth
+      }),
       connectionRules: deepFreeze({
         adjacentToCollectorPreferred: true,
         supportsWalkingLink: true,
-        buffersResidentialBlocks: true
+        buffersResidentialBlocks: true,
+        actsAsDistrictSeam: true
       }),
-      futureAssetCompatibility: deepFreeze(["trees", "walking_path", "reserve_edge"])
+      futureAssetCompatibility: deepFreeze([
+        "trees",
+        "walking_path",
+        "reserve_edge",
+        "pedestrian_spine"
+      ])
     },
     {
       schemaId: openSpaceSchemaId,
       openSpaceId: "OPEN_SPACE_003",
       openSpaceType: "walking_link",
-      position: deepFreeze({ x: districtBounds.maxX - 90, y: districtBounds.minY + 116, z: 0 }),
-      size: deepFreeze({ width: 32, depth: 144 }),
+      position: deepFreeze({
+        x: districtBounds.maxX - 74,
+        y: roundNumber((districtBounds.minY + seamBoundary.minY) / 2 + 20),
+        z: 0
+      }),
+      size: deepFreeze({ width: 32, depth: roundNumber(seamBoundary.depth + 92) }),
       connectionRules: deepFreeze({
         adjacentToCollectorPreferred: true,
         supportsWalkingLink: true,
-        buffersResidentialBlocks: false
+        buffersResidentialBlocks: false,
+        connectsSeamToCommercialEdge: true
       }),
       futureAssetCompatibility: deepFreeze(["walking_path", "signage", "trees"])
     }
@@ -745,6 +830,100 @@ function buildDestinationReserves(input, themeProfile, blockPlacements, district
   ]);
 }
 
+function buildSeamTreatment(input, themeProfile, blockPlacements, districtBounds) {
+  const boundary = buildCentralSeamBoundary(input, districtBounds);
+  return deepFreeze({
+    seamId: "DISTRICT_SEAM_001",
+    seamType: "green_pedestrian_spine",
+    boundary,
+    purpose: "Resolve central block-row seam as usable green connector space.",
+    supportedFunctions: deepFreeze([
+      "green_corridor",
+      "pedestrian_spine",
+      "park_edge_transition",
+      "collector_visibility_buffer"
+    ]),
+    connectedZoneIds: deepFreeze([
+      "ZONE_RES_001",
+      "ZONE_RES_002",
+      "ZONE_RES_003",
+      "ZONE_RES_004",
+      "ZONE_OPEN_001"
+    ]),
+    connectedOpenSpaceIds: deepFreeze(["OPEN_SPACE_002", "OPEN_SPACE_003"]),
+    connectedReserveIds: deepFreeze(["RESERVE_001", "RESERVE_002", "RESERVE_003"]),
+    accessRules: deepFreeze({
+      noUnusedGap: true,
+      pedestrianAccessRequired: true,
+      openSpaceContinuityRequired: true
+    })
+  });
+}
+
+function buildPedestrianNetwork(
+  input,
+  themeProfile,
+  districtBounds,
+  seamTreatment,
+  destinationReserves
+) {
+  const seamBoundary = seamTreatment.boundary;
+  const centreY = roundNumber((seamBoundary.minY + seamBoundary.maxY) / 2);
+  const centreX = roundNumber((districtBounds.minX + districtBounds.maxX) / 2);
+  return deepFreeze([
+    deepFreeze({
+      linkId: "PED_LINK_001",
+      linkType: "district_seam_spine",
+      path: freezePath([
+        { x: seamBoundary.minX + 14, y: centreY, z: 0 },
+        { x: seamBoundary.maxX - 14, y: centreY, z: 0 }
+      ]),
+      connects: deepFreeze(["ZONE_RES_001", "ZONE_RES_002", "ZONE_RES_003", "ZONE_RES_004"]),
+      accessibilityRole: "primary_district_walk_link"
+    }),
+    deepFreeze({
+      linkId: "PED_LINK_002",
+      linkType: "park_connection",
+      path: freezePath([
+        { x: districtBounds.minX + 84, y: centreY, z: 0 },
+        { x: districtBounds.minX + 84, y: districtBounds.maxY - 60, z: 0 }
+      ]),
+      connects: deepFreeze(["OPEN_SPACE_002", "OPEN_SPACE_001", "ZONE_PARK_001"]),
+      accessibilityRole: "park_access"
+    }),
+    deepFreeze({
+      linkId: "PED_LINK_003",
+      linkType: "community_connection",
+      path: freezePath([
+        { x: districtBounds.minX + 92, y: centreY, z: 0 },
+        { x: districtBounds.minX + 92, y: districtBounds.minY + 52, z: 0 }
+      ]),
+      connects: deepFreeze(["OPEN_SPACE_002", "ZONE_COMMUNITY_001", destinationReserves[0].reserveId]),
+      accessibilityRole: "community_access"
+    }),
+    deepFreeze({
+      linkId: "PED_LINK_004",
+      linkType: "commercial_connection",
+      path: freezePath([
+        { x: districtBounds.maxX - 74, y: centreY, z: 0 },
+        { x: districtBounds.maxX - 74, y: districtBounds.minY + 67, z: 0 }
+      ]),
+      connects: deepFreeze(["OPEN_SPACE_002", "OPEN_SPACE_003", "ZONE_COMMERCIAL_001", destinationReserves[1].reserveId]),
+      accessibilityRole: "commercial_access"
+    }),
+    deepFreeze({
+      linkId: "PED_LINK_005",
+      linkType: "sports_connection",
+      path: freezePath([
+        { x: districtBounds.maxX - 84, y: centreY, z: 0 },
+        { x: districtBounds.maxX - 84, y: districtBounds.maxY - 57, z: 0 }
+      ]),
+      connects: deepFreeze(["OPEN_SPACE_002", destinationReserves[2].reserveId]),
+      accessibilityRole: "sports_access"
+    })
+  ]);
+}
+
 function buildRoadHierarchySummary(themeProfile, roadConnectors) {
   const counts = roadConnectors.reduce(
     (summary, connector) => {
@@ -784,6 +963,26 @@ function buildValidationResult(preview, input) {
   const destinationReservesValid = preview.destinationReserves.every((reserve) =>
     boundaryContainsRect(preview.districtBounds, reserve.boundary)
   );
+  const seamTreatmentValid =
+    preview.seamTreatment &&
+    boundaryContainsRect(preview.districtBounds, preview.seamTreatment.boundary) &&
+    countBoundaryBlockOverlaps(preview.blockPlacements, preview.seamTreatment.boundary) === 0 &&
+    preview.seamTreatment.accessRules?.noUnusedGap === true;
+  const pedestrianConnectivityValid =
+    Array.isArray(preview.pedestrianNetwork) &&
+    preview.pedestrianNetwork.length >= 4 &&
+    preview.pedestrianNetwork.every((link) => pedestrianLinkValid(link, preview.districtBounds));
+  const greenCorridorConnectivityValid =
+    preview.openSpacePlacements.some((space) => space.openSpaceType === "green_corridor") &&
+    preview.seamTreatment.connectedOpenSpaceIds.includes("OPEN_SPACE_002") &&
+    preview.pedestrianNetwork.some((link) => link.linkType === "district_seam_spine");
+  const destinationAccessibilityValid = preview.destinationReserves.every((reserve) =>
+    preview.pedestrianNetwork.some((link) => link.connects.includes(reserve.reserveId))
+  );
+  const previewLayerCompletenessValid =
+    preview.seamTreatment?.seamId === "DISTRICT_SEAM_001" &&
+    Array.isArray(preview.pedestrianNetwork) &&
+    preview.pedestrianNetwork.length > 0;
   const streamingBoundariesValid = preview.blockPlacements.every(
     (block) => typeof block.streamingCellId === "string" && block.streamingCellId.length > 0
   );
@@ -802,6 +1001,11 @@ function buildValidationResult(preview, input) {
     landUseDistributionValid,
     openSpaceValid,
     destinationReservesValid,
+    seamTreatmentValid,
+    pedestrianConnectivityValid,
+    greenCorridorConnectivityValid,
+    destinationAccessibilityValid,
+    previewLayerCompletenessValid,
     deterministicRebuildValid: true,
     streamingBoundariesValid,
     instanceReuseStrategyValid,
@@ -814,6 +1018,11 @@ function buildValidationResult(preview, input) {
       landUseDistributionValid &&
       openSpaceValid &&
       destinationReservesValid &&
+      seamTreatmentValid &&
+      pedestrianConnectivityValid &&
+      greenCorridorConnectivityValid &&
+      destinationAccessibilityValid &&
+      previewLayerCompletenessValid &&
       streamingBoundariesValid &&
       instanceReuseStrategyValid
   });
@@ -865,6 +1074,12 @@ function validateOpenSpace(preview) {
       "District open-space placements are outside the district boundary."
     );
   }
+  if (!preview.validationResult.greenCorridorConnectivityValid) {
+    throw createValidationError(
+      "invalid_green_corridor_connectivity",
+      "District green corridor does not connect the seam and walking system correctly."
+    );
+  }
 }
 
 function validateDestinationReserves(preview) {
@@ -872,6 +1087,33 @@ function validateDestinationReserves(preview) {
     throw createValidationError(
       "invalid_destination_reserves",
       "District destination reserves are outside the district boundary."
+    );
+  }
+  if (!preview.validationResult.destinationAccessibilityValid) {
+    throw createValidationError(
+      "invalid_destination_accessibility",
+      "District destination reserves do not connect to the pedestrian access network."
+    );
+  }
+}
+
+function validateSeamAndPedestrianNetwork(preview) {
+  if (!preview.validationResult.seamTreatmentValid) {
+    throw createValidationError(
+      "invalid_seam_treatment",
+      "District seam treatment does not define a usable central corridor."
+    );
+  }
+  if (!preview.validationResult.pedestrianConnectivityValid) {
+    throw createValidationError(
+      "invalid_pedestrian_connectivity",
+      "District pedestrian network does not connect the main district destinations."
+    );
+  }
+  if (!preview.validationResult.previewLayerCompletenessValid) {
+    throw createValidationError(
+      "preview_layers_incomplete",
+      "District preview layers are incomplete for inspection fidelity."
     );
   }
 }
@@ -961,6 +1203,86 @@ function rectFromPositionAndSize(position, size) {
   };
 }
 
+function countBoundaryBlockOverlaps(blockPlacements, boundary) {
+  let overlaps = 0;
+  for (const block of blockPlacements) {
+    if (rectanglesOverlap(blockRect(block), boundary)) {
+      overlaps += 1;
+    }
+  }
+  return overlaps;
+}
+
+function connectorEndpoints(startBlock, endBlock, direction) {
+  if (direction === "east_west") {
+    return deepFreeze({
+      start: deepFreeze({
+        x: roundNumber(startBlock.position.x + startBlock.blockFootprint.width / 2),
+        y: startBlock.position.y,
+        z: 0
+      }),
+      end: deepFreeze({
+        x: roundNumber(endBlock.position.x - endBlock.blockFootprint.width / 2),
+        y: endBlock.position.y,
+        z: 0
+      })
+    });
+  }
+  return deepFreeze({
+    start: deepFreeze({
+      x: startBlock.position.x,
+      y: roundNumber(startBlock.position.y + startBlock.blockFootprint.depth / 2),
+      z: 0
+    }),
+    end: deepFreeze({
+      x: endBlock.position.x,
+      y: roundNumber(endBlock.position.y - endBlock.blockFootprint.depth / 2),
+      z: 0
+    })
+  });
+}
+
+function buildCentralSeamBoundary(input, districtBounds) {
+  const width = roundNumber(districtBounds.maxX - districtBounds.minX - 160);
+  return boundaryRect(
+    districtBounds.minX + 80,
+    roundNumber(-input.districtConfiguration.seamCorridorDepth / 2),
+    width,
+    input.districtConfiguration.seamCorridorDepth
+  );
+}
+
+function freezePath(points) {
+  return deepFreeze(
+    points.map((point) =>
+      deepFreeze({
+        x: roundNumber(point.x),
+        y: roundNumber(point.y),
+        z: roundNumber(point.z ?? 0)
+      })
+    )
+  );
+}
+
+function pedestrianLinkValid(link, districtBounds) {
+  return (
+    Array.isArray(link.path) &&
+    link.path.length >= 2 &&
+    link.path.every((point) => pointInsideBoundary(point, districtBounds)) &&
+    Array.isArray(link.connects) &&
+    link.connects.length >= 2
+  );
+}
+
+function pointInsideBoundary(point, bounds) {
+  return (
+    point.x >= bounds.minX &&
+    point.x <= bounds.maxX &&
+    point.y >= bounds.minY &&
+    point.y <= bounds.maxY
+  );
+}
+
 function boundaryContainsRect(bounds, rect) {
   return (
     rect.minX >= bounds.minX &&
@@ -1017,6 +1339,16 @@ function computeDeterministicSignatureHash(preview) {
       openSpace: preview.openSpacePlacements.map((space) => ({
         openSpaceId: space.openSpaceId,
         openSpaceType: space.openSpaceType
+      })),
+      seamTreatment: {
+        seamId: preview.seamTreatment.seamId,
+        seamType: preview.seamTreatment.seamType,
+        boundary: preview.seamTreatment.boundary
+      },
+      pedestrianNetwork: preview.pedestrianNetwork.map((link) => ({
+        linkId: link.linkId,
+        linkType: link.linkType,
+        connects: link.connects
       })),
       reserves: preview.destinationReserves.map((reserve) => ({
         reserveId: reserve.reserveId,
@@ -1077,6 +1409,14 @@ function normalizeGeneratorInput(rawInput) {
       blockFootprintDepth: normalizePositiveNumber(
         districtConfiguration.blockFootprintDepth,
         "districtConfiguration.blockFootprintDepth"
+      ),
+      seamCorridorDepth: normalizePositiveNumber(
+        districtConfiguration.seamCorridorDepth,
+        "districtConfiguration.seamCorridorDepth"
+      ),
+      seamSpineWidth: normalizePositiveNumber(
+        districtConfiguration.seamSpineWidth,
+        "districtConfiguration.seamSpineWidth"
       ),
       connectorWidthLocal: normalizePositiveNumber(
         districtConfiguration.connectorWidthLocal,

@@ -20,6 +20,11 @@
     "landUseDistributionValid": "PASS",
     "openSpaceValid": "PASS",
     "destinationReservesValid": "PASS",
+    "seamTreatmentValid": "PASS",
+    "pedestrianConnectivityValid": "PASS",
+    "greenCorridorConnectivityValid": "PASS",
+    "destinationAccessibilityValid": "PASS",
+    "previewLayerCompletenessValid": "PASS",
     "deterministicRebuildValid": "PASS",
     "streamingBoundariesValid": "PASS",
     "instanceReuseStrategyValid": "PASS"

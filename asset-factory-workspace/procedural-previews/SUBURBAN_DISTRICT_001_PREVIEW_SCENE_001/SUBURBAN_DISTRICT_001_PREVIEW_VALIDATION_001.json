@@ -11,6 +11,11 @@
     "zonesValid": "PASS",
     "openSpaceConnected": "PASS",
     "destinationReservesValid": "PASS",
+    "seamTreatmentValid": "PASS",
+    "pedestrianConnectivityValid": "PASS",
+    "greenCorridorConnectivityValid": "PASS",
+    "destinationAccessibilityValid": "PASS",
+    "previewLayerCompletenessValid": "PASS",
     "cameraProfileValid": "PASS",
     "deterministicSourceMatches": "PASS",
     "instanceReferenceModeValid": "PASS"
@@ -22,6 +27,7 @@
     "roadConnectorCount": 5,
     "zoneCount": 8,
     "openSpaceCount": 3,
-    "destinationReserveCount": 3
+    "destinationReserveCount": 3,
+    "pedestrianLinkCount": 5
   }
 }

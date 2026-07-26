@@ -42,6 +42,8 @@ PARK_COLOUR = (0.25, 0.72, 0.35, 0.65)
 COMMUNITY_COLOUR = (0.88, 0.72, 0.22, 0.65)
 COMMERCIAL_COLOUR = (0.92, 0.52, 0.18, 0.65)
 RESERVE_COLOUR = (0.70, 0.30, 0.78, 0.65)
+SEAM_COLOUR = (0.19, 0.72, 0.58, 0.50)
+PEDESTRIAN_COLOUR = (0.94, 0.91, 0.68, 1.0)
 PASS_COLOUR = (0.18, 0.78, 0.32, 1.0)
 FAIL_COLOUR = (0.85, 0.18, 0.18, 1.0)
 
@@ -227,9 +229,11 @@ def build_district_boundary(metadata, collection):
 
 def build_block_layer(preview, block_collection, debug_collection):
     for block in preview["blockPlacements"]:
+        block_id = block["blockInstanceId"]
         footprint = block["blockFootprint"]
         centre_x = block["position"]["x"]
         centre_y = block["position"]["y"]
+        lot_scale = max(0.16, min(0.34, block["estimatedLotCount"] / 100.0))
         boundary = {
             "minX": centre_x - footprint["width"] / 2.0,
             "maxX": centre_x + footprint["width"] / 2.0,
@@ -237,7 +241,7 @@ def build_block_layer(preview, block_collection, debug_collection):
             "maxY": centre_y + footprint["depth"] / 2.0,
         }
         create_curve_polyline(
-            f"{block['blockId']}_BOUNDARY",
+            f"{block_id}_BOUNDARY",
             rectangle_points(boundary, z=0.11),
             block_collection,
             BLOCK_COLOUR,
@@ -245,15 +249,15 @@ def build_block_layer(preview, block_collection, debug_collection):
             bevel=0.09,
         )
         create_box(
-            f"{block['blockId']}_MASSING",
+            f"{block_id}_MASSING",
             (centre_x, centre_y, 0.18),
-            (footprint["width"] / 2.0, footprint["depth"] / 2.0, 0.18),
+            (footprint["width"] / 2.0, footprint["depth"] / 2.0, lot_scale),
             block_collection,
-            (0.20, 0.33, 0.58, 0.10),
+            (0.20, 0.33, 0.58, 0.18),
         )
         create_text_label(
-            f"{block['blockId']}_LABEL",
-            block["blockId"],
+            f"{block_id}_LABEL",
+            block_id,
             (centre_x - 18.0, centre_y + 6.0, 0.6),
             debug_collection,
             size=2.2,
@@ -327,6 +331,48 @@ def build_open_space_layer(preview, collection, debug_collection):
         )
 
 
+def build_seam_layer(preview, collection, debug_collection):
+    seam = preview["seamTreatment"]
+    create_curve_polyline(
+        f"{seam['seamId']}_BOUNDARY",
+        rectangle_points(seam["boundary"], z=0.06),
+        collection,
+        SEAM_COLOUR,
+        closed=True,
+        bevel=0.08,
+    )
+    centre_x = (seam["boundary"]["minX"] + seam["boundary"]["maxX"]) / 2.0
+    centre_y = (seam["boundary"]["minY"] + seam["boundary"]["maxY"]) / 2.0
+    create_text_label(
+        f"{seam['seamId']}_LABEL",
+        seam["seamType"],
+        (centre_x - 22.0, centre_y, 0.34),
+        debug_collection,
+        size=1.6,
+    )
+
+
+def build_pedestrian_layer(preview, collection, debug_collection):
+    for link in preview["pedestrianNetwork"]:
+        points = [(point["x"], point["y"], 0.09) for point in link["path"]]
+        create_curve_polyline(
+            link["linkId"],
+            points,
+            collection,
+            PEDESTRIAN_COLOUR,
+            closed=False,
+            bevel=0.16,
+        )
+        midpoint = points[len(points) // 2]
+        create_text_label(
+            f"{link['linkId']}_LABEL",
+            link["linkType"],
+            (midpoint[0] + 2.0, midpoint[1] + 1.2, 0.42),
+            debug_collection,
+            size=1.0,
+        )
+
+
 def build_destination_reserves(preview, collection, debug_collection):
     for reserve in preview["destinationReserves"]:
         create_curve_polyline(
@@ -381,6 +427,8 @@ def main():
     boundary_collection = ensure_child_collection(root, "DISTRICT_BOUNDARY")
     block_collection = ensure_child_collection(root, "STREET_BLOCKS")
     connector_collection = ensure_child_collection(root, "ROAD_CONNECTORS")
+    seam_collection = ensure_child_collection(root, "DISTRICT_SEAM")
+    pedestrian_collection = ensure_child_collection(root, "PEDESTRIAN_NETWORK")
     zone_collection = ensure_child_collection(root, "LAND_USE_ZONES")
     open_space_collection = ensure_child_collection(root, "OPEN_SPACES")
     reserve_collection = ensure_child_collection(root, "DESTINATION_RESERVES")
@@ -389,6 +437,8 @@ def main():
     build_district_boundary(metadata, boundary_collection)
     build_block_layer(preview, block_collection, debug_collection)
     build_road_connector_layer(preview, connector_collection, debug_collection)
+    build_seam_layer(preview, seam_collection, debug_collection)
+    build_pedestrian_layer(preview, pedestrian_collection, debug_collection)
     build_zone_layer(preview, zone_collection, debug_collection)
     build_open_space_layer(preview, open_space_collection, debug_collection)
     build_destination_reserves(preview, reserve_collection, debug_collection)
