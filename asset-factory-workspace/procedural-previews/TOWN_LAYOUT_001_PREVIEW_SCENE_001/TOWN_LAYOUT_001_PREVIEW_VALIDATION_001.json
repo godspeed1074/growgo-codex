@@ -1,0 +1,34 @@
+{
+  "validationId": "TOWN_LAYOUT_001_PREVIEW_VALIDATION_001",
+  "consumerId": "TOWN_LAYOUT_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "TOWN_LAYOUT_001_PREVIEW_001",
+  "sceneId": "TOWN_LAYOUT_001_PREVIEW_SCENE_001",
+  "checks": {
+    "townBoundaryValid": "PASS",
+    "districtsPlaced": "PASS",
+    "zonesValid": "PASS",
+    "districtPreviewsResolve": "PASS",
+    "townCentreAccessible": "PASS",
+    "townCentreConnected": "PASS",
+    "commercialSensibleLocation": "PASS",
+    "civicAccessible": "PASS",
+    "transportConnectedHierarchy": "PASS",
+    "recreationValid": "PASS",
+    "landmarksValid": "PASS",
+    "deterministicSourceMatches": "PASS",
+    "referenceBasedPlacement": "PASS",
+    "noDuplicateGeometryGeneration": "PASS",
+    "cameraProfileValid": "PASS"
+  },
+  "summary": {
+    "validationPassed": true,
+    "districtCount": 3,
+    "districtLotCount": 336,
+    "townCentreCount": 1,
+    "commercialZoneCount": 1,
+    "civicReserveCount": 4,
+    "transportCorridorCount": 6,
+    "recreationZoneCount": 4,
+    "landmarkReserveCount": 2
+  }
+}
