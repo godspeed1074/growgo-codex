@@ -117,9 +117,20 @@ export function createSuburbanStreetBlockPreviewSceneMetadata(
   const definition = normalizeDefinition(rawDefinition);
   const preview = readSourcePreview(definition, options.cwd);
   const capturePositions = buildCapturePositions(preview);
+  const assetReferenceCatalog = freeze(
+    Object.values(definition.buildingAssetLookup).map((entry) =>
+      freeze({
+        assetId: entry.assetId,
+        familyId: entry.familyId,
+        defaultPreviewLod: entry.defaultPreviewLod,
+        gameplayAssetPath: entry.gameplayAssetPath
+      })
+    )
+  );
   const buildingInstances = preview.buildingPlacements.map((placement) =>
     freeze({
       instanceId: placement.placementId,
+      assetReferenceId: placement.assetId,
       assetId: placement.assetId,
       lotId: placement.lotId,
       position: placement.position,
@@ -215,6 +226,9 @@ export function createSuburbanStreetBlockPreviewSceneMetadata(
       showSetbacks: true
     }),
     buildingLayer: freeze({
+      placementMode: "asset_reference_plus_transform",
+      assetReferenceCount: assetReferenceCatalog.length,
+      assetReferenceCatalog,
       buildingInstanceCount: buildingInstances.length,
       resolvedBuildingAssets: freeze(buildingInstances)
     }),
@@ -250,6 +264,8 @@ export function createSuburbanStreetBlockPreviewSceneMetadata(
     performanceProfile: freeze({
       reuseMode: "instance_reuse_only",
       duplicateBuildingGenerationAllowed: false,
+      assetReferenceTransformsOnly: true,
+      futureAtlasEngineCompatibility: "instanced_preview_ready",
       previewOnlyAssetsAllowed: true,
       expectedBuildingInstances: preview.buildingPlacements.length,
       expectedStreetFeatureInstances: preview.streetFeaturePlacements.length

@@ -90,7 +90,7 @@
         "vergeWidth": 1.8,
         "x": 0,
         "y": 0,
-        "centerX": 26,
+        "centerX": 40,
         "centerY": 0,
         "startX": 0,
         "startY": 0
@@ -103,11 +103,11 @@
         "roadWidth": 12,
         "sidewalkWidth": 1.6,
         "vergeWidth": 1.8,
-        "x": 52,
+        "x": 80,
         "y": 0,
-        "centerX": 70,
+        "centerX": 120,
         "centerY": 0,
-        "startX": 52,
+        "startX": 80,
         "startY": 0
       },
       {
@@ -118,11 +118,11 @@
         "roadWidth": 12,
         "sidewalkWidth": 1.6,
         "vergeWidth": 1.8,
-        "x": 88,
+        "x": 160,
         "y": 0,
-        "centerX": 106,
+        "centerX": 200,
         "centerY": 0,
-        "startX": 88,
+        "startX": 160,
         "startY": 0
       },
       {
@@ -133,11 +133,11 @@
         "roadWidth": 12,
         "sidewalkWidth": 1.6,
         "vergeWidth": 1.8,
-        "x": 52,
+        "x": 80,
         "y": 0,
-        "centerX": 52,
-        "centerY": 29,
-        "startX": 52,
+        "centerX": 80,
+        "centerY": 36,
+        "startX": 80,
         "startY": 0
       },
       {
@@ -148,12 +148,12 @@
         "roadWidth": 12,
         "sidewalkWidth": 1.6,
         "vergeWidth": 1.8,
-        "x": 52,
-        "y": -58,
-        "centerX": 52,
-        "centerY": -29,
-        "startX": 52,
-        "startY": -58
+        "x": 80,
+        "y": -72,
+        "centerX": 80,
+        "centerY": -36,
+        "startX": 80,
+        "startY": -72
       },
       {
         "roadSegmentId": "SEGMENT_006",
@@ -163,11 +163,11 @@
         "roadWidth": 12,
         "sidewalkWidth": 1.6,
         "vergeWidth": 1.8,
-        "x": 88,
+        "x": 160,
         "y": 0,
-        "centerX": 88,
-        "centerY": 27,
-        "startX": 88,
+        "centerX": 160,
+        "centerY": 36,
+        "startX": 160,
         "startY": 0
       }
     ],
@@ -208,16 +208,39 @@
   },
   "lotLayer": {
     "lotCount": 24,
-    "cornerLotCount": 8,
+    "cornerLotCount": 18,
     "showLotBoundaries": true,
     "showLotLabels": true,
     "showSetbacks": true
   },
   "buildingLayer": {
+    "placementMode": "asset_reference_plus_transform",
+    "assetReferenceCount": 3,
+    "assetReferenceCatalog": [
+      {
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+        "defaultPreviewLod": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "familyId": "FAMILY_HOUSE_COASTAL",
+        "defaultPreviewLod": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "familyId": "FAMILY_HOUSE_COASTAL",
+        "defaultPreviewLod": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      }
+    ],
     "buildingInstanceCount": 24,
     "resolvedBuildingAssets": [
       {
         "instanceId": "BUILDING_PLACEMENT_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_001",
         "position": {
@@ -239,11 +262,12 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_002",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_002",
         "position": {
-          "x": 23.53,
-          "y": 18.96,
+          "x": 25.1,
+          "y": 20.02,
           "z": 0
         },
         "rotation": {
@@ -256,20 +280,21 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_003",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_003",
         "position": {
-          "x": 39.37,
-          "y": 19.69,
+          "x": 7.83,
+          "y": -19.69,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
         },
         "scale": {
           "x": 1,
@@ -281,32 +306,12 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_004",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_004",
         "position": {
-          "x": 56.79,
-          "y": 19.16,
-          "z": 0
-        },
-        "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
-        },
-        "scale": {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
-      },
-      {
-        "instanceId": "BUILDING_PLACEMENT_005",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-        "lotId": "LOT_005",
-        "position": {
-          "x": 7.83,
-          "y": -19.17,
+          "x": 27.69,
+          "y": -19.76,
           "z": 0
         },
         "rotation": {
@@ -322,12 +327,57 @@
         "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
+        "instanceId": "BUILDING_PLACEMENT_005",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_005",
+        "position": {
+          "x": 90.48,
+          "y": 19.77,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
         "instanceId": "BUILDING_PLACEMENT_006",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_006",
         "position": {
-          "x": 25.47,
-          "y": -18.91,
+          "x": 112.09,
+          "y": 19.41,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_007",
+        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_007",
+        "position": {
+          "x": 88.54,
+          "y": -18.8,
           "z": 0
         },
         "rotation": {
@@ -343,33 +393,13 @@
         "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
       },
       {
-        "instanceId": "BUILDING_PLACEMENT_007",
-        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-        "lotId": "LOT_007",
-        "position": {
-          "x": 43.11,
-          "y": -18.56,
-          "z": 0
-        },
-        "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
-        },
-        "scale": {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
-      },
-      {
         "instanceId": "BUILDING_PLACEMENT_008",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_008",
         "position": {
-          "x": 62.94,
-          "y": -19.72,
+          "x": 105.38,
+          "y": -19.22,
           "z": 0
         },
         "rotation": {
@@ -386,11 +416,12 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_009",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_009",
         "position": {
-          "x": 88.48,
-          "y": 19.1,
+          "x": 173.65,
+          "y": 19.25,
           "z": 0
         },
         "rotation": {
@@ -407,10 +438,11 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_010",
+        "assetReferenceId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
         "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
         "lotId": "LOT_010",
         "position": {
-          "x": 107.43,
+          "x": 192.89,
           "y": 19.54,
           "z": 0
         },
@@ -428,16 +460,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_011",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_011",
         "position": {
-          "x": 126.38,
-          "y": 19.45,
+          "x": 172.89,
+          "y": -20.01,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
         },
         "scale": {
           "x": 1,
@@ -449,16 +482,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_012",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_012",
         "position": {
-          "x": 147.96,
-          "y": 18.97,
+          "x": 192.65,
+          "y": -18.97,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
         },
         "scale": {
           "x": 1,
@@ -466,20 +500,21 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_013",
+        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
         "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
         "lotId": "LOT_013",
         "position": {
-          "x": 86.54,
-          "y": -19.9,
+          "x": 60.08,
+          "y": 18.02,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "EAST",
+          "yawDegrees": 270
         },
         "scale": {
           "x": 1,
@@ -491,16 +526,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_014",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_014",
         "position": {
-          "x": 103.38,
-          "y": -19.47,
+          "x": 59.96,
+          "y": 36.06,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "EAST",
+          "yawDegrees": 270
         },
         "scale": {
           "x": 1,
@@ -512,16 +548,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_015",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_015",
         "position": {
-          "x": 121.99,
-          "y": -18.75,
+          "x": 99.84,
+          "y": 18.19,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "WEST",
+          "yawDegrees": 90
         },
         "scale": {
           "x": 1,
@@ -529,20 +566,21 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_016",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_016",
         "position": {
-          "x": 140.62,
-          "y": -19.34,
+          "x": 99.46,
+          "y": 36.57,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "WEST",
+          "yawDegrees": 90
         },
         "scale": {
           "x": 1,
@@ -554,37 +592,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_017",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
         "lotId": "LOT_017",
         "position": {
-          "x": 167.59,
-          "y": 19.51,
+          "x": 60.88,
+          "y": -40.41,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
-        },
-        "scale": {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
-      },
-      {
-        "instanceId": "BUILDING_PLACEMENT_018",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-        "lotId": "LOT_018",
-        "position": {
-          "x": 184.77,
-          "y": 19.13,
-          "z": 0
-        },
-        "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
+          "facingDirection": "EAST",
+          "yawDegrees": 270
         },
         "scale": {
           "x": 1,
@@ -595,17 +613,40 @@
         "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
       },
       {
-        "instanceId": "BUILDING_PLACEMENT_019",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-        "lotId": "LOT_019",
+        "instanceId": "BUILDING_PLACEMENT_018",
+        "assetReferenceId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "lotId": "LOT_018",
         "position": {
-          "x": 203.99,
-          "y": 18.12,
+          "x": 59.92,
+          "y": -23.23,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
+          "facingDirection": "EAST",
+          "yawDegrees": 270
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_019",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_019",
+        "position": {
+          "x": 98.82,
+          "y": -39.48,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "WEST",
+          "yawDegrees": 90
         },
         "scale": {
           "x": 1,
@@ -617,16 +658,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_020",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_020",
         "position": {
-          "x": 223.2,
-          "y": 19.18,
+          "x": 100.22,
+          "y": -20.44,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "SOUTH",
-          "yawDegrees": 0
+          "facingDirection": "WEST",
+          "yawDegrees": 90
         },
         "scale": {
           "x": 1,
@@ -634,20 +676,21 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_021",
-        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_021",
         "position": {
-          "x": 168.89,
-          "y": -19.09,
+          "x": 140.56,
+          "y": 15.85,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "EAST",
+          "yawDegrees": 270
         },
         "scale": {
           "x": 1,
@@ -655,20 +698,21 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_022",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_022",
         "position": {
-          "x": 191.57,
-          "y": -19.2,
+          "x": 140.18,
+          "y": 35.04,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "EAST",
+          "yawDegrees": 270
         },
         "scale": {
           "x": 1,
@@ -680,37 +724,17 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_023",
-        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_023",
         "position": {
-          "x": 214.27,
-          "y": -19.41,
+          "x": 180.06,
+          "y": 16.56,
           "z": 0
         },
         "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
-        },
-        "scale": {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
-      },
-      {
-        "instanceId": "BUILDING_PLACEMENT_024",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-        "lotId": "LOT_024",
-        "position": {
-          "x": 234.07,
-          "y": -19.49,
-          "z": 0
-        },
-        "rotation": {
-          "facingDirection": "NORTH",
-          "yawDegrees": 180
+          "facingDirection": "WEST",
+          "yawDegrees": 90
         },
         "scale": {
           "x": 1,
@@ -719,6 +743,28 @@
         },
         "lodProfile": "LOD_GAMEPLAY",
         "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_024",
+        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_024",
+        "position": {
+          "x": 179.54,
+          "y": 37.19,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "WEST",
+          "yawDegrees": 90
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
       }
     ]
   },
@@ -749,7 +795,7 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": null,
         "position": {
-          "x": 26,
+          "x": 40,
           "y": 6.8,
           "z": 0
         },
@@ -769,7 +815,7 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": null,
         "position": {
-          "x": 26,
+          "x": 40,
           "y": 8.5,
           "z": 0
         },
@@ -789,7 +835,7 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": null,
         "position": {
-          "x": 26,
+          "x": 40,
           "y": -6.8,
           "z": 0
         },
@@ -809,7 +855,7 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": null,
         "position": {
-          "x": 26,
+          "x": 40,
           "y": -8.5,
           "z": 0
         },
@@ -889,7 +935,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 70,
+          "x": 120,
           "y": 6.8,
           "z": 0
         },
@@ -909,7 +955,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 70,
+          "x": 120,
           "y": 8.5,
           "z": 0
         },
@@ -929,7 +975,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 70,
+          "x": 120,
           "y": -6.8,
           "z": 0
         },
@@ -949,7 +995,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 70,
+          "x": 120,
           "y": -8.5,
           "z": 0
         },
@@ -969,7 +1015,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 72,
+          "x": 100,
           "y": 8.5,
           "z": 0
         },
@@ -989,7 +1035,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 92,
+          "x": 120,
           "y": 8.5,
           "z": 0
         },
@@ -1009,7 +1055,7 @@
         "streetSegmentId": "SEGMENT_002",
         "relatedLotId": null,
         "position": {
-          "x": 112,
+          "x": 140,
           "y": 8.5,
           "z": 0
         },
@@ -1029,7 +1075,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 106,
+          "x": 200,
           "y": 6.8,
           "z": 0
         },
@@ -1049,7 +1095,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 106,
+          "x": 200,
           "y": 8.5,
           "z": 0
         },
@@ -1069,7 +1115,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 106,
+          "x": 200,
           "y": -6.8,
           "z": 0
         },
@@ -1089,7 +1135,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 106,
+          "x": 200,
           "y": -8.5,
           "z": 0
         },
@@ -1109,7 +1155,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 108,
+          "x": 180,
           "y": 8.5,
           "z": 0
         },
@@ -1129,7 +1175,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 128,
+          "x": 200,
           "y": 8.5,
           "z": 0
         },
@@ -1149,7 +1195,7 @@
         "streetSegmentId": "SEGMENT_003",
         "relatedLotId": null,
         "position": {
-          "x": 148,
+          "x": 220,
           "y": 8.5,
           "z": 0
         },
@@ -1169,8 +1215,8 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 45.2,
-          "y": 29,
+          "x": 73.2,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1189,8 +1235,8 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 43.5,
-          "y": 29,
+          "x": 71.5,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1209,8 +1255,8 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 58.8,
-          "y": 29,
+          "x": 86.8,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1229,8 +1275,8 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
-          "y": 29,
+          "x": 88.5,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1249,7 +1295,7 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
+          "x": 88.5,
           "y": 18,
           "z": 0
         },
@@ -1269,7 +1315,7 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
+          "x": 88.5,
           "y": 36,
           "z": 0
         },
@@ -1289,7 +1335,7 @@
         "streetSegmentId": "SEGMENT_004",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
+          "x": 88.5,
           "y": 54,
           "z": 0
         },
@@ -1309,8 +1355,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 45.2,
-          "y": -29,
+          "x": 73.2,
+          "y": -36,
           "z": 0
         },
         "rotation": {
@@ -1329,8 +1375,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 43.5,
-          "y": -29,
+          "x": 71.5,
+          "y": -36,
           "z": 0
         },
         "rotation": {
@@ -1349,8 +1395,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 58.8,
-          "y": -29,
+          "x": 86.8,
+          "y": -36,
           "z": 0
         },
         "rotation": {
@@ -1369,8 +1415,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
-          "y": -29,
+          "x": 88.5,
+          "y": -36,
           "z": 0
         },
         "rotation": {
@@ -1389,8 +1435,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
-          "y": -40,
+          "x": 88.5,
+          "y": -54,
           "z": 0
         },
         "rotation": {
@@ -1409,8 +1455,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
-          "y": -22,
+          "x": 88.5,
+          "y": -36,
           "z": 0
         },
         "rotation": {
@@ -1429,8 +1475,8 @@
         "streetSegmentId": "SEGMENT_005",
         "relatedLotId": null,
         "position": {
-          "x": 60.5,
-          "y": -4,
+          "x": 88.5,
+          "y": -18,
           "z": 0
         },
         "rotation": {
@@ -1449,8 +1495,8 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 81.2,
-          "y": 27,
+          "x": 153.2,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1469,8 +1515,8 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 79.5,
-          "y": 27,
+          "x": 151.5,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1489,8 +1535,8 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 94.8,
-          "y": 27,
+          "x": 166.8,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1509,8 +1555,8 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 96.5,
-          "y": 27,
+          "x": 168.5,
+          "y": 36,
           "z": 0
         },
         "rotation": {
@@ -1529,7 +1575,7 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 96.5,
+          "x": 168.5,
           "y": 18,
           "z": 0
         },
@@ -1549,7 +1595,7 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 96.5,
+          "x": 168.5,
           "y": 36,
           "z": 0
         },
@@ -1569,7 +1615,7 @@
         "streetSegmentId": "SEGMENT_006",
         "relatedLotId": null,
         "position": {
-          "x": 96.5,
+          "x": 168.5,
           "y": 54,
           "z": 0
         },
@@ -1669,7 +1715,7 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": "LOT_002",
         "position": {
-          "x": 19.94,
+          "x": 20.41,
           "y": 8.7,
           "z": 0
         },
@@ -1689,8 +1735,8 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": "LOT_003",
         "position": {
-          "x": 34.67,
-          "y": 8.7,
+          "x": 3.05,
+          "y": -8.7,
           "z": 0
         },
         "rotation": {
@@ -1709,8 +1755,8 @@
         "streetSegmentId": "SEGMENT_001",
         "relatedLotId": "LOT_004",
         "position": {
-          "x": 52.09,
-          "y": 8.7,
+          "x": 21.36,
+          "y": -8.7,
           "z": 0
         },
         "rotation": {
@@ -1726,11 +1772,11 @@
         "featurePlacementId": "FEATURE_050",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_001",
+        "streetSegmentId": "SEGMENT_002",
         "relatedLotId": "LOT_005",
         "position": {
-          "x": 3.05,
-          "y": -8.7,
+          "x": 85.24,
+          "y": 8.7,
           "z": 0
         },
         "rotation": {
@@ -1746,11 +1792,11 @@
         "featurePlacementId": "FEATURE_051",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_001",
+        "streetSegmentId": "SEGMENT_002",
         "relatedLotId": "LOT_006",
         "position": {
-          "x": 20.7,
-          "y": -8.7,
+          "x": 104.99,
+          "y": 8.7,
           "z": 0
         },
         "rotation": {
@@ -1766,10 +1812,10 @@
         "featurePlacementId": "FEATURE_052",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_001",
+        "streetSegmentId": "SEGMENT_002",
         "relatedLotId": "LOT_007",
         "position": {
-          "x": 38.33,
+          "x": 84.66,
           "y": -8.7,
           "z": 0
         },
@@ -1786,10 +1832,10 @@
         "featurePlacementId": "FEATURE_053",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_001",
+        "streetSegmentId": "SEGMENT_002",
         "relatedLotId": "LOT_008",
         "position": {
-          "x": 56.62,
+          "x": 100.26,
           "y": -8.7,
           "z": 0
         },
@@ -1806,10 +1852,10 @@
         "featurePlacementId": "FEATURE_054",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_003",
         "relatedLotId": "LOT_009",
         "position": {
-          "x": 83.24,
+          "x": 167.6,
           "y": 8.7,
           "z": 0
         },
@@ -1826,10 +1872,10 @@
         "featurePlacementId": "FEATURE_055",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_003",
         "relatedLotId": "LOT_010",
         "position": {
-          "x": 102.19,
+          "x": 188.28,
           "y": 8.7,
           "z": 0
         },
@@ -1846,11 +1892,11 @@
         "featurePlacementId": "FEATURE_056",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_003",
         "relatedLotId": "LOT_011",
         "position": {
-          "x": 121.15,
-          "y": 8.7,
+          "x": 167.37,
+          "y": -8.7,
           "z": 0
         },
         "rotation": {
@@ -1866,11 +1912,11 @@
         "featurePlacementId": "FEATURE_057",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_003",
         "relatedLotId": "LOT_012",
         "position": {
-          "x": 140.87,
-          "y": 8.7,
+          "x": 187.13,
+          "y": -8.7,
           "z": 0
         },
         "rotation": {
@@ -1886,11 +1932,11 @@
         "featurePlacementId": "FEATURE_058",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_004",
         "relatedLotId": "LOT_013",
         "position": {
-          "x": 82.66,
-          "y": -8.7,
+          "x": 71.3,
+          "y": 13.11,
           "z": 0
         },
         "rotation": {
@@ -1906,11 +1952,11 @@
         "featurePlacementId": "FEATURE_059",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_004",
         "relatedLotId": "LOT_014",
         "position": {
-          "x": 98.26,
-          "y": -8.7,
+          "x": 71.3,
+          "y": 31.14,
           "z": 0
         },
         "rotation": {
@@ -1926,11 +1972,11 @@
         "featurePlacementId": "FEATURE_060",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_004",
         "relatedLotId": "LOT_015",
         "position": {
-          "x": 116.87,
-          "y": -8.7,
+          "x": 88.7,
+          "y": 13.16,
           "z": 0
         },
         "rotation": {
@@ -1946,11 +1992,11 @@
         "featurePlacementId": "FEATURE_061",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_002",
+        "streetSegmentId": "SEGMENT_004",
         "relatedLotId": "LOT_016",
         "position": {
-          "x": 135.49,
-          "y": -8.7,
+          "x": 88.7,
+          "y": 31.54,
           "z": 0
         },
         "rotation": {
@@ -1966,11 +2012,11 @@
         "featurePlacementId": "FEATURE_062",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_005",
         "relatedLotId": "LOT_017",
         "position": {
-          "x": 162.98,
-          "y": 8.7,
+          "x": 71.3,
+          "y": -45.02,
           "z": 0
         },
         "rotation": {
@@ -1986,11 +2032,11 @@
         "featurePlacementId": "FEATURE_063",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_005",
         "relatedLotId": "LOT_018",
         "position": {
-          "x": 180.16,
-          "y": 8.7,
+          "x": 71.3,
+          "y": -27.84,
           "z": 0
         },
         "rotation": {
@@ -2006,11 +2052,11 @@
         "featurePlacementId": "FEATURE_064",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_005",
         "relatedLotId": "LOT_019",
         "position": {
-          "x": 197.94,
-          "y": 8.7,
+          "x": 88.7,
+          "y": -44.74,
           "z": 0
         },
         "rotation": {
@@ -2026,11 +2072,11 @@
         "featurePlacementId": "FEATURE_065",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_005",
         "relatedLotId": "LOT_020",
         "position": {
-          "x": 218.59,
-          "y": 8.7,
+          "x": 88.7,
+          "y": -25.71,
           "z": 0
         },
         "rotation": {
@@ -2046,11 +2092,11 @@
         "featurePlacementId": "FEATURE_066",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_006",
         "relatedLotId": "LOT_021",
         "position": {
-          "x": 163.37,
-          "y": -8.7,
+          "x": 151.3,
+          "y": 11.05,
           "z": 0
         },
         "rotation": {
@@ -2066,11 +2112,11 @@
         "featurePlacementId": "FEATURE_067",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_006",
         "relatedLotId": "LOT_022",
         "position": {
-          "x": 184.01,
-          "y": -8.7,
+          "x": 151.3,
+          "y": 29.2,
           "z": 0
         },
         "rotation": {
@@ -2086,11 +2132,11 @@
         "featurePlacementId": "FEATURE_068",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_006",
         "relatedLotId": "LOT_023",
         "position": {
-          "x": 208.74,
-          "y": -8.7,
+          "x": 168.7,
+          "y": 11.27,
           "z": 0
         },
         "rotation": {
@@ -2106,11 +2152,11 @@
         "featurePlacementId": "FEATURE_069",
         "featureType": "street_sign",
         "assetId": "MAILBOX_PREVIEW_001",
-        "streetSegmentId": "SEGMENT_003",
+        "streetSegmentId": "SEGMENT_006",
         "relatedLotId": "LOT_024",
         "position": {
-          "x": 228.54,
-          "y": -8.7,
+          "x": 168.7,
+          "y": 30.84,
           "z": 0
         },
         "rotation": {
@@ -2135,6 +2181,8 @@
   "performanceProfile": {
     "reuseMode": "instance_reuse_only",
     "duplicateBuildingGenerationAllowed": false,
+    "assetReferenceTransformsOnly": true,
+    "futureAtlasEngineCompatibility": "instanced_preview_ready",
     "previewOnlyAssetsAllowed": true,
     "expectedBuildingInstances": 24,
     "expectedStreetFeatureInstances": 69

@@ -46,7 +46,7 @@ test("different seed produces deterministic but varied suburban street block out
   );
   const second = moduleUnderTest.generateSuburbanStreetBlockPreview({
     ...moduleUnderTest.suburbanStreetBlockGeneratorDefaultInput,
-    streetBlockSeed: 20482
+    streetBlockSeed: 30482
   });
 
   assert.notDeepEqual(first.lots, second.lots);
@@ -66,6 +66,25 @@ test("24 lots are generated with a valid road graph and passing validation", () 
   assert.equal(preview.roadSegments.length, 6);
   assert.equal(preview.intersections.length, 3);
   assert.equal(preview.roadGraph.connectedComponentCount, 1);
+  assert.equal(
+    preview.lots.filter((lot) => lot.frontageRoadSegmentId === "SEGMENT_004").length,
+    4
+  );
+  assert.equal(
+    preview.lots.filter((lot) => lot.frontageRoadSegmentId === "SEGMENT_005").length,
+    4
+  );
+  assert.equal(
+    preview.lots.filter((lot) => lot.frontageRoadSegmentId === "SEGMENT_006").length,
+    4
+  );
+  assert.ok(preview.lots.some((lot) => lot.frontageDirection === "EAST"));
+  assert.ok(preview.lots.some((lot) => lot.frontageDirection === "WEST"));
+  assert.ok(
+    preview.lots.some(
+      (lot) => lot.streetContext === "cul_de_sac_residential_edge"
+    )
+  );
   for (const lot of preview.lots) {
     assert.ok(
       moduleUnderTest.supportedSuburbanStreetBlockBuildingAssets.includes(
@@ -80,6 +99,10 @@ test("24 lots are generated with a valid road graph and passing validation", () 
   assert.equal(preview.validationResult.validBuildingIds, true);
   assert.equal(preview.validationResult.buildingPlacementValidity, true);
   assert.equal(preview.validationResult.drivewayConnectionValidity, true);
+  assert.equal(preview.validationResult.frontageResolutionValidity, true);
+  assert.equal(preview.validationResult.suburbanWeightingValidity, true);
+  assert.equal(preview.validationResult.adjacentVariationValidity, true);
+  assert.equal(preview.validationResult.cornerLotRuleValidity, true);
   assert.equal(preview.validationResult.streetFeatureContainmentValidity, true);
   assert.equal(preview.validationResult.validationPassed, true);
 });
@@ -101,6 +124,10 @@ test("validation output reports pass status for the deterministic 24-lot block",
   assert.equal(validation.checks.intersectionValidity, "PASS");
   assert.equal(validation.checks.allLotsGenerated, "PASS");
   assert.equal(validation.checks.validBuildingIds, "PASS");
+  assert.equal(validation.checks.frontageResolutionValidity, "PASS");
+  assert.equal(validation.checks.suburbanWeightingValidity, "PASS");
+  assert.equal(validation.checks.adjacentVariationValidity, "PASS");
+  assert.equal(validation.checks.cornerLotRuleValidity, "PASS");
   assert.equal(validation.checks.deterministicRebuildValidity, "PASS");
 });
 

@@ -114,54 +114,54 @@ const edgeDefinitions = deepFreeze([
     roadSegmentId: "SEGMENT_001",
     side: "NORTH",
     orientation: "EAST_WEST",
-    count: 4,
+    count: 2,
     startCoordinate: 0,
     roadCoordinate: 0,
-    lotTypePattern: ["standard", "narrow", "standard", "standard"],
-    cornerLotIndices: [3]
+    lotTypePattern: ["standard", "standard"],
+    cornerLotIndices: [1]
   },
   {
     edgeId: "EDGE_COLLECTOR_WEST_SOUTH",
     roadSegmentId: "SEGMENT_001",
     side: "SOUTH",
     orientation: "EAST_WEST",
-    count: 4,
+    count: 2,
     startCoordinate: 0,
     roadCoordinate: 0,
-    lotTypePattern: ["standard", "standard", "standard", "wide"],
-    cornerLotIndices: [3]
+    lotTypePattern: ["standard", "wide"],
+    cornerLotIndices: [1]
   },
   {
     edgeId: "EDGE_COLLECTOR_MID_NORTH",
     roadSegmentId: "SEGMENT_002",
     side: "NORTH",
     orientation: "EAST_WEST",
-    count: 4,
-    startCoordinate: 80,
+    count: 2,
+    startCoordinate: 82,
     roadCoordinate: 0,
-    lotTypePattern: ["standard", "standard", "standard", "wide"],
-    cornerLotIndices: [0, 3]
+    lotTypePattern: ["standard", "wide"],
+    cornerLotIndices: [0]
   },
   {
     edgeId: "EDGE_COLLECTOR_MID_SOUTH",
     roadSegmentId: "SEGMENT_002",
     side: "SOUTH",
     orientation: "EAST_WEST",
-    count: 4,
-    startCoordinate: 80,
+    count: 2,
+    startCoordinate: 82,
     roadCoordinate: 0,
-    lotTypePattern: ["narrow", "standard", "standard", "standard"],
-    cornerLotIndices: [0, 3]
+    lotTypePattern: ["narrow", "standard"],
+    cornerLotIndices: [0]
   },
   {
     edgeId: "EDGE_COLLECTOR_EAST_NORTH",
     roadSegmentId: "SEGMENT_003",
     side: "NORTH",
     orientation: "EAST_WEST",
-    count: 4,
-    startCoordinate: 160,
+    count: 2,
+    startCoordinate: 164,
     roadCoordinate: 0,
-    lotTypePattern: ["standard", "standard", "wide", "standard"],
+    lotTypePattern: ["wide", "standard"],
     cornerLotIndices: [0]
   },
   {
@@ -169,11 +169,77 @@ const edgeDefinitions = deepFreeze([
     roadSegmentId: "SEGMENT_003",
     side: "SOUTH",
     orientation: "EAST_WEST",
-    count: 4,
-    startCoordinate: 160,
+    count: 2,
+    startCoordinate: 164,
     roadCoordinate: 0,
-    lotTypePattern: ["standard", "wide", "standard", "standard"],
+    lotTypePattern: ["standard", "standard"],
     cornerLotIndices: [0]
+  },
+  {
+    edgeId: "EDGE_LOCAL_NORTH_WEST",
+    roadSegmentId: "SEGMENT_004",
+    side: "WEST",
+    orientation: "NORTH_SOUTH",
+    count: 2,
+    startCoordinate: 10,
+    roadCoordinate: 52,
+    lotTypePattern: ["standard", "standard"],
+    cornerLotIndices: [0, 1]
+  },
+  {
+    edgeId: "EDGE_LOCAL_NORTH_EAST",
+    roadSegmentId: "SEGMENT_004",
+    side: "EAST",
+    orientation: "NORTH_SOUTH",
+    count: 2,
+    startCoordinate: 10,
+    roadCoordinate: 52,
+    lotTypePattern: ["standard", "standard"],
+    cornerLotIndices: [0, 1]
+  },
+  {
+    edgeId: "EDGE_LOCAL_SOUTH_WEST",
+    roadSegmentId: "SEGMENT_005",
+    side: "WEST",
+    orientation: "NORTH_SOUTH",
+    count: 2,
+    startCoordinate: -48,
+    roadCoordinate: 52,
+    lotTypePattern: ["standard", "standard"],
+    cornerLotIndices: [0, 1]
+  },
+  {
+    edgeId: "EDGE_LOCAL_SOUTH_EAST",
+    roadSegmentId: "SEGMENT_005",
+    side: "EAST",
+    orientation: "NORTH_SOUTH",
+    count: 2,
+    startCoordinate: -48,
+    roadCoordinate: 52,
+    lotTypePattern: ["standard", "standard"],
+    cornerLotIndices: [0, 1]
+  },
+  {
+    edgeId: "EDGE_CULDESAC_WEST",
+    roadSegmentId: "SEGMENT_006",
+    side: "WEST",
+    orientation: "NORTH_SOUTH",
+    count: 2,
+    startCoordinate: 8,
+    roadCoordinate: 88,
+    lotTypePattern: ["standard", "culdesac"],
+    cornerLotIndices: [0, 1]
+  },
+  {
+    edgeId: "EDGE_CULDESAC_EAST",
+    roadSegmentId: "SEGMENT_006",
+    side: "EAST",
+    orientation: "NORTH_SOUTH",
+    count: 2,
+    startCoordinate: 8,
+    roadCoordinate: 88,
+    lotTypePattern: ["standard", "culdesac"],
+    cornerLotIndices: [0, 1]
   }
 ]);
 
@@ -301,6 +367,18 @@ export function createSuburbanStreetBlockValidationOutput(
       drivewayConnectionValidity: passFail(
         preview.validationResult.drivewayConnectionValidity
       ),
+      frontageResolutionValidity: passFail(
+        preview.validationResult.frontageResolutionValidity
+      ),
+      suburbanWeightingValidity: passFail(
+        preview.validationResult.suburbanWeightingValidity
+      ),
+      adjacentVariationValidity: passFail(
+        preview.validationResult.adjacentVariationValidity
+      ),
+      cornerLotRuleValidity: passFail(
+        preview.validationResult.cornerLotRuleValidity
+      ),
       streetFeatureContainmentValidity: passFail(
         preview.validationResult.streetFeatureContainmentValidity
       ),
@@ -351,6 +429,9 @@ export function validateSuburbanStreetBlockPreview(rawPreview) {
     validateBuildingPlacements(preview.buildingPlacements, preview.lots);
     validateRoadConnections(preview.roadFrontageConnections, preview.lots, preview.roadSegments);
     validateStreetFeatures(preview.streetFeaturePlacements, preview.blockBounds);
+    validateThemeMix(preview, preview.themeProfile);
+    validateAdjacentVariation(preview.lots);
+    validateCornerLots(preview.lots);
 
     if (!preview.validationResult.validationPassed) {
       throw createValidationError(
@@ -465,22 +546,50 @@ function buildLots(input, seedConfig, roadGraphData) {
       const depthRange = isCornerLot
         ? input.blockConfiguration.cornerLotDepthRange
         : input.blockConfiguration.standardLotDepthRange;
-      const roadDistance = pickDepth(seedConfig, depthRange, edge.edgeId, index);
+      const rawRoadDistance = pickDepth(seedConfig, depthRange, edge.edgeId, index);
+      const roadDistance =
+        edge.orientation === "EAST_WEST"
+          ? rawRoadDistance
+          : roundNumber(Math.max(22, rawRoadDistance * 0.62));
       const width = edge.orientation === "EAST_WEST" ? frontageSpan : roadDistance;
       const depth = edge.orientation === "EAST_WEST" ? roadDistance : frontageSpan;
-      const setbacks = buildSetbacks(seedConfig, lotId, isCornerLot);
-      const drivewaySide = resolveDrivewaySide(seedConfig, lotId, edge.side, isCornerLot);
       const positionData = buildLotPosition(edge, segment, cursor, width, depth, input);
       const frontageDirection = positionData.frontageDirection;
       const cornerStatus = resolveCornerStatus(edge, index);
       const lotType = classifyLotType(frontageSpan);
+      const streetContext = resolveStreetContextFromFrontageRoad(
+        edge.roadSegmentId,
+        cornerStatus
+      );
+      const frontageRelationship = resolveFrontageRelationship(
+        edge.roadSegmentId,
+        edge.side,
+        frontageDirection,
+        cornerStatus
+      );
+      const setbacks = buildSetbacks(
+        seedConfig,
+        lotId,
+        cornerStatus,
+        frontageDirection,
+        streetContext
+      );
+      const drivewaySide = resolveDrivewaySide(
+        seedConfig,
+        lotId,
+        edge.side,
+        cornerStatus,
+        frontageDirection,
+        streetContext
+      );
       const landscapingZones = buildLandscapingZones(
         positionData.position,
         width,
         depth,
         frontageDirection,
         drivewaySide,
-        cornerStatus
+        cornerStatus,
+        streetContext
       );
       lots.push(
         deepFreeze({
@@ -493,6 +602,7 @@ function buildLots(input, seedConfig, roadGraphData) {
           frontageWidth: frontageSpan,
           frontageRoadSegmentId: edge.roadSegmentId,
           frontageDirection,
+          frontageRelationship,
           cornerStatus,
           lotType,
           setback: deepFreeze(setbacks),
@@ -521,7 +631,22 @@ function buildLots(input, seedConfig, roadGraphData) {
             y: roundNumber(positionData.position.y + depth / 2),
             facing: frontageDirection
           }),
-          drivewaySocket: buildDrivewaySocket(positionData.position, width, depth, frontageDirection, drivewaySide),
+          drivewaySocket: buildDrivewaySocket(
+            positionData.position,
+            width,
+            depth,
+            frontageDirection,
+            drivewaySide,
+            streetContext,
+            cornerStatus
+          ),
+          garageRelationship: buildGarageRelationship(
+            frontageDirection,
+            drivewaySide,
+            streetContext,
+            cornerStatus
+          ),
+          streetContext,
           resolverInputs: deepFreeze({
             streetBlockSeed: seedConfig.streetBlockSeed,
             regionSeed: seedConfig.regionSeed,
@@ -596,13 +721,34 @@ function buildLotPosition(edge, segment, cursor, width, depth, input) {
   });
 }
 
-function buildSetbacks(seedConfig, lotId, isCornerLot) {
+function buildSetbacks(
+  seedConfig,
+  lotId,
+  cornerStatus,
+  frontageDirection,
+  streetContext
+) {
+  const isCornerLot = cornerStatus !== "interior";
+  const frontMin =
+    streetContext === "cul_de_sac_residential_edge"
+      ? 5.4
+      : isCornerLot
+        ? 5.2
+        : 4.5;
+  const frontMax =
+    streetContext === "cul_de_sac_residential_edge"
+      ? 6.9
+      : isCornerLot
+        ? 7
+        : 6.5;
+  const sideMin =
+    frontageDirection === "EAST" || frontageDirection === "WEST" ? 1.8 : 1.4;
   return deepFreeze({
     front: roundNumber(
-      randomInRange(seedConfig, `${lotId}:front`, isCornerLot ? 5 : 4.5, isCornerLot ? 7 : 6.5)
+      randomInRange(seedConfig, `${lotId}:front`, frontMin, frontMax)
     ),
-    left: roundNumber(randomInRange(seedConfig, `${lotId}:left`, 1.4, 2.4)),
-    right: roundNumber(randomInRange(seedConfig, `${lotId}:right`, 1.4, 2.4)),
+    left: roundNumber(randomInRange(seedConfig, `${lotId}:left`, sideMin, 2.6)),
+    right: roundNumber(randomInRange(seedConfig, `${lotId}:right`, sideMin, 2.6)),
     rear: roundNumber(randomInRange(seedConfig, `${lotId}:rear`, 5.5, 8.5))
   });
 }
@@ -611,8 +757,23 @@ function pickDepth(seedConfig, range, label, index) {
   return roundNumber(randomInRange(seedConfig, `${label}:depth:${index}`, range[0], range[1]));
 }
 
-function resolveDrivewaySide(seedConfig, lotId, edgeSide, isCornerLot) {
-  if (isCornerLot && (edgeSide === "NORTH" || edgeSide === "WEST")) {
+function resolveDrivewaySide(
+  seedConfig,
+  lotId,
+  edgeSide,
+  cornerStatus,
+  frontageDirection,
+  streetContext
+) {
+  if (streetContext === "cul_de_sac_residential_edge") {
+    return edgeSide === "WEST" ? "WEST" : "EAST";
+  }
+  if (
+    cornerStatus !== "interior" &&
+    (edgeSide === "NORTH" ||
+      edgeSide === "WEST" ||
+      frontageDirection === "EAST")
+  ) {
     return "WEST";
   }
   const hashed = stableHash(`${seedConfig.streetBlockSeed}:${seedConfig.regionSeed}:${seedConfig.neighbourhoodThemeSeed}:${lotId}:${edgeSide}`);
@@ -632,9 +793,20 @@ function resolveCornerStatus(edge, index) {
   return "corner_secondary";
 }
 
-function buildLandscapingZones(position, width, depth, frontageDirection, drivewaySide, cornerStatus) {
+function buildLandscapingZones(
+  position,
+  width,
+  depth,
+  frontageDirection,
+  drivewaySide,
+  cornerStatus,
+  streetContext
+) {
   const sideWidth = 1.4;
-  const frontDepth = Math.min(8, depth * 0.25);
+  const frontDepth = Math.min(
+    cornerStatus === "interior" ? 8 : 9.5,
+    depth * (cornerStatus === "interior" ? 0.25 : 0.3)
+  );
   const treeZoneDepth = Math.min(6.5, depth * 0.22);
   const frontLawnZone = zoneForFront(position, width, depth, frontageDirection, frontDepth);
   const backyardZone = zoneForBack(position, width, depth, frontageDirection, Math.max(depth - frontDepth - 6, 8));
@@ -646,6 +818,10 @@ function buildLandscapingZones(position, width, depth, frontageDirection, drivew
     sidePlantingZone,
     treeZone,
     mailboxVergeZone: zoneForMailbox(position, width, depth, frontageDirection),
+    cornerFrontageGardenZone:
+      cornerStatus === "interior"
+        ? null
+        : zoneForCornerGarden(position, width, depth, frontageDirection, streetContext),
     cornerVisibilityPlantingZone:
       cornerStatus === "interior"
         ? null
@@ -725,14 +901,40 @@ function zoneForCornerVisibility(position, width, depth, frontageDirection) {
   return zoneRect(position.x + 0.5, position.y + depth - 3.2, 2.4, 2.4);
 }
 
-function buildDrivewaySocket(position, width, depth, frontageDirection, drivewaySide) {
+function zoneForCornerGarden(position, width, depth, frontageDirection, streetContext) {
+  const size = streetContext === "cul_de_sac_residential_edge" ? 3.4 : 2.8;
+  if (frontageDirection === "SOUTH") {
+    return zoneRect(position.x + 0.5, position.y + 0.5, size, size);
+  }
+  if (frontageDirection === "NORTH") {
+    return zoneRect(position.x + 0.5, position.y + depth - size - 0.5, size, size);
+  }
+  if (frontageDirection === "EAST") {
+    return zoneRect(position.x + width - size - 0.5, position.y + 0.5, size, size);
+  }
+  return zoneRect(position.x + 0.5, position.y + 0.5, size, size);
+}
+
+function buildDrivewaySocket(
+  position,
+  width,
+  depth,
+  frontageDirection,
+  drivewaySide,
+  streetContext,
+  cornerStatus
+) {
   if (frontageDirection === "NORTH") {
     return deepFreeze({
       x: roundNumber(position.x + (drivewaySide === "EAST" ? width - 2.2 : 2.2)),
       y: roundNumber(position.y + depth),
       side: drivewaySide,
       frontageDirection,
-      garageSide: drivewaySide
+      garageSide: drivewaySide,
+      frontageGeometry:
+        streetContext === "cul_de_sac_residential_edge"
+          ? "cul_de_sac_radial_frontage"
+          : "linear_frontage"
     });
   }
   if (frontageDirection === "SOUTH") {
@@ -741,24 +943,52 @@ function buildDrivewaySocket(position, width, depth, frontageDirection, driveway
       y: roundNumber(position.y),
       side: drivewaySide,
       frontageDirection,
-      garageSide: drivewaySide
+      garageSide: drivewaySide,
+      frontageGeometry:
+        streetContext === "cul_de_sac_residential_edge"
+          ? "cul_de_sac_radial_frontage"
+          : "linear_frontage"
     });
   }
   if (frontageDirection === "EAST") {
     return deepFreeze({
       x: roundNumber(position.x + width),
-      y: roundNumber(position.y + (drivewaySide === "EAST" ? depth - 2.2 : 2.2)),
+      y: roundNumber(
+        position.y +
+          (streetContext === "cul_de_sac_residential_edge"
+            ? depth * 0.5
+            : drivewaySide === "EAST"
+              ? depth - 2.2
+              : 2.2)
+      ),
       side: drivewaySide,
       frontageDirection,
-      garageSide: drivewaySide
+      garageSide:
+        cornerStatus === "corner_secondary" ? "SIDE_FACING" : drivewaySide,
+      frontageGeometry:
+        streetContext === "cul_de_sac_residential_edge"
+          ? "cul_de_sac_radial_frontage"
+          : "linear_frontage"
     });
   }
   return deepFreeze({
     x: roundNumber(position.x),
-    y: roundNumber(position.y + (drivewaySide === "EAST" ? depth - 2.2 : 2.2)),
+    y: roundNumber(
+      position.y +
+        (streetContext === "cul_de_sac_residential_edge"
+          ? depth * 0.5
+          : drivewaySide === "EAST"
+            ? depth - 2.2
+            : 2.2)
+    ),
     side: drivewaySide,
     frontageDirection,
-    garageSide: drivewaySide
+    garageSide:
+      cornerStatus === "corner_secondary" ? "SIDE_FACING" : drivewaySide,
+    frontageGeometry:
+      streetContext === "cul_de_sac_residential_edge"
+        ? "cul_de_sac_radial_frontage"
+        : "linear_frontage"
   });
 }
 
@@ -774,13 +1004,21 @@ function classifyLotType(width) {
 
 function resolveLotBuildings(lots, input, seedConfig) {
   const resolved = [];
+  const targetCounts = buildThemeTargetCounts(resolveThemeProfile(input), lots.length);
+  const currentCounts = Object.fromEntries(
+    supportedSuburbanStreetBlockBuildingAssets.map((assetId) => [assetId, 0])
+  );
 
   for (const lot of lots) {
-    const excludedAssets = collectExcludedAssets(resolved, lot);
-    const candidateIds = pickCandidateOrder(lot, input, seedConfig, excludedAssets);
-    const selectedProfile =
-      candidateIds.map((assetId) => buildingProfiles[assetId]).find(Boolean) ??
-      buildingProfiles.BUILDING_HOUSE_SUBURBAN_BRICK_001;
+    const selectedProfile = selectProfileForLot(
+      lot,
+      resolved,
+      currentCounts,
+      targetCounts,
+      input,
+      seedConfig
+    );
+    currentCounts[selectedProfile.assetId] += 1;
 
     resolved.push(
       deepFreeze({
@@ -788,151 +1026,349 @@ function resolveLotBuildings(lots, input, seedConfig) {
         buildingId: selectedProfile.assetId,
         buildingRecipe: selectedProfile.recipeId,
         buildingFamily: selectedProfile.familyId,
-        variationProfile: deepFreeze({
-          roofTone: resolveRoofTone(seedConfig, lot.lotId, selectedProfile.assetId),
-          fenceStyle:
-            lot.lotType === "wide" || lot.cornerStatus !== "interior"
-              ? "decorative_suburban"
-              : "timber_standard",
-          yardDensity: resolveYardDensity(seedConfig, lot.lotId),
-          colourVariant: resolveColourVariant(
-            seedConfig,
-            lot.lotId,
-            selectedProfile.assetId
-          )
-        }),
+        variationProfile: buildVariationProfile(
+          seedConfig,
+          lot,
+          selectedProfile,
+          resolved
+        ),
         resolverMetadata: deepFreeze({
           weightingRuleApplied: selectedProfile.primaryTheme,
-          duplicatePreventionRuleApplied: excludedAssets.size > 0,
+          duplicatePreventionRuleApplied: hasImmediateDuplicateRisk(
+            resolved,
+            lot,
+            selectedProfile.assetId
+          ),
           streetAwareSelection: true,
           cornerLotVariationApplied: lot.cornerStatus !== "interior",
           resolverHash: stableHash(
             `${lot.lotId}:${input.streetBlockSeed}:${selectedProfile.assetId}`
-          )
+          ),
+          targetCounts,
+          selectedFromRemainingPool:
+            targetCounts[selectedProfile.assetId] - currentCounts[selectedProfile.assetId]
         })
       })
     );
   }
 
-  return deepFreeze(rebalanceResolvedLotsForTheme(resolved, input));
+  return deepFreeze(
+    rebalanceResolvedLotsToTargets(resolved, targetCounts, input, seedConfig)
+  );
 }
 
-function collectExcludedAssets(resolvedLots, currentLot) {
-  const excludedAssets = new Set();
-  for (const priorLot of resolvedLots) {
-    if (priorLot.frontageRoadSegmentId === currentLot.frontageRoadSegmentId) {
-      const sequentialDistance =
-        Math.abs(numericLotId(priorLot.lotId) - numericLotId(currentLot.lotId));
-      if (sequentialDistance <= 1) {
-        excludedAssets.add(priorLot.buildingId);
-      }
-    }
-    if (
-      priorLot.frontageRoadSegmentId === currentLot.frontageRoadSegmentId &&
-      priorLot.frontageDirection !== currentLot.frontageDirection &&
-      sameRoadCluster(priorLot, currentLot)
-    ) {
-      excludedAssets.add(priorLot.buildingId);
-    }
+function buildThemeTargetCounts(themeProfile, totalLots) {
+  const entries = Object.entries(themeProfile.buildingWeights);
+  const baseCounts = Object.fromEntries(entries.map(([assetId]) => [assetId, 0]));
+  const remainders = [];
+  let assigned = 0;
+
+  for (const [assetId, weight] of entries) {
+    const exact = weight * totalLots;
+    const count = Math.floor(exact);
+    baseCounts[assetId] = count;
+    assigned += count;
+    remainders.push({ assetId, remainder: exact - count });
   }
-  return excludedAssets;
+
+  remainders.sort(
+    (left, right) =>
+      right.remainder - left.remainder || left.assetId.localeCompare(right.assetId)
+  );
+  while (assigned < totalLots) {
+    const next = remainders.shift();
+    baseCounts[next.assetId] += 1;
+    assigned += 1;
+  }
+
+  return deepFreeze(baseCounts);
 }
 
-function sameRoadCluster(left, right) {
-  return Math.abs(left.position.x - right.position.x) < 16 ||
-    Math.abs(left.position.y - right.position.y) < 16;
+function selectProfileForLot(
+  lot,
+  resolvedLots,
+  currentCounts,
+  targetCounts,
+  input,
+  seedConfig
+) {
+  const candidates = Object.values(buildingProfiles)
+    .filter((candidate) => lotCanFitProfile(lot, candidate))
+    .map((candidate) => ({
+      profile: candidate,
+      score: scoreProfileForLot(
+        lot,
+        candidate,
+        resolvedLots,
+        currentCounts,
+        targetCounts,
+        input,
+        seedConfig
+      )
+    }))
+    .sort((left, right) => left.score - right.score);
+
+  return candidates.at(0)?.profile ?? buildingProfiles.BUILDING_HOUSE_SUBURBAN_BRICK_001;
 }
 
 function numericLotId(lotId) {
   return Number.parseInt(lotId.split("_").at(-1), 10);
 }
 
-function pickCandidateOrder(lot, input, seedConfig, excludedAssets) {
-  const activeThemeProfile = resolveThemeProfile(input);
-  const candidates = Object.values(buildingProfiles).filter((candidate) =>
-    lotCanFitProfile(lot, candidate)
+function scoreProfileForLot(
+  lot,
+  candidate,
+  resolvedLots,
+  currentCounts,
+  targetCounts,
+  input,
+  seedConfig
+) {
+  const resolutionIndex = resolvedLots.length + 1;
+  const totalLots = Object.values(targetCounts).reduce((sum, value) => sum + value, 0);
+  const currentCount = currentCounts[candidate.assetId] ?? 0;
+  const targetCount = targetCounts[candidate.assetId] ?? 0;
+  const expectedCountByNow = (targetCount * resolutionIndex) / totalLots;
+  let score = 0;
+
+  if (currentCount >= targetCount) {
+    score += 10000;
+  }
+
+  score += (currentCount - expectedCountByNow) * 120;
+  score += repetitionPenaltyForLot(resolvedLots, lot, candidate.assetId);
+  score += streetContextPenalty(lot, candidate.assetId);
+  score += cornerLotPenalty(lot, candidate.assetId);
+  score +=
+    (stableHash(
+      `${input.streetBlockSeed}:${input.regionSeed}:${input.neighbourhoodThemeSeed}:${lot.lotId}:${candidate.assetId}`
+    ) %
+      100) /
+    100;
+
+  return score;
+}
+
+function repetitionPenaltyForLot(resolvedLots, lot, assetId) {
+  const priorStreetLots = resolvedLots.filter(
+    (entry) =>
+      entry.frontageRoadSegmentId === lot.frontageRoadSegmentId &&
+      entry.frontageDirection === lot.frontageDirection
+  );
+  const acrossStreetLots = resolvedLots.filter(
+    (entry) =>
+      entry.frontageRoadSegmentId === lot.frontageRoadSegmentId &&
+      entry.frontageDirection !== lot.frontageDirection &&
+      sameRoadCluster(entry, lot)
   );
 
-  return candidates
-    .map((candidate) => ({
-      assetId: candidate.assetId,
-      score:
-        (
-          weightedDeterministicScore(
-            `${input.streetBlockSeed}:${input.regionSeed}:${input.neighbourhoodThemeSeed}:${lot.lotId}:${candidate.assetId}`,
-            activeThemeProfile.buildingWeights[candidate.assetId] ?? candidate.weight
-          ) + (excludedAssets.has(candidate.assetId) ? 1000 : 0)
-        ) *
-        resolveThemeIdentityScoreMultiplier(activeThemeProfile.themeSeed, candidate, lot)
-    }))
-    .sort((left, right) => left.score - right.score)
-    .map((entry) => entry.assetId);
+  let penalty = 0;
+  const priorLot = priorStreetLots.at(-1);
+  const twoBack = priorStreetLots.at(-2);
+
+  if (priorLot?.buildingId === assetId) {
+    penalty += 2500;
+  }
+  if (twoBack?.buildingId === assetId && priorLot?.buildingId !== assetId) {
+    penalty += 450;
+  }
+  if (acrossStreetLots.some((entry) => entry.buildingId === assetId)) {
+    penalty += 360;
+  }
+
+  return penalty;
 }
 
-function resolveThemeIdentityScoreMultiplier(themeSeed, candidate, lot) {
-  let multiplier = 1;
-  if (themeSeed === "SUBURBAN_AUSTRALIA") {
-    if (candidate.primaryTheme === "suburban_primary") {
-      multiplier *= 0.72;
-    } else if (candidate.primaryTheme === "coastal_secondary") {
-      multiplier *= 1.18;
-    } else {
-      multiplier *= 1.35;
+function streetContextPenalty(lot, assetId) {
+  if (
+    lot.streetContext === "cul_de_sac_residential_edge" ||
+    lot.streetContext === "local_residential_interior"
+  ) {
+    if (assetId === "BUILDING_HOUSE_SUBURBAN_BRICK_001") {
+      return -120;
+    }
+    if (assetId === "BUILDING_HOUSE_COASTAL_COTTAGE_001") {
+      return 25;
+    }
+    return 90;
+  }
+  return assetId === "BUILDING_HOUSE_SUBURBAN_BRICK_001" ? -30 : 0;
+}
+
+function cornerLotPenalty(lot, assetId) {
+  if (lot.cornerStatus === "interior") {
+    return 0;
+  }
+  if (lot.cornerStatus === "cul_de_sac_edge") {
+    return assetId === "BUILDING_HOUSE_SUBURBAN_BRICK_001" ? -55 : 20;
+  }
+  if (assetId === "BUILDING_HOUSE_COASTAL_COTTAGE_001") {
+    return -20;
+  }
+  if (assetId === "BUILDING_HOUSE_BEACH_BUNGALOW_001") {
+    return 40;
+  }
+  return -10;
+}
+
+function buildVariationProfile(seedConfig, lot, selectedProfile, resolvedLots) {
+  const priorLot = findPriorStreetLot(resolvedLots, lot);
+  const roofTones = ["charcoal", "terracotta", "slate", "warm_grey"];
+  const yardDensities = ["light", "balanced", "lush"];
+  const colourVariants = ["muted_trim", "warm_trim", "cool_trim", "brick_contrast"];
+
+  const roofTone = dedupeVariant(
+    resolveVariantValue(seedConfig, `${lot.lotId}:${selectedProfile.assetId}:roof`, roofTones),
+    priorLot?.variationProfile?.roofTone,
+    roofTones
+  );
+  const yardDensity = dedupeVariant(
+    resolveVariantValue(seedConfig, `${lot.lotId}:${selectedProfile.assetId}:yard`, yardDensities),
+    priorLot?.variationProfile?.yardDensity,
+    yardDensities
+  );
+  const colourVariant = dedupeVariant(
+    resolveVariantValue(
+      seedConfig,
+      `${lot.lotId}:${selectedProfile.assetId}:colour`,
+      colourVariants
+    ),
+    priorLot?.variationProfile?.colourVariant,
+    colourVariants
+  );
+
+  return deepFreeze({
+    roofTone,
+    fenceStyle:
+      lot.cornerStatus !== "interior" || lot.lotType === "wide"
+        ? "decorative_suburban"
+        : "timber_standard",
+    yardDensity,
+    colourVariant,
+    landscapingSequence:
+      lot.streetContext === "cul_de_sac_residential_edge"
+        ? "culdesac_garden_cluster"
+        : lot.streetContext === "local_residential_interior"
+          ? "suburban_side_street_garden"
+          : "collector_edge_front_garden"
+  });
+}
+
+function resolveVariantValue(seedConfig, label, variants) {
+  const index = stableHash(
+    `${seedConfig.streetBlockSeed}:${seedConfig.regionSeed}:${seedConfig.neighbourhoodThemeSeed}:${label}`
+  ) % variants.length;
+  return variants[index];
+}
+
+function dedupeVariant(value, priorValue, variants) {
+  if (value !== priorValue) {
+    return value;
+  }
+  const index = variants.indexOf(value);
+  return variants[(index + 1) % variants.length];
+}
+
+function findPriorStreetLot(resolvedLots, lot) {
+  for (let index = resolvedLots.length - 1; index >= 0; index -= 1) {
+    const priorLot = resolvedLots[index];
+    if (
+      priorLot.frontageRoadSegmentId === lot.frontageRoadSegmentId &&
+      priorLot.frontageDirection === lot.frontageDirection
+    ) {
+      return priorLot;
     }
   }
-  if (lot.cornerStatus !== "interior") {
-    multiplier *= candidate.cornerBias;
-  }
-  return multiplier;
+  return null;
 }
 
-function rebalanceResolvedLotsForTheme(resolvedLots, input) {
-  if (input.neighbourhoodThemeSeed !== "SUBURBAN_AUSTRALIA") {
-    return resolvedLots;
-  }
-  const targetSuburbanCount = Math.max(12, Math.ceil(resolvedLots.length * 0.5));
-  const suburbanAssetId = "BUILDING_HOUSE_SUBURBAN_BRICK_001";
-  let suburbanCount = resolvedLots.filter(
-    (lot) => lot.buildingId === suburbanAssetId
-  ).length;
-  if (suburbanCount >= targetSuburbanCount) {
-    return resolvedLots;
-  }
-  const replacementCandidates = [...resolvedLots]
-    .filter((lot) => lot.buildingId !== suburbanAssetId)
-    .sort((left, right) => {
-      const priorityDelta =
-        replacementPriority(left.buildingId) - replacementPriority(right.buildingId);
-      if (priorityDelta !== 0) {
-        return priorityDelta;
-      }
-      if (left.cornerStatus !== right.cornerStatus) {
-        return left.cornerStatus === "interior" ? -1 : 1;
-      }
-      return left.lotId.localeCompare(right.lotId);
-    });
+function hasImmediateDuplicateRisk(resolvedLots, lot, assetId) {
+  const priorLot = findPriorStreetLot(resolvedLots, lot);
+  return priorLot?.buildingId === assetId;
+}
 
+function sameRoadCluster(left, right) {
+  return Math.abs(left.position.x - right.position.x) < 20 ||
+    Math.abs(left.position.y - right.position.y) < 20;
+}
+
+function rebalanceResolvedLotsToTargets(resolvedLots, targetCounts, input, seedConfig) {
   const balancedLots = [...resolvedLots];
-  for (const candidate of replacementCandidates) {
-    if (suburbanCount >= targetSuburbanCount) {
+  const counts = countResolvedBuildingMix(balancedLots);
+  const underTarget = () =>
+    supportedSuburbanStreetBlockBuildingAssets.filter(
+      (assetId) => counts[assetId] < (targetCounts[assetId] ?? 0)
+    );
+
+  const candidates = [...balancedLots].sort((left, right) => {
+    const priorityDelta =
+      replacementPriority(left.buildingId) - replacementPriority(right.buildingId);
+    if (priorityDelta !== 0) {
+      return priorityDelta;
+    }
+    if (left.streetContext !== right.streetContext) {
+      return left.streetContext.localeCompare(right.streetContext);
+    }
+    return left.lotId.localeCompare(right.lotId);
+  });
+
+  for (const candidate of candidates) {
+    const currentAssetId = candidate.buildingId;
+    if (counts[currentAssetId] <= (targetCounts[currentAssetId] ?? 0)) {
+      continue;
+    }
+    const replacementAssetIds = underTarget();
+    for (const replacementAssetId of replacementAssetIds) {
+      if (!canReplaceLotWithAsset(balancedLots, candidate.lotId, replacementAssetId)) {
+        continue;
+      }
+      const replacementProfile = buildingProfiles[replacementAssetId];
+      if (!lotCanFitProfile(candidate, replacementProfile)) {
+        continue;
+      }
+      const candidateIndex = balancedLots.findIndex((lot) => lot.lotId === candidate.lotId);
+      const replacementLot = deepFreeze({
+        ...balancedLots[candidateIndex],
+        buildingId: replacementProfile.assetId,
+        buildingRecipe: replacementProfile.recipeId,
+        buildingFamily: replacementProfile.familyId,
+        variationProfile: buildVariationProfile(
+          seedConfig,
+          balancedLots[candidateIndex],
+          replacementProfile,
+          balancedLots.slice(0, candidateIndex)
+        ),
+        resolverMetadata: deepFreeze({
+          weightingRuleApplied: replacementProfile.primaryTheme,
+          duplicatePreventionRuleApplied: true,
+          streetAwareSelection: true,
+          cornerLotVariationApplied:
+            balancedLots[candidateIndex].cornerStatus !== "interior",
+          resolverHash: stableHash(
+            `${balancedLots[candidateIndex].lotId}:${input.streetBlockSeed}:${replacementProfile.assetId}:rebalanced`
+          ),
+          targetCounts,
+          rebalanceApplied: true
+        })
+      });
+      balancedLots[candidateIndex] = replacementLot;
+      counts[currentAssetId] -= 1;
+      counts[replacementAssetId] += 1;
       break;
     }
-    const candidateIndex = balancedLots.findIndex((lot) => lot.lotId === candidate.lotId);
-    if (candidateIndex === -1) {
-      continue;
-    }
-    if (!canResolveReplacementAtIndex(balancedLots, candidateIndex, suburbanAssetId)) {
-      continue;
-    }
-    balancedLots[candidateIndex] = rebuildResolvedLotWithProfile(
-      balancedLots[candidateIndex],
-      buildingProfiles[suburbanAssetId],
-      input
-    );
-    suburbanCount += 1;
   }
 
   return balancedLots;
+}
+
+function countResolvedBuildingMix(lots) {
+  const counts = Object.fromEntries(
+    supportedSuburbanStreetBlockBuildingAssets.map((assetId) => [assetId, 0])
+  );
+  for (const lot of lots) {
+    counts[lot.buildingId] += 1;
+  }
+  return counts;
 }
 
 function replacementPriority(assetId) {
@@ -945,46 +1381,12 @@ function replacementPriority(assetId) {
   return 2;
 }
 
-function canResolveReplacementAtIndex(lots, index, assetId) {
-  const lot = lots[index];
-  for (const otherLot of lots) {
-    if (otherLot.lotId === lot.lotId) {
-      continue;
-    }
-    if (otherLot.frontageRoadSegmentId !== lot.frontageRoadSegmentId) {
-      continue;
-    }
-    if (otherLot.buildingId !== assetId) {
-      continue;
-    }
-    if (Math.abs(numericLotId(otherLot.lotId) - numericLotId(lot.lotId)) <= 1) {
-      return false;
-    }
+function canReplaceLotWithAsset(lots, lotId, replacementAssetId) {
+  const targetLot = lots.find((lot) => lot.lotId === lotId);
+  if (!targetLot) {
+    return false;
   }
   return true;
-}
-
-function rebuildResolvedLotWithProfile(lot, selectedProfile, input) {
-  return deepFreeze({
-    ...lot,
-    buildingId: selectedProfile.assetId,
-    buildingRecipe: selectedProfile.recipeId,
-    buildingFamily: selectedProfile.familyId,
-    variationProfile: deepFreeze({
-      ...lot.variationProfile,
-      rebalanceProfile: input.neighbourhoodThemeSeed
-    }),
-    resolverMetadata: deepFreeze({
-      weightingRuleApplied: selectedProfile.primaryTheme,
-      duplicatePreventionRuleApplied: true,
-      streetAwareSelection: true,
-      cornerLotVariationApplied: lot.cornerStatus !== "interior",
-      resolverHash: stableHash(
-        `${lot.lotId}:${input.streetBlockSeed}:${selectedProfile.assetId}:rebalanced`
-      ),
-      rebalanceApplied: true
-    })
-  });
 }
 
 function lotCanFitProfile(lot, profile) {
@@ -1022,7 +1424,8 @@ function buildBuildingPlacements(lots) {
       lodProfile: "LOD_GAMEPLAY",
       frontSetback: lot.setback.front,
       drivewaySide: lot.drivewaySide,
-      streetContext: resolveStreetContext(lot),
+      garageRelationship: lot.garageRelationship,
+      streetContext: lot.streetContext,
       variationProfile: lot.variationProfile,
       resolverMetadata: lot.resolverMetadata
     });
@@ -1060,16 +1463,71 @@ function buildBuildingPosition(lot, profile) {
 }
 
 function resolveStreetContext(lot) {
-  if (lot.frontageRoadSegmentId === "SEGMENT_006") {
+  return resolveStreetContextFromFrontageRoad(
+    lot.frontageRoadSegmentId,
+    lot.cornerStatus
+  );
+}
+
+function resolveStreetContextFromFrontageRoad(frontageRoadSegmentId, cornerStatus) {
+  if (frontageRoadSegmentId === "SEGMENT_006") {
     return "cul_de_sac_residential_edge";
   }
-  if (lot.cornerStatus !== "interior") {
+  if (frontageRoadSegmentId === "SEGMENT_004" || frontageRoadSegmentId === "SEGMENT_005") {
+    return "local_residential_interior";
+  }
+  if (cornerStatus !== "interior") {
     return "corner_residential_lot";
   }
-  if (lot.frontageRoadSegmentId === "SEGMENT_002" || lot.frontageRoadSegmentId === "SEGMENT_003") {
+  if (
+    frontageRoadSegmentId === "SEGMENT_001" ||
+    frontageRoadSegmentId === "SEGMENT_002" ||
+    frontageRoadSegmentId === "SEGMENT_003"
+  ) {
     return "collector_edge_residential";
   }
   return "local_residential_interior";
+}
+
+function resolveFrontageRelationship(
+  frontageRoadSegmentId,
+  side,
+  frontageDirection,
+  cornerStatus
+) {
+  if (frontageRoadSegmentId === "SEGMENT_006") {
+    return deepFreeze({
+      roadRelationship: "cul_de_sac_radial_frontage",
+      primaryFrontageSelection: side,
+      inwardFacingRoadRelationship: true,
+      cornerLotProfile: cornerStatus
+    });
+  }
+  return deepFreeze({
+    roadRelationship: "linear_frontage",
+    primaryFrontageSelection: side,
+    inwardFacingRoadRelationship: false,
+    cornerLotProfile: cornerStatus
+  });
+}
+
+function buildGarageRelationship(
+  frontageDirection,
+  drivewaySide,
+  streetContext,
+  cornerStatus
+) {
+  return deepFreeze({
+    garageSide:
+      cornerStatus === "corner_secondary" ? "SIDE_FACING" : drivewaySide,
+    frontageDirection,
+    alignmentMode:
+      streetContext === "cul_de_sac_residential_edge"
+        ? "radial_driveway_alignment"
+        : cornerStatus !== "interior"
+          ? "corner_side_alignment"
+          : "standard_frontage_alignment"
+  });
 }
 
 function buildStreetFeaturePlacements(input, seedConfig, roadGraphData, lots) {
@@ -1330,6 +1788,35 @@ function buildValidationResult(preview, input) {
     connection.drivewayLink.crossingNeighbouringLots === false &&
     connection.drivewayLink.drivewayStreet === connection.roadSegmentId
   );
+  const frontageResolutionValidity = preview.lots.every((lot) => {
+    const placement = preview.buildingPlacements.find(
+      (entry) => entry.lotId === lot.lotId
+    );
+    const connection = preview.roadFrontageConnections.find(
+      (entry) => entry.lotId === lot.lotId
+    );
+    return (
+      placement &&
+      connection &&
+      placement.rotation.facingDirection === lot.frontageDirection &&
+      connection.frontageDirection === lot.frontageDirection &&
+      connection.drivewayLink.drivewayStreet === lot.frontageRoadSegmentId &&
+      connection.drivewayLink.garageSide === lot.drivewaySocket.garageSide
+    );
+  });
+  const suburbanWeightingValidity = themeWeightingWithinTolerance(
+    preview.lots,
+    resolveThemeProfile(input)
+  );
+  const adjacentVariationValidity = noExcessiveAdjacentRepeats(preview.lots);
+  const cornerLotRuleValidity = preview.lots
+    .filter((lot) => lot.cornerStatus !== "interior")
+    .every(
+      (lot) =>
+        lot.setback.front >= 5.2 &&
+        lot.landscapingZones.cornerVisibilityPlantingZone !== null &&
+        lot.garageRelationship.alignmentMode !== "standard_frontage_alignment"
+    );
   const streetFeatureContainmentValidity = preview.streetFeaturePlacements.every((feature) =>
     isStreetFeatureWithinPublicArea(feature, preview.blockBounds)
   );
@@ -1345,6 +1832,10 @@ function buildValidationResult(preview, input) {
     validBuildingIds,
     buildingPlacementValidity,
     drivewayConnectionValidity,
+    frontageResolutionValidity,
+    suburbanWeightingValidity,
+    adjacentVariationValidity,
+    cornerLotRuleValidity,
     streetFeatureContainmentValidity,
     deterministicRebuildValidity: true,
     deterministicSignatureHash,
@@ -1357,6 +1848,10 @@ function buildValidationResult(preview, input) {
       validBuildingIds &&
       buildingPlacementValidity &&
       drivewayConnectionValidity &&
+      frontageResolutionValidity &&
+      suburbanWeightingValidity &&
+      adjacentVariationValidity &&
+      cornerLotRuleValidity &&
       streetFeatureContainmentValidity
   });
 }
@@ -1445,6 +1940,40 @@ function validateRoadConnections(connections, lots, roadSegments) {
   }
 }
 
+function validateThemeMix(preview, themeProfile) {
+  if (!themeWeightingWithinTolerance(preview.lots, themeProfile)) {
+    throw createValidationError(
+      "theme_weighting_out_of_tolerance",
+      "Street block building mix is outside the configured theme tolerance."
+    );
+  }
+}
+
+function validateAdjacentVariation(lots) {
+  if (!noExcessiveAdjacentRepeats(lots)) {
+    throw createValidationError(
+      "adjacent_variation_failed",
+      "Street block contains excessive adjacent building or landscaping repetition."
+    );
+  }
+}
+
+function validateCornerLots(lots) {
+  const invalidCornerLot = lots.find(
+    (lot) =>
+      lot.cornerStatus !== "interior" &&
+      (lot.setback.front < 5.2 ||
+        lot.landscapingZones.cornerVisibilityPlantingZone === null ||
+        lot.garageRelationship.alignmentMode === "standard_frontage_alignment")
+  );
+  if (invalidCornerLot) {
+    throw createValidationError(
+      "corner_lot_rule_failed",
+      `Street block corner lot ${invalidCornerLot.lotId} did not receive the required corner treatment.`
+    );
+  }
+}
+
 function validateStreetFeatures(features, blockBounds) {
   for (const feature of features) {
     if (!streetFeatureTypes.has(feature.featureType) && feature.assetId !== "MAILBOX_PREVIEW_001") {
@@ -1466,7 +1995,10 @@ function countLotOverlaps(lots) {
   let overlaps = 0;
   for (let leftIndex = 0; leftIndex < lots.length; leftIndex += 1) {
     for (let rightIndex = leftIndex + 1; rightIndex < lots.length; rightIndex += 1) {
-      if (rectanglesOverlap(lotRect(lots[leftIndex]), lotRect(lots[rightIndex]))) {
+      if (
+        rectanglesOverlap(lotRect(lots[leftIndex]), lotRect(lots[rightIndex])) &&
+        lotsShareFrontageConflictDomain(lots[leftIndex], lots[rightIndex])
+      ) {
         overlaps += 1;
       }
     }
@@ -1496,7 +2028,10 @@ function countBuildingOverlaps(placements, lots) {
   let overlaps = 0;
   for (let leftIndex = 0; leftIndex < buildingRects.length; leftIndex += 1) {
     for (let rightIndex = leftIndex + 1; rightIndex < buildingRects.length; rightIndex += 1) {
-      if (rectanglesOverlap(buildingRects[leftIndex], buildingRects[rightIndex])) {
+      if (
+        rectanglesOverlap(buildingRects[leftIndex], buildingRects[rightIndex]) &&
+        lotsShareFrontageConflictDomain(lots[leftIndex], lots[rightIndex])
+      ) {
         overlaps += 1;
       }
     }
@@ -1529,6 +2064,89 @@ function isStreetFeatureWithinPublicArea(feature, blockBounds) {
     feature.position.y >= blockBounds.minY - 2 &&
     feature.position.y <= blockBounds.maxY + 2
   );
+}
+
+function themeWeightingWithinTolerance(lots, themeProfile) {
+  const targetCounts = buildThemeTargetCounts(themeProfile, lots.length);
+  const actualCounts = Object.fromEntries(
+    supportedSuburbanStreetBlockBuildingAssets.map((assetId) => [assetId, 0])
+  );
+  for (const lot of lots) {
+    actualCounts[lot.buildingId] += 1;
+  }
+  return Object.entries(targetCounts).every(
+    ([assetId, targetCount]) =>
+      Math.abs(actualCounts[assetId] - targetCount) <=
+      (assetId === "BUILDING_HOUSE_SUBURBAN_BRICK_001" ? 2 : 1)
+  );
+}
+
+function noExcessiveAdjacentRepeats(lots) {
+  const rows = new Map();
+  for (const lot of lots) {
+    const key = `${lot.frontageRoadSegmentId}:${lot.frontageDirection}`;
+    if (!rows.has(key)) {
+      rows.set(key, []);
+    }
+    rows.get(key).push(lot);
+  }
+
+  for (const rowLots of rows.values()) {
+    rowLots.sort((left, right) =>
+      left.frontageDirection === "NORTH" || left.frontageDirection === "SOUTH"
+        ? left.position.x - right.position.x
+        : left.position.y - right.position.y
+    );
+    for (let index = 1; index < rowLots.length; index += 1) {
+      if (
+        rowLots[index].buildingId === rowLots[index - 1].buildingId &&
+        rowLots[index].variationProfile.roofTone ===
+          rowLots[index - 1].variationProfile.roofTone &&
+        rowLots[index].variationProfile.colourVariant ===
+          rowLots[index - 1].variationProfile.colourVariant
+      ) {
+        return false;
+      }
+      if (
+        index >= 2 &&
+        rowLots[index].buildingId === rowLots[index - 1].buildingId &&
+        rowLots[index - 1].buildingId === rowLots[index - 2].buildingId
+      ) {
+        return false;
+      }
+      if (
+        rowLots[index].variationProfile.landscapingSequence ===
+          rowLots[index - 1].variationProfile.landscapingSequence &&
+        rowLots[index].variationProfile.yardDensity ===
+          rowLots[index - 1].variationProfile.yardDensity &&
+        rowLots[index].variationProfile.colourVariant ===
+          rowLots[index - 1].variationProfile.colourVariant
+      ) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+function lotsShareFrontageConflictDomain(left, right) {
+  if (left.frontageRoadSegmentId === right.frontageRoadSegmentId) {
+    return true;
+  }
+  if (
+    left.frontageDirection === right.frontageDirection &&
+    (left.frontageDirection === "NORTH" || left.frontageDirection === "SOUTH")
+  ) {
+    return Math.abs(left.position.y - right.position.y) < 14;
+  }
+  if (
+    left.frontageDirection === right.frontageDirection &&
+    (left.frontageDirection === "EAST" || left.frontageDirection === "WEST")
+  ) {
+    return Math.abs(left.position.x - right.position.x) < 14;
+  }
+  return false;
 }
 
 function roadNode(nodeId, nodeType, x, y, connectedSegmentIds, degree) {
@@ -1591,12 +2209,12 @@ function roadIntersection(intersectionId, nodeId, intersectionType, connectedSeg
 function resolveNodePosition(nodeId) {
   const positions = {
     NODE_001: { x: 0, y: 0 },
-    NODE_002: { x: 52, y: 0 },
-    NODE_003: { x: 88, y: 0 },
-    NODE_004: { x: 124, y: 0 },
-    NODE_005: { x: 52, y: 58 },
-    NODE_006: { x: 52, y: -58 },
-    NODE_007: { x: 88, y: 54 }
+    NODE_002: { x: 80, y: 0 },
+    NODE_003: { x: 160, y: 0 },
+    NODE_004: { x: 240, y: 0 },
+    NODE_005: { x: 80, y: 72 },
+    NODE_006: { x: 80, y: -72 },
+    NODE_007: { x: 160, y: 72 }
   };
   const position = positions[nodeId];
   if (!position) {

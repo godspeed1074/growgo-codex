@@ -20,6 +20,10 @@
     "validBuildingIds": "PASS",
     "buildingPlacementValidity": "PASS",
     "drivewayConnectionValidity": "PASS",
+    "frontageResolutionValidity": "PASS",
+    "suburbanWeightingValidity": "PASS",
+    "adjacentVariationValidity": "PASS",
+    "cornerLotRuleValidity": "PASS",
     "streetFeatureContainmentValidity": "PASS",
     "deterministicRebuildValidity": "PASS"
   }
