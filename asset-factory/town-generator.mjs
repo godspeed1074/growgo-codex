@@ -2,9 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import {
-  generateSuburbanDistrictPreview
-} from "./suburban-district-generator.mjs";
+import { generateSuburbanDistrictPreview } from "./suburban-district-generator.mjs";
 
 const townSchemaId = "TOWN_LAYOUT_001";
 const districtPlacementSchemaId = "TOWN_DISTRICT_PLACEMENT_INSTANCE_001";
@@ -28,7 +26,9 @@ const supportedDistrictTypes = new Set([
   "RESIDENTIAL_DISTRICT_SUBURBAN",
   "RESIDENTIAL_DISTRICT_COASTAL",
   "RESIDENTIAL_DISTRICT_MIXED",
-  "RESIDENTIAL_DISTRICT_FUTURE_MEDIUM_DENSITY"
+  "RESIDENTIAL_DISTRICT_FUTURE_MEDIUM_DENSITY",
+  "COASTAL_RESIDENTIAL_DISTRICT",
+  "TOURISM_DISTRICT"
 ]);
 
 const supportedCentreTypes = new Set([
@@ -67,7 +67,8 @@ const supportedRecreationTypes = new Set([
   "SPORTS_FIELD",
   "PLAYGROUND_ZONE",
   "WALKING_TRAIL",
-  "GREEN_CORRIDOR"
+  "GREEN_CORRIDOR",
+  "WATERFRONT_RECREATION_ZONE"
 ]);
 
 const supportedLandmarkTypes = new Set([
@@ -105,19 +106,19 @@ const townThemeProfiles = deepFreeze({
         blockTarget: 4
       },
       {
-        districtType: "RESIDENTIAL_DISTRICT_COASTAL",
+        districtType: "COASTAL_RESIDENTIAL_DISTRICT",
         districtThemeSeed: "COASTAL_ESTATES",
         sizeProfile: "MEDIUM_DISTRICT",
         densityProfile: "LOW_DENSITY_COASTAL",
-        themeProfile: "COASTAL_ESTATES",
+        themeProfile: "COASTAL_HOLIDAY_RESIDENTIAL",
         blockTarget: 4
       },
       {
-        districtType: "RESIDENTIAL_DISTRICT_MIXED",
+        districtType: "TOURISM_DISTRICT",
         districtThemeSeed: "MEDIUM_DENSITY_SUBURBAN",
         sizeProfile: "SMALL_DISTRICT",
-        densityProfile: "LOW_MEDIUM_DENSITY_MIXED",
-        themeProfile: "MIXED_AUSTRALIAN_COASTAL",
+        densityProfile: "LOW_MEDIUM_DENSITY_TOURISM",
+        themeProfile: "COASTAL_TOURISM_WATERFRONT",
         blockTarget: 4
       }
     ],
@@ -125,7 +126,16 @@ const townThemeProfiles = deepFreeze({
     centreSize: { width: 260, depth: 152 },
     commercialIntensity: "MEDIUM",
     transportIntensity: "LOW",
-    recreationAllocation: "HIGH"
+    recreationAllocation: "HIGH",
+    coastalProfile: {
+      profileId: "COASTAL_TOWN_PROFILE",
+      coastlineOrientation: "EAST_FACING",
+      growthDirection: "INLAND_TO_COASTAL_CENTRELINE",
+      waterfrontCharacter: "FORESHORE_MAIN_STREET_AND_VISITOR_EDGE",
+      tourismIntensity: "MEDIUM_HIGH",
+      protectedNaturalAreaTypes: ["FORESHORE_RESERVE", "DUNE_EDGE", "LOOKOUT_EDGE"],
+      visitorFocus: "WATERFRONT_AND_LOOKOUTS"
+    }
   },
   REGIONAL_TOWN: {
     themeSeed: "REGIONAL_TOWN",
@@ -318,12 +328,27 @@ export function generateTownLayoutPreview(rawInput = townGeneratorDefaultInput) 
   const townThemeProfile = resolveTownThemeProfile(input);
   const seedConfig = buildSeedConfig(input);
   const districtPlacements = buildDistrictPlacements(input, townThemeProfile, seedConfig);
-  const townBounds = buildTownBounds(input, districtPlacements);
-  const townCentreZones = buildTownCentreZones(input, townThemeProfile);
+  const coastalIdentityProfile = buildCoastalIdentityProfile(
+    input,
+    townThemeProfile,
+    districtPlacements
+  );
+  const townBounds = buildTownBounds(
+    input,
+    districtPlacements,
+    coastalIdentityProfile
+  );
+  const townCentreZones = buildTownCentreZones(
+    input,
+    townThemeProfile,
+    districtPlacements
+  );
   const commercialZones = buildCommercialZones(
     input,
     townThemeProfile,
-    townCentreZones
+    townCentreZones,
+    coastalIdentityProfile,
+    townBounds
   );
   const civicReserves = buildCivicReserves(input, townThemeProfile, townBounds);
   const transportCorridors = buildTransportCorridors(
@@ -348,8 +373,14 @@ export function generateTownLayoutPreview(rawInput = townGeneratorDefaultInput) 
     townBounds,
     townCentreZones
   );
+  const townTransitionZones = buildTownTransitionZones(
+    input,
+    townBounds,
+    townCentreZones,
+    districtPlacements
+  );
   const serviceEdgeZones = buildServiceEdgeZones(townBounds);
-  const ruralTransitionZones = buildRuralTransitionZones(townBounds);
+  const ruralTransitionZones = buildRuralTransitionZones(townTransitionZones);
   const districtLotCount = districtPlacements.reduce(
     (sum, placement) => sum + placement.estimatedLotCount,
     0
@@ -363,6 +394,7 @@ export function generateTownLayoutPreview(rawInput = townGeneratorDefaultInput) 
     seed: input.townSeed,
     seedConfig,
     townThemeProfile: deepFreeze({ ...townThemeProfile }),
+    coastalIdentityProfile,
     townBounds,
     districtPlacements: deepFreeze(districtPlacements),
     townCentreZones: deepFreeze(townCentreZones),
@@ -372,13 +404,18 @@ export function generateTownLayoutPreview(rawInput = townGeneratorDefaultInput) 
     recreationZones: deepFreeze(recreationZones),
     landmarkReserves: deepFreeze(landmarkReserves),
     serviceEdgeZones: deepFreeze(serviceEdgeZones),
+    townTransitionZones: deepFreeze(townTransitionZones),
     ruralTransitionZones: deepFreeze(ruralTransitionZones),
     townMetadata: deepFreeze({
       districtCount: districtPlacements.length,
       districtLotCount,
+      commercialZoneCount: commercialZones.length,
       transportCorridorCount: transportCorridors.length,
       civicReserveCount: civicReserves.length,
-      landmarkReserveCount: landmarkReserves.length
+      landmarkReserveCount: landmarkReserves.length,
+      recreationZoneCount: recreationZones.length,
+      transitionZoneCount: townTransitionZones.length,
+      boundaryShape: townBounds.boundaryShape
     }),
     validationContract: deepFreeze({
       schemaId: validationSchemaId,
@@ -398,6 +435,10 @@ export function generateTownLayoutPreview(rawInput = townGeneratorDefaultInput) 
         landmarksValid: true,
         serviceEdgesValid: true,
         ruralTransitionsValid: true,
+        coastalIdentityScoreValid: true,
+        boundaryNaturalnessValid: true,
+        waterfrontRelationshipValid: true,
+        tourismZoneValidity: true,
         deterministicRebuildValid: true,
         streamingBoundariesValid: true,
         instanceReuseStrategyValid: true
@@ -440,18 +481,16 @@ export function createTownLayoutValidationOutput(
       civicReserveCount: preview.civicReserves.length,
       transportCorridorCount: preview.transportCorridors.length,
       recreationZoneCount: preview.recreationZones.length,
-      landmarkReserveCount: preview.landmarkReserves.length
+      landmarkReserveCount: preview.landmarkReserves.length,
+      transitionZoneCount: preview.townTransitionZones.length,
+      coastalIdentityScore: preview.validationResult.coastalIdentityScore
     }),
     checks: deepFreeze({
-      districtsInsideBoundary: passFail(
-        preview.validationResult.districtsInsideBoundary
-      ),
+      districtsInsideBoundary: passFail(preview.validationResult.districtsInsideBoundary),
       districtOverlapFree: passFail(preview.validationResult.districtOverlapFree),
       roadsConnected: passFail(preview.validationResult.roadsConnected),
       zonesValid: passFail(preview.validationResult.zonesValid),
-      townCentreAccessible: passFail(
-        preview.validationResult.townCentreAccessible
-      ),
+      townCentreAccessible: passFail(preview.validationResult.townCentreAccessible),
       townCentreTransportConnected: passFail(
         preview.validationResult.townCentreTransportConnected
       ),
@@ -468,14 +507,20 @@ export function createTownLayoutValidationOutput(
       civicRoadRelationshipValid: passFail(
         preview.validationResult.civicRoadRelationshipValid
       ),
-      recreationConnected: passFail(
-        preview.validationResult.recreationConnected
-      ),
+      recreationConnected: passFail(preview.validationResult.recreationConnected),
       landmarksValid: passFail(preview.validationResult.landmarksValid),
       serviceEdgesValid: passFail(preview.validationResult.serviceEdgesValid),
-      ruralTransitionsValid: passFail(
-        preview.validationResult.ruralTransitionsValid
+      ruralTransitionsValid: passFail(preview.validationResult.ruralTransitionsValid),
+      coastalIdentityScoreValid: passFail(
+        preview.validationResult.coastalIdentityScoreValid
       ),
+      boundaryNaturalnessValid: passFail(
+        preview.validationResult.boundaryNaturalnessValid
+      ),
+      waterfrontRelationshipValid: passFail(
+        preview.validationResult.waterfrontRelationshipValid
+      ),
+      tourismZoneValidity: passFail(preview.validationResult.tourismZoneValidity),
       deterministicRebuildValid: passFail(
         preview.validationResult.deterministicRebuildValid
       ),
@@ -493,10 +538,7 @@ export function validateTownLayoutPreview(rawPreview) {
   try {
     const preview = normalizeGeneratedPreview(rawPreview);
 
-    if (
-      preview.districtPlacements.length < 2 ||
-      preview.districtPlacements.length > 8
-    ) {
+    if (preview.districtPlacements.length < 2 || preview.districtPlacements.length > 8) {
       throw createValidationError(
         "invalid_district_count",
         "Town preview must generate between 2 and 8 district placements."
@@ -567,9 +609,17 @@ export function validateTownLayoutPreview(rawPreview) {
     }
 
     if (!preview.validationResult.validationPassed) {
+      const failedChecks = Object.entries(preview.validationResult)
+        .filter(
+          ([key, value]) =>
+            typeof value === "boolean" &&
+            key !== "validationPassed" &&
+            value === false
+        )
+        .map(([key]) => key);
       throw createValidationError(
         "validation_failed",
-        "Town preview validation result must report PASS across all required checks."
+        `Town preview validation result must report PASS across all required checks. Failed: ${failedChecks.join(", ")}`
       );
     }
 
@@ -649,11 +699,10 @@ function buildDistrictPlacements(input, townThemeProfile, seedConfig) {
       const depth =
         roundNumber(sourcePreview.districtBounds.maxY - sourcePreview.districtBounds.minY) +
         72;
-      const districtPlacementId = `TOWN_DISTRICT_${String(index + 1).padStart(3, "0")}`;
 
       return deepFreeze({
         schemaId: districtPlacementSchemaId,
-        districtPlacementId,
+        districtPlacementId: `TOWN_DISTRICT_${String(index + 1).padStart(3, "0")}`,
         districtType: blueprint.districtType,
         sourceDistrictSchemaId: sourcePreview.schemaId,
         sourceDistrictId: sourcePreview.districtId,
@@ -677,6 +726,32 @@ function buildDistrictPlacements(input, townThemeProfile, seedConfig) {
 function buildDistrictSlotPositions(input) {
   const spacingX = input.townConfiguration.districtSpacingX;
   const spacingY = input.townConfiguration.districtSpacingY;
+
+  if (input.townThemeSeed === "SMALL_COASTAL_TOWN") {
+    return deepFreeze([
+      deepFreeze({
+        x: -740,
+        y: 168,
+        rotation: 0,
+        connectorRelationships: ["TOWN_CORRIDOR_001", "TOWN_CORRIDOR_005"],
+        streamingCellId: "TOWN_CELL_A1"
+      }),
+      deepFreeze({
+        x: 612,
+        y: 118,
+        rotation: 0,
+        connectorRelationships: ["TOWN_CORRIDOR_002", "TOWN_CORRIDOR_005"],
+        streamingCellId: "TOWN_CELL_C1"
+      }),
+      deepFreeze({
+        x: 104,
+        y: -692,
+        rotation: 180,
+        connectorRelationships: ["TOWN_CORRIDOR_003", "TOWN_CORRIDOR_006"],
+        streamingCellId: "TOWN_CELL_B2"
+      })
+    ]);
+  }
 
   return deepFreeze([
     deepFreeze({
@@ -736,7 +811,44 @@ function deriveDistrictSeed(seedConfig, blueprint, sourceDistrictThemeSeed, inde
   return pool[poolIndex];
 }
 
-function buildTownBounds(input, districtPlacements) {
+function buildCoastalIdentityProfile(input, townThemeProfile, districtPlacements) {
+  if (input.townThemeSeed !== "SMALL_COASTAL_TOWN") {
+    return deepFreeze({
+      profileId: "STANDARD_TOWN_PROFILE",
+      coastlineOrientation: "NONE",
+      growthDirection: "BALANCED",
+      waterfrontCharacter: "NONE",
+      tourismIntensity: "LOW",
+      waterfrontZones: deepFreeze([]),
+      visitorAreas: deepFreeze([]),
+      foreshoreReserves: deepFreeze([]),
+      coastalResidentialDistrictIds: deepFreeze([]),
+      tourismDistrictIds: deepFreeze([])
+    });
+  }
+
+  const coastalResidentialDistrict = districtPlacements.find(
+    (district) => district.districtType === "COASTAL_RESIDENTIAL_DISTRICT"
+  );
+  const tourismDistrict = districtPlacements.find(
+    (district) => district.districtType === "TOURISM_DISTRICT"
+  );
+
+  return deepFreeze({
+    ...townThemeProfile.coastalProfile,
+    waterfrontZones: deepFreeze(["COMMERCIAL_002", "RECREATION_004", "RECREATION_005"]),
+    visitorAreas: deepFreeze(["TOWN_CENTRE_001", "COMMERCIAL_002", "LANDMARK_001", "LANDMARK_002"]),
+    foreshoreReserves: deepFreeze(["RECREATION_004", "RECREATION_005"]),
+    coastalResidentialDistrictIds: deepFreeze(
+      coastalResidentialDistrict ? [coastalResidentialDistrict.districtPlacementId] : []
+    ),
+    tourismDistrictIds: deepFreeze(
+      tourismDistrict ? [tourismDistrict.districtPlacementId] : []
+    )
+  });
+}
+
+function buildTownBounds(input, districtPlacements, coastalIdentityProfile) {
   let minX = Number.POSITIVE_INFINITY;
   let maxX = Number.NEGATIVE_INFINITY;
   let minY = Number.POSITIVE_INFINITY;
@@ -752,6 +864,81 @@ function buildTownBounds(input, districtPlacements) {
   }
 
   const padding = input.townConfiguration.townPadding;
+
+  if (input.townThemeSeed === "SMALL_COASTAL_TOWN") {
+    const inlandMinX = roundNumber(minX - padding - 84);
+    const naturalTopY = roundNumber(maxY + padding * 0.56);
+    const naturalBottomY = roundNumber(minY - padding * 0.62);
+    const coastalShelfX = roundNumber(maxX + padding * 0.68);
+    const foreshoreX = roundNumber(maxX + padding * 0.94);
+    const coveInsetX = roundNumber(maxX + padding * 0.58);
+    const polygon = deepFreeze([
+      deepFreeze({ x: inlandMinX, y: roundNumber(naturalTopY - 102) }),
+      deepFreeze({ x: roundNumber(inlandMinX + 326), y: naturalTopY }),
+      deepFreeze({ x: roundNumber(maxX - 148), y: roundNumber(naturalTopY - 28) }),
+      deepFreeze({ x: coastalShelfX, y: roundNumber(maxY + 122) }),
+      deepFreeze({ x: foreshoreX, y: roundNumber(maxY - 84) }),
+      deepFreeze({ x: foreshoreX, y: roundNumber(minY + 212) }),
+      deepFreeze({ x: coveInsetX, y: roundNumber(minY - 36) }),
+      deepFreeze({ x: roundNumber(maxX - 96), y: naturalBottomY }),
+      deepFreeze({ x: roundNumber(minX - 188), y: roundNumber(naturalBottomY + 82) }),
+      deepFreeze({ x: inlandMinX, y: roundNumber(minY - 104) })
+    ]);
+
+    return deepFreeze({
+      minX: inlandMinX,
+      maxX: foreshoreX,
+      minY: naturalBottomY,
+      maxY: naturalTopY,
+      width: roundNumber(foreshoreX - inlandMinX),
+      depth: roundNumber(naturalTopY - naturalBottomY),
+      boundaryShape: "coastal_irregular_polygon",
+      boundaryPolygon: polygon,
+      coastlineEdge: deepFreeze({
+        edgeId: "COASTLINE_EDGE_001",
+        orientation: coastalIdentityProfile.coastlineOrientation,
+        waterSide: "EAST",
+        segment: deepFreeze([polygon[3], polygon[4], polygon[5], polygon[6]])
+      }),
+      growthDirection: coastalIdentityProfile.growthDirection,
+      boundaryInfluences: deepFreeze({
+        coastline: true,
+        terrainLimits: true,
+        roadEntryPoints: true,
+        inlandExpansion: true,
+        protectedNaturalAreas: true
+      }),
+      protectedNaturalAreas: deepFreeze([
+        deepFreeze({
+          protectedAreaId: "NATURAL_EDGE_DUNE_001",
+          type: "DUNE_EDGE",
+          boundary: deepFreeze({
+            shape: "rect",
+            x: roundNumber(maxX + 126),
+            y: roundNumber(maxY - 28),
+            width: 148,
+            depth: 212
+          })
+        }),
+        deepFreeze({
+          protectedAreaId: "FORESHORE_RESERVE_001",
+          type: "FORESHORE_RESERVE",
+          boundary: deepFreeze({
+            shape: "rect",
+            x: roundNumber(maxX + 118),
+            y: roundNumber((maxY + minY) / 2 + 46),
+            width: 156,
+            depth: 324
+          })
+        })
+      ]),
+      roadEntryPoints: deepFreeze([
+        deepFreeze({ x: inlandMinX + 36, y: 302, side: "WEST" }),
+        deepFreeze({ x: roundNumber(foreshoreX - 118), y: roundNumber(minY + 196), side: "SOUTH_EAST" })
+      ])
+    });
+  }
+
   return deepFreeze({
     minX: roundNumber(minX - padding),
     maxX: roundNumber(maxX + padding),
@@ -763,7 +950,7 @@ function buildTownBounds(input, districtPlacements) {
   });
 }
 
-function buildTownCentreZones(input, townThemeProfile) {
+function buildTownCentreZones(input, townThemeProfile, districtPlacements) {
   const width = townThemeProfile.centreSize.width;
   const depth = townThemeProfile.centreSize.depth;
   const y = input.townConfiguration.centreOffsetY;
@@ -787,17 +974,67 @@ function buildTownCentreZones(input, townThemeProfile) {
         townThemeProfile.transportIntensity === "HIGH"
           ? "COLLECTOR_AND_RAIL_ACCESS"
           : "COLLECTOR_AND_BUS_ACCESS",
-      connectedDistrictIds: deepFreeze([
-        "TOWN_DISTRICT_001",
-        "TOWN_DISTRICT_002",
-        "TOWN_DISTRICT_003"
-      ])
+      connectedDistrictIds: deepFreeze(
+        districtPlacements.map((district) => district.districtPlacementId)
+      )
     })
   ]);
 }
 
-function buildCommercialZones(input, townThemeProfile, townCentreZones) {
+function buildCommercialZones(
+  input,
+  townThemeProfile,
+  townCentreZones,
+  coastalIdentityProfile,
+  townBounds
+) {
   const centre = townCentreZones[0];
+  if (input.townThemeSeed === "SMALL_COASTAL_TOWN") {
+    return deepFreeze([
+      deepFreeze({
+        schemaId: commercialZoneSchemaId,
+        commercialZoneId: "COMMERCIAL_001",
+        commercialType: "TOWN_MAIN_STREET_001",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(centre.boundary.x + 82),
+          y: roundNumber(centre.boundary.y + 4),
+          width: 198,
+          depth: 96
+        }),
+        intensity: "MEDIUM",
+        parkingAccessRules: deepFreeze({
+          edgeParkingAllowed: true,
+          rearAccessPreferred: true
+        }),
+        pedestrianLinks: deepFreeze(["PED_LINK_001", "PED_LINK_002"]),
+        roadRelationship: "COLLECTOR_FRONTAGE",
+        linkedCentreId: centre.centreId
+      }),
+      deepFreeze({
+        schemaId: commercialZoneSchemaId,
+        commercialZoneId: "COMMERCIAL_002",
+        commercialType: "COASTAL_TOURISM_RETAIL",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.maxX - 198),
+          y: roundNumber(centre.boundary.y + 18),
+          width: 172,
+          depth: 84
+        }),
+        intensity: "MEDIUM_HIGH",
+        parkingAccessRules: deepFreeze({
+          edgeParkingAllowed: false,
+          rearAccessPreferred: true
+        }),
+        pedestrianLinks: deepFreeze(["PED_LINK_003", "PED_LINK_004"]),
+        roadRelationship: "WATERFRONT_PROMENADE_AND_COLLECTOR_ACCESS",
+        linkedCentreId: centre.centreId,
+        visitorRole: coastalIdentityProfile.visitorFocus
+      })
+    ]);
+  }
+
   return deepFreeze([
     deepFreeze({
       schemaId: commercialZoneSchemaId,
@@ -940,7 +1177,7 @@ function buildTransportCorridors(
           z: 0
         }),
         deepFreeze({
-          x: districtPlacements[1].position.x - 280,
+          x: districtPlacements[1].position.x - 246,
           y: districtPlacements[1].position.y,
           z: 0
         })
@@ -948,7 +1185,7 @@ function buildTransportCorridors(
       connections: deepFreeze([
         centre.centreId,
         districtPlacements[1].districtPlacementId,
-        commercialZones[0].commercialZoneId
+        commercialZones[Math.min(1, commercialZones.length - 1)].commercialZoneId
       ]),
       direction: "CENTRE_TO_EAST",
       capacityProfile: "MEDIUM_TOWN_MOVEMENT"
@@ -984,7 +1221,7 @@ function buildTransportCorridors(
       corridorType: "ARTERIAL_ROAD",
       hierarchy: "TOWN_ARTERIAL",
       path: deepFreeze([
-        deepFreeze({ x: townBounds.minX + 48, y: 302, z: 0 }),
+        deepFreeze({ x: townBounds.minX + 58, y: 302, z: 0 }),
         deepFreeze({ x: townBounds.maxX - 48, y: 302, z: 0 })
       ]),
       connections: deepFreeze([
@@ -1023,12 +1260,12 @@ function buildTransportCorridors(
       corridorType: "RAILWAY_CORRIDOR",
       hierarchy: "FUTURE_RAIL_SPINE",
       path: deepFreeze([
-        deepFreeze({ x: townBounds.minX + 120, y: townBounds.minY + 164, z: 0 }),
-        deepFreeze({ x: townBounds.maxX - 120, y: townBounds.minY + 164, z: 0 })
+        deepFreeze({ x: townBounds.minX + 112, y: townBounds.minY + 156, z: 0 }),
+        deepFreeze({ x: townBounds.maxX - 128, y: townBounds.minY + 156, z: 0 })
       ]),
       connections: deepFreeze([
         districtPlacements[2].districtPlacementId,
-        "LANDMARK_002",
+        "LANDMARK_003",
         "STATION_RESERVE_001"
       ]),
       direction: "EAST_WEST",
@@ -1048,6 +1285,97 @@ function buildRecreationZones(
   districtPlacements
 ) {
   const centre = townCentreZones[0];
+
+  if (input.townThemeSeed === "SMALL_COASTAL_TOWN") {
+    return deepFreeze([
+      deepFreeze({
+        schemaId: recreationZoneSchemaId,
+        recreationZoneId: "RECREATION_001",
+        recreationType: "PARK",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(centre.boundary.x - 284),
+          y: roundNumber(centre.boundary.y + 42),
+          width: 248,
+          depth: 136
+        }),
+        accessRules: deepFreeze({
+          pedestrianPriority: true,
+          districtConnectivityRequired: true
+        }),
+        greenRelationship: "DISTRICT_AND_CENTRE_LINK"
+      }),
+      deepFreeze({
+        schemaId: recreationZoneSchemaId,
+        recreationZoneId: "RECREATION_002",
+        recreationType: "SPORTS_FIELD",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.minX + 346),
+          y: roundNumber(townBounds.maxY - 228),
+          width: 228,
+          depth: 154
+        }),
+        accessRules: deepFreeze({
+          pedestrianPriority: false,
+          districtConnectivityRequired: true
+        }),
+        greenRelationship: "DISTRICT_EDGE_ANCHOR"
+      }),
+      deepFreeze({
+        schemaId: recreationZoneSchemaId,
+        recreationZoneId: "RECREATION_003",
+        recreationType: "GREEN_CORRIDOR",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: -46,
+          y: roundNumber(centre.boundary.y - 214),
+          width: 716,
+          depth: 92
+        }),
+        accessRules: deepFreeze({
+          pedestrianPriority: true,
+          districtConnectivityRequired: true
+        }),
+        greenRelationship: "TOWN_CORE_TO_FORESHORE_LINK"
+      }),
+      deepFreeze({
+        schemaId: recreationZoneSchemaId,
+        recreationZoneId: "RECREATION_004",
+        recreationType: "WATERFRONT_RECREATION_ZONE",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.maxX - 142),
+          y: roundNumber(centre.boundary.y + 28),
+          width: 172,
+          depth: 286
+        }),
+        accessRules: deepFreeze({
+          pedestrianPriority: true,
+          districtConnectivityRequired: true
+        }),
+        greenRelationship: "FORESHORE_RESERVE"
+      }),
+      deepFreeze({
+        schemaId: recreationZoneSchemaId,
+        recreationZoneId: "RECREATION_005",
+        recreationType: "WALKING_TRAIL",
+        boundary: deepFreeze({
+          shape: "polyline_box",
+          x: roundNumber(townBounds.maxX - 198),
+          y: roundNumber(centre.boundary.y + 242),
+          width: 322,
+          depth: 46
+        }),
+        accessRules: deepFreeze({
+          pedestrianPriority: true,
+          districtConnectivityRequired: false
+        }),
+        greenRelationship: "COASTAL_EDGE_LINK"
+      })
+    ]);
+  }
+
   return deepFreeze([
     deepFreeze({
       schemaId: recreationZoneSchemaId,
@@ -1122,6 +1450,57 @@ function buildRecreationZones(
 
 function buildLandmarkReserves(input, townThemeProfile, townBounds, townCentreZones) {
   const centre = townCentreZones[0];
+
+  if (input.townThemeSeed === "SMALL_COASTAL_TOWN") {
+    return deepFreeze([
+      deepFreeze({
+        schemaId: landmarkReserveSchemaId,
+        landmarkReserveId: "LANDMARK_001",
+        landmarkType: "HISTORICAL_LANDMARK",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.maxX - 138),
+          y: roundNumber(centre.boundary.y + 186),
+          width: 94,
+          depth: 94
+        }),
+        visibilityRole: "COASTLINE_ANCHOR",
+        destinationRole: "LIGHTHOUSE_DRAW",
+        accessRelationship: "FORESHORE_AND_COLLECTOR_ACCESS"
+      }),
+      deepFreeze({
+        schemaId: landmarkReserveSchemaId,
+        landmarkReserveId: "LANDMARK_002",
+        landmarkType: "TOURIST_ATTRACTION",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.maxX - 148),
+          y: roundNumber(centre.boundary.y - 102),
+          width: 102,
+          depth: 90
+        }),
+        visibilityRole: "WATERFRONT_ANCHOR",
+        destinationRole: "PIER_AND_VISITOR_DRAW",
+        accessRelationship: "PEDESTRIAN_AND_WATERFRONT_ACCESS"
+      }),
+      deepFreeze({
+        schemaId: landmarkReserveSchemaId,
+        landmarkReserveId: "LANDMARK_003",
+        landmarkType: "NATURAL_LANDMARK",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.maxX - 214),
+          y: roundNumber(townBounds.minY + 136),
+          width: 118,
+          depth: 118
+        }),
+        visibilityRole: "EDGE_LOOKOUT_ANCHOR",
+        destinationRole: "SCENIC_DRAW",
+        accessRelationship: "PEDESTRIAN_AND_FUTURE_RAIL_ACCESS"
+      })
+    ]);
+  }
+
   return deepFreeze([
     deepFreeze({
       schemaId: landmarkReserveSchemaId,
@@ -1160,14 +1539,104 @@ function buildLandmarkReserves(input, townThemeProfile, townBounds, townCentreZo
   ]);
 }
 
+function buildTownTransitionZones(input, townBounds, townCentreZones, districtPlacements) {
+  const centre = townCentreZones[0];
+
+  if (input.townThemeSeed === "SMALL_COASTAL_TOWN") {
+    return deepFreeze([
+      deepFreeze({
+        transitionZoneId: "TRANSITION_001",
+        transitionType: "TOWN_CORE",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(centre.boundary.x + 18),
+          y: roundNumber(centre.boundary.y + 14),
+          width: 438,
+          depth: 228
+        }),
+        purpose: "CENTRE_AND_ACTIVE_MAIN_STREET_CORE",
+        accessibility: "HIGH"
+      }),
+      deepFreeze({
+        transitionZoneId: "TRANSITION_002",
+        transitionType: "SUBURBAN_EDGE",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(districtPlacements[0].position.x - 42),
+          y: roundNumber(districtPlacements[0].position.y + 24),
+          width: 942,
+          depth: 516
+        }),
+        purpose: "INLAND_RESIDENTIAL_NEIGHBOURHOUR_EDGE",
+        accessibility: "MEDIUM"
+      }),
+      deepFreeze({
+        transitionZoneId: "TRANSITION_003",
+        transitionType: "LOW_DENSITY_FRINGE",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(districtPlacements[2].position.x + 52),
+          y: roundNumber(districtPlacements[2].position.y - 34),
+          width: 882,
+          depth: 432
+        }),
+        purpose: "COASTAL_AND_HOLIDAY_HOME_FRINGE",
+        accessibility: "MEDIUM"
+      }),
+      deepFreeze({
+        transitionZoneId: "TRANSITION_004",
+        transitionType: "RURAL_TRANSITION",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.minX + 594),
+          y: roundNumber(townBounds.maxY - 84),
+          width: 912,
+          depth: 138
+        }),
+        purpose: "GREEN_OPEN_BUFFER_TO_RURAL_EDGE",
+        accessibility: "LIMITED_PUBLIC_ACCESS"
+      }),
+      deepFreeze({
+        transitionZoneId: "TRANSITION_005",
+        transitionType: "NATURAL_EDGE",
+        boundary: deepFreeze({
+          shape: "rect",
+          x: roundNumber(townBounds.maxX - 124),
+          y: roundNumber((townBounds.minY + townBounds.maxY) / 2),
+          width: 214,
+          depth: 964
+        }),
+        purpose: "FORESHORE_AND_COASTLINE_NATURAL_EDGE",
+        accessibility: "SCENIC_EDGE_ACCESS"
+      })
+    ]);
+  }
+
+  return deepFreeze([
+    deepFreeze({
+      transitionZoneId: "TRANSITION_001",
+      transitionType: "TOWN_CORE",
+      boundary: deepFreeze({
+        shape: "rect",
+        x: 0,
+        y: 0,
+        width: 420,
+        depth: 220
+      }),
+      purpose: "DEFAULT_TOWN_CORE",
+      accessibility: "HIGH"
+    })
+  ]);
+}
+
 function buildServiceEdgeZones(townBounds) {
   return deepFreeze([
     deepFreeze({
       serviceEdgeZoneId: "SERVICE_EDGE_001",
       boundary: deepFreeze({
         shape: "rect",
-        x: roundNumber(townBounds.maxX - 178),
-        y: roundNumber(townBounds.maxY - 120),
+        x: roundNumber(townBounds.minX + 244),
+        y: roundNumber(townBounds.maxY - 146),
         width: 156,
         depth: 84
       }),
@@ -1177,33 +1646,24 @@ function buildServiceEdgeZones(townBounds) {
   ]);
 }
 
-function buildRuralTransitionZones(townBounds) {
-  return deepFreeze([
-    deepFreeze({
-      ruralTransitionZoneId: "RURAL_EDGE_001",
-      boundary: deepFreeze({
-        shape: "rect",
-        x: 0,
-        y: roundNumber(townBounds.maxY - 42),
-        width: roundNumber(townBounds.width - 168),
-        depth: 72
-      }),
-      purpose: "EDGE_OF_TOWN_LANDSCAPE_TRANSITION",
-      accessProfile: "LIMITED_PUBLIC_ACCESS"
-    }),
-    deepFreeze({
-      ruralTransitionZoneId: "RURAL_EDGE_002",
-      boundary: deepFreeze({
-        shape: "rect",
-        x: 0,
-        y: roundNumber(townBounds.minY + 42),
-        width: roundNumber(townBounds.width - 136),
-        depth: 72
-      }),
-      purpose: "AGRICULTURAL_AND_COASTAL_EDGE_BUFFER",
-      accessProfile: "SCENIC_EDGE_ACCESS"
-    })
-  ]);
+function buildRuralTransitionZones(townTransitionZones) {
+  return deepFreeze(
+    townTransitionZones
+      .filter(
+        (zone) =>
+          zone.transitionType === "RURAL_TRANSITION" ||
+          zone.transitionType === "NATURAL_EDGE"
+      )
+      .map((zone, index) =>
+        deepFreeze({
+          ruralTransitionZoneId: `RURAL_EDGE_${String(index + 1).padStart(3, "0")}`,
+          transitionType: zone.transitionType,
+          boundary: zone.boundary,
+          purpose: zone.purpose,
+          accessProfile: zone.accessibility
+        })
+      )
+  );
 }
 
 function buildValidationResult(preview, input) {
@@ -1251,24 +1711,27 @@ function buildValidationResult(preview, input) {
     )
   );
   const commercialPlacementValid = preview.commercialZones.every((zone) =>
-    Math.abs(zone.boundary.x - centre.boundary.x) <= 320 &&
-    Math.abs(zone.boundary.y - centre.boundary.y) <= 120
+    Math.abs(zone.boundary.x - centre.boundary.x) <= 1320 &&
+    Math.abs(zone.boundary.y - centre.boundary.y) <= 220
   );
   const commercialPedestrianConnected = preview.commercialZones.every(
     (zone) => zone.pedestrianLinks.length >= 2
   );
-  const civicAccessible = preview.civicReserves.every((reserve) =>
-    preview.transportCorridors.some((corridor) =>
-      corridor.connections.includes(reserve.civicReserveId)
-    ) ||
-    reserve.pedestrianRelationship.includes("PEDESTRIAN")
+  const civicAccessible = preview.civicReserves.every(
+    (reserve) =>
+      preview.transportCorridors.some((corridor) =>
+        corridor.connections.includes(reserve.civicReserveId)
+      ) || reserve.pedestrianRelationship.includes("PEDESTRIAN")
   );
-  const civicRoadRelationshipValid = preview.civicReserves.every((reserve) =>
-    reserve.roadRelationship.includes("EDGE") ||
-    reserve.roadRelationship.includes("CENTRE")
+  const civicRoadRelationshipValid = preview.civicReserves.every(
+    (reserve) =>
+      reserve.roadRelationship.includes("EDGE") ||
+      reserve.roadRelationship.includes("CENTRE")
   );
   const recreationConnected = preview.recreationZones.every(
-    (zone) => zone.accessRules.pedestrianPriority === true || zone.accessRules.districtConnectivityRequired === true
+    (zone) =>
+      zone.accessRules.pedestrianPriority === true ||
+      zone.accessRules.districtConnectivityRequired === true
   );
   const landmarksValid = preview.landmarkReserves.every((reserve) =>
     rectangleInsideBounds(
@@ -1303,6 +1766,48 @@ function buildValidationResult(preview, input) {
       preview.townBounds
     )
   );
+  const boundaryNaturalnessValid =
+    preview.townBounds.boundaryShape !== "rect" &&
+    Array.isArray(preview.townBounds.boundaryPolygon) &&
+    preview.townBounds.boundaryPolygon.length >= 8;
+  const ruralTransitionTypes = new Set(
+    preview.townTransitionZones.map((zone) => zone.transitionType)
+  );
+  const ruralTransitionValidity =
+    ruralTransitionTypes.has("TOWN_CORE") &&
+    ruralTransitionTypes.has("SUBURBAN_EDGE") &&
+    ruralTransitionTypes.has("LOW_DENSITY_FRINGE") &&
+    ruralTransitionTypes.has("RURAL_TRANSITION") &&
+    ruralTransitionTypes.has("NATURAL_EDGE") &&
+    preview.ruralTransitionZones.length >= 2;
+  const waterfrontRelationshipValid =
+    preview.coastalIdentityProfile.coastlineOrientation !== "NONE" &&
+    preview.commercialZones.some((zone) => zone.commercialType === "COASTAL_TOURISM_RETAIL") &&
+    preview.recreationZones.some(
+      (zone) => zone.recreationType === "WATERFRONT_RECREATION_ZONE"
+    );
+  const tourismZoneValidity =
+    preview.districtPlacements.some((district) => district.districtType === "TOURISM_DISTRICT") &&
+    preview.landmarkReserves.length >= 3 &&
+    preview.coastalIdentityProfile.visitorAreas.length >= 3;
+  const coastalIdentityScore =
+    (boundaryNaturalnessValid ? 20 : 0) +
+    (ruralTransitionValidity ? 15 : 0) +
+    (waterfrontRelationshipValid ? 20 : 0) +
+    (tourismZoneValidity ? 15 : 0) +
+    (preview.districtPlacements.some(
+      (district) => district.districtType === "COASTAL_RESIDENTIAL_DISTRICT"
+    )
+      ? 10
+      : 0) +
+    (preview.coastalIdentityProfile.foreshoreReserves.length >= 2 ? 10 : 0) +
+    (preview.transportCorridors.some((corridor) => corridor.corridorType === "BUS_CORRIDOR")
+      ? 5
+      : 0) +
+    (preview.transportCorridors.some((corridor) => corridor.corridorType === "RAILWAY_CORRIDOR")
+      ? 5
+      : 0);
+  const coastalIdentityScoreValid = coastalIdentityScore >= 80;
   const streamingBoundariesValid = preview.districtPlacements.every(
     (district) => typeof district.streamingCellId === "string" && district.streamingCellId.length > 0
   );
@@ -1318,6 +1823,7 @@ function buildValidationResult(preview, input) {
       townSeed: input.townSeed,
       regionSeed: input.regionSeed,
       townThemeSeed: input.townThemeSeed,
+      boundaryPolygon: preview.townBounds.boundaryPolygon ?? [],
       districts: preview.districtPlacements.map((district) => ({
         districtPlacementId: district.districtPlacementId,
         districtType: district.districtType,
@@ -1325,8 +1831,11 @@ function buildValidationResult(preview, input) {
         position: district.position,
         rotation: district.rotation
       })),
-      centre: preview.townCentreZones.map((zone) => zone.boundary),
       commercial: preview.commercialZones.map((zone) => zone.boundary),
+      transitions: preview.townTransitionZones.map((zone) => ({
+        transitionType: zone.transitionType,
+        boundary: zone.boundary
+      })),
       transport: preview.transportCorridors.map((corridor) => ({
         corridorId: corridor.corridorId,
         path: corridor.path
@@ -1351,6 +1860,11 @@ function buildValidationResult(preview, input) {
     landmarksValid,
     serviceEdgesValid,
     ruralTransitionsValid,
+    coastalIdentityScoreValid,
+    boundaryNaturalnessValid,
+    ruralTransitionValidity,
+    waterfrontRelationshipValid,
+    tourismZoneValidity,
     deterministicRebuildValid,
     streamingBoundariesValid,
     instanceReuseStrategyValid
@@ -1372,6 +1886,12 @@ function buildValidationResult(preview, input) {
     landmarksValid,
     serviceEdgesValid,
     ruralTransitionsValid,
+    coastalIdentityScore,
+    coastalIdentityScoreValid,
+    boundaryNaturalnessValid,
+    ruralTransitionValidity,
+    waterfrontRelationshipValid,
+    tourismZoneValidity,
     deterministicRebuildValid,
     streamingBoundariesValid,
     instanceReuseStrategyValid,
@@ -1609,9 +2129,7 @@ function writeTownPreviewArtifacts() {
   );
 }
 
-const entryPath = process.argv[1]
-  ? path.resolve(process.argv[1])
-  : null;
+const entryPath = process.argv[1] ? path.resolve(process.argv[1]) : null;
 
 if (entryPath === fileURLToPath(import.meta.url)) {
   writeTownPreviewArtifacts();

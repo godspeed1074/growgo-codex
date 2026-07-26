@@ -23,12 +23,14 @@
   "summary": {
     "validationPassed": true,
     "districtCount": 3,
-    "districtLotCount": 336,
+    "districtLotCount": 337,
     "townCentreCount": 1,
-    "commercialZoneCount": 1,
+    "commercialZoneCount": 2,
     "civicReserveCount": 4,
     "transportCorridorCount": 6,
-    "recreationZoneCount": 4,
-    "landmarkReserveCount": 2
+    "recreationZoneCount": 5,
+    "landmarkReserveCount": 3,
+    "transitionZoneCount": 5,
+    "coastalIdentityScore": 100
   }
 }

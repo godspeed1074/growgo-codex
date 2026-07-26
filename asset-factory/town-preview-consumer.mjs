@@ -52,6 +52,14 @@ export const townPreviewConsumerDefinition = deepFreeze({
       displayColour: "SUBURBAN_GREEN",
       markerType: "suburban_district"
     }),
+    COASTAL_RESIDENTIAL_DISTRICT: deepFreeze({
+      displayColour: "COASTAL_CYAN",
+      markerType: "coastal_residential_district"
+    }),
+    TOURISM_DISTRICT: deepFreeze({
+      displayColour: "TOURISM_GOLD",
+      markerType: "tourism_district"
+    }),
     RESIDENTIAL_DISTRICT_COASTAL: deepFreeze({
       displayColour: "COASTAL_CYAN",
       markerType: "coastal_district"
@@ -77,7 +85,8 @@ export const townPreviewConsumerDefinition = deepFreeze({
     SPORTS_FIELD: deepFreeze({ displayColour: "SPORTS_GREEN" }),
     PLAYGROUND_ZONE: deepFreeze({ displayColour: "PLAYGROUND_YELLOW" }),
     WALKING_TRAIL: deepFreeze({ displayColour: "TRAIL_BEIGE" }),
-    GREEN_CORRIDOR: deepFreeze({ displayColour: "CORRIDOR_GREEN" })
+    GREEN_CORRIDOR: deepFreeze({ displayColour: "CORRIDOR_GREEN" }),
+    WATERFRONT_RECREATION_ZONE: deepFreeze({ displayColour: "WATERFRONT_BLUE" })
   }),
   landmarkPresentation: deepFreeze({
     HISTORICAL_LANDMARK: deepFreeze({ markerType: "historical_landmark" }),
@@ -175,11 +184,13 @@ export function createTownPreviewSceneMetadata(
       paddingMeters: 140
     }),
     visualCaptureWorkflow: freeze({
-      previewVersion: "SESSION_65_TOWN_PREVIEW_CONSUMER",
+      previewVersion: "SESSION_67_COASTAL_REFINEMENT_PASS",
       townSeed: preview.seedConfig.townSeed,
+      townProfile: preview.townThemeProfile.themeSeed,
       previewVersionSeedSignature:
         preview.validationResult.deterministicSignatureHash,
       validationResult: preview.validationResult.validationPassed ? "PASS" : "FAIL",
+      inspectionStatus: "READY_FOR_SECOND_TOWN_INSPECTION",
       topDown: freeze({
         ...definition.previewCaptureProfiles.topDown,
         position: capturePositions.topDown.position,
@@ -200,6 +211,10 @@ export function createTownPreviewSceneMetadata(
       townId: preview.townId,
       townBoundaryVisible: true,
       townBounds: preview.townBounds,
+      boundaryShape: preview.townBounds.boundaryShape,
+      coastlineOrientation:
+        preview.coastalIdentityProfile?.coastlineOrientation ?? "NONE",
+      growthDirection: preview.coastalIdentityProfile?.growthDirection ?? "BALANCED",
       districtCount: preview.districtPlacements.length,
       districtLotCountEstimate: preview.townMetadata.districtLotCount,
       commercialZoneCount: preview.commercialZones.length,
@@ -223,6 +238,21 @@ export function createTownPreviewSceneMetadata(
         centreRelationshipVisible: true,
         transportAdjacencyVisible: true
       })
+    }),
+    coastalIdentityLayer: freeze({
+      profileId: preview.coastalIdentityProfile?.profileId ?? "STANDARD_TOWN_PROFILE",
+      coastlineOrientation:
+        preview.coastalIdentityProfile?.coastlineOrientation ?? "NONE",
+      waterfrontCharacter:
+        preview.coastalIdentityProfile?.waterfrontCharacter ?? "NONE",
+      tourismIntensity: preview.coastalIdentityProfile?.tourismIntensity ?? "LOW",
+      visitorFocus: preview.coastalIdentityProfile?.visitorFocus ?? "LOCAL_ONLY",
+      waterfrontZoneCount: preview.coastalIdentityProfile?.waterfrontZones?.length ?? 0,
+      foreshoreReserveCount:
+        preview.coastalIdentityProfile?.foreshoreReserves?.length ?? 0,
+      coastalResidentialDistrictIds:
+        preview.coastalIdentityProfile?.coastalResidentialDistrictIds ?? [],
+      tourismDistrictIds: preview.coastalIdentityProfile?.tourismDistrictIds ?? []
     }),
     townCentreLayer: freeze({
       centreCount: preview.townCentreZones.length,
@@ -348,6 +378,15 @@ export function createTownPreviewSceneMetadata(
         )
       )
     }),
+    transitionLayer: freeze({
+      transitionZoneCount: preview.townTransitionZones.length,
+      showTownCore: true,
+      showSuburbanEdge: true,
+      showLowDensityFringe: true,
+      showRuralTransition: true,
+      showNaturalEdge: true,
+      resolvedTransitionZones: freeze(preview.townTransitionZones)
+    }),
     ruralTransitionLayer: freeze({
       ruralTransitionCount: preview.ruralTransitionZones.length,
       showTownOutline: true,
@@ -455,7 +494,9 @@ export function createTownPreviewValidationReport(
       civicReserveCount: preview.civicReserves.length,
       transportCorridorCount: preview.transportCorridors.length,
       recreationZoneCount: preview.recreationZones.length,
-      landmarkReserveCount: preview.landmarkReserves.length
+      landmarkReserveCount: preview.landmarkReserves.length,
+      transitionZoneCount: preview.townTransitionZones.length,
+      coastalIdentityScore: preview.validationResult.coastalIdentityScore
     })
   });
 }

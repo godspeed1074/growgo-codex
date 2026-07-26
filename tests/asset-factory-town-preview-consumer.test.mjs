@@ -38,18 +38,28 @@ test("town preview consumer metadata resolves the town preview scene", () => {
   assert.equal(metadata.sceneId, "TOWN_LAYOUT_001_PREVIEW_SCENE_001");
   assert.equal(metadata.previewType, "procedural_town_visual_inspection");
   assert.equal(metadata.townLayer.districtCount, 3);
-  assert.equal(metadata.townLayer.districtLotCountEstimate, 336);
+  assert.equal(metadata.townLayer.districtLotCountEstimate, 337);
+  assert.equal(metadata.townLayer.boundaryShape, "coastal_irregular_polygon");
+  assert.equal(metadata.townLayer.coastlineOrientation, "EAST_FACING");
   assert.equal(metadata.districtLayer.districtInstanceCount, 3);
   assert.equal(metadata.townCentreLayer.centreCount, 1);
-  assert.equal(metadata.commercialLayer.zoneCount, 1);
+  assert.equal(metadata.commercialLayer.zoneCount, 2);
   assert.equal(metadata.civicLayer.reserveCount, 4);
   assert.equal(metadata.transportLayer.corridorCount, 6);
-  assert.equal(metadata.recreationLayer.recreationZoneCount, 4);
-  assert.equal(metadata.landmarkLayer.landmarkReserveCount, 2);
+  assert.equal(metadata.recreationLayer.recreationZoneCount, 5);
+  assert.equal(metadata.landmarkLayer.landmarkReserveCount, 3);
+  assert.equal(metadata.coastalIdentityLayer.profileId, "COASTAL_TOWN_PROFILE");
+  assert.equal(metadata.coastalIdentityLayer.waterfrontZoneCount, 3);
+  assert.equal(metadata.transitionLayer.transitionZoneCount, 5);
   assert.equal(metadata.ruralTransitionLayer.ruralTransitionCount, 2);
   assert.equal(
     metadata.visualCaptureWorkflow.previewVersion,
-    "SESSION_65_TOWN_PREVIEW_CONSUMER"
+    "SESSION_67_COASTAL_REFINEMENT_PASS"
+  );
+  assert.equal(metadata.visualCaptureWorkflow.townProfile, "SMALL_COASTAL_TOWN");
+  assert.equal(
+    metadata.visualCaptureWorkflow.inspectionStatus,
+    "READY_FOR_SECOND_TOWN_INSPECTION"
   );
   assert.equal(
     metadata.visualCaptureWorkflow.topDown.cameraId,
@@ -67,7 +77,8 @@ test("town preview consumer metadata resolves the town preview scene", () => {
   assert.equal(metadata.performanceProfile.districtInstanceReferencesOnly, true);
   assert.equal(metadata.performanceProfile.expectedTransportCorridors, 6);
   assert.equal(metadata.transportLayer.resolvedTransportCorridors[3].corridorType, "ARTERIAL_ROAD");
-  assert.equal(metadata.commercialLayer.resolvedCommercialZones[0].commercialType, "COMMERCIAL_STRIP_001");
+  assert.equal(metadata.commercialLayer.resolvedCommercialZones[0].commercialType, "TOWN_MAIN_STREET_001");
+  assert.equal(metadata.commercialLayer.resolvedCommercialZones[1].commercialType, "COASTAL_TOURISM_RETAIL");
   for (const district of metadata.districtLayer.resolvedDistrictInstances) {
     assert.equal(district.previewSceneId, "SUBURBAN_DISTRICT_001_PREVIEW_SCENE_001");
     assert.equal(district.previewMode, "instance_reference_only");
@@ -80,13 +91,15 @@ test("town preview consumer validation passes against the deterministic town sou
 
   assert.equal(validation.summary.validationPassed, true);
   assert.equal(validation.summary.districtCount, 3);
-  assert.equal(validation.summary.districtLotCount, 336);
+  assert.equal(validation.summary.districtLotCount, 337);
   assert.equal(validation.summary.townCentreCount, 1);
-  assert.equal(validation.summary.commercialZoneCount, 1);
+  assert.equal(validation.summary.commercialZoneCount, 2);
   assert.equal(validation.summary.civicReserveCount, 4);
   assert.equal(validation.summary.transportCorridorCount, 6);
-  assert.equal(validation.summary.recreationZoneCount, 4);
-  assert.equal(validation.summary.landmarkReserveCount, 2);
+  assert.equal(validation.summary.recreationZoneCount, 5);
+  assert.equal(validation.summary.landmarkReserveCount, 3);
+  assert.equal(validation.summary.transitionZoneCount, 5);
+  assert.equal(validation.summary.coastalIdentityScore, 100);
   assert.equal(validation.checks.townBoundaryValid, "PASS");
   assert.equal(validation.checks.districtsPlaced, "PASS");
   assert.equal(validation.checks.zonesValid, "PASS");

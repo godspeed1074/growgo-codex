@@ -27,19 +27,19 @@
         "blockTarget": 4
       },
       {
-        "districtType": "RESIDENTIAL_DISTRICT_COASTAL",
+        "districtType": "COASTAL_RESIDENTIAL_DISTRICT",
         "districtThemeSeed": "COASTAL_ESTATES",
         "sizeProfile": "MEDIUM_DISTRICT",
         "densityProfile": "LOW_DENSITY_COASTAL",
-        "themeProfile": "COASTAL_ESTATES",
+        "themeProfile": "COASTAL_HOLIDAY_RESIDENTIAL",
         "blockTarget": 4
       },
       {
-        "districtType": "RESIDENTIAL_DISTRICT_MIXED",
+        "districtType": "TOURISM_DISTRICT",
         "districtThemeSeed": "MEDIUM_DENSITY_SUBURBAN",
         "sizeProfile": "SMALL_DISTRICT",
-        "densityProfile": "LOW_MEDIUM_DENSITY_MIXED",
-        "themeProfile": "MIXED_AUSTRALIAN_COASTAL",
+        "densityProfile": "LOW_MEDIUM_DENSITY_TOURISM",
+        "themeProfile": "COASTAL_TOURISM_WATERFRONT",
         "blockTarget": 4
       }
     ],
@@ -50,16 +50,172 @@
     },
     "commercialIntensity": "MEDIUM",
     "transportIntensity": "LOW",
-    "recreationAllocation": "HIGH"
+    "recreationAllocation": "HIGH",
+    "coastalProfile": {
+      "profileId": "COASTAL_TOWN_PROFILE",
+      "coastlineOrientation": "EAST_FACING",
+      "growthDirection": "INLAND_TO_COASTAL_CENTRELINE",
+      "waterfrontCharacter": "FORESHORE_MAIN_STREET_AND_VISITOR_EDGE",
+      "tourismIntensity": "MEDIUM_HIGH",
+      "protectedNaturalAreaTypes": [
+        "FORESHORE_RESERVE",
+        "DUNE_EDGE",
+        "LOOKOUT_EDGE"
+      ],
+      "visitorFocus": "WATERFRONT_AND_LOOKOUTS"
+    }
+  },
+  "coastalIdentityProfile": {
+    "profileId": "COASTAL_TOWN_PROFILE",
+    "coastlineOrientation": "EAST_FACING",
+    "growthDirection": "INLAND_TO_COASTAL_CENTRELINE",
+    "waterfrontCharacter": "FORESHORE_MAIN_STREET_AND_VISITOR_EDGE",
+    "tourismIntensity": "MEDIUM_HIGH",
+    "protectedNaturalAreaTypes": [
+      "FORESHORE_RESERVE",
+      "DUNE_EDGE",
+      "LOOKOUT_EDGE"
+    ],
+    "visitorFocus": "WATERFRONT_AND_LOOKOUTS",
+    "waterfrontZones": [
+      "COMMERCIAL_002",
+      "RECREATION_004",
+      "RECREATION_005"
+    ],
+    "visitorAreas": [
+      "TOWN_CENTRE_001",
+      "COMMERCIAL_002",
+      "LANDMARK_001",
+      "LANDMARK_002"
+    ],
+    "foreshoreReserves": [
+      "RECREATION_004",
+      "RECREATION_005"
+    ],
+    "coastalResidentialDistrictIds": [
+      "TOWN_DISTRICT_002"
+    ],
+    "tourismDistrictIds": [
+      "TOWN_DISTRICT_003"
+    ]
   },
   "townBounds": {
-    "minX": -1430,
-    "maxX": 1430,
-    "minY": -1153,
-    "maxY": 805.8,
-    "width": 2860,
-    "depth": 1958.8,
-    "boundaryShape": "rect"
+    "minX": -1494,
+    "maxX": 1267.6,
+    "minY": -1195.8,
+    "maxY": 657.4,
+    "width": 2761.6,
+    "depth": 1853.2,
+    "boundaryShape": "coastal_irregular_polygon",
+    "boundaryPolygon": [
+      {
+        "x": -1494,
+        "y": 555.4
+      },
+      {
+        "x": -1168,
+        "y": 657.4
+      },
+      {
+        "x": 894,
+        "y": 629.4
+      },
+      {
+        "x": 1205.2,
+        "y": 645
+      },
+      {
+        "x": 1267.6,
+        "y": 439
+      },
+      {
+        "x": 1267.6,
+        "y": -835
+      },
+      {
+        "x": 1181.2,
+        "y": -1083
+      },
+      {
+        "x": 946,
+        "y": -1195.8
+      },
+      {
+        "x": -1358,
+        "y": -1113.8
+      },
+      {
+        "x": -1494,
+        "y": -1151
+      }
+    ],
+    "coastlineEdge": {
+      "edgeId": "COASTLINE_EDGE_001",
+      "orientation": "EAST_FACING",
+      "waterSide": "EAST",
+      "segment": [
+        {
+          "x": 1205.2,
+          "y": 645
+        },
+        {
+          "x": 1267.6,
+          "y": 439
+        },
+        {
+          "x": 1267.6,
+          "y": -835
+        },
+        {
+          "x": 1181.2,
+          "y": -1083
+        }
+      ]
+    },
+    "growthDirection": "INLAND_TO_COASTAL_CENTRELINE",
+    "boundaryInfluences": {
+      "coastline": true,
+      "terrainLimits": true,
+      "roadEntryPoints": true,
+      "inlandExpansion": true,
+      "protectedNaturalAreas": true
+    },
+    "protectedNaturalAreas": [
+      {
+        "protectedAreaId": "NATURAL_EDGE_DUNE_001",
+        "type": "DUNE_EDGE",
+        "boundary": {
+          "shape": "rect",
+          "x": 1168,
+          "y": 495,
+          "width": 148,
+          "depth": 212
+        }
+      },
+      {
+        "protectedAreaId": "FORESHORE_RESERVE_001",
+        "type": "FORESHORE_RESERVE",
+        "boundary": {
+          "shape": "rect",
+          "x": 1160,
+          "y": -216,
+          "width": 156,
+          "depth": 324
+        }
+      }
+    ],
+    "roadEntryPoints": [
+      {
+        "x": -1458,
+        "y": 302,
+        "side": "WEST"
+      },
+      {
+        "x": 1149.6,
+        "y": -851,
+        "side": "SOUTH_EAST"
+      }
+    ]
   },
   "districtPlacements": [
     {
@@ -70,8 +226,8 @@
       "sourceDistrictId": "SUBURBAN_DISTRICT_10003",
       "sourcePreviewId": "SUBURBAN_DISTRICT_001_PREVIEW_TOWN_001",
       "position": {
-        "x": -760,
-        "y": 210.8,
+        "x": -740,
+        "y": 168,
         "z": 0
       },
       "rotation": {
@@ -97,13 +253,13 @@
     {
       "schemaId": "TOWN_DISTRICT_PLACEMENT_INSTANCE_001",
       "districtPlacementId": "TOWN_DISTRICT_002",
-      "districtType": "RESIDENTIAL_DISTRICT_COASTAL",
+      "districtType": "COASTAL_RESIDENTIAL_DISTRICT",
       "sourceDistrictSchemaId": "SUBURBAN_DISTRICT_001",
-      "sourceDistrictId": "SUBURBAN_DISTRICT_10006",
+      "sourceDistrictId": "SUBURBAN_DISTRICT_10005",
       "sourcePreviewId": "SUBURBAN_DISTRICT_001_PREVIEW_TOWN_002",
       "position": {
-        "x": 760,
-        "y": 210.8,
+        "x": 612,
+        "y": 118,
         "z": 0
       },
       "rotation": {
@@ -111,7 +267,7 @@
       },
       "sizeProfile": "MEDIUM_DISTRICT",
       "densityProfile": "LOW_DENSITY_COASTAL",
-      "themeProfile": "COASTAL_ESTATES",
+      "themeProfile": "COASTAL_HOLIDAY_RESIDENTIAL",
       "connectorRelationships": [
         "TOWN_CORRIDOR_002",
         "TOWN_CORRIDOR_005"
@@ -122,28 +278,28 @@
         "depth": 710
       },
       "estimatedLotCount": 107,
-      "sourceSeed": 10006,
+      "sourceSeed": 10005,
       "sourceThemeSeed": "LOW_DENSITY_SUBURBAN",
       "sourceBlockCount": 4
     },
     {
       "schemaId": "TOWN_DISTRICT_PLACEMENT_INSTANCE_001",
       "districtPlacementId": "TOWN_DISTRICT_003",
-      "districtType": "RESIDENTIAL_DISTRICT_MIXED",
+      "districtType": "TOURISM_DISTRICT",
       "sourceDistrictSchemaId": "SUBURBAN_DISTRICT_001",
-      "sourceDistrictId": "SUBURBAN_DISTRICT_10001",
+      "sourceDistrictId": "SUBURBAN_DISTRICT_10003",
       "sourcePreviewId": "SUBURBAN_DISTRICT_001_PREVIEW_TOWN_003",
       "position": {
-        "x": 0,
-        "y": -558,
+        "x": 104,
+        "y": -692,
         "z": 0
       },
       "rotation": {
         "yawDegrees": 180
       },
       "sizeProfile": "SMALL_DISTRICT",
-      "densityProfile": "LOW_MEDIUM_DENSITY_MIXED",
-      "themeProfile": "MIXED_AUSTRALIAN_COASTAL",
+      "densityProfile": "LOW_MEDIUM_DENSITY_TOURISM",
+      "themeProfile": "COASTAL_TOURISM_WATERFRONT",
       "connectorRelationships": [
         "TOWN_CORRIDOR_003",
         "TOWN_CORRIDOR_006"
@@ -153,8 +309,8 @@
         "width": 860,
         "depth": 710
       },
-      "estimatedLotCount": 120,
-      "sourceSeed": 10001,
+      "estimatedLotCount": 121,
+      "sourceSeed": 10003,
       "sourceThemeSeed": "MEDIUM_DENSITY_SUBURBAN",
       "sourceBlockCount": 4
     }
@@ -187,13 +343,13 @@
     {
       "schemaId": "COMMERCIAL_ZONE_INSTANCE_001",
       "commercialZoneId": "COMMERCIAL_001",
-      "commercialType": "COMMERCIAL_STRIP_001",
+      "commercialType": "TOWN_MAIN_STREET_001",
       "boundary": {
         "shape": "rect",
-        "x": 228.8,
-        "y": 16,
-        "width": 192,
-        "depth": 92
+        "x": 82,
+        "y": 28,
+        "width": 198,
+        "depth": 96
       },
       "intensity": "MEDIUM",
       "parkingAccessRules": {
@@ -204,8 +360,32 @@
         "PED_LINK_001",
         "PED_LINK_002"
       ],
-      "roadRelationship": "COLLECTOR_OR_ARTERIAL_FRONTAGE",
+      "roadRelationship": "COLLECTOR_FRONTAGE",
       "linkedCentreId": "TOWN_CENTRE_001"
+    },
+    {
+      "schemaId": "COMMERCIAL_ZONE_INSTANCE_001",
+      "commercialZoneId": "COMMERCIAL_002",
+      "commercialType": "COASTAL_TOURISM_RETAIL",
+      "boundary": {
+        "shape": "rect",
+        "x": 1069.6,
+        "y": 42,
+        "width": 172,
+        "depth": 84
+      },
+      "intensity": "MEDIUM_HIGH",
+      "parkingAccessRules": {
+        "edgeParkingAllowed": false,
+        "rearAccessPreferred": true
+      },
+      "pedestrianLinks": [
+        "PED_LINK_003",
+        "PED_LINK_004"
+      ],
+      "roadRelationship": "WATERFRONT_PROMENADE_AND_COLLECTOR_ACCESS",
+      "linkedCentreId": "TOWN_CENTRE_001",
+      "visitorRole": "WATERFRONT_AND_LOOKOUTS"
     }
   ],
   "civicReserves": [
@@ -215,8 +395,8 @@
       "civicType": "SCHOOL_RESERVE",
       "boundary": {
         "shape": "rect",
-        "x": -1170,
-        "y": 617.8,
+        "x": -1234,
+        "y": 469.4,
         "width": 176,
         "depth": 132
       },
@@ -260,8 +440,8 @@
       "civicType": "EMERGENCY_SERVICE_RESERVE",
       "boundary": {
         "shape": "rect",
-        "x": 1188,
-        "y": -957,
+        "x": 1025.6,
+        "y": -999.8,
         "width": 142,
         "depth": 96
       },
@@ -278,8 +458,8 @@
       "hierarchy": "TOWN_COLLECTOR",
       "path": [
         {
-          "x": -480,
-          "y": 210.8,
+          "x": -460,
+          "y": 168,
           "z": 0
         },
         {
@@ -308,15 +488,15 @@
           "z": 0
         },
         {
-          "x": 480,
-          "y": 210.8,
+          "x": 366,
+          "y": 118,
           "z": 0
         }
       ],
       "connections": [
         "TOWN_CENTRE_001",
         "TOWN_DISTRICT_002",
-        "COMMERCIAL_001"
+        "COMMERCIAL_002"
       ],
       "direction": "CENTRE_TO_EAST",
       "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
@@ -333,8 +513,8 @@
           "z": 0
         },
         {
-          "x": 0,
-          "y": -306,
+          "x": 104,
+          "y": -440,
           "z": 0
         }
       ],
@@ -353,12 +533,12 @@
       "hierarchy": "TOWN_ARTERIAL",
       "path": [
         {
-          "x": -1382,
+          "x": -1436,
           "y": 302,
           "z": 0
         },
         {
-          "x": 1382,
+          "x": 1219.6,
           "y": 302,
           "z": 0
         }
@@ -420,19 +600,19 @@
       "hierarchy": "FUTURE_RAIL_SPINE",
       "path": [
         {
-          "x": -1310,
-          "y": -989,
+          "x": -1382,
+          "y": -1039.8,
           "z": 0
         },
         {
-          "x": 1310,
-          "y": -989,
+          "x": 1139.6,
+          "y": -1039.8,
           "z": 0
         }
       ],
       "connections": [
         "TOWN_DISTRICT_003",
-        "LANDMARK_002",
+        "LANDMARK_003",
         "STATION_RESERVE_001"
       ],
       "direction": "EAST_WEST",
@@ -446,10 +626,10 @@
       "recreationType": "PARK",
       "boundary": {
         "shape": "rect",
-        "x": -328,
-        "y": 50,
-        "width": 224,
-        "depth": 132
+        "x": -284,
+        "y": 66,
+        "width": 248,
+        "depth": 136
       },
       "accessRules": {
         "pedestrianPriority": true,
@@ -463,10 +643,10 @@
       "recreationType": "SPORTS_FIELD",
       "boundary": {
         "shape": "rect",
-        "x": -1106,
-        "y": 613.8,
-        "width": 236,
-        "depth": 152
+        "x": -1148,
+        "y": 429.4,
+        "width": 228,
+        "depth": 154
       },
       "accessRules": {
         "pedestrianPriority": false,
@@ -480,27 +660,44 @@
       "recreationType": "GREEN_CORRIDOR",
       "boundary": {
         "shape": "rect",
-        "x": 0,
-        "y": -186,
-        "width": 628,
-        "depth": 76
+        "x": -46,
+        "y": -190,
+        "width": 716,
+        "depth": 92
       },
       "accessRules": {
         "pedestrianPriority": true,
         "districtConnectivityRequired": true
       },
-      "greenRelationship": "DISTRICT_AND_CENTRE_LINK"
+      "greenRelationship": "TOWN_CORE_TO_FORESHORE_LINK"
     },
     {
       "schemaId": "RECREATION_ZONE_INSTANCE_001",
       "recreationZoneId": "RECREATION_004",
+      "recreationType": "WATERFRONT_RECREATION_ZONE",
+      "boundary": {
+        "shape": "rect",
+        "x": 1125.6,
+        "y": 52,
+        "width": 172,
+        "depth": 286
+      },
+      "accessRules": {
+        "pedestrianPriority": true,
+        "districtConnectivityRequired": true
+      },
+      "greenRelationship": "FORESHORE_RESERVE"
+    },
+    {
+      "schemaId": "RECREATION_ZONE_INSTANCE_001",
+      "recreationZoneId": "RECREATION_005",
       "recreationType": "WALKING_TRAIL",
       "boundary": {
         "shape": "polyline_box",
-        "x": 708,
-        "y": 478.8,
-        "width": 284,
-        "depth": 42
+        "x": 1069.6,
+        "y": 266,
+        "width": 322,
+        "depth": 46
       },
       "accessRules": {
         "pedestrianPriority": true,
@@ -513,30 +710,45 @@
     {
       "schemaId": "LANDMARK_RESERVE_INSTANCE_001",
       "landmarkReserveId": "LANDMARK_001",
-      "landmarkType": "TOURIST_ATTRACTION",
+      "landmarkType": "HISTORICAL_LANDMARK",
       "boundary": {
         "shape": "rect",
-        "x": 32,
-        "y": 262,
-        "width": 96,
-        "depth": 96
+        "x": 1129.6,
+        "y": 210,
+        "width": 94,
+        "depth": 94
       },
-      "visibilityRole": "OVERVIEW_ANCHOR",
-      "destinationRole": "VISITOR_DRAW",
-      "accessRelationship": "PEDESTRIAN_AND_COLLECTOR_ACCESS"
+      "visibilityRole": "COASTLINE_ANCHOR",
+      "destinationRole": "LIGHTHOUSE_DRAW",
+      "accessRelationship": "FORESHORE_AND_COLLECTOR_ACCESS"
     },
     {
       "schemaId": "LANDMARK_RESERVE_INSTANCE_001",
       "landmarkReserveId": "LANDMARK_002",
+      "landmarkType": "TOURIST_ATTRACTION",
+      "boundary": {
+        "shape": "rect",
+        "x": 1119.6,
+        "y": -78,
+        "width": 102,
+        "depth": 90
+      },
+      "visibilityRole": "WATERFRONT_ANCHOR",
+      "destinationRole": "PIER_AND_VISITOR_DRAW",
+      "accessRelationship": "PEDESTRIAN_AND_WATERFRONT_ACCESS"
+    },
+    {
+      "schemaId": "LANDMARK_RESERVE_INSTANCE_001",
+      "landmarkReserveId": "LANDMARK_003",
       "landmarkType": "NATURAL_LANDMARK",
       "boundary": {
         "shape": "rect",
-        "x": 1244,
-        "y": -1001,
-        "width": 110,
-        "depth": 110
+        "x": 1053.6,
+        "y": -1059.8,
+        "width": 118,
+        "depth": 118
       },
-      "visibilityRole": "DISTRICT_EDGE_ANCHOR",
+      "visibilityRole": "EDGE_LOOKOUT_ANCHOR",
       "destinationRole": "SCENIC_DRAW",
       "accessRelationship": "PEDESTRIAN_AND_FUTURE_RAIL_ACCESS"
     }
@@ -546,8 +758,8 @@
       "serviceEdgeZoneId": "SERVICE_EDGE_001",
       "boundary": {
         "shape": "rect",
-        "x": 1252,
-        "y": 685.8,
+        "x": -1250,
+        "y": 511.4,
         "width": 156,
         "depth": 84
       },
@@ -555,38 +767,111 @@
       "accessProfile": "ARTERIAL_EDGE_PREFERRED"
     }
   ],
+  "townTransitionZones": [
+    {
+      "transitionZoneId": "TRANSITION_001",
+      "transitionType": "TOWN_CORE",
+      "boundary": {
+        "shape": "rect",
+        "x": 18,
+        "y": 38,
+        "width": 438,
+        "depth": 228
+      },
+      "purpose": "CENTRE_AND_ACTIVE_MAIN_STREET_CORE",
+      "accessibility": "HIGH"
+    },
+    {
+      "transitionZoneId": "TRANSITION_002",
+      "transitionType": "SUBURBAN_EDGE",
+      "boundary": {
+        "shape": "rect",
+        "x": -782,
+        "y": 192,
+        "width": 942,
+        "depth": 516
+      },
+      "purpose": "INLAND_RESIDENTIAL_NEIGHBOURHOUR_EDGE",
+      "accessibility": "MEDIUM"
+    },
+    {
+      "transitionZoneId": "TRANSITION_003",
+      "transitionType": "LOW_DENSITY_FRINGE",
+      "boundary": {
+        "shape": "rect",
+        "x": 156,
+        "y": -726,
+        "width": 882,
+        "depth": 432
+      },
+      "purpose": "COASTAL_AND_HOLIDAY_HOME_FRINGE",
+      "accessibility": "MEDIUM"
+    },
+    {
+      "transitionZoneId": "TRANSITION_004",
+      "transitionType": "RURAL_TRANSITION",
+      "boundary": {
+        "shape": "rect",
+        "x": -900,
+        "y": 573.4,
+        "width": 912,
+        "depth": 138
+      },
+      "purpose": "GREEN_OPEN_BUFFER_TO_RURAL_EDGE",
+      "accessibility": "LIMITED_PUBLIC_ACCESS"
+    },
+    {
+      "transitionZoneId": "TRANSITION_005",
+      "transitionType": "NATURAL_EDGE",
+      "boundary": {
+        "shape": "rect",
+        "x": 1143.6,
+        "y": -269.2,
+        "width": 214,
+        "depth": 964
+      },
+      "purpose": "FORESHORE_AND_COASTLINE_NATURAL_EDGE",
+      "accessibility": "SCENIC_EDGE_ACCESS"
+    }
+  ],
   "ruralTransitionZones": [
     {
       "ruralTransitionZoneId": "RURAL_EDGE_001",
+      "transitionType": "RURAL_TRANSITION",
       "boundary": {
         "shape": "rect",
-        "x": 0,
-        "y": 763.8,
-        "width": 2692,
-        "depth": 72
+        "x": -900,
+        "y": 573.4,
+        "width": 912,
+        "depth": 138
       },
-      "purpose": "EDGE_OF_TOWN_LANDSCAPE_TRANSITION",
+      "purpose": "GREEN_OPEN_BUFFER_TO_RURAL_EDGE",
       "accessProfile": "LIMITED_PUBLIC_ACCESS"
     },
     {
       "ruralTransitionZoneId": "RURAL_EDGE_002",
+      "transitionType": "NATURAL_EDGE",
       "boundary": {
         "shape": "rect",
-        "x": 0,
-        "y": -1111,
-        "width": 2724,
-        "depth": 72
+        "x": 1143.6,
+        "y": -269.2,
+        "width": 214,
+        "depth": 964
       },
-      "purpose": "AGRICULTURAL_AND_COASTAL_EDGE_BUFFER",
+      "purpose": "FORESHORE_AND_COASTLINE_NATURAL_EDGE",
       "accessProfile": "SCENIC_EDGE_ACCESS"
     }
   ],
   "townMetadata": {
     "districtCount": 3,
-    "districtLotCount": 336,
+    "districtLotCount": 337,
+    "commercialZoneCount": 2,
     "transportCorridorCount": 6,
     "civicReserveCount": 4,
-    "landmarkReserveCount": 2
+    "landmarkReserveCount": 3,
+    "recreationZoneCount": 5,
+    "transitionZoneCount": 5,
+    "boundaryShape": "coastal_irregular_polygon"
   },
   "validationContract": {
     "schemaId": "TOWN_VALIDATION_001",
@@ -606,6 +891,10 @@
       "landmarksValid": true,
       "serviceEdgesValid": true,
       "ruralTransitionsValid": true,
+      "coastalIdentityScoreValid": true,
+      "boundaryNaturalnessValid": true,
+      "waterfrontRelationshipValid": true,
+      "tourismZoneValidity": true,
       "deterministicRebuildValid": true,
       "streamingBoundariesValid": true,
       "instanceReuseStrategyValid": true
@@ -627,10 +916,16 @@
     "landmarksValid": true,
     "serviceEdgesValid": true,
     "ruralTransitionsValid": true,
+    "coastalIdentityScore": 100,
+    "coastalIdentityScoreValid": true,
+    "boundaryNaturalnessValid": true,
+    "ruralTransitionValidity": true,
+    "waterfrontRelationshipValid": true,
+    "tourismZoneValidity": true,
     "deterministicRebuildValid": true,
     "streamingBoundariesValid": true,
     "instanceReuseStrategyValid": true,
-    "deterministicSignatureHash": 3294322853,
+    "deterministicSignatureHash": 2812767132,
     "validationPassed": true
   }
 }
