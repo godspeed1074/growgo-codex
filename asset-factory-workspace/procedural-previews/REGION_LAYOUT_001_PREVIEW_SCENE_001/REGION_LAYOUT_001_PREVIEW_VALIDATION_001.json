@@ -1,0 +1,30 @@
+{
+  "validationId": "REGION_LAYOUT_001_PREVIEW_VALIDATION_001",
+  "consumerId": "REGION_LAYOUT_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "REGION_LAYOUT_001_PREVIEW_001",
+  "sceneId": "REGION_LAYOUT_001_PREVIEW_SCENE_001",
+  "checks": {
+    "regionBoundaryValid": "PASS",
+    "naturalZonesValid": "PASS",
+    "settlementsValid": "PASS",
+    "corridorsConnected": "PASS",
+    "settlementsLinked": "PASS",
+    "landmarksAccessible": "PASS",
+    "routeCompatible": "PASS",
+    "explorationRoutesValid": "PASS",
+    "deterministicSourceMatches": "PASS",
+    "referenceBasedPlacement": "PASS",
+    "streamingReadyStructure": "PASS",
+    "noDuplicateGeometryGeneration": "PASS",
+    "cameraProfileValid": "PASS"
+  },
+  "summary": {
+    "validationPassed": true,
+    "regionProfileId": "COASTAL_REGION",
+    "settlementCount": 5,
+    "naturalZoneCount": 6,
+    "transportCorridorCount": 6,
+    "landmarkReserveCount": 5,
+    "explorationRouteCount": 6
+  }
+}
