@@ -1,0 +1,12 @@
+{
+  "batchId": "BAKERY_SMALL_TOWN_MODULE_BATCH_001",
+  "status": "passed",
+  "expectedModuleCount": 4,
+  "expectedExportCount": 12,
+  "duplicateModulesDetected": false,
+  "lodCoverage": [
+    "LOD_CLOSE",
+    "LOD_GAMEPLAY",
+    "LOD_MAP"
+  ]
+}

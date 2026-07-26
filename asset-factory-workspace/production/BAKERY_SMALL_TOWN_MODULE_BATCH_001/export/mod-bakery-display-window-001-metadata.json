@@ -1,0 +1,28 @@
+{
+  "assetId": "MOD_BAKERY_DISPLAY_WINDOW_001",
+  "category": "OPENING",
+  "family": "DISPLAY_WINDOW_COMMERCIAL_SMALL_TOWN",
+  "variants": [
+    "single_large_display_window",
+    "double_pane_bakery_display_window",
+    "corner_display_frontage",
+    "narrow_pastry_display_window"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_BAKERY_SMALL_TOWN_001",
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_GLASS_COMMERCIAL_CLEAR_001",
+    "MAT_FRAME_BAKERY_CREAM_001",
+    "MAT_FRAME_BAKERY_RED_001",
+    "MAT_DISPLAY_WOOD_LIGHT_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_BAKERY_DISPLAY_WINDOW_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_BAKERY_DISPLAY_WINDOW_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_BAKERY_DISPLAY_WINDOW_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

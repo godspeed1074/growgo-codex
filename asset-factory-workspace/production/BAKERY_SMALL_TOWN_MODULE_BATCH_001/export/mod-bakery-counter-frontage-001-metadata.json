@@ -1,0 +1,27 @@
+{
+  "assetId": "MOD_BAKERY_COUNTER_FRONTAGE_001",
+  "category": "INTERIOR_FRONTAGE",
+  "family": "COUNTER_COMMERCIAL_SMALL_TOWN",
+  "variants": [
+    "straight_bakery_counter",
+    "glass_front_pastry_counter",
+    "compact_corner_service_counter",
+    "takeaway_led_compact_counter"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_BAKERY_SMALL_TOWN_001",
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_COUNTER_WOOD_LIGHT_001",
+    "MAT_COUNTER_TRIM_CREAM_001",
+    "MAT_COUNTER_GLASS_CLEAR_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_BAKERY_COUNTER_FRONTAGE_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_BAKERY_COUNTER_FRONTAGE_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_BAKERY_COUNTER_FRONTAGE_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

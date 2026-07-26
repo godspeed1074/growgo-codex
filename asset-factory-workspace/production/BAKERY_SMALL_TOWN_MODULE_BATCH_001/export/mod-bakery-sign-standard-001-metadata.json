@@ -1,0 +1,28 @@
+{
+  "assetId": "MOD_BAKERY_SIGN_STANDARD_001",
+  "category": "EXTERIOR",
+  "family": "SIGNAGE_COMMERCIAL_SMALL_TOWN",
+  "variants": [
+    "fascia_bakery_sign",
+    "hanging_bakery_sign",
+    "narrow_vertical_bakery_sign",
+    "compact_corner_bakery_sign"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_BAKERY_SMALL_TOWN_001",
+    "RECIPE_CAFE_COASTAL_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_SIGN_BAKERY_CREAM_001",
+    "MAT_SIGN_BAKERY_RED_001",
+    "MAT_SIGN_BAKERY_YELLOW_001",
+    "MAT_SIGN_FRAME_WHITE_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_BAKERY_SIGN_STANDARD_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_BAKERY_SIGN_STANDARD_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_BAKERY_SIGN_STANDARD_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

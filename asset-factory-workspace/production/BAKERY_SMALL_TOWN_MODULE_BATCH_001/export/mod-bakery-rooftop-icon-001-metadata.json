@@ -1,0 +1,26 @@
+{
+  "assetId": "MOD_BAKERY_ROOFTOP_ICON_001",
+  "category": "LANDMARK_IDENTITY",
+  "family": "ICON_COMMERCIAL_SMALL_TOWN",
+  "variants": [
+    "bread_loaf_icon",
+    "rolling_pin_icon",
+    "pastry_crest_icon",
+    "wheat_bundle_icon"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_BAKERY_SMALL_TOWN_001",
+    "RECIPE_BAKERY_COASTAL_001"
+  ],
+  "materialReferences": [
+    "MAT_ICON_BAKERY_CREAM_001",
+    "MAT_ICON_BAKERY_RED_001",
+    "MAT_ICON_FRAME_WHITE_001"
+  ],
+  "lodMappings": {
+    "close": "MOD_BAKERY_ROOFTOP_ICON_001_LOD_CLOSE.glb",
+    "gameplay": "MOD_BAKERY_ROOFTOP_ICON_001_LOD_GAMEPLAY.glb",
+    "map": "MOD_BAKERY_ROOFTOP_ICON_001_LOD_MAP.glb"
+  },
+  "validationStatus": "READY_FOR_VALIDATION"
+}

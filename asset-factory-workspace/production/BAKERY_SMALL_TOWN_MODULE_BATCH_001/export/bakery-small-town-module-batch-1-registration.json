@@ -1,0 +1,16 @@
+{
+  "batchId": "BAKERY_SMALL_TOWN_MODULE_BATCH_001",
+  "status": "SUCCESSFUL",
+  "registeredModules": [
+    "MOD_BAKERY_DISPLAY_WINDOW_001",
+    "MOD_BAKERY_SIGN_STANDARD_001",
+    "MOD_BAKERY_COUNTER_FRONTAGE_001",
+    "MOD_BAKERY_ROOFTOP_ICON_001"
+  ],
+  "futureUnlocks": [
+    "BUILDING_BAKERY_SMALL_TOWN_001",
+    "future coastal bakeries",
+    "future pastry shops",
+    "future food stalls"
+  ]
+}
