@@ -19,8 +19,13 @@
     "settlementHierarchyValid": "PASS",
     "terrainRelationshipsValid": "PASS",
     "corridorsConnected": "PASS",
+    "terrainAwareCorridorValidity": "PASS",
+    "scenicRouteValidity": "PASS",
+    "settlementConnectivity": "PASS",
+    "naturalBarrierCompliance": "PASS",
     "landmarksAccessible": "PASS",
     "explorationRoutesValid": "PASS",
+    "explorationRouteQuality": "PASS",
     "deterministicRebuildValid": "PASS",
     "streamingReadyStructure": "PASS",
     "instanceReferencesOnly": "PASS"

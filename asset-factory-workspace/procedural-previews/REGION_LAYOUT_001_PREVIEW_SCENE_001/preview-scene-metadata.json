@@ -16,7 +16,7 @@
     "previewVersion": "SESSION_76_REGION_PREVIEW_CONSUMER",
     "regionSeed": 10482,
     "regionProfile": "COASTAL_REGION",
-    "previewVersionSeedSignature": 2835102542,
+    "previewVersionSeedSignature": 3292669404,
     "validationResult": "PASS",
     "inspectionStatus": "READY_FOR_REGION_INSPECTION",
     "topDown": {
@@ -159,6 +159,9 @@
         "biomeType": "TEMPERATE_COASTAL",
         "accessibility": "PARTIAL_PUBLIC_ACCESS",
         "explorationValue": "VERY_HIGH",
+        "barrierSeverity": "EDGE_CONSTRAINT",
+        "preferredCrossingMode": "FOLLOW_SHORELINE",
+        "corridorGuidance": "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS",
         "displayColour": "COASTAL_BLUE",
         "markerType": "coastline_zone"
       },
@@ -188,6 +191,9 @@
         "biomeType": "COASTAL_HINTERLAND_FOREST",
         "accessibility": "TRACK_ACCESS",
         "explorationValue": "HIGH",
+        "barrierSeverity": "MEDIUM",
+        "preferredCrossingMode": "STANDARD_PASSAGE",
+        "corridorGuidance": "USE_EDGE_ALIGNMENT_FOR_SCENIC_VILLAGE_LINKS",
         "displayColour": "FOREST_GREEN",
         "markerType": "forest_zone"
       },
@@ -217,6 +223,9 @@
         "biomeType": "TEMPERATE_FARMLAND",
         "accessibility": "ROAD_ACCESS",
         "explorationValue": "MEDIUM",
+        "barrierSeverity": "LOW",
+        "preferredCrossingMode": "STANDARD_PASSAGE",
+        "corridorGuidance": "ALLOW_STANDARD_ALIGNMENT",
         "displayColour": "FARMLAND_GOLD",
         "markerType": "farmland_zone"
       },
@@ -246,6 +255,9 @@
         "biomeType": "TEMPERATE_RIVER_CORRIDOR",
         "accessibility": "PARTIAL_PUBLIC_ACCESS",
         "explorationValue": "HIGH",
+        "barrierSeverity": "MEDIUM",
+        "preferredCrossingMode": "BRIDGE_REQUIRED",
+        "corridorGuidance": "USE_LIMITED_CROSSING_POINTS_AND_VALLEY_ALIGNMENT",
         "displayColour": "RIVER_BLUE",
         "markerType": "river_zone"
       },
@@ -275,6 +287,9 @@
         "biomeType": "COASTAL_WETLAND",
         "accessibility": "BOARDWALK_CONTROLLED",
         "explorationValue": "MEDIUM_HIGH",
+        "barrierSeverity": "HIGH",
+        "preferredCrossingMode": "CAUSEWAY_OR_AVOID",
+        "corridorGuidance": "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION",
         "displayColour": "WETLAND_TEAL",
         "markerType": "wetland_zone"
       },
@@ -304,6 +319,9 @@
         "biomeType": "NATIONAL_PARK_EDGE",
         "accessibility": "TRAIL_ACCESS",
         "explorationValue": "VERY_HIGH",
+        "barrierSeverity": "HIGH",
+        "preferredCrossingMode": "AVOID_DEVELOPMENT",
+        "corridorGuidance": "HOLD_CORRIDORS_TO_EDGE_AND_TRAIL_ACCESS",
         "displayColour": "PROTECTED_GREEN",
         "markerType": "protected_area_zone"
       }
@@ -329,6 +347,12 @@
         "populationScale": "REGIONAL_ANCHOR",
         "terrainRelationship": "COASTAL_PLAIN_SERVICE_EDGE",
         "transportRelationship": "HIGHWAY_RAIL_AND_COASTAL_ROUTE_HUB",
+        "connectionPriority": "PRIMARY_MULTI_CORRIDOR",
+        "connectionExpectation": {
+          "minimumCorridors": 3,
+          "landmarkAccessPriority": "HIGH"
+        },
+        "landmarkAccessRole": "REGION_WIDE_DISTRIBUTOR",
         "linkedSettlements": [
           "SETTLEMENT_002",
           "SETTLEMENT_003"
@@ -350,6 +374,12 @@
         "populationScale": "DISTRICT_SERVICE_SCALE",
         "terrainRelationship": "INLAND_FARMLAND_EDGE",
         "transportRelationship": "HIGHWAY_AND_MAJOR_ROAD_LINK",
+        "connectionPriority": "SECONDARY_SERVICE_CORRIDOR",
+        "connectionExpectation": {
+          "minimumCorridors": 2,
+          "landmarkAccessPriority": "MEDIUM"
+        },
+        "landmarkAccessRole": "DISTRICT_ACCESS_NODE",
         "linkedSettlements": [
           "SETTLEMENT_001"
         ],
@@ -370,6 +400,12 @@
         "populationScale": "COASTAL_DESTINATION_SCALE",
         "terrainRelationship": "WATERFRONT_FORESHORE_EDGE",
         "transportRelationship": "COASTAL_ROUTE_AND_MAJOR_ROAD_LINK",
+        "connectionPriority": "COASTAL_DESTINATION_CORRIDOR",
+        "connectionExpectation": {
+          "minimumCorridors": 2,
+          "landmarkAccessPriority": "HIGH"
+        },
+        "landmarkAccessRole": "TOURISM_GATEWAY",
         "linkedSettlements": [
           "SETTLEMENT_001"
         ],
@@ -390,6 +426,12 @@
         "populationScale": "RURAL_VILLAGE_SCALE",
         "terrainRelationship": "FOREST_AND_RIVER_MARGIN",
         "transportRelationship": "LOCAL_ROAD_LINK",
+        "connectionPriority": "LOCAL_ACCESS_CORRIDOR",
+        "connectionExpectation": {
+          "minimumCorridors": 1,
+          "landmarkAccessPriority": "MEDIUM"
+        },
+        "landmarkAccessRole": "TRAILHEAD_NODE",
         "linkedSettlements": [
           "SETTLEMENT_001"
         ],
@@ -410,6 +452,12 @@
         "populationScale": "HAMLET_SCALE",
         "terrainRelationship": "PROTECTED_LOOKOUT_EDGE",
         "transportRelationship": "LOCAL_SCENIC_ACCESS",
+        "connectionPriority": "EXPLORATION_ACCESS_CORRIDOR",
+        "connectionExpectation": {
+          "minimumCorridors": 1,
+          "landmarkAccessPriority": "SCENIC"
+        },
+        "landmarkAccessRole": "LOOKOUT_ACCESS_NODE",
         "linkedSettlements": [
           "SETTLEMENT_001"
         ],
@@ -446,11 +494,62 @@
           "y": 0,
           "z": -380
         },
+        "path": [
+          {
+            "x": -1780,
+            "z": -1080
+          },
+          {
+            "x": -1005.3,
+            "z": -849.9
+          },
+          {
+            "x": 1051.9,
+            "z": -523.9
+          },
+          {
+            "x": 1560,
+            "z": -380
+          }
+        ],
         "connectedSettlements": [
           "SETTLEMENT_001",
           "SETTLEMENT_002"
         ],
-        "routeLength": 3412.57,
+        "routeLength": 3419.1,
+        "routeMode": "shortest_practical_route",
+        "corridorReasoning": {
+          "avoidsImpossibleTerrain": true,
+          "naturalBarrierCompliance": true,
+          "scenicIntent": false,
+          "primarySettlementRole": "PRIMARY_MULTI_CORRIDOR",
+          "secondarySettlementRole": "SECONDARY_SERVICE_CORRIDOR",
+          "reasoningSummary": "shortest_practical_route using COASTLINE, FARMLAND, WETLAND terrain cues for primary_major_town_to_regional_town_spine"
+        },
+        "terrainInfluences": [
+          {
+            "naturalZoneId": "NATURAL_ZONE_001",
+            "zoneType": "COASTLINE",
+            "corridorGuidance": "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS",
+            "barrierSeverity": "EDGE_CONSTRAINT",
+            "preferredCrossingMode": "FOLLOW_SHORELINE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_003",
+            "zoneType": "FARMLAND",
+            "corridorGuidance": "ALLOW_STANDARD_ALIGNMENT",
+            "barrierSeverity": "LOW",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_005",
+            "zoneType": "WETLAND",
+            "corridorGuidance": "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION",
+            "barrierSeverity": "HIGH",
+            "preferredCrossingMode": "CAUSEWAY_OR_AVOID"
+          }
+        ],
+        "geographicPurpose": "primary_major_town_to_regional_town_spine",
         "markerType": "highway_corridor",
         "lineWeight": "HEAVY"
       },
@@ -468,11 +567,66 @@
           "y": 0,
           "z": -1780
         },
+        "path": [
+          {
+            "x": -1780,
+            "z": -1080
+          },
+          {
+            "x": -804.4,
+            "z": -1514.4
+          },
+          {
+            "x": 1180.8,
+            "z": -1717.2
+          },
+          {
+            "x": 1907.5,
+            "z": -651.25
+          },
+          {
+            "x": 1920,
+            "z": -1780
+          }
+        ],
         "connectedSettlements": [
           "SETTLEMENT_001",
           "SETTLEMENT_003"
         ],
-        "routeLength": 3765.63,
+        "routeLength": 5482.39,
+        "routeMode": "coastal_route_option",
+        "corridorReasoning": {
+          "avoidsImpossibleTerrain": true,
+          "naturalBarrierCompliance": true,
+          "scenicIntent": true,
+          "primarySettlementRole": "PRIMARY_MULTI_CORRIDOR",
+          "secondarySettlementRole": "COASTAL_DESTINATION_CORRIDOR",
+          "reasoningSummary": "coastal_route_option using COASTLINE, FARMLAND, WETLAND terrain cues for major_town_to_coastal_tourism_link"
+        },
+        "terrainInfluences": [
+          {
+            "naturalZoneId": "NATURAL_ZONE_001",
+            "zoneType": "COASTLINE",
+            "corridorGuidance": "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS",
+            "barrierSeverity": "EDGE_CONSTRAINT",
+            "preferredCrossingMode": "FOLLOW_SHORELINE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_003",
+            "zoneType": "FARMLAND",
+            "corridorGuidance": "ALLOW_STANDARD_ALIGNMENT",
+            "barrierSeverity": "LOW",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_005",
+            "zoneType": "WETLAND",
+            "corridorGuidance": "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION",
+            "barrierSeverity": "HIGH",
+            "preferredCrossingMode": "CAUSEWAY_OR_AVOID"
+          }
+        ],
+        "geographicPurpose": "major_town_to_coastal_tourism_link",
         "markerType": "major_road_corridor",
         "lineWeight": "MEDIUM"
       },
@@ -490,11 +644,69 @@
           "y": 0,
           "z": 1220
         },
+        "path": [
+          {
+            "x": 1560,
+            "z": -380
+          },
+          {
+            "x": 44.4,
+            "z": 257.2
+          },
+          {
+            "x": -1815.63,
+            "z": 1047.25
+          },
+          {
+            "x": -2120,
+            "z": 1220
+          }
+        ],
         "connectedSettlements": [
           "SETTLEMENT_002",
           "SETTLEMENT_004"
         ],
-        "routeLength": 4012.78,
+        "routeLength": 4014.94,
+        "routeMode": "inland_connector_option",
+        "corridorReasoning": {
+          "avoidsImpossibleTerrain": true,
+          "naturalBarrierCompliance": true,
+          "scenicIntent": false,
+          "primarySettlementRole": "SECONDARY_SERVICE_CORRIDOR",
+          "secondarySettlementRole": "LOCAL_ACCESS_CORRIDOR",
+          "reasoningSummary": "inland_connector_option using FOREST, FARMLAND, RIVER, WETLAND terrain cues for regional_town_to_scenic_village_access"
+        },
+        "terrainInfluences": [
+          {
+            "naturalZoneId": "NATURAL_ZONE_002",
+            "zoneType": "FOREST",
+            "corridorGuidance": "USE_EDGE_ALIGNMENT_FOR_SCENIC_VILLAGE_LINKS",
+            "barrierSeverity": "MEDIUM",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_003",
+            "zoneType": "FARMLAND",
+            "corridorGuidance": "ALLOW_STANDARD_ALIGNMENT",
+            "barrierSeverity": "LOW",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_004",
+            "zoneType": "RIVER",
+            "corridorGuidance": "USE_LIMITED_CROSSING_POINTS_AND_VALLEY_ALIGNMENT",
+            "barrierSeverity": "MEDIUM",
+            "preferredCrossingMode": "BRIDGE_REQUIRED"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_005",
+            "zoneType": "WETLAND",
+            "corridorGuidance": "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION",
+            "barrierSeverity": "HIGH",
+            "preferredCrossingMode": "CAUSEWAY_OR_AVOID"
+          }
+        ],
+        "geographicPurpose": "regional_town_to_scenic_village_access",
         "markerType": "local_road_corridor",
         "lineWeight": "LIGHT"
       },
@@ -512,11 +724,62 @@
           "y": 0,
           "z": -380
         },
+        "path": [
+          {
+            "x": -1780,
+            "z": -1080
+          },
+          {
+            "x": -986,
+            "z": -878
+          },
+          {
+            "x": 1048,
+            "z": -508
+          },
+          {
+            "x": 1560,
+            "z": -380
+          }
+        ],
         "connectedSettlements": [
           "SETTLEMENT_001",
           "SETTLEMENT_002"
         ],
-        "routeLength": 3412.57,
+        "routeLength": 3414.43,
+        "routeMode": "inland_connector_option",
+        "corridorReasoning": {
+          "avoidsImpossibleTerrain": true,
+          "naturalBarrierCompliance": true,
+          "scenicIntent": false,
+          "primarySettlementRole": "PRIMARY_MULTI_CORRIDOR",
+          "secondarySettlementRole": "SECONDARY_SERVICE_CORRIDOR",
+          "reasoningSummary": "inland_connector_option using COASTLINE, FARMLAND, WETLAND terrain cues for future_rail_spine_between_primary_settlements"
+        },
+        "terrainInfluences": [
+          {
+            "naturalZoneId": "NATURAL_ZONE_001",
+            "zoneType": "COASTLINE",
+            "corridorGuidance": "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS",
+            "barrierSeverity": "EDGE_CONSTRAINT",
+            "preferredCrossingMode": "FOLLOW_SHORELINE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_003",
+            "zoneType": "FARMLAND",
+            "corridorGuidance": "ALLOW_STANDARD_ALIGNMENT",
+            "barrierSeverity": "LOW",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_005",
+            "zoneType": "WETLAND",
+            "corridorGuidance": "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION",
+            "barrierSeverity": "HIGH",
+            "preferredCrossingMode": "CAUSEWAY_OR_AVOID"
+          }
+        ],
+        "geographicPurpose": "future_rail_spine_between_primary_settlements",
         "markerType": "railway_placeholder",
         "lineWeight": "MEDIUM_DASHED"
       },
@@ -534,11 +797,73 @@
           "y": 0,
           "z": 1440
         },
+        "path": [
+          {
+            "x": 1920,
+            "z": -1780
+          },
+          {
+            "x": 1180,
+            "z": -1790
+          },
+          {
+            "x": 1604,
+            "z": 735.2
+          },
+          {
+            "x": 1907.5,
+            "z": -651.25
+          },
+          {
+            "x": 2280,
+            "z": 1440
+          }
+        ],
         "connectedSettlements": [
           "SETTLEMENT_003",
           "SETTLEMENT_005"
         ],
-        "routeLength": 3240.06,
+        "routeLength": 6844.06,
+        "routeMode": "scenic_route_option",
+        "corridorReasoning": {
+          "avoidsImpossibleTerrain": true,
+          "naturalBarrierCompliance": true,
+          "scenicIntent": true,
+          "primarySettlementRole": "COASTAL_DESTINATION_CORRIDOR",
+          "secondarySettlementRole": "EXPLORATION_ACCESS_CORRIDOR",
+          "reasoningSummary": "scenic_route_option using COASTLINE, FARMLAND, WETLAND, PROTECTED_AREA terrain cues for foreshore_destination_chain"
+        },
+        "terrainInfluences": [
+          {
+            "naturalZoneId": "NATURAL_ZONE_001",
+            "zoneType": "COASTLINE",
+            "corridorGuidance": "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS",
+            "barrierSeverity": "EDGE_CONSTRAINT",
+            "preferredCrossingMode": "FOLLOW_SHORELINE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_003",
+            "zoneType": "FARMLAND",
+            "corridorGuidance": "ALLOW_STANDARD_ALIGNMENT",
+            "barrierSeverity": "LOW",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_005",
+            "zoneType": "WETLAND",
+            "corridorGuidance": "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION",
+            "barrierSeverity": "HIGH",
+            "preferredCrossingMode": "CAUSEWAY_OR_AVOID"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_006",
+            "zoneType": "PROTECTED_AREA",
+            "corridorGuidance": "HOLD_CORRIDORS_TO_EDGE_AND_TRAIL_ACCESS",
+            "barrierSeverity": "HIGH",
+            "preferredCrossingMode": "AVOID_DEVELOPMENT"
+          }
+        ],
+        "geographicPurpose": "foreshore_destination_chain",
         "markerType": "coastal_route",
         "lineWeight": "MEDIUM_SCENIC"
       },
@@ -556,11 +881,55 @@
           "y": 0,
           "z": 1220
         },
+        "path": [
+          {
+            "x": -1780,
+            "z": -1080
+          },
+          {
+            "x": -1966,
+            "z": 195.75
+          },
+          {
+            "x": -1845,
+            "z": 1057
+          },
+          {
+            "x": -2120,
+            "z": 1220
+          }
+        ],
         "connectedSettlements": [
           "SETTLEMENT_001",
           "SETTLEMENT_004"
         ],
-        "routeLength": 2324.99,
+        "routeLength": 2478.62,
+        "routeMode": "inland_connector_option",
+        "corridorReasoning": {
+          "avoidsImpossibleTerrain": true,
+          "naturalBarrierCompliance": true,
+          "scenicIntent": false,
+          "primarySettlementRole": "PRIMARY_MULTI_CORRIDOR",
+          "secondarySettlementRole": "LOCAL_ACCESS_CORRIDOR",
+          "reasoningSummary": "inland_connector_option using FOREST, RIVER terrain cues for service_hub_to_river_forest_village_link"
+        },
+        "terrainInfluences": [
+          {
+            "naturalZoneId": "NATURAL_ZONE_002",
+            "zoneType": "FOREST",
+            "corridorGuidance": "USE_EDGE_ALIGNMENT_FOR_SCENIC_VILLAGE_LINKS",
+            "barrierSeverity": "MEDIUM",
+            "preferredCrossingMode": "STANDARD_PASSAGE"
+          },
+          {
+            "naturalZoneId": "NATURAL_ZONE_004",
+            "zoneType": "RIVER",
+            "corridorGuidance": "USE_LIMITED_CROSSING_POINTS_AND_VALLEY_ALIGNMENT",
+            "barrierSeverity": "MEDIUM",
+            "preferredCrossingMode": "BRIDGE_REQUIRED"
+          }
+        ],
+        "geographicPurpose": "service_hub_to_river_forest_village_link",
         "markerType": "local_road_corridor",
         "lineWeight": "LIGHT"
       }
@@ -657,11 +1026,11 @@
     "resolvedExplorationRoutes": [
       {
         "routeId": "ROUTE_001",
-        "routeType": "SCENIC_COASTAL_DRIVE",
+        "routeType": "COASTAL_SCENIC_ROUTE",
         "startAnchor": "SETTLEMENT_001",
         "endAnchor": "LANDMARK_001",
         "distance": 4141.22,
-        "difficulty": "LOW",
+        "difficulty": "LOW_MEDIUM",
         "discoveryValue": "HIGH",
         "connectedPointsOfInterest": [
           "SETTLEMENT_001",
@@ -672,12 +1041,17 @@
           "VEHICLE",
           "VIEWPOINT_STOP"
         ],
+        "landmarkRelationships": [
+          "LIGHTHOUSE",
+          "REGION_WIDE_DISTRIBUTOR"
+        ],
+        "geographicRelationship": "foreshore travel corridor linked to NATURAL_ZONE_001",
         "displayColour": "ROUTE_BLUE",
         "lineStyle": "SCENIC"
       },
       {
         "routeId": "ROUTE_002",
-        "routeType": "INLAND_SERVICE_ROUTE",
+        "routeType": "TOWN_CONNECTOR_ROUTE",
         "startAnchor": "SETTLEMENT_001",
         "endAnchor": "SETTLEMENT_002",
         "distance": 3412.57,
@@ -691,49 +1065,64 @@
           "VEHICLE",
           "VIEWPOINT_STOP"
         ],
+        "landmarkRelationships": [
+          "REGION_WIDE_DISTRIBUTOR"
+        ],
+        "geographicRelationship": "settlement connector spanning 3412.57m",
         "displayColour": "ROUTE_ORANGE",
-        "lineStyle": "SERVICE"
+        "lineStyle": "CONNECTOR"
       },
       {
         "routeId": "ROUTE_003",
-        "routeType": "LOOKOUT_TRAIL",
+        "routeType": "NATURE_DISCOVERY_ROUTE",
         "startAnchor": "SETTLEMENT_005",
         "endAnchor": "LANDMARK_003",
         "distance": 228.04,
         "difficulty": "MEDIUM",
-        "discoveryValue": "MEDIUM_HIGH",
+        "discoveryValue": "HIGH",
         "connectedPointsOfInterest": [
           "SETTLEMENT_005",
-          "LANDMARK_003"
+          "LANDMARK_003",
+          "NATURAL_ZONE_004"
         ],
         "travelModeCompatibility": [
           "WALKING"
         ],
+        "landmarkRelationships": [
+          "LOOKOUT",
+          "LOOKOUT_ACCESS_NODE"
+        ],
+        "geographicRelationship": "nature-led access route toward LOOKOUT",
         "displayColour": "ROUTE_GREEN",
-        "lineStyle": "TRAIL"
+        "lineStyle": "DISCOVERY"
       },
       {
         "routeId": "ROUTE_004",
-        "routeType": "LANDMARK_LINK",
+        "routeType": "NATURE_DISCOVERY_ROUTE",
         "startAnchor": "SETTLEMENT_004",
         "endAnchor": "LANDMARK_002",
         "distance": 340.59,
-        "difficulty": "LOW",
-        "discoveryValue": "MEDIUM",
+        "difficulty": "MEDIUM",
+        "discoveryValue": "HIGH",
         "connectedPointsOfInterest": [
           "SETTLEMENT_004",
-          "LANDMARK_002"
+          "LANDMARK_002",
+          "NATURAL_ZONE_004"
         ],
         "travelModeCompatibility": [
-          "VEHICLE",
           "WALKING"
         ],
-        "displayColour": "ROUTE_GOLD",
-        "lineStyle": "LANDMARK"
+        "landmarkRelationships": [
+          "WATERFALL",
+          "TRAILHEAD_NODE"
+        ],
+        "geographicRelationship": "nature-led access route toward WATERFALL",
+        "displayColour": "ROUTE_GREEN",
+        "lineStyle": "DISCOVERY"
       },
       {
         "routeId": "ROUTE_005",
-        "routeType": "NATURE_LOOP",
+        "routeType": "NATURE_DISCOVERY_ROUTE",
         "startAnchor": "SETTLEMENT_002",
         "endAnchor": "LANDMARK_005",
         "distance": 920.87,
@@ -741,33 +1130,43 @@
         "discoveryValue": "HIGH",
         "connectedPointsOfInterest": [
           "SETTLEMENT_002",
-          "LANDMARK_005"
-        ],
-        "travelModeCompatibility": [
-          "VEHICLE",
-          "WALKING"
-        ],
-        "displayColour": "ROUTE_TEAL",
-        "lineStyle": "LOOP"
-      },
-      {
-        "routeId": "ROUTE_006",
-        "routeType": "RIVER_WALK",
-        "startAnchor": "SETTLEMENT_004",
-        "endAnchor": "NATURAL_ZONE_004",
-        "distance": 794.26,
-        "difficulty": "LOW",
-        "discoveryValue": "MEDIUM",
-        "connectedPointsOfInterest": [
-          "SETTLEMENT_004",
-          "NATURAL_ZONE_004",
+          "LANDMARK_005",
           "NATURAL_ZONE_004"
         ],
         "travelModeCompatibility": [
           "WALKING"
         ],
-        "displayColour": "ROUTE_CYAN",
-        "lineStyle": "WALK"
+        "landmarkRelationships": [
+          "NATIONAL_PARK",
+          "DISTRICT_ACCESS_NODE"
+        ],
+        "geographicRelationship": "nature-led access route toward NATIONAL_PARK",
+        "displayColour": "ROUTE_GREEN",
+        "lineStyle": "DISCOVERY"
+      },
+      {
+        "routeId": "ROUTE_006",
+        "routeType": "HERITAGE_ROUTE",
+        "startAnchor": "SETTLEMENT_001",
+        "endAnchor": "LANDMARK_004",
+        "distance": 284.25,
+        "difficulty": "LOW",
+        "discoveryValue": "MEDIUM_HIGH",
+        "connectedPointsOfInterest": [
+          "SETTLEMENT_001",
+          "LANDMARK_004"
+        ],
+        "travelModeCompatibility": [
+          "VEHICLE",
+          "WALKING"
+        ],
+        "landmarkRelationships": [
+          "HISTORIC_SITE",
+          "REGION_WIDE_DISTRIBUTOR"
+        ],
+        "geographicRelationship": "town-edge heritage loop tied to settled farmland margin",
+        "displayColour": "ROUTE_GOLD",
+        "lineStyle": "HERITAGE"
       }
     ]
   },

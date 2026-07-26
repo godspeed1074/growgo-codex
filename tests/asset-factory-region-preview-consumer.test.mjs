@@ -87,7 +87,27 @@ test("region preview consumer metadata resolves the region preview scene", () =>
   );
   assert.equal(
     metadata.explorationLayer.resolvedExplorationRoutes[0].routeType,
-    "SCENIC_COASTAL_DRIVE"
+    "COASTAL_SCENIC_ROUTE"
+  );
+  assert.equal(
+    metadata.transportLayer.resolvedTransportCorridors[0].routeMode,
+    "shortest_practical_route"
+  );
+  assert.equal(
+    metadata.transportLayer.resolvedTransportCorridors[0].terrainInfluences.length > 0,
+    true
+  );
+  assert.equal(
+    metadata.naturalSystemLayer.resolvedNaturalZones[0].corridorGuidance,
+    "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS"
+  );
+  assert.equal(
+    metadata.settlementLayer.resolvedSettlements[0].connectionPriority,
+    "PRIMARY_MULTI_CORRIDOR"
+  );
+  assert.equal(
+    metadata.explorationLayer.resolvedExplorationRoutes[0].geographicRelationship,
+    "foreshore travel corridor linked to NATURAL_ZONE_001"
   );
 });
 
@@ -105,10 +125,15 @@ test("region preview consumer validation passes against the deterministic region
   assert.equal(validation.checks.naturalZonesValid, "PASS");
   assert.equal(validation.checks.settlementsValid, "PASS");
   assert.equal(validation.checks.corridorsConnected, "PASS");
+  assert.equal(validation.checks.terrainAwareCorridorValidity, "PASS");
+  assert.equal(validation.checks.scenicRouteValidity, "PASS");
+  assert.equal(validation.checks.settlementConnectivity, "PASS");
+  assert.equal(validation.checks.naturalBarrierCompliance, "PASS");
   assert.equal(validation.checks.settlementsLinked, "PASS");
   assert.equal(validation.checks.landmarksAccessible, "PASS");
   assert.equal(validation.checks.routeCompatible, "PASS");
   assert.equal(validation.checks.explorationRoutesValid, "PASS");
+  assert.equal(validation.checks.explorationRouteQuality, "PASS");
   assert.equal(validation.checks.deterministicSourceMatches, "PASS");
   assert.equal(validation.checks.referenceBasedPlacement, "PASS");
   assert.equal(validation.checks.streamingReadyStructure, "PASS");

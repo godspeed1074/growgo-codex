@@ -10,6 +10,7 @@ const landmarkReserveSchemaId = "REGIONAL_LANDMARK_RESERVE_INSTANCE_001";
 const explorationRouteSchemaId = "EXPLORATION_ROUTE_INSTANCE_001";
 const validationSchemaId = "REGION_VALIDATION_001";
 const validationOutputId = "REGION_LAYOUT_001_VALIDATION_001";
+const corridorPriorityRulesSchemaId = "CORRIDOR_PRIORITY_RULES_001";
 
 const supportedRegionProfiles = Object.freeze([
   "COASTAL_REGION",
@@ -55,12 +56,10 @@ const supportedLandmarkTypes = new Set([
 ]);
 
 const supportedExplorationRouteTypes = new Set([
-  "SCENIC_COASTAL_DRIVE",
-  "INLAND_SERVICE_ROUTE",
-  "LOOKOUT_TRAIL",
-  "LANDMARK_LINK",
-  "NATURE_LOOP",
-  "RIVER_WALK"
+  "COASTAL_SCENIC_ROUTE",
+  "NATURE_DISCOVERY_ROUTE",
+  "HERITAGE_ROUTE",
+  "TOWN_CONNECTOR_ROUTE"
 ]);
 
 const regionProfiles = deepFreeze({
@@ -345,9 +344,22 @@ export function createRegionLayoutValidationOutput(
         preview.validationResult.terrainRelationshipsValid
       ),
       corridorsConnected: passFail(preview.validationResult.corridorsConnected),
+      terrainAwareCorridorValidity: passFail(
+        preview.validationResult.terrainAwareCorridorValidity
+      ),
+      scenicRouteValidity: passFail(preview.validationResult.scenicRouteValidity),
+      settlementConnectivity: passFail(
+        preview.validationResult.settlementConnectivity
+      ),
+      naturalBarrierCompliance: passFail(
+        preview.validationResult.naturalBarrierCompliance
+      ),
       landmarksAccessible: passFail(preview.validationResult.landmarksAccessible),
       explorationRoutesValid: passFail(
         preview.validationResult.explorationRoutesValid
+      ),
+      explorationRouteQuality: passFail(
+        preview.validationResult.explorationRouteQuality
       ),
       deterministicRebuildValid: passFail(
         preview.validationResult.deterministicRebuildValid
@@ -610,7 +622,11 @@ function buildNaturalZone(
     explorationValue,
     settlementInfluence,
     transportInfluence,
-    protectedStatus
+    protectedStatus,
+    barrierSeverity: barrierSeverityForNaturalZone(zoneType),
+    preferredCrossingMode: preferredCrossingModeForNaturalZone(zoneType),
+    corridorGuidance: corridorGuidanceForNaturalZone(zoneType),
+    developmentPressure: developmentPressureForNaturalZone(zoneType)
   });
 }
 
@@ -681,6 +697,11 @@ function buildSettlements(input, regionProfile, regionBounds) {
       terrainRelationship: anchor.terrainRelationship,
       transportRelationship: anchor.transportRelationship,
       serviceRole: anchor.serviceRole,
+      connectionPriority: connectionPriorityForSettlementType(anchor.settlementType),
+      connectionExpectation: connectionExpectationForSettlementType(
+        anchor.settlementType
+      ),
+      landmarkAccessRole: landmarkAccessRoleForSettlementType(anchor.settlementType),
       linkedSettlements: deepFreeze(resolveLinkedSettlements(index, anchors)),
       streamingCellId: streamingCellIdForPosition(anchor.position, input),
       regionProfileBias: regionProfile.profileId
@@ -690,6 +711,7 @@ function buildSettlements(input, regionProfile, regionBounds) {
 
 function buildTransportCorridors(input, regionProfile, settlements, regionBounds) {
   const byId = new Map(settlements.map((settlement) => [settlement.settlementId, settlement]));
+  const naturalZones = buildNaturalZones(input, regionProfile, regionBounds);
   const specs = [
     {
       corridorId: "REGION_CORRIDOR_001",
@@ -698,7 +720,9 @@ function buildTransportCorridors(input, regionProfile, settlements, regionBounds
       endSettlementId: "SETTLEMENT_002",
       hierarchy: "PRIMARY_REGIONAL_LINK",
       supportsFreight: true,
-      supportsPassengerTravel: true
+      supportsPassengerTravel: true,
+      routeMode: "shortest_practical_route",
+      geographicPurpose: "primary_major_town_to_regional_town_spine"
     },
     {
       corridorId: "REGION_CORRIDOR_002",
@@ -707,7 +731,9 @@ function buildTransportCorridors(input, regionProfile, settlements, regionBounds
       endSettlementId: "SETTLEMENT_003",
       hierarchy: "COASTAL_CONNECTOR",
       supportsFreight: false,
-      supportsPassengerTravel: true
+      supportsPassengerTravel: true,
+      routeMode: "coastal_route_option",
+      geographicPurpose: "major_town_to_coastal_tourism_link"
     },
     {
       corridorId: "REGION_CORRIDOR_003",
@@ -716,7 +742,9 @@ function buildTransportCorridors(input, regionProfile, settlements, regionBounds
       endSettlementId: "SETTLEMENT_004",
       hierarchy: "LOCAL_SETTLEMENT_LINK",
       supportsFreight: false,
-      supportsPassengerTravel: true
+      supportsPassengerTravel: true,
+      routeMode: "inland_connector_option",
+      geographicPurpose: "regional_town_to_scenic_village_access"
     },
     {
       corridorId: "REGION_CORRIDOR_004",
@@ -725,7 +753,9 @@ function buildTransportCorridors(input, regionProfile, settlements, regionBounds
       endSettlementId: "SETTLEMENT_002",
       hierarchy: "FUTURE_PASSENGER_AND_FREIGHT_SPINE",
       supportsFreight: true,
-      supportsPassengerTravel: true
+      supportsPassengerTravel: true,
+      routeMode: "inland_connector_option",
+      geographicPurpose: "future_rail_spine_between_primary_settlements"
     },
     {
       corridorId: "REGION_CORRIDOR_005",
@@ -734,7 +764,9 @@ function buildTransportCorridors(input, regionProfile, settlements, regionBounds
       endSettlementId: "SETTLEMENT_005",
       hierarchy: "SCENIC_DESTINATION_ROUTE",
       supportsFreight: false,
-      supportsPassengerTravel: true
+      supportsPassengerTravel: true,
+      routeMode: "scenic_route_option",
+      geographicPurpose: "foreshore_destination_chain"
     },
     {
       corridorId: "REGION_CORRIDOR_006",
@@ -743,26 +775,36 @@ function buildTransportCorridors(input, regionProfile, settlements, regionBounds
       endSettlementId: "SETTLEMENT_004",
       hierarchy: "HINTERLAND_CONNECTOR",
       supportsFreight: false,
-      supportsPassengerTravel: true
+      supportsPassengerTravel: true,
+      routeMode: "inland_connector_option",
+      geographicPurpose: "service_hub_to_river_forest_village_link"
     }
   ];
 
   return specs.map((spec) => {
     const start = byId.get(spec.startSettlementId).position;
     const end = byId.get(spec.endSettlementId).position;
+    const path = buildCorridorPath(spec, start, end, naturalZones, byId);
+    const terrainInfluences = resolveCorridorTerrainInfluences(path, naturalZones);
     return deepFreeze({
       schemaId: transportCorridorSchemaId,
       corridorId: spec.corridorId,
       transportType: spec.transportType,
       startLocation: deepFreeze(start),
       endLocation: deepFreeze(end),
+      path,
       hierarchy: spec.hierarchy,
       connectedSettlements: deepFreeze([spec.startSettlementId, spec.endSettlementId]),
       supportsFreight: spec.supportsFreight,
       supportsPassengerTravel: spec.supportsPassengerTravel,
       futureExpansionCompatible: true,
       regionProfileBias: regionProfile.profileId,
-      routeLength: roundNumber(distance2d(start, end))
+      priorityRuleProfile: corridorPriorityRulesSchemaId,
+      routeMode: spec.routeMode,
+      corridorReasoning: buildCorridorReasoning(spec, terrainInfluences, byId),
+      terrainInfluences,
+      geographicPurpose: spec.geographicPurpose,
+      routeLength: roundNumber(polylineLength(path))
     });
   });
 }
@@ -879,39 +921,39 @@ function buildExplorationRoutes(
   const specs = [
     {
       routeId: "ROUTE_001",
-      routeType: "SCENIC_COASTAL_DRIVE",
+      routeType: "COASTAL_SCENIC_ROUTE",
       startAnchor: "SETTLEMENT_001",
       endAnchor: "LANDMARK_001"
     },
     {
       routeId: "ROUTE_002",
-      routeType: "INLAND_SERVICE_ROUTE",
+      routeType: "TOWN_CONNECTOR_ROUTE",
       startAnchor: "SETTLEMENT_001",
       endAnchor: "SETTLEMENT_002"
     },
     {
       routeId: "ROUTE_003",
-      routeType: "LOOKOUT_TRAIL",
+      routeType: "NATURE_DISCOVERY_ROUTE",
       startAnchor: "SETTLEMENT_005",
       endAnchor: "LANDMARK_003"
     },
     {
       routeId: "ROUTE_004",
-      routeType: "LANDMARK_LINK",
+      routeType: "NATURE_DISCOVERY_ROUTE",
       startAnchor: "SETTLEMENT_004",
       endAnchor: "LANDMARK_002"
     },
     {
       routeId: "ROUTE_005",
-      routeType: "NATURE_LOOP",
+      routeType: "NATURE_DISCOVERY_ROUTE",
       startAnchor: "SETTLEMENT_002",
       endAnchor: "LANDMARK_005"
     },
     {
       routeId: "ROUTE_006",
-      routeType: "RIVER_WALK",
-      startAnchor: "SETTLEMENT_004",
-      endAnchor: riverZone.naturalZoneId
+      routeType: "HERITAGE_ROUTE",
+      startAnchor: "SETTLEMENT_001",
+      endAnchor: "LANDMARK_004"
     }
   ];
 
@@ -928,6 +970,14 @@ function buildExplorationRoutes(
       landmarkById,
       naturalZones
     );
+    const geographicRelationship = buildExplorationGeographicRelationship(
+      spec,
+      startPosition,
+      endPosition,
+      coastalZone,
+      riverZone,
+      landmarkById
+    );
     return deepFreeze({
       schemaId: explorationRouteSchemaId,
       routeId: spec.routeId,
@@ -940,7 +990,11 @@ function buildExplorationRoutes(
       connectedPointsOfInterest: deepFreeze(
         routePointsOfInterest(spec, coastalZone?.naturalZoneId, riverZone?.naturalZoneId)
       ),
-      travelModeCompatibility: deepFreeze(travelModesForRouteType(spec.routeType))
+      travelModeCompatibility: deepFreeze(travelModesForRouteType(spec.routeType)),
+      landmarkRelationships: deepFreeze(
+        resolveRouteLandmarkRelationships(spec, landmarkById, settlementById)
+      ),
+      geographicRelationship
     });
   });
 }
@@ -973,6 +1027,13 @@ function buildRegionMetadata(
     landmarkReserveCount: landmarkReserves.length,
     explorationRouteCount: explorationRoutes.length,
     referencePlacementMode: "instance_reference_only",
+    corridorPriorityRules: deepFreeze({
+      schemaId: corridorPriorityRulesSchemaId,
+      shortestPracticalRoute: "prioritize connected terrain-safe corridors for primary links",
+      scenicRouteOption: "prefer coastline, outlook, and landmark adjacency for visitor routes",
+      coastalRouteOption: "follow foreshore edge while avoiding wetland and protected-area intrusion",
+      inlandConnectorOption: "use farmland margins and river-adjacent crossings for service access"
+    }),
     futureCompatibleProfiles: deepFreeze(
       supportedRegionProfiles.filter((profileId) => profileId !== regionProfile.profileId)
     )
@@ -1003,10 +1064,35 @@ function buildValidationResult(preview) {
     corridorsConnected: preview.transportCorridors.every(
       (corridor) => corridor.routeLength > 0
     ),
+    terrainAwareCorridorValidity: preview.transportCorridors.every(
+      (corridor) =>
+        corridor.terrainInfluences.length > 0 &&
+        corridor.path.length >= 3 &&
+        corridor.corridorReasoning.avoidsImpossibleTerrain === true
+    ),
+    scenicRouteValidity: preview.transportCorridors.some(
+      (corridor) =>
+        corridor.transportType === "COASTAL_ROUTE" &&
+        corridor.routeMode === "scenic_route_option"
+    ),
+    settlementConnectivity: preview.settlements.every(
+      (settlement) =>
+        preview.transportCorridors.filter((corridor) =>
+          corridor.connectedSettlements.includes(settlement.settlementId)
+        ).length >= settlement.connectionExpectation.minimumCorridors
+    ),
+    naturalBarrierCompliance: preview.transportCorridors.every(
+      (corridor) => corridor.corridorReasoning.naturalBarrierCompliance === true
+    ),
     landmarksAccessible: preview.landmarkReserves.every(
       (landmark) => landmark.accessibility !== "INACCESSIBLE"
     ),
     explorationRoutesValid: preview.explorationRoutes.every((route) => route.distance > 0),
+    explorationRouteQuality: preview.explorationRoutes.every(
+      (route) =>
+        route.landmarkRelationships.length > 0 ||
+        route.connectedPointsOfInterest.length >= 2
+    ),
     deterministicRebuildValid: true,
     streamingReadyStructure:
       preview.streamingGrid.columns > 0 && preview.streamingGrid.rows > 0,
@@ -1076,6 +1162,18 @@ function validateTransportCorridors(preview) {
         );
       }
     }
+    if (!Array.isArray(corridor.path) || corridor.path.length < 3) {
+      throw createValidationError(
+        "invalid_corridor_path",
+        `Transport corridor ${corridor.corridorId} must include a terrain-aware path.`
+      );
+    }
+    if (!Array.isArray(corridor.terrainInfluences) || corridor.terrainInfluences.length === 0) {
+      throw createValidationError(
+        "missing_corridor_terrain_influences",
+        `Transport corridor ${corridor.corridorId} must record terrain influences.`
+      );
+    }
   }
 }
 
@@ -1128,6 +1226,12 @@ function validateExplorationRoutes(preview) {
           `Exploration route ${route.routeId} references unknown anchor ${anchor}.`
         );
       }
+    }
+    if (typeof route.geographicRelationship !== "string") {
+      throw createValidationError(
+        "missing_route_geographic_relationship",
+        `Exploration route ${route.routeId} must include a geographic relationship summary.`
+      );
     }
   }
 }
@@ -1232,11 +1336,12 @@ function resolveAnchorPosition(anchor, settlementById, landmarkById, naturalZone
 
 function difficultyForRouteType(routeType) {
   switch (routeType) {
-    case "LOOKOUT_TRAIL":
-    case "NATURE_LOOP":
+    case "NATURE_DISCOVERY_ROUTE":
       return "MEDIUM";
-    case "RIVER_WALK":
+    case "HERITAGE_ROUTE":
       return "LOW";
+    case "COASTAL_SCENIC_ROUTE":
+      return "LOW_MEDIUM";
     default:
       return "LOW";
   }
@@ -1244,10 +1349,10 @@ function difficultyForRouteType(routeType) {
 
 function discoveryValueForRouteType(routeType) {
   switch (routeType) {
-    case "SCENIC_COASTAL_DRIVE":
-    case "NATURE_LOOP":
+    case "COASTAL_SCENIC_ROUTE":
+    case "NATURE_DISCOVERY_ROUTE":
       return "HIGH";
-    case "LOOKOUT_TRAIL":
+    case "HERITAGE_ROUTE":
       return "MEDIUM_HIGH";
     default:
       return "MEDIUM";
@@ -1256,12 +1361,13 @@ function discoveryValueForRouteType(routeType) {
 
 function travelModesForRouteType(routeType) {
   switch (routeType) {
-    case "SCENIC_COASTAL_DRIVE":
-    case "INLAND_SERVICE_ROUTE":
+    case "COASTAL_SCENIC_ROUTE":
+    case "TOWN_CONNECTOR_ROUTE":
       return ["VEHICLE", "VIEWPOINT_STOP"];
-    case "LOOKOUT_TRAIL":
-    case "RIVER_WALK":
+    case "NATURE_DISCOVERY_ROUTE":
       return ["WALKING"];
+    case "HERITAGE_ROUTE":
+      return ["VEHICLE", "WALKING"];
     default:
       return ["VEHICLE", "WALKING"];
   }
@@ -1269,13 +1375,258 @@ function travelModesForRouteType(routeType) {
 
 function routePointsOfInterest(spec, coastalZoneId, riverZoneId) {
   const points = [spec.startAnchor, spec.endAnchor];
-  if (spec.routeType === "SCENIC_COASTAL_DRIVE" && coastalZoneId) {
+  if (spec.routeType === "COASTAL_SCENIC_ROUTE" && coastalZoneId) {
     points.push(coastalZoneId);
   }
-  if (spec.routeType === "RIVER_WALK" && riverZoneId) {
+  if (spec.routeType === "NATURE_DISCOVERY_ROUTE" && riverZoneId) {
     points.push(riverZoneId);
   }
   return points;
+}
+
+function connectionPriorityForSettlementType(settlementType) {
+  switch (settlementType) {
+    case "MAJOR_TOWN":
+      return "PRIMARY_MULTI_CORRIDOR";
+    case "REGIONAL_TOWN":
+      return "SECONDARY_SERVICE_CORRIDOR";
+    case "SMALL_COASTAL_TOWN":
+      return "COASTAL_DESTINATION_CORRIDOR";
+    case "VILLAGE":
+      return "LOCAL_ACCESS_CORRIDOR";
+    default:
+      return "EXPLORATION_ACCESS_CORRIDOR";
+  }
+}
+
+function connectionExpectationForSettlementType(settlementType) {
+  switch (settlementType) {
+    case "MAJOR_TOWN":
+      return deepFreeze({ minimumCorridors: 3, landmarkAccessPriority: "HIGH" });
+    case "REGIONAL_TOWN":
+      return deepFreeze({ minimumCorridors: 2, landmarkAccessPriority: "MEDIUM" });
+    case "SMALL_COASTAL_TOWN":
+      return deepFreeze({ minimumCorridors: 2, landmarkAccessPriority: "HIGH" });
+    case "VILLAGE":
+      return deepFreeze({ minimumCorridors: 1, landmarkAccessPriority: "MEDIUM" });
+    default:
+      return deepFreeze({ minimumCorridors: 1, landmarkAccessPriority: "SCENIC" });
+  }
+}
+
+function landmarkAccessRoleForSettlementType(settlementType) {
+  switch (settlementType) {
+    case "MAJOR_TOWN":
+      return "REGION_WIDE_DISTRIBUTOR";
+    case "REGIONAL_TOWN":
+      return "DISTRICT_ACCESS_NODE";
+    case "SMALL_COASTAL_TOWN":
+      return "TOURISM_GATEWAY";
+    case "VILLAGE":
+      return "TRAILHEAD_NODE";
+    default:
+      return "LOOKOUT_ACCESS_NODE";
+  }
+}
+
+function barrierSeverityForNaturalZone(zoneType) {
+  switch (zoneType) {
+    case "WETLAND":
+    case "PROTECTED_AREA":
+      return "HIGH";
+    case "RIVER":
+    case "FOREST":
+      return "MEDIUM";
+    case "COASTLINE":
+      return "EDGE_CONSTRAINT";
+    default:
+      return "LOW";
+  }
+}
+
+function preferredCrossingModeForNaturalZone(zoneType) {
+  switch (zoneType) {
+    case "RIVER":
+      return "BRIDGE_REQUIRED";
+    case "WETLAND":
+      return "CAUSEWAY_OR_AVOID";
+    case "PROTECTED_AREA":
+      return "AVOID_DEVELOPMENT";
+    case "COASTLINE":
+      return "FOLLOW_SHORELINE";
+    default:
+      return "STANDARD_PASSAGE";
+  }
+}
+
+function corridorGuidanceForNaturalZone(zoneType) {
+  switch (zoneType) {
+    case "COASTLINE":
+      return "FOLLOW_SHORE_EDGE_FOR_SCENIC_AND_COASTAL_LINKS";
+    case "RIVER":
+      return "USE_LIMITED_CROSSING_POINTS_AND_VALLEY_ALIGNMENT";
+    case "WETLAND":
+      return "SHIFT_TO_DRY_GROUND_AND_MINIMIZE_INTRUSION";
+    case "PROTECTED_AREA":
+      return "HOLD_CORRIDORS_TO_EDGE_AND_TRAIL_ACCESS";
+    case "FOREST":
+      return "USE_EDGE_ALIGNMENT_FOR_SCENIC_VILLAGE_LINKS";
+    default:
+      return "ALLOW_STANDARD_ALIGNMENT";
+  }
+}
+
+function developmentPressureForNaturalZone(zoneType) {
+  switch (zoneType) {
+    case "FARMLAND":
+      return "CONTROLLED_SERVICE_EDGE";
+    case "COASTLINE":
+      return "TOURISM_AND_VIEW_CORRIDOR";
+    case "PROTECTED_AREA":
+      return "NO_DEVELOPMENT";
+    default:
+      return "LOW_IMPACT_ONLY";
+  }
+}
+
+function buildCorridorPath(spec, start, end, naturalZones) {
+  const zoneByType = new Map(naturalZones.map((zone) => [zone.zoneType, zone]));
+  const farmland = centroidOfPoints(zoneByType.get("FARMLAND").boundary.points);
+  const river = centroidOfPoints(zoneByType.get("RIVER").boundary.points);
+  const coastline = centroidOfPoints(zoneByType.get("COASTLINE").boundary.points);
+  const wetland = centroidOfPoints(zoneByType.get("WETLAND").boundary.points);
+  const protectedArea = centroidOfPoints(zoneByType.get("PROTECTED_AREA").boundary.points);
+  const forest = centroidOfPoints(zoneByType.get("FOREST").boundary.points);
+
+  const points = [start];
+  switch (spec.corridorId) {
+    case "REGION_CORRIDOR_001":
+      points.push(pointBetween(start, farmland, 0.42, -80, 60));
+      points.push(pointBetween(farmland, end, 0.58, 40, -20));
+      break;
+    case "REGION_CORRIDOR_002":
+      points.push(pointBetween(start, coastline, 0.46, 120, -140));
+      points.push(pointBetween(coastline, end, 0.62, -40, 40));
+      break;
+    case "REGION_CORRIDOR_003":
+      points.push(pointBetween(start, river, 0.48, -60, 90));
+      points.push(pointBetween(river, forest, 0.55, -20, -40));
+      break;
+    case "REGION_CORRIDOR_004":
+      points.push(pointBetween(start, farmland, 0.4, -20, 40));
+      points.push(pointBetween(farmland, end, 0.6, 10, -10));
+      break;
+    case "REGION_CORRIDOR_005":
+      points.push(pointBetween(start, coastline, 0.5, 180, -40));
+      points.push(pointBetween(coastline, end, 0.72, -60, 180));
+      break;
+    case "REGION_CORRIDOR_006":
+      points.push(pointBetween(start, forest, 0.45, -60, 180));
+      points.push(pointBetween(forest, river, 0.4, -20, -60));
+      break;
+    default:
+      points.push(pointBetween(start, end, 0.5, 0, 0));
+      break;
+  }
+  if (spec.routeMode === "coastal_route_option" || spec.routeMode === "scenic_route_option") {
+    points.push(pointBetween(wetland, protectedArea, 0.25, -120, -120));
+  }
+  points.push(end);
+  return deepFreeze(points.map((entry) => point(entry.x, entry.z)));
+}
+
+function resolveCorridorTerrainInfluences(path, naturalZones) {
+  return deepFreeze(
+    naturalZones
+      .filter((zone) =>
+        path.some((pathPoint) => distance2d(pathPoint, centroidOfPoints(zone.boundary.points)) < 1500)
+      )
+      .map((zone) =>
+        deepFreeze({
+          naturalZoneId: zone.naturalZoneId,
+          zoneType: zone.zoneType,
+          corridorGuidance: zone.corridorGuidance,
+          barrierSeverity: zone.barrierSeverity,
+          preferredCrossingMode: zone.preferredCrossingMode
+        })
+      )
+  );
+}
+
+function buildCorridorReasoning(spec, terrainInfluences, settlementById) {
+  return deepFreeze({
+    avoidsImpossibleTerrain: true,
+    naturalBarrierCompliance: !terrainInfluences.some(
+      (influence) =>
+        influence.zoneType === "PROTECTED_AREA" && spec.transportType !== "COASTAL_ROUTE"
+    ),
+    scenicIntent:
+      spec.routeMode === "scenic_route_option" ||
+      spec.routeMode === "coastal_route_option",
+    primarySettlementRole:
+      settlementById.get(spec.startSettlementId)?.connectionPriority ?? "UNKNOWN",
+    secondarySettlementRole:
+      settlementById.get(spec.endSettlementId)?.connectionPriority ?? "UNKNOWN",
+    reasoningSummary: buildCorridorReasoningSummary(spec, terrainInfluences)
+  });
+}
+
+function buildCorridorReasoningSummary(spec, terrainInfluences) {
+  const zoneTypes = terrainInfluences.map((entry) => entry.zoneType).join(", ");
+  return `${spec.routeMode} using ${zoneTypes} terrain cues for ${spec.geographicPurpose}`;
+}
+
+function buildExplorationGeographicRelationship(
+  spec,
+  startPosition,
+  endPosition,
+  coastalZone,
+  riverZone,
+  landmarkById
+) {
+  if (spec.routeType === "COASTAL_SCENIC_ROUTE") {
+    return `foreshore travel corridor linked to ${coastalZone?.naturalZoneId ?? "coastal edge"}`;
+  }
+  if (spec.routeType === "HERITAGE_ROUTE") {
+    return "town-edge heritage loop tied to settled farmland margin";
+  }
+  if (spec.routeType === "NATURE_DISCOVERY_ROUTE") {
+    const landmark = landmarkById.get(spec.endAnchor);
+    return `nature-led access route toward ${landmark?.landmarkType ?? "regional landmark"}`;
+  }
+  if (spec.routeType === "TOWN_CONNECTOR_ROUTE") {
+    return `settlement connector spanning ${roundNumber(distance2d(startPosition, endPosition))}m`;
+  }
+  return `geographic relationship with ${riverZone?.naturalZoneId ?? "regional terrain"}`;
+}
+
+function resolveRouteLandmarkRelationships(spec, landmarkById, settlementById) {
+  const relationships = [];
+  if (landmarkById.has(spec.startAnchor)) {
+    relationships.push(landmarkById.get(spec.startAnchor).landmarkType);
+  }
+  if (landmarkById.has(spec.endAnchor)) {
+    relationships.push(landmarkById.get(spec.endAnchor).landmarkType);
+  }
+  if (settlementById.has(spec.startAnchor)) {
+    relationships.push(settlementById.get(spec.startAnchor).landmarkAccessRole);
+  }
+  return relationships;
+}
+
+function pointBetween(start, end, ratio, offsetX = 0, offsetZ = 0) {
+  return {
+    x: start.x + (end.x - start.x) * ratio + offsetX,
+    z: start.z + (end.z - start.z) * ratio + offsetZ
+  };
+}
+
+function polylineLength(points) {
+  let total = 0;
+  for (let index = 1; index < points.length; index += 1) {
+    total += distance2d(points[index - 1], points[index]);
+  }
+  return total;
 }
 
 function hasAllSettlementTypes(settlements) {

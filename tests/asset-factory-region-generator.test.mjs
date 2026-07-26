@@ -96,17 +96,31 @@ test("region generation creates a valid deterministic coastal region preview", (
   );
   assert.ok(
     preview.explorationRoutes.some(
-      (route) => route.routeType === "SCENIC_COASTAL_DRIVE"
+      (route) => route.routeType === "COASTAL_SCENIC_ROUTE"
     )
   );
+  assert.ok(
+    preview.transportCorridors.every(
+      (corridor) =>
+        Array.isArray(corridor.path) &&
+        corridor.path.length >= 3 &&
+        corridor.terrainInfluences.length > 0
+    )
+  );
+  assert.equal(preview.regionMetadata.corridorPriorityRules.schemaId, "CORRIDOR_PRIORITY_RULES_001");
   assert.equal(preview.validationResult.naturalZonesValid, true);
   assert.equal(preview.validationResult.settlementsValid, true);
   assert.equal(preview.validationResult.transportConnected, true);
   assert.equal(preview.validationResult.settlementHierarchyValid, true);
   assert.equal(preview.validationResult.terrainRelationshipsValid, true);
   assert.equal(preview.validationResult.corridorsConnected, true);
+  assert.equal(preview.validationResult.terrainAwareCorridorValidity, true);
+  assert.equal(preview.validationResult.scenicRouteValidity, true);
+  assert.equal(preview.validationResult.settlementConnectivity, true);
+  assert.equal(preview.validationResult.naturalBarrierCompliance, true);
   assert.equal(preview.validationResult.landmarksAccessible, true);
   assert.equal(preview.validationResult.explorationRoutesValid, true);
+  assert.equal(preview.validationResult.explorationRouteQuality, true);
   assert.equal(preview.validationResult.deterministicRebuildValid, true);
   assert.equal(preview.validationResult.streamingReadyStructure, true);
   assert.equal(preview.validationResult.instanceReferencesOnly, true);
@@ -133,8 +147,13 @@ test("region validation output reports pass status for the deterministic coastal
   assert.equal(validation.checks.settlementHierarchyValid, "PASS");
   assert.equal(validation.checks.terrainRelationshipsValid, "PASS");
   assert.equal(validation.checks.corridorsConnected, "PASS");
+  assert.equal(validation.checks.terrainAwareCorridorValidity, "PASS");
+  assert.equal(validation.checks.scenicRouteValidity, "PASS");
+  assert.equal(validation.checks.settlementConnectivity, "PASS");
+  assert.equal(validation.checks.naturalBarrierCompliance, "PASS");
   assert.equal(validation.checks.landmarksAccessible, "PASS");
   assert.equal(validation.checks.explorationRoutesValid, "PASS");
+  assert.equal(validation.checks.explorationRouteQuality, "PASS");
   assert.equal(validation.checks.deterministicRebuildValid, "PASS");
   assert.equal(validation.checks.streamingReadyStructure, "PASS");
   assert.equal(validation.checks.instanceReferencesOnly, "PASS");

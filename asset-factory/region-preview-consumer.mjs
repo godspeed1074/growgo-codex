@@ -108,12 +108,22 @@ export const regionPreviewConsumerDefinition = deepFreeze({
     GEOLOGICAL_FEATURE: deepFreeze({ markerType: "geological_landmark" })
   }),
   explorationRoutePresentation: deepFreeze({
-    SCENIC_COASTAL_DRIVE: deepFreeze({ displayColour: "ROUTE_BLUE", lineStyle: "SCENIC" }),
-    INLAND_SERVICE_ROUTE: deepFreeze({ displayColour: "ROUTE_ORANGE", lineStyle: "SERVICE" }),
-    LOOKOUT_TRAIL: deepFreeze({ displayColour: "ROUTE_GREEN", lineStyle: "TRAIL" }),
-    LANDMARK_LINK: deepFreeze({ displayColour: "ROUTE_GOLD", lineStyle: "LANDMARK" }),
-    NATURE_LOOP: deepFreeze({ displayColour: "ROUTE_TEAL", lineStyle: "LOOP" }),
-    RIVER_WALK: deepFreeze({ displayColour: "ROUTE_CYAN", lineStyle: "WALK" })
+    COASTAL_SCENIC_ROUTE: deepFreeze({
+      displayColour: "ROUTE_BLUE",
+      lineStyle: "SCENIC"
+    }),
+    NATURE_DISCOVERY_ROUTE: deepFreeze({
+      displayColour: "ROUTE_GREEN",
+      lineStyle: "DISCOVERY"
+    }),
+    HERITAGE_ROUTE: deepFreeze({
+      displayColour: "ROUTE_GOLD",
+      lineStyle: "HERITAGE"
+    }),
+    TOWN_CONNECTOR_ROUTE: deepFreeze({
+      displayColour: "ROUTE_ORANGE",
+      lineStyle: "CONNECTOR"
+    })
   })
 });
 
@@ -213,6 +223,9 @@ export function createRegionPreviewSceneMetadata(
             biomeType: zone.biomeType,
             accessibility: zone.accessibility,
             explorationValue: zone.explorationValue,
+            barrierSeverity: zone.barrierSeverity,
+            preferredCrossingMode: zone.preferredCrossingMode,
+            corridorGuidance: zone.corridorGuidance,
             displayColour:
               definition.naturalZonePresentation[zone.zoneType]?.displayColour ??
               "NATURAL_DEFAULT",
@@ -240,6 +253,9 @@ export function createRegionPreviewSceneMetadata(
             populationScale: settlement.populationScale,
             terrainRelationship: settlement.terrainRelationship,
             transportRelationship: settlement.transportRelationship,
+            connectionPriority: settlement.connectionPriority,
+            connectionExpectation: settlement.connectionExpectation,
+            landmarkAccessRole: settlement.landmarkAccessRole,
             linkedSettlements: settlement.linkedSettlements,
             streamingCellId: settlement.streamingCellId,
             displayColour:
@@ -272,8 +288,13 @@ export function createRegionPreviewSceneMetadata(
             hierarchy: corridor.hierarchy,
             startLocation: corridor.startLocation,
             endLocation: corridor.endLocation,
+            path: corridor.path,
             connectedSettlements: corridor.connectedSettlements,
             routeLength: corridor.routeLength,
+            routeMode: corridor.routeMode,
+            corridorReasoning: corridor.corridorReasoning,
+            terrainInfluences: corridor.terrainInfluences,
+            geographicPurpose: corridor.geographicPurpose,
             markerType:
               definition.transportPresentation[corridor.transportType]?.markerType ??
               "transport_corridor",
@@ -324,6 +345,8 @@ export function createRegionPreviewSceneMetadata(
             discoveryValue: route.discoveryValue,
             connectedPointsOfInterest: route.connectedPointsOfInterest,
             travelModeCompatibility: route.travelModeCompatibility,
+            landmarkRelationships: route.landmarkRelationships,
+            geographicRelationship: route.geographicRelationship,
             displayColour:
               definition.explorationRoutePresentation[route.routeType]
                 ?.displayColour ?? "ROUTE_DEFAULT",
@@ -374,6 +397,13 @@ export function createRegionPreviewValidationReport(
   const naturalZonesValid = preview.validationResult.naturalZonesValid === true;
   const settlementsValid = preview.validationResult.settlementsValid === true;
   const corridorsConnected = preview.validationResult.corridorsConnected === true;
+  const terrainAwareCorridorValidity =
+    preview.validationResult.terrainAwareCorridorValidity === true;
+  const scenicRouteValidity = preview.validationResult.scenicRouteValidity === true;
+  const settlementConnectivity =
+    preview.validationResult.settlementConnectivity === true;
+  const naturalBarrierCompliance =
+    preview.validationResult.naturalBarrierCompliance === true;
   const settlementsLinked =
     preview.validationResult.transportConnected === true &&
     preview.transportCorridors.every(
@@ -391,6 +421,8 @@ export function createRegionPreviewValidationReport(
     )
   );
   const explorationRoutesValid = preview.validationResult.explorationRoutesValid === true;
+  const explorationRouteQuality =
+    preview.validationResult.explorationRouteQuality === true;
   const deterministicSourceMatches =
     stableStringify(preview) ===
     stableStringify(readJson(path.resolve(options.cwd ?? process.cwd(), definition.sourcePreviewPath)));
@@ -407,10 +439,15 @@ export function createRegionPreviewValidationReport(
     naturalZonesValid: passFail(naturalZonesValid),
     settlementsValid: passFail(settlementsValid),
     corridorsConnected: passFail(corridorsConnected),
+    terrainAwareCorridorValidity: passFail(terrainAwareCorridorValidity),
+    scenicRouteValidity: passFail(scenicRouteValidity),
+    settlementConnectivity: passFail(settlementConnectivity),
+    naturalBarrierCompliance: passFail(naturalBarrierCompliance),
     settlementsLinked: passFail(settlementsLinked),
     landmarksAccessible: passFail(landmarksAccessible),
     routeCompatible: passFail(routeCompatible),
     explorationRoutesValid: passFail(explorationRoutesValid),
+    explorationRouteQuality: passFail(explorationRouteQuality),
     deterministicSourceMatches: passFail(deterministicSourceMatches),
     referenceBasedPlacement: passFail(referenceBasedPlacement),
     streamingReadyStructure: passFail(streamingReadyStructure),
