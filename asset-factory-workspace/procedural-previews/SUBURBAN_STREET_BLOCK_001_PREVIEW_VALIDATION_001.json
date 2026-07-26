@@ -1,0 +1,26 @@
+{
+  "validationId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_VALIDATION_001",
+  "previewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+  "streetBlockId": "SUBURBAN_STREET_BLOCK_10482",
+  "seed": 10482,
+  "summary": {
+    "validationPassed": true,
+    "lotCount": 24,
+    "roadNodeCount": 7,
+    "roadSegmentCount": 6,
+    "buildingPlacementCount": 24,
+    "streetFeatureCount": 69
+  },
+  "checks": {
+    "roadConnectivityValid": "PASS",
+    "intersectionValidity": "PASS",
+    "allLotsGenerated": "PASS",
+    "lotBoundaryValidity": "PASS",
+    "lotFrontageValidity": "PASS",
+    "validBuildingIds": "PASS",
+    "buildingPlacementValidity": "PASS",
+    "drivewayConnectionValidity": "PASS",
+    "streetFeatureContainmentValidity": "PASS",
+    "deterministicRebuildValidity": "PASS"
+  }
+}

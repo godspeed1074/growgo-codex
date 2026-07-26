@@ -1,0 +1,6128 @@
+{
+  "schemaId": "SUBURBAN_STREET_BLOCK_001",
+  "streetBlockId": "SUBURBAN_STREET_BLOCK_10482",
+  "previewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+  "generationProfile": "suburban_multi_street_24_lot_default",
+  "seed": 10482,
+  "seedConfig": {
+    "streetBlockSeed": 10482,
+    "regionSeed": 1,
+    "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA"
+  },
+  "themeProfile": {
+    "themeSeed": "SUBURBAN_AUSTRALIA",
+    "neighbourhoodTheme": "suburban_multi_street_default",
+    "densityProfile": "low_density_suburban",
+    "buildingWeights": {
+      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.85,
+      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.12,
+      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.03
+    }
+  },
+  "blockBounds": {
+    "minX": -26,
+    "maxX": 266,
+    "minY": -86,
+    "maxY": 100
+  },
+  "roadGraph": {
+    "graphType": "collector_plus_cross_street_plus_culdesac",
+    "supportsStraightRoads": true,
+    "supportsTIntersections": true,
+    "supportsCornerConnections": true,
+    "supportsCulDeSac": true,
+    "connectedComponentCount": 1
+  },
+  "roadNodes": [
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_001",
+      "nodeType": "road_connection_point",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_001"
+      ],
+      "degree": 1,
+      "orientationProfile": "north_up_cardinal"
+    },
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_002",
+      "nodeType": "four_way",
+      "position": {
+        "x": 80,
+        "y": 0,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_001",
+        "SEGMENT_002",
+        "SEGMENT_004",
+        "SEGMENT_005"
+      ],
+      "degree": 4,
+      "orientationProfile": "north_up_cardinal"
+    },
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_003",
+      "nodeType": "t_junction",
+      "position": {
+        "x": 160,
+        "y": 0,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_002",
+        "SEGMENT_003",
+        "SEGMENT_006"
+      ],
+      "degree": 3,
+      "orientationProfile": "north_up_cardinal"
+    },
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_004",
+      "nodeType": "road_connection_point",
+      "position": {
+        "x": 240,
+        "y": 0,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_003"
+      ],
+      "degree": 1,
+      "orientationProfile": "north_up_cardinal"
+    },
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_005",
+      "nodeType": "road_connection_point",
+      "position": {
+        "x": 80,
+        "y": 72,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_004"
+      ],
+      "degree": 1,
+      "orientationProfile": "north_up_cardinal"
+    },
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_006",
+      "nodeType": "road_connection_point",
+      "position": {
+        "x": 80,
+        "y": -72,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_005"
+      ],
+      "degree": 1,
+      "orientationProfile": "north_up_cardinal"
+    },
+    {
+      "schemaId": "ROAD_NODE_INSTANCE_001",
+      "nodeId": "NODE_007",
+      "nodeType": "cul_de_sac_end",
+      "position": {
+        "x": 160,
+        "y": 72,
+        "z": 0
+      },
+      "connectedSegmentIds": [
+        "SEGMENT_006"
+      ],
+      "degree": 1,
+      "orientationProfile": "north_up_cardinal"
+    }
+  ],
+  "roadSegments": [
+    {
+      "schemaId": "ROAD_SEGMENT_INSTANCE_001",
+      "roadSegmentId": "SEGMENT_001",
+      "roadType": "collector_residential_street",
+      "startNodeId": "NODE_001",
+      "endNodeId": "NODE_002",
+      "direction": "east_west",
+      "length": 80,
+      "roadWidth": 12,
+      "sidewalkWidth": 1.6,
+      "vergeWidth": 1.8,
+      "lotRanges": [
+        "SEGMENT_001_LOT_RANGE_A",
+        "SEGMENT_001_LOT_RANGE_B"
+      ],
+      "supportsDriveways": true,
+      "x": 0,
+      "y": 0,
+      "centerX": 26,
+      "centerY": 0,
+      "startX": 0,
+      "startY": 0
+    },
+    {
+      "schemaId": "ROAD_SEGMENT_INSTANCE_001",
+      "roadSegmentId": "SEGMENT_002",
+      "roadType": "collector_residential_street",
+      "startNodeId": "NODE_002",
+      "endNodeId": "NODE_003",
+      "direction": "east_west",
+      "length": 80,
+      "roadWidth": 12,
+      "sidewalkWidth": 1.6,
+      "vergeWidth": 1.8,
+      "lotRanges": [
+        "SEGMENT_002_LOT_RANGE_A",
+        "SEGMENT_002_LOT_RANGE_B"
+      ],
+      "supportsDriveways": true,
+      "x": 52,
+      "y": 0,
+      "centerX": 70,
+      "centerY": 0,
+      "startX": 52,
+      "startY": 0
+    },
+    {
+      "schemaId": "ROAD_SEGMENT_INSTANCE_001",
+      "roadSegmentId": "SEGMENT_003",
+      "roadType": "collector_residential_street",
+      "startNodeId": "NODE_003",
+      "endNodeId": "NODE_004",
+      "direction": "east_west",
+      "length": 80,
+      "roadWidth": 12,
+      "sidewalkWidth": 1.6,
+      "vergeWidth": 1.8,
+      "lotRanges": [
+        "SEGMENT_003_LOT_RANGE_A",
+        "SEGMENT_003_LOT_RANGE_B"
+      ],
+      "supportsDriveways": true,
+      "x": 88,
+      "y": 0,
+      "centerX": 106,
+      "centerY": 0,
+      "startX": 88,
+      "startY": 0
+    },
+    {
+      "schemaId": "ROAD_SEGMENT_INSTANCE_001",
+      "roadSegmentId": "SEGMENT_004",
+      "roadType": "local_residential_street",
+      "startNodeId": "NODE_002",
+      "endNodeId": "NODE_005",
+      "direction": "north_south",
+      "length": 72,
+      "roadWidth": 12,
+      "sidewalkWidth": 1.6,
+      "vergeWidth": 1.8,
+      "lotRanges": [
+        "SEGMENT_004_LOT_RANGE_A",
+        "SEGMENT_004_LOT_RANGE_B"
+      ],
+      "supportsDriveways": true,
+      "x": 52,
+      "y": 0,
+      "centerX": 52,
+      "centerY": 29,
+      "startX": 52,
+      "startY": 0
+    },
+    {
+      "schemaId": "ROAD_SEGMENT_INSTANCE_001",
+      "roadSegmentId": "SEGMENT_005",
+      "roadType": "local_residential_street",
+      "startNodeId": "NODE_006",
+      "endNodeId": "NODE_002",
+      "direction": "north_south",
+      "length": 72,
+      "roadWidth": 12,
+      "sidewalkWidth": 1.6,
+      "vergeWidth": 1.8,
+      "lotRanges": [
+        "SEGMENT_005_LOT_RANGE_A",
+        "SEGMENT_005_LOT_RANGE_B"
+      ],
+      "supportsDriveways": true,
+      "x": 52,
+      "y": -58,
+      "centerX": 52,
+      "centerY": -29,
+      "startX": 52,
+      "startY": -58
+    },
+    {
+      "schemaId": "ROAD_SEGMENT_INSTANCE_001",
+      "roadSegmentId": "SEGMENT_006",
+      "roadType": "cul_de_sac_residential_loop",
+      "startNodeId": "NODE_003",
+      "endNodeId": "NODE_007",
+      "direction": "north_south",
+      "length": 72,
+      "roadWidth": 12,
+      "sidewalkWidth": 1.6,
+      "vergeWidth": 1.8,
+      "lotRanges": [
+        "SEGMENT_006_LOT_RANGE_A",
+        "SEGMENT_006_LOT_RANGE_B"
+      ],
+      "supportsDriveways": true,
+      "x": 88,
+      "y": 0,
+      "centerX": 88,
+      "centerY": 27,
+      "startX": 88,
+      "startY": 0
+    }
+  ],
+  "intersections": [
+    {
+      "schemaId": "ROAD_INTERSECTION_INSTANCE_001",
+      "intersectionId": "INTERSECTION_001",
+      "nodeId": "NODE_002",
+      "intersectionType": "four_way_intersection",
+      "connectedSegmentIds": [
+        "SEGMENT_001",
+        "SEGMENT_002",
+        "SEGMENT_004",
+        "SEGMENT_005"
+      ],
+      "turnRules": {
+        "leftTurnAllowed": true,
+        "rightTurnAllowed": true,
+        "throughAllowed": true
+      },
+      "lotVisibilityBuffer": 4
+    },
+    {
+      "schemaId": "ROAD_INTERSECTION_INSTANCE_001",
+      "intersectionId": "INTERSECTION_002",
+      "nodeId": "NODE_003",
+      "intersectionType": "t_intersection",
+      "connectedSegmentIds": [
+        "SEGMENT_002",
+        "SEGMENT_003",
+        "SEGMENT_006"
+      ],
+      "turnRules": {
+        "leftTurnAllowed": true,
+        "rightTurnAllowed": true,
+        "throughAllowed": true
+      },
+      "lotVisibilityBuffer": 4
+    },
+    {
+      "schemaId": "ROAD_INTERSECTION_INSTANCE_001",
+      "intersectionId": "INTERSECTION_003",
+      "nodeId": "NODE_007",
+      "intersectionType": "cul_de_sac_head",
+      "connectedSegmentIds": [
+        "SEGMENT_006"
+      ],
+      "turnRules": {
+        "leftTurnAllowed": true,
+        "rightTurnAllowed": true,
+        "throughAllowed": false
+      },
+      "lotVisibilityBuffer": 2
+    }
+  ],
+  "lotCount": 24,
+  "lots": [
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_001",
+      "position": {
+        "x": 0,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 15.4,
+      "depth": 36.72,
+      "dimensions": {
+        "width": 15.4,
+        "depth": 36.72
+      },
+      "frontageWidth": 15.4,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 4.76,
+        "left": 1.8,
+        "right": 1.95,
+        "rear": 8.48
+      },
+      "setbackProfile": {
+        "front": 4.76,
+        "left": 1.8,
+        "right": 1.95,
+        "rear": 8.48
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_001",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 0.5,
+          "y": 9.9,
+          "width": 14.4,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 0.5,
+          "y": 22.9,
+          "width": 14.4,
+          "depth": 22.72
+        },
+        "sidePlantingZone": {
+          "x": 0.5,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 28.72
+        },
+        "treeZone": {
+          "x": 8.62,
+          "y": 22.25,
+          "width": 3.39,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 2.31,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 7.7,
+        "y": 27.76,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 13.2,
+        "y": 9.4,
+        "side": "EAST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_WEST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": false,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 1953291993
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_002",
+      "position": {
+        "x": 17.4,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 12.26,
+      "depth": 36.75,
+      "dimensions": {
+        "width": 12.26,
+        "depth": 36.75
+      },
+      "frontageWidth": 12.26,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "narrow",
+      "setback": {
+        "front": 5.86,
+        "left": 1.57,
+        "right": 1.74,
+        "rear": 8.41
+      },
+      "setbackProfile": {
+        "front": 5.86,
+        "left": 1.57,
+        "right": 1.74,
+        "rear": 8.41
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_002",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 17.9,
+          "y": 9.9,
+          "width": 11.26,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 17.9,
+          "y": 22.9,
+          "width": 11.26,
+          "depth": 22.75
+        },
+        "sidePlantingZone": {
+          "x": 27.76,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 28.75
+        },
+        "treeZone": {
+          "x": 24.27,
+          "y": 22.26,
+          "width": 2.7,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 19.24,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 23.53,
+        "y": 27.78,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 19.6,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_WEST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2650334145
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_003",
+      "position": {
+        "x": 31.66,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 15.42,
+      "depth": 36.68,
+      "dimensions": {
+        "width": 15.42,
+        "depth": 36.68
+      },
+      "frontageWidth": 15.42,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 6.09,
+        "left": 1.61,
+        "right": 2.14,
+        "rear": 7
+      },
+      "setbackProfile": {
+        "front": 6.09,
+        "left": 1.61,
+        "right": 2.14,
+        "rear": 7
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_003",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 32.16,
+          "y": 9.9,
+          "width": 14.42,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 32.16,
+          "y": 22.9,
+          "width": 14.42,
+          "depth": 22.68
+        },
+        "sidePlantingZone": {
+          "x": 32.16,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 28.68
+        },
+        "treeZone": {
+          "x": 40.3,
+          "y": 22.24,
+          "width": 3.39,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 33.97,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 39.37,
+        "y": 27.74,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 44.88,
+        "y": 9.4,
+        "side": "EAST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_WEST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2239755859
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_004",
+      "position": {
+        "x": 49.08,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 15.41,
+      "depth": 38.7,
+      "dimensions": {
+        "width": 15.41,
+        "depth": 38.7
+      },
+      "frontageWidth": 15.41,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "standard",
+      "setback": {
+        "front": 6.06,
+        "left": 1.48,
+        "right": 2.04,
+        "rear": 8.25
+      },
+      "setbackProfile": {
+        "front": 6.06,
+        "left": 1.48,
+        "right": 2.04,
+        "rear": 8.25
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_004",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 49.58,
+          "y": 9.9,
+          "width": 14.41,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 49.58,
+          "y": 22.9,
+          "width": 14.41,
+          "depth": 24.7
+        },
+        "sidePlantingZone": {
+          "x": 62.59,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 30.7
+        },
+        "treeZone": {
+          "x": 57.71,
+          "y": 22.95,
+          "width": 3.39,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 51.39,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 61.29,
+          "y": 9.9,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 56.79,
+        "y": 28.75,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 51.28,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_WEST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 3947646875
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_005",
+      "position": {
+        "x": 0,
+        "y": -44.92,
+        "z": 0
+      },
+      "width": 15.65,
+      "depth": 35.52,
+      "dimensions": {
+        "width": 15.65,
+        "depth": 35.52
+      },
+      "frontageWidth": 15.65,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.57,
+        "left": 1.95,
+        "right": 1.63,
+        "rear": 6.47
+      },
+      "setbackProfile": {
+        "front": 5.57,
+        "left": 1.95,
+        "right": 1.63,
+        "rear": 6.47
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_005",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 0.5,
+          "y": -17.9,
+          "width": 14.65,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 0.5,
+          "y": -44.42,
+          "width": 14.65,
+          "depth": 21.52
+        },
+        "sidePlantingZone": {
+          "x": 0.5,
+          "y": -40.92,
+          "width": 1.4,
+          "depth": 27.52
+        },
+        "treeZone": {
+          "x": 8.76,
+          "y": -32.49,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 2.35,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 7.83,
+        "y": -27.16,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 13.45,
+        "y": -9.4,
+        "side": "EAST",
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_WEST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "planted",
+        "colourVariant": "standard",
+        "rebalanceProfile": "SUBURBAN_AUSTRALIA"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 502057328,
+        "rebalanceApplied": true
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_006",
+      "position": {
+        "x": 17.65,
+        "y": -44.94,
+        "z": 0
+      },
+      "width": 15.64,
+      "depth": 35.54,
+      "dimensions": {
+        "width": 15.64,
+        "depth": 35.54
+      },
+      "frontageWidth": 15.64,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.81,
+        "left": 2.37,
+        "right": 2.33,
+        "rear": 8.32
+      },
+      "setbackProfile": {
+        "front": 5.81,
+        "left": 2.37,
+        "right": 2.33,
+        "rear": 8.32
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_006",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 18.15,
+          "y": -17.9,
+          "width": 14.64,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 18.15,
+          "y": -44.44,
+          "width": 14.64,
+          "depth": 21.54
+        },
+        "sidePlantingZone": {
+          "x": 31.39,
+          "y": -40.94,
+          "width": 1.4,
+          "depth": 27.54
+        },
+        "treeZone": {
+          "x": 26.41,
+          "y": -32.5,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 20,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 25.47,
+        "y": -27.17,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 19.85,
+        "y": -9.4,
+        "side": "WEST",
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_WEST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 754016117
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_007",
+      "position": {
+        "x": 35.29,
+        "y": -44.96,
+        "z": 0
+      },
+      "width": 15.63,
+      "depth": 35.56,
+      "dimensions": {
+        "width": 15.63,
+        "depth": 35.56
+      },
+      "frontageWidth": 15.63,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.06,
+        "left": 1.52,
+        "right": 1.84,
+        "rear": 6.06
+      },
+      "setbackProfile": {
+        "front": 5.06,
+        "left": 1.52,
+        "right": 1.84,
+        "rear": 6.06
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_007",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 35.79,
+          "y": -17.9,
+          "width": 14.63,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 35.79,
+          "y": -44.46,
+          "width": 14.63,
+          "depth": 21.56
+        },
+        "sidePlantingZone": {
+          "x": 35.79,
+          "y": -40.96,
+          "width": 1.4,
+          "depth": 27.56
+        },
+        "treeZone": {
+          "x": 44.04,
+          "y": -32.51,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 37.63,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 43.11,
+        "y": -27.18,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 48.72,
+        "y": -9.4,
+        "side": "EAST",
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_WEST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 432885026
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_008",
+      "position": {
+        "x": 52.92,
+        "y": -46.99,
+        "z": 0
+      },
+      "width": 20.03,
+      "depth": 37.59,
+      "dimensions": {
+        "width": 20.03,
+        "depth": 37.59
+      },
+      "frontageWidth": 20.03,
+      "frontageRoadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "wide",
+      "setback": {
+        "front": 6.12,
+        "left": 2.13,
+        "right": 1.76,
+        "rear": 6.63
+      },
+      "setbackProfile": {
+        "front": 6.12,
+        "left": 2.13,
+        "right": 1.76,
+        "rear": 6.63
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_001",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_008",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 53.42,
+          "y": -17.9,
+          "width": 19.03,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 53.42,
+          "y": -46.49,
+          "width": 19.03,
+          "depth": 23.59
+        },
+        "sidePlantingZone": {
+          "x": 71.05,
+          "y": -42.99,
+          "width": 1.4,
+          "depth": 29.59
+        },
+        "treeZone": {
+          "x": 64.14,
+          "y": -33.83,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 55.92,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 69.75,
+          "y": -12.3,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 62.94,
+        "y": -28.19,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 55.12,
+        "y": -9.4,
+        "side": "WEST",
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_001",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_WEST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "standard"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 308817574
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_009",
+      "position": {
+        "x": 80,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 16.95,
+      "depth": 37.35,
+      "dimensions": {
+        "width": 16.95,
+        "depth": 37.35
+      },
+      "frontageWidth": 16.95,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.5,
+        "left": 1.94,
+        "right": 1.47,
+        "rear": 5.78
+      },
+      "setbackProfile": {
+        "front": 5.5,
+        "left": 1.94,
+        "right": 1.47,
+        "rear": 5.78
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_009",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 80.5,
+          "y": 9.9,
+          "width": 15.95,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 80.5,
+          "y": 22.9,
+          "width": 15.95,
+          "depth": 23.35
+        },
+        "sidePlantingZone": {
+          "x": 95.05,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 29.35
+        },
+        "treeZone": {
+          "x": 89.49,
+          "y": 22.47,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 82.54,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 93.75,
+          "y": 9.9,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 88.48,
+        "y": 28.08,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 82.2,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_MID_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": false,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 2277539937
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_010",
+      "position": {
+        "x": 98.95,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 16.96,
+      "depth": 35.33,
+      "dimensions": {
+        "width": 16.96,
+        "depth": 35.33
+      },
+      "frontageWidth": 16.96,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 6.04,
+        "left": 2.19,
+        "right": 2.28,
+        "rear": 6.19
+      },
+      "setbackProfile": {
+        "front": 6.04,
+        "left": 2.19,
+        "right": 2.28,
+        "rear": 6.19
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_010",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 99.45,
+          "y": 9.9,
+          "width": 15.96,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 99.45,
+          "y": 22.9,
+          "width": 15.96,
+          "depth": 21.33
+        },
+        "sidePlantingZone": {
+          "x": 99.45,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 27.33
+        },
+        "treeZone": {
+          "x": 108.45,
+          "y": 21.77,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 101.49,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 107.43,
+        "y": 27.07,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 113.71,
+        "y": 9.4,
+        "side": "EAST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_MID_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 3438259442
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_011",
+      "position": {
+        "x": 117.91,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 16.93,
+      "depth": 35.4,
+      "dimensions": {
+        "width": 16.93,
+        "depth": 35.4
+      },
+      "frontageWidth": 16.93,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.85,
+        "left": 1.89,
+        "right": 2.16,
+        "rear": 7.99
+      },
+      "setbackProfile": {
+        "front": 5.85,
+        "left": 1.89,
+        "right": 2.16,
+        "rear": 7.99
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_011",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 118.41,
+          "y": 9.9,
+          "width": 15.93,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 118.41,
+          "y": 22.9,
+          "width": 15.93,
+          "depth": 21.4
+        },
+        "sidePlantingZone": {
+          "x": 132.94,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 27.4
+        },
+        "treeZone": {
+          "x": 127.39,
+          "y": 21.79,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 120.45,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 126.38,
+        "y": 27.1,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 120.11,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_MID_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2689260596
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_012",
+      "position": {
+        "x": 136.84,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 22.23,
+      "depth": 37.37,
+      "dimensions": {
+        "width": 22.23,
+        "depth": 37.37
+      },
+      "frontageWidth": 22.23,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "wide",
+      "setback": {
+        "front": 5.87,
+        "left": 2.39,
+        "right": 1.75,
+        "rear": 8.35
+      },
+      "setbackProfile": {
+        "front": 5.87,
+        "left": 2.39,
+        "right": 1.75,
+        "rear": 8.35
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_012",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 137.34,
+          "y": 9.9,
+          "width": 21.23,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 137.34,
+          "y": 22.9,
+          "width": 21.23,
+          "depth": 23.37
+        },
+        "sidePlantingZone": {
+          "x": 157.17,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 29.37
+        },
+        "treeZone": {
+          "x": 149.29,
+          "y": 22.48,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 140.17,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 155.87,
+          "y": 9.9,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 147.96,
+        "y": 28.09,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 139.04,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_MID_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 1219771554
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_013",
+      "position": {
+        "x": 80,
+        "y": -48.19,
+        "z": 0
+      },
+      "width": 13.07,
+      "depth": 38.79,
+      "dimensions": {
+        "width": 13.07,
+        "depth": 38.79
+      },
+      "frontageWidth": 13.07,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "narrow",
+      "setback": {
+        "front": 6.8,
+        "left": 1.6,
+        "right": 2.26,
+        "rear": 7.78
+      },
+      "setbackProfile": {
+        "front": 6.8,
+        "left": 1.6,
+        "right": 2.26,
+        "rear": 7.78
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_013",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 80.5,
+          "y": -17.9,
+          "width": 12.07,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 80.5,
+          "y": -47.69,
+          "width": 12.07,
+          "depth": 24.79
+        },
+        "sidePlantingZone": {
+          "x": 91.17,
+          "y": -44.19,
+          "width": 1.4,
+          "depth": 30.79
+        },
+        "treeZone": {
+          "x": 87.32,
+          "y": -34.61,
+          "width": 2.88,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 81.96,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 89.87,
+          "y": -12.3,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 86.54,
+        "y": -28.79,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 82.2,
+        "y": -9.4,
+        "side": "WEST",
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_MID_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 217186635
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_014",
+      "position": {
+        "x": 95.07,
+        "y": -46.16,
+        "z": 0
+      },
+      "width": 16.61,
+      "depth": 36.76,
+      "dimensions": {
+        "width": 16.61,
+        "depth": 36.76
+      },
+      "frontageWidth": 16.61,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.87,
+        "left": 1.72,
+        "right": 2.19,
+        "rear": 6.83
+      },
+      "setbackProfile": {
+        "front": 5.87,
+        "left": 1.72,
+        "right": 2.19,
+        "rear": 6.83
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_014",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 95.57,
+          "y": -17.9,
+          "width": 15.61,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 95.57,
+          "y": -45.66,
+          "width": 15.61,
+          "depth": 22.76
+        },
+        "sidePlantingZone": {
+          "x": 95.57,
+          "y": -42.16,
+          "width": 1.4,
+          "depth": 28.76
+        },
+        "treeZone": {
+          "x": 104.37,
+          "y": -33.29,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 97.56,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 103.38,
+        "y": -27.78,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 109.48,
+        "y": -9.4,
+        "side": "EAST",
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_MID_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "standard"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 1362655939
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_015",
+      "position": {
+        "x": 113.68,
+        "y": -46.14,
+        "z": 0
+      },
+      "width": 16.62,
+      "depth": 36.74,
+      "dimensions": {
+        "width": 16.62,
+        "depth": 36.74
+      },
+      "frontageWidth": 16.62,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.65,
+        "left": 1.69,
+        "right": 2.02,
+        "rear": 7.58
+      },
+      "setbackProfile": {
+        "front": 5.65,
+        "left": 1.69,
+        "right": 2.02,
+        "rear": 7.58
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_015",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 114.18,
+          "y": -17.9,
+          "width": 15.62,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 114.18,
+          "y": -45.64,
+          "width": 15.62,
+          "depth": 22.74
+        },
+        "sidePlantingZone": {
+          "x": 128.4,
+          "y": -42.14,
+          "width": 1.4,
+          "depth": 28.74
+        },
+        "treeZone": {
+          "x": 122.99,
+          "y": -33.28,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 116.17,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 121.99,
+        "y": -27.77,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 115.88,
+        "y": -9.4,
+        "side": "WEST",
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_MID_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 1894700081
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_016",
+      "position": {
+        "x": 132.3,
+        "y": -48.12,
+        "z": 0
+      },
+      "width": 16.63,
+      "depth": 38.72,
+      "dimensions": {
+        "width": 16.63,
+        "depth": 38.72
+      },
+      "frontageWidth": 16.63,
+      "frontageRoadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.74,
+        "left": 2.32,
+        "right": 1.72,
+        "rear": 7.87
+      },
+      "setbackProfile": {
+        "front": 5.74,
+        "left": 2.32,
+        "right": 1.72,
+        "rear": 7.87
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_002",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_016",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 132.8,
+          "y": -17.9,
+          "width": 15.63,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 132.8,
+          "y": -47.62,
+          "width": 15.63,
+          "depth": 24.72
+        },
+        "sidePlantingZone": {
+          "x": 132.8,
+          "y": -44.12,
+          "width": 1.4,
+          "depth": 30.72
+        },
+        "treeZone": {
+          "x": 141.61,
+          "y": -34.57,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 134.79,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 145.73,
+          "y": -12.3,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 140.62,
+        "y": -28.76,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 146.73,
+        "y": -9.4,
+        "side": "EAST",
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_002",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_MID_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "muted_trim",
+        "rebalanceProfile": "SUBURBAN_AUSTRALIA"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 2061857596,
+        "rebalanceApplied": true
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_017",
+      "position": {
+        "x": 160,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 15.18,
+      "depth": 41.22,
+      "dimensions": {
+        "width": 15.18,
+        "depth": 41.22
+      },
+      "frontageWidth": 15.18,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.91,
+        "left": 1.97,
+        "right": 1.86,
+        "rear": 6.62
+      },
+      "setbackProfile": {
+        "front": 5.91,
+        "left": 1.97,
+        "right": 1.86,
+        "rear": 6.62
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_017",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 160.5,
+          "y": 9.9,
+          "width": 14.18,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 160.5,
+          "y": 22.9,
+          "width": 14.18,
+          "depth": 27.22
+        },
+        "sidePlantingZone": {
+          "x": 173.28,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 33.22
+        },
+        "treeZone": {
+          "x": 168.5,
+          "y": 23.83,
+          "width": 3.34,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 162.28,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 171.98,
+          "y": 9.9,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 167.59,
+        "y": 30.01,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 162.2,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_EAST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": false,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 2430098094
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_018",
+      "position": {
+        "x": 177.18,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 15.17,
+      "depth": 39.24,
+      "dimensions": {
+        "width": 15.17,
+        "depth": 39.24
+      },
+      "frontageWidth": 15.17,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 6.03,
+        "left": 2.2,
+        "right": 1.79,
+        "rear": 6.49
+      },
+      "setbackProfile": {
+        "front": 6.03,
+        "left": 2.2,
+        "right": 1.79,
+        "rear": 6.49
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_018",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 177.68,
+          "y": 9.9,
+          "width": 14.17,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 177.68,
+          "y": 22.9,
+          "width": 14.17,
+          "depth": 25.24
+        },
+        "sidePlantingZone": {
+          "x": 177.68,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 31.24
+        },
+        "treeZone": {
+          "x": 185.68,
+          "y": 23.13,
+          "width": 3.34,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 179.46,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 184.77,
+        "y": 29.02,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 190.15,
+        "y": 9.4,
+        "side": "EAST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_EAST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2148040260
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_019",
+      "position": {
+        "x": 194.35,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 19.27,
+      "depth": 39.27,
+      "dimensions": {
+        "width": 19.27,
+        "depth": 39.27
+      },
+      "frontageWidth": 19.27,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "wide",
+      "setback": {
+        "front": 4.52,
+        "left": 1.55,
+        "right": 1.71,
+        "rear": 7.63
+      },
+      "setbackProfile": {
+        "front": 4.52,
+        "left": 1.55,
+        "right": 1.71,
+        "rear": 7.63
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_019",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 194.85,
+          "y": 9.9,
+          "width": 18.27,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 194.85,
+          "y": 22.9,
+          "width": 18.27,
+          "depth": 25.27
+        },
+        "sidePlantingZone": {
+          "x": 211.72,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 31.27
+        },
+        "treeZone": {
+          "x": 205.14,
+          "y": 23.14,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 197.24,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 203.99,
+        "y": 29.04,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 196.55,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_EAST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 3710048668
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_020",
+      "position": {
+        "x": 215.62,
+        "y": 9.4,
+        "z": 0
+      },
+      "width": 15.15,
+      "depth": 39.29,
+      "dimensions": {
+        "width": 15.15,
+        "depth": 39.29
+      },
+      "frontageWidth": 15.15,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 6.08,
+        "left": 1.66,
+        "right": 2.26,
+        "rear": 7.12
+      },
+      "setbackProfile": {
+        "front": 6.08,
+        "left": 1.66,
+        "right": 2.26,
+        "rear": 7.12
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_020",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 216.12,
+          "y": 9.9,
+          "width": 14.15,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 216.12,
+          "y": 22.9,
+          "width": 14.15,
+          "depth": 25.29
+        },
+        "sidePlantingZone": {
+          "x": 228.87,
+          "y": 13.4,
+          "width": 1.4,
+          "depth": 31.29
+        },
+        "treeZone": {
+          "x": 224.1,
+          "y": 23.15,
+          "width": 3.33,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 217.89,
+          "y": 8.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 223.2,
+        "y": 29.05,
+        "facing": "SOUTH"
+      },
+      "drivewaySocket": {
+        "x": 217.82,
+        "y": 9.4,
+        "side": "WEST",
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_EAST_NORTH"
+      },
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 4093859385
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_021",
+      "position": {
+        "x": 160,
+        "y": -47.84,
+        "z": 0
+      },
+      "width": 17.77,
+      "depth": 38.44,
+      "dimensions": {
+        "width": 17.77,
+        "depth": 38.44
+      },
+      "frontageWidth": 17.77,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "corner_primary",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.59,
+        "left": 2.13,
+        "right": 1.6,
+        "rear": 8.43
+      },
+      "setbackProfile": {
+        "front": 5.59,
+        "left": 2.13,
+        "right": 1.6,
+        "rear": 8.43
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "corner_suburban_dual_frontage_visibility_buffer",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": true
+      },
+      "landscapingSeed": "LANDSCAPE_10482_021",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 160.5,
+          "y": -17.9,
+          "width": 16.77,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 160.5,
+          "y": -47.34,
+          "width": 16.77,
+          "depth": 24.44
+        },
+        "sidePlantingZone": {
+          "x": 160.5,
+          "y": -43.84,
+          "width": 1.4,
+          "depth": 30.44
+        },
+        "treeZone": {
+          "x": 169.95,
+          "y": -34.39,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 162.67,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": {
+          "x": 174.57,
+          "y": -12.3,
+          "width": 2.4,
+          "depth": 2.4
+        }
+      },
+      "buildingSocket": {
+        "x": 168.89,
+        "y": -28.62,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 175.57,
+        "y": -9.4,
+        "side": "EAST",
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "corner_primary",
+        "edgeId": "EDGE_COLLECTOR_EAST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 4090990710
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_022",
+      "position": {
+        "x": 179.77,
+        "y": -45.86,
+        "z": 0
+      },
+      "width": 23.6,
+      "depth": 36.46,
+      "dimensions": {
+        "width": 23.6,
+        "depth": 36.46
+      },
+      "frontageWidth": 23.6,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "wide",
+      "setback": {
+        "front": 5.6,
+        "left": 2.09,
+        "right": 2.08,
+        "rear": 8.3
+      },
+      "setbackProfile": {
+        "front": 5.6,
+        "left": 2.09,
+        "right": 2.08,
+        "rear": 8.3
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_022",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 180.27,
+          "y": -17.9,
+          "width": 22.6,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 180.27,
+          "y": -45.36,
+          "width": 22.6,
+          "depth": 22.46
+        },
+        "sidePlantingZone": {
+          "x": 201.47,
+          "y": -41.86,
+          "width": 1.4,
+          "depth": 28.46
+        },
+        "treeZone": {
+          "x": 192.99,
+          "y": -33.1,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 183.31,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 191.57,
+        "y": -27.63,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 181.97,
+        "y": -9.4,
+        "side": "WEST",
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_EAST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "standard"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 826836358
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_023",
+      "position": {
+        "x": 205.37,
+        "y": -45.79,
+        "z": 0
+      },
+      "width": 17.8,
+      "depth": 36.39,
+      "dimensions": {
+        "width": 17.8,
+        "depth": 36.39
+      },
+      "frontageWidth": 17.8,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.91,
+        "left": 1.85,
+        "right": 2.32,
+        "rear": 6.77
+      },
+      "setbackProfile": {
+        "front": 5.91,
+        "left": 1.85,
+        "right": 2.32,
+        "rear": 6.77
+      },
+      "drivewaySide": "EAST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_023",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 205.87,
+          "y": -17.9,
+          "width": 16.8,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 205.87,
+          "y": -45.29,
+          "width": 16.8,
+          "depth": 22.39
+        },
+        "sidePlantingZone": {
+          "x": 205.87,
+          "y": -41.79,
+          "width": 1.4,
+          "depth": 28.39
+        },
+        "treeZone": {
+          "x": 215.34,
+          "y": -33.05,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 208.04,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 214.27,
+        "y": -27.59,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 220.97,
+        "y": -9.4,
+        "side": "EAST",
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_EAST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 3856737412
+      }
+    },
+    {
+      "schemaId": "LOT_SUBURBAN_BLOCK_001",
+      "lotId": "LOT_024",
+      "position": {
+        "x": 225.17,
+        "y": -45.81,
+        "z": 0
+      },
+      "width": 17.79,
+      "depth": 36.41,
+      "dimensions": {
+        "width": 17.79,
+        "depth": 36.41
+      },
+      "frontageWidth": 17.79,
+      "frontageRoadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "cornerStatus": "interior",
+      "lotType": "standard",
+      "setback": {
+        "front": 5.89,
+        "left": 2.08,
+        "right": 2.28,
+        "rear": 7.81
+      },
+      "setbackProfile": {
+        "front": 5.89,
+        "left": 2.08,
+        "right": 2.28,
+        "rear": 7.81
+      },
+      "drivewaySide": "WEST",
+      "drivewayStreet": "SEGMENT_003",
+      "fenceConfiguration": "standard_suburban_front_gap_with_side_and_rear_boundaries",
+      "fenceRules": {
+        "front": true,
+        "left": true,
+        "right": true,
+        "rear": true,
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1,
+        "cornerVisibilityOpening": false
+      },
+      "landscapingSeed": "LANDSCAPE_10482_024",
+      "landscapingZones": {
+        "frontLawnZone": {
+          "x": 225.67,
+          "y": -17.9,
+          "width": 16.79,
+          "depth": 8
+        },
+        "backyardZone": {
+          "x": 225.67,
+          "y": -45.31,
+          "width": 16.79,
+          "depth": 22.41
+        },
+        "sidePlantingZone": {
+          "x": 241.06,
+          "y": -41.81,
+          "width": 1.4,
+          "depth": 28.41
+        },
+        "treeZone": {
+          "x": 235.13,
+          "y": -33.07,
+          "width": 3.4,
+          "depth": 6.5
+        },
+        "mailboxVergeZone": {
+          "x": 227.84,
+          "y": -9.2,
+          "width": 1.4,
+          "depth": 1
+        },
+        "cornerVisibilityPlantingZone": null
+      },
+      "buildingSocket": {
+        "x": 234.07,
+        "y": -27.61,
+        "facing": "NORTH"
+      },
+      "drivewaySocket": {
+        "x": 227.37,
+        "y": -9.4,
+        "side": "WEST",
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
+      },
+      "resolverInputs": {
+        "streetBlockSeed": 10482,
+        "regionSeed": 1,
+        "neighbourhoodThemeSeed": "SUBURBAN_AUSTRALIA",
+        "frontageRoadSegmentId": "SEGMENT_003",
+        "cornerStatus": "interior",
+        "edgeId": "EDGE_COLLECTOR_EAST_SOUTH"
+      },
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2548573004
+      }
+    }
+  ],
+  "buildingPlacements": [
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_001",
+      "lotId": "LOT_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 7.7,
+        "y": 18.36,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 4.76,
+      "drivewaySide": "EAST",
+      "streetContext": "local_residential_interior",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": false,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 1953291993
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_002",
+      "lotId": "LOT_002",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 23.53,
+        "y": 18.96,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.86,
+      "drivewaySide": "WEST",
+      "streetContext": "local_residential_interior",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2650334145
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_003",
+      "lotId": "LOT_003",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 39.37,
+        "y": 19.69,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.09,
+      "drivewaySide": "EAST",
+      "streetContext": "local_residential_interior",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2239755859
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_004",
+      "lotId": "LOT_004",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 56.79,
+        "y": 19.16,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.06,
+      "drivewaySide": "WEST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 3947646875
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_005",
+      "lotId": "LOT_005",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 7.83,
+        "y": -19.17,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.57,
+      "drivewaySide": "EAST",
+      "streetContext": "local_residential_interior",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "planted",
+        "colourVariant": "standard",
+        "rebalanceProfile": "SUBURBAN_AUSTRALIA"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 502057328,
+        "rebalanceApplied": true
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_006",
+      "lotId": "LOT_006",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 25.47,
+        "y": -18.91,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.81,
+      "drivewaySide": "WEST",
+      "streetContext": "local_residential_interior",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 754016117
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_007",
+      "lotId": "LOT_007",
+      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "position": {
+        "x": 43.11,
+        "y": -18.56,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.06,
+      "drivewaySide": "EAST",
+      "streetContext": "local_residential_interior",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 432885026
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_008",
+      "lotId": "LOT_008",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 62.94,
+        "y": -19.72,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.12,
+      "drivewaySide": "WEST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "standard"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 308817574
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_009",
+      "lotId": "LOT_009",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 88.48,
+        "y": 19.1,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.5,
+      "drivewaySide": "WEST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": false,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 2277539937
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_010",
+      "lotId": "LOT_010",
+      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "position": {
+        "x": 107.43,
+        "y": 19.54,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.04,
+      "drivewaySide": "EAST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 3438259442
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_011",
+      "lotId": "LOT_011",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 126.38,
+        "y": 19.45,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.85,
+      "drivewaySide": "WEST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2689260596
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_012",
+      "lotId": "LOT_012",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 147.96,
+        "y": 18.97,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.87,
+      "drivewaySide": "WEST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 1219771554
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_013",
+      "lotId": "LOT_013",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 86.54,
+        "y": -19.9,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.8,
+      "drivewaySide": "WEST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 217186635
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_014",
+      "lotId": "LOT_014",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 103.38,
+        "y": -19.47,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.87,
+      "drivewaySide": "EAST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "standard"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 1362655939
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_015",
+      "lotId": "LOT_015",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 121.99,
+        "y": -18.75,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.65,
+      "drivewaySide": "WEST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "moderate",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 1894700081
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_016",
+      "lotId": "LOT_016",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 140.62,
+        "y": -19.34,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.74,
+      "drivewaySide": "EAST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "muted_trim",
+        "rebalanceProfile": "SUBURBAN_AUSTRALIA"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 2061857596,
+        "rebalanceApplied": true
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_017",
+      "lotId": "LOT_017",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 167.59,
+        "y": 19.51,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.91,
+      "drivewaySide": "WEST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": false,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 2430098094
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_018",
+      "lotId": "LOT_018",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 184.77,
+        "y": 19.13,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.03,
+      "drivewaySide": "EAST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "muted_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2148040260
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_019",
+      "lotId": "LOT_019",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 203.99,
+        "y": 18.12,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 4.52,
+      "drivewaySide": "WEST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "charcoal",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 3710048668
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_020",
+      "lotId": "LOT_020",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "position": {
+        "x": 223.2,
+        "y": 19.18,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 6.08,
+      "drivewaySide": "WEST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 4093859385
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_021",
+      "lotId": "LOT_021",
+      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "position": {
+        "x": 168.89,
+        "y": -19.09,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.59,
+      "drivewaySide": "EAST",
+      "streetContext": "corner_residential_lot",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": true,
+        "resolverHash": 4090990710
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_022",
+      "lotId": "LOT_022",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 191.57,
+        "y": -19.2,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.6,
+      "drivewaySide": "WEST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "decorative_suburban",
+        "yardDensity": "moderate",
+        "colourVariant": "standard"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 826836358
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_023",
+      "lotId": "LOT_023",
+      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "position": {
+        "x": 214.27,
+        "y": -19.41,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.91,
+      "drivewaySide": "EAST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "sandstone",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "planted",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 3856737412
+      }
+    },
+    {
+      "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
+      "placementId": "BUILDING_PLACEMENT_024",
+      "lotId": "LOT_024",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "position": {
+        "x": 234.07,
+        "y": -19.49,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "frontSetback": 5.89,
+      "drivewaySide": "WEST",
+      "streetContext": "collector_edge_residential",
+      "variationProfile": {
+        "roofTone": "slate",
+        "fenceStyle": "timber_standard",
+        "yardDensity": "light",
+        "colourVariant": "warm_trim"
+      },
+      "resolverMetadata": {
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
+        "streetAwareSelection": true,
+        "cornerLotVariationApplied": false,
+        "resolverHash": 2548573004
+      }
+    }
+  ],
+  "streetFeaturePlacements": [
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_001",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 26,
+        "y": 6.8,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_001_NORTH",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_002",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 26,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_001_NORTH",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_003",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 26,
+        "y": -6.8,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_001_SOUTH",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_004",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 26,
+        "y": -8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_001_SOUTH",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_005",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 20,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 231
+      },
+      "variationSeed": "TREE_10482_SEGMENT_001_0",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_006",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 40,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 52
+      },
+      "variationSeed": "TREE_10482_SEGMENT_001_1",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_007",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 60,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 229
+      },
+      "variationSeed": "TREE_10482_SEGMENT_001_2",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_008",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 70,
+        "y": 6.8,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_002_NORTH",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_009",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 70,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_002_NORTH",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_010",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 70,
+        "y": -6.8,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_002_SOUTH",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_011",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 70,
+        "y": -8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_002_SOUTH",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_012",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 72,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 134
+      },
+      "variationSeed": "TREE_10482_SEGMENT_002_0",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_013",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 92,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 313
+      },
+      "variationSeed": "TREE_10482_SEGMENT_002_1",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_014",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 112,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 136
+      },
+      "variationSeed": "TREE_10482_SEGMENT_002_2",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_015",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 106,
+        "y": 6.8,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_003_NORTH",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_016",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 106,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_003_NORTH",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_017",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 106,
+        "y": -6.8,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_003_SOUTH",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_018",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 106,
+        "y": -8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_003_SOUTH",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_019",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 108,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 101
+      },
+      "variationSeed": "TREE_10482_SEGMENT_003_0",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_020",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 128,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 282
+      },
+      "variationSeed": "TREE_10482_SEGMENT_003_1",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_021",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": null,
+      "position": {
+        "x": 148,
+        "y": 8.5,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 103
+      },
+      "variationSeed": "TREE_10482_SEGMENT_003_2",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_022",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 45.2,
+        "y": 29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_004_WEST",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_023",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 43.5,
+        "y": 29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_004_WEST",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_024",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 58.8,
+        "y": 29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_004_EAST",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_025",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": 29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_004_EAST",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_026",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": 18,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 260
+      },
+      "variationSeed": "TREE_10482_SEGMENT_004_0",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_027",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": 36,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 79
+      },
+      "variationSeed": "TREE_10482_SEGMENT_004_1",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_028",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_004",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": 54,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 258
+      },
+      "variationSeed": "TREE_10482_SEGMENT_004_2",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_029",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 45.2,
+        "y": -29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_005_WEST",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_030",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 43.5,
+        "y": -29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_005_WEST",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_031",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 58.8,
+        "y": -29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_005_EAST",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_032",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": -29,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_005_EAST",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_033",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": -40,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 115
+      },
+      "variationSeed": "TREE_10482_SEGMENT_005_0",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_034",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": -22,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 296
+      },
+      "variationSeed": "TREE_10482_SEGMENT_005_1",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_035",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_005",
+      "relatedLotId": null,
+      "position": {
+        "x": 60.5,
+        "y": -4,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 113
+      },
+      "variationSeed": "TREE_10482_SEGMENT_005_2",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_036",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 81.2,
+        "y": 27,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_006_WEST",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_037",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 79.5,
+        "y": 27,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_006_WEST",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_038",
+      "featureType": "sidewalk",
+      "assetId": "MOD_PATH_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 94.8,
+        "y": 27,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "SIDEWALK_10482_SEGMENT_006_EAST",
+      "placementRule": "continuous_footpath_edge",
+      "publicAreaClass": "public_footpath"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_039",
+      "featureType": "grass_verge",
+      "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 96.5,
+        "y": 27,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "VERGE_10482_SEGMENT_006_EAST",
+      "placementRule": "continuous_grass_verge_edge",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_040",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 96.5,
+        "y": 18,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 90
+      },
+      "variationSeed": "TREE_10482_SEGMENT_006_0",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_041",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 96.5,
+        "y": 36,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 269
+      },
+      "variationSeed": "TREE_10482_SEGMENT_006_1",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_042",
+      "featureType": "street_tree",
+      "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 96.5,
+        "y": 54,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 92
+      },
+      "variationSeed": "TREE_10482_SEGMENT_006_2",
+      "placementRule": "verge_interval_standard",
+      "publicAreaClass": "public_verge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_043",
+      "featureType": "street_sign",
+      "assetId": "STREET_FEATURE_SIGN_STANDARD_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": null,
+      "position": {
+        "x": 82.2,
+        "y": 2.2,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIGN_10482_INTERSECTION_001",
+      "placementRule": "intersection_sign_anchor",
+      "publicAreaClass": "intersection_buffer"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_044",
+      "featureType": "street_sign",
+      "assetId": "STREET_FEATURE_SIGN_STANDARD_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": null,
+      "position": {
+        "x": 162.2,
+        "y": 2.2,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIGN_10482_INTERSECTION_002",
+      "placementRule": "intersection_sign_anchor",
+      "publicAreaClass": "intersection_buffer"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_045",
+      "featureType": "street_sign",
+      "assetId": "STREET_FEATURE_SIGN_STANDARD_001",
+      "streetSegmentId": "SEGMENT_006",
+      "relatedLotId": null,
+      "position": {
+        "x": 162.2,
+        "y": 74.2,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "SIGN_10482_INTERSECTION_003",
+      "placementRule": "intersection_sign_anchor",
+      "publicAreaClass": "cul_de_sac_centre"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_046",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_001",
+      "position": {
+        "x": 3.01,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_001",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_047",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_002",
+      "position": {
+        "x": 19.94,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_002",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_048",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_003",
+      "position": {
+        "x": 34.67,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_003",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_049",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_004",
+      "position": {
+        "x": 52.09,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_004",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_050",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_005",
+      "position": {
+        "x": 3.05,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_005",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_051",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_006",
+      "position": {
+        "x": 20.7,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_006",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_052",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_007",
+      "position": {
+        "x": 38.33,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_007",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_053",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_001",
+      "relatedLotId": "LOT_008",
+      "position": {
+        "x": 56.62,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_008",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_054",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_009",
+      "position": {
+        "x": 83.24,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_009",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_055",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_010",
+      "position": {
+        "x": 102.19,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_010",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_056",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_011",
+      "position": {
+        "x": 121.15,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_011",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_057",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_012",
+      "position": {
+        "x": 140.87,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_012",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_058",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_013",
+      "position": {
+        "x": 82.66,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_013",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_059",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_014",
+      "position": {
+        "x": 98.26,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_014",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_060",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_015",
+      "position": {
+        "x": 116.87,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_015",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_061",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_002",
+      "relatedLotId": "LOT_016",
+      "position": {
+        "x": 135.49,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_016",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_062",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_017",
+      "position": {
+        "x": 162.98,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_017",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_063",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_018",
+      "position": {
+        "x": 180.16,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_018",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_064",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_019",
+      "position": {
+        "x": 197.94,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_019",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_065",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_020",
+      "position": {
+        "x": 218.59,
+        "y": 8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_020",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_066",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_021",
+      "position": {
+        "x": 163.37,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_021",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_067",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_022",
+      "position": {
+        "x": 184.01,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_022",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_068",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_023",
+      "position": {
+        "x": 208.74,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_023",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    },
+    {
+      "schemaId": "STREET_FEATURE_INSTANCE_001",
+      "featurePlacementId": "FEATURE_069",
+      "featureType": "street_sign",
+      "assetId": "MAILBOX_PREVIEW_001",
+      "streetSegmentId": "SEGMENT_003",
+      "relatedLotId": "LOT_024",
+      "position": {
+        "x": 228.54,
+        "y": -8.7,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "variationSeed": "MAILBOX_10482_LOT_024",
+      "placementRule": "frontage_mailbox_anchor",
+      "publicAreaClass": "lot_frontage_edge"
+    }
+  ],
+  "roadFrontageConnections": [
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_001",
+      "lotId": "LOT_001",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 13.2,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_002",
+      "lotId": "LOT_002",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 19.6,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_003",
+      "lotId": "LOT_003",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 44.88,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_004",
+      "lotId": "LOT_004",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 51.28,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_005",
+      "lotId": "LOT_005",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 13.45,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_006",
+      "lotId": "LOT_006",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 19.85,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_007",
+      "lotId": "LOT_007",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 48.72,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_008",
+      "lotId": "LOT_008",
+      "roadSegmentId": "SEGMENT_001",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 55.12,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_001",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_009",
+      "lotId": "LOT_009",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 82.2,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_010",
+      "lotId": "LOT_010",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 113.71,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_011",
+      "lotId": "LOT_011",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 120.11,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_012",
+      "lotId": "LOT_012",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 139.04,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_013",
+      "lotId": "LOT_013",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 82.2,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_014",
+      "lotId": "LOT_014",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 109.48,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_015",
+      "lotId": "LOT_015",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 115.88,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_016",
+      "lotId": "LOT_016",
+      "roadSegmentId": "SEGMENT_002",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 146.73,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_002",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_017",
+      "lotId": "LOT_017",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 162.2,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_018",
+      "lotId": "LOT_018",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 190.15,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_019",
+      "lotId": "LOT_019",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 196.55,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_020",
+      "lotId": "LOT_020",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "SOUTH",
+      "connectionPoint": {
+        "x": 217.82,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_021",
+      "lotId": "LOT_021",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 175.57,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_022",
+      "lotId": "LOT_022",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 181.97,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_023",
+      "lotId": "LOT_023",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 220.97,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "EAST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
+      }
+    },
+    {
+      "connectionId": "ROAD_FRONTAGE_CONNECTION_024",
+      "lotId": "LOT_024",
+      "roadSegmentId": "SEGMENT_003",
+      "frontageDirection": "NORTH",
+      "connectionPoint": {
+        "x": 227.37,
+        "y": 0,
+        "z": 0
+      },
+      "drivewayLink": {
+        "drivewaySide": "WEST",
+        "drivewayStreet": "SEGMENT_003",
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
+      },
+      "pedestrianLink": {
+        "connected": true,
+        "footpathAligned": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
+      }
+    }
+  ],
+  "validationContract": {
+    "checks": {
+      "roadConnectivityValid": true,
+      "intersectionValidity": true,
+      "allLotsGenerated": true,
+      "lotBoundaryValidity": true,
+      "lotFrontageValidity": true,
+      "validBuildingIds": true,
+      "buildingPlacementValidity": true,
+      "drivewayConnectionValidity": true,
+      "streetFeatureContainmentValidity": true,
+      "deterministicRebuildValidity": true
+    }
+  },
+  "validationResult": {
+    "roadConnectivityValid": true,
+    "intersectionValidity": true,
+    "allLotsGenerated": true,
+    "lotBoundaryValidity": true,
+    "lotFrontageValidity": true,
+    "validBuildingIds": true,
+    "buildingPlacementValidity": true,
+    "drivewayConnectionValidity": true,
+    "streetFeatureContainmentValidity": true,
+    "deterministicRebuildValidity": true,
+    "deterministicSignatureHash": 2308952644,
+    "validationPassed": true
+  }
+}
