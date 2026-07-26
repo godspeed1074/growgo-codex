@@ -1,0 +1,649 @@
+{
+  "schemaId": "SUBURBAN_DISTRICT_001",
+  "districtId": "SUBURBAN_DISTRICT_10482",
+  "previewId": "SUBURBAN_DISTRICT_001_PREVIEW_001",
+  "generationProfile": "suburban_district_default",
+  "seed": 10482,
+  "seedConfig": {
+    "districtSeed": 10482,
+    "regionSeed": 1,
+    "districtThemeSeed": "LOW_DENSITY_SUBURBAN"
+  },
+  "themeProfile": {
+    "themeSeed": "LOW_DENSITY_SUBURBAN",
+    "blockThemeSeed": "SUBURBAN_AUSTRALIA",
+    "districtProfile": "suburban_district_default",
+    "dominantZoneType": "RESIDENTIAL_LOW_DENSITY",
+    "blockLotTarget": 27,
+    "targetBlocksRange": [
+      4,
+      8
+    ],
+    "openSpaceTarget": 2,
+    "connectorHierarchy": "collector_connection"
+  },
+  "districtBounds": {
+    "minX": -394,
+    "maxX": 394,
+    "minY": -319,
+    "maxY": 319
+  },
+  "roadHierarchy": {
+    "dominantHierarchy": "collector_connection",
+    "connectorCounts": {
+      "collector_connection": 2,
+      "local_connection": 2,
+      "future_arterial_connection": 1
+    },
+    "supportedHierarchies": [
+      "local_connection",
+      "collector_connection",
+      "future_arterial_connection"
+    ]
+  },
+  "blockGrid": {
+    "gridType": "deterministic_rectangular_district_grid",
+    "blockCount": 4,
+    "columns": 2,
+    "rows": 2,
+    "blockSpacingX": 336,
+    "blockSpacingY": 272,
+    "densityProfile": "LOW_DENSITY_SUBURBAN"
+  },
+  "blockPlacements": [
+    {
+      "schemaId": "BLOCK_PLACEMENT_INSTANCE_001",
+      "blockInstanceId": "BLOCK_001",
+      "streetBlockType": "SUBURBAN_STREET_BLOCK_001",
+      "sourceBlockSchemaId": "SUBURBAN_STREET_BLOCK_001",
+      "sourcePreviewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+      "sourceStreetBlockId": "SUBURBAN_STREET_BLOCK_74656",
+      "sourceBlockSeed": 74656,
+      "position": {
+        "x": -168,
+        "y": -136,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "densityProfile": "LOW_DENSITY_SUBURBAN",
+      "themeProfile": "SUBURBAN_AUSTRALIA",
+      "connectorRelationships": [],
+      "estimatedLotCount": 26,
+      "streamingCellId": "DISTRICT_CELL_1_1",
+      "gridPosition": {
+        "row": 1,
+        "column": 1
+      },
+      "blockFootprint": {
+        "width": 292,
+        "depth": 186
+      },
+      "sourceValidationSignature": 859143467
+    },
+    {
+      "schemaId": "BLOCK_PLACEMENT_INSTANCE_001",
+      "blockInstanceId": "BLOCK_002",
+      "streetBlockType": "SUBURBAN_STREET_BLOCK_001",
+      "sourceBlockSchemaId": "SUBURBAN_STREET_BLOCK_001",
+      "sourcePreviewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+      "sourceStreetBlockId": "SUBURBAN_STREET_BLOCK_87513",
+      "sourceBlockSeed": 87513,
+      "position": {
+        "x": 168,
+        "y": -136,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 180
+      },
+      "densityProfile": "LOW_DENSITY_SUBURBAN",
+      "themeProfile": "SUBURBAN_AUSTRALIA",
+      "connectorRelationships": [],
+      "estimatedLotCount": 27,
+      "streamingCellId": "DISTRICT_CELL_1_2",
+      "gridPosition": {
+        "row": 1,
+        "column": 2
+      },
+      "blockFootprint": {
+        "width": 292,
+        "depth": 186
+      },
+      "sourceValidationSignature": 2625262292
+    },
+    {
+      "schemaId": "BLOCK_PLACEMENT_INSTANCE_001",
+      "blockInstanceId": "BLOCK_003",
+      "streetBlockType": "SUBURBAN_STREET_BLOCK_001",
+      "sourceBlockSchemaId": "SUBURBAN_STREET_BLOCK_001",
+      "sourcePreviewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+      "sourceStreetBlockId": "SUBURBAN_STREET_BLOCK_29894",
+      "sourceBlockSeed": 29894,
+      "position": {
+        "x": -168,
+        "y": 136,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 0
+      },
+      "densityProfile": "LOW_DENSITY_SUBURBAN",
+      "themeProfile": "SUBURBAN_AUSTRALIA",
+      "connectorRelationships": [],
+      "estimatedLotCount": 27,
+      "streamingCellId": "DISTRICT_CELL_2_1",
+      "gridPosition": {
+        "row": 2,
+        "column": 1
+      },
+      "blockFootprint": {
+        "width": 292,
+        "depth": 186
+      },
+      "sourceValidationSignature": 1952068211
+    },
+    {
+      "schemaId": "BLOCK_PLACEMENT_INSTANCE_001",
+      "blockInstanceId": "BLOCK_004",
+      "streetBlockType": "SUBURBAN_STREET_BLOCK_001",
+      "sourceBlockSchemaId": "SUBURBAN_STREET_BLOCK_001",
+      "sourcePreviewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+      "sourceStreetBlockId": "SUBURBAN_STREET_BLOCK_42751",
+      "sourceBlockSeed": 42751,
+      "position": {
+        "x": 168,
+        "y": 136,
+        "z": 0
+      },
+      "rotation": {
+        "yawDegrees": 180
+      },
+      "densityProfile": "LOW_DENSITY_SUBURBAN",
+      "themeProfile": "SUBURBAN_AUSTRALIA",
+      "connectorRelationships": [],
+      "estimatedLotCount": 28,
+      "streamingCellId": "DISTRICT_CELL_2_2",
+      "gridPosition": {
+        "row": 2,
+        "column": 2
+      },
+      "blockFootprint": {
+        "width": 292,
+        "depth": 186
+      },
+      "sourceValidationSignature": 3584668087
+    }
+  ],
+  "roadConnectors": [
+    {
+      "schemaId": "DISTRICT_ROAD_CONNECTOR_INSTANCE_001",
+      "connectorId": "CONNECTOR_001",
+      "startBlockId": "BLOCK_001",
+      "endBlockId": "BLOCK_002",
+      "roadType": "collector_residential_street",
+      "direction": "east_west",
+      "width": 16,
+      "hierarchy": "collector_connection",
+      "supportsPedestrianLink": true,
+      "futureExpansionCompatible": true
+    },
+    {
+      "schemaId": "DISTRICT_ROAD_CONNECTOR_INSTANCE_001",
+      "connectorId": "CONNECTOR_002",
+      "startBlockId": "BLOCK_001",
+      "endBlockId": "BLOCK_003",
+      "roadType": "local_residential_street",
+      "direction": "north_south",
+      "width": 12,
+      "hierarchy": "local_connection",
+      "supportsPedestrianLink": true,
+      "futureExpansionCompatible": true
+    },
+    {
+      "schemaId": "DISTRICT_ROAD_CONNECTOR_INSTANCE_001",
+      "connectorId": "CONNECTOR_003",
+      "startBlockId": "BLOCK_002",
+      "endBlockId": "BLOCK_004",
+      "roadType": "local_residential_street",
+      "direction": "north_south",
+      "width": 12,
+      "hierarchy": "local_connection",
+      "supportsPedestrianLink": true,
+      "futureExpansionCompatible": true
+    },
+    {
+      "schemaId": "DISTRICT_ROAD_CONNECTOR_INSTANCE_001",
+      "connectorId": "CONNECTOR_004",
+      "startBlockId": "BLOCK_003",
+      "endBlockId": "BLOCK_004",
+      "roadType": "collector_residential_street",
+      "direction": "east_west",
+      "width": 16,
+      "hierarchy": "collector_connection",
+      "supportsPedestrianLink": true,
+      "futureExpansionCompatible": true
+    },
+    {
+      "schemaId": "DISTRICT_ROAD_CONNECTOR_INSTANCE_001",
+      "connectorId": "CONNECTOR_005",
+      "startBlockId": "BLOCK_002",
+      "endBlockId": "DISTRICT_EDGE_EAST",
+      "roadType": "future_arterial_connection",
+      "direction": "east_west",
+      "width": 22,
+      "hierarchy": "future_arterial_connection",
+      "supportsPedestrianLink": true,
+      "futureExpansionCompatible": true
+    }
+  ],
+  "landUseZones": [
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_RES_001",
+      "zoneType": "RESIDENTIAL_LOW_DENSITY",
+      "boundary": {
+        "shape": "rect",
+        "x": -314,
+        "y": -229,
+        "width": 292,
+        "depth": 186,
+        "minX": -314,
+        "maxX": -22,
+        "minY": -229,
+        "maxY": -43
+      },
+      "purpose": "Detached suburban housing block.",
+      "allowedContent": [
+        "SUBURBAN_STREET_BLOCK_001"
+      ],
+      "placementRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsCulDeSacs": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "COASTAL_ESTATES"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_RES_002",
+      "zoneType": "RESIDENTIAL_LOW_DENSITY",
+      "boundary": {
+        "shape": "rect",
+        "x": 22,
+        "y": -229,
+        "width": 292,
+        "depth": 186,
+        "minX": 22,
+        "maxX": 314,
+        "minY": -229,
+        "maxY": -43
+      },
+      "purpose": "Detached suburban housing block.",
+      "allowedContent": [
+        "SUBURBAN_STREET_BLOCK_001"
+      ],
+      "placementRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsCulDeSacs": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "COASTAL_ESTATES"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_RES_003",
+      "zoneType": "RESIDENTIAL_LOW_DENSITY",
+      "boundary": {
+        "shape": "rect",
+        "x": -314,
+        "y": 43,
+        "width": 292,
+        "depth": 186,
+        "minX": -314,
+        "maxX": -22,
+        "minY": 43,
+        "maxY": 229
+      },
+      "purpose": "Detached suburban housing block.",
+      "allowedContent": [
+        "SUBURBAN_STREET_BLOCK_001"
+      ],
+      "placementRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsCulDeSacs": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "COASTAL_ESTATES"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_RES_004",
+      "zoneType": "RESIDENTIAL_LOW_DENSITY",
+      "boundary": {
+        "shape": "rect",
+        "x": 22,
+        "y": 43,
+        "width": 292,
+        "depth": 186,
+        "minX": 22,
+        "maxX": 314,
+        "minY": 43,
+        "maxY": 229
+      },
+      "purpose": "Detached suburban housing block.",
+      "allowedContent": [
+        "SUBURBAN_STREET_BLOCK_001"
+      ],
+      "placementRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsCulDeSacs": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "COASTAL_ESTATES"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_OPEN_001",
+      "zoneType": "OPEN_SPACE",
+      "boundary": {
+        "shape": "rect",
+        "x": -30,
+        "y": -279,
+        "width": 60,
+        "depth": 180,
+        "minX": -30,
+        "maxX": 30,
+        "minY": -279,
+        "maxY": -99
+      },
+      "purpose": "District green separation and walking connection.",
+      "allowedContent": [
+        "green_corridor",
+        "walking_link"
+      ],
+      "placementRules": {
+        "buffersResidentialBlocks": true,
+        "adjacentToCollectorsAllowed": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "MEDIUM_DENSITY_SUBURBAN",
+        "COASTAL_ESTATES",
+        "FUTURE_URBAN_EDGE"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_PARK_001",
+      "zoneType": "PARK_RESERVE",
+      "boundary": {
+        "shape": "rect",
+        "x": -370,
+        "y": 223,
+        "width": 120,
+        "depth": 72,
+        "minX": -370,
+        "maxX": -250,
+        "minY": 223,
+        "maxY": 295
+      },
+      "purpose": "Neighbourhood park reserve.",
+      "allowedContent": [
+        "park",
+        "trees",
+        "paths"
+      ],
+      "placementRules": {
+        "adjacentToCollectorPreferred": true,
+        "walkableFromResidential": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "MEDIUM_DENSITY_SUBURBAN",
+        "COASTAL_ESTATES",
+        "FUTURE_URBAN_EDGE"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_COMMUNITY_001",
+      "zoneType": "COMMUNITY_ZONE",
+      "boundary": {
+        "shape": "rect",
+        "x": -358,
+        "y": -301,
+        "width": 110,
+        "depth": 70,
+        "minX": -358,
+        "maxX": -248,
+        "minY": -301,
+        "maxY": -231
+      },
+      "purpose": "Future community facility edge.",
+      "allowedContent": [
+        "school_reserve",
+        "civic_building_reserve"
+      ],
+      "placementRules": {
+        "collectorAccessRequired": true,
+        "avoidDeepCulDeSacs": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "MEDIUM_DENSITY_SUBURBAN"
+      ]
+    },
+    {
+      "schemaId": "LAND_USE_ZONE_INSTANCE_001",
+      "zoneId": "ZONE_COMMERCIAL_001",
+      "zoneType": "COMMERCIAL_EDGE_ZONE",
+      "boundary": {
+        "shape": "rect",
+        "x": 260,
+        "y": -295,
+        "width": 110,
+        "depth": 180,
+        "minX": 260,
+        "maxX": 370,
+        "minY": -295,
+        "maxY": -115
+      },
+      "purpose": "Future neighbourhood retail and services edge.",
+      "allowedContent": [
+        "shopping_reserve",
+        "commercial_edge_use"
+      ],
+      "placementRules": {
+        "futureArterialPreferred": true,
+        "edgeOfDistrictPreferred": true
+      },
+      "densityCompatibility": [
+        "LOW_DENSITY_SUBURBAN",
+        "MEDIUM_DENSITY_SUBURBAN",
+        "FUTURE_URBAN_EDGE"
+      ]
+    }
+  ],
+  "openSpacePlacements": [
+    {
+      "schemaId": "OPEN_SPACE_INSTANCE_001",
+      "openSpaceId": "OPEN_SPACE_001",
+      "openSpaceType": "park",
+      "position": {
+        "x": -310,
+        "y": 259,
+        "z": 0
+      },
+      "size": {
+        "width": 90,
+        "depth": 64
+      },
+      "connectionRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsWalkingLink": true,
+        "buffersResidentialBlocks": true
+      },
+      "futureAssetCompatibility": [
+        "playground",
+        "sport_field",
+        "trees",
+        "path_network"
+      ]
+    },
+    {
+      "schemaId": "OPEN_SPACE_INSTANCE_001",
+      "openSpaceId": "OPEN_SPACE_002",
+      "openSpaceType": "green_corridor",
+      "position": {
+        "x": 0,
+        "y": -187,
+        "z": 0
+      },
+      "size": {
+        "width": 60,
+        "depth": 180
+      },
+      "connectionRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsWalkingLink": true,
+        "buffersResidentialBlocks": true
+      },
+      "futureAssetCompatibility": [
+        "trees",
+        "walking_path",
+        "reserve_edge"
+      ]
+    },
+    {
+      "schemaId": "OPEN_SPACE_INSTANCE_001",
+      "openSpaceId": "OPEN_SPACE_003",
+      "openSpaceType": "walking_link",
+      "position": {
+        "x": 304,
+        "y": -203,
+        "z": 0
+      },
+      "size": {
+        "width": 32,
+        "depth": 144
+      },
+      "connectionRules": {
+        "adjacentToCollectorPreferred": true,
+        "supportsWalkingLink": true,
+        "buffersResidentialBlocks": false
+      },
+      "futureAssetCompatibility": [
+        "walking_path",
+        "signage",
+        "trees"
+      ]
+    }
+  ],
+  "destinationReserves": [
+    {
+      "schemaId": "DESTINATION_RESERVE_INSTANCE_001",
+      "reserveId": "RESERVE_001",
+      "reserveType": "school_reserve",
+      "boundary": {
+        "shape": "rect",
+        "x": -358,
+        "y": -301,
+        "width": 110,
+        "depth": 70,
+        "minX": -358,
+        "maxX": -248,
+        "minY": -301,
+        "maxY": -231
+      },
+      "futureUse": "Primary school campus",
+      "roadAccessProfile": "collector_edge_access",
+      "bufferRules": {
+        "requiresOpenSpaceBuffer": true,
+        "avoidDeepCulDeSacAccess": true
+      }
+    },
+    {
+      "schemaId": "DESTINATION_RESERVE_INSTANCE_001",
+      "reserveId": "RESERVE_002",
+      "reserveType": "shopping_reserve",
+      "boundary": {
+        "shape": "rect",
+        "x": 260,
+        "y": -295,
+        "width": 110,
+        "depth": 86,
+        "minX": 260,
+        "maxX": 370,
+        "minY": -295,
+        "maxY": -209
+      },
+      "futureUse": "Neighbourhood shopping strip",
+      "roadAccessProfile": "future_arterial_edge_access",
+      "bufferRules": {
+        "requiresOpenSpaceBuffer": false,
+        "avoidDeepCulDeSacAccess": true
+      }
+    },
+    {
+      "schemaId": "DESTINATION_RESERVE_INSTANCE_001",
+      "reserveId": "RESERVE_003",
+      "reserveType": "sports_field_reserve",
+      "boundary": {
+        "shape": "rect",
+        "x": 248,
+        "y": 227,
+        "width": 120,
+        "depth": 70,
+        "minX": 248,
+        "maxX": 368,
+        "minY": 227,
+        "maxY": 297
+      },
+      "futureUse": "Community sports field",
+      "roadAccessProfile": "collector_edge_access",
+      "bufferRules": {
+        "requiresOpenSpaceBuffer": true,
+        "avoidDeepCulDeSacAccess": true
+      }
+    }
+  ],
+  "lotCount": 108,
+  "validationContract": {
+    "checks": {
+      "blocksInsideBoundary": true,
+      "blocksDoNotOverlap": true,
+      "roadsConnected": true,
+      "roadHierarchyValid": true,
+      "landUseDistributionValid": true,
+      "openSpaceValid": true,
+      "destinationReservesValid": true,
+      "deterministicRebuildValid": true,
+      "streamingBoundariesValid": true,
+      "instanceReuseStrategyValid": true
+    }
+  },
+  "validationResult": {
+    "blocksInsideBoundary": true,
+    "blocksDoNotOverlap": true,
+    "roadsConnected": true,
+    "roadHierarchyValid": true,
+    "landUseDistributionValid": true,
+    "openSpaceValid": true,
+    "destinationReservesValid": true,
+    "deterministicRebuildValid": true,
+    "streamingBoundariesValid": true,
+    "instanceReuseStrategyValid": true,
+    "deterministicSignatureHash": 3403348121,
+    "validationPassed": true
+  }
+}

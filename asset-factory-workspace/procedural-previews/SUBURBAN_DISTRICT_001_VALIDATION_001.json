@@ -1,0 +1,27 @@
+{
+  "validationId": "SUBURBAN_DISTRICT_001_VALIDATION_001",
+  "previewId": "SUBURBAN_DISTRICT_001_PREVIEW_001",
+  "districtId": "SUBURBAN_DISTRICT_10482",
+  "seed": 10482,
+  "summary": {
+    "validationPassed": true,
+    "blockCount": 4,
+    "lotCount": 108,
+    "roadConnectorCount": 5,
+    "zoneCount": 8,
+    "openSpaceCount": 3,
+    "destinationReserveCount": 3
+  },
+  "checks": {
+    "blocksInsideBoundary": "PASS",
+    "blocksDoNotOverlap": "PASS",
+    "roadsConnected": "PASS",
+    "roadHierarchyValid": "PASS",
+    "landUseDistributionValid": "PASS",
+    "openSpaceValid": "PASS",
+    "destinationReservesValid": "PASS",
+    "deterministicRebuildValid": "PASS",
+    "streamingBoundariesValid": "PASS",
+    "instanceReuseStrategyValid": "PASS"
+  }
+}
