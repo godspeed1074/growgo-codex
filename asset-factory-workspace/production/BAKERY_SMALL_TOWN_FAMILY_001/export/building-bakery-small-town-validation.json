@@ -1,0 +1,18 @@
+{
+  "assetId": "BUILDING_BAKERY_SMALL_TOWN_001",
+  "geometry": "PASS",
+  "recipeResolution": "PASS",
+  "moduleImport": "PASS",
+  "assembly": "PASS",
+  "commercialIdentity": "PASS",
+  "style": "PASS",
+  "technical": "PASS",
+  "lod": "PASS",
+  "export": "PASS",
+  "duplicateModulesAvoided": true,
+  "reusedResidentialCoastalModuleCount": 8,
+  "reusedHospitalityModuleCount": 4,
+  "bakeryIdentityModuleCount": 4,
+  "totalModuleCount": 16,
+  "reusePercentage": 80
+}
