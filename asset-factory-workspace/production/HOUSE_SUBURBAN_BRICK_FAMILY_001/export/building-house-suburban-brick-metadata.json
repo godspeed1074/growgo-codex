@@ -1,0 +1,25 @@
+{
+  "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+  "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+  "family": "FAMILY_HOUSE_SUBURBAN_BRICK",
+  "category": "BUILDING_RESIDENTIAL",
+  "suburbanIdentityModules": [
+    "MOD_WALL_BRICK_SUBURBAN_001",
+    "MOD_ROOF_TILE_STANDARD_001",
+    "MOD_GARAGE_RESIDENTIAL_STANDARD_001",
+    "MOD_WINDOW_RESIDENTIAL_STANDARD_001",
+    "MOD_LETTERBOX_STANDARD_001",
+    "MOD_ENTRY_PATH_SUBURBAN_001"
+  ],
+  "sharedSiteModules": [
+    "MOD_PATH_STANDARD_001",
+    "MOD_FENCE_STANDARD_001",
+    "MOD_DRIVEWAY_STANDARD_SINGLE_001",
+    "MOD_GROUND_GRASS_STANDARD_001",
+    "MOD_BUSH_NATIVE_STANDARD_001",
+    "MOD_TREE_EUCALYPTUS_STANDARD_001"
+  ],
+  "reusePercentage": 75,
+  "validationStatus": "ASSEMBLY_READY",
+  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export"
+}

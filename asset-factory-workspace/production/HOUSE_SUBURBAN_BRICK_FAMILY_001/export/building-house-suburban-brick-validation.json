@@ -1,0 +1,17 @@
+{
+  "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+  "geometry": "PASS",
+  "recipeResolution": "PASS",
+  "moduleImport": "PASS",
+  "assembly": "PASS",
+  "residentialIdentity": "PASS",
+  "style": "PASS",
+  "technical": "PASS",
+  "lod": "PASS",
+  "export": "PASS",
+  "duplicateModulesAvoided": true,
+  "suburbanModuleCount": 6,
+  "sharedSiteModuleCount": 6,
+  "totalModuleCount": 12,
+  "reusePercentage": 75
+}
