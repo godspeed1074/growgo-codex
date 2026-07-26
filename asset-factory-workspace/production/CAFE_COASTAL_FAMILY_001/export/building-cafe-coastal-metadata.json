@@ -1,0 +1,21 @@
+{
+  "assetId": "BUILDING_CAFE_COASTAL_001",
+  "recipeId": "RECIPE_CAFE_COASTAL_001",
+  "moduleList": [
+    "MOD_FOUNDATION_STANDARD_RECT_001",
+    "MOD_WALL_WEATHERBOARD_WHITE_001",
+    "MOD_ROOF_GABLE_STANDARD_001",
+    "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+    "MOD_PATH_STANDARD_001",
+    "MOD_GROUND_GRASS_STANDARD_001",
+    "MOD_BUSH_NATIVE_STANDARD_001",
+    "MOD_TREE_EUCALYPTUS_STANDARD_001",
+    "MOD_AWNING_COASTAL_CAFE_001",
+    "MOD_CAFE_SIGN_STANDARD_001",
+    "MOD_SERVICE_WINDOW_CAFE_001",
+    "MOD_OUTDOOR_TABLE_SEATING_COASTAL_001"
+  ],
+  "reusePercentage": 75,
+  "validationStatus": "ASSEMBLY_READY",
+  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CAFE_COASTAL_FAMILY_001/export"
+}

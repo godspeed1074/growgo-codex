@@ -1,0 +1,16 @@
+{
+  "assetId": "BUILDING_CAFE_COASTAL_001",
+  "geometry": "PASS",
+  "recipeResolution": "PASS",
+  "moduleImport": "PASS",
+  "assembly": "PASS",
+  "style": "PASS",
+  "technical": "PASS",
+  "lod": "PASS",
+  "export": "PASS",
+  "duplicateModulesAvoided": true,
+  "reusedModuleCount": 8,
+  "hospitalityModuleCount": 4,
+  "totalModuleCount": 12,
+  "reusePercentage": 75
+}
