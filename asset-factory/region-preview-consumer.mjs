@@ -5,6 +5,12 @@ const PREVIEW_ID = "REGION_LAYOUT_001_PREVIEW_001";
 const SCENE_ID = "REGION_LAYOUT_001_PREVIEW_SCENE_001";
 const VALIDATION_ID = "REGION_LAYOUT_001_PREVIEW_VALIDATION_001";
 const CONSUMER_ID = "REGION_LAYOUT_001_PREVIEW_CONSUMER_001";
+const CAPTURE_RECORD_ID = "REGION_INSPECTION_CAPTURE_RECORD_001";
+const CAPTURE_RECORD_FILENAME = `${CAPTURE_RECORD_ID}.json`;
+const REFINEMENT_VERSION = "SESSION_78_TERRAIN_REFINEMENT_PASS";
+const PREVIEW_CONSUMER_VERSION = "SESSION_80_REGION_EVIDENCE_CLOSEOUT";
+const GENERATOR_VERSION = "SESSION_78_TERRAIN_REFINEMENT_PASS";
+const VALIDATION_VERSION = "REGION_PREVIEW_VALIDATION_001";
 
 export const regionPreviewConsumerDefinition = deepFreeze({
   consumerId: CONSUMER_ID,
@@ -156,6 +162,7 @@ export function createRegionPreviewSceneMetadata(
   const definition = normalizeDefinition(rawDefinition);
   const preview = readSourcePreview(definition, options.cwd);
   const capturePositions = buildCapturePositions(preview);
+  const traceability = buildTraceabilityBundle(definition, preview);
 
   return freeze({
     sceneId: definition.previewSceneId,
@@ -171,14 +178,18 @@ export function createRegionPreviewSceneMetadata(
       framing: "region_overview",
       paddingMeters: 320
     }),
+    traceability,
     visualCaptureWorkflow: freeze({
-      previewVersion: "SESSION_76_REGION_PREVIEW_CONSUMER",
+      previewVersion: REFINEMENT_VERSION,
       regionSeed: preview.seedConfig.regionSeed,
       regionProfile: preview.regionProfile.profileId,
       previewVersionSeedSignature:
         preview.validationResult.deterministicSignatureHash,
       validationResult: preview.validationResult.validationPassed ? "PASS" : "FAIL",
       inspectionStatus: "READY_FOR_REGION_INSPECTION",
+      generatorVersion: GENERATOR_VERSION,
+      previewConsumerVersion: PREVIEW_CONSUMER_VERSION,
+      validationVersion: VALIDATION_VERSION,
       topDown: freeze({
         ...definition.previewCaptureProfiles.topDown,
         position: capturePositions.topDown.position,
@@ -380,12 +391,42 @@ export function createRegionPreviewSceneMetadata(
   });
 }
 
+export function createRegionInspectionCaptureRecord(
+  rawDefinition = regionPreviewConsumerDefinition,
+  options = {}
+) {
+  const definition = normalizeDefinition(rawDefinition);
+  const preview = readSourcePreview(definition, options.cwd);
+  const metadata = createRegionPreviewSceneMetadata(definition, options);
+  const traceability = buildTraceabilityBundle(definition, preview);
+
+  return freeze({
+    captureRecordId: CAPTURE_RECORD_ID,
+    sceneId: definition.previewSceneId,
+    sourcePreviewId: definition.sourcePreviewId,
+    regionId: preview.regionId,
+    regionSeed: preview.seedConfig.regionSeed,
+    regionProfile: preview.regionProfile.profileId,
+    previewVersion: REFINEMENT_VERSION,
+    captureStatus: "METADATA_ONLY_PENDING_VIEWPORT_CAPTURE",
+    validationStatus: preview.validationResult.validationPassed ? "PASS" : "FAIL",
+    cameraProfiles: freeze([
+      metadata.visualCaptureWorkflow.topDown,
+      metadata.visualCaptureWorkflow.angledRegion25D,
+      metadata.visualCaptureWorkflow.settlementNetworkOverview
+    ]),
+    traceability
+  });
+}
+
 export function createRegionPreviewValidationReport(
   rawDefinition = regionPreviewConsumerDefinition,
   options = {}
 ) {
   const definition = normalizeDefinition(rawDefinition);
   const preview = readSourcePreview(definition, options.cwd);
+  const metadata = createRegionPreviewSceneMetadata(definition, options);
+  const captureRecord = createRegionInspectionCaptureRecord(definition, options);
 
   const boundaryValid =
     Number.isFinite(preview.regionBounds.minX) &&
@@ -433,6 +474,33 @@ export function createRegionPreviewValidationReport(
   const noDuplicateGeometryGeneration =
     preview.validationResult.instanceReferencesOnly === true;
   const cameraProfileValid = validateCaptureProfiles(definition.previewCaptureProfiles);
+  const metadataVersionMatchesRefinementState =
+    metadata.visualCaptureWorkflow.previewVersion === REFINEMENT_VERSION &&
+    metadata.traceability.refinementVersion === REFINEMENT_VERSION &&
+    metadata.traceability.generatorVersion === GENERATOR_VERSION &&
+    metadata.traceability.previewConsumerVersion === PREVIEW_CONSUMER_VERSION &&
+    metadata.traceability.validationVersion === VALIDATION_VERSION;
+  const inspectionRecordComplete =
+    captureRecord.captureRecordId === CAPTURE_RECORD_ID &&
+    captureRecord.previewVersion === REFINEMENT_VERSION &&
+    captureRecord.validationStatus === "PASS" &&
+    Array.isArray(captureRecord.cameraProfiles) &&
+    captureRecord.cameraProfiles.length === 3;
+  const cameraProfileComplete = captureRecord.cameraProfiles.every(
+    (profile) =>
+      typeof profile.cameraId === "string" &&
+      typeof profile.viewType === "string" &&
+      Number.isFinite(profile.angleDegrees) &&
+      profile.position &&
+      profile.rotation
+  );
+  const validationReferenceConsistent =
+    metadata.sourcePreviewId === definition.sourcePreviewId &&
+    captureRecord.sourcePreviewId === definition.sourcePreviewId &&
+    metadata.traceability.sourcePreview.previewId === preview.previewId &&
+    metadata.traceability.sourcePreview.previewId === captureRecord.traceability.sourcePreview.previewId &&
+    metadata.traceability.sourcePreview.deterministicSignatureHash ===
+      preview.validationResult.deterministicSignatureHash;
 
   const checks = freeze({
     regionBoundaryValid: passFail(boundaryValid),
@@ -452,7 +520,13 @@ export function createRegionPreviewValidationReport(
     referenceBasedPlacement: passFail(referenceBasedPlacement),
     streamingReadyStructure: passFail(streamingReadyStructure),
     noDuplicateGeometryGeneration: passFail(noDuplicateGeometryGeneration),
-    cameraProfileValid: passFail(cameraProfileValid)
+    cameraProfileValid: passFail(cameraProfileValid),
+    metadataVersionMatchesRefinementState: passFail(
+      metadataVersionMatchesRefinementState
+    ),
+    inspectionRecordComplete: passFail(inspectionRecordComplete),
+    cameraProfileComplete: passFail(cameraProfileComplete),
+    validationReferenceConsistent: passFail(validationReferenceConsistent)
   });
 
   return freeze({
@@ -460,6 +534,8 @@ export function createRegionPreviewValidationReport(
     consumerId: definition.consumerId,
     sourcePreviewId: definition.sourcePreviewId,
     sceneId: definition.previewSceneId,
+    traceability: metadata.traceability,
+    inspectionCaptureRecordId: CAPTURE_RECORD_ID,
     checks,
     summary: freeze({
       validationPassed: Object.values(checks).every((status) => status === "PASS"),
@@ -483,14 +559,24 @@ export function writeRegionPreviewArtifacts(
   fs.mkdirSync(outputDirectory, { recursive: true });
 
   const metadata = createRegionPreviewSceneMetadata(definition, { cwd });
+  const captureRecord = createRegionInspectionCaptureRecord(definition, { cwd });
   const validation = createRegionPreviewValidationReport(definition, { cwd });
   const manifest = freeze({
     consumerId: definition.consumerId,
     sceneId: definition.previewSceneId,
     validationId: definition.validationId,
+    captureRecordId: CAPTURE_RECORD_ID,
     sourcePreviewPath: definition.sourcePreviewPath,
+    traceability: metadata.traceability,
+    previewVersion: REFINEMENT_VERSION,
     blenderScriptPath: definition.blenderScriptPath,
-    blenderCommand: buildRegionPreviewBlenderCommand(definition)
+    blenderCommand: buildRegionPreviewBlenderCommand(definition),
+    artifactPaths: freeze({
+      metadataPath: "preview-scene-metadata.json",
+      manifestPath: "preview-scene-manifest.json",
+      validationPath: `${definition.validationId}.json`,
+      captureRecordPath: CAPTURE_RECORD_FILENAME
+    })
   });
 
   fs.writeFileSync(
@@ -505,12 +591,34 @@ export function writeRegionPreviewArtifacts(
     path.join(outputDirectory, `${definition.validationId}.json`),
     `${JSON.stringify(validation, null, 2)}\n`
   );
+  fs.writeFileSync(
+    path.join(outputDirectory, CAPTURE_RECORD_FILENAME),
+    `${JSON.stringify(captureRecord, null, 2)}\n`
+  );
 
   return freeze({
     outputDirectory,
     metadataPath: path.join(outputDirectory, "preview-scene-metadata.json"),
     manifestPath: path.join(outputDirectory, "preview-scene-manifest.json"),
-    validationPath: path.join(outputDirectory, `${definition.validationId}.json`)
+    validationPath: path.join(outputDirectory, `${definition.validationId}.json`),
+    captureRecordPath: path.join(outputDirectory, CAPTURE_RECORD_FILENAME)
+  });
+}
+
+function buildTraceabilityBundle(definition, preview) {
+  return freeze({
+    generatorVersion: GENERATOR_VERSION,
+    previewConsumerVersion: PREVIEW_CONSUMER_VERSION,
+    refinementVersion: REFINEMENT_VERSION,
+    validationVersion: VALIDATION_VERSION,
+    sourcePreview: freeze({
+      previewId: preview.previewId,
+      schemaId: preview.schemaId,
+      previewPath: definition.sourcePreviewPath,
+      regionId: preview.regionId,
+      deterministicSignatureHash:
+        preview.validationResult.deterministicSignatureHash
+    })
   });
 }
 

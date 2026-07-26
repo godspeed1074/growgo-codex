@@ -1,0 +1,71 @@
+{
+  "captureRecordId": "REGION_INSPECTION_CAPTURE_RECORD_001",
+  "sceneId": "REGION_LAYOUT_001_PREVIEW_SCENE_001",
+  "sourcePreviewId": "REGION_LAYOUT_001_PREVIEW_001",
+  "regionId": "REGION_10482",
+  "regionSeed": 10482,
+  "regionProfile": "COASTAL_REGION",
+  "previewVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+  "captureStatus": "METADATA_ONLY_PENDING_VIEWPORT_CAPTURE",
+  "validationStatus": "PASS",
+  "cameraProfiles": [
+    {
+      "cameraId": "TOP_DOWN_REGION_INSPECTION",
+      "viewType": "top_down_region",
+      "angleDegrees": 90,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 6944
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "cameraId": "ANGLED_REGION_2_5D_INSPECTION",
+      "viewType": "angled_25d_region",
+      "angleDegrees": 58,
+      "position": {
+        "x": 0,
+        "y": -3256,
+        "z": 5580
+      },
+      "rotation": {
+        "x": 57.9,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "cameraId": "SETTLEMENT_NETWORK_OVERVIEW_INSPECTION",
+      "viewType": "settlement_network_overview",
+      "angleDegrees": 42,
+      "position": {
+        "x": 744,
+        "y": -704,
+        "z": 3348
+      },
+      "rotation": {
+        "x": 66.5,
+        "y": 0,
+        "z": 24
+      }
+    }
+  ],
+  "traceability": {
+    "generatorVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "previewConsumerVersion": "SESSION_80_REGION_EVIDENCE_CLOSEOUT",
+    "refinementVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "validationVersion": "REGION_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "REGION_LAYOUT_001_PREVIEW_001",
+      "schemaId": "REGION_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json",
+      "regionId": "REGION_10482",
+      "deterministicSignatureHash": 3292669404
+    }
+  }
+}

@@ -3,6 +3,20 @@
   "consumerId": "REGION_LAYOUT_001_PREVIEW_CONSUMER_001",
   "sourcePreviewId": "REGION_LAYOUT_001_PREVIEW_001",
   "sceneId": "REGION_LAYOUT_001_PREVIEW_SCENE_001",
+  "traceability": {
+    "generatorVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "previewConsumerVersion": "SESSION_80_REGION_EVIDENCE_CLOSEOUT",
+    "refinementVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "validationVersion": "REGION_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "REGION_LAYOUT_001_PREVIEW_001",
+      "schemaId": "REGION_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json",
+      "regionId": "REGION_10482",
+      "deterministicSignatureHash": 3292669404
+    }
+  },
+  "inspectionCaptureRecordId": "REGION_INSPECTION_CAPTURE_RECORD_001",
   "checks": {
     "regionBoundaryValid": "PASS",
     "naturalZonesValid": "PASS",
@@ -21,7 +35,11 @@
     "referenceBasedPlacement": "PASS",
     "streamingReadyStructure": "PASS",
     "noDuplicateGeometryGeneration": "PASS",
-    "cameraProfileValid": "PASS"
+    "cameraProfileValid": "PASS",
+    "metadataVersionMatchesRefinementState": "PASS",
+    "inspectionRecordComplete": "PASS",
+    "cameraProfileComplete": "PASS",
+    "validationReferenceConsistent": "PASS"
   },
   "summary": {
     "validationPassed": true,

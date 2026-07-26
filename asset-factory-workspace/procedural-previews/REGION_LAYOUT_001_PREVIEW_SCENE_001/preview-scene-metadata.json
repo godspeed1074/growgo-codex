@@ -12,13 +12,29 @@
     "framing": "region_overview",
     "paddingMeters": 320
   },
+  "traceability": {
+    "generatorVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "previewConsumerVersion": "SESSION_80_REGION_EVIDENCE_CLOSEOUT",
+    "refinementVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "validationVersion": "REGION_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "REGION_LAYOUT_001_PREVIEW_001",
+      "schemaId": "REGION_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json",
+      "regionId": "REGION_10482",
+      "deterministicSignatureHash": 3292669404
+    }
+  },
   "visualCaptureWorkflow": {
-    "previewVersion": "SESSION_76_REGION_PREVIEW_CONSUMER",
+    "previewVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
     "regionSeed": 10482,
     "regionProfile": "COASTAL_REGION",
     "previewVersionSeedSignature": 3292669404,
     "validationResult": "PASS",
     "inspectionStatus": "READY_FOR_REGION_INSPECTION",
+    "generatorVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "previewConsumerVersion": "SESSION_80_REGION_EVIDENCE_CLOSEOUT",
+    "validationVersion": "REGION_PREVIEW_VALIDATION_001",
     "topDown": {
       "cameraId": "TOP_DOWN_REGION_INSPECTION",
       "viewType": "top_down_region",

@@ -55,9 +55,34 @@ test("region preview consumer metadata resolves the region preview scene", () =>
   assert.equal(metadata.explorationLayer.routeCount, 6);
   assert.equal(
     metadata.visualCaptureWorkflow.previewVersion,
-    "SESSION_76_REGION_PREVIEW_CONSUMER"
+    "SESSION_78_TERRAIN_REFINEMENT_PASS"
   );
   assert.equal(metadata.visualCaptureWorkflow.regionProfile, "COASTAL_REGION");
+  assert.equal(
+    metadata.visualCaptureWorkflow.generatorVersion,
+    "SESSION_78_TERRAIN_REFINEMENT_PASS"
+  );
+  assert.equal(
+    metadata.visualCaptureWorkflow.previewConsumerVersion,
+    "SESSION_80_REGION_EVIDENCE_CLOSEOUT"
+  );
+  assert.equal(
+    metadata.visualCaptureWorkflow.validationVersion,
+    "REGION_PREVIEW_VALIDATION_001"
+  );
+  assert.equal(metadata.traceability.generatorVersion, "SESSION_78_TERRAIN_REFINEMENT_PASS");
+  assert.equal(
+    metadata.traceability.previewConsumerVersion,
+    "SESSION_80_REGION_EVIDENCE_CLOSEOUT"
+  );
+  assert.equal(
+    metadata.traceability.refinementVersion,
+    "SESSION_78_TERRAIN_REFINEMENT_PASS"
+  );
+  assert.equal(
+    metadata.traceability.sourcePreview.previewId,
+    "REGION_LAYOUT_001_PREVIEW_001"
+  );
   assert.equal(
     metadata.visualCaptureWorkflow.inspectionStatus,
     "READY_FOR_REGION_INSPECTION"
@@ -111,6 +136,25 @@ test("region preview consumer metadata resolves the region preview scene", () =>
   );
 });
 
+test("region preview consumer emits a complete inspection capture record", () => {
+  const captureRecord = moduleUnderTest.createRegionInspectionCaptureRecord();
+
+  assert.equal(captureRecord.captureRecordId, "REGION_INSPECTION_CAPTURE_RECORD_001");
+  assert.equal(
+    captureRecord.previewVersion,
+    "SESSION_78_TERRAIN_REFINEMENT_PASS"
+  );
+  assert.equal(captureRecord.regionProfile, "COASTAL_REGION");
+  assert.equal(captureRecord.captureStatus, "METADATA_ONLY_PENDING_VIEWPORT_CAPTURE");
+  assert.equal(captureRecord.validationStatus, "PASS");
+  assert.equal(captureRecord.cameraProfiles.length, 3);
+  assert.equal(captureRecord.cameraProfiles[0].cameraId, "TOP_DOWN_REGION_INSPECTION");
+  assert.equal(
+    captureRecord.traceability.previewConsumerVersion,
+    "SESSION_80_REGION_EVIDENCE_CLOSEOUT"
+  );
+});
+
 test("region preview consumer validation passes against the deterministic region source", () => {
   const validation = moduleUnderTest.createRegionPreviewValidationReport();
 
@@ -139,6 +183,14 @@ test("region preview consumer validation passes against the deterministic region
   assert.equal(validation.checks.streamingReadyStructure, "PASS");
   assert.equal(validation.checks.noDuplicateGeometryGeneration, "PASS");
   assert.equal(validation.checks.cameraProfileValid, "PASS");
+  assert.equal(validation.checks.metadataVersionMatchesRefinementState, "PASS");
+  assert.equal(validation.checks.inspectionRecordComplete, "PASS");
+  assert.equal(validation.checks.cameraProfileComplete, "PASS");
+  assert.equal(validation.checks.validationReferenceConsistent, "PASS");
+  assert.equal(
+    validation.inspectionCaptureRecordId,
+    "REGION_INSPECTION_CAPTURE_RECORD_001"
+  );
 });
 
 test("checked-in region preview artifacts match generated metadata and validation outputs", () => {
@@ -163,11 +215,31 @@ test("checked-in region preview artifacts match generated metadata and validatio
       "utf8"
     )
   );
+  const captureRecord = JSON.parse(
+    fs.readFileSync(
+      path.join(
+        previewOutputDirectory,
+        "REGION_INSPECTION_CAPTURE_RECORD_001.json"
+      ),
+      "utf8"
+    )
+  );
   const generatedMetadata = moduleUnderTest.createRegionPreviewSceneMetadata();
+  const generatedCaptureRecord =
+    moduleUnderTest.createRegionInspectionCaptureRecord();
   const generatedValidation = moduleUnderTest.createRegionPreviewValidationReport();
   const generatedCommand = moduleUnderTest.buildRegionPreviewBlenderCommand();
 
   assert.deepEqual(metadata, generatedMetadata);
+  assert.deepEqual(captureRecord, generatedCaptureRecord);
   assert.deepEqual(validation, generatedValidation);
   assert.equal(manifest.blenderCommand, generatedCommand);
+  assert.equal(
+    manifest.captureRecordId,
+    "REGION_INSPECTION_CAPTURE_RECORD_001"
+  );
+  assert.equal(
+    manifest.previewVersion,
+    "SESSION_78_TERRAIN_REFINEMENT_PASS"
+  );
 });

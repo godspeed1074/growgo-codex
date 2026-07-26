@@ -2,7 +2,28 @@
   "consumerId": "REGION_LAYOUT_001_PREVIEW_CONSUMER_001",
   "sceneId": "REGION_LAYOUT_001_PREVIEW_SCENE_001",
   "validationId": "REGION_LAYOUT_001_PREVIEW_VALIDATION_001",
+  "captureRecordId": "REGION_INSPECTION_CAPTURE_RECORD_001",
   "sourcePreviewPath": "asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json",
+  "traceability": {
+    "generatorVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "previewConsumerVersion": "SESSION_80_REGION_EVIDENCE_CLOSEOUT",
+    "refinementVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
+    "validationVersion": "REGION_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "REGION_LAYOUT_001_PREVIEW_001",
+      "schemaId": "REGION_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json",
+      "regionId": "REGION_10482",
+      "deterministicSignatureHash": 3292669404
+    }
+  },
+  "previewVersion": "SESSION_78_TERRAIN_REFINEMENT_PASS",
   "blenderScriptPath": "asset-factory/local-blender-scripts/generate_region_layout_preview_scene.py",
-  "blenderCommand": "blender --python asset-factory/local-blender-scripts/generate_region_layout_preview_scene.py -- --source-json asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json --output-dir asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_SCENE_001"
+  "blenderCommand": "blender --python asset-factory/local-blender-scripts/generate_region_layout_preview_scene.py -- --source-json asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_001.json --output-dir asset-factory-workspace/procedural-previews/REGION_LAYOUT_001_PREVIEW_SCENE_001",
+  "artifactPaths": {
+    "metadataPath": "preview-scene-metadata.json",
+    "manifestPath": "preview-scene-manifest.json",
+    "validationPath": "REGION_LAYOUT_001_PREVIEW_VALIDATION_001.json",
+    "captureRecordPath": "REGION_INSPECTION_CAPTURE_RECORD_001.json"
+  }
 }
