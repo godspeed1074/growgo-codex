@@ -1,0 +1,30 @@
+{
+  "validationId": "WORLD_LAYOUT_001_VALIDATION_001",
+  "previewId": "WORLD_LAYOUT_001_PREVIEW_001",
+  "worldId": "WORLD_10482",
+  "seed": 10482,
+  "summary": {
+    "validationPassed": true,
+    "worldProfileId": "AUSTRALIAN_COASTAL_WORLD",
+    "geographyZoneCount": 8,
+    "regionCount": 5,
+    "connectionCount": 6,
+    "landmarkReserveCount": 5,
+    "explorationRouteCount": 6,
+    "streamingChunkCount": 4
+  },
+  "checks": {
+    "geographyValid": "PASS",
+    "regionsValid": "PASS",
+    "transitionsValid": "PASS",
+    "corridorsConnected": "PASS",
+    "routesReachable": "PASS",
+    "landmarksAccessible": "PASS",
+    "chunksValid": "PASS",
+    "boundariesConsistent": "PASS",
+    "deterministicRebuildValid": "PASS",
+    "referenceBasedStructure": "PASS",
+    "streamingReady": "PASS",
+    "noDuplicateGeometryGeneration": "PASS"
+  }
+}
