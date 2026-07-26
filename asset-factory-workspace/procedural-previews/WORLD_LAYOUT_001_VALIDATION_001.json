@@ -6,10 +6,11 @@
   "summary": {
     "validationPassed": true,
     "worldProfileId": "AUSTRALIAN_COASTAL_WORLD",
+    "scaleProfileId": "SMALL_WORLD",
     "geographyZoneCount": 8,
     "regionCount": 5,
-    "connectionCount": 6,
-    "landmarkReserveCount": 5,
+    "connectionCount": 7,
+    "landmarkReserveCount": 4,
     "explorationRouteCount": 6,
     "streamingChunkCount": 4
   },
@@ -25,6 +26,10 @@
     "deterministicRebuildValid": "PASS",
     "referenceBasedStructure": "PASS",
     "streamingReady": "PASS",
-    "noDuplicateGeometryGeneration": "PASS"
+    "noDuplicateGeometryGeneration": "PASS",
+    "profileAppliedCorrectly": "PASS",
+    "identityScoreAligned": "PASS",
+    "requiredSystemsGenerated": "PASS",
+    "streamingRequirementsValid": "PASS"
   }
 }

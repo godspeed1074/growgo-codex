@@ -14,9 +14,10 @@ const validationOutputId = "WORLD_LAYOUT_001_VALIDATION_001";
 
 const supportedWorldProfiles = Object.freeze([
   "AUSTRALIAN_COASTAL_WORLD",
-  "CONTINENTAL_WORLD",
-  "MOUNTAIN_WORLD",
-  "TOURISM_WORLD"
+  "AUSTRALIAN_OUTBACK_WORLD",
+  "ALPINE_WORLD",
+  "TOURISM_ARCHIPELAGO_WORLD",
+  "METROPOLITAN_EXPANSION_WORLD"
 ]);
 
 const supportedRegionProfiles = new Set([
@@ -62,114 +63,254 @@ const supportedRouteTypes = new Set([
   "FERRY_EXPLORATION_LOOP"
 ]);
 
+const worldScaleProfiles = deepFreeze({
+  SMALL_WORLD: {
+    schemaId: "WORLD_SCALE_PROFILE_001",
+    scaleId: "SMALL_WORLD",
+    regionCountRange: [5, 6],
+    travelDistanceRange: "COMPACT_INTER_REGION",
+    explorationDensity: "HIGH_EXPLORATION",
+    sizeMultiplier: 1,
+    chunkRequirements: {
+      minimumChunkCount: 4,
+      preferredColumns: 2,
+      preferredRows: 2,
+      streamingComplexity: "LOW"
+    }
+  },
+  MEDIUM_WORLD: {
+    schemaId: "WORLD_SCALE_PROFILE_001",
+    scaleId: "MEDIUM_WORLD",
+    regionCountRange: [8, 10],
+    travelDistanceRange: "MULTI_REGION",
+    explorationDensity: "MEDIUM_EXPLORATION",
+    sizeMultiplier: 1.55,
+    chunkRequirements: {
+      minimumChunkCount: 6,
+      preferredColumns: 3,
+      preferredRows: 2,
+      streamingComplexity: "MEDIUM"
+    }
+  },
+  LARGE_WORLD: {
+    schemaId: "WORLD_SCALE_PROFILE_001",
+    scaleId: "LARGE_WORLD",
+    regionCountRange: [12, 14],
+    travelDistanceRange: "EPIC_WORLD_ROUTE",
+    explorationDensity: "WIDE_EXPLORATION",
+    sizeMultiplier: 2.1,
+    chunkRequirements: {
+      minimumChunkCount: 9,
+      preferredColumns: 3,
+      preferredRows: 3,
+      streamingComplexity: "HIGH"
+    }
+  }
+});
+
 const worldProfiles = deepFreeze({
   AUSTRALIAN_COASTAL_WORLD: {
     profileId: "AUSTRALIAN_COASTAL_WORLD",
-    generationProfile: "australian_coastal_world_default",
+    generationProfile: "australian_coastal_world_composition_v1",
+    worldIdentity: "SCENIC_COASTAL_CHAIN",
+    scaleProfile: "SMALL_WORLD",
     geographyWeighting: {
       ocean: 1,
       coastline: 1,
-      forest: 0.7,
-      farmland: 0.8,
-      river: 0.65,
+      forest: 0.72,
+      farmland: 0.72,
+      river: 0.62,
       wetland: 0.45,
-      mountains: 0.35,
+      mountains: 0.4,
       protectedArea: 0.7
     },
-    regionDensity: "MEDIUM_SCENIC",
-    regionProfileWeighting: {
-      COASTAL_REGION: 1,
-      TOURISM_REGION: 0.9,
-      RURAL_REGION: 0.75,
-      MOUNTAIN_REGION: 0.45,
-      METROPOLITAN_EDGE_REGION: 0.55
+    regionMix: {
+      COASTAL_REGION: 0.34,
+      TOURISM_REGION: 0.22,
+      RURAL_REGION: 0.2,
+      MOUNTAIN_REGION: 0.1,
+      METROPOLITAN_EDGE_REGION: 0.14
     },
+    settlementDensity: "MEDIUM_SCENIC",
     transportIntensity: "MEDIUM_HIGH",
     landmarkFrequency: "HIGH",
-    explorationRouteDensity: "HIGH",
+    explorationDensity: "HIGH_EXPLORATION",
+    streamingRequirements: {
+      targetChunkComplexity: "LOW",
+      routeDensity: "DENSE",
+      cacheMode: "SCENIC_CHAIN"
+    },
     boundaryBehaviour: "COASTAL_CONTINENTAL_ARC",
     growthPattern: "COASTAL_SPINE_WITH_INLAND_SUPPORT"
   },
-  CONTINENTAL_WORLD: {
-    profileId: "CONTINENTAL_WORLD",
-    generationProfile: "continental_world_default",
+  AUSTRALIAN_OUTBACK_WORLD: {
+    profileId: "AUSTRALIAN_OUTBACK_WORLD",
+    generationProfile: "australian_outback_world_composition_v1",
+    worldIdentity: "SPARSE_INTERIOR_NETWORK",
+    scaleProfile: "MEDIUM_WORLD",
     geographyWeighting: {
-      ocean: 0.25,
-      coastline: 0.35,
-      forest: 0.5,
-      farmland: 0.9,
-      river: 0.75,
-      wetland: 0.25,
-      mountains: 0.5,
-      protectedArea: 0.4
+      ocean: 0.1,
+      coastline: 0.18,
+      forest: 0.28,
+      farmland: 0.88,
+      river: 0.52,
+      wetland: 0.14,
+      mountains: 0.35,
+      protectedArea: 0.42
     },
-    regionDensity: "WIDE_INLAND",
-    regionProfileWeighting: {
-      COASTAL_REGION: 0.4,
-      TOURISM_REGION: 0.4,
-      RURAL_REGION: 1,
-      MOUNTAIN_REGION: 0.7,
-      METROPOLITAN_EDGE_REGION: 0.5
+    regionMix: {
+      COASTAL_REGION: 0.05,
+      TOURISM_REGION: 0.08,
+      RURAL_REGION: 0.52,
+      MOUNTAIN_REGION: 0.12,
+      METROPOLITAN_EDGE_REGION: 0.23
     },
-    transportIntensity: "HIGH",
-    landmarkFrequency: "MEDIUM",
-    explorationRouteDensity: "MEDIUM",
-    boundaryBehaviour: "INLAND_SPREAD",
-    growthPattern: "SERVICE_SPINE_AND_RURAL_FAN"
+    settlementDensity: "LOW_SPARSE",
+    transportIntensity: "MEDIUM_LONG_DISTANCE",
+    landmarkFrequency: "LOW_MEDIUM",
+    explorationDensity: "LONG_RANGE_DISCOVERY",
+    streamingRequirements: {
+      targetChunkComplexity: "MEDIUM",
+      routeDensity: "SPARSE",
+      cacheMode: "LONG_RANGE_TRAVEL"
+    },
+    boundaryBehaviour: "INLAND_EXPANSE",
+    growthPattern: "SERVICE_CORRIDORS_AND_REMOTE_EDGES"
   },
-  MOUNTAIN_WORLD: {
-    profileId: "MOUNTAIN_WORLD",
-    generationProfile: "mountain_world_default",
+  ALPINE_WORLD: {
+    profileId: "ALPINE_WORLD",
+    generationProfile: "alpine_world_composition_v1",
+    worldIdentity: "MOUNTAIN_PASS_DISCOVERY",
+    scaleProfile: "MEDIUM_WORLD",
     geographyWeighting: {
-      ocean: 0.15,
-      coastline: 0.2,
-      forest: 0.9,
-      farmland: 0.3,
-      river: 0.7,
-      wetland: 0.2,
+      ocean: 0.16,
+      coastline: 0.14,
+      forest: 0.94,
+      farmland: 0.26,
+      river: 0.78,
+      wetland: 0.22,
       mountains: 1,
-      protectedArea: 0.85
+      protectedArea: 0.92
     },
-    regionDensity: "LOW_CONSTRAINED",
-    regionProfileWeighting: {
-      COASTAL_REGION: 0.2,
-      TOURISM_REGION: 0.75,
-      RURAL_REGION: 0.35,
-      MOUNTAIN_REGION: 1,
-      METROPOLITAN_EDGE_REGION: 0.15
+    regionMix: {
+      COASTAL_REGION: 0.04,
+      TOURISM_REGION: 0.24,
+      RURAL_REGION: 0.16,
+      MOUNTAIN_REGION: 0.46,
+      METROPOLITAN_EDGE_REGION: 0.1
     },
+    settlementDensity: "LOW_CONSTRAINED",
     transportIntensity: "LOW_MEDIUM",
     landmarkFrequency: "VERY_HIGH",
-    explorationRouteDensity: "VERY_HIGH",
+    explorationDensity: "REMOTE_HIGH_VALUE",
+    streamingRequirements: {
+      targetChunkComplexity: "MEDIUM",
+      routeDensity: "MEDIUM",
+      cacheMode: "PASS_AND_VALLEY"
+    },
     boundaryBehaviour: "RIDGE_CHAIN_WORLD",
     growthPattern: "VALLEY_AND_PASS_CORRIDORS"
   },
-  TOURISM_WORLD: {
-    profileId: "TOURISM_WORLD",
-    generationProfile: "tourism_world_default",
+  TOURISM_ARCHIPELAGO_WORLD: {
+    profileId: "TOURISM_ARCHIPELAGO_WORLD",
+    generationProfile: "tourism_archipelago_world_composition_v1",
+    worldIdentity: "ISLAND_DESTINATION_NETWORK",
+    scaleProfile: "MEDIUM_WORLD",
     geographyWeighting: {
-      ocean: 0.7,
-      coastline: 0.8,
-      forest: 0.7,
-      farmland: 0.35,
-      river: 0.55,
-      wetland: 0.3,
-      mountains: 0.55,
-      protectedArea: 0.75
+      ocean: 1,
+      coastline: 0.96,
+      forest: 0.64,
+      farmland: 0.24,
+      river: 0.42,
+      wetland: 0.38,
+      mountains: 0.3,
+      protectedArea: 0.74
     },
-    regionDensity: "DESTINATION_CLUSTERED",
-    regionProfileWeighting: {
-      COASTAL_REGION: 0.8,
-      TOURISM_REGION: 1,
-      RURAL_REGION: 0.3,
-      MOUNTAIN_REGION: 0.55,
-      METROPOLITAN_EDGE_REGION: 0.35
+    regionMix: {
+      COASTAL_REGION: 0.36,
+      TOURISM_REGION: 0.32,
+      RURAL_REGION: 0.08,
+      MOUNTAIN_REGION: 0.06,
+      METROPOLITAN_EDGE_REGION: 0.18
     },
-    transportIntensity: "MEDIUM",
+    settlementDensity: "DESTINATION_CLUSTERED",
+    transportIntensity: "FERRY_SCENIC_HIGH",
     landmarkFrequency: "VERY_HIGH",
-    explorationRouteDensity: "VERY_HIGH",
-    boundaryBehaviour: "SCENIC_DESTINATION_CHAIN",
-    growthPattern: "ATTRACTION_LINKED_REGIONS"
+    explorationDensity: "DENSE_ATTRACTION_LOOPS",
+    streamingRequirements: {
+      targetChunkComplexity: "MEDIUM",
+      routeDensity: "VERY_DENSE",
+      cacheMode: "ISLAND_HOPPING"
+    },
+    boundaryBehaviour: "ARCHIPELAGO_CHAIN",
+    growthPattern: "ISLAND_HUBS_AND_SCENIC_LINKS"
+  },
+  METROPOLITAN_EXPANSION_WORLD: {
+    profileId: "METROPOLITAN_EXPANSION_WORLD",
+    generationProfile: "metropolitan_expansion_world_composition_v1",
+    worldIdentity: "URBAN_GROWTH_CORRIDORS",
+    scaleProfile: "LARGE_WORLD",
+    geographyWeighting: {
+      ocean: 0.42,
+      coastline: 0.36,
+      forest: 0.34,
+      farmland: 0.48,
+      river: 0.56,
+      wetland: 0.22,
+      mountains: 0.2,
+      protectedArea: 0.24
+    },
+    regionMix: {
+      COASTAL_REGION: 0.14,
+      TOURISM_REGION: 0.08,
+      RURAL_REGION: 0.24,
+      MOUNTAIN_REGION: 0.04,
+      METROPOLITAN_EDGE_REGION: 0.5
+    },
+    settlementDensity: "HIGH_CORRIDOR",
+    transportIntensity: "VERY_HIGH_MULTI_CENTRE",
+    landmarkFrequency: "MEDIUM",
+    explorationDensity: "NETWORKED_REGIONAL_DISCOVERY",
+    streamingRequirements: {
+      targetChunkComplexity: "HIGH",
+      routeDensity: "HIGH",
+      cacheMode: "MULTI_CENTRE_STREAMING"
+    },
+    boundaryBehaviour: "URBAN_CORRIDOR_FAN",
+    growthPattern: "MULTI_CENTRE_EXPANSION_AND_SERVICE_SPINES"
+  }
+});
+
+const regionProfileDescriptors = deepFreeze({
+  COASTAL_REGION: {
+    biome: "TEMPERATE_COASTAL",
+    climate: "MILD_COASTAL",
+    sizeBias: "LARGE",
+    transitionRules: ["COAST_TO_INLAND", "SCENIC_PUBLIC_EDGE", "FORESHORE_ACCESS"]
+  },
+  RURAL_REGION: {
+    biome: "TEMPERATE_FARMLAND",
+    climate: "MIXED_TEMPERATE",
+    sizeBias: "LARGE",
+    transitionRules: ["SERVICE_SPINE", "FARMLAND_SUPPORT", "INLAND_CONNECTOR"]
+  },
+  MOUNTAIN_REGION: {
+    biome: "HIGHLAND_FOREST",
+    climate: "COOL_ELEVATED",
+    sizeBias: "LARGE",
+    transitionRules: ["RIDGE_ACCESS", "PASS_CORRIDOR", "PROTECTED_EDGE"]
+  },
+  TOURISM_REGION: {
+    biome: "SCENIC_DESTINATION",
+    climate: "MILD_VISITOR",
+    sizeBias: "MEDIUM_LARGE",
+    transitionRules: ["DESTINATION_LINK", "LANDMARK_CLUSTER", "PEDESTRIAN_SCENIC_CHAIN"]
+  },
+  METROPOLITAN_EDGE_REGION: {
+    biome: "COASTAL_PLAIN_MIXED",
+    climate: "TEMPERATE_GROWTH_BELT",
+    sizeBias: "MEDIUM",
+    transitionRules: ["SERVICE_EXPANSION", "CORRIDOR_CONCENTRATION", "FUTURE_CENTRE_SUPPORT"]
   }
 });
 
@@ -184,7 +325,7 @@ export const worldGeneratorDefaultInput = deepFreeze({
   worldConfiguration: deepFreeze({
     schemaId: worldSchemaId,
     previewId: "WORLD_LAYOUT_001_PREVIEW_001",
-    generationProfile: "australian_coastal_world_default",
+    generationProfile: "world_composition_profile_system_001",
     width: 24000,
     height: 16000,
     coastlineDepth: 3200,
@@ -215,10 +356,21 @@ export function createWorldGenerator(options = worldGeneratorDefaultInput) {
 export function generateWorldLayoutPreview(rawInput = worldGeneratorDefaultInput) {
   const input = normalizeGeneratorInput(rawInput);
   const worldProfile = resolveWorldProfile(input.worldProfile);
-  const seedConfig = buildSeedConfig(input);
-  const worldBounds = buildWorldBounds(input, worldProfile);
-  const worldGeographyZones = buildWorldGeographyZones(input, worldProfile, worldBounds);
-  const regionInstances = buildRegionInstances(input, worldProfile, worldBounds);
+  const worldScaleProfile = resolveWorldScaleProfile(worldProfile.scaleProfile);
+  const seedConfig = buildSeedConfig(input, worldProfile, worldScaleProfile);
+  const worldBounds = buildWorldBounds(input, worldProfile, worldScaleProfile);
+  const worldGeographyZones = buildWorldGeographyZones(
+    input,
+    worldProfile,
+    worldScaleProfile,
+    worldBounds
+  );
+  const regionInstances = buildRegionInstances(
+    input,
+    worldProfile,
+    worldScaleProfile,
+    worldBounds
+  );
   const worldConnections = buildWorldConnections(
     input,
     worldProfile,
@@ -237,9 +389,16 @@ export function generateWorldLayoutPreview(rawInput = worldGeneratorDefaultInput
     regionInstances,
     worldLandmarkReserves
   );
-  const streamingChunks = buildStreamingChunks(input, regionInstances, worldBounds);
+  const streamingChunks = buildStreamingChunks(
+    input,
+    worldProfile,
+    worldScaleProfile,
+    regionInstances,
+    worldBounds
+  );
   const worldMetadata = buildWorldMetadata(
     worldProfile,
+    worldScaleProfile,
     worldGeographyZones,
     regionInstances,
     worldConnections,
@@ -256,6 +415,7 @@ export function generateWorldLayoutPreview(rawInput = worldGeneratorDefaultInput
     seed: input.worldSeed,
     seedConfig,
     worldProfile: deepFreeze({ ...worldProfile }),
+    worldScaleProfile: deepFreeze({ ...worldScaleProfile }),
     worldBounds,
     worldMetadata,
     worldGeographyZones: deepFreeze(worldGeographyZones),
@@ -278,7 +438,11 @@ export function generateWorldLayoutPreview(rawInput = worldGeneratorDefaultInput
         deterministicRebuildValid: true,
         referenceBasedStructure: true,
         streamingReady: true,
-        noDuplicateGeometryGeneration: true
+        noDuplicateGeometryGeneration: true,
+        profileAppliedCorrectly: true,
+        identityScoreAligned: true,
+        requiredSystemsGenerated: true,
+        streamingRequirementsValid: true
       })
     }),
     validationResult: null
@@ -298,6 +462,28 @@ export function generateWorldLayoutPreview(rawInput = worldGeneratorDefaultInput
   return finalizedPreview;
 }
 
+export function generateWorldCompositionProfileComparison(seed = 10482) {
+  return deepFreeze(
+    supportedWorldProfiles.map((profileId) => {
+      const preview = generateWorldLayoutPreview({
+        ...worldGeneratorDefaultInput,
+        worldSeed: seed,
+        worldProfile: profileId
+      });
+      return {
+        profileId,
+        scaleProfile: preview.worldScaleProfile.scaleId,
+        geographyDistribution: preview.worldMetadata.geographyDistribution,
+        regionDistribution: preview.worldMetadata.regionDistribution,
+        transportIntensity: preview.worldMetadata.transportIntensity,
+        landmarkDensity: preview.worldMetadata.landmarkDensity,
+        explorationDensity: preview.worldMetadata.explorationDensity,
+        validationPassed: preview.validationResult.validationPassed
+      };
+    })
+  );
+}
+
 export function createWorldLayoutValidationOutput(
   rawPreview,
   validationId = validationOutputId
@@ -311,6 +497,7 @@ export function createWorldLayoutValidationOutput(
     summary: deepFreeze({
       validationPassed: preview.validationResult.validationPassed,
       worldProfileId: preview.worldProfile.profileId,
+      scaleProfileId: preview.worldScaleProfile.scaleId,
       geographyZoneCount: preview.worldGeographyZones.length,
       regionCount: preview.regionInstances.length,
       connectionCount: preview.worldConnections.length,
@@ -336,6 +523,18 @@ export function createWorldLayoutValidationOutput(
       streamingReady: passFail(preview.validationResult.streamingReady),
       noDuplicateGeometryGeneration: passFail(
         preview.validationResult.noDuplicateGeometryGeneration
+      ),
+      profileAppliedCorrectly: passFail(
+        preview.validationResult.profileAppliedCorrectly
+      ),
+      identityScoreAligned: passFail(
+        preview.validationResult.identityScoreAligned
+      ),
+      requiredSystemsGenerated: passFail(
+        preview.validationResult.requiredSystemsGenerated
+      ),
+      streamingRequirementsValid: passFail(
+        preview.validationResult.streamingRequirementsValid
       )
     })
   });
@@ -345,10 +544,10 @@ export function validateWorldLayoutPreview(rawPreview) {
   try {
     const preview = normalizeGeneratedPreview(rawPreview);
 
-    if (preview.worldProfile.profileId !== "AUSTRALIAN_COASTAL_WORLD") {
+    if (!supportedWorldProfiles.includes(preview.worldProfile.profileId)) {
       throw createValidationError(
         "unsupported_world_profile",
-        "Session 83 generator must actively generate the AUSTRALIAN_COASTAL_WORLD profile."
+        `World preview profile ${preview.worldProfile.profileId} is not supported.`
       );
     }
     if (preview.worldGeographyZones.length < 8) {
@@ -357,16 +556,19 @@ export function validateWorldLayoutPreview(rawPreview) {
         "World preview must include at least eight geography zones."
       );
     }
-    if (preview.regionInstances.length < 5) {
+    if (
+      preview.regionInstances.length <
+      preview.worldScaleProfile.regionCountRange[0]
+    ) {
       throw createValidationError(
         "insufficient_region_count",
-        "World preview must include at least five region instances."
+        "World preview does not satisfy the selected scale profile region count."
       );
     }
-    if (preview.worldConnections.length < 5) {
+    if (preview.worldConnections.length < preview.regionInstances.length) {
       throw createValidationError(
         "insufficient_connection_count",
-        "World preview must include at least five world connections."
+        "World preview must include at least one corridor per region."
       );
     }
     if (preview.worldLandmarkReserves.length < 4) {
@@ -381,10 +583,13 @@ export function validateWorldLayoutPreview(rawPreview) {
         "World preview must include at least five exploration routes."
       );
     }
-    if (preview.streamingChunks.length < 4) {
+    if (
+      preview.streamingChunks.length <
+      preview.worldScaleProfile.chunkRequirements.minimumChunkCount
+    ) {
       throw createValidationError(
         "insufficient_chunk_count",
-        "World preview must include at least four streaming chunks."
+        "World preview must satisfy the selected scale profile chunk count."
       );
     }
 
@@ -429,7 +634,7 @@ export function validateWorldLayoutPreview(rawPreview) {
   }
 }
 
-function buildSeedConfig(input) {
+function buildSeedConfig(input, worldProfile, worldScaleProfile) {
   return deepFreeze({
     worldSeed: input.worldSeed,
     geographySeed: input.geographySeed,
@@ -437,7 +642,9 @@ function buildSeedConfig(input) {
     biomeSeed: input.biomeSeed,
     settlementSeed: input.settlementSeed,
     explorationSeed: input.explorationSeed,
-    worldProfile: input.worldProfile
+    worldProfile: input.worldProfile,
+    scaleProfile: worldScaleProfile.scaleId,
+    compositionIdentity: worldProfile.worldIdentity
   });
 }
 
@@ -445,11 +652,20 @@ function resolveWorldProfile(worldProfile) {
   return worldProfiles[worldProfile] ?? worldProfiles.AUSTRALIAN_COASTAL_WORLD;
 }
 
-function buildWorldBounds(input, worldProfile) {
-  const { width, height } = input.worldConfiguration;
+function resolveWorldScaleProfile(scaleProfile) {
+  return worldScaleProfiles[scaleProfile] ?? worldScaleProfiles.SMALL_WORLD;
+}
+
+function buildWorldBounds(input, worldProfile, worldScaleProfile) {
+  const profileWidthFactor = worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD" ? 1.18 : 1;
+  const profileHeightFactor = worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? 1.12 : 1;
+  const width = input.worldConfiguration.width * worldScaleProfile.sizeMultiplier * profileWidthFactor;
+  const height = input.worldConfiguration.height * worldScaleProfile.sizeMultiplier * profileHeightFactor;
   const halfWidth = width / 2;
   const halfHeight = height / 2;
-  const variation = seedOffset(input.worldSeed, 240);
+  const variation = seedOffset(input.worldSeed, 260);
+  const coastalLift = worldProfile.geographyWeighting.coastline * 880;
+  const northernRidge = worldProfile.geographyWeighting.mountains * 540;
 
   return deepFreeze({
     boundaryStyle: worldProfile.boundaryBehaviour,
@@ -458,24 +674,37 @@ function buildWorldBounds(input, worldProfile) {
     minY: roundNumber(-halfHeight),
     maxY: roundNumber(halfHeight),
     boundaryPolygon: deepFreeze([
-      point(-halfWidth, -halfHeight + 680),
-      point(-halfWidth + 920, -halfHeight - 140),
-      point(-halfWidth + 3200 + variation, -halfHeight + 220),
-      point(halfWidth - 2100, -halfHeight + 540),
-      point(halfWidth + 240, -halfHeight + 2200),
-      point(halfWidth + 460, halfHeight - 1800),
-      point(halfWidth - 820, halfHeight + 260),
-      point(-halfWidth + 1800, halfHeight + 420),
-      point(-halfWidth - 340, halfHeight - 1240),
+      point(-halfWidth, -halfHeight + 680 + coastalLift * 0.2),
+      point(-halfWidth + 940, -halfHeight - 120),
+      point(-halfWidth + width * 0.23 + variation, -halfHeight + 240),
+      point(halfWidth - width * 0.1, -halfHeight + 520 + coastalLift * 0.3),
+      point(halfWidth + 280, -halfHeight + height * 0.14),
+      point(halfWidth + 460, halfHeight - height * 0.12),
+      point(halfWidth - 820, halfHeight + northernRidge * 0.5),
+      point(-halfWidth + width * 0.1, halfHeight + 420),
+      point(-halfWidth - 360, halfHeight - height * 0.08),
       point(-halfWidth - 420, -860)
     ])
   });
 }
 
-function buildWorldGeographyZones(input, worldProfile, worldBounds) {
+function buildWorldGeographyZones(input, worldProfile, worldScaleProfile, worldBounds) {
   const { minX, maxX, minY, maxY } = worldBounds;
-  const coastDepth = input.worldConfiguration.coastlineDepth;
-  const inlandDepth = input.worldConfiguration.inlandBandDepth;
+  const width = maxX - minX;
+  const height = maxY - minY;
+  const coastDepth =
+    input.worldConfiguration.coastlineDepth *
+    worldScaleProfile.sizeMultiplier *
+    clamp(worldProfile.geographyWeighting.coastline, 0.18, 1);
+  const inlandDepth =
+    input.worldConfiguration.inlandBandDepth *
+    worldScaleProfile.sizeMultiplier *
+    clamp(worldProfile.geographyWeighting.farmland, 0.3, 1);
+  const oceanDepth = coastDepth + worldProfile.geographyWeighting.ocean * 760;
+  const mountainBias = worldProfile.geographyWeighting.mountains;
+  const forestBias = worldProfile.geographyWeighting.forest;
+  const wetlandBias = worldProfile.geographyWeighting.wetland;
+  const protectedBias = worldProfile.geographyWeighting.protectedArea;
 
   return [
     buildWorldGeographyZone(
@@ -484,11 +713,11 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       [
         point(minX - 1200, minY - 1200),
         point(maxX + 1400, minY - 920),
-        point(maxX + 820, minY + coastDepth - 520),
-        point(minX - 620, minY + coastDepth - 680)
+        point(maxX + 820, minY + oceanDepth - 520),
+        point(minX - 620, minY + oceanDepth - 680)
       ],
-      "MARINE_COASTAL",
-      "TEMPERATE_MARINE",
+      worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? "DRY_MARGIN_COAST" : "MARINE_COASTAL",
+      worldProfile.profileId === "ALPINE_WORLD" ? "COLD_MARINE" : "TEMPERATE_MARINE",
       "WATER_ONLY_ACCESS",
       ["SHAPES_COASTAL_REGION_EDGES", "ENABLES_FERRY_AND_COASTAL_ROUTE_LOGIC"]
     ),
@@ -501,8 +730,8 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
         point(maxX - 620, minY + coastDepth),
         point(minX + 420, minY + coastDepth - 180)
       ],
-      "TEMPERATE_COASTLINE",
-      "MILD_COASTAL",
+      worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD" ? "ARCHIPELAGO_COASTLINE" : "TEMPERATE_COASTLINE",
+      worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? "WARM_DRY_COAST" : "MILD_COASTAL",
       "PARTIAL_PUBLIC_ACCESS",
       ["ENABLES_COASTAL_AND_TOURISM_REGIONS", "SUPPORTS_SCENIC_ROUTE_SPINES"]
     ),
@@ -510,13 +739,13 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       "WORLD_ZONE_003",
       "FOREST",
       [
-        point(minX + 920, maxY - 4200),
-        point(minX + 4800, maxY - 4500),
-        point(minX + 5200, maxY - 900),
-        point(minX + 1460, maxY - 620)
+        point(minX + width * 0.05, maxY - height * 0.26),
+        point(minX + width * 0.24, maxY - height * 0.28),
+        point(minX + width * 0.26, maxY - height * 0.05),
+        point(minX + width * 0.08, maxY - height * 0.04)
       ],
-      "TEMPERATE_FOREST",
-      "MILD_WET",
+      forestBias > 0.8 ? "DENSE_TEMPERATE_FOREST" : "TEMPERATE_FOREST",
+      forestBias > 0.85 ? "MILD_WET" : "MIXED_WET_DRY",
       "TRACK_ACCESS",
       ["SUPPORTS_MOUNTAIN_AND_TOURISM_EDGE_REGIONS", "INCREASES_DISCOVERY_VALUE"]
     ),
@@ -524,13 +753,13 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       "WORLD_ZONE_004",
       "FARMLAND",
       [
-        point(minX + 2400, minY + coastDepth + 780),
-        point(maxX - 780, minY + coastDepth + 420),
-        point(maxX - 1320, minY + coastDepth + inlandDepth),
-        point(minX + 1820, minY + coastDepth + inlandDepth + 620)
+        point(minX + width * 0.12, minY + coastDepth + 760),
+        point(maxX - width * 0.04, minY + coastDepth + 420),
+        point(maxX - width * 0.06, minY + coastDepth + inlandDepth),
+        point(minX + width * 0.1, minY + coastDepth + inlandDepth + 620)
       ],
-      "TEMPERATE_FARMLAND",
-      "MIXED_TEMPERATE",
+      worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? "ARID_GRAZING_BELT" : "TEMPERATE_FARMLAND",
+      worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? "HOT_DRY" : "MIXED_TEMPERATE",
       "ROAD_ACCESS",
       ["SUPPORTS_RURAL_AND_SERVICE_REGIONS", "ENABLES_HIGHWAY_AND_RAIL_ALIGNMENT"]
     ),
@@ -538,13 +767,13 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       "WORLD_ZONE_005",
       "RIVER",
       [
-        point(minX + 6200, maxY - 260),
-        point(minX + 6740, maxY - 2200),
-        point(minX + 7160, maxY - 4080),
-        point(minX + 7460, minY + 1240)
+        point(minX + width * 0.24, maxY - 260),
+        point(minX + width * 0.27, maxY - height * 0.14),
+        point(minX + width * 0.29, maxY - height * 0.26),
+        point(minX + width * 0.31, minY + height * 0.12)
       ],
-      "TEMPERATE_RIVER_SYSTEM",
-      "MIXED_TEMPERATE",
+      worldProfile.profileId === "ALPINE_WORLD" ? "SNOWMELT_RIVER_SYSTEM" : "TEMPERATE_RIVER_SYSTEM",
+      worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? "SEASONAL_FLOW" : "MIXED_TEMPERATE",
       "PARTIAL_PUBLIC_ACCESS",
       ["CREATES_BRIDGE_AND_VALLEY_CORRIDOR_LOGIC", "ATTRACTS_SETTLEMENT_AND_RECREATION"]
     ),
@@ -552,13 +781,13 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       "WORLD_ZONE_006",
       "WETLAND",
       [
-        point(maxX - 4860, minY + 2640),
-        point(maxX - 2840, minY + 2540),
-        point(maxX - 2620, minY + 3560),
-        point(maxX - 4580, minY + 3680)
+        point(maxX - width * 0.2, minY + height * 0.17),
+        point(maxX - width * 0.12, minY + height * 0.16),
+        point(maxX - width * 0.11, minY + height * (0.16 + 0.08 * wetlandBias)),
+        point(maxX - width * 0.19, minY + height * (0.17 + 0.08 * wetlandBias))
       ],
-      "COASTAL_WETLAND",
-      "MILD_HUMID",
+      wetlandBias > 0.3 ? "COASTAL_WETLAND" : "SEASONAL_LOWLAND",
+      wetlandBias > 0.3 ? "MILD_HUMID" : "SEASONAL_DRY",
       "BOARDWALK_CONTROLLED",
       ["LIMITS_DENSE_REGION_EXPANSION", "SHIFTS_CORRIDORS_TO_DRY_GROUND"]
     ),
@@ -566,13 +795,13 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       "WORLD_ZONE_007",
       "MOUNTAINS",
       [
-        point(maxX - 6400, maxY - 5200),
-        point(maxX - 2820, maxY - 5600),
-        point(maxX - 1820, maxY - 2260),
-        point(maxX - 5580, maxY - 1620)
+        point(maxX - width * 0.27, maxY - height * 0.32),
+        point(maxX - width * 0.12, maxY - height * 0.35),
+        point(maxX - width * 0.08, maxY - height * 0.14),
+        point(maxX - width * 0.24, maxY - height * 0.1)
       ],
-      "HIGHLAND_RIDGE",
-      "COOL_ELEVATED",
+      mountainBias > 0.8 ? "ALPINE_RIDGE_SYSTEM" : "HIGHLAND_RIDGE",
+      mountainBias > 0.8 ? "COOL_ELEVATED" : "TEMPERATE_HIGHLAND",
       "PASS_AND_TRAIL_ACCESS",
       ["CONSTRAINS_TRANSPORT", "SUPPORTS_MOUNTAIN_REGIONS_AND_REMOTE_DISCOVERY"]
     ),
@@ -580,13 +809,13 @@ function buildWorldGeographyZones(input, worldProfile, worldBounds) {
       "WORLD_ZONE_008",
       "PROTECTED_AREA",
       [
-        point(maxX - 3820, maxY - 3300),
-        point(maxX - 1540, maxY - 3460),
-        point(maxX - 920, maxY - 1820),
-        point(maxX - 3240, maxY - 1460)
+        point(maxX - width * 0.16, maxY - height * 0.2),
+        point(maxX - width * 0.07, maxY - height * 0.21),
+        point(maxX - width * 0.04, maxY - height * 0.12),
+        point(maxX - width * 0.13, maxY - height * 0.09)
       ],
-      "NATIONAL_PARK_COMPLEX",
-      "TEMPERATE_PROTECTED",
+      protectedBias > 0.75 ? "NATIONAL_PARK_COMPLEX" : "REGIONAL_CONSERVATION_AREA",
+      protectedBias > 0.75 ? "TEMPERATE_PROTECTED" : "MIXED_PROTECTED",
       "TRAIL_ACCESS",
       ["LIMITS_DEVELOPMENT", "SUPPORTS_LANDMARKS_AND_DISCOVERY_ROUTES"]
     )
@@ -614,358 +843,254 @@ function buildWorldGeographyZone(
   });
 }
 
-function buildRegionInstances(input, worldProfile, worldBounds) {
+function buildRegionInstances(input, worldProfile, worldScaleProfile, worldBounds) {
+  const count = selectRegionCount(input.worldSeed, worldScaleProfile);
+  const profiles = buildRegionProfileSequence(count, worldProfile, input.settlementSeed);
   const { minX, maxX, minY, maxY } = worldBounds;
-  const shiftX = seedOffset(input.worldSeed, 180);
-  const shiftY = seedOffset(input.settlementSeed, 120);
-  const specs = [
-    {
-      regionId: "REGION_001",
-      profile: "COASTAL_REGION",
-      position: { x: minX + 3600 + shiftX, z: minY + 2800 + shiftY },
-      size: "LARGE",
-      biome: "TEMPERATE_COASTAL",
-      climate: "MILD_WET_SUMMER",
-      neighbouringRegions: ["REGION_002", "REGION_003", "REGION_005"],
-      transitionRules: ["COAST_TO_FARMLAND", "FORESHORE_TO_TOURISM", "COASTAL_SERVICE_CORRIDOR"]
-    },
-    {
-      regionId: "REGION_002",
-      profile: "RURAL_REGION",
-      position: { x: minX + 6200, z: minY + 6400 },
-      size: "LARGE",
-      biome: "TEMPERATE_FARMLAND",
-      climate: "TEMPERATE_MIXED",
-      neighbouringRegions: ["REGION_001", "REGION_004", "REGION_005"],
-      transitionRules: ["RURAL_SERVICE_SUPPORT", "FARMLAND_TO_MOUNTAIN", "INLAND_HIGHWAY_SPINE"]
-    },
-    {
-      regionId: "REGION_003",
-      profile: "TOURISM_REGION",
-      position: { x: maxX - 4800, z: minY + 2460 },
-      size: "MEDIUM_LARGE",
-      biome: "COASTAL_SCENIC",
-      climate: "MILD_COASTAL",
-      neighbouringRegions: ["REGION_001", "REGION_004"],
-      transitionRules: ["TOURISM_COASTAL_CHAIN", "SCENIC_LINK_TO_HIGHLANDS"]
-    },
-    {
-      regionId: "REGION_004",
-      profile: "MOUNTAIN_REGION",
-      position: { x: maxX - 4020, z: maxY - 4540 },
-      size: "LARGE",
-      biome: "HIGHLAND_FOREST",
-      climate: "COOL_ELEVATED",
-      neighbouringRegions: ["REGION_002", "REGION_003"],
-      transitionRules: ["RIDGE_AND_PASS_ACCESS", "PROTECTED_PARK_EDGE"]
-    },
-    {
-      regionId: "REGION_005",
-      profile: "METROPOLITAN_EDGE_REGION",
-      position: { x: minX + 9800, z: minY + 4700 },
-      size: "MEDIUM",
-      biome: "COASTAL_PLAIN_MIXED",
-      climate: "TEMPERATE_GROWTH_BELT",
-      neighbouringRegions: ["REGION_001", "REGION_002"],
-      transitionRules: ["SERVICE_EXPANSION_EDGE", "RAIL_AND_HIGHWAY_CONCENTRATION"]
-    }
-  ];
+  const width = maxX - minX;
+  const height = maxY - minY;
+  const centerX = roundNumber((minX + maxX) / 2);
+  const centerY = roundNumber((minY + maxY) / 2);
+  const radiusX = width * 0.33;
+  const radiusY = height * 0.28;
+  const archipelagoOffset = worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD" ? width * 0.09 : 0;
+  const outbackDepth = worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD" ? height * 0.09 : 0;
+  const metroBias = worldProfile.profileId === "METROPOLITAN_EXPANSION_WORLD" ? width * 0.04 : 0;
 
-  return specs.map((spec, index) =>
-    deepFreeze({
+  return profiles.map((profile, index) => {
+    const descriptor = regionProfileDescriptors[profile];
+    const angle = (-Math.PI * 0.92) + (index / count) * Math.PI * 1.84;
+    const position = {
+      x: roundNumber(
+        centerX +
+          Math.cos(angle) * radiusX +
+          seedOffset(input.worldSeed + index * 19, 220) +
+          (profile === "TOURISM_REGION" ? archipelagoOffset : 0) +
+          (profile === "METROPOLITAN_EDGE_REGION" ? metroBias : 0)
+      ),
+      y: 0,
+      z: roundNumber(
+        centerY +
+          Math.sin(angle) * radiusY +
+          seedOffset(input.settlementSeed + index * 11, 180) -
+          (profile === "COASTAL_REGION" ? height * 0.12 : 0) +
+          (profile === "RURAL_REGION" ? outbackDepth : 0) -
+          (profile === "MOUNTAIN_REGION" ? height * 0.14 : 0)
+      )
+    };
+
+    return deepFreeze({
       schemaId: regionInstanceSchemaId,
-      regionId: spec.regionId,
-      profile: spec.profile,
-      position: deepFreeze({
-        x: roundNumber(spec.position.x + index * 24),
-        y: 0,
-        z: roundNumber(spec.position.z - index * 18)
-      }),
-      size: spec.size,
-      biome: spec.biome,
-      climate: spec.climate,
-      neighbouringRegions: deepFreeze(spec.neighbouringRegions),
-      transitionRules: deepFreeze(spec.transitionRules),
+      regionId: `REGION_${String(index + 1).padStart(3, "0")}`,
+      profile,
+      position: deepFreeze(position),
+      size: descriptor.sizeBias,
+      biome: descriptor.biome,
+      climate: descriptor.climate,
+      neighbouringRegions: deepFreeze(resolveRegionNeighbours(index, count)),
+      transitionRules: deepFreeze(resolveRegionTransitionRules(profile, descriptor, worldProfile)),
       worldProfileBias: worldProfile.profileId
-    })
-  );
+    });
+  });
 }
 
 function buildWorldConnections(input, worldProfile, regionInstances, geographyZones) {
-  const byId = new Map(regionInstances.map((region) => [region.regionId, region]));
   const zoneByType = new Map(geographyZones.map((zone) => [zone.zoneType, zone]));
-  const specs = [
-    {
-      corridorId: "WORLD_CORRIDOR_001",
-      startRegion: "REGION_001",
-      endRegion: "REGION_002",
-      connectionType: "HIGHWAY",
-      hierarchy: "PRIMARY_WORLD_SPINE",
-      difficulty: "LOW_MEDIUM",
-      explorationValue: "MEDIUM"
-    },
-    {
-      corridorId: "WORLD_CORRIDOR_002",
-      startRegion: "REGION_001",
-      endRegion: "REGION_003",
-      connectionType: "COASTAL_ROUTE",
-      hierarchy: "SCENIC_COASTAL_SPINE",
-      difficulty: "LOW",
-      explorationValue: "HIGH"
-    },
-    {
-      corridorId: "WORLD_CORRIDOR_003",
-      startRegion: "REGION_002",
-      endRegion: "REGION_004",
-      connectionType: "TRAIL",
-      hierarchy: "MOUNTAIN_ACCESS_LINK",
-      difficulty: "MEDIUM_HIGH",
-      explorationValue: "HIGH"
-    },
-    {
-      corridorId: "WORLD_CORRIDOR_004",
-      startRegion: "REGION_001",
-      endRegion: "REGION_005",
-      connectionType: "RAILWAY",
-      hierarchy: "SERVICE_AND_PASSENGER_SPINE",
-      difficulty: "LOW",
-      explorationValue: "MEDIUM"
-    },
-    {
-      corridorId: "WORLD_CORRIDOR_005",
-      startRegion: "REGION_003",
-      endRegion: "REGION_004",
-      connectionType: "FERRY_ROUTE",
-      hierarchy: "DESTINATION_CHAIN_LINK",
-      difficulty: "MEDIUM",
-      explorationValue: "HIGH"
-    },
-    {
-      corridorId: "WORLD_CORRIDOR_006",
-      startRegion: "REGION_002",
-      endRegion: "REGION_005",
-      connectionType: "HIGHWAY",
-      hierarchy: "INLAND_SUPPORT_LINK",
-      difficulty: "LOW",
-      explorationValue: "MEDIUM_LOW"
-    }
-  ];
+  const connections = [];
+  const extraCrossLinks =
+    worldProfile.transportIntensity.includes("VERY_HIGH") ? 3 :
+      worldProfile.transportIntensity.includes("HIGH") ? 2 : 1;
 
-  return specs.map((spec) => {
-    const start = byId.get(spec.startRegion);
-    const end = byId.get(spec.endRegion);
-    const distance = distance2d(start.position, end.position);
-    return deepFreeze({
-      schemaId: connectionCorridorSchemaId,
-      corridorId: spec.corridorId,
-      startRegion: spec.startRegion,
-      endRegion: spec.endRegion,
-      connectionType: spec.connectionType,
-      hierarchy: spec.hierarchy,
-      distance: roundNumber(distance),
-      difficulty: spec.difficulty,
-      explorationValue: spec.explorationValue,
-      terrainInfluence: deepFreeze(resolveConnectionTerrainInfluence(
-        spec.connectionType,
+  for (let index = 0; index < regionInstances.length - 1; index += 1) {
+    connections.push(
+      buildConnectionRecord(
+        `WORLD_CORRIDOR_${String(connections.length + 1).padStart(3, "0")}`,
+        regionInstances[index],
+        regionInstances[index + 1],
+        worldProfile,
         zoneByType
-      )),
-      worldProfileBias: worldProfile.profileId
-    });
-  });
+      )
+    );
+  }
+
+  connections.push(
+    buildConnectionRecord(
+      `WORLD_CORRIDOR_${String(connections.length + 1).padStart(3, "0")}`,
+      regionInstances[regionInstances.length - 1],
+      regionInstances[0],
+      worldProfile,
+      zoneByType
+    )
+  );
+
+  for (let index = 0; index < extraCrossLinks; index += 1) {
+    const start = regionInstances[index];
+    const end = regionInstances[(index + 2 + index) % regionInstances.length];
+    if (start.regionId !== end.regionId) {
+      connections.push(
+        buildConnectionRecord(
+          `WORLD_CORRIDOR_${String(connections.length + 1).padStart(3, "0")}`,
+          start,
+          end,
+          worldProfile,
+          zoneByType
+        )
+      );
+    }
+  }
+
+  return connections.map((connection) => deepFreeze(connection));
 }
 
 function buildWorldLandmarks(input, worldProfile, regionInstances, geographyZones) {
-  const byId = new Map(regionInstances.map((region) => [region.regionId, region]));
   const zoneByType = new Map(geographyZones.map((zone) => [zone.zoneType, zone]));
-  const specs = [
-    {
-      landmarkId: "WORLD_LANDMARK_001",
-      landmarkType: "ICONIC_LOCATION",
-      regionRelationship: "REGION_001",
-      location: offsetPoint(byId.get("REGION_001").position, 620, -280),
-      rarity: "HIGH",
-      discoveryValue: "VERY_HIGH",
-      geographyRelationship: zoneByType.get("COASTLINE").zoneId
-    },
-    {
-      landmarkId: "WORLD_LANDMARK_002",
-      landmarkType: "HISTORICAL_SITE",
-      regionRelationship: "REGION_002",
-      location: offsetPoint(byId.get("REGION_002").position, -420, 360),
-      rarity: "MEDIUM",
-      discoveryValue: "HIGH",
-      geographyRelationship: zoneByType.get("FARMLAND").zoneId
-    },
-    {
-      landmarkId: "WORLD_LANDMARK_003",
-      landmarkType: "RARE_DISCOVERY",
-      regionRelationship: "REGION_004",
-      location: offsetPoint(byId.get("REGION_004").position, 260, -520),
-      rarity: "VERY_HIGH",
-      discoveryValue: "VERY_HIGH",
-      geographyRelationship: zoneByType.get("MOUNTAINS").zoneId
-    },
-    {
-      landmarkId: "WORLD_LANDMARK_004",
-      landmarkType: "NATURAL_WONDER",
-      regionRelationship: "REGION_003",
-      location: offsetPoint(byId.get("REGION_003").position, 480, 220),
-      rarity: "HIGH",
-      discoveryValue: "VERY_HIGH",
-      geographyRelationship: zoneByType.get("OCEAN").zoneId
-    },
-    {
-      landmarkId: "WORLD_LANDMARK_005",
-      landmarkType: "NATURAL_WONDER",
-      regionRelationship: "REGION_004",
-      location: offsetPoint(byId.get("REGION_004").position, -340, 460),
-      rarity: "HIGH",
-      discoveryValue: "HIGH",
-      geographyRelationship: zoneByType.get("PROTECTED_AREA").zoneId
-    }
-  ];
-
-  return specs.map((spec) =>
-    deepFreeze({
-      schemaId: landmarkReserveSchemaId,
-      landmarkId: spec.landmarkId,
-      landmarkType: spec.landmarkType,
-      location: deepFreeze(spec.location),
-      rarity: spec.rarity,
-      regionRelationship: spec.regionRelationship,
-      discoveryValue: spec.discoveryValue,
-      geographyRelationship: spec.geographyRelationship,
-      worldProfileBias: worldProfile.profileId
-    })
+  const targetCount = Math.max(
+    4,
+    Math.round(regionInstances.length * landmarkFrequencyMultiplier(worldProfile.landmarkFrequency))
   );
+  const landmarks = [];
+
+  for (let index = 0; index < targetCount; index += 1) {
+    const region = regionInstances[index % regionInstances.length];
+    const landmarkType = selectLandmarkType(worldProfile, region.profile, index);
+    const geographyRelationship = selectLandmarkZoneId(zoneByType, landmarkType, region.profile);
+    const rarity = index === 0 ? "VERY_HIGH" : (index % 3 === 0 ? "HIGH" : "MEDIUM");
+    landmarks.push(
+      deepFreeze({
+        schemaId: landmarkReserveSchemaId,
+        landmarkId: `WORLD_LANDMARK_${String(index + 1).padStart(3, "0")}`,
+        landmarkType,
+        location: deepFreeze(
+          offsetPoint(
+            region.position,
+            seedOffset(input.explorationSeed + index * 7, 620),
+            seedOffset(input.biomeSeed + index * 13, 540)
+          )
+        ),
+        rarity,
+        regionRelationship: region.regionId,
+        discoveryValue: rarity === "VERY_HIGH" ? "VERY_HIGH" : "HIGH",
+        geographyRelationship,
+        worldProfileBias: worldProfile.profileId
+      })
+    );
+  }
+
+  return landmarks;
 }
 
 function buildWorldExplorationRoutes(input, worldProfile, regionInstances, landmarks) {
-  const byId = new Map(regionInstances.map((region) => [region.regionId, region]));
+  const regionById = new Map(regionInstances.map((region) => [region.regionId, region]));
   const landmarkById = new Map(landmarks.map((landmark) => [landmark.landmarkId, landmark]));
-  const specs = [
-    {
-      routeId: "WORLD_ROUTE_001",
-      routeType: "COASTAL_GRAND_TOUR",
-      startAnchor: "REGION_001",
-      endAnchor: "WORLD_LANDMARK_004",
-      difficulty: "LOW_MEDIUM",
-      rewardPotential: "VERY_HIGH"
-    },
-    {
-      routeId: "WORLD_ROUTE_002",
-      routeType: "INLAND_HERITAGE_ROUTE",
-      startAnchor: "REGION_002",
-      endAnchor: "WORLD_LANDMARK_002",
-      difficulty: "LOW",
-      rewardPotential: "HIGH"
-    },
-    {
-      routeId: "WORLD_ROUTE_003",
-      routeType: "MOUNTAIN_DISCOVERY_ROUTE",
-      startAnchor: "REGION_004",
-      endAnchor: "WORLD_LANDMARK_003",
-      difficulty: "HIGH",
-      rewardPotential: "VERY_HIGH"
-    },
-    {
-      routeId: "WORLD_ROUTE_004",
-      routeType: "INTER_REGION_CONNECTOR",
-      startAnchor: "REGION_001",
-      endAnchor: "REGION_005",
-      difficulty: "LOW",
-      rewardPotential: "MEDIUM"
-    },
-    {
-      routeId: "WORLD_ROUTE_005",
-      routeType: "PROTECTED_AREA_TRAIL",
-      startAnchor: "REGION_004",
-      endAnchor: "WORLD_LANDMARK_005",
-      difficulty: "MEDIUM_HIGH",
-      rewardPotential: "HIGH"
-    },
-    {
-      routeId: "WORLD_ROUTE_006",
-      routeType: "FERRY_EXPLORATION_LOOP",
-      startAnchor: "REGION_003",
-      endAnchor: "WORLD_LANDMARK_001",
-      difficulty: "MEDIUM",
-      rewardPotential: "HIGH"
-    }
-  ];
+  const routes = [];
 
-  return specs.map((spec) => {
-    const start = resolveAnchorPosition(spec.startAnchor, byId, landmarkById);
-    const end = resolveAnchorPosition(spec.endAnchor, byId, landmarkById);
+  landmarks.forEach((landmark, index) => {
+    const sourceRegion = regionInstances[index % regionInstances.length];
+    routes.push(
+      deepFreeze({
+        schemaId: explorationRouteSchemaId,
+        routeId: `WORLD_ROUTE_${String(routes.length + 1).padStart(3, "0")}`,
+        routeType: selectRouteType(worldProfile, landmark, sourceRegion.profile),
+        startAnchor: sourceRegion.regionId,
+        endAnchor: landmark.landmarkId,
+        distance: roundNumber(distance2d(sourceRegion.position, landmark.location)),
+        difficulty: resolveRouteDifficulty(worldProfile, landmark.landmarkType),
+        rewardPotential: landmark.discoveryValue === "VERY_HIGH" ? "VERY_HIGH" : "HIGH",
+        worldProfileBias: worldProfile.profileId
+      })
+    );
+  });
+
+  for (let index = 0; index < regionInstances.length - 1; index += 2) {
+    const start = regionInstances[index];
+    const end = regionInstances[(index + 1) % regionInstances.length];
+    routes.push(
+      deepFreeze({
+        schemaId: explorationRouteSchemaId,
+        routeId: `WORLD_ROUTE_${String(routes.length + 1).padStart(3, "0")}`,
+        routeType: "INTER_REGION_CONNECTOR",
+        startAnchor: start.regionId,
+        endAnchor: end.regionId,
+        distance: roundNumber(distance2d(start.position, end.position)),
+        difficulty: "LOW_MEDIUM",
+        rewardPotential: "MEDIUM",
+        worldProfileBias: worldProfile.profileId
+      })
+    );
+  }
+
+  return routes.map((route) => {
+    const start = resolveAnchorPosition(route.startAnchor, regionById, landmarkById);
+    const end = resolveAnchorPosition(route.endAnchor, regionById, landmarkById);
     return deepFreeze({
-      schemaId: explorationRouteSchemaId,
-      routeId: spec.routeId,
-      routeType: spec.routeType,
-      startAnchor: spec.startAnchor,
-      endAnchor: spec.endAnchor,
-      distance: roundNumber(distance2d(start, end)),
-      difficulty: spec.difficulty,
-      rewardPotential: spec.rewardPotential,
-      worldProfileBias: worldProfile.profileId
+      ...route,
+      distance: roundNumber(distance2d(start, end))
     });
   });
 }
 
-function buildStreamingChunks(input, regionInstances, worldBounds) {
-  const { minX, maxX, minY, maxY } = worldBounds;
-  const midX = roundNumber((minX + maxX) / 2);
-  const midY = roundNumber((minY + maxY) / 2);
-  const specs = [
-    {
-      chunkId: "WORLD_CHUNK_001",
-      boundary: [point(minX, minY), point(midX, minY), point(midX, midY), point(minX, midY)],
-      regionOwnership: ["REGION_001"],
-      loadingPriority: "PRIMARY_COASTAL_ENTRY",
-      cacheRules: ["KEEP_ACTIVE_IF_PLAYER_NEAR_COAST", "PREFER_SCENIC_ROUTE_CACHE"],
-      neighbourRelationships: ["WORLD_CHUNK_002", "WORLD_CHUNK_003"]
-    },
-    {
-      chunkId: "WORLD_CHUNK_002",
-      boundary: [point(midX, minY), point(maxX, minY), point(maxX, midY), point(midX, midY)],
-      regionOwnership: ["REGION_003", "REGION_005"],
-      loadingPriority: "TOURISM_AND_SERVICE_EDGE",
-      cacheRules: ["KEEP_ACTIVE_FOR_RAIL_AND_COASTAL_LINKS", "PREFER_DESTINATION_CHAIN_CACHE"],
-      neighbourRelationships: ["WORLD_CHUNK_001", "WORLD_CHUNK_004"]
-    },
-    {
-      chunkId: "WORLD_CHUNK_003",
-      boundary: [point(minX, midY), point(midX, midY), point(midX, maxY), point(minX, maxY)],
-      regionOwnership: ["REGION_002"],
-      loadingPriority: "INLAND_SUPPORT_ZONE",
-      cacheRules: ["PREFER_HIGHWAY_AND_FARMLAND_CACHE"],
-      neighbourRelationships: ["WORLD_CHUNK_001", "WORLD_CHUNK_004"]
-    },
-    {
-      chunkId: "WORLD_CHUNK_004",
-      boundary: [point(midX, midY), point(maxX, midY), point(maxX, maxY), point(midX, maxY)],
-      regionOwnership: ["REGION_004"],
-      loadingPriority: "MOUNTAIN_DISCOVERY_ZONE",
-      cacheRules: ["PREFER_DISCOVERY_ROUTE_CACHE", "EVICT_LAST_ON_REMOTE_TRAVEL"],
-      neighbourRelationships: ["WORLD_CHUNK_002", "WORLD_CHUNK_003"]
-    }
-  ];
+function buildStreamingChunks(input, worldProfile, worldScaleProfile, regionInstances, worldBounds) {
+  const columns = worldScaleProfile.chunkRequirements.preferredColumns;
+  const rows = worldScaleProfile.chunkRequirements.preferredRows;
+  const width = worldBounds.maxX - worldBounds.minX;
+  const height = worldBounds.maxY - worldBounds.minY;
+  const chunkWidth = width / columns;
+  const chunkHeight = height / rows;
+  const chunks = [];
 
-  return specs.map((spec) =>
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const minX = worldBounds.minX + column * chunkWidth;
+      const maxX = minX + chunkWidth;
+      const minY = worldBounds.minY + row * chunkHeight;
+      const maxY = minY + chunkHeight;
+      const chunkId = `WORLD_CHUNK_${String(chunks.length + 1).padStart(3, "0")}`;
+      const regionOwnership = regionInstances
+        .filter(
+          (region) =>
+            region.position.x >= minX &&
+            region.position.x < maxX &&
+            region.position.z >= minY &&
+            region.position.z < maxY
+        )
+        .map((region) => region.regionId);
+
+      chunks.push(
+        deepFreeze({
+          schemaId: streamingChunkSchemaId,
+          chunkId,
+          regionOwnership: deepFreeze(
+            regionOwnership.length > 0 ? regionOwnership : [regionInstances[chunks.length % regionInstances.length].regionId]
+          ),
+          boundary: deepFreeze({
+            points: deepFreeze([
+              point(minX, minY),
+              point(maxX, minY),
+              point(maxX, maxY),
+              point(minX, maxY)
+            ])
+          }),
+          loadingPriority: resolveChunkPriority(worldProfile, row, column),
+          cacheRules: deepFreeze(resolveChunkCacheRules(worldProfile, row, column)),
+          neighbourRelationships: deepFreeze([]),
+          instanceReferencesOnly: true
+        })
+      );
+    }
+  }
+
+  const chunkIds = chunks.map((chunk) => chunk.chunkId);
+  return chunks.map((chunk, index) =>
     deepFreeze({
-      schemaId: streamingChunkSchemaId,
-      chunkId: spec.chunkId,
-      regionOwnership: deepFreeze(spec.regionOwnership),
-      boundary: deepFreeze({ points: deepFreeze(spec.boundary) }),
-      loadingPriority: spec.loadingPriority,
-      cacheRules: deepFreeze(spec.cacheRules),
-      neighbourRelationships: deepFreeze(spec.neighbourRelationships),
-      instanceReferencesOnly: true
+      ...chunk,
+      neighbourRelationships: deepFreeze(resolveChunkNeighbours(index, columns, rows, chunkIds))
     })
   );
 }
 
 function buildWorldMetadata(
   worldProfile,
+  worldScaleProfile,
   geographyZones,
   regionInstances,
   connections,
@@ -973,19 +1098,32 @@ function buildWorldMetadata(
   routes,
   chunks
 ) {
+  const geographyDistribution = summarizeByKey(geographyZones, "zoneType");
+  const regionDistribution = summarizeByKey(regionInstances, "profile");
+  const identityScore = computeIdentityScore(worldProfile, regionDistribution);
+
   return deepFreeze({
     profileId: worldProfile.profileId,
+    scaleProfile: worldScaleProfile.scaleId,
+    worldIdentity: worldProfile.worldIdentity,
     geographyZoneCount: geographyZones.length,
     regionCount: regionInstances.length,
     connectionCount: connections.length,
     landmarkReserveCount: landmarks.length,
     explorationRouteCount: routes.length,
     streamingChunkCount: chunks.length,
+    geographyDistribution,
+    regionDistribution,
+    transportIntensity: worldProfile.transportIntensity,
+    landmarkDensity: worldProfile.landmarkFrequency,
+    explorationDensity: worldProfile.explorationDensity,
+    identityScore,
     referencePlacementMode: "instance_reference_only",
     futureCompatibleProfiles: deepFreeze([
-      "CONTINENTAL_WORLD",
-      "MOUNTAIN_WORLD",
-      "TOURISM_WORLD"
+      "AUSTRALIAN_OUTBACK_WORLD",
+      "ALPINE_WORLD",
+      "TOURISM_ARCHIPELAGO_WORLD",
+      "METROPOLITAN_EXPANSION_WORLD"
     ])
   });
 }
@@ -996,7 +1134,7 @@ function buildValidationResult(preview) {
     preview.worldGeographyZones.every((zone) => supportedZoneTypes.has(zone.zoneType));
   const regionIds = new Set(preview.regionInstances.map((region) => region.regionId));
   const regionsValid =
-    preview.regionInstances.length >= 5 &&
+    preview.regionInstances.length >= preview.worldScaleProfile.regionCountRange[0] &&
     preview.regionInstances.every(
       (region) =>
         supportedRegionProfiles.has(region.profile) &&
@@ -1015,9 +1153,7 @@ function buildValidationResult(preview) {
     preview.worldLandmarkReserves.map((landmark) => landmark.landmarkId)
   );
   const routesReachable = preview.worldExplorationRoutes.every(
-    (route) =>
-      regionIds.has(route.startAnchor) ||
-      landmarkIds.has(route.startAnchor)
+    (route) => regionIds.has(route.startAnchor) || landmarkIds.has(route.startAnchor)
   ) && preview.worldExplorationRoutes.every(
     (route) => regionIds.has(route.endAnchor) || landmarkIds.has(route.endAnchor)
   );
@@ -1039,8 +1175,26 @@ function buildValidationResult(preview) {
   const referenceBasedStructure = preview.streamingChunks.every(
     (chunk) => chunk.instanceReferencesOnly === true
   );
-  const streamingReady = preview.streamingChunks.length >= 4;
+  const streamingReady =
+    preview.streamingChunks.length >=
+    preview.worldScaleProfile.chunkRequirements.minimumChunkCount;
   const noDuplicateGeometryGeneration = true;
+  const profileAppliedCorrectly =
+    preview.worldProfile.scaleProfile === preview.worldScaleProfile.scaleId &&
+    supportedWorldProfiles.includes(preview.worldProfile.profileId);
+  const identityScoreAligned = preview.worldMetadata.identityScore >= 0.72;
+  const requiredSystemsGenerated = [
+    preview.worldGeographyZones.length,
+    preview.regionInstances.length,
+    preview.worldConnections.length,
+    preview.worldLandmarkReserves.length,
+    preview.worldExplorationRoutes.length,
+    preview.streamingChunks.length
+  ].every((count) => count > 0);
+  const streamingRequirementsValid =
+    preview.worldScaleProfile.chunkRequirements.minimumChunkCount <=
+      preview.streamingChunks.length &&
+    preview.worldMetadata.referencePlacementMode === "instance_reference_only";
 
   const validationWithoutHash = deepFreeze({
     schemaId: validationSchemaId,
@@ -1056,6 +1210,10 @@ function buildValidationResult(preview) {
     referenceBasedStructure,
     streamingReady,
     noDuplicateGeometryGeneration,
+    profileAppliedCorrectly,
+    identityScoreAligned,
+    requiredSystemsGenerated,
+    streamingRequirementsValid,
     deterministicSignatureHash: 0,
     validationPassed: false
   });
@@ -1077,7 +1235,11 @@ function buildValidationResult(preview) {
     deterministicRebuildValid,
     referenceBasedStructure,
     streamingReady,
-    noDuplicateGeometryGeneration
+    noDuplicateGeometryGeneration,
+    profileAppliedCorrectly,
+    identityScoreAligned,
+    requiredSystemsGenerated,
+    streamingRequirementsValid
   ].every(Boolean);
 
   return deepFreeze({
@@ -1171,10 +1333,7 @@ function validateWorldExplorationRoutes(preview) {
         `World route type ${route.routeType} is not supported.`
       );
     }
-    if (
-      !regionIds.has(route.startAnchor) &&
-      !landmarkIds.has(route.startAnchor)
-    ) {
+    if (!regionIds.has(route.startAnchor) && !landmarkIds.has(route.startAnchor)) {
       throw createValidationError(
         "invalid_world_route_start_anchor",
         `World route ${route.routeId} references an unknown start anchor.`
@@ -1208,6 +1367,279 @@ function validateStreamingChunks(preview) {
   }
 }
 
+function selectRegionCount(worldSeed, worldScaleProfile) {
+  const [minimum, maximum] = worldScaleProfile.regionCountRange;
+  const span = maximum - minimum + 1;
+  return minimum + ((worldSeed + span) % span);
+}
+
+function buildRegionProfileSequence(count, worldProfile, settlementSeed) {
+  const entries = Object.entries(worldProfile.regionMix).sort((left, right) =>
+    right[1] - left[1] || left[0].localeCompare(right[0])
+  );
+  const allocations = entries.map(([profile, weight]) => ({
+    profile,
+    exact: count * weight,
+    count: Math.floor(count * weight)
+  }));
+  let assigned = allocations.reduce((sum, entry) => sum + entry.count, 0);
+
+  while (assigned < count) {
+    allocations
+      .sort((left, right) =>
+        (right.exact - right.count) - (left.exact - left.count) ||
+        left.profile.localeCompare(right.profile)
+      )[0]
+      .count += 1;
+    assigned += 1;
+  }
+
+  const sequence = [];
+  const ordered = allocations
+    .slice()
+    .sort((left, right) => right.count - left.count || left.profile.localeCompare(right.profile));
+
+  while (sequence.length < count) {
+    let placed = false;
+    for (const entry of ordered) {
+      if (entry.count === 0) {
+        continue;
+      }
+      if (sequence.at(-1) === entry.profile && ordered.some((candidate) => candidate.count > 0 && candidate.profile !== entry.profile)) {
+        continue;
+      }
+      sequence.push(entry.profile);
+      entry.count -= 1;
+      placed = true;
+      break;
+    }
+    if (!placed) {
+      const fallback = ordered.find((entry) => entry.count > 0);
+      sequence.push(fallback.profile);
+      fallback.count -= 1;
+    }
+  }
+
+  const rotation = settlementSeed % sequence.length;
+  return sequence.slice(rotation).concat(sequence.slice(0, rotation));
+}
+
+function resolveRegionNeighbours(index, count) {
+  const previous = ((index - 1 + count) % count) + 1;
+  const next = ((index + 1) % count) + 1;
+  const across = ((index + Math.ceil(count / 2)) % count) + 1;
+  return [
+    `REGION_${String(previous).padStart(3, "0")}`,
+    `REGION_${String(next).padStart(3, "0")}`,
+    `REGION_${String(across).padStart(3, "0")}`
+  ];
+}
+
+function resolveRegionTransitionRules(profile, descriptor, worldProfile) {
+  const base = [...descriptor.transitionRules];
+  if (worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD") {
+    base.push("FERRY_AND_WATERFRONT_LINK");
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    base.push("LONG_DISTANCE_SERVICE_ROUTE");
+  }
+  if (profile === "METROPOLITAN_EDGE_REGION") {
+    base.push("MULTI_CENTRE_GROWTH_SUPPORT");
+  }
+  return base;
+}
+
+function buildConnectionRecord(corridorId, start, end, worldProfile, zoneByType) {
+  const connectionType = selectConnectionType(worldProfile, start.profile, end.profile);
+  return {
+    schemaId: connectionCorridorSchemaId,
+    corridorId,
+    startRegion: start.regionId,
+    endRegion: end.regionId,
+    connectionType,
+    hierarchy: resolveConnectionHierarchy(connectionType, worldProfile),
+    distance: roundNumber(distance2d(start.position, end.position)),
+    difficulty: resolveConnectionDifficulty(connectionType, worldProfile),
+    explorationValue: resolveConnectionExplorationValue(connectionType, worldProfile),
+    terrainInfluence: deepFreeze(resolveConnectionTerrainInfluence(connectionType, zoneByType)),
+    worldProfileBias: worldProfile.profileId
+  };
+}
+
+function selectConnectionType(worldProfile, startProfile, endProfile) {
+  if (worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD") {
+    return startProfile === "COASTAL_REGION" || endProfile === "COASTAL_REGION"
+      ? "FERRY_ROUTE"
+      : "COASTAL_ROUTE";
+  }
+  if (worldProfile.profileId === "ALPINE_WORLD") {
+    return startProfile === "MOUNTAIN_REGION" || endProfile === "MOUNTAIN_REGION"
+      ? "TRAIL"
+      : "HIGHWAY";
+  }
+  if (worldProfile.profileId === "METROPOLITAN_EXPANSION_WORLD") {
+    return startProfile === "METROPOLITAN_EDGE_REGION" || endProfile === "METROPOLITAN_EDGE_REGION"
+      ? "RAILWAY"
+      : "HIGHWAY";
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    return startProfile === "RURAL_REGION" && endProfile === "RURAL_REGION"
+      ? "HIGHWAY"
+      : "RAILWAY";
+  }
+  if (startProfile === "COASTAL_REGION" || endProfile === "TOURISM_REGION") {
+    return "COASTAL_ROUTE";
+  }
+  return "HIGHWAY";
+}
+
+function resolveConnectionHierarchy(connectionType, worldProfile) {
+  const baseMap = {
+    HIGHWAY: "PRIMARY_WORLD_SPINE",
+    RAILWAY: "PASSENGER_AND_FREIGHT_SPINE",
+    COASTAL_ROUTE: "SCENIC_COASTAL_SPINE",
+    FERRY_ROUTE: "WATER_DESTINATION_CHAIN",
+    TRAIL: "DISCOVERY_ACCESS_LINK"
+  };
+  return `${baseMap[connectionType]}_${worldProfile.scaleProfile}`;
+}
+
+function resolveConnectionDifficulty(connectionType, worldProfile) {
+  if (connectionType === "TRAIL") {
+    return "MEDIUM_HIGH";
+  }
+  if (connectionType === "FERRY_ROUTE") {
+    return "MEDIUM";
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    return "MEDIUM";
+  }
+  return "LOW_MEDIUM";
+}
+
+function resolveConnectionExplorationValue(connectionType, worldProfile) {
+  if (connectionType === "COASTAL_ROUTE" || connectionType === "FERRY_ROUTE") {
+    return "HIGH";
+  }
+  if (connectionType === "TRAIL" || worldProfile.profileId === "ALPINE_WORLD") {
+    return "VERY_HIGH";
+  }
+  return "MEDIUM";
+}
+
+function selectLandmarkType(worldProfile, regionProfile, index) {
+  if (worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD") {
+    return index % 2 === 0 ? "ICONIC_LOCATION" : "NATURAL_WONDER";
+  }
+  if (worldProfile.profileId === "ALPINE_WORLD") {
+    return regionProfile === "MOUNTAIN_REGION" ? "NATURAL_WONDER" : "RARE_DISCOVERY";
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    return index % 3 === 0 ? "RARE_DISCOVERY" : "HISTORICAL_SITE";
+  }
+  if (worldProfile.profileId === "METROPOLITAN_EXPANSION_WORLD") {
+    return index % 3 === 0 ? "ICONIC_LOCATION" : "HISTORICAL_SITE";
+  }
+  return index % 3 === 0 ? "ICONIC_LOCATION" : "NATURAL_WONDER";
+}
+
+function selectLandmarkZoneId(zoneByType, landmarkType, regionProfile) {
+  if (landmarkType === "NATURAL_WONDER" && regionProfile === "MOUNTAIN_REGION") {
+    return zoneByType.get("MOUNTAINS")?.zoneId ?? zoneByType.get("PROTECTED_AREA")?.zoneId;
+  }
+  if (landmarkType === "ICONIC_LOCATION") {
+    return zoneByType.get("COASTLINE")?.zoneId ?? zoneByType.get("OCEAN")?.zoneId;
+  }
+  if (landmarkType === "HISTORICAL_SITE") {
+    return zoneByType.get("FARMLAND")?.zoneId ?? zoneByType.get("RIVER")?.zoneId;
+  }
+  return zoneByType.get("PROTECTED_AREA")?.zoneId ?? zoneByType.get("FOREST")?.zoneId;
+}
+
+function selectRouteType(worldProfile, landmark, sourceRegionProfile) {
+  if (worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD") {
+    return landmark.landmarkType === "ICONIC_LOCATION"
+      ? "FERRY_EXPLORATION_LOOP"
+      : "COASTAL_GRAND_TOUR";
+  }
+  if (worldProfile.profileId === "ALPINE_WORLD" || sourceRegionProfile === "MOUNTAIN_REGION") {
+    return landmark.landmarkType === "NATURAL_WONDER"
+      ? "MOUNTAIN_DISCOVERY_ROUTE"
+      : "PROTECTED_AREA_TRAIL";
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    return "INLAND_HERITAGE_ROUTE";
+  }
+  return landmark.landmarkType === "NATURAL_WONDER"
+    ? "COASTAL_GRAND_TOUR"
+    : "INTER_REGION_CONNECTOR";
+}
+
+function resolveRouteDifficulty(worldProfile, landmarkType) {
+  if (worldProfile.profileId === "ALPINE_WORLD") {
+    return landmarkType === "NATURAL_WONDER" ? "HIGH" : "MEDIUM_HIGH";
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    return "MEDIUM";
+  }
+  return landmarkType === "ICONIC_LOCATION" ? "LOW_MEDIUM" : "MEDIUM";
+}
+
+function resolveChunkPriority(worldProfile, row, column) {
+  if (worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD" && row === 0) {
+    return "WATERFRONT_DESTINATION_ENTRY";
+  }
+  if (worldProfile.profileId === "METROPOLITAN_EXPANSION_WORLD" && column === 1) {
+    return "MULTI_CENTRE_CORRIDOR_CORE";
+  }
+  if (worldProfile.profileId === "ALPINE_WORLD" && row === 0) {
+    return "ELEVATION_DISCOVERY_ENTRY";
+  }
+  return row === 0 ? "PRIMARY_WORLD_ENTRY" : "SECONDARY_WORLD_SUPPORT";
+}
+
+function resolveChunkCacheRules(worldProfile, row, column) {
+  const rules = ["INSTANCE_REFERENCE_ONLY", "DETERMINISTIC_CHUNK_REBUILD"];
+  if (worldProfile.profileId === "TOURISM_ARCHIPELAGO_WORLD") {
+    rules.push("PREFER_FERRY_AND_SCENIC_CACHE");
+  }
+  if (worldProfile.profileId === "AUSTRALIAN_OUTBACK_WORLD") {
+    rules.push("PREFER_LONG_DISTANCE_CORRIDOR_CACHE");
+  }
+  if (worldProfile.profileId === "METROPOLITAN_EXPANSION_WORLD") {
+    rules.push("KEEP_CENTRE_CORRIDOR_CHUNKS_WARM");
+  }
+  if (row === 0 && column === 0) {
+    rules.push("BOOST_INITIAL_INSPECTION_READABILITY");
+  }
+  return rules;
+}
+
+function resolveChunkNeighbours(index, columns, rows, chunkIds) {
+  const row = Math.floor(index / columns);
+  const column = index % columns;
+  const neighbours = [];
+  const candidates = [
+    [row - 1, column],
+    [row + 1, column],
+    [row, column - 1],
+    [row, column + 1]
+  ];
+
+  for (const [candidateRow, candidateColumn] of candidates) {
+    if (
+      candidateRow >= 0 &&
+      candidateRow < rows &&
+      candidateColumn >= 0 &&
+      candidateColumn < columns
+    ) {
+      neighbours.push(chunkIds[candidateRow * columns + candidateColumn]);
+    }
+  }
+
+  return neighbours;
+}
+
 function resolveConnectionTerrainInfluence(connectionType, zoneByType) {
   switch (connectionType) {
     case "COASTAL_ROUTE":
@@ -1236,6 +1668,46 @@ function resolveConnectionTerrainInfluence(connectionType, zoneByType) {
         zoneByType.get("RIVER")?.zoneId
       ].filter(Boolean);
   }
+}
+
+function landmarkFrequencyMultiplier(frequency) {
+  switch (frequency) {
+    case "VERY_HIGH":
+      return 1;
+    case "HIGH":
+      return 0.8;
+    case "MEDIUM":
+      return 0.65;
+    case "LOW_MEDIUM":
+      return 0.55;
+    default:
+      return 0.6;
+  }
+}
+
+function computeIdentityScore(worldProfile, regionDistribution) {
+  const total = Object.values(regionDistribution).reduce((sum, value) => sum + value, 0);
+  let score = 0;
+
+  for (const [profile, targetWeight] of Object.entries(worldProfile.regionMix)) {
+    const actualWeight = (regionDistribution[profile] ?? 0) / total;
+    score += 1 - Math.min(1, Math.abs(actualWeight - targetWeight));
+  }
+
+  return roundNumber(score / Object.keys(worldProfile.regionMix).length);
+}
+
+function summarizeByKey(items, key) {
+  return deepFreeze(
+    items.reduce((result, item) => {
+      result[item[key]] = (result[item[key]] ?? 0) + 1;
+      return result;
+    }, {})
+  );
+}
+
+function clamp(value, minimum, maximum) {
+  return Math.max(minimum, Math.min(maximum, value));
 }
 
 function resolveAnchorPosition(anchorId, regionById, landmarkById) {

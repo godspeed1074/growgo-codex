@@ -2,7 +2,7 @@
   "schemaId": "WORLD_LAYOUT_001",
   "worldId": "WORLD_10482",
   "previewId": "WORLD_LAYOUT_001_PREVIEW_001",
-  "generationProfile": "australian_coastal_world_default",
+  "generationProfile": "australian_coastal_world_composition_v1",
   "seed": 10482,
   "seedConfig": {
     "worldSeed": 10482,
@@ -11,34 +11,60 @@
     "biomeSeed": 1,
     "settlementSeed": 1,
     "explorationSeed": 1,
-    "worldProfile": "AUSTRALIAN_COASTAL_WORLD"
+    "worldProfile": "AUSTRALIAN_COASTAL_WORLD",
+    "scaleProfile": "SMALL_WORLD",
+    "compositionIdentity": "SCENIC_COASTAL_CHAIN"
   },
   "worldProfile": {
     "profileId": "AUSTRALIAN_COASTAL_WORLD",
-    "generationProfile": "australian_coastal_world_default",
+    "generationProfile": "australian_coastal_world_composition_v1",
+    "worldIdentity": "SCENIC_COASTAL_CHAIN",
+    "scaleProfile": "SMALL_WORLD",
     "geographyWeighting": {
       "ocean": 1,
       "coastline": 1,
-      "forest": 0.7,
-      "farmland": 0.8,
-      "river": 0.65,
+      "forest": 0.72,
+      "farmland": 0.72,
+      "river": 0.62,
       "wetland": 0.45,
-      "mountains": 0.35,
+      "mountains": 0.4,
       "protectedArea": 0.7
     },
-    "regionDensity": "MEDIUM_SCENIC",
-    "regionProfileWeighting": {
-      "COASTAL_REGION": 1,
-      "TOURISM_REGION": 0.9,
-      "RURAL_REGION": 0.75,
-      "MOUNTAIN_REGION": 0.45,
-      "METROPOLITAN_EDGE_REGION": 0.55
+    "regionMix": {
+      "COASTAL_REGION": 0.34,
+      "TOURISM_REGION": 0.22,
+      "RURAL_REGION": 0.2,
+      "MOUNTAIN_REGION": 0.1,
+      "METROPOLITAN_EDGE_REGION": 0.14
     },
+    "settlementDensity": "MEDIUM_SCENIC",
     "transportIntensity": "MEDIUM_HIGH",
     "landmarkFrequency": "HIGH",
-    "explorationRouteDensity": "HIGH",
+    "explorationDensity": "HIGH_EXPLORATION",
+    "streamingRequirements": {
+      "targetChunkComplexity": "LOW",
+      "routeDensity": "DENSE",
+      "cacheMode": "SCENIC_CHAIN"
+    },
     "boundaryBehaviour": "COASTAL_CONTINENTAL_ARC",
     "growthPattern": "COASTAL_SPINE_WITH_INLAND_SUPPORT"
+  },
+  "worldScaleProfile": {
+    "schemaId": "WORLD_SCALE_PROFILE_001",
+    "scaleId": "SMALL_WORLD",
+    "regionCountRange": [
+      5,
+      6
+    ],
+    "travelDistanceRange": "COMPACT_INTER_REGION",
+    "explorationDensity": "HIGH_EXPLORATION",
+    "sizeMultiplier": 1,
+    "chunkRequirements": {
+      "minimumChunkCount": 4,
+      "preferredColumns": 2,
+      "preferredRows": 2,
+      "streamingComplexity": "LOW"
+    }
   },
   "worldBounds": {
     "boundaryStyle": "COASTAL_CONTINENTAL_ARC",
@@ -49,39 +75,39 @@
     "boundaryPolygon": [
       {
         "x": -12000,
-        "z": -7320
+        "z": -7144
       },
       {
-        "x": -11080,
-        "z": -8140
+        "x": -11060,
+        "z": -8120
       },
       {
-        "x": -8989.46,
-        "z": -7780
+        "x": -6685.25,
+        "z": -7760
       },
       {
-        "x": 9900,
-        "z": -7460
+        "x": 9600,
+        "z": -7216
       },
       {
-        "x": 12240,
-        "z": -5800
+        "x": 12280,
+        "z": -5760
       },
       {
         "x": 12460,
-        "z": 6200
+        "z": 6080
       },
       {
         "x": 11180,
-        "z": 8260
+        "z": 8108
       },
       {
-        "x": -10200,
+        "x": -9600,
         "z": 8420
       },
       {
-        "x": -12340,
-        "z": 6760
+        "x": -12360,
+        "z": 6720
       },
       {
         "x": -12420,
@@ -91,17 +117,40 @@
   },
   "worldMetadata": {
     "profileId": "AUSTRALIAN_COASTAL_WORLD",
+    "scaleProfile": "SMALL_WORLD",
+    "worldIdentity": "SCENIC_COASTAL_CHAIN",
     "geographyZoneCount": 8,
     "regionCount": 5,
-    "connectionCount": 6,
-    "landmarkReserveCount": 5,
+    "connectionCount": 7,
+    "landmarkReserveCount": 4,
     "explorationRouteCount": 6,
     "streamingChunkCount": 4,
+    "geographyDistribution": {
+      "OCEAN": 1,
+      "COASTLINE": 1,
+      "FOREST": 1,
+      "FARMLAND": 1,
+      "RIVER": 1,
+      "WETLAND": 1,
+      "MOUNTAINS": 1,
+      "PROTECTED_AREA": 1
+    },
+    "regionDistribution": {
+      "METROPOLITAN_EDGE_REGION": 1,
+      "COASTAL_REGION": 2,
+      "RURAL_REGION": 1,
+      "TOURISM_REGION": 1
+    },
+    "transportIntensity": "MEDIUM_HIGH",
+    "landmarkDensity": "HIGH",
+    "explorationDensity": "HIGH_EXPLORATION",
+    "identityScore": 0.95,
     "referencePlacementMode": "instance_reference_only",
     "futureCompatibleProfiles": [
-      "CONTINENTAL_WORLD",
-      "MOUNTAIN_WORLD",
-      "TOURISM_WORLD"
+      "AUSTRALIAN_OUTBACK_WORLD",
+      "ALPINE_WORLD",
+      "TOURISM_ARCHIPELAGO_WORLD",
+      "METROPOLITAN_EXPANSION_WORLD"
     ]
   },
   "worldGeographyZones": [
@@ -121,11 +170,11 @@
           },
           {
             "x": 12820,
-            "z": -5320
+            "z": -4560
           },
           {
             "x": -12620,
-            "z": -5480
+            "z": -4720
           }
         ]
       },
@@ -176,25 +225,25 @@
       "boundary": {
         "points": [
           {
-            "x": -11080,
-            "z": 3800
+            "x": -10800,
+            "z": 3840
           },
           {
-            "x": -7200,
-            "z": 3500
+            "x": -6240,
+            "z": 3520
           },
           {
-            "x": -6800,
-            "z": 7100
+            "x": -5760,
+            "z": 7200
           },
           {
-            "x": -10540,
-            "z": 7380
+            "x": -10080,
+            "z": 7360
           }
         ]
       },
       "biome": "TEMPERATE_FOREST",
-      "climate": "MILD_WET",
+      "climate": "MIXED_WET_DRY",
       "accessibility": "TRACK_ACCESS",
       "influenceRules": [
         "SUPPORTS_MOUNTAIN_AND_TOURISM_EDGE_REGIONS",
@@ -208,20 +257,20 @@
       "boundary": {
         "points": [
           {
-            "x": -9600,
-            "z": -4020
+            "x": -9120,
+            "z": -4040
           },
           {
-            "x": 11220,
+            "x": 11040,
             "z": -4380
           },
           {
-            "x": 10680,
-            "z": 400
+            "x": 10560,
+            "z": -1056
           },
           {
-            "x": -10180,
-            "z": 1020
+            "x": -9600,
+            "z": -436
           }
         ]
       },
@@ -240,20 +289,20 @@
       "boundary": {
         "points": [
           {
-            "x": -5800,
+            "x": -6240,
             "z": 7740
           },
           {
-            "x": -5260,
-            "z": 5800
+            "x": -5520,
+            "z": 5760
           },
           {
-            "x": -4840,
-            "z": 3920
+            "x": -5040,
+            "z": 3840
           },
           {
-            "x": -4540,
-            "z": -6760
+            "x": -4560,
+            "z": -6080
           }
         ]
       },
@@ -272,20 +321,20 @@
       "boundary": {
         "points": [
           {
-            "x": 7140,
-            "z": -5360
+            "x": 7200,
+            "z": -5280
           },
           {
-            "x": 9160,
-            "z": -5460
+            "x": 9120,
+            "z": -5440
           },
           {
-            "x": 9380,
-            "z": -4440
+            "x": 9360,
+            "z": -4864
           },
           {
-            "x": 7420,
-            "z": -4320
+            "x": 7440,
+            "z": -4704
           }
         ]
       },
@@ -304,25 +353,25 @@
       "boundary": {
         "points": [
           {
-            "x": 5600,
-            "z": 2800
+            "x": 5520,
+            "z": 2880
           },
           {
-            "x": 9180,
+            "x": 9120,
             "z": 2400
           },
           {
-            "x": 10180,
-            "z": 5740
+            "x": 10080,
+            "z": 5760
           },
           {
-            "x": 6420,
-            "z": 6380
+            "x": 6240,
+            "z": 6400
           }
         ]
       },
       "biome": "HIGHLAND_RIDGE",
-      "climate": "COOL_ELEVATED",
+      "climate": "TEMPERATE_HIGHLAND",
       "accessibility": "PASS_AND_TRAIL_ACCESS",
       "influenceRules": [
         "CONSTRAINS_TRANSPORT",
@@ -336,25 +385,25 @@
       "boundary": {
         "points": [
           {
-            "x": 8180,
-            "z": 4700
+            "x": 8160,
+            "z": 4800
           },
           {
-            "x": 10460,
-            "z": 4540
+            "x": 10320,
+            "z": 4640
           },
           {
-            "x": 11080,
-            "z": 6180
+            "x": 11040,
+            "z": 6080
           },
           {
-            "x": 8760,
-            "z": 6540
+            "x": 8880,
+            "z": 6560
           }
         ]
       },
-      "biome": "NATIONAL_PARK_COMPLEX",
-      "climate": "TEMPERATE_PROTECTED",
+      "biome": "REGIONAL_CONSERVATION_AREA",
+      "climate": "MIXED_PROTECTED",
       "accessibility": "TRAIL_ACCESS",
       "influenceRules": [
         "LIMITS_DEVELOPMENT",
@@ -366,114 +415,121 @@
     {
       "schemaId": "REGION_INSTANCE_001",
       "regionId": "REGION_001",
-      "profile": "COASTAL_REGION",
+      "profile": "METROPOLITAN_EDGE_REGION",
       "position": {
-        "x": -8542.1,
+        "x": -7844.85,
         "y": 0,
-        "z": -5198.36
+        "z": -1111.66
       },
-      "size": "LARGE",
-      "biome": "TEMPERATE_COASTAL",
-      "climate": "MILD_WET_SUMMER",
+      "size": "MEDIUM",
+      "biome": "COASTAL_PLAIN_MIXED",
+      "climate": "TEMPERATE_GROWTH_BELT",
       "neighbouringRegions": [
+        "REGION_005",
         "REGION_002",
-        "REGION_003",
-        "REGION_005"
+        "REGION_004"
       ],
       "transitionRules": [
-        "COAST_TO_FARMLAND",
-        "FORESHORE_TO_TOURISM",
-        "COASTAL_SERVICE_CORRIDOR"
+        "SERVICE_EXPANSION",
+        "CORRIDOR_CONCENTRATION",
+        "FUTURE_CENTRE_SUPPORT",
+        "MULTI_CENTRE_GROWTH_SUPPORT"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "REGION_INSTANCE_001",
       "regionId": "REGION_002",
-      "profile": "RURAL_REGION",
+      "profile": "COASTAL_REGION",
       "position": {
-        "x": -5776,
+        "x": -1421.15,
         "y": 0,
-        "z": -1618
+        "z": -6310.89
       },
       "size": "LARGE",
-      "biome": "TEMPERATE_FARMLAND",
-      "climate": "TEMPERATE_MIXED",
+      "biome": "TEMPERATE_COASTAL",
+      "climate": "MILD_COASTAL",
       "neighbouringRegions": [
         "REGION_001",
-        "REGION_004",
+        "REGION_003",
         "REGION_005"
       ],
       "transitionRules": [
-        "RURAL_SERVICE_SUPPORT",
-        "FARMLAND_TO_MOUNTAIN",
-        "INLAND_HIGHWAY_SPINE"
+        "COAST_TO_INLAND",
+        "SCENIC_PUBLIC_EDGE",
+        "FORESHORE_ACCESS"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "REGION_INSTANCE_001",
       "regionId": "REGION_003",
-      "profile": "TOURISM_REGION",
+      "profile": "RURAL_REGION",
       "position": {
-        "x": 7248,
+        "x": 6549.73,
         "y": 0,
-        "z": -5576
+        "z": -2392.07
       },
-      "size": "MEDIUM_LARGE",
-      "biome": "COASTAL_SCENIC",
-      "climate": "MILD_COASTAL",
+      "size": "LARGE",
+      "biome": "TEMPERATE_FARMLAND",
+      "climate": "MIXED_TEMPERATE",
       "neighbouringRegions": [
-        "REGION_001",
-        "REGION_004"
+        "REGION_002",
+        "REGION_004",
+        "REGION_001"
       ],
       "transitionRules": [
-        "TOURISM_COASTAL_CHAIN",
-        "SCENIC_LINK_TO_HIGHLANDS"
+        "SERVICE_SPINE",
+        "FARMLAND_SUPPORT",
+        "INLAND_CONNECTOR"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "REGION_INSTANCE_001",
       "regionId": "REGION_004",
-      "profile": "MOUNTAIN_REGION",
+      "profile": "TOURISM_REGION",
       "position": {
-        "x": 8052,
+        "x": 6604.93,
         "y": 0,
-        "z": 3406
+        "z": 2528.69
       },
-      "size": "LARGE",
-      "biome": "HIGHLAND_FOREST",
-      "climate": "COOL_ELEVATED",
+      "size": "MEDIUM_LARGE",
+      "biome": "SCENIC_DESTINATION",
+      "climate": "MILD_VISITOR",
       "neighbouringRegions": [
-        "REGION_002",
-        "REGION_003"
+        "REGION_003",
+        "REGION_005",
+        "REGION_002"
       ],
       "transitionRules": [
-        "RIDGE_AND_PASS_ACCESS",
-        "PROTECTED_PARK_EDGE"
+        "DESTINATION_LINK",
+        "LANDMARK_CLUSTER",
+        "PEDESTRIAN_SCENIC_CHAIN"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "REGION_INSTANCE_001",
       "regionId": "REGION_005",
-      "profile": "METROPOLITAN_EDGE_REGION",
+      "profile": "COASTAL_REGION",
       "position": {
-        "x": -2104,
+        "x": -1259.28,
         "y": 0,
-        "z": -3372
+        "z": 2604.42
       },
-      "size": "MEDIUM",
-      "biome": "COASTAL_PLAIN_MIXED",
-      "climate": "TEMPERATE_GROWTH_BELT",
+      "size": "LARGE",
+      "biome": "TEMPERATE_COASTAL",
+      "climate": "MILD_COASTAL",
       "neighbouringRegions": [
+        "REGION_004",
         "REGION_001",
-        "REGION_002"
+        "REGION_003"
       ],
       "transitionRules": [
-        "SERVICE_EXPANSION_EDGE",
-        "RAIL_AND_HIGHWAY_CONCENTRATION"
+        "COAST_TO_INLAND",
+        "SCENIC_PUBLIC_EDGE",
+        "FORESHORE_ACCESS"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     }
@@ -485,8 +541,8 @@
       "startRegion": "REGION_001",
       "endRegion": "REGION_002",
       "connectionType": "HIGHWAY",
-      "hierarchy": "PRIMARY_WORLD_SPINE",
-      "distance": 4524.41,
+      "hierarchy": "PRIMARY_WORLD_SPINE_SMALL_WORLD",
+      "distance": 8264.13,
       "difficulty": "LOW_MEDIUM",
       "explorationValue": "MEDIUM",
       "terrainInfluence": [
@@ -498,12 +554,12 @@
     {
       "schemaId": "WORLD_CONNECTION_CORRIDOR_001",
       "corridorId": "WORLD_CORRIDOR_002",
-      "startRegion": "REGION_001",
+      "startRegion": "REGION_002",
       "endRegion": "REGION_003",
       "connectionType": "COASTAL_ROUTE",
-      "hierarchy": "SCENIC_COASTAL_SPINE",
-      "distance": 15794.62,
-      "difficulty": "LOW",
+      "hierarchy": "SCENIC_COASTAL_SPINE_SMALL_WORLD",
+      "distance": 8882.12,
+      "difficulty": "LOW_MEDIUM",
       "explorationValue": "HIGH",
       "terrainInfluence": [
         "WORLD_ZONE_002",
@@ -514,28 +570,28 @@
     {
       "schemaId": "WORLD_CONNECTION_CORRIDOR_001",
       "corridorId": "WORLD_CORRIDOR_003",
-      "startRegion": "REGION_002",
+      "startRegion": "REGION_003",
       "endRegion": "REGION_004",
-      "connectionType": "TRAIL",
-      "hierarchy": "MOUNTAIN_ACCESS_LINK",
-      "distance": 14712.38,
-      "difficulty": "MEDIUM_HIGH",
+      "connectionType": "COASTAL_ROUTE",
+      "hierarchy": "SCENIC_COASTAL_SPINE_SMALL_WORLD",
+      "distance": 4921.07,
+      "difficulty": "LOW_MEDIUM",
       "explorationValue": "HIGH",
       "terrainInfluence": [
-        "WORLD_ZONE_007",
-        "WORLD_ZONE_008"
+        "WORLD_ZONE_002",
+        "WORLD_ZONE_001"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_CONNECTION_CORRIDOR_001",
       "corridorId": "WORLD_CORRIDOR_004",
-      "startRegion": "REGION_001",
+      "startRegion": "REGION_004",
       "endRegion": "REGION_005",
-      "connectionType": "RAILWAY",
-      "hierarchy": "SERVICE_AND_PASSENGER_SPINE",
-      "distance": 6692.14,
-      "difficulty": "LOW",
+      "connectionType": "HIGHWAY",
+      "hierarchy": "PRIMARY_WORLD_SPINE_SMALL_WORLD",
+      "distance": 7864.57,
+      "difficulty": "LOW_MEDIUM",
       "explorationValue": "MEDIUM",
       "terrainInfluence": [
         "WORLD_ZONE_004",
@@ -546,32 +602,48 @@
     {
       "schemaId": "WORLD_CONNECTION_CORRIDOR_001",
       "corridorId": "WORLD_CORRIDOR_005",
-      "startRegion": "REGION_003",
-      "endRegion": "REGION_004",
-      "connectionType": "FERRY_ROUTE",
-      "hierarchy": "DESTINATION_CHAIN_LINK",
-      "distance": 9017.91,
-      "difficulty": "MEDIUM",
+      "startRegion": "REGION_005",
+      "endRegion": "REGION_001",
+      "connectionType": "COASTAL_ROUTE",
+      "hierarchy": "SCENIC_COASTAL_SPINE_SMALL_WORLD",
+      "distance": 7561.68,
+      "difficulty": "LOW_MEDIUM",
       "explorationValue": "HIGH",
       "terrainInfluence": [
-        "WORLD_ZONE_001",
-        "WORLD_ZONE_002"
+        "WORLD_ZONE_002",
+        "WORLD_ZONE_001"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_CONNECTION_CORRIDOR_001",
       "corridorId": "WORLD_CORRIDOR_006",
-      "startRegion": "REGION_002",
-      "endRegion": "REGION_005",
+      "startRegion": "REGION_001",
+      "endRegion": "REGION_003",
       "connectionType": "HIGHWAY",
-      "hierarchy": "INLAND_SUPPORT_LINK",
-      "distance": 4069.41,
-      "difficulty": "LOW",
-      "explorationValue": "MEDIUM_LOW",
+      "hierarchy": "PRIMARY_WORLD_SPINE_SMALL_WORLD",
+      "distance": 14451.41,
+      "difficulty": "LOW_MEDIUM",
+      "explorationValue": "MEDIUM",
       "terrainInfluence": [
         "WORLD_ZONE_004",
         "WORLD_ZONE_005"
+      ],
+      "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
+    },
+    {
+      "schemaId": "WORLD_CONNECTION_CORRIDOR_001",
+      "corridorId": "WORLD_CORRIDOR_007",
+      "startRegion": "REGION_002",
+      "endRegion": "REGION_005",
+      "connectionType": "COASTAL_ROUTE",
+      "hierarchy": "SCENIC_COASTAL_SPINE_SMALL_WORLD",
+      "distance": 8916.78,
+      "difficulty": "LOW_MEDIUM",
+      "explorationValue": "HIGH",
+      "terrainInfluence": [
+        "WORLD_ZONE_002",
+        "WORLD_ZONE_001"
       ],
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     }
@@ -582,11 +654,11 @@
       "landmarkId": "WORLD_LANDMARK_001",
       "landmarkType": "ICONIC_LOCATION",
       "location": {
-        "x": -7922.1,
+        "x": -7836.36,
         "y": 0,
-        "z": -5478.36
+        "z": -1104.26
       },
-      "rarity": "HIGH",
+      "rarity": "VERY_HIGH",
       "regionRelationship": "REGION_001",
       "discoveryValue": "VERY_HIGH",
       "geographyRelationship": "WORLD_ZONE_002",
@@ -595,61 +667,46 @@
     {
       "schemaId": "WORLD_LANDMARK_RESERVE_001",
       "landmarkId": "WORLD_LANDMARK_002",
-      "landmarkType": "HISTORICAL_SITE",
+      "landmarkType": "NATURAL_WONDER",
       "location": {
-        "x": -6196,
+        "x": -1353.33,
         "y": 0,
-        "z": -1258
+        "z": -6207.95
       },
       "rarity": "MEDIUM",
       "regionRelationship": "REGION_002",
       "discoveryValue": "HIGH",
-      "geographyRelationship": "WORLD_ZONE_004",
+      "geographyRelationship": "WORLD_ZONE_008",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_LANDMARK_RESERVE_001",
       "landmarkId": "WORLD_LANDMARK_003",
-      "landmarkType": "RARE_DISCOVERY",
+      "landmarkType": "NATURAL_WONDER",
       "location": {
-        "x": 8312,
+        "x": 6676.25,
         "y": 0,
-        "z": 2886
+        "z": -2196.85
       },
-      "rarity": "VERY_HIGH",
-      "regionRelationship": "REGION_004",
-      "discoveryValue": "VERY_HIGH",
-      "geographyRelationship": "WORLD_ZONE_007",
+      "rarity": "MEDIUM",
+      "regionRelationship": "REGION_003",
+      "discoveryValue": "HIGH",
+      "geographyRelationship": "WORLD_ZONE_008",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_LANDMARK_RESERVE_001",
       "landmarkId": "WORLD_LANDMARK_004",
-      "landmarkType": "NATURAL_WONDER",
+      "landmarkType": "ICONIC_LOCATION",
       "location": {
-        "x": 7728,
+        "x": 6788.98,
         "y": 0,
-        "z": -5356
-      },
-      "rarity": "HIGH",
-      "regionRelationship": "REGION_003",
-      "discoveryValue": "VERY_HIGH",
-      "geographyRelationship": "WORLD_ZONE_001",
-      "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
-    },
-    {
-      "schemaId": "WORLD_LANDMARK_RESERVE_001",
-      "landmarkId": "WORLD_LANDMARK_005",
-      "landmarkType": "NATURAL_WONDER",
-      "location": {
-        "x": 7712,
-        "y": 0,
-        "z": 3866
+        "z": 2810.02
       },
       "rarity": "HIGH",
       "regionRelationship": "REGION_004",
       "discoveryValue": "HIGH",
-      "geographyRelationship": "WORLD_ZONE_008",
+      "geographyRelationship": "WORLD_ZONE_002",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     }
   ],
@@ -657,10 +714,10 @@
     {
       "schemaId": "WORLD_EXPLORATION_ROUTE_001",
       "routeId": "WORLD_ROUTE_001",
-      "routeType": "COASTAL_GRAND_TOUR",
+      "routeType": "INTER_REGION_CONNECTOR",
       "startAnchor": "REGION_001",
-      "endAnchor": "WORLD_LANDMARK_004",
-      "distance": 16270.86,
+      "endAnchor": "WORLD_LANDMARK_001",
+      "distance": 11.26,
       "difficulty": "LOW_MEDIUM",
       "rewardPotential": "VERY_HIGH",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
@@ -668,56 +725,56 @@
     {
       "schemaId": "WORLD_EXPLORATION_ROUTE_001",
       "routeId": "WORLD_ROUTE_002",
-      "routeType": "INLAND_HERITAGE_ROUTE",
+      "routeType": "COASTAL_GRAND_TOUR",
       "startAnchor": "REGION_002",
       "endAnchor": "WORLD_LANDMARK_002",
-      "distance": 553.17,
-      "difficulty": "LOW",
+      "distance": 123.27,
+      "difficulty": "MEDIUM",
       "rewardPotential": "HIGH",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_EXPLORATION_ROUTE_001",
       "routeId": "WORLD_ROUTE_003",
-      "routeType": "MOUNTAIN_DISCOVERY_ROUTE",
-      "startAnchor": "REGION_004",
+      "routeType": "COASTAL_GRAND_TOUR",
+      "startAnchor": "REGION_003",
       "endAnchor": "WORLD_LANDMARK_003",
-      "distance": 581.38,
-      "difficulty": "HIGH",
-      "rewardPotential": "VERY_HIGH",
+      "distance": 232.63,
+      "difficulty": "MEDIUM",
+      "rewardPotential": "HIGH",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_EXPLORATION_ROUTE_001",
       "routeId": "WORLD_ROUTE_004",
       "routeType": "INTER_REGION_CONNECTOR",
-      "startAnchor": "REGION_001",
-      "endAnchor": "REGION_005",
-      "distance": 6692.14,
-      "difficulty": "LOW",
-      "rewardPotential": "MEDIUM",
+      "startAnchor": "REGION_004",
+      "endAnchor": "WORLD_LANDMARK_004",
+      "distance": 336.19,
+      "difficulty": "LOW_MEDIUM",
+      "rewardPotential": "HIGH",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_EXPLORATION_ROUTE_001",
       "routeId": "WORLD_ROUTE_005",
-      "routeType": "PROTECTED_AREA_TRAIL",
-      "startAnchor": "REGION_004",
-      "endAnchor": "WORLD_LANDMARK_005",
-      "distance": 572.01,
-      "difficulty": "MEDIUM_HIGH",
-      "rewardPotential": "HIGH",
+      "routeType": "INTER_REGION_CONNECTOR",
+      "startAnchor": "REGION_001",
+      "endAnchor": "REGION_002",
+      "distance": 8264.13,
+      "difficulty": "LOW_MEDIUM",
+      "rewardPotential": "MEDIUM",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     },
     {
       "schemaId": "WORLD_EXPLORATION_ROUTE_001",
       "routeId": "WORLD_ROUTE_006",
-      "routeType": "FERRY_EXPLORATION_LOOP",
+      "routeType": "INTER_REGION_CONNECTOR",
       "startAnchor": "REGION_003",
-      "endAnchor": "WORLD_LANDMARK_001",
-      "distance": 15170.41,
-      "difficulty": "MEDIUM",
-      "rewardPotential": "HIGH",
+      "endAnchor": "REGION_004",
+      "distance": 4921.07,
+      "difficulty": "LOW_MEDIUM",
+      "rewardPotential": "MEDIUM",
       "worldProfileBias": "AUSTRALIAN_COASTAL_WORLD"
     }
   ],
@@ -726,7 +783,8 @@
       "schemaId": "WORLD_STREAMING_CHUNK_001",
       "chunkId": "WORLD_CHUNK_001",
       "regionOwnership": [
-        "REGION_001"
+        "REGION_001",
+        "REGION_002"
       ],
       "boundary": {
         "points": [
@@ -748,14 +806,15 @@
           }
         ]
       },
-      "loadingPriority": "PRIMARY_COASTAL_ENTRY",
+      "loadingPriority": "PRIMARY_WORLD_ENTRY",
       "cacheRules": [
-        "KEEP_ACTIVE_IF_PLAYER_NEAR_COAST",
-        "PREFER_SCENIC_ROUTE_CACHE"
+        "INSTANCE_REFERENCE_ONLY",
+        "DETERMINISTIC_CHUNK_REBUILD",
+        "BOOST_INITIAL_INSPECTION_READABILITY"
       ],
       "neighbourRelationships": [
-        "WORLD_CHUNK_002",
-        "WORLD_CHUNK_003"
+        "WORLD_CHUNK_003",
+        "WORLD_CHUNK_002"
       ],
       "instanceReferencesOnly": true
     },
@@ -763,8 +822,7 @@
       "schemaId": "WORLD_STREAMING_CHUNK_001",
       "chunkId": "WORLD_CHUNK_002",
       "regionOwnership": [
-        "REGION_003",
-        "REGION_005"
+        "REGION_003"
       ],
       "boundary": {
         "points": [
@@ -786,14 +844,14 @@
           }
         ]
       },
-      "loadingPriority": "TOURISM_AND_SERVICE_EDGE",
+      "loadingPriority": "PRIMARY_WORLD_ENTRY",
       "cacheRules": [
-        "KEEP_ACTIVE_FOR_RAIL_AND_COASTAL_LINKS",
-        "PREFER_DESTINATION_CHAIN_CACHE"
+        "INSTANCE_REFERENCE_ONLY",
+        "DETERMINISTIC_CHUNK_REBUILD"
       ],
       "neighbourRelationships": [
-        "WORLD_CHUNK_001",
-        "WORLD_CHUNK_004"
+        "WORLD_CHUNK_004",
+        "WORLD_CHUNK_001"
       ],
       "instanceReferencesOnly": true
     },
@@ -801,7 +859,7 @@
       "schemaId": "WORLD_STREAMING_CHUNK_001",
       "chunkId": "WORLD_CHUNK_003",
       "regionOwnership": [
-        "REGION_002"
+        "REGION_005"
       ],
       "boundary": {
         "points": [
@@ -823,9 +881,10 @@
           }
         ]
       },
-      "loadingPriority": "INLAND_SUPPORT_ZONE",
+      "loadingPriority": "SECONDARY_WORLD_SUPPORT",
       "cacheRules": [
-        "PREFER_HIGHWAY_AND_FARMLAND_CACHE"
+        "INSTANCE_REFERENCE_ONLY",
+        "DETERMINISTIC_CHUNK_REBUILD"
       ],
       "neighbourRelationships": [
         "WORLD_CHUNK_001",
@@ -859,10 +918,10 @@
           }
         ]
       },
-      "loadingPriority": "MOUNTAIN_DISCOVERY_ZONE",
+      "loadingPriority": "SECONDARY_WORLD_SUPPORT",
       "cacheRules": [
-        "PREFER_DISCOVERY_ROUTE_CACHE",
-        "EVICT_LAST_ON_REMOTE_TRAVEL"
+        "INSTANCE_REFERENCE_ONLY",
+        "DETERMINISTIC_CHUNK_REBUILD"
       ],
       "neighbourRelationships": [
         "WORLD_CHUNK_002",
@@ -885,7 +944,11 @@
       "deterministicRebuildValid": true,
       "referenceBasedStructure": true,
       "streamingReady": true,
-      "noDuplicateGeometryGeneration": true
+      "noDuplicateGeometryGeneration": true,
+      "profileAppliedCorrectly": true,
+      "identityScoreAligned": true,
+      "requiredSystemsGenerated": true,
+      "streamingRequirementsValid": true
     }
   },
   "validationResult": {
@@ -902,7 +965,11 @@
     "referenceBasedStructure": true,
     "streamingReady": true,
     "noDuplicateGeometryGeneration": true,
-    "deterministicSignatureHash": 3168729931,
+    "profileAppliedCorrectly": true,
+    "identityScoreAligned": true,
+    "requiredSystemsGenerated": true,
+    "streamingRequirementsValid": true,
+    "deterministicSignatureHash": 3800664878,
     "validationPassed": true
   }
 }
