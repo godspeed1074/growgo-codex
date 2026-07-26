@@ -12,12 +12,17 @@
     "fenceOpeningsValid": "PASS",
     "landscapeContainmentValid": "PASS",
     "themeWeightingValid": "PASS",
+    "suburbanIdentityScoreValid": "PASS",
+    "vergeContainmentValid": "PASS",
+    "footpathAlignmentValid": "PASS",
+    "cameraProfileValid": "PASS",
     "deterministicSourceMatches": "PASS"
   },
   "summary": {
     "validationPassed": true,
     "buildingInstanceCount": 6,
     "lotCount": 6,
-    "drivewayConnectionCount": 6
+    "drivewayConnectionCount": 6,
+    "suburbanIdentityScore": 50
   }
 }

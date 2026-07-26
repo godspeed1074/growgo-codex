@@ -69,6 +69,20 @@ LANDSCAPE_LOOKUP = {
     / "export"
     / "MOD_BUSH_NATIVE_STANDARD_001_LOD_GAMEPLAY.glb",
 }
+SITE_ASSET_LOOKUP = {
+    "MOD_GROUND_GRASS_STANDARD_001": REPO_ROOT
+    / "asset-factory-workspace"
+    / "production"
+    / "HOUSE_COASTAL_FAMILY_001"
+    / "export"
+    / "MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+    "MOD_PATH_STANDARD_001": REPO_ROOT
+    / "asset-factory-workspace"
+    / "production"
+    / "HOUSE_COASTAL_FAMILY_001"
+    / "export"
+    / "MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+}
 
 PASS_COLOUR = (0.18, 0.78, 0.32, 1.0)
 FAIL_COLOUR = (0.85, 0.18, 0.18, 1.0)
@@ -76,6 +90,9 @@ LOT_COLOUR = (0.16, 0.52, 0.92, 1.0)
 ROAD_COLOUR = (0.13, 0.13, 0.15, 1.0)
 DRIVEWAY_COLOUR = (0.55, 0.55, 0.57, 1.0)
 FENCE_COLOUR = (0.58, 0.46, 0.31, 1.0)
+GRASS_COLOUR = (0.33, 0.62, 0.29, 1.0)
+VERGE_COLOUR = (0.41, 0.66, 0.34, 1.0)
+FOOTPATH_COLOUR = (0.72, 0.71, 0.67, 1.0)
 
 
 def extract_script_arguments():
@@ -230,27 +247,24 @@ def configure_camera(bounds):
     bpy.context.scene.camera = camera
 
 
-def create_capture_cameras(bounds):
-    centre_x = (bounds["minX"] + bounds["maxX"]) / 2.0
-    centre_y = (bounds["minY"] + bounds["maxY"]) / 2.0
-    span_x = bounds["maxX"] - bounds["minX"]
-    span_y = bounds["maxY"] - bounds["minY"]
-    scene_span = max(span_x, span_y)
-
-    top_down = bpy.data.objects.new("CAPTURE_TOP_DOWN", bpy.data.cameras.new("CAPTURE_TOP_DOWN"))
-    top_down.location = (centre_x, centre_y, scene_span * 1.55)
-    top_down.rotation_euler = (0.0, 0.0, 0.0)
-    bpy.context.scene.collection.objects.link(top_down)
-
-    angled = bpy.data.objects.new("CAPTURE_ANGLED_25D", bpy.data.cameras.new("CAPTURE_ANGLED_25D"))
-    angled.location = (centre_x, centre_y - span_y * 0.58, scene_span * 0.98)
-    angled.rotation_euler = (1.01, 0.0, 0.0)
-    bpy.context.scene.collection.objects.link(angled)
-
-    street = bpy.data.objects.new("CAPTURE_STREET_LEVEL", bpy.data.cameras.new("CAPTURE_STREET_LEVEL"))
-    street.location = (bounds["minX"] + 6.0, centre_y - 4.0, 4.8)
-    street.rotation_euler = (1.26, 0.0, 0.78)
-    bpy.context.scene.collection.objects.link(street)
+def create_capture_cameras(metadata):
+    capture_workflow = metadata["visualCaptureWorkflow"]
+    for profile_key in ("topDown", "angled25D", "streetLevel"):
+        profile = capture_workflow[profile_key]
+        camera = bpy.data.objects.new(
+            profile["cameraId"], bpy.data.cameras.new(profile["cameraId"])
+        )
+        camera.location = (
+            profile["position"]["x"],
+            profile["position"]["y"],
+            profile["position"]["z"],
+        )
+        camera.rotation_euler = (
+            profile["rotation"]["x"] * 3.141592653589793 / 180.0,
+            profile["rotation"]["y"] * 3.141592653589793 / 180.0,
+            profile["rotation"]["z"] * 3.141592653589793 / 180.0,
+        )
+        bpy.context.scene.collection.objects.link(camera)
 
 
 def build_road_layer(preview, collection):
@@ -264,6 +278,48 @@ def build_road_layer(preview, collection):
         collection,
         ROAD_COLOUR,
     )
+
+
+def build_ground_layer(metadata, collection):
+    ground = metadata["groundPresentation"]
+    for verge_zone in ground["vergeZones"]:
+        create_box(
+            verge_zone["zoneId"],
+            (
+                verge_zone["position"]["x"],
+                verge_zone["position"]["y"],
+                0.005,
+            ),
+            (verge_zone["width"] / 2.0, verge_zone["depth"] / 2.0, 0.005),
+            collection,
+            VERGE_COLOUR,
+        )
+
+    for footpath in ground["footpathPlacements"]:
+        create_box(
+            footpath["pathId"],
+            (
+                footpath["position"]["x"],
+                footpath["position"]["y"],
+                0.01,
+            ),
+            (footpath["width"] / 2.0, footpath["depth"] / 2.0, 0.01),
+            collection,
+            FOOTPATH_COLOUR,
+        )
+
+    for lawn in ground["lawnBoundaries"]:
+        create_box(
+            lawn["lawnId"],
+            (
+                lawn["x"] + lawn["width"] / 2.0,
+                lawn["y"] + lawn["depth"] / 2.0,
+                0.003,
+            ),
+            (lawn["width"] / 2.0, lawn["depth"] / 2.0, 0.003),
+            collection,
+            GRASS_COLOUR,
+        )
 
 
 def build_lot_layer(preview, collection, debug_collection):
@@ -476,6 +532,12 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     preview = json.loads(source_json.read_text(encoding="utf8"))
+    metadata_path = output_dir / "preview-scene-metadata.json"
+    metadata = (
+        json.loads(metadata_path.read_text(encoding="utf8"))
+        if metadata_path.exists()
+        else None
+    )
     validation_path = output_dir / f"{VALIDATION_ID}.json"
     validation = (
         json.loads(validation_path.read_text(encoding="utf8"))
@@ -496,6 +558,7 @@ def main():
     reset_scene()
     root = ensure_root_collection(SCENE_ID)
     road_collection = ensure_child_collection(root, "ROAD_LAYER")
+    ground_collection = ensure_child_collection(root, "GROUND_LAYER")
     lot_collection = ensure_child_collection(root, "LOT_LAYER")
     building_collection = ensure_child_collection(root, "BUILDING_LAYER")
     driveway_collection = ensure_child_collection(root, "DRIVEWAY_LAYER")
@@ -504,6 +567,8 @@ def main():
     debug_collection = ensure_child_collection(root, "DEBUG_LAYER")
 
     build_road_layer(preview, road_collection)
+    if metadata is not None:
+        build_ground_layer(metadata, ground_collection)
     build_lot_layer(preview, lot_collection, debug_collection)
     build_building_layer(preview, building_collection, debug_collection, validation)
     build_driveway_layer(preview, driveway_collection, validation)
@@ -511,7 +576,8 @@ def main():
     build_landscape_layer(preview, landscape_collection)
     build_validation_markers(preview, validation, debug_collection)
     configure_camera(preview["bounds"])
-    create_capture_cameras(preview["bounds"])
+    if metadata is not None:
+        create_capture_cameras(metadata)
 
     bpy.ops.wm.save_as_mainfile(filepath=str(output_dir / f"{SCENE_ID}.blend"))
 

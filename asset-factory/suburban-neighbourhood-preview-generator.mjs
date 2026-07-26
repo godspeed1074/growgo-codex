@@ -46,9 +46,9 @@ const themeProfiles = deepFreeze({
     neighbourhoodTheme: "suburban_mixed_residential_default",
     densityProfile: "low_density_suburban",
     buildingWeights: deepFreeze({
-      BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.7,
-      BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.25,
-      BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.05
+      BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.85,
+      BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.12,
+      BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.03
     })
   }),
   COASTAL_ESTATES: deepFreeze({
@@ -473,7 +473,7 @@ function resolveLotBuildings(lots, input, seedConfig) {
     );
   }
 
-  return deepFreeze(resolved);
+  return deepFreeze(rebalanceResolvedLotsForTheme(resolved, input));
 }
 
 function pickCandidateOrder(lot, input, seedConfig, excludedAssets) {
@@ -486,13 +486,132 @@ function pickCandidateOrder(lot, input, seedConfig, excludedAssets) {
     .map((candidate) => ({
       assetId: candidate.assetId,
       score:
+        (
         weightedDeterministicScore(
-        `${input.neighbourhoodSeed}:${input.regionSeed}:${input.themeSeed}:${lot.lotId}:${candidate.assetId}`,
-        activeThemeProfile.buildingWeights[candidate.assetId] ?? candidate.weight
+          `${input.neighbourhoodSeed}:${input.regionSeed}:${input.themeSeed}:${lot.lotId}:${candidate.assetId}`,
+          activeThemeProfile.buildingWeights[candidate.assetId] ?? candidate.weight
         ) + (excludedAssets.has(candidate.assetId) ? 1000 : 0)
+        ) *
+        resolveThemeIdentityScoreMultiplier(activeThemeProfile.themeSeed, candidate)
     }))
     .sort((left, right) => left.score - right.score)
     .map((entry) => entry.assetId);
+}
+
+function resolveThemeIdentityScoreMultiplier(themeSeed, candidate) {
+  if (themeSeed === "SUBURBAN_AUSTRALIA") {
+    if (candidate.primaryTheme === "suburban_primary") {
+      return 0.72;
+    }
+    if (candidate.primaryTheme === "coastal_secondary") {
+      return 1.18;
+    }
+    if (candidate.primaryTheme === "coastal_tertiary") {
+      return 1.35;
+    }
+  }
+  return 1;
+}
+
+function rebalanceResolvedLotsForTheme(resolvedLots, input) {
+  if (input.themeSeed !== "SUBURBAN_AUSTRALIA") {
+    return resolvedLots;
+  }
+
+  const targetSuburbanCount = Math.max(3, Math.ceil(resolvedLots.length * 0.5));
+  const suburbanAssetId = "BUILDING_HOUSE_SUBURBAN_BRICK_001";
+  let suburbanCount = resolvedLots.filter(
+    (lot) => lot.buildingId === suburbanAssetId
+  ).length;
+
+  if (suburbanCount >= targetSuburbanCount) {
+    return resolvedLots;
+  }
+
+  const rowSize = resolvedLots.length / 2;
+  const replacementCandidates = [...resolvedLots]
+    .filter((lot) => lot.buildingId !== suburbanAssetId)
+    .sort((left, right) => {
+      const priorityDelta =
+        replacementPriority(left.buildingId) - replacementPriority(right.buildingId);
+      if (priorityDelta !== 0) {
+        return priorityDelta;
+      }
+      return left.lotId.localeCompare(right.lotId);
+    });
+
+  const balancedLots = [...resolvedLots];
+  for (const candidate of replacementCandidates) {
+    if (suburbanCount >= targetSuburbanCount) {
+      break;
+    }
+    const candidateIndex = balancedLots.findIndex((lot) => lot.lotId === candidate.lotId);
+    if (candidateIndex === -1) {
+      continue;
+    }
+    if (!canResolveReplacementAtIndex(balancedLots, candidateIndex, suburbanAssetId, rowSize)) {
+      continue;
+    }
+    balancedLots[candidateIndex] = rebuildResolvedLotWithProfile(
+      balancedLots[candidateIndex],
+      buildingProfiles[suburbanAssetId],
+      input
+    );
+    suburbanCount += 1;
+  }
+
+  return balancedLots;
+}
+
+function replacementPriority(assetId) {
+  if (assetId === "BUILDING_HOUSE_BEACH_BUNGALOW_001") {
+    return 0;
+  }
+  if (assetId === "BUILDING_HOUSE_COASTAL_COTTAGE_001") {
+    return 1;
+  }
+  return 2;
+}
+
+function canResolveReplacementAtIndex(lots, index, assetId, rowSize) {
+  if (index > 0 && sameRow(index, index - 1, rowSize) && lots[index - 1].buildingId === assetId) {
+    return false;
+  }
+  if (
+    index < lots.length - 1 &&
+    sameRow(index, index + 1, rowSize) &&
+    lots[index + 1].buildingId === assetId
+  ) {
+    return false;
+  }
+  if (index >= rowSize && lots[index - rowSize].buildingId === assetId) {
+    return false;
+  }
+  if (index + rowSize < lots.length && lots[index + rowSize].buildingId === assetId) {
+    return false;
+  }
+  return true;
+}
+
+function rebuildResolvedLotWithProfile(lot, selectedProfile, input) {
+  return deepFreeze({
+    ...lot,
+    buildingId: selectedProfile.assetId,
+    buildingRecipe: selectedProfile.recipeId,
+    buildingFamily: selectedProfile.familyId,
+    variationProfile: deepFreeze({
+      ...lot.variationProfile,
+      rebalanceProfile: input.themeSeed
+    }),
+    resolverMetadata: deepFreeze({
+      weightingRuleApplied: selectedProfile.primaryTheme,
+      duplicatePreventionRuleApplied: true,
+      resolverHash: stableHash(
+        `${lot.lotId}:${input.neighbourhoodSeed}:${selectedProfile.assetId}:rebalanced`
+      ),
+      rebalanceApplied: true
+    })
+  });
 }
 
 function lotCanFitProfile(lot, profile) {

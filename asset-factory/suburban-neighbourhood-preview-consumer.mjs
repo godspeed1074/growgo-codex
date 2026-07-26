@@ -6,6 +6,7 @@ const SCENE_ID = "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_SCENE_001";
 const VALIDATION_ID = "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_VALIDATION_001";
 const CONSUMER_ID = "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_CONSUMER_001";
 const ADAPTER_ID = "NEIGHBOURHOOD_PREVIEW_ADAPTER_001";
+const suburbanIdentityScorePassThreshold = 50;
 
 export const suburbanNeighbourhoodPreviewConsumerDefinition = deepFreeze({
   consumerId: CONSUMER_ID,
@@ -21,19 +22,31 @@ export const suburbanNeighbourhoodPreviewConsumerDefinition = deepFreeze({
   validationId: VALIDATION_ID,
   previewCaptureProfiles: deepFreeze({
     topDown: deepFreeze({
-      cameraId: "SUBURBAN_CAPTURE_TOP_DOWN_001",
+      cameraId: "TOP_DOWN_INSPECTION",
       viewType: "top_down",
       angleDegrees: 90
     }),
     angled25D: deepFreeze({
-      cameraId: "SUBURBAN_CAPTURE_ANGLED_25D_001",
+      cameraId: "ANGLED_2_5D_INSPECTION",
       viewType: "angled_25d",
       angleDegrees: 58
     }),
     streetLevel: deepFreeze({
-      cameraId: "SUBURBAN_CAPTURE_STREET_LEVEL_001",
+      cameraId: "STREET_LEVEL_INSPECTION",
       viewType: "street_level",
       angleDegrees: 18
+    })
+  }),
+  siteAssetLookup: deepFreeze({
+    MOD_GROUND_GRASS_STANDARD_001: deepFreeze({
+      assetId: "MOD_GROUND_GRASS_STANDARD_001",
+      gameplayAssetPath:
+        "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb"
+    }),
+    MOD_PATH_STANDARD_001: deepFreeze({
+      assetId: "MOD_PATH_STANDARD_001",
+      gameplayAssetPath:
+        "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb"
     })
   }),
   buildingAssetLookup: deepFreeze({
@@ -89,6 +102,9 @@ export function createSuburbanNeighbourhoodPreviewSceneMetadata(
 ) {
   const definition = normalizeDefinition(rawDefinition);
   const preview = readSourcePreview(definition, options.cwd);
+  const capturePosition = buildCapturePositions(preview);
+  const { vergeZones, footpathPlacements, lawnBoundaries } =
+    buildGroundPresentation(preview);
   const buildingInstances = preview.buildingPlacements.map((placement) =>
     freeze({
       instanceId: placement.placementId,
@@ -120,11 +136,24 @@ export function createSuburbanNeighbourhoodPreviewSceneMetadata(
       paddingMeters: 6
     }),
     visualCaptureWorkflow: freeze({
-      previewVersion: "SESSION_42_RULE_CORRECTION_PASS",
+      previewVersion: "SESSION_44_PREVIEW_POLISH_PASS",
       seed: preview.seed,
-      topDown: definition.previewCaptureProfiles.topDown,
-      angled25D: definition.previewCaptureProfiles.angled25D,
-      streetLevel: definition.previewCaptureProfiles.streetLevel
+      validationResult: preview.validationResult.validationPassed ? "PASS" : "FAIL",
+      topDown: freeze({
+        ...definition.previewCaptureProfiles.topDown,
+        position: capturePosition.topDown.position,
+        rotation: capturePosition.topDown.rotation
+      }),
+      angled25D: freeze({
+        ...definition.previewCaptureProfiles.angled25D,
+        position: capturePosition.angled25D.position,
+        rotation: capturePosition.angled25D.rotation
+      }),
+      streetLevel: freeze({
+        ...definition.previewCaptureProfiles.streetLevel,
+        position: capturePosition.streetLevel.position,
+        rotation: capturePosition.streetLevel.rotation
+      })
     }),
     themeProfile: freeze(preview.themeProfile),
     resolvedBuildingAssets: freeze(buildingInstances),
@@ -135,6 +164,17 @@ export function createSuburbanNeighbourhoodPreviewSceneMetadata(
       sidewalkWidth: preview.roadLayout.sidewalkWidth,
       vergeWidth: preview.roadLayout.vergeWidth,
       streetLength: preview.roadLayout.streetLength
+    }),
+    groundPresentation: freeze({
+      vergeZones,
+      footpathPlacements,
+      lawnBoundaries,
+      siteAssets: freeze({
+        grassAssetPath:
+          definition.siteAssetLookup.MOD_GROUND_GRASS_STANDARD_001.gameplayAssetPath,
+        pathAssetPath:
+          definition.siteAssetLookup.MOD_PATH_STANDARD_001.gameplayAssetPath
+      })
     }),
     lotLayer: freeze({
       lotCount: preview.lots.length,
@@ -204,6 +244,14 @@ export function createSuburbanNeighbourhoodPreviewValidationReport(
       (connection) => connection.drivewayLink?.roadAligned === true
     );
   const orientationValid = preview.validationResult.validBuildingOrientation === true;
+  const cameraProfileValid = validateCaptureProfiles(definition.previewCaptureProfiles);
+  const themeWeightingValid = preview.validationResult.themeWeightingValid === true;
+  const suburbanIdentityScore = calculateSuburbanIdentityScore(preview.lots);
+  const suburbanIdentityValid =
+    preview.themeProfile.themeSeed !== "SUBURBAN_AUSTRALIA" ||
+    suburbanIdentityScore >= suburbanIdentityScorePassThreshold;
+  const vergeContainmentValid = calculateVergeContainment(preview) === true;
+  const footpathAlignmentValid = calculateFootpathAlignment(preview) === true;
   const deterministicSourceMatches = stableStringify(preview) === stableStringify(readJson(path.resolve(cwd, definition.sourcePreviewPath)));
 
   const checks = freeze({
@@ -216,7 +264,11 @@ export function createSuburbanNeighbourhoodPreviewValidationReport(
     landscapeContainmentValid: passFail(
       preview.validationResult.landscapeContainment === true
     ),
-    themeWeightingValid: passFail(preview.validationResult.themeWeightingValid === true),
+    themeWeightingValid: passFail(themeWeightingValid),
+    suburbanIdentityScoreValid: passFail(suburbanIdentityValid),
+    vergeContainmentValid: passFail(vergeContainmentValid),
+    footpathAlignmentValid: passFail(footpathAlignmentValid),
+    cameraProfileValid: passFail(cameraProfileValid),
     deterministicSourceMatches: passFail(deterministicSourceMatches)
   });
 
@@ -230,7 +282,8 @@ export function createSuburbanNeighbourhoodPreviewValidationReport(
       validationPassed: Object.values(checks).every((status) => status === "PASS"),
       buildingInstanceCount: preview.buildingPlacements.length,
       lotCount: preview.lots.length,
-      drivewayConnectionCount: preview.roadFrontageConnections.length
+      drivewayConnectionCount: preview.roadFrontageConnections.length,
+      suburbanIdentityScore
     })
   });
 }
@@ -300,6 +353,137 @@ import runpy
 SCRIPT_PATH = Path(__file__).resolve().parents[3] / "${scriptPath}"
 runpy.run_path(str(SCRIPT_PATH), run_name="__main__")
 `;
+}
+
+function buildGroundPresentation(preview) {
+  const road = preview.roadLayout;
+  const bounds = preview.bounds;
+  const roadCentreY = (bounds.minY + bounds.maxY) / 2;
+  const roadHalf = road.roadWidth / 2;
+  const sidewalk = road.sidewalkWidth;
+  const verge = road.vergeWidth;
+  const streetLength = road.streetLength;
+  const sceneMidX = bounds.minX + streetLength / 2;
+
+  const vergeZones = freeze([
+    freeze({
+      zoneId: "VERGE_NORTH_001",
+      position: freeze({ x: sceneMidX, y: round(roadCentreY - roadHalf - sidewalk - verge / 2), z: 0 }),
+      width: streetLength,
+      depth: verge,
+      assetId: "MOD_GROUND_GRASS_STANDARD_001"
+    }),
+    freeze({
+      zoneId: "VERGE_SOUTH_001",
+      position: freeze({ x: sceneMidX, y: round(roadCentreY + roadHalf + sidewalk + verge / 2), z: 0 }),
+      width: streetLength,
+      depth: verge,
+      assetId: "MOD_GROUND_GRASS_STANDARD_001"
+    })
+  ]);
+
+  const footpathPlacements = freeze([
+    freeze({
+      pathId: "FOOTPATH_NORTH_001",
+      position: freeze({ x: sceneMidX, y: round(roadCentreY - roadHalf - sidewalk / 2), z: 0 }),
+      width: streetLength,
+      depth: sidewalk,
+      assetId: "MOD_PATH_STANDARD_001"
+    }),
+    freeze({
+      pathId: "FOOTPATH_SOUTH_001",
+      position: freeze({ x: sceneMidX, y: round(roadCentreY + roadHalf + sidewalk / 2), z: 0 }),
+      width: streetLength,
+      depth: sidewalk,
+      assetId: "MOD_PATH_STANDARD_001"
+    })
+  ]);
+
+  const lawnBoundaries = freeze(
+    preview.lots.flatMap((lot) => [
+      freeze({
+        lawnId: `${lot.lotId}_FRONT_LAWN`,
+        lotId: lot.lotId,
+        zoneId: "frontLawnZone",
+        ...lot.landscapingZones.frontLawnZone
+      }),
+      freeze({
+        lawnId: `${lot.lotId}_BACKYARD_LAWN`,
+        lotId: lot.lotId,
+        zoneId: "backyardZone",
+        ...lot.landscapingZones.backyardZone
+      })
+    ])
+  );
+
+  return { vergeZones, footpathPlacements, lawnBoundaries };
+}
+
+function buildCapturePositions(preview) {
+  const bounds = preview.bounds;
+  const centreX = (bounds.minX + bounds.maxX) / 2;
+  const centreY = (bounds.minY + bounds.maxY) / 2;
+  const spanX = bounds.maxX - bounds.minX;
+  const spanY = bounds.maxY - bounds.minY;
+  const sceneSpan = Math.max(spanX, spanY);
+  return freeze({
+    topDown: freeze({
+      position: freeze({ x: round(centreX), y: round(centreY), z: round(sceneSpan * 1.55) }),
+      rotation: freeze({ x: 0, y: 0, z: 0 })
+    }),
+    angled25D: freeze({
+      position: freeze({ x: round(centreX), y: round(centreY - spanY * 0.58), z: round(sceneSpan * 0.98) }),
+      rotation: freeze({ x: 57.9, y: 0, z: 0 })
+    }),
+    streetLevel: freeze({
+      position: freeze({ x: round(bounds.minX + 6), y: round(centreY - 4), z: 4.8 }),
+      rotation: freeze({ x: 72.2, y: 0, z: 44.69 })
+    })
+  });
+}
+
+function validateCaptureProfiles(profiles) {
+  return [profiles.topDown, profiles.angled25D, profiles.streetLevel].every(
+    (profile) =>
+      typeof profile.cameraId === "string" &&
+      profile.cameraId.length > 0 &&
+      typeof profile.viewType === "string" &&
+      Number.isFinite(profile.angleDegrees)
+  );
+}
+
+function calculateSuburbanIdentityScore(lots) {
+  const suburbanCount = lots.filter(
+    (lot) => lot.buildingId === "BUILDING_HOUSE_SUBURBAN_BRICK_001"
+  ).length;
+  return round((suburbanCount / lots.length) * 100);
+}
+
+function calculateVergeContainment(preview) {
+  const { vergeZones } = buildGroundPresentation(preview);
+  return vergeZones.every(
+    (zone) =>
+      zone.position.x - zone.width / 2 >= preview.bounds.minX &&
+      zone.position.x + zone.width / 2 <= preview.bounds.maxX &&
+      zone.position.y - zone.depth / 2 >= preview.bounds.minY &&
+      zone.position.y + zone.depth / 2 <= preview.bounds.maxY
+  );
+}
+
+function calculateFootpathAlignment(preview) {
+  const { footpathPlacements } = buildGroundPresentation(preview);
+  const roadCentreY = (preview.bounds.minY + preview.bounds.maxY) / 2;
+  const expectedOffsets = [
+    -(preview.roadLayout.roadWidth / 2 + preview.roadLayout.sidewalkWidth / 2),
+    preview.roadLayout.roadWidth / 2 + preview.roadLayout.sidewalkWidth / 2
+  ].map((offset) => round(roadCentreY + offset));
+  return footpathPlacements.every((placement) =>
+    expectedOffsets.includes(round(placement.position.y))
+  );
+}
+
+function round(value) {
+  return Math.round(value * 100) / 100;
 }
 
 function normalizeDefinition(rawDefinition) {
@@ -383,6 +567,20 @@ function normalizeDefinition(rawDefinition) {
               entry.defaultPreviewLod,
               `${assetId}.defaultPreviewLod`
             ),
+            gameplayAssetPath: normalizeRelativePath(
+              entry.gameplayAssetPath,
+              `${assetId}.gameplayAssetPath`
+            )
+          })
+        ])
+      )
+    ),
+    siteAssetLookup: freeze(
+      Object.fromEntries(
+        Object.entries(definition.siteAssetLookup).map(([assetId, entry]) => [
+          assetId,
+          freeze({
+            assetId: normalizeNonEmptyString(entry.assetId, `${assetId}.assetId`),
             gameplayAssetPath: normalizeRelativePath(
               entry.gameplayAssetPath,
               `${assetId}.gameplayAssetPath`

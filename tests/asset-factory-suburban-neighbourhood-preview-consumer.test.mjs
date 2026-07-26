@@ -51,9 +51,26 @@ test("suburban neighbourhood preview consumer metadata resolves all six building
   assert.equal(metadata.fenceLayer.showDrivewayOpenings, true);
   assert.equal(metadata.fenceLayer.showPedestrianOpenings, true);
   assert.equal(metadata.landscapeLayer.useRegisteredLandscapeAssets, true);
+  assert.equal(metadata.visualCaptureWorkflow.previewVersion, "SESSION_44_PREVIEW_POLISH_PASS");
+  assert.equal(metadata.visualCaptureWorkflow.topDown.cameraId, "TOP_DOWN_INSPECTION");
+  assert.equal(metadata.visualCaptureWorkflow.angled25D.cameraId, "ANGLED_2_5D_INSPECTION");
+  assert.equal(metadata.visualCaptureWorkflow.streetLevel.cameraId, "STREET_LEVEL_INSPECTION");
   assert.equal(metadata.visualCaptureWorkflow.topDown.viewType, "top_down");
   assert.equal(metadata.visualCaptureWorkflow.angled25D.viewType, "angled_25d");
   assert.equal(metadata.visualCaptureWorkflow.streetLevel.viewType, "street_level");
+  assert.equal(metadata.groundPresentation.vergeZones.length, 2);
+  assert.equal(metadata.groundPresentation.footpathPlacements.length, 2);
+  assert.equal(metadata.groundPresentation.lawnBoundaries.length, 12);
+  assert.ok(
+    metadata.groundPresentation.siteAssets.grassAssetPath.endsWith(
+      "MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb"
+    )
+  );
+  assert.ok(
+    metadata.groundPresentation.siteAssets.pathAssetPath.endsWith(
+      "MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb"
+    )
+  );
   for (const instance of metadata.resolvedBuildingAssets) {
     assert.equal(instance.lodProfile, "LOD_GAMEPLAY");
     assert.ok(instance.gameplayAssetPath.endsWith(".glb"));
@@ -73,6 +90,10 @@ test("suburban neighbourhood preview consumer validation passes against the dete
   assert.equal(validation.checks.fenceOpeningsValid, "PASS");
   assert.equal(validation.checks.landscapeContainmentValid, "PASS");
   assert.equal(validation.checks.themeWeightingValid, "PASS");
+  assert.equal(validation.checks.suburbanIdentityScoreValid, "PASS");
+  assert.equal(validation.checks.vergeContainmentValid, "PASS");
+  assert.equal(validation.checks.footpathAlignmentValid, "PASS");
+  assert.equal(validation.checks.cameraProfileValid, "PASS");
   assert.equal(validation.checks.deterministicSourceMatches, "PASS");
 });
 

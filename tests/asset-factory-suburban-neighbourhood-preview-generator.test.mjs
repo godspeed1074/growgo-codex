@@ -68,9 +68,9 @@ test("six lots are generated with valid building ids and passing validation", ()
   assert.equal(preview.validationResult.landscapeContainment, true);
   assert.equal(preview.validationResult.themeWeightingValid, true);
   assert.deepEqual(preview.themeProfile.buildingWeights, {
-    BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.7,
-    BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.25,
-    BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.05
+    BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.85,
+    BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.12,
+    BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.03
   });
   for (const lot of preview.lots) {
     const expectedDrivewayX =

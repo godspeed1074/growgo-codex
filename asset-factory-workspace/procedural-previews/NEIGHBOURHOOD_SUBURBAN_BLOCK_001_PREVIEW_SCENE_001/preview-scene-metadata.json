@@ -14,22 +14,53 @@
     "paddingMeters": 6
   },
   "visualCaptureWorkflow": {
-    "previewVersion": "SESSION_42_RULE_CORRECTION_PASS",
+    "previewVersion": "SESSION_44_PREVIEW_POLISH_PASS",
     "seed": 10482,
+    "validationResult": "PASS",
     "topDown": {
-      "cameraId": "SUBURBAN_CAPTURE_TOP_DOWN_001",
+      "cameraId": "TOP_DOWN_INSPECTION",
       "viewType": "top_down",
-      "angleDegrees": 90
+      "angleDegrees": 90,
+      "position": {
+        "x": 29,
+        "y": 0.05,
+        "z": 160.52
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
     },
     "angled25D": {
-      "cameraId": "SUBURBAN_CAPTURE_ANGLED_25D_001",
+      "cameraId": "ANGLED_2_5D_INSPECTION",
       "viewType": "angled_25d",
-      "angleDegrees": 58
+      "angleDegrees": 58,
+      "position": {
+        "x": 29,
+        "y": -60.01,
+        "z": 101.49
+      },
+      "rotation": {
+        "x": 57.9,
+        "y": 0,
+        "z": 0
+      }
     },
     "streetLevel": {
-      "cameraId": "SUBURBAN_CAPTURE_STREET_LEVEL_001",
+      "cameraId": "STREET_LEVEL_INSPECTION",
       "viewType": "street_level",
-      "angleDegrees": 18
+      "angleDegrees": 18,
+      "position": {
+        "x": 6,
+        "y": -3.95,
+        "z": 4.8
+      },
+      "rotation": {
+        "x": 72.2,
+        "y": 0,
+        "z": 44.69
+      }
     }
   },
   "themeProfile": {
@@ -37,9 +68,9 @@
     "neighbourhoodTheme": "suburban_mixed_residential_default",
     "densityProfile": "low_density_suburban",
     "buildingWeights": {
-      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.7,
-      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.25,
-      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.05
+      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.85,
+      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.12,
+      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.03
     }
   },
   "resolvedBuildingAssets": [
@@ -129,11 +160,11 @@
     },
     {
       "instanceId": "BUILDING_PLACEMENT_005",
-      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "lotId": "LOT_005",
       "position": {
         "x": 25.5,
-        "y": 17.33,
+        "y": 17.43,
         "z": 0
       },
       "rotation": {
@@ -146,7 +177,7 @@
         "z": 1
       },
       "lodProfile": "LOD_GAMEPLAY",
-      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
     },
     {
       "instanceId": "BUILDING_PLACEMENT_006",
@@ -177,6 +208,170 @@
     "sidewalkWidth": 1.6,
     "vergeWidth": 1.8,
     "streetLength": 58
+  },
+  "groundPresentation": {
+    "vergeZones": [
+      {
+        "zoneId": "VERGE_NORTH_001",
+        "position": {
+          "x": 29,
+          "y": -8.45,
+          "z": 0
+        },
+        "width": 58,
+        "depth": 1.8,
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001"
+      },
+      {
+        "zoneId": "VERGE_SOUTH_001",
+        "position": {
+          "x": 29,
+          "y": 8.55,
+          "z": 0
+        },
+        "width": 58,
+        "depth": 1.8,
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001"
+      }
+    ],
+    "footpathPlacements": [
+      {
+        "pathId": "FOOTPATH_NORTH_001",
+        "position": {
+          "x": 29,
+          "y": -6.75,
+          "z": 0
+        },
+        "width": 58,
+        "depth": 1.6,
+        "assetId": "MOD_PATH_STANDARD_001"
+      },
+      {
+        "pathId": "FOOTPATH_SOUTH_001",
+        "position": {
+          "x": 29,
+          "y": 6.85,
+          "z": 0
+        },
+        "width": 58,
+        "depth": 1.6,
+        "assetId": "MOD_PATH_STANDARD_001"
+      }
+    ],
+    "lawnBoundaries": [
+      {
+        "lawnId": "LOT_001_FRONT_LAWN",
+        "lotId": "LOT_001",
+        "zoneId": "frontLawnZone",
+        "x": 0.5,
+        "y": -18,
+        "width": 15,
+        "depth": 8
+      },
+      {
+        "lawnId": "LOT_001_BACKYARD_LAWN",
+        "lotId": "LOT_001",
+        "zoneId": "backyardZone",
+        "x": 0.5,
+        "y": -46.71,
+        "width": 15,
+        "depth": 25.71
+      },
+      {
+        "lawnId": "LOT_002_FRONT_LAWN",
+        "lotId": "LOT_002",
+        "zoneId": "frontLawnZone",
+        "x": 18.5,
+        "y": -18,
+        "width": 13,
+        "depth": 8
+      },
+      {
+        "lawnId": "LOT_002_BACKYARD_LAWN",
+        "lotId": "LOT_002",
+        "zoneId": "backyardZone",
+        "x": 18.5,
+        "y": -46.73,
+        "width": 13,
+        "depth": 25.73
+      },
+      {
+        "lawnId": "LOT_003_FRONT_LAWN",
+        "lotId": "LOT_003",
+        "zoneId": "frontLawnZone",
+        "x": 34.5,
+        "y": -18,
+        "width": 17,
+        "depth": 8
+      },
+      {
+        "lawnId": "LOT_003_BACKYARD_LAWN",
+        "lotId": "LOT_003",
+        "zoneId": "backyardZone",
+        "x": 34.5,
+        "y": -46.66,
+        "width": 17,
+        "depth": 25.66
+      },
+      {
+        "lawnId": "LOT_004_FRONT_LAWN",
+        "lotId": "LOT_004",
+        "zoneId": "frontLawnZone",
+        "x": 0.5,
+        "y": 37.69,
+        "width": 15,
+        "depth": 8
+      },
+      {
+        "lawnId": "LOT_004_BACKYARD_LAWN",
+        "lotId": "LOT_004",
+        "zoneId": "backyardZone",
+        "x": 0.5,
+        "y": 9,
+        "width": 15,
+        "depth": 25.69
+      },
+      {
+        "lawnId": "LOT_005_FRONT_LAWN",
+        "lotId": "LOT_005",
+        "zoneId": "frontLawnZone",
+        "x": 18.5,
+        "y": 37.8,
+        "width": 14,
+        "depth": 8
+      },
+      {
+        "lawnId": "LOT_005_BACKYARD_LAWN",
+        "lotId": "LOT_005",
+        "zoneId": "backyardZone",
+        "x": 18.5,
+        "y": 9,
+        "width": 14,
+        "depth": 25.8
+      },
+      {
+        "lawnId": "LOT_006_FRONT_LAWN",
+        "lotId": "LOT_006",
+        "zoneId": "frontLawnZone",
+        "x": 35.5,
+        "y": 37.83,
+        "width": 18,
+        "depth": 8
+      },
+      {
+        "lawnId": "LOT_006_BACKYARD_LAWN",
+        "lotId": "LOT_006",
+        "zoneId": "backyardZone",
+        "x": 35.5,
+        "y": 9,
+        "width": 18,
+        "depth": 25.83
+      }
+    ],
+    "siteAssets": {
+      "grassAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+      "pathAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb"
+    }
   },
   "lotLayer": {
     "lotCount": 6,

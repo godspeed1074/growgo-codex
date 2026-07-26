@@ -14,9 +14,9 @@
     "neighbourhoodTheme": "suburban_mixed_residential_default",
     "densityProfile": "low_density_suburban",
     "buildingWeights": {
-      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.7,
-      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.25,
-      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.05
+      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.85,
+      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.12,
+      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.03
     }
   },
   "bounds": {
@@ -501,19 +501,21 @@
         "rowLocalIndex": 1,
         "neighbourhoodTheme": "suburban_mixed_residential_default"
       },
-      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
-      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
         "roofTone": "soft_grey",
         "fenceStyle": "timber_standard",
         "yardDensity": "moderate",
-        "colourVariant": "weatherboard_white"
+        "colourVariant": "weatherboard_white",
+        "rebalanceProfile": "SUBURBAN_AUSTRALIA"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_tertiary",
+        "weightingRuleApplied": "suburban_primary",
         "duplicatePreventionRuleApplied": true,
-        "resolverHash": 2557691632
+        "resolverHash": 502057328,
+        "rebalanceApplied": true
       }
     },
     {
@@ -762,12 +764,12 @@
       "schemaId": "BUILDING_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_005",
       "lotId": "LOT_005",
-      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-      "familyId": "FAMILY_HOUSE_COASTAL",
-      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "position": {
         "x": 25.5,
-        "y": 17.33,
+        "y": 17.43,
         "z": 0
       },
       "rotation": {
@@ -786,12 +788,14 @@
         "roofTone": "soft_grey",
         "fenceStyle": "timber_standard",
         "yardDensity": "moderate",
-        "colourVariant": "weatherboard_white"
+        "colourVariant": "weatherboard_white",
+        "rebalanceProfile": "SUBURBAN_AUSTRALIA"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_tertiary",
+        "weightingRuleApplied": "suburban_primary",
         "duplicatePreventionRuleApplied": true,
-        "resolverHash": 2557691632
+        "resolverHash": 502057328,
+        "rebalanceApplied": true
       }
     },
     {
@@ -1458,7 +1462,7 @@
     "fenceOpeningsValid": true,
     "landscapeContainment": true,
     "themeWeightingValid": true,
-    "deterministicSignatureHash": 1638129186,
+    "deterministicSignatureHash": 423016707,
     "validationPassed": true
   }
 }
