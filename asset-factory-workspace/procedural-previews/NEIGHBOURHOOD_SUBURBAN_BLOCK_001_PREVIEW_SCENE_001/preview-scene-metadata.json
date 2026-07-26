@@ -1,0 +1,185 @@
+{
+  "sceneId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_SCENE_001",
+  "consumerId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_CONSUMER_001",
+  "adapterId": "NEIGHBOURHOOD_PREVIEW_ADAPTER_001",
+  "sourcePreviewId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_001",
+  "sourcePreviewPath": "asset-factory-workspace/procedural-previews/NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_001.json",
+  "previewType": "suburban_neighbourhood_visual_inspection",
+  "sourceSeed": 10482,
+  "cameraProfile": {
+    "profileId": "SUBURBAN_NEIGHBOURHOOD_OVERVIEW_001",
+    "orientation": "north_up",
+    "tiltDegrees": 58,
+    "framing": "full_block_overview",
+    "paddingMeters": 6
+  },
+  "resolvedBuildingAssets": [
+    {
+      "instanceId": "BUILDING_PLACEMENT_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "lotId": "LOT_001",
+      "position": {
+        "x": 8,
+        "y": -17.39,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+    },
+    {
+      "instanceId": "BUILDING_PLACEMENT_002",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "lotId": "LOT_002",
+      "position": {
+        "x": 25,
+        "y": -16.9,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+    },
+    {
+      "instanceId": "BUILDING_PLACEMENT_003",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "lotId": "LOT_003",
+      "position": {
+        "x": 43,
+        "y": -17.41,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "NORTH",
+        "yawDegrees": 180
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+    },
+    {
+      "instanceId": "BUILDING_PLACEMENT_004",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "lotId": "LOT_004",
+      "position": {
+        "x": 8,
+        "y": 16.92,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+    },
+    {
+      "instanceId": "BUILDING_PLACEMENT_005",
+      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "lotId": "LOT_005",
+      "position": {
+        "x": 25.5,
+        "y": 17.33,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+    },
+    {
+      "instanceId": "BUILDING_PLACEMENT_006",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "lotId": "LOT_006",
+      "position": {
+        "x": 44.5,
+        "y": 16.93,
+        "z": 0
+      },
+      "rotation": {
+        "facingDirection": "SOUTH",
+        "yawDegrees": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "lodProfile": "LOD_GAMEPLAY",
+      "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+    }
+  ],
+  "roadLayer": {
+    "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
+    "orientation": "north_up",
+    "roadWidth": 12,
+    "sidewalkWidth": 1.6,
+    "vergeWidth": 1.8,
+    "streetLength": 58
+  },
+  "lotLayer": {
+    "lotCount": 6,
+    "showLotBoundaries": true,
+    "showLotLabels": true
+  },
+  "drivewayLayer": {
+    "drivewayCount": 6,
+    "showDrivewayPaths": true
+  },
+  "fenceLayer": {
+    "fenceLotCount": 6,
+    "showFenceBoundaries": true
+  },
+  "landscapeLayer": {
+    "landscapeInstanceCount": 18,
+    "showTrees": true,
+    "showBushes": true,
+    "showLawns": true
+  },
+  "debugLayer": {
+    "showLotBoundaryOutlines": true,
+    "showOrientationArrows": true,
+    "showDrivewayMarkers": true,
+    "showValidationMarkers": true,
+    "passColour": "GREEN",
+    "failColour": "RED"
+  },
+  "performanceProfile": {
+    "reuseMode": "instance_reuse_only",
+    "duplicateBuildingGenerationAllowed": false,
+    "controlledSceneSize": true,
+    "expectedBuildingInstances": 6
+  }
+}

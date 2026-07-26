@@ -1,0 +1,20 @@
+{
+  "validationId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_VALIDATION_001",
+  "consumerId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_001",
+  "sceneId": "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_SCENE_001",
+  "checks": {
+    "allBuildingIdsResolve": "PASS",
+    "allLotsPopulated": "PASS",
+    "noPlacementOverlap": "PASS",
+    "drivewayConnectionsValid": "PASS",
+    "orientationValid": "PASS",
+    "deterministicSourceMatches": "PASS"
+  },
+  "summary": {
+    "validationPassed": true,
+    "buildingInstanceCount": 6,
+    "lotCount": 6,
+    "drivewayConnectionCount": 6
+  }
+}
