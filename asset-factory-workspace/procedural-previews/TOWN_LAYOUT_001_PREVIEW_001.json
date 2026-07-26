@@ -65,6 +65,145 @@
       "visitorFocus": "WATERFRONT_AND_LOOKOUTS"
     }
   },
+  "variantProfileSystem": {
+    "schemaId": "TOWN_VARIANT_PROFILE_SYSTEM_001",
+    "selectedProfileId": "SMALL_COASTAL_TOWN",
+    "selectionSource": "townThemeSeed"
+  },
+  "variantProfile": {
+    "schemaId": "TOWN_VARIANT_PROFILE_001",
+    "profileId": "SMALL_COASTAL_TOWN",
+    "settlementIdentity": "LOW_DENSITY_COASTAL_SETTLEMENT",
+    "districtWeighting": {
+      "residential": 0.55,
+      "coastal": 1,
+      "tourism": 0.7,
+      "civic": 0.45,
+      "commercial": 0.55,
+      "industrialService": 0.15,
+      "futureMediumDensity": 0.1
+    },
+    "densityProfile": {
+      "baseline": "LOW",
+      "residentialSpread": "COMPACT_WITH_COASTAL_EDGE",
+      "futureDensitySupport": "LIMITED"
+    },
+    "centreBehaviour": {
+      "centreCount": 1,
+      "primaryCentreType": "MAIN_STREET",
+      "intensity": "MEDIUM",
+      "pedestrianPriority": "HIGH",
+      "waterfrontLinked": true
+    },
+    "commercialIntensity": {
+      "level": "MODERATE",
+      "targetZoneCount": 2,
+      "waterfrontRetailBias": 0.85
+    },
+    "civicAllocation": {
+      "level": "MODERATE",
+      "targetReserveCount": 4,
+      "centreClusterBias": 0.8
+    },
+    "transportIntensity": {
+      "level": "LOW",
+      "roadHierarchyBias": "LOCAL_COLLECTOR",
+      "busSupport": "MEDIUM",
+      "railwayPotential": "LOW",
+      "parkingBias": "MODERATE"
+    },
+    "recreationAllocation": {
+      "level": "HIGH",
+      "targetZoneCount": 5,
+      "waterfrontRecreationBias": 1,
+      "trailBias": 0.9
+    },
+    "landmarkWeighting": {
+      "level": "HIGH",
+      "targetLandmarkCount": 3,
+      "waterfrontBias": 0.95,
+      "scenicBias": 0.9
+    },
+    "boundaryBehaviour": {
+      "style": "coastal_irregular_polygon",
+      "scenicConstraint": "COASTLINE_AND_FORESHORE",
+      "protectedEdgeBias": "HIGH"
+    },
+    "growthDirection": {
+      "primary": "INLAND_TO_COASTAL_CENTRELINE",
+      "corridorBias": "SECONDARY",
+      "waterfrontBias": "HIGH"
+    },
+    "identityTargets": {
+      "waterfrontRelationship": "PRIMARY",
+      "tourismVisibility": "MEDIUM_HIGH",
+      "ruralTransitionMode": "COASTAL_FRINGE"
+    },
+    "validationTargets": {
+      "minIdentityScore": 80,
+      "requiredDistrictTypes": [
+        "COASTAL_RESIDENTIAL_DISTRICT",
+        "TOURISM_DISTRICT"
+      ],
+      "requiredCommercialTypes": [
+        "COASTAL_TOURISM_RETAIL"
+      ],
+      "requiredRecreationTypes": [
+        "WATERFRONT_RECREATION_ZONE",
+        "WALKING_TRAIL"
+      ],
+      "minLandmarkCount": 3
+    }
+  },
+  "variantWeightProfile": {
+    "schemaId": "VARIANT_WEIGHT_PROFILE_001",
+    "profileId": "SMALL_COASTAL_TOWN",
+    "districtSelectionWeights": {
+      "residential": 0.55,
+      "coastal": 1,
+      "tourism": 0.7,
+      "civic": 0.45,
+      "commercial": 0.55,
+      "industrialService": 0.15,
+      "futureMediumDensity": 0.1
+    },
+    "centreWeights": {
+      "centreCountBias": 1,
+      "centreSizeBias": "MEDIUM",
+      "centreIntensityBias": "MODERATE",
+      "pedestrianPriorityBias": "HIGH"
+    },
+    "commercialWeights": {
+      "targetZoneCount": 2,
+      "waterfrontRetailBias": 0.85
+    },
+    "civicWeights": {
+      "targetReserveCount": 4,
+      "centreClusterBias": 0.8
+    },
+    "transportWeights": {
+      "roadHierarchyBias": "LOCAL_COLLECTOR",
+      "busSupportBias": "MEDIUM",
+      "railwayPotentialBias": "LOW",
+      "parkingBias": "MODERATE"
+    },
+    "recreationWeights": {
+      "targetZoneCount": 5,
+      "waterfrontRecreationBias": 1,
+      "trailBias": 0.9
+    },
+    "landmarkWeights": {
+      "targetLandmarkCount": 3,
+      "landmarkFrequencyBias": "HIGH",
+      "landmarkImportanceBias": 0.9
+    },
+    "boundaryWeights": {
+      "boundaryStyle": "coastal_irregular_polygon",
+      "scenicConstraint": "COASTLINE_AND_FORESHORE",
+      "protectedEdgeBias": "HIGH",
+      "growthDirection": "INLAND_TO_COASTAL_CENTRELINE"
+    }
+  },
   "coastalIdentityProfile": {
     "profileId": "COASTAL_TOWN_PROFILE",
     "coastlineOrientation": "EAST_FACING",
@@ -458,22 +597,22 @@
       "hierarchy": "TOWN_COLLECTOR",
       "path": [
         {
-          "x": -460,
+          "x": -740,
           "y": 168,
           "z": 0
         },
         {
-          "x": -132,
-          "y": 48,
+          "x": 0,
+          "y": 24,
           "z": 0
         }
       ],
       "connections": [
         "TOWN_DISTRICT_001",
         "TOWN_CENTRE_001",
-        "CIVIC_002"
+        "CIVIC_001"
       ],
-      "direction": "WEST_TO_CENTRE",
+      "direction": "DISTRICT_TO_CENTRE",
       "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
     },
     {
@@ -483,22 +622,22 @@
       "hierarchy": "TOWN_COLLECTOR",
       "path": [
         {
-          "x": 132,
-          "y": 48,
+          "x": 612,
+          "y": 118,
           "z": 0
         },
         {
-          "x": 366,
-          "y": 118,
+          "x": 0,
+          "y": 24,
           "z": 0
         }
       ],
       "connections": [
-        "TOWN_CENTRE_001",
         "TOWN_DISTRICT_002",
-        "COMMERCIAL_002"
+        "TOWN_CENTRE_001",
+        "CIVIC_002"
       ],
-      "direction": "CENTRE_TO_EAST",
+      "direction": "DISTRICT_TO_CENTRE",
       "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
     },
     {
@@ -508,22 +647,22 @@
       "hierarchy": "TOWN_COLLECTOR",
       "path": [
         {
-          "x": 0,
-          "y": -72,
+          "x": 104,
+          "y": -692,
           "z": 0
         },
         {
-          "x": 104,
-          "y": -440,
+          "x": 0,
+          "y": 24,
           "z": 0
         }
       ],
       "connections": [
-        "TOWN_CENTRE_001",
         "TOWN_DISTRICT_003",
-        "CIVIC_004"
+        "TOWN_CENTRE_001",
+        "CIVIC_003"
       ],
-      "direction": "CENTRE_TO_SOUTH",
+      "direction": "DISTRICT_TO_NORTH_CENTRE",
       "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
     },
     {
@@ -546,8 +685,8 @@
       "connections": [
         "TOWN_CENTRE_001",
         "COMMERCIAL_001",
-        "CIVIC_001",
-        "CIVIC_003"
+        "COMMERCIAL_002",
+        "CIVIC_001"
       ],
       "direction": "EAST_WEST",
       "capacityProfile": "TOWN_WIDE_MOVEMENT"
@@ -559,27 +698,27 @@
       "hierarchy": "CENTRE_LOOP",
       "path": [
         {
-          "x": -148,
+          "x": -168,
           "y": 120,
           "z": 0
         },
         {
-          "x": 148,
+          "x": 168,
           "y": 120,
           "z": 0
         },
         {
-          "x": 148,
-          "y": -84,
+          "x": 168,
+          "y": -68,
           "z": 0
         },
         {
-          "x": -148,
-          "y": -84,
+          "x": -168,
+          "y": -68,
           "z": 0
         },
         {
-          "x": -148,
+          "x": -168,
           "y": 120,
           "z": 0
         }
@@ -871,11 +1010,17 @@
     "landmarkReserveCount": 3,
     "recreationZoneCount": 5,
     "transitionZoneCount": 5,
-    "boundaryShape": "coastal_irregular_polygon"
+    "boundaryShape": "coastal_irregular_polygon",
+    "profileId": "SMALL_COASTAL_TOWN",
+    "centreCount": 1
   },
   "validationContract": {
     "schemaId": "TOWN_VALIDATION_001",
     "checks": {
+      "profileAppliedCorrectly": true,
+      "requiredZonesGenerated": true,
+      "weightingToleranceValid": true,
+      "variantIdentityScoreValid": true,
       "districtsInsideBoundary": true,
       "districtOverlapFree": true,
       "roadsConnected": true,
@@ -901,6 +1046,25 @@
     }
   },
   "validationResult": {
+    "variantValidation": {
+      "schemaId": "VARIANT_VALIDATION_001",
+      "profileId": "SMALL_COASTAL_TOWN",
+      "profileRuleApplicationValid": true,
+      "deterministicResultValid": true,
+      "weightingWithinTolerance": true,
+      "requiredZonesGenerated": true,
+      "profileIdentityScore": 100,
+      "profileDensityValid": true,
+      "profileDistributionValid": true,
+      "profileBoundaryBehaviourValid": true,
+      "profileCentreBehaviourValid": true,
+      "profileTransportIntensityValid": true
+    },
+    "profileAppliedCorrectly": true,
+    "requiredZonesGenerated": true,
+    "weightingToleranceValid": true,
+    "variantIdentityScore": 100,
+    "variantIdentityScoreValid": true,
     "districtsInsideBoundary": true,
     "districtOverlapFree": true,
     "roadsConnected": true,
@@ -925,7 +1089,7 @@
     "deterministicRebuildValid": true,
     "streamingBoundariesValid": true,
     "instanceReuseStrategyValid": true,
-    "deterministicSignatureHash": 2812767132,
+    "deterministicSignatureHash": 4076613198,
     "validationPassed": true
   }
 }

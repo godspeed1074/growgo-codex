@@ -59,12 +59,17 @@ test("town generation creates a valid deterministic coastal town preview", () =>
   );
 
   assert.equal(preview.schemaId, "TOWN_LAYOUT_001");
+  assert.equal(preview.variantProfileSystem.schemaId, "TOWN_VARIANT_PROFILE_SYSTEM_001");
+  assert.equal(preview.variantProfile.profileId, "SMALL_COASTAL_TOWN");
+  assert.equal(preview.variantWeightProfile.schemaId, "VARIANT_WEIGHT_PROFILE_001");
   assert.equal(preview.townThemeProfile.themeSeed, "SMALL_COASTAL_TOWN");
   assert.equal(preview.coastalIdentityProfile.profileId, "COASTAL_TOWN_PROFILE");
   assert.equal(preview.townBounds.boundaryShape, "coastal_irregular_polygon");
   assert.equal(preview.townBounds.boundaryPolygon.length, 10);
   assert.equal(preview.districtPlacements.length, 3);
   assert.equal(preview.townMetadata.districtLotCount, 337);
+  assert.equal(preview.townMetadata.profileId, "SMALL_COASTAL_TOWN");
+  assert.equal(preview.townMetadata.centreCount, 1);
   assert.equal(preview.townCentreZones.length, 1);
   assert.equal(preview.commercialZones.length, 2);
   assert.equal(preview.civicReserves.length, 4);
@@ -112,6 +117,11 @@ test("town generation creates a valid deterministic coastal town preview", () =>
   assert.equal(preview.validationResult.landmarksValid, true);
   assert.equal(preview.validationResult.serviceEdgesValid, true);
   assert.equal(preview.validationResult.ruralTransitionsValid, true);
+  assert.equal(preview.validationResult.profileAppliedCorrectly, true);
+  assert.equal(preview.validationResult.requiredZonesGenerated, true);
+  assert.equal(preview.validationResult.weightingToleranceValid, true);
+  assert.equal(preview.validationResult.variantIdentityScore, 100);
+  assert.equal(preview.validationResult.variantIdentityScoreValid, true);
   assert.equal(preview.validationResult.coastalIdentityScore, 100);
   assert.equal(preview.validationResult.coastalIdentityScoreValid, true);
   assert.equal(preview.validationResult.boundaryNaturalnessValid, true);
@@ -131,8 +141,10 @@ test("town validation output reports pass status for the deterministic town prev
 
   assert.equal(validation.validationId, "TOWN_LAYOUT_001_VALIDATION_001");
   assert.equal(validation.summary.validationPassed, true);
+  assert.equal(validation.summary.profileId, "SMALL_COASTAL_TOWN");
   assert.equal(validation.summary.districtCount, 3);
   assert.equal(validation.summary.districtLotCount, 337);
+  assert.equal(validation.summary.centreCount, 1);
   assert.equal(validation.summary.townCentreCount, 1);
   assert.equal(validation.summary.commercialZoneCount, 2);
   assert.equal(validation.summary.civicReserveCount, 4);
@@ -141,6 +153,11 @@ test("town validation output reports pass status for the deterministic town prev
   assert.equal(validation.summary.landmarkReserveCount, 3);
   assert.equal(validation.summary.transitionZoneCount, 5);
   assert.equal(validation.summary.coastalIdentityScore, 100);
+  assert.equal(validation.summary.variantIdentityScore, 100);
+  assert.equal(validation.checks.profileAppliedCorrectly, "PASS");
+  assert.equal(validation.checks.requiredZonesGenerated, "PASS");
+  assert.equal(validation.checks.weightingToleranceValid, "PASS");
+  assert.equal(validation.checks.variantIdentityScoreValid, "PASS");
   assert.equal(validation.checks.districtsInsideBoundary, "PASS");
   assert.equal(validation.checks.districtOverlapFree, "PASS");
   assert.equal(validation.checks.roadsConnected, "PASS");
@@ -163,6 +180,70 @@ test("town validation output reports pass status for the deterministic town prev
   assert.equal(validation.checks.deterministicRebuildValid, "PASS");
   assert.equal(validation.checks.streamingBoundariesValid, "PASS");
   assert.equal(validation.checks.instanceReuseStrategyValid, "PASS");
+});
+
+test("same seed with different profiles produces distinct validated town variants", () => {
+  const themes = [
+    "SMALL_COASTAL_TOWN",
+    "REGIONAL_TOWN",
+    "TOURIST_TOWN",
+    "SUBURBAN_CITY_EDGE"
+  ];
+  const previews = themes.map((townThemeSeed) =>
+    moduleUnderTest.generateTownLayoutPreview({
+      ...moduleUnderTest.townGeneratorDefaultInput,
+      townThemeSeed
+    })
+  );
+
+  for (const preview of previews) {
+    assert.equal(preview.validationResult.validationPassed, true);
+    assert.equal(preview.validationResult.profileAppliedCorrectly, true);
+    assert.equal(preview.validationResult.requiredZonesGenerated, true);
+    assert.equal(preview.validationResult.weightingToleranceValid, true);
+    assert.equal(preview.validationResult.variantIdentityScoreValid, true);
+  }
+
+  assert.equal(previews[0].variantProfile.profileId, "SMALL_COASTAL_TOWN");
+  assert.equal(previews[1].variantProfile.profileId, "REGIONAL_TOWN");
+  assert.equal(previews[2].variantProfile.profileId, "TOURIST_TOWN");
+  assert.equal(previews[3].variantProfile.profileId, "SUBURBAN_CITY_EDGE");
+
+  assert.equal(previews[0].districtPlacements.length, 3);
+  assert.equal(previews[1].districtPlacements.length, 4);
+  assert.equal(previews[2].districtPlacements.length, 4);
+  assert.equal(previews[3].districtPlacements.length, 5);
+
+  assert.equal(previews[0].townCentreZones.length, 1);
+  assert.equal(previews[3].townCentreZones.length, 2);
+
+  assert.equal(previews[0].commercialZones.length, 2);
+  assert.equal(previews[1].commercialZones.length, 2);
+  assert.equal(previews[2].commercialZones.length, 3);
+  assert.equal(previews[3].commercialZones.length, 2);
+
+  assert.equal(previews[0].landmarkReserves.length, 3);
+  assert.equal(previews[1].landmarkReserves.length, 2);
+  assert.equal(previews[2].landmarkReserves.length, 4);
+  assert.equal(previews[3].landmarkReserves.length, 2);
+
+  assert.equal(previews[0].townBounds.boundaryShape, "coastal_irregular_polygon");
+  assert.equal(previews[1].townBounds.boundaryShape, "regional_radial_polygon");
+  assert.equal(previews[2].townBounds.boundaryShape, "scenic_destination_polygon");
+  assert.equal(previews[3].townBounds.boundaryShape, "corridor_growth_polygon");
+
+  assert.notEqual(
+    previews[0].validationResult.deterministicSignatureHash,
+    previews[1].validationResult.deterministicSignatureHash
+  );
+  assert.notEqual(
+    previews[1].validationResult.deterministicSignatureHash,
+    previews[2].validationResult.deterministicSignatureHash
+  );
+  assert.notEqual(
+    previews[2].validationResult.deterministicSignatureHash,
+    previews[3].validationResult.deterministicSignatureHash
+  );
 });
 
 test("checked-in town preview and validation outputs match generator output", () => {

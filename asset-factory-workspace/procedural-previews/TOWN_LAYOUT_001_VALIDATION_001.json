@@ -6,8 +6,10 @@
   "seed": 10482,
   "summary": {
     "validationPassed": true,
+    "profileId": "SMALL_COASTAL_TOWN",
     "districtCount": 3,
     "districtLotCount": 337,
+    "centreCount": 1,
     "townCentreCount": 1,
     "commercialZoneCount": 2,
     "civicReserveCount": 4,
@@ -15,9 +17,14 @@
     "recreationZoneCount": 5,
     "landmarkReserveCount": 3,
     "transitionZoneCount": 5,
-    "coastalIdentityScore": 100
+    "coastalIdentityScore": 100,
+    "variantIdentityScore": 100
   },
   "checks": {
+    "profileAppliedCorrectly": "PASS",
+    "requiredZonesGenerated": "PASS",
+    "weightingToleranceValid": "PASS",
+    "variantIdentityScoreValid": "PASS",
     "districtsInsideBoundary": "PASS",
     "districtOverlapFree": "PASS",
     "roadsConnected": "PASS",

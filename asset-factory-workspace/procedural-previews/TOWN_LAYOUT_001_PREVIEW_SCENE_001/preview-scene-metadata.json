@@ -16,7 +16,7 @@
     "previewVersion": "SESSION_67_COASTAL_REFINEMENT_PASS",
     "townSeed": 10482,
     "townProfile": "SMALL_COASTAL_TOWN",
-    "previewVersionSeedSignature": 2812767132,
+    "previewVersionSeedSignature": 4076613198,
     "validationResult": "PASS",
     "inspectionStatus": "READY_FOR_SECOND_TOWN_INSPECTION",
     "topDown": {
@@ -508,22 +508,22 @@
         "hierarchy": "TOWN_COLLECTOR",
         "path": [
           {
-            "x": -460,
+            "x": -740,
             "y": 168,
             "z": 0
           },
           {
-            "x": -132,
-            "y": 48,
+            "x": 0,
+            "y": 24,
             "z": 0
           }
         ],
         "connections": [
           "TOWN_DISTRICT_001",
           "TOWN_CENTRE_001",
-          "CIVIC_002"
+          "CIVIC_001"
         ],
-        "direction": "WEST_TO_CENTRE",
+        "direction": "DISTRICT_TO_CENTRE",
         "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
       },
       {
@@ -532,22 +532,22 @@
         "hierarchy": "TOWN_COLLECTOR",
         "path": [
           {
-            "x": 132,
-            "y": 48,
+            "x": 612,
+            "y": 118,
             "z": 0
           },
           {
-            "x": 366,
-            "y": 118,
+            "x": 0,
+            "y": 24,
             "z": 0
           }
         ],
         "connections": [
-          "TOWN_CENTRE_001",
           "TOWN_DISTRICT_002",
-          "COMMERCIAL_002"
+          "TOWN_CENTRE_001",
+          "CIVIC_002"
         ],
-        "direction": "CENTRE_TO_EAST",
+        "direction": "DISTRICT_TO_CENTRE",
         "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
       },
       {
@@ -556,22 +556,22 @@
         "hierarchy": "TOWN_COLLECTOR",
         "path": [
           {
-            "x": 0,
-            "y": -72,
+            "x": 104,
+            "y": -692,
             "z": 0
           },
           {
-            "x": 104,
-            "y": -440,
+            "x": 0,
+            "y": 24,
             "z": 0
           }
         ],
         "connections": [
-          "TOWN_CENTRE_001",
           "TOWN_DISTRICT_003",
-          "CIVIC_004"
+          "TOWN_CENTRE_001",
+          "CIVIC_003"
         ],
-        "direction": "CENTRE_TO_SOUTH",
+        "direction": "DISTRICT_TO_NORTH_CENTRE",
         "capacityProfile": "MEDIUM_TOWN_MOVEMENT"
       },
       {
@@ -593,8 +593,8 @@
         "connections": [
           "TOWN_CENTRE_001",
           "COMMERCIAL_001",
-          "CIVIC_001",
-          "CIVIC_003"
+          "COMMERCIAL_002",
+          "CIVIC_001"
         ],
         "direction": "EAST_WEST",
         "capacityProfile": "TOWN_WIDE_MOVEMENT"
@@ -605,27 +605,27 @@
         "hierarchy": "CENTRE_LOOP",
         "path": [
           {
-            "x": -148,
+            "x": -168,
             "y": 120,
             "z": 0
           },
           {
-            "x": 148,
+            "x": 168,
             "y": 120,
             "z": 0
           },
           {
-            "x": 148,
-            "y": -84,
+            "x": 168,
+            "y": -68,
             "z": 0
           },
           {
-            "x": -148,
-            "y": -84,
+            "x": -168,
+            "y": -68,
             "z": 0
           },
           {
-            "x": -148,
+            "x": -168,
             "y": 120,
             "z": 0
           }
