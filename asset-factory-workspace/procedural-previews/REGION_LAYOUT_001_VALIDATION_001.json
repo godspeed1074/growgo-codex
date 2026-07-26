@@ -1,0 +1,28 @@
+{
+  "validationId": "REGION_LAYOUT_001_VALIDATION_001",
+  "previewId": "REGION_LAYOUT_001_PREVIEW_001",
+  "regionId": "REGION_10482",
+  "seed": 10482,
+  "summary": {
+    "validationPassed": true,
+    "regionProfileId": "COASTAL_REGION",
+    "settlementCount": 5,
+    "naturalZoneCount": 6,
+    "transportCorridorCount": 6,
+    "landmarkReserveCount": 5,
+    "explorationRouteCount": 6
+  },
+  "checks": {
+    "naturalZonesValid": "PASS",
+    "settlementsValid": "PASS",
+    "transportConnected": "PASS",
+    "settlementHierarchyValid": "PASS",
+    "terrainRelationshipsValid": "PASS",
+    "corridorsConnected": "PASS",
+    "landmarksAccessible": "PASS",
+    "explorationRoutesValid": "PASS",
+    "deterministicRebuildValid": "PASS",
+    "streamingReadyStructure": "PASS",
+    "instanceReferencesOnly": "PASS"
+  }
+}
