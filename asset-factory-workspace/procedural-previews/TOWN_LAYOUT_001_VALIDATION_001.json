@@ -1,0 +1,38 @@
+{
+  "schemaId": "TOWN_VALIDATION_001",
+  "validationId": "TOWN_LAYOUT_001_VALIDATION_001",
+  "previewId": "TOWN_LAYOUT_001_PREVIEW_001",
+  "townId": "TOWN_LAYOUT_10482",
+  "seed": 10482,
+  "summary": {
+    "validationPassed": true,
+    "districtCount": 3,
+    "districtLotCount": 336,
+    "townCentreCount": 1,
+    "commercialZoneCount": 1,
+    "civicReserveCount": 4,
+    "transportCorridorCount": 6,
+    "recreationZoneCount": 4,
+    "landmarkReserveCount": 2
+  },
+  "checks": {
+    "districtsInsideBoundary": "PASS",
+    "districtOverlapFree": "PASS",
+    "roadsConnected": "PASS",
+    "zonesValid": "PASS",
+    "townCentreAccessible": "PASS",
+    "townCentreTransportConnected": "PASS",
+    "townCentreResidentialConnected": "PASS",
+    "commercialPlacementValid": "PASS",
+    "commercialPedestrianConnected": "PASS",
+    "civicAccessible": "PASS",
+    "civicRoadRelationshipValid": "PASS",
+    "recreationConnected": "PASS",
+    "landmarksValid": "PASS",
+    "serviceEdgesValid": "PASS",
+    "ruralTransitionsValid": "PASS",
+    "deterministicRebuildValid": "PASS",
+    "streamingBoundariesValid": "PASS",
+    "instanceReuseStrategyValid": "PASS"
+  }
+}
