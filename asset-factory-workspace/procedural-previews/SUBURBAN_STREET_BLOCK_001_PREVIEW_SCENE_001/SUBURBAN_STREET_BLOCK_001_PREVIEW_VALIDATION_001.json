@@ -1,0 +1,27 @@
+{
+  "validationId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_VALIDATION_001",
+  "consumerId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+  "sceneId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_SCENE_001",
+  "checks": {
+    "roadConnectedNetworkValid": "PASS",
+    "validIntersections": "PASS",
+    "allLotsPopulated": "PASS",
+    "lotBoundariesValid": "PASS",
+    "allBuildingIdsResolve": "PASS",
+    "noBuildingOverlap": "PASS",
+    "orientationValid": "PASS",
+    "drivewaysConnected": "PASS",
+    "streetFeaturesContained": "PASS",
+    "cameraProfileValid": "PASS",
+    "deterministicSourceMatches": "PASS"
+  },
+  "summary": {
+    "validationPassed": true,
+    "roadSegmentCount": 6,
+    "intersectionCount": 3,
+    "lotCount": 24,
+    "buildingInstanceCount": 24,
+    "streetFeatureCount": 69
+  }
+}

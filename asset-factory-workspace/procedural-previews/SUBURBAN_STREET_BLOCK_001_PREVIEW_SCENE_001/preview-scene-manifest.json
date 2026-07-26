@@ -1,0 +1,9 @@
+{
+  "consumerId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_CONSUMER_001",
+  "adapterId": "SUBURBAN_STREET_BLOCK_PREVIEW_ADAPTER_001",
+  "sceneId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_SCENE_001",
+  "validationId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_VALIDATION_001",
+  "sourcePreviewPath": "asset-factory-workspace/procedural-previews/SUBURBAN_STREET_BLOCK_001_PREVIEW_001.json",
+  "blenderScriptPath": "asset-factory/local-blender-scripts/generate_suburban_street_block_preview_scene.py",
+  "blenderCommand": "blender --python asset-factory/local-blender-scripts/generate_suburban_street_block_preview_scene.py -- --source-json asset-factory-workspace/procedural-previews/SUBURBAN_STREET_BLOCK_001_PREVIEW_001.json --output-dir asset-factory-workspace/procedural-previews/SUBURBAN_STREET_BLOCK_001_PREVIEW_SCENE_001"
+}

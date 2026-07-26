@@ -1,0 +1,2142 @@
+{
+  "sceneId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_SCENE_001",
+  "consumerId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_CONSUMER_001",
+  "adapterId": "SUBURBAN_STREET_BLOCK_PREVIEW_ADAPTER_001",
+  "sourcePreviewId": "SUBURBAN_STREET_BLOCK_001_PREVIEW_001",
+  "sourcePreviewPath": "asset-factory-workspace/procedural-previews/SUBURBAN_STREET_BLOCK_001_PREVIEW_001.json",
+  "previewType": "suburban_street_block_visual_inspection",
+  "sourceSeed": 10482,
+  "cameraProfile": {
+    "profileId": "SUBURBAN_STREET_BLOCK_OVERVIEW_001",
+    "orientation": "north_up",
+    "tiltDegrees": 58,
+    "framing": "multi_street_block_overview",
+    "paddingMeters": 12
+  },
+  "visualCaptureWorkflow": {
+    "previewVersion": "SESSION_49_BLOCK_PREVIEW_INTEGRATION",
+    "seed": 10482,
+    "validationResult": "PASS",
+    "topDown": {
+      "cameraId": "TOP_DOWN_BLOCK_INSPECTION",
+      "viewType": "top_down_block",
+      "angleDegrees": 90,
+      "position": {
+        "x": 120,
+        "y": 7,
+        "z": 452.6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "angled25D": {
+      "cameraId": "ANGLED_2_5D_BLOCK_INSPECTION",
+      "viewType": "angled_25d_block",
+      "angleDegrees": 58,
+      "position": {
+        "x": 120,
+        "y": -119.48,
+        "z": 297.84
+      },
+      "rotation": {
+        "x": 57.9,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "streetLevel": {
+      "cameraId": "STREET_LEVEL_BLOCK_INSPECTION",
+      "viewType": "street_level_block",
+      "angleDegrees": 18,
+      "position": {
+        "x": -16,
+        "y": 1,
+        "z": 5.2
+      },
+      "rotation": {
+        "x": 72.2,
+        "y": 0,
+        "z": 38.5
+      }
+    }
+  },
+  "themeProfile": {
+    "themeSeed": "SUBURBAN_AUSTRALIA",
+    "neighbourhoodTheme": "suburban_multi_street_default",
+    "densityProfile": "low_density_suburban",
+    "buildingWeights": {
+      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.85,
+      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.12,
+      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.03
+    }
+  },
+  "roadLayer": {
+    "roadSegmentCount": 6,
+    "intersectionCount": 3,
+    "nodeCount": 7,
+    "graphType": "collector_plus_cross_street_plus_culdesac",
+    "connectedComponentCount": 1,
+    "resolvedSegments": [
+      {
+        "roadSegmentId": "SEGMENT_001",
+        "roadType": "collector_residential_street",
+        "direction": "east_west",
+        "length": 80,
+        "roadWidth": 12,
+        "sidewalkWidth": 1.6,
+        "vergeWidth": 1.8,
+        "x": 0,
+        "y": 0,
+        "centerX": 26,
+        "centerY": 0,
+        "startX": 0,
+        "startY": 0
+      },
+      {
+        "roadSegmentId": "SEGMENT_002",
+        "roadType": "collector_residential_street",
+        "direction": "east_west",
+        "length": 80,
+        "roadWidth": 12,
+        "sidewalkWidth": 1.6,
+        "vergeWidth": 1.8,
+        "x": 52,
+        "y": 0,
+        "centerX": 70,
+        "centerY": 0,
+        "startX": 52,
+        "startY": 0
+      },
+      {
+        "roadSegmentId": "SEGMENT_003",
+        "roadType": "collector_residential_street",
+        "direction": "east_west",
+        "length": 80,
+        "roadWidth": 12,
+        "sidewalkWidth": 1.6,
+        "vergeWidth": 1.8,
+        "x": 88,
+        "y": 0,
+        "centerX": 106,
+        "centerY": 0,
+        "startX": 88,
+        "startY": 0
+      },
+      {
+        "roadSegmentId": "SEGMENT_004",
+        "roadType": "local_residential_street",
+        "direction": "north_south",
+        "length": 72,
+        "roadWidth": 12,
+        "sidewalkWidth": 1.6,
+        "vergeWidth": 1.8,
+        "x": 52,
+        "y": 0,
+        "centerX": 52,
+        "centerY": 29,
+        "startX": 52,
+        "startY": 0
+      },
+      {
+        "roadSegmentId": "SEGMENT_005",
+        "roadType": "local_residential_street",
+        "direction": "north_south",
+        "length": 72,
+        "roadWidth": 12,
+        "sidewalkWidth": 1.6,
+        "vergeWidth": 1.8,
+        "x": 52,
+        "y": -58,
+        "centerX": 52,
+        "centerY": -29,
+        "startX": 52,
+        "startY": -58
+      },
+      {
+        "roadSegmentId": "SEGMENT_006",
+        "roadType": "cul_de_sac_residential_loop",
+        "direction": "north_south",
+        "length": 72,
+        "roadWidth": 12,
+        "sidewalkWidth": 1.6,
+        "vergeWidth": 1.8,
+        "x": 88,
+        "y": 0,
+        "centerX": 88,
+        "centerY": 27,
+        "startX": 88,
+        "startY": 0
+      }
+    ],
+    "resolvedIntersections": [
+      {
+        "intersectionId": "INTERSECTION_001",
+        "nodeId": "NODE_002",
+        "intersectionType": "four_way_intersection",
+        "connectedSegmentIds": [
+          "SEGMENT_001",
+          "SEGMENT_002",
+          "SEGMENT_004",
+          "SEGMENT_005"
+        ],
+        "lotVisibilityBuffer": 4
+      },
+      {
+        "intersectionId": "INTERSECTION_002",
+        "nodeId": "NODE_003",
+        "intersectionType": "t_intersection",
+        "connectedSegmentIds": [
+          "SEGMENT_002",
+          "SEGMENT_003",
+          "SEGMENT_006"
+        ],
+        "lotVisibilityBuffer": 4
+      },
+      {
+        "intersectionId": "INTERSECTION_003",
+        "nodeId": "NODE_007",
+        "intersectionType": "cul_de_sac_head",
+        "connectedSegmentIds": [
+          "SEGMENT_006"
+        ],
+        "lotVisibilityBuffer": 2
+      }
+    ]
+  },
+  "lotLayer": {
+    "lotCount": 24,
+    "cornerLotCount": 8,
+    "showLotBoundaries": true,
+    "showLotLabels": true,
+    "showSetbacks": true
+  },
+  "buildingLayer": {
+    "buildingInstanceCount": 24,
+    "resolvedBuildingAssets": [
+      {
+        "instanceId": "BUILDING_PLACEMENT_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_001",
+        "position": {
+          "x": 7.7,
+          "y": 18.36,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_002",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_002",
+        "position": {
+          "x": 23.53,
+          "y": 18.96,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_003",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_003",
+        "position": {
+          "x": 39.37,
+          "y": 19.69,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_004",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_004",
+        "position": {
+          "x": 56.79,
+          "y": 19.16,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_005",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_005",
+        "position": {
+          "x": 7.83,
+          "y": -19.17,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_006",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_006",
+        "position": {
+          "x": 25.47,
+          "y": -18.91,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_007",
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "lotId": "LOT_007",
+        "position": {
+          "x": 43.11,
+          "y": -18.56,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_008",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_008",
+        "position": {
+          "x": 62.94,
+          "y": -19.72,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_009",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_009",
+        "position": {
+          "x": 88.48,
+          "y": 19.1,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_010",
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "lotId": "LOT_010",
+        "position": {
+          "x": 107.43,
+          "y": 19.54,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_011",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_011",
+        "position": {
+          "x": 126.38,
+          "y": 19.45,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_012",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_012",
+        "position": {
+          "x": 147.96,
+          "y": 18.97,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_013",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_013",
+        "position": {
+          "x": 86.54,
+          "y": -19.9,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_014",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_014",
+        "position": {
+          "x": 103.38,
+          "y": -19.47,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_015",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_015",
+        "position": {
+          "x": 121.99,
+          "y": -18.75,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_016",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_016",
+        "position": {
+          "x": 140.62,
+          "y": -19.34,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_017",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_017",
+        "position": {
+          "x": 167.59,
+          "y": 19.51,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_018",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_018",
+        "position": {
+          "x": 184.77,
+          "y": 19.13,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_019",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_019",
+        "position": {
+          "x": 203.99,
+          "y": 18.12,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_020",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "lotId": "LOT_020",
+        "position": {
+          "x": 223.2,
+          "y": 19.18,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "SOUTH",
+          "yawDegrees": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_021",
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "lotId": "LOT_021",
+        "position": {
+          "x": 168.89,
+          "y": -19.09,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_022",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_022",
+        "position": {
+          "x": 191.57,
+          "y": -19.2,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_023",
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "lotId": "LOT_023",
+        "position": {
+          "x": 214.27,
+          "y": -19.41,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+      },
+      {
+        "instanceId": "BUILDING_PLACEMENT_024",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "lotId": "LOT_024",
+        "position": {
+          "x": 234.07,
+          "y": -19.49,
+          "z": 0
+        },
+        "rotation": {
+          "facingDirection": "NORTH",
+          "yawDegrees": 180
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "lodProfile": "LOD_GAMEPLAY",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+      }
+    ]
+  },
+  "drivewayLayer": {
+    "drivewayCount": 24,
+    "showDrivewayPaths": true,
+    "showGarageRelationship": true,
+    "showRoadConnections": true
+  },
+  "fenceLayer": {
+    "fenceLotCount": 24,
+    "showFenceBoundaries": true,
+    "showDrivewayOpenings": true,
+    "showPedestrianOpenings": true
+  },
+  "streetFeatureLayer": {
+    "featureCount": 69,
+    "showSidewalks": true,
+    "showGrassVerges": true,
+    "showStreetTrees": true,
+    "showStreetSigns": true,
+    "showMailboxes": true,
+    "featurePresentation": [
+      {
+        "featurePlacementId": "FEATURE_001",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 26,
+          "y": 6.8,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_001_NORTH",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_002",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 26,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_001_NORTH",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_003",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 26,
+          "y": -6.8,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_001_SOUTH",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_004",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 26,
+          "y": -8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_001_SOUTH",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_005",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 20,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 231
+        },
+        "variationSeed": "TREE_10482_SEGMENT_001_0",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_006",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 40,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 52
+        },
+        "variationSeed": "TREE_10482_SEGMENT_001_1",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_007",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 60,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 229
+        },
+        "variationSeed": "TREE_10482_SEGMENT_001_2",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_008",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 70,
+          "y": 6.8,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_002_NORTH",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_009",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 70,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_002_NORTH",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_010",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 70,
+          "y": -6.8,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_002_SOUTH",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_011",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 70,
+          "y": -8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_002_SOUTH",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_012",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 72,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 134
+        },
+        "variationSeed": "TREE_10482_SEGMENT_002_0",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_013",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 92,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 313
+        },
+        "variationSeed": "TREE_10482_SEGMENT_002_1",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_014",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 112,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 136
+        },
+        "variationSeed": "TREE_10482_SEGMENT_002_2",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_015",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 106,
+          "y": 6.8,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_003_NORTH",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_016",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 106,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_003_NORTH",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_017",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 106,
+          "y": -6.8,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_003_SOUTH",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_018",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 106,
+          "y": -8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_003_SOUTH",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_019",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 108,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 101
+        },
+        "variationSeed": "TREE_10482_SEGMENT_003_0",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_020",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 128,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 282
+        },
+        "variationSeed": "TREE_10482_SEGMENT_003_1",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_021",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": null,
+        "position": {
+          "x": 148,
+          "y": 8.5,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 103
+        },
+        "variationSeed": "TREE_10482_SEGMENT_003_2",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_022",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 45.2,
+          "y": 29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_004_WEST",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_023",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 43.5,
+          "y": 29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_004_WEST",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_024",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 58.8,
+          "y": 29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_004_EAST",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_025",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": 29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_004_EAST",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_026",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": 18,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 260
+        },
+        "variationSeed": "TREE_10482_SEGMENT_004_0",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_027",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": 36,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 79
+        },
+        "variationSeed": "TREE_10482_SEGMENT_004_1",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_028",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_004",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": 54,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 258
+        },
+        "variationSeed": "TREE_10482_SEGMENT_004_2",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_029",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 45.2,
+          "y": -29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_005_WEST",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_030",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 43.5,
+          "y": -29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_005_WEST",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_031",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 58.8,
+          "y": -29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_005_EAST",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_032",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": -29,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_005_EAST",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_033",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": -40,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 115
+        },
+        "variationSeed": "TREE_10482_SEGMENT_005_0",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_034",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": -22,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 296
+        },
+        "variationSeed": "TREE_10482_SEGMENT_005_1",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_035",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_005",
+        "relatedLotId": null,
+        "position": {
+          "x": 60.5,
+          "y": -4,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 113
+        },
+        "variationSeed": "TREE_10482_SEGMENT_005_2",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_036",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 81.2,
+          "y": 27,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_006_WEST",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_037",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 79.5,
+          "y": 27,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_006_WEST",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_038",
+        "featureType": "sidewalk",
+        "assetId": "MOD_PATH_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 94.8,
+          "y": 27,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "SIDEWALK_10482_SEGMENT_006_EAST",
+        "placementRule": "continuous_footpath_edge",
+        "publicAreaClass": "public_footpath",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_PATH_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_039",
+        "featureType": "grass_verge",
+        "assetId": "MOD_GROUND_GRASS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 96.5,
+          "y": 27,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "VERGE_10482_SEGMENT_006_EAST",
+        "placementRule": "continuous_grass_verge_edge",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_GROUND_GRASS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_040",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 96.5,
+          "y": 18,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 90
+        },
+        "variationSeed": "TREE_10482_SEGMENT_006_0",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_041",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 96.5,
+          "y": 36,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 269
+        },
+        "variationSeed": "TREE_10482_SEGMENT_006_1",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_042",
+        "featureType": "street_tree",
+        "assetId": "MOD_TREE_EUCALYPTUS_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 96.5,
+          "y": 54,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 92
+        },
+        "variationSeed": "TREE_10482_SEGMENT_006_2",
+        "placementRule": "verge_interval_standard",
+        "publicAreaClass": "public_verge",
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+        "presentationMode": "registered_asset"
+      },
+      {
+        "featurePlacementId": "FEATURE_043",
+        "featureType": "street_sign",
+        "assetId": "STREET_FEATURE_SIGN_STANDARD_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": null,
+        "position": {
+          "x": 82.2,
+          "y": 2.2,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIGN_10482_INTERSECTION_001",
+        "placementRule": "intersection_sign_anchor",
+        "publicAreaClass": "intersection_buffer",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_044",
+        "featureType": "street_sign",
+        "assetId": "STREET_FEATURE_SIGN_STANDARD_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": null,
+        "position": {
+          "x": 162.2,
+          "y": 2.2,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIGN_10482_INTERSECTION_002",
+        "placementRule": "intersection_sign_anchor",
+        "publicAreaClass": "intersection_buffer",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_045",
+        "featureType": "street_sign",
+        "assetId": "STREET_FEATURE_SIGN_STANDARD_001",
+        "streetSegmentId": "SEGMENT_006",
+        "relatedLotId": null,
+        "position": {
+          "x": 162.2,
+          "y": 74.2,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "SIGN_10482_INTERSECTION_003",
+        "placementRule": "intersection_sign_anchor",
+        "publicAreaClass": "cul_de_sac_centre",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_046",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_001",
+        "position": {
+          "x": 3.01,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_001",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_047",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_002",
+        "position": {
+          "x": 19.94,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_002",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_048",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_003",
+        "position": {
+          "x": 34.67,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_003",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_049",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_004",
+        "position": {
+          "x": 52.09,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_004",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_050",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_005",
+        "position": {
+          "x": 3.05,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_005",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_051",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_006",
+        "position": {
+          "x": 20.7,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_006",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_052",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_007",
+        "position": {
+          "x": 38.33,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_007",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_053",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_001",
+        "relatedLotId": "LOT_008",
+        "position": {
+          "x": 56.62,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_008",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_054",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_009",
+        "position": {
+          "x": 83.24,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_009",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_055",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_010",
+        "position": {
+          "x": 102.19,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_010",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_056",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_011",
+        "position": {
+          "x": 121.15,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_011",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_057",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_012",
+        "position": {
+          "x": 140.87,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_012",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_058",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_013",
+        "position": {
+          "x": 82.66,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_013",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_059",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_014",
+        "position": {
+          "x": 98.26,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_014",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_060",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_015",
+        "position": {
+          "x": 116.87,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_015",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_061",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_002",
+        "relatedLotId": "LOT_016",
+        "position": {
+          "x": 135.49,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_016",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_062",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_017",
+        "position": {
+          "x": 162.98,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_017",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_063",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_018",
+        "position": {
+          "x": 180.16,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_018",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_064",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_019",
+        "position": {
+          "x": 197.94,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_019",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_065",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_020",
+        "position": {
+          "x": 218.59,
+          "y": 8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_020",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_066",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_021",
+        "position": {
+          "x": 163.37,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_021",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_067",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_022",
+        "position": {
+          "x": 184.01,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_022",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_068",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_023",
+        "position": {
+          "x": 208.74,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_023",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      },
+      {
+        "featurePlacementId": "FEATURE_069",
+        "featureType": "street_sign",
+        "assetId": "MAILBOX_PREVIEW_001",
+        "streetSegmentId": "SEGMENT_003",
+        "relatedLotId": "LOT_024",
+        "position": {
+          "x": 228.54,
+          "y": -8.7,
+          "z": 0
+        },
+        "rotation": {
+          "yawDegrees": 0
+        },
+        "variationSeed": "MAILBOX_10482_LOT_024",
+        "placementRule": "frontage_mailbox_anchor",
+        "publicAreaClass": "lot_frontage_edge",
+        "gameplayAssetPath": null,
+        "presentationMode": "preview_marker"
+      }
+    ]
+  },
+  "debugLayer": {
+    "showRoadGraphMarkers": true,
+    "showLotOutlines": true,
+    "showOrientationArrows": true,
+    "showValidationIndicators": true,
+    "passColour": "GREEN",
+    "failColour": "RED"
+  },
+  "performanceProfile": {
+    "reuseMode": "instance_reuse_only",
+    "duplicateBuildingGenerationAllowed": false,
+    "previewOnlyAssetsAllowed": true,
+    "expectedBuildingInstances": 24,
+    "expectedStreetFeatureInstances": 69
+  }
+}
