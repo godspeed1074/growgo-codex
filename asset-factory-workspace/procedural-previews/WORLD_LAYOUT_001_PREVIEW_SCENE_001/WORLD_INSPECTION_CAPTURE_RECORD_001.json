@@ -1,0 +1,71 @@
+{
+  "captureRecordId": "WORLD_INSPECTION_CAPTURE_RECORD_001",
+  "sceneId": "WORLD_LAYOUT_001_PREVIEW_SCENE_001",
+  "sourcePreviewId": "WORLD_LAYOUT_001_PREVIEW_001",
+  "worldId": "WORLD_10482",
+  "worldSeed": 10482,
+  "worldProfile": "AUSTRALIAN_COASTAL_WORLD",
+  "previewVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+  "captureStatus": "METADATA_ONLY_PENDING_VIEWPORT_CAPTURE",
+  "validationStatus": "PASS",
+  "cameraProfiles": [
+    {
+      "cameraId": "TOP_DOWN_WORLD_INSPECTION",
+      "viewType": "top_down_world",
+      "angleDegrees": 90,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 27840
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "cameraId": "ANGLED_WORLD_2_5D_INSPECTION",
+      "viewType": "angled_25d_world",
+      "angleDegrees": 56,
+      "position": {
+        "x": 0,
+        "y": -11200,
+        "z": 22080
+      },
+      "rotation": {
+        "x": 56,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "cameraId": "REGION_NETWORK_OVERVIEW_INSPECTION",
+      "viewType": "region_network_overview",
+      "angleDegrees": 40,
+      "position": {
+        "x": 3360,
+        "y": -2880,
+        "z": 14400
+      },
+      "rotation": {
+        "x": 64,
+        "y": 0,
+        "z": 22
+      }
+    }
+  ],
+  "traceability": {
+    "generatorVersion": "SESSION_83_DETERMINISTIC_WORLD_GENERATOR",
+    "previewConsumerVersion": "SESSION_84_WORLD_VISUAL_PREVIEW_CONSUMER",
+    "refinementVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+    "validationVersion": "WORLD_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "WORLD_LAYOUT_001_PREVIEW_001",
+      "schemaId": "WORLD_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json",
+      "worldId": "WORLD_10482",
+      "deterministicSignatureHash": 3168729931
+    }
+  }
+}

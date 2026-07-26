@@ -1,0 +1,29 @@
+{
+  "consumerId": "WORLD_LAYOUT_001_PREVIEW_CONSUMER_001",
+  "sceneId": "WORLD_LAYOUT_001_PREVIEW_SCENE_001",
+  "validationId": "WORLD_LAYOUT_001_PREVIEW_VALIDATION_001",
+  "captureRecordId": "WORLD_INSPECTION_CAPTURE_RECORD_001",
+  "sourcePreviewPath": "asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json",
+  "traceability": {
+    "generatorVersion": "SESSION_83_DETERMINISTIC_WORLD_GENERATOR",
+    "previewConsumerVersion": "SESSION_84_WORLD_VISUAL_PREVIEW_CONSUMER",
+    "refinementVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+    "validationVersion": "WORLD_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "WORLD_LAYOUT_001_PREVIEW_001",
+      "schemaId": "WORLD_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json",
+      "worldId": "WORLD_10482",
+      "deterministicSignatureHash": 3168729931
+    }
+  },
+  "previewVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+  "blenderScriptPath": "asset-factory/local-blender-scripts/generate_world_layout_preview_scene.py",
+  "blenderCommand": "blender --python asset-factory/local-blender-scripts/generate_world_layout_preview_scene.py -- --source-json asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json --output-dir asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_SCENE_001",
+  "artifactPaths": {
+    "metadataPath": "preview-scene-metadata.json",
+    "manifestPath": "preview-scene-manifest.json",
+    "validationPath": "WORLD_LAYOUT_001_PREVIEW_VALIDATION_001.json",
+    "captureRecordPath": "WORLD_INSPECTION_CAPTURE_RECORD_001.json"
+  }
+}

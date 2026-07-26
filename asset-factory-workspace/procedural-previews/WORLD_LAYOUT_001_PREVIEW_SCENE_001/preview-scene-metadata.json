@@ -1,0 +1,975 @@
+{
+  "sceneId": "WORLD_LAYOUT_001_PREVIEW_SCENE_001",
+  "consumerId": "WORLD_LAYOUT_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "WORLD_LAYOUT_001_PREVIEW_001",
+  "sourcePreviewPath": "asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json",
+  "previewType": "procedural_world_visual_inspection",
+  "sourceSeed": 10482,
+  "cameraProfile": {
+    "profileId": "WORLD_OVERVIEW_001",
+    "orientation": "north_up",
+    "tiltDegrees": 56,
+    "framing": "world_overview",
+    "paddingMeters": 640
+  },
+  "traceability": {
+    "generatorVersion": "SESSION_83_DETERMINISTIC_WORLD_GENERATOR",
+    "previewConsumerVersion": "SESSION_84_WORLD_VISUAL_PREVIEW_CONSUMER",
+    "refinementVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+    "validationVersion": "WORLD_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "WORLD_LAYOUT_001_PREVIEW_001",
+      "schemaId": "WORLD_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json",
+      "worldId": "WORLD_10482",
+      "deterministicSignatureHash": 3168729931
+    }
+  },
+  "visualCaptureWorkflow": {
+    "previewVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+    "worldSeed": 10482,
+    "worldProfile": "AUSTRALIAN_COASTAL_WORLD",
+    "previewVersionSeedSignature": 3168729931,
+    "validationResult": "PASS",
+    "inspectionStatus": "READY_FOR_WORLD_INSPECTION",
+    "generatorVersion": "SESSION_83_DETERMINISTIC_WORLD_GENERATOR",
+    "previewConsumerVersion": "SESSION_84_WORLD_VISUAL_PREVIEW_CONSUMER",
+    "validationVersion": "WORLD_PREVIEW_VALIDATION_001",
+    "topDown": {
+      "cameraId": "TOP_DOWN_WORLD_INSPECTION",
+      "viewType": "top_down_world",
+      "angleDegrees": 90,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 27840
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "angledWorld25D": {
+      "cameraId": "ANGLED_WORLD_2_5D_INSPECTION",
+      "viewType": "angled_25d_world",
+      "angleDegrees": 56,
+      "position": {
+        "x": 0,
+        "y": -11200,
+        "z": 22080
+      },
+      "rotation": {
+        "x": 56,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "regionNetworkOverview": {
+      "cameraId": "REGION_NETWORK_OVERVIEW_INSPECTION",
+      "viewType": "region_network_overview",
+      "angleDegrees": 40,
+      "position": {
+        "x": 3360,
+        "y": -2880,
+        "z": 14400
+      },
+      "rotation": {
+        "x": 64,
+        "y": 0,
+        "z": 22
+      }
+    }
+  },
+  "worldLayer": {
+    "worldId": "WORLD_10482",
+    "worldBoundaryVisible": true,
+    "worldBounds": {
+      "boundaryStyle": "COASTAL_CONTINENTAL_ARC",
+      "minX": -12000,
+      "maxX": 12000,
+      "minY": -8000,
+      "maxY": 8000,
+      "boundaryPolygon": [
+        {
+          "x": -12000,
+          "z": -7320
+        },
+        {
+          "x": -11080,
+          "z": -8140
+        },
+        {
+          "x": -8989.46,
+          "z": -7780
+        },
+        {
+          "x": 9900,
+          "z": -7460
+        },
+        {
+          "x": 12240,
+          "z": -5800
+        },
+        {
+          "x": 12460,
+          "z": 6200
+        },
+        {
+          "x": 11180,
+          "z": 8260
+        },
+        {
+          "x": -10200,
+          "z": 8420
+        },
+        {
+          "x": -12340,
+          "z": 6760
+        },
+        {
+          "x": -12420,
+          "z": -860
+        }
+      ]
+    },
+    "boundaryStyle": "COASTAL_CONTINENTAL_ARC",
+    "profileIdentity": "AUSTRALIAN_COASTAL_WORLD",
+    "geographyZoneCount": 8,
+    "regionCount": 5,
+    "connectionCount": 6,
+    "landmarkReserveCount": 5,
+    "explorationRouteCount": 6,
+    "streamingChunkCount": 4
+  },
+  "geographyLayer": {
+    "zoneCount": 8,
+    "showOceans": true,
+    "showCoastlines": true,
+    "showForests": true,
+    "showFarmland": true,
+    "showMountains": true,
+    "showRivers": true,
+    "showProtectedAreas": true,
+    "resolvedWorldGeographyZones": [
+      {
+        "zoneId": "WORLD_ZONE_001",
+        "zoneType": "OCEAN",
+        "boundary": {
+          "points": [
+            {
+              "x": -13200,
+              "z": -9200
+            },
+            {
+              "x": 13400,
+              "z": -8920
+            },
+            {
+              "x": 12820,
+              "z": -5320
+            },
+            {
+              "x": -12620,
+              "z": -5480
+            }
+          ]
+        },
+        "biome": "MARINE_COASTAL",
+        "climate": "TEMPERATE_MARINE",
+        "accessibility": "WATER_ONLY_ACCESS",
+        "influenceRules": [
+          "SHAPES_COASTAL_REGION_EDGES",
+          "ENABLES_FERRY_AND_COASTAL_ROUTE_LOGIC"
+        ],
+        "displayColour": "OCEAN_BLUE",
+        "markerType": "ocean_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_002",
+        "zoneType": "COASTLINE",
+        "boundary": {
+          "points": [
+            {
+              "x": -12000,
+              "z": -7760
+            },
+            {
+              "x": 11760,
+              "z": -7540
+            },
+            {
+              "x": 11380,
+              "z": -4800
+            },
+            {
+              "x": -11580,
+              "z": -4980
+            }
+          ]
+        },
+        "biome": "TEMPERATE_COASTLINE",
+        "climate": "MILD_COASTAL",
+        "accessibility": "PARTIAL_PUBLIC_ACCESS",
+        "influenceRules": [
+          "ENABLES_COASTAL_AND_TOURISM_REGIONS",
+          "SUPPORTS_SCENIC_ROUTE_SPINES"
+        ],
+        "displayColour": "COASTLINE_CYAN",
+        "markerType": "coastline_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_003",
+        "zoneType": "FOREST",
+        "boundary": {
+          "points": [
+            {
+              "x": -11080,
+              "z": 3800
+            },
+            {
+              "x": -7200,
+              "z": 3500
+            },
+            {
+              "x": -6800,
+              "z": 7100
+            },
+            {
+              "x": -10540,
+              "z": 7380
+            }
+          ]
+        },
+        "biome": "TEMPERATE_FOREST",
+        "climate": "MILD_WET",
+        "accessibility": "TRACK_ACCESS",
+        "influenceRules": [
+          "SUPPORTS_MOUNTAIN_AND_TOURISM_EDGE_REGIONS",
+          "INCREASES_DISCOVERY_VALUE"
+        ],
+        "displayColour": "FOREST_GREEN",
+        "markerType": "forest_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_004",
+        "zoneType": "FARMLAND",
+        "boundary": {
+          "points": [
+            {
+              "x": -9600,
+              "z": -4020
+            },
+            {
+              "x": 11220,
+              "z": -4380
+            },
+            {
+              "x": 10680,
+              "z": 400
+            },
+            {
+              "x": -10180,
+              "z": 1020
+            }
+          ]
+        },
+        "biome": "TEMPERATE_FARMLAND",
+        "climate": "MIXED_TEMPERATE",
+        "accessibility": "ROAD_ACCESS",
+        "influenceRules": [
+          "SUPPORTS_RURAL_AND_SERVICE_REGIONS",
+          "ENABLES_HIGHWAY_AND_RAIL_ALIGNMENT"
+        ],
+        "displayColour": "FARMLAND_GOLD",
+        "markerType": "farmland_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_005",
+        "zoneType": "RIVER",
+        "boundary": {
+          "points": [
+            {
+              "x": -5800,
+              "z": 7740
+            },
+            {
+              "x": -5260,
+              "z": 5800
+            },
+            {
+              "x": -4840,
+              "z": 3920
+            },
+            {
+              "x": -4540,
+              "z": -6760
+            }
+          ]
+        },
+        "biome": "TEMPERATE_RIVER_SYSTEM",
+        "climate": "MIXED_TEMPERATE",
+        "accessibility": "PARTIAL_PUBLIC_ACCESS",
+        "influenceRules": [
+          "CREATES_BRIDGE_AND_VALLEY_CORRIDOR_LOGIC",
+          "ATTRACTS_SETTLEMENT_AND_RECREATION"
+        ],
+        "displayColour": "RIVER_BLUE",
+        "markerType": "river_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_006",
+        "zoneType": "WETLAND",
+        "boundary": {
+          "points": [
+            {
+              "x": 7140,
+              "z": -5360
+            },
+            {
+              "x": 9160,
+              "z": -5460
+            },
+            {
+              "x": 9380,
+              "z": -4440
+            },
+            {
+              "x": 7420,
+              "z": -4320
+            }
+          ]
+        },
+        "biome": "COASTAL_WETLAND",
+        "climate": "MILD_HUMID",
+        "accessibility": "BOARDWALK_CONTROLLED",
+        "influenceRules": [
+          "LIMITS_DENSE_REGION_EXPANSION",
+          "SHIFTS_CORRIDORS_TO_DRY_GROUND"
+        ],
+        "displayColour": "WETLAND_TEAL",
+        "markerType": "wetland_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_007",
+        "zoneType": "MOUNTAINS",
+        "boundary": {
+          "points": [
+            {
+              "x": 5600,
+              "z": 2800
+            },
+            {
+              "x": 9180,
+              "z": 2400
+            },
+            {
+              "x": 10180,
+              "z": 5740
+            },
+            {
+              "x": 6420,
+              "z": 6380
+            }
+          ]
+        },
+        "biome": "HIGHLAND_RIDGE",
+        "climate": "COOL_ELEVATED",
+        "accessibility": "PASS_AND_TRAIL_ACCESS",
+        "influenceRules": [
+          "CONSTRAINS_TRANSPORT",
+          "SUPPORTS_MOUNTAIN_REGIONS_AND_REMOTE_DISCOVERY"
+        ],
+        "displayColour": "MOUNTAIN_GREY",
+        "markerType": "mountain_zone"
+      },
+      {
+        "zoneId": "WORLD_ZONE_008",
+        "zoneType": "PROTECTED_AREA",
+        "boundary": {
+          "points": [
+            {
+              "x": 8180,
+              "z": 4700
+            },
+            {
+              "x": 10460,
+              "z": 4540
+            },
+            {
+              "x": 11080,
+              "z": 6180
+            },
+            {
+              "x": 8760,
+              "z": 6540
+            }
+          ]
+        },
+        "biome": "NATIONAL_PARK_COMPLEX",
+        "climate": "TEMPERATE_PROTECTED",
+        "accessibility": "TRAIL_ACCESS",
+        "influenceRules": [
+          "LIMITS_DEVELOPMENT",
+          "SUPPORTS_LANDMARKS_AND_DISCOVERY_ROUTES"
+        ],
+        "displayColour": "PROTECTED_GREEN",
+        "markerType": "protected_area_zone"
+      }
+    ]
+  },
+  "regionLayer": {
+    "regionCount": 5,
+    "showRegionLabels": true,
+    "showNeighbourLinks": true,
+    "showProfileColours": true,
+    "placementMode": "reference_based_region_markers_only",
+    "resolvedRegionInstances": [
+      {
+        "regionId": "REGION_001",
+        "profile": "COASTAL_REGION",
+        "position": {
+          "x": -8542.1,
+          "y": 0,
+          "z": -5198.36
+        },
+        "size": "LARGE",
+        "biome": "TEMPERATE_COASTAL",
+        "climate": "MILD_WET_SUMMER",
+        "neighbouringRegions": [
+          "REGION_002",
+          "REGION_003",
+          "REGION_005"
+        ],
+        "transitionRules": [
+          "COAST_TO_FARMLAND",
+          "FORESHORE_TO_TOURISM",
+          "COASTAL_SERVICE_CORRIDOR"
+        ],
+        "displayColour": "REGION_COASTAL_BLUE",
+        "markerType": "coastal_region"
+      },
+      {
+        "regionId": "REGION_002",
+        "profile": "RURAL_REGION",
+        "position": {
+          "x": -5776,
+          "y": 0,
+          "z": -1618
+        },
+        "size": "LARGE",
+        "biome": "TEMPERATE_FARMLAND",
+        "climate": "TEMPERATE_MIXED",
+        "neighbouringRegions": [
+          "REGION_001",
+          "REGION_004",
+          "REGION_005"
+        ],
+        "transitionRules": [
+          "RURAL_SERVICE_SUPPORT",
+          "FARMLAND_TO_MOUNTAIN",
+          "INLAND_HIGHWAY_SPINE"
+        ],
+        "displayColour": "REGION_RURAL_GOLD",
+        "markerType": "rural_region"
+      },
+      {
+        "regionId": "REGION_003",
+        "profile": "TOURISM_REGION",
+        "position": {
+          "x": 7248,
+          "y": 0,
+          "z": -5576
+        },
+        "size": "MEDIUM_LARGE",
+        "biome": "COASTAL_SCENIC",
+        "climate": "MILD_COASTAL",
+        "neighbouringRegions": [
+          "REGION_001",
+          "REGION_004"
+        ],
+        "transitionRules": [
+          "TOURISM_COASTAL_CHAIN",
+          "SCENIC_LINK_TO_HIGHLANDS"
+        ],
+        "displayColour": "REGION_TOURISM_CORAL",
+        "markerType": "tourism_region"
+      },
+      {
+        "regionId": "REGION_004",
+        "profile": "MOUNTAIN_REGION",
+        "position": {
+          "x": 8052,
+          "y": 0,
+          "z": 3406
+        },
+        "size": "LARGE",
+        "biome": "HIGHLAND_FOREST",
+        "climate": "COOL_ELEVATED",
+        "neighbouringRegions": [
+          "REGION_002",
+          "REGION_003"
+        ],
+        "transitionRules": [
+          "RIDGE_AND_PASS_ACCESS",
+          "PROTECTED_PARK_EDGE"
+        ],
+        "displayColour": "REGION_MOUNTAIN_GREY",
+        "markerType": "mountain_region"
+      },
+      {
+        "regionId": "REGION_005",
+        "profile": "METROPOLITAN_EDGE_REGION",
+        "position": {
+          "x": -2104,
+          "y": 0,
+          "z": -3372
+        },
+        "size": "MEDIUM",
+        "biome": "COASTAL_PLAIN_MIXED",
+        "climate": "TEMPERATE_GROWTH_BELT",
+        "neighbouringRegions": [
+          "REGION_001",
+          "REGION_002"
+        ],
+        "transitionRules": [
+          "SERVICE_EXPANSION_EDGE",
+          "RAIL_AND_HIGHWAY_CONCENTRATION"
+        ],
+        "displayColour": "REGION_METRO_RED",
+        "markerType": "metropolitan_edge_region"
+      }
+    ]
+  },
+  "connectionLayer": {
+    "corridorCount": 6,
+    "showHighways": true,
+    "showRailways": true,
+    "showCoastalRoutes": true,
+    "showFerries": true,
+    "showTrails": true,
+    "readabilityEnhancements": {
+      "hierarchyLineWeighting": true,
+      "scenicRouteEmphasis": true,
+      "regionLinkMarkers": true
+    },
+    "resolvedWorldConnections": [
+      {
+        "corridorId": "WORLD_CORRIDOR_001",
+        "startRegion": "REGION_001",
+        "endRegion": "REGION_002",
+        "connectionType": "HIGHWAY",
+        "hierarchy": "PRIMARY_WORLD_SPINE",
+        "distance": 4524.41,
+        "difficulty": "LOW_MEDIUM",
+        "explorationValue": "MEDIUM",
+        "terrainInfluence": [
+          "WORLD_ZONE_004",
+          "WORLD_ZONE_005"
+        ],
+        "markerType": "highway_connection",
+        "lineWeight": "HEAVY"
+      },
+      {
+        "corridorId": "WORLD_CORRIDOR_002",
+        "startRegion": "REGION_001",
+        "endRegion": "REGION_003",
+        "connectionType": "COASTAL_ROUTE",
+        "hierarchy": "SCENIC_COASTAL_SPINE",
+        "distance": 15794.62,
+        "difficulty": "LOW",
+        "explorationValue": "HIGH",
+        "terrainInfluence": [
+          "WORLD_ZONE_002",
+          "WORLD_ZONE_001"
+        ],
+        "markerType": "coastal_connection",
+        "lineWeight": "MEDIUM_SCENIC"
+      },
+      {
+        "corridorId": "WORLD_CORRIDOR_003",
+        "startRegion": "REGION_002",
+        "endRegion": "REGION_004",
+        "connectionType": "TRAIL",
+        "hierarchy": "MOUNTAIN_ACCESS_LINK",
+        "distance": 14712.38,
+        "difficulty": "MEDIUM_HIGH",
+        "explorationValue": "HIGH",
+        "terrainInfluence": [
+          "WORLD_ZONE_007",
+          "WORLD_ZONE_008"
+        ],
+        "markerType": "trail_connection",
+        "lineWeight": "LIGHT"
+      },
+      {
+        "corridorId": "WORLD_CORRIDOR_004",
+        "startRegion": "REGION_001",
+        "endRegion": "REGION_005",
+        "connectionType": "RAILWAY",
+        "hierarchy": "SERVICE_AND_PASSENGER_SPINE",
+        "distance": 6692.14,
+        "difficulty": "LOW",
+        "explorationValue": "MEDIUM",
+        "terrainInfluence": [
+          "WORLD_ZONE_004",
+          "WORLD_ZONE_005"
+        ],
+        "markerType": "railway_connection",
+        "lineWeight": "MEDIUM_DASHED"
+      },
+      {
+        "corridorId": "WORLD_CORRIDOR_005",
+        "startRegion": "REGION_003",
+        "endRegion": "REGION_004",
+        "connectionType": "FERRY_ROUTE",
+        "hierarchy": "DESTINATION_CHAIN_LINK",
+        "distance": 9017.91,
+        "difficulty": "MEDIUM",
+        "explorationValue": "HIGH",
+        "terrainInfluence": [
+          "WORLD_ZONE_001",
+          "WORLD_ZONE_002"
+        ],
+        "markerType": "ferry_connection",
+        "lineWeight": "MEDIUM_WATER"
+      },
+      {
+        "corridorId": "WORLD_CORRIDOR_006",
+        "startRegion": "REGION_002",
+        "endRegion": "REGION_005",
+        "connectionType": "HIGHWAY",
+        "hierarchy": "INLAND_SUPPORT_LINK",
+        "distance": 4069.41,
+        "difficulty": "LOW",
+        "explorationValue": "MEDIUM_LOW",
+        "terrainInfluence": [
+          "WORLD_ZONE_004",
+          "WORLD_ZONE_005"
+        ],
+        "markerType": "highway_connection",
+        "lineWeight": "HEAVY"
+      }
+    ]
+  },
+  "landmarkLayer": {
+    "landmarkReserveCount": 5,
+    "showLandmarkMarkers": true,
+    "showRarityLabels": true,
+    "showExplorationValue": true,
+    "resolvedWorldLandmarkReserves": [
+      {
+        "landmarkId": "WORLD_LANDMARK_001",
+        "landmarkType": "ICONIC_LOCATION",
+        "location": {
+          "x": -7922.1,
+          "y": 0,
+          "z": -5478.36
+        },
+        "rarity": "HIGH",
+        "regionRelationship": "REGION_001",
+        "discoveryValue": "VERY_HIGH",
+        "markerType": "iconic_location_landmark"
+      },
+      {
+        "landmarkId": "WORLD_LANDMARK_002",
+        "landmarkType": "HISTORICAL_SITE",
+        "location": {
+          "x": -6196,
+          "y": 0,
+          "z": -1258
+        },
+        "rarity": "MEDIUM",
+        "regionRelationship": "REGION_002",
+        "discoveryValue": "HIGH",
+        "markerType": "historical_site_landmark"
+      },
+      {
+        "landmarkId": "WORLD_LANDMARK_003",
+        "landmarkType": "RARE_DISCOVERY",
+        "location": {
+          "x": 8312,
+          "y": 0,
+          "z": 2886
+        },
+        "rarity": "VERY_HIGH",
+        "regionRelationship": "REGION_004",
+        "discoveryValue": "VERY_HIGH",
+        "markerType": "rare_discovery_landmark"
+      },
+      {
+        "landmarkId": "WORLD_LANDMARK_004",
+        "landmarkType": "NATURAL_WONDER",
+        "location": {
+          "x": 7728,
+          "y": 0,
+          "z": -5356
+        },
+        "rarity": "HIGH",
+        "regionRelationship": "REGION_003",
+        "discoveryValue": "VERY_HIGH",
+        "markerType": "natural_wonder_landmark"
+      },
+      {
+        "landmarkId": "WORLD_LANDMARK_005",
+        "landmarkType": "NATURAL_WONDER",
+        "location": {
+          "x": 7712,
+          "y": 0,
+          "z": 3866
+        },
+        "rarity": "HIGH",
+        "regionRelationship": "REGION_004",
+        "discoveryValue": "HIGH",
+        "markerType": "natural_wonder_landmark"
+      }
+    ]
+  },
+  "explorationLayer": {
+    "routeCount": 6,
+    "showRegionalJourneys": true,
+    "showLandmarkRoutes": true,
+    "showTravelCorridors": true,
+    "resolvedWorldExplorationRoutes": [
+      {
+        "routeId": "WORLD_ROUTE_001",
+        "routeType": "COASTAL_GRAND_TOUR",
+        "startAnchor": "REGION_001",
+        "endAnchor": "WORLD_LANDMARK_004",
+        "distance": 16270.86,
+        "difficulty": "LOW_MEDIUM",
+        "rewardPotential": "VERY_HIGH",
+        "displayColour": "ROUTE_BLUE",
+        "lineStyle": "SCENIC"
+      },
+      {
+        "routeId": "WORLD_ROUTE_002",
+        "routeType": "INLAND_HERITAGE_ROUTE",
+        "startAnchor": "REGION_002",
+        "endAnchor": "WORLD_LANDMARK_002",
+        "distance": 553.17,
+        "difficulty": "LOW",
+        "rewardPotential": "HIGH",
+        "displayColour": "ROUTE_GOLD",
+        "lineStyle": "HERITAGE"
+      },
+      {
+        "routeId": "WORLD_ROUTE_003",
+        "routeType": "MOUNTAIN_DISCOVERY_ROUTE",
+        "startAnchor": "REGION_004",
+        "endAnchor": "WORLD_LANDMARK_003",
+        "distance": 581.38,
+        "difficulty": "HIGH",
+        "rewardPotential": "VERY_HIGH",
+        "displayColour": "ROUTE_GREY",
+        "lineStyle": "DISCOVERY"
+      },
+      {
+        "routeId": "WORLD_ROUTE_004",
+        "routeType": "INTER_REGION_CONNECTOR",
+        "startAnchor": "REGION_001",
+        "endAnchor": "REGION_005",
+        "distance": 6692.14,
+        "difficulty": "LOW",
+        "rewardPotential": "MEDIUM",
+        "displayColour": "ROUTE_ORANGE",
+        "lineStyle": "CONNECTOR"
+      },
+      {
+        "routeId": "WORLD_ROUTE_005",
+        "routeType": "PROTECTED_AREA_TRAIL",
+        "startAnchor": "REGION_004",
+        "endAnchor": "WORLD_LANDMARK_005",
+        "distance": 572.01,
+        "difficulty": "MEDIUM_HIGH",
+        "rewardPotential": "HIGH",
+        "displayColour": "ROUTE_GREEN",
+        "lineStyle": "TRAIL"
+      },
+      {
+        "routeId": "WORLD_ROUTE_006",
+        "routeType": "FERRY_EXPLORATION_LOOP",
+        "startAnchor": "REGION_003",
+        "endAnchor": "WORLD_LANDMARK_001",
+        "distance": 15170.41,
+        "difficulty": "MEDIUM",
+        "rewardPotential": "HIGH",
+        "displayColour": "ROUTE_CYAN",
+        "lineStyle": "FERRY"
+      }
+    ]
+  },
+  "streamingLayer": {
+    "chunkCount": 4,
+    "showChunkBoundaries": true,
+    "showOwnershipZones": true,
+    "showLoadingPriority": true,
+    "resolvedStreamingChunks": [
+      {
+        "chunkId": "WORLD_CHUNK_001",
+        "regionOwnership": [
+          "REGION_001"
+        ],
+        "boundary": {
+          "points": [
+            {
+              "x": -12000,
+              "z": -8000
+            },
+            {
+              "x": 0,
+              "z": -8000
+            },
+            {
+              "x": 0,
+              "z": 0
+            },
+            {
+              "x": -12000,
+              "z": 0
+            }
+          ]
+        },
+        "loadingPriority": "PRIMARY_COASTAL_ENTRY",
+        "cacheRules": [
+          "KEEP_ACTIVE_IF_PLAYER_NEAR_COAST",
+          "PREFER_SCENIC_ROUTE_CACHE"
+        ],
+        "neighbourRelationships": [
+          "WORLD_CHUNK_002",
+          "WORLD_CHUNK_003"
+        ],
+        "instanceReferencesOnly": true
+      },
+      {
+        "chunkId": "WORLD_CHUNK_002",
+        "regionOwnership": [
+          "REGION_003",
+          "REGION_005"
+        ],
+        "boundary": {
+          "points": [
+            {
+              "x": 0,
+              "z": -8000
+            },
+            {
+              "x": 12000,
+              "z": -8000
+            },
+            {
+              "x": 12000,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 0
+            }
+          ]
+        },
+        "loadingPriority": "TOURISM_AND_SERVICE_EDGE",
+        "cacheRules": [
+          "KEEP_ACTIVE_FOR_RAIL_AND_COASTAL_LINKS",
+          "PREFER_DESTINATION_CHAIN_CACHE"
+        ],
+        "neighbourRelationships": [
+          "WORLD_CHUNK_001",
+          "WORLD_CHUNK_004"
+        ],
+        "instanceReferencesOnly": true
+      },
+      {
+        "chunkId": "WORLD_CHUNK_003",
+        "regionOwnership": [
+          "REGION_002"
+        ],
+        "boundary": {
+          "points": [
+            {
+              "x": -12000,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 8000
+            },
+            {
+              "x": -12000,
+              "z": 8000
+            }
+          ]
+        },
+        "loadingPriority": "INLAND_SUPPORT_ZONE",
+        "cacheRules": [
+          "PREFER_HIGHWAY_AND_FARMLAND_CACHE"
+        ],
+        "neighbourRelationships": [
+          "WORLD_CHUNK_001",
+          "WORLD_CHUNK_004"
+        ],
+        "instanceReferencesOnly": true
+      },
+      {
+        "chunkId": "WORLD_CHUNK_004",
+        "regionOwnership": [
+          "REGION_004"
+        ],
+        "boundary": {
+          "points": [
+            {
+              "x": 0,
+              "z": 0
+            },
+            {
+              "x": 12000,
+              "z": 0
+            },
+            {
+              "x": 12000,
+              "z": 8000
+            },
+            {
+              "x": 0,
+              "z": 8000
+            }
+          ]
+        },
+        "loadingPriority": "MOUNTAIN_DISCOVERY_ZONE",
+        "cacheRules": [
+          "PREFER_DISCOVERY_ROUTE_CACHE",
+          "EVICT_LAST_ON_REMOTE_TRAVEL"
+        ],
+        "neighbourRelationships": [
+          "WORLD_CHUNK_002",
+          "WORLD_CHUNK_003"
+        ],
+        "instanceReferencesOnly": true
+      }
+    ]
+  },
+  "debugLayer": {
+    "showWorldBoundaryMarkers": true,
+    "showRegionLabels": true,
+    "showGeographyLabels": true,
+    "showCorridorMarkers": true,
+    "showLandmarkMarkers": true,
+    "showChunkLabels": true,
+    "showValidationIndicators": true,
+    "passColour": "GREEN",
+    "failColour": "RED"
+  },
+  "performanceProfile": {
+    "reuseMode": "reference_based_preview_only",
+    "duplicateGeometryGenerationAllowed": false,
+    "streamingReadyStructure": true,
+    "noDuplicateGeometryGeneration": true,
+    "futureAtlasEngineCompatibility": "world_preview_reference_ready",
+    "expectedRegionReferences": 5,
+    "expectedConnectionReferences": 6,
+    "expectedStreamingChunks": 4
+  }
+}

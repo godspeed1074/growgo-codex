@@ -1,0 +1,48 @@
+{
+  "validationId": "WORLD_LAYOUT_001_PREVIEW_VALIDATION_001",
+  "consumerId": "WORLD_LAYOUT_001_PREVIEW_CONSUMER_001",
+  "sourcePreviewId": "WORLD_LAYOUT_001_PREVIEW_001",
+  "sceneId": "WORLD_LAYOUT_001_PREVIEW_SCENE_001",
+  "traceability": {
+    "generatorVersion": "SESSION_83_DETERMINISTIC_WORLD_GENERATOR",
+    "previewConsumerVersion": "SESSION_84_WORLD_VISUAL_PREVIEW_CONSUMER",
+    "refinementVersion": "SESSION_84_WORLD_PREVIEW_CONSUMER_PASS",
+    "validationVersion": "WORLD_PREVIEW_VALIDATION_001",
+    "sourcePreview": {
+      "previewId": "WORLD_LAYOUT_001_PREVIEW_001",
+      "schemaId": "WORLD_LAYOUT_001",
+      "previewPath": "asset-factory-workspace/procedural-previews/WORLD_LAYOUT_001_PREVIEW_001.json",
+      "worldId": "WORLD_10482",
+      "deterministicSignatureHash": 3168729931
+    }
+  },
+  "inspectionCaptureRecordId": "WORLD_INSPECTION_CAPTURE_RECORD_001",
+  "checks": {
+    "worldBoundaryValid": "PASS",
+    "geographyValid": "PASS",
+    "regionsValid": "PASS",
+    "corridorsConnected": "PASS",
+    "travelRoutesValid": "PASS",
+    "landmarkPlacementValid": "PASS",
+    "chunksValid": "PASS",
+    "ownershipValid": "PASS",
+    "deterministicSourceMatches": "PASS",
+    "referenceBasedPlacement": "PASS",
+    "streamingReadyStructure": "PASS",
+    "noDuplicateGeometryGeneration": "PASS",
+    "cameraProfileValid": "PASS",
+    "metadataVersionMatchesPreviewState": "PASS",
+    "inspectionRecordComplete": "PASS",
+    "validationReferenceConsistent": "PASS"
+  },
+  "summary": {
+    "validationPassed": true,
+    "worldProfileId": "AUSTRALIAN_COASTAL_WORLD",
+    "geographyZoneCount": 8,
+    "regionCount": 5,
+    "connectionCount": 6,
+    "landmarkReserveCount": 5,
+    "explorationRouteCount": 6,
+    "streamingChunkCount": 4
+  }
+}
