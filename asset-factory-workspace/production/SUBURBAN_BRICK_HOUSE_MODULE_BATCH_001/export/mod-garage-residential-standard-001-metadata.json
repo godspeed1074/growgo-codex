@@ -1,0 +1,28 @@
+{
+  "assetId": "MOD_GARAGE_RESIDENTIAL_STANDARD_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "category": "EXTERIOR_FRONTAGE",
+  "family": "GARAGE_RESIDENTIAL_SUBURBAN",
+  "variants": [
+    "single_garage_front",
+    "double_garage_front",
+    "recessed_garage_front",
+    "side_access_garage_front"
+  ],
+  "materialReferences": [
+    "MAT_GARAGE_PANEL_WHITE_001",
+    "MAT_GARAGE_PANEL_CHARCOAL_001",
+    "MAT_CONCRETE_DRIVEWAY_001"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_TOWNHOUSE_SUBURBAN_001",
+    "RECIPE_WORKSHOP_RESIDENTIAL_001"
+  ],
+  "lodMappings": {
+    "LOD_CLOSE": "MOD_GARAGE_RESIDENTIAL_STANDARD_001_LOD_CLOSE.glb",
+    "LOD_GAMEPLAY": "MOD_GARAGE_RESIDENTIAL_STANDARD_001_LOD_GAMEPLAY.glb",
+    "LOD_MAP": "MOD_GARAGE_RESIDENTIAL_STANDARD_001_LOD_MAP.glb"
+  },
+  "localBlenderExecutionOnly": true
+}

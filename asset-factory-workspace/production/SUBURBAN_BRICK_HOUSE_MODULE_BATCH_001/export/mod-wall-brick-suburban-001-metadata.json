@@ -1,0 +1,29 @@
+{
+  "assetId": "MOD_WALL_BRICK_SUBURBAN_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "category": "STRUCTURE",
+  "family": "WALL_RESIDENTIAL_SUBURBAN",
+  "variants": [
+    "standard_red_brick_wall",
+    "cream_brick_wall",
+    "dark_suburban_brick_wall",
+    "entry_ready_brick_wall"
+  ],
+  "materialReferences": [
+    "MAT_BRICK_RED_001",
+    "MAT_BRICK_CREAM_001",
+    "MAT_BRICK_BROWN_001",
+    "MAT_WINDOW_FRAME_DARK_001"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_TOWNHOUSE_SUBURBAN_001",
+    "RECIPE_DUPLEX_SUBURBAN_001"
+  ],
+  "lodMappings": {
+    "LOD_CLOSE": "MOD_WALL_BRICK_SUBURBAN_001_LOD_CLOSE.glb",
+    "LOD_GAMEPLAY": "MOD_WALL_BRICK_SUBURBAN_001_LOD_GAMEPLAY.glb",
+    "LOD_MAP": "MOD_WALL_BRICK_SUBURBAN_001_LOD_MAP.glb"
+  },
+  "localBlenderExecutionOnly": true
+}

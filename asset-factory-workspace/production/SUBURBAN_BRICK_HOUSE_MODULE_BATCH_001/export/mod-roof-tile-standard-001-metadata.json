@@ -1,0 +1,28 @@
+{
+  "assetId": "MOD_ROOF_TILE_STANDARD_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "category": "ROOF",
+  "family": "ROOF_RESIDENTIAL_SUBURBAN",
+  "variants": [
+    "hip_tile_roof",
+    "gable_tile_roof",
+    "garage_integrated_roof",
+    "wider_double_front_roof"
+  ],
+  "materialReferences": [
+    "MAT_ROOF_TILE_TERRACOTTA_001",
+    "MAT_ROOF_TILE_CHARCOAL_001",
+    "MAT_FASCIA_CREAM_001"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_TOWNHOUSE_SUBURBAN_001",
+    "RECIPE_VILLA_SUBURBAN_001"
+  ],
+  "lodMappings": {
+    "LOD_CLOSE": "MOD_ROOF_TILE_STANDARD_001_LOD_CLOSE.glb",
+    "LOD_GAMEPLAY": "MOD_ROOF_TILE_STANDARD_001_LOD_GAMEPLAY.glb",
+    "LOD_MAP": "MOD_ROOF_TILE_STANDARD_001_LOD_MAP.glb"
+  },
+  "localBlenderExecutionOnly": true
+}

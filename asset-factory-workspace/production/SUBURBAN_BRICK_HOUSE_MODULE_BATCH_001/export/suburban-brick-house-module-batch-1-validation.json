@@ -1,0 +1,12 @@
+{
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "validationStatus": "READY_FOR_LOCAL_BLENDER_EXECUTION",
+  "checks": {
+    "collectionsCreated": true,
+    "geometryCreated": true,
+    "materialsCreated": true,
+    "lodRootsCreated": true,
+    "metadataWritten": true,
+    "registrationPrepared": true
+  }
+}

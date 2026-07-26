@@ -1,0 +1,28 @@
+{
+  "assetId": "MOD_WINDOW_RESIDENTIAL_STANDARD_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "category": "OPENING",
+  "family": "WINDOW_RESIDENTIAL_STANDARD",
+  "variants": [
+    "single_standard_window",
+    "double_standard_window",
+    "tall_narrow_window",
+    "dark_frame_standard_window"
+  ],
+  "materialReferences": [
+    "MAT_WINDOW_FRAME_WHITE_001",
+    "MAT_WINDOW_FRAME_DARK_001",
+    "MAT_GLASS_RESIDENTIAL_001"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_APARTMENT_LOWRISE_001",
+    "RECIPE_TOWNHOUSE_SUBURBAN_001"
+  ],
+  "lodMappings": {
+    "LOD_CLOSE": "MOD_WINDOW_RESIDENTIAL_STANDARD_001_LOD_CLOSE.glb",
+    "LOD_GAMEPLAY": "MOD_WINDOW_RESIDENTIAL_STANDARD_001_LOD_GAMEPLAY.glb",
+    "LOD_MAP": "MOD_WINDOW_RESIDENTIAL_STANDARD_001_LOD_MAP.glb"
+  },
+  "localBlenderExecutionOnly": true
+}

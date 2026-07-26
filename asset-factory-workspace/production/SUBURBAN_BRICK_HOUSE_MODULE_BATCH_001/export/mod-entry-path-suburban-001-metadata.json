@@ -1,0 +1,27 @@
+{
+  "assetId": "MOD_ENTRY_PATH_SUBURBAN_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "category": "SITE_CONNECTION",
+  "family": "PATH_RESIDENTIAL_SUBURBAN",
+  "variants": [
+    "straight_entry_path",
+    "driveway_to_porch_entry",
+    "split_garden_entry_path",
+    "offset_front_entry_path"
+  ],
+  "materialReferences": [
+    "MAT_PATH_CONCRETE_LIGHT_001",
+    "MAT_PATH_PAVER_SUBURBAN_001"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_TOWNHOUSE_SUBURBAN_001",
+    "RECIPE_VILLA_SUBURBAN_001"
+  ],
+  "lodMappings": {
+    "LOD_CLOSE": "MOD_ENTRY_PATH_SUBURBAN_001_LOD_CLOSE.glb",
+    "LOD_GAMEPLAY": "MOD_ENTRY_PATH_SUBURBAN_001_LOD_GAMEPLAY.glb",
+    "LOD_MAP": "MOD_ENTRY_PATH_SUBURBAN_001_LOD_MAP.glb"
+  },
+  "localBlenderExecutionOnly": true
+}

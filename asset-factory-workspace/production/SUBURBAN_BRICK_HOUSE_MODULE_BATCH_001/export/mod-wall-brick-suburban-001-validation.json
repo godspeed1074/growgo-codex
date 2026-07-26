@@ -1,0 +1,11 @@
+{
+  "assetId": "MOD_WALL_BRICK_SUBURBAN_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "validationStatus": "READY_FOR_LOCAL_BLENDER_EXECUTION",
+  "checks": {
+    "socketDefinitionsPresent": true,
+    "lodCoveragePlanned": true,
+    "metadataPrepared": true,
+    "exportContractPrepared": true
+  }
+}

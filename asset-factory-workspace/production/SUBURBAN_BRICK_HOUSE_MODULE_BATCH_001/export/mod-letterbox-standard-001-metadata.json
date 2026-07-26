@@ -1,0 +1,28 @@
+{
+  "assetId": "MOD_LETTERBOX_STANDARD_001",
+  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
+  "category": "STREET_EDGE_PROP",
+  "family": "LETTERBOX_RESIDENTIAL_STANDARD",
+  "variants": [
+    "brick_pillar_letterbox",
+    "rendered_letterbox",
+    "post_mounted_letterbox",
+    "garden_edge_letterbox"
+  ],
+  "materialReferences": [
+    "MAT_BRICK_RED_001",
+    "MAT_RENDER_CREAM_001",
+    "MAT_MAILBOX_DARK_001"
+  ],
+  "compatibleRecipes": [
+    "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+    "RECIPE_VILLA_SUBURBAN_001",
+    "RECIPE_ESTATES_STREETSCAPE_001"
+  ],
+  "lodMappings": {
+    "LOD_CLOSE": "MOD_LETTERBOX_STANDARD_001_LOD_CLOSE.glb",
+    "LOD_GAMEPLAY": "MOD_LETTERBOX_STANDARD_001_LOD_GAMEPLAY.glb",
+    "LOD_MAP": "MOD_LETTERBOX_STANDARD_001_LOD_MAP.glb"
+  },
+  "localBlenderExecutionOnly": true
+}
