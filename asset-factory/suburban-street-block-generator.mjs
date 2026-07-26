@@ -51,20 +51,87 @@ const themeProfiles = deepFreeze({
     themeSeed: "SUBURBAN_AUSTRALIA",
     neighbourhoodTheme: "suburban_multi_street_default",
     densityProfile: "low_density_suburban",
+    blockBudgetProfileId: "SUBURBAN_AUSTRALIA_BLOCK",
     buildingWeights: deepFreeze({
       BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.85,
       BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.12,
       BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.03
+    }),
+    blockBudgetRules: deepFreeze({
+      primaryAssetId: "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      secondaryAssetId: "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      rareAssetId: "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      maxFeatureLots: 1,
+      maxUnusualLayouts: 5,
+      roleCaps: deepFreeze({
+        STANDARD_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze(["BUILDING_HOUSE_SUBURBAN_BRICK_001"])
+        }),
+        CORNER_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001"
+          ])
+        }),
+        CUL_DE_SAC_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001"
+          ])
+        }),
+        FEATURE_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_BEACH_BUNGALOW_001"
+          ])
+        })
+      })
     })
   }),
   COASTAL_ESTATES: deepFreeze({
     themeSeed: "COASTAL_ESTATES",
     neighbourhoodTheme: "coastal_estate_multi_street",
     densityProfile: "low_density_coastal_estate",
+    blockBudgetProfileId: "COASTAL_ESTATES_BLOCK",
     buildingWeights: deepFreeze({
       BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.2,
       BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.5,
       BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.3
+    }),
+    blockBudgetRules: deepFreeze({
+      primaryAssetId: "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      secondaryAssetId: "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      rareAssetId: "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      maxFeatureLots: 2,
+      maxUnusualLayouts: 8,
+      roleCaps: deepFreeze({
+        STANDARD_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001"
+          ])
+        }),
+        CORNER_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001"
+          ])
+        }),
+        CUL_DE_SAC_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_BEACH_BUNGALOW_001"
+          ])
+        }),
+        FEATURE_LOT: deepFreeze({
+          allowedAssetIds: deepFreeze([
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_BEACH_BUNGALOW_001"
+          ])
+        })
+      })
     })
   })
 });
@@ -85,6 +152,12 @@ const streetFeatureTypes = new Set([
 
 const supportedDirections = new Set(["NORTH", "SOUTH", "EAST", "WEST"]);
 const supportedDrivewaySides = new Set(["EAST", "WEST"]);
+const supportedLotRoles = new Set([
+  "STANDARD_LOT",
+  "CORNER_LOT",
+  "CUL_DE_SAC_LOT",
+  "FEATURE_LOT"
+]);
 
 export const suburbanStreetBlockGeneratorDefaultInput = deepFreeze({
   streetBlockSeed: 10482,
@@ -269,9 +342,10 @@ export function generateSuburbanStreetBlockPreview(
 ) {
   const input = normalizeGeneratorInput(rawInput);
   const seedConfig = buildSeedConfig(input);
+  const themeProfile = resolveThemeProfile(input);
   const roadGraphData = buildRoadGraph(input);
   const lots = buildLots(input, seedConfig, roadGraphData);
-  const resolvedLots = resolveLotBuildings(lots, input, seedConfig);
+  const resolvedLots = resolveLotBuildings(lots, input, seedConfig, themeProfile);
   const buildingPlacements = buildBuildingPlacements(resolvedLots);
   const streetFeaturePlacements = buildStreetFeaturePlacements(
     input,
@@ -294,7 +368,7 @@ export function generateSuburbanStreetBlockPreview(
     generationProfile: input.blockConfiguration.generationProfile,
     seed: input.streetBlockSeed,
     seedConfig,
-    themeProfile: deepFreeze({ ...resolveThemeProfile(input) }),
+    themeProfile: deepFreeze({ ...themeProfile }),
     blockBounds: roadGraphData.blockBounds,
     roadGraph: roadGraphData.roadGraph,
     roadNodes: roadGraphData.roadNodes,
@@ -370,6 +444,13 @@ export function createSuburbanStreetBlockValidationOutput(
       frontageResolutionValidity: passFail(
         preview.validationResult.frontageResolutionValidity
       ),
+      blockThemeBudgetValidity: passFail(
+        preview.validationResult.blockThemeBudgetValidity
+      ),
+      lotRoleValidity: passFail(preview.validationResult.lotRoleValidity),
+      featureLotLimitValidity: passFail(
+        preview.validationResult.featureLotLimitValidity
+      ),
       suburbanWeightingValidity: passFail(
         preview.validationResult.suburbanWeightingValidity
       ),
@@ -424,12 +505,19 @@ export function validateSuburbanStreetBlockPreview(rawPreview) {
           `Street block lot ${lot.lotId} has an invalid driveway side.`
         );
       }
+      if (!supportedLotRoles.has(lot.lotRole)) {
+        throw createValidationError(
+          "invalid_lot_role",
+          `Street block lot ${lot.lotId} has an invalid lot role.`
+        );
+      }
     }
     validateRoadGraph(preview);
     validateBuildingPlacements(preview.buildingPlacements, preview.lots);
     validateRoadConnections(preview.roadFrontageConnections, preview.lots, preview.roadSegments);
     validateStreetFeatures(preview.streetFeaturePlacements, preview.blockBounds);
     validateThemeMix(preview, preview.themeProfile);
+    validateLotRoles(preview);
     validateAdjacentVariation(preview.lots);
     validateCornerLots(preview.lots);
 
@@ -561,6 +649,7 @@ function buildLots(input, seedConfig, roadGraphData) {
         edge.roadSegmentId,
         cornerStatus
       );
+      const baseLotRole = resolveBaseLotRole(cornerStatus, streetContext);
       const frontageRelationship = resolveFrontageRelationship(
         edge.roadSegmentId,
         edge.side,
@@ -646,6 +735,7 @@ function buildLots(input, seedConfig, roadGraphData) {
             streetContext,
             cornerStatus
           ),
+          baseLotRole,
           streetContext,
           resolverInputs: deepFreeze({
             streetBlockSeed: seedConfig.streetBlockSeed,
@@ -791,6 +881,16 @@ function resolveCornerStatus(edge, index) {
     return "corner_primary";
   }
   return "corner_secondary";
+}
+
+function resolveBaseLotRole(cornerStatus, streetContext) {
+  if (streetContext === "cul_de_sac_residential_edge") {
+    return "CUL_DE_SAC_LOT";
+  }
+  if (cornerStatus !== "interior") {
+    return "CORNER_LOT";
+  }
+  return "STANDARD_LOT";
 }
 
 function buildLandscapingZones(
@@ -1002,19 +1102,20 @@ function classifyLotType(width) {
   return "wide";
 }
 
-function resolveLotBuildings(lots, input, seedConfig) {
+function resolveLotBuildings(lots, input, seedConfig, themeProfile) {
   const resolved = [];
-  const targetCounts = buildThemeTargetCounts(resolveThemeProfile(input), lots.length);
+  const blockBudget = buildBlockThemeBudget(themeProfile, lots, seedConfig);
   const currentCounts = Object.fromEntries(
     supportedSuburbanStreetBlockBuildingAssets.map((assetId) => [assetId, 0])
   );
 
   for (const lot of lots) {
+    const lotRole = blockBudget.rolesByLotId[lot.lotId] ?? lot.baseLotRole;
     const selectedProfile = selectProfileForLot(
-      lot,
+      { ...lot, lotRole },
       resolved,
       currentCounts,
-      targetCounts,
+      blockBudget,
       input,
       seedConfig
     );
@@ -1023,12 +1124,13 @@ function resolveLotBuildings(lots, input, seedConfig) {
     resolved.push(
       deepFreeze({
         ...lot,
+        lotRole,
         buildingId: selectedProfile.assetId,
         buildingRecipe: selectedProfile.recipeId,
         buildingFamily: selectedProfile.familyId,
         variationProfile: buildVariationProfile(
           seedConfig,
-          lot,
+          { ...lot, lotRole },
           selectedProfile,
           resolved
         ),
@@ -1041,19 +1143,27 @@ function resolveLotBuildings(lots, input, seedConfig) {
           ),
           streetAwareSelection: true,
           cornerLotVariationApplied: lot.cornerStatus !== "interior",
+          lotRole,
           resolverHash: stableHash(
             `${lot.lotId}:${input.streetBlockSeed}:${selectedProfile.assetId}`
           ),
-          targetCounts,
+          blockBudgetId: blockBudget.budgetId,
+          targetCounts: blockBudget.targetCounts,
           selectedFromRemainingPool:
-            targetCounts[selectedProfile.assetId] - currentCounts[selectedProfile.assetId]
+            blockBudget.targetCounts[selectedProfile.assetId] -
+            currentCounts[selectedProfile.assetId]
         })
       })
     );
   }
 
   return deepFreeze(
-    rebalanceResolvedLotsToTargets(resolved, targetCounts, input, seedConfig)
+    rebalanceResolvedLotsToTargets(
+      resolved,
+      blockBudget,
+      input,
+      seedConfig
+    )
   );
 }
 
@@ -1084,16 +1194,105 @@ function buildThemeTargetCounts(themeProfile, totalLots) {
   return deepFreeze(baseCounts);
 }
 
+function buildBlockThemeBudget(themeProfile, lots, seedConfig) {
+  const targetCounts = buildThemeTargetCounts(themeProfile, lots.length);
+  const blockBudgetRules = themeProfile.blockBudgetRules ?? deepFreeze({});
+  const rolesByLotId = assignLotRolesForBlock(lots, blockBudgetRules, seedConfig);
+  const roleCounts = countLotRoles(Object.values(rolesByLotId));
+  const maxFeatureLots = Math.min(
+    blockBudgetRules.maxFeatureLots ?? 0,
+    roleCounts.FEATURE_LOT ?? 0
+  );
+  const maxCoastalHouses = targetCounts.BUILDING_HOUSE_COASTAL_COTTAGE_001 ?? 0;
+  const maxBungalowHouses = targetCounts.BUILDING_HOUSE_BEACH_BUNGALOW_001 ?? 0;
+
+  return deepFreeze({
+    budgetId: themeProfile.blockBudgetProfileId ?? `${themeProfile.themeSeed}_BLOCK`,
+    targetCounts,
+    maximumCounts: deepFreeze({
+      BUILDING_HOUSE_SUBURBAN_BRICK_001:
+        targetCounts.BUILDING_HOUSE_SUBURBAN_BRICK_001 ?? 0,
+      BUILDING_HOUSE_COASTAL_COTTAGE_001: maxCoastalHouses,
+      BUILDING_HOUSE_BEACH_BUNGALOW_001: maxBungalowHouses
+    }),
+    lotRoleLimits: deepFreeze({
+      STANDARD_LOT: roleCounts.STANDARD_LOT ?? 0,
+      CORNER_LOT: roleCounts.CORNER_LOT ?? 0,
+      CUL_DE_SAC_LOT: roleCounts.CUL_DE_SAC_LOT ?? 0,
+      FEATURE_LOT: maxFeatureLots
+    }),
+    roleCaps: blockBudgetRules.roleCaps ?? deepFreeze({}),
+    maxCoastalHouses,
+    maxBungalowHouses,
+    maxFeatureLots,
+    maxUnusualLayouts: blockBudgetRules.maxUnusualLayouts ?? roleCounts.FEATURE_LOT ?? 0,
+    rolesByLotId: deepFreeze(rolesByLotId)
+  });
+}
+
+function assignLotRolesForBlock(lots, blockBudgetRules, seedConfig) {
+  const featureCandidates = lots
+    .filter(
+      (lot) =>
+        lot.baseLotRole === "CUL_DE_SAC_LOT" ||
+        (lot.baseLotRole === "CORNER_LOT" &&
+          (lot.lotType === "wide" || lot.streetContext === "local_residential_interior"))
+    )
+    .sort(
+      (left, right) =>
+        stableHash(
+          `${seedConfig.streetBlockSeed}:${seedConfig.regionSeed}:${seedConfig.neighbourhoodThemeSeed}:${left.lotId}:feature`
+        ) -
+          stableHash(
+            `${seedConfig.streetBlockSeed}:${seedConfig.regionSeed}:${seedConfig.neighbourhoodThemeSeed}:${right.lotId}:feature`
+          ) || left.lotId.localeCompare(right.lotId)
+    );
+
+  const featureLotIds = new Set(
+    featureCandidates
+      .slice(0, blockBudgetRules.maxFeatureLots ?? 0)
+      .map((lot) => lot.lotId)
+  );
+
+  return Object.fromEntries(
+    lots.map((lot) => [
+      lot.lotId,
+      featureLotIds.has(lot.lotId) ? "FEATURE_LOT" : lot.baseLotRole
+    ])
+  );
+}
+
+function countLotRoles(roles) {
+  const counts = {
+    STANDARD_LOT: 0,
+    CORNER_LOT: 0,
+    CUL_DE_SAC_LOT: 0,
+    FEATURE_LOT: 0
+  };
+  for (const role of roles) {
+    counts[role] += 1;
+  }
+  return deepFreeze(counts);
+}
+
 function selectProfileForLot(
   lot,
   resolvedLots,
   currentCounts,
-  targetCounts,
+  blockBudget,
   input,
   seedConfig
 ) {
   const candidates = Object.values(buildingProfiles)
     .filter((candidate) => lotCanFitProfile(lot, candidate))
+    .filter((candidate) =>
+      roleAllowsAsset(
+        lot.lotRole,
+        candidate.assetId,
+        blockBudget,
+        currentCounts
+      )
+    )
     .map((candidate) => ({
       profile: candidate,
       score: scoreProfileForLot(
@@ -1101,14 +1300,14 @@ function selectProfileForLot(
         candidate,
         resolvedLots,
         currentCounts,
-        targetCounts,
+        blockBudget,
         input,
         seedConfig
       )
     }))
     .sort((left, right) => left.score - right.score);
 
-  return candidates.at(0)?.profile ?? buildingProfiles.BUILDING_HOUSE_SUBURBAN_BRICK_001;
+  return candidates.at(0)?.profile ?? resolveRoleFallbackProfile(lot, blockBudget);
 }
 
 function numericLotId(lotId) {
@@ -1120,18 +1319,21 @@ function scoreProfileForLot(
   candidate,
   resolvedLots,
   currentCounts,
-  targetCounts,
+  blockBudget,
   input,
   seedConfig
 ) {
   const resolutionIndex = resolvedLots.length + 1;
-  const totalLots = Object.values(targetCounts).reduce((sum, value) => sum + value, 0);
+  const totalLots = Object.values(blockBudget.targetCounts).reduce(
+    (sum, value) => sum + value,
+    0
+  );
   const currentCount = currentCounts[candidate.assetId] ?? 0;
-  const targetCount = targetCounts[candidate.assetId] ?? 0;
+  const targetCount = blockBudget.targetCounts[candidate.assetId] ?? 0;
   const expectedCountByNow = (targetCount * resolutionIndex) / totalLots;
   let score = 0;
 
-  if (currentCount >= targetCount) {
+  if (currentCount >= (blockBudget.maximumCounts[candidate.assetId] ?? targetCount)) {
     score += 10000;
   }
 
@@ -1139,6 +1341,7 @@ function scoreProfileForLot(
   score += repetitionPenaltyForLot(resolvedLots, lot, candidate.assetId);
   score += streetContextPenalty(lot, candidate.assetId);
   score += cornerLotPenalty(lot, candidate.assetId);
+  score += lotRolePenalty(lot, candidate.assetId, blockBudget);
   score +=
     (stableHash(
       `${input.streetBlockSeed}:${input.regionSeed}:${input.neighbourhoodThemeSeed}:${lot.lotId}:${candidate.assetId}`
@@ -1147,6 +1350,27 @@ function scoreProfileForLot(
     100;
 
   return score;
+}
+
+function roleAllowsAsset(lotRole, assetId, blockBudget, currentCounts) {
+  const allowedAssetIds =
+    blockBudget.roleCaps?.[lotRole]?.allowedAssetIds ??
+    supportedSuburbanStreetBlockBuildingAssets;
+  if (!allowedAssetIds.includes(assetId)) {
+    return false;
+  }
+  if ((currentCounts[assetId] ?? 0) >= (blockBudget.maximumCounts[assetId] ?? Infinity)) {
+    return false;
+  }
+  return true;
+}
+
+function resolveRoleFallbackProfile(lot, blockBudget) {
+  const allowedAssetIds =
+    blockBudget.roleCaps?.[lot.lotRole]?.allowedAssetIds ??
+    supportedSuburbanStreetBlockBuildingAssets;
+  const assetId = allowedAssetIds[0] ?? "BUILDING_HOUSE_SUBURBAN_BRICK_001";
+  return buildingProfiles[assetId] ?? buildingProfiles.BUILDING_HOUSE_SUBURBAN_BRICK_001;
 }
 
 function repetitionPenaltyForLot(resolvedLots, lot, assetId) {
@@ -1209,6 +1433,30 @@ function cornerLotPenalty(lot, assetId) {
     return 40;
   }
   return -10;
+}
+
+function lotRolePenalty(lot, assetId, blockBudget) {
+  if (lot.lotRole === "STANDARD_LOT") {
+    return assetId === "BUILDING_HOUSE_SUBURBAN_BRICK_001" ? -220 : 3000;
+  }
+  if (lot.lotRole === "FEATURE_LOT") {
+    if (
+      assetId === "BUILDING_HOUSE_BEACH_BUNGALOW_001" &&
+      (blockBudget.targetCounts.BUILDING_HOUSE_BEACH_BUNGALOW_001 ?? 0) > 0
+    ) {
+      return -280;
+    }
+    if (assetId === "BUILDING_HOUSE_COASTAL_COTTAGE_001") {
+      return -60;
+    }
+  }
+  if (lot.lotRole === "CUL_DE_SAC_LOT") {
+    return assetId === "BUILDING_HOUSE_COASTAL_COTTAGE_001" ? -45 : -15;
+  }
+  if (lot.lotRole === "CORNER_LOT") {
+    return assetId === "BUILDING_HOUSE_COASTAL_COTTAGE_001" ? -30 : -10;
+  }
+  return 0;
 }
 
 function buildVariationProfile(seedConfig, lot, selectedProfile, resolvedLots) {
@@ -1292,12 +1540,12 @@ function sameRoadCluster(left, right) {
     Math.abs(left.position.y - right.position.y) < 20;
 }
 
-function rebalanceResolvedLotsToTargets(resolvedLots, targetCounts, input, seedConfig) {
+function rebalanceResolvedLotsToTargets(resolvedLots, blockBudget, input, seedConfig) {
   const balancedLots = [...resolvedLots];
   const counts = countResolvedBuildingMix(balancedLots);
   const underTarget = () =>
     supportedSuburbanStreetBlockBuildingAssets.filter(
-      (assetId) => counts[assetId] < (targetCounts[assetId] ?? 0)
+      (assetId) => counts[assetId] < (blockBudget.targetCounts[assetId] ?? 0)
     );
 
   const candidates = [...balancedLots].sort((left, right) => {
@@ -1314,12 +1562,20 @@ function rebalanceResolvedLotsToTargets(resolvedLots, targetCounts, input, seedC
 
   for (const candidate of candidates) {
     const currentAssetId = candidate.buildingId;
-    if (counts[currentAssetId] <= (targetCounts[currentAssetId] ?? 0)) {
+    if (counts[currentAssetId] <= (blockBudget.targetCounts[currentAssetId] ?? 0)) {
       continue;
     }
     const replacementAssetIds = underTarget();
     for (const replacementAssetId of replacementAssetIds) {
-      if (!canReplaceLotWithAsset(balancedLots, candidate.lotId, replacementAssetId)) {
+      if (
+        !canReplaceLotWithAsset(
+          balancedLots,
+          candidate.lotId,
+          replacementAssetId,
+          blockBudget,
+          counts
+        )
+      ) {
         continue;
       }
       const replacementProfile = buildingProfiles[replacementAssetId];
@@ -1347,7 +1603,8 @@ function rebalanceResolvedLotsToTargets(resolvedLots, targetCounts, input, seedC
           resolverHash: stableHash(
             `${balancedLots[candidateIndex].lotId}:${input.streetBlockSeed}:${replacementProfile.assetId}:rebalanced`
           ),
-          targetCounts,
+          blockBudgetId: blockBudget.budgetId,
+          targetCounts: blockBudget.targetCounts,
           rebalanceApplied: true
         })
       });
@@ -1381,12 +1638,23 @@ function replacementPriority(assetId) {
   return 2;
 }
 
-function canReplaceLotWithAsset(lots, lotId, replacementAssetId) {
+function canReplaceLotWithAsset(
+  lots,
+  lotId,
+  replacementAssetId,
+  blockBudget,
+  counts
+) {
   const targetLot = lots.find((lot) => lot.lotId === lotId);
   if (!targetLot) {
     return false;
   }
-  return true;
+  return roleAllowsAsset(
+    targetLot.lotRole ?? targetLot.baseLotRole,
+    replacementAssetId,
+    blockBudget,
+    counts
+  );
 }
 
 function lotCanFitProfile(lot, profile) {
@@ -1804,6 +2072,17 @@ function buildValidationResult(preview, input) {
       connection.drivewayLink.garageSide === lot.drivewaySocket.garageSide
     );
   });
+  const blockThemeBudgetValidity = blockThemeBudgetWithinTolerance(
+    preview.lots,
+    resolveThemeProfile(input)
+  );
+  const lotRoleValidity = preview.lots.every((lot) =>
+    lotRoleMatchesLotContext(lot)
+  );
+  const featureLotLimitValidity = featureLotLimitsWithinBudget(
+    preview.lots,
+    resolveThemeProfile(input)
+  );
   const suburbanWeightingValidity = themeWeightingWithinTolerance(
     preview.lots,
     resolveThemeProfile(input)
@@ -1833,6 +2112,9 @@ function buildValidationResult(preview, input) {
     buildingPlacementValidity,
     drivewayConnectionValidity,
     frontageResolutionValidity,
+    blockThemeBudgetValidity,
+    lotRoleValidity,
+    featureLotLimitValidity,
     suburbanWeightingValidity,
     adjacentVariationValidity,
     cornerLotRuleValidity,
@@ -1849,6 +2131,9 @@ function buildValidationResult(preview, input) {
       buildingPlacementValidity &&
       drivewayConnectionValidity &&
       frontageResolutionValidity &&
+      blockThemeBudgetValidity &&
+      lotRoleValidity &&
+      featureLotLimitValidity &&
       suburbanWeightingValidity &&
       adjacentVariationValidity &&
       cornerLotRuleValidity &&
@@ -1945,6 +2230,21 @@ function validateThemeMix(preview, themeProfile) {
     throw createValidationError(
       "theme_weighting_out_of_tolerance",
       "Street block building mix is outside the configured theme tolerance."
+    );
+  }
+}
+
+function validateLotRoles(preview) {
+  if (!preview.validationResult.lotRoleValidity) {
+    throw createValidationError(
+      "lot_role_invalid",
+      "Street block lot roles do not match the resolved lot contexts."
+    );
+  }
+  if (!preview.validationResult.featureLotLimitValidity) {
+    throw createValidationError(
+      "feature_lot_limit_failed",
+      "Street block exceeded the configured feature lot or unusual layout limits."
     );
   }
 }
@@ -2078,6 +2378,58 @@ function themeWeightingWithinTolerance(lots, themeProfile) {
     ([assetId, targetCount]) =>
       Math.abs(actualCounts[assetId] - targetCount) <=
       (assetId === "BUILDING_HOUSE_SUBURBAN_BRICK_001" ? 2 : 1)
+  );
+}
+
+function blockThemeBudgetWithinTolerance(lots, themeProfile) {
+  const blockBudget = buildBlockThemeBudget(
+    themeProfile,
+    lots,
+    {
+      streetBlockSeed: 0,
+      regionSeed: 0,
+      neighbourhoodThemeSeed: themeProfile.themeSeed
+    }
+  );
+  const actualCounts = countResolvedBuildingMix(lots);
+  return (
+    actualCounts.BUILDING_HOUSE_COASTAL_COTTAGE_001 <= blockBudget.maxCoastalHouses &&
+    actualCounts.BUILDING_HOUSE_BEACH_BUNGALOW_001 <= blockBudget.maxBungalowHouses
+  );
+}
+
+function lotRoleMatchesLotContext(lot) {
+  if (lot.lotRole === "FEATURE_LOT") {
+    return lot.baseLotRole === "CORNER_LOT" || lot.baseLotRole === "CUL_DE_SAC_LOT";
+  }
+  if (lot.lotRole === "CUL_DE_SAC_LOT") {
+    return lot.streetContext === "cul_de_sac_residential_edge";
+  }
+  if (lot.lotRole === "CORNER_LOT") {
+    return lot.cornerStatus !== "interior";
+  }
+  return lot.baseLotRole === "STANDARD_LOT";
+}
+
+function featureLotLimitsWithinBudget(lots, themeProfile) {
+  const blockBudget = buildBlockThemeBudget(
+    themeProfile,
+    lots,
+    {
+      streetBlockSeed: 0,
+      regionSeed: 0,
+      neighbourhoodThemeSeed: themeProfile.themeSeed
+    }
+  );
+  const featureLots = lots.filter((lot) => lot.lotRole === "FEATURE_LOT");
+  const unusualLots = lots.filter(
+    (lot) =>
+      lot.lotRole === "FEATURE_LOT" ||
+      lot.buildingId === "BUILDING_HOUSE_BEACH_BUNGALOW_001"
+  );
+  return (
+    featureLots.length <= blockBudget.maxFeatureLots &&
+    unusualLots.length <= blockBudget.maxUnusualLayouts
   );
 }
 

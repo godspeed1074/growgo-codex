@@ -13,10 +13,44 @@
     "themeSeed": "SUBURBAN_AUSTRALIA",
     "neighbourhoodTheme": "suburban_multi_street_default",
     "densityProfile": "low_density_suburban",
+    "blockBudgetProfileId": "SUBURBAN_AUSTRALIA_BLOCK",
     "buildingWeights": {
       "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.85,
       "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.12,
       "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.03
+    },
+    "blockBudgetRules": {
+      "primaryAssetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "secondaryAssetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "rareAssetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "maxFeatureLots": 1,
+      "maxUnusualLayouts": 5,
+      "roleCaps": {
+        "STANDARD_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001"
+          ]
+        },
+        "CORNER_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001"
+          ]
+        },
+        "CUL_DE_SAC_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001"
+          ]
+        },
+        "FEATURE_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_BEACH_BUNGALOW_001"
+          ]
+        }
+      }
     }
   },
   "blockBounds": {
@@ -443,6 +477,7 @@
         "frontageDirection": "SOUTH",
         "alignmentMode": "standard_frontage_alignment"
       },
+      "baseLotRole": "STANDARD_LOT",
       "streetContext": "collector_edge_residential",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -452,6 +487,7 @@
         "cornerStatus": "interior",
         "edgeId": "EDGE_COLLECTOR_WEST_NORTH"
       },
+      "lotRole": "STANDARD_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -467,7 +503,9 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
+        "lotRole": "STANDARD_LOT",
         "resolverHash": 1953291993,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
@@ -590,6 +628,7 @@
         "frontageDirection": "SOUTH",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "corner_residential_lot",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -599,28 +638,31 @@
         "cornerStatus": "corner_primary",
         "edgeId": "EDGE_COLLECTOR_WEST_NORTH"
       },
-      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
-      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "lotRole": "CORNER_LOT",
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
       "variationProfile": {
         "roofTone": "slate",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "balanced",
+        "yardDensity": "light",
         "colourVariant": "muted_trim",
         "landscapingSequence": "collector_edge_front_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": true,
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 826400367,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 2650334145,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "rebalanceApplied": true
+        "selectedFromRemainingPool": 2
       }
     },
     {
@@ -727,6 +769,7 @@
         "frontageDirection": "NORTH",
         "alignmentMode": "standard_frontage_alignment"
       },
+      "baseLotRole": "STANDARD_LOT",
       "streetContext": "collector_edge_residential",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -736,6 +779,7 @@
         "cornerStatus": "interior",
         "edgeId": "EDGE_COLLECTOR_WEST_SOUTH"
       },
+      "lotRole": "STANDARD_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -748,16 +792,18 @@
       },
       "resolverMetadata": {
         "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": true,
+        "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
-        "resolverHash": 3455497726,
+        "lotRole": "STANDARD_LOT",
+        "resolverHash": 2239755859,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "rebalanceApplied": true
+        "selectedFromRemainingPool": 18
       }
     },
     {
@@ -874,6 +920,7 @@
         "frontageDirection": "NORTH",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "corner_residential_lot",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -883,28 +930,31 @@
         "cornerStatus": "corner_primary",
         "edgeId": "EDGE_COLLECTOR_WEST_SOUTH"
       },
-      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
-      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "lotRole": "CORNER_LOT",
+      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
       "variationProfile": {
-        "roofTone": "terracotta",
+        "roofTone": "charcoal",
         "fenceStyle": "decorative_suburban",
         "yardDensity": "balanced",
-        "colourVariant": "brick_contrast",
+        "colourVariant": "cool_trim",
         "landscapingSequence": "collector_edge_front_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "suburban_primary",
+        "weightingRuleApplied": "coastal_secondary",
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 4197522802,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 3947646875,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 18
+        "selectedFromRemainingPool": 1
       }
     },
     {
@@ -1021,6 +1071,7 @@
         "frontageDirection": "SOUTH",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "corner_residential_lot",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1030,6 +1081,7 @@
         "cornerStatus": "corner_primary",
         "edgeId": "EDGE_COLLECTOR_MID_NORTH"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -1045,7 +1097,9 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 2797056221,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
@@ -1158,6 +1212,7 @@
         "frontageDirection": "SOUTH",
         "alignmentMode": "standard_frontage_alignment"
       },
+      "baseLotRole": "STANDARD_LOT",
       "streetContext": "collector_edge_residential",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1167,6 +1222,7 @@
         "cornerStatus": "interior",
         "edgeId": "EDGE_COLLECTOR_MID_NORTH"
       },
+      "lotRole": "STANDARD_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -1182,13 +1238,15 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
-        "resolverHash": 3059185555,
+        "lotRole": "STANDARD_LOT",
+        "resolverHash": 3283743556,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "rebalanceApplied": true
+        "selectedFromRemainingPool": 16
       }
     },
     {
@@ -1305,6 +1363,7 @@
         "frontageDirection": "NORTH",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "corner_residential_lot",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1314,6 +1373,7 @@
         "cornerStatus": "corner_primary",
         "edgeId": "EDGE_COLLECTOR_MID_SOUTH"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
       "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
       "buildingFamily": "FAMILY_HOUSE_COASTAL",
@@ -1329,7 +1389,9 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3832622172,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
@@ -1442,6 +1504,7 @@
         "frontageDirection": "NORTH",
         "alignmentMode": "standard_frontage_alignment"
       },
+      "baseLotRole": "STANDARD_LOT",
       "streetContext": "collector_edge_residential",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1451,6 +1514,7 @@
         "cornerStatus": "interior",
         "edgeId": "EDGE_COLLECTOR_MID_SOUTH"
       },
+      "lotRole": "STANDARD_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -1466,13 +1530,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
+        "lotRole": "STANDARD_LOT",
         "resolverHash": 308817574,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 16
+        "selectedFromRemainingPool": 15
       }
     },
     {
@@ -1589,6 +1655,7 @@
         "frontageDirection": "SOUTH",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "corner_residential_lot",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1598,6 +1665,7 @@
         "cornerStatus": "corner_primary",
         "edgeId": "EDGE_COLLECTOR_EAST_NORTH"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -1613,13 +1681,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 2277539937,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 15
+        "selectedFromRemainingPool": 14
       }
     },
     {
@@ -1726,6 +1796,7 @@
         "frontageDirection": "SOUTH",
         "alignmentMode": "standard_frontage_alignment"
       },
+      "baseLotRole": "STANDARD_LOT",
       "streetContext": "collector_edge_residential",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1735,28 +1806,31 @@
         "cornerStatus": "interior",
         "edgeId": "EDGE_COLLECTOR_EAST_NORTH"
       },
-      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
-      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "lotRole": "STANDARD_LOT",
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
-        "roofTone": "charcoal",
+        "roofTone": "warm_grey",
         "fenceStyle": "timber_standard",
         "yardDensity": "balanced",
-        "colourVariant": "cool_trim",
+        "colourVariant": "warm_trim",
         "landscapingSequence": "collector_edge_front_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_tertiary",
-        "duplicatePreventionRuleApplied": false,
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
-        "resolverHash": 3438259442,
+        "lotRole": "STANDARD_LOT",
+        "resolverHash": 1429034487,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -1
+        "selectedFromRemainingPool": 13
       }
     },
     {
@@ -1873,6 +1947,7 @@
         "frontageDirection": "NORTH",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "corner_residential_lot",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -1882,6 +1957,7 @@
         "cornerStatus": "corner_primary",
         "edgeId": "EDGE_COLLECTOR_EAST_SOUTH"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -1897,13 +1973,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 2689260596,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 14
+        "selectedFromRemainingPool": 12
       }
     },
     {
@@ -2010,6 +2088,7 @@
         "frontageDirection": "NORTH",
         "alignmentMode": "standard_frontage_alignment"
       },
+      "baseLotRole": "STANDARD_LOT",
       "streetContext": "collector_edge_residential",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2019,6 +2098,7 @@
         "cornerStatus": "interior",
         "edgeId": "EDGE_COLLECTOR_EAST_SOUTH"
       },
+      "lotRole": "STANDARD_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -2034,13 +2114,15 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
+        "lotRole": "STANDARD_LOT",
         "resolverHash": 1372717453,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 13
+        "selectedFromRemainingPool": 11
       }
     },
     {
@@ -2157,6 +2239,7 @@
         "frontageDirection": "EAST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2166,28 +2249,31 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_NORTH_WEST"
       },
-      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
-      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "lotRole": "CORNER_LOT",
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
-        "roofTone": "warm_grey",
+        "roofTone": "charcoal",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "balanced",
-        "colourVariant": "warm_trim",
+        "yardDensity": "light",
+        "colourVariant": "cool_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_secondary",
+        "weightingRuleApplied": "suburban_primary",
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 217186635,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 2920724130,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -1
+        "selectedFromRemainingPool": 10
       }
     },
     {
@@ -2304,6 +2390,7 @@
         "frontageDirection": "EAST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2313,28 +2400,31 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_NORTH_WEST"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
-        "roofTone": "charcoal",
+        "roofTone": "warm_grey",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
-        "colourVariant": "cool_trim",
+        "yardDensity": "balanced",
+        "colourVariant": "warm_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
         "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": false,
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 1362655939,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 12
+        "selectedFromRemainingPool": 9
       }
     },
     {
@@ -2451,6 +2541,7 @@
         "frontageDirection": "WEST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2460,6 +2551,7 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_NORTH_EAST"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -2475,13 +2567,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3977071168,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 11
+        "selectedFromRemainingPool": 8
       }
     },
     {
@@ -2598,6 +2692,7 @@
         "frontageDirection": "WEST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2607,6 +2702,7 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_NORTH_EAST"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -2622,13 +2718,15 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3312483465,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 10
+        "selectedFromRemainingPool": 7
       }
     },
     {
@@ -2745,6 +2843,7 @@
         "frontageDirection": "EAST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2754,28 +2853,31 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_SOUTH_WEST"
       },
-      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
-      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "lotRole": "CORNER_LOT",
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
-        "roofTone": "warm_grey",
+        "roofTone": "charcoal",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
-        "colourVariant": "warm_trim",
+        "yardDensity": "balanced",
+        "colourVariant": "cool_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_secondary",
+        "weightingRuleApplied": "suburban_primary",
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 2765581831,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 2430098094,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -2
+        "selectedFromRemainingPool": 6
       }
     },
     {
@@ -2892,6 +2994,7 @@
         "frontageDirection": "EAST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -2901,28 +3004,31 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_SOUTH_WEST"
       },
-      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
-      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "lotRole": "CORNER_LOT",
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
-        "roofTone": "charcoal",
+        "roofTone": "warm_grey",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "light",
-        "colourVariant": "cool_trim",
+        "yardDensity": "lush",
+        "colourVariant": "warm_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_tertiary",
-        "duplicatePreventionRuleApplied": false,
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 1464868362,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 1521109279,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -2
+        "selectedFromRemainingPool": 5
       }
     },
     {
@@ -3039,6 +3145,7 @@
         "frontageDirection": "WEST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -3048,6 +3155,7 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_SOUTH_EAST"
       },
+      "lotRole": "CORNER_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -3063,13 +3171,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3710048668,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 9
+        "selectedFromRemainingPool": 4
       }
     },
     {
@@ -3186,6 +3296,7 @@
         "frontageDirection": "WEST",
         "alignmentMode": "corner_side_alignment"
       },
+      "baseLotRole": "CORNER_LOT",
       "streetContext": "local_residential_interior",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -3195,28 +3306,31 @@
         "cornerStatus": "corner_secondary",
         "edgeId": "EDGE_LOCAL_SOUTH_EAST"
       },
-      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
-      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "lotRole": "FEATURE_LOT",
+      "buildingId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "buildingRecipe": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "buildingFamily": "FAMILY_HOUSE_COASTAL",
       "variationProfile": {
-        "roofTone": "warm_grey",
+        "roofTone": "terracotta",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
-        "colourVariant": "warm_trim",
+        "yardDensity": "light",
+        "colourVariant": "brick_contrast",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": true,
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 190122872,
+        "lotRole": "FEATURE_LOT",
+        "resolverHash": 1940094573,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 8
+        "selectedFromRemainingPool": 0
       }
     },
     {
@@ -3333,6 +3447,7 @@
         "frontageDirection": "EAST",
         "alignmentMode": "radial_driveway_alignment"
       },
+      "baseLotRole": "CUL_DE_SAC_LOT",
       "streetContext": "cul_de_sac_residential_edge",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -3342,6 +3457,7 @@
         "cornerStatus": "cul_de_sac_edge",
         "edgeId": "EDGE_CULDESAC_WEST"
       },
+      "lotRole": "CUL_DE_SAC_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -3357,13 +3473,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CUL_DE_SAC_LOT",
         "resolverHash": 2294363867,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 7
+        "selectedFromRemainingPool": 3
       }
     },
     {
@@ -3480,6 +3598,7 @@
         "frontageDirection": "EAST",
         "alignmentMode": "radial_driveway_alignment"
       },
+      "baseLotRole": "CUL_DE_SAC_LOT",
       "streetContext": "cul_de_sac_residential_edge",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -3489,6 +3608,7 @@
         "cornerStatus": "cul_de_sac_edge",
         "edgeId": "EDGE_CULDESAC_WEST"
       },
+      "lotRole": "CUL_DE_SAC_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -3504,13 +3624,15 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CUL_DE_SAC_LOT",
         "resolverHash": 826836358,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 6
+        "selectedFromRemainingPool": 2
       }
     },
     {
@@ -3627,6 +3749,7 @@
         "frontageDirection": "WEST",
         "alignmentMode": "radial_driveway_alignment"
       },
+      "baseLotRole": "CUL_DE_SAC_LOT",
       "streetContext": "cul_de_sac_residential_edge",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -3636,6 +3759,7 @@
         "cornerStatus": "cul_de_sac_edge",
         "edgeId": "EDGE_CULDESAC_EAST"
       },
+      "lotRole": "CUL_DE_SAC_LOT",
       "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
       "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
@@ -3651,13 +3775,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CUL_DE_SAC_LOT",
         "resolverHash": 1524619457,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 5
+        "selectedFromRemainingPool": 1
       }
     },
     {
@@ -3774,6 +3900,7 @@
         "frontageDirection": "WEST",
         "alignmentMode": "radial_driveway_alignment"
       },
+      "baseLotRole": "CUL_DE_SAC_LOT",
       "streetContext": "cul_de_sac_residential_edge",
       "resolverInputs": {
         "streetBlockSeed": 10482,
@@ -3783,28 +3910,31 @@
         "cornerStatus": "cul_de_sac_edge",
         "edgeId": "EDGE_CULDESAC_EAST"
       },
-      "buildingId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-      "buildingRecipe": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
-      "buildingFamily": "FAMILY_HOUSE_COASTAL",
+      "lotRole": "CUL_DE_SAC_LOT",
+      "buildingId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "buildingRecipe": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "buildingFamily": "FAMILY_HOUSE_SUBURBAN_BRICK",
       "variationProfile": {
         "roofTone": "slate",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
+        "yardDensity": "light",
         "colourVariant": "muted_trim",
         "landscapingSequence": "culdesac_garden_cluster"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_secondary",
-        "duplicatePreventionRuleApplied": false,
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 1842923693,
+        "lotRole": "CUL_DE_SAC_LOT",
+        "resolverHash": 2548573004,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -3
+        "selectedFromRemainingPool": 0
       }
     }
   ],
@@ -3851,7 +3981,9 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
+        "lotRole": "STANDARD_LOT",
         "resolverHash": 1953291993,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
@@ -3864,12 +3996,12 @@
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_002",
       "lotId": "LOT_002",
-      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
-      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
       "position": {
         "x": 25.1,
-        "y": 20.02,
+        "y": 19.52,
         "z": 0
       },
       "rotation": {
@@ -3893,22 +4025,24 @@
       "variationProfile": {
         "roofTone": "slate",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "balanced",
+        "yardDensity": "light",
         "colourVariant": "muted_trim",
         "landscapingSequence": "collector_edge_front_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": true,
+        "weightingRuleApplied": "coastal_secondary",
+        "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 826400367,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 2650334145,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "rebalanceApplied": true
+        "selectedFromRemainingPool": 2
       }
     },
     {
@@ -3950,28 +4084,30 @@
       },
       "resolverMetadata": {
         "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": true,
+        "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
-        "resolverHash": 3455497726,
+        "lotRole": "STANDARD_LOT",
+        "resolverHash": 2239755859,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "rebalanceApplied": true
+        "selectedFromRemainingPool": 18
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_004",
       "lotId": "LOT_004",
-      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
-      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
       "position": {
         "x": 27.69,
-        "y": -19.76,
+        "y": -19.26,
         "z": 0
       },
       "rotation": {
@@ -3993,24 +4129,26 @@
       },
       "streetContext": "corner_residential_lot",
       "variationProfile": {
-        "roofTone": "terracotta",
+        "roofTone": "charcoal",
         "fenceStyle": "decorative_suburban",
         "yardDensity": "balanced",
-        "colourVariant": "brick_contrast",
+        "colourVariant": "cool_trim",
         "landscapingSequence": "collector_edge_front_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "suburban_primary",
+        "weightingRuleApplied": "coastal_secondary",
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 4197522802,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 3947646875,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 18
+        "selectedFromRemainingPool": 1
       }
     },
     {
@@ -4055,7 +4193,9 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 2797056221,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
@@ -4106,13 +4246,15 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
-        "resolverHash": 3059185555,
+        "lotRole": "STANDARD_LOT",
+        "resolverHash": 3283743556,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "rebalanceApplied": true
+        "selectedFromRemainingPool": 16
       }
     },
     {
@@ -4157,7 +4299,9 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3832622172,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
@@ -4208,13 +4352,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
+        "lotRole": "STANDARD_LOT",
         "resolverHash": 308817574,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 16
+        "selectedFromRemainingPool": 15
       }
     },
     {
@@ -4259,25 +4405,27 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 2277539937,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 15
+        "selectedFromRemainingPool": 14
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_010",
       "lotId": "LOT_010",
-      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-      "familyId": "FAMILY_HOUSE_COASTAL",
-      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "position": {
         "x": 192.89,
-        "y": 19.54,
+        "y": 19.64,
         "z": 0
       },
       "rotation": {
@@ -4299,24 +4447,26 @@
       },
       "streetContext": "collector_edge_residential",
       "variationProfile": {
-        "roofTone": "charcoal",
+        "roofTone": "warm_grey",
         "fenceStyle": "timber_standard",
         "yardDensity": "balanced",
-        "colourVariant": "cool_trim",
+        "colourVariant": "warm_trim",
         "landscapingSequence": "collector_edge_front_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_tertiary",
-        "duplicatePreventionRuleApplied": false,
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
-        "resolverHash": 3438259442,
+        "lotRole": "STANDARD_LOT",
+        "resolverHash": 1429034487,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -1
+        "selectedFromRemainingPool": 13
       }
     },
     {
@@ -4361,13 +4511,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 2689260596,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 14
+        "selectedFromRemainingPool": 12
       }
     },
     {
@@ -4412,24 +4564,26 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": false,
+        "lotRole": "STANDARD_LOT",
         "resolverHash": 1372717453,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 13
+        "selectedFromRemainingPool": 11
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_013",
       "lotId": "LOT_013",
-      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-      "familyId": "FAMILY_HOUSE_COASTAL",
-      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "position": {
-        "x": 60.08,
+        "x": 59.58,
         "y": 18.02,
         "z": 0
       },
@@ -4452,24 +4606,26 @@
       },
       "streetContext": "local_residential_interior",
       "variationProfile": {
-        "roofTone": "warm_grey",
+        "roofTone": "charcoal",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "balanced",
-        "colourVariant": "warm_trim",
+        "yardDensity": "light",
+        "colourVariant": "cool_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_secondary",
+        "weightingRuleApplied": "suburban_primary",
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 217186635,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 2920724130,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -1
+        "selectedFromRemainingPool": 10
       }
     },
     {
@@ -4503,24 +4659,26 @@
       },
       "streetContext": "local_residential_interior",
       "variationProfile": {
-        "roofTone": "charcoal",
+        "roofTone": "warm_grey",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
-        "colourVariant": "cool_trim",
+        "yardDensity": "balanced",
+        "colourVariant": "warm_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
         "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": false,
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 1362655939,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 12
+        "selectedFromRemainingPool": 9
       }
     },
     {
@@ -4565,13 +4723,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3977071168,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 11
+        "selectedFromRemainingPool": 8
       }
     },
     {
@@ -4616,24 +4776,26 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3312483465,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 10
+        "selectedFromRemainingPool": 7
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_017",
       "lotId": "LOT_017",
-      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-      "familyId": "FAMILY_HOUSE_COASTAL",
-      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "position": {
-        "x": 60.88,
+        "x": 60.38,
         "y": -40.41,
         "z": 0
       },
@@ -4656,35 +4818,37 @@
       },
       "streetContext": "local_residential_interior",
       "variationProfile": {
-        "roofTone": "warm_grey",
+        "roofTone": "charcoal",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
-        "colourVariant": "warm_trim",
+        "yardDensity": "balanced",
+        "colourVariant": "cool_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_secondary",
+        "weightingRuleApplied": "suburban_primary",
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 2765581831,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 2430098094,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -2
+        "selectedFromRemainingPool": 6
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_018",
       "lotId": "LOT_018",
-      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-      "familyId": "FAMILY_HOUSE_COASTAL",
-      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "position": {
-        "x": 59.92,
+        "x": 59.82,
         "y": -23.23,
         "z": 0
       },
@@ -4707,24 +4871,26 @@
       },
       "streetContext": "local_residential_interior",
       "variationProfile": {
-        "roofTone": "charcoal",
+        "roofTone": "warm_grey",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "light",
-        "colourVariant": "cool_trim",
+        "yardDensity": "lush",
+        "colourVariant": "warm_trim",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_tertiary",
-        "duplicatePreventionRuleApplied": false,
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 1464868362,
+        "lotRole": "CORNER_LOT",
+        "resolverHash": 1521109279,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -2
+        "selectedFromRemainingPool": 5
       }
     },
     {
@@ -4769,24 +4935,26 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CORNER_LOT",
         "resolverHash": 3710048668,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 9
+        "selectedFromRemainingPool": 4
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_020",
       "lotId": "LOT_020",
-      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
-      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
+      "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "familyId": "FAMILY_HOUSE_COASTAL",
+      "recipeId": "RECIPE_HOUSE_BEACH_BUNGALOW_001",
       "position": {
-        "x": 100.22,
+        "x": 100.12,
         "y": -20.44,
         "z": 0
       },
@@ -4809,24 +4977,26 @@
       },
       "streetContext": "local_residential_interior",
       "variationProfile": {
-        "roofTone": "warm_grey",
+        "roofTone": "terracotta",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
-        "colourVariant": "warm_trim",
+        "yardDensity": "light",
+        "colourVariant": "brick_contrast",
         "landscapingSequence": "suburban_side_street_garden"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "suburban_primary",
-        "duplicatePreventionRuleApplied": true,
+        "weightingRuleApplied": "coastal_tertiary",
+        "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 190122872,
+        "lotRole": "FEATURE_LOT",
+        "resolverHash": 1940094573,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 8
+        "selectedFromRemainingPool": 0
       }
     },
     {
@@ -4871,13 +5041,15 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CUL_DE_SAC_LOT",
         "resolverHash": 2294363867,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 7
+        "selectedFromRemainingPool": 3
       }
     },
     {
@@ -4922,13 +5094,15 @@
         "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CUL_DE_SAC_LOT",
         "resolverHash": 826836358,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 6
+        "selectedFromRemainingPool": 2
       }
     },
     {
@@ -4973,24 +5147,26 @@
         "duplicatePreventionRuleApplied": false,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
+        "lotRole": "CUL_DE_SAC_LOT",
         "resolverHash": 1524619457,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": 5
+        "selectedFromRemainingPool": 1
       }
     },
     {
       "schemaId": "BUILDING_BLOCK_PLACEMENT_INSTANCE_001",
       "placementId": "BUILDING_PLACEMENT_024",
       "lotId": "LOT_024",
-      "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-      "familyId": "FAMILY_HOUSE_COASTAL",
-      "recipeId": "RECIPE_HOUSE_COASTAL_COTTAGE_001",
+      "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "familyId": "FAMILY_HOUSE_SUBURBAN_BRICK",
+      "recipeId": "RECIPE_HOUSE_SUBURBAN_BRICK_001",
       "position": {
-        "x": 179.54,
+        "x": 180.04,
         "y": 37.19,
         "z": 0
       },
@@ -5015,22 +5191,24 @@
       "variationProfile": {
         "roofTone": "slate",
         "fenceStyle": "decorative_suburban",
-        "yardDensity": "lush",
+        "yardDensity": "light",
         "colourVariant": "muted_trim",
         "landscapingSequence": "culdesac_garden_cluster"
       },
       "resolverMetadata": {
-        "weightingRuleApplied": "coastal_secondary",
-        "duplicatePreventionRuleApplied": false,
+        "weightingRuleApplied": "suburban_primary",
+        "duplicatePreventionRuleApplied": true,
         "streetAwareSelection": true,
         "cornerLotVariationApplied": true,
-        "resolverHash": 1842923693,
+        "lotRole": "CUL_DE_SAC_LOT",
+        "resolverHash": 2548573004,
+        "blockBudgetId": "SUBURBAN_AUSTRALIA_BLOCK",
         "targetCounts": {
           "BUILDING_HOUSE_SUBURBAN_BRICK_001": 20,
           "BUILDING_HOUSE_COASTAL_COTTAGE_001": 3,
           "BUILDING_HOUSE_BEACH_BUNGALOW_001": 1
         },
-        "selectedFromRemainingPool": -3
+        "selectedFromRemainingPool": 0
       }
     }
   ],
@@ -7045,12 +7223,15 @@
     "buildingPlacementValidity": true,
     "drivewayConnectionValidity": true,
     "frontageResolutionValidity": true,
+    "blockThemeBudgetValidity": true,
+    "lotRoleValidity": true,
+    "featureLotLimitValidity": true,
     "suburbanWeightingValidity": true,
     "adjacentVariationValidity": true,
     "cornerLotRuleValidity": true,
     "streetFeatureContainmentValidity": true,
     "deterministicRebuildValidity": true,
-    "deterministicSignatureHash": 2440822924,
+    "deterministicSignatureHash": 317277502,
     "validationPassed": true
   }
 }

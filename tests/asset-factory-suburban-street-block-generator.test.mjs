@@ -85,6 +85,29 @@ test("24 lots are generated with a valid road graph and passing validation", () 
       (lot) => lot.streetContext === "cul_de_sac_residential_edge"
     )
   );
+  assert.deepEqual(
+    preview.lots.reduce((counts, lot) => {
+      counts[lot.buildingId] = (counts[lot.buildingId] ?? 0) + 1;
+      return counts;
+    }, {}),
+    {
+      BUILDING_HOUSE_SUBURBAN_BRICK_001: 20,
+      BUILDING_HOUSE_COASTAL_COTTAGE_001: 3,
+      BUILDING_HOUSE_BEACH_BUNGALOW_001: 1
+    }
+  );
+  assert.deepEqual(
+    preview.lots.reduce((counts, lot) => {
+      counts[lot.lotRole] = (counts[lot.lotRole] ?? 0) + 1;
+      return counts;
+    }, {}),
+    {
+      STANDARD_LOT: 6,
+      CORNER_LOT: 13,
+      FEATURE_LOT: 1,
+      CUL_DE_SAC_LOT: 4
+    }
+  );
   for (const lot of preview.lots) {
     assert.ok(
       moduleUnderTest.supportedSuburbanStreetBlockBuildingAssets.includes(
@@ -100,6 +123,9 @@ test("24 lots are generated with a valid road graph and passing validation", () 
   assert.equal(preview.validationResult.buildingPlacementValidity, true);
   assert.equal(preview.validationResult.drivewayConnectionValidity, true);
   assert.equal(preview.validationResult.frontageResolutionValidity, true);
+  assert.equal(preview.validationResult.blockThemeBudgetValidity, true);
+  assert.equal(preview.validationResult.lotRoleValidity, true);
+  assert.equal(preview.validationResult.featureLotLimitValidity, true);
   assert.equal(preview.validationResult.suburbanWeightingValidity, true);
   assert.equal(preview.validationResult.adjacentVariationValidity, true);
   assert.equal(preview.validationResult.cornerLotRuleValidity, true);
@@ -125,6 +151,9 @@ test("validation output reports pass status for the deterministic 24-lot block",
   assert.equal(validation.checks.allLotsGenerated, "PASS");
   assert.equal(validation.checks.validBuildingIds, "PASS");
   assert.equal(validation.checks.frontageResolutionValidity, "PASS");
+  assert.equal(validation.checks.blockThemeBudgetValidity, "PASS");
+  assert.equal(validation.checks.lotRoleValidity, "PASS");
+  assert.equal(validation.checks.featureLotLimitValidity, "PASS");
   assert.equal(validation.checks.suburbanWeightingValidity, "PASS");
   assert.equal(validation.checks.adjacentVariationValidity, "PASS");
   assert.equal(validation.checks.cornerLotRuleValidity, "PASS");

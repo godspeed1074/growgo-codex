@@ -67,10 +67,44 @@
     "themeSeed": "SUBURBAN_AUSTRALIA",
     "neighbourhoodTheme": "suburban_multi_street_default",
     "densityProfile": "low_density_suburban",
+    "blockBudgetProfileId": "SUBURBAN_AUSTRALIA_BLOCK",
     "buildingWeights": {
       "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.85,
       "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.12,
       "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.03
+    },
+    "blockBudgetRules": {
+      "primaryAssetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+      "secondaryAssetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+      "rareAssetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+      "maxFeatureLots": 1,
+      "maxUnusualLayouts": 5,
+      "roleCaps": {
+        "STANDARD_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001"
+          ]
+        },
+        "CORNER_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001"
+          ]
+        },
+        "CUL_DE_SAC_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001"
+          ]
+        },
+        "FEATURE_LOT": {
+          "allowedAssetIds": [
+            "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+            "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+            "BUILDING_HOUSE_BEACH_BUNGALOW_001"
+          ]
+        }
+      }
     }
   },
   "roadLayer": {
@@ -262,12 +296,12 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_002",
-        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
         "lotId": "LOT_002",
         "position": {
           "x": 25.1,
-          "y": 20.02,
+          "y": 19.52,
           "z": 0
         },
         "rotation": {
@@ -280,7 +314,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_003",
@@ -306,12 +340,12 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_004",
-        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
         "lotId": "LOT_004",
         "position": {
           "x": 27.69,
-          "y": -19.76,
+          "y": -19.26,
           "z": 0
         },
         "rotation": {
@@ -324,7 +358,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_005",
@@ -438,12 +472,12 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_010",
-        "assetReferenceId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_010",
         "position": {
           "x": 192.89,
-          "y": 19.54,
+          "y": 19.64,
           "z": 0
         },
         "rotation": {
@@ -456,7 +490,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_011",
@@ -504,11 +538,11 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_013",
-        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_013",
         "position": {
-          "x": 60.08,
+          "x": 59.58,
           "y": 18.02,
           "z": 0
         },
@@ -522,7 +556,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_014",
@@ -592,11 +626,11 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_017",
-        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_017",
         "position": {
-          "x": 60.88,
+          "x": 60.38,
           "y": -40.41,
           "z": 0
         },
@@ -610,15 +644,15 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_018",
-        "assetReferenceId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
-        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_018",
         "position": {
-          "x": 59.92,
+          "x": 59.82,
           "y": -23.23,
           "z": 0
         },
@@ -632,7 +666,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_019",
@@ -658,11 +692,11 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_020",
-        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetReferenceId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
+        "assetId": "BUILDING_HOUSE_BEACH_BUNGALOW_001",
         "lotId": "LOT_020",
         "position": {
-          "x": 100.22,
+          "x": 100.12,
           "y": -20.44,
           "z": 0
         },
@@ -676,7 +710,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_BEACH_BUNGALOW_FAMILY_001/export/BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb"
       },
       {
         "instanceId": "BUILDING_PLACEMENT_021",
@@ -746,11 +780,11 @@
       },
       {
         "instanceId": "BUILDING_PLACEMENT_024",
-        "assetReferenceId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
-        "assetId": "BUILDING_HOUSE_COASTAL_COTTAGE_001",
+        "assetReferenceId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
+        "assetId": "BUILDING_HOUSE_SUBURBAN_BRICK_001",
         "lotId": "LOT_024",
         "position": {
-          "x": 179.54,
+          "x": 180.04,
           "y": 37.19,
           "z": 0
         },
@@ -764,7 +798,7 @@
           "z": 1
         },
         "lodProfile": "LOD_GAMEPLAY",
-        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_COASTAL_FAMILY_001/export/BUILDING_HOUSE_COASTAL_COTTAGE_001_LOD_GAMEPLAY.glb"
+        "gameplayAssetPath": "asset-factory-workspace/production/HOUSE_SUBURBAN_BRICK_FAMILY_001/export/BUILDING_HOUSE_SUBURBAN_BRICK_001_LOD_GAMEPLAY.glb"
       }
     ]
   },
