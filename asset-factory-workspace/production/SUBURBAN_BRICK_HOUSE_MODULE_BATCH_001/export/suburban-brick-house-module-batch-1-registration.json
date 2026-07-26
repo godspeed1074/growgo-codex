@@ -1,7 +1,7 @@
 {
   "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
-  "status": "PENDING_LOCAL_BLENDER_VALIDATION",
-  "registeredModuleIds": [
+  "status": "SUCCESSFUL",
+  "registeredModules": [
     "MOD_WALL_BRICK_SUBURBAN_001",
     "MOD_ROOF_TILE_STANDARD_001",
     "MOD_GARAGE_RESIDENTIAL_STANDARD_001",
@@ -9,10 +9,13 @@
     "MOD_LETTERBOX_STANDARD_001",
     "MOD_ENTRY_PATH_SUBURBAN_001"
   ],
-  "futureRecipeUnlocks": [
+  "futureUnlocks": [
     "BUILDING_HOUSE_SUBURBAN_BRICK_001",
-    "future suburban townhouses",
-    "future suburban duplexes",
-    "future low-rise brick apartments"
+    "suburban estates",
+    "townhouses",
+    "duplexes",
+    "villas",
+    "residential streets",
+    "neighbourhood generation"
   ]
 }

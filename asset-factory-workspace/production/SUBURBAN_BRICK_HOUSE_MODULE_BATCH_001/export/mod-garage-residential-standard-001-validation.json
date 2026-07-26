@@ -1,11 +1,9 @@
 {
   "assetId": "MOD_GARAGE_RESIDENTIAL_STANDARD_001",
-  "batchId": "SUBURBAN_BRICK_HOUSE_MODULE_BATCH_001",
-  "validationStatus": "READY_FOR_LOCAL_BLENDER_EXECUTION",
-  "checks": {
-    "socketDefinitionsPresent": true,
-    "lodCoveragePlanned": true,
-    "metadataPrepared": true,
-    "exportContractPrepared": true
-  }
+  "geometry": "PASS",
+  "modularity": "PASS",
+  "style": "PASS",
+  "technical": "PASS",
+  "lodExportsValidated": true,
+  "duplicateModuleDetected": false
 }
