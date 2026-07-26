@@ -40,6 +40,29 @@ const buildingProfiles = deepFreeze({
   }
 });
 
+const themeProfiles = deepFreeze({
+  SUBURBAN_AUSTRALIA: deepFreeze({
+    themeSeed: "SUBURBAN_AUSTRALIA",
+    neighbourhoodTheme: "suburban_mixed_residential_default",
+    densityProfile: "low_density_suburban",
+    buildingWeights: deepFreeze({
+      BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.7,
+      BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.25,
+      BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.05
+    })
+  }),
+  COASTAL_ESTATES: deepFreeze({
+    themeSeed: "COASTAL_ESTATES",
+    neighbourhoodTheme: "coastal_estate_mixed_residential",
+    densityProfile: "low_density_coastal_estate",
+    buildingWeights: deepFreeze({
+      BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.2,
+      BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.5,
+      BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.3
+    })
+  })
+});
+
 export const suburbanNeighbourhoodPreviewGeneratorDefaultInput = deepFreeze({
   neighbourhoodSeed: 10482,
   regionSeed: 1,
@@ -106,14 +129,7 @@ export function generateSuburbanNeighbourhoodPreview(
     seed: input.neighbourhoodSeed,
     seedConfig,
     themeProfile: deepFreeze({
-      themeSeed: input.themeSeed,
-      neighbourhoodTheme: input.blockConfiguration.neighbourhoodTheme,
-      densityProfile: input.blockConfiguration.densityProfile,
-      buildingWeights: deepFreeze({
-        BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.55,
-        BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.25,
-        BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.2
-      })
+      ...resolveThemeProfile(input)
     }),
     bounds: buildBounds(input, resolvedLots),
     roadLayout: deepFreeze({
@@ -143,7 +159,10 @@ export function generateSuburbanNeighbourhoodPreview(
         validLotBoundaries: true,
         validRoadConnections: true,
         validDrivewayConnections: true,
-        validBuildingOrientation: true
+        validBuildingOrientation: true,
+        fenceOpeningsValid: true,
+        landscapeContainment: true,
+        themeWeightingValid: true
       })
     }),
     validationResult: null
@@ -318,15 +337,24 @@ function buildLots(input, seedConfig) {
         facing: frontageDirection
       }),
       drivewaySocket: deepFreeze({
+        x: roundNumber(resolveDrivewayAnchorX({ x }, width, drivewaySide)),
+        y:
+          frontageDirection === "NORTH"
+            ? roundNumber(y + depth)
+            : roundNumber(y),
         side: drivewaySide,
-        frontageDirection
+        frontageDirection,
+        garageSide: drivewaySide
       }),
       fenceBoundary: deepFreeze({
         front: true,
         left: true,
         right: true,
         rear: true,
-        drivewayOpeningSide: drivewaySide
+        drivewayOpeningSide: drivewaySide,
+        drivewayOpeningWidth: 3.2,
+        pedestrianAccessSide: drivewaySide === "EAST" ? "WEST" : "EAST",
+        pedestrianAccessWidth: 1.1
       }),
       landscapingZones: deepFreeze({
         frontLawnZone: zoneRect(x + 0.5, y + depth - 10, width - 1, 8),
@@ -449,24 +477,19 @@ function resolveLotBuildings(lots, input, seedConfig) {
 }
 
 function pickCandidateOrder(lot, input, seedConfig, excludedAssets) {
-  const candidates = Object.values(buildingProfiles)
-    .filter((candidate) => lotCanFitProfile(lot, candidate))
-    .filter((candidate) => !excludedAssets.has(candidate.assetId));
+  const activeThemeProfile = resolveThemeProfile(input);
+  const candidates = Object.values(buildingProfiles).filter((candidate) =>
+    lotCanFitProfile(lot, candidate)
+  );
 
-  const fallbackCandidates =
-    candidates.length > 0
-      ? candidates
-      : Object.values(buildingProfiles).filter((candidate) =>
-          lotCanFitProfile(lot, candidate)
-        );
-
-  return fallbackCandidates
+  return candidates
     .map((candidate) => ({
       assetId: candidate.assetId,
-      score: weightedDeterministicScore(
+      score:
+        weightedDeterministicScore(
         `${input.neighbourhoodSeed}:${input.regionSeed}:${input.themeSeed}:${lot.lotId}:${candidate.assetId}`,
-        candidate.weight
-      )
+        activeThemeProfile.buildingWeights[candidate.assetId] ?? candidate.weight
+        ) + (excludedAssets.has(candidate.assetId) ? 1000 : 0)
     }))
     .sort((left, right) => left.score - right.score)
     .map((entry) => entry.assetId);
@@ -541,8 +564,8 @@ function buildLandscapePlacements(lots, input) {
         landscapeType: "grass",
         zoneId: "frontLawnZone",
         position: deepFreeze({
-          x: roundNumber(lot.position.x + lot.width / 2),
-          y: roundNumber(lot.position.y + lot.depth / 2),
+          x: roundNumber(centerOfZone(lot.landscapingZones.frontLawnZone).x),
+          y: roundNumber(centerOfZone(lot.landscapingZones.frontLawnZone).y),
           z: 0
         }),
         rotation: deepFreeze({ yawDegrees: 0 }),
@@ -564,14 +587,11 @@ function buildLandscapePlacements(lots, input) {
         landscapeType: "bush",
         zoneId: "entryPlantingZone",
         position: deepFreeze({
-          x:
-            lot.drivewaySide === "EAST"
-              ? roundNumber(lot.position.x + 2.2)
-              : roundNumber(lot.position.x + lot.width - 2.2),
+          x: roundNumber(centerOfZone(lot.landscapingZones.sidePlantingZone).x),
           y:
             lot.frontageDirection === "NORTH"
-              ? roundNumber(lot.position.y + lot.depth - 5.8)
-              : roundNumber(lot.position.y + 5.8),
+              ? roundNumber(lot.position.y + lot.depth - lot.setback.front - 0.6)
+              : roundNumber(lot.position.y + lot.setback.front + 0.6),
           z: 0
         }),
         rotation: deepFreeze({
@@ -596,8 +616,8 @@ function buildLandscapePlacements(lots, input) {
           landscapeType: "tree",
           zoneId: "treeZone",
           position: deepFreeze({
-            x: roundNumber(lot.position.x + lot.width * 0.7),
-            y: roundNumber(lot.position.y + 8.5),
+            x: roundNumber(centerOfZone(lot.landscapingZones.treeZone).x),
+            y: roundNumber(centerOfZone(lot.landscapingZones.treeZone).y),
             z: 0
           }),
           rotation: deepFreeze({
@@ -626,17 +646,25 @@ function buildRoadFrontageConnections(lots, input) {
       roadSegmentId: input.blockConfiguration.roadSegmentId,
       frontageDirection: lot.frontageDirection,
       connectionPoint: deepFreeze({
-        x: roundNumber(lot.position.x + lot.width / 2),
+        x: roundNumber(resolveDrivewayAnchorX(lot.position, lot.width, lot.drivewaySide)),
         y: lot.frontageDirection === "NORTH" ? 0 : input.blockConfiguration.roadWidth,
         z: 0
       }),
       drivewayLink: deepFreeze({
         drivewaySide: lot.drivewaySide,
-        roadAligned: true
+        garageSide: lot.drivewaySocket.garageSide,
+        roadAligned: true,
+        crossingNeighbouringLots: false
       }),
       entryPathLink: deepFreeze({
         connected: true,
         frontDoorFacingRoad: true
+      }),
+      fenceOpenings: deepFreeze({
+        drivewayOpeningSide: lot.fenceBoundary.drivewayOpeningSide,
+        drivewayOpeningWidth: lot.fenceBoundary.drivewayOpeningWidth,
+        pedestrianAccessSide: lot.fenceBoundary.pedestrianAccessSide,
+        pedestrianAccessWidth: lot.fenceBoundary.pedestrianAccessWidth
       }),
       vergeProfile: deepFreeze({
         grassVergeWidth: input.blockConfiguration.vergeWidth,
@@ -672,6 +700,22 @@ function buildValidationResult(preview, input) {
       }))
     })
   );
+  const fenceOpeningsValid = preview.lots.every((lot) => {
+    const openingWidth = lot.fenceBoundary.drivewayOpeningWidth;
+    const pedestrianWidth = lot.fenceBoundary.pedestrianAccessWidth;
+    return (
+      supportedDrivewaySides.has(lot.fenceBoundary.drivewayOpeningSide) &&
+      supportedDrivewaySides.has(lot.fenceBoundary.pedestrianAccessSide) &&
+      openingWidth > 2.4 &&
+      pedestrianWidth > 0.8 &&
+      lot.fenceBoundary.pedestrianAccessSide !==
+        lot.fenceBoundary.drivewayOpeningSide
+    );
+  });
+  const landscapeContainment = preview.landscapePlacements.every((placement) =>
+    isLandscapePlacementWithinZone(placement, preview.lots)
+  );
+  const themeWeightingValid = validateThemeWeights(preview.themeProfile);
 
   return deepFreeze({
     lotCountCorrect: preview.lotCount === input.lotCount,
@@ -689,13 +733,19 @@ function buildValidationResult(preview, input) {
       (connection) => connection.roadSegmentId === input.blockConfiguration.roadSegmentId
     ),
     validDrivewayConnections: preview.roadFrontageConnections.every(
-      (connection) => connection.drivewayLink.roadAligned
+      (connection) =>
+        connection.drivewayLink.roadAligned &&
+        connection.drivewayLink.crossingNeighbouringLots === false &&
+        connection.drivewayLink.garageSide === connection.drivewayLink.drivewaySide
     ),
     validBuildingOrientation: preview.buildingPlacements.every(
       (placement) =>
         placement.rotation.yawDegrees ===
         facingDirectionToYaw(placement.rotation.facingDirection)
     ),
+    fenceOpeningsValid,
+    landscapeContainment,
+    themeWeightingValid,
     deterministicSignatureHash,
     validationPassed:
       preview.lotCount === input.lotCount &&
@@ -704,7 +754,10 @@ function buildValidationResult(preview, input) {
       validRotations &&
       drivewayAssignments &&
       fenceAssignments &&
-      noOverlap
+      noOverlap &&
+      fenceOpeningsValid &&
+      landscapeContainment &&
+      themeWeightingValid
   });
 }
 
@@ -813,9 +866,10 @@ function validateBuildingPlacements(buildingPlacements, lots) {
 }
 
 function validateRoadConnections(roadFrontageConnections, lots) {
-  const lotIds = new Set(lots.map((lot) => lot.lotId));
+  const lotMap = new Map(lots.map((lot) => [lot.lotId, lot]));
   for (const connection of roadFrontageConnections) {
-    if (!lotIds.has(connection.lotId)) {
+    const lot = lotMap.get(connection.lotId);
+    if (!lot) {
       throw createValidationError(
         "road_connection_invalid",
         "Preview road connection references an unknown lot."
@@ -825,6 +879,21 @@ function validateRoadConnections(roadFrontageConnections, lots) {
       throw createValidationError(
         "driveway_connection_invalid",
         "Preview road connection must keep driveway alignment true."
+      );
+    }
+    const expectedDrivewayX = roundNumber(
+      resolveDrivewayAnchorX(lot.position, lot.width, lot.drivewaySide)
+    );
+    if (Math.abs(connection.connectionPoint.x - expectedDrivewayX) > 0.02) {
+      throw createValidationError(
+        "driveway_connection_invalid",
+        `Preview road connection for lot ${lot.lotId} does not align with its driveway side.`
+      );
+    }
+    if (connection.drivewayLink.crossingNeighbouringLots) {
+      throw createValidationError(
+        "driveway_crossing_invalid",
+        "Preview road connection must not cross neighbouring lots."
       );
     }
   }
@@ -852,7 +921,74 @@ function validateLandscapePlacements(landscapePlacements, lots) {
         "Preview landscape placement falls outside its assigned lot."
       );
     }
+    if (!isLandscapePlacementWithinZone(placement, lots)) {
+      throw createValidationError(
+        "landscape_zone_invalid",
+        `Preview landscape placement ${placement.placementId} falls outside its intended zone.`
+      );
+    }
   }
+}
+
+function isLandscapePlacementWithinZone(placement, lots) {
+  const lotMap = Array.isArray(lots) ? new Map(lots.map((lot) => [lot.lotId, lot])) : lots;
+  const lot = lotMap.get ? lotMap.get(placement.lotId) : null;
+  if (!lot) {
+    return false;
+  }
+  const zone = resolveLandscapeZone(lot, placement.zoneId, placement.landscapeType);
+  if (!zone) {
+    return false;
+  }
+  return pointInsideZone(placement.position, zone, 0.15);
+}
+
+function resolveLandscapeZone(lot, zoneId, landscapeType) {
+  if (zoneId === "frontLawnZone") {
+    return lot.landscapingZones.frontLawnZone;
+  }
+  if (zoneId === "treeZone") {
+    return lot.landscapingZones.treeZone;
+  }
+  if (zoneId === "entryPlantingZone") {
+    return lot.landscapingZones.sidePlantingZone;
+  }
+  return lot.landscapingZones[zoneId] ?? null;
+}
+
+function pointInsideZone(position, zone, tolerance = 0) {
+  return (
+    position.x >= zone.x - tolerance &&
+    position.x <= zone.x + zone.width + tolerance &&
+    position.y >= zone.y - tolerance &&
+    position.y <= zone.y + zone.depth + tolerance
+  );
+}
+
+function validateThemeWeights(themeProfile) {
+  const weights = themeProfile.buildingWeights;
+  const total = Object.values(weights).reduce((sum, value) => sum + value, 0);
+  return Math.abs(total - 1) < 0.0001;
+}
+
+function resolveThemeProfile(input) {
+  const explicit = themeProfiles[input.themeSeed];
+  if (explicit) {
+    return explicit;
+  }
+  return themeProfiles.SUBURBAN_AUSTRALIA;
+}
+
+function resolveDrivewayAnchorX(positionOrLot, width, drivewaySide) {
+  const x = positionOrLot.x;
+  return drivewaySide === "EAST" ? x + width - 2.2 : x + 2.2;
+}
+
+function centerOfZone(zone) {
+  return {
+    x: zone.x + zone.width / 2,
+    y: zone.y + zone.depth / 2
+  };
 }
 
 function buildBounds(input, lots) {

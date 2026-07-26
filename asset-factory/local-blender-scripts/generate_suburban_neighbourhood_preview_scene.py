@@ -55,6 +55,21 @@ BUILDING_LOOKUP = {
     / "BUILDING_HOUSE_BEACH_BUNGALOW_001_LOD_GAMEPLAY.glb",
 }
 
+LANDSCAPE_LOOKUP = {
+    "MOD_TREE_EUCALYPTUS_STANDARD_001": REPO_ROOT
+    / "asset-factory-workspace"
+    / "production"
+    / "HOUSE_COASTAL_FAMILY_001"
+    / "export"
+    / "MOD_TREE_EUCALYPTUS_STANDARD_001_LOD_GAMEPLAY.glb",
+    "MOD_BUSH_NATIVE_STANDARD_001": REPO_ROOT
+    / "asset-factory-workspace"
+    / "production"
+    / "HOUSE_COASTAL_FAMILY_001"
+    / "export"
+    / "MOD_BUSH_NATIVE_STANDARD_001_LOD_GAMEPLAY.glb",
+}
+
 PASS_COLOUR = (0.18, 0.78, 0.32, 1.0)
 FAIL_COLOUR = (0.85, 0.18, 0.18, 1.0)
 LOT_COLOUR = (0.16, 0.52, 0.92, 1.0)
@@ -196,6 +211,12 @@ def import_gltf_instance(filepath, name, collection, location, yaw_degrees):
     return root
 
 
+def resolve_driveway_x(lot):
+    if lot["drivewaySide"] == "EAST":
+        return lot["position"]["x"] + lot["width"] - 2.2
+    return lot["position"]["x"] + 2.2
+
+
 def configure_camera(bounds):
     camera_data = bpy.data.cameras.new("PREVIEW_CAMERA")
     camera = bpy.data.objects.new("PREVIEW_CAMERA", camera_data)
@@ -207,6 +228,29 @@ def configure_camera(bounds):
     camera.location = (centre_x, centre_y - span_y * 0.55, max(span_x, span_y) * 0.95)
     camera.rotation_euler = (1.05, 0.0, 0.0)
     bpy.context.scene.camera = camera
+
+
+def create_capture_cameras(bounds):
+    centre_x = (bounds["minX"] + bounds["maxX"]) / 2.0
+    centre_y = (bounds["minY"] + bounds["maxY"]) / 2.0
+    span_x = bounds["maxX"] - bounds["minX"]
+    span_y = bounds["maxY"] - bounds["minY"]
+    scene_span = max(span_x, span_y)
+
+    top_down = bpy.data.objects.new("CAPTURE_TOP_DOWN", bpy.data.cameras.new("CAPTURE_TOP_DOWN"))
+    top_down.location = (centre_x, centre_y, scene_span * 1.55)
+    top_down.rotation_euler = (0.0, 0.0, 0.0)
+    bpy.context.scene.collection.objects.link(top_down)
+
+    angled = bpy.data.objects.new("CAPTURE_ANGLED_25D", bpy.data.cameras.new("CAPTURE_ANGLED_25D"))
+    angled.location = (centre_x, centre_y - span_y * 0.58, scene_span * 0.98)
+    angled.rotation_euler = (1.01, 0.0, 0.0)
+    bpy.context.scene.collection.objects.link(angled)
+
+    street = bpy.data.objects.new("CAPTURE_STREET_LEVEL", bpy.data.cameras.new("CAPTURE_STREET_LEVEL"))
+    street.location = (bounds["minX"] + 6.0, centre_y - 4.0, 4.8)
+    street.rotation_euler = (1.26, 0.0, 0.78)
+    bpy.context.scene.collection.objects.link(street)
 
 
 def build_road_layer(preview, collection):
@@ -299,20 +343,74 @@ def build_fence_layer(preview, collection, validation):
         y = lot["position"]["y"]
         width = lot["width"]
         depth = lot["depth"]
-        points = [
-            (x, y, 0.15),
-            (x + width, y, 0.15),
-            (x + width, y + depth, 0.15),
-            (x, y + depth, 0.15),
-        ]
+        driveway_opening_width = lot["fenceBoundary"]["drivewayOpeningWidth"]
+        pedestrian_opening_width = lot["fenceBoundary"]["pedestrianAccessWidth"]
+        driveway_centre_x = resolve_driveway_x(lot)
+        pedestrian_centre_x = x + width - 2.2 if lot["fenceBoundary"]["pedestrianAccessSide"] == "EAST" else x + 2.2
+        if lot["frontageDirection"] == "NORTH":
+            front_y = y + depth
+        else:
+            front_y = y
+
         create_curve_polyline(
-            f"{lot['lotId']}_FENCE",
-            points,
+            f"{lot['lotId']}_FENCE_LEFT",
+            [(x, y, 0.15), (x, y + depth, 0.15)],
             collection,
-            colour if lot["fenceBoundary"]["rear"] else FAIL_COLOUR,
-            closed=True,
+            colour,
+            closed=False,
             bevel=0.03,
         )
+        create_curve_polyline(
+            f"{lot['lotId']}_FENCE_RIGHT",
+            [(x + width, y, 0.15), (x + width, y + depth, 0.15)],
+            collection,
+            colour,
+            closed=False,
+            bevel=0.03,
+        )
+        create_curve_polyline(
+            f"{lot['lotId']}_FENCE_REAR",
+            [(x, y if lot["frontageDirection"] == "NORTH" else y + depth, 0.15), (x + width, y if lot["frontageDirection"] == "NORTH" else y + depth, 0.15)],
+            collection,
+            colour if lot["fenceBoundary"]["rear"] else FAIL_COLOUR,
+            closed=False,
+            bevel=0.03,
+        )
+
+        front_segments = sorted(
+            [
+                (
+                    max(x, driveway_centre_x - driveway_opening_width / 2),
+                    min(x + width, driveway_centre_x + driveway_opening_width / 2),
+                ),
+                (
+                    max(x, pedestrian_centre_x - pedestrian_opening_width / 2),
+                    min(x + width, pedestrian_centre_x + pedestrian_opening_width / 2),
+                ),
+            ],
+            key=lambda segment: segment[0],
+        )
+        current_x = x
+        for index, segment in enumerate(front_segments):
+            if segment[0] > current_x:
+                create_curve_polyline(
+                    f"{lot['lotId']}_FENCE_FRONT_{index}",
+                    [(current_x, front_y, 0.15), (segment[0], front_y, 0.15)],
+                    collection,
+                    colour,
+                    closed=False,
+                    bevel=0.03,
+                )
+            current_x = max(current_x, segment[1])
+        if current_x < x + width:
+            create_curve_polyline(
+                f"{lot['lotId']}_FENCE_FRONT_END",
+                [(current_x, front_y, 0.15), (x + width, front_y, 0.15)],
+                collection,
+                colour,
+                closed=False,
+                bevel=0.03,
+            )
 
 
 def build_landscape_layer(preview, collection):
@@ -330,28 +428,28 @@ def build_landscape_layer(preview, collection):
                 (0.27, 0.63, 0.27, 1.0),
             )
         elif placement["landscapeType"] == "bush":
-            create_box(
+            import_gltf_instance(
+                LANDSCAPE_LOOKUP["MOD_BUSH_NATIVE_STANDARD_001"],
                 placement["placementId"],
+                collection,
                 (
                     placement["position"]["x"],
                     placement["position"]["y"],
-                    0.3,
+                    0.0,
                 ),
-                (0.45, 0.45, 0.3),
-                collection,
-                (0.19, 0.49, 0.19, 1.0),
+                placement["rotation"]["yawDegrees"],
             )
         elif placement["landscapeType"] == "tree":
-            create_box(
+            import_gltf_instance(
+                LANDSCAPE_LOOKUP["MOD_TREE_EUCALYPTUS_STANDARD_001"],
                 placement["placementId"],
+                collection,
                 (
                     placement["position"]["x"],
                     placement["position"]["y"],
-                    0.8,
+                    0.0,
                 ),
-                (0.35, 0.35, 0.8),
-                collection,
-                (0.18, 0.42, 0.18, 1.0),
+                placement["rotation"]["yawDegrees"],
             )
 
 
@@ -413,6 +511,7 @@ def main():
     build_landscape_layer(preview, landscape_collection)
     build_validation_markers(preview, validation, debug_collection)
     configure_camera(preview["bounds"])
+    create_capture_cameras(preview["bounds"])
 
     bpy.ops.wm.save_as_mainfile(filepath=str(output_dir / f"{SCENE_ID}.blend"))
 

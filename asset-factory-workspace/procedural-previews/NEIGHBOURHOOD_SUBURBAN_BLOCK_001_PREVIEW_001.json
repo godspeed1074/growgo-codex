@@ -14,9 +14,9 @@
     "neighbourhoodTheme": "suburban_mixed_residential_default",
     "densityProfile": "low_density_suburban",
     "buildingWeights": {
-      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.55,
+      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.7,
       "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.25,
-      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.2
+      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.05
     }
   },
   "bounds": {
@@ -68,15 +68,21 @@
         "facing": "NORTH"
       },
       "drivewaySocket": {
+        "x": 2.2,
+        "y": -8,
         "side": "WEST",
-        "frontageDirection": "NORTH"
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
       },
       "fenceBoundary": {
         "front": true,
         "left": true,
         "right": true,
         "rear": true,
-        "drivewayOpeningSide": "WEST"
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
       },
       "landscapingZones": {
         "frontLawnZone": {
@@ -158,15 +164,21 @@
         "facing": "NORTH"
       },
       "drivewaySocket": {
+        "x": 29.8,
+        "y": -8,
         "side": "EAST",
-        "frontageDirection": "NORTH"
+        "frontageDirection": "NORTH",
+        "garageSide": "EAST"
       },
       "fenceBoundary": {
         "front": true,
         "left": true,
         "right": true,
         "rear": true,
-        "drivewayOpeningSide": "EAST"
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
       },
       "landscapingZones": {
         "frontLawnZone": {
@@ -248,15 +260,21 @@
         "facing": "NORTH"
       },
       "drivewaySocket": {
+        "x": 36.2,
+        "y": -8,
         "side": "WEST",
-        "frontageDirection": "NORTH"
+        "frontageDirection": "NORTH",
+        "garageSide": "WEST"
       },
       "fenceBoundary": {
         "front": true,
         "left": true,
         "right": true,
         "rear": true,
-        "drivewayOpeningSide": "WEST"
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
       },
       "landscapingZones": {
         "frontLawnZone": {
@@ -338,15 +356,21 @@
         "facing": "SOUTH"
       },
       "drivewaySocket": {
+        "x": 13.8,
+        "y": 8,
         "side": "EAST",
-        "frontageDirection": "SOUTH"
+        "frontageDirection": "SOUTH",
+        "garageSide": "EAST"
       },
       "fenceBoundary": {
         "front": true,
         "left": true,
         "right": true,
         "rear": true,
-        "drivewayOpeningSide": "EAST"
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
       },
       "landscapingZones": {
         "frontLawnZone": {
@@ -428,15 +452,21 @@
         "facing": "SOUTH"
       },
       "drivewaySocket": {
+        "x": 20.2,
+        "y": 8,
         "side": "WEST",
-        "frontageDirection": "SOUTH"
+        "frontageDirection": "SOUTH",
+        "garageSide": "WEST"
       },
       "fenceBoundary": {
         "front": true,
         "left": true,
         "right": true,
         "rear": true,
-        "drivewayOpeningSide": "WEST"
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
       },
       "landscapingZones": {
         "frontLawnZone": {
@@ -518,15 +548,21 @@
         "facing": "SOUTH"
       },
       "drivewaySocket": {
+        "x": 51.8,
+        "y": 8,
         "side": "EAST",
-        "frontageDirection": "SOUTH"
+        "frontageDirection": "SOUTH",
+        "garageSide": "EAST"
       },
       "fenceBoundary": {
         "front": true,
         "left": true,
         "right": true,
         "rear": true,
-        "drivewayOpeningSide": "EAST"
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
       },
       "landscapingZones": {
         "frontLawnZone": {
@@ -805,7 +841,7 @@
       "zoneId": "frontLawnZone",
       "position": {
         "x": 8,
-        "y": -27.85,
+        "y": -14,
         "z": 0
       },
       "rotation": {
@@ -826,8 +862,8 @@
       "landscapeType": "bush",
       "zoneId": "entryPlantingZone",
       "position": {
-        "x": 13.8,
-        "y": -13.8,
+        "x": 14.8,
+        "y": -13.79,
         "z": 0
       },
       "rotation": {
@@ -848,8 +884,8 @@
       "landscapeType": "tree",
       "zoneId": "treeZone",
       "position": {
-        "x": 11.2,
-        "y": -39.21,
+        "x": 10.98,
+        "y": -38.46,
         "z": 0
       },
       "rotation": {
@@ -871,7 +907,7 @@
       "zoneId": "frontLawnZone",
       "position": {
         "x": 25,
-        "y": -27.86,
+        "y": -14,
         "z": 0
       },
       "rotation": {
@@ -892,7 +928,7 @@
       "landscapeType": "bush",
       "zoneId": "entryPlantingZone",
       "position": {
-        "x": 20.2,
+        "x": 19.2,
         "y": -13.8,
         "z": 0
       },
@@ -914,8 +950,8 @@
       "landscapeType": "tree",
       "zoneId": "treeZone",
       "position": {
-        "x": 27.8,
-        "y": -39.23,
+        "x": 27.82,
+        "y": -38.48,
         "z": 0
       },
       "rotation": {
@@ -937,7 +973,7 @@
       "zoneId": "frontLawnZone",
       "position": {
         "x": 43,
-        "y": -27.83,
+        "y": -14,
         "z": 0
       },
       "rotation": {
@@ -958,8 +994,8 @@
       "landscapeType": "bush",
       "zoneId": "entryPlantingZone",
       "position": {
-        "x": 49.8,
-        "y": -13.8,
+        "x": 50.8,
+        "y": -13.81,
         "z": 0
       },
       "rotation": {
@@ -980,8 +1016,8 @@
       "landscapeType": "tree",
       "zoneId": "treeZone",
       "position": {
-        "x": 46.6,
-        "y": -39.16,
+        "x": 46.14,
+        "y": -38.41,
         "z": 0
       },
       "rotation": {
@@ -1003,7 +1039,7 @@
       "zoneId": "frontLawnZone",
       "position": {
         "x": 8,
-        "y": 27.85,
+        "y": 41.69,
         "z": 0
       },
       "rotation": {
@@ -1024,8 +1060,8 @@
       "landscapeType": "bush",
       "zoneId": "entryPlantingZone",
       "position": {
-        "x": 2.2,
-        "y": 13.8,
+        "x": 1.2,
+        "y": 13.82,
         "z": 0
       },
       "rotation": {
@@ -1046,8 +1082,8 @@
       "landscapeType": "tree",
       "zoneId": "treeZone",
       "position": {
-        "x": 11.2,
-        "y": 16.5,
+        "x": 10.98,
+        "y": 17.25,
         "z": 0
       },
       "rotation": {
@@ -1069,7 +1105,7 @@
       "zoneId": "frontLawnZone",
       "position": {
         "x": 25.5,
-        "y": 27.9,
+        "y": 41.8,
         "z": 0
       },
       "rotation": {
@@ -1090,8 +1126,8 @@
       "landscapeType": "bush",
       "zoneId": "entryPlantingZone",
       "position": {
-        "x": 30.8,
-        "y": 13.8,
+        "x": 31.8,
+        "y": 13.83,
         "z": 0
       },
       "rotation": {
@@ -1112,8 +1148,8 @@
       "landscapeType": "tree",
       "zoneId": "treeZone",
       "position": {
-        "x": 28.5,
-        "y": 16.5,
+        "x": 28.4,
+        "y": 17.25,
         "z": 0
       },
       "rotation": {
@@ -1135,7 +1171,7 @@
       "zoneId": "frontLawnZone",
       "position": {
         "x": 44.5,
-        "y": 27.92,
+        "y": 41.83,
         "z": 0
       },
       "rotation": {
@@ -1156,8 +1192,8 @@
       "landscapeType": "bush",
       "zoneId": "entryPlantingZone",
       "position": {
-        "x": 37.2,
-        "y": 13.8,
+        "x": 36.2,
+        "y": 13.83,
         "z": 0
       },
       "rotation": {
@@ -1178,8 +1214,8 @@
       "landscapeType": "tree",
       "zoneId": "treeZone",
       "position": {
-        "x": 48.3,
-        "y": 16.5,
+        "x": 47.72,
+        "y": 17.25,
         "z": 0
       },
       "rotation": {
@@ -1201,17 +1237,25 @@
       "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
       "frontageDirection": "NORTH",
       "connectionPoint": {
-        "x": 8,
+        "x": 2.2,
         "y": 0,
         "z": 0
       },
       "drivewayLink": {
         "drivewaySide": "WEST",
-        "roadAligned": true
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
       },
       "entryPathLink": {
         "connected": true,
         "frontDoorFacingRoad": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
       },
       "vergeProfile": {
         "grassVergeWidth": 1.8,
@@ -1225,17 +1269,25 @@
       "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
       "frontageDirection": "NORTH",
       "connectionPoint": {
-        "x": 25,
+        "x": 29.8,
         "y": 0,
         "z": 0
       },
       "drivewayLink": {
         "drivewaySide": "EAST",
-        "roadAligned": true
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
       },
       "entryPathLink": {
         "connected": true,
         "frontDoorFacingRoad": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
       },
       "vergeProfile": {
         "grassVergeWidth": 1.8,
@@ -1249,17 +1301,25 @@
       "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
       "frontageDirection": "NORTH",
       "connectionPoint": {
-        "x": 43,
+        "x": 36.2,
         "y": 0,
         "z": 0
       },
       "drivewayLink": {
         "drivewaySide": "WEST",
-        "roadAligned": true
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
       },
       "entryPathLink": {
         "connected": true,
         "frontDoorFacingRoad": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
       },
       "vergeProfile": {
         "grassVergeWidth": 1.8,
@@ -1273,17 +1333,25 @@
       "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
       "frontageDirection": "SOUTH",
       "connectionPoint": {
-        "x": 8,
+        "x": 13.8,
         "y": 12,
         "z": 0
       },
       "drivewayLink": {
         "drivewaySide": "EAST",
-        "roadAligned": true
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
       },
       "entryPathLink": {
         "connected": true,
         "frontDoorFacingRoad": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
       },
       "vergeProfile": {
         "grassVergeWidth": 1.8,
@@ -1297,17 +1365,25 @@
       "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
       "frontageDirection": "SOUTH",
       "connectionPoint": {
-        "x": 25.5,
+        "x": 20.2,
         "y": 12,
         "z": 0
       },
       "drivewayLink": {
         "drivewaySide": "WEST",
-        "roadAligned": true
+        "garageSide": "WEST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
       },
       "entryPathLink": {
         "connected": true,
         "frontDoorFacingRoad": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "WEST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "EAST",
+        "pedestrianAccessWidth": 1.1
       },
       "vergeProfile": {
         "grassVergeWidth": 1.8,
@@ -1321,17 +1397,25 @@
       "roadSegmentId": "ROAD_SEGMENT_STRAIGHT_001",
       "frontageDirection": "SOUTH",
       "connectionPoint": {
-        "x": 44.5,
+        "x": 51.8,
         "y": 12,
         "z": 0
       },
       "drivewayLink": {
         "drivewaySide": "EAST",
-        "roadAligned": true
+        "garageSide": "EAST",
+        "roadAligned": true,
+        "crossingNeighbouringLots": false
       },
       "entryPathLink": {
         "connected": true,
         "frontDoorFacingRoad": true
+      },
+      "fenceOpenings": {
+        "drivewayOpeningSide": "EAST",
+        "drivewayOpeningWidth": 3.2,
+        "pedestrianAccessSide": "WEST",
+        "pedestrianAccessWidth": 1.1
       },
       "vergeProfile": {
         "grassVergeWidth": 1.8,
@@ -1352,7 +1436,10 @@
       "validLotBoundaries": true,
       "validRoadConnections": true,
       "validDrivewayConnections": true,
-      "validBuildingOrientation": true
+      "validBuildingOrientation": true,
+      "fenceOpeningsValid": true,
+      "landscapeContainment": true,
+      "themeWeightingValid": true
     }
   },
   "validationResult": {
@@ -1368,6 +1455,9 @@
     "validRoadConnections": true,
     "validDrivewayConnections": true,
     "validBuildingOrientation": true,
+    "fenceOpeningsValid": true,
+    "landscapeContainment": true,
+    "themeWeightingValid": true,
     "deterministicSignatureHash": 1638129186,
     "validationPassed": true
   }

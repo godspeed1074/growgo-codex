@@ -9,6 +9,9 @@
     "noPlacementOverlap": "PASS",
     "drivewayConnectionsValid": "PASS",
     "orientationValid": "PASS",
+    "fenceOpeningsValid": "PASS",
+    "landscapeContainmentValid": "PASS",
+    "themeWeightingValid": "PASS",
     "deterministicSourceMatches": "PASS"
   },
   "summary": {

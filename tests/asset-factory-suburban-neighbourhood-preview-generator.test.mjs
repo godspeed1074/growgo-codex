@@ -64,6 +64,34 @@ test("six lots are generated with valid building ids and passing validation", ()
   assert.equal(preview.validationResult.validRotations, true);
   assert.equal(preview.validationResult.drivewayAssignments, true);
   assert.equal(preview.validationResult.fenceAssignments, true);
+  assert.equal(preview.validationResult.fenceOpeningsValid, true);
+  assert.equal(preview.validationResult.landscapeContainment, true);
+  assert.equal(preview.validationResult.themeWeightingValid, true);
+  assert.deepEqual(preview.themeProfile.buildingWeights, {
+    BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.7,
+    BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.25,
+    BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.05
+  });
+  for (const lot of preview.lots) {
+    const expectedDrivewayX =
+      lot.drivewaySide === "EAST" ? lot.position.x + lot.width - 2.2 : lot.position.x + 2.2;
+    assert.equal(lot.drivewaySocket.x, expectedDrivewayX);
+  }
+});
+
+test("coastal estates theme profile resolves deterministically with coastal weighting", () => {
+  const preview = moduleUnderTest.generateSuburbanNeighbourhoodPreview({
+    ...moduleUnderTest.suburbanNeighbourhoodPreviewGeneratorDefaultInput,
+    neighbourhoodSeed: 30482,
+    themeSeed: "COASTAL_ESTATES"
+  });
+
+  assert.deepEqual(preview.themeProfile.buildingWeights, {
+    BUILDING_HOUSE_SUBURBAN_BRICK_001: 0.2,
+    BUILDING_HOUSE_COASTAL_COTTAGE_001: 0.5,
+    BUILDING_HOUSE_BEACH_BUNGALOW_001: 0.3
+  });
+  assert.equal(preview.validationResult.themeWeightingValid, true);
 });
 
 test("validator rejects invalid duplicate adjacent building rows safely", () => {

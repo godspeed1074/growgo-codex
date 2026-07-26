@@ -13,6 +13,35 @@
     "framing": "full_block_overview",
     "paddingMeters": 6
   },
+  "visualCaptureWorkflow": {
+    "previewVersion": "SESSION_42_RULE_CORRECTION_PASS",
+    "seed": 10482,
+    "topDown": {
+      "cameraId": "SUBURBAN_CAPTURE_TOP_DOWN_001",
+      "viewType": "top_down",
+      "angleDegrees": 90
+    },
+    "angled25D": {
+      "cameraId": "SUBURBAN_CAPTURE_ANGLED_25D_001",
+      "viewType": "angled_25d",
+      "angleDegrees": 58
+    },
+    "streetLevel": {
+      "cameraId": "SUBURBAN_CAPTURE_STREET_LEVEL_001",
+      "viewType": "street_level",
+      "angleDegrees": 18
+    }
+  },
+  "themeProfile": {
+    "themeSeed": "SUBURBAN_AUSTRALIA",
+    "neighbourhoodTheme": "suburban_mixed_residential_default",
+    "densityProfile": "low_density_suburban",
+    "buildingWeights": {
+      "BUILDING_HOUSE_SUBURBAN_BRICK_001": 0.7,
+      "BUILDING_HOUSE_COASTAL_COTTAGE_001": 0.25,
+      "BUILDING_HOUSE_BEACH_BUNGALOW_001": 0.05
+    }
+  },
   "resolvedBuildingAssets": [
     {
       "instanceId": "BUILDING_PLACEMENT_001",
@@ -156,17 +185,21 @@
   },
   "drivewayLayer": {
     "drivewayCount": 6,
-    "showDrivewayPaths": true
+    "showDrivewayPaths": true,
+    "useDrivewaySideOffsets": true
   },
   "fenceLayer": {
     "fenceLotCount": 6,
-    "showFenceBoundaries": true
+    "showFenceBoundaries": true,
+    "showDrivewayOpenings": true,
+    "showPedestrianOpenings": true
   },
   "landscapeLayer": {
     "landscapeInstanceCount": 18,
     "showTrees": true,
     "showBushes": true,
-    "showLawns": true
+    "showLawns": true,
+    "useRegisteredLandscapeAssets": true
   },
   "debugLayer": {
     "showLotBoundaryOutlines": true,

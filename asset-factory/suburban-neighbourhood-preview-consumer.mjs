@@ -19,6 +19,23 @@ export const suburbanNeighbourhoodPreviewConsumerDefinition = deepFreeze({
     "asset-factory-workspace/procedural-previews/NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_SCENE_001",
   previewSceneId: SCENE_ID,
   validationId: VALIDATION_ID,
+  previewCaptureProfiles: deepFreeze({
+    topDown: deepFreeze({
+      cameraId: "SUBURBAN_CAPTURE_TOP_DOWN_001",
+      viewType: "top_down",
+      angleDegrees: 90
+    }),
+    angled25D: deepFreeze({
+      cameraId: "SUBURBAN_CAPTURE_ANGLED_25D_001",
+      viewType: "angled_25d",
+      angleDegrees: 58
+    }),
+    streetLevel: deepFreeze({
+      cameraId: "SUBURBAN_CAPTURE_STREET_LEVEL_001",
+      viewType: "street_level",
+      angleDegrees: 18
+    })
+  }),
   buildingAssetLookup: deepFreeze({
     BUILDING_HOUSE_SUBURBAN_BRICK_001: deepFreeze({
       assetId: "BUILDING_HOUSE_SUBURBAN_BRICK_001",
@@ -102,6 +119,14 @@ export function createSuburbanNeighbourhoodPreviewSceneMetadata(
       framing: "full_block_overview",
       paddingMeters: 6
     }),
+    visualCaptureWorkflow: freeze({
+      previewVersion: "SESSION_42_RULE_CORRECTION_PASS",
+      seed: preview.seed,
+      topDown: definition.previewCaptureProfiles.topDown,
+      angled25D: definition.previewCaptureProfiles.angled25D,
+      streetLevel: definition.previewCaptureProfiles.streetLevel
+    }),
+    themeProfile: freeze(preview.themeProfile),
     resolvedBuildingAssets: freeze(buildingInstances),
     roadLayer: freeze({
       roadSegmentId: preview.roadLayout.roadSegmentId,
@@ -118,17 +143,21 @@ export function createSuburbanNeighbourhoodPreviewSceneMetadata(
     }),
     drivewayLayer: freeze({
       drivewayCount: preview.roadFrontageConnections.length,
-      showDrivewayPaths: true
+      showDrivewayPaths: true,
+      useDrivewaySideOffsets: true
     }),
     fenceLayer: freeze({
       fenceLotCount: preview.lots.length,
-      showFenceBoundaries: true
+      showFenceBoundaries: true,
+      showDrivewayOpenings: true,
+      showPedestrianOpenings: true
     }),
     landscapeLayer: freeze({
       landscapeInstanceCount: preview.landscapePlacements.length,
       showTrees: true,
       showBushes: true,
-      showLawns: true
+      showLawns: true,
+      useRegisteredLandscapeAssets: true
     }),
     debugLayer: freeze({
       showLotBoundaryOutlines: true,
@@ -183,6 +212,11 @@ export function createSuburbanNeighbourhoodPreviewValidationReport(
     noPlacementOverlap: passFail(noPlacementOverlap),
     drivewayConnectionsValid: passFail(allDrivewaysConnect),
     orientationValid: passFail(orientationValid),
+    fenceOpeningsValid: passFail(preview.validationResult.fenceOpeningsValid === true),
+    landscapeContainmentValid: passFail(
+      preview.validationResult.landscapeContainment === true
+    ),
+    themeWeightingValid: passFail(preview.validationResult.themeWeightingValid === true),
     deterministicSourceMatches: passFail(deterministicSourceMatches)
   });
 
@@ -294,6 +328,50 @@ function normalizeDefinition(rawDefinition) {
       "previewSceneId"
     ),
     validationId: normalizeNonEmptyString(definition.validationId, "validationId"),
+    previewCaptureProfiles: freeze({
+      topDown: freeze({
+        cameraId: normalizeNonEmptyString(
+          definition.previewCaptureProfiles.topDown.cameraId,
+          "previewCaptureProfiles.topDown.cameraId"
+        ),
+        viewType: normalizeNonEmptyString(
+          definition.previewCaptureProfiles.topDown.viewType,
+          "previewCaptureProfiles.topDown.viewType"
+        ),
+        angleDegrees: normalizeNumber(
+          definition.previewCaptureProfiles.topDown.angleDegrees,
+          "previewCaptureProfiles.topDown.angleDegrees"
+        )
+      }),
+      angled25D: freeze({
+        cameraId: normalizeNonEmptyString(
+          definition.previewCaptureProfiles.angled25D.cameraId,
+          "previewCaptureProfiles.angled25D.cameraId"
+        ),
+        viewType: normalizeNonEmptyString(
+          definition.previewCaptureProfiles.angled25D.viewType,
+          "previewCaptureProfiles.angled25D.viewType"
+        ),
+        angleDegrees: normalizeNumber(
+          definition.previewCaptureProfiles.angled25D.angleDegrees,
+          "previewCaptureProfiles.angled25D.angleDegrees"
+        )
+      }),
+      streetLevel: freeze({
+        cameraId: normalizeNonEmptyString(
+          definition.previewCaptureProfiles.streetLevel.cameraId,
+          "previewCaptureProfiles.streetLevel.cameraId"
+        ),
+        viewType: normalizeNonEmptyString(
+          definition.previewCaptureProfiles.streetLevel.viewType,
+          "previewCaptureProfiles.streetLevel.viewType"
+        ),
+        angleDegrees: normalizeNumber(
+          definition.previewCaptureProfiles.streetLevel.angleDegrees,
+          "previewCaptureProfiles.streetLevel.angleDegrees"
+        )
+      })
+    }),
     buildingAssetLookup: freeze(
       Object.fromEntries(
         Object.entries(definition.buildingAssetLookup).map(([assetId, entry]) => [
@@ -347,6 +425,13 @@ function normalizeRelativePath(value, fieldName) {
     throw new Error(`${fieldName} must remain repository-relative.`);
   }
   return normalized;
+}
+
+function normalizeNumber(value, fieldName) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw new Error(`${fieldName} must be a finite number.`);
+  }
+  return value;
 }
 
 function normalizeNonEmptyString(value, fieldName) {

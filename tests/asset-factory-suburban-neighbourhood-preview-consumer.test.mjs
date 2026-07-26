@@ -47,6 +47,13 @@ test("suburban neighbourhood preview consumer metadata resolves all six building
     "NEIGHBOURHOOD_SUBURBAN_BLOCK_001_PREVIEW_SCENE_001"
   );
   assert.equal(metadata.resolvedBuildingAssets.length, 6);
+  assert.equal(metadata.drivewayLayer.useDrivewaySideOffsets, true);
+  assert.equal(metadata.fenceLayer.showDrivewayOpenings, true);
+  assert.equal(metadata.fenceLayer.showPedestrianOpenings, true);
+  assert.equal(metadata.landscapeLayer.useRegisteredLandscapeAssets, true);
+  assert.equal(metadata.visualCaptureWorkflow.topDown.viewType, "top_down");
+  assert.equal(metadata.visualCaptureWorkflow.angled25D.viewType, "angled_25d");
+  assert.equal(metadata.visualCaptureWorkflow.streetLevel.viewType, "street_level");
   for (const instance of metadata.resolvedBuildingAssets) {
     assert.equal(instance.lodProfile, "LOD_GAMEPLAY");
     assert.ok(instance.gameplayAssetPath.endsWith(".glb"));
@@ -63,6 +70,9 @@ test("suburban neighbourhood preview consumer validation passes against the dete
   assert.equal(validation.checks.noPlacementOverlap, "PASS");
   assert.equal(validation.checks.drivewayConnectionsValid, "PASS");
   assert.equal(validation.checks.orientationValid, "PASS");
+  assert.equal(validation.checks.fenceOpeningsValid, "PASS");
+  assert.equal(validation.checks.landscapeContainmentValid, "PASS");
+  assert.equal(validation.checks.themeWeightingValid, "PASS");
   assert.equal(validation.checks.deterministicSourceMatches, "PASS");
 });
 
