@@ -242,6 +242,17 @@ export const providerFixtureBundles = deepFreeze({
         }
       ),
       providerFeature(
+        "coastline_001",
+        "landform",
+        "LineString",
+        [[144.84, -38.42], [145.02, -38.32], [145.18, -38.2]],
+        {
+          landformType: "coastline",
+          distanceMeters: 450,
+          confidence: 1
+        }
+      ),
+      providerFeature(
         "landform_001",
         "landform",
         "Polygon",
@@ -552,6 +563,16 @@ function terrainProviderFeature(converted, feature) {
   }
 
   if (feature.sourceType === "landform") {
+    if (feature.properties.landformType === "coastline") {
+      converted.geographyFeatures.push(
+        createSourceFeature(feature, "COASTLINE", {
+          distanceMeters: feature.properties.distanceMeters ?? 0,
+          providerProvenance: buildFeatureProvenance(feature)
+        })
+      );
+      return;
+    }
+
     converted.geographyFeatures.push(
       createSourceFeature(feature, "PROTECTED_AREA", {
         protectedAreaType: feature.properties.protectedAreaType ?? "PROTECTED_AREA",

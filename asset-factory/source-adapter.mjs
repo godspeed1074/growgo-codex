@@ -1165,10 +1165,11 @@ function extractProvenance(provider, features) {
     features.map((feature) =>
       deepFreeze({
         schemaId: provenanceRecordSchemaId,
-        provider: provider.providerId,
-        sourceId: feature.id,
+        provider: feature.properties?.providerProvenance?.provider ?? provider.providerId,
+        sourceId: feature.properties?.providerProvenance?.providerId ?? feature.id,
         originalType: feature.type,
-        providerVersion: provider.version,
+        providerVersion:
+          feature.properties?.providerProvenance?.providerVersion ?? provider.version,
         importVersion,
         normalizationVersion,
         importBatchId: "FIXTURE_IMPORT_BATCH_001",

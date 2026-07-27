@@ -26,12 +26,15 @@ test("terrain provider fixture converts elevation and terrain classes into geogr
     providerAdapterModule.providerFixtureBundles.TERRAIN_PROVIDER_FIXTURE_001
   );
 
-  assert.equal(layer.sourceDataBundle.geographyFeatures.length, 4);
+  assert.equal(layer.sourceDataBundle.geographyFeatures.length, 5);
   assert.ok(
     layer.sourceDataBundle.geographyFeatures.some((feature) => feature.type === "ELEVATION")
   );
   assert.ok(
     layer.sourceDataBundle.geographyFeatures.some((feature) => feature.type === "BIOME")
+  );
+  assert.ok(
+    layer.sourceDataBundle.geographyFeatures.some((feature) => feature.type === "COASTLINE")
   );
 });
 
