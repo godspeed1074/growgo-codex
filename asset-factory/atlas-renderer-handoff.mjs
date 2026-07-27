@@ -261,6 +261,7 @@ function buildRenderInstruction(scene, objectEntry, assetAssignment, assetIndex)
 
   return deepFreeze({
     objectId: objectEntry.objectId,
+    objectType: objectEntry.objectType,
     sceneId: scene.sceneId,
     assetReference: assetAssignment.assetId,
     transformReference: deepFreeze(
