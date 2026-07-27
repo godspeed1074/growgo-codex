@@ -252,14 +252,32 @@ function buildWorldObject({
 }
 
 function classifyNaturalFeature(naturalFeatureType) {
-  if (naturalFeatureType === "PARK" || naturalFeatureType === "RESERVE") {
+  if (
+    naturalFeatureType === "PARK" ||
+    naturalFeatureType === "RESERVE" ||
+    naturalFeatureType === "OVAL" ||
+    naturalFeatureType === "RECREATION_AREA"
+  ) {
     return "PARK";
   }
   return "NATURAL_FEATURE";
 }
 
 function classifyBuildingType(buildingType) {
-  if (["BAKERY", "CAFE", "RESTAURANT", "PETROL_STATION", "SHOP", "LIBRARY"].includes(buildingType)) {
+  if (
+    [
+      "BAKERY",
+      "CAFE",
+      "RESTAURANT",
+      "PETROL_STATION",
+      "SHOP",
+      "LIBRARY",
+      "SCHOOL",
+      "COMMUNITY_BUILDING",
+      "WAREHOUSE",
+      "INDUSTRIAL_BUILDING"
+    ].includes(buildingType)
+  ) {
     return "BUSINESS";
   }
   if (["LIGHTHOUSE", "MONUMENT", "LOOKOUT", "HISTORIC_SITE"].includes(buildingType)) {
@@ -285,6 +303,9 @@ function resolveNaturalGameplayTags(naturalFeatureType) {
   if (naturalFeatureType === "PARK" || naturalFeatureType === "RESERVE") {
     return ["exploration", "nature", "wildlife", "quest_candidate"];
   }
+  if (naturalFeatureType === "OVAL" || naturalFeatureType === "RECREATION_AREA") {
+    return ["exploration", "nature", "recreation", "quest_candidate"];
+  }
   if (naturalFeatureType === "BEACH") {
     return ["exploration", "nature", "coastal", "quest_candidate"];
   }
@@ -295,8 +316,14 @@ function resolveBuildingGameplayTags(buildingType) {
   if (buildingType === "BAKERY") {
     return ["npc_interaction", "crafting", "quest_candidate", "food"];
   }
-  if (["CAFE", "RESTAURANT", "SHOP", "LIBRARY", "PETROL_STATION"].includes(buildingType)) {
+  if (["CAFE", "RESTAURANT", "SHOP", "PETROL_STATION"].includes(buildingType)) {
     return ["npc_interaction", "crafting", "quest_candidate"];
+  }
+  if (["LIBRARY", "SCHOOL", "COMMUNITY_BUILDING"].includes(buildingType)) {
+    return ["npc_interaction", "community", "quest_candidate"];
+  }
+  if (["WAREHOUSE", "INDUSTRIAL_BUILDING"].includes(buildingType)) {
+    return ["industrial", "logistics", "quest_candidate"];
   }
   if (["LIGHTHOUSE", "MONUMENT", "LOOKOUT", "HISTORIC_SITE"].includes(buildingType)) {
     return ["achievement", "collection", "quest"];

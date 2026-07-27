@@ -454,7 +454,20 @@ function resolvePreviewType(sourceObject, natureAssignment, objectRelationships)
     return "TOWN_STREET_PREVIEW";
   }
   if (
-    ["BAKERY", "CAFE", "SHOP", "PETROL_STATION", "LIBRARY", "SCHOOL", "COMMUNITY_BUILDING"].includes(
+    [
+      "BAKERY",
+      "CAFE",
+      "SHOP",
+      "PETROL_STATION",
+      "LIBRARY",
+      "SCHOOL",
+      "COMMUNITY_BUILDING",
+      "RAILWAY_STATION",
+      "FERRY_TERMINAL",
+      "BUS_STOP",
+      "WAREHOUSE",
+      "INDUSTRIAL_BUILDING"
+    ].includes(
       sourceObject.realWorldType
     )
   ) {
@@ -492,6 +505,33 @@ function resolveRecipeCompatibility(entry, normalized) {
   if (entry.objectType === "PETROL_STATION") {
     return entry.assetRecipe.includes("FUEL_STATION");
   }
+  if (entry.objectType === "SHOP") {
+    return entry.assetRecipe.includes("SHOP");
+  }
+  if (entry.objectType === "LIBRARY") {
+    return entry.assetRecipe.includes("LIBRARY");
+  }
+  if (entry.objectType === "SCHOOL") {
+    return entry.assetRecipe.includes("SCHOOL");
+  }
+  if (entry.objectType === "COMMUNITY_BUILDING") {
+    return entry.assetRecipe.includes("COMMUNITY");
+  }
+  if (entry.objectType === "RAILWAY_STATION") {
+    return entry.assetRecipe.includes("RAILWAY_STATION");
+  }
+  if (entry.objectType === "FERRY_TERMINAL") {
+    return entry.assetRecipe.includes("FERRY_TERMINAL");
+  }
+  if (entry.objectType === "BUS_STOP") {
+    return entry.assetRecipe.includes("BUS_STOP");
+  }
+  if (entry.objectType === "WAREHOUSE") {
+    return entry.assetRecipe.includes("WAREHOUSE");
+  }
+  if (entry.objectType === "INDUSTRIAL_BUILDING") {
+    return entry.assetRecipe.includes("INDUSTRIAL");
+  }
   if (entry.objectType === "TRANSPORT_ROUTE") {
     return entry.assetRecipe.includes("TRANSPORT_ROUTE");
   }
@@ -504,17 +544,15 @@ function resolveRecipeCompatibility(entry, normalized) {
   if (entry.objectType === "HISTORIC_SITE") {
     return entry.assetRecipe.includes("HISTORIC_SITE");
   }
-  if (["PARK", "RESERVE", "BEACH", "FOREST", "WATERWAY"].includes(entry.objectType)) {
+  if (
+    ["PARK", "RESERVE", "BEACH", "FOREST", "WATERWAY", "OVAL", "RECREATION_AREA"].includes(
+      entry.objectType
+    )
+  ) {
     return entry.assetRecipe.endsWith("_RECIPE_001");
   }
   if (entry.previewType === "TOWN_STREET_PREVIEW") {
-    return (
-      entry.assetRecipe.includes("TRANSPORT_ROUTE") ||
-      entry.assetRecipe.includes("CAFE") ||
-      entry.assetRecipe.includes("BAKERY") ||
-      entry.assetRecipe.includes("SHOP") ||
-      entry.assetRecipe.includes("LIBRARY")
-    );
+    return typeof entry.assetRecipe === "string" && entry.assetRecipe.startsWith("RECIPE_");
   }
   if (entry.previewType === "COMMERCIAL_AREA_PREVIEW") {
     return typeof entry.assetRecipe === "string" && entry.assetRecipe.startsWith("RECIPE_");

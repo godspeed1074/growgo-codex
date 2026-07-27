@@ -29,10 +29,34 @@ const recipeCatalog = deepFreeze({
     variantRules: deepFreeze(["coastal_or_town_cafe", "street_frontage"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
+  SHOP: deepFreeze({
+    recipeId: "RECIPE_BUILDING_SHOP_STANDARD_001",
+    assetFamily: "FAMILY_BUILDING_COMMERCIAL_SHOP",
+    variantRules: deepFreeze(["shopfront_standard", "street_frontage"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
   PETROL_STATION: deepFreeze({
     recipeId: "RECIPE_BUILDING_FUEL_STATION_STANDARD_001",
     assetFamily: "FAMILY_BUILDING_COMMERCIAL_FUEL",
     variantRules: deepFreeze(["roadside_service", "vehicle_access_required"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  LIBRARY: deepFreeze({
+    recipeId: "RECIPE_BUILDING_LIBRARY_STANDARD_001",
+    assetFamily: "FAMILY_BUILDING_CIVIC_LIBRARY",
+    variantRules: deepFreeze(["civic_frontage", "community_anchor"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  SCHOOL: deepFreeze({
+    recipeId: "RECIPE_BUILDING_SCHOOL_STANDARD_001",
+    assetFamily: "FAMILY_BUILDING_CIVIC_SCHOOL",
+    variantRules: deepFreeze(["civic_campus", "community_anchor"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  COMMUNITY_BUILDING: deepFreeze({
+    recipeId: "RECIPE_BUILDING_COMMUNITY_STANDARD_001",
+    assetFamily: "FAMILY_BUILDING_CIVIC_COMMUNITY",
+    variantRules: deepFreeze(["community_hub", "public_frontage"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   PARK: deepFreeze({
@@ -45,6 +69,18 @@ const recipeCatalog = deepFreeze({
     recipeId: "RECIPE_TREATMENT_RESERVE_STANDARD_001",
     assetFamily: "FAMILY_TREATMENT_RESERVE",
     variantRules: deepFreeze(["green_space", "controlled_access"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  OVAL: deepFreeze({
+    recipeId: "RECIPE_TREATMENT_OVAL_STANDARD_001",
+    assetFamily: "FAMILY_TREATMENT_RECREATION_OVAL",
+    variantRules: deepFreeze(["sports_ground", "open_recreation"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  RECREATION_AREA: deepFreeze({
+    recipeId: "RECIPE_TREATMENT_RECREATION_STANDARD_001",
+    assetFamily: "FAMILY_TREATMENT_RECREATION",
+    variantRules: deepFreeze(["active_recreation", "open_space"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   LIGHTHOUSE: deepFreeze({
@@ -69,6 +105,36 @@ const recipeCatalog = deepFreeze({
     recipeId: "RECIPE_LANDMARK_GENERIC_001",
     assetFamily: "FAMILY_LANDMARK_GENERIC",
     variantRules: deepFreeze(["generic_landmark", "focal_point"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  RAILWAY_STATION: deepFreeze({
+    recipeId: "RECIPE_TRANSPORT_RAILWAY_STATION_001",
+    assetFamily: "FAMILY_TRANSPORT_RAILWAY_STATION",
+    variantRules: deepFreeze(["transport_hub", "rail_access"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  FERRY_TERMINAL: deepFreeze({
+    recipeId: "RECIPE_TRANSPORT_FERRY_TERMINAL_001",
+    assetFamily: "FAMILY_TRANSPORT_FERRY_TERMINAL",
+    variantRules: deepFreeze(["transport_hub", "waterfront_context"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  BUS_STOP: deepFreeze({
+    recipeId: "RECIPE_TRANSPORT_BUS_STOP_001",
+    assetFamily: "FAMILY_TRANSPORT_BUS_STOP",
+    variantRules: deepFreeze(["transport_stop", "road_served"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  WAREHOUSE: deepFreeze({
+    recipeId: "RECIPE_BUILDING_WAREHOUSE_STANDARD_001",
+    assetFamily: "FAMILY_BUILDING_INDUSTRIAL_WAREHOUSE",
+    variantRules: deepFreeze(["industrial_frontage", "logistics_access"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  INDUSTRIAL_BUILDING: deepFreeze({
+    recipeId: "RECIPE_BUILDING_INDUSTRIAL_STANDARD_001",
+    assetFamily: "FAMILY_BUILDING_INDUSTRIAL_GENERIC",
+    variantRules: deepFreeze(["industrial_frontage", "service_access"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   NATURAL_FEATURE: deepFreeze({
@@ -313,14 +379,32 @@ function resolveRecipeCatalogEntry(object, relationships) {
   if (object.realWorldType === "CAFE") {
     return recipeCatalog.CAFE;
   }
+  if (object.realWorldType === "SHOP") {
+    return recipeCatalog.SHOP;
+  }
   if (object.realWorldType === "PETROL_STATION") {
     return recipeCatalog.PETROL_STATION;
+  }
+  if (object.realWorldType === "LIBRARY") {
+    return recipeCatalog.LIBRARY;
+  }
+  if (object.realWorldType === "SCHOOL") {
+    return recipeCatalog.SCHOOL;
+  }
+  if (object.realWorldType === "COMMUNITY_BUILDING") {
+    return recipeCatalog.COMMUNITY_BUILDING;
   }
   if (object.realWorldType === "PARK") {
     return enhanceCatalogEntry(recipeCatalog.PARK, relationships);
   }
   if (object.realWorldType === "RESERVE") {
     return enhanceCatalogEntry(recipeCatalog.RESERVE, relationships);
+  }
+  if (object.realWorldType === "OVAL") {
+    return enhanceCatalogEntry(recipeCatalog.OVAL, relationships);
+  }
+  if (object.realWorldType === "RECREATION_AREA") {
+    return enhanceCatalogEntry(recipeCatalog.RECREATION_AREA, relationships);
   }
   if (object.realWorldType === "LIGHTHOUSE") {
     return enhanceCatalogEntry(recipeCatalog.LIGHTHOUSE, relationships);
@@ -330,6 +414,21 @@ function resolveRecipeCatalogEntry(object, relationships) {
   }
   if (object.realWorldType === "HISTORIC_SITE") {
     return recipeCatalog.HISTORIC_SITE;
+  }
+  if (object.realWorldType === "RAILWAY_STATION") {
+    return enhanceCatalogEntry(recipeCatalog.RAILWAY_STATION, relationships);
+  }
+  if (object.realWorldType === "FERRY_TERMINAL") {
+    return enhanceCatalogEntry(recipeCatalog.FERRY_TERMINAL, relationships);
+  }
+  if (object.realWorldType === "BUS_STOP") {
+    return enhanceCatalogEntry(recipeCatalog.BUS_STOP, relationships);
+  }
+  if (object.realWorldType === "WAREHOUSE") {
+    return enhanceCatalogEntry(recipeCatalog.WAREHOUSE, relationships);
+  }
+  if (object.realWorldType === "INDUSTRIAL_BUILDING") {
+    return enhanceCatalogEntry(recipeCatalog.INDUSTRIAL_BUILDING, relationships);
   }
   if (object.realWorldType === "TRANSPORT_ROUTE") {
     return enhanceCatalogEntry(recipeCatalog.TRANSPORT_ROUTE, relationships);
@@ -426,17 +525,56 @@ function isObjectTypeCompatible(assignment, object) {
   if (object.realWorldType === "CAFE") {
     return recipe.includes("CAFE");
   }
+  if (object.realWorldType === "SHOP") {
+    return recipe.includes("SHOP");
+  }
   if (object.realWorldType === "PETROL_STATION") {
     return recipe.includes("FUEL_STATION");
   }
+  if (object.realWorldType === "LIBRARY") {
+    return recipe.includes("LIBRARY");
+  }
+  if (object.realWorldType === "SCHOOL") {
+    return recipe.includes("SCHOOL");
+  }
+  if (object.realWorldType === "COMMUNITY_BUILDING") {
+    return recipe.includes("COMMUNITY");
+  }
   if (object.realWorldType === "PARK") {
     return recipe.includes("PARK");
+  }
+  if (object.realWorldType === "RESERVE") {
+    return recipe.includes("RESERVE");
+  }
+  if (object.realWorldType === "OVAL") {
+    return recipe.includes("OVAL");
+  }
+  if (object.realWorldType === "RECREATION_AREA") {
+    return recipe.includes("RECREATION");
   }
   if (object.realWorldType === "LIGHTHOUSE") {
     return recipe.includes("LIGHTHOUSE");
   }
   if (object.realWorldType === "LOOKOUT") {
     return recipe.includes("LOOKOUT");
+  }
+  if (object.realWorldType === "HISTORIC_SITE") {
+    return recipe.includes("HISTORIC_SITE");
+  }
+  if (object.realWorldType === "RAILWAY_STATION") {
+    return recipe.includes("RAILWAY_STATION");
+  }
+  if (object.realWorldType === "FERRY_TERMINAL") {
+    return recipe.includes("FERRY_TERMINAL");
+  }
+  if (object.realWorldType === "BUS_STOP") {
+    return recipe.includes("BUS_STOP");
+  }
+  if (object.realWorldType === "WAREHOUSE") {
+    return recipe.includes("WAREHOUSE");
+  }
+  if (object.realWorldType === "INDUSTRIAL_BUILDING") {
+    return recipe.includes("INDUSTRIAL");
   }
   return recipe.startsWith("RECIPE_");
 }
