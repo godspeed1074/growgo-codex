@@ -13,9 +13,9 @@ test("coverage calculation reports expected pack percentages", () => {
 
   assert.ok(nature);
   assert.equal(nature.familyCoveragePercentage, 100);
-  assert.equal(nature.recipeCoveragePercentage, 0);
-  assert.equal(nature.variantCoveragePercentage, 25);
-  assert.equal(nature.packCoveragePercentage, 42);
+  assert.equal(nature.recipeCoveragePercentage, 100);
+  assert.equal(nature.variantCoveragePercentage, 13);
+  assert.equal(nature.packCoveragePercentage, 71);
 
   assert.ok(residential);
   assert.equal(residential.packCoveragePercentage, 89);
@@ -25,13 +25,8 @@ test("missing recipe detection identifies uncovered nature Atlas demand", () => 
   const layer = coverageReviewModule.createAssetFactoryCoverageReviewLayer();
   const nature = layer.getPackReport("NATURE");
 
-  assert.deepEqual(nature.recipeCoverage.uncoveredRecipes, [
-    "BEACH_RECIPE_001",
-    "FOREST_RECIPE_001",
-    "RECIPE_TREATMENT_PARK_STANDARD_001",
-    "RESERVE_RECIPE_001"
-  ]);
-  assert.equal(nature.highestValueGaps[0].gapType, "missing_recipe_coverage");
+  assert.deepEqual(nature.recipeCoverage.uncoveredRecipes, []);
+  assert.equal(nature.highestValueGaps[0].gapType, "underfilled_asset_family");
 });
 
 test("priority ordering favors lowest coverage first then existing pack priority order", () => {
@@ -39,10 +34,10 @@ test("priority ordering favors lowest coverage first then existing pack priority
   const orderedCategories = layer.report.recommendedNextActions.map((entry) => entry.category);
 
   assert.deepEqual(orderedCategories, [
-    "NATURE",
     "CIVIC",
     "ROAD_AND_STREET",
     "TRANSPORT",
+    "NATURE",
     "COMMERCIAL",
     "RESIDENTIAL"
   ]);

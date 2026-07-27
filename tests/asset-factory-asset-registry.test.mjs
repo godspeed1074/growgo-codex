@@ -54,6 +54,46 @@ test("terrain feature lookup returns coastal terrain feature asset", () => {
   assert.ok(asset.biomeCompatibility.includes("CLIFF_EDGE"));
 });
 
+test("beach lookup returns expanded beach asset family record", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("GROUND_BEACH_SAND_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "BEACH_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "BEACH_ENVIRONMENT_RECIPE_001");
+  assert.ok(asset.biomeCompatibility.includes("DUNE_SYSTEM"));
+});
+
+test("forest lookup returns expanded forest asset family record", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("FOREST_UNDERGROWTH_SET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "FOREST_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "FOREST_ENVIRONMENT_RECIPE_001");
+  assert.ok(asset.biomeCompatibility.includes("WOODLAND"));
+});
+
+test("reserve lookup returns expanded reserve asset family record", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("RESERVE_HABITAT_SET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "RESERVE_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "RESERVE_ENVIRONMENT_RECIPE_001");
+  assert.ok(asset.biomeCompatibility.includes("PROTECTED_AREA"));
+});
+
+test("park treatment lookup returns expanded park treatment asset family record", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("PARK_TREATMENT_GREENERY_SET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "PARK_TREATMENT_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "PARK_ENVIRONMENT_RECIPE_001");
+  assert.ok(asset.biomeCompatibility.includes("SUBURBAN_PARKLAND"));
+});
+
 test("recipe lookup resolves shop recipe to onboarded asset", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const asset = registryLayer.getAssetByRecipeId("BUILDING_SHOP_GENERAL_RECIPE_001");
@@ -69,6 +109,15 @@ test("recipe lookup resolves nature pack recipe through nature asset pack", () =
   assert.ok(recipe);
   assert.equal(recipe.recipeType, "COASTAL_ENVIRONMENT_RECIPE");
   assert.ok(recipe.supportedFamilies.includes("TREE_ASSET_FAMILY_001"));
+});
+
+test("recipe lookup resolves expanded nature environment recipe through nature asset pack", () => {
+  const naturePack = assetRegistryModule.createNatureAssetPack();
+  const recipe = naturePack.getRecipe("BEACH_ENVIRONMENT_RECIPE_001");
+
+  assert.ok(recipe);
+  assert.equal(recipe.recipeType, "BEACH_ENVIRONMENT_RECIPE");
+  assert.ok(recipe.supportedFamilies.includes("BEACH_ASSET_FAMILY_001"));
 });
 
 test("school lookup returns civic school asset", () => {

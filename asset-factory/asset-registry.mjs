@@ -36,7 +36,7 @@ const versionPattern = /^(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*)){0,2}$/;
 export const assetFactoryRegistryLayerSchemaId = "ASSET_FACTORY_REGISTRY_LAYER_001";
 export const assetRegistryValidationSchemaId = "ASSET_REGISTRY_VALIDATION_001";
 export const natureAssetPackSchemaId = "NATURE_ASSET_PACK_001";
-export const natureAssetPackValidationSchemaId = "NATURE_ASSET_PACK_VALIDATION_001";
+export const natureAssetPackValidationSchemaId = "NATURE_EXPANSION_VALIDATION_001";
 export const civicAssetPackSchemaId = "CIVIC_ASSET_PACK_001";
 export const civicAssetPackValidationSchemaId = "CIVIC_ASSET_PACK_VALIDATION_001";
 export const transportAssetPackSchemaId = "TRANSPORT_ASSET_PACK_001";
@@ -97,10 +97,18 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "INTERSECTION_RECIPE_001",
   "STREET_FURNITURE_RECIPE_001",
   "RECIPE_TRANSPORT_ROUTE_STANDARD_001",
+  "BEACH_RECIPE_001",
+  "RESERVE_RECIPE_001",
+  "FOREST_RECIPE_001",
+  "RECIPE_TREATMENT_PARK_STANDARD_001",
   "RECIPE_NATURE_PARK_STANDARD_001",
   "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
   "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
-  "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
+  "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001",
+  "BEACH_ENVIRONMENT_RECIPE_001",
+  "FOREST_ENVIRONMENT_RECIPE_001",
+  "RESERVE_ENVIRONMENT_RECIPE_001",
+  "PARK_ENVIRONMENT_RECIPE_001"
 ]);
 
 export const onboardedExistingAssetRecords = deepFreeze([
@@ -207,6 +215,42 @@ export const natureAssetPackRecipes = deepFreeze([
       "TREE_ASSET_FAMILY_001",
       "VEGETATION_ASSET_FAMILY_001",
       "GROUND_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "BEACH_ENVIRONMENT_RECIPE_001",
+    recipeType: "BEACH_ENVIRONMENT_RECIPE",
+    supportedFamilies: deepFreeze([
+      "BEACH_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "FOREST_ENVIRONMENT_RECIPE_001",
+    recipeType: "FOREST_ENVIRONMENT_RECIPE",
+    supportedFamilies: deepFreeze([
+      "FOREST_ASSET_FAMILY_001",
+      "TREE_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "RESERVE_ENVIRONMENT_RECIPE_001",
+    recipeType: "RESERVE_ENVIRONMENT_RECIPE",
+    supportedFamilies: deepFreeze([
+      "RESERVE_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "PARK_ENVIRONMENT_RECIPE_001",
+    recipeType: "PARK_ENVIRONMENT_RECIPE",
+    supportedFamilies: deepFreeze([
+      "PARK_TREATMENT_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001"
     ])
   })
 ]);
@@ -402,6 +446,198 @@ export const natureAssetPackRecords = deepFreeze([
       sourceRecipeReferences: deepFreeze(["RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"]),
       existingWorkPreserved: true,
       onboardingSource: "SESSION_111_NATURE_PACK_FOUNDATION"
+    })
+  }),
+  deepFreeze({
+    assetId: "GROUND_BEACH_SAND_001",
+    assetFamily: "BEACH_ASSET_FAMILY_001",
+    assetType: "BEACH_SAND_AND_DUNE_SET",
+    recipeId: "BEACH_ENVIRONMENT_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "beach_ground_cover",
+      "dune_edge_treatment",
+      "shoreline_transition"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["BEACH", "COASTLINE", "SHORELINE"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "BEACH_ENVIRONMENT_RECIPE_001",
+        "BEACH_RECIPE_001",
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"
+      ]),
+      assignmentMode: "beach_environment_recipe_bridge"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "BEACH_EDGE",
+      "DUNE_SYSTEM"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["GROUND_BEACH_SAND_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "BEACH_ENVIRONMENT_RECIPE_001",
+        "BEACH_RECIPE_001"
+      ]),
+      performanceBudget: deepFreeze({
+        polygonBudget: "low",
+        materialBudget: "shared_nature_material",
+        instanceFriendly: true
+      }),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_143_NATURE_ASSET_PACK_EXPANSION"
+    })
+  }),
+  deepFreeze({
+    assetId: "FOREST_UNDERGROWTH_SET_001",
+    assetFamily: "FOREST_ASSET_FAMILY_001",
+    assetType: "FOREST_UNDERGROWTH_AND_GROUND_SET",
+    recipeId: "FOREST_ENVIRONMENT_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "forest_floor_cover",
+      "forest_edge_transition",
+      "undergrowth_cluster"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["FOREST", "FOREST_EDGE", "WOODLAND"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "FOREST_ENVIRONMENT_RECIPE_001",
+        "FOREST_RECIPE_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
+      ]),
+      assignmentMode: "forest_environment_recipe_bridge"
+    }),
+    biomeCompatibility: deepFreeze([
+      "TEMPERATE_FOREST_EDGE",
+      "FOREST_EDGE",
+      "WOODLAND"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["FOREST_UNDERGROWTH_SET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "FOREST_ENVIRONMENT_RECIPE_001",
+        "FOREST_RECIPE_001"
+      ]),
+      performanceBudget: deepFreeze({
+        polygonBudget: "low",
+        materialBudget: "shared_forest_material",
+        instanceFriendly: true
+      }),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_143_NATURE_ASSET_PACK_EXPANSION"
+    })
+  }),
+  deepFreeze({
+    assetId: "RESERVE_HABITAT_SET_001",
+    assetFamily: "RESERVE_ASSET_FAMILY_001",
+    assetType: "RESERVE_VEGETATION_AND_TRAIL_SET",
+    recipeId: "RESERVE_ENVIRONMENT_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "protected_area_vegetation",
+      "habitat_transition",
+      "walking_trail_treatment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["RESERVE", "PROTECTED_AREA", "TRAIL"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE", "PARK"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RESERVE_ENVIRONMENT_RECIPE_001",
+        "RESERVE_RECIPE_001",
+        "RECIPE_NATURE_PARK_STANDARD_001"
+      ]),
+      assignmentMode: "reserve_environment_recipe_bridge"
+    }),
+    biomeCompatibility: deepFreeze([
+      "PROTECTED_AREA",
+      "NATIVE_HABITAT",
+      "COASTAL"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["RESERVE_HABITAT_SET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "RESERVE_ENVIRONMENT_RECIPE_001",
+        "RESERVE_RECIPE_001"
+      ]),
+      performanceBudget: deepFreeze({
+        polygonBudget: "low",
+        materialBudget: "shared_reserve_material",
+        instanceFriendly: true
+      }),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_143_NATURE_ASSET_PACK_EXPANSION"
+    })
+  }),
+  deepFreeze({
+    assetId: "PARK_TREATMENT_GREENERY_SET_001",
+    assetFamily: "PARK_TREATMENT_ASSET_FAMILY_001",
+    assetType: "PARK_LANDSCAPING_AND_RECREATION_GREENERY",
+    recipeId: "PARK_ENVIRONMENT_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "park_landscaping",
+      "garden_edge_treatment",
+      "recreation_greenery"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["PARK", "GARDEN", "RECREATION_AREA"]),
+      supportedClassifications: deepFreeze(["PARK", "NATURAL_FEATURE"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "PARK_ENVIRONMENT_RECIPE_001",
+        "RECIPE_TREATMENT_PARK_STANDARD_001",
+        "RECIPE_NATURE_PARK_STANDARD_001"
+      ]),
+      assignmentMode: "park_environment_recipe_bridge"
+    }),
+    biomeCompatibility: deepFreeze([
+      "SUBURBAN_PARKLAND",
+      "TEMPERATE_GRASSLAND",
+      "COASTAL"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["PARK_TREATMENT_GREENERY_SET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "PARK_ENVIRONMENT_RECIPE_001",
+        "RECIPE_TREATMENT_PARK_STANDARD_001"
+      ]),
+      performanceBudget: deepFreeze({
+        polygonBudget: "low",
+        materialBudget: "shared_park_material",
+        instanceFriendly: true
+      }),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_143_NATURE_ASSET_PACK_EXPANSION"
     })
   })
 ]);
