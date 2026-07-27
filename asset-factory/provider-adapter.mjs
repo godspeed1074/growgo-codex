@@ -345,8 +345,15 @@ export const providerFixtureBundles = deepFreeze({
 export function createProviderAdapterLayer(rawProviderBundle) {
   const providerBundle = normalizeProviderSourceBundle(rawProviderBundle);
   const mappings = selectMappingsForProviderType(providerBundle.providerType);
-  const sourceDataBundle = convertProviderBundleToSourceDataBundle(providerBundle, mappings);
-  const validation = buildProviderValidation(providerBundle, sourceDataBundle, mappings);
+  const conversion = convertProviderBundleToSourceDataBundle(providerBundle, mappings);
+  const { sourceDataBundle, warnings, stats } = conversion;
+  const validation = buildProviderValidation(
+    providerBundle,
+    sourceDataBundle,
+    mappings,
+    warnings,
+    stats
+  );
 
   const layer = deepFreeze({
     schemaId: providerAdapterLayerSchemaId,
@@ -355,6 +362,8 @@ export function createProviderAdapterLayer(rawProviderBundle) {
     providerAdapter: buildProviderAdapterDefinition(providerBundle),
     fieldMappings: mappings,
     sourceDataBundle,
+    conversionWarnings: warnings,
+    conversionStats: stats,
     validation
   });
 
@@ -454,6 +463,7 @@ function buildProviderAdapterDefinition(providerBundle) {
 }
 
 function convertProviderBundleToSourceDataBundle(providerBundle, mappings) {
+  const warnings = [];
   const converted = {
     schemaId: sourceDataBundleSchemaId,
     bundleId: `${providerBundle.bundleId}_SOURCE_DATA`,
@@ -474,35 +484,62 @@ function convertProviderBundleToSourceDataBundle(providerBundle, mappings) {
 
   for (const feature of providerBundle.sourceFeatures) {
     if (providerBundle.providerType === "MAP_PROVIDER") {
-      mapProviderFeature(converted, feature);
+      mapProviderFeature(converted, feature, warnings);
     } else if (providerBundle.providerType === "TERRAIN_PROVIDER") {
-      terrainProviderFeature(converted, feature);
+      terrainProviderFeature(converted, feature, warnings);
     } else if (providerBundle.providerType === "POI_PROVIDER") {
-      poiProviderFeature(converted, feature);
+      poiProviderFeature(converted, feature, warnings);
     } else if (providerBundle.providerType === "NATURAL_PROVIDER") {
-      naturalProviderFeature(converted, feature);
+      naturalProviderFeature(converted, feature, warnings);
     }
   }
 
-  return deepFreeze({
+  const dedupedPoiResult = dedupePoiFeatures(converted.poiFeatures, warnings);
+
+  const sourceDataBundle = deepFreeze({
     ...converted,
     geographyFeatures: deepFreeze(sortById(converted.geographyFeatures)),
     roadFeatures: deepFreeze(sortById(converted.roadFeatures)),
     settlementFeatures: deepFreeze(sortById(converted.settlementFeatures)),
-    poiFeatures: deepFreeze(sortById(converted.poiFeatures)),
+    poiFeatures: deepFreeze(sortById(dedupedPoiResult.poiFeatures)),
     naturalFeatures: deepFreeze(sortById(converted.naturalFeatures)),
     providerMappingMetadata: mappings
   });
+
+  const stats = deepFreeze({
+    warningCount: warnings.length,
+    duplicateResolutionCount: dedupedPoiResult.duplicatesResolvedCount,
+    lowConfidenceMappingCount: countLowConfidenceFeatures(sourceDataBundle)
+  });
+
+  return deepFreeze({
+    sourceDataBundle,
+    warnings: deepFreeze(warnings.map((warning) => deepFreeze(warning))),
+    stats
+  });
 }
 
-function mapProviderFeature(converted, feature) {
+function mapProviderFeature(converted, feature, warnings) {
   if (feature.sourceType === "road" || feature.sourceType === "trail" || feature.sourceType === "path") {
-    const mapping = mapRoadTypeMap[feature.properties.highway];
+    const highway = normalizeRoadAlias(
+      readProviderField(feature, [
+        "highway",
+        "roadType",
+        "tags.highway",
+        "attributes.highway",
+        "classification.road"
+      ])
+    );
+    const mapping = mapRoadTypeMap[highway];
     if (!mapping) {
-      throw createValidationError(
-        "unsupported_map_feature",
-        `Unsupported map feature highway ${feature.properties.highway}.`
+      warnings.push(
+        createWarning(
+          "UNSUPPORTED_MAP_FEATURE",
+          feature.id,
+          `Unsupported map feature highway ${String(highway)} was ignored.`
+        )
       );
+      return;
     }
 
     converted.roadFeatures.push(
@@ -510,31 +547,74 @@ function mapProviderFeature(converted, feature) {
         ...("roadClass" in mapping ? { roadClass: mapping.roadClass } : {}),
         ...("trailType" in mapping ? { trailType: mapping.trailType } : {}),
         ...("pathType" in mapping ? { pathType: mapping.pathType } : {}),
-        surface: feature.properties.surface,
-        access: feature.properties.access,
+        surface: readProviderField(feature, [
+          "surface",
+          "tags.surface",
+          "meta.surface"
+        ]) ?? "UNKNOWN",
+        access:
+          String(
+            readProviderField(feature, ["access", "tags.access", "meta.access"]) ?? "UNKNOWN"
+          ).toUpperCase(),
+        mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
         providerProvenance: buildFeatureProvenance(feature)
       })
     );
+
+    if (readProviderField(feature, ["surface", "tags.surface", "meta.surface"]) === undefined) {
+      warnings.push(
+        createWarning(
+          "MISSING_OPTIONAL_SURFACE",
+          feature.id,
+          "Road feature missing surface metadata; defaulted to UNKNOWN."
+        )
+      );
+    }
+    if (readProviderField(feature, ["access", "tags.access", "meta.access"]) === undefined) {
+      warnings.push(
+        createWarning(
+          "MISSING_OPTIONAL_ACCESS",
+          feature.id,
+          "Road feature missing access metadata; defaulted to UNKNOWN."
+        )
+      );
+    }
     return;
   }
 
   if (feature.sourceType === "boundary") {
     converted.settlementFeatures.push(
       createSourceFeature(feature, "TOWN", {
-        name: feature.properties.name ?? "Provider Boundary",
-        density: feature.properties.density ?? 0.4,
+        name: readProviderField(feature, ["name", "properties.name"]) ?? "Provider Boundary",
+        density: Number(readProviderField(feature, ["density", "meta.density"]) ?? 0.4),
+        mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
         providerProvenance: buildFeatureProvenance(feature)
       })
     );
   }
 }
 
-function terrainProviderFeature(converted, feature) {
+function terrainProviderFeature(converted, feature, warnings) {
   if (feature.sourceType === "elevation") {
+    const elevationMeters = Number(
+      readProviderField(feature, [
+        "elevationMeters",
+        "elev_m",
+        "stats.avg_elevation_m"
+      ]) ?? 0
+    );
+    const maxElevationMeters = Number(
+      readProviderField(feature, [
+        "maxElevationMeters",
+        "elev_max_m",
+        "stats.max_elevation_m"
+      ]) ?? elevationMeters
+    );
     converted.geographyFeatures.push(
       createSourceFeature(feature, "ELEVATION", {
-        averageMeters: feature.properties.elevationMeters,
-        maxMeters: feature.properties.maxElevationMeters ?? feature.properties.elevationMeters,
+        averageMeters: elevationMeters,
+        maxMeters: maxElevationMeters,
+        mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
         providerProvenance: buildFeatureProvenance(feature)
       })
     );
@@ -542,10 +622,28 @@ function terrainProviderFeature(converted, feature) {
   }
 
   if (feature.sourceType === "terrain") {
+    const terrainType = normalizeTerrainAlias(
+      readProviderField(feature, [
+        "terrainClass",
+        "terrainLabel",
+        "classification.terrain",
+        "landcover.terrain"
+      ])
+    );
+    const biomeType = normalizeBiomeAlias(
+      readProviderField(feature, [
+        "biomeClass",
+        "biomeLabel",
+        "classification.biome",
+        "landcover.biome"
+      ])
+    );
+    const slopeClass = readProviderField(feature, ["slopeClass", "slope", "terrainSlope"]);
     converted.geographyFeatures.push(
       createSourceFeature(feature, "TERRAIN", {
-        terrainType: String(feature.properties.terrainClass ?? "unknown").toUpperCase(),
-        slopeClass: feature.properties.slopeClass ?? "unknown",
+        terrainType,
+        slopeClass: slopeClass ?? "UNKNOWN",
+        mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
         providerProvenance: buildFeatureProvenance(feature)
       })
     );
@@ -554,19 +652,39 @@ function terrainProviderFeature(converted, feature) {
         { ...feature, id: `${feature.id}_BIOME` },
         "BIOME",
         {
-          biomeType: String(feature.properties.biomeClass ?? "unknown").toUpperCase(),
+          biomeType,
+          mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
           providerProvenance: buildFeatureProvenance(feature)
         }
       )
     );
+
+    if (slopeClass === undefined) {
+      warnings.push(
+        createWarning(
+          "MISSING_OPTIONAL_SLOPE",
+          feature.id,
+          "Terrain feature missing slope data; defaulted to UNKNOWN."
+        )
+      );
+    }
     return;
   }
 
   if (feature.sourceType === "landform") {
-    if (feature.properties.landformType === "coastline") {
+    const landformType = normalizeLandformAlias(
+      readProviderField(feature, [
+        "landformType",
+        "landform.kind",
+        "classification.landform"
+      ])
+    );
+
+    if (landformType === "coastline") {
       converted.geographyFeatures.push(
         createSourceFeature(feature, "COASTLINE", {
-          distanceMeters: feature.properties.distanceMeters ?? 0,
+          distanceMeters: Number(readProviderField(feature, ["distanceMeters", "proximityMeters"]) ?? 0),
+          mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
           providerProvenance: buildFeatureProvenance(feature)
         })
       );
@@ -575,51 +693,117 @@ function terrainProviderFeature(converted, feature) {
 
     converted.geographyFeatures.push(
       createSourceFeature(feature, "PROTECTED_AREA", {
-        protectedAreaType: feature.properties.protectedAreaType ?? "PROTECTED_AREA",
-        landformType: feature.properties.landformType ?? "landform",
+        protectedAreaType:
+          readProviderField(feature, ["protectedAreaType", "status.protectedType"]) ??
+          "PROTECTED_AREA",
+        landformType: landformType ?? "landform",
+        mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
         providerProvenance: buildFeatureProvenance(feature)
       })
     );
   }
 }
 
-function poiProviderFeature(converted, feature) {
-  const mapping = poiCategoryMap[feature.properties.category];
+function poiProviderFeature(converted, feature, warnings) {
+  const rawCategory = readProviderField(feature, [
+    "category",
+    "poiCategory",
+    "classification.category",
+    "tags.kind"
+  ]);
+  const normalizedCategory = normalizePoiAlias(rawCategory);
+  const mapping = poiCategoryMap[normalizedCategory];
   if (!mapping) {
-    throw createValidationError(
-      "unsupported_poi_feature",
-      `Unsupported POI category ${feature.properties.category}.`
+    warnings.push(
+      createWarning(
+        "UNSUPPORTED_POI_FEATURE",
+        feature.id,
+        `Unsupported POI category ${String(rawCategory)} was ignored.`
+      )
     );
+    return;
   }
 
+  const mappingConfidence = normalizeConfidence(readProviderField(feature, ["confidence"]));
   converted.poiFeatures.push(
     createSourceFeature(feature, mapping.type, {
       poiType: mapping.poiType,
-      mappingConfidence: feature.properties.confidence ?? 1,
+      mappingConfidence,
+      metadataCompleteness: hasMetadataFields(feature, ["name", "description"]) ? "COMPLETE" : "PARTIAL",
       providerProvenance: buildFeatureProvenance(feature)
     })
   );
+
+  if (!hasMetadataFields(feature, ["name", "description"])) {
+    warnings.push(
+      createWarning(
+        "INCOMPLETE_POI_METADATA",
+        feature.id,
+        "POI feature has incomplete metadata and was preserved with partial completeness."
+      )
+    );
+  }
+  if (mappingConfidence < 0.75) {
+    warnings.push(
+      createWarning(
+        "LOW_CONFIDENCE_POI_MAPPING",
+        feature.id,
+        "POI feature mapped with low confidence."
+      )
+    );
+  }
 }
 
-function naturalProviderFeature(converted, feature) {
-  const mapping = naturalCategoryMap[feature.properties.featureClass];
+function naturalProviderFeature(converted, feature, warnings) {
+  const rawFeatureClass = readProviderField(feature, [
+    "featureClass",
+    "featureType",
+    "classification.natural",
+    "tags.natural_kind"
+  ]);
+  const normalizedFeatureClass = normalizeNaturalAlias(rawFeatureClass);
+  const mapping = naturalCategoryMap[normalizedFeatureClass];
   if (!mapping) {
-    throw createValidationError(
-      "unsupported_natural_feature",
-      `Unsupported natural feature class ${feature.properties.featureClass}.`
+    warnings.push(
+      createWarning(
+        "UNSUPPORTED_NATURAL_FEATURE",
+        feature.id,
+        `Unsupported natural feature class ${String(rawFeatureClass)} was ignored.`
+      )
     );
+    return;
   }
 
   converted.naturalFeatures.push(
     createSourceFeature(feature, mapping.type, {
       featureType: mapping.featureType,
-      accessibility: String(feature.properties.access ?? "unknown").toUpperCase(),
+      accessibility: String(readProviderField(feature, ["access", "meta.access"]) ?? "UNKNOWN").toUpperCase(),
+      mappingConfidence: normalizeConfidence(readProviderField(feature, ["confidence"])),
       providerProvenance: buildFeatureProvenance(feature)
     })
   );
+
+  if (readProviderField(feature, ["boundaryStatus"]) === "INCOMPLETE") {
+    warnings.push(
+      createWarning(
+        "INCOMPLETE_NATURAL_BOUNDARY",
+        feature.id,
+        "Natural feature boundary is incomplete and was preserved with warning."
+      )
+    );
+  }
+  if (Array.isArray(readProviderField(feature, ["overlapsWith"]))) {
+    warnings.push(
+      createWarning(
+        "OVERLAPPING_NATURAL_FEATURE",
+        feature.id,
+        "Natural feature overlaps with another provider feature."
+      )
+    );
+  }
 }
 
-function buildProviderValidation(providerBundle, sourceDataBundle, mappings) {
+function buildProviderValidation(providerBundle, sourceDataBundle, mappings, warnings, stats) {
   const deterministicSignatureHash = computeDeterministicSignatureHash({
     providerBundle,
     providerAdapter: buildProviderAdapterDefinition(providerBundle),
@@ -638,6 +822,10 @@ function buildProviderValidation(providerBundle, sourceDataBundle, mappings) {
     ),
     deterministicConversion: true,
     sourceAdapterCompatibility: true,
+    warningCount: stats.warningCount,
+    duplicateResolutionCount: stats.duplicateResolutionCount,
+    lowConfidenceMappingCount: stats.lowConfidenceMappingCount,
+    warnings,
     deterministicSignatureHash
   });
 }
@@ -659,6 +847,10 @@ function normalizeProviderSourceBundle(rawBundle) {
     );
   }
 
+  const normalizedFeatures = rawBundle.sourceFeatures
+    .map((feature) => normalizeProviderFeature(rawBundle, feature))
+    .filter(Boolean);
+
   const bundle = deepFreeze({
     schemaId: rawBundle.schemaId,
     bundleId: rawBundle.bundleId,
@@ -670,9 +862,7 @@ function normalizeProviderSourceBundle(rawBundle) {
     supportedDataTypes: deepFreeze(structuredClone(rawBundle.supportedDataTypes)),
     geographicArea: deepFreeze(structuredClone(rawBundle.geographicArea)),
     sourceTimestamps: deepFreeze(structuredClone(rawBundle.sourceTimestamps)),
-    sourceFeatures: deepFreeze(
-      sortById(rawBundle.sourceFeatures.map((feature) => normalizeProviderFeature(rawBundle, feature)))
-    )
+    sourceFeatures: deepFreeze(sortById(normalizedFeatures))
   });
 
   return bundle;
@@ -681,13 +871,14 @@ function normalizeProviderSourceBundle(rawBundle) {
 function normalizeProviderFeature(bundle, rawFeature) {
   assertPresent(rawFeature.id, "Provider feature id is required.");
   assertPresent(rawFeature.sourceType, "Provider feature sourceType is required.");
-  assertPresent(rawFeature.geometry?.type, "Provider feature geometry type is required.");
-  assertPresent(rawFeature.geometry?.coordinates, "Provider feature geometry coordinates are required.");
+  const geometry = normalizeProviderGeometry(rawFeature);
+  assertPresent(geometry?.type, "Provider feature geometry type is required.");
+  assertPresent(geometry?.coordinates, "Provider feature geometry coordinates are required.");
 
   return deepFreeze({
     id: rawFeature.id,
     sourceType: rawFeature.sourceType,
-    geometry: deepFreeze(structuredClone(rawFeature.geometry)),
+    geometry: deepFreeze(geometry),
     properties: deepFreeze(structuredClone(rawFeature.properties ?? {})),
     providerMetadata: deepFreeze({
       provider: bundle.provider.providerId,
@@ -777,6 +968,234 @@ function buildFeatureProvenance(feature) {
     providerVersion: feature.providerMetadata.providerVersion,
     mappingVersion
   });
+}
+
+function readProviderField(feature, candidatePaths) {
+  for (const path of candidatePaths) {
+    const value = getNestedValue(feature.properties, path);
+    if (value !== undefined && value !== null && value !== "") {
+      return value;
+    }
+  }
+  return undefined;
+}
+
+function getNestedValue(value, path) {
+  const segments = path.split(".");
+  let current = value;
+  for (const segment of segments) {
+    if (current === null || current === undefined || typeof current !== "object") {
+      return undefined;
+    }
+    current = current[segment];
+  }
+  return current;
+}
+
+function normalizeRoadAlias(rawValue) {
+  const value = String(rawValue ?? "").trim().toLowerCase();
+  const aliasMap = {
+    primary_road: "primary",
+    primaryroute: "primary",
+    main: "primary",
+    local_street: "residential",
+    local: "residential",
+    walking_track: "track",
+    trail: "track",
+    pedestrian: "footway",
+    path: "footway"
+  };
+  return aliasMap[value] ?? value;
+}
+
+function normalizeTerrainAlias(rawValue) {
+  const value = String(rawValue ?? "unknown").trim().toUpperCase();
+  const aliasMap = {
+    "COASTAL FLATS": "COASTAL_PLAIN",
+    COASTAL_FLATS: "COASTAL_PLAIN",
+    COASTALPLAIN: "COASTAL_PLAIN",
+    FARM_LAND: "FARMLAND"
+  };
+  return aliasMap[value] ?? value;
+}
+
+function normalizeBiomeAlias(rawValue) {
+  const value = String(rawValue ?? "unknown").trim().toUpperCase();
+  const aliasMap = {
+    TEMPERATECOASTAL: "TEMPERATE_COASTAL",
+    TEMPERATE_COAST: "TEMPERATE_COASTAL"
+  };
+  return aliasMap[value] ?? value;
+}
+
+function normalizeLandformAlias(rawValue) {
+  const value = String(rawValue ?? "").trim().toLowerCase();
+  const aliasMap = {
+    shoreline: "coastline",
+    coast: "coastline",
+    foreshore: "coastline",
+    protected_reserve: "reserve"
+  };
+  return aliasMap[value] ?? value;
+}
+
+function normalizePoiAlias(rawValue) {
+  const value = String(rawValue ?? "").trim().toLowerCase();
+  const aliasMap = {
+    scenic_lookout: "lookout",
+    lookout_point: "lookout",
+    surf_beach: "beach",
+    beachfront: "beach",
+    coffee_shop: "cafe",
+    cafe_shop: "cafe",
+    light_house: "lighthouse",
+    art_gallery: "gallery"
+  };
+  return aliasMap[value] ?? value;
+}
+
+function normalizeNaturalAlias(rawValue) {
+  const value = String(rawValue ?? "").trim().toLowerCase();
+  const aliasMap = {
+    foreshore_park: "park",
+    urban_park: "park",
+    nature_reserve: "reserve",
+    protected_reserve: "reserve",
+    creek: "waterway",
+    stream: "waterway",
+    beachfront: "beach",
+    woodland: "forest"
+  };
+  return aliasMap[value] ?? value;
+}
+
+function normalizeConfidence(rawValue) {
+  const numeric = Number(rawValue);
+  if (!Number.isFinite(numeric)) {
+    return 0.7;
+  }
+  if (numeric < 0) {
+    return 0;
+  }
+  if (numeric > 1) {
+    return 1;
+  }
+  return Math.round(numeric * 100) / 100;
+}
+
+function hasMetadataFields(feature, fieldNames) {
+  return fieldNames.some((fieldName) => readProviderField(feature, [fieldName]) !== undefined);
+}
+
+function normalizeProviderGeometry(rawFeature) {
+  if (rawFeature.geometry?.type && rawFeature.geometry?.coordinates) {
+    if (rawFeature.geometry.type === "MultiLineString") {
+      const firstSegment = rawFeature.geometry.coordinates[0];
+      return {
+        type: "LineString",
+        coordinates: structuredClone(firstSegment ?? [])
+      };
+    }
+    return structuredClone(rawFeature.geometry);
+  }
+
+  if (rawFeature.geometryFormat === "polyline" && Array.isArray(rawFeature.points)) {
+    return {
+      type: "LineString",
+      coordinates: structuredClone(rawFeature.points)
+    };
+  }
+
+  if (rawFeature.geometryFormat === "bboxPolygon" && rawFeature.bbox) {
+    const {
+      minLongitude,
+      maxLongitude,
+      minLatitude,
+      maxLatitude
+    } = rawFeature.bbox;
+    return {
+      type: "Polygon",
+      coordinates: [[
+        [minLongitude, minLatitude],
+        [maxLongitude, minLatitude],
+        [maxLongitude, maxLatitude],
+        [minLongitude, maxLatitude],
+        [minLongitude, minLatitude]
+      ]]
+    };
+  }
+
+  if (rawFeature.geometryFormat === "pointTuple" && Array.isArray(rawFeature.point)) {
+    return {
+      type: "Point",
+      coordinates: structuredClone(rawFeature.point)
+    };
+  }
+
+  return rawFeature.geometry ? structuredClone(rawFeature.geometry) : null;
+}
+
+function dedupePoiFeatures(features, warnings) {
+  const byKey = new Map();
+  let duplicatesResolvedCount = 0;
+
+  for (const feature of sortById(features)) {
+    const key = buildPoiDeduplicationKey(feature);
+    const existing = byKey.get(key);
+    if (!existing) {
+      byKey.set(key, feature);
+      continue;
+    }
+
+    duplicatesResolvedCount += 1;
+    warnings.push(
+      createWarning(
+        "DUPLICATE_POI_RESOLVED",
+        feature.id,
+        `Duplicate POI ${feature.id} resolved deterministically against ${existing.id}.`
+      )
+    );
+
+    const existingConfidence = normalizeConfidence(existing.properties.mappingConfidence);
+    const currentConfidence = normalizeConfidence(feature.properties.mappingConfidence);
+    if (currentConfidence > existingConfidence) {
+      byKey.set(key, feature);
+    }
+  }
+
+  return {
+    poiFeatures: [...byKey.values()],
+    duplicatesResolvedCount
+  };
+}
+
+function buildPoiDeduplicationKey(feature) {
+  const coordinates = Array.isArray(feature.geometry.coordinates)
+    ? feature.geometry.coordinates.map((value) => roundCoordinate(value)).join(",")
+    : String(feature.geometry.coordinates);
+  return `${feature.type}|${feature.properties.poiType}|${coordinates}`;
+}
+
+function roundCoordinate(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return value;
+  }
+  return Math.round(numeric * 10000) / 10000;
+}
+
+function countLowConfidenceFeatures(sourceDataBundle) {
+  return allSourceFeatures(sourceDataBundle).filter(
+    (feature) => normalizeConfidence(feature.properties?.mappingConfidence) < 0.75
+  ).length;
+}
+
+function createWarning(code, featureId, message) {
+  return {
+    code,
+    featureId,
+    message
+  };
 }
 
 function allSourceFeatures(sourceDataBundle) {
