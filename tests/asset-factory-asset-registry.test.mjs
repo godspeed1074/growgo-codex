@@ -120,6 +120,51 @@ test("recipe lookup resolves civic pack recipe through civic asset pack", () => 
   assert.ok(recipe.supportedFamilies.includes("SCHOOL_ASSET_FAMILY_001"));
 });
 
+test("railway lookup returns transport railway asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("TRANSPORT_RAILWAY_STATION_PLATFORM_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "RAIL_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "RAILWAY_STATION_RECIPE_001");
+});
+
+test("ferry lookup returns transport ferry asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("TRANSPORT_FERRY_TERMINAL_PIER_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "FERRY_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "FERRY_TERMINAL_RECIPE_001");
+});
+
+test("bus stop lookup returns transport bus stop asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("TRANSPORT_BUS_STOP_SHELTER_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "BUS_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "BUS_STOP_RECIPE_001");
+});
+
+test("infrastructure lookup returns road infrastructure asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("TRANSPORT_ROAD_INFRASTRUCTURE_STANDARD_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "ROAD_INFRASTRUCTURE_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "ROAD_INFRASTRUCTURE_RECIPE_001");
+});
+
+test("recipe lookup resolves transport pack recipe through transport asset pack", () => {
+  const transportPack = assetRegistryModule.createTransportAssetPack();
+  const recipe = transportPack.getRecipe("RAILWAY_STATION_RECIPE_001");
+
+  assert.ok(recipe);
+  assert.equal(recipe.recipeType, "RAILWAY_STATION_TRANSPORT_RECIPE");
+  assert.ok(recipe.supportedFamilies.includes("RAIL_ASSET_FAMILY_001"));
+});
+
 test("atlas assignment resolution resolves residential recipe deterministically", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const resolved = registryLayer.resolveAssetForAtlasAssignment({
@@ -151,6 +196,17 @@ test("deterministic civic asset pack output stays stable", () => {
   assert.equal(
     first.validation.deterministicCivicPackHash,
     second.validation.deterministicCivicPackHash
+  );
+});
+
+test("deterministic transport asset pack output stays stable", () => {
+  const first = assetRegistryModule.createTransportAssetPack();
+  const second = assetRegistryModule.createTransportAssetPack();
+
+  assert.deepEqual(first.assets, second.assets);
+  assert.equal(
+    first.validation.deterministicTransportPackHash,
+    second.validation.deterministicTransportPackHash
   );
 });
 
@@ -218,4 +274,18 @@ test("explicit civic asset pack validation passes contract checks", () => {
   assert.equal(validation.civicAssetPack.validation.recipesExist, true);
   assert.equal(validation.civicAssetPack.validation.atlasCompatibilityValid, true);
   assert.equal(validation.civicAssetPack.validation.footprintCompatibilityValid, true);
+});
+
+test("explicit transport asset pack validation passes contract checks", () => {
+  const transportPack = assetRegistryModule.createTransportAssetPack();
+  const validation = assetRegistryModule.validateTransportAssetPack(transportPack);
+
+  assert.equal(validation.ok, true);
+  assert.equal(validation.transportAssetPack.validation.uniqueIds, true);
+  assert.equal(validation.transportAssetPack.validation.recipesExist, true);
+  assert.equal(validation.transportAssetPack.validation.atlasCompatibilityValid, true);
+  assert.equal(
+    validation.transportAssetPack.validation.footprintCompatibilityValid,
+    true
+  );
 });

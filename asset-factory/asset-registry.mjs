@@ -39,6 +39,9 @@ export const natureAssetPackSchemaId = "NATURE_ASSET_PACK_001";
 export const natureAssetPackValidationSchemaId = "NATURE_ASSET_PACK_VALIDATION_001";
 export const civicAssetPackSchemaId = "CIVIC_ASSET_PACK_001";
 export const civicAssetPackValidationSchemaId = "CIVIC_ASSET_PACK_VALIDATION_001";
+export const transportAssetPackSchemaId = "TRANSPORT_ASSET_PACK_001";
+export const transportAssetPackValidationSchemaId =
+  "TRANSPORT_ASSET_PACK_VALIDATION_001";
 
 export const assetFactoryRecordRequiredFields = Object.freeze([
   "assetId",
@@ -62,6 +65,10 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "COMMUNITY_BUILDING_RECIPE_001",
   "SPORTS_OVAL_RECIPE_001",
   "RECREATION_AREA_RECIPE_001",
+  "RAILWAY_STATION_RECIPE_001",
+  "FERRY_TERMINAL_RECIPE_001",
+  "BUS_STOP_RECIPE_001",
+  "ROAD_INFRASTRUCTURE_RECIPE_001",
   "RECIPE_NATURE_PARK_STANDARD_001",
   "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
   "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
@@ -533,10 +540,189 @@ export const civicAssetPackRecords = deepFreeze([
   })
 ]);
 
+export const transportAssetPackRecipes = deepFreeze([
+  deepFreeze({
+    recipeId: "RAILWAY_STATION_RECIPE_001",
+    recipeType: "RAILWAY_STATION_TRANSPORT_RECIPE",
+    supportedFamilies: deepFreeze(["RAIL_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "FERRY_TERMINAL_RECIPE_001",
+    recipeType: "FERRY_TERMINAL_TRANSPORT_RECIPE",
+    supportedFamilies: deepFreeze(["FERRY_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "BUS_STOP_RECIPE_001",
+    recipeType: "BUS_STOP_TRANSPORT_RECIPE",
+    supportedFamilies: deepFreeze(["BUS_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "ROAD_INFRASTRUCTURE_RECIPE_001",
+    recipeType: "ROAD_INFRASTRUCTURE_TRANSPORT_RECIPE",
+    supportedFamilies: deepFreeze(["ROAD_INFRASTRUCTURE_ASSET_FAMILY_001"])
+  })
+]);
+
+export const transportAssetPackRecords = deepFreeze([
+  deepFreeze({
+    assetId: "TRANSPORT_RAILWAY_STATION_PLATFORM_001",
+    assetFamily: "RAIL_ASSET_FAMILY_001",
+    assetType: "RAILWAY_STATION_PLATFORM",
+    recipeId: "RAILWAY_STATION_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "regional_station_platform",
+      "rail_infrastructure",
+      "atlas_transport_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["RAILWAY_STATION"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze(["RAILWAY_STATION_RECIPE_001"]),
+      assignmentMode: "direct_transport_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "LINEAR_PLATFORM_FOOTPRINT",
+      "RAIL_CORRIDOR_EDGE",
+      "STATION_CLUSTER_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TRANSPORT_RAILWAY_STATION_PLATFORM_001"]),
+      sourceRecipeReferences: deepFreeze(["RAILWAY_STATION_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_138_TRANSPORT_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "railway_track",
+        "station_platform",
+        "station_building",
+        "rail_infrastructure"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "TRANSPORT_BUS_STOP_SHELTER_001",
+    assetFamily: "BUS_ASSET_FAMILY_001",
+    assetType: "BUS_STOP_SHELTER",
+    recipeId: "BUS_STOP_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "urban_bus_stop",
+      "regional_bus_stop",
+      "atlas_transport_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["BUS_STOP"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze(["BUS_STOP_RECIPE_001"]),
+      assignmentMode: "direct_transport_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "KERB_EDGE_FOOTPRINT",
+      "STREET_FRONTAGE_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TRANSPORT_BUS_STOP_SHELTER_001"]),
+      sourceRecipeReferences: deepFreeze(["BUS_STOP_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_138_TRANSPORT_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "bus_stop",
+        "shelter",
+        "bus_related_street_object"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "TRANSPORT_FERRY_TERMINAL_PIER_001",
+    assetFamily: "FERRY_ASSET_FAMILY_001",
+    assetType: "FERRY_TERMINAL_PIER",
+    recipeId: "FERRY_TERMINAL_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "coastal_ferry_terminal",
+      "pier_entry",
+      "atlas_transport_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["FERRY_TERMINAL"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze(["FERRY_TERMINAL_RECIPE_001"]),
+      assignmentMode: "direct_transport_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "WATERFRONT_EDGE_FOOTPRINT",
+      "PIER_LINEAR_FOOTPRINT",
+      "MARINA_CLUSTER_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TRANSPORT_FERRY_TERMINAL_PIER_001"]),
+      sourceRecipeReferences: deepFreeze(["FERRY_TERMINAL_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_138_TRANSPORT_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "ferry_terminal",
+        "pier",
+        "marina_element"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "TRANSPORT_ROAD_INFRASTRUCTURE_STANDARD_001",
+    assetFamily: "ROAD_INFRASTRUCTURE_ASSET_FAMILY_001",
+    assetType: "ROAD_INFRASTRUCTURE_STANDARD",
+    recipeId: "ROAD_INFRASTRUCTURE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "street_signage",
+      "crossing_support",
+      "traffic_furniture",
+      "atlas_transport_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["TRANSPORT_ROUTE", "BUS_STOP", "ROAD"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "ROAD_INFRASTRUCTURE_RECIPE_001",
+        "RECIPE_TRANSPORT_ROUTE_STANDARD_001"
+      ]),
+      assignmentMode: "transport_infrastructure_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "ROAD_EDGE_FOOTPRINT",
+      "CROSSING_NODE_FOOTPRINT",
+      "STREET_FURNITURE_POINT_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TRANSPORT_ROAD_INFRASTRUCTURE_STANDARD_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "ROAD_INFRASTRUCTURE_RECIPE_001",
+        "RECIPE_TRANSPORT_ROUTE_STANDARD_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_138_TRANSPORT_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "sign",
+        "crossing",
+        "traffic_furniture",
+        "street_infrastructure"
+      ])
+    })
+  })
+]);
+
 export const defaultAssetFactoryRecords = deepFreeze([
   ...onboardedExistingAssetRecords,
   ...natureAssetPackRecords,
-  ...civicAssetPackRecords
+  ...civicAssetPackRecords,
+  ...transportAssetPackRecords
 ]);
 
 export function createAssetRegistry(initialAssets = []) {
@@ -740,6 +926,45 @@ export function createCivicAssetPack(initialAssets = civicAssetPackRecords) {
   return pack;
 }
 
+export function createTransportAssetPack(initialAssets = transportAssetPackRecords) {
+  const records = normalizeAssetFactoryRecords(initialAssets);
+  const recipes = transportAssetPackRecipes;
+  const validation = buildTransportAssetPackValidation(records, recipes);
+  const recipeMap = new Map(recipes.map((recipe) => [recipe.recipeId, recipe]));
+  const assetMap = new Map(records.map((record) => [record.assetId, record]));
+
+  const pack = deepFreeze({
+    schemaId: transportAssetPackSchemaId,
+    packId: "TRANSPORT_ASSET_PACK_001_DEFAULT",
+    assetFamilies: deepFreeze([
+      "RAIL_ASSET_FAMILY_001",
+      "BUS_ASSET_FAMILY_001",
+      "FERRY_ASSET_FAMILY_001",
+      "ROAD_INFRASTRUCTURE_ASSET_FAMILY_001"
+    ]),
+    recipes,
+    assets: records,
+    validation,
+    getAssetById(assetId) {
+      return assetMap.get(normalizeAssetIdInput(assetId)) ?? null;
+    },
+    getAssetsByFamily(assetFamily) {
+      const normalizedAssetFamily = normalizeStringValue(assetFamily, "assetFamily");
+      return records.filter((record) => record.assetFamily === normalizedAssetFamily);
+    },
+    getRecipe(recipeId) {
+      return recipeMap.get(normalizeStringValue(recipeId, "recipeId")) ?? null;
+    }
+  });
+
+  const checked = validateTransportAssetPack(pack);
+  if (!checked.ok) {
+    throw createAssetRegistryValidationError(checked.errorCode, checked.message);
+  }
+
+  return pack;
+}
+
 export function validateNatureAssetPack(rawPack) {
   try {
     if (rawPack?.schemaId !== natureAssetPackSchemaId) {
@@ -872,6 +1097,74 @@ export function validateCivicAssetPack(rawPack) {
       errorCode: error.code,
       message: error.message,
       civicAssetPack: null
+    });
+  }
+}
+
+export function validateTransportAssetPack(rawPack) {
+  try {
+    if (rawPack?.schemaId !== transportAssetPackSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_transport_asset_pack_schema",
+        `Expected ${transportAssetPackSchemaId} but received ${rawPack?.schemaId}.`
+      );
+    }
+
+    const records = normalizeAssetFactoryRecords(rawPack.assets);
+    if (!Array.isArray(rawPack.recipes) || rawPack.recipes.length === 0) {
+      throw createAssetRegistryValidationError(
+        "invalid_transport_asset_pack_recipes",
+        "Transport asset pack must expose a non-empty recipes array."
+      );
+    }
+
+    if (rawPack.validation?.schemaId !== transportAssetPackValidationSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_transport_asset_pack_validation_schema",
+        `Expected ${transportAssetPackValidationSchemaId} but received ${rawPack.validation?.schemaId}.`
+      );
+    }
+
+    for (const key of [
+      "uniqueIds",
+      "recipesExist",
+      "atlasCompatibilityValid",
+      "footprintCompatibilityValid",
+      "deterministicLookup",
+      "validationPassed"
+    ]) {
+      if (rawPack.validation[key] !== true) {
+        throw createAssetRegistryValidationError(
+          "transport_asset_pack_validation_failed",
+          `Transport asset pack validation flag ${key} must be true.`
+        );
+      }
+    }
+
+    const expectedHash = computeDeterministicTransportPackHash(records, rawPack.recipes);
+    if (expectedHash !== rawPack.validation.deterministicTransportPackHash) {
+      throw createAssetRegistryValidationError(
+        "transport_asset_pack_hash_mismatch",
+        "Transport asset pack deterministic hash does not match generated state."
+      );
+    }
+
+    return deepFreeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      transportAssetPack: rawPack
+    });
+  } catch (error) {
+    if (error?.name !== "AssetRegistryValidationError") {
+      throw error;
+    }
+
+    return deepFreeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      transportAssetPack: null
     });
   }
 }
@@ -1188,6 +1481,44 @@ function buildCivicAssetPackValidation(records, recipes) {
   });
 }
 
+function buildTransportAssetPackValidation(records, recipes) {
+  const uniqueIds = new Set(records.map((record) => record.assetId)).size === records.length;
+  const recipesExist = records.every(
+    (record) =>
+      recipes.some((recipe) => recipe.recipeId === record.recipeId) ||
+      record.atlasCompatibility.atlasAssignmentRecipeIds.every((recipeId) =>
+        atlasCompatibleRecipeIds.includes(recipeId)
+      )
+  );
+  const atlasCompatibilityValid = records.every(
+    (record) =>
+      record.atlasCompatibility.atlasCompatible === true &&
+      record.atlasCompatibility.supportedObjectTypes.length > 0
+  );
+  const footprintCompatibilityValid = records.every(
+    (record) =>
+      Array.isArray(record.footprintCompatibility) && record.footprintCompatibility.length > 0
+  );
+  const deterministicLookup = true;
+  const validationPassed =
+    uniqueIds &&
+    recipesExist &&
+    atlasCompatibilityValid &&
+    footprintCompatibilityValid &&
+    deterministicLookup;
+
+  return deepFreeze({
+    schemaId: transportAssetPackValidationSchemaId,
+    uniqueIds,
+    recipesExist,
+    atlasCompatibilityValid,
+    footprintCompatibilityValid,
+    deterministicLookup,
+    validationPassed,
+    deterministicTransportPackHash: computeDeterministicTransportPackHash(records, recipes)
+  });
+}
+
 function computeDeterministicRegistryHash(records) {
   return stableStringify(
     records.map((record) => ({
@@ -1221,6 +1552,23 @@ function computeDeterministicNaturePackHash(records, recipes) {
 }
 
 function computeDeterministicCivicPackHash(records, recipes) {
+  return stableStringify({
+    assets: records.map((record) => ({
+      assetId: record.assetId,
+      assetFamily: record.assetFamily,
+      recipeId: record.recipeId,
+      footprintCompatibility: record.footprintCompatibility,
+      atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
+    })),
+    recipes: recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      recipeType: recipe.recipeType,
+      supportedFamilies: recipe.supportedFamilies
+    }))
+  });
+}
+
+function computeDeterministicTransportPackHash(records, recipes) {
   return stableStringify({
     assets: records.map((record) => ({
       assetId: record.assetId,
