@@ -4,13 +4,20 @@ import {
   createNatureEnvironmentRecipeResolver,
   validateNatureEnvironmentRecipeResolver
 } from "./nature-environment-recipe-resolver.mjs";
+import {
+  createAtlasAssetRecipeResolver,
+  validateAtlasAssetRecipeResolver
+} from "./atlas-asset-recipe-resolver.mjs";
+import { createAssetFactoryRegistryLayer } from "./asset-registry.mjs";
 
 export const atlasEnvironmentPreviewLayerSchemaId =
   "ATLAS_ENVIRONMENT_PREVIEW_LAYER_001";
 export const atlasEnvironmentPreviewObjectsSchemaId =
   "ATLAS_ENVIRONMENT_PREVIEW_OBJECTS_001";
+export const atlasObjectPreviewValidationSchemaId =
+  "ATLAS_OBJECT_PREVIEW_VALIDATION_001";
 export const atlasEnvironmentPreviewValidationSchemaId =
-  "ATLAS_ENVIRONMENT_PREVIEW_VALIDATION_001";
+  atlasObjectPreviewValidationSchemaId;
 
 export function createAtlasEnvironmentPreviewLayer(
   rawWorldObjects,
@@ -102,6 +109,8 @@ export function validateAtlasEnvironmentPreviewLayer(rawLayer) {
       "sourceGeometryPreserved",
       "assetsExist",
       "recipesValid",
+      "recipeCompatibility",
+      "assetRegistryReferencesValid",
       "deterministicOutput",
       "validationPassed"
     ]) {
@@ -147,7 +156,7 @@ function normalizePreviewInputs(
 ) {
   const worldLayer = normalizeWorldObjects(rawWorldObjects);
   const relationshipLayer = normalizeRelationships(rawRelationships);
-  const resolver =
+  const natureResolver =
     rawNatureAssignments && rawNatureAssignments.schemaId === "NATURE_ENVIRONMENT_RECIPE_RESOLVER_001"
       ? normalizeNatureResolver(rawNatureAssignments)
       : createNatureEnvironmentRecipeResolver(
@@ -159,12 +168,24 @@ function normalizePreviewInputs(
             natureAssetPack: options.natureAssetPack
           }
         );
+  const assetRecipeResolver =
+    options.assetRecipeResolver &&
+    options.assetRecipeResolver.schemaId === "ATLAS_ASSET_RECIPE_RESOLVER_001"
+      ? normalizeAssetRecipeResolver(options.assetRecipeResolver)
+      : createAtlasAssetRecipeResolver(worldLayer.worldObjects, relationshipLayer.relationships);
+  const assetRegistryLayer = options.assetRegistryLayer ?? createAssetFactoryRegistryLayer();
 
   const worldObjectsById = new Map(
     worldLayer.worldObjects.objects.map((object) => [object.objectId, object])
   );
   const relationshipsByObjectId = groupRelationshipsByObjectId(
     relationshipLayer.relationships.entries
+  );
+  const natureAssignmentsByObjectId = new Map(
+    natureResolver.assignments.entries.map((assignment) => [assignment.objectId, assignment])
+  );
+  const assetAssignmentsByObjectId = new Map(
+    assetRecipeResolver.assignments.entries.map((assignment) => [assignment.objectId, assignment])
   );
 
   return deepFreeze({
@@ -173,7 +194,10 @@ function normalizePreviewInputs(
     regionId: worldLayer.regionId,
     worldObjectsById,
     relationshipsByObjectId,
-    assignments: resolver.assignments.entries
+    natureAssignmentsByObjectId,
+    assetAssignmentsByObjectId,
+    orderedWorldObjects: worldLayer.worldObjects.objects,
+    assetRegistryLayer
   });
 }
 
@@ -240,48 +264,104 @@ function normalizeNatureResolver(rawNatureAssignments) {
   return deepFreeze(structuredClone(validation.natureEnvironmentRecipeResolver));
 }
 
+function normalizeAssetRecipeResolver(rawAssetRecipeResolver) {
+  const validation = validateAtlasAssetRecipeResolver(rawAssetRecipeResolver);
+  if (!validation.ok) {
+    throw createValidationError(
+      "invalid_atlas_asset_recipe_resolver",
+      validation.message
+    );
+  }
+  return deepFreeze(structuredClone(validation.atlasAssetRecipeResolver));
+}
+
 function buildPreviewEntries(normalized) {
   return deepFreeze(
-    normalized.assignments
-      .map((assignment) => {
-        const sourceObject = normalized.worldObjectsById.get(assignment.objectId);
-        if (!sourceObject) {
-          throw createValidationError(
-            "missing_preview_source_object",
-            `Nature assignment ${assignment.objectId} does not resolve to a world object.`
-          );
-        }
-
-        const objectRelationships =
-          normalized.relationshipsByObjectId.get(assignment.objectId) ?? [];
-        return deepFreeze({
-          objectId: assignment.objectId,
-          sourceGeometryReference: sourceObject.geometryReference,
-          environmentRecipe: assignment.recipeId,
-          assignedAssets: deepFreeze(
-            assignment.selectedAssets.map((asset) => ({
-              assetId: asset.assetId,
-              assetFamily: asset.assetFamily,
-              role: asset.role
-            }))
-          ),
-          lodRules: assignment.lodRules,
-          previewType: resolvePreviewType(assignment.environmentType),
-          previewMetadata: deepFreeze({
-            environmentType: assignment.environmentType,
-            relationshipHints: deepFreeze(
-              uniqueSorted(objectRelationships.map((entry) => entry.relationshipType))
-            ),
-            realWorldType: sourceObject.realWorldType,
-            classification: sourceObject.growgoClassification
-          })
-        });
-      })
+    normalized.orderedWorldObjects
+      .filter(isPreviewSupportedObject)
+      .map((sourceObject) =>
+        buildPreviewEntryForObject(sourceObject, normalized)
+      )
       .sort(compareBy("objectId"))
   );
 }
 
+function buildPreviewEntryForObject(sourceObject, normalized) {
+  const natureAssignment =
+    normalized.natureAssignmentsByObjectId.get(sourceObject.objectId) ?? null;
+  const assetAssignment =
+    normalized.assetAssignmentsByObjectId.get(sourceObject.objectId) ?? null;
+  const objectRelationships =
+    normalized.relationshipsByObjectId.get(sourceObject.objectId) ?? [];
+
+  if (natureAssignment) {
+    return deepFreeze({
+      objectId: sourceObject.objectId,
+      objectType: sourceObject.realWorldType,
+      sourceGeometryReference: sourceObject.geometryReference,
+      environmentRecipe: natureAssignment.recipeId,
+      assetRecipe: natureAssignment.recipeId,
+      assignedAssets: deepFreeze(
+        natureAssignment.selectedAssets.map((asset) => ({
+          assetId: asset.assetId,
+          assetFamily: asset.assetFamily,
+          role: asset.role
+        }))
+      ),
+      lodRules: natureAssignment.lodRules,
+      previewType: resolvePreviewType(sourceObject, natureAssignment, objectRelationships),
+      previewMetadata: deepFreeze({
+        environmentType: natureAssignment.environmentType,
+        relationshipHints: deepFreeze(
+          uniqueSorted(objectRelationships.map((entry) => entry.relationshipType))
+        ),
+        realWorldType: sourceObject.realWorldType,
+        classification: sourceObject.growgoClassification
+      })
+    });
+  }
+
+  if (!assetAssignment) {
+    throw createValidationError(
+      "missing_preview_assignment",
+      `Preview object ${sourceObject.objectId} has no assignment data.`
+    );
+  }
+
+  const registryMatch = resolveRegistryMatchForAssignment(
+    normalized.assetRegistryLayer,
+    assetAssignment
+  );
+
+  return deepFreeze({
+    objectId: sourceObject.objectId,
+    objectType: sourceObject.realWorldType,
+    sourceGeometryReference: sourceObject.geometryReference,
+    environmentRecipe: assetAssignment.recipeId,
+    assetRecipe: assetAssignment.recipeId,
+    assignedAssets: deepFreeze([
+      {
+        assetId: registryMatch?.assetId ?? assetAssignment.assetFamily,
+        assetFamily: assetAssignment.assetFamily,
+        role: "primary_object_recipe"
+      }
+    ]),
+    lodRules: assetAssignment.lodRules,
+    previewType: resolvePreviewType(sourceObject, null, objectRelationships),
+    previewMetadata: deepFreeze({
+      relationshipHints: deepFreeze(
+        uniqueSorted(objectRelationships.map((entry) => entry.relationshipType))
+      ),
+      realWorldType: sourceObject.realWorldType,
+      classification: sourceObject.growgoClassification,
+      variantRules: assetAssignment.variantRules,
+      registryAssetId: registryMatch?.assetId ?? null
+    })
+  });
+}
+
 function buildPreviewValidation(layerBase, normalized) {
+  const registryRecords = normalized.assetRegistryLayer.records;
   const validationWithoutHash = deepFreeze({
     schemaId: atlasEnvironmentPreviewValidationSchemaId,
     sourceGeometryPreserved: layerBase.previewObjects.entries.every((entry) => {
@@ -295,7 +375,24 @@ function buildPreviewValidation(layerBase, normalized) {
       (entry) => Array.isArray(entry.assignedAssets) && entry.assignedAssets.length > 0
     ),
     recipesValid: layerBase.previewObjects.entries.every(
-      (entry) => typeof entry.environmentRecipe === "string" && entry.environmentRecipe.endsWith("_RECIPE_001")
+      (entry) =>
+        typeof entry.environmentRecipe === "string" &&
+        (entry.environmentRecipe.startsWith("RECIPE_") ||
+          entry.environmentRecipe.endsWith("_RECIPE_001"))
+    ),
+    recipeCompatibility: layerBase.previewObjects.entries.every((entry) =>
+      resolveRecipeCompatibility(entry, normalized)
+    ),
+    assetRegistryReferencesValid: layerBase.previewObjects.entries.every((entry) =>
+      entry.assignedAssets.every((asset) => {
+        if (canUsePreviewOnlyAssetReference(entry)) {
+          return true;
+        }
+        return registryRecords.some(
+          (record) =>
+            record.assetId === asset.assetId || record.assetFamily === asset.assetFamily
+        );
+      })
     ),
     deterministicOutput: true,
     validationPassed: true,
@@ -319,6 +416,8 @@ function buildValidationSignatureSource(layer) {
   return {
     previewObjects: layer.previewObjects.entries.map((entry) => ({
       objectId: entry.objectId,
+      objectType: entry.objectType,
+      assetRecipe: entry.assetRecipe,
       environmentRecipe: entry.environmentRecipe,
       assignedAssets: entry.assignedAssets.map((asset) => asset.assetId),
       lodRules: entry.lodRules,
@@ -330,6 +429,8 @@ function buildValidationSignatureSource(layer) {
           sourceGeometryPreserved: layer.validation.sourceGeometryPreserved,
           assetsExist: layer.validation.assetsExist,
           recipesValid: layer.validation.recipesValid,
+          recipeCompatibility: layer.validation.recipeCompatibility,
+          assetRegistryReferencesValid: layer.validation.assetRegistryReferencesValid,
           deterministicOutput: layer.validation.deterministicOutput,
           validationPassed: layer.validation.validationPassed
         }
@@ -337,14 +438,106 @@ function buildValidationSignatureSource(layer) {
   };
 }
 
-function resolvePreviewType(environmentType) {
-  if (environmentType === "COASTAL_PARK") {
+function resolvePreviewType(sourceObject, natureAssignment, objectRelationships) {
+  if (natureAssignment?.environmentType === "COASTAL_PARK") {
     return "COASTAL_PARK_PREVIEW";
   }
-  if (environmentType === "BEACH") {
+  if (natureAssignment?.environmentType === "BEACH") {
     return "BEACH_EDGE_PREVIEW";
   }
+  if (
+    ["HOUSE", "TOWNHOUSE", "APARTMENT"].includes(sourceObject.realWorldType)
+  ) {
+    return "RESIDENTIAL_AREA_PREVIEW";
+  }
+  if (sourceObject.realWorldType === "TRANSPORT_ROUTE") {
+    return "TOWN_STREET_PREVIEW";
+  }
+  if (
+    ["BAKERY", "CAFE", "SHOP", "PETROL_STATION", "LIBRARY", "SCHOOL", "COMMUNITY_BUILDING"].includes(
+      sourceObject.realWorldType
+    )
+  ) {
+    return objectRelationships.some((entry) => entry.relationshipType === "served_by_road")
+      ? "TOWN_STREET_PREVIEW"
+      : "COMMERCIAL_AREA_PREVIEW";
+  }
   return "SUBURBAN_GREENSPACE_PREVIEW";
+}
+
+function resolveRegistryMatchForAssignment(assetRegistryLayer, assetAssignment) {
+  return (
+    assetRegistryLayer.records.find(
+      (record) =>
+        record.recipeId === assetAssignment.recipeId ||
+        record.atlasCompatibility.atlasAssignmentRecipeIds.includes(
+          assetAssignment.recipeId
+        ) ||
+        record.assetFamily === assetAssignment.assetFamily
+    ) ?? null
+  );
+}
+
+function resolveRecipeCompatibility(entry, normalized) {
+  void normalized;
+  if (entry.previewType === "RESIDENTIAL_AREA_PREVIEW") {
+    return entry.assetRecipe.includes("RESIDENTIAL_HOUSE");
+  }
+  if (entry.objectType === "BAKERY") {
+    return entry.assetRecipe.includes("BAKERY");
+  }
+  if (entry.objectType === "CAFE") {
+    return entry.assetRecipe.includes("CAFE");
+  }
+  if (entry.objectType === "PETROL_STATION") {
+    return entry.assetRecipe.includes("FUEL_STATION");
+  }
+  if (entry.objectType === "TRANSPORT_ROUTE") {
+    return entry.assetRecipe.includes("TRANSPORT_ROUTE");
+  }
+  if (entry.objectType === "LIGHTHOUSE") {
+    return entry.assetRecipe.includes("LIGHTHOUSE");
+  }
+  if (entry.objectType === "LOOKOUT") {
+    return entry.assetRecipe.includes("LOOKOUT");
+  }
+  if (entry.objectType === "HISTORIC_SITE") {
+    return entry.assetRecipe.includes("HISTORIC_SITE");
+  }
+  if (["PARK", "RESERVE", "BEACH", "FOREST", "WATERWAY"].includes(entry.objectType)) {
+    return entry.assetRecipe.endsWith("_RECIPE_001");
+  }
+  if (entry.previewType === "TOWN_STREET_PREVIEW") {
+    return (
+      entry.assetRecipe.includes("TRANSPORT_ROUTE") ||
+      entry.assetRecipe.includes("CAFE") ||
+      entry.assetRecipe.includes("BAKERY") ||
+      entry.assetRecipe.includes("SHOP") ||
+      entry.assetRecipe.includes("LIBRARY")
+    );
+  }
+  if (entry.previewType === "COMMERCIAL_AREA_PREVIEW") {
+    return typeof entry.assetRecipe === "string" && entry.assetRecipe.startsWith("RECIPE_");
+  }
+  return typeof entry.assetRecipe === "string" && entry.assetRecipe.startsWith("RECIPE_");
+}
+
+function canUsePreviewOnlyAssetReference(entry) {
+  return (
+    entry.objectType === "TRANSPORT_ROUTE" ||
+    ["ATTRACTION", "LIGHTHOUSE", "LOOKOUT", "HISTORIC_SITE", "LANDMARK"].includes(
+      entry.objectType
+    )
+  );
+}
+
+function isPreviewSupportedObject(sourceObject) {
+  return (
+    ["PARK", "BUSINESS", "LANDMARK", "TRANSPORT", "NATURAL_FEATURE"].includes(
+      sourceObject.growgoClassification
+    ) ||
+    ["HOUSE", "TOWNHOUSE", "APARTMENT"].includes(sourceObject.realWorldType)
+  );
 }
 
 function groupRelationshipsByObjectId(entries) {

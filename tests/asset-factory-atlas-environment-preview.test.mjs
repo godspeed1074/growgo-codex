@@ -56,7 +56,6 @@ const natureResolverModule = await import(
     "nature-environment-recipe-resolver.mjs"
   )
 );
-
 function createDirectPreviewInput() {
   return {
     schemaId: "GROWGO_WORLD_OBJECTS_001",
@@ -105,6 +104,64 @@ function createDirectPreviewInput() {
         presentationReference: "BEACH_EDGE_001_PRESENTATION",
         gameplayTags: ["exploration", "nature", "coastal"],
         questCompatibility: "QUEST_OPTIONAL"
+      },
+      {
+        objectId: "HOUSE_RESIDENTIAL_001",
+        sourceReference: { sourceFeatureId: "house_001", provider: "fixture-provider" },
+        realWorldType: "HOUSE",
+        growgoClassification: "RESIDENTIAL",
+        geometryReference: [
+          [145.40, -38.60],
+          [145.405, -38.60],
+          [145.405, -38.605],
+          [145.40, -38.605]
+        ],
+        presentationReference: "HOUSE_RESIDENTIAL_001_PRESENTATION",
+        gameplayTags: ["residential", "neighbourhood"],
+        questCompatibility: "QUEST_OPTIONAL"
+      },
+      {
+        objectId: "BAKERY_COMMERCIAL_001",
+        sourceReference: { sourceFeatureId: "bakery_001", provider: "fixture-provider" },
+        realWorldType: "BAKERY",
+        growgoClassification: "BUSINESS",
+        geometryReference: [
+          [145.50, -38.70],
+          [145.505, -38.70],
+          [145.505, -38.705],
+          [145.50, -38.705]
+        ],
+        presentationReference: "BAKERY_COMMERCIAL_001_PRESENTATION",
+        gameplayTags: ["business", "food", "town_centre"],
+        questCompatibility: "QUEST_OPTIONAL"
+      },
+      {
+        objectId: "CAFE_STREET_001",
+        sourceReference: { sourceFeatureId: "cafe_001", provider: "fixture-provider" },
+        realWorldType: "CAFE",
+        growgoClassification: "BUSINESS",
+        geometryReference: [
+          [145.60, -38.80],
+          [145.605, -38.80],
+          [145.605, -38.805],
+          [145.60, -38.805]
+        ],
+        presentationReference: "CAFE_STREET_001_PRESENTATION",
+        gameplayTags: ["business", "pedestrian", "street_frontage"],
+        questCompatibility: "QUEST_OPTIONAL"
+      },
+      {
+        objectId: "TOWN_ROUTE_001",
+        sourceReference: { sourceFeatureId: "route_001", provider: "fixture-provider" },
+        realWorldType: "TRANSPORT_ROUTE",
+        growgoClassification: "TRANSPORT",
+        geometryReference: [
+          [145.495, -38.695],
+          [145.615, -38.815]
+        ],
+        presentationReference: "TOWN_ROUTE_001_PRESENTATION",
+        gameplayTags: ["transport", "street_network"],
+        questCompatibility: "QUEST_OPTIONAL"
       }
     ]
   };
@@ -141,6 +198,27 @@ function createDirectRelationshipInput() {
         toObjectId: "WATERFRONT_001",
         relationshipType: "waterfront_relationship",
         relationshipDomain: "NATURAL"
+      },
+      {
+        relationshipId: "HOUSE_RESIDENTIAL_001_TO_TOWN_ROUTE_001",
+        fromObjectId: "HOUSE_RESIDENTIAL_001",
+        toObjectId: "TOWN_ROUTE_001",
+        relationshipType: "nearby",
+        relationshipDomain: "SPATIAL"
+      },
+      {
+        relationshipId: "BAKERY_COMMERCIAL_001_TO_SETTLEMENT_001",
+        fromObjectId: "BAKERY_COMMERCIAL_001",
+        toObjectId: "SETTLEMENT_001",
+        relationshipType: "business_area",
+        relationshipDomain: "COMMERCIAL"
+      },
+      {
+        relationshipId: "CAFE_STREET_001_TO_TOWN_ROUTE_001",
+        fromObjectId: "CAFE_STREET_001",
+        toObjectId: "TOWN_ROUTE_001",
+        relationshipType: "served_by_road",
+        relationshipDomain: "TRANSPORT"
       }
     ]
   };
@@ -260,6 +338,79 @@ test("asset assignment validation keeps preview assets present and recipes valid
   assert.equal(previewLayer.validation.assetsExist, true);
   assert.equal(previewLayer.validation.recipesValid, true);
   assert.equal(previewLayer.validation.sourceGeometryPreserved, true);
+});
+
+test("residential preview uses house recipe while preserving real footprint geometry", () => {
+  const previewLayer = previewModule.createAtlasEnvironmentPreviewLayer(
+    createDirectPreviewInput(),
+    createDirectRelationshipInput(),
+    createNatureResolverForDirectInput()
+  );
+  const preview = previewLayer.previewObjects.entries.find(
+    (entry) => entry.objectId === "HOUSE_RESIDENTIAL_001"
+  );
+
+  assert.ok(preview);
+  assert.equal(preview.previewType, "RESIDENTIAL_AREA_PREVIEW");
+  assert.equal(
+    preview.assetRecipe,
+    "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001"
+  );
+  assert.equal(preview.objectType, "HOUSE");
+});
+
+test("bakery preview supports standalone commercial area treatment", () => {
+  const worldObjects = createDirectPreviewInput();
+  const relationships = {
+    schemaId: "ATLAS_OBJECT_RELATIONSHIPS_001",
+    entries: createDirectRelationshipInput().entries.filter(
+      (entry) => entry.fromObjectId !== "CAFE_STREET_001"
+    )
+  };
+  const previewLayer = previewModule.createAtlasEnvironmentPreviewLayer(
+    worldObjects,
+    relationships,
+    createNatureResolverForDirectInput()
+  );
+  const preview = previewLayer.previewObjects.entries.find(
+    (entry) => entry.objectId === "BAKERY_COMMERCIAL_001"
+  );
+
+  assert.ok(preview);
+  assert.equal(preview.previewType, "COMMERCIAL_AREA_PREVIEW");
+  assert.equal(preview.assetRecipe, "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001");
+});
+
+test("street-served commercial preview resolves as town street preview", () => {
+  const previewLayer = previewModule.createAtlasEnvironmentPreviewLayer(
+    createDirectPreviewInput(),
+    createDirectRelationshipInput(),
+    createNatureResolverForDirectInput()
+  );
+  const preview = previewLayer.previewObjects.entries.find(
+    (entry) => entry.objectId === "CAFE_STREET_001"
+  );
+
+  assert.ok(preview);
+  assert.equal(preview.previewType, "TOWN_STREET_PREVIEW");
+  assert.equal(preview.assetRecipe, "RECIPE_BUILDING_CAFE_COASTAL_001");
+  assert.ok(preview.previewMetadata.relationshipHints.includes("served_by_road"));
+});
+
+test("town street preview includes transport route presentation support", () => {
+  const previewLayer = previewModule.createAtlasEnvironmentPreviewLayer(
+    createDirectPreviewInput(),
+    createDirectRelationshipInput(),
+    createNatureResolverForDirectInput()
+  );
+  const preview = previewLayer.previewObjects.entries.find(
+    (entry) => entry.objectId === "TOWN_ROUTE_001"
+  );
+
+  assert.ok(preview);
+  assert.equal(preview.previewType, "TOWN_STREET_PREVIEW");
+  assert.equal(preview.assetRecipe, "RECIPE_TRANSPORT_ROUTE_STANDARD_001");
+  assert.equal(preview.objectType, "TRANSPORT_ROUTE");
 });
 
 test("same inputs produce deterministic same preview output", () => {
