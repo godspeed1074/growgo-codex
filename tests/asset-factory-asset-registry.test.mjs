@@ -71,6 +71,55 @@ test("recipe lookup resolves nature pack recipe through nature asset pack", () =
   assert.ok(recipe.supportedFamilies.includes("TREE_ASSET_FAMILY_001"));
 });
 
+test("school lookup returns civic school asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_CIVIC_SCHOOL_PRIMARY_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "SCHOOL_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "SCHOOL_RECIPE_001");
+  assert.ok(asset.footprintCompatibility.includes("CAMPUS_FOOTPRINT"));
+});
+
+test("library lookup returns civic library asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_CIVIC_LIBRARY_SMALL_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "LIBRARY_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "LIBRARY_RECIPE_001");
+});
+
+test("community lookup returns civic community building asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_CIVIC_COMMUNITY_HALL_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "COMMUNITY_BUILDING_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "COMMUNITY_BUILDING_RECIPE_001");
+});
+
+test("sports lookup returns civic sports facility asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_CIVIC_SPORTS_PAVILION_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "SPORTS_FACILITY_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "SPORTS_FACILITY_RECIPE_001");
+  assert.ok(
+    asset.atlasCompatibility.atlasAssignmentRecipeIds.includes("SPORTS_OVAL_RECIPE_001")
+  );
+});
+
+test("recipe lookup resolves civic pack recipe through civic asset pack", () => {
+  const civicPack = assetRegistryModule.createCivicAssetPack();
+  const recipe = civicPack.getRecipe("SCHOOL_RECIPE_001");
+
+  assert.ok(recipe);
+  assert.equal(recipe.recipeType, "SCHOOL_CIVIC_RECIPE");
+  assert.ok(recipe.supportedFamilies.includes("SCHOOL_ASSET_FAMILY_001"));
+});
+
 test("atlas assignment resolution resolves residential recipe deterministically", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const resolved = registryLayer.resolveAssetForAtlasAssignment({
@@ -91,6 +140,17 @@ test("deterministic nature asset pack output stays stable", () => {
   assert.equal(
     first.validation.deterministicNaturePackHash,
     second.validation.deterministicNaturePackHash
+  );
+});
+
+test("deterministic civic asset pack output stays stable", () => {
+  const first = assetRegistryModule.createCivicAssetPack();
+  const second = assetRegistryModule.createCivicAssetPack();
+
+  assert.deepEqual(first.assets, second.assets);
+  assert.equal(
+    first.validation.deterministicCivicPackHash,
+    second.validation.deterministicCivicPackHash
   );
 });
 
@@ -147,4 +207,15 @@ test("explicit nature asset pack validation passes contract checks", () => {
     validation.natureAssetPack.validation.biomeCompatibilityValid,
     true
   );
+});
+
+test("explicit civic asset pack validation passes contract checks", () => {
+  const civicPack = assetRegistryModule.createCivicAssetPack();
+  const validation = assetRegistryModule.validateCivicAssetPack(civicPack);
+
+  assert.equal(validation.ok, true);
+  assert.equal(validation.civicAssetPack.validation.uniqueIds, true);
+  assert.equal(validation.civicAssetPack.validation.recipesExist, true);
+  assert.equal(validation.civicAssetPack.validation.atlasCompatibilityValid, true);
+  assert.equal(validation.civicAssetPack.validation.footprintCompatibilityValid, true);
 });

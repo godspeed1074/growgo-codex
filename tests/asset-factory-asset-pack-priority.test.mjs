@@ -13,7 +13,7 @@ test("pack lookup returns civic pack with explicit civic recipe dependencies", (
   assert.ok(civicPack);
   assert.ok(civicPack.recipeDependencies.includes("SCHOOL_RECIPE_001"));
   assert.ok(civicPack.recipeDependencies.includes("SPORTS_OVAL_RECIPE_001"));
-  assert.equal(civicPack.coverageSummary.unmetRecipeCount, 5);
+  assert.equal(civicPack.coverageSummary.unmetRecipeCount, 0);
 });
 
 test("priority ordering stays deterministic and sorted by Atlas demand pressure", () => {
@@ -21,10 +21,10 @@ test("priority ordering stays deterministic and sorted by Atlas demand pressure"
   const orderedPackIds = system.listPacksByPriority().map((pack) => pack.packId);
 
   assert.deepEqual(orderedPackIds, [
-    "CIVIC_PACK_001",
     "TRANSPORT_PACK_001",
     "ROAD_AND_STREET_PACK_001",
     "COMMERCIAL_PACK_001",
+    "CIVIC_PACK_001",
     "RESIDENTIAL_PACK_001"
   ]);
 });

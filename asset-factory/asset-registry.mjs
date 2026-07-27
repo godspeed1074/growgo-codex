@@ -37,6 +37,8 @@ export const assetFactoryRegistryLayerSchemaId = "ASSET_FACTORY_REGISTRY_LAYER_0
 export const assetRegistryValidationSchemaId = "ASSET_REGISTRY_VALIDATION_001";
 export const natureAssetPackSchemaId = "NATURE_ASSET_PACK_001";
 export const natureAssetPackValidationSchemaId = "NATURE_ASSET_PACK_VALIDATION_001";
+export const civicAssetPackSchemaId = "CIVIC_ASSET_PACK_001";
+export const civicAssetPackValidationSchemaId = "CIVIC_ASSET_PACK_VALIDATION_001";
 
 export const assetFactoryRecordRequiredFields = Object.freeze([
   "assetId",
@@ -55,6 +57,11 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001",
   "RECIPE_BUILDING_CAFE_COASTAL_001",
   "RECIPE_BUILDING_FUEL_STATION_STANDARD_001",
+  "SCHOOL_RECIPE_001",
+  "LIBRARY_RECIPE_001",
+  "COMMUNITY_BUILDING_RECIPE_001",
+  "SPORTS_OVAL_RECIPE_001",
+  "RECREATION_AREA_RECIPE_001",
   "RECIPE_NATURE_PARK_STANDARD_001",
   "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
   "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
@@ -364,9 +371,172 @@ export const natureAssetPackRecords = deepFreeze([
   })
 ]);
 
+export const civicAssetPackRecipes = deepFreeze([
+  deepFreeze({
+    recipeId: "SCHOOL_RECIPE_001",
+    recipeType: "SCHOOL_CIVIC_RECIPE",
+    supportedFamilies: deepFreeze(["SCHOOL_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "LIBRARY_RECIPE_001",
+    recipeType: "LIBRARY_CIVIC_RECIPE",
+    supportedFamilies: deepFreeze(["LIBRARY_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "COMMUNITY_BUILDING_RECIPE_001",
+    recipeType: "COMMUNITY_CIVIC_RECIPE",
+    supportedFamilies: deepFreeze(["COMMUNITY_BUILDING_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "SPORTS_FACILITY_RECIPE_001",
+    recipeType: "SPORTS_FACILITY_CIVIC_RECIPE",
+    supportedFamilies: deepFreeze(["SPORTS_FACILITY_ASSET_FAMILY_001"])
+  })
+]);
+
+export const civicAssetPackRecords = deepFreeze([
+  deepFreeze({
+    assetId: "BUILDING_CIVIC_SCHOOL_PRIMARY_001",
+    assetFamily: "SCHOOL_ASSET_FAMILY_001",
+    assetType: "PRIMARY_SCHOOL",
+    recipeId: "SCHOOL_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "suburban_primary_school",
+      "civic_anchor",
+      "atlas_civic_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["SCHOOL"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze(["SCHOOL_RECIPE_001"]),
+      assignmentMode: "direct_civic_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "CAMPUS_FOOTPRINT",
+      "SUBURBAN_BLOCK_EDGE",
+      "CORNER_LOT_CIVIC"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_CIVIC_SCHOOL_PRIMARY_001"]),
+      sourceRecipeReferences: deepFreeze(["SCHOOL_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_137_CIVIC_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["primary_school", "secondary_school", "small_rural_school"])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_CIVIC_LIBRARY_SMALL_001",
+    assetFamily: "LIBRARY_ASSET_FAMILY_001",
+    assetType: "SMALL_LIBRARY",
+    recipeId: "LIBRARY_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "small_town_library",
+      "community_library",
+      "atlas_civic_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["LIBRARY"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze(["LIBRARY_RECIPE_001"]),
+      assignmentMode: "direct_civic_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "MAIN_STREET_CIVIC_FRONTAGE",
+      "COMMUNITY_CLUSTER_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_CIVIC_LIBRARY_SMALL_001"]),
+      sourceRecipeReferences: deepFreeze(["LIBRARY_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_137_CIVIC_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["small_library", "community_library"])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_CIVIC_COMMUNITY_HALL_001",
+    assetFamily: "COMMUNITY_BUILDING_ASSET_FAMILY_001",
+    assetType: "COMMUNITY_HALL",
+    recipeId: "COMMUNITY_BUILDING_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "community_hall",
+      "civic_centre",
+      "atlas_civic_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["COMMUNITY_BUILDING"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze(["COMMUNITY_BUILDING_RECIPE_001"]),
+      assignmentMode: "direct_civic_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "PUBLIC_FRONTAGE_FOOTPRINT",
+      "CIVIC_CLUSTER_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_CIVIC_COMMUNITY_HALL_001"]),
+      sourceRecipeReferences: deepFreeze(["COMMUNITY_BUILDING_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_137_CIVIC_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["community_hall", "civic_centre"])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_CIVIC_SPORTS_PAVILION_001",
+    assetFamily: "SPORTS_FACILITY_ASSET_FAMILY_001",
+    assetType: "SPORTS_PAVILION",
+    recipeId: "SPORTS_FACILITY_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "sports_ground_support",
+      "recreation_building",
+      "atlas_civic_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["OVAL", "RECREATION_AREA"]),
+      supportedClassifications: deepFreeze(["PARK"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "SPORTS_OVAL_RECIPE_001",
+        "RECREATION_AREA_RECIPE_001"
+      ]),
+      assignmentMode: "sports_support_recipe_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "SPORTS_EDGE_FOOTPRINT",
+      "OPEN_SPACE_SUPPORT_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_CIVIC_SPORTS_PAVILION_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "SPORTS_FACILITY_RECIPE_001",
+        "SPORTS_OVAL_RECIPE_001",
+        "RECREATION_AREA_RECIPE_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_137_CIVIC_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "sports_pavilion",
+        "changing_rooms",
+        "recreation_building"
+      ])
+    })
+  })
+]);
+
 export const defaultAssetFactoryRecords = deepFreeze([
   ...onboardedExistingAssetRecords,
-  ...natureAssetPackRecords
+  ...natureAssetPackRecords,
+  ...civicAssetPackRecords
 ]);
 
 export function createAssetRegistry(initialAssets = []) {
@@ -531,6 +701,45 @@ export function createNatureAssetPack(initialAssets = natureAssetPackRecords) {
   return pack;
 }
 
+export function createCivicAssetPack(initialAssets = civicAssetPackRecords) {
+  const records = normalizeAssetFactoryRecords(initialAssets);
+  const recipes = civicAssetPackRecipes;
+  const validation = buildCivicAssetPackValidation(records, recipes);
+  const recipeMap = new Map(recipes.map((recipe) => [recipe.recipeId, recipe]));
+  const assetMap = new Map(records.map((record) => [record.assetId, record]));
+
+  const pack = deepFreeze({
+    schemaId: civicAssetPackSchemaId,
+    packId: "CIVIC_ASSET_PACK_001_DEFAULT",
+    assetFamilies: deepFreeze([
+      "SCHOOL_ASSET_FAMILY_001",
+      "LIBRARY_ASSET_FAMILY_001",
+      "COMMUNITY_BUILDING_ASSET_FAMILY_001",
+      "SPORTS_FACILITY_ASSET_FAMILY_001"
+    ]),
+    recipes,
+    assets: records,
+    validation,
+    getAssetById(assetId) {
+      return assetMap.get(normalizeAssetIdInput(assetId)) ?? null;
+    },
+    getAssetsByFamily(assetFamily) {
+      const normalizedAssetFamily = normalizeStringValue(assetFamily, "assetFamily");
+      return records.filter((record) => record.assetFamily === normalizedAssetFamily);
+    },
+    getRecipe(recipeId) {
+      return recipeMap.get(normalizeStringValue(recipeId, "recipeId")) ?? null;
+    }
+  });
+
+  const checked = validateCivicAssetPack(pack);
+  if (!checked.ok) {
+    throw createAssetRegistryValidationError(checked.errorCode, checked.message);
+  }
+
+  return pack;
+}
+
 export function validateNatureAssetPack(rawPack) {
   try {
     if (rawPack?.schemaId !== natureAssetPackSchemaId) {
@@ -595,6 +804,74 @@ export function validateNatureAssetPack(rawPack) {
       errorCode: error.code,
       message: error.message,
       natureAssetPack: null
+    });
+  }
+}
+
+export function validateCivicAssetPack(rawPack) {
+  try {
+    if (rawPack?.schemaId !== civicAssetPackSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_civic_asset_pack_schema",
+        `Expected ${civicAssetPackSchemaId} but received ${rawPack?.schemaId}.`
+      );
+    }
+
+    const records = normalizeAssetFactoryRecords(rawPack.assets);
+    if (!Array.isArray(rawPack.recipes) || rawPack.recipes.length === 0) {
+      throw createAssetRegistryValidationError(
+        "invalid_civic_asset_pack_recipes",
+        "Civic asset pack must expose a non-empty recipes array."
+      );
+    }
+
+    if (rawPack.validation?.schemaId !== civicAssetPackValidationSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_civic_asset_pack_validation_schema",
+        `Expected ${civicAssetPackValidationSchemaId} but received ${rawPack.validation?.schemaId}.`
+      );
+    }
+
+    for (const key of [
+      "uniqueIds",
+      "recipesExist",
+      "atlasCompatibilityValid",
+      "footprintCompatibilityValid",
+      "deterministicLookup",
+      "validationPassed"
+    ]) {
+      if (rawPack.validation[key] !== true) {
+        throw createAssetRegistryValidationError(
+          "civic_asset_pack_validation_failed",
+          `Civic asset pack validation flag ${key} must be true.`
+        );
+      }
+    }
+
+    const expectedHash = computeDeterministicCivicPackHash(records, rawPack.recipes);
+    if (expectedHash !== rawPack.validation.deterministicCivicPackHash) {
+      throw createAssetRegistryValidationError(
+        "civic_asset_pack_hash_mismatch",
+        "Civic asset pack deterministic hash does not match generated state."
+      );
+    }
+
+    return deepFreeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      civicAssetPack: rawPack
+    });
+  } catch (error) {
+    if (error?.name !== "AssetRegistryValidationError") {
+      throw error;
+    }
+
+    return deepFreeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      civicAssetPack: null
     });
   }
 }
@@ -726,6 +1003,13 @@ function normalizeAssetFactoryRecord(rawRecord) {
     lodRules: deepFreeze(normalizeStringArray(record.lodRules, "lodRules")),
     usageRules: deepFreeze(normalizeStringArray(record.usageRules, "usageRules")),
     atlasCompatibility,
+    footprintCompatibility: deepFreeze(
+      normalizeOptionalStringArray(
+        record.footprintCompatibility,
+        "footprintCompatibility",
+        ["GENERIC_FOOTPRINT"]
+      )
+    ),
     biomeCompatibility: deepFreeze(
       normalizeOptionalStringArray(
         record.biomeCompatibility,
@@ -867,6 +1151,43 @@ function buildNatureAssetPackValidation(records, recipes) {
   });
 }
 
+function buildCivicAssetPackValidation(records, recipes) {
+  const uniqueIds = new Set(records.map((record) => record.assetId)).size === records.length;
+  const recipesExist = records.every(
+    (record) =>
+      recipes.some((recipe) => recipe.recipeId === record.recipeId) ||
+      record.atlasCompatibility.atlasAssignmentRecipeIds.every((recipeId) =>
+        atlasCompatibleRecipeIds.includes(recipeId)
+      )
+  );
+  const atlasCompatibilityValid = records.every(
+    (record) =>
+      record.atlasCompatibility.atlasCompatible === true &&
+      record.atlasCompatibility.supportedObjectTypes.length > 0
+  );
+  const footprintCompatibilityValid = records.every(
+    (record) => Array.isArray(record.footprintCompatibility) && record.footprintCompatibility.length > 0
+  );
+  const deterministicLookup = true;
+  const validationPassed =
+    uniqueIds &&
+    recipesExist &&
+    atlasCompatibilityValid &&
+    footprintCompatibilityValid &&
+    deterministicLookup;
+
+  return deepFreeze({
+    schemaId: civicAssetPackValidationSchemaId,
+    uniqueIds,
+    recipesExist,
+    atlasCompatibilityValid,
+    footprintCompatibilityValid,
+    deterministicLookup,
+    validationPassed,
+    deterministicCivicPackHash: computeDeterministicCivicPackHash(records, recipes)
+  });
+}
+
 function computeDeterministicRegistryHash(records) {
   return stableStringify(
     records.map((record) => ({
@@ -877,7 +1198,8 @@ function computeDeterministicRegistryHash(records) {
       version: record.version,
       lodRules: record.lodRules,
       usageRules: record.usageRules,
-      atlasCompatibility: record.atlasCompatibility
+      atlasCompatibility: record.atlasCompatibility,
+      footprintCompatibility: record.footprintCompatibility
     }))
   );
 }
@@ -889,6 +1211,23 @@ function computeDeterministicNaturePackHash(records, recipes) {
       assetFamily: record.assetFamily,
       recipeId: record.recipeId,
       biomeCompatibility: record.biomeCompatibility
+    })),
+    recipes: recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      recipeType: recipe.recipeType,
+      supportedFamilies: recipe.supportedFamilies
+    }))
+  });
+}
+
+function computeDeterministicCivicPackHash(records, recipes) {
+  return stableStringify({
+    assets: records.map((record) => ({
+      assetId: record.assetId,
+      assetFamily: record.assetFamily,
+      recipeId: record.recipeId,
+      footprintCompatibility: record.footprintCompatibility,
+      atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
     })),
     recipes: recipes.map((recipe) => ({
       recipeId: recipe.recipeId,
