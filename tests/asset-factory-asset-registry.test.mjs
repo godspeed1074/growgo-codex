@@ -165,6 +165,52 @@ test("recipe lookup resolves transport pack recipe through transport asset pack"
   assert.ok(recipe.supportedFamilies.includes("RAIL_ASSET_FAMILY_001"));
 });
 
+test("road lookup returns road surface asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("ROAD_SURFACE_RESIDENTIAL_STREET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "ROAD_SURFACE_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "RESIDENTIAL_STREET_RECIPE_001");
+  assert.ok(asset.geometryCompatibility.includes("LINEAR_ROAD_GEOMETRY"));
+});
+
+test("sidewalk lookup returns sidewalk asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("SIDEWALK_CURB_CROSSING_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "SIDEWALK_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "PEDESTRIAN_PATH_RECIPE_001");
+});
+
+test("furniture lookup returns street furniture asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("STREET_FURNITURE_STANDARD_SET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "STREET_FURNITURE_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "STREET_FURNITURE_RECIPE_001");
+});
+
+test("detail lookup returns road detail asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("ROAD_DETAIL_MARKING_SET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "ROAD_DETAIL_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "INTERSECTION_RECIPE_001");
+});
+
+test("recipe lookup resolves road and street pack recipe through road and street asset pack", () => {
+  const roadPack = assetRegistryModule.createRoadAndStreetAssetPack();
+  const recipe = roadPack.getRecipe("RESIDENTIAL_STREET_RECIPE_001");
+
+  assert.ok(recipe);
+  assert.equal(recipe.recipeType, "RESIDENTIAL_STREET_ROAD_RECIPE");
+  assert.ok(recipe.supportedFamilies.includes("ROAD_SURFACE_ASSET_FAMILY_001"));
+});
+
 test("atlas assignment resolution resolves residential recipe deterministically", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const resolved = registryLayer.resolveAssetForAtlasAssignment({
@@ -207,6 +253,17 @@ test("deterministic transport asset pack output stays stable", () => {
   assert.equal(
     first.validation.deterministicTransportPackHash,
     second.validation.deterministicTransportPackHash
+  );
+});
+
+test("deterministic road and street asset pack output stays stable", () => {
+  const first = assetRegistryModule.createRoadAndStreetAssetPack();
+  const second = assetRegistryModule.createRoadAndStreetAssetPack();
+
+  assert.deepEqual(first.assets, second.assets);
+  assert.equal(
+    first.validation.deterministicRoadAndStreetPackHash,
+    second.validation.deterministicRoadAndStreetPackHash
   );
 });
 
@@ -286,6 +343,20 @@ test("explicit transport asset pack validation passes contract checks", () => {
   assert.equal(validation.transportAssetPack.validation.atlasCompatibilityValid, true);
   assert.equal(
     validation.transportAssetPack.validation.footprintCompatibilityValid,
+    true
+  );
+});
+
+test("explicit road and street asset pack validation passes contract checks", () => {
+  const roadPack = assetRegistryModule.createRoadAndStreetAssetPack();
+  const validation = assetRegistryModule.validateRoadAndStreetAssetPack(roadPack);
+
+  assert.equal(validation.ok, true);
+  assert.equal(validation.roadAndStreetAssetPack.validation.uniqueIds, true);
+  assert.equal(validation.roadAndStreetAssetPack.validation.recipesExist, true);
+  assert.equal(validation.roadAndStreetAssetPack.validation.atlasCompatibilityValid, true);
+  assert.equal(
+    validation.roadAndStreetAssetPack.validation.geometryCompatibilityValid,
     true
   );
 });

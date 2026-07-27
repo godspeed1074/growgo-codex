@@ -42,6 +42,9 @@ export const civicAssetPackValidationSchemaId = "CIVIC_ASSET_PACK_VALIDATION_001
 export const transportAssetPackSchemaId = "TRANSPORT_ASSET_PACK_001";
 export const transportAssetPackValidationSchemaId =
   "TRANSPORT_ASSET_PACK_VALIDATION_001";
+export const roadAndStreetAssetPackSchemaId = "ROAD_AND_STREET_ASSET_PACK_001";
+export const roadAndStreetAssetPackValidationSchemaId =
+  "ROAD_AND_STREET_ASSET_PACK_VALIDATION_001";
 
 export const assetFactoryRecordRequiredFields = Object.freeze([
   "assetId",
@@ -69,6 +72,12 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "FERRY_TERMINAL_RECIPE_001",
   "BUS_STOP_RECIPE_001",
   "ROAD_INFRASTRUCTURE_RECIPE_001",
+  "RESIDENTIAL_STREET_RECIPE_001",
+  "TOWN_MAIN_ROAD_RECIPE_001",
+  "PEDESTRIAN_PATH_RECIPE_001",
+  "INTERSECTION_RECIPE_001",
+  "STREET_FURNITURE_RECIPE_001",
+  "RECIPE_TRANSPORT_ROUTE_STANDARD_001",
   "RECIPE_NATURE_PARK_STANDARD_001",
   "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
   "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
@@ -718,11 +727,229 @@ export const transportAssetPackRecords = deepFreeze([
   })
 ]);
 
+export const roadAndStreetAssetPackRecipes = deepFreeze([
+  deepFreeze({
+    recipeId: "RESIDENTIAL_STREET_RECIPE_001",
+    recipeType: "RESIDENTIAL_STREET_ROAD_RECIPE",
+    supportedFamilies: deepFreeze(["ROAD_SURFACE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "TOWN_MAIN_ROAD_RECIPE_001",
+    recipeType: "TOWN_MAIN_ROAD_RECIPE",
+    supportedFamilies: deepFreeze(["ROAD_SURFACE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "PEDESTRIAN_PATH_RECIPE_001",
+    recipeType: "PEDESTRIAN_PATH_RECIPE",
+    supportedFamilies: deepFreeze(["SIDEWALK_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "INTERSECTION_RECIPE_001",
+    recipeType: "INTERSECTION_ROAD_RECIPE",
+    supportedFamilies: deepFreeze([
+      "ROAD_SURFACE_ASSET_FAMILY_001",
+      "SIDEWALK_ASSET_FAMILY_001",
+      "ROAD_DETAIL_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "STREET_FURNITURE_RECIPE_001",
+    recipeType: "STREET_FURNITURE_ROAD_RECIPE",
+    supportedFamilies: deepFreeze(["STREET_FURNITURE_ASSET_FAMILY_001"])
+  })
+]);
+
+export const roadAndStreetAssetPackRecords = deepFreeze([
+  deepFreeze({
+    assetId: "ROAD_SURFACE_RESIDENTIAL_STREET_001",
+    assetFamily: "ROAD_SURFACE_ASSET_FAMILY_001",
+    assetType: "RESIDENTIAL_STREET_SURFACE",
+    recipeId: "RESIDENTIAL_STREET_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "residential_road_surface",
+      "suburban_street_network",
+      "atlas_road_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["ROAD", "TRANSPORT_ROUTE"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RESIDENTIAL_STREET_RECIPE_001",
+        "TOWN_MAIN_ROAD_RECIPE_001",
+        "PEDESTRIAN_PATH_RECIPE_001",
+        "INTERSECTION_RECIPE_001",
+        "RECIPE_TRANSPORT_ROUTE_STANDARD_001"
+      ]),
+      assignmentMode: "road_surface_recipe_bridge"
+    }),
+    geometryCompatibility: deepFreeze([
+      "LINEAR_ROAD_GEOMETRY",
+      "CURVING_STREET_SEGMENT",
+      "MAIN_ROAD_SEGMENT",
+      "PATH_SEGMENT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["ROAD_SURFACE_RESIDENTIAL_STREET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "RESIDENTIAL_STREET_RECIPE_001",
+        "TOWN_MAIN_ROAD_RECIPE_001",
+        "RECIPE_TRANSPORT_ROUTE_STANDARD_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_139_ROAD_AND_STREET_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "residential_road",
+        "main_road",
+        "path",
+        "trail",
+        "intersection"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "SIDEWALK_CURB_CROSSING_001",
+    assetFamily: "SIDEWALK_ASSET_FAMILY_001",
+    assetType: "SIDEWALK_AND_CURB_SYSTEM",
+    recipeId: "PEDESTRIAN_PATH_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "sidewalk_edge_treatment",
+      "curb_transition",
+      "pedestrian_crossing_support",
+      "atlas_road_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["PATH", "ROAD", "TRANSPORT_ROUTE"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "PEDESTRIAN_PATH_RECIPE_001",
+        "INTERSECTION_RECIPE_001"
+      ]),
+      assignmentMode: "sidewalk_and_crossing_bridge"
+    }),
+    geometryCompatibility: deepFreeze([
+      "EDGE_ALIGNED_GEOMETRY",
+      "CROSSING_NODE_GEOMETRY",
+      "RAMP_TRANSITION_GEOMETRY"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["SIDEWALK_CURB_CROSSING_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "PEDESTRIAN_PATH_RECIPE_001",
+        "INTERSECTION_RECIPE_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_139_ROAD_AND_STREET_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "sidewalk",
+        "curb",
+        "crossing",
+        "ramp"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "STREET_FURNITURE_STANDARD_SET_001",
+    assetFamily: "STREET_FURNITURE_ASSET_FAMILY_001",
+    assetType: "STREET_FURNITURE_STANDARD",
+    recipeId: "STREET_FURNITURE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "street_light_cluster",
+      "signage_support",
+      "street_amenity_support",
+      "atlas_road_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["ROAD", "PATH", "TRANSPORT_ROUTE", "BUS_STOP"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "STREET_FURNITURE_RECIPE_001",
+        "ROAD_INFRASTRUCTURE_RECIPE_001"
+      ]),
+      assignmentMode: "street_furniture_context_bridge"
+    }),
+    geometryCompatibility: deepFreeze([
+      "POINT_PLACEMENT_GEOMETRY",
+      "VERGE_EDGE_GEOMETRY",
+      "STREET_NODE_GEOMETRY"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["STREET_FURNITURE_STANDARD_SET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "STREET_FURNITURE_RECIPE_001",
+        "ROAD_INFRASTRUCTURE_RECIPE_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_139_ROAD_AND_STREET_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "street_light",
+        "sign",
+        "bin",
+        "bench",
+        "mailbox"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "ROAD_DETAIL_MARKING_SET_001",
+    assetFamily: "ROAD_DETAIL_ASSET_FAMILY_001",
+    assetType: "ROAD_DETAIL_MARKING_SET",
+    recipeId: "INTERSECTION_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "lane_marking_support",
+      "barrier_support",
+      "intersection_detail_support",
+      "atlas_road_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["ROAD", "TRANSPORT_ROUTE", "INTERSECTION"]),
+      supportedClassifications: deepFreeze(["TRANSPORT"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "INTERSECTION_RECIPE_001",
+        "TOWN_MAIN_ROAD_RECIPE_001"
+      ]),
+      assignmentMode: "road_detail_overlay_bridge"
+    }),
+    geometryCompatibility: deepFreeze([
+      "LANE_CENTERLINE_GEOMETRY",
+      "INTERSECTION_SURFACE_GEOMETRY",
+      "BARRIER_EDGE_GEOMETRY"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["ROAD_DETAIL_MARKING_SET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "INTERSECTION_RECIPE_001",
+        "TOWN_MAIN_ROAD_RECIPE_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_139_ROAD_AND_STREET_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "marking",
+        "lane_detail",
+        "barrier",
+        "fence"
+      ])
+    })
+  })
+]);
+
 export const defaultAssetFactoryRecords = deepFreeze([
   ...onboardedExistingAssetRecords,
   ...natureAssetPackRecords,
   ...civicAssetPackRecords,
-  ...transportAssetPackRecords
+  ...transportAssetPackRecords,
+  ...roadAndStreetAssetPackRecords
 ]);
 
 export function createAssetRegistry(initialAssets = []) {
@@ -965,6 +1192,47 @@ export function createTransportAssetPack(initialAssets = transportAssetPackRecor
   return pack;
 }
 
+export function createRoadAndStreetAssetPack(
+  initialAssets = roadAndStreetAssetPackRecords
+) {
+  const records = normalizeAssetFactoryRecords(initialAssets);
+  const recipes = roadAndStreetAssetPackRecipes;
+  const validation = buildRoadAndStreetAssetPackValidation(records, recipes);
+  const recipeMap = new Map(recipes.map((recipe) => [recipe.recipeId, recipe]));
+  const assetMap = new Map(records.map((record) => [record.assetId, record]));
+
+  const pack = deepFreeze({
+    schemaId: roadAndStreetAssetPackSchemaId,
+    packId: "ROAD_AND_STREET_ASSET_PACK_001_DEFAULT",
+    assetFamilies: deepFreeze([
+      "ROAD_SURFACE_ASSET_FAMILY_001",
+      "SIDEWALK_ASSET_FAMILY_001",
+      "STREET_FURNITURE_ASSET_FAMILY_001",
+      "ROAD_DETAIL_ASSET_FAMILY_001"
+    ]),
+    recipes,
+    assets: records,
+    validation,
+    getAssetById(assetId) {
+      return assetMap.get(normalizeAssetIdInput(assetId)) ?? null;
+    },
+    getAssetsByFamily(assetFamily) {
+      const normalizedAssetFamily = normalizeStringValue(assetFamily, "assetFamily");
+      return records.filter((record) => record.assetFamily === normalizedAssetFamily);
+    },
+    getRecipe(recipeId) {
+      return recipeMap.get(normalizeStringValue(recipeId, "recipeId")) ?? null;
+    }
+  });
+
+  const checked = validateRoadAndStreetAssetPack(pack);
+  if (!checked.ok) {
+    throw createAssetRegistryValidationError(checked.errorCode, checked.message);
+  }
+
+  return pack;
+}
+
 export function validateNatureAssetPack(rawPack) {
   try {
     if (rawPack?.schemaId !== natureAssetPackSchemaId) {
@@ -1169,6 +1437,74 @@ export function validateTransportAssetPack(rawPack) {
   }
 }
 
+export function validateRoadAndStreetAssetPack(rawPack) {
+  try {
+    if (rawPack?.schemaId !== roadAndStreetAssetPackSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_road_and_street_asset_pack_schema",
+        `Expected ${roadAndStreetAssetPackSchemaId} but received ${rawPack?.schemaId}.`
+      );
+    }
+
+    const records = normalizeAssetFactoryRecords(rawPack.assets);
+    if (!Array.isArray(rawPack.recipes) || rawPack.recipes.length === 0) {
+      throw createAssetRegistryValidationError(
+        "invalid_road_and_street_asset_pack_recipes",
+        "Road and street asset pack must expose a non-empty recipes array."
+      );
+    }
+
+    if (rawPack.validation?.schemaId !== roadAndStreetAssetPackValidationSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_road_and_street_asset_pack_validation_schema",
+        `Expected ${roadAndStreetAssetPackValidationSchemaId} but received ${rawPack.validation?.schemaId}.`
+      );
+    }
+
+    for (const key of [
+      "uniqueIds",
+      "recipesExist",
+      "atlasCompatibilityValid",
+      "geometryCompatibilityValid",
+      "deterministicLookup",
+      "validationPassed"
+    ]) {
+      if (rawPack.validation[key] !== true) {
+        throw createAssetRegistryValidationError(
+          "road_and_street_asset_pack_validation_failed",
+          `Road and street asset pack validation flag ${key} must be true.`
+        );
+      }
+    }
+
+    const expectedHash = computeDeterministicRoadAndStreetPackHash(records, rawPack.recipes);
+    if (expectedHash !== rawPack.validation.deterministicRoadAndStreetPackHash) {
+      throw createAssetRegistryValidationError(
+        "road_and_street_asset_pack_hash_mismatch",
+        "Road and street asset pack deterministic hash does not match generated state."
+      );
+    }
+
+    return deepFreeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      roadAndStreetAssetPack: rawPack
+    });
+  } catch (error) {
+    if (error?.name !== "AssetRegistryValidationError") {
+      throw error;
+    }
+
+    return deepFreeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      roadAndStreetAssetPack: null
+    });
+  }
+}
+
 export function validateAssetFactoryRegistryLayer(rawLayer) {
   try {
     if (rawLayer?.schemaId !== assetFactoryRegistryLayerSchemaId) {
@@ -1301,6 +1637,13 @@ function normalizeAssetFactoryRecord(rawRecord) {
         record.footprintCompatibility,
         "footprintCompatibility",
         ["GENERIC_FOOTPRINT"]
+      )
+    ),
+    geometryCompatibility: deepFreeze(
+      normalizeOptionalStringArray(
+        record.geometryCompatibility,
+        "geometryCompatibility",
+        ["GENERIC_GEOMETRY"]
       )
     ),
     biomeCompatibility: deepFreeze(
@@ -1519,6 +1862,47 @@ function buildTransportAssetPackValidation(records, recipes) {
   });
 }
 
+function buildRoadAndStreetAssetPackValidation(records, recipes) {
+  const uniqueIds = new Set(records.map((record) => record.assetId)).size === records.length;
+  const recipesExist = records.every(
+    (record) =>
+      recipes.some((recipe) => recipe.recipeId === record.recipeId) ||
+      record.atlasCompatibility.atlasAssignmentRecipeIds.every((recipeId) =>
+        atlasCompatibleRecipeIds.includes(recipeId)
+      )
+  );
+  const atlasCompatibilityValid = records.every(
+    (record) =>
+      record.atlasCompatibility.atlasCompatible === true &&
+      record.atlasCompatibility.supportedObjectTypes.length > 0
+  );
+  const geometryCompatibilityValid = records.every(
+    (record) =>
+      Array.isArray(record.geometryCompatibility) && record.geometryCompatibility.length > 0
+  );
+  const deterministicLookup = true;
+  const validationPassed =
+    uniqueIds &&
+    recipesExist &&
+    atlasCompatibilityValid &&
+    geometryCompatibilityValid &&
+    deterministicLookup;
+
+  return deepFreeze({
+    schemaId: roadAndStreetAssetPackValidationSchemaId,
+    uniqueIds,
+    recipesExist,
+    atlasCompatibilityValid,
+    geometryCompatibilityValid,
+    deterministicLookup,
+    validationPassed,
+    deterministicRoadAndStreetPackHash: computeDeterministicRoadAndStreetPackHash(
+      records,
+      recipes
+    )
+  });
+}
+
 function computeDeterministicRegistryHash(records) {
   return stableStringify(
     records.map((record) => ({
@@ -1530,7 +1914,8 @@ function computeDeterministicRegistryHash(records) {
       lodRules: record.lodRules,
       usageRules: record.usageRules,
       atlasCompatibility: record.atlasCompatibility,
-      footprintCompatibility: record.footprintCompatibility
+      footprintCompatibility: record.footprintCompatibility,
+      geometryCompatibility: record.geometryCompatibility
     }))
   );
 }
@@ -1575,6 +1960,23 @@ function computeDeterministicTransportPackHash(records, recipes) {
       assetFamily: record.assetFamily,
       recipeId: record.recipeId,
       footprintCompatibility: record.footprintCompatibility,
+      atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
+    })),
+    recipes: recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      recipeType: recipe.recipeType,
+      supportedFamilies: recipe.supportedFamilies
+    }))
+  });
+}
+
+function computeDeterministicRoadAndStreetPackHash(records, recipes) {
+  return stableStringify({
+    assets: records.map((record) => ({
+      assetId: record.assetId,
+      assetFamily: record.assetFamily,
+      recipeId: record.recipeId,
+      geometryCompatibility: record.geometryCompatibility,
       atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
     })),
     recipes: recipes.map((recipe) => ({
