@@ -239,6 +239,7 @@ function buildCommandFlow(sceneEntry) {
           objectType: command.objectType,
           assetReference: command.assetReference,
           renderLayer: command.renderLayer,
+          layerOrdering: command.layerOrdering,
           lod: command.lod,
           materialReference: command.materialReference,
           transform: structuredClone(command.transform),
@@ -507,6 +508,7 @@ function buildValidationSignatureSource(layer) {
         objectId: entry.objectId,
         assetReference: entry.assetReference,
         renderLayer: entry.renderLayer,
+        layerOrdering: entry.layerOrdering,
         lod: entry.lod,
         materialReference: entry.materialReference,
         transformSignature: entry.transformSignature
