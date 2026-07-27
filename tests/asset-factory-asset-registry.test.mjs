@@ -211,6 +211,51 @@ test("recipe lookup resolves road and street pack recipe through road and street
   assert.ok(recipe.supportedFamilies.includes("ROAD_SURFACE_ASSET_FAMILY_001"));
 });
 
+test("bakery lookup returns commercial bakery asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_COMMERCIAL_BAKERY_SMALL_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "FOOD_BUSINESS_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "BAKERY_RECIPE_001");
+});
+
+test("cafe lookup returns commercial cafe asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_COMMERCIAL_CAFE_COASTAL_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "FOOD_BUSINESS_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "CAFE_RECIPE_001");
+});
+
+test("petrol station lookup returns commercial service asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_COMMERCIAL_SERVICE_PETROL_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "SERVICE_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "PETROL_STATION_RECIPE_001");
+});
+
+test("retail lookup returns commercial retail asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_COMMERCIAL_RETAIL_SHOP_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "RETAIL_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "RETAIL_SHOP_RECIPE_001");
+});
+
+test("recipe lookup resolves commercial pack recipe through commercial asset pack", () => {
+  const commercialPack = assetRegistryModule.createCommercialAssetPack();
+  const recipe = commercialPack.getRecipe("BAKERY_RECIPE_001");
+
+  assert.ok(recipe);
+  assert.equal(recipe.recipeType, "COMMERCIAL_BAKERY_RECIPE");
+  assert.ok(recipe.supportedFamilies.includes("FOOD_BUSINESS_ASSET_FAMILY_001"));
+});
+
 test("atlas assignment resolution resolves residential recipe deterministically", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const resolved = registryLayer.resolveAssetForAtlasAssignment({
@@ -264,6 +309,17 @@ test("deterministic road and street asset pack output stays stable", () => {
   assert.equal(
     first.validation.deterministicRoadAndStreetPackHash,
     second.validation.deterministicRoadAndStreetPackHash
+  );
+});
+
+test("deterministic commercial asset pack output stays stable", () => {
+  const first = assetRegistryModule.createCommercialAssetPack();
+  const second = assetRegistryModule.createCommercialAssetPack();
+
+  assert.deepEqual(first.assets, second.assets);
+  assert.equal(
+    first.validation.deterministicCommercialPackHash,
+    second.validation.deterministicCommercialPackHash
   );
 });
 
@@ -357,6 +413,20 @@ test("explicit road and street asset pack validation passes contract checks", ()
   assert.equal(validation.roadAndStreetAssetPack.validation.atlasCompatibilityValid, true);
   assert.equal(
     validation.roadAndStreetAssetPack.validation.geometryCompatibilityValid,
+    true
+  );
+});
+
+test("explicit commercial asset pack validation passes contract checks", () => {
+  const commercialPack = assetRegistryModule.createCommercialAssetPack();
+  const validation = assetRegistryModule.validateCommercialAssetPack(commercialPack);
+
+  assert.equal(validation.ok, true);
+  assert.equal(validation.commercialAssetPack.validation.uniqueIds, true);
+  assert.equal(validation.commercialAssetPack.validation.recipesExist, true);
+  assert.equal(validation.commercialAssetPack.validation.atlasCompatibilityValid, true);
+  assert.equal(
+    validation.commercialAssetPack.validation.footprintCompatibilityValid,
     true
   );
 });

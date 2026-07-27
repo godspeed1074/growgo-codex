@@ -45,6 +45,9 @@ export const transportAssetPackValidationSchemaId =
 export const roadAndStreetAssetPackSchemaId = "ROAD_AND_STREET_ASSET_PACK_001";
 export const roadAndStreetAssetPackValidationSchemaId =
   "ROAD_AND_STREET_ASSET_PACK_VALIDATION_001";
+export const commercialAssetPackSchemaId = "COMMERCIAL_ASSET_PACK_001";
+export const commercialAssetPackValidationSchemaId =
+  "COMMERCIAL_ASSET_PACK_VALIDATION_001";
 
 export const assetFactoryRecordRequiredFields = Object.freeze([
   "assetId",
@@ -63,6 +66,13 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001",
   "RECIPE_BUILDING_CAFE_COASTAL_001",
   "RECIPE_BUILDING_FUEL_STATION_STANDARD_001",
+  "RECIPE_BUILDING_SHOP_STANDARD_001",
+  "BAKERY_RECIPE_001",
+  "CAFE_RECIPE_001",
+  "RESTAURANT_RECIPE_001",
+  "PETROL_STATION_RECIPE_001",
+  "RETAIL_SHOP_RECIPE_001",
+  "HOSPITALITY_RECIPE_001",
   "SCHOOL_RECIPE_001",
   "LIBRARY_RECIPE_001",
   "COMMUNITY_BUILDING_RECIPE_001",
@@ -944,12 +954,260 @@ export const roadAndStreetAssetPackRecords = deepFreeze([
   })
 ]);
 
+export const commercialAssetPackRecipes = deepFreeze([
+  deepFreeze({
+    recipeId: "BAKERY_RECIPE_001",
+    recipeType: "COMMERCIAL_BAKERY_RECIPE",
+    supportedFamilies: deepFreeze(["FOOD_BUSINESS_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "CAFE_RECIPE_001",
+    recipeType: "COMMERCIAL_CAFE_RECIPE",
+    supportedFamilies: deepFreeze(["FOOD_BUSINESS_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "RESTAURANT_RECIPE_001",
+    recipeType: "COMMERCIAL_RESTAURANT_RECIPE",
+    supportedFamilies: deepFreeze(["FOOD_BUSINESS_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "PETROL_STATION_RECIPE_001",
+    recipeType: "COMMERCIAL_PETROL_STATION_RECIPE",
+    supportedFamilies: deepFreeze(["SERVICE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "RETAIL_SHOP_RECIPE_001",
+    recipeType: "COMMERCIAL_RETAIL_SHOP_RECIPE",
+    supportedFamilies: deepFreeze(["RETAIL_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "HOSPITALITY_RECIPE_001",
+    recipeType: "COMMERCIAL_HOSPITALITY_RECIPE",
+    supportedFamilies: deepFreeze(["HOSPITALITY_ASSET_FAMILY_001"])
+  })
+]);
+
+export const commercialAssetPackRecords = deepFreeze([
+  deepFreeze({
+    assetId: "BUILDING_COMMERCIAL_BAKERY_SMALL_001",
+    assetFamily: "FOOD_BUSINESS_ASSET_FAMILY_001",
+    assetType: "BAKERY_SMALL_TOWN",
+    recipeId: "BAKERY_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "small_town_bakery",
+      "main_street_food_business",
+      "atlas_business_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["BAKERY"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "BAKERY_RECIPE_001",
+        "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001"
+      ]),
+      assignmentMode: "direct_commercial_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "SHOPFRONT_FOOTPRINT",
+      "MAIN_STREET_COMMERCIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_COMMERCIAL_BAKERY_SMALL_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "BAKERY_RECIPE_001",
+        "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_140_COMMERCIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "bakery",
+        "restaurant",
+        "takeaway"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_COMMERCIAL_CAFE_COASTAL_001",
+    assetFamily: "FOOD_BUSINESS_ASSET_FAMILY_001",
+    assetType: "CAFE_COASTAL",
+    recipeId: "CAFE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "coastal_cafe",
+      "street_facing_hospitality",
+      "atlas_business_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["CAFE"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "CAFE_RECIPE_001",
+        "RECIPE_BUILDING_CAFE_COASTAL_001"
+      ]),
+      assignmentMode: "direct_commercial_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "SHOPFRONT_FOOTPRINT",
+      "CORNER_CAFE_FOOTPRINT",
+      "WATERFRONT_COMMERCIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_COMMERCIAL_CAFE_COASTAL_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "CAFE_RECIPE_001",
+        "RECIPE_BUILDING_CAFE_COASTAL_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_140_COMMERCIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "cafe",
+        "restaurant",
+        "takeaway"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_COMMERCIAL_RETAIL_SHOP_001",
+    assetFamily: "RETAIL_ASSET_FAMILY_001",
+    assetType: "RETAIL_SHOP_STANDARD",
+    recipeId: "RETAIL_SHOP_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "small_shop_frontage",
+      "convenience_store",
+      "atlas_business_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["SHOP"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RETAIL_SHOP_RECIPE_001",
+        "RECIPE_BUILDING_SHOP_STANDARD_001",
+        "BUILDING_SHOP_GENERAL_RECIPE_001"
+      ]),
+      assignmentMode: "retail_recipe_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "SHOPFRONT_FOOTPRINT",
+      "NARROW_RETAIL_FRONTAGE",
+      "SPECIALTY_STORE_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_COMMERCIAL_RETAIL_SHOP_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "RETAIL_SHOP_RECIPE_001",
+        "RECIPE_BUILDING_SHOP_STANDARD_001",
+        "BUILDING_SHOP_GENERAL_RECIPE_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_140_COMMERCIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "small_shop",
+        "convenience_store",
+        "specialty_store"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_COMMERCIAL_SERVICE_PETROL_001",
+    assetFamily: "SERVICE_ASSET_FAMILY_001",
+    assetType: "PETROL_STATION_STANDARD",
+    recipeId: "PETROL_STATION_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "roadside_service",
+      "vehicle_access_required",
+      "atlas_business_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["PETROL_STATION"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "PETROL_STATION_RECIPE_001",
+        "RECIPE_BUILDING_FUEL_STATION_STANDARD_001"
+      ]),
+      assignmentMode: "service_recipe_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "SERVICE_STATION_FOOTPRINT",
+      "FORECOURT_FOOTPRINT",
+      "ROAD_EDGE_COMMERCIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_COMMERCIAL_SERVICE_PETROL_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "PETROL_STATION_RECIPE_001",
+        "RECIPE_BUILDING_FUEL_STATION_STANDARD_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_140_COMMERCIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "petrol_station",
+        "repair_shop",
+        "service_building"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_COMMERCIAL_HOSPITALITY_INN_001",
+    assetFamily: "HOSPITALITY_ASSET_FAMILY_001",
+    assetType: "HOSPITALITY_INN_STANDARD",
+    recipeId: "HOSPITALITY_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "pub_or_hotel_frontage",
+      "visitor_accommodation",
+      "atlas_business_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["CAFE", "SHOP"]),
+      supportedClassifications: deepFreeze(["BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "HOSPITALITY_RECIPE_001",
+        "RESTAURANT_RECIPE_001"
+      ]),
+      assignmentMode: "hospitality_variant_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "LARGE_MAIN_STREET_FOOTPRINT",
+      "CORNER_HOSPITALITY_FOOTPRINT",
+      "ACCOMMODATION_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_COMMERCIAL_HOSPITALITY_INN_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "HOSPITALITY_RECIPE_001",
+        "RESTAURANT_RECIPE_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_140_COMMERCIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "pub",
+        "hotel",
+        "accommodation"
+      ])
+    })
+  })
+]);
+
 export const defaultAssetFactoryRecords = deepFreeze([
   ...onboardedExistingAssetRecords,
   ...natureAssetPackRecords,
   ...civicAssetPackRecords,
   ...transportAssetPackRecords,
-  ...roadAndStreetAssetPackRecords
+  ...roadAndStreetAssetPackRecords,
+  ...commercialAssetPackRecords
 ]);
 
 export function createAssetRegistry(initialAssets = []) {
@@ -1233,6 +1491,47 @@ export function createRoadAndStreetAssetPack(
   return pack;
 }
 
+export function createCommercialAssetPack(
+  initialAssets = commercialAssetPackRecords
+) {
+  const records = normalizeAssetFactoryRecords(initialAssets);
+  const recipes = commercialAssetPackRecipes;
+  const validation = buildCommercialAssetPackValidation(records, recipes);
+  const recipeMap = new Map(recipes.map((recipe) => [recipe.recipeId, recipe]));
+  const assetMap = new Map(records.map((record) => [record.assetId, record]));
+
+  const pack = deepFreeze({
+    schemaId: commercialAssetPackSchemaId,
+    packId: "COMMERCIAL_ASSET_PACK_001_DEFAULT",
+    assetFamilies: deepFreeze([
+      "FOOD_BUSINESS_ASSET_FAMILY_001",
+      "RETAIL_ASSET_FAMILY_001",
+      "SERVICE_ASSET_FAMILY_001",
+      "HOSPITALITY_ASSET_FAMILY_001"
+    ]),
+    recipes,
+    assets: records,
+    validation,
+    getAssetById(assetId) {
+      return assetMap.get(normalizeAssetIdInput(assetId)) ?? null;
+    },
+    getAssetsByFamily(assetFamily) {
+      const normalizedAssetFamily = normalizeStringValue(assetFamily, "assetFamily");
+      return records.filter((record) => record.assetFamily === normalizedAssetFamily);
+    },
+    getRecipe(recipeId) {
+      return recipeMap.get(normalizeStringValue(recipeId, "recipeId")) ?? null;
+    }
+  });
+
+  const checked = validateCommercialAssetPack(pack);
+  if (!checked.ok) {
+    throw createAssetRegistryValidationError(checked.errorCode, checked.message);
+  }
+
+  return pack;
+}
+
 export function validateNatureAssetPack(rawPack) {
   try {
     if (rawPack?.schemaId !== natureAssetPackSchemaId) {
@@ -1501,6 +1800,74 @@ export function validateRoadAndStreetAssetPack(rawPack) {
       errorCode: error.code,
       message: error.message,
       roadAndStreetAssetPack: null
+    });
+  }
+}
+
+export function validateCommercialAssetPack(rawPack) {
+  try {
+    if (rawPack?.schemaId !== commercialAssetPackSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_commercial_asset_pack_schema",
+        `Expected ${commercialAssetPackSchemaId} but received ${rawPack?.schemaId}.`
+      );
+    }
+
+    const records = normalizeAssetFactoryRecords(rawPack.assets);
+    if (!Array.isArray(rawPack.recipes) || rawPack.recipes.length === 0) {
+      throw createAssetRegistryValidationError(
+        "invalid_commercial_asset_pack_recipes",
+        "Commercial asset pack must expose a non-empty recipes array."
+      );
+    }
+
+    if (rawPack.validation?.schemaId !== commercialAssetPackValidationSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_commercial_asset_pack_validation_schema",
+        `Expected ${commercialAssetPackValidationSchemaId} but received ${rawPack.validation?.schemaId}.`
+      );
+    }
+
+    for (const key of [
+      "uniqueIds",
+      "recipesExist",
+      "atlasCompatibilityValid",
+      "footprintCompatibilityValid",
+      "deterministicLookup",
+      "validationPassed"
+    ]) {
+      if (rawPack.validation[key] !== true) {
+        throw createAssetRegistryValidationError(
+          "commercial_asset_pack_validation_failed",
+          `Commercial asset pack validation flag ${key} must be true.`
+        );
+      }
+    }
+
+    const expectedHash = computeDeterministicCommercialPackHash(records, rawPack.recipes);
+    if (expectedHash !== rawPack.validation.deterministicCommercialPackHash) {
+      throw createAssetRegistryValidationError(
+        "commercial_asset_pack_hash_mismatch",
+        "Commercial asset pack deterministic hash does not match generated state."
+      );
+    }
+
+    return deepFreeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      commercialAssetPack: rawPack
+    });
+  } catch (error) {
+    if (error?.name !== "AssetRegistryValidationError") {
+      throw error;
+    }
+
+    return deepFreeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      commercialAssetPack: null
     });
   }
 }
@@ -1903,6 +2270,44 @@ function buildRoadAndStreetAssetPackValidation(records, recipes) {
   });
 }
 
+function buildCommercialAssetPackValidation(records, recipes) {
+  const uniqueIds = new Set(records.map((record) => record.assetId)).size === records.length;
+  const recipesExist = records.every(
+    (record) =>
+      recipes.some((recipe) => recipe.recipeId === record.recipeId) ||
+      record.atlasCompatibility.atlasAssignmentRecipeIds.every((recipeId) =>
+        atlasCompatibleRecipeIds.includes(recipeId)
+      )
+  );
+  const atlasCompatibilityValid = records.every(
+    (record) =>
+      record.atlasCompatibility.atlasCompatible === true &&
+      record.atlasCompatibility.supportedObjectTypes.length > 0
+  );
+  const footprintCompatibilityValid = records.every(
+    (record) =>
+      Array.isArray(record.footprintCompatibility) && record.footprintCompatibility.length > 0
+  );
+  const deterministicLookup = true;
+  const validationPassed =
+    uniqueIds &&
+    recipesExist &&
+    atlasCompatibilityValid &&
+    footprintCompatibilityValid &&
+    deterministicLookup;
+
+  return deepFreeze({
+    schemaId: commercialAssetPackValidationSchemaId,
+    uniqueIds,
+    recipesExist,
+    atlasCompatibilityValid,
+    footprintCompatibilityValid,
+    deterministicLookup,
+    validationPassed,
+    deterministicCommercialPackHash: computeDeterministicCommercialPackHash(records, recipes)
+  });
+}
+
 function computeDeterministicRegistryHash(records) {
   return stableStringify(
     records.map((record) => ({
@@ -1977,6 +2382,23 @@ function computeDeterministicRoadAndStreetPackHash(records, recipes) {
       assetFamily: record.assetFamily,
       recipeId: record.recipeId,
       geometryCompatibility: record.geometryCompatibility,
+      atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
+    })),
+    recipes: recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      recipeType: recipe.recipeType,
+      supportedFamilies: recipe.supportedFamilies
+    }))
+  });
+}
+
+function computeDeterministicCommercialPackHash(records, recipes) {
+  return stableStringify({
+    assets: records.map((record) => ({
+      assetId: record.assetId,
+      assetFamily: record.assetFamily,
+      recipeId: record.recipeId,
+      footprintCompatibility: record.footprintCompatibility,
       atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
     })),
     recipes: recipes.map((recipe) => ({
