@@ -256,6 +256,51 @@ test("recipe lookup resolves commercial pack recipe through commercial asset pac
   assert.ok(recipe.supportedFamilies.includes("FOOD_BUSINESS_ASSET_FAMILY_001"));
 });
 
+test("residential house lookup returns residential house asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_RESIDENTIAL_HOUSE_SUBURBAN_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "HOUSE_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "SUBURBAN_HOUSE_RECIPE_001");
+});
+
+test("townhouse lookup returns residential townhouse asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_RESIDENTIAL_MULTI_UNIT_TOWNHOUSE_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "MULTI_UNIT_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "TOWNHOUSE_RECIPE_001");
+});
+
+test("apartment lookup returns residential apartment asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("BUILDING_RESIDENTIAL_MULTI_UNIT_APARTMENT_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "MULTI_UNIT_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "APARTMENT_RECIPE_001");
+});
+
+test("garden lookup returns residential detail asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("RESIDENTIAL_DETAIL_GARDEN_SET_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "RESIDENTIAL_DETAIL_ASSET_FAMILY_001");
+  assert.equal(asset.recipeId, "RESIDENTIAL_GARDEN_RECIPE_001");
+});
+
+test("recipe lookup resolves residential pack recipe through residential asset pack", () => {
+  const residentialPack = assetRegistryModule.createResidentialAssetPack();
+  const recipe = residentialPack.getRecipe("SUBURBAN_HOUSE_RECIPE_001");
+
+  assert.ok(recipe);
+  assert.equal(recipe.recipeType, "RESIDENTIAL_SUBURBAN_HOUSE_RECIPE");
+  assert.ok(recipe.supportedFamilies.includes("HOUSE_ASSET_FAMILY_001"));
+});
+
 test("atlas assignment resolution resolves residential recipe deterministically", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const resolved = registryLayer.resolveAssetForAtlasAssignment({
@@ -320,6 +365,17 @@ test("deterministic commercial asset pack output stays stable", () => {
   assert.equal(
     first.validation.deterministicCommercialPackHash,
     second.validation.deterministicCommercialPackHash
+  );
+});
+
+test("deterministic residential asset pack output stays stable", () => {
+  const first = assetRegistryModule.createResidentialAssetPack();
+  const second = assetRegistryModule.createResidentialAssetPack();
+
+  assert.deepEqual(first.assets, second.assets);
+  assert.equal(
+    first.validation.deterministicResidentialPackHash,
+    second.validation.deterministicResidentialPackHash
   );
 });
 
@@ -427,6 +483,20 @@ test("explicit commercial asset pack validation passes contract checks", () => {
   assert.equal(validation.commercialAssetPack.validation.atlasCompatibilityValid, true);
   assert.equal(
     validation.commercialAssetPack.validation.footprintCompatibilityValid,
+    true
+  );
+});
+
+test("explicit residential asset pack validation passes contract checks", () => {
+  const residentialPack = assetRegistryModule.createResidentialAssetPack();
+  const validation = assetRegistryModule.validateResidentialAssetPack(residentialPack);
+
+  assert.equal(validation.ok, true);
+  assert.equal(validation.residentialAssetPack.validation.uniqueIds, true);
+  assert.equal(validation.residentialAssetPack.validation.recipesExist, true);
+  assert.equal(validation.residentialAssetPack.validation.atlasCompatibilityValid, true);
+  assert.equal(
+    validation.residentialAssetPack.validation.footprintCompatibilityValid,
     true
   );
 });

@@ -48,6 +48,9 @@ export const roadAndStreetAssetPackValidationSchemaId =
 export const commercialAssetPackSchemaId = "COMMERCIAL_ASSET_PACK_001";
 export const commercialAssetPackValidationSchemaId =
   "COMMERCIAL_ASSET_PACK_VALIDATION_001";
+export const residentialAssetPackSchemaId = "RESIDENTIAL_ASSET_PACK_001";
+export const residentialAssetPackValidationSchemaId =
+  "RESIDENTIAL_ASSET_PACK_VALIDATION_001";
 
 export const assetFactoryRecordRequiredFields = Object.freeze([
   "assetId",
@@ -62,6 +65,12 @@ export const assetFactoryRecordRequiredFields = Object.freeze([
 
 export const atlasCompatibleRecipeIds = Object.freeze([
   "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001",
+  "SUBURBAN_HOUSE_RECIPE_001",
+  "COASTAL_HOUSE_RECIPE_001",
+  "RURAL_HOUSE_RECIPE_001",
+  "TOWNHOUSE_RECIPE_001",
+  "APARTMENT_RECIPE_001",
+  "RESIDENTIAL_GARDEN_RECIPE_001",
   "BUILDING_SHOP_GENERAL_RECIPE_001",
   "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001",
   "RECIPE_BUILDING_CAFE_COASTAL_001",
@@ -1201,13 +1210,277 @@ export const commercialAssetPackRecords = deepFreeze([
   })
 ]);
 
+export const residentialAssetPackRecipes = deepFreeze([
+  deepFreeze({
+    recipeId: "SUBURBAN_HOUSE_RECIPE_001",
+    recipeType: "RESIDENTIAL_SUBURBAN_HOUSE_RECIPE",
+    supportedFamilies: deepFreeze(["HOUSE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "COASTAL_HOUSE_RECIPE_001",
+    recipeType: "RESIDENTIAL_COASTAL_HOUSE_RECIPE",
+    supportedFamilies: deepFreeze(["HOUSE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "RURAL_HOUSE_RECIPE_001",
+    recipeType: "RESIDENTIAL_RURAL_HOUSE_RECIPE",
+    supportedFamilies: deepFreeze(["HOUSE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "TOWNHOUSE_RECIPE_001",
+    recipeType: "RESIDENTIAL_TOWNHOUSE_RECIPE",
+    supportedFamilies: deepFreeze(["MULTI_UNIT_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "APARTMENT_RECIPE_001",
+    recipeType: "RESIDENTIAL_APARTMENT_RECIPE",
+    supportedFamilies: deepFreeze(["MULTI_UNIT_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "RESIDENTIAL_GARDEN_RECIPE_001",
+    recipeType: "RESIDENTIAL_GARDEN_DETAIL_RECIPE",
+    supportedFamilies: deepFreeze(["RESIDENTIAL_DETAIL_ASSET_FAMILY_001"])
+  })
+]);
+
+export const residentialAssetPackRecords = deepFreeze([
+  deepFreeze({
+    assetId: "BUILDING_RESIDENTIAL_HOUSE_SUBURBAN_001",
+    assetFamily: "HOUSE_ASSET_FAMILY_001",
+    assetType: "SUBURBAN_HOUSE",
+    recipeId: "SUBURBAN_HOUSE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "suburban_residential_house",
+      "detached_house",
+      "atlas_residential_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["HOUSE"]),
+      supportedClassifications: deepFreeze(["RESIDENTIAL", "BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "SUBURBAN_HOUSE_RECIPE_001",
+        "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001"
+      ]),
+      assignmentMode: "residential_house_recipe_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "SUBURBAN_LOT_FOOTPRINT",
+      "DETACHED_HOUSE_FOOTPRINT",
+      "CORNER_LOT_RESIDENTIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze([
+        "BUILDING_RESIDENTIAL_SUBURBAN_001",
+        "BUILDING_HOUSE_SUBURBAN_BRICK_001"
+      ]),
+      sourceRecipeReferences: deepFreeze([
+        "SUBURBAN_HOUSE_RECIPE_001",
+        "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001",
+        "RECIPE_HOUSE_SUBURBAN_BRICK_001"
+      ]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_141_RESIDENTIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "suburban_house",
+        "modern_house"
+      ])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_RESIDENTIAL_HOUSE_COASTAL_001",
+    assetFamily: "HOUSE_ASSET_FAMILY_001",
+    assetType: "COASTAL_HOUSE",
+    recipeId: "COASTAL_HOUSE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "coastal_residential_house",
+      "holiday_or_permanent_home",
+      "atlas_residential_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["HOUSE"]),
+      supportedClassifications: deepFreeze(["RESIDENTIAL", "BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "COASTAL_HOUSE_RECIPE_001",
+        "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001"
+      ]),
+      assignmentMode: "residential_house_variant_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "COASTAL_LOT_FOOTPRINT",
+      "DETACHED_HOUSE_FOOTPRINT",
+      "WATERFRONT_RESIDENTIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_RESIDENTIAL_HOUSE_COASTAL_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "COASTAL_HOUSE_RECIPE_001",
+        "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_141_RESIDENTIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["coastal_house"])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_RESIDENTIAL_HOUSE_RURAL_001",
+    assetFamily: "HOUSE_ASSET_FAMILY_001",
+    assetType: "RURAL_HOUSE",
+    recipeId: "RURAL_HOUSE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "rural_residential_house",
+      "larger_setback_dwelling",
+      "atlas_residential_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["HOUSE"]),
+      supportedClassifications: deepFreeze(["RESIDENTIAL", "BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RURAL_HOUSE_RECIPE_001",
+        "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001"
+      ]),
+      assignmentMode: "residential_house_variant_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "RURAL_PARCEL_FOOTPRINT",
+      "DETACHED_HOUSE_FOOTPRINT",
+      "WIDE_FRONTAGE_RESIDENTIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_RESIDENTIAL_HOUSE_RURAL_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "RURAL_HOUSE_RECIPE_001",
+        "RECIPE_BUILDING_RESIDENTIAL_HOUSE_STANDARD_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_141_RESIDENTIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["rural_house"])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_RESIDENTIAL_MULTI_UNIT_TOWNHOUSE_001",
+    assetFamily: "MULTI_UNIT_ASSET_FAMILY_001",
+    assetType: "TOWNHOUSE_ROW",
+    recipeId: "TOWNHOUSE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "townhouse_residential",
+      "attached_multi_unit",
+      "atlas_residential_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["HOUSE"]),
+      supportedClassifications: deepFreeze(["RESIDENTIAL", "BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze(["TOWNHOUSE_RECIPE_001"]),
+      assignmentMode: "multi_unit_direct_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "ROW_HOUSE_FOOTPRINT",
+      "MEDIUM_DENSITY_RESIDENTIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_RESIDENTIAL_MULTI_UNIT_TOWNHOUSE_001"]),
+      sourceRecipeReferences: deepFreeze(["TOWNHOUSE_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_141_RESIDENTIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["townhouse", "small_units"])
+    })
+  }),
+  deepFreeze({
+    assetId: "BUILDING_RESIDENTIAL_MULTI_UNIT_APARTMENT_001",
+    assetFamily: "MULTI_UNIT_ASSET_FAMILY_001",
+    assetType: "LOW_RISE_APARTMENT",
+    recipeId: "APARTMENT_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "apartment_residential",
+      "higher_density_residential",
+      "atlas_residential_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["HOUSE"]),
+      supportedClassifications: deepFreeze(["RESIDENTIAL", "BUSINESS"]),
+      atlasAssignmentRecipeIds: deepFreeze(["APARTMENT_RECIPE_001"]),
+      assignmentMode: "multi_unit_direct_recipe_match"
+    }),
+    footprintCompatibility: deepFreeze([
+      "APARTMENT_BLOCK_FOOTPRINT",
+      "MEDIUM_DENSITY_RESIDENTIAL_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUILDING_RESIDENTIAL_MULTI_UNIT_APARTMENT_001"]),
+      sourceRecipeReferences: deepFreeze(["APARTMENT_RECIPE_001"]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_141_RESIDENTIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze(["apartment"])
+    })
+  }),
+  deepFreeze({
+    assetId: "RESIDENTIAL_DETAIL_GARDEN_SET_001",
+    assetFamily: "RESIDENTIAL_DETAIL_ASSET_FAMILY_001",
+    assetType: "RESIDENTIAL_GARDEN_AND_FENCE_SET",
+    recipeId: "RESIDENTIAL_GARDEN_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "garden_edge_treatment",
+      "frontage_detail_support",
+      "driveway_and_mailbox_support",
+      "atlas_residential_assignment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["HOUSE", "GARDEN", "MAILBOX"]),
+      supportedClassifications: deepFreeze(["RESIDENTIAL", "NATURAL_FEATURE"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RESIDENTIAL_GARDEN_RECIPE_001",
+        "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001"
+      ]),
+      assignmentMode: "residential_detail_recipe_bridge"
+    }),
+    footprintCompatibility: deepFreeze([
+      "FRONT_YARD_FOOTPRINT",
+      "DRIVEWAY_EDGE_FOOTPRINT",
+      "FENCE_LINE_FOOTPRINT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["RESIDENTIAL_DETAIL_GARDEN_SET_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "RESIDENTIAL_GARDEN_RECIPE_001",
+        "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001"
+      ]),
+      existingWorkPreserved: false,
+      onboardingSource: "SESSION_141_RESIDENTIAL_ASSET_PACK_FOUNDATION",
+      supportedVariants: deepFreeze([
+        "fence",
+        "garden",
+        "driveway",
+        "mailbox"
+      ])
+    })
+  })
+]);
+
 export const defaultAssetFactoryRecords = deepFreeze([
   ...onboardedExistingAssetRecords,
   ...natureAssetPackRecords,
   ...civicAssetPackRecords,
   ...transportAssetPackRecords,
   ...roadAndStreetAssetPackRecords,
-  ...commercialAssetPackRecords
+  ...commercialAssetPackRecords,
+  ...residentialAssetPackRecords
 ]);
 
 export function createAssetRegistry(initialAssets = []) {
@@ -1525,6 +1798,46 @@ export function createCommercialAssetPack(
   });
 
   const checked = validateCommercialAssetPack(pack);
+  if (!checked.ok) {
+    throw createAssetRegistryValidationError(checked.errorCode, checked.message);
+  }
+
+  return pack;
+}
+
+export function createResidentialAssetPack(
+  initialAssets = residentialAssetPackRecords
+) {
+  const records = normalizeAssetFactoryRecords(initialAssets);
+  const recipes = residentialAssetPackRecipes;
+  const validation = buildResidentialAssetPackValidation(records, recipes);
+  const recipeMap = new Map(recipes.map((recipe) => [recipe.recipeId, recipe]));
+  const assetMap = new Map(records.map((record) => [record.assetId, record]));
+
+  const pack = deepFreeze({
+    schemaId: residentialAssetPackSchemaId,
+    packId: "RESIDENTIAL_ASSET_PACK_001_DEFAULT",
+    assetFamilies: deepFreeze([
+      "HOUSE_ASSET_FAMILY_001",
+      "MULTI_UNIT_ASSET_FAMILY_001",
+      "RESIDENTIAL_DETAIL_ASSET_FAMILY_001"
+    ]),
+    recipes,
+    assets: records,
+    validation,
+    getAssetById(assetId) {
+      return assetMap.get(normalizeAssetIdInput(assetId)) ?? null;
+    },
+    getAssetsByFamily(assetFamily) {
+      const normalizedAssetFamily = normalizeStringValue(assetFamily, "assetFamily");
+      return records.filter((record) => record.assetFamily === normalizedAssetFamily);
+    },
+    getRecipe(recipeId) {
+      return recipeMap.get(normalizeStringValue(recipeId, "recipeId")) ?? null;
+    }
+  });
+
+  const checked = validateResidentialAssetPack(pack);
   if (!checked.ok) {
     throw createAssetRegistryValidationError(checked.errorCode, checked.message);
   }
@@ -1868,6 +2181,74 @@ export function validateCommercialAssetPack(rawPack) {
       errorCode: error.code,
       message: error.message,
       commercialAssetPack: null
+    });
+  }
+}
+
+export function validateResidentialAssetPack(rawPack) {
+  try {
+    if (rawPack?.schemaId !== residentialAssetPackSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_residential_asset_pack_schema",
+        `Expected ${residentialAssetPackSchemaId} but received ${rawPack?.schemaId}.`
+      );
+    }
+
+    const records = normalizeAssetFactoryRecords(rawPack.assets);
+    if (!Array.isArray(rawPack.recipes) || rawPack.recipes.length === 0) {
+      throw createAssetRegistryValidationError(
+        "invalid_residential_asset_pack_recipes",
+        "Residential asset pack must expose a non-empty recipes array."
+      );
+    }
+
+    if (rawPack.validation?.schemaId !== residentialAssetPackValidationSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_residential_asset_pack_validation_schema",
+        `Expected ${residentialAssetPackValidationSchemaId} but received ${rawPack.validation?.schemaId}.`
+      );
+    }
+
+    for (const key of [
+      "uniqueIds",
+      "recipesExist",
+      "atlasCompatibilityValid",
+      "footprintCompatibilityValid",
+      "deterministicLookup",
+      "validationPassed"
+    ]) {
+      if (rawPack.validation[key] !== true) {
+        throw createAssetRegistryValidationError(
+          "residential_asset_pack_validation_failed",
+          `Residential asset pack validation flag ${key} must be true.`
+        );
+      }
+    }
+
+    const expectedHash = computeDeterministicResidentialPackHash(records, rawPack.recipes);
+    if (expectedHash !== rawPack.validation.deterministicResidentialPackHash) {
+      throw createAssetRegistryValidationError(
+        "residential_asset_pack_hash_mismatch",
+        "Residential asset pack deterministic hash does not match generated state."
+      );
+    }
+
+    return deepFreeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      residentialAssetPack: rawPack
+    });
+  } catch (error) {
+    if (error?.name !== "AssetRegistryValidationError") {
+      throw error;
+    }
+
+    return deepFreeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      residentialAssetPack: null
     });
   }
 }
@@ -2308,6 +2689,47 @@ function buildCommercialAssetPackValidation(records, recipes) {
   });
 }
 
+function buildResidentialAssetPackValidation(records, recipes) {
+  const uniqueIds = new Set(records.map((record) => record.assetId)).size === records.length;
+  const recipesExist = records.every(
+    (record) =>
+      recipes.some((recipe) => recipe.recipeId === record.recipeId) ||
+      record.atlasCompatibility.atlasAssignmentRecipeIds.every((recipeId) =>
+        atlasCompatibleRecipeIds.includes(recipeId)
+      )
+  );
+  const atlasCompatibilityValid = records.every(
+    (record) =>
+      record.atlasCompatibility.atlasCompatible === true &&
+      record.atlasCompatibility.supportedObjectTypes.length > 0
+  );
+  const footprintCompatibilityValid = records.every(
+    (record) =>
+      Array.isArray(record.footprintCompatibility) && record.footprintCompatibility.length > 0
+  );
+  const deterministicLookup = true;
+  const validationPassed =
+    uniqueIds &&
+    recipesExist &&
+    atlasCompatibilityValid &&
+    footprintCompatibilityValid &&
+    deterministicLookup;
+
+  return deepFreeze({
+    schemaId: residentialAssetPackValidationSchemaId,
+    uniqueIds,
+    recipesExist,
+    atlasCompatibilityValid,
+    footprintCompatibilityValid,
+    deterministicLookup,
+    validationPassed,
+    deterministicResidentialPackHash: computeDeterministicResidentialPackHash(
+      records,
+      recipes
+    )
+  });
+}
+
 function computeDeterministicRegistryHash(records) {
   return stableStringify(
     records.map((record) => ({
@@ -2393,6 +2815,23 @@ function computeDeterministicRoadAndStreetPackHash(records, recipes) {
 }
 
 function computeDeterministicCommercialPackHash(records, recipes) {
+  return stableStringify({
+    assets: records.map((record) => ({
+      assetId: record.assetId,
+      assetFamily: record.assetFamily,
+      recipeId: record.recipeId,
+      footprintCompatibility: record.footprintCompatibility,
+      atlasAssignmentRecipeIds: record.atlasCompatibility.atlasAssignmentRecipeIds
+    })),
+    recipes: recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      recipeType: recipe.recipeType,
+      supportedFamilies: recipe.supportedFamilies
+    }))
+  });
+}
+
+function computeDeterministicResidentialPackHash(records, recipes) {
   return stableStringify({
     assets: records.map((record) => ({
       assetId: record.assetId,
