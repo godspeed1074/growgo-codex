@@ -213,6 +213,48 @@ export const natureAssetPackRecords = deepFreeze([
     })
   }),
   deepFreeze({
+    assetId: "TREE_COASTAL_001",
+    assetFamily: "TREE_ASSET_FAMILY_001",
+    assetType: "NATIVE_TREE",
+    recipeId: "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "coastal_street_tree",
+      "foreshore_tree_cluster",
+      "suburban_coastal_tree"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["TREE", "PARK", "STREET_TREE"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE", "PARK"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+        "RECIPE_NATURE_PARK_STANDARD_001"
+      ]),
+      assignmentMode: "biome_and_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "FORESHORE_PARKLAND",
+      "SUBURBAN_PARKLAND",
+      "URBAN_STREET"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TREE_EUCALYPTUS_001"]),
+      sourceRecipeReferences: deepFreeze([
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"
+      ]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_112_NATURE_ASSET_CREATION_PASS"
+    })
+  }),
+  deepFreeze({
     assetId: "GROUND_COASTAL_GRASS_001",
     assetFamily: "GROUND_ASSET_FAMILY_001",
     assetType: "COASTAL_GROUND",
