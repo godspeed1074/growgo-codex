@@ -42,19 +42,19 @@ const recipeCatalog = deepFreeze({
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   LIBRARY: deepFreeze({
-    recipeId: "RECIPE_BUILDING_LIBRARY_STANDARD_001",
+    recipeId: "LIBRARY_RECIPE_001",
     assetFamily: "FAMILY_BUILDING_CIVIC_LIBRARY",
     variantRules: deepFreeze(["civic_frontage", "community_anchor"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   SCHOOL: deepFreeze({
-    recipeId: "RECIPE_BUILDING_SCHOOL_STANDARD_001",
+    recipeId: "SCHOOL_RECIPE_001",
     assetFamily: "FAMILY_BUILDING_CIVIC_SCHOOL",
     variantRules: deepFreeze(["civic_campus", "community_anchor"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   COMMUNITY_BUILDING: deepFreeze({
-    recipeId: "RECIPE_BUILDING_COMMUNITY_STANDARD_001",
+    recipeId: "COMMUNITY_BUILDING_RECIPE_001",
     assetFamily: "FAMILY_BUILDING_CIVIC_COMMUNITY",
     variantRules: deepFreeze(["community_hub", "public_frontage"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
@@ -66,21 +66,33 @@ const recipeCatalog = deepFreeze({
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   RESERVE: deepFreeze({
-    recipeId: "RECIPE_TREATMENT_RESERVE_STANDARD_001",
+    recipeId: "RESERVE_RECIPE_001",
     assetFamily: "FAMILY_TREATMENT_RESERVE",
     variantRules: deepFreeze(["green_space", "controlled_access"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   OVAL: deepFreeze({
-    recipeId: "RECIPE_TREATMENT_OVAL_STANDARD_001",
+    recipeId: "SPORTS_OVAL_RECIPE_001",
     assetFamily: "FAMILY_TREATMENT_RECREATION_OVAL",
     variantRules: deepFreeze(["sports_ground", "open_recreation"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   RECREATION_AREA: deepFreeze({
-    recipeId: "RECIPE_TREATMENT_RECREATION_STANDARD_001",
+    recipeId: "RECREATION_AREA_RECIPE_001",
     assetFamily: "FAMILY_TREATMENT_RECREATION",
     variantRules: deepFreeze(["active_recreation", "open_space"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  BEACH: deepFreeze({
+    recipeId: "BEACH_RECIPE_001",
+    assetFamily: "FAMILY_TREATMENT_BEACH",
+    variantRules: deepFreeze(["beach_edge", "coastal_open_space"]),
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
+  }),
+  FOREST: deepFreeze({
+    recipeId: "FOREST_RECIPE_001",
+    assetFamily: "FAMILY_TREATMENT_FOREST",
+    variantRules: deepFreeze(["forest_edge", "nature_preservation"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   LIGHTHOUSE: deepFreeze({
@@ -108,31 +120,31 @@ const recipeCatalog = deepFreeze({
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   RAILWAY_STATION: deepFreeze({
-    recipeId: "RECIPE_TRANSPORT_RAILWAY_STATION_001",
+    recipeId: "RAILWAY_STATION_RECIPE_001",
     assetFamily: "FAMILY_TRANSPORT_RAILWAY_STATION",
     variantRules: deepFreeze(["transport_hub", "rail_access"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   FERRY_TERMINAL: deepFreeze({
-    recipeId: "RECIPE_TRANSPORT_FERRY_TERMINAL_001",
+    recipeId: "FERRY_TERMINAL_RECIPE_001",
     assetFamily: "FAMILY_TRANSPORT_FERRY_TERMINAL",
     variantRules: deepFreeze(["transport_hub", "waterfront_context"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   BUS_STOP: deepFreeze({
-    recipeId: "RECIPE_TRANSPORT_BUS_STOP_001",
+    recipeId: "BUS_STOP_RECIPE_001",
     assetFamily: "FAMILY_TRANSPORT_BUS_STOP",
     variantRules: deepFreeze(["transport_stop", "road_served"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   WAREHOUSE: deepFreeze({
-    recipeId: "RECIPE_BUILDING_WAREHOUSE_STANDARD_001",
+    recipeId: "WAREHOUSE_RECIPE_001",
     assetFamily: "FAMILY_BUILDING_INDUSTRIAL_WAREHOUSE",
     variantRules: deepFreeze(["industrial_frontage", "logistics_access"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
   }),
   INDUSTRIAL_BUILDING: deepFreeze({
-    recipeId: "RECIPE_BUILDING_INDUSTRIAL_STANDARD_001",
+    recipeId: "INDUSTRIAL_BUILDING_RECIPE_001",
     assetFamily: "FAMILY_BUILDING_INDUSTRIAL_GENERIC",
     variantRules: deepFreeze(["industrial_frontage", "service_access"]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"])
@@ -214,6 +226,7 @@ export function validateAtlasAssetRecipeResolver(rawResolver) {
     for (const entry of resolver.assignments.entries) {
       assertPresent(entry.objectId, "Assignment objectId is required.");
       assertPresent(entry.objectType, "Assignment objectType is required.");
+      assertPresent(entry.classification, "Assignment classification is required.");
       assertPresent(entry.recipeId, "Assignment recipeId is required.");
       assertPresent(entry.assetFamily, "Assignment assetFamily is required.");
       if (!objectIds.has(entry.objectId)) {
@@ -360,6 +373,7 @@ function buildAssetAssignment(object, objectRelationships) {
   return {
     objectId: object.objectId,
     objectType: object.realWorldType,
+    classification: object.growgoClassification,
     recipeId: catalogEntry.recipeId,
     assetFamily: catalogEntry.assetFamily,
     variantRules: catalogEntry.variantRules,
@@ -405,6 +419,12 @@ function resolveRecipeCatalogEntry(object, relationships) {
   }
   if (object.realWorldType === "RECREATION_AREA") {
     return enhanceCatalogEntry(recipeCatalog.RECREATION_AREA, relationships);
+  }
+  if (object.realWorldType === "BEACH") {
+    return enhanceCatalogEntry(recipeCatalog.BEACH, relationships);
+  }
+  if (object.realWorldType === "FOREST") {
+    return enhanceCatalogEntry(recipeCatalog.FOREST, relationships);
   }
   if (object.realWorldType === "LIGHTHOUSE") {
     return enhanceCatalogEntry(recipeCatalog.LIGHTHOUSE, relationships);
@@ -483,7 +503,9 @@ function buildAssetAssignmentValidation(resolverBase, objects) {
   const validationWithoutHash = deepFreeze({
     schemaId: atlasAssetAssignmentValidationSchemaId,
     recipeExists: resolverBase.assignments.entries.every(
-      (entry) => typeof entry.recipeId === "string" && entry.recipeId.startsWith("RECIPE_")
+      (entry) =>
+        typeof entry.recipeId === "string" &&
+        (entry.recipeId.startsWith("RECIPE_") || entry.recipeId.endsWith("_RECIPE_001"))
     ),
     objectTypeCompatible: resolverBase.assignments.entries.every((entry) =>
       isObjectTypeCompatible(entry, objectMap.get(entry.objectId))
@@ -552,6 +574,12 @@ function isObjectTypeCompatible(assignment, object) {
   if (object.realWorldType === "RECREATION_AREA") {
     return recipe.includes("RECREATION");
   }
+  if (object.realWorldType === "BEACH") {
+    return recipe.includes("BEACH");
+  }
+  if (object.realWorldType === "FOREST") {
+    return recipe.includes("FOREST");
+  }
   if (object.realWorldType === "LIGHTHOUSE") {
     return recipe.includes("LIGHTHOUSE");
   }
@@ -583,6 +611,7 @@ function buildValidationSignatureSource(resolver) {
   return {
     assignments: resolver.assignments?.entries?.map((entry) => ({
       objectId: entry.objectId,
+      classification: entry.classification,
       recipeId: entry.recipeId,
       assetFamily: entry.assetFamily,
       variantRules: entry.variantRules,
