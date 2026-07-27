@@ -931,10 +931,10 @@ function validateRegionPackage(regionPackage) {
 }
 
 function validateProvenanceCollection(provenanceCollection) {
-  if (!Array.isArray(provenanceCollection) || provenanceCollection.length === 0) {
+  if (!Array.isArray(provenanceCollection)) {
     throw createValidationError(
       "missing_provenance",
-      "Normalized output must preserve provenance records."
+      "Normalized output provenance must be represented as an array."
     );
   }
 
