@@ -35,6 +35,8 @@ const versionPattern = /^(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*)){0,2}$/;
 
 export const assetFactoryRegistryLayerSchemaId = "ASSET_FACTORY_REGISTRY_LAYER_001";
 export const assetRegistryValidationSchemaId = "ASSET_REGISTRY_VALIDATION_001";
+export const natureAssetPackSchemaId = "NATURE_ASSET_PACK_001";
+export const natureAssetPackValidationSchemaId = "NATURE_ASSET_PACK_VALIDATION_001";
 
 export const assetFactoryRecordRequiredFields = Object.freeze([
   "assetId",
@@ -52,7 +54,11 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "BUILDING_SHOP_GENERAL_RECIPE_001",
   "RECIPE_BUILDING_BAKERY_SMALL_TOWN_001",
   "RECIPE_BUILDING_CAFE_COASTAL_001",
-  "RECIPE_BUILDING_FUEL_STATION_STANDARD_001"
+  "RECIPE_BUILDING_FUEL_STATION_STANDARD_001",
+  "RECIPE_NATURE_PARK_STANDARD_001",
+  "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
+  "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+  "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
 ]);
 
 export const onboardedExistingAssetRecords = deepFreeze([
@@ -122,6 +128,203 @@ export const onboardedExistingAssetRecords = deepFreeze([
       onboardingSource: "SESSION_110_EXISTING_ASSET_ONBOARDING"
     })
   })
+]);
+
+export const natureAssetPackRecipes = deepFreeze([
+  deepFreeze({
+    recipeId: "RECIPE_NATURE_PARK_STANDARD_001",
+    recipeType: "PARK_NATURE_RECIPE",
+    supportedFamilies: deepFreeze([
+      "TREE_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
+    recipeType: "SUBURBAN_GARDEN_RECIPE",
+    supportedFamilies: deepFreeze([
+      "TREE_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+    recipeType: "COASTAL_ENVIRONMENT_RECIPE",
+    supportedFamilies: deepFreeze([
+      "TREE_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001",
+      "TERRAIN_FEATURE_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
+    recipeId: "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001",
+    recipeType: "FOREST_ENVIRONMENT_RECIPE",
+    supportedFamilies: deepFreeze([
+      "TREE_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001"
+    ])
+  })
+]);
+
+export const natureAssetPackRecords = deepFreeze([
+  deepFreeze({
+    assetId: "TREE_EUCALYPTUS_001",
+    assetFamily: "TREE_ASSET_FAMILY_001",
+    assetType: "COASTAL_TREE",
+    recipeId: "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "coastal_environment_cluster",
+      "park_edge_tree",
+      "street_tree_candidate",
+      "forest_transition_tree"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["TREE", "PARK", "FOREST_EDGE"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE", "PARK"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
+      ]),
+      assignmentMode: "biome_and_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "SUBURBAN_PARKLAND",
+      "FOREST_EDGE",
+      "URBAN_STREET"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TREE_EUCALYPTUS_001"]),
+      sourceRecipeReferences: deepFreeze(["TREE_EUCALYPTUS_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_111_NATURE_PACK_FOUNDATION"
+    })
+  }),
+  deepFreeze({
+    assetId: "GROUND_COASTAL_GRASS_001",
+    assetFamily: "GROUND_ASSET_FAMILY_001",
+    assetType: "COASTAL_GROUND",
+    recipeId: "RECIPE_NATURE_PARK_STANDARD_001",
+    version: "1.0.0",
+    lodRules: deepFreeze([
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP",
+      "LOD_DISTANT_SILHOUETTE"
+    ]),
+    usageRules: deepFreeze([
+      "park_ground_cover",
+      "suburban_verge_ground",
+      "coastal_ground_transition"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["PARK", "GROUND_COVER", "VERGE"]),
+      supportedClassifications: deepFreeze(["PARK", "NATURAL_FEATURE"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"
+      ]),
+      assignmentMode: "ground_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "SUBURBAN_PARKLAND",
+      "TEMPERATE_GRASSLAND"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["GROUND_COASTAL_GRASS_001"]),
+      sourceRecipeReferences: deepFreeze(["GROUND_COASTAL_GRASS_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_111_NATURE_PACK_FOUNDATION"
+    })
+  }),
+  deepFreeze({
+    assetId: "BUSH_NATIVE_001",
+    assetFamily: "VEGETATION_ASSET_FAMILY_001",
+    assetType: "NATIVE_BUSH",
+    recipeId: "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "suburban_garden_fill",
+      "park_border_vegetation",
+      "coastal_shrub_cluster"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["BUSH", "GARDEN", "PARK"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE", "PARK"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
+      ]),
+      assignmentMode: "vegetation_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "SUBURBAN_GARDEN",
+      "COASTAL",
+      "TEMPERATE_FOREST_EDGE"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["BUSH_NATIVE_001"]),
+      sourceRecipeReferences: deepFreeze(["BUSH_NATIVE_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_111_NATURE_PACK_FOUNDATION"
+    })
+  }),
+  deepFreeze({
+    assetId: "ROCK_COASTAL_001",
+    assetFamily: "TERRAIN_FEATURE_ASSET_FAMILY_001",
+    assetType: "COASTAL_ROCK_FEATURE",
+    recipeId: "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "cliff_edge_feature",
+      "beach_edge_feature",
+      "riverbank_or_coastal_marker"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["CLIFF_EDGE", "ROCK", "BEACH_EDGE", "RIVER_EDGE"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"
+      ]),
+      assignmentMode: "terrain_feature_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "RIVER_CORRIDOR",
+      "CLIFF_EDGE"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["ROCK_COASTAL_001"]),
+      sourceRecipeReferences: deepFreeze(["RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_111_NATURE_PACK_FOUNDATION"
+    })
+  })
+]);
+
+export const defaultAssetFactoryRecords = deepFreeze([
+  ...onboardedExistingAssetRecords,
+  ...natureAssetPackRecords
 ]);
 
 export function createAssetRegistry(initialAssets = []) {
@@ -203,7 +406,7 @@ export function validateAssetRecord(rawAsset, options = {}) {
 }
 
 export function createAssetFactoryRegistryLayer(
-  initialAssets = onboardedExistingAssetRecords
+  initialAssets = defaultAssetFactoryRecords
 ) {
   const records = normalizeAssetFactoryRecords(initialAssets);
   const registryByAssetId = new Map(records.map((record) => [record.assetId, record]));
@@ -245,6 +448,113 @@ export function createAssetFactoryRegistryLayer(
   }
 
   return layer;
+}
+
+export function createNatureAssetPack(initialAssets = natureAssetPackRecords) {
+  const records = normalizeAssetFactoryRecords(initialAssets);
+  const recipes = natureAssetPackRecipes;
+  const validation = buildNatureAssetPackValidation(records, recipes);
+  const recipeMap = new Map(recipes.map((recipe) => [recipe.recipeId, recipe]));
+  const assetMap = new Map(records.map((record) => [record.assetId, record]));
+
+  const pack = deepFreeze({
+    schemaId: natureAssetPackSchemaId,
+    packId: "NATURE_ASSET_PACK_001_DEFAULT",
+    assetFamilies: deepFreeze([
+      "TREE_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001",
+      "TERRAIN_FEATURE_ASSET_FAMILY_001"
+    ]),
+    recipes,
+    assets: records,
+    validation,
+    getAssetById(assetId) {
+      return assetMap.get(normalizeAssetIdInput(assetId)) ?? null;
+    },
+    getAssetsByFamily(assetFamily) {
+      const normalizedAssetFamily = normalizeStringValue(assetFamily, "assetFamily");
+      return records.filter((record) => record.assetFamily === normalizedAssetFamily);
+    },
+    getRecipe(recipeId) {
+      return recipeMap.get(normalizeStringValue(recipeId, "recipeId")) ?? null;
+    }
+  });
+
+  const checked = validateNatureAssetPack(pack);
+  if (!checked.ok) {
+    throw createAssetRegistryValidationError(checked.errorCode, checked.message);
+  }
+
+  return pack;
+}
+
+export function validateNatureAssetPack(rawPack) {
+  try {
+    if (rawPack?.schemaId !== natureAssetPackSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_nature_asset_pack_schema",
+        `Expected ${natureAssetPackSchemaId} but received ${rawPack?.schemaId}.`
+      );
+    }
+
+    const records = normalizeAssetFactoryRecords(rawPack.assets);
+    if (!Array.isArray(rawPack.recipes) || rawPack.recipes.length === 0) {
+      throw createAssetRegistryValidationError(
+        "invalid_nature_asset_pack_recipes",
+        "Nature asset pack must expose a non-empty recipes array."
+      );
+    }
+
+    if (rawPack.validation?.schemaId !== natureAssetPackValidationSchemaId) {
+      throw createAssetRegistryValidationError(
+        "invalid_nature_asset_pack_validation_schema",
+        `Expected ${natureAssetPackValidationSchemaId} but received ${rawPack.validation?.schemaId}.`
+      );
+    }
+
+    for (const key of [
+      "uniqueIds",
+      "recipesExist",
+      "biomeCompatibilityValid",
+      "atlasCompatibilityValid",
+      "deterministicLookup",
+      "validationPassed"
+    ]) {
+      if (rawPack.validation[key] !== true) {
+        throw createAssetRegistryValidationError(
+          "nature_asset_pack_validation_failed",
+          `Nature asset pack validation flag ${key} must be true.`
+        );
+      }
+    }
+
+    const expectedHash = computeDeterministicNaturePackHash(records, rawPack.recipes);
+    if (expectedHash !== rawPack.validation.deterministicNaturePackHash) {
+      throw createAssetRegistryValidationError(
+        "nature_asset_pack_hash_mismatch",
+        "Nature asset pack deterministic hash does not match generated state."
+      );
+    }
+
+    return deepFreeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      natureAssetPack: rawPack
+    });
+  } catch (error) {
+    if (error?.name !== "AssetRegistryValidationError") {
+      throw error;
+    }
+
+    return deepFreeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      natureAssetPack: null
+    });
+  }
 }
 
 export function validateAssetFactoryRegistryLayer(rawLayer) {
@@ -374,6 +684,13 @@ function normalizeAssetFactoryRecord(rawRecord) {
     lodRules: deepFreeze(normalizeStringArray(record.lodRules, "lodRules")),
     usageRules: deepFreeze(normalizeStringArray(record.usageRules, "usageRules")),
     atlasCompatibility,
+    biomeCompatibility: deepFreeze(
+      normalizeOptionalStringArray(
+        record.biomeCompatibility,
+        "biomeCompatibility",
+        ["GENERIC"]
+      )
+    ),
     metadata: record.metadata ? deepFreeze(asPlainObject(record.metadata, "metadata")) : deepFreeze({})
   });
 }
@@ -475,6 +792,39 @@ function buildAssetFactoryRegistryValidation(records) {
   });
 }
 
+function buildNatureAssetPackValidation(records, recipes) {
+  const uniqueIds = new Set(records.map((record) => record.assetId)).size === records.length;
+  const recipesExist = records.every((record) =>
+    recipes.some((recipe) => recipe.recipeId === record.recipeId)
+  );
+  const biomeCompatibilityValid = records.every(
+    (record) => Array.isArray(record.biomeCompatibility) && record.biomeCompatibility.length > 0
+  );
+  const atlasCompatibilityValid = records.every(
+    (record) =>
+      record.atlasCompatibility.atlasCompatible === true &&
+      record.atlasCompatibility.supportedObjectTypes.length > 0
+  );
+  const deterministicLookup = true;
+  const validationPassed =
+    uniqueIds &&
+    recipesExist &&
+    biomeCompatibilityValid &&
+    atlasCompatibilityValid &&
+    deterministicLookup;
+
+  return deepFreeze({
+    schemaId: natureAssetPackValidationSchemaId,
+    uniqueIds,
+    recipesExist,
+    biomeCompatibilityValid,
+    atlasCompatibilityValid,
+    deterministicLookup,
+    validationPassed,
+    deterministicNaturePackHash: computeDeterministicNaturePackHash(records, recipes)
+  });
+}
+
 function computeDeterministicRegistryHash(records) {
   return stableStringify(
     records.map((record) => ({
@@ -488,6 +838,22 @@ function computeDeterministicRegistryHash(records) {
       atlasCompatibility: record.atlasCompatibility
     }))
   );
+}
+
+function computeDeterministicNaturePackHash(records, recipes) {
+  return stableStringify({
+    assets: records.map((record) => ({
+      assetId: record.assetId,
+      assetFamily: record.assetFamily,
+      recipeId: record.recipeId,
+      biomeCompatibility: record.biomeCompatibility
+    })),
+    recipes: recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      recipeType: recipe.recipeType,
+      supportedFamilies: recipe.supportedFamilies
+    }))
+  });
 }
 
 function normalizeAssetRecord(rawAsset) {
@@ -598,6 +964,14 @@ function normalizeStringArray(value, fieldName) {
       );
     }
   });
+}
+
+function normalizeOptionalStringArray(value, fieldName, defaultValue = []) {
+  if (value === null || value === undefined) {
+    return defaultValue;
+  }
+
+  return normalizeStringArray(value, fieldName);
 }
 
 function normalizeBoolean(value, fieldName) {
