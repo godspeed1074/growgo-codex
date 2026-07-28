@@ -279,6 +279,10 @@ def validate_existing_final_or_fail(final_path):
     return parse_glb(final_path)
 
 
+def build_temp_glb_path(final_path):
+    return final_path.with_name(f"{final_path.stem}.tmp{final_path.suffix}")
+
+
 def export_lod(output_dir, lod_key, lod_label, final_filename, root_name):
     root_object = bpy.data.objects.get(root_name)
     if root_object is None:
@@ -288,7 +292,7 @@ def export_lod(output_dir, lod_key, lod_label, final_filename, root_name):
         )
 
     final_path = output_dir / final_filename
-    temp_path = output_dir / f"{final_filename}.resume.tmp.glb"
+    temp_path = build_temp_glb_path(final_path)
     if temp_path.exists():
         temp_path.unlink()
 

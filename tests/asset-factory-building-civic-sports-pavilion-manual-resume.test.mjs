@@ -60,10 +60,37 @@ test("pavilion manual resume script includes identity guards and ordered exports
 test("pavilion manual resume script uses atomic export finalization and stops on first failure", () => {
   const script = fs.readFileSync(resumeScriptPath, "utf8");
 
-  assert.match(script, /\.resume\.tmp\.glb/);
+  assert.match(script, /def build_temp_glb_path\(final_path\):/);
+  assert.match(script, /final_path\.with_name\(f"\{final_path\.stem\}\.tmp\{final_path\.suffix\}"\)/);
   assert.match(script, /temp_path\.replace\(final_path\)/);
   assert.match(script, /raise RuntimeError/);
   assert.match(script, /for lod_key, lod_label, final_filename, root_name in EXPORT_SEQUENCE/);
+});
+
+test("pavilion manual resume script never uses .glb.tmp or .glb.tmp.glb temp names", () => {
+  const script = fs.readFileSync(resumeScriptPath, "utf8");
+
+  assert.doesNotMatch(script, /\.glb\.tmp/);
+  assert.doesNotMatch(script, /\.glb\.tmp\.glb/);
+});
+
+test("pavilion manual resume script builds .tmp.glb paths for all three lod exports", () => {
+  const script = fs.readFileSync(resumeScriptPath, "utf8");
+
+  assert.match(script, /\("close", "LOD_CLOSE", f"\{ASSET_ID\}_LOD_CLOSE\.glb"/);
+  assert.match(script, /\("gameplay", "LOD_GAMEPLAY", f"\{ASSET_ID\}_LOD_GAMEPLAY\.glb"/);
+  assert.match(script, /\("map", "LOD_MAP", f"\{ASSET_ID\}_LOD_MAP\.glb"/);
+  assert.match(script, /temp_path = build_temp_glb_path\(final_path\)/);
+  assert.match(script, /export_root\(root_object, temp_path\)/);
+  assert.match(script, /verified_metrics = validate_export\(temp_path, expected_metrics\)/);
+});
+
+test("pavilion manual resume script enforces final source blend naming", () => {
+  const script = fs.readFileSync(resumeScriptPath, "utf8");
+
+  assert.match(script, /EXPECTED_BLEND_NAME = f"\{ASSET_ID\}_v001\.blend"/);
+  assert.match(script, /BLEND_NAME_MISMATCH/);
+  assert.match(script, /Expected open blend '\{EXPECTED_BLEND_NAME\}', found '\{filepath\.name\}'\./);
 });
 
 test("pavilion manual resume script avoids regeneration and rendering systems", () => {

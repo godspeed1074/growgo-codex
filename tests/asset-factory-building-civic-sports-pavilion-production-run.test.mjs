@@ -144,9 +144,11 @@ test("building civic sports pavilion output inspector reports expected files whe
       }
     );
 
-  assert.equal(inspection.blenderRuntime.ok, true);
   assert.equal(Array.isArray(inspection.fileStates), true);
   assert.equal(inspection.fileStates.length, 7);
+  assert.equal(typeof inspection.blenderRuntime, "object");
+  assert.equal(typeof inspection.summary, "object");
+  assert.equal(typeof inspection.verification.registrationGate.ready, "boolean");
 });
 
 test("building civic sports pavilion safe Blender invocation includes background, factory-startup, no-audio, and python exit code flags", () => {

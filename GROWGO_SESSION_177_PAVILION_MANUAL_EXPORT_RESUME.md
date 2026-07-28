@@ -5,12 +5,17 @@
 This session prepares a safe manual-completion path for
 `BUILDING_CIVIC_SPORTS_PAVILION_001` without launching Blender from Codex.
 
+This repair pass fixes the temporary GLB export-path bug discovered during the
+manual Blender run.
+
 Codex work completed:
 
 - created a Blender-internal resume script for manual execution
 - upgraded the Node-side pavilion verifier to inspect final GLBs deeply
 - added a post-run verification helper command
 - added focused tests for the resume contract and final GLB verification rules
+- repaired the temporary GLB naming so Blender exports to `.tmp.glb` instead of
+  `.glb.tmp`
 
 This session does **not** complete the pavilion.
 
@@ -44,8 +49,32 @@ Missing final outputs:
 
 ## Files Updated
 
+- [resume_building_civic_sports_pavilion_exports.py](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/resume_building_civic_sports_pavilion_exports.py)
 - [building-civic-sports-pavilion-production-run.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/building-civic-sports-pavilion-production-run.mjs)
 - [asset-factory-building-civic-sports-pavilion-production-run.test.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/tests/asset-factory-building-civic-sports-pavilion-production-run.test.mjs)
+- [asset-factory-building-civic-sports-pavilion-manual-resume.test.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/tests/asset-factory-building-civic-sports-pavilion-manual-resume.test.mjs)
+
+## Exact Bug
+
+The earlier resume script built a temporary path like:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp`
+
+When Blender exported GLB, it appended `.glb`, which produced:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp.glb`
+
+The script then tried to validate the wrong path and failed with
+`FileNotFoundError`.
+
+The repaired script now builds temporary export paths in this form:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.tmp.glb`
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.tmp.glb`
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.tmp.glb`
+
+After validation, each temp file is atomically renamed to its final `.glb`
+filename.
 
 ## Resume Script Behaviour
 
@@ -61,7 +90,7 @@ The manual Blender resume script:
   1. `LOD_CLOSE`
   2. `LOD_GAMEPLAY`
   3. `LOD_MAP`
-- uses a fresh `.resume.tmp.glb` path for each export
+- uses a fresh `.tmp.glb` path for each export
 - validates each GLB before final rename
 - stops at the first failure
 - preserves already-valid final outputs
@@ -71,13 +100,21 @@ The manual Blender resume script:
 ## Exact Manual Blender Steps
 
 1. Open Blender 4.2 LTS manually.
-2. Open:
+2. Open this exact file:
    `/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
-3. Switch to Blender’s `Scripting` workspace.
-4. Open this script in the Blender text editor:
+3. Confirm Blender’s title bar shows:
+   `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
+4. If Blender shows a temporary source name such as:
+   `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.tmp`
+   do **not** run the resume script yet.
+5. In that case, use `File` -> `Open` and reopen the exact final source file:
+   `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
+6. Do not rename the temporary source file manually from Finder.
+7. Switch to Blender’s `Scripting` workspace.
+8. Open this script in the Blender text editor:
    `/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/resume_building_civic_sports_pavilion_exports.py`
-5. Run the script from Blender’s text editor.
-6. Watch for these markers in Blender’s console output:
+9. Run the script from Blender’s text editor.
+10. Watch for these markers in Blender’s console output:
    - `S177_PAVILION_RESUME_START`
    - `S177_PAVILION_RESUME_VERSION_GUARD_OK`
    - `S177_PAVILION_RESUME_ASSET_GUARD_OK`
@@ -85,8 +122,8 @@ The manual Blender resume script:
    - `S177_PAVILION_RESUME_LOD_EXPORT_START:...`
    - `S177_PAVILION_RESUME_LOD_EXPORT_COMPLETE:...`
    - `S177_PAVILION_RESUME_COMPLETE`
-7. If the script stops on a failure marker, do not rename files manually.
-8. Return to Codex for non-Blender verification.
+11. If the script stops on a failure marker, do not rename files manually.
+12. Return to Codex for non-Blender verification.
 
 ## Expected Outputs After Manual Execution
 
@@ -145,6 +182,13 @@ Passed:
 Focused coverage added:
 
 - resume-script syntax
+- temp GLB path ends with `.tmp.glb`
+- no `.glb.tmp`
+- no `.glb.tmp.glb`
+- validation reads the actual exported temp file
+- atomic rename to final `.glb`
+- all three LOD paths
+- final source `.blend` naming check
 - asset identity guard
 - export order
 - atomic finalisation
