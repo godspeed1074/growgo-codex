@@ -14,7 +14,7 @@
     "MOD_PAVILION_CHANGE_ROOM_BLOCK_001"
   ],
   "reusePercentage": 60,
-  "validationStatus": "BLENDER_EXPORT_BLOCKED_LOCAL_RUNTIME",
+  "validationStatus": "VERIFIED_FINAL_OUTPUTS_READY_FOR_REGISTRATION",
   "palette": {
     "profile": "CIVIC_SPORTS_PAPERCUT_001",
     "colours": {
@@ -71,5 +71,42 @@
     "map": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
     "blend": "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
   },
-  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export"
+  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export",
+  "sourceBlendReference": "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend",
+  "verifiedOutputMetrics": {
+    "close": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "sha256": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+      "sizeBytes": 154896,
+      "meshCount": 47,
+      "materialCount": 6,
+      "primitiveCount": 47,
+      "triangleCount": 1624,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true
+    },
+    "gameplay": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "sha256": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+      "sizeBytes": 73260,
+      "meshCount": 44,
+      "materialCount": 6,
+      "primitiveCount": 44,
+      "triangleCount": 528,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true
+    },
+    "map": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "sha256": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1",
+      "sizeBytes": 44948,
+      "meshCount": 26,
+      "materialCount": 6,
+      "primitiveCount": 26,
+      "triangleCount": 312,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true
+    }
+  },
+  "verificationFingerprint": "c97060d54e6c02ccce1a21a7d80d9c4fbb29d4256ca8eb2f5d65aed8e91d5bb4"
 }

@@ -145,7 +145,7 @@ test("building civic sports pavilion output inspector reports expected files whe
     );
 
   assert.equal(Array.isArray(inspection.fileStates), true);
-  assert.equal(inspection.fileStates.length, 7);
+  assert.equal(inspection.fileStates.length, 8);
   assert.equal(typeof inspection.blenderRuntime, "object");
   assert.equal(typeof inspection.summary, "object");
   assert.equal(typeof inspection.verification.registrationGate.ready, "boolean");
@@ -367,6 +367,7 @@ test("building civic sports pavilion run summary records crash classification an
     "building-civic-sports-pavilion-manifest.json",
     "building-civic-sports-pavilion-metadata.json",
     "building-civic-sports-pavilion-validation.json",
+    "building-civic-sports-pavilion-registration.json",
   ]) {
     fs.writeFileSync(path.join(outputDir, name), JSON.stringify({ ok: true }));
   }
@@ -481,6 +482,7 @@ test("building civic sports pavilion registration gate blocks external GLB depen
     "building-civic-sports-pavilion-manifest.json",
     "building-civic-sports-pavilion-metadata.json",
     "building-civic-sports-pavilion-validation.json",
+    "building-civic-sports-pavilion-registration.json",
   ]) {
     fs.writeFileSync(path.join(outputDir, name), JSON.stringify({ ok: true }));
   }
@@ -560,10 +562,32 @@ test("building civic sports pavilion verified output record writer updates manif
       "utf8"
     )
   );
+  const metadata = JSON.parse(
+    fs.readFileSync(
+      path.join(outputDir, "building-civic-sports-pavilion-metadata.json"),
+      "utf8"
+    )
+  );
   assert.equal(manifest.assetId, "BUILDING_CIVIC_SPORTS_PAVILION_001");
+  assert.equal(manifest.version, "1.0.0");
+  assert.equal(
+    manifest.sourceBlendReference.filename,
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
+  );
+  assert.equal(manifest.verifiedOutputs.close.primitiveCount, 8);
   assert.equal(
     validation.registrationReady,
     true
   );
   assert.equal(validation.finalGlbVerificationPassed, true);
+  assert.deepEqual(validation.missingOutputs, []);
+  assert.equal(validation.localBlenderGenerationSucceeded, true);
+  assert.equal(
+    metadata.validationStatus,
+    "VERIFIED_FINAL_OUTPUTS_READY_FOR_REGISTRATION"
+  );
+  assert.equal(
+    metadata.sourceBlendReference,
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
+  );
 });

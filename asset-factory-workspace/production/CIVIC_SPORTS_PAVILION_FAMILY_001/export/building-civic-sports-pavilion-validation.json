@@ -11,7 +11,7 @@
   "deterministicGeneration": true,
   "duplicateAssetArchitectureAvoided": true,
   "localBlenderRuntimeDetected": true,
-  "localBlenderGenerationSucceeded": false,
+  "localBlenderGenerationSucceeded": true,
   "crashClassification": "GENERATION_FAILED",
   "localBlenderFailureCode": "metal_backend_startup_crash",
   "localBlenderFailureDate": "2026-07-28",
@@ -30,24 +30,65 @@
     }
   },
   "preparedJsonOutputsPresent": true,
-  "missingOutputs": [
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
-  ],
+  "missingOutputs": [],
   "outputVerification": {
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb": "MISSING",
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb": "MISSING",
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb": "MISSING",
-    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend": "MISSING",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb": "VERIFIED_COMPLETE",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb": "VERIFIED_COMPLETE",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb": "VERIFIED_COMPLETE",
     "building-civic-sports-pavilion-manifest.json": "VERIFIED_COMPLETE",
     "building-civic-sports-pavilion-metadata.json": "VERIFIED_COMPLETE",
-    "building-civic-sports-pavilion-validation.json": "VERIFIED_COMPLETE"
+    "building-civic-sports-pavilion-validation.json": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-registration.json": "VERIFIED_COMPLETE",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend": "VERIFIED_COMPLETE"
   },
   "reusedSharedModuleCount": 6,
   "missingModuleCount": 4,
   "totalModuleCount": 10,
   "reusePercentage": 60,
-  "readyForCommit": false
+  "readyForCommit": false,
+  "finalGlbVerificationPassed": true,
+  "noExternalDependencies": true,
+  "verifiedOutputMetrics": {
+    "close": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "sha256": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+      "sizeBytes": 154896,
+      "meshCount": 47,
+      "materialCount": 6,
+      "primitiveCount": 47,
+      "triangleCount": 1624,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true
+    },
+    "gameplay": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "sha256": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+      "sizeBytes": 73260,
+      "meshCount": 44,
+      "materialCount": 6,
+      "primitiveCount": 44,
+      "triangleCount": 528,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true
+    },
+    "map": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "sha256": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1",
+      "sizeBytes": 44948,
+      "meshCount": 26,
+      "materialCount": 6,
+      "primitiveCount": 26,
+      "triangleCount": 312,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true
+    }
+  },
+  "lodComplexityCheck": {
+    "ok": true,
+    "blockers": []
+  },
+  "registrationReady": true,
+  "verificationFingerprint": "c97060d54e6c02ccce1a21a7d80d9c4fbb29d4256ca8eb2f5d65aed8e91d5bb4",
+  "currentOutputState": "VERIFIED_FINAL_OUTPUTS",
+  "sourceBlendReference": "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
 }

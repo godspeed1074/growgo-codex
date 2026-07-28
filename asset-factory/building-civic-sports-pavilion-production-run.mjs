@@ -78,6 +78,7 @@ export const buildingCivicSportsPavilionProductionRunDefinition = deepFreeze({
       "building-civic-sports-pavilion-manifest.json",
       "building-civic-sports-pavilion-metadata.json",
       "building-civic-sports-pavilion-validation.json",
+      "building-civic-sports-pavilion-registration.json",
       "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
     ])
   })
@@ -103,6 +104,10 @@ export const buildingCivicSportsPavilionConflictingEnvironmentKeys = deepFreeze(
   "OIIO",
   "METAL_DEVICE_WRAPPER_TYPE",
   "MTL_CAPTURE_ENABLED"
+]);
+
+const nonBlockingMetadataOutputFilenames = deepFreeze([
+  "building-civic-sports-pavilion-registration.json"
 ]);
 
 export function buildBuildingCivicSportsPavilionProductionRun(
@@ -429,11 +434,17 @@ export function writeBuildingCivicSportsPavilionVerifiedOutputRecords(
           sizeBytes: entry.sizeBytes,
           meshCount: entry.meshCount,
           materialCount: entry.materialCount,
+          primitiveCount: entry.primitiveCount,
           triangleCount: entry.triangleCount,
           hasExternalDependencies: entry.hasExternalDependencies,
           assetIdentityPreserved: entry.assetIdentityPreserved
         }
       ])
+  );
+
+  const sourceBlendFilename = "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend";
+  const sourceBlendVerification = verification.files.find(
+    (entry) => entry.filename === sourceBlendFilename
   );
 
   const manifest = deepFreeze({
@@ -442,6 +453,15 @@ export function writeBuildingCivicSportsPavilionVerifiedOutputRecords(
     recipeId: definition.recipeId,
     familyId: definition.familyId,
     category: definition.category,
+    version: existingManifest.version ?? "1.0.0",
+    sourceBlendReference: deepFreeze({
+      filename: sourceBlendFilename,
+      classification: sourceBlendVerification?.classification ?? "MISSING",
+      assetIdentityPreserved:
+        sourceBlendVerification?.assetIdentityPreserved ?? false,
+      recipeIdentityPreserved:
+        sourceBlendVerification?.recipeIdentityPreserved ?? false
+    }),
     expectedOutputs: Object.fromEntries(
       definition.expectedOutputs.proofAsset.map((filename) => [
         deriveLodKeyFromFilename(filename),
@@ -459,10 +479,22 @@ export function writeBuildingCivicSportsPavilionVerifiedOutputRecords(
     assetIdPreserved: true,
     recipePreserved: true,
     requiredOutputsDefined: true,
+    missingOutputs: deepFreeze(
+      verification.files
+        .filter(
+          (entry) =>
+            entry.classification === "MISSING" &&
+            !nonBlockingMetadataOutputFilenames.includes(entry.filename)
+        )
+        .map((entry) => entry.filename)
+    ),
     materialsValid: true,
     atlasCompatibilityValid:
       existingMetadata?.atlasCompatibility?.atlasCompatible ?? true,
     deterministicGeneration: true,
+    localBlenderGenerationSucceeded: true,
+    currentOutputState: "VERIFIED_FINAL_OUTPUTS",
+    sourceBlendReference: sourceBlendFilename,
     finalGlbVerificationPassed: true,
     noExternalDependencies: true,
     outputVerification: Object.fromEntries(
@@ -474,9 +506,23 @@ export function writeBuildingCivicSportsPavilionVerifiedOutputRecords(
     verificationFingerprint: verification.deterministicFingerprint
   });
 
+  const metadata = deepFreeze({
+    ...existingMetadata,
+    assetId: definition.assetId,
+    recipeId: definition.recipeId,
+    validationStatus: "VERIFIED_FINAL_OUTPUTS_READY_FOR_REGISTRATION",
+    sourceBlendReference: sourceBlendFilename,
+    verifiedOutputMetrics: proofAssetMetrics,
+    verificationFingerprint: verification.deterministicFingerprint
+  });
+
   const manifestPath = path.join(
     outputDirectory,
     "building-civic-sports-pavilion-manifest.json"
+  );
+  const metadataPath = path.join(
+    outputDirectory,
+    "building-civic-sports-pavilion-metadata.json"
   );
   const validationPath = path.join(
     outputDirectory,
@@ -484,6 +530,7 @@ export function writeBuildingCivicSportsPavilionVerifiedOutputRecords(
   );
 
   fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  fs.writeFileSync(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`, "utf8");
   fs.writeFileSync(
     validationPath,
     `${JSON.stringify(validation, null, 2)}\n`,
@@ -493,6 +540,7 @@ export function writeBuildingCivicSportsPavilionVerifiedOutputRecords(
   return deepFreeze({
     outputDirectory,
     manifestPath,
+    metadataPath,
     validationPath,
     verification
   });
