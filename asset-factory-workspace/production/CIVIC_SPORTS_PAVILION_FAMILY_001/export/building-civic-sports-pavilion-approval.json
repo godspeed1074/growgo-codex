@@ -1,0 +1,108 @@
+{
+  "schemaId": "ASSET_APPROVAL_RECORD_001",
+  "approvalRecordId": "ASSET_APPROVAL_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "approvalStatus": "QUALITY_APPROVED",
+  "qualityResult": {
+    "reportId": "ASSET_QUALITY_REPORT_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "approvalReadiness": "READY_FOR_APPROVAL",
+    "warnings": []
+  },
+  "registrationStatus": "approved_pending_registration",
+  "version": "1.0.0",
+  "approvalTimestamp": "2026-07-27",
+  "recipeId": "SPORTS_FACILITY_RECIPE_001",
+  "authoringHistory": {
+    "specificationId": "ASSET_CREATION_SPECIFICATION_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "workflowState": "VALIDATION_PENDING",
+    "validationStatus": "validated",
+    "registrationStatus": "registered"
+  },
+  "validation": {
+    "schemaId": "ASSET_APPROVAL_VALIDATION_001",
+    "qualityPassed": true,
+    "authoringCompleted": true,
+    "registryEntryValid": true,
+    "recipeExists": true,
+    "deterministicApprovalState": true,
+    "validationPassed": true,
+    "deterministicApprovalHash": "APPROVAL_EF2C2163"
+  },
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "sourceBlendReference": {
+    "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend",
+    "sizeBytes": 2142796
+  },
+  "registrationRecordReference": {
+    "filename": "building-civic-sports-pavilion-registration.json",
+    "relativePath": "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/building-civic-sports-pavilion-registration.json",
+    "deterministicFingerprint": "9904bfbc94202cbb86e599a328a3e9abb778612485cd7170952bed18bb52c7a2",
+    "linkedRegistrationStatus": "registered"
+  },
+  "verifiedOutputs": {
+    "close": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "sha256": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+      "sizeBytes": 154896,
+      "meshCount": 47,
+      "materialCount": 6,
+      "primitiveCount": 47,
+      "triangleCount": 1624,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true,
+      "relativePath": "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb"
+    },
+    "gameplay": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "sha256": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+      "sizeBytes": 73260,
+      "meshCount": 44,
+      "materialCount": 6,
+      "primitiveCount": 44,
+      "triangleCount": 528,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true,
+      "relativePath": "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb"
+    },
+    "map": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "sha256": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1",
+      "sizeBytes": 44948,
+      "meshCount": 26,
+      "materialCount": 6,
+      "primitiveCount": 26,
+      "triangleCount": 312,
+      "hasExternalDependencies": false,
+      "assetIdentityPreserved": true,
+      "relativePath": "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb"
+    }
+  },
+  "outputVerification": {
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb": "VERIFIED_COMPLETE",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb": "VERIFIED_COMPLETE",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-manifest.json": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-metadata.json": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-validation.json": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-registration.json": "VERIFIED_COMPLETE",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend": "VERIFIED_COMPLETE"
+  },
+  "metadataValidationStatus": "VERIFIED_FINAL_OUTPUTS_READY_FOR_REGISTRATION",
+  "lifecycleSummary": {
+    "assetStatus": "registered_validated_approved",
+    "approvalStatus": "QUALITY_APPROVED",
+    "linkedRegistrationStatus": "registered",
+    "publishStatus": "not_published"
+  },
+  "preservedContracts": {
+    "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "recipeId": "SPORTS_FACILITY_RECIPE_001",
+    "version": "1.0.0",
+    "closeHash": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+    "gameplayHash": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+    "mapHash": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1"
+  },
+  "deterministicFingerprint": "e56d7a99e303ac1461a669f17ef9d95d9a11fea64c791e5ca4a5664a14464e64"
+}

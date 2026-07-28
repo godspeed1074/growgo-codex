@@ -19,3 +19,5 @@ firebase-debug.*.log
 *.local.env
 *.service-account.json
 service-account*.json
+*.tmp.glb
+*.tmp.blend
