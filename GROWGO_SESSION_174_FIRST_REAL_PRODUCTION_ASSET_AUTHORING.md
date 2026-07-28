@@ -13,11 +13,18 @@ This repair session inspected the failed Blender run, verified exactly what file
 exist, ran two minimal Blender diagnostics, hardened the pavilion production
 runner, and decided **not** to retry pavilion generation on this host.
 
+This report has now been updated with a later manual inspection of the pavilion
+output directory that was performed without launching Blender.
+
 Honest outcome:
 
-- real production pavilion `.glb` outputs do **not** exist
-- real production pavilion `.blend` output does **not** exist
-- the only valid Session 174 production outputs are JSON records and diagnostic logs
+- the required final pavilion `.glb` outputs do **not** exist under their
+  required filenames
+- a pavilion `.blend` file **does** exist and carries the correct asset identity
+- a temporary close LOD GLB exists and parses successfully, but it is still not
+  a valid final proof output
+- the JSON records exist, but the validation JSON no longer reflects the full
+  manually verified file state
 - Blender crashes before Python marker execution on this Intel Mac
 - no safe retry was performed because both minimal diagnostics failed first
 
@@ -33,8 +40,8 @@ Observed result:
 
 - process terminated with segmentation fault
 - no pavilion output marker reached
-- no `.glb` outputs written
-- no `.blend` output written
+- no final `.glb` outputs were confirmed from that crashing run
+- no `.blend` output was confirmed from that crashing run
 
 ### Diagnostic 1 command
 
@@ -106,6 +113,8 @@ This means the local failure happens before our pavilion script gets control.
 
 Found:
 
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp.glb`
 - `building-civic-sports-pavilion-manifest.json`
 - `building-civic-sports-pavilion-metadata.json`
 - `building-civic-sports-pavilion-validation.json`
@@ -115,21 +124,26 @@ Not found:
 - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb`
 - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb`
 - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb`
-- `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
 
 ### File sizes and timestamps
 
-Verified JSON outputs:
+Verified files:
 
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
+  - size: `2,112,748 bytes`
+  - sha256: `87441921360f6fa71799abd577259aa72966e8d58b9f29343229a22c80da92ec`
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp.glb`
+  - size: `154,896 bytes`
+  - sha256: `ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06`
 - `building-civic-sports-pavilion-manifest.json`
   - size: `843 bytes`
-  - modified: `2026-07-28 18:11`
+  - sha256: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
 - `building-civic-sports-pavilion-metadata.json`
-  - size: `1925 bytes`
-  - modified: `2026-07-28 18:11`
+  - size: `1,925 bytes`
+  - sha256: `942c2b2f25d3323daf3c9a766348bc499bcec9dd243b2371de78e7432cf01379`
 - `building-civic-sports-pavilion-validation.json`
-  - size: `1109 bytes`
-  - modified: `2026-07-28 18:11`
+  - size: `2,359 bytes`
+  - sha256: `7eb3787ef290ca589e0916eff17cdcb17aa4907a5a5c6a8811494ed680b19884`
 
 ### Expected output classification
 
@@ -138,7 +152,11 @@ Verified JSON outputs:
 - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb` -> `MISSING`
 - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb` -> `MISSING`
 - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb` -> `MISSING`
-- `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend` -> `MISSING`
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend` -> `PRESENT_UNVERIFIED_FOR_REGISTRATION`
+
+#### Temporary non-contract output
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp.glb` -> `PRESENT_UNVERIFIED_FOR_REGISTRATION`
 
 #### Existing JSON artifacts
 
@@ -146,13 +164,109 @@ Verified JSON outputs:
 - `building-civic-sports-pavilion-metadata.json` -> `VERIFIED_COMPLETE`
 - `building-civic-sports-pavilion-validation.json` -> `VERIFIED_COMPLETE`
 
-No expected pavilion output was classified as:
+The required final GLB trio is still incomplete, so the pavilion package is not
+registrable from the current file set.
 
-- `VERIFIED_COMPLETE`
-- `PRESENT_UNVERIFIED`
-- `CORRUPT`
+## Manual Output Verification
 
-for the required `.glb` / `.blend` set, because none of those files exist.
+This section records the later non-Blender inspection of the manually generated
+files.
+
+### Manifest hash
+
+- `building-civic-sports-pavilion-manifest.json`
+  - sha256: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
+
+The manifest lists the expected filenames, but it does not contain per-output
+hashes. That means the manifest hash can be recorded, but there is no
+manifest-declared output hash list to cross-check against.
+
+### Per-file verification
+
+#### `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
+
+- existence: `YES`
+- non-zero size: `YES`
+- valid parsing: `PARTIAL`
+  - Blender header verified: `BLENDER-v402`
+  - no structured `.blend` parser was available locally without launching
+    Blender
+- correct asset ID: `YES`
+  - embedded identity markers found:
+    - `BUILDING_CIVIC_SPORTS_PAVILION_001`
+    - `SPORTS_FACILITY_RECIPE_001`
+    - `S174_PAVILION_MARKER_COMPLETE`
+- mesh count: `NOT VERIFIED`
+- material count: `NOT VERIFIED`
+- triangle budget: `NOT VERIFIED`
+- no external dependencies: `NOT VERIFIED`
+  - embedded path-like and image-like strings were found, including `.jpg`,
+    `.exr`, and `/Users/michaelpeterson`
+- manifest hash: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
+- classification: `PRESENT_UNVERIFIED_FOR_REGISTRATION`
+
+#### `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb`
+
+- existence: `NO`
+- non-zero size: `NO`
+- valid parsing: `NO`
+- correct asset ID: `NO FILE`
+- mesh count: `NO FILE`
+- material count: `NO FILE`
+- triangle budget: `NO FILE`
+- no external dependencies: `NO FILE`
+- manifest hash: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
+- classification: `MISSING`
+
+Related temporary file found:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp.glb`
+  - valid GLB parse: `YES`
+  - correct asset ID: `YES`
+  - mesh count: `47`
+  - material count: `6`
+  - triangle count: `1,624`
+  - no external dependencies: `YES`
+  - registration status: `NOT ACCEPTABLE AS FINAL OUTPUT`
+
+#### `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb`
+
+- existence: `NO`
+- non-zero size: `NO`
+- valid parsing: `NO`
+- correct asset ID: `NO FILE`
+- mesh count: `NO FILE`
+- material count: `NO FILE`
+- triangle budget: `NO FILE`
+- no external dependencies: `NO FILE`
+- manifest hash: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
+- classification: `MISSING`
+
+#### `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb`
+
+- existence: `NO`
+- non-zero size: `NO`
+- valid parsing: `NO`
+- correct asset ID: `NO FILE`
+- mesh count: `NO FILE`
+- material count: `NO FILE`
+- triangle budget: `NO FILE`
+- no external dependencies: `NO FILE`
+- manifest hash: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
+- classification: `MISSING`
+
+## Registration Readiness
+
+`BUILDING_CIVIC_SPORTS_PAVILION_001` is **not ready for registration**.
+
+Exact blockers:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb` is missing under the
+  required final filename
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb` is missing
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb` is missing
+- the `.blend` file alone does not satisfy the required output contract
+- the temporary close GLB is not a valid substitute for the required final file
 
 ## Step 2 — Blender Isolation Diagnostics
 

@@ -15,6 +15,8 @@ Key result:
 Therefore:
 
 - pavilion generation is **not** yet safe to retry
+- the pavilion asset package is **not** ready for registration based on the
+  later manual output inspection
 
 ## Manual Finder Launch Result
 
@@ -254,6 +256,47 @@ Coverage added or confirmed:
 Wrapper exit-code propagation test:
 
 - not added because no wrapper script was created in this session
+
+## Manual Output Inspection Follow-up
+
+This environment-isolation session did not launch Blender successfully, but the
+later manual file inspection clarified the current pavilion package state.
+
+Verified without launching Blender:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend`
+  - exists
+  - non-zero size
+  - Blender header verified: `BLENDER-v402`
+  - embedded asset identity markers present
+  - not fully parse-verified for mesh/material/triangle counts
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb`
+  - missing as a final required file
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb`
+  - missing
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb`
+  - missing
+- `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb.tmp.glb`
+  - present as a temporary file only
+  - valid GLB parse
+  - mesh count: `47`
+  - material count: `6`
+  - triangle count: `1,624`
+  - no external dependencies detected
+  - not acceptable as a final proof output
+
+Manifest hash:
+
+- `building-civic-sports-pavilion-manifest.json`
+  - sha256: `685f0a27960db8711fdfe379c4e7e06d0b63ecd73b9908266213fb53f2238297`
+
+Registration truth after manual inspection:
+
+- `BUILDING_CIVIC_SPORTS_PAVILION_001` is **not ready for registration**
+- the exact blocker remains the incomplete required output set:
+  - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb` missing
+  - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb` missing
+  - `BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb` missing
 
 ## Files Changed
 
