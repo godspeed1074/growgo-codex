@@ -1,0 +1,75 @@
+{
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "recipeId": "SPORTS_FACILITY_RECIPE_001",
+  "moduleList": [
+    "MOD_FOUNDATION_STANDARD_RECT_001",
+    "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+    "MOD_PATH_STANDARD_001",
+    "MOD_GROUND_GRASS_STANDARD_001",
+    "MOD_FENCE_STANDARD_001",
+    "MOD_TREE_EUCALYPTUS_STANDARD_001",
+    "MOD_PAVILION_CANOPY_STANDARD_001",
+    "MOD_PAVILION_POST_SET_001",
+    "MOD_PAVILION_BLEACHER_SET_001",
+    "MOD_PAVILION_CHANGE_ROOM_BLOCK_001"
+  ],
+  "reusePercentage": 60,
+  "validationStatus": "BLENDER_EXPORT_BLOCKED_LOCAL_RUNTIME",
+  "palette": {
+    "profile": "CIVIC_SPORTS_PAPERCUT_001",
+    "colours": {
+      "civic_wall": [
+        0.886,
+        0.871,
+        0.816
+      ],
+      "civic_roof": [
+        0.188,
+        0.357,
+        0.455
+      ],
+      "civic_trim": [
+        0.247,
+        0.263,
+        0.298
+      ],
+      "sports_accent": [
+        0.816,
+        0.416,
+        0.224
+      ],
+      "ground_green": [
+        0.455,
+        0.655,
+        0.42
+      ],
+      "path_neutral": [
+        0.631,
+        0.62,
+        0.596
+      ]
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "OVAL",
+      "RECREATION_AREA"
+    ],
+    "supportedClassifications": [
+      "PARK"
+    ],
+    "supportedRecipeIds": [
+      "SPORTS_FACILITY_RECIPE_001",
+      "SPORTS_OVAL_RECIPE_001",
+      "RECREATION_AREA_RECIPE_001"
+    ]
+  },
+  "plannedLodOutputs": {
+    "close": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+    "gameplay": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+    "map": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+    "blend": "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
+  },
+  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export"
+}

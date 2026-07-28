@@ -1,0 +1,53 @@
+{
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "recipeId": "SPORTS_FACILITY_RECIPE_001",
+  "assetIdPreserved": true,
+  "recipePreserved": true,
+  "requiredOutputsDefined": true,
+  "lodsValid": true,
+  "performanceBudgetsValid": true,
+  "materialsValid": true,
+  "atlasCompatibilityValid": true,
+  "deterministicGeneration": true,
+  "duplicateAssetArchitectureAvoided": true,
+  "localBlenderRuntimeDetected": true,
+  "localBlenderGenerationSucceeded": false,
+  "crashClassification": "GENERATION_FAILED",
+  "localBlenderFailureCode": "metal_backend_startup_crash",
+  "localBlenderFailureDate": "2026-07-28",
+  "localBlenderFailureDetail": "Blender 4.5.12 LTS crashed during WM_init GPU backend startup before the pavilion authoring script executed.",
+  "diagnostics": {
+    "retryOccurred": false,
+    "diagnosticOne": {
+      "command": "blender --background --factory-startup -noaudio --python-exit-code 1 --python growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/diag1_trivial.py",
+      "returnCode": -11,
+      "completionMarkerReached": false
+    },
+    "diagnosticTwo": {
+      "command": "blender --background --factory-startup -noaudio --python-exit-code 1 --python growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/diag2_minimal_cube.py",
+      "returnCode": -11,
+      "completionMarkerReached": false
+    }
+  },
+  "preparedJsonOutputsPresent": true,
+  "missingOutputs": [
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
+  ],
+  "outputVerification": {
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb": "MISSING",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb": "MISSING",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb": "MISSING",
+    "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend": "MISSING",
+    "building-civic-sports-pavilion-manifest.json": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-metadata.json": "VERIFIED_COMPLETE",
+    "building-civic-sports-pavilion-validation.json": "VERIFIED_COMPLETE"
+  },
+  "reusedSharedModuleCount": 6,
+  "missingModuleCount": 4,
+  "totalModuleCount": 10,
+  "reusePercentage": 60,
+  "readyForCommit": false
+}

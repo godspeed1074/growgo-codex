@@ -1,0 +1,663 @@
+import fs from "node:fs";
+import path from "node:path";
+import { createHash } from "node:crypto";
+import {
+  blenderRuntimeConfigurationDefinition,
+  detectBlenderRuntime
+} from "./blender-runtime-configuration.mjs";
+import {
+  buildingCivicSportsPavilionLocalGeneratorDefinition,
+  validateBuildingCivicSportsPavilionLocalGenerator
+} from "./building-civic-sports-pavilion-local-generator.mjs";
+
+function deepFreeze(value) {
+  if (!value || typeof value !== "object" || Object.isFrozen(value)) {
+    return value;
+  }
+
+  for (const key of Reflect.ownKeys(value)) {
+    const nestedValue = value[key];
+    if (nestedValue && typeof nestedValue === "object") {
+      deepFreeze(nestedValue);
+    }
+  }
+
+  return Object.freeze(value);
+}
+
+export const buildingCivicSportsPavilionProductionRunDefinition = deepFreeze({
+  assetId: "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  recipeId: "SPORTS_FACILITY_RECIPE_001",
+  familyId: "CIVIC_SPORTS_PAVILION_FAMILY_001",
+  category: "BUILDING_CIVIC",
+  blenderExecutable:
+    "/Applications/Blender-4.2-LTS.app/Contents/MacOS/Blender",
+  scriptLocation:
+    "asset-factory/local-blender-scripts/generate_building_civic_sports_pavilion.py",
+  reusedSharedModules: deepFreeze([
+    "MOD_FOUNDATION_STANDARD_RECT_001",
+    "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+    "MOD_PATH_STANDARD_001",
+    "MOD_GROUND_GRASS_STANDARD_001",
+    "MOD_FENCE_STANDARD_001",
+    "MOD_TREE_EUCALYPTUS_STANDARD_001"
+  ]),
+  missingSportsFacilityModules: deepFreeze([
+    "MOD_PAVILION_CANOPY_STANDARD_001",
+    "MOD_PAVILION_POST_SET_001",
+    "MOD_PAVILION_BLEACHER_SET_001",
+    "MOD_PAVILION_CHANGE_ROOM_BLOCK_001"
+  ]),
+  targetReusePercentage: 60,
+  outputLocation:
+    "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export",
+  logLocation:
+    "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs",
+  completionMarkers: deepFreeze({
+    runStart: "S174_PAVILION_MARKER_RUN_START",
+    geometryStart: "S174_PAVILION_MARKER_GEOMETRY_START",
+    geometryComplete: "S174_PAVILION_MARKER_GEOMETRY_COMPLETE",
+    blendSaveStart: "S174_PAVILION_MARKER_BLEND_SAVE_START",
+    blendSaveComplete: "S174_PAVILION_MARKER_BLEND_SAVE_COMPLETE",
+    lodExportStartPrefix: "S174_PAVILION_MARKER_LOD_EXPORT_START:",
+    lodExportCompletePrefix: "S174_PAVILION_MARKER_LOD_EXPORT_COMPLETE:",
+    manifestWriteStart: "S174_PAVILION_MARKER_METADATA_WRITE_START",
+    manifestWriteComplete: "S174_PAVILION_MARKER_METADATA_WRITE_COMPLETE",
+    runComplete: "S174_PAVILION_MARKER_COMPLETE"
+  }),
+  expectedOutputs: deepFreeze({
+    proofAsset: deepFreeze([
+      "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb"
+    ]),
+    metadataFiles: deepFreeze([
+      "building-civic-sports-pavilion-manifest.json",
+      "building-civic-sports-pavilion-metadata.json",
+      "building-civic-sports-pavilion-validation.json",
+      "BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend"
+    ])
+  })
+});
+
+export function buildBuildingCivicSportsPavilionProductionRun(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition
+) {
+  return normalizeDefinition(rawDefinition);
+}
+
+export function validateBuildingCivicSportsPavilionProductionRun(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition
+) {
+  try {
+    const definition = normalizeDefinition(rawDefinition);
+    const generatorResult = validateBuildingCivicSportsPavilionLocalGenerator(
+      buildingCivicSportsPavilionLocalGeneratorDefinition
+    );
+    if (!generatorResult.ok) {
+      return generatorResult;
+    }
+
+    if (
+      definition.outputLocation !==
+      generatorResult.localGenerator.definition.expectedOutputLocation
+    ) {
+      throw createValidationError(
+        "output_location_mismatch",
+        "Building civic sports pavilion output location must match the approved local generator output location."
+      );
+    }
+
+    return Object.freeze({
+      ok: true,
+      errorCode: null,
+      message: null,
+      productionRun: Object.freeze({
+        definition,
+        compatibility: Object.freeze({
+          generatorValidated: true,
+          recipeAssemblyScoped: true,
+          duplicateModulesAvoided: true
+        })
+      })
+    });
+  } catch (error) {
+    if (
+      error?.name !== "BuildingCivicSportsPavilionProductionRunValidationError"
+    ) {
+      throw error;
+    }
+    return Object.freeze({
+      ok: false,
+      errorCode: error.code,
+      message: error.message,
+      productionRun: null
+    });
+  }
+}
+
+export function inspectBuildingCivicSportsPavilionProductionOutputs(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition,
+  options = {}
+) {
+  const definition = normalizeDefinition(rawDefinition);
+  const cwd = options.cwd ?? process.cwd();
+  const outputDirectory = path.resolve(cwd, definition.outputLocation);
+
+  const detectResult = detectBlenderRuntime(
+    options.runtimeConfiguration ?? blenderRuntimeConfigurationDefinition,
+    options.runtimeDetectionOptions ?? {}
+  );
+
+  const fileStates = collectExpectedFileStates(outputDirectory, definition);
+  const validationMetadata = readJsonIfPresent(
+    path.join(outputDirectory, "building-civic-sports-pavilion-validation.json")
+  );
+  const manifestMetadata = readJsonIfPresent(
+    path.join(outputDirectory, "building-civic-sports-pavilion-manifest.json")
+  );
+  const authoringMetadata = readJsonIfPresent(
+    path.join(outputDirectory, "building-civic-sports-pavilion-metadata.json")
+  );
+
+  const verification = verifyBuildingCivicSportsPavilionOutputs(
+    rawDefinition,
+    options
+  );
+
+  return Object.freeze({
+    outputDirectory,
+    blenderRuntime: detectResult,
+    fileStates,
+    manifestMetadata,
+    authoringMetadata,
+    validationMetadata,
+    verification,
+    summary: Object.freeze({
+      allExpectedFilesPresent: fileStates.every((state) => state.exists),
+      proofAssetsPresent: fileStates
+        .filter((state) => state.phase === "proof-asset")
+        .every((state) => state.exists),
+      metadataFilesPresent: fileStates
+        .filter((state) => state.phase === "metadata")
+        .every((state) => state.exists)
+    })
+  });
+}
+
+export function buildBuildingCivicSportsPavilionSafeBlenderInvocation(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition,
+  options = {}
+) {
+  const definition = normalizeDefinition(rawDefinition);
+  const cwd = options.cwd ?? process.cwd();
+  const runId = normalizeRunId(options.runId ?? createRunId());
+  const outputDirectory = path.resolve(cwd, definition.outputLocation);
+  const logDirectory = path.resolve(cwd, definition.logLocation);
+  const stdoutLog = path.join(logDirectory, `${runId}.stdout.log`);
+  const stderrLog = path.join(logDirectory, `${runId}.stderr.log`);
+  const exitRecord = path.join(logDirectory, `${runId}.exit.json`);
+
+  return deepFreeze({
+    executable: definition.blenderExecutable,
+    args: deepFreeze([
+      "--background",
+      "--factory-startup",
+      "-noaudio",
+      "--python-exit-code",
+      "1",
+      "--python",
+      definition.scriptLocation,
+      "--",
+      "--output-dir",
+      definition.outputLocation,
+      "--auto-quit"
+    ]),
+    blenderCommand: [
+      definition.blenderExecutable,
+      "--background",
+      "--factory-startup",
+      "-noaudio",
+      "--python-exit-code",
+      "1",
+      "--python",
+      definition.scriptLocation,
+      "--",
+      "--output-dir",
+      definition.outputLocation,
+      "--auto-quit"
+    ].join(" "),
+    cwd,
+    outputDirectory,
+    logDirectory,
+    stdoutLog,
+    stderrLog,
+    exitRecord,
+    runId
+  });
+}
+
+export function verifyBuildingCivicSportsPavilionOutputs(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition,
+  options = {}
+) {
+  const definition = normalizeDefinition(rawDefinition);
+  const cwd = options.cwd ?? process.cwd();
+  const outputDirectory = path.resolve(cwd, definition.outputLocation);
+  const expectedFiles = [
+    ...definition.expectedOutputs.proofAsset,
+    ...definition.expectedOutputs.metadataFiles
+  ];
+
+  const files = expectedFiles.map((filename) =>
+    classifyOutputFile(path.join(outputDirectory, filename), filename)
+  );
+
+  return deepFreeze({
+    outputDirectory,
+    files: deepFreeze(files),
+    finalCompletionMarkerReached: false,
+    deterministicFingerprint: createHash("sha256")
+      .update(JSON.stringify(files))
+      .digest("hex")
+  });
+}
+
+export function detectBuildingCivicSportsPavilionCompletionMarker(logText) {
+  const normalizedText = typeof logText === "string" ? logText : "";
+  return normalizedText.includes(
+    buildingCivicSportsPavilionProductionRunDefinition.completionMarkers.runComplete
+  );
+}
+
+export function classifyBuildingCivicSportsPavilionCrashState(rawInput = {}) {
+  const input = asPlainObject(rawInput, "crash classification input");
+  const exitCode = normalizeNullableInteger(input.exitCode, "exitCode");
+  const signal = normalizeNullableString(input.signal, "signal");
+  const completionMarkerReached = normalizeBoolean(
+    input.completionMarkerReached ?? false,
+    "completionMarkerReached"
+  );
+  const verifiedOutputsPresent = normalizeBoolean(
+    input.verifiedOutputsPresent ?? false,
+    "verifiedOutputsPresent"
+  );
+
+  if (completionMarkerReached && verifiedOutputsPresent && (exitCode !== 0 || signal)) {
+    return "COMPLETED_WITH_BLENDER_SHUTDOWN_CRASH";
+  }
+
+  if (completionMarkerReached && verifiedOutputsPresent) {
+    return "COMPLETED";
+  }
+
+  return "GENERATION_FAILED";
+}
+
+export function summarizeBuildingCivicSportsPavilionRun(
+  rawInput = {},
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition,
+  options = {}
+) {
+  const input = asPlainObject(rawInput, "run summary input");
+  const definition = normalizeDefinition(rawDefinition);
+  const cwd = options.cwd ?? process.cwd();
+  const outputDirectory = path.resolve(cwd, definition.outputLocation);
+  const stdoutLogPath = input.stdoutLogPath
+    ? path.resolve(input.stdoutLogPath)
+    : null;
+  const stderrLogPath = input.stderrLogPath
+    ? path.resolve(input.stderrLogPath)
+    : null;
+  const stdoutText =
+    stdoutLogPath && fs.existsSync(stdoutLogPath)
+      ? fs.readFileSync(stdoutLogPath, "utf8")
+      : "";
+  const stderrText =
+    stderrLogPath && fs.existsSync(stderrLogPath)
+      ? fs.readFileSync(stderrLogPath, "utf8")
+      : "";
+  const outputVerification = verifyBuildingCivicSportsPavilionOutputs(
+    rawDefinition,
+    { cwd }
+  );
+  const verifiedOutputsPresent = outputVerification.files
+    .filter((entry) => definition.expectedOutputs.proofAsset.includes(entry.filename))
+    .every((entry) => entry.classification === "VERIFIED_COMPLETE");
+  const completionMarkerReached =
+    detectBuildingCivicSportsPavilionCompletionMarker(stdoutText) ||
+    detectBuildingCivicSportsPavilionCompletionMarker(stderrText);
+  const crashClassification = classifyBuildingCivicSportsPavilionCrashState({
+    exitCode: input.exitCode ?? null,
+    signal: input.signal ?? null,
+    completionMarkerReached,
+    verifiedOutputsPresent
+  });
+
+  return deepFreeze({
+    exitCode: input.exitCode ?? null,
+    signal: input.signal ?? null,
+    outputDirectory,
+    stdoutLogPath,
+    stderrLogPath,
+    completionMarkerReached,
+    verifiedOutputsPresent,
+    crashClassification,
+    outputVerification
+  });
+}
+
+function collectExpectedFileStates(outputDirectory, definition) {
+  const states = [];
+
+  for (const filename of definition.expectedOutputs.proofAsset) {
+    states.push(
+      Object.freeze({
+        phase: "proof-asset",
+        filename,
+        exists: fs.existsSync(path.join(outputDirectory, filename))
+      })
+    );
+  }
+
+  for (const filename of definition.expectedOutputs.metadataFiles) {
+    states.push(
+      Object.freeze({
+        phase: "metadata",
+        filename,
+        exists: fs.existsSync(path.join(outputDirectory, filename))
+      })
+    );
+  }
+
+  return Object.freeze(states);
+}
+
+function classifyOutputFile(filename, label) {
+  if (!fs.existsSync(filename)) {
+    return deepFreeze({
+      filename: label,
+      absolutePath: filename,
+      classification: "MISSING",
+      sizeBytes: 0,
+      detail: "File is absent."
+    });
+  }
+
+  const stat = fs.statSync(filename);
+  const extension = path.extname(filename).toLowerCase();
+
+  try {
+    if (extension === ".json") {
+      JSON.parse(fs.readFileSync(filename, "utf8"));
+      return deepFreeze({
+        filename: label,
+        absolutePath: filename,
+        classification: "VERIFIED_COMPLETE",
+        sizeBytes: stat.size,
+        detail: "JSON parsed successfully."
+      });
+    }
+
+    if (extension === ".glb") {
+      const handle = fs.openSync(filename, "r");
+      const buffer = Buffer.alloc(4);
+      fs.readSync(handle, buffer, 0, 4, 0);
+      fs.closeSync(handle);
+      const isGlb = buffer.toString("utf8") === "glTF";
+      return deepFreeze({
+        filename: label,
+        absolutePath: filename,
+        classification: isGlb && stat.size > 20 ? "VERIFIED_COMPLETE" : "CORRUPT",
+        sizeBytes: stat.size,
+        detail: isGlb
+          ? "GLB header verified."
+          : "GLB header was not valid."
+      });
+    }
+
+    if (extension === ".blend") {
+      const handle = fs.openSync(filename, "r");
+      const buffer = Buffer.alloc(7);
+      fs.readSync(handle, buffer, 0, 7, 0);
+      fs.closeSync(handle);
+      const isBlend = buffer.toString("utf8") === "BLENDER";
+      return deepFreeze({
+        filename: label,
+        absolutePath: filename,
+        classification: isBlend && stat.size > 32 ? "VERIFIED_COMPLETE" : "CORRUPT",
+        sizeBytes: stat.size,
+        detail: isBlend
+          ? "Blend header verified."
+          : "Blend header was not valid."
+      });
+    }
+  } catch (error) {
+    return deepFreeze({
+      filename: label,
+      absolutePath: filename,
+      classification: "CORRUPT",
+      sizeBytes: stat.size,
+      detail: `Verification failed: ${error.message}`
+    });
+  }
+
+  return deepFreeze({
+    filename: label,
+    absolutePath: filename,
+    classification: "PRESENT_UNVERIFIED",
+    sizeBytes: stat.size,
+    detail: "File exists but no verifier is registered for this extension."
+  });
+}
+
+function readJsonIfPresent(filename) {
+  if (!fs.existsSync(filename)) {
+    return null;
+  }
+  return JSON.parse(fs.readFileSync(filename, "utf8"));
+}
+
+function normalizeDefinition(rawDefinition) {
+  const definition = asPlainObject(
+    rawDefinition,
+    "building civic sports pavilion production run"
+  );
+
+  return deepFreeze({
+    assetId: normalizeNonEmptyString(definition.assetId, "assetId"),
+    recipeId: normalizeNonEmptyString(definition.recipeId, "recipeId"),
+    familyId: normalizeNonEmptyString(definition.familyId, "familyId"),
+    category: normalizeNonEmptyString(definition.category, "category"),
+    blenderExecutable: normalizeAbsolutePath(
+      definition.blenderExecutable,
+      "blenderExecutable"
+    ),
+    scriptLocation: normalizeRelativePath(definition.scriptLocation, "scriptLocation"),
+    reusedSharedModules: deepFreeze(
+      normalizeStringArray(definition.reusedSharedModules, "reusedSharedModules")
+    ),
+    missingSportsFacilityModules: deepFreeze(
+      normalizeStringArray(
+        definition.missingSportsFacilityModules,
+        "missingSportsFacilityModules"
+      )
+    ),
+    targetReusePercentage: normalizePercentage(
+      definition.targetReusePercentage,
+      "targetReusePercentage"
+    ),
+    outputLocation: normalizeRelativePath(definition.outputLocation, "outputLocation"),
+    logLocation: normalizeRelativePath(definition.logLocation, "logLocation"),
+    completionMarkers: normalizeCompletionMarkers(definition.completionMarkers),
+    expectedOutputs: normalizeExpectedOutputs(definition.expectedOutputs)
+  });
+}
+
+function normalizeCompletionMarkers(rawCompletionMarkers) {
+  const completionMarkers = asPlainObject(rawCompletionMarkers, "completionMarkers");
+  return deepFreeze({
+    runStart: normalizeNonEmptyString(completionMarkers.runStart, "completionMarkers.runStart"),
+    geometryStart: normalizeNonEmptyString(
+      completionMarkers.geometryStart,
+      "completionMarkers.geometryStart"
+    ),
+    geometryComplete: normalizeNonEmptyString(
+      completionMarkers.geometryComplete,
+      "completionMarkers.geometryComplete"
+    ),
+    blendSaveStart: normalizeNonEmptyString(
+      completionMarkers.blendSaveStart,
+      "completionMarkers.blendSaveStart"
+    ),
+    blendSaveComplete: normalizeNonEmptyString(
+      completionMarkers.blendSaveComplete,
+      "completionMarkers.blendSaveComplete"
+    ),
+    lodExportStartPrefix: normalizeNonEmptyString(
+      completionMarkers.lodExportStartPrefix,
+      "completionMarkers.lodExportStartPrefix"
+    ),
+    lodExportCompletePrefix: normalizeNonEmptyString(
+      completionMarkers.lodExportCompletePrefix,
+      "completionMarkers.lodExportCompletePrefix"
+    ),
+    manifestWriteStart: normalizeNonEmptyString(
+      completionMarkers.manifestWriteStart,
+      "completionMarkers.manifestWriteStart"
+    ),
+    manifestWriteComplete: normalizeNonEmptyString(
+      completionMarkers.manifestWriteComplete,
+      "completionMarkers.manifestWriteComplete"
+    ),
+    runComplete: normalizeNonEmptyString(
+      completionMarkers.runComplete,
+      "completionMarkers.runComplete"
+    )
+  });
+}
+
+function normalizeExpectedOutputs(rawExpectedOutputs) {
+  const expectedOutputs = asPlainObject(rawExpectedOutputs, "expectedOutputs");
+  return deepFreeze({
+    proofAsset: deepFreeze(
+      normalizeStringArray(expectedOutputs.proofAsset, "expectedOutputs.proofAsset")
+    ),
+    metadataFiles: deepFreeze(
+      normalizeStringArray(
+        expectedOutputs.metadataFiles,
+        "expectedOutputs.metadataFiles"
+      )
+    )
+  });
+}
+
+function normalizePercentage(value, fieldName) {
+  if (!Number.isInteger(value) || value < 0 || value > 100) {
+    throw createValidationError(
+      "invalid_percentage",
+      `${fieldName} must be an integer percentage between 0 and 100.`
+    );
+  }
+  return value;
+}
+
+function normalizeStringArray(value, fieldName) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw createValidationError(
+      "invalid_string_array",
+      `${fieldName} must be a non-empty array of strings.`
+    );
+  }
+  return value.map((entry, index) =>
+    normalizeNonEmptyString(entry, `${fieldName}[${index}]`)
+  );
+}
+
+function normalizeRelativePath(value, fieldName) {
+  const normalized = normalizeNonEmptyString(value, fieldName);
+  if (path.isAbsolute(normalized)) {
+    throw createValidationError(
+      "invalid_relative_path",
+      `${fieldName} must be a relative path.`
+    );
+  }
+  return normalized;
+}
+
+function normalizeAbsolutePath(value, fieldName) {
+  const normalized = normalizeNonEmptyString(value, fieldName);
+  if (!path.isAbsolute(normalized)) {
+    throw createValidationError(
+      "invalid_absolute_path",
+      `${fieldName} must be an absolute path.`
+    );
+  }
+  return normalized;
+}
+
+function normalizeNonEmptyString(value, fieldName) {
+  if (typeof value !== "string" || value.trim().length === 0) {
+    throw createValidationError(
+      "invalid_string",
+      `${fieldName} must be a non-empty string.`
+    );
+  }
+  return value.trim();
+}
+
+function normalizeNullableString(value, fieldName) {
+  if (value === null || value === undefined || value === "") {
+    return null;
+  }
+  return normalizeNonEmptyString(value, fieldName);
+}
+
+function normalizeNullableInteger(value, fieldName) {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (!Number.isInteger(value)) {
+    throw createValidationError(
+      "invalid_integer",
+      `${fieldName} must be an integer or null.`
+    );
+  }
+  return value;
+}
+
+function normalizeBoolean(value, fieldName) {
+  if (typeof value !== "boolean") {
+    throw createValidationError(
+      "invalid_boolean",
+      `${fieldName} must be a boolean.`
+    );
+  }
+  return value;
+}
+
+function normalizeRunId(value) {
+  return normalizeNonEmptyString(value, "runId").replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+function createRunId() {
+  const iso = new Date().toISOString();
+  return iso.replace(/[:]/g, "").replace(/\..+$/, "").replace("T", "-");
+}
+
+function asPlainObject(value, label) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw createValidationError(
+      "invalid_object",
+      `${label} must be provided as an object.`
+    );
+  }
+  return value;
+}
+
+function createValidationError(code, message) {
+  const error = new Error(message);
+  error.name = "BuildingCivicSportsPavilionProductionRunValidationError";
+  error.code = code;
+  return error;
+}
