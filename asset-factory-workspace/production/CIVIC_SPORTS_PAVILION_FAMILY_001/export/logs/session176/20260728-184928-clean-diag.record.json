@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Applications/Blender-4.2-LTS.app/Contents/MacOS/Blender",
+    "--background",
+    "--factory-startup",
+    "-noaudio",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/session176/diag_env_marker.py"
+  ],
+  "sanitizedEnvironment": {
+    "HOME": "/Users/michaelpeterson",
+    "USER": "michaelpeterson",
+    "TMPDIR": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
+    "LANG": "C.UTF-8"
+  },
+  "stdout_log": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/session176/20260728-184928-clean-diag.stdout.log",
+  "stderr_log": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/session176/20260728-184928-clean-diag.stderr.log",
+  "exit_code": -11,
+  "signal": "SIGSEGV",
+  "completion_marker_stdout": false,
+  "marker_file_exists": false,
+  "env_snapshot_exists": false
+}

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "open",
+    "-W",
+    "-n",
+    "-a",
+    "/Applications/Blender-4.2-LTS.app",
+    "--args",
+    "--background",
+    "--factory-startup",
+    "-noaudio",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/session176/diag_env_marker.py"
+  ],
+  "stdout_log": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/session176/20260728-184948-open-diag.stdout.log",
+  "stderr_log": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/logs/session176/20260728-184948-open-diag.stderr.log",
+  "exit_code": 1,
+  "signal": null,
+  "completion_marker_stdout": false,
+  "marker_file_exists": false,
+  "env_snapshot_exists": false
+}

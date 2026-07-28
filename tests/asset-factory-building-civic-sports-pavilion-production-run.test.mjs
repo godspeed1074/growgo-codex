@@ -96,6 +96,61 @@ test("building civic sports pavilion safe Blender invocation includes background
   assert.match(invocation.stderrLog, /diagnostic-check\.stderr\.log$/);
 });
 
+test("building civic sports pavilion sanitized environment keeps only essential variables", () => {
+  const environment =
+    moduleUnderTest.buildBuildingCivicSportsPavilionSanitizedEnvironment({
+      HOME: "/Users/example",
+      USER: "example",
+      TMPDIR: "/tmp/example/",
+      PATH: "/bad/path",
+      LANG: "en_AU.UTF-8",
+      DYLD_LIBRARY_PATH: "/bad/lib",
+      PYTHONPATH: "/bad/python",
+      BLENDER_USER_SCRIPTS: "/bad/scripts",
+      OCIO: "/bad/ocio"
+    });
+
+  assert.deepEqual(Object.keys(environment).sort(), [
+    "HOME",
+    "LANG",
+    "PATH",
+    "TMPDIR",
+    "USER",
+  ]);
+  assert.equal(environment.HOME, "/Users/example");
+  assert.equal(environment.USER, "example");
+  assert.equal(environment.TMPDIR, "/tmp/example/");
+  assert.equal(environment.PATH, "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");
+  assert.equal(environment.LANG, "en_AU.UTF-8");
+});
+
+test("building civic sports pavilion LaunchServices invocation is deterministic and quoted around the app bundle path", () => {
+  const invocation =
+    moduleUnderTest.buildBuildingCivicSportsPavilionLaunchServicesInvocation(
+      undefined,
+      {
+        cwd: path.resolve(import.meta.dirname, ".."),
+        runId: "launchservices-check",
+        environment: {
+          HOME: "/Users/example",
+          USER: "example",
+          TMPDIR: "/tmp/example/",
+          LANG: "C.UTF-8"
+        }
+      }
+    );
+
+  assert.equal(invocation.executable, "open");
+  assert.deepEqual(invocation.args.slice(0, 5), [
+    "-W",
+    "-n",
+    "-a",
+    "/Applications/Blender-4.2-LTS.app",
+    "--args",
+  ]);
+  assert.match(invocation.command, /open -W -n -a \/Applications\/Blender-4\.2-LTS\.app --args/);
+});
+
 test("building civic sports pavilion completion marker detection requires final marker", () => {
   assert.equal(
     moduleUnderTest.detectBuildingCivicSportsPavilionCompletionMarker(

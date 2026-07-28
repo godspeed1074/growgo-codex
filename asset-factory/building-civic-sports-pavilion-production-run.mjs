@@ -32,6 +32,7 @@ export const buildingCivicSportsPavilionProductionRunDefinition = deepFreeze({
   category: "BUILDING_CIVIC",
   blenderExecutable:
     "/Applications/Blender-4.2-LTS.app/Contents/MacOS/Blender",
+  blenderApplicationPath: "/Applications/Blender-4.2-LTS.app",
   scriptLocation:
     "asset-factory/local-blender-scripts/generate_building_civic_sports_pavilion.py",
   reusedSharedModules: deepFreeze([
@@ -79,6 +80,28 @@ export const buildingCivicSportsPavilionProductionRunDefinition = deepFreeze({
     ])
   })
 });
+
+export const buildingCivicSportsPavilionSanitizedEnvironmentKeys = deepFreeze([
+  "HOME",
+  "USER",
+  "TMPDIR",
+  "PATH",
+  "LANG"
+]);
+
+export const buildingCivicSportsPavilionConflictingEnvironmentKeys = deepFreeze([
+  "DYLD_LIBRARY_PATH",
+  "DYLD_FRAMEWORK_PATH",
+  "PYTHONPATH",
+  "PYTHONHOME",
+  "BLENDER_USER_CONFIG",
+  "BLENDER_USER_SCRIPTS",
+  "BLENDER_SYSTEM_SCRIPTS",
+  "OCIO",
+  "OIIO",
+  "METAL_DEVICE_WRAPPER_TYPE",
+  "MTL_CAPTURE_ENABLED"
+]);
 
 export function buildBuildingCivicSportsPavilionProductionRun(
   rawDefinition = buildingCivicSportsPavilionProductionRunDefinition
@@ -234,6 +257,94 @@ export function buildBuildingCivicSportsPavilionSafeBlenderInvocation(
     stderrLog,
     exitRecord,
     runId
+  });
+}
+
+export function buildBuildingCivicSportsPavilionSanitizedEnvironment(
+  rawEnvironment = process.env,
+  options = {}
+) {
+  const environment =
+    rawEnvironment && typeof rawEnvironment === "object" ? rawEnvironment : {};
+  const fallbackPath = "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin";
+  const fallbackLang = "C.UTF-8";
+
+  return deepFreeze({
+    HOME: normalizeNonEmptyString(
+      environment.HOME ?? options.home ?? process.env.HOME,
+      "HOME"
+    ),
+    USER: normalizeNonEmptyString(
+      environment.USER ?? options.user ?? process.env.USER,
+      "USER"
+    ),
+    TMPDIR: normalizeNonEmptyString(
+      environment.TMPDIR ?? options.tmpdir ?? process.env.TMPDIR,
+      "TMPDIR"
+    ),
+    PATH: normalizeNonEmptyString(options.path ?? fallbackPath, "PATH"),
+    LANG: normalizeNonEmptyString(
+      environment.LANG ?? options.lang ?? fallbackLang,
+      "LANG"
+    )
+  });
+}
+
+export function buildBuildingCivicSportsPavilionCleanEnvironmentInvocation(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition,
+  options = {}
+) {
+  const baseInvocation = buildBuildingCivicSportsPavilionSafeBlenderInvocation(
+    rawDefinition,
+    options
+  );
+  return deepFreeze({
+    ...baseInvocation,
+    environment: buildBuildingCivicSportsPavilionSanitizedEnvironment(
+      options.environment ?? process.env,
+      options
+    )
+  });
+}
+
+export function buildBuildingCivicSportsPavilionLaunchServicesInvocation(
+  rawDefinition = buildingCivicSportsPavilionProductionRunDefinition,
+  options = {}
+) {
+  const definition = normalizeDefinition(rawDefinition);
+  const baseInvocation = buildBuildingCivicSportsPavilionSafeBlenderInvocation(
+    rawDefinition,
+    options
+  );
+
+  return deepFreeze({
+    executable: "open",
+    args: deepFreeze([
+      "-W",
+      "-n",
+      "-a",
+      definition.blenderApplicationPath,
+      "--args",
+      ...baseInvocation.args
+    ]),
+    command: [
+      "open",
+      "-W",
+      "-n",
+      "-a",
+      definition.blenderApplicationPath,
+      "--args",
+      ...baseInvocation.args
+    ].join(" "),
+    environment: buildBuildingCivicSportsPavilionSanitizedEnvironment(
+      options.environment ?? process.env,
+      options
+    ),
+    cwd: baseInvocation.cwd,
+    stdoutLog: baseInvocation.stdoutLog,
+    stderrLog: baseInvocation.stderrLog,
+    exitRecord: baseInvocation.exitRecord,
+    runId: baseInvocation.runId
   });
 }
 
@@ -472,6 +583,10 @@ function normalizeDefinition(rawDefinition) {
     blenderExecutable: normalizeAbsolutePath(
       definition.blenderExecutable,
       "blenderExecutable"
+    ),
+    blenderApplicationPath: normalizeAbsolutePath(
+      definition.blenderApplicationPath,
+      "blenderApplicationPath"
     ),
     scriptLocation: normalizeRelativePath(definition.scriptLocation, "scriptLocation"),
     reusedSharedModules: deepFreeze(
