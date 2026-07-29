@@ -12,9 +12,10 @@
 8. Open this export script:
    `/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/resume_tree_eucalyptus_001_exports.py`
 9. Click `Run Script`.
-10. Wait for the final marker:
+10. If Blender reports an identity failure again, stop there and return to Codex without renaming anything manually.
+11. Wait for the final marker:
    `S184_TREE_EUCALYPTUS_EXPORT_COMPLETE`
-11. Return to Codex.
+12. Return to Codex.
 
 After the manual Blender step finishes, Codex verification command:
 

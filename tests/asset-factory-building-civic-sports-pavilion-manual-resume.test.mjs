@@ -55,6 +55,7 @@ test("pavilion manual resume script includes identity guards and ordered exports
     script,
     /\("map", "LOD_MAP", f"\{ASSET_ID\}_LOD_MAP\.glb", f"\{ASSET_ID\}_MAP_ROOT"\)/
   );
+  assert.match(script, /def validate_pre_export_identity\(root_object, lod_label\):/);
 });
 
 test("pavilion manual resume script uses atomic export finalization and stops on first failure", () => {

@@ -48,6 +48,33 @@ Repair applied:
 - generator no longer depends on Blender's current working directory
 - resume export script now uses the same guarded absolute repository path model
 
+## Session 184 Identity Repair
+
+Identity repair completed on Wednesday, July 29, 2026.
+
+Exact cause:
+
+- the tree export validator looks for the exact token `TREE_EUCALYPTUS_001`
+  inside exported GLB node, mesh, material, or scene names
+- the tree LOD root empties already used the full asset ID
+- but most generated geometry and materials used only partial names such as
+  `TREE_EUCALYPTUS_TRUNK_001` or `MAT_TREE_EUCALYPTUS_*`
+- those names do **not** contain the exact validator token
+  `TREE_EUCALYPTUS_001`
+- the exported GLBs therefore parsed successfully but still failed identity
+  preservation
+
+Identity repair applied:
+
+- generated trunk, branch, canopy, and socket objects now use names prefixed
+  with the exact asset identity token
+- generated materials now also use names prefixed with the exact asset identity
+  token
+- this gives the exported GLBs multiple identity anchors instead of relying only
+  on the LOD root empty
+- the resume validator remains unchanged in behavior and still requires the
+  exported GLB to preserve the exact asset identity
+
 ## Files Created
 
 - [tree-eucalyptus-production-run.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/tree-eucalyptus-production-run.mjs)
@@ -263,6 +290,8 @@ Focused coverage added:
 - no duplicate asset definition
 - deterministic generation settings
 - Blender script syntax
+- identity survives export naming contract
+- all LODs preserve exact asset identity markers
 - exact final filenames
 - `.tmp.glb` temporary naming
 - no `.glb.tmp`

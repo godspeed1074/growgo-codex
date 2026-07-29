@@ -2,6 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import {
+  buildAssetIdentityContract,
+  inspectExportedGlbIdentityByPath
+} from "./asset-identity-contract.mjs";
+import {
   blenderRuntimeConfigurationDefinition,
   detectBlenderRuntime
 } from "./blender-runtime-configuration.mjs";
@@ -685,7 +689,15 @@ function classifyOutputFile(filename, label, definition) {
     }
 
     if (extension === ".glb") {
-      const parsed = parseGlbFile(filename, definition.assetId);
+      const parsed = inspectExportedGlbIdentityByPath(
+        buildAssetIdentityContract({
+          assetId: definition.assetId,
+          recipeId: definition.recipeId,
+          version: "1.0.0",
+          category: definition.category
+        }),
+        filename
+      );
       return deepFreeze({
         filename: label,
         absolutePath: filename,
@@ -704,7 +716,7 @@ function classifyOutputFile(filename, label, definition) {
         primitiveCount: parsed.primitiveCount,
         hasExternalDependencies: parsed.hasExternalDependencies,
         assetIdentityPreserved: parsed.assetIdentityPreserved,
-        assetIdentityHits: parsed.assetIdentityHits,
+        assetIdentityHits: parsed.namedIdentityHits,
         detail: parsed.detail
       });
     }
@@ -757,140 +769,6 @@ function parseBlendFile(filename, assetId, recipeId) {
     assetIdentityPreserved,
     recipeIdentityPreserved,
     detail: valid ? "Blend header and identity markers inspected." : "Blend header was not valid."
-  });
-}
-
-function parseGlbFile(filename, assetId) {
-  const data = fs.readFileSync(filename);
-  if (data.length <= 20) {
-    return deepFreeze({
-      valid: false,
-      sha256: createHash("sha256").update(data).digest("hex"),
-      meshCount: 0,
-      materialCount: 0,
-      triangleCount: 0,
-      primitiveCount: 0,
-      hasExternalDependencies: true,
-      assetIdentityPreserved: false,
-      assetIdentityHits: deepFreeze([]),
-      detail: "GLB was too small to trust."
-    });
-  }
-
-  const magic = data.subarray(0, 4).toString("utf8");
-  const version = data.readUInt32LE(4);
-  const declaredLength = data.readUInt32LE(8);
-  if (magic !== "glTF") {
-    return deepFreeze({
-      valid: false,
-      sha256: createHash("sha256").update(data).digest("hex"),
-      meshCount: 0,
-      materialCount: 0,
-      triangleCount: 0,
-      primitiveCount: 0,
-      hasExternalDependencies: true,
-      assetIdentityPreserved: false,
-      assetIdentityHits: deepFreeze([]),
-      detail: "GLB header was not valid."
-    });
-  }
-  if (version !== 2 || declaredLength !== data.length) {
-    return deepFreeze({
-      valid: false,
-      sha256: createHash("sha256").update(data).digest("hex"),
-      meshCount: 0,
-      materialCount: 0,
-      triangleCount: 0,
-      primitiveCount: 0,
-      hasExternalDependencies: true,
-      assetIdentityPreserved: false,
-      assetIdentityHits: deepFreeze([]),
-      detail: "GLB version or declared length was invalid."
-    });
-  }
-
-  let offset = 12;
-  let gltfJson = null;
-  while (offset + 8 <= data.length) {
-    const chunkLength = data.readUInt32LE(offset);
-    const chunkType = data.subarray(offset + 4, offset + 8).toString("utf8");
-    offset += 8;
-    const chunk = data.subarray(offset, offset + chunkLength);
-    offset += chunkLength;
-    if (chunkType === "JSON") {
-      gltfJson = JSON.parse(chunk.toString("utf8").replace(/\0+$/u, "").trimEnd());
-    }
-  }
-
-  if (!gltfJson) {
-    return deepFreeze({
-      valid: false,
-      sha256: createHash("sha256").update(data).digest("hex"),
-      meshCount: 0,
-      materialCount: 0,
-      triangleCount: 0,
-      primitiveCount: 0,
-      hasExternalDependencies: true,
-      assetIdentityPreserved: false,
-      assetIdentityHits: deepFreeze([]),
-      detail: "GLB JSON chunk was missing."
-    });
-  }
-
-  const meshes = Array.isArray(gltfJson.meshes) ? gltfJson.meshes : [];
-  const materials = Array.isArray(gltfJson.materials) ? gltfJson.materials : [];
-  const images = Array.isArray(gltfJson.images) ? gltfJson.images : [];
-  const buffers = Array.isArray(gltfJson.buffers) ? gltfJson.buffers : [];
-  const accessors = Array.isArray(gltfJson.accessors) ? gltfJson.accessors : [];
-  const assetIdentityHits = [];
-  for (const key of ["nodes", "meshes", "materials", "scenes"]) {
-    const values = Array.isArray(gltfJson[key]) ? gltfJson[key] : [];
-    for (const value of values) {
-      if (
-        value &&
-        typeof value === "object" &&
-        typeof value.name === "string" &&
-        value.name.includes(assetId)
-      ) {
-        assetIdentityHits.push(value.name);
-      }
-    }
-  }
-
-  let primitiveCount = 0;
-  let triangleCount = 0;
-  for (const mesh of meshes) {
-    const primitives = Array.isArray(mesh.primitives) ? mesh.primitives : [];
-    for (const primitive of primitives) {
-      primitiveCount += 1;
-      const mode = primitive?.mode ?? 4;
-      if (mode !== 4) {
-        continue;
-      }
-      const accessorIndex = primitive?.indices;
-      if (Number.isInteger(accessorIndex) && accessors[accessorIndex]) {
-        triangleCount += Math.floor((accessors[accessorIndex].count ?? 0) / 3);
-      }
-    }
-  }
-
-  const hasExternalDependencies = images.some(
-    (image) => image && typeof image === "object" && typeof image.uri === "string"
-  ) || buffers.some(
-    (buffer) => buffer && typeof buffer === "object" && typeof buffer.uri === "string"
-  );
-
-  return deepFreeze({
-    valid: true,
-    sha256: createHash("sha256").update(data).digest("hex"),
-    meshCount: meshes.length,
-    materialCount: materials.length,
-    triangleCount,
-    primitiveCount,
-    hasExternalDependencies,
-    assetIdentityPreserved: assetIdentityHits.length > 0,
-    assetIdentityHits: deepFreeze(assetIdentityHits.slice(0, 24)),
-    detail: "GLB parsed successfully."
   });
 }
 

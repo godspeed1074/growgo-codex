@@ -1,0 +1,114 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_TREE_EUCALYPTUS_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "category": "nature",
+  "familyId": "TREE_ASSET_FAMILY_001",
+  "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+  "registryRecipeId": "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+  "version": "v001",
+  "lifecycleStatus": "REGISTERED",
+  "validationStatus": "validated",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_NATIVE_GREEN_001",
+    "slots": [
+      "trunk",
+      "branch",
+      "canopy light",
+      "canopy mid",
+      "canopy dark"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+      "sha256": "862be6bc5e365dad75c55fbe0877ca3b246972a1bea123a1c75aea6b3a5b9725",
+      "meshCount": 11,
+      "materialCount": 5,
+      "triangleCount": 249,
+      "primitiveCount": 11
+    },
+    "gameplay": {
+      "filename": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+      "sha256": "ac3487f5be6131e0eaec66f6e431a148efb9266348ac5aa339e3547b46868f49",
+      "meshCount": 7,
+      "materialCount": 5,
+      "triangleCount": 153,
+      "primitiveCount": 7
+    },
+    "map": {
+      "filename": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_MAP.glb",
+      "sha256": "94a90a141a6eae569e8ceaf65a12608121abe25d0d59236fb553c9a462097a55",
+      "meshCount": 4,
+      "materialCount": 2,
+      "triangleCount": 77,
+      "primitiveCount": 4
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "TREE",
+      "PARK",
+      "FOREST_EDGE"
+    ],
+    "supportedClassifications": [
+      "NATURAL_FEATURE",
+      "PARK"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+      "RECIPE_NATURE_PARK_STANDARD_001",
+      "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_TREE_LEAF_CLUSTER_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "tree-eucalyptus-registration.json",
+    "deterministicFingerprint": "8119d9acc43b731ef258245d1b14ef64c761c2a081a36af51c94cd278f805ef6"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true
+  },
+  "deterministicCatalogHash": "7d3d8df1c555885e83b295b95a40689c81cc0297f0079c8bca4551842d7faf29"
+}

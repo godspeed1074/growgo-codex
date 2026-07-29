@@ -282,6 +282,7 @@ def create_cuboid(name, collection, location, dimensions, material, parent=None)
     bpy.ops.mesh.primitive_cube_add(location=location)
     obj = bpy.context.active_object
     obj.name = name
+    obj.data.name = f"{name}_MESH"
     obj.scale = (
         dimensions[0] * 0.5,
         dimensions[1] * 0.5,

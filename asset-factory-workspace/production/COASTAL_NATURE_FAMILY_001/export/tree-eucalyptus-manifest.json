@@ -2,5 +2,20 @@
   "assetId": "TREE_EUCALYPTUS_001",
   "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
   "manifestVersion": "1.0.0",
-  "category": "nature"
+  "category": "nature",
+  "identityContractSchemaId": "ASSET_IDENTITY_CONTRACT_PHASE_001_1",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_NATIVE_GREEN_001",
+  "lodProfile": "NATURE_STANDARD_001",
+  "identityPolicy": "ASSET_ROOT_AND_COMPONENTS",
+  "dependencies": [
+    "MOD_TREE_LEAF_CLUSTER_001"
+  ],
+  "workspaceRoot": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace",
+  "expectedBlendFilename": "TREE_EUCALYPTUS_001_v001.blend",
+  "expectedFinalOutputs": [
+    "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+    "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+    "TREE_EUCALYPTUS_001_LOD_MAP.glb"
+  ]
 }

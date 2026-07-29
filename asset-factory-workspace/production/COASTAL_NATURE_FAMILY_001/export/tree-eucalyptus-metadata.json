@@ -2,27 +2,48 @@
   "assetId": "TREE_EUCALYPTUS_001",
   "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
   "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
-  "collections": [
-    "GEOMETRY",
-    "MATERIALS",
-    "LOD0",
-    "LOD1",
-    "LOD2",
-    "LOD3",
-    "EXPORT"
-  ],
-  "lodOutputs": {
-    "close": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
-    "gameplay": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
-    "map": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
-    "distantSilhouette": "TREE_EUCALYPTUS_001_LOD_DISTANT_SILHOUETTE.glb"
+  "registryRecipeId": "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+  "identityContractV2": {
+    "assetId": "TREE_EUCALYPTUS_001",
+    "category": "nature",
+    "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_NATIVE_GREEN_001",
+    "lodProfile": "NATURE_STANDARD_001",
+    "source": {
+      "generator": "Asset Factory",
+      "authoringTool": "Blender"
+    },
+    "dependencies": [
+      {
+        "dependencyId": "MOD_TREE_LEAF_CLUSTER_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      }
+    ],
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS",
+    "identityAnchor": {
+      "componentRole": "IDENTITY_ANCHOR",
+      "required": true
+    },
+    "anchorRequired": true,
+    "anchorValidation": "REQUIRE_PER_LOD_EXPORTED_ANCHOR",
+    "exportedIdentitySource": "identity_anchor"
   },
-  "executionTarget": "local-blender-python",
-  "components": [
-    "TREE_TRUNK_EUCALYPTUS_001",
-    "TREE_BRANCH_SMALL_001",
-    "TREE_BRANCH_LARGE_001",
-    "TREE_CANOPY_EUCALYPTUS_001",
-    "TREE_LEAF_CLUSTER_001"
-  ]
+  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export",
+  "paletteSlots": [
+    "trunk",
+    "branch",
+    "canopy light",
+    "canopy mid",
+    "canopy dark"
+  ],
+  "lodRoots": {
+    "close": "TREE_EUCALYPTUS_001_LOD_CLOSE_ROOT",
+    "gameplay": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY_ROOT",
+    "map": "TREE_EUCALYPTUS_001_LOD_MAP_ROOT"
+  },
+  "deterministicConstruction": true,
+  "manualBlenderExecutionRequired": true
 }

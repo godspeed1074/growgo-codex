@@ -172,6 +172,67 @@ def count_triangles_and_materials(root_object):
     }
 
 
+def collect_identity_state(root_object):
+    object_names = set()
+    mesh_names = set()
+    material_names = set()
+    collection_names = set()
+
+    stack = [root_object]
+    while stack:
+        current = stack.pop()
+        object_names.add(current.name)
+        for collection in current.users_collection:
+            collection_names.add(collection.name)
+        if current.type == "MESH" and current.data is not None:
+            mesh_names.add(current.data.name)
+            for material in current.data.materials:
+                if material is not None:
+                    material_names.add(material.name)
+        stack.extend(list(current.children))
+
+    asset_collection = bpy.data.collections.get(ASSET_ID)
+    if asset_collection is not None:
+        collection_names.add(asset_collection.name)
+
+    return {
+        "objectNames": sorted(object_names),
+        "meshNames": sorted(mesh_names),
+        "materialNames": sorted(material_names),
+        "collectionNames": sorted(collection_names),
+    }
+
+
+def validate_pre_export_identity(root_object, lod_label):
+    identity_state = collect_identity_state(root_object)
+    missing_items = []
+
+    if ASSET_ID not in root_object.name:
+        missing_items.append(f"lod_root:{root_object.name}")
+    if not any(ASSET_ID in name for name in identity_state["objectNames"]):
+        missing_items.append("object_names")
+    if not any(ASSET_ID in name for name in identity_state["meshNames"]):
+        missing_items.append(
+            "mesh_names:" + ",".join(identity_state["meshNames"][:6] or ["none"])
+        )
+    if not any(ASSET_ID in name for name in identity_state["materialNames"]):
+        missing_items.append(
+            "material_names:" + ",".join(identity_state["materialNames"][:6] or ["none"])
+        )
+    if not any(ASSET_ID in name for name in identity_state["collectionNames"]):
+        missing_items.append(
+            "collection_names:" + ",".join(identity_state["collectionNames"][:6] or ["none"])
+        )
+
+    if missing_items:
+        raise RuntimeError(
+            f"Pre-export identity validation failed for {lod_label}: "
+            + "; ".join(missing_items)
+        )
+
+    return identity_state
+
+
 def parse_glb(filepath):
     data = filepath.read_bytes()
     if len(data) <= 20:
@@ -302,6 +363,7 @@ def export_lod(output_dir, lod_key, lod_label, final_filename, root_name):
         print(json.dumps({"lod": lod_key, "finalFile": final_filename, "status": "already_valid", "metrics": existing_final}, indent=2))
         return existing_final
 
+    validate_pre_export_identity(root_object, lod_label)
     expected_metrics = count_triangles_and_materials(root_object)
     emit_marker(f"{LOD_EXPORT_START_PREFIX}{final_filename}")
     export_root(root_object, temp_path)

@@ -31,6 +31,20 @@ const generationScriptPath = path.resolve(
   "local-blender-scripts",
   "generate_tree_eucalyptus_001.py"
 );
+const anchorHelperPath = path.resolve(
+  import.meta.dirname,
+  "..",
+  "asset-factory",
+  "local-blender-scripts",
+  "asset_identity_anchor_v2.py"
+);
+const bootstrapHelperPath = path.resolve(
+  import.meta.dirname,
+  "..",
+  "asset-factory",
+  "local-blender-scripts",
+  "growgo_blender_bootstrap.py"
+);
 
 const verifierScriptPath = path.resolve(
   import.meta.dirname,
@@ -163,7 +177,35 @@ test("tree eucalyptus generation script preserves deterministic palette restrict
   const script = fs.readFileSync(generationScriptPath, "utf8");
 
   assert.match(script, /SOURCE_RECIPE_ID = "TREE_EUCALYPTUS_RECIPE_001"/);
+  assert.match(script, /ASSET_CATEGORY = "nature"/);
+  assert.match(script, /ASSET_VERSION = "v001"/);
+  assert.match(script, /VARIANT_ID = "DEFAULT"/);
+  assert.match(script, /PALETTE_ID = "AU_NATIVE_GREEN_001"/);
+  assert.match(script, /LOD_PROFILE = "NATURE_STANDARD_001"/);
+  assert.match(script, /IDENTITY_POLICY = "ASSET_ROOT_AND_COMPONENTS"/);
+  assert.match(script, /DEPENDENCY_IDS = \("MOD_TREE_LEAF_CLUSTER_001",\)/);
+  assert.match(script, /"anchorRequired": True/);
+  assert.match(script, /"anchorValidation": "REQUIRE_PER_LOD_EXPORTED_ANCHOR"/);
+  assert.match(script, /"exportedIdentitySource": "identity_anchor"/);
   assert.match(script, /REGISTRY_RECIPE_ID = "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"/);
+  assert.match(script, /BOOTSTRAP_PATH = \(/);
+  assert.match(script, /bootstrap_local_blender_scripts\(/);
+  assert.match(script, /required_helpers=\("asset_identity_anchor_v2",\)/);
+  assert.match(script, /IDENTITY_CONTRACT_V2 = \{/);
+  assert.match(script, /"paletteId": PALETTE_ID/);
+  assert.match(script, /"dependencies": \[/);
+  assert.match(script, /f"\{ASSET_ID\}_MATERIAL_TRUNK"/);
+  assert.match(script, /f"\{ASSET_ID\}_MATERIAL_BRANCH"/);
+  assert.match(script, /f"\{ASSET_ID\}_MATERIAL_CANOPY_LIGHT"/);
+  assert.match(script, /f"\{ASSET_ID\}_LOD_CLOSE_ROOT"/);
+  assert.match(script, /f"\{ASSET_ID\}_LOD_GAMEPLAY_ROOT"/);
+  assert.match(script, /f"\{ASSET_ID\}_LOD_MAP_ROOT"/);
+  assert.match(script, /f"\{ASSET_ID\}_TRUNK_001"/);
+  assert.match(script, /f"\{ASSET_ID\}_BRANCH_LARGE_001_A"/);
+  assert.match(script, /f"\{ASSET_ID\}_CANOPY_001_A"/);
+  assert.match(script, /from asset_identity_anchor_v2 import create_identity_anchor, write_identity_properties/);
+  assert.match(script, /create_identity_anchor/);
+  assert.match(script, /growgo_identity_contract_v2/);
   assert.match(script, /REPO_ROOT = Path\(/);
   assert.match(script, /WORKSPACE_ROOT = \(REPO_ROOT \/ "asset-factory-workspace"\)\.resolve\(\)/);
   assert.match(script, /EXPECTED_OUTPUT_DIR = \(/);
@@ -182,6 +224,84 @@ test("tree eucalyptus generation script preserves deterministic palette restrict
   assert.doesNotMatch(script, /denois/i);
   assert.doesNotMatch(script, /OpenEXR/i);
   assert.doesNotMatch(script, /asset-factory-workspace\/production\/COASTAL_NATURE_FAMILY_001\/export/);
+});
+
+test("tree eucalyptus generation script prefixes exported geometry and materials with the exact asset identity token", () => {
+  const script = fs.readFileSync(generationScriptPath, "utf8");
+
+  const requiredIdentityAnchors = [
+    'f"{ASSET_ID}_TRUNK_001"',
+    'f"{ASSET_ID}_BRANCH_LARGE_001_A"',
+    'f"{ASSET_ID}_BRANCH_LARGE_001_B"',
+    'f"{ASSET_ID}_BRANCH_SMALL_001_A"',
+    'f"{ASSET_ID}_CANOPY_001_A"',
+    'f"{ASSET_ID}_CANOPY_001_B"',
+    'f"{ASSET_ID}_GROUND_SOCKET_001"',
+    'f"{ASSET_ID}_LANDSCAPE_SOCKET_001"',
+    'f"{ASSET_ID}_MATERIAL_TRUNK"',
+    'f"{ASSET_ID}_MATERIAL_BRANCH"',
+    'f"{ASSET_ID}_MATERIAL_CANOPY_LIGHT"',
+    'f"{ASSET_ID}_MATERIAL_CANOPY_MID"',
+    'f"{ASSET_ID}_MATERIAL_CANOPY_DARK"',
+  ];
+
+  for (const anchor of requiredIdentityAnchors) {
+    assert.match(script, new RegExp(anchor.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+});
+
+test("tree eucalyptus generation script adopts asset identity contract v2 metadata", () => {
+  const script = fs.readFileSync(generationScriptPath, "utf8");
+
+  assert.match(script, /"assetId": ASSET_ID/);
+  assert.match(script, /"category": ASSET_CATEGORY/);
+  assert.match(script, /"recipeId": SOURCE_RECIPE_ID/);
+  assert.match(script, /"version": ASSET_VERSION/);
+  assert.match(script, /"variantId": VARIANT_ID/);
+  assert.match(script, /"paletteId": PALETTE_ID/);
+  assert.match(script, /"lodProfile": LOD_PROFILE/);
+  assert.match(script, /"identityPolicy": IDENTITY_POLICY/);
+  assert.match(script, /"identityAnchor": \{/);
+  assert.match(script, /dependency_id in DEPENDENCY_IDS/);
+});
+
+test("tree eucalyptus shared identity anchor helper is valid Python syntax", () => {
+  const result = spawnSync(
+    "python3",
+    [
+      "-c",
+      [
+        "from pathlib import Path",
+        `source = Path(r'''${anchorHelperPath.replace(/\\/g, "\\\\")}''').read_text(encoding='utf8')`,
+        `compile(source, r'''${anchorHelperPath.replace(/\\/g, "\\\\")}''', 'exec')`,
+      ].join("; "),
+    ],
+    { encoding: "utf8" }
+  );
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+
+  const helper = fs.readFileSync(anchorHelperPath, "utf8");
+  assert.match(helper, /def create_identity_anchor\(/);
+  assert.match(helper, /IDENTITY_ANCHOR_COMPONENT_ROLE = "IDENTITY_ANCHOR"/);
+  assert.match(helper, /growgo_identity_anchor/);
+});
+
+test("tree eucalyptus generation script references the shared bootstrap helper", () => {
+  const script = fs.readFileSync(generationScriptPath, "utf8");
+  const bootstrap = fs.readFileSync(bootstrapHelperPath, "utf8");
+
+  assert.match(script, /growgo_blender_bootstrap/);
+  assert.match(script, /importlib\.util\.spec_from_file_location/);
+  assert.match(bootstrap, /def bootstrap_local_blender_scripts\(/);
+});
+
+test("tree eucalyptus generation script creates per-lod identity anchors", () => {
+  const script = fs.readFileSync(generationScriptPath, "utf8");
+
+  assert.match(script, /create_identity_anchor\(\s*collections\["LOD_CLOSE"\],/);
+  assert.match(script, /create_identity_anchor\(\s*collections\["LOD_GAMEPLAY"\],/);
+  assert.match(script, /create_identity_anchor\(\s*collections\["LOD_MAP"\],/);
 });
 
 test("tree eucalyptus verifier does not launch Blender from Codex", () => {

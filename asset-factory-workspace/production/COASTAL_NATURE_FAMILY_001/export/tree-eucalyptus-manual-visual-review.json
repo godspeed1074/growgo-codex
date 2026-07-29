@@ -1,0 +1,208 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_MANUAL_VISUAL_REVIEW_001",
+  "reviewRecordId": "TREE_EUCALYPTUS_MANUAL_VISUAL_REVIEW_TREE_EUCALYPTUS_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "category": "nature",
+  "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+  "version": "v001",
+  "sourceRegistrationRecord": {
+    "filename": "tree-eucalyptus-registration.json",
+    "deterministicFingerprint": "8119d9acc43b731ef258245d1b14ef64c761c2a081a36af51c94cd278f805ef6",
+    "registrationStatus": "registered",
+    "validationStatus": "validated"
+  },
+  "sourceDevelopmentCatalogEntry": {
+    "filename": "tree-eucalyptus-development-catalog-entry.json",
+    "catalogEntryId": "ASSET_DEV_CATALOG_TREE_EUCALYPTUS_001",
+    "environment": "DEVELOPMENT_ONLY",
+    "lifecycleStatus": "REGISTERED"
+  },
+  "manualReviewChecklist": {
+    "papercut_2_5d_style": [
+      "simple readable layered forms",
+      "stylised 2.5D silhouette rather than realistic rendering",
+      "clean shape language with limited fine detail",
+      "palette reads as bright but grounded nature art",
+      "branch and canopy masses remain easy to read at gameplay scale"
+    ],
+    "australian_eucalyptus_identity": [
+      "overall silhouette reads as eucalyptus rather than generic tree",
+      "trunk and branch structure suggest Australian gum tree character",
+      "canopy clustering feels appropriate for eucalyptus foliage",
+      "palette supports native eucalyptus tones",
+      "asset does not visually drift into tropical palm or dense broadleaf identity"
+    ],
+    "mobile_lightweight_design": [
+      "geometry remains lightweight for mobile use",
+      "shared material usage appears restrained and intentional",
+      "LOD progression visibly simplifies the tree",
+      "no unnecessary micro-detail or hidden complexity",
+      "asset remains readable without needing dense geometry"
+    ],
+    "world_placement_suitability": [
+      "asset can plausibly sit in coastal, parkland, suburban, or forest-edge placement",
+      "upright orientation and footprint feel sensible for Atlas placement",
+      "base and canopy proportions do not create obvious placement issues",
+      "tree reads well as a reusable world object rather than a one-off scene prop",
+      "no visible assumptions conflict with Atlas real-world placement rules"
+    ]
+  },
+  "visualEvidenceModel": {
+    "supportedResults": [
+      "PASS",
+      "FAIL",
+      "NEEDS_REVISION",
+      "NOT_REVIEWED"
+    ],
+    "passRequiresExplicitEvidence": true,
+    "fields": [
+      "result",
+      "reviewerEvidence",
+      "screenshotReferenceOrConfirmation",
+      "notes",
+      "timestamp",
+      "sourceAssetVersion"
+    ]
+  },
+  "reviewContext": {
+    "approvedPalette": {
+      "paletteId": "AU_NATIVE_GREEN_001",
+      "slots": [
+        "trunk",
+        "branch",
+        "canopy light",
+        "canopy mid",
+        "canopy dark"
+      ]
+    },
+    "availableLods": {
+      "close": {
+        "filename": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+        "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+        "sha256": "862be6bc5e365dad75c55fbe0877ca3b246972a1bea123a1c75aea6b3a5b9725",
+        "meshCount": 11,
+        "materialCount": 5,
+        "triangleCount": 249,
+        "primitiveCount": 11
+      },
+      "gameplay": {
+        "filename": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+        "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+        "sha256": "ac3487f5be6131e0eaec66f6e431a148efb9266348ac5aa339e3547b46868f49",
+        "meshCount": 7,
+        "materialCount": 5,
+        "triangleCount": 153,
+        "primitiveCount": 7
+      },
+      "map": {
+        "filename": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
+        "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_MAP.glb",
+        "sha256": "94a90a141a6eae569e8ceaf65a12608121abe25d0d59236fb553c9a462097a55",
+        "meshCount": 4,
+        "materialCount": 2,
+        "triangleCount": 77,
+        "primitiveCount": 4
+      }
+    },
+    "atlasCompatibility": {
+      "atlasCompatible": true,
+      "supportedObjectTypes": [
+        "TREE",
+        "PARK",
+        "FOREST_EDGE"
+      ],
+      "supportedClassifications": [
+        "NATURAL_FEATURE",
+        "PARK"
+      ],
+      "atlasAssignmentRecipeIds": [
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001"
+      ],
+      "assignmentMode": "biome_and_context_match"
+    },
+    "dependencyReferences": [
+      {
+        "dependencyId": "MOD_TREE_LEAF_CLUSTER_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      }
+    ]
+  },
+  "reviewResults": {
+    "papercut_2_5d_style": {
+      "result": "PASS",
+      "reviewerEvidence": "Manual Blender visual inspection completed.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender visual inspection completed.",
+      "timestamp": "2026-07-29T16:10:00.000Z",
+      "sourceAssetVersion": "v001"
+    },
+    "australian_eucalyptus_identity": {
+      "result": "PASS",
+      "reviewerEvidence": "Manual Blender visual inspection completed.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender visual inspection completed.",
+      "timestamp": "2026-07-29T16:10:00.000Z",
+      "sourceAssetVersion": "v001"
+    },
+    "mobile_lightweight_design": {
+      "result": "PASS",
+      "reviewerEvidence": "Manual Blender visual inspection completed.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender visual inspection completed.",
+      "timestamp": "2026-07-29T16:10:00.000Z",
+      "sourceAssetVersion": "v001"
+    },
+    "world_placement_suitability": {
+      "result": "PASS",
+      "reviewerEvidence": "Manual Blender visual inspection completed.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender visual inspection completed.",
+      "timestamp": "2026-07-29T16:10:00.000Z",
+      "sourceAssetVersion": "v001"
+    }
+  },
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "unresolvedChecks": [],
+    "failedChecks": [],
+    "revisionChecks": [],
+    "minimalRevisionRecommendation": []
+  },
+  "preservedHashes": {
+    "blend": "74d87e40a65a99f3f89e20539ad81cacdfe9060046bcd987abbcd3e4711044b4",
+    "close": "862be6bc5e365dad75c55fbe0877ca3b246972a1bea123a1c75aea6b3a5b9725",
+    "gameplay": "ac3487f5be6131e0eaec66f6e431a148efb9266348ac5aa339e3547b46868f49",
+    "map": "94a90a141a6eae569e8ceaf65a12608121abe25d0d59236fb553c9a462097a55"
+  },
+  "safety": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false,
+    "canvasCreated": false,
+    "webglCreated": false,
+    "mapAttached": false,
+    "betaPublished": false,
+    "productionPublished": false,
+    "releaseCreated": false
+  },
+  "validation": {
+    "passRequiresExplicitEvidence": true,
+    "unresolvedChecksRemainUnresolvedWithoutEvidence": true,
+    "failRecordsExactDefect": true,
+    "hashesRemainPreserved": true,
+    "developmentOnlySource": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishingSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "deterministicManualReviewHash": "40b6c196328d1c2936f3c4cad88169c5e311826c586cbda8a71f0afbc9799b00"
+  }
+}

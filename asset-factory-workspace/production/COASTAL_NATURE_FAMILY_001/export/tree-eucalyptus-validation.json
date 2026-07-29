@@ -1,11 +1,11 @@
 {
   "assetId": "TREE_EUCALYPTUS_001",
-  "sceneContractValidated": true,
-  "trunkGeometryGenerated": true,
-  "branchStructureGenerated": true,
-  "canopyGeometryGenerated": true,
-  "leafMaterialsGenerated": true,
-  "lodOutputsPrepared": true,
-  "exportPrepared": true,
-  "localBlenderExecutionRequired": true
+  "readyForManualGeneration": true,
+  "outputDirectoryInsideRepo": true,
+  "applicationsWriteBlocked": true,
+  "deterministicPathConstruction": true,
+  "identityContractSchemaId": "ASSET_IDENTITY_CONTRACT_PHASE_001_1",
+  "identityMetadataReady": true,
+  "finalBlendExistsBeforeManualSave": false,
+  "finalGlbsGenerated": false
 }
