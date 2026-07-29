@@ -345,3 +345,50 @@ test("manual visual review has no renderer or map activation and is deterministi
   assert.equal(first.safety.mapAttached, false);
   assert.equal(first.validation.deterministicOutput, true);
 });
+
+test("all three checks pass with explicit evidence and mark the pavilion visually approved", () => {
+  const tempRoot = fs.mkdtempSync(
+    path.join(os.tmpdir(), "growgo-pavilion-manual-review-approved-")
+  );
+  const { expectedHashes } = seedWorkspace(tempRoot);
+
+  const record =
+    manualVisualReviewModule.buildBuildingCivicSportsPavilionManualVisualReviewRecord(
+      undefined,
+      {
+        cwd: tempRoot,
+        expectedHashes,
+        reviewTimestamp: "2026-07-29T13:00:00.000Z",
+        reviewEvidence: {
+          papercut_2_5d_style: {
+            result: "PASS",
+            reviewerEvidence:
+              "Simple layered forms, readable geometry, stylised civic shape, and no excessive realism.",
+            screenshotReferenceOrConfirmation: "Explicit user confirmation",
+            notes: "Manual Blender review confirmed papercut 2.5D presentation.",
+            sourceAssetVersion: "1.0.0"
+          },
+          no_interior: {
+            result: "PASS",
+            reviewerEvidence:
+              "Open pavilion structure with no rooms, furniture, or detailed interior geometry.",
+            screenshotReferenceOrConfirmation: "Explicit user confirmation",
+            notes: "Manual Blender review confirmed no interior content is present.",
+            sourceAssetVersion: "1.0.0"
+          },
+          road_facing_orientation: {
+            result: "PASS",
+            reviewerEvidence:
+              "Main entry, walkway, signage area, and frontage are clearly identifiable.",
+            screenshotReferenceOrConfirmation: "Explicit user confirmation",
+            notes: "Manual Blender review confirmed the intended road-facing frontage is clear.",
+            sourceAssetVersion: "1.0.0"
+          }
+        }
+      }
+    );
+
+  assert.equal(record.reviewOutcome.visualReviewComplete, true);
+  assert.equal(record.reviewOutcome.visuallyApprovedForDevelopmentPreview, true);
+  assert.deepEqual(record.reviewOutcome.unresolvedChecks, []);
+});

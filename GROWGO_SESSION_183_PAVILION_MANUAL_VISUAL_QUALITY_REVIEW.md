@@ -7,8 +7,8 @@ Branch: `feature/growgo-asset-factory-town-expansion`
 
 A manual visual quality review package has been prepared for `BUILDING_CIVIC_SPORTS_PAVILION_001`.
 
-This session did not perform the actual Blender-side visual confirmation.
-The review record remains intentionally unresolved until manual evidence is supplied.
+Manual Blender-side visual confirmation has now been recorded from explicit user evidence.
+All three previously unresolved checks are now marked `PASS`.
 
 ## Files Changed
 
@@ -60,7 +60,7 @@ Supported evidence results:
 - `NEEDS_REVISION`
 - `NOT_REVIEWED`
 
-Each unresolved check now supports:
+Each visual check supports:
 
 - result
 - reviewer evidence
@@ -80,26 +80,22 @@ Current manual review record:
 - review record ID: `ASSET_MANUAL_VISUAL_REVIEW_BUILDING_CIVIC_SPORTS_PAVILION_001`
 - source asset version: `1.0.0`
 
-Current status of unresolved checks:
+Current visual review results:
 
-- `papercut_2_5d_style`: `NOT_REVIEWED`
-- `no_interior`: `NOT_REVIEWED`
-- `road_facing_orientation`: `NOT_REVIEWED`
+- `papercut_2_5d_style`: `PASS`
+- `no_interior`: `PASS`
+- `road_facing_orientation`: `PASS`
 
 Current overall outcome:
 
-- visual review complete: `false`
-- visually approved for development preview: `false`
+- visual review complete: `true`
+- visually approved for development preview: `true`
 
 ## Unresolved Checks
 
 Still unresolved:
 
-- `papercut_2_5d_style`
-- `no_interior`
-- `road_facing_orientation`
-
-This is expected because no manual Blender screenshot evidence or explicit visual confirmation was provided during this session.
+- none
 
 ## Review Outcome Rules
 
@@ -171,11 +167,16 @@ Covered:
 
 Current visual approval status:
 
-- not yet visually approved
+- visually approved for development preview
 
-Reason:
+Evidence recorded:
 
-- manual Blender inspection evidence has not yet been supplied
+- `papercut_2_5d_style`
+  - Simple layered forms, readable geometry, stylised civic shape, and no excessive realism.
+- `no_interior`
+  - Open pavilion structure with no rooms, furniture, or detailed interior geometry.
+- `road_facing_orientation`
+  - Main entry, walkway, signage area, and frontage are clearly identifiable.
 
 ## Revision Requirements
 
@@ -185,7 +186,7 @@ Current revision requirements:
 
 Reason:
 
-- no visual defect has been confirmed
+- no visual defect was confirmed during manual review
 
 ## Final Safety Confirmation
 

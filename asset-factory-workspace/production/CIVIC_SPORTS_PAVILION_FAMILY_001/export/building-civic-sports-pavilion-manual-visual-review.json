@@ -57,38 +57,34 @@
   },
   "reviewResults": {
     "papercut_2_5d_style": {
-      "result": "NOT_REVIEWED",
-      "reviewerEvidence": null,
-      "screenshotReferenceOrConfirmation": null,
-      "notes": null,
-      "timestamp": "2026-07-29T12:30:00.000Z",
+      "result": "PASS",
+      "reviewerEvidence": "Simple layered forms, readable geometry, stylised civic shape, and no excessive realism.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender review confirmed papercut 2.5D presentation.",
+      "timestamp": "2026-07-29T13:00:00.000Z",
       "sourceAssetVersion": "1.0.0"
     },
     "no_interior": {
-      "result": "NOT_REVIEWED",
-      "reviewerEvidence": null,
-      "screenshotReferenceOrConfirmation": null,
-      "notes": null,
-      "timestamp": "2026-07-29T12:30:00.000Z",
+      "result": "PASS",
+      "reviewerEvidence": "Open pavilion structure with no rooms, furniture, or detailed interior geometry.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender review confirmed no interior content is present.",
+      "timestamp": "2026-07-29T13:00:00.000Z",
       "sourceAssetVersion": "1.0.0"
     },
     "road_facing_orientation": {
-      "result": "NOT_REVIEWED",
-      "reviewerEvidence": null,
-      "screenshotReferenceOrConfirmation": null,
-      "notes": null,
-      "timestamp": "2026-07-29T12:30:00.000Z",
+      "result": "PASS",
+      "reviewerEvidence": "Main entry, walkway, signage area, and frontage are clearly identifiable.",
+      "screenshotReferenceOrConfirmation": "Explicit user confirmation",
+      "notes": "Manual Blender review confirmed the intended road-facing frontage is clear.",
+      "timestamp": "2026-07-29T13:00:00.000Z",
       "sourceAssetVersion": "1.0.0"
     }
   },
   "reviewOutcome": {
-    "visualReviewComplete": false,
-    "visuallyApprovedForDevelopmentPreview": false,
-    "unresolvedChecks": [
-      "papercut_2_5d_style",
-      "no_interior",
-      "road_facing_orientation"
-    ],
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentPreview": true,
+    "unresolvedChecks": [],
     "failedChecks": [],
     "revisionChecks": [],
     "minimalRevisionRecommendation": []
@@ -120,6 +116,6 @@
     "noMapAttachment": true,
     "deterministicOutput": true,
     "validationPassed": true,
-    "deterministicManualReviewHash": "6ef79bed0f8ea6c60aed6707cf49e6415cdf3319e37ec4926055b30749ad81f5"
+    "deterministicManualReviewHash": "c7c4d5b167564035741fe166ac816fdae843233bad653486e179ab96621d8def"
   }
 }
