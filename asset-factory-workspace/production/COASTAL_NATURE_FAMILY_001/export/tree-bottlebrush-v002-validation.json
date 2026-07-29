@@ -56,5 +56,9 @@
       "triangleCount": 265,
       "materialCount": 4
     }
-  ]
+  ],
+  "revisionStatus": "approved",
+  "promotionStatus": "approved/current",
+  "currentDevelopmentRevision": true,
+  "promotedToDevelopmentCatalog": true
 }

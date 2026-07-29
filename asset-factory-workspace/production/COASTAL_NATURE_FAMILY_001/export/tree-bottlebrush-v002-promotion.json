@@ -1,0 +1,23 @@
+{
+  "schemaId": "TREE_BOTTLEBRUSH_V002_CATALOG_PROMOTION_001",
+  "assetId": "TREE_BOTTLEBRUSH_001",
+  "previousDevelopmentVersion": "v001",
+  "currentDevelopmentVersion": "v002",
+  "v001": {
+    "status": "historical_approved",
+    "protected": true,
+    "filesModified": false
+  },
+  "v002": {
+    "status": "approved",
+    "current": true,
+    "validationRecord": "tree-bottlebrush-v002-validation.json",
+    "verificationRecord": "tree-bottlebrush-v002-verification.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "registrationReplaced": false,
+  "visualApprovalReplaced": false,
+  "deterministicFingerprint": "12b657a3fa88b0d76f840a8110bc6a76eaaffd2499e558592c5361ba4ce2c006"
+}

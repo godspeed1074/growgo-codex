@@ -314,6 +314,23 @@ export const natureAssetPackRecords = deepFreeze([
     assetType: "ROADSIDE_NATIVE_FLOWERING_TREE",
     recipeId: "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
     version: "1.0.0",
+    currentDevelopmentVersion: "v002",
+    revisions: deepFreeze([
+      deepFreeze({
+        version: "v001",
+        status: "historical_approved",
+        protected: true,
+        current: false
+      }),
+      deepFreeze({
+        version: "v002",
+        status: "approved",
+        protected: false,
+        current: true,
+        verificationRecord:
+          "tree-bottlebrush-v002-verification.json"
+      })
+    ]),
     lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
     usageRules: deepFreeze([
       "roadside_native_tree",
@@ -340,8 +357,15 @@ export const natureAssetPackRecords = deepFreeze([
     metadata: deepFreeze({
       sourceAssetReferences: deepFreeze(["TREE_BOTTLEBRUSH_001"]),
       sourceRecipeReferences: deepFreeze(["TREE_BOTTLEBRUSH_RECIPE_001"]),
+      currentDevelopmentVersion: "v002",
+      previousDevelopmentVersion: "v001",
+      v001Status: "historical_approved",
+      v001Protected: true,
+      v002Status: "approved",
+      v002Current: true,
       existingWorkPreserved: true,
-      onboardingSource: "SESSION_186_BOTTLEBRUSH_PRODUCTION_SETUP"
+      onboardingSource: "SESSION_186_BOTTLEBRUSH_PRODUCTION_SETUP",
+      promotionSource: "SESSION_187_8_BOTTLEBRUSH_V002_PROMOTION"
     })
   }),
   deepFreeze({
@@ -2659,6 +2683,23 @@ function normalizeAssetFactoryRecord(rawRecord) {
     assetType,
     recipeId,
     version,
+    ...(record.currentDevelopmentVersion
+      ? {
+          currentDevelopmentVersion: normalizeStringValue(
+            record.currentDevelopmentVersion,
+            "currentDevelopmentVersion"
+          )
+        }
+      : {}),
+    ...(Array.isArray(record.revisions)
+      ? {
+          revisions: deepFreeze(
+            record.revisions.map((revision) =>
+              deepFreeze(asPlainObject(revision, "revision"))
+            )
+          )
+        }
+      : {}),
     lodRules: deepFreeze(normalizeStringArray(record.lodRules, "lodRules")),
     usageRules: deepFreeze(normalizeStringArray(record.usageRules, "usageRules")),
     atlasCompatibility,
