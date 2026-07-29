@@ -1,0 +1,216 @@
+{
+  "schemaId": "ASSET_DEVELOPMENT_PREVIEW_INSPECTION_001",
+  "inspectionRecordId": "ASSET_DEV_PREVIEW_INSPECTION_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "recipeId": "SPORTS_FACILITY_RECIPE_001",
+  "version": "1.0.0",
+  "sourceDevelopmentPublishRecord": {
+    "filename": "building-civic-sports-pavilion-development-publish-record.json",
+    "publishRecordId": "ASSET_DEV_PUBLISH_RECORD_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "publishStatus": "PUBLISHED_DEVELOPMENT"
+  },
+  "sourceDevelopmentCatalogActivation": {
+    "filename": "building-civic-sports-pavilion-development-catalog-activation.json",
+    "activationRecordId": "ASSET_DEV_CATALOG_ACTIVATION_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "activationStatus": "ACTIVE_DEVELOPMENT_ONLY"
+  },
+  "lodFileReferences": {
+    "close": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "sha256": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+      "metrics": {
+        "sizeBytes": 154896,
+        "meshCount": 47,
+        "materialCount": 6,
+        "primitiveCount": 47,
+        "triangleCount": 1624
+      }
+    },
+    "gameplay": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "sha256": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+      "metrics": {
+        "sizeBytes": 73260,
+        "meshCount": 44,
+        "materialCount": 6,
+        "primitiveCount": 44,
+        "triangleCount": 528
+      }
+    },
+    "map": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "sha256": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1",
+      "metrics": {
+        "sizeBytes": 44948,
+        "meshCount": 26,
+        "materialCount": 6,
+        "primitiveCount": 26,
+        "triangleCount": 312
+      }
+    }
+  },
+  "verifiedHashes": {
+    "close": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+    "gameplay": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+    "map": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1"
+  },
+  "metrics": {
+    "close": {
+      "sizeBytes": 154896,
+      "meshCount": 47,
+      "materialCount": 6,
+      "primitiveCount": 47,
+      "triangleCount": 1624
+    },
+    "gameplay": {
+      "sizeBytes": 73260,
+      "meshCount": 44,
+      "materialCount": 6,
+      "primitiveCount": 44,
+      "triangleCount": 528
+    },
+    "map": {
+      "sizeBytes": 44948,
+      "meshCount": 26,
+      "materialCount": 6,
+      "primitiveCount": 26,
+      "triangleCount": 312
+    }
+  },
+  "atlasCompatibilitySummary": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "OVAL",
+      "RECREATION_AREA"
+    ],
+    "supportedClassifications": [
+      "PARK"
+    ],
+    "supportedRecipeIds": [
+      "SPORTS_FACILITY_RECIPE_001",
+      "SPORTS_OVAL_RECIPE_001",
+      "RECREATION_AREA_RECIPE_001"
+    ]
+  },
+  "approvedPaletteSummary": {
+    "profile": "CIVIC_SPORTS_PAPERCUT_001",
+    "colours": {
+      "civic_wall": [
+        0.886,
+        0.871,
+        0.816
+      ],
+      "civic_roof": [
+        0.188,
+        0.357,
+        0.455
+      ],
+      "civic_trim": [
+        0.247,
+        0.263,
+        0.298
+      ],
+      "sports_accent": [
+        0.816,
+        0.416,
+        0.224
+      ],
+      "ground_green": [
+        0.455,
+        0.655,
+        0.42
+      ],
+      "path_neutral": [
+        0.631,
+        0.62,
+        0.596
+      ]
+    }
+  },
+  "footprintMetadata": {
+    "compatibleFootprints": [
+      "SPORTS_EDGE_FOOTPRINT",
+      "OPEN_SPACE_SUPPORT_FOOTPRINT"
+    ],
+    "familyId": "CIVIC_SPORTS_PAVILION_FAMILY_001"
+  },
+  "orientationMetadata": {
+    "status": "UNRESOLVED_REQUIRES_VISUAL_REVIEW",
+    "roadFacingOrientationConfirmed": false,
+    "evidence": "No verified orientation record exists in the current pavilion metadata set."
+  },
+  "rendererSafetyState": {
+    "lifecycleExecutionEnabled": false,
+    "automaticRendererExecutionAllowed": false,
+    "noRendererImportsRequired": true
+  },
+  "mapAttachmentSafetyState": {
+    "mapAttachmentAllowed": false,
+    "liveMapAttachmentBlocked": true,
+    "automaticMapPlacementBlocked": true
+  },
+  "inspectionChecklist": [
+    {
+      "checkId": "papercut_2_5d_style",
+      "status": "UNRESOLVED_REQUIRES_VISUAL_REVIEW",
+      "evidence": "Current records preserve the approved palette profile but do not include verified visual inspection evidence."
+    },
+    {
+      "checkId": "civic_colour_palette",
+      "status": "SUPPORTED_BY_RECORDS",
+      "evidence": "Palette profile CIVIC_SPORTS_PAPERCUT_001 is recorded with deterministic swatches."
+    },
+    {
+      "checkId": "no_interior",
+      "status": "UNRESOLVED_REQUIRES_VISUAL_REVIEW",
+      "evidence": "No explicit no-interior verification field exists in the current final pavilion records."
+    },
+    {
+      "checkId": "road_facing_orientation",
+      "status": "UNRESOLVED_REQUIRES_VISUAL_REVIEW",
+      "evidence": "No explicit orientation or road-facing metadata is present in verified pavilion records."
+    },
+    {
+      "checkId": "modular_reuse",
+      "status": "SUPPORTED_BY_RECORDS",
+      "evidence": "Manifest and metadata record 6 reused modules and 60% reuse."
+    },
+    {
+      "checkId": "mobile_performance",
+      "status": "SUPPORTED_BY_RECORDS",
+      "evidence": "Validation marks performance budgets valid and verified LOD metrics remain within the approved record set."
+    },
+    {
+      "checkId": "lod_progression",
+      "status": "SUPPORTED_BY_RECORDS",
+      "evidence": "Verified triangle counts decrease CLOSE 1624 -> GAMEPLAY 528 -> MAP 312 and validation lodComplexityCheck is ok."
+    },
+    {
+      "checkId": "no_missing_dependencies",
+      "status": "SUPPORTED_BY_RECORDS",
+      "evidence": "Verified records mark all final GLBs as having no external dependencies."
+    },
+    {
+      "checkId": "no_unsupported_atlas_assumptions",
+      "status": "SUPPORTED_BY_RECORDS",
+      "evidence": "Atlas compatibility summary is explicit and validation marks atlasCompatibilityValid true."
+    }
+  ],
+  "validation": {
+    "derivesFromDevelopmentPublishedAsset": true,
+    "metricsMatchVerifiedGlbs": true,
+    "noRendererImports": true,
+    "noCanvasOrWebglCreation": true,
+    "noMapAttachment": true,
+    "noLifecycleActivation": true,
+    "noBetaSideEffects": true,
+    "noProductionSideEffects": true,
+    "noReleaseSideEffects": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "deterministicInspectionHash": "7894c37d3a0306f2ee9bd4d29186f13fed491558a393896542ecbe1a3cd97516"
+  }
+}

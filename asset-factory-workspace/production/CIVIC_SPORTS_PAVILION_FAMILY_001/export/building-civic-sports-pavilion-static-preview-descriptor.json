@@ -1,0 +1,119 @@
+{
+  "schemaId": "ASSET_DEVELOPMENT_STATIC_PREVIEW_DESCRIPTOR_001",
+  "previewDescriptorId": "ASSET_STATIC_PREVIEW_DESCRIPTOR_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "version": "1.0.0",
+  "sourceInspectionRecord": {
+    "filename": "building-civic-sports-pavilion-development-preview-inspection.json",
+    "inspectionRecordId": "ASSET_DEV_PREVIEW_INSPECTION_BUILDING_CIVIC_SPORTS_PAVILION_001"
+  },
+  "assetBounds": {
+    "status": "UNVERIFIED_FROM_EXISTING_RECORDS",
+    "bounds": null,
+    "evidence": "No verified spatial bounds record has been generated for this inspection-only package."
+  },
+  "cameraFramingRecommendation": {
+    "preferredLod": "CLOSE",
+    "framingMode": "STATIC_THREE_QUARTER_OBLIQUE_RECOMMENDED",
+    "evidence": "Recommendation derived from development inspection intent only; no renderer initialisation performed."
+  },
+  "expectedOrientation": {
+    "status": "UNRESOLVED_REQUIRES_VISUAL_REVIEW",
+    "roadFacingOrientationConfirmed": false
+  },
+  "paletteSwatches": {
+    "profile": "CIVIC_SPORTS_PAPERCUT_001",
+    "colours": {
+      "civic_wall": [
+        0.886,
+        0.871,
+        0.816
+      ],
+      "civic_roof": [
+        0.188,
+        0.357,
+        0.455
+      ],
+      "civic_trim": [
+        0.247,
+        0.263,
+        0.298
+      ],
+      "sports_accent": [
+        0.816,
+        0.416,
+        0.224
+      ],
+      "ground_green": [
+        0.455,
+        0.655,
+        0.42
+      ],
+      "path_neutral": [
+        0.631,
+        0.62,
+        0.596
+      ]
+    }
+  },
+  "moduleList": [
+    "MOD_FOUNDATION_STANDARD_RECT_001",
+    "MOD_WINDOW_RESIDENTIAL_LARGE_001",
+    "MOD_PATH_STANDARD_001",
+    "MOD_GROUND_GRASS_STANDARD_001",
+    "MOD_FENCE_STANDARD_001",
+    "MOD_TREE_EUCALYPTUS_STANDARD_001",
+    "MOD_PAVILION_CANOPY_STANDARD_001",
+    "MOD_PAVILION_POST_SET_001",
+    "MOD_PAVILION_BLEACHER_SET_001",
+    "MOD_PAVILION_CHANGE_ROOM_BLOCK_001"
+  ],
+  "performanceMetrics": {
+    "close": {
+      "sizeBytes": 154896,
+      "meshCount": 47,
+      "materialCount": 6,
+      "primitiveCount": 47,
+      "triangleCount": 1624
+    },
+    "gameplay": {
+      "sizeBytes": 73260,
+      "meshCount": 44,
+      "materialCount": 6,
+      "primitiveCount": 44,
+      "triangleCount": 528
+    },
+    "map": {
+      "sizeBytes": 44948,
+      "meshCount": 26,
+      "materialCount": 6,
+      "primitiveCount": 26,
+      "triangleCount": 312
+    }
+  },
+  "footprintMetadata": {
+    "compatibleFootprints": [
+      "SPORTS_EDGE_FOOTPRINT",
+      "OPEN_SPACE_SUPPORT_FOOTPRINT"
+    ],
+    "familyId": "CIVIC_SPORTS_PAVILION_FAMILY_001"
+  },
+  "restrictions": {
+    "renderPixelsAllowed": false,
+    "canvasInitialisationAllowed": false,
+    "webglInitialisationAllowed": false,
+    "liveRendererImportAllowed": false,
+    "mapAttachmentAllowed": false,
+    "runtimeLifecycleExecutionAllowed": false
+  },
+  "validation": {
+    "derivesFromInspectionRecord": true,
+    "noRendererImports": true,
+    "noCanvasOrWebglCreation": true,
+    "noMapAttachment": true,
+    "noLifecycleActivation": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "deterministicDescriptorHash": "b0eaf9baad2cb580849f4f50fa99fc5fc55604b74a2801a44b6d75d0a8380891"
+  }
+}
