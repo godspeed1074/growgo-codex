@@ -1,0 +1,133 @@
+{
+  "schemaId": "ASSET_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "category": "BUILDING_CIVIC",
+  "family": "SPORTS_FACILITY_ASSET_FAMILY_001",
+  "version": "1.0.0",
+  "approvedPalette": {
+    "profile": "CIVIC_SPORTS_PAPERCUT_001",
+    "colours": {
+      "civic_wall": [
+        0.886,
+        0.871,
+        0.816
+      ],
+      "civic_roof": [
+        0.188,
+        0.357,
+        0.455
+      ],
+      "civic_trim": [
+        0.247,
+        0.263,
+        0.298
+      ],
+      "sports_accent": [
+        0.816,
+        0.416,
+        0.224
+      ],
+      "ground_green": [
+        0.455,
+        0.655,
+        0.42
+      ],
+      "path_neutral": [
+        0.631,
+        0.62,
+        0.596
+      ]
+    }
+  },
+  "availableLods": [
+    {
+      "lod": "CLOSE",
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "sha256": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+      "metrics": {
+        "sizeBytes": 154896,
+        "meshCount": 47,
+        "materialCount": 6,
+        "primitiveCount": 47,
+        "triangleCount": 1624
+      }
+    },
+    {
+      "lod": "GAMEPLAY",
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "sha256": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+      "metrics": {
+        "sizeBytes": 73260,
+        "meshCount": 44,
+        "materialCount": 6,
+        "primitiveCount": 44,
+        "triangleCount": 528
+      }
+    },
+    {
+      "lod": "MAP",
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "sha256": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1",
+      "metrics": {
+        "sizeBytes": 44948,
+        "meshCount": 26,
+        "materialCount": 6,
+        "primitiveCount": 26,
+        "triangleCount": 312
+      }
+    }
+  ],
+  "performanceMetrics": {
+    "close": {
+      "sizeBytes": 154896,
+      "meshCount": 47,
+      "materialCount": 6,
+      "primitiveCount": 47,
+      "triangleCount": 1624
+    },
+    "gameplay": {
+      "sizeBytes": 73260,
+      "meshCount": 44,
+      "materialCount": 6,
+      "primitiveCount": 44,
+      "triangleCount": 528
+    },
+    "map": {
+      "sizeBytes": 44948,
+      "meshCount": 26,
+      "materialCount": 6,
+      "primitiveCount": 26,
+      "triangleCount": 312
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "OVAL",
+      "RECREATION_AREA"
+    ],
+    "supportedClassifications": [
+      "PARK"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "SPORTS_OVAL_RECIPE_001",
+      "RECREATION_AREA_RECIPE_001"
+    ],
+    "assignmentMode": "sports_support_recipe_bridge"
+  },
+  "localDevelopmentFileReferences": {
+    "sourceBlend": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_v001.blend",
+    "closeGlb": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+    "gameplayGlb": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+    "mapGlb": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb"
+  },
+  "usageConstraints": {
+    "rendererActivationAllowed": false,
+    "liveMapAttachmentAllowed": false,
+    "developmentPreviewOnly": true
+  }
+}
