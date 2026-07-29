@@ -1,0 +1,154 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_RECORD_001",
+  "intakeId": "INTAKE_COASTAL_GRASS_TUSSOCK_001_V001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-29",
+  "status": "intake_complete_authoring_not_started",
+  "assetIdentity": {
+    "assetId": "COASTAL_GRASS_TUSSOCK_001",
+    "familyId": "COASTAL_NATURE_FAMILY_001",
+    "category": "NATURE",
+    "assetType": "LOW_COASTAL_GRASS_TUSSOCK",
+    "developmentVersion": "v001",
+    "protectionState": "unregistered_new_asset",
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
+  },
+  "recipeIdentity": {
+    "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+    "recipeType": "STATIC_NATURE_PROP",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_GRASS_NATIVE_001",
+    "lodProfile": "NATURE_LIGHTWEIGHT_001",
+    "placementContexts": [
+      "roadside",
+      "trail_edge",
+      "dune_margin",
+      "reserve_understory",
+      "open_coastal_ground"
+    ]
+  },
+  "intakeTemplateInputs": {
+    "assetName": "COASTAL_GRASS_TUSSOCK_001",
+    "family": "COASTAL_NATURE_FAMILY_001",
+    "purpose": "Low coastal native grass/tussock vegetation for roadsides, trails, dunes, reserves, and open areas.",
+    "biomeTheme": "Australian coastal native vegetation",
+    "expectedLods": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ],
+    "performanceBudget": {
+      "mobileFirst": true,
+      "triangleTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 160
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 96
+        },
+        "LOD_MAP": {
+          "targetMax": 32
+        }
+      },
+      "meshTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 8
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 5
+        },
+        "LOD_MAP": {
+          "targetMax": 2
+        }
+      },
+      "materialTargets": {
+        "allLods": {
+          "targetMax": 1,
+          "strategy": "shared_material"
+        }
+      }
+    },
+    "dependencies": [],
+    "visualReferences": [
+      "Low wind-shaped coastal tussock silhouette",
+      "Readable papercut 2.5D front, side, and 45-degree views",
+      "Native Australian dune and roadside grass character"
+    ],
+    "approvalCriteria": [
+      "Readable tussock silhouette from front, side, and 45-degree views",
+      "Visible layered blade masses without appearing pancaked",
+      "Papercut 2.5D style maintained",
+      "Mobile-first geometry remains lightweight",
+      "LOD simplification preserves asset identity"
+    ]
+  },
+  "lodExpectations": {
+    "requiredLods": [
+      {
+        "lod": "LOD_CLOSE",
+        "purpose": "nearest gameplay and inspection view",
+        "expectedComplexityRank": 3
+      },
+      {
+        "lod": "LOD_GAMEPLAY",
+        "purpose": "standard in-world placement view",
+        "expectedComplexityRank": 2
+      },
+      {
+        "lod": "LOD_MAP",
+        "purpose": "far-map and low-detail placement view",
+        "expectedComplexityRank": 1
+      }
+    ],
+    "complexityOrderingRule": "LOD_CLOSE > LOD_GAMEPLAY > LOD_MAP"
+  },
+  "validationRequirements": {
+    "preAuthoring": [
+      "asset_identity_defined",
+      "recipe_identity_defined",
+      "lod_expectations_defined",
+      "performance_targets_defined",
+      "visual_approval_criteria_defined",
+      "no_blender_source_created_yet",
+      "no_glb_outputs_created_yet",
+      "no_registration_records_created"
+    ],
+    "futureProductionGates": [
+      "identity_anchor_present_per_lod",
+      "asset_identity_preserved",
+      "recipe_identity_preserved",
+      "dependency_identity_preserved",
+      "metadata_identity_preserved",
+      "no_external_dependencies",
+      "deterministic_generation",
+      "deterministic_export",
+      "lod_complexity_order_preserved",
+      "naming_and_versioning_valid",
+      "manual_visual_review_required_before_registration"
+    ]
+  },
+  "visualApprovalCriteria": {
+    "automatedChecksInformingReview": [
+      "LOD presence",
+      "triangle budgets",
+      "mesh budgets",
+      "shared material count",
+      "identity contract completeness"
+    ],
+    "humanReviewRequired": [
+      "Tussock reads clearly as coastal native grass",
+      "Silhouette has width, depth, and wind-shaped character",
+      "Side profile is readable and not flat",
+      "Blade clusters remain visible at gameplay distance",
+      "MAP LOD retains recognisable tuft footprint"
+    ]
+  },
+  "authoringReadiness": {
+    "blenderFilesCreated": false,
+    "geometryGenerated": false,
+    "glbsExported": false,
+    "registered": false,
+    "readyForAuthoringSetup": true,
+    "nextPhase": "192.2_authoring_setup"
+  }
+}

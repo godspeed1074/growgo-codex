@@ -1,0 +1,133 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_SHRUB_COASTAL_LOW_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "category": "nature",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "registryRecipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "version": "v002",
+  "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+  "validationStatus": "approved",
+  "visualApprovalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_COASTAL_SHRUB_NATIVE_001",
+    "slots": [
+      "branch",
+      "leaf light",
+      "leaf mid",
+      "flower"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "sha256": "a68339a081a23e7e390b558a21dab4319ed3fca0f763e3fe52984ef2136eed16",
+      "meshCount": 18,
+      "materialCount": 4,
+      "triangleCount": 341,
+      "primitiveCount": 18
+    },
+    "gameplay": {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "78ea8a6a877414bbadfe27a977b5dc51022d7b20c43b159a44447928d5747970",
+      "meshCount": 13,
+      "materialCount": 4,
+      "triangleCount": 241,
+      "primitiveCount": 13
+    },
+    "map": {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb",
+      "sha256": "53125d3ff32e3d9cd15b4ace24215c26789804ece83275358e6136e7488908c6",
+      "meshCount": 6,
+      "materialCount": 3,
+      "triangleCount": 101,
+      "primitiveCount": 6
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "SHRUB",
+      "PARK",
+      "TRAIL_EDGE",
+      "GARDEN_EDGE"
+    ],
+    "supportedClassifications": [
+      "NATURAL_FEATURE",
+      "PARK"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "SHRUB_COASTAL_LOW_RECIPE_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_SHRUB_BRANCH_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_SHRUB_FOLIAGE_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_SHRUB_FLOWER_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_SHRUB_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "shrub-coastal-low-registration.json",
+    "version": "v002",
+    "historicalProtectedVersion": "v001"
+  },
+  "sourcePromotionRecord": {
+    "filename": "shrub-coastal-low-v002-promotion.json",
+    "currentDevelopmentVersion": "v002"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "promotionApplied": true
+  }
+}

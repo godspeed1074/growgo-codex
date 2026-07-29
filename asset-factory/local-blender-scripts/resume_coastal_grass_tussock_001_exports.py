@@ -1,9 +1,10 @@
 """
-Manual Blender 4.2 LTS export-resume workflow for SHRUB_COASTAL_LOW_001_v002.
+Manual Blender 4.2 LTS export-resume workflow for COASTAL_GRASS_TUSSOCK_001_v001.
 
-Run only after manually inspecting and saving SHRUB_COASTAL_LOW_001_v001.blend.
-This script prepares deterministic CLOSE, GAMEPLAY, and MAP GLB exports. It is
-not run by Codex during Phase 188.1 and has no registration or publishing path.
+Run only after manually inspecting and saving COASTAL_GRASS_TUSSOCK_001_v001.blend.
+This script uses the universal exporter to prepare deterministic CLOSE,
+GAMEPLAY, and MAP GLB exports. It is export-only and does not change catalog
+or runtime state.
 """
 
 from __future__ import annotations
@@ -17,21 +18,19 @@ from pathlib import Path
 import bpy
 
 
-ASSET_ID = "SHRUB_COASTAL_LOW_001"
+ASSET_ID = "COASTAL_GRASS_TUSSOCK_001"
 ASSET_CATEGORY = "nature"
-SOURCE_RECIPE_ID = "SHRUB_COASTAL_LOW_RECIPE_001"
-PREVIOUS_REGISTERED_VERSION = "v001"
-ASSET_VERSION = "v002"
+SOURCE_RECIPE_ID = "COASTAL_GRASS_TUSSOCK_RECIPE_001"
+ASSET_VERSION = "v001"
 VERSIONED_ASSET_STEM = f"{ASSET_ID}_{ASSET_VERSION}"
 VARIANT_ID = "DEFAULT"
-PALETTE_ID = "AU_COASTAL_SHRUB_NATIVE_001"
-LOD_PROFILE = "NATURE_STANDARD_001"
+PALETTE_ID = "AU_COASTAL_GRASS_NATIVE_001"
+LOD_PROFILE = "NATURE_LIGHTWEIGHT_001"
 EXPECTED_BLEND_NAME = f"{VERSIONED_ASSET_STEM}.blend"
 DEPENDENCY_IDS = (
-    "MOD_SHRUB_BRANCH_CLUSTER_COASTAL_001",
-    "MOD_SHRUB_FOLIAGE_CLUSTER_COASTAL_001",
-    "MOD_SHRUB_FLOWER_CLUSTER_COASTAL_001",
-    "MOD_SHRUB_GROUND_SOCKET_COASTAL_001",
+    "MOD_GRASS_BLADE_TUSSOCK_001",
+    "MOD_GRASS_TUFT_CLUSTER_001",
+    "MOD_GRASS_GROUND_SOCKET_COASTAL_001",
 )
 REPO_ROOT = Path(
     "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex"
@@ -47,7 +46,7 @@ if bootstrap_spec is None or bootstrap_spec.loader is None:
 growgo_blender_bootstrap = importlib.util.module_from_spec(bootstrap_spec)
 bootstrap_spec.loader.exec_module(growgo_blender_bootstrap)
 BOOTSTRAP_STATE = growgo_blender_bootstrap.bootstrap_local_blender_scripts(
-    "resume_shrub_coastal_low_001_exports.py",
+    "resume_coastal_grass_tussock_001_exports.py",
     required_helpers=("asset_identity_anchor_v2",),
     explicit_repo_root=REPO_ROOT,
     script_path=BOOTSTRAP_PATH,
@@ -68,36 +67,33 @@ from asset_factory_exporter_v1 import (
 )
 
 
-EXPECTED_OUTPUT_DIR = (
+EXPECTED_SOURCE_DIR = (
     REPO_ROOT
     / "asset-factory-workspace"
     / "production"
-    / "COASTAL_SHRUB_FAMILY_001"
+    / "COASTAL_NATURE_FAMILY_001"
+    / "source"
+).resolve()
+EXPECTED_EXPORT_DIR = (
+    REPO_ROOT
+    / "asset-factory-workspace"
+    / "production"
+    / "COASTAL_NATURE_FAMILY_001"
     / "export"
 ).resolve()
 EXPORT_SEQUENCE = (
-    (
-        "close",
-        "LOD_CLOSE",
-        f"{VERSIONED_ASSET_STEM}_LOD_CLOSE.glb",
-        f"{ASSET_ID}_LOD_CLOSE_ROOT",
-    ),
+    ("close", "LOD_CLOSE", f"{ASSET_ID}_LOD_CLOSE.glb", f"{ASSET_ID}_LOD_CLOSE_ROOT"),
     (
         "gameplay",
         "LOD_GAMEPLAY",
-        f"{VERSIONED_ASSET_STEM}_LOD_GAMEPLAY.glb",
+        f"{ASSET_ID}_LOD_GAMEPLAY.glb",
         f"{ASSET_ID}_LOD_GAMEPLAY_ROOT",
     ),
-    (
-        "map",
-        "LOD_MAP",
-        f"{VERSIONED_ASSET_STEM}_LOD_MAP.glb",
-        f"{ASSET_ID}_LOD_MAP_ROOT",
-    ),
+    ("map", "LOD_MAP", f"{ASSET_ID}_LOD_MAP.glb", f"{ASSET_ID}_LOD_MAP_ROOT"),
 )
-EXPORT_START = "S188_1_SHRUB_COASTAL_LOW_EXPORT_START"
-EXPORT_COMPLETE = "S188_1_SHRUB_COASTAL_LOW_EXPORT_COMPLETE"
-EXPORT_FAILURE_PREFIX = "S188_1_SHRUB_COASTAL_LOW_EXPORT_FAILURE:"
+EXPORT_START = "S192_2_COASTAL_GRASS_TUSSOCK_EXPORT_START"
+EXPORT_COMPLETE = "S192_2_COASTAL_GRASS_TUSSOCK_EXPORT_COMPLETE"
+EXPORT_FAILURE_PREFIX = "S192_2_COASTAL_GRASS_TUSSOCK_EXPORT_FAILURE:"
 
 
 def fail(message, code):
@@ -113,10 +109,11 @@ def ensure_environment():
     if filepath is None or filepath.name != EXPECTED_BLEND_NAME or not filepath.exists():
         fail(f"Expected open saved blend {EXPECTED_BLEND_NAME}.", "BLEND")
     try:
-        EXPECTED_OUTPUT_DIR.relative_to(REPO_ROOT)
+        EXPECTED_SOURCE_DIR.relative_to(REPO_ROOT)
+        EXPECTED_EXPORT_DIR.relative_to(REPO_ROOT)
     except ValueError:
-        fail("Export directory is outside GrowGo.", "OUTPUT_DIRECTORY")
-    EXPECTED_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        fail("Asset directories are outside GrowGo.", "DIRECTORY")
+    EXPECTED_EXPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def iter_identity_strings():
@@ -204,7 +201,7 @@ def export_lod(lod_label, filename, root_name):
     root = discover_lod_roots(bpy.data.objects, ASSET_ID)[lod_label]
     metrics = count_scene_metrics(root, lod_label)
     select_export_object_set(root, ASSET_ID, lod_label)
-    final_path = EXPECTED_OUTPUT_DIR / filename
+    final_path = EXPECTED_EXPORT_DIR / filename
     temp_path = final_path.with_name(f"{final_path.stem}.tmp{final_path.suffix}")
     if temp_path.exists():
         temp_path.unlink()
@@ -247,14 +244,14 @@ def main():
         fail(str(error), "LOD_COMPLEXITY")
     manifest_outputs = {}
     for lod_key, _lod_label, filename, _root_name in EXPORT_SEQUENCE:
-        final_path = EXPECTED_OUTPUT_DIR / filename
+        final_path = EXPECTED_EXPORT_DIR / filename
         manifest_outputs[lod_key] = {
             **metrics[lod_key],
             "filename": filename,
             "sizeBytes": final_path.stat().st_size,
         }
     write_export_manifest(
-        EXPECTED_OUTPUT_DIR / f"shrub-coastal-low-{ASSET_VERSION}-export-manifest.json",
+        EXPECTED_EXPORT_DIR / "coastal-grass-tussock-export-manifest.json",
         asset_id=ASSET_ID,
         recipe_id=SOURCE_RECIPE_ID,
         version=ASSET_VERSION,

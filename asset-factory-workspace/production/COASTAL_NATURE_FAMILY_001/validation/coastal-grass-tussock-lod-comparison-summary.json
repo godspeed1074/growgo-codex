@@ -1,0 +1,30 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_LOD_COMPARISON_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "version": "v001",
+  "lods": {
+    "close": {
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+      "triangleCount": 133,
+      "meshCount": 10,
+      "materialCount": 1,
+      "sizeBytes": 57160
+    },
+    "gameplay": {
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+      "triangleCount": 89,
+      "meshCount": 7,
+      "materialCount": 1,
+      "sizeBytes": 41228
+    },
+    "map": {
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb",
+      "triangleCount": 65,
+      "meshCount": 5,
+      "materialCount": 1,
+      "sizeBytes": 30988
+    }
+  },
+  "lodOrderRequirement": "CLOSE > GAMEPLAY > MAP",
+  "lodOrderPassed": true
+}

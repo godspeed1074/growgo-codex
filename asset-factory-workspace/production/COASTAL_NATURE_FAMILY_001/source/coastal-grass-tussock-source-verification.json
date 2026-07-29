@@ -1,0 +1,28 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_SOURCE_VERIFICATION_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "version": "v001",
+  "verifiedOn": "2026-07-29",
+  "sourceBlend": {
+    "filename": "COASTAL_GRASS_TUSSOCK_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GRASS_TUSSOCK_001_v001.blend",
+    "sha256": "d9566ddd944f244ab34e638d3016761c27875992d8e3552bd9d550011ee24b3e"
+  },
+  "sourceIdentityVerification": {
+    "filenameMatches": true,
+    "canonicalSourceFolder": true,
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true,
+    "sourceBlendModifiedDuringExport": false
+  },
+  "expectedExportTargets": [
+    "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+    "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+    "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb"
+  ],
+  "readyForExportValidation": true
+}

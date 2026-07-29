@@ -1,9 +1,10 @@
 """
-Manual Blender 4.2 LTS generator for SHRUB_COASTAL_LOW_001_v002.
+Manual Blender 4.2 LTS generator for COASTAL_GRASS_TUSSOCK_001_v001.
 
-Run this script inside Blender. It creates deterministic, mobile-first
-papercut 2.5D geometry and three identity-anchored LOD roots. It does not
-export GLBs, register, publish, or activate the asset.
+Run this script inside Blender. It creates deterministic, lightweight
+papercut 2.5D-compatible grass/tussock geometry with CLOSE, GAMEPLAY, and MAP
+LOD roots plus identity anchors. It does not export GLBs, register, publish,
+or activate runtime usage.
 """
 
 from __future__ import annotations
@@ -17,21 +18,19 @@ from pathlib import Path
 import bpy
 
 
-ASSET_ID = "SHRUB_COASTAL_LOW_001"
+ASSET_ID = "COASTAL_GRASS_TUSSOCK_001"
 ASSET_CATEGORY = "nature"
-SOURCE_RECIPE_ID = "SHRUB_COASTAL_LOW_RECIPE_001"
-PREVIOUS_REGISTERED_VERSION = "v001"
-ASSET_VERSION = "v002"
+SOURCE_RECIPE_ID = "COASTAL_GRASS_TUSSOCK_RECIPE_001"
+ASSET_VERSION = "v001"
 VERSIONED_ASSET_STEM = f"{ASSET_ID}_{ASSET_VERSION}"
 VARIANT_ID = "DEFAULT"
-PALETTE_ID = "AU_COASTAL_SHRUB_NATIVE_001"
-LOD_PROFILE = "NATURE_STANDARD_001"
+PALETTE_ID = "AU_COASTAL_GRASS_NATIVE_001"
+LOD_PROFILE = "NATURE_LIGHTWEIGHT_001"
 IDENTITY_POLICY = "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
 DEPENDENCY_IDS = (
-    "MOD_SHRUB_BRANCH_CLUSTER_COASTAL_001",
-    "MOD_SHRUB_FOLIAGE_CLUSTER_COASTAL_001",
-    "MOD_SHRUB_FLOWER_CLUSTER_COASTAL_001",
-    "MOD_SHRUB_GROUND_SOCKET_COASTAL_001",
+    "MOD_GRASS_BLADE_TUSSOCK_001",
+    "MOD_GRASS_TUFT_CLUSTER_001",
+    "MOD_GRASS_GROUND_SOCKET_COASTAL_001",
 )
 REPO_ROOT = Path(
     "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex"
@@ -50,7 +49,7 @@ if bootstrap_spec is None or bootstrap_spec.loader is None:
 growgo_blender_bootstrap = importlib.util.module_from_spec(bootstrap_spec)
 bootstrap_spec.loader.exec_module(growgo_blender_bootstrap)
 BOOTSTRAP_STATE = growgo_blender_bootstrap.bootstrap_local_blender_scripts(
-    "generate_shrub_coastal_low_001.py",
+    "generate_coastal_grass_tussock_001.py",
     required_helpers=("asset_identity_anchor_v2",),
     explicit_repo_root=REPO_ROOT,
     script_path=BOOTSTRAP_PATH,
@@ -60,12 +59,12 @@ from asset_identity_anchor_v2 import create_identity_anchor, write_identity_prop
 
 
 WORKSPACE_ROOT = (REPO_ROOT / "asset-factory-workspace").resolve()
-EXPECTED_OUTPUT_DIR = (
-    WORKSPACE_ROOT / "production" / "COASTAL_SHRUB_FAMILY_001" / "export"
+EXPECTED_SOURCE_DIR = (
+    WORKSPACE_ROOT / "production" / "COASTAL_NATURE_FAMILY_001" / "source"
 ).resolve()
 EXPECTED_BLEND_FILENAME = f"{VERSIONED_ASSET_STEM}.blend"
-GENERATION_START = "S188_1_SHRUB_COASTAL_LOW_GENERATION_START"
-GENERATION_READY = "S188_1_SHRUB_COASTAL_LOW_READY_FOR_MANUAL_SAVE"
+GENERATION_START = "S192_2_COASTAL_GRASS_TUSSOCK_GENERATION_START"
+GENERATION_READY = "S192_2_COASTAL_GRASS_TUSSOCK_READY_FOR_MANUAL_SAVE"
 
 ROOT_NAMES = {
     "close": f"{ASSET_ID}_LOD_CLOSE_ROOT",
@@ -73,44 +72,48 @@ ROOT_NAMES = {
     "map": f"{ASSET_ID}_LOD_MAP_ROOT",
 }
 IDENTITY_ANCHOR_NAMES = {
-    "close": "SHRUB_COASTAL_LOW_001_LOD_CLOSE_IDENTITY_ANCHOR",
-    "gameplay": "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
-    "map": "SHRUB_COASTAL_LOW_001_LOD_MAP_IDENTITY_ANCHOR",
+    "close": "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "gameplay": "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "map": "COASTAL_GRASS_TUSSOCK_001_LOD_MAP_IDENTITY_ANCHOR",
 }
 
-# Shared materials are intentionally few, matte, and reused across every LOD.
 MATERIAL_SPECS = (
-    (f"{ASSET_ID}_MATERIAL_BRANCH", "branch", (0.34, 0.27, 0.19, 1.0)),
-    (f"{ASSET_ID}_MATERIAL_LEAF_LIGHT", "leaf light", (0.48, 0.62, 0.37, 1.0)),
-    (f"{ASSET_ID}_MATERIAL_LEAF_MID", "leaf mid", (0.30, 0.47, 0.28, 1.0)),
-    (f"{ASSET_ID}_MATERIAL_FLOWER", "flower", (0.82, 0.60, 0.43, 1.0)),
+    (f"{ASSET_ID}_MATERIAL_GRASS", "grass", (0.52, 0.66, 0.38, 1.0)),
 )
 
-# Explicit layouts avoid randomness. Staggered Y offsets add more side-profile
-# volume while staying within a restrained papercut 2.5D depth budget.
-CLOSE_CLUSTER_SPECS = (
-    ("CLUSTER_001", (-0.72, 0.18, 0.70), (0.74, 0.30, 0.56), "leaf mid"),
-    ("CLUSTER_002", (-0.34, -0.22, 0.92), (0.84, 0.31, 0.64), "leaf light"),
-    ("CLUSTER_003", (0.00, 0.06, 1.04), (0.92, 0.34, 0.72), "leaf mid"),
-    ("CLUSTER_004", (0.34, -0.18, 0.88), (0.86, 0.31, 0.62), "leaf light"),
-    ("CLUSTER_005", (0.74, 0.20, 0.66), (0.72, 0.29, 0.54), "leaf mid"),
-    ("CLUSTER_006", (-0.10, -0.30, 0.56), (0.98, 0.30, 0.52), "leaf light"),
-    ("CLUSTER_007", (0.14, 0.28, 0.74), (0.80, 0.28, 0.58), "leaf mid"),
-    ("CLUSTER_008", (0.46, 0.08, 1.00), (0.62, 0.24, 0.46), "leaf light"),
+# Explicit blade and tuft layouts keep the generator deterministic and create
+# subtle front/back depth for stronger side and 45-degree silhouettes while
+# staying lightweight for repeated placement.
+CLOSE_BLADE_SPECS = (
+    ("BLADE_001", (-0.42, 0.14, 0.44), math.radians(-20), (0.08, 0.05, 0.78)),
+    ("BLADE_002", (-0.26, -0.10, 0.62), math.radians(-10), (0.08, 0.05, 0.96)),
+    ("BLADE_003", (-0.08, 0.06, 0.88), math.radians(-4), (0.08, 0.05, 1.10)),
+    ("BLADE_004", (0.10, -0.16, 0.98), math.radians(8), (0.08, 0.05, 1.06)),
+    ("BLADE_005", (0.28, 0.12, 0.84), math.radians(16), (0.08, 0.05, 0.94)),
+    ("BLADE_006", (0.42, -0.06, 0.58), math.radians(24), (0.08, 0.05, 0.76)),
 )
-GAMEPLAY_CLUSTER_SPECS = (
-    CLOSE_CLUSTER_SPECS[0],
-    CLOSE_CLUSTER_SPECS[1],
-    CLOSE_CLUSTER_SPECS[2],
-    CLOSE_CLUSTER_SPECS[3],
-    CLOSE_CLUSTER_SPECS[4],
-    CLOSE_CLUSTER_SPECS[6],
+GAMEPLAY_BLADE_SPECS = (
+    CLOSE_BLADE_SPECS[0],
+    CLOSE_BLADE_SPECS[1],
+    CLOSE_BLADE_SPECS[2],
+    CLOSE_BLADE_SPECS[4],
 )
-MAP_CLUSTER_SPECS = (
-    ("CLUSTER_MAP_001", (-0.42, 0.08, 0.74), (1.02, 0.24, 0.62), "leaf mid"),
-    ("CLUSTER_MAP_002", (0.44, -0.08, 0.76), (1.00, 0.24, 0.60), "leaf light"),
-    ("CLUSTER_MAP_003", (0.02, 0.0, 0.96), (0.76, 0.22, 0.44), "leaf mid"),
+MAP_BLADE_SPECS = (
+    ("BLADE_MAP_001", (-0.18, 0.04, 0.72), math.radians(-8), (0.10, 0.06, 0.84)),
+    ("BLADE_MAP_002", (0.20, -0.04, 0.76), math.radians(10), (0.10, 0.06, 0.82)),
 )
+TUFT_SPECS = {
+    "close": (
+        ("TUFT_001", (-0.18, 0.12, 0.34), (0.38, 0.22, 0.28)),
+        ("TUFT_002", (0.20, -0.10, 0.32), (0.40, 0.22, 0.30)),
+    ),
+    "gameplay": (
+        ("TUFT_001", (-0.10, 0.08, 0.30), (0.34, 0.20, 0.24)),
+    ),
+    "map": (
+        ("TUFT_001", (0.00, 0.00, 0.28), (0.46, 0.18, 0.20)),
+    ),
+}
 
 IDENTITY_CONTRACT_V2 = {
     "assetId": ASSET_ID,
@@ -147,16 +150,14 @@ def ensure_blender_version():
         raise RuntimeError(f"Expected Blender 4.2.x, found {bpy.app.version!r}.")
 
 
-def ensure_output_directory():
-    output_dir = EXPECTED_OUTPUT_DIR.resolve()
-    if str(output_dir).startswith("/Applications"):
-        raise RuntimeError(f"Refusing to write inside /Applications: {output_dir}")
+def ensure_source_directory():
+    source_dir = EXPECTED_SOURCE_DIR.resolve()
     try:
-        output_dir.relative_to(REPO_ROOT)
+        source_dir.relative_to(REPO_ROOT)
     except ValueError as error:
-        raise RuntimeError(f"Output directory is outside GrowGo: {output_dir}") from error
-    output_dir.mkdir(parents=True, exist_ok=True)
-    return output_dir
+        raise RuntimeError(f"Source directory is outside GrowGo: {source_dir}") from error
+    source_dir.mkdir(parents=True, exist_ok=True)
+    return source_dir
 
 
 def reset_scene():
@@ -179,7 +180,7 @@ def create_materials():
     for name, slot, color in MATERIAL_SPECS:
         material = bpy.data.materials.new(name)
         material.diffuse_color = color
-        material.roughness = 0.82
+        material.roughness = 0.86
         material.use_nodes = False
         material["growgo_palette_id"] = PALETTE_ID
         material["growgo_palette_slot"] = slot
@@ -227,23 +228,38 @@ def apply_component_identity(obj, role, lod_label, dependency_id):
         )
 
 
-def add_branch(name, location, scale, rotation_y, material, collection, root, lod_label):
-    bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.08, depth=1.0)
+def add_ground_socket(collection, root, lod_label, material):
+    bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.22, depth=0.10)
+    obj = bpy.context.object
+    obj.name = f"{ASSET_ID}_{lod_label}_GROUND_SOCKET"
+    obj.location = (0.0, 0.0, 0.06)
+    obj.data.name = f"{obj.name}_MESH"
+    obj.data.materials.append(material)
+    move_to_collection(obj, collection)
+    obj.parent = root
+    apply_component_identity(obj, "GROUND_SOCKET", lod_label, DEPENDENCY_IDS[2])
+    return obj
+
+
+def add_blade(name, location, lean_y, scale, material, collection, root, lod_label):
+    bpy.ops.mesh.primitive_cube_add(size=1.0)
     obj = bpy.context.object
     obj.name = name
     obj.location = location
     obj.scale = scale
-    obj.rotation_euler = (0.0, rotation_y, 0.0)
+    obj.rotation_euler = (0.0, lean_y, 0.0)
     obj.data.name = f"{name}_MESH"
     obj.data.materials.append(material)
     move_to_collection(obj, collection)
     obj.parent = root
-    apply_component_identity(obj, "BRANCH_CLUSTER", lod_label, DEPENDENCY_IDS[0])
+    obj["growgo_papercut_2_5d"] = True
+    obj["growgo_mobile_first"] = True
+    apply_component_identity(obj, "GRASS_BLADE", lod_label, DEPENDENCY_IDS[0])
     return obj
 
 
-def add_cluster(name, location, scale, material, collection, root, lod_label, segments):
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=1.0)
+def add_tuft(name, location, scale, material, collection, root, lod_label):
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=0.32)
     obj = bpy.context.object
     obj.name = name
     obj.location = location
@@ -254,26 +270,11 @@ def add_cluster(name, location, scale, material, collection, root, lod_label, se
     obj.parent = root
     obj["growgo_papercut_2_5d"] = True
     obj["growgo_mobile_first"] = True
-    obj["growgo_segment_budget"] = segments
-    apply_component_identity(obj, "FOLIAGE_CLUSTER", lod_label, DEPENDENCY_IDS[1])
+    apply_component_identity(obj, "TUFT_CLUSTER", lod_label, DEPENDENCY_IDS[1])
     return obj
 
 
-def add_flower(name, location, scale, material, collection, root, lod_label):
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=0.11)
-    obj = bpy.context.object
-    obj.name = name
-    obj.location = location
-    obj.scale = scale
-    obj.data.name = f"{name}_MESH"
-    obj.data.materials.append(material)
-    move_to_collection(obj, collection)
-    obj.parent = root
-    apply_component_identity(obj, "FLOWER_CLUSTER", lod_label, DEPENDENCY_IDS[2])
-    return obj
-
-
-def build_lod(key, lod_label, cluster_specs, collections, materials, flower_indices):
+def build_lod(key, lod_label, blade_specs, collections, materials):
     collection = collections[key]
     root = add_empty(ROOT_NAMES[key], collection)
     write_identity_properties(
@@ -283,48 +284,29 @@ def build_lod(key, lod_label, cluster_specs, collections, materials, flower_indi
         lod_label=lod_label,
         exported_identity_source="metadata",
     )
-    branch_count = {"close": 5, "gameplay": 4, "map": 2}[key]
-    for index in range(branch_count):
-        offset = index - ((branch_count - 1) / 2)
-        add_branch(
-            f"{ASSET_ID}_{lod_label}_BRANCH_{index + 1:03d}",
-            (offset * 0.24, 0.0, 0.38 + abs(offset) * 0.05),
-            (0.72, 0.72, 0.58 + abs(offset) * 0.10),
-            math.radians(offset * 22),
-            materials["branch"],
+    add_ground_socket(collection, root, lod_label, materials["grass"])
+    for suffix, location, lean_y, scale in blade_specs:
+        add_blade(
+            f"{ASSET_ID}_{lod_label}_{suffix}",
+            location,
+            lean_y,
+            scale,
+            materials["grass"],
             collection,
             root,
             lod_label,
         )
-    for index, (suffix, location, scale, slot) in enumerate(cluster_specs):
-        add_cluster(
+    for suffix, location, scale in TUFT_SPECS[key]:
+        add_tuft(
             f"{ASSET_ID}_{lod_label}_{suffix}",
             location,
             scale,
-            materials[slot],
+            materials["grass"],
             collection,
             root,
             lod_label,
-            20 if key == "close" else 12 if key == "gameplay" else 8,
         )
-        if index in flower_indices:
-            flower_offset_y = 0.08 if location[1] <= 0 else -0.08
-            add_flower(
-                f"{ASSET_ID}_{lod_label}_FLOWER_{index + 1:03d}",
-                (
-                    location[0] * 1.04,
-                    location[1] + flower_offset_y,
-                    location[2] + scale[2] * 0.80,
-                ),
-                (1.08, 0.36, 0.76) if key == "close" else (1.0, 0.34, 0.72),
-                materials["flower"],
-                collection,
-                root,
-                lod_label,
-            )
-    anchor = create_identity_anchor(
-        collection, root, IDENTITY_CONTRACT_V2, lod_label
-    )
+    anchor = create_identity_anchor(collection, root, IDENTITY_CONTRACT_V2, lod_label)
     if anchor.name != IDENTITY_ANCHOR_NAMES[key]:
         raise RuntimeError(
             f"Unexpected identity anchor {anchor.name}; expected {IDENTITY_ANCHOR_NAMES[key]}."
@@ -332,24 +314,23 @@ def build_lod(key, lod_label, cluster_specs, collections, materials, flower_indi
     return root
 
 
-def write_setup_metadata(output_dir):
+def write_setup_metadata(source_dir):
     manifest = {
         "assetId": ASSET_ID,
         "recipeReference": SOURCE_RECIPE_ID,
-        "familyId": "COASTAL_SHRUB_FAMILY_001",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
         "version": ASSET_VERSION,
-        "previousRegisteredVersion": PREVIOUS_REGISTERED_VERSION,
         "targetRevisionVersion": ASSET_VERSION,
         "expectedBlendFilename": EXPECTED_BLEND_FILENAME,
         "expectedFinalOutputs": [
-            f"{VERSIONED_ASSET_STEM}_LOD_CLOSE.glb",
-            f"{VERSIONED_ASSET_STEM}_LOD_GAMEPLAY.glb",
-            f"{VERSIONED_ASSET_STEM}_LOD_MAP.glb",
+            f"{ASSET_ID}_LOD_CLOSE.glb",
+            f"{ASSET_ID}_LOD_GAMEPLAY.glb",
+            f"{ASSET_ID}_LOD_MAP.glb",
         ],
         "manualBlenderExecutionRequired": True,
         "finalGlbsGenerated": False,
     }
-    (output_dir / f"shrub-coastal-low-{ASSET_VERSION}-authoring-manifest.json").write_text(
+    (source_dir / "coastal-grass-tussock-authoring-manifest.json").write_text(
         f"{json.dumps(manifest, indent=2)}\n", encoding="utf-8"
     )
 
@@ -357,8 +338,8 @@ def write_setup_metadata(output_dir):
 def main():
     emit(GENERATION_START)
     ensure_blender_version()
-    output_dir = ensure_output_directory()
-    final_blend = output_dir / EXPECTED_BLEND_FILENAME
+    source_dir = ensure_source_directory()
+    final_blend = source_dir / EXPECTED_BLEND_FILENAME
     if final_blend.exists():
         raise RuntimeError(f"Refusing to overwrite existing source: {final_blend}")
 
@@ -370,30 +351,17 @@ def main():
         "map": create_collection("LOD_MAP", asset_collection),
     }
     materials = create_materials()
-    build_lod(
-        "close",
-        "LOD_CLOSE",
-        CLOSE_CLUSTER_SPECS,
-        collections,
-        materials,
-        flower_indices=(0, 2, 4, 7),
-    )
-    build_lod(
-        "gameplay",
-        "LOD_GAMEPLAY",
-        GAMEPLAY_CLUSTER_SPECS,
-        collections,
-        materials,
-        flower_indices=(1, 4),
-    )
-    build_lod("map", "LOD_MAP", MAP_CLUSTER_SPECS, collections, materials, flower_indices=())
+    build_lod("close", "LOD_CLOSE", CLOSE_BLADE_SPECS, collections, materials)
+    build_lod("gameplay", "LOD_GAMEPLAY", GAMEPLAY_BLADE_SPECS, collections, materials)
+    build_lod("map", "LOD_MAP", MAP_BLADE_SPECS, collections, materials)
 
     asset_collection["growgo_identity_contract_v2"] = json.dumps(
         IDENTITY_CONTRACT_V2, sort_keys=True
     )
     asset_collection["growgo_reference_pipeline"] = (
-        "TREE_EUCALYPTUS_001,TREE_BOTTLEBRUSH_001"
+        "TREE_EUCALYPTUS_001,TREE_BOTTLEBRUSH_001,SHRUB_COASTAL_LOW_001"
     )
+    asset_collection["growgo_repeated_placement_ready"] = True
     bpy.context.scene["growgo_asset_id"] = ASSET_ID
     bpy.context.scene["growgo_recipe_id"] = SOURCE_RECIPE_ID
     bpy.context.scene["growgo_bootstrap_state"] = json.dumps(
@@ -401,7 +369,7 @@ def main():
     )
     bpy.context.scene["growgo_mobile_first_geometry"] = True
     bpy.context.scene["growgo_papercut_2_5d_compatible"] = True
-    write_setup_metadata(output_dir)
+    write_setup_metadata(source_dir)
     emit(GENERATION_READY)
 
 

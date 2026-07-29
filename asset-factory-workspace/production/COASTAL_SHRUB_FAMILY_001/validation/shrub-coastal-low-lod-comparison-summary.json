@@ -1,0 +1,30 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_LOD_COMPARISON_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v001",
+  "lods": {
+    "close": {
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_CLOSE.glb",
+      "triangleCount": 301,
+      "meshCount": 16,
+      "materialCount": 4,
+      "sizeBytes": 109300
+    },
+    "gameplay": {
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
+      "triangleCount": 181,
+      "meshCount": 10,
+      "materialCount": 4,
+      "sizeBytes": 72628
+    },
+    "map": {
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_MAP.glb",
+      "triangleCount": 61,
+      "meshCount": 4,
+      "materialCount": 3,
+      "sizeBytes": 33332
+    }
+  },
+  "lodOrderRequirement": "CLOSE > GAMEPLAY > MAP",
+  "lodOrderPassed": true
+}

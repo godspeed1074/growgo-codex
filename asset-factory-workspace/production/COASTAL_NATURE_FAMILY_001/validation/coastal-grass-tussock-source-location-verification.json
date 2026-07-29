@@ -1,0 +1,44 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_SOURCE_LOCATION_VERIFICATION_001",
+  "verificationId": "VERIFY_COASTAL_GRASS_TUSSOCK_001_SOURCE_LOCATION",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "version": "v001",
+  "verifiedOn": "2026-07-29",
+  "status": "pass",
+  "canonicalConvention": {
+    "sourceBlendFolder": "source",
+    "generatedGlbFolder": "export"
+  },
+  "expectedSourcePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GRASS_TUSSOCK_001_v001.blend",
+  "expectedExportPathPrefix": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/",
+  "checks": [
+    {
+      "name": "blend_in_canonical_source_folder",
+      "ok": true
+    },
+    {
+      "name": "blend_absent_from_export_folder",
+      "ok": true
+    },
+    {
+      "name": "filename_matches_exactly",
+      "ok": true
+    },
+    {
+      "name": "version_matches_v001",
+      "ok": true
+    },
+    {
+      "name": "no_duplicate_source_files",
+      "ok": true
+    },
+    {
+      "name": "export_folder_reserved_for_glbs",
+      "ok": true
+    }
+  ],
+  "actualSourcePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GRASS_TUSSOCK_001_v001.blend",
+  "correctionsApplied": [
+    "moved_blend_from_export_to_source"
+  ]
+}

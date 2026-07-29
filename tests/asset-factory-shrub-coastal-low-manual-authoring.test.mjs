@@ -45,7 +45,8 @@ test("generator preserves permanent identity and creates every required anchor",
 
   assert.match(script, /ASSET_ID = "SHRUB_COASTAL_LOW_001"/);
   assert.match(script, /SOURCE_RECIPE_ID = "SHRUB_COASTAL_LOW_RECIPE_001"/);
-  assert.match(script, /ASSET_VERSION = "v001"/);
+  assert.match(script, /PREVIOUS_REGISTERED_VERSION = "v001"/);
+  assert.match(script, /ASSET_VERSION = "v002"/);
   assert.match(script, /PALETTE_ID = "AU_COASTAL_SHRUB_NATIVE_001"/);
   assert.match(
     script,
@@ -66,12 +67,18 @@ test("generator defines deterministic mobile-first papercut geometry and shared 
   assert.match(script, /CLOSE_CLUSTER_SPECS = \(/);
   assert.match(script, /GAMEPLAY_CLUSTER_SPECS = \(/);
   assert.match(script, /MAP_CLUSTER_SPECS = \(/);
+  assert.match(script, /\(-0\.72, 0\.18, 0\.70\)/);
+  assert.match(script, /\(0\.14, 0\.28, 0\.74\)/);
+  assert.match(script, /\(0\.46, 0\.08, 1\.00\)/);
+  assert.match(script, /flower_indices=\(0, 2, 4, 7\)/);
+  assert.match(script, /flower_indices=\(1, 4\)/);
+  assert.match(script, /flower_offset_y = 0\.08 if location\[1\] <= 0 else -0\.08/);
   assert.match(script, /primitive_cylinder_add\(vertices=6/);
   assert.match(script, /primitive_ico_sphere_add\(subdivisions=1/);
   assert.match(script, /growgo_papercut_2_5d/);
   assert.match(script, /growgo_mobile_first/);
   assert.match(script, /growgo_shared_material/);
-  assert.match(script, /Shallow Y offsets retain papercut depth/);
+  assert.match(script, /Staggered Y offsets add more side-profile/);
   assert.doesNotMatch(script, /\brandom\b/);
   assert.doesNotMatch(script, /cycles/i);
   assert.doesNotMatch(script, /composit/i);
@@ -84,6 +91,11 @@ test("generator prepares three LOD roots but never exports GLBs", () => {
   assert.match(script, /f"\{ASSET_ID\}_LOD_CLOSE_ROOT"/);
   assert.match(script, /f"\{ASSET_ID\}_LOD_GAMEPLAY_ROOT"/);
   assert.match(script, /f"\{ASSET_ID\}_LOD_MAP_ROOT"/);
+  assert.match(script, /targetRevisionVersion": ASSET_VERSION/);
+  assert.match(script, /f"shrub-coastal-low-\{ASSET_VERSION\}-authoring-manifest\.json"/);
+  assert.match(script, /f"\{VERSIONED_ASSET_STEM\}_LOD_CLOSE\.glb"/);
+  assert.match(script, /f"\{VERSIONED_ASSET_STEM\}_LOD_GAMEPLAY\.glb"/);
+  assert.match(script, /f"\{VERSIONED_ASSET_STEM\}_LOD_MAP\.glb"/);
   assert.match(script, /finalGlbsGenerated": False/);
   assert.doesNotMatch(script, /bpy\.ops\.export_scene\.gltf/);
   assert.doesNotMatch(script, /save_as_mainfile/);
@@ -92,10 +104,13 @@ test("generator prepares three LOD roots but never exports GLBs", () => {
 test("resume workflow is deterministic identity-aware and development-safe", () => {
   const script = fs.readFileSync(resumePath, "utf8");
 
-  assert.match(script, /EXPECTED_BLEND_NAME = "SHRUB_COASTAL_LOW_001_v001\.blend"/);
-  assert.match(script, /f"\{ASSET_ID\}_LOD_CLOSE\.glb"/);
-  assert.match(script, /f"\{ASSET_ID\}_LOD_GAMEPLAY\.glb"/);
-  assert.match(script, /f"\{ASSET_ID\}_LOD_MAP\.glb"/);
+  assert.match(script, /PREVIOUS_REGISTERED_VERSION = "v001"/);
+  assert.match(script, /ASSET_VERSION = "v002"/);
+  assert.match(script, /EXPECTED_BLEND_NAME = f"\{VERSIONED_ASSET_STEM\}\.blend"/);
+  assert.match(script, /f"\{VERSIONED_ASSET_STEM\}_LOD_CLOSE\.glb"/);
+  assert.match(script, /f"\{VERSIONED_ASSET_STEM\}_LOD_GAMEPLAY\.glb"/);
+  assert.match(script, /f"\{VERSIONED_ASSET_STEM\}_LOD_MAP\.glb"/);
+  assert.match(script, /f"shrub-coastal-low-\{ASSET_VERSION\}-export-manifest\.json"/);
   assert.match(script, /find_identity_anchor\(/);
   assert.match(script, /build_export_object_set\(/);
   assert.match(script, /select_export_object_set\(/);
@@ -126,10 +141,13 @@ test("resume metric validator normalizes the shared export-set compatibility tup
 test("manual authoring setup record preserves its setup-only safety contract", () => {
   const setup = JSON.parse(
     fs.readFileSync(
-      path.join(productionRoot, "validation/manual-authoring-setup.json"),
+      path.join(productionRoot, "validation/manual-authoring-v002-setup.json"),
       "utf8"
     )
   );
+  assert.equal(setup.previousRegisteredVersion, "v001");
+  assert.equal(setup.version, "v002");
+  assert.equal(setup.expectedBlend, "SHRUB_COASTAL_LOW_001_v002.blend");
   assert.equal(setup.manualBlenderExecutionRequired, true);
   assert.equal(setup.blenderLaunched, false);
   assert.equal(setup.blendGenerated, false);

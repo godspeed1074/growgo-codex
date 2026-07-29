@@ -1,0 +1,207 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_REGISTRATION_RECORD_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "category": "nature",
+  "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "registryRecipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "assetFamilyId": "COASTAL_SHRUB_FAMILY_001",
+  "productionFamilyId": "COASTAL_SHRUB_FAMILY_001",
+  "version": "v002",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_SHRUB_NATIVE_001",
+  "registrationStatus": "registered",
+  "validationStatus": "validated",
+  "visualApprovalStatus": "approved",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "readyForApproval": true,
+  "readyForPublishing": false,
+  "promotionStatus": "active_development_revision",
+  "currentDevelopmentRevision": true,
+  "registeredAt": "2026-07-29",
+  "sourceBlend": {
+    "filename": "SHRUB_COASTAL_LOW_001_v002.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002.blend",
+    "sizeBytes": 1547440,
+    "sha256": "151afc237fdc94cb41282252bc657380794f63852f814104cf3463b29528ee8c"
+  },
+  "registry": {
+    "assetId": "SHRUB_COASTAL_LOW_001",
+    "assetFamily": "COASTAL_SHRUB_FAMILY_001",
+    "assetType": "COASTAL_NATIVE_LOW_SHRUB",
+    "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+    "version": "1.0.0",
+    "atlasCompatibility": {
+      "atlasCompatible": true,
+      "supportedObjectTypes": [
+        "SHRUB",
+        "PARK",
+        "TRAIL_EDGE",
+        "GARDEN_EDGE"
+      ],
+      "supportedClassifications": [
+        "NATURAL_FEATURE",
+        "PARK"
+      ],
+      "atlasAssignmentRecipeIds": [
+        "SHRUB_COASTAL_LOW_RECIPE_001"
+      ],
+      "assignmentMode": "biome_and_context_match"
+    },
+    "biomeCompatibility": [
+      "COASTAL",
+      "SUBURBAN_PARKLAND",
+      "TRAIL_CORRIDOR",
+      "GARDEN_EDGE"
+    ],
+    "usageRules": [
+      "coastal_native_shrub",
+      "trail_edge_shrub",
+      "parkland_understory",
+      "garden_edge_native_planting"
+    ],
+    "lodRules": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ]
+  },
+  "verifiedOutputs": {
+    "close": {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "sha256": "a68339a081a23e7e390b558a21dab4319ed3fca0f763e3fe52984ef2136eed16",
+      "meshCount": 18,
+      "materialCount": 4,
+      "triangleCount": 341,
+      "primitiveCount": 18,
+      "hasExternalDependencies": false
+    },
+    "gameplay": {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "78ea8a6a877414bbadfe27a977b5dc51022d7b20c43b159a44447928d5747970",
+      "meshCount": 13,
+      "materialCount": 4,
+      "triangleCount": 241,
+      "primitiveCount": 13,
+      "hasExternalDependencies": false
+    },
+    "map": {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb",
+      "sha256": "53125d3ff32e3d9cd15b4ace24215c26789804ece83275358e6136e7488908c6",
+      "meshCount": 6,
+      "materialCount": 3,
+      "triangleCount": 101,
+      "primitiveCount": 6,
+      "hasExternalDependencies": false
+    }
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_SHRUB_BRANCH_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_SHRUB_FOLIAGE_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_SHRUB_FLOWER_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_SHRUB_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "verification": {
+    "registrationReady": true,
+    "blockers": [],
+    "manifestConsistency": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "export_manifest_exists",
+          "ok": true
+        },
+        {
+          "name": "source_verification_exists",
+          "ok": true
+        },
+        {
+          "name": "export_validation_exists",
+          "ok": true
+        },
+        {
+          "name": "visual_approval_exists",
+          "ok": true
+        },
+        {
+          "name": "identity_contracts_match",
+          "ok": true
+        }
+      ]
+    },
+    "lodComplexity": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "triangles_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "triangles_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "meshes_close_gte_gameplay",
+          "ok": true
+        },
+        {
+          "name": "meshes_gameplay_gte_map",
+          "ok": true
+        }
+      ]
+    },
+    "identityPreserved": true,
+    "recipeIdentityPreserved": true,
+    "dependencyValidationPassed": true,
+    "metadataIdentityPreserved": true,
+    "visualApprovalPassed": true,
+    "promotedToActiveDevelopmentRevision": true
+  },
+  "preservedContracts": {
+    "assetIdPreserved": true,
+    "sourceRecipeIdPreserved": true,
+    "registryRecipeIdPreserved": true,
+    "identityContractSchemaId": "ASSET_IDENTITY_CONTRACT_PHASE_001_1"
+  },
+  "sourceRecords": {
+    "authoringManifestReference": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-v002-authoring-manifest.json",
+    "exportManifestReference": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-v002-export-manifest.json",
+    "sourceVerificationReference": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/source/shrub-coastal-low-v002-source-verification.json",
+    "exportValidationReference": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/validation/shrub-coastal-low-v002-export-validation.json",
+    "visualApprovalReference": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-v002-visual-approval.json"
+  },
+  "historicalRevision": {
+    "version": "v001",
+    "status": "historical_approved",
+    "protected": true,
+    "sourceBlendSha256": "a4b2e6c55784cdbd268bafa3a216fc03b63da8b5fd5bfd85f61c46f0bb66ab0a",
+    "glbHashes": {
+      "close": "def3627ff0c2f76ee471307184136b103ff9b4d72550c25a1521dbf111b582ef",
+      "gameplay": "ce5bb360f52361c5aa82dd335c50e266b3c23e07113a9eb009d7cc229c8c229f",
+      "map": "a5def1a7df8622b90548947341ed6d138d81e4f30ab74adec8c52e59a83b5e27"
+    }
+  },
+  "promotionRecord": "shrub-coastal-low-v002-promotion.json"
+}

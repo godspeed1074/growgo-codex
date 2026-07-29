@@ -1,0 +1,20 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_V001_VERSION_RECORD_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "previousDevelopmentVersion": null,
+  "currentDevelopmentVersion": "v001",
+  "v001": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "coastal-grass-tussock-visual-approval.json",
+    "validationRecord": "coastal-grass-tussock-export-validation.json",
+    "registrationRecord": "coastal-grass-tussock-registration.json",
+    "developmentCatalogRecord": "coastal-grass-tussock-development-catalog-entry.json",
+    "promotionRecord": "coastal-grass-tussock-v001-promotion.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "promotionPerformed": true,
+  "registrationReplaced": false
+}

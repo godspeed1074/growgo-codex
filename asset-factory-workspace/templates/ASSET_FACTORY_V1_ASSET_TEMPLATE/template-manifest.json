@@ -1,0 +1,13 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_TEMPLATE_LAYOUT_001",
+  "templateId": "ASSET_FACTORY_V1_ASSET_TEMPLATE",
+  "status": "locked",
+  "rootFolder": "asset-name",
+  "requiredFolders": [
+    "specification",
+    "source",
+    "export",
+    "validation",
+    "reports"
+  ]
+}

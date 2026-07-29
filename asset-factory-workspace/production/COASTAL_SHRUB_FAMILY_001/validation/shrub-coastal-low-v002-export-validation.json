@@ -1,0 +1,61 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V002_EXPORT_VALIDATION_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v002",
+  "validatedOn": "2026-07-29",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "sha256": "a68339a081a23e7e390b558a21dab4319ed3fca0f763e3fe52984ef2136eed16",
+      "sizeBytes": 122060,
+      "meshCount": 18,
+      "triangleCount": 341,
+      "materialCount": 4,
+      "metadataPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "78ea8a6a877414bbadfe27a977b5dc51022d7b20c43b159a44447928d5747970",
+      "sizeBytes": 91208,
+      "meshCount": 13,
+      "triangleCount": 241,
+      "materialCount": 4,
+      "metadataPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "filename": "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb",
+      "sha256": "53125d3ff32e3d9cd15b4ace24215c26789804ece83275358e6136e7488908c6",
+      "sizeBytes": 45504,
+      "meshCount": 6,
+      "triangleCount": 101,
+      "materialCount": 3,
+      "metadataPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "requirement": "CLOSE > GAMEPLAY > MAP",
+    "passed": true
+  },
+  "exportManifest": {
+    "filename": "shrub-coastal-low-v002-export-manifest.json",
+    "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+    "deterministicFingerprint": "c9ea91458e0f63dd80287ee2fe8b82b7d177d048c16f2e08a2a5fbafd769ac99"
+  },
+  "v001HistoricalHashesUnchanged": {
+    "SHRUB_COASTAL_LOW_001_LOD_CLOSE.glb": "def3627ff0c2f76ee471307184136b103ff9b4d72550c25a1521dbf111b582ef",
+    "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb": "ce5bb360f52361c5aa82dd335c50e266b3c23e07113a9eb009d7cc229c8c229f",
+    "SHRUB_COASTAL_LOW_001_LOD_MAP.glb": "a5def1a7df8622b90548947341ed6d138d81e4f30ab74adec8c52e59a83b5e27"
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false
+}

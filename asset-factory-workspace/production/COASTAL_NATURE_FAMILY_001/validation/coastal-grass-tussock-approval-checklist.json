@@ -1,0 +1,42 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_APPROVAL_CHECKLIST_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "version": "v001",
+  "automatedValidationResults": {
+    "sourceBlendPresent": true,
+    "sourceBlendHashRecorded": true,
+    "exportManifestPresent": true,
+    "assetIdentityConfirmed": true,
+    "recipeIdentityConfirmed": true,
+    "dependencyIdentityConfirmed": true,
+    "identityAnchorsDeclared": true,
+    "noExternalDependencies": true,
+    "lodOrderPassed": true,
+    "registrationPerformed": false,
+    "promotionPerformed": false
+  },
+  "humanVisualApprovalRequirements": {
+    "reviewStatus": "PENDING_HUMAN_REVIEW",
+    "papercut_2_5d_style": "REVIEW_REQUIRED",
+    "coastal_native_identity": "REVIEW_REQUIRED",
+    "repeated_placement_readability": "REVIEW_REQUIRED",
+    "lod_visual_consistency": "REVIEW_REQUIRED",
+    "world_placement_suitability": "REVIEW_REQUIRED"
+  },
+  "approvalBlockedUntilHumanReview": true,
+  "checklist": {
+    "papercutStyle": [
+      "Layered papercut 2.5D grass silhouette reads clearly from close and gameplay views.",
+      "Tuft massing feels stylised and readable rather than noisy or photoreal.",
+      "Side and 45-degree views show enough depth to avoid a pancaked silhouette.",
+      "Shared material treatment keeps the asset visually clean and placement-friendly.",
+      "Gameplay and map LODs preserve the same recognisable tussock identity after simplification."
+    ],
+    "requiredEvidence": [
+      "Reviewer confirms CLOSE LOD silhouette and tuft layering read clearly.",
+      "Reviewer confirms GAMEPLAY LOD remains readable in repeated roadside and reserve-edge placement.",
+      "Reviewer confirms MAP LOD keeps the intended tussock footprint after simplification.",
+      "Reviewer confirms no visual issue blocks approval for the current revision."
+    ]
+  }
+}

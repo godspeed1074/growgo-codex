@@ -1,0 +1,37 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V002_REVISION_SPECIFICATION_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "previousRevisionVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "revisionReason": "v001 passed technical validation but failed human visual approval",
+  "visualIssues": [
+    "pancaked_silhouette",
+    "weak_side_profile",
+    "flowers_not_visually_readable"
+  ],
+  "requiredChanges": [
+    "increase_3d_canopy_depth",
+    "add_staggered_front_back_foliage_masses",
+    "improve_left_right_volume",
+    "improve_side_and_45_degree_silhouettes",
+    "move_flower_clusters_to_visible_outer_positions"
+  ],
+  "constraints": {
+    "preserveV001Completely": true,
+    "overwriteV001Forbidden": true,
+    "finalGlbExportAllowed": false,
+    "registrationAllowed": false,
+    "promotionAllowed": false,
+    "mobileFirstGeometryRequired": true,
+    "papercut25DStyleRequired": true
+  },
+  "expectedOutputs": {
+    "blend": "SHRUB_COASTAL_LOW_001_v002.blend",
+    "glbs": [
+      "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+      "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb"
+    ]
+  }
+}

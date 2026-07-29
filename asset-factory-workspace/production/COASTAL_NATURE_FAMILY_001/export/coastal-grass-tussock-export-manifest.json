@@ -1,0 +1,42 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_GRASS_BLADE_TUSSOCK_001",
+    "MOD_GRASS_TUFT_CLUSTER_001",
+    "MOD_GRASS_GROUND_SOCKET_COASTAL_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 10,
+      "triangleCount": 133,
+      "materialCount": 1,
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+      "sizeBytes": 57160
+    },
+    "gameplay": {
+      "meshCount": 7,
+      "triangleCount": 89,
+      "materialCount": 1,
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+      "sizeBytes": 41228
+    },
+    "map": {
+      "meshCount": 5,
+      "triangleCount": 65,
+      "materialCount": 1,
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb",
+      "sizeBytes": 30988
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "20ae253b2a481086dc550bbb053360ac4e0ef5e9f14504b8b2eab8b935db4d28"
+}

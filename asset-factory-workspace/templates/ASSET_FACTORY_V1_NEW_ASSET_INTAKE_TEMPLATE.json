@@ -1,0 +1,25 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_TEMPLATE_001",
+  "status": "permanent",
+  "requiredInputs": [
+    "assetName",
+    "family",
+    "purpose",
+    "biomeTheme",
+    "expectedLods",
+    "performanceBudget",
+    "dependencies",
+    "visualReferences",
+    "approvalCriteria"
+  ],
+  "defaults": {
+    "expectedLods": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ],
+    "dependencies": [],
+    "visualReferences": [],
+    "approvalCriteria": []
+  }
+}

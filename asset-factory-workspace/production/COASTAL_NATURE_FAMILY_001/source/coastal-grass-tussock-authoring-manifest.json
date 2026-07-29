@@ -1,0 +1,15 @@
+{
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "recipeReference": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v001",
+  "targetRevisionVersion": "v001",
+  "expectedBlendFilename": "COASTAL_GRASS_TUSSOCK_001_v001.blend",
+  "expectedFinalOutputs": [
+    "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+    "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+    "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "finalGlbsGenerated": false
+}

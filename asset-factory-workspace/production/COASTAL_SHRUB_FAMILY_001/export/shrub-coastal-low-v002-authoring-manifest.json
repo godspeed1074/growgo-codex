@@ -1,0 +1,16 @@
+{
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "recipeReference": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "version": "v002",
+  "previousRegisteredVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "expectedBlendFilename": "SHRUB_COASTAL_LOW_001_v002.blend",
+  "expectedFinalOutputs": [
+    "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+    "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+    "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "finalGlbsGenerated": false
+}

@@ -1,0 +1,57 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_VALIDATION_001",
+  "validationId": "VALIDATION_COASTAL_GRASS_TUSSOCK_001_INTAKE",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-29",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "asset_identity_defined",
+      "ok": true
+    },
+    {
+      "name": "recipe_identity_defined",
+      "ok": true
+    },
+    {
+      "name": "required_lods_defined",
+      "ok": true
+    },
+    {
+      "name": "performance_targets_defined",
+      "ok": true
+    },
+    {
+      "name": "validation_requirements_defined",
+      "ok": true
+    },
+    {
+      "name": "visual_approval_criteria_defined",
+      "ok": true
+    },
+    {
+      "name": "no_blender_file_created",
+      "ok": true
+    },
+    {
+      "name": "no_glb_output_created",
+      "ok": true
+    },
+    {
+      "name": "no_registration_created",
+      "ok": true
+    }
+  ],
+  "evidence": {
+    "intakeRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/specification/coastal-grass-tussock-001-intake.json",
+    "expectedFutureSource": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GRASS_TUSSOCK_001_v001.blend",
+    "expectedFutureExports": [
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb"
+    ]
+  },
+  "nextAllowedAction": "authoring_setup_only"
+}

@@ -1,0 +1,37 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_PERFORMANCE_SUMMARY_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "version": "v001",
+  "performanceClass": "mobile_first_lightweight",
+  "summary": {
+    "close": {
+      "triangleCount": 133,
+      "meshCount": 10,
+      "materialCount": 1,
+      "primitiveCount": 10,
+      "sizeBytes": 57160
+    },
+    "gameplay": {
+      "triangleCount": 89,
+      "meshCount": 7,
+      "materialCount": 1,
+      "primitiveCount": 7,
+      "sizeBytes": 41228
+    },
+    "map": {
+      "triangleCount": 65,
+      "meshCount": 5,
+      "materialCount": 1,
+      "primitiveCount": 5,
+      "sizeBytes": 30988
+    }
+  },
+  "sharedMaterialApproach": {
+    "closeMaterialCount": 1,
+    "gameplayMaterialCount": 1,
+    "mapMaterialCount": 1,
+    "materialCountsStayConstrained": true
+  },
+  "noExternalDependencies": true,
+  "exporterDeterministicFingerprint": "20ae253b2a481086dc550bbb053360ac4e0ef5e9f14504b8b2eab8b935db4d28"
+}

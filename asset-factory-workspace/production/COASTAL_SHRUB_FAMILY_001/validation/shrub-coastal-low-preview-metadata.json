@@ -1,0 +1,46 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_PREVIEW_METADATA_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "version": "v001",
+  "sourceBlend": {
+    "filename": "SHRUB_COASTAL_LOW_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v001.blend",
+    "sizeBytes": 1490000,
+    "sha256": "a4b2e6c55784cdbd268bafa3a216fc03b63da8b5fd5bfd85f61c46f0bb66ab0a"
+  },
+  "reviewPreviewAssets": {
+    "close": {
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_CLOSE.glb",
+      "sha256": "def3627ff0c2f76ee471307184136b103ff9b4d72550c25a1521dbf111b582ef"
+    },
+    "gameplay": {
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
+      "sha256": "ce5bb360f52361c5aa82dd335c50e266b3c23e07113a9eb009d7cc229c8c229f"
+    },
+    "map": {
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_MAP.glb",
+      "sha256": "a5def1a7df8622b90548947341ed6d138d81e4f30ab74adec8c52e59a83b5e27"
+    }
+  },
+  "expectedIdentityAnchors": [
+    "SHRUB_COASTAL_LOW_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "SHRUB_COASTAL_LOW_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "papercutStyleChecklist": [
+    "Layered papercut 2.5D silhouette reads clearly from close and gameplay views.",
+    "Shrub massing feels stylised and readable rather than realistic or noisy.",
+    "Leaf and flower shapes stay clean without micro-detail clutter.",
+    "Palette reads as bright but grounded coastal native vegetation.",
+    "Gameplay and map LODs keep the same recognisable shrub identity after simplification."
+  ],
+  "manualVisualApprovalRequired": true,
+  "registrationBlocked": true,
+  "promotionBlocked": true,
+  "automatedValidationPassed": true
+}

@@ -1,0 +1,29 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_V001_VISUAL_APPROVAL_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "version": "v001",
+  "approvedOn": "2026-07-29",
+  "approvalStatus": "approved",
+  "approvalSource": "Manual visual approval confirmed in the Phase 192.6 registration handoff request.",
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "revisionRequired": false
+  },
+  "evidenceReferences": {
+    "visualReviewReport": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/coastal-grass-tussock-visual-review-report.md",
+    "previewMetadata": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-grass-tussock-preview-metadata.json",
+    "lodComparisonSummary": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-grass-tussock-lod-comparison-summary.json",
+    "performanceSummary": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-grass-tussock-performance-summary.json",
+    "approvalChecklist": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-grass-tussock-approval-checklist.json",
+    "sourceVerification": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-grass-tussock-source-verification.json",
+    "exportValidation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-grass-tussock-export-validation.json",
+    "exportManifest": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-export-manifest.json"
+  },
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

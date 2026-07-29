@@ -1,0 +1,32 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V002_CATALOG_PROMOTION_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "previousDevelopmentVersion": "v001",
+  "currentDevelopmentVersion": "v002",
+  "before": {
+    "developmentCatalogLifecycleStatus": "APPROVED_CURRENT_CANDIDATE",
+    "versionState": "approved/current candidate"
+  },
+  "after": {
+    "developmentCatalogLifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+    "versionState": "active_development_revision"
+  },
+  "v001": {
+    "status": "historical_approved",
+    "protected": true,
+    "filesModified": false
+  },
+  "v002": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "shrub-coastal-low-v002-visual-approval.json",
+    "validationRecord": "shrub-coastal-low-v002-export-validation.json",
+    "registrationRecord": "shrub-coastal-low-registration.json",
+    "developmentCatalogRecord": "shrub-coastal-low-development-catalog-entry.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "registrationReplaced": false,
+  "visualApprovalReplaced": false
+}

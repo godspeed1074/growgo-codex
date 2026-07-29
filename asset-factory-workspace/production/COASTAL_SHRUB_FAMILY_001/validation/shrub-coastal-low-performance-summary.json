@@ -1,0 +1,34 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_PERFORMANCE_SUMMARY_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v001",
+  "performanceClass": "mobile_first_lightweight",
+  "summary": {
+    "close": {
+      "triangleCount": 301,
+      "meshCount": 16,
+      "materialCount": 4,
+      "sizeBytes": 109300
+    },
+    "gameplay": {
+      "triangleCount": 181,
+      "meshCount": 10,
+      "materialCount": 4,
+      "sizeBytes": 72628
+    },
+    "map": {
+      "triangleCount": 61,
+      "meshCount": 4,
+      "materialCount": 3,
+      "sizeBytes": 33332
+    }
+  },
+  "sharedMaterialApproach": {
+    "closeMaterialCount": 4,
+    "gameplayMaterialCount": 4,
+    "mapMaterialCount": 3,
+    "materialCountsStayConstrained": true
+  },
+  "noExternalDependencies": true,
+  "exporterDeterministicFingerprint": "70f736267e1d671035596438d2b0295ecbd1561a839c149672f3e4f45514ea98"
+}

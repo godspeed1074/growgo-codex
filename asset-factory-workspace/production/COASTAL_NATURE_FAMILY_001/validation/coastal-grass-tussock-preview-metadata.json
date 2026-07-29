@@ -1,0 +1,46 @@
+{
+  "schemaId": "COASTAL_GRASS_TUSSOCK_PREVIEW_METADATA_001",
+  "assetId": "COASTAL_GRASS_TUSSOCK_001",
+  "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v001",
+  "sourceBlend": {
+    "filename": "COASTAL_GRASS_TUSSOCK_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GRASS_TUSSOCK_001_v001.blend",
+    "sizeBytes": 1335920,
+    "sha256": "d9566ddd944f244ab34e638d3016761c27875992d8e3552bd9d550011ee24b3e"
+  },
+  "reviewPreviewAssets": {
+    "close": {
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+      "sha256": "135561384dd2a11f625be3fa6d0048189b35193ead308a10537c4774f3773d2f"
+    },
+    "gameplay": {
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+      "sha256": "07de9f83bcf264f00ab1c1e9deefe7a4f359c4a9df64a9192ff6138b8948860d"
+    },
+    "map": {
+      "filename": "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb",
+      "sha256": "bf5823b537342fe26f29656528fe1be10494ca4576d7edef8b90d11935ab5221"
+    }
+  },
+  "expectedIdentityAnchors": [
+    "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "COASTAL_GRASS_TUSSOCK_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "papercutStyleChecklist": [
+    "Layered papercut 2.5D grass silhouette reads clearly from close and gameplay views.",
+    "Tuft massing feels stylised and readable rather than noisy or photoreal.",
+    "Side and 45-degree views show enough depth to avoid a pancaked silhouette.",
+    "Shared material treatment keeps the asset visually clean and placement-friendly.",
+    "Gameplay and map LODs preserve the same recognisable tussock identity after simplification."
+  ],
+  "manualVisualApprovalRequired": true,
+  "registrationBlocked": true,
+  "promotionBlocked": true,
+  "automatedValidationPassed": true
+}
