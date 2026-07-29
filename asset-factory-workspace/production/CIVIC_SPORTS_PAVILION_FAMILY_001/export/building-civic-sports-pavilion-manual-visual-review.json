@@ -1,0 +1,125 @@
+{
+  "schemaId": "ASSET_MANUAL_VISUAL_REVIEW_001",
+  "reviewRecordId": "ASSET_MANUAL_VISUAL_REVIEW_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "recipeId": "SPORTS_FACILITY_RECIPE_001",
+  "sourceAssetVersion": "1.0.0",
+  "sourceDevelopmentPublishRecord": {
+    "filename": "building-civic-sports-pavilion-development-publish-record.json",
+    "publishRecordId": "ASSET_DEV_PUBLISH_RECORD_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "publishStatus": "PUBLISHED_DEVELOPMENT"
+  },
+  "sourceDevelopmentPreviewInspection": {
+    "filename": "building-civic-sports-pavilion-development-preview-inspection.json",
+    "inspectionRecordId": "ASSET_DEV_PREVIEW_INSPECTION_BUILDING_CIVIC_SPORTS_PAVILION_001"
+  },
+  "sourceStaticPreviewDescriptor": {
+    "filename": "building-civic-sports-pavilion-static-preview-descriptor.json",
+    "previewDescriptorId": "ASSET_STATIC_PREVIEW_DESCRIPTOR_BUILDING_CIVIC_SPORTS_PAVILION_001"
+  },
+  "manualReviewChecklist": {
+    "papercut_2_5d_style": [
+      "simple readable forms",
+      "layered 2.5D appearance",
+      "bright but sensible civic palette",
+      "no unnecessary realism",
+      "no excessive geometry detail"
+    ],
+    "no_interior": [
+      "no furnished rooms",
+      "no hidden interior geometry",
+      "no internal decorative detail",
+      "openings do not expose unintended interior content"
+    ],
+    "road_facing_orientation": [
+      "front entry is clearly identifiable",
+      "signage and main frontage face the intended road side",
+      "rear/service side is distinguishable",
+      "orientation metadata matches the visible model"
+    ]
+  },
+  "visualEvidenceModel": {
+    "supportedResults": [
+      "PASS",
+      "FAIL",
+      "NEEDS_REVISION",
+      "NOT_REVIEWED"
+    ],
+    "passRequiresExplicitEvidence": true,
+    "fields": [
+      "result",
+      "reviewerEvidence",
+      "screenshotReferenceOrConfirmation",
+      "notes",
+      "timestamp",
+      "sourceAssetVersion"
+    ]
+  },
+  "reviewResults": {
+    "papercut_2_5d_style": {
+      "result": "NOT_REVIEWED",
+      "reviewerEvidence": null,
+      "screenshotReferenceOrConfirmation": null,
+      "notes": null,
+      "timestamp": "2026-07-29T12:30:00.000Z",
+      "sourceAssetVersion": "1.0.0"
+    },
+    "no_interior": {
+      "result": "NOT_REVIEWED",
+      "reviewerEvidence": null,
+      "screenshotReferenceOrConfirmation": null,
+      "notes": null,
+      "timestamp": "2026-07-29T12:30:00.000Z",
+      "sourceAssetVersion": "1.0.0"
+    },
+    "road_facing_orientation": {
+      "result": "NOT_REVIEWED",
+      "reviewerEvidence": null,
+      "screenshotReferenceOrConfirmation": null,
+      "notes": null,
+      "timestamp": "2026-07-29T12:30:00.000Z",
+      "sourceAssetVersion": "1.0.0"
+    }
+  },
+  "reviewOutcome": {
+    "visualReviewComplete": false,
+    "visuallyApprovedForDevelopmentPreview": false,
+    "unresolvedChecks": [
+      "papercut_2_5d_style",
+      "no_interior",
+      "road_facing_orientation"
+    ],
+    "failedChecks": [],
+    "revisionChecks": [],
+    "minimalRevisionRecommendation": []
+  },
+  "preservedHashes": {
+    "close": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+    "gameplay": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+    "map": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1"
+  },
+  "safety": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false,
+    "canvasCreated": false,
+    "webglCreated": false,
+    "mapAttached": false,
+    "betaPublished": false,
+    "productionPublished": false,
+    "releaseCreated": false
+  },
+  "validation": {
+    "passRequiresExplicitEvidence": true,
+    "unresolvedChecksRemainUnresolvedWithoutEvidence": true,
+    "failRecordsExactDefect": true,
+    "hashesRemainPreserved": true,
+    "noPublishingSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "deterministicManualReviewHash": "6ef79bed0f8ea6c60aed6707cf49e6415cdf3319e37ec4926055b30749ad81f5"
+  }
+}
