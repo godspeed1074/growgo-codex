@@ -10,7 +10,9 @@ the result and save the final blend manually.
 from __future__ import annotations
 
 import math
+import json
 import sys
+from pathlib import Path
 
 import bpy
 
@@ -18,6 +20,13 @@ import bpy
 ASSET_ID = "TREE_EUCALYPTUS_001"
 SOURCE_RECIPE_ID = "TREE_EUCALYPTUS_RECIPE_001"
 REGISTRY_RECIPE_ID = "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"
+REPO_ROOT = Path(
+    "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex"
+).resolve()
+WORKSPACE_ROOT = (REPO_ROOT / "asset-factory-workspace").resolve()
+EXPECTED_OUTPUT_DIR = (
+    WORKSPACE_ROOT / "production" / "COASTAL_NATURE_FAMILY_001" / "export"
+).resolve()
 GENERATION_MARKER_START = "S184_TREE_EUCALYPTUS_GENERATION_START"
 GENERATION_MARKER_READY = "S184_TREE_EUCALYPTUS_GENERATION_READY_FOR_SAVE"
 GENERATION_MARKER_COMPLETE = "S184_TREE_EUCALYPTUS_GENERATION_COMPLETE"
@@ -68,6 +77,12 @@ FORBIDDEN_PALETTE_DESCRIPTIONS = (
     "unrealistic random palettes",
 )
 
+METADATA_FILENAMES = {
+    "manifest": "tree-eucalyptus-manifest.json",
+    "metadata": "tree-eucalyptus-metadata.json",
+    "validation": "tree-eucalyptus-validation.json",
+}
+
 
 def emit(marker):
     print(marker)
@@ -81,6 +96,95 @@ def fail(message):
 def ensure_blender_version():
     if bpy.app.version[:2] != (4, 2):
         fail(f"Expected Blender 4.2.x, found {bpy.app.version!r}.")
+
+
+def ensure_output_directory():
+    output_dir = EXPECTED_OUTPUT_DIR.resolve()
+    repo_root = REPO_ROOT.resolve()
+
+    print(f"Resolved eucalyptus output directory: {output_dir}")
+    sys.stdout.flush()
+
+    if str(output_dir).startswith("/Applications"):
+        fail(f"Refusing to write inside /Applications: {output_dir}")
+
+    try:
+        output_dir.relative_to(repo_root)
+    except ValueError:
+        fail(
+            "Refusing to write outside the GrowGo repository workspace: "
+            f"{output_dir}"
+        )
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
+def ensure_final_output_targets_safe(output_dir):
+    final_blend_path = output_dir / f"{ASSET_ID}_v001.blend"
+    if final_blend_path.exists():
+        fail(
+            "Refusing to continue because the final blend already exists. "
+            "Use a fresh Blender file and inspect before deciding whether to replace it: "
+            f"{final_blend_path}"
+        )
+
+
+def write_json(output_path, payload):
+    if output_path.exists():
+        print(f"Refreshing existing metadata file: {output_path.name}")
+    output_path.write_text(f"{json.dumps(payload, indent=2)}\n", encoding="utf-8")
+
+
+def write_repository_metadata(output_dir):
+    write_json(
+        output_dir / METADATA_FILENAMES["manifest"],
+        {
+            "assetId": ASSET_ID,
+            "recipeReference": SOURCE_RECIPE_ID,
+            "manifestVersion": "1.0.0",
+            "category": "nature",
+            "workspaceRoot": str(WORKSPACE_ROOT),
+            "expectedBlendFilename": f"{ASSET_ID}_v001.blend",
+            "expectedFinalOutputs": [
+                f"{ASSET_ID}_LOD_CLOSE.glb",
+                f"{ASSET_ID}_LOD_GAMEPLAY.glb",
+                f"{ASSET_ID}_LOD_MAP.glb",
+            ],
+        },
+    )
+    write_json(
+        output_dir / METADATA_FILENAMES["metadata"],
+        {
+            "assetId": ASSET_ID,
+            "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+            "recipeReference": SOURCE_RECIPE_ID,
+            "registryRecipeId": REGISTRY_RECIPE_ID,
+            "outputDirectory": str(output_dir),
+            "paletteSlots": [
+                "trunk",
+                "branch",
+                "canopy light",
+                "canopy mid",
+                "canopy dark",
+            ],
+            "lodRoots": ROOT_NAMES,
+            "deterministicConstruction": True,
+            "manualBlenderExecutionRequired": True,
+        },
+    )
+    write_json(
+        output_dir / METADATA_FILENAMES["validation"],
+        {
+            "assetId": ASSET_ID,
+            "readyForManualGeneration": True,
+            "outputDirectoryInsideRepo": True,
+            "applicationsWriteBlocked": True,
+            "deterministicPathConstruction": True,
+            "finalBlendExistsBeforeManualSave": False,
+            "finalGlbsGenerated": False,
+        },
+    )
 
 
 def reset_scene():
@@ -403,6 +507,8 @@ def write_metadata_texts(collections):
 def main():
     emit(GENERATION_MARKER_START)
     ensure_blender_version()
+    output_dir = ensure_output_directory()
+    ensure_final_output_targets_safe(output_dir)
     reset_scene()
     _asset_collection, collections = create_root_structure()
     materials = create_materials()
@@ -418,6 +524,9 @@ def main():
     bpy.context.scene["approved_palette_slots"] = ",".join(
         slot_name for _name, slot_name, _color, _roughness in MATERIAL_SPECS
     )
+    bpy.context.scene["expected_output_dir"] = str(output_dir)
+
+    write_repository_metadata(output_dir)
 
     emit(GENERATION_MARKER_READY)
     emit(GENERATION_MARKER_COMPLETE)

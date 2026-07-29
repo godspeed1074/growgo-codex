@@ -164,6 +164,12 @@ test("tree eucalyptus generation script preserves deterministic palette restrict
 
   assert.match(script, /SOURCE_RECIPE_ID = "TREE_EUCALYPTUS_RECIPE_001"/);
   assert.match(script, /REGISTRY_RECIPE_ID = "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001"/);
+  assert.match(script, /REPO_ROOT = Path\(/);
+  assert.match(script, /WORKSPACE_ROOT = \(REPO_ROOT \/ "asset-factory-workspace"\)\.resolve\(\)/);
+  assert.match(script, /EXPECTED_OUTPUT_DIR = \(/);
+  assert.match(script, /Resolved eucalyptus output directory:/);
+  assert.match(script, /Refusing to write inside \/Applications/);
+  assert.match(script, /Refusing to write outside the GrowGo repository workspace/);
   assert.match(script, /"canopy light"/);
   assert.match(script, /"canopy mid"/);
   assert.match(script, /"canopy dark"/);
@@ -175,6 +181,7 @@ test("tree eucalyptus generation script preserves deterministic palette restrict
   assert.doesNotMatch(script, /composit/i);
   assert.doesNotMatch(script, /denois/i);
   assert.doesNotMatch(script, /OpenEXR/i);
+  assert.doesNotMatch(script, /asset-factory-workspace\/production\/COASTAL_NATURE_FAMILY_001\/export/);
 });
 
 test("tree eucalyptus verifier does not launch Blender from Codex", () => {
@@ -299,5 +306,53 @@ test("tree eucalyptus verification blocks registration when final blend is missi
   assert.match(
     verification.registrationGate.blockers.join("\n"),
     /TREE_EUCALYPTUS_001_v001\.blend:MISSING|final_blend_missing_or_unverified/
+  );
+});
+
+test("tree eucalyptus generator and resume script share the same absolute output directory", () => {
+  const generationScript = fs.readFileSync(generationScriptPath, "utf8");
+  const resumeScript = fs.readFileSync(
+    path.resolve(
+      import.meta.dirname,
+      "..",
+      "asset-factory",
+      "local-blender-scripts",
+      "resume_tree_eucalyptus_001_exports.py"
+    ),
+    "utf8"
+  );
+
+  for (const script of [generationScript, resumeScript]) {
+    assert.match(
+      script,
+      /\/Users\/michaelpeterson\/Documents\/Codex\/2026-06-16\/files-mentioned-by-the-user-root\/growgo-codex/
+    );
+    assert.match(script, /WORKSPACE_ROOT = \(REPO_ROOT \/ "asset-factory-workspace"\)\.resolve\(\)/);
+    assert.match(
+      script,
+      /EXPECTED_OUTPUT_DIR = \(\s*WORKSPACE_ROOT \/ "production" \/ "COASTAL_NATURE_FAMILY_001" \/ "export"/
+    );
+  }
+});
+
+test("tree eucalyptus path construction stays inside the GrowGo repository deterministically", () => {
+  const definition = moduleUnderTest.buildTreeEucalyptusProductionRun();
+  const outputPath = path.resolve(
+    path.resolve(import.meta.dirname, ".."),
+    definition.outputLocation
+  );
+  const repoRoot = path.resolve(import.meta.dirname, "..");
+
+  assert.ok(outputPath.startsWith(repoRoot));
+  assert.ok(!outputPath.startsWith("/Applications"));
+  assert.equal(
+    outputPath,
+    path.join(
+      repoRoot,
+      "asset-factory-workspace",
+      "production",
+      "COASTAL_NATURE_FAMILY_001",
+      "export"
+    )
   );
 });

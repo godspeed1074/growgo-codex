@@ -21,9 +21,13 @@ import bpy
 ASSET_ID = "TREE_EUCALYPTUS_001"
 SOURCE_RECIPE_ID = "TREE_EUCALYPTUS_RECIPE_001"
 EXPECTED_BLEND_NAME = f"{ASSET_ID}_v001.blend"
-EXPECTED_OUTPUT_DIR = Path(
-    "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export"
-)
+REPO_ROOT = Path(
+    "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex"
+).resolve()
+WORKSPACE_ROOT = (REPO_ROOT / "asset-factory-workspace").resolve()
+EXPECTED_OUTPUT_DIR = (
+    WORKSPACE_ROOT / "production" / "COASTAL_NATURE_FAMILY_001" / "export"
+).resolve()
 
 EXPORT_START_MARKER = "S184_TREE_EUCALYPTUS_EXPORT_START"
 EXPORT_COMPLETE_MARKER = "S184_TREE_EUCALYPTUS_EXPORT_COMPLETE"
@@ -59,6 +63,31 @@ def ensure_blender_version():
             f"{EXPORT_FAILURE_PREFIX}VERSION_INCOMPATIBLE",
         )
     emit_marker(VERSION_GUARD_MARKER)
+
+
+def ensure_output_directory():
+    output_dir = EXPECTED_OUTPUT_DIR.resolve()
+    repo_root = REPO_ROOT.resolve()
+
+    print(f"Resolved eucalyptus export directory: {output_dir}")
+    sys.stdout.flush()
+
+    if str(output_dir).startswith("/Applications"):
+        fail(
+            f"Refusing to write exports inside /Applications: {output_dir}",
+            f"{EXPORT_FAILURE_PREFIX}OUTPUT_DIR_IN_APPLICATIONS",
+        )
+
+    try:
+        output_dir.relative_to(repo_root)
+    except ValueError:
+        fail(
+            f"Refusing to write exports outside the GrowGo repository: {output_dir}",
+            f"{EXPORT_FAILURE_PREFIX}OUTPUT_DIR_OUTSIDE_REPO",
+        )
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
 
 
 def find_open_blend_path():
@@ -318,7 +347,7 @@ def export_single_lod(lod_key, lod_label, final_filename, root_name):
 
 def main():
     emit_marker(EXPORT_START_MARKER)
-    EXPECTED_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    ensure_output_directory()
     ensure_blender_version()
     find_open_blend_path()
     ensure_asset_identity()

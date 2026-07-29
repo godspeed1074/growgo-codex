@@ -24,10 +24,43 @@ Completion still requires:
 3. manual export of the three final GLBs
 4. Codex verification of the final outputs
 
+## Session 184 Repair
+
+Repair completed on Wednesday, July 29, 2026.
+
+Exact cause:
+
+- the manual generator was still relying on workspace-style output resolution
+  without a hard repository guard
+- when run inside Blender, that path could resolve relative to Blender's own
+  protected application context instead of the GrowGo repository
+- Blender then raised:
+  `OSError: [Errno 30] Read-only file system: 'asset-factory-workspace'`
+
+Repair applied:
+
+- generator now resolves output through explicit absolute repository constants:
+  `REPO_ROOT`, `WORKSPACE_ROOT`, and `EXPECTED_OUTPUT_DIR`
+- generator prints the resolved output directory before writing
+- generator refuses to write inside `/Applications`
+- generator refuses to write outside the GrowGo repository
+- generator creates the output directory safely inside the repo workspace
+- generator no longer depends on Blender's current working directory
+- resume export script now uses the same guarded absolute repository path model
+
 ## Files Created
 
 - [tree-eucalyptus-production-run.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/tree-eucalyptus-production-run.mjs)
 - [tree-eucalyptus-post-run-verify.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/tree-eucalyptus-post-run-verify.mjs)
+- [generate_tree_eucalyptus_001.py](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/generate_tree_eucalyptus_001.py)
+- [resume_tree_eucalyptus_001_exports.py](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/resume_tree_eucalyptus_001_exports.py)
+- [asset-factory-tree-eucalyptus-production-run.test.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/tests/asset-factory-tree-eucalyptus-production-run.test.mjs)
+- [asset-factory-tree-eucalyptus-manual-resume.test.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/tests/asset-factory-tree-eucalyptus-manual-resume.test.mjs)
+- [GROWGO_SESSION_184_EUCALYPTUS_MANUAL_STEPS.md](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/GROWGO_SESSION_184_EUCALYPTUS_MANUAL_STEPS.md)
+- [GROWGO_SESSION_184_EUCALYPTUS_TREE_PRODUCTION_AUTHORING.md](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/GROWGO_SESSION_184_EUCALYPTUS_TREE_PRODUCTION_AUTHORING.md)
+
+## Files Changed In This Repair
+
 - [generate_tree_eucalyptus_001.py](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/generate_tree_eucalyptus_001.py)
 - [resume_tree_eucalyptus_001_exports.py](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory/local-blender-scripts/resume_tree_eucalyptus_001_exports.py)
 - [asset-factory-tree-eucalyptus-production-run.test.mjs](/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/tests/asset-factory-tree-eucalyptus-production-run.test.mjs)
@@ -176,6 +209,20 @@ Current registration blockers:
 - `TREE_EUCALYPTUS_001_LOD_MAP.glb:CORRUPT`
 - `final_blend_missing_or_unverified`
 
+## Safe Restart Instruction
+
+The failed generator appears to have already created geometry in the currently
+open Blender scene, but completeness cannot be proven from Codex.
+
+Safest next action:
+
+- start from a fresh Blender file
+- rerun the repaired generator
+- inspect the regenerated tree
+- then save the final `.blend`
+
+Do **not** continue from the partially failed scene.
+
 ## Expected Outputs After Manual Blender Execution
 
 - `TREE_EUCALYPTUS_001_v001.blend`
@@ -224,6 +271,12 @@ Focused coverage added:
 - no Blender launch from Codex
 - decreasing LOD complexity
 - approved palette restrictions
+- absolute repository output path
+- no relative `asset-factory-workspace` path
+- output path remains inside the GrowGo repository
+- `/Applications` output is rejected
+- generator and resume script share the same output directory
+- deterministic path construction
 
 ## Readiness
 

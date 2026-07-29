@@ -73,10 +73,16 @@ test("tree eucalyptus manual resume script validates the actual exported temp fi
   const script = fs.readFileSync(resumeScriptPath, "utf8");
 
   assert.match(script, /EXPECTED_BLEND_NAME = f"\{ASSET_ID\}_v001\.blend"/);
+  assert.match(script, /REPO_ROOT = Path\(/);
+  assert.match(script, /WORKSPACE_ROOT = \(REPO_ROOT \/ "asset-factory-workspace"\)\.resolve\(\)/);
+  assert.match(script, /Resolved eucalyptus export directory:/);
+  assert.match(script, /OUTPUT_DIR_IN_APPLICATIONS/);
+  assert.match(script, /OUTPUT_DIR_OUTSIDE_REPO/);
   assert.match(script, /BLEND_NAME_MISMATCH/);
   assert.match(script, /temp_path = build_temp_glb_path\(final_path\)/);
   assert.match(script, /export_root\(root_object, temp_path\)/);
   assert.match(script, /verified_metrics = validate_export\(temp_path, expected_metrics\)/);
+  assert.doesNotMatch(script, /asset-factory-workspace\/production\/COASTAL_NATURE_FAMILY_001\/export/);
 });
 
 test("tree eucalyptus manual resume script preserves successful earlier exports and avoids render systems", () => {
