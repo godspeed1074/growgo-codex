@@ -1,0 +1,38 @@
+{
+  "schemaId": "ASSET_DEVELOPMENT_CATALOG_ACTIVATION_001",
+  "activationRecordId": "ASSET_DEV_CATALOG_ACTIVATION_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "catalogEntryReference": {
+    "filename": "building-civic-sports-pavilion-development-catalog-entry.json",
+    "catalogEntryId": "ASSET_DEV_CATALOG_BUILDING_CIVIC_SPORTS_PAVILION_001"
+  },
+  "targetEnvironment": "DEVELOPMENT",
+  "activationStatus": "ACTIVE_DEVELOPMENT_ONLY",
+  "developmentVisibility": {
+    "enabled": true,
+    "developmentPreviewTools": true,
+    "assetFactoryInspectionTools": true,
+    "futureAtlasDevelopmentPreviewWork": true
+  },
+  "blockedVisibility": {
+    "testing": true,
+    "beta": true,
+    "production": true,
+    "livePlayers": true,
+    "automaticMapPlacement": true
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "validation": {
+    "developmentOnlyActivation": true,
+    "rendererActivationBlocked": true,
+    "mapAttachmentBlocked": true,
+    "runtimeExecutionBlocked": true,
+    "validationPassed": true,
+    "deterministicActivationHash": "0e0532d266853c5fbda07a9a4d5960fc29bbc3a596301fd270d02cb7424b7117"
+  }
+}

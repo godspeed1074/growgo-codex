@@ -1,0 +1,108 @@
+{
+  "schemaId": "ASSET_DEVELOPMENT_PUBLISH_EXECUTION_001",
+  "sourcePublishingContract": {
+    "publishRecordSchemaId": "ASSET_PUBLISH_RECORD_001",
+    "publishingLayerSchemaId": "ASSET_PUBLISHING_PIPELINE_LAYER_001",
+    "environmentRecordSchemaId": "ASSET_ENVIRONMENT_RECORD_001",
+    "environmentLayerSchemaId": "ASSET_ENVIRONMENT_SEPARATION_LAYER_001"
+  },
+  "publishRecordId": "ASSET_DEV_PUBLISH_RECORD_BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "assetId": "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "recipeId": "SPORTS_FACILITY_RECIPE_001",
+  "version": "1.0.0",
+  "sourceCandidateRecord": {
+    "filename": "building-civic-sports-pavilion-development-publish-candidate.json",
+    "candidateId": "ASSET_DEV_PUBLISH_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "deterministicCandidateHash": "683dfa61d47463aec5de0fc3b4bf4c0c53f1b8925917fce70e1806d089405562"
+  },
+  "sourceApprovalRecord": {
+    "filename": "building-civic-sports-pavilion-approval.json",
+    "approvalRecordId": "ASSET_APPROVAL_BUILDING_CIVIC_SPORTS_PAVILION_001",
+    "approvalStatus": "QUALITY_APPROVED"
+  },
+  "sourceRegistrationRecord": {
+    "filename": "building-civic-sports-pavilion-registration.json",
+    "registrationStatus": "registered",
+    "deterministicFingerprint": "9904bfbc94202cbb86e599a328a3e9abb778612485cd7170952bed18bb52c7a2"
+  },
+  "targetEnvironment": "DEVELOPMENT",
+  "publishStatus": "PUBLISHED_DEVELOPMENT",
+  "publishTimestamp": "2026-07-29T12:00:00.000Z",
+  "lodFileReferences": {
+    "close": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_CLOSE.glb",
+      "sha256": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+      "metrics": {
+        "sizeBytes": 154896,
+        "meshCount": 47,
+        "materialCount": 6,
+        "primitiveCount": 47,
+        "triangleCount": 1624
+      }
+    },
+    "gameplay": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
+      "sha256": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+      "metrics": {
+        "sizeBytes": 73260,
+        "meshCount": 44,
+        "materialCount": 6,
+        "primitiveCount": 44,
+        "triangleCount": 528
+      }
+    },
+    "map": {
+      "filename": "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_MAP.glb",
+      "sha256": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1",
+      "metrics": {
+        "sizeBytes": 44948,
+        "meshCount": 26,
+        "materialCount": 6,
+        "primitiveCount": 26,
+        "triangleCount": 312
+      }
+    }
+  },
+  "verifiedHashes": {
+    "close": "ee921ba10750ce0237f0ed13481145cbc383903afbbb61b1ca57e5695b4ddc06",
+    "gameplay": "e941dba8229c8d6158d132c6a1a5bcb241ea5ebb94ad702c63f9f12062dc0637",
+    "map": "38208a153ef605fcea6a8f17fd38d16702259fc698c3bcc83a7a05cfb5982ab1"
+  },
+  "catalogEntryReference": {
+    "filename": "building-civic-sports-pavilion-development-catalog-entry.json",
+    "catalogEntryId": "ASSET_DEV_CATALOG_BUILDING_CIVIC_SPORTS_PAVILION_001"
+  },
+  "visibility": {
+    "developmentPreviewTools": true,
+    "assetFactoryInspectionTools": true,
+    "futureAtlasDevelopmentPreviewWork": true,
+    "beta": false,
+    "production": false,
+    "livePlayers": false,
+    "automaticMapPlacement": false
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "validation": {
+    "derivesFromPreparedCandidate": true,
+    "targetEnvironmentIsDevelopment": true,
+    "hashesMatch": true,
+    "developmentOnlyVisibility": true,
+    "noReleaseRecordCreated": true,
+    "noBetaSideEffects": true,
+    "noProductionSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "lifecycleConsistent": true,
+    "validationPassed": true,
+    "deterministicPublishExecutionHash": "2664dcadac4c94edfc5bf2d35d53ffc86adc61f7c32fc8f4fc57933a2a035e12"
+  }
+}
