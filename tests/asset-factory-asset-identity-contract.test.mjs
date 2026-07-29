@@ -265,6 +265,56 @@ test("asset identity contract v2 accepts metadata-based GLB identity", () => {
   assert.equal(inspection.exportedIdentitySource, "metadata");
 });
 
+test("asset identity contract v2 reads exported growgo snake_case extras for recipe palette and dependencies", () => {
+  const contract = createContract({
+    dependencies: [
+      {
+        dependencyId: "MOD_TREE_LEAF_CLUSTER_001",
+        category: "module"
+      }
+    ]
+  });
+
+  const inspection = moduleUnderTest.inspectExportedGlbIdentityBuffer(
+    contract,
+    createMinimalGlb({
+      meshNames: ["TREE_MESH"],
+      nodeNames: ["TREE_NODE"],
+      materialNames: ["TREE_MATERIAL"],
+      extras: {
+        nodeExtras: {
+          growgo_asset_id: "TREE_EUCALYPTUS_001",
+          growgo_recipe_id: "TREE_EUCALYPTUS_RECIPE_001",
+          growgo_palette_id: "PALETTE_AU_NATIVE_GREEN_001",
+          growgo_lod_profile: "NATURE_STANDARD_001",
+          growgo_dependencies: "MOD_TREE_LEAF_CLUSTER_001",
+          growgo_dependency_id: "MOD_TREE_LEAF_CLUSTER_001",
+          growgo_identity_policy: "ASSET_ROOT_AND_COMPONENTS"
+        }
+      }
+    })
+  );
+
+  assert.equal(inspection.valid, true);
+  assert.equal(inspection.assetIdentityPreserved, true);
+  assert.ok(
+    inspection.metadataIdentityHits.some((hit) =>
+      hit.includes("$.nodes[0].extras.growgo_recipe_id:TREE_EUCALYPTUS_RECIPE_001")
+    )
+  );
+  assert.ok(
+    inspection.metadataIdentityHits.some((hit) =>
+      hit.includes("$.nodes[0].extras.growgo_dependencies:MOD_TREE_LEAF_CLUSTER_001")
+    )
+  );
+  assert.ok(
+    inspection.dependencyIdentityHits.some((hit) =>
+      hit.includes("$.nodes[0].extras.growgo_dependency_id:MOD_TREE_LEAF_CLUSTER_001")
+    )
+  );
+  assert.equal(inspection.exportedIdentitySource, "metadata");
+});
+
 test("asset identity contract v2 supports explicit identity anchor naming", () => {
   const contract = createContract({
     assetId: "BUILDING_HOME_001",

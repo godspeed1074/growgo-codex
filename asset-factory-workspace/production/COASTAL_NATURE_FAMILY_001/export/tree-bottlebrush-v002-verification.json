@@ -1,0 +1,88 @@
+{
+  "schemaId": "TREE_BOTTLEBRUSH_V002_PRODUCTION_VERIFICATION_001",
+  "assetId": "TREE_BOTTLEBRUSH_001",
+  "previousVersion": "v001",
+  "targetVersion": "v002",
+  "packageReady": true,
+  "packageBlockers": [],
+  "lodComplexity": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "triangles_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "triangles_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "meshes_close_gte_gameplay",
+        "ok": true
+      },
+      {
+        "name": "meshes_gameplay_gte_map",
+        "ok": true
+      },
+      {
+        "name": "primitives_close_gte_gameplay",
+        "ok": true
+      },
+      {
+        "name": "primitives_gameplay_gte_map",
+        "ok": true
+      }
+    ]
+  },
+  "versionComparison": {
+    "ok": true,
+    "previousVersion": "v001",
+    "targetVersion": "v002",
+    "checks": [
+      {
+        "name": "blend_geometry_hash_changed",
+        "ok": true
+      },
+      {
+        "name": "close_geometry_hash_changed",
+        "ok": true
+      },
+      {
+        "name": "gameplay_geometry_hash_changed",
+        "ok": true
+      },
+      {
+        "name": "map_geometry_hash_changed",
+        "ok": true
+      },
+      {
+        "name": "asset_identity_unchanged",
+        "ok": true
+      },
+      {
+        "name": "recipe_identity_unchanged",
+        "ok": true
+      },
+      {
+        "name": "dependency_identity_unchanged",
+        "ok": true
+      },
+      {
+        "name": "metadata_identity_unchanged",
+        "ok": true
+      },
+      {
+        "name": "version_change_recorded",
+        "ok": true
+      }
+    ]
+  },
+  "replacementReadiness": {
+    "readyToReplaceV001": true,
+    "registrationReplaced": false,
+    "visualApprovalReplaced": false,
+    "publishingPerformed": false,
+    "runtimeActivated": false
+  },
+  "deterministicFingerprint": "ad4d1e153f26ac95cfec0e595e1895ab9a06549afebf7d838370dd2485cd2a87"
+}

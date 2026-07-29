@@ -1,0 +1,70 @@
+{
+  "assetId": "TREE_BOTTLEBRUSH_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_BOTTLEBRUSH_RECIPE_001",
+  "registryRecipeId": "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+  "identityContractV2": {
+    "assetId": "TREE_BOTTLEBRUSH_001",
+    "category": "nature",
+    "recipeId": "TREE_BOTTLEBRUSH_RECIPE_001",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_BOTTLEBRUSH_NATIVE_001",
+    "lodProfile": "NATURE_STANDARD_001",
+    "source": {
+      "generator": "Asset Factory",
+      "authoringTool": "Blender"
+    },
+    "dependencies": [
+      {
+        "dependencyId": "MOD_TREE_TRUNK_BOTTLEBRUSH_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      },
+      {
+        "dependencyId": "MOD_TREE_BRANCH_BOTTLEBRUSH_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      },
+      {
+        "dependencyId": "MOD_TREE_LEAF_CLUSTER_BOTTLEBRUSH_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      },
+      {
+        "dependencyId": "MOD_TREE_FLOWER_CLUSTER_BOTTLEBRUSH_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      },
+      {
+        "dependencyId": "MOD_TREE_GROUND_SOCKET_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      }
+    ],
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES",
+    "identityAnchor": {
+      "componentRole": "IDENTITY_ANCHOR",
+      "required": true
+    },
+    "anchorRequired": true,
+    "anchorValidation": "REQUIRE_PER_LOD_EXPORTED_ANCHOR",
+    "exportedIdentitySource": "identity_anchor"
+  },
+  "outputDirectory": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export",
+  "paletteSlots": [
+    "trunk",
+    "branch",
+    "leaf light",
+    "leaf mid",
+    "flower red",
+    "flower pink"
+  ],
+  "lodRoots": {
+    "close": "TREE_BOTTLEBRUSH_001_LOD_CLOSE_ROOT",
+    "gameplay": "TREE_BOTTLEBRUSH_001_LOD_GAMEPLAY_ROOT",
+    "map": "TREE_BOTTLEBRUSH_001_LOD_MAP_ROOT"
+  },
+  "deterministicConstruction": true,
+  "manualBlenderExecutionRequired": true
+}

@@ -518,6 +518,13 @@ export function inspectExportedGlbIdentityBuffer(contractInput, data) {
   }
 
   const metadataIdentityHits = collectMetadataIdentityHits(contract, gltfJson);
+  for (const hit of metadataIdentityHits) {
+    for (const dependencyId of contract.dependencies.map((dependency) => dependency.dependencyId)) {
+      if (hit.includes(dependencyId)) {
+        dependencyIdentityHits.push(hit);
+      }
+    }
+  }
   if (metadataIdentityHits.some((hit) => hit.includes("IDENTITY_ANCHOR"))) {
     for (const hit of metadataIdentityHits) {
       if (hit.includes("IDENTITY_ANCHOR")) {
@@ -778,6 +785,7 @@ function determineExportedIdentitySource({
 function collectMetadataIdentityHits(contract, gltfJson) {
   const hits = [];
   const dependencyIds = contract.dependencies.map((dependency) => dependency.dependencyId);
+  const growgoMetadataPrefixes = ["growgo_", "palette_", "dependency_"];
 
   function scan(value, path) {
     if (typeof value === "string") {
@@ -807,7 +815,9 @@ function collectMetadataIdentityHits(contract, gltfJson) {
       if (
         path === "$" ||
         metadataIdentityKeys.has(key) ||
+        growgoMetadataPrefixes.some((prefix) => key.startsWith(prefix)) ||
         key.endsWith("Id") ||
+        key.endsWith("_id") ||
         key === "name"
       ) {
         scan(nested, `${path}.${key}`);

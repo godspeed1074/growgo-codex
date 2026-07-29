@@ -1,0 +1,60 @@
+{
+  "schemaId": "TREE_BOTTLEBRUSH_V002_VALIDATION_001",
+  "assetId": "TREE_BOTTLEBRUSH_001",
+  "previousRegisteredVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "identityContractSchemaId": "ASSET_IDENTITY_CONTRACT_PHASE_001_1",
+  "identityMetadataReady": true,
+  "sourceVerified": true,
+  "finalBlendExists": true,
+  "finalGlbsGenerated": true,
+  "glbIdentityVerified": true,
+  "noExternalDependencies": true,
+  "lodComplexityVerified": true,
+  "geometryVersionChangeDetected": true,
+  "identityUnchanged": true,
+  "versionChangeRecordedCorrectly": true,
+  "readyToReplaceV001": true,
+  "registrationReplaced": false,
+  "visualApprovalReplaced": false,
+  "publishingPerformed": false,
+  "runtimeActivated": false,
+  "files": [
+    {
+      "filename": "TREE_BOTTLEBRUSH_001_v002.blend",
+      "sizeBytes": 1813944,
+      "sha256": "770400937a59b7077fc4241f280dbbaf1b1d2076ab9cfdde1d7fa9a0b07da4bc",
+      "classification": "VERIFIED_COMPLETE"
+    },
+    {
+      "filename": "TREE_BOTTLEBRUSH_001_v002_LOD_CLOSE.glb",
+      "sizeBytes": 169872,
+      "sha256": "1e9270a448c117599a28fdade30b6afb60950fe093d753c7451d17b0787ee25e",
+      "classification": "VERIFIED_COMPLETE",
+      "meshCount": 16,
+      "primitiveCount": 16,
+      "triangleCount": 1089,
+      "materialCount": 6
+    },
+    {
+      "filename": "TREE_BOTTLEBRUSH_001_v002_LOD_GAMEPLAY.glb",
+      "sizeBytes": 106168,
+      "sha256": "95462bc8287c36982b7e4536f3a972a81fa666b0f63b30b8c3b90c0a0450ec67",
+      "classification": "VERIFIED_COMPLETE",
+      "meshCount": 10,
+      "primitiveCount": 10,
+      "triangleCount": 657,
+      "materialCount": 6
+    },
+    {
+      "filename": "TREE_BOTTLEBRUSH_001_v002_LOD_MAP.glb",
+      "sizeBytes": 60704,
+      "sha256": "cab0ad1196926b558994e1c6d097806caddd12cc36329eebe5fa6ffa4870deb1",
+      "classification": "VERIFIED_COMPLETE",
+      "meshCount": 6,
+      "primitiveCount": 6,
+      "triangleCount": 265,
+      "materialCount": 4
+    }
+  ]
+}

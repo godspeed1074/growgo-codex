@@ -1,0 +1,135 @@
+{
+  "schemaId": "TREE_BOTTLEBRUSH_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_TREE_BOTTLEBRUSH_001",
+  "assetId": "TREE_BOTTLEBRUSH_001",
+  "category": "nature",
+  "familyId": "TREE_ASSET_FAMILY_001",
+  "recipeId": "TREE_BOTTLEBRUSH_RECIPE_001",
+  "registryRecipeId": "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+  "version": "v001",
+  "lifecycleStatus": "REGISTERED",
+  "validationStatus": "validated",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_BOTTLEBRUSH_NATIVE_001",
+    "slots": [
+      "trunk",
+      "branch",
+      "leaf light",
+      "leaf mid",
+      "flower red",
+      "flower pink"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "TREE_BOTTLEBRUSH_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_BOTTLEBRUSH_001_LOD_CLOSE.glb",
+      "sha256": "7ac14df6f75588522ad31e517e9d5b2bdeaf7ed8272b95f1f93bbc8c61042a52",
+      "meshCount": 12,
+      "materialCount": 6,
+      "triangleCount": 713,
+      "primitiveCount": 12
+    },
+    "gameplay": {
+      "filename": "TREE_BOTTLEBRUSH_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_BOTTLEBRUSH_001_LOD_GAMEPLAY.glb",
+      "sha256": "bb36f6127284a118dff36b132b0cc1e0f7f4f0cec2bb244ff60e8831d4773d93",
+      "meshCount": 8,
+      "materialCount": 6,
+      "triangleCount": 469,
+      "primitiveCount": 8
+    },
+    "map": {
+      "filename": "TREE_BOTTLEBRUSH_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_BOTTLEBRUSH_001_LOD_MAP.glb",
+      "sha256": "aaeba3b4367dddc841640b36f19a64ebea36b4c64c1be8911aecfdc24ce465a3",
+      "meshCount": 5,
+      "materialCount": 4,
+      "triangleCount": 245,
+      "primitiveCount": 5
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "TREE",
+      "PARK",
+      "STREET_TREE",
+      "TRAIL_EDGE"
+    ],
+    "supportedClassifications": [
+      "NATURAL_FEATURE",
+      "PARK"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+      "RECIPE_NATURE_PARK_STANDARD_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_TREE_TRUNK_BOTTLEBRUSH_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_TREE_BRANCH_BOTTLEBRUSH_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_TREE_LEAF_CLUSTER_BOTTLEBRUSH_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_TREE_FLOWER_CLUSTER_BOTTLEBRUSH_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_TREE_GROUND_SOCKET_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "tree-bottlebrush-registration.json",
+    "deterministicFingerprint": "afcf4f13da204bb388cac7c535caa97be15fb7be21811688c18100da971e6d42"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true
+  },
+  "deterministicCatalogHash": "841d71b25136429fe888cf986e3b0237ed7068f415295b8e71ee1f36a36cad54"
+}

@@ -104,6 +104,7 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "RECIPE_NATURE_PARK_STANDARD_001",
   "RECIPE_NATURE_SUBURBAN_GARDEN_STANDARD_001",
   "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
+  "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
   "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001",
   "BEACH_ENVIRONMENT_RECIPE_001",
   "FOREST_ENVIRONMENT_RECIPE_001",
@@ -209,6 +210,15 @@ export const natureAssetPackRecipes = deepFreeze([
     ])
   }),
   deepFreeze({
+    recipeId: "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+    recipeType: "ROADSIDE_NATIVE_TREE_RECIPE",
+    supportedFamilies: deepFreeze([
+      "TREE_ASSET_FAMILY_001",
+      "GROUND_ASSET_FAMILY_001",
+      "VEGETATION_ASSET_FAMILY_001"
+    ])
+  }),
+  deepFreeze({
     recipeId: "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001",
     recipeType: "FOREST_ENVIRONMENT_RECIPE",
     supportedFamilies: deepFreeze([
@@ -296,6 +306,42 @@ export const natureAssetPackRecords = deepFreeze([
       sourceRecipeReferences: deepFreeze(["TREE_EUCALYPTUS_RECIPE_001"]),
       existingWorkPreserved: true,
       onboardingSource: "SESSION_111_NATURE_PACK_FOUNDATION"
+    })
+  }),
+  deepFreeze({
+    assetId: "TREE_BOTTLEBRUSH_001",
+    assetFamily: "TREE_ASSET_FAMILY_001",
+    assetType: "ROADSIDE_NATIVE_FLOWERING_TREE",
+    recipeId: "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "roadside_native_tree",
+      "trail_edge_tree",
+      "suburban_native_landscape",
+      "flowering_feature_tree"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze(["TREE", "PARK", "STREET_TREE", "TRAIL_EDGE"]),
+      supportedClassifications: deepFreeze(["NATURAL_FEATURE", "PARK"]),
+      atlasAssignmentRecipeIds: deepFreeze([
+        "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+        "RECIPE_NATURE_PARK_STANDARD_001"
+      ]),
+      assignmentMode: "biome_and_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "SUBURBAN_PARKLAND",
+      "URBAN_STREET",
+      "TRAIL_CORRIDOR"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["TREE_BOTTLEBRUSH_001"]),
+      sourceRecipeReferences: deepFreeze(["TREE_BOTTLEBRUSH_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_186_BOTTLEBRUSH_PRODUCTION_SETUP"
     })
   }),
   deepFreeze({
