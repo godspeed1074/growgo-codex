@@ -1,0 +1,43 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_SHRUB_BRANCH_CLUSTER_COASTAL_001",
+    "MOD_SHRUB_FOLIAGE_CLUSTER_COASTAL_001",
+    "MOD_SHRUB_FLOWER_CLUSTER_COASTAL_001",
+    "MOD_SHRUB_GROUND_SOCKET_COASTAL_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 16,
+      "triangleCount": 301,
+      "materialCount": 4,
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_CLOSE.glb",
+      "sizeBytes": 109300
+    },
+    "gameplay": {
+      "meshCount": 10,
+      "triangleCount": 181,
+      "materialCount": 4,
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
+      "sizeBytes": 72628
+    },
+    "map": {
+      "meshCount": 4,
+      "triangleCount": 61,
+      "materialCount": 3,
+      "filename": "SHRUB_COASTAL_LOW_001_LOD_MAP.glb",
+      "sizeBytes": 33332
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "70f736267e1d671035596438d2b0295ecbd1561a839c149672f3e4f45514ea98"
+}

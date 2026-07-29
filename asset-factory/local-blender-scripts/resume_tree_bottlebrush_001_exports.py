@@ -71,6 +71,14 @@ from asset_identity_anchor_v2 import (
     find_identity_anchor,
     select_export_object_set,
 )
+from asset_factory_exporter_v1 import (
+    count_export_metrics,
+    discover_lod_roots,
+    normalize_export_objects,
+    validate_export_identity,
+    validate_lod_metric_order,
+    write_export_manifest,
+)
 
 WORKSPACE_ROOT = (REPO_ROOT / "asset-factory-workspace").resolve()
 EXPECTED_OUTPUT_DIR = (
@@ -264,26 +272,7 @@ def ensure_recipe_identity():
 
 
 def count_triangles_and_materials(root_object):
-    triangle_count = 0
-    mesh_count = 0
-    material_names = set()
-    stack = [root_object]
-    while stack:
-        current = stack.pop()
-        if current.type == "MESH" and current.data is not None:
-            mesh_count += 1
-            for polygon in current.data.polygons:
-                triangle_count += max(len(polygon.vertices) - 2, 0)
-            for material in current.data.materials:
-                if material is not None:
-                    material_names.add(material.name)
-        stack.extend(list(current.children))
-    return {
-        "meshCount": mesh_count,
-        "materialCount": len(material_names),
-        "triangleCount": triangle_count,
-        "materials": sorted(material_names),
-    }
+    return count_export_metrics(normalize_export_objects(root_object))
 
 
 def collect_identity_state(root_object):
@@ -462,6 +451,15 @@ def validate_pre_export_identity(root_object, lod_label):
 
 def validate_export_preflight(root_object, lod_label):
     export_objects, anchor_object = build_export_object_set(root_object, ASSET_ID, lod_label)
+    validate_export_identity(
+        (export_objects, anchor_object),
+        asset_id=ASSET_ID,
+        recipe_id=SOURCE_RECIPE_ID,
+        dependency_ids=DEPENDENCY_IDS,
+        lod_label=lod_label,
+        anchor_finder=find_identity_anchor,
+        root_object=root_object,
+    )
     export_names = [obj.name for obj in export_objects]
     if anchor_object.name not in export_names:
         raise RuntimeError(
@@ -695,12 +693,7 @@ def validate_existing_final_if_present(final_path, expected_metrics):
 
 
 def export_single_lod(lod_key, lod_label, final_filename, root_name):
-    root_object = bpy.data.objects.get(root_name)
-    if root_object is None:
-        fail(
-            f"Could not find LOD root {root_name}.",
-            f"{EXPORT_FAILURE_PREFIX}{lod_label}_ROOT_MISSING",
-        )
+    root_object = discover_lod_roots(bpy.data.objects, ASSET_ID)[lod_label]
 
     validate_pre_export_identity(root_object, lod_label)
     validate_export_preflight(root_object, lod_label)
@@ -744,13 +737,24 @@ def main():
     close_metrics = metrics_by_lod["close"]
     gameplay_metrics = metrics_by_lod["gameplay"]
     map_metrics = metrics_by_lod["map"]
-    if not (
-        close_metrics["triangleCount"] > gameplay_metrics["triangleCount"] > map_metrics["triangleCount"]
-    ):
+    try:
+        validate_lod_metric_order(metrics_by_lod)
+    except RuntimeError as error:
         fail(
-            "LOD triangle complexity did not decrease from close to gameplay to map.",
+            str(error),
             f"{EXPORT_FAILURE_PREFIX}LOD_COMPLEXITY",
         )
+    write_export_manifest(
+        EXPECTED_OUTPUT_DIR / f"tree-bottlebrush-{ASSET_VERSION}-export-manifest.json",
+        asset_id=ASSET_ID,
+        recipe_id=SOURCE_RECIPE_ID,
+        version=ASSET_VERSION,
+        dependency_ids=DEPENDENCY_IDS,
+        outputs={
+            lod_key: {**metrics_by_lod[lod_key], "filename": filename}
+            for lod_key, _lod_label, filename, _root_name in EXPORT_SEQUENCE
+        },
+    )
 
     emit_marker(EXPORT_COMPLETE_MARKER)
 

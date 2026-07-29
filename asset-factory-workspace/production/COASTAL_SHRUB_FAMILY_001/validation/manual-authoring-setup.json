@@ -1,0 +1,26 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_MANUAL_AUTHORING_SETUP_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v001",
+  "generatorScript": "asset-factory/local-blender-scripts/generate_shrub_coastal_low_001.py",
+  "exportResumeScript": "asset-factory/local-blender-scripts/resume_shrub_coastal_low_001_exports.py",
+  "expectedBlend": "SHRUB_COASTAL_LOW_001_v001.blend",
+  "expectedLods": [
+    "LOD_CLOSE",
+    "LOD_GAMEPLAY",
+    "LOD_MAP"
+  ],
+  "identityAnchors": [
+    "SHRUB_COASTAL_LOW_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "SHRUB_COASTAL_LOW_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "published": false,
+  "runtimeActivated": false
+}

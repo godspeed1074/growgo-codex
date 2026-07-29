@@ -1,0 +1,35 @@
+{
+  "schemaId": "COASTAL_SHRUB_FAMILY_SPECIFICATION_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "category": "nature",
+  "status": "foundation_only",
+  "referencePipelineAssets": [
+    "TREE_EUCALYPTUS_001",
+    "TREE_BOTTLEBRUSH_001"
+  ],
+  "primaryAsset": {
+    "assetId": "SHRUB_COASTAL_LOW_001",
+    "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_SHRUB_NATIVE_001",
+    "lodProfile": "NATURE_STANDARD_001",
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
+  },
+  "expectedLods": [
+    "LOD_CLOSE",
+    "LOD_GAMEPLAY",
+    "LOD_MAP"
+  ],
+  "expectedFutureOutputs": {
+    "blend": "SHRUB_COASTAL_LOW_001_v001.blend",
+    "glbs": [
+      "SHRUB_COASTAL_LOW_001_LOD_CLOSE.glb",
+      "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
+      "SHRUB_COASTAL_LOW_001_LOD_MAP.glb"
+    ]
+  },
+  "binaryAssetsGenerated": false,
+  "publishingPrepared": false,
+  "runtimeActivationPrepared": false
+}

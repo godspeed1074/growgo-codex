@@ -1,0 +1,26 @@
+{
+  "schemaId": "COASTAL_SHRUB_FAMILY_RECIPE_PLACEHOLDERS_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "recipes": [
+    {
+      "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+      "role": "PRIMARY_LOW_SHRUB",
+      "status": "placeholder",
+      "variantId": "DEFAULT"
+    },
+    {
+      "recipeId": "SHRUB_COASTAL_FLOWERING_RECIPE_001",
+      "role": "FLOWERING_VARIANT",
+      "status": "reserved_placeholder",
+      "variantId": "FLOWERING"
+    },
+    {
+      "recipeId": "SHRUB_COASTAL_WINDSWEPT_RECIPE_001",
+      "role": "WINDSWEPT_VARIANT",
+      "status": "reserved_placeholder",
+      "variantId": "WINDSWEPT"
+    }
+  ],
+  "registered": false,
+  "productionAuthorized": false
+}

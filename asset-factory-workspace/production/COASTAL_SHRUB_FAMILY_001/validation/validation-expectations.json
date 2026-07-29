@@ -1,0 +1,27 @@
+{
+  "schemaId": "COASTAL_SHRUB_FAMILY_VALIDATION_EXPECTATIONS_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "expectations": [
+    "asset_identity_preserved",
+    "recipe_identity_preserved",
+    "dependency_identity_preserved",
+    "metadata_identity_preserved",
+    "identity_anchor_present_per_lod",
+    "no_external_dependencies",
+    "triangles_close_gt_gameplay_gt_map",
+    "meshes_close_gte_gameplay_gte_map",
+    "primitives_close_gte_gameplay_gte_map",
+    "deterministic_export",
+    "manual_visual_review_required_before_approval",
+    "publishing_blocked_until_explicit_phase"
+  ],
+  "currentState": {
+    "specificationComplete": true,
+    "blenderGeneratorCreated": false,
+    "blendCreated": false,
+    "glbsCreated": false,
+    "productionValidationRun": false,
+    "approved": false,
+    "published": false
+  }
+}

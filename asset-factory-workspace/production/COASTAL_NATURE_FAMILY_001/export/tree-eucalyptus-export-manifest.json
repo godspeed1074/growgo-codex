@@ -1,0 +1,49 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_TREE_LEAF_CLUSTER_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "sizeBytes": 67032,
+      "sha256": "862be6bc5e365dad75c55fbe0877ca3b246972a1bea123a1c75aea6b3a5b9725",
+      "meshCount": 11,
+      "materialCount": 5,
+      "triangleCount": 249,
+      "primitiveCount": 11,
+      "hasExternalDependencies": false,
+      "filename": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb"
+    },
+    "gameplay": {
+      "sizeBytes": 44328,
+      "sha256": "ac3487f5be6131e0eaec66f6e431a148efb9266348ac5aa339e3547b46868f49",
+      "meshCount": 7,
+      "materialCount": 5,
+      "triangleCount": 153,
+      "primitiveCount": 7,
+      "hasExternalDependencies": false,
+      "filename": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb"
+    },
+    "map": {
+      "sizeBytes": 25244,
+      "sha256": "94a90a141a6eae569e8ceaf65a12608121abe25d0d59236fb553c9a462097a55",
+      "meshCount": 4,
+      "materialCount": 2,
+      "triangleCount": 77,
+      "primitiveCount": 4,
+      "hasExternalDependencies": false,
+      "filename": "TREE_EUCALYPTUS_001_LOD_MAP.glb"
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "0dfc5138d335b71606dca532326f018c5eaf61639de3e87c41eeb19d00854447"
+}
