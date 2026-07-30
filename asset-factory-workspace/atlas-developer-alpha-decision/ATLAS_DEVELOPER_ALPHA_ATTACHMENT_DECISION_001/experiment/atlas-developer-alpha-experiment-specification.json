@@ -1,0 +1,62 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_EXPERIMENT_SPECIFICATION_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_ATTACHMENT_DECISION_001",
+  "experimentId": "ATLAS_DEVELOPER_ALPHA_EXPERIMENT_001",
+  "experimentState": "DECISION_PENDING_MANUAL_GO_NO_GO",
+  "environment": "DEVELOPMENT_ONLY",
+  "permittedRegion": {
+    "primaryRegionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "latBucket": -38.12,
+    "lngBucket": 144.61,
+    "regionPolicy": "single-primary-region unless manual escalation approved"
+  },
+  "testUserBoundaries": {
+    "userClasses": [
+      "internal_developer_reviewer",
+      "atlas_operator"
+    ],
+    "maxConcurrentTestUsers": 2,
+    "playerAccountsAllowed": false,
+    "internalOnly": true
+  },
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "telemetryPlan": {
+    "requiredSignals": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state",
+      "runtime_enablement_block_reason"
+    ],
+    "visibilityTarget": "internal developer monitoring only"
+  },
+  "rollbackPlan": {
+    "owner": "atlas_operator",
+    "backupOwner": "internal_developer_reviewer",
+    "rollbackSteps": [
+      "set runtimeExecutionEnabled false",
+      "set mapAttachmentAllowed false",
+      "set automaticRendererExecutionAllowed false",
+      "return to metadata-only planning state",
+      "record blocked lifecycle reason"
+    ]
+  },
+  "approvalGate": {
+    "requiredRecords": [
+      "ATLAS_ALPHA_FINAL_SAFETY_AUDIT_001 remains pass",
+      "ATLAS_ALPHA_MANUAL_APPROVAL_001 remains valid",
+      "ATLAS_RUNTIME_IMPLEMENTATION_001 remains planning-only",
+      "manual developer signoff recorded before experiment execution"
+    ],
+    "finalAuditLifecycle": "ALPHA_FINAL_GATE_PASSED",
+    "finalAuditValidationStatus": "pass"
+  },
+  "deterministicFingerprint": "5716964d6e838af8e4dfba43c78d173a257ae4396307fe58aeb74d2796b07b64"
+}
