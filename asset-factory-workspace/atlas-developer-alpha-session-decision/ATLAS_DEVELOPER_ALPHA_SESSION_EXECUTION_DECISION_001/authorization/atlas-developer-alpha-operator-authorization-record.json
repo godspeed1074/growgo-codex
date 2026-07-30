@@ -1,0 +1,18 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_OPERATOR_AUTHORIZATION_RECORD_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+  "authorizationMode": "manual_internal_roles_only",
+  "authorizedRoles": [
+    "atlas_operator",
+    "internal_developer_reviewer"
+  ],
+  "blockedRoles": [
+    "beta_tester",
+    "live_player",
+    "external_reviewer"
+  ],
+  "maxConcurrentOperators": 2,
+  "playerAccountsAllowed": false,
+  "internalOnly": true,
+  "deterministicFingerprint": "83059afce67e227ee896210d82e78a82e130f3a39c8d654f1db23abf9e53a72b"
+}

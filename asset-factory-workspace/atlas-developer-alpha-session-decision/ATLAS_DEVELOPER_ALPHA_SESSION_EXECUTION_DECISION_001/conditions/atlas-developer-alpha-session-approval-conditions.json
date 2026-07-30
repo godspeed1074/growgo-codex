@@ -1,0 +1,46 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_APPROVAL_CONDITIONS_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+  "decisionState": "GO",
+  "conditions": [
+    "runtimeExecutionEnabled must remain false",
+    "mapAttachmentAllowed must remain false",
+    "automaticRendererExecutionAllowed must remain false",
+    "test remains developer-only and internal-only",
+    "experiment stays within the single approved primary region",
+    "experiment duration must not exceed 30 minutes",
+    "manual rollback owner must remain available",
+    "any failure criteria immediately returns to planning-only state",
+    "session remains developer-only and internal-only",
+    "session uses the captured package snapshot and recipe snapshot only",
+    "session remains limited to metadata inspection and monitoring review",
+    "no runtime, renderer, map download, Blender, GLB, or asset mutation work is authorized"
+  ],
+  "successMetrics": [
+    "deterministic coordinate lookup remains stable across repeat requests",
+    "package validation produces no new blocked states in approved region",
+    "monitoring signals stay readable in developer control centre views",
+    "rollback path remains callable without state drift"
+  ],
+  "stopAuthority": {
+    "primaryOwner": "atlas_operator",
+    "backupOwner": "internal_developer_reviewer",
+    "stopConditions": [
+      "runtimeExecutionEnabled becomes true without manual authorization",
+      "mapAttachmentAllowed becomes true outside approved experiment review",
+      "automaticRendererExecutionAllowed becomes true",
+      "package validation enters blocked state for permitted region",
+      "monitoring emits emergency shutdown or unresolved blocked condition"
+    ]
+  },
+  "rollbackReadiness": {
+    "status": "PASS",
+    "rollbackProcedure": [
+      "owner: atlas_operator",
+      "backup owner: internal_developer_reviewer",
+      "return immediately to planning-only state",
+      "end session if any failure criteria or emergency signal is observed"
+    ]
+  },
+  "deterministicFingerprint": "ec0469bd51e1e3022d22efe6712f8abedbcae7b6d4e38c4df60d07b215e2c10b"
+}

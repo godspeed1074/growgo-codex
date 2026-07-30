@@ -1,0 +1,25 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_RECORD_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+  "decidedOn": "2026-07-30",
+  "decisionState": "GO",
+  "decisionMode": "manual_internal_session_authorization",
+  "references": {
+    "preparationId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+    "executionReviewId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_REVIEW_001",
+    "goNoGoRecordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+    "finalSafetyAuditId": "ATLAS_ALPHA_FINAL_SAFETY_AUDIT_001"
+  },
+  "sessionTarget": {
+    "environment": "DEVELOPMENT_ONLY",
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001"
+  },
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "deterministicFingerprint": "b85a51d9577e4eb46c725826ff7bfa3fbf31411c427d996fbbcc71c52ec0d349"
+}

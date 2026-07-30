@@ -1,0 +1,15 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_DECISION_LIFECYCLE_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+  "decisionState": "GO",
+  "lifecycleStatus": "SESSION_DECISION_GO_RECORDED_PENDING_FUTURE_MANUAL_EXECUTION",
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "2c17e571f4f141925dd556740cec95b6e9e20a9c8f0ab3509d17c1e7979b9bae"
+}

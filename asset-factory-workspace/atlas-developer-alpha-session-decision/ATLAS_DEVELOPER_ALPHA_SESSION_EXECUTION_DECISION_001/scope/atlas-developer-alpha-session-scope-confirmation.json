@@ -1,0 +1,28 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_SCOPE_CONFIRMATION_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+  "environment": "DEVELOPMENT_ONLY",
+  "scopeType": "TINY_INTERNAL_ATTACHMENT_EXPERIMENT",
+  "permittedRegion": {
+    "primaryRegionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "latBucket": -38.12,
+    "lngBucket": 144.61,
+    "regionPolicy": "single-primary-region unless manual escalation approved"
+  },
+  "allowedActions": [
+    "manual developer inspection",
+    "metadata-only coordinate lookup rehearsal",
+    "non-player internal monitoring review"
+  ],
+  "blockedActions": [
+    "player exposure",
+    "beta distribution",
+    "production distribution",
+    "automatic renderer execution",
+    "map download expansion"
+  ],
+  "durationLimitMinutes": 30,
+  "deterministicFingerprint": "e38cf9792537e6918be74b7b51be67e39b259f60fa98d8f55d4edb9050fdd52a"
+}
