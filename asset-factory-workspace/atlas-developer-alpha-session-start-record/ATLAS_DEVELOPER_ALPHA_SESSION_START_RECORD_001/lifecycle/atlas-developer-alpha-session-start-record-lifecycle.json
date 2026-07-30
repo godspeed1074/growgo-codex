@@ -1,0 +1,15 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_START_RECORD_LIFECYCLE_001",
+  "startRecordId": "ATLAS_DEVELOPER_ALPHA_SESSION_START_RECORD_001",
+  "lifecycleStatus": "SESSION_START_READY_PENDING_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "sessionId": "ATLAS_DEVELOPER_ALPHA_SESSION_20260730_REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION_001",
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "0679d6450645ecce0cc2fcc6fb7a83245b7b47080397701e280f8c96e5fa2de9"
+}

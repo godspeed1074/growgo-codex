@@ -1,0 +1,59 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_START_EVENT_SCHEMA_001",
+  "startRecordId": "ATLAS_DEVELOPER_ALPHA_SESSION_START_RECORD_001",
+  "recordedOn": "2026-07-30",
+  "supportedStartEvents": [
+    {
+      "eventType": "SESSION_OPENED",
+      "requiredFields": [
+        "eventId",
+        "eventType",
+        "timestamp",
+        "actorRole",
+        "sessionId",
+        "authorizationReference",
+        "readinessLockReference",
+        "safetyFlags",
+        "summary",
+        "auditReference"
+      ]
+    },
+    {
+      "eventType": "PRE_SESSION_CAPTURED",
+      "requiredFields": [
+        "eventId",
+        "eventType",
+        "timestamp",
+        "actorRole",
+        "sessionId",
+        "repositorySnapshotReference",
+        "packageSnapshotReference",
+        "recipeSnapshotReference",
+        "telemetryBaselineReference",
+        "safetyFlags",
+        "summary",
+        "auditReference"
+      ]
+    }
+  ],
+  "controlAlignment": {
+    "startState": "NOT_STARTED",
+    "nextState": "PRE_SESSION_CAPTURE_READY",
+    "requiredControlEvent": "OPEN_SESSION",
+    "requiredPreSessionEvent": "CAPTURE_PRE_SESSION_STATE"
+  },
+  "telemetryAlignment": {
+    "requiredTelemetryReferences": [
+      "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ],
+    "baselineMonitoringChecklist": [
+      "healthy signal available: RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "watch for package validation failure alerts",
+      "watch for budget warning alerts",
+      "watch for recipe fallback warning alerts",
+      "watch for emergency shutdown signal: RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ]
+  },
+  "deterministicFingerprint": "2764db85dc71e9c2be68813ac17b04c655af41c54341f6da0e0f647d4759103a"
+}

@@ -1,0 +1,98 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_START_RECORD_SPECIFICATION_001",
+  "startRecordId": "ATLAS_DEVELOPER_ALPHA_SESSION_START_RECORD_001",
+  "recordedOn": "2026-07-30",
+  "sessionIdentityRecord": {
+    "sessionId": "ATLAS_DEVELOPER_ALPHA_SESSION_20260730_REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION_001",
+    "sessionDate": "2026-07-30",
+    "environment": "DEVELOPMENT_ONLY",
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "operatorRoles": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ],
+    "approvalReference": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_AUTHORIZATION_001",
+    "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+    "readinessLockReference": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_001"
+  },
+  "readinessVerification": {
+    "readinessLockState": "READINESS_LOCKED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+    "readinessLockValidationStatus": "pass",
+    "authorizationState": "AUTHORIZED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+    "authorizationExpiryStatus": "VALID",
+    "repositoryState": "SESSION_START_REPOSITORY_SNAPSHOT_CAPTURED"
+  },
+  "initialStateSnapshot": {
+    "allowedStartState": "NOT_STARTED",
+    "nextState": "PRE_SESSION_CAPTURE_READY",
+    "allowedTransitionConfirmed": true,
+    "featureFlags": {
+      "runtimeExecutionEnabled": false,
+      "mapAttachmentAllowed": false,
+      "automaticRendererExecutionAllowed": false,
+      "rendererAttachmentAuthorized": false,
+      "mapDownloadsAuthorized": false,
+      "blenderAuthorized": false,
+      "glbAuthorized": false,
+      "assetModificationAuthorized": false
+    }
+  },
+  "packageSnapshot": {
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "packageVersion": "v001",
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageVersionLocked": true
+  },
+  "recipeSnapshot": {
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipeVersion": "v001",
+    "approvedForDeveloperOnlySession": true,
+    "recipeVersionLocked": true
+  },
+  "telemetryBaseline": {
+    "sourceMonitoringChecklist": [
+      "healthy signal available: RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "watch for package validation failure alerts",
+      "watch for budget warning alerts",
+      "watch for recipe fallback warning alerts",
+      "watch for emergency shutdown signal: RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ],
+    "healthyReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+    "warningReference": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT",
+    "emergencyReference": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT"
+  },
+  "auditInitialization": {
+    "requiredAuditEvents": [
+      "SESSION_OPENED",
+      "PRE_SESSION_CAPTURED",
+      "SESSION_STATE_CHANGED",
+      "TELEMETRY_REFERENCED",
+      "ROLLBACK_RECORDED",
+      "EMERGENCY_STOP_RECORDED",
+      "SESSION_CLOSED"
+    ],
+    "requiredAuditReferences": [
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+      "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+    ],
+    "initialAuditEvents": [
+      "SESSION_OPENED",
+      "PRE_SESSION_CAPTURED"
+    ]
+  },
+  "repositorySnapshot": {
+    "gitStatusCaptured": true,
+    "statusLines": [
+      "?? GROWGO_SESSION_209_1_DEVELOPER_ALPHA_SESSION_START_RECORD.md",
+      "?? asset-factory-workspace/atlas-developer-alpha-session-start-record/",
+      "?? asset-factory/atlas-developer-alpha-session-start-record.mjs",
+      "?? tests/asset-factory-atlas-developer-alpha-session-start-record.test.mjs"
+    ],
+    "hasUncommittedChanges": true,
+    "readinessState": "SESSION_START_REPOSITORY_SNAPSHOT_CAPTURED"
+  },
+  "deterministicFingerprint": "f7597756da7475d10b0a79e34703897d75d0caa54b3ebde3e7e463f8118fc9d4"
+}
