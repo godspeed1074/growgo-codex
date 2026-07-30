@@ -1,0 +1,44 @@
+{
+  "schemaId": "ATLAS_RUNTIME_ADAPTER_SIMULATION_VALIDATION_001",
+  "simulationId": "ATLAS_RUNTIME_ADAPTER_CONTRACT_SIMULATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "adapter_input_handling",
+      "ok": true
+    },
+    {
+      "name": "package_lookup",
+      "ok": true
+    },
+    {
+      "name": "permission_checks",
+      "ok": true
+    },
+    {
+      "name": "deterministic_recipe_resolution",
+      "ok": true
+    },
+    {
+      "name": "rollback_behaviour",
+      "ok": true
+    },
+    {
+      "name": "failure_responses",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "2cb457cebc843b8daaaf555b8208505985ce0b17d423dab56c9883d398ccf93e"
+}

@@ -1,0 +1,16 @@
+{
+  "schemaId": "ATLAS_RUNTIME_ADAPTER_SIMULATION_LIFECYCLE_001",
+  "simulationId": "ATLAS_RUNTIME_ADAPTER_CONTRACT_SIMULATION_001",
+  "lifecycleStatus": "FUTURE_RUNTIME_ADAPTER_READY_FOR_IMPLEMENTATION",
+  "readyScenarioCount": 1,
+  "blockedScenarioCount": 4,
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "1ed6726b0bc354515540a3ab44a0c1388f7099b373200a03d3b506c7888ee963"
+}

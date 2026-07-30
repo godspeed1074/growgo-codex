@@ -1,0 +1,24 @@
+{
+  "schemaId": "ATLAS_RUNTIME_PERMISSION_MODEL_001",
+  "runtimeImplementationId": "ATLAS_RUNTIME_IMPLEMENTATION_001",
+  "approvalReference": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "readinessReference": "ATLAS_ALPHA_ATTACHMENT_READINESS_REVIEW_001",
+  "permissionState": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "manualEnablementRequired": true,
+  "authorizationBoundaries": [
+    "development-only internal review",
+    "manual operator approval",
+    "validated package input only",
+    "no player-facing runtime exposure"
+  ],
+  "deterministicFingerprint": "8daddea705746bbfe5c37cd7dd306104726cf0e1a2a464b7e15ed88fdd4adde4"
+}

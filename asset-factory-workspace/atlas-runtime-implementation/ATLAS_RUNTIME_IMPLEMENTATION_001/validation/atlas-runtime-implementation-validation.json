@@ -1,0 +1,44 @@
+{
+  "schemaId": "ATLAS_RUNTIME_IMPLEMENTATION_VALIDATION_001",
+  "runtimeImplementationId": "ATLAS_RUNTIME_IMPLEMENTATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "manual_alpha_approval_present",
+      "ok": true
+    },
+    {
+      "name": "readiness_review_passed",
+      "ok": true
+    },
+    {
+      "name": "controlled_attachment_simulation_passed",
+      "ok": true
+    },
+    {
+      "name": "map_attachment_contract_available",
+      "ok": true
+    },
+    {
+      "name": "runtime_flags_remain_disabled",
+      "ok": true
+    },
+    {
+      "name": "runtime_scope_and_telemetry_defined",
+      "ok": true
+    },
+    {
+      "name": "lifecycle_stays_planning_only",
+      "ok": true
+    }
+  ],
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "8e70099113b714537ef1930988fa83f7868ca6ab99ca330d8e58c9e83425b6cd"
+}

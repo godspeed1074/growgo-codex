@@ -1,0 +1,166 @@
+{
+  "schemaId": "ATLAS_RUNTIME_IMPLEMENTATION_SPECIFICATION_001",
+  "runtimeImplementationId": "ATLAS_RUNTIME_IMPLEMENTATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "approvedOn": "2026-07-30",
+  "references": {
+    "atlasAlphaManualApprovalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+    "atlasAlphaReadinessReviewId": "ATLAS_ALPHA_ATTACHMENT_READINESS_REVIEW_001",
+    "atlasControlledAttachmentSimulationId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_001",
+    "atlasMapAttachmentId": "ATLAS_MAP_ATTACHMENT_001"
+  },
+  "runtimeAdapterContract": {
+    "schemaId": "ATLAS_RUNTIME_ADAPTER_CONTRACT_001",
+    "adapterResponsibilities": [
+      "consume validated region metadata only",
+      "resolve coordinate-to-package handoff through approved map attachment contract",
+      "request recipe selection from approved selector inputs only",
+      "prepare runtime-ready payload envelopes without activating runtime"
+    ],
+    "blockedResponsibilities": [
+      "direct renderer boot",
+      "direct map download",
+      "asset mutation",
+      "live player exposure"
+    ],
+    "requiredInputs": [
+      "validatedPackageMetadata",
+      "approvedRecipeSelection",
+      "deterministicSeed",
+      "permissionState",
+      "featureFlagState"
+    ]
+  },
+  "mapIntegrationBoundary": {
+    "schemaId": "ATLAS_RUNTIME_MAP_INTEGRATION_BOUNDARY_001",
+    "allowedBoundaryStates": [
+      "COORDINATE_LOOKUP_CONFIRMED",
+      "PACKAGE_METADATA_READY",
+      "SELECTOR_HANDOFF_READY",
+      "RUNTIME_ADAPTER_PREPARED"
+    ],
+    "blockedBoundaryStates": [
+      "LIVE_MAP_ATTACHMENT",
+      "PLAYER_VISIBLE_RUNTIME",
+      "UNVALIDATED_PACKAGE_HANDOFF"
+    ],
+    "sourceContract": "ATLAS_MAP_COORDINATE_INPUT_CONTRACT_001"
+  },
+  "rendererHandoffBoundary": {
+    "schemaId": "ATLAS_RUNTIME_RENDERER_HANDOFF_BOUNDARY_001",
+    "preconditions": [
+      "manual alpha approval remains valid",
+      "runtime adapter payload validated",
+      "renderer capability separately authorized",
+      "rollback path verified"
+    ],
+    "blockedUntilAuthorized": [
+      "renderer attachment",
+      "automatic renderer execution",
+      "runtime scene activation"
+    ],
+    "blockedImports": [
+      "live_renderer_runtime",
+      "map_canvas_attachment",
+      "webgl_scene_boot",
+      "leaflet_layer_attachment"
+    ]
+  },
+  "lifecycleStates": [
+    "RUNTIME_PLANNING_ONLY",
+    "ADAPTER_CONTRACT_READY",
+    "ALPHA_RUNTIME_SCOPE_DEFINED",
+    "FEATURE_FLAGS_DEFINED",
+    "TELEMETRY_READY",
+    "ROLLBACK_READY",
+    "IMPLEMENTATION_READY_PENDING_MANUAL_ENABLEMENT"
+  ],
+  "featureFlagProgression": {
+    "schemaId": "ATLAS_RUNTIME_FEATURE_FLAG_PROGRESSION_001",
+    "permanentDefaults": {
+      "runtimeExecutionEnabled": false,
+      "mapAttachmentAllowed": false,
+      "automaticRendererExecutionAllowed": false
+    },
+    "stagedProgression": [
+      {
+        "stage": "PLANNING",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "ALPHA_INTERNAL_VALIDATION",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "MANUAL_RUNTIME_ENABLEMENT_REVIEW",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    ]
+  },
+  "alphaRuntimeScope": {
+    "schemaId": "ATLAS_ALPHA_RUNTIME_SCOPE_001",
+    "authorizedRegions": "ATLAS_ALPHA_AUTHORIZED_REGION_LIST_001",
+    "scopePolicy": "development-only manual alpha preparation",
+    "allowedCapabilities": "ATLAS_ALPHA_ENABLED_CAPABILITIES_001",
+    "disabledCapabilities": "ATLAS_ALPHA_DISABLED_CAPABILITIES_001",
+    "unsupportedCapabilities": [
+      "beta exposure",
+      "production exposure",
+      "player-triggered runtime launch",
+      "automatic region streaming"
+    ]
+  },
+  "telemetryRequirements": {
+    "schemaId": "ATLAS_RUNTIME_TELEMETRY_REQUIREMENTS_001",
+    "requiredSignals": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state",
+      "runtime_enablement_block_reason"
+    ],
+    "privacyPolicy": "developer-only internal planning telemetry",
+    "exportPolicy": "no player telemetry, no live gameplay telemetry"
+  },
+  "rollbackProcedure": {
+    "schemaId": "ATLAS_RUNTIME_ROLLBACK_PROCEDURE_001",
+    "triggerSources": [
+      "manual operator disable",
+      "package validation failure",
+      "coordinate resolution mismatch",
+      "permission model violation",
+      "renderer boundary violation"
+    ],
+    "rollbackSteps": [
+      "set runtimeExecutionEnabled false",
+      "set mapAttachmentAllowed false",
+      "set automaticRendererExecutionAllowed false",
+      "return to metadata-only planning state",
+      "record blocked lifecycle reason"
+    ]
+  },
+  "failureHandling": {
+    "schemaId": "ATLAS_RUNTIME_FAILURE_HANDLING_001",
+    "failureModes": [
+      "PACKAGE_VALIDATION_FAILED",
+      "RECIPE_SELECTION_BLOCKED",
+      "PERMISSION_GATE_BLOCKED",
+      "MAP_INTEGRATION_CONTRACT_MISMATCH",
+      "RENDERER_HANDOFF_PRECONDITION_FAILED"
+    ],
+    "safeFailureRules": [
+      "stay in planning-only state",
+      "do not activate runtime",
+      "do not attach renderer",
+      "do not download maps",
+      "do not mutate assets"
+    ]
+  }
+}

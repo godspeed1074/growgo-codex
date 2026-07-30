@@ -1,0 +1,58 @@
+{
+  "schemaId": "ATLAS_RUNTIME_ADAPTER_SIMULATION_HARNESS_001",
+  "simulationId": "ATLAS_RUNTIME_ADAPTER_CONTRACT_SIMULATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "runtimeImplementationId": "ATLAS_RUNTIME_IMPLEMENTATION_001",
+    "controlledAttachmentSimulationId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_001",
+    "mapAttachmentId": "ATLAS_MAP_ATTACHMENT_001"
+  },
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "scenarios": [
+    {
+      "scenarioId": "RUNTIME_ADAPTER_VALID_PLAYER_LOCATION_REQUEST_001",
+      "scenarioType": "VALID_PLAYER_LOCATION_REQUEST",
+      "requestType": "PLAYER_LOCATION_LOOKUP",
+      "lat": -38.12,
+      "lng": 144.61,
+      "inheritedScenarioId": "CONTROLLED_ATTACHMENT_APPROVED_ALPHA_REGION_001"
+    },
+    {
+      "scenarioId": "RUNTIME_ADAPTER_BLOCKED_REGION_REQUEST_001",
+      "scenarioType": "BLOCKED_REGION_REQUEST",
+      "requestType": "PLAYER_LOCATION_LOOKUP",
+      "lat": -37.55,
+      "lng": 144.02,
+      "inheritedScenarioId": "CONTROLLED_ATTACHMENT_BLOCKED_REGION_001"
+    },
+    {
+      "scenarioId": "RUNTIME_ADAPTER_MISSING_PACKAGE_REQUEST_001",
+      "scenarioType": "MISSING_PACKAGE_REQUEST",
+      "requestType": "PLAYER_LOCATION_LOOKUP",
+      "lat": -38.5,
+      "lng": 145.5,
+      "inheritedScenarioId": "CONTROLLED_ATTACHMENT_MISSING_PACKAGE_001"
+    },
+    {
+      "scenarioId": "RUNTIME_ADAPTER_INVALID_COORDINATE_REQUEST_001",
+      "scenarioType": "INVALID_COORDINATE_REQUEST",
+      "requestType": "PLAYER_LOCATION_LOOKUP",
+      "lat": 93.25,
+      "lng": 181.4,
+      "inheritedScenarioId": null
+    },
+    {
+      "scenarioId": "RUNTIME_ADAPTER_EMERGENCY_SHUTDOWN_REQUEST_001",
+      "scenarioType": "EMERGENCY_SHUTDOWN_REQUEST",
+      "requestType": "EMERGENCY_SHUTDOWN",
+      "lat": -38.12,
+      "lng": 144.61,
+      "inheritedScenarioId": "CONTROLLED_ATTACHMENT_EMERGENCY_DISABLE_001"
+    }
+  ],
+  "deterministicFingerprint": "7809cc6643833f40d9cb2f2263dcf690704b3d7747de4553dfb84f143355dec0"
+}
