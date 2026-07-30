@@ -1,0 +1,15 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_LIFECYCLE_FINAL_AUDIT_LIFECYCLE_001",
+  "auditId": "ATLAS_DEVELOPER_ALPHA_LIFECYCLE_FINAL_AUDIT_001",
+  "lifecycleStatus": "LIFECYCLE_CERTIFIED_FOR_FUTURE_DEVELOPER_ONLY_ATLAS_ALPHA_SESSION",
+  "certificationStatus": "CERTIFIED_FOR_FUTURE_DEVELOPER_ONLY_ATLAS_ALPHA_SESSION",
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "6e9afec0e289f60c85c15a3503641d0a849741cf81f13a4c98f737afb9551870"
+}
