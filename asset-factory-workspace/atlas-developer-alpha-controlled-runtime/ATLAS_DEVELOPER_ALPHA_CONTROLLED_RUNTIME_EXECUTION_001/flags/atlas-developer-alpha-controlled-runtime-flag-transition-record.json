@@ -1,0 +1,38 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_RECORD_001",
+  "executionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_EXECUTION_001",
+  "recordedOn": "2026-07-30",
+  "transitionPlan": {
+    "currentFlags": {
+      "runtimeExecutionEnabled": false,
+      "mapAttachmentAllowed": false,
+      "automaticRendererExecutionAllowed": false
+    },
+    "plannedTransition": [
+      {
+        "stage": "PRE_ENABLEMENT_REVIEW",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "MINIMAL_RUNTIME_EXPERIMENT_WINDOW",
+        "runtimeExecutionEnabled": "planned transition",
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "POST_EXPERIMENT_RESET",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    ]
+  },
+  "immutableSafetyFlags": {
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "auditRequirement": "every runtimeExecutionEnabled change must be recorded before and after transition",
+  "deterministicFingerprint": "8caaf5c61e55eafc0a2d810a734c0fb47d4ea5d1ff866526481928bda7826d84"
+}

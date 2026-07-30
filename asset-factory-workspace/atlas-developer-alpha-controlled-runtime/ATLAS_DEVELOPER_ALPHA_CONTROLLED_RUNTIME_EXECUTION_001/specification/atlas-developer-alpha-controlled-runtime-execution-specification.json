@@ -1,0 +1,130 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_EXECUTION_SPECIFICATION_001",
+  "executionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_EXECUTION_001",
+  "definedOn": "2026-07-30",
+  "references": {
+    "lifecycleFinalAuditId": "ATLAS_DEVELOPER_ALPHA_LIFECYCLE_FINAL_AUDIT_001",
+    "authorizationId": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_AUTHORIZATION_001",
+    "runtimeImplementationId": "ATLAS_RUNTIME_IMPLEMENTATION_001",
+    "runtimeAdapterSimulationId": "ATLAS_RUNTIME_ADAPTER_CONTRACT_SIMULATION_001"
+  },
+  "runtimeExecutionExperimentScope": {
+    "environment": "DEVELOPMENT_ONLY",
+    "scopeType": "MINIMAL_CONTROLLED_RUNTIME_PATHWAY",
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "internalDeveloperOnly": true,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false
+  },
+  "exactFeatureFlagTransitionPlan": {
+    "currentFlags": {
+      "runtimeExecutionEnabled": false,
+      "mapAttachmentAllowed": false,
+      "automaticRendererExecutionAllowed": false
+    },
+    "plannedTransition": [
+      {
+        "stage": "PRE_ENABLEMENT_REVIEW",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "MINIMAL_RUNTIME_EXPERIMENT_WINDOW",
+        "runtimeExecutionEnabled": "planned transition",
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "POST_EXPERIMENT_RESET",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    ]
+  },
+  "developerOnlyPermissionBoundary": {
+    "authorizedRoles": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ],
+    "blockedRoles": [
+      "beta_tester",
+      "live_player",
+      "external_reviewer"
+    ],
+    "approvedRegionOnly": true,
+    "approvedRecipeOnly": true,
+    "approvedPackageOnly": true
+  },
+  "monitoringRequirements": {
+    "requiredTelemetrySignals": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state",
+      "runtime_enablement_block_reason"
+    ],
+    "monitoringChecklist": [
+      "watch coordinate_lookup_attempt",
+      "watch package_validation_result",
+      "watch recipe_selection_result",
+      "watch permission_gate_state",
+      "watch rollback_trigger_state",
+      "watch runtime_enablement_block_reason"
+    ],
+    "requiredReferences": [
+      "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ]
+  },
+  "rollbackTriggers": [
+    "package validation failure",
+    "recipe resolution outside approved recipe",
+    "permission model violation",
+    "unexpected map attachment request",
+    "unexpected renderer attachment request",
+    "emergency shutdown signal"
+  ],
+  "successCriteria": [
+    "single approved region remains the only runtime scope",
+    "single approved recipe remains the only runtime resolution",
+    "runtimeExecutionEnabled change remains manual and auditable",
+    "mapAttachmentAllowed stays false",
+    "automaticRendererExecutionAllowed stays false",
+    "monitoring remains readable through the full experiment window"
+  ],
+  "failureCriteria": [
+    "any recipe other than COASTAL_LOCATION_RECIPE_001 is resolved",
+    "any region outside REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION is touched",
+    "mapAttachmentAllowed becomes true",
+    "automaticRendererExecutionAllowed becomes true",
+    "rendererAttachmentAuthorized becomes true without separate approval",
+    "runtime telemetry enters blocked or emergency state without immediate rollback"
+  ],
+  "activationAuditRequirements": {
+    "requiredRecords": [
+      "runtime flag change record",
+      "operator approval record",
+      "monitoring session capture",
+      "rollback outcome capture"
+    ],
+    "requiredAuditFields": [
+      "actorRole",
+      "timestamp",
+      "reason",
+      "preFlagState",
+      "postFlagState",
+      "regionId",
+      "recipeId"
+    ]
+  },
+  "deterministicFingerprint": "665b6cfab88394f2172c30d4c7174ac7cfb3a2ba1370028e8465fcf3313d3d44"
+}
