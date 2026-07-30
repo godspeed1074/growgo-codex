@@ -1,0 +1,43 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_SOURCE_RECOVERY_VERIFICATION_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "version": "v002",
+  "verifiedOn": "2026-07-30",
+  "status": "pass",
+  "recoveryGoal": "restore the correct v002 Blender source into the Asset Factory v1 source lane while preserving quarantine evidence",
+  "chosenCanonicalSource": {
+    "filename": "COASTAL_GROUND_COVER_001_v002.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GROUND_COVER_001_v002.blend",
+    "sha256": "0fed203648976371d5ec8d750061bfed70332cd74628218a59226474212137a6",
+    "matchesKnownApprovedCandidate": true
+  },
+  "preservedQuarantineEvidence": {
+    "filename": "COASTAL_GROUND_COVER_001_v002.blend1",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/quarantine/COASTAL_GROUND_COVER_001_v002.blend1",
+    "sha256": "aa3148ce79b94a71ce81f83c311a2cb0461330223868bc8447e0bd79870babc6",
+    "preserved": true
+  },
+  "identityEvidence": {
+    "assetIdentityMatches": true,
+    "lodRootsExist": true,
+    "identityAnchorsExist": true,
+    "evidenceSource": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-ground-cover-manual-authoring-v002-setup.json"
+  },
+  "sourceExportSeparation": {
+    "canonicalSourceInSourceFolder": true,
+    "noBlendFilesRemainInExport": true,
+    "quarantineRemainsSeparate": true
+  },
+  "recoveryAction": {
+    "physicalMoveRequired": false,
+    "copiesCreated": [],
+    "filesMoved": [],
+    "reason": "The canonical source file was already restored in source/ with the expected original-candidate hash at verification time."
+  },
+  "safety": {
+    "v001Modified": false,
+    "exportsCreated": false,
+    "registered": false,
+    "promoted": false
+  }
+}

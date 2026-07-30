@@ -1,0 +1,27 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_VISUAL_APPROVAL_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "version": "v002",
+  "approvedOn": "2026-07-30",
+  "approvalStatus": "approved",
+  "approvalSource": "Manual visual approval confirmed in the Phase 195.6 registration handoff request.",
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "revisionRequired": false
+  },
+  "evidenceReferences": {
+    "revisionSpecification": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/specification/coastal-ground-cover-v002-revision-specification.json",
+    "visualRefinementReport": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/coastal-ground-cover-v002-refinement-report.md",
+    "sourceVerification": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-ground-cover-v002-source-verification.json",
+    "sourceRecoveryVerification": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-ground-cover-v002-source-recovery-verification.json",
+    "exportValidation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-ground-cover-v002-export-validation.json",
+    "exportManifest": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-export-manifest.json"
+  },
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

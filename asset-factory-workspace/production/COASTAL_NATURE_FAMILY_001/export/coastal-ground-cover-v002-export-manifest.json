@@ -1,0 +1,42 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+  "version": "v002",
+  "dependencies": [
+    "MOD_GROUND_COVER_PATCH_COASTAL_001",
+    "MOD_GROUND_COVER_LEAF_CLUSTER_COASTAL_001",
+    "MOD_GROUND_COVER_GROUND_SOCKET_COASTAL_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 12,
+      "triangleCount": 173,
+      "materialCount": 2,
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "sizeBytes": 73180
+    },
+    "gameplay": {
+      "meshCount": 9,
+      "triangleCount": 129,
+      "materialCount": 2,
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "sizeBytes": 56804
+    },
+    "map": {
+      "meshCount": 7,
+      "triangleCount": 97,
+      "materialCount": 2,
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "sizeBytes": 45368
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "e40a83ec4c307aec8b5c981933f177465fd727fecd47a30bfdd2e008c5d3c397"
+}

@@ -1,0 +1,34 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_SOURCE_VERIFICATION_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "version": "v002",
+  "verifiedOn": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_GROUND_COVER_001_v002.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GROUND_COVER_001_v002.blend",
+    "sizeBytes": 1522620,
+    "sha256": "0fed203648976371d5ec8d750061bfed70332cd74628218a59226474212137a6"
+  },
+  "sourceIdentityVerification": {
+    "filenameMatches": true,
+    "canonicalSourceFolder": true,
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true,
+    "sourceBlendModifiedDuringExport": false
+  },
+  "preservedHistoricalRevision": {
+    "previousRegisteredVersion": "v001",
+    "overwritten": false
+  },
+  "exportReadiness": {
+    "readyToAttemptExport": true,
+    "exportCompleted": false,
+    "exportBlocked": true,
+    "blockerType": "BLENDER_RUNTIME_CRASH",
+    "blockerDetail": "Headless Blender 4.2.23 LTS crashed during startup before the export-resume script could complete."
+  }
+}

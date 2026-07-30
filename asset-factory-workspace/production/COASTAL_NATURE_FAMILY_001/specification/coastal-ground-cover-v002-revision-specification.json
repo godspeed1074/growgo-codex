@@ -1,0 +1,39 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_REVISION_SPECIFICATION_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "previousRevisionVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "revisionReason": "v001 passed technical checks but failed human visual review",
+  "visualIssues": [
+    "square_terrain_tile_read",
+    "insufficient_organic_clumping",
+    "weak_side_and_45_degree_silhouette"
+  ],
+  "requiredChanges": [
+    "replace_square_patch_appearance_with_irregular_organic_clumps",
+    "improve_natural_silhouette_from_front_side_and_45_degree_views",
+    "make_asset_suitable_for_procedural_scattering",
+    "maintain_papercut_2_5d_style",
+    "maintain_mobile_first_geometry",
+    "keep_low_triangle_budget",
+    "support_deterministic_placement_variation"
+  ],
+  "constraints": {
+    "preserveV001Completely": true,
+    "overwriteV001Forbidden": true,
+    "finalGlbExportAllowed": false,
+    "registrationAllowed": false,
+    "promotionAllowed": false,
+    "mobileFirstGeometryRequired": true,
+    "papercut25DStyleRequired": true
+  },
+  "expectedOutputs": {
+    "blend": "COASTAL_GROUND_COVER_001_v002.blend",
+    "glbs": [
+      "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb"
+    ]
+  }
+}

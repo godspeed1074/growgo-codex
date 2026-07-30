@@ -1,0 +1,31 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_VERSION_RECORD_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "previousDevelopmentVersion": "v001",
+  "currentDevelopmentVersion": "v002",
+  "v001": {
+    "status": "historical_preserved_revision",
+    "current": false,
+    "protected": true,
+    "visualApprovalRecord": null,
+    "validationRecord": null,
+    "registrationRecord": null,
+    "developmentCatalogRecord": null,
+    "promotionRecord": null
+  },
+  "v002": {
+    "status": "active_development_revision",
+    "current": true,
+    "protected": false,
+    "visualApprovalRecord": "coastal-ground-cover-v002-visual-approval.json",
+    "validationRecord": "coastal-ground-cover-v002-export-validation.json",
+    "registrationRecord": "coastal-ground-cover-v002-registration.json",
+    "developmentCatalogRecord": "coastal-ground-cover-v002-development-catalog-entry.json",
+    "promotionRecord": "coastal-ground-cover-v002-promotion.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "promotionPerformed": true,
+  "registrationReplaced": false
+}

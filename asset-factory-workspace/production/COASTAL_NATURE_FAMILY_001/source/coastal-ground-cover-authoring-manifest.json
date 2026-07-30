@@ -1,0 +1,15 @@
+{
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "recipeReference": "COASTAL_GROUND_COVER_RECIPE_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v001",
+  "targetRevisionVersion": "v001",
+  "expectedBlendFilename": "COASTAL_GROUND_COVER_001_v001.blend",
+  "expectedFinalOutputs": [
+    "COASTAL_GROUND_COVER_001_LOD_CLOSE.glb",
+    "COASTAL_GROUND_COVER_001_LOD_GAMEPLAY.glb",
+    "COASTAL_GROUND_COVER_001_LOD_MAP.glb"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "finalGlbsGenerated": false
+}

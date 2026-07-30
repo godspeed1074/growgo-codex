@@ -1,0 +1,48 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_MANUAL_AUTHORING_SETUP_002",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "previousRegisteredVersion": "v001",
+  "version": "v002",
+  "generatorScript": "asset-factory/local-blender-scripts/generate_coastal_ground_cover_001.py",
+  "exportResumeScript": "asset-factory/local-blender-scripts/resume_coastal_ground_cover_001_exports.py",
+  "expectedBlend": "COASTAL_GROUND_COVER_001_v002.blend",
+  "expectedBlendLocation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GROUND_COVER_001_v002.blend",
+  "expectedLods": [
+    "LOD_CLOSE",
+    "LOD_GAMEPLAY",
+    "LOD_MAP"
+  ],
+  "expectedLodRoots": [
+    "COASTAL_GROUND_COVER_001_LOD_CLOSE_ROOT",
+    "COASTAL_GROUND_COVER_001_LOD_GAMEPLAY_ROOT",
+    "COASTAL_GROUND_COVER_001_LOD_MAP_ROOT"
+  ],
+  "expectedFinalOutputs": [
+    "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+    "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+    "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb"
+  ],
+  "identityAnchors": [
+    "COASTAL_GROUND_COVER_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "COASTAL_GROUND_COVER_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "COASTAL_GROUND_COVER_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "visualRefinementGoals": [
+    "replace_square_patch_appearance_with_irregular_organic_clumps",
+    "improve_front_side_and_45_degree_silhouettes",
+    "support_procedural_scattering",
+    "preserve_mobile_first_geometry",
+    "preserve_papercut_2_5d_style",
+    "support_deterministic_variation"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "runtimeActivated": false,
+  "readyForBlenderGeneration": true
+}

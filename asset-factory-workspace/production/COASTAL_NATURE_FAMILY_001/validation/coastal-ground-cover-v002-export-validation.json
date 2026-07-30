@@ -1,0 +1,110 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_EXPORT_VALIDATION_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "version": "v002",
+  "validatedOn": "2026-07-30",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "lod": "LOD_CLOSE",
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "sha256": "1cb2fc521bf99a88945e06bacaa422ae5486569be4671c0ef11ee7d0b1331d4b",
+      "sizeBytes": 73180,
+      "meshCount": 12,
+      "triangleCount": 173,
+      "materialCount": 2,
+      "primitiveCount": 12,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_GAMEPLAY",
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "d1585342023fb8e17e29626be8c45a2dbfc958e3e6ded890fe1798bb93140bed",
+      "sizeBytes": 56804,
+      "meshCount": 9,
+      "triangleCount": 129,
+      "materialCount": 2,
+      "primitiveCount": 9,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_MAP",
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "sha256": "4b45cb33ccad5f2be178c1a3e428469f225e1f58a5b1e5cc4246a63ca0b79a15",
+      "sizeBytes": 45368,
+      "meshCount": 7,
+      "triangleCount": 97,
+      "materialCount": 2,
+      "primitiveCount": 7,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "triangles_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "triangles_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "meshes_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "meshes_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "primitives_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "primitives_gameplay_gt_map",
+        "ok": true
+      }
+    ]
+  },
+  "sourceVerification": {
+    "sourceBlendRelativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GROUND_COVER_001_v002.blend",
+    "sourceBlendSha256": "0fed203648976371d5ec8d750061bfed70332cd74628218a59226474212137a6",
+    "sourceBlendModifiedDuringExport": false
+  },
+  "quarantineEvidence": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/quarantine/COASTAL_GROUND_COVER_001_v002.blend1",
+    "sha256": "aa3148ce79b94a71ce81f83c311a2cb0461330223868bc8447e0bd79870babc6",
+    "untouched": true
+  },
+  "historicalRevisionProtection": {
+    "previousRegisteredVersion": "v001",
+    "previousRevisionUntouched": true
+  },
+  "exportManifest": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-export-manifest.json",
+    "deterministicFingerprint": "e40a83ec4c307aec8b5c981933f177465fd727fecd47a30bfdd2e008c5d3c397"
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false,
+  "publishingPerformed": false
+}

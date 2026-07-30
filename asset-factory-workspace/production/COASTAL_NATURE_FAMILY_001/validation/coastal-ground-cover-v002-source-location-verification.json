@@ -1,0 +1,46 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_SOURCE_LOCATION_VERIFICATION_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "version": "v002",
+  "verifiedOn": "2026-07-30",
+  "status": "pass",
+  "chosenSourceCandidate": {
+    "filename": "COASTAL_GROUND_COVER_001_v002.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GROUND_COVER_001_v002.blend",
+    "originPath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002.blend",
+    "sha256": "0fed203648976371d5ec8d750061bfed70332cd74628218a59226474212137a6",
+    "selectionReason": [
+      "matches canonical .blend extension for the current source candidate",
+      "newer modified timestamp than the .blend1 backup candidate",
+      "contains the COASTAL_GROUND_COVER_001 v002 identity anchors and LOD roots"
+    ]
+  },
+  "quarantinedCandidates": [
+    {
+      "filename": "COASTAL_GROUND_COVER_001_v002.blend1",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/quarantine/COASTAL_GROUND_COVER_001_v002.blend1",
+      "originPath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002.blend1",
+      "sha256": "aa3148ce79b94a71ce81f83c311a2cb0461330223868bc8447e0bd79870babc6",
+      "reason": "Blender backup-style candidate quarantined to remove source/export ambiguity."
+    }
+  ],
+  "checks": [
+    {
+      "name": "canonical_source_path_present",
+      "ok": true
+    },
+    {
+      "name": "expected_filename_matches",
+      "ok": true
+    },
+    {
+      "name": "no_v002_blend_remaining_in_export",
+      "ok": true
+    },
+    {
+      "name": "backup_candidate_quarantined",
+      "ok": true
+    }
+  ],
+  "readyForPhase195_5Export": true
+}

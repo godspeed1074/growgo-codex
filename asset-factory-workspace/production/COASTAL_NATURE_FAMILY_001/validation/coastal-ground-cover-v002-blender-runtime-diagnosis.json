@@ -1,0 +1,90 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_BLENDER_RUNTIME_DIAGNOSIS_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "version": "v002",
+  "diagnosedOn": "2026-07-30",
+  "status": "blocked_environment_runtime",
+  "runtimeTarget": {
+    "applicationPath": "/Applications/Blender-4.2-LTS.app",
+    "executablePath": "/Applications/Blender-4.2-LTS.app/Contents/MacOS/Blender",
+    "version": "4.2.23 LTS",
+    "buildHash": "d0cbe84903e8",
+    "architecture": "x86_64",
+    "headlessStartupHealthy": false
+  },
+  "reproductionMatrix": [
+    {
+      "name": "background_startup",
+      "arguments": [
+        "-b"
+      ],
+      "result": "crash",
+      "exitCode": 139
+    },
+    {
+      "name": "factory_background_startup",
+      "arguments": [
+        "-b",
+        "--factory-startup"
+      ],
+      "result": "crash",
+      "exitCode": 139
+    },
+    {
+      "name": "factory_python_expression_startup",
+      "arguments": [
+        "-b",
+        "--factory-startup",
+        "--python-expr",
+        "print('BLENDER_HEADLESS_OK')"
+      ],
+      "result": "crash",
+      "exitCode": 139
+    },
+    {
+      "name": "python_expression_startup",
+      "arguments": [
+        "-b",
+        "--python-expr",
+        "print('BLENDER_EXPR_OK')"
+      ],
+      "result": "crash",
+      "exitCode": 139
+    }
+  ],
+  "crashEvidence": {
+    "crashReportPath": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/blender.crash.txt",
+    "crashStage": "startup_gpu_backend_initialization",
+    "stackSummary": [
+      "tiny_free_no_lock",
+      "supports_barycentric_whitelist",
+      "MTLBackend::metal_is_supported",
+      "GPU_backend_type_selection_detect",
+      "WM_init"
+    ],
+    "pythonFramesPresent": false
+  },
+  "causeAnalysis": {
+    "assetRelated": false,
+    "exporterRelated": false,
+    "environmentRelated": true,
+    "likelyRootCause": "Blender 4.2.23 LTS crashes during Metal GPU capability detection on startup before any Asset Factory export script or asset source loads.",
+    "testedNonCauses": [
+      "COASTAL_GROUND_COVER_001_v002 source blend content",
+      "resume_coastal_ground_cover_001_exports.py logic",
+      "locale environment variables LANG, LC_ALL, LC_CTYPE",
+      "factory startup state",
+      "simple Blender Python expression startup"
+    ],
+    "openExrOrIlmThreadEvidenceFound": false
+  },
+  "recoveryRecommendation": {
+    "exportCanResumeNow": false,
+    "recommendedAction": "Restore a Blender runtime that can complete a clean headless startup on this Mac before retrying Asset Factory export.",
+    "safeNextSteps": [
+      "reinstall or replace the current Blender 4.2 LTS application with a known-good build for this machine",
+      "verify `Blender -b --factory-startup --python-expr` succeeds before rerunning any asset export",
+      "retry Phase 195.5 export only after headless startup passes"
+    ]
+  }
+}

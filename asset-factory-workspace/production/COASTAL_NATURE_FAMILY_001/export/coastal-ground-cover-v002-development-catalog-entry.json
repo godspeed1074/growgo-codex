@@ -1,0 +1,127 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_COASTAL_GROUND_COVER_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "category": "nature",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+  "registryRecipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+  "version": "v002",
+  "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+  "validationStatus": "approved",
+  "visualApprovalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_COASTAL_GROUND_COVER_001",
+    "slots": [
+      "foliage",
+      "dry_edge"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "sha256": "1cb2fc521bf99a88945e06bacaa422ae5486569be4671c0ef11ee7d0b1331d4b",
+      "meshCount": 12,
+      "materialCount": 2,
+      "triangleCount": 173,
+      "primitiveCount": 12
+    },
+    "gameplay": {
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "d1585342023fb8e17e29626be8c45a2dbfc958e3e6ded890fe1798bb93140bed",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 129,
+      "primitiveCount": 9
+    },
+    "map": {
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "sha256": "4b45cb33ccad5f2be178c1a3e428469f225e1f58a5b1e5cc4246a63ca0b79a15",
+      "meshCount": 7,
+      "materialCount": 2,
+      "triangleCount": 97,
+      "primitiveCount": 7
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "GROUND_COVER",
+      "ROADSIDE",
+      "TRAIL_EDGE",
+      "DUNE_MARGIN",
+      "PARK_UNDERSTORY"
+    ],
+    "supportedClassifications": [
+      "NATURAL_FEATURE",
+      "GROUND_COVER"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "COASTAL_GROUND_COVER_RECIPE_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_GROUND_COVER_PATCH_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_GROUND_COVER_LEAF_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_GROUND_COVER_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "coastal-ground-cover-v002-registration.json",
+    "version": "v002",
+    "historicalProtectedVersion": "v001"
+  },
+  "sourcePromotionRecord": {
+    "filename": "coastal-ground-cover-v002-promotion.json",
+    "currentDevelopmentVersion": "v002"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "promotionApplied": true
+  }
+}

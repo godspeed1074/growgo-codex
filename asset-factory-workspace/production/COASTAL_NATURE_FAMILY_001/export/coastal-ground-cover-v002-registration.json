@@ -1,0 +1,205 @@
+{
+  "schemaId": "COASTAL_GROUND_COVER_V002_REGISTRATION_RECORD_001",
+  "assetId": "COASTAL_GROUND_COVER_001",
+  "category": "nature",
+  "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+  "registryRecipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "productionFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v002",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_GROUND_COVER_001",
+  "registrationStatus": "registered",
+  "validationStatus": "validated",
+  "visualApprovalStatus": "approved",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "readyForApproval": true,
+  "readyForPublishing": false,
+  "promotionStatus": "active_development_revision",
+  "currentDevelopmentRevision": true,
+  "registeredAt": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_GROUND_COVER_001_v002.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GROUND_COVER_001_v002.blend",
+    "sizeBytes": 1522620,
+    "sha256": "0fed203648976371d5ec8d750061bfed70332cd74628218a59226474212137a6"
+  },
+  "registry": {
+    "assetId": "COASTAL_GROUND_COVER_001",
+    "assetFamily": "COASTAL_NATURE_FAMILY_001",
+    "assetType": "LOW_COASTAL_NATIVE_GROUND_COVER",
+    "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+    "version": "1.0.0",
+    "atlasCompatibility": {
+      "atlasCompatible": true,
+      "supportedObjectTypes": [
+        "GROUND_COVER",
+        "ROADSIDE",
+        "TRAIL_EDGE",
+        "DUNE_MARGIN",
+        "PARK_UNDERSTORY"
+      ],
+      "supportedClassifications": [
+        "NATURAL_FEATURE",
+        "GROUND_COVER"
+      ],
+      "atlasAssignmentRecipeIds": [
+        "COASTAL_GROUND_COVER_RECIPE_001"
+      ],
+      "assignmentMode": "biome_and_context_match"
+    },
+    "biomeCompatibility": [
+      "COASTAL",
+      "DUNE_MARGIN",
+      "TRAIL_CORRIDOR",
+      "PARK_EDGE",
+      "OPEN_GROUND"
+    ],
+    "usageRules": [
+      "low_coastal_ground_cover",
+      "irregular_repeatable_cluster",
+      "trail_edge_ground_cover",
+      "dune_margin_scatter",
+      "reserve_understory_repeatable_placement"
+    ],
+    "lodRules": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ]
+  },
+  "verifiedOutputs": {
+    "close": {
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+      "sha256": "1cb2fc521bf99a88945e06bacaa422ae5486569be4671c0ef11ee7d0b1331d4b",
+      "meshCount": 12,
+      "materialCount": 2,
+      "triangleCount": 173,
+      "primitiveCount": 12,
+      "hasExternalDependencies": false
+    },
+    "gameplay": {
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "d1585342023fb8e17e29626be8c45a2dbfc958e3e6ded890fe1798bb93140bed",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 129,
+      "primitiveCount": 9,
+      "hasExternalDependencies": false
+    },
+    "map": {
+      "filename": "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb",
+      "sha256": "4b45cb33ccad5f2be178c1a3e428469f225e1f58a5b1e5cc4246a63ca0b79a15",
+      "meshCount": 7,
+      "materialCount": 2,
+      "triangleCount": 97,
+      "primitiveCount": 7,
+      "hasExternalDependencies": false
+    }
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_GROUND_COVER_PATCH_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_GROUND_COVER_LEAF_CLUSTER_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_GROUND_COVER_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "verification": {
+    "registrationReady": true,
+    "blockers": [],
+    "manifestConsistency": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "export_manifest_exists",
+          "ok": true
+        },
+        {
+          "name": "source_verification_exists",
+          "ok": true
+        },
+        {
+          "name": "export_validation_exists",
+          "ok": true
+        },
+        {
+          "name": "visual_approval_exists",
+          "ok": true
+        },
+        {
+          "name": "identity_contracts_match",
+          "ok": true
+        },
+        {
+          "name": "source_export_separation_valid",
+          "ok": true
+        }
+      ]
+    },
+    "lodComplexity": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "triangles_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "triangles_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "meshes_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "meshes_gameplay_gt_map",
+          "ok": true
+        }
+      ]
+    },
+    "identityPreserved": true,
+    "recipeIdentityPreserved": true,
+    "dependencyValidationPassed": true,
+    "metadataIdentityPreserved": true,
+    "visualApprovalPassed": true,
+    "promotedToActiveDevelopmentRevision": true
+  },
+  "preservedContracts": {
+    "assetIdPreserved": true,
+    "sourceRecipeIdPreserved": true,
+    "registryRecipeIdPreserved": true,
+    "identityContractSchemaId": "ASSET_IDENTITY_CONTRACT_PHASE_001_1"
+  },
+  "sourceRecords": {
+    "authoringManifestReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-ground-cover-v002-authoring-manifest.json",
+    "exportManifestReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-export-manifest.json",
+    "sourceVerificationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-ground-cover-v002-source-verification.json",
+    "sourceRecoveryVerificationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-ground-cover-v002-source-recovery-verification.json",
+    "exportValidationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-ground-cover-v002-export-validation.json",
+    "visualApprovalReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-visual-approval.json"
+  },
+  "historicalRevision": {
+    "version": "v001",
+    "status": "historical_preserved_revision",
+    "protected": true,
+    "reason": "v001 remains preserved after v002 visual refinement and registration candidate creation."
+  },
+  "promotionRecord": "coastal-ground-cover-v002-promotion.json"
+}
