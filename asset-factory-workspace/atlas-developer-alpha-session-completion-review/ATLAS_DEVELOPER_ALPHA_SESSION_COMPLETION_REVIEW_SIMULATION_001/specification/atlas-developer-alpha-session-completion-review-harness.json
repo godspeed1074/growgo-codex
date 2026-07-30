@@ -1,0 +1,32 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_COMPLETION_REVIEW_HARNESS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_COMPLETION_REVIEW_SIMULATION_001",
+  "recordedOn": "2026-07-30",
+  "operationalReference": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_SIMULATION_001",
+  "recordFrameworkReference": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_FRAMEWORK_001",
+  "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "controlReference": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001",
+  "scenarios": [
+    {
+      "scenarioId": "ATLAS_COMPLETION_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_SESSION_COMPLETION",
+      "outcomeState": "COMPLETED_NO_ACTION"
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_WARNING_001",
+      "scenarioType": "COMPLETION_WITH_WARNINGS",
+      "outcomeState": "COMPLETED_WITH_WARNING"
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_ROLLBACK_001",
+      "scenarioType": "ROLLBACK_COMPLETION",
+      "outcomeState": "STOPPED_AND_ROLLED_BACK"
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_REVIEW_FAIL_001",
+      "scenarioType": "FAILED_SESSION_REQUIRING_REVIEW",
+      "outcomeState": "INVALID_SESSION_RECORD"
+    }
+  ],
+  "deterministicFingerprint": "9c94cd5705b3609db334aceecad7d801482377df484699a1348a04050624808b"
+}

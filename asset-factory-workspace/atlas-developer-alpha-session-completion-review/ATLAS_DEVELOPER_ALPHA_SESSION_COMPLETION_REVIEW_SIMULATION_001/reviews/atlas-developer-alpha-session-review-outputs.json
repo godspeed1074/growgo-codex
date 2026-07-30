@@ -1,0 +1,87 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_REVIEW_OUTPUTS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_COMPLETION_REVIEW_SIMULATION_001",
+  "outputs": [
+    {
+      "scenarioId": "ATLAS_COMPLETION_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_SESSION_COMPLETION",
+      "reviewSections": [
+        "sessionSummary",
+        "eventTimeline",
+        "telemetrySummary",
+        "successMetricReview",
+        "stopConditionReview",
+        "rollbackReview",
+        "operatorNotes",
+        "followUpActions"
+      ],
+      "reviewStatus": "GENERATED",
+      "recommendations": [],
+      "operatorNotesRequired": true
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_WARNING_001",
+      "scenarioType": "COMPLETION_WITH_WARNINGS",
+      "reviewSections": [
+        "sessionSummary",
+        "eventTimeline",
+        "telemetrySummary",
+        "successMetricReview",
+        "stopConditionReview",
+        "rollbackReview",
+        "operatorNotes",
+        "followUpActions"
+      ],
+      "reviewStatus": "GENERATED",
+      "recommendations": [
+        "inspect warning and fallback traces before any future manual session",
+        "confirm operator notes and follow-up actions are appended",
+        "preserve planning-only rollback path if the same signals recur"
+      ],
+      "operatorNotesRequired": true
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_ROLLBACK_001",
+      "scenarioType": "ROLLBACK_COMPLETION",
+      "reviewSections": [
+        "sessionSummary",
+        "eventTimeline",
+        "telemetrySummary",
+        "successMetricReview",
+        "stopConditionReview",
+        "rollbackReview",
+        "operatorNotes",
+        "followUpActions"
+      ],
+      "reviewStatus": "GENERATED",
+      "recommendations": [
+        "inspect warning and fallback traces before any future manual session",
+        "confirm operator notes and follow-up actions are appended",
+        "preserve planning-only rollback path if the same signals recur"
+      ],
+      "operatorNotesRequired": true
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_REVIEW_FAIL_001",
+      "scenarioType": "FAILED_SESSION_REQUIRING_REVIEW",
+      "reviewSections": [
+        "sessionSummary",
+        "eventTimeline",
+        "telemetrySummary",
+        "successMetricReview",
+        "stopConditionReview",
+        "rollbackReview",
+        "operatorNotes",
+        "followUpActions"
+      ],
+      "reviewStatus": "GENERATED",
+      "recommendations": [
+        "inspect warning and fallback traces before any future manual session",
+        "confirm operator notes and follow-up actions are appended",
+        "preserve planning-only rollback path if the same signals recur"
+      ],
+      "operatorNotesRequired": true
+    }
+  ],
+  "deterministicFingerprint": "645735d24e765909cbaf80ffc4c507e33fbef93d314457b80b3dfc98e267969f"
+}

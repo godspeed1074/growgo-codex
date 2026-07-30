@@ -1,0 +1,30 @@
+{
+  "schemaId": "ATLAS_ALPHA_SESSION_TELEMETRY_SUMMARY_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_COMPLETION_REVIEW_SIMULATION_001",
+  "summary": {
+    "telemetryIds": [
+      "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY"
+    ],
+    "healthStates": [
+      "HEALTHY",
+      "WARNING",
+      "WARNING"
+    ],
+    "alertStates": [
+      "NO_ALERT",
+      "WARNING_PACKAGE_NEAR_LIMIT",
+      "RECIPE_FALLBACK_WARNING"
+    ],
+    "rollbackSignals": [
+      "NONE",
+      "NONE",
+      "FALLBACK_TO_APPROVED_RECIPE_PATH"
+    ],
+    "warningsObserved": 2,
+    "blockedSignalsObserved": 0,
+    "continuityState": "POST_SESSION_TELEMETRY_SUMMARY_COMPLETE"
+  },
+  "deterministicFingerprint": "98d21134362256b09251cf322a9ffea2bcd9375229b8c73819bff0269acd2400"
+}

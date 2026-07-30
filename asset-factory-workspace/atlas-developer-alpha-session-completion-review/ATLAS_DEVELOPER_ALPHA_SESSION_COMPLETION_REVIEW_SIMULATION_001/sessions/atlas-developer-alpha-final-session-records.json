@@ -1,0 +1,83 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_FINAL_SESSION_RECORDS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_COMPLETION_REVIEW_SIMULATION_001",
+  "records": [
+    {
+      "scenarioId": "ATLAS_COMPLETION_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_SESSION_COMPLETION",
+      "completionStateTransition": {
+        "from": "COMPLETED",
+        "event": "POST_SESSION_REVIEW_COMPLETED",
+        "to": "COMPLETED"
+      },
+      "outcomeState": "COMPLETED_NO_ACTION",
+      "postSessionCapture": "CAPTURED",
+      "telemetrySummaryReference": "ATLAS_ALPHA_SESSION_TELEMETRY_SUMMARY_001",
+      "reviewGenerated": true,
+      "recommendationsGenerated": false,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_WARNING_001",
+      "scenarioType": "COMPLETION_WITH_WARNINGS",
+      "completionStateTransition": {
+        "from": "COMPLETED",
+        "event": "POST_SESSION_REVIEW_COMPLETED",
+        "to": "COMPLETED"
+      },
+      "outcomeState": "COMPLETED_WITH_WARNING",
+      "postSessionCapture": "CAPTURED",
+      "telemetrySummaryReference": "ATLAS_ALPHA_SESSION_TELEMETRY_SUMMARY_001",
+      "reviewGenerated": true,
+      "recommendationsGenerated": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_ROLLBACK_001",
+      "scenarioType": "ROLLBACK_COMPLETION",
+      "completionStateTransition": {
+        "from": "ROLLBACK_IN_PROGRESS",
+        "event": "CLOSE_SESSION",
+        "to": "COMPLETED"
+      },
+      "outcomeState": "STOPPED_AND_ROLLED_BACK",
+      "postSessionCapture": "CAPTURED",
+      "telemetrySummaryReference": "ATLAS_ALPHA_SESSION_TELEMETRY_SUMMARY_001",
+      "reviewGenerated": true,
+      "recommendationsGenerated": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "scenarioId": "ATLAS_COMPLETION_REVIEW_FAIL_001",
+      "scenarioType": "FAILED_SESSION_REQUIRING_REVIEW",
+      "completionStateTransition": {
+        "from": "INVALID_SESSION",
+        "event": "POST_SESSION_REVIEW_COMPLETED",
+        "to": "INVALID_SESSION"
+      },
+      "outcomeState": "INVALID_SESSION_RECORD",
+      "postSessionCapture": "CAPTURED_WITH_FAILURE_NOTES",
+      "telemetrySummaryReference": "ATLAS_ALPHA_SESSION_TELEMETRY_SUMMARY_001",
+      "reviewGenerated": true,
+      "recommendationsGenerated": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    }
+  ],
+  "deterministicFingerprint": "a2b42e0800518e6c9558c0db4a58fcf59a3aa604815d78502e9321f45856813c"
+}
