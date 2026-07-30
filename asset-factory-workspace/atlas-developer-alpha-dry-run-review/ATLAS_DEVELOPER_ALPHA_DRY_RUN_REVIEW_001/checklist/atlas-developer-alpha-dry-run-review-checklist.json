@@ -1,0 +1,50 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_DRY_RUN_REVIEW_CHECKLIST_001",
+  "reviewId": "ATLAS_DEVELOPER_ALPHA_DRY_RUN_REVIEW_001",
+  "reviewedOn": "2026-07-30",
+  "items": [
+    {
+      "itemId": "CHECK_STATE_MACHINE_BEHAVIOUR",
+      "area": "state_machine_behaviour",
+      "status": "PASS",
+      "evidence": "Dry-run steps follow the approved control state machine through pause, rollback, and completion."
+    },
+    {
+      "itemId": "CHECK_TELEMETRY_COMPLETENESS",
+      "area": "telemetry_completeness",
+      "status": "PASS",
+      "evidence": "Healthy, warning, and rollback-linked telemetry were all captured in the orchestration dry run."
+    },
+    {
+      "itemId": "CHECK_MONITORING_OUTPUTS",
+      "area": "monitoring_outputs",
+      "status": "PASS",
+      "evidence": "Monitoring outputs preserved the expected warning and rollback-facing alert states."
+    },
+    {
+      "itemId": "CHECK_ROLLBACK_HANDLING",
+      "area": "rollback_handling",
+      "status": "PASS",
+      "evidence": "Rollback was triggered from a paused review state, linked to telemetry, and captured in audit."
+    },
+    {
+      "itemId": "CHECK_OPERATOR_WORKFLOW",
+      "area": "operator_workflow",
+      "status": "PASS",
+      "evidence": "The dry-run preserves a readable operator flow from initialization through review completion."
+    },
+    {
+      "itemId": "CHECK_STOP_CONDITIONS",
+      "area": "stop_conditions",
+      "status": "PASS",
+      "evidence": "Warning handling pauses the session and rollback handling remains available before any emergency path."
+    },
+    {
+      "itemId": "CHECK_AUDIT_COMPLETENESS",
+      "area": "audit_completeness",
+      "status": "PASS",
+      "evidence": "The dry run produced a complete audit trail across open, capture, telemetry, rollback, and close events."
+    }
+  ],
+  "deterministicFingerprint": "4ca56d538e5a2fa9271f140c01c0aafb3a3523e5dad38b95cc453b89b1952c6a"
+}
