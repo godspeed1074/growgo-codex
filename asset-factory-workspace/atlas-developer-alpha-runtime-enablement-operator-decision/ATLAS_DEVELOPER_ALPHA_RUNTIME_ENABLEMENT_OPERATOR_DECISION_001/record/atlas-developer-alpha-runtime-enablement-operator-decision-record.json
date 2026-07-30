@@ -1,0 +1,44 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_OPERATOR_DECISION_RECORD_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_OPERATOR_DECISION_001",
+  "recordedOn": "2026-07-30",
+  "decisionState": "DEFER_ENABLEMENT",
+  "decisionStatesSupported": [
+    "EXECUTE_ENABLEMENT",
+    "DEFER_ENABLEMENT"
+  ],
+  "operatorDecision": {
+    "state": "DEFER_ENABLEMENT",
+    "operatorRole": "atlas_operator",
+    "dualAwarenessRequired": true
+  },
+  "decisionRationaleReference": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_DECISION_RATIONALE_001",
+  "finalPreChangeSnapshot": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "approvalReferences": {
+    "enablementActionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_ACTION_001",
+    "enablementReviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001",
+    "flagTransitionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_001"
+  },
+  "scopeConfirmation": {
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "internalDeveloperOnly": true
+  },
+  "rollbackConfirmation": {
+    "rollbackState": "READY_IF_MANUAL_TRANSITION_IS_ATTEMPTED",
+    "rollbackOwner": "atlas_operator",
+    "backupRollbackOwner": "internal_developer_reviewer"
+  },
+  "authorizationState": "AUTHORIZED_TO_RECORD_DECISION_ONLY",
+  "deterministicFingerprint": "bb9cf6e2352b6c97b0fbfb67f55994de3d00d6e46cae46e907b25c7a2b5a6a8b"
+}

@@ -1,0 +1,22 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_OPERATOR_AUTHORIZATION_RECORD_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_OPERATOR_DECISION_001",
+  "recordedOn": "2026-07-30",
+  "authorizationState": "AUTHORIZED_TO_RECORD_DECISION_ONLY",
+  "authorizedRoles": [
+    "atlas_operator",
+    "internal_developer_reviewer"
+  ],
+  "internalDeveloperOnly": true,
+  "explicitTransitionStillRequired": true,
+  "blockedActions": [
+    "automatic runtime enablement",
+    "renderer attachment",
+    "map attachment",
+    "map downloads",
+    "Blender execution",
+    "GLB generation",
+    "asset modification"
+  ],
+  "deterministicFingerprint": "ca29b7d5bd9bf2c71e1bf402f20d5482d5829625443757bc91682cc5923d9423"
+}

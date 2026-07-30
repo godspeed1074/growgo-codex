@@ -1,0 +1,25 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_DECISION_RATIONALE_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_RUNTIME_ENABLEMENT_OPERATOR_DECISION_001",
+  "recordedOn": "2026-07-30",
+  "selectedDecisionState": "DEFER_ENABLEMENT",
+  "rationaleSummary": "Defer the first runtime enablement until a separate explicit manual transition moment is intentionally chosen by the authorized operator pair.",
+  "reasons": [
+    "current planning and control records are complete and passing",
+    "no explicit live transition request is being executed in this phase",
+    "safety requires runtimeExecutionEnabled to remain false until the precise operator moment",
+    "map and renderer pathways remain intentionally blocked",
+    "deferral preserves rollback simplicity and audit clarity"
+  ],
+  "preservedFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "deterministicFingerprint": "520fafa7c24dca9a458ed4c2d31e091188530267c03c5e3970e7ca8f7392abda"
+}
