@@ -1,0 +1,27 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_V001_VISUAL_APPROVAL_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "version": "v001",
+  "approvedOn": "2026-07-30",
+  "approvalStatus": "approved",
+  "approvalSource": "Manual visual approval confirmed in the Phase 196.6 registration handoff request.",
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "revisionRequired": false
+  },
+  "evidenceReferences": {
+    "intakeReport": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/coastal-rock-cluster-001-intake-report.md",
+    "authoringSetupReport": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/coastal-rock-cluster-authoring-setup-report.md",
+    "exportVerificationReport": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/coastal-rock-cluster-export-verification-report.md",
+    "sourceVerification": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-rock-cluster-source-verification.json",
+    "exportValidation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-rock-cluster-export-validation.json",
+    "exportManifest": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-export-manifest.json"
+  },
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

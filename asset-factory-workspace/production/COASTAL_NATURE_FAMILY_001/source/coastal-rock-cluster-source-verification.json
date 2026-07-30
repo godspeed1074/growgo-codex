@@ -1,0 +1,36 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_V001_SOURCE_VERIFICATION_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "version": "v001",
+  "verifiedOn": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_ROCK_CLUSTER_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_ROCK_CLUSTER_001_v001.blend",
+    "sizeBytes": 1460552,
+    "sha256": "63eff4636ee2b5e4f26522ac443cf586e9f597d8d9964f0f49f52776d9afc471"
+  },
+  "sourceIdentityVerification": {
+    "filenameMatches": true,
+    "canonicalSourceFolder": true,
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true,
+    "noBlendFilesPresentInExport": true,
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportReadiness": {
+    "readyToAttemptExport": true,
+    "exportCompleted": false,
+    "exportBlocked": true,
+    "blockerType": "BLENDER_RUNTIME_CRASH",
+    "blockerDetail": "Headless Blender 4.2.23 LTS crashed during startup before resume_coastal_rock_cluster_001_exports.py could complete."
+  },
+  "expectedOutputs": [
+    "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+    "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+    "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb"
+  ]
+}

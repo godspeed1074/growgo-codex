@@ -1,0 +1,20 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_V001_VERSION_RECORD_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "previousDevelopmentVersion": null,
+  "currentDevelopmentVersion": "v001",
+  "v001": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "coastal-rock-cluster-visual-approval.json",
+    "validationRecord": "coastal-rock-cluster-export-validation.json",
+    "registrationRecord": "coastal-rock-cluster-registration.json",
+    "developmentCatalogRecord": "coastal-rock-cluster-development-catalog-entry.json",
+    "promotionRecord": "coastal-rock-cluster-v001-promotion.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "promotionPerformed": true,
+  "registrationReplaced": false
+}

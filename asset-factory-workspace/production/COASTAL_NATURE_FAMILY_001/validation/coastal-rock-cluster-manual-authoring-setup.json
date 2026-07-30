@@ -1,0 +1,59 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_MANUAL_AUTHORING_SETUP_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "version": "v001",
+  "generatorScript": "asset-factory/local-blender-scripts/generate_coastal_rock_cluster_001.py",
+  "exportResumeScript": "asset-factory/local-blender-scripts/resume_coastal_rock_cluster_001_exports.py",
+  "expectedBlend": "COASTAL_ROCK_CLUSTER_001_v001.blend",
+  "expectedBlendLocation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_ROCK_CLUSTER_001_v001.blend",
+  "expectedLods": [
+    "LOD_CLOSE",
+    "LOD_GAMEPLAY",
+    "LOD_MAP"
+  ],
+  "expectedLodRoots": [
+    "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE_ROOT",
+    "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY_ROOT",
+    "COASTAL_ROCK_CLUSTER_001_LOD_MAP_ROOT"
+  ],
+  "expectedFinalOutputs": [
+    "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+    "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+    "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb"
+  ],
+  "identityAnchors": [
+    "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "COASTAL_ROCK_CLUSTER_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "folderContract": {
+    "sourceBlendFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source",
+    "glbExportFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export",
+    "blendFilesAllowedInExport": false
+  },
+  "designRequirements": [
+    "papercut_2_5d_style",
+    "lightweight_mobile_geometry",
+    "natural_rock_silhouettes",
+    "repeated_placement_ready",
+    "procedural_scattering_compatible",
+    "no_obvious_tile_appearance",
+    "coastal_beaches_trails_cliffs_parks_suitable"
+  ],
+  "referenceWorkflows": [
+    "TREE_EUCALYPTUS_001",
+    "TREE_BOTTLEBRUSH_001",
+    "SHRUB_COASTAL_LOW_001",
+    "COASTAL_GROUND_COVER_001"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "runtimeActivated": false,
+  "readyForBlenderGeneration": true
+}

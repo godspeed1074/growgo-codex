@@ -1,0 +1,100 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_EXPORT_VALIDATION_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "version": "v001",
+  "validatedOn": "2026-07-30",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "lod": "LOD_CLOSE",
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "sha256": "9735c49581d9aed032e90371c721b80974170cef0742113109e58fdc4b53e404",
+      "sizeBytes": 56008,
+      "meshCount": 9,
+      "triangleCount": 129,
+      "materialCount": 2,
+      "primitiveCount": 9,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_GAMEPLAY",
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "sha256": "7fd7d4db78e18395316d0a6d07ae635dcce055783a2c13800bc1896136223ac3",
+      "sizeBytes": 44924,
+      "meshCount": 7,
+      "triangleCount": 97,
+      "materialCount": 2,
+      "primitiveCount": 7,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_MAP",
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "sha256": "016d654a3c6315cb258493f27952d8d80c2c1546446e4e8bd348fcb189c630e7",
+      "sizeBytes": 33620,
+      "meshCount": 5,
+      "triangleCount": 65,
+      "materialCount": 2,
+      "primitiveCount": 5,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "triangles_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "triangles_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "meshes_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "meshes_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "primitives_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "primitives_gameplay_gt_map",
+        "ok": true
+      }
+    ]
+  },
+  "sourceVerification": {
+    "sourceBlendRelativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_ROCK_CLUSTER_001_v001.blend",
+    "sourceBlendSha256": "63eff4636ee2b5e4f26522ac443cf586e9f597d8d9964f0f49f52776d9afc471",
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportManifest": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-export-manifest.json",
+    "deterministicFingerprint": "122ee35cff71f85f5c740303dc3a50a0b1a134eed7fba8030555de0b4646a5ba"
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false
+}

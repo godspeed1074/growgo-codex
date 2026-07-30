@@ -1,0 +1,127 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_COASTAL_ROCK_CLUSTER_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "category": "nature",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+  "registryRecipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+  "version": "v001",
+  "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+  "validationStatus": "approved",
+  "visualApprovalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_COASTAL_ROCK_001",
+    "slots": [
+      "stone",
+      "edge"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "sha256": "9735c49581d9aed032e90371c721b80974170cef0742113109e58fdc4b53e404",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 129,
+      "primitiveCount": 9
+    },
+    "gameplay": {
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "sha256": "7fd7d4db78e18395316d0a6d07ae635dcce055783a2c13800bc1896136223ac3",
+      "meshCount": 7,
+      "materialCount": 2,
+      "triangleCount": 97,
+      "primitiveCount": 7
+    },
+    "map": {
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "sha256": "016d654a3c6315cb258493f27952d8d80c2c1546446e4e8bd348fcb189c630e7",
+      "meshCount": 5,
+      "materialCount": 2,
+      "triangleCount": 65,
+      "primitiveCount": 5
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "ROCK_CLUSTER",
+      "SHORELINE_DETAIL",
+      "TRAILSIDE_DETAIL",
+      "CLIFF_BASE_DETAIL",
+      "PARK_TERRAIN_DETAIL"
+    ],
+    "supportedClassifications": [
+      "NATURAL_FEATURE",
+      "TERRAIN_DETAIL"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "COASTAL_ROCK_CLUSTER_RECIPE_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_ROCK_CLUSTER_CORE_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_ROCK_CLUSTER_DETAIL_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_ROCK_CLUSTER_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "coastal-rock-cluster-registration.json",
+    "version": "v001",
+    "historicalProtectedVersion": null
+  },
+  "sourcePromotionRecord": {
+    "filename": "coastal-rock-cluster-v001-promotion.json",
+    "currentDevelopmentVersion": "v001"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "promotionApplied": true
+  }
+}

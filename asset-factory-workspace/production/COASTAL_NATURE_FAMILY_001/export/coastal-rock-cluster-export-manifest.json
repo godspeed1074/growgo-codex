@@ -1,0 +1,42 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_ROCK_CLUSTER_CORE_COASTAL_001",
+    "MOD_ROCK_CLUSTER_DETAIL_COASTAL_001",
+    "MOD_ROCK_CLUSTER_GROUND_SOCKET_COASTAL_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 9,
+      "triangleCount": 129,
+      "materialCount": 2,
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "sizeBytes": 56008
+    },
+    "gameplay": {
+      "meshCount": 7,
+      "triangleCount": 97,
+      "materialCount": 2,
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "sizeBytes": 44924
+    },
+    "map": {
+      "meshCount": 5,
+      "triangleCount": 65,
+      "materialCount": 2,
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "sizeBytes": 33620
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "122ee35cff71f85f5c740303dc3a50a0b1a134eed7fba8030555de0b4646a5ba"
+}

@@ -1,0 +1,171 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_RECORD_001",
+  "intakeId": "INTAKE_COASTAL_ROCK_CLUSTER_001_V001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-30",
+  "status": "intake_complete_authoring_not_started",
+  "assetIdentity": {
+    "assetId": "COASTAL_ROCK_CLUSTER_001",
+    "familyId": "COASTAL_NATURE_FAMILY_001",
+    "category": "NATURE",
+    "assetType": "COASTAL_ROCK_CLUSTER_TERRAIN_DETAIL",
+    "developmentVersion": "v001",
+    "protectionState": "unregistered_new_asset",
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
+  },
+  "recipeIdentity": {
+    "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+    "recipeType": "STATIC_ENVIRONMENT_DETAIL",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_ROCK_001",
+    "lodProfile": "NATURE_LIGHTWEIGHT_001",
+    "placementContexts": [
+      "beach_edge",
+      "cliff_base",
+      "trailside",
+      "park_rockery",
+      "shoreline_scatter",
+      "natural_terrain_detail"
+    ]
+  },
+  "familyAssignment": {
+    "familyId": "COASTAL_NATURE_FAMILY_001",
+    "familyRole": "coastal_nature_environment_detail",
+    "assetPack": "coastal_nature"
+  },
+  "intakeTemplateInputs": {
+    "assetName": "COASTAL_ROCK_CLUSTER_001",
+    "family": "COASTAL_NATURE_FAMILY_001",
+    "purpose": "Reusable coastal rock clusters for beaches, cliffs, trails, parks, shorelines, and natural terrain.",
+    "biomeTheme": "Australian coastal terrain detail with weathered rock cluster character",
+    "expectedLods": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ],
+    "performanceBudget": {
+      "mobileFirst": true,
+      "triangleTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 220
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 132
+        },
+        "LOD_MAP": {
+          "targetMax": 56
+        }
+      },
+      "meshTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 7
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 5
+        },
+        "LOD_MAP": {
+          "targetMax": 3
+        }
+      },
+      "materialTargets": {
+        "allLods": {
+          "targetMax": 2,
+          "strategy": "shared_material"
+        }
+      }
+    },
+    "dependencies": [],
+    "visualReferences": [
+      "Clustered weathered coastal rocks with broad readable silhouettes",
+      "Papercut 2.5D forms readable from front, side, and 45-degree views",
+      "Reusable natural rock groupings suitable for beaches, cliffs, trails, and shoreline scatter"
+    ],
+    "approvalCriteria": [
+      "Reads clearly as a natural coastal rock cluster rather than a square tile or single boulder",
+      "Maintains papercut 2.5D silhouette from front, side, and 45-degree views",
+      "Supports repeated placement without obvious copy-paste tiling",
+      "Mobile-first geometry remains lightweight and stable across all LODs",
+      "LOD simplification preserves rock-cluster identity and footprint"
+    ]
+  },
+  "lodExpectations": {
+    "requiredLods": [
+      {
+        "lod": "LOD_CLOSE",
+        "purpose": "nearest gameplay and inspection view",
+        "expectedComplexityRank": 3
+      },
+      {
+        "lod": "LOD_GAMEPLAY",
+        "purpose": "standard in-world placement view",
+        "expectedComplexityRank": 2
+      },
+      {
+        "lod": "LOD_MAP",
+        "purpose": "far-map and low-detail placement view",
+        "expectedComplexityRank": 1
+      }
+    ],
+    "complexityOrderingRule": "LOD_CLOSE > LOD_GAMEPLAY > LOD_MAP"
+  },
+  "productionContracts": {
+    "sourceExportSeparation": {
+      "blenderSourceFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/",
+      "exportFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/",
+      "rule": "Blender source must live only in source/ and GLB outputs must live only in export/"
+    }
+  },
+  "validationRequirements": {
+    "preAuthoring": [
+      "asset_identity_defined",
+      "recipe_identity_defined",
+      "family_assignment_defined",
+      "lod_expectations_defined",
+      "performance_targets_defined",
+      "visual_approval_criteria_defined",
+      "source_export_contract_defined",
+      "no_blender_source_created_yet",
+      "no_glb_outputs_created_yet",
+      "no_registration_records_created"
+    ],
+    "futureProductionGates": [
+      "identity_anchor_present_per_lod",
+      "asset_identity_preserved",
+      "recipe_identity_preserved",
+      "dependency_identity_preserved",
+      "metadata_identity_preserved",
+      "no_external_dependencies",
+      "deterministic_generation",
+      "deterministic_export",
+      "lod_complexity_order_preserved",
+      "naming_and_versioning_valid",
+      "source_export_separation_preserved",
+      "manual_visual_review_required_before_registration"
+    ]
+  },
+  "visualApprovalCriteria": {
+    "automatedChecksInformingReview": [
+      "LOD presence",
+      "triangle budgets",
+      "mesh budgets",
+      "shared material count",
+      "identity contract completeness",
+      "source_export_contract completeness"
+    ],
+    "humanReviewRequired": [
+      "Rock cluster reads as a natural grouped formation rather than a repeated tile",
+      "Silhouette feels organic from front, side, and 45-degree views",
+      "Papercut 2.5D style remains intact",
+      "Repeated placement would still look believable across beaches, cliffs, trails, and shorelines",
+      "MAP LOD retains a recognisable clustered rock footprint suitable for procedural scattering"
+    ]
+  },
+  "authoringReadiness": {
+    "blenderFilesCreated": false,
+    "geometryGenerated": false,
+    "glbsExported": false,
+    "registered": false,
+    "readyForAuthoringSetup": true,
+    "nextPhase": "196.2_authoring_setup"
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "schemaId": "COASTAL_ROCK_CLUSTER_REGISTRATION_RECORD_001",
+  "assetId": "COASTAL_ROCK_CLUSTER_001",
+  "category": "nature",
+  "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+  "registryRecipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "productionFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_ROCK_001",
+  "registrationStatus": "registered",
+  "validationStatus": "validated",
+  "visualApprovalStatus": "approved",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "readyForApproval": true,
+  "readyForPublishing": false,
+  "promotionStatus": "active_development_revision",
+  "currentDevelopmentRevision": true,
+  "registeredAt": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_ROCK_CLUSTER_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_ROCK_CLUSTER_001_v001.blend",
+    "sizeBytes": 1460552,
+    "sha256": "63eff4636ee2b5e4f26522ac443cf586e9f597d8d9964f0f49f52776d9afc471"
+  },
+  "registry": {
+    "assetId": "COASTAL_ROCK_CLUSTER_001",
+    "assetFamily": "COASTAL_NATURE_FAMILY_001",
+    "assetType": "COASTAL_ROCK_CLUSTER_TERRAIN_DETAIL",
+    "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+    "version": "1.0.0",
+    "atlasCompatibility": {
+      "atlasCompatible": true,
+      "supportedObjectTypes": [
+        "ROCK_CLUSTER",
+        "SHORELINE_DETAIL",
+        "TRAILSIDE_DETAIL",
+        "CLIFF_BASE_DETAIL",
+        "PARK_TERRAIN_DETAIL"
+      ],
+      "supportedClassifications": [
+        "NATURAL_FEATURE",
+        "TERRAIN_DETAIL"
+      ],
+      "atlasAssignmentRecipeIds": [
+        "COASTAL_ROCK_CLUSTER_RECIPE_001"
+      ],
+      "assignmentMode": "biome_and_context_match"
+    },
+    "biomeCompatibility": [
+      "COASTAL",
+      "BEACH_EDGE",
+      "CLIFF_BASE",
+      "TRAIL_CORRIDOR",
+      "PARK_EDGE",
+      "SHORELINE"
+    ],
+    "usageRules": [
+      "coastal_rock_cluster_detail",
+      "shoreline_scatter_cluster",
+      "trail_edge_rock_grouping",
+      "cliff_base_repeatable_detail",
+      "park_terrain_detail_cluster"
+    ],
+    "lodRules": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ]
+  },
+  "verifiedOutputs": {
+    "close": {
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+      "sha256": "9735c49581d9aed032e90371c721b80974170cef0742113109e58fdc4b53e404",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 129,
+      "primitiveCount": 9,
+      "hasExternalDependencies": false
+    },
+    "gameplay": {
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+      "sha256": "7fd7d4db78e18395316d0a6d07ae635dcce055783a2c13800bc1896136223ac3",
+      "meshCount": 7,
+      "materialCount": 2,
+      "triangleCount": 97,
+      "primitiveCount": 7,
+      "hasExternalDependencies": false
+    },
+    "map": {
+      "filename": "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb",
+      "sha256": "016d654a3c6315cb258493f27952d8d80c2c1546446e4e8bd348fcb189c630e7",
+      "meshCount": 5,
+      "materialCount": 2,
+      "triangleCount": 65,
+      "primitiveCount": 5,
+      "hasExternalDependencies": false
+    }
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_ROCK_CLUSTER_CORE_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_ROCK_CLUSTER_DETAIL_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_ROCK_CLUSTER_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "verification": {
+    "registrationReady": true,
+    "blockers": [],
+    "manifestConsistency": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "export_manifest_exists",
+          "ok": true
+        },
+        {
+          "name": "source_verification_exists",
+          "ok": true
+        },
+        {
+          "name": "export_validation_exists",
+          "ok": true
+        },
+        {
+          "name": "visual_approval_exists",
+          "ok": true
+        },
+        {
+          "name": "identity_contracts_match",
+          "ok": true
+        },
+        {
+          "name": "source_export_separation_valid",
+          "ok": true
+        }
+      ]
+    },
+    "lodComplexity": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "triangles_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "triangles_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "meshes_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "meshes_gameplay_gt_map",
+          "ok": true
+        }
+      ]
+    },
+    "identityPreserved": true,
+    "recipeIdentityPreserved": true,
+    "dependencyValidationPassed": true,
+    "metadataIdentityPreserved": true,
+    "visualApprovalPassed": true,
+    "promotedToActiveDevelopmentRevision": true
+  },
+  "preservedContracts": {
+    "assetIdPreserved": true,
+    "sourceRecipeIdPreserved": true,
+    "registryRecipeIdPreserved": true,
+    "identityContractSchemaId": "ASSET_IDENTITY_CONTRACT_PHASE_001_1"
+  },
+  "sourceRecords": {
+    "authoringManifestReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-rock-cluster-authoring-manifest.json",
+    "exportManifestReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-export-manifest.json",
+    "sourceVerificationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-rock-cluster-source-verification.json",
+    "exportValidationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-rock-cluster-export-validation.json",
+    "visualApprovalReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-visual-approval.json"
+  },
+  "historicalRevision": null,
+  "promotionRecord": "coastal-rock-cluster-v001-promotion.json"
+}
