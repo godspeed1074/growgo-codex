@@ -1,0 +1,34 @@
+{
+  "schemaId": "ATLAS_MAP_PREVIEW_ATTACHMENT_VALIDATION_001",
+  "previewId": "ATLAS_MAP_PREVIEW_ATTACHMENT_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "coordinates_align_with_regions",
+      "ok": true
+    },
+    {
+      "name": "selected_recipes_match_expected_environments",
+      "ok": true
+    },
+    {
+      "name": "boundaries_transition_correctly",
+      "ok": true
+    },
+    {
+      "name": "deterministic_outputs_preserved",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "57b61ad23a1998535b6156a5bd670d48977d53bda5b4ce801884315c61975a9b",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

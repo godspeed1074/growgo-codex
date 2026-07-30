@@ -1,0 +1,25 @@
+{
+  "schemaId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_LIFECYCLE_RULES_001",
+  "attachmentPlanId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_001",
+  "lifecycleStatus": "CONTROLLED_ATTACHMENT_PLANNING_READY",
+  "allowedStates": [
+    "PREVIEW_ONLY",
+    "ALPHA_SCOPE_DEFINED",
+    "CONTROLLED_HANDOFF_PENDING"
+  ],
+  "blockedStates": [
+    "RUNTIME_ATTACHED",
+    "RENDERER_ATTACHED",
+    "MAPS_DOWNLOADED",
+    "PLAYER_VISIBLE"
+  ],
+  "rollbackAvailable": true,
+  "emergencyDisableAvailable": true,
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "981d16e98ade916ef95ac3357c64e7e876a98f8efcae11475246e5f5fd0a2452"
+}

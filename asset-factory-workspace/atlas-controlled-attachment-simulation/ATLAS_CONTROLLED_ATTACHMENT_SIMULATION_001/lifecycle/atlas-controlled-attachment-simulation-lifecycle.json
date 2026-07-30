@@ -1,0 +1,16 @@
+{
+  "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_LIFECYCLE_001",
+  "simulationId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_001",
+  "lifecycleStatus": "FUTURE_ALPHA_ATTACHMENT_READY_FOR_REVIEW",
+  "readyScenarioCount": 1,
+  "blockedScenarioCount": 4,
+  "rollbackAvailable": true,
+  "emergencyDisableAvailable": true,
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "dab297d06980fd0d56c25f145f04f2f31363576a8944dd3a16802f8166bf5480"
+}

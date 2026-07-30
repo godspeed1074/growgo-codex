@@ -1,0 +1,38 @@
+{
+  "schemaId": "ATLAS_REGIONAL_BOUNDARY_TRANSITION_VALIDATION_001",
+  "simulationId": "ATLAS_REGIONAL_BOUNDARY_TRANSITION_SIMULATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "package_handoff",
+      "ok": true
+    },
+    {
+      "name": "cache_continuity",
+      "ok": true
+    },
+    {
+      "name": "deterministic_recipe_continuity",
+      "ok": true
+    },
+    {
+      "name": "seed_preservation",
+      "ok": true
+    },
+    {
+      "name": "safe_failure_behaviour",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "1d3932dc15a32b5ff7fbf19cfb7e49dc80932291baf8d6f6ef9851c184780ed0",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

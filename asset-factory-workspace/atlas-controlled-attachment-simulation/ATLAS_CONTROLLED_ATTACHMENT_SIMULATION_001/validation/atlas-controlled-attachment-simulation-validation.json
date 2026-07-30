@@ -1,0 +1,42 @@
+{
+  "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_VALIDATION_001",
+  "simulationId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "permission_checks",
+      "ok": true
+    },
+    {
+      "name": "rollback_behaviour",
+      "ok": true
+    },
+    {
+      "name": "kill_switch_handling",
+      "ok": true
+    },
+    {
+      "name": "package_validation",
+      "ok": true
+    },
+    {
+      "name": "coordinate_resolution",
+      "ok": true
+    },
+    {
+      "name": "deterministic_recipe_selection",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "6bc08fe75e516b2adf01d2cf685b63a39d31f0ea721cb7a3d6981fe426baf379",
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

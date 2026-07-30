@@ -1,0 +1,38 @@
+{
+  "schemaId": "ATLAS_MAP_COORDINATE_DETERMINISM_SIMULATION_VALIDATION_001",
+  "simulationId": "ATLAS_MAP_COORDINATE_DETERMINISM_SIMULATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "deterministic_region_identity",
+      "ok": true
+    },
+    {
+      "name": "deterministic_package_selection",
+      "ok": true
+    },
+    {
+      "name": "deterministic_recipe_selection",
+      "ok": true
+    },
+    {
+      "name": "deterministic_seed_generation",
+      "ok": true
+    },
+    {
+      "name": "safe_failure_behaviour",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "96c6bf67c96f5c14a0984de9c1e703e1374662e6485c91a889a28f95a24aaab1",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

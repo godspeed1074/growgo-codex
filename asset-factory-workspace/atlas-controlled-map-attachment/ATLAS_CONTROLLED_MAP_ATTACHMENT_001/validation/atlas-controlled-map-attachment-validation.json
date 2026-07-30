@@ -1,0 +1,46 @@
+{
+  "schemaId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_VALIDATION_001",
+  "attachmentPlanId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "attachment_permission_model_defined",
+      "ok": true
+    },
+    {
+      "name": "alpha_test_boundaries_defined",
+      "ok": true
+    },
+    {
+      "name": "allowed_regions_defined",
+      "ok": true
+    },
+    {
+      "name": "rollback_and_emergency_disable_present",
+      "ok": true
+    },
+    {
+      "name": "renderer_handoff_contract_blocked",
+      "ok": true
+    },
+    {
+      "name": "logging_and_failure_handling_defined",
+      "ok": true
+    },
+    {
+      "name": "validation_gates_backed_by_preview_and_transition_passes",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "3e20c5b9e6a5af4d1ca9c5ff892c90c22e00512e0f7699d5ef934a76677f1582",
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

@@ -1,0 +1,157 @@
+{
+  "schemaId": "ATLAS_MAP_ATTACHMENT_SPECIFICATION_001",
+  "attachmentId": "ATLAS_MAP_ATTACHMENT_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "atlasEngineRecipeIntegrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+    "locationRecipeSelectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "locationRecipeFactoryId": "LOCATION_RECIPE_FACTORY_001"
+  },
+  "coordinateInputContract": {
+    "schemaId": "ATLAS_MAP_COORDINATE_INPUT_CONTRACT_001",
+    "requiredFields": [
+      "lat",
+      "lng",
+      "mapZoom",
+      "mapProjection",
+      "environment",
+      "requestIntent"
+    ],
+    "normalizationRules": [
+      "lat and lng are bucketed to two decimal places for planning lookups",
+      "mapProjection must be declared before region lookup",
+      "requestIntent must remain PLANNING_PREVIEW or INSPECTION_ONLY"
+    ],
+    "supportedEnvironment": "DEVELOPMENT_ONLY"
+  },
+  "mapToRegionLookupRules": {
+    "schemaId": "ATLAS_MAP_TO_REGION_LOOKUP_RULES_001",
+    "lookupInputs": [
+      "latBucket",
+      "lngBucket",
+      "environmentProfile",
+      "selectorVersion",
+      "schemaVersion"
+    ],
+    "deterministicLookupPolicy": "same coordinate buckets and environment profile must resolve to same regionId and packageId",
+    "representativeRegions": [
+      {
+        "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+        "environmentProfile": "COASTAL_EXPLORATION"
+      },
+      {
+        "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+        "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+        "environmentProfile": "FOREST_EXPLORATION"
+      },
+      {
+        "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+        "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+        "environmentProfile": "MIXED_EDGE_TRANSITION"
+      }
+    ]
+  },
+  "regionBoundaryRules": {
+    "schemaId": "ATLAS_MAP_REGION_BOUNDARY_RULES_001",
+    "requiredFields": [
+      "boundaryPolygon",
+      "centroid",
+      "latBucket",
+      "lngBucket"
+    ],
+    "rules": [
+      "map attachment planning may use region boundaries for lookup only",
+      "boundaries remain source-authoritative and read-only",
+      "cross-boundary requests must prefer deterministic nearest-bucket resolution before fallback review"
+    ]
+  },
+  "packageLoadingRules": {
+    "schemaId": "ATLAS_MAP_PACKAGE_LOADING_RULES_001",
+    "allowedArtifacts": [
+      "environmentSummary",
+      "classificationInputs",
+      "selectorCompatibility",
+      "cacheMetadata"
+    ],
+    "blockedArtifacts": [
+      "runtime_scene",
+      "renderer_payload",
+      "mesh_stream",
+      "texture_stream"
+    ],
+    "loadPolicies": [
+      "package loading is metadata-only during planning",
+      "package loading must preserve packageFingerprint and sourceRevision",
+      "package loading must stop before renderer or runtime attachment"
+    ]
+  },
+  "deterministicSeedGenerationFromCoordinates": {
+    "schemaId": "ATLAS_MAP_COORDINATE_SEED_GENERATION_001",
+    "seedInputs": [
+      "regionId",
+      "packageVersion",
+      "latBucket",
+      "lngBucket",
+      "primaryBiomeHint",
+      "archetypeHint",
+      "selectorVersion"
+    ],
+    "seedPolicy": "sha256(regionId, packageVersion, latBucket, lngBucket, biomeHint, archetypeHint, selectorVersion)",
+    "replayGuarantee": true
+  },
+  "mapAttachmentPermissions": {
+    "schemaId": "ATLAS_MAP_ATTACHMENT_PERMISSIONS_001",
+    "allowedStates": [
+      "PLANNING_ONLY",
+      "LOOKUP_READY",
+      "PACKAGE_METADATA_READY",
+      "SELECTOR_HANDOFF_READY"
+    ],
+    "blockedStates": [
+      "MAP_DOWNLOADED",
+      "RENDERER_ATTACHED",
+      "RUNTIME_ACTIVATED",
+      "PLAYER_VISIBLE"
+    ],
+    "permissions": {
+      "runtimeActivationAuthorized": false,
+      "mapDownloadsAuthorized": false,
+      "rendererAttachmentAuthorized": false,
+      "blenderAuthorized": false,
+      "glbAuthorized": false,
+      "assetModificationAuthorized": false
+    }
+  },
+  "rendererBoundaryRules": {
+    "schemaId": "ATLAS_MAP_RENDERER_BOUNDARY_RULES_001",
+    "blockedImports": [
+      "live_renderer_runtime",
+      "map_canvas_attachment",
+      "webgl_scene_boot",
+      "leaflet_layer_attachment"
+    ],
+    "rules": [
+      "selector and package handoff stop before renderer attachment",
+      "no runtime scene graph may be created in planning",
+      "no renderer lifecycle flags may change during map attachment planning"
+    ]
+  },
+  "failureHandling": {
+    "schemaId": "ATLAS_MAP_ATTACHMENT_FAILURE_HANDLING_001",
+    "reasonCodes": [
+      "UNSUPPORTED_COORDINATE_CONTEXT",
+      "REGION_NOT_FOUND",
+      "PACKAGE_INCOMPATIBLE",
+      "SELECTOR_CONTRACT_MISMATCH",
+      "PERMISSION_BLOCKED",
+      "RENDERER_BOUNDARY_VIOLATION"
+    ],
+    "safeFailureRules": [
+      "failures return metadata-only blocked states",
+      "failures do not trigger downloads",
+      "failures do not attach renderer",
+      "failures do not mutate assets or map state"
+    ]
+  }
+}

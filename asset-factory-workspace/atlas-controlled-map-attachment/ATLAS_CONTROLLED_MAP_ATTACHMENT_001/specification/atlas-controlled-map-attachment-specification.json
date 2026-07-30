@@ -1,0 +1,171 @@
+{
+  "schemaId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_SPECIFICATION_001",
+  "attachmentPlanId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "mapAttachmentId": "ATLAS_MAP_ATTACHMENT_001",
+    "mapPreviewAttachmentId": "ATLAS_MAP_PREVIEW_ATTACHMENT_001",
+    "regionalBoundaryTransitionSimulationId": "ATLAS_REGIONAL_BOUNDARY_TRANSITION_SIMULATION_001"
+  },
+  "attachmentPermissionModel": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_PERMISSION_MODEL_REF_001",
+    "permissionModelId": "ATLAS_CONTROLLED_ATTACHMENT_PERMISSION_MODEL_001"
+  },
+  "alphaTestBoundaries": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_ALPHA_TEST_BOUNDARIES_001",
+    "boundaryCount": 2,
+    "boundaries": [
+      {
+        "boundaryId": "REGION_TRANSITION_CROSS_REGION_001_ALPHA_BOUNDARY",
+        "sourceTransitionId": "REGION_TRANSITION_CROSS_REGION_001",
+        "fromRegionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        "toRegionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+        "fromPackageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+        "toPackageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+        "fromCoordinate": {
+          "lat": -38.12,
+          "lng": 144.61
+        },
+        "toCoordinate": {
+          "lat": -37.84,
+          "lng": 145.29
+        },
+        "allowedForAlphaInspectionOnly": true,
+        "expectedTransitionStatus": "PASS"
+      },
+      {
+        "boundaryId": "REGION_TRANSITION_MIXED_BOUNDARY_001_ALPHA_BOUNDARY",
+        "sourceTransitionId": "REGION_TRANSITION_MIXED_BOUNDARY_001",
+        "fromRegionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+        "toRegionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+        "fromPackageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+        "toPackageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+        "fromCoordinate": {
+          "lat": -37.84,
+          "lng": 145.29
+        },
+        "toCoordinate": {
+          "lat": -38.02,
+          "lng": 145.01
+        },
+        "allowedForAlphaInspectionOnly": true,
+        "expectedTransitionStatus": "PASS"
+      }
+    ],
+    "scopeRules": [
+      "alpha testing remains limited to approved preview regions and boundary transitions",
+      "alpha attachment planning is development-only and inspection-only",
+      "unsupported coordinates or missing neighboring packages remain blocked"
+    ]
+  },
+  "allowedRegions": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_ALLOWED_REGIONS_001",
+    "regionCount": 2,
+    "regions": [
+      {
+        "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+        "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+        "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+        "latBucket": -38.12,
+        "lngBucket": 144.61
+      },
+      {
+        "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+        "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+        "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+        "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+        "latBucket": -38.02,
+        "lngBucket": 145.01
+      }
+    ],
+    "regionSelectionPolicy": "only regions proven by preview alignment and deterministic transition simulation may enter controlled attachment planning"
+  },
+  "rollbackControls": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_ROLLBACK_CONTROLS_001",
+    "rollbackModes": [
+      "DISABLE_ATTACHMENT_PLAN",
+      "REVERT_TO_PREVIEW_ONLY",
+      "CLEAR_PENDING_HANDOFF",
+      "FREEZE_REGION_SCOPE"
+    ],
+    "rollbackRules": [
+      "rollback returns all attachment states to planning-only",
+      "rollback does not mutate assets or approved recipes",
+      "rollback clears pending renderer handoff authorization"
+    ]
+  },
+  "emergencyDisable": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_EMERGENCY_DISABLE_001",
+    "triggerModes": [
+      "MANUAL_OPERATOR_DISABLE",
+      "VALIDATION_GATE_FAILURE",
+      "BOUNDARY_HANDOFF_MISMATCH",
+      "UNEXPECTED_REGION_SCOPE"
+    ],
+    "emergencyState": "ATTACHMENT_DISABLED",
+    "requiredOutcome": "all controlled attachment readiness is revoked and preview-only mode remains available"
+  },
+  "rendererHandoffContract": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_RENDERER_HANDOFF_CONTRACT_001",
+    "currentState": "PREVIEW_ONLY_NO_RUNTIME_HANDOFF",
+    "allowedFutureState": "CONTROLLED_HANDOFF_PENDING_APPROVAL",
+    "blockedNow": true,
+    "blockedOperations": [
+      "renderer_attach",
+      "runtime_scene_boot",
+      "map_layer_enable",
+      "player_visible_publish"
+    ],
+    "prerequisites": [
+      "controlled attachment validation must pass",
+      "alpha region scope must remain inside allowed regions",
+      "rollback and emergency disable controls must remain available"
+    ]
+  },
+  "loggingRequirements": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_LOGGING_REQUIREMENTS_001",
+    "requiredEvents": [
+      "ATTACHMENT_SCOPE_CHECK",
+      "REGION_LOOKUP_ATTEMPT",
+      "BOUNDARY_HANDOFF_CHECK",
+      "VALIDATION_GATE_RESULT",
+      "ROLLBACK_TRIGGERED",
+      "EMERGENCY_DISABLE_TRIGGERED"
+    ],
+    "privacyAndSafetyRules": [
+      "logs remain metadata-only",
+      "logs preserve deterministic fingerprints for lookup and transition records",
+      "logs do not include player runtime state because runtime remains disabled"
+    ]
+  },
+  "failureHandling": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_FAILURE_HANDLING_001",
+    "reasonCodes": [
+      "REGION_SCOPE_VIOLATION",
+      "BOUNDARY_HANDOFF_MISMATCH",
+      "PREVIEW_ALIGNMENT_FAILURE",
+      "VALIDATION_GATE_FAILURE",
+      "EMERGENCY_DISABLE_TRIGGERED",
+      "RENDERER_HANDOFF_BLOCKED"
+    ],
+    "safeFailureRules": [
+      "failures keep preview data available",
+      "failures prevent runtime or renderer activation",
+      "failures preserve rollback availability",
+      "failures do not download maps or mutate assets"
+    ]
+  },
+  "validationGates": {
+    "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_VALIDATION_GATES_001",
+    "requiredPasses": [
+      "preview_alignment_pass",
+      "boundary_transition_pass",
+      "permission_model_pass",
+      "rollback_controls_present",
+      "emergency_disable_present"
+    ],
+    "finalStateIfPassed": "CONTROLLED_ATTACHMENT_PLANNING_READY",
+    "finalStateIfFailed": "CONTROLLED_ATTACHMENT_BLOCKED"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schemaId": "ATLAS_CONTROLLED_ATTACHMENT_PERMISSION_MODEL_001",
+  "permissionModelId": "ATLAS_CONTROLLED_ATTACHMENT_PERMISSION_MODEL_001",
+  "attachmentPlanId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_001",
+  "environment": "DEVELOPMENT_ONLY",
+  "permissionFlags": {
+    "runtimeActivationAuthorized": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false,
+    "previewInspectionAuthorized": true,
+    "metadataLookupAuthorized": true,
+    "boundaryInspectionAuthorized": true
+  },
+  "operatorRoles": [
+    {
+      "roleId": "ATLAS_ATTACHMENT_REVIEWER",
+      "allowedActions": [
+        "inspect_preview_alignment",
+        "inspect_boundary_transition",
+        "review_validation_gates",
+        "trigger_rollback",
+        "trigger_emergency_disable"
+      ],
+      "blockedActions": [
+        "attach_renderer",
+        "activate_runtime",
+        "download_maps",
+        "modify_assets"
+      ]
+    }
+  ],
+  "inheritedBlockedStates": [
+    "MAP_DOWNLOADED",
+    "RENDERER_ATTACHED",
+    "RUNTIME_ACTIVATED",
+    "PLAYER_VISIBLE"
+  ],
+  "deterministicFingerprint": "3cb1491c738705eef303c89043a02d7535597316c8a43bf4be7748182a440f31"
+}

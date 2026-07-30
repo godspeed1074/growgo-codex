@@ -1,0 +1,116 @@
+{
+  "schemaId": "ATLAS_MAP_ATTACHMENT_METADATA_CONTRACTS_001",
+  "attachmentId": "ATLAS_MAP_ATTACHMENT_001",
+  "representativeLookupContexts": [
+    {
+      "schemaId": "ATLAS_MAP_ATTACHMENT_LOOKUP_CONTEXT_001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "coordinateInput": {
+        "lat": -38.12,
+        "lng": 144.61,
+        "latBucket": -38.12,
+        "lngBucket": 144.61,
+        "mapZoom": 14,
+        "mapProjection": "EPSG:3857",
+        "environment": "DEVELOPMENT_ONLY",
+        "requestIntent": "PLANNING_PREVIEW"
+      },
+      "lookupResolution": {
+        "environmentProfile": "COASTAL_EXPLORATION",
+        "packageFingerprint": "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed",
+        "schemaVersion": "v001",
+        "selectorVersion": "LOCATION_RECIPE_SELECTOR_001",
+        "selectorSeed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0"
+      },
+      "attachmentPermissions": {
+        "runtimeActivationAuthorized": false,
+        "mapDownloadsAuthorized": false,
+        "rendererAttachmentAuthorized": false
+      },
+      "deterministicFingerprint": "b03e5756620fcec481e1c0e5c58381fd641eeedf320efc41b47e52d536dd0b71"
+    },
+    {
+      "schemaId": "ATLAS_MAP_ATTACHMENT_LOOKUP_CONTEXT_001",
+      "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+      "coordinateInput": {
+        "lat": -37.84,
+        "lng": 145.29,
+        "latBucket": -37.84,
+        "lngBucket": 145.29,
+        "mapZoom": 14,
+        "mapProjection": "EPSG:3857",
+        "environment": "DEVELOPMENT_ONLY",
+        "requestIntent": "PLANNING_PREVIEW"
+      },
+      "lookupResolution": {
+        "environmentProfile": "FOREST_EXPLORATION",
+        "packageFingerprint": "1dbda2e0a1edeca195c5606e4a45c8f66987dafe69dc3911af3334ad234af2c1",
+        "schemaVersion": "v001",
+        "selectorVersion": "LOCATION_RECIPE_SELECTOR_001",
+        "selectorSeed": "885a3119aa809a7d4318e93d0e22d6c0b58a6c7315d237d8ebd592769c258f0a"
+      },
+      "attachmentPermissions": {
+        "runtimeActivationAuthorized": false,
+        "mapDownloadsAuthorized": false,
+        "rendererAttachmentAuthorized": false
+      },
+      "deterministicFingerprint": "2e916e6cf5f58aa6f76d79c82d8c34982b4847e7afa6eae02993467e4a205c8d"
+    },
+    {
+      "schemaId": "ATLAS_MAP_ATTACHMENT_LOOKUP_CONTEXT_001",
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "coordinateInput": {
+        "lat": -38.02,
+        "lng": 145.01,
+        "latBucket": -38.02,
+        "lngBucket": 145.01,
+        "mapZoom": 14,
+        "mapProjection": "EPSG:3857",
+        "environment": "DEVELOPMENT_ONLY",
+        "requestIntent": "PLANNING_PREVIEW"
+      },
+      "lookupResolution": {
+        "environmentProfile": "MIXED_EDGE_TRANSITION",
+        "packageFingerprint": "8eb96000c1872696a9f398134276e4e053db6a1f6f9ce749e0f0e925964e7cd2",
+        "schemaVersion": "v001",
+        "selectorVersion": "LOCATION_RECIPE_SELECTOR_001",
+        "selectorSeed": "c8edee1572b4935c49b8730c9c4a879b6741cad7b8574397edf75fd2ebbf420c"
+      },
+      "attachmentPermissions": {
+        "runtimeActivationAuthorized": false,
+        "mapDownloadsAuthorized": false,
+        "rendererAttachmentAuthorized": false
+      },
+      "deterministicFingerprint": "f97e1bd9a8383ae4e0addf5ecb1eb23af66efe9ed7b1dbac8ff639f70db6fd54"
+    }
+  ],
+  "failureContracts": [
+    {
+      "scenarioId": "MAP_ATTACHMENT_UNSUPPORTED_CONTEXT_001",
+      "reasonCode": "UNSUPPORTED_COORDINATE_CONTEXT",
+      "blockedState": "LOOKUP_BLOCKED",
+      "rendererAttachmentAuthorized": false,
+      "mapDownloadsAuthorized": false,
+      "deterministicFingerprint": "45f38bc7ff83b83ea77a76347536a1cb069956c3723c3ff825b50a77ba75084c"
+    },
+    {
+      "scenarioId": "MAP_ATTACHMENT_REGION_NOT_FOUND_001",
+      "reasonCode": "REGION_NOT_FOUND",
+      "blockedState": "PACKAGE_METADATA_BLOCKED",
+      "rendererAttachmentAuthorized": false,
+      "mapDownloadsAuthorized": false,
+      "deterministicFingerprint": "d3bf53417f7636f9f9a21779fd40e561e5195d0073f2ff971e4beb6c72bed783"
+    },
+    {
+      "scenarioId": "MAP_ATTACHMENT_RENDERER_BOUNDARY_001",
+      "reasonCode": "RENDERER_BOUNDARY_VIOLATION",
+      "blockedState": "RENDERER_BLOCKED",
+      "rendererAttachmentAuthorized": false,
+      "mapDownloadsAuthorized": false,
+      "deterministicFingerprint": "d1e6d8c2be8fbc5dc231799ee30f62e8cd75e8a90be24e2491ae731dd4908cf9"
+    }
+  ]
+}

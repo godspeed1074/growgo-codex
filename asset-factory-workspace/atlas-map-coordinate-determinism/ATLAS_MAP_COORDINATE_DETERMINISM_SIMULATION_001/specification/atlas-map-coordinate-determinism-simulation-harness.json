@@ -1,0 +1,104 @@
+{
+  "schemaId": "ATLAS_MAP_COORDINATE_DETERMINISM_SIMULATION_HARNESS_001",
+  "simulationId": "ATLAS_MAP_COORDINATE_DETERMINISM_SIMULATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "mapAttachmentId": "ATLAS_MAP_ATTACHMENT_001",
+    "regionalPackagePlanningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+    "locationRecipeSelectorId": "LOCATION_RECIPE_SELECTOR_001"
+  },
+  "deterministicContracts": {
+    "coordinateNormalization": [
+      "lat and lng are bucketed to two decimal places for planning lookups",
+      "mapProjection must be declared before region lookup",
+      "requestIntent must remain PLANNING_PREVIEW or INSPECTION_ONLY"
+    ],
+    "lookupPolicy": "same coordinate buckets and environment profile must resolve to same regionId and packageId",
+    "seedPolicy": "sha256(regionId, packageVersion, latBucket, lngBucket, biomeHint, archetypeHint, selectorVersion)"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "MAP_COORDINATE_REPEAT_001",
+      "scenarioType": "IDENTICAL_COORDINATE_REPEATED_LOOKUP",
+      "description": "The same coastal coordinate is resolved twice and must produce the same region, package, seed, and recipe.",
+      "lookups": [
+        {
+          "lookupId": "REPEAT_A",
+          "lat": -38.12,
+          "lng": 144.61,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        },
+        {
+          "lookupId": "REPEAT_B",
+          "lat": -38.12,
+          "lng": 144.61,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        }
+      ]
+    },
+    {
+      "scenarioId": "MAP_COORDINATE_NEARBY_VARIATION_001",
+      "scenarioType": "NEARBY_COORDINATE_VARIATION",
+      "description": "Nearby coordinates in the same rounded bucket should resolve to the same metadata package and recipe.",
+      "lookups": [
+        {
+          "lookupId": "NEARBY_A",
+          "lat": -38.119,
+          "lng": 144.61100000000002,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        },
+        {
+          "lookupId": "NEARBY_B",
+          "lat": -38.120999999999995,
+          "lng": 144.609,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        }
+      ]
+    },
+    {
+      "scenarioId": "MAP_COORDINATE_BOUNDARY_CROSSING_001",
+      "scenarioType": "REGION_BOUNDARY_CROSSING",
+      "description": "Crossing from a coastal lookup to a mixed coastal-forest margin lookup should change region and package deterministically.",
+      "lookups": [
+        {
+          "lookupId": "BOUNDARY_COASTAL_SIDE",
+          "lat": -38.12,
+          "lng": 144.61,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        },
+        {
+          "lookupId": "BOUNDARY_MIXED_SIDE",
+          "lat": -38.02,
+          "lng": 145.01,
+          "environmentProfileHint": "MIXED_EDGE_TRANSITION"
+        }
+      ]
+    },
+    {
+      "scenarioId": "MAP_COORDINATE_INVALID_INPUT_001",
+      "scenarioType": "INVALID_COORDINATE_HANDLING",
+      "description": "Invalid geographic coordinates must block safely before package or recipe handoff.",
+      "lookups": [
+        {
+          "lookupId": "INVALID_COORDINATE",
+          "lat": 123.45,
+          "lng": 200.01,
+          "environmentProfileHint": "FOREST_EXPLORATION"
+        }
+      ]
+    },
+    {
+      "scenarioId": "MAP_COORDINATE_MISSING_PACKAGE_001",
+      "scenarioType": "MISSING_PACKAGE_HANDLING",
+      "description": "A valid coordinate with no matching representative package must fail safely with a missing-package result.",
+      "lookups": [
+        {
+          "lookupId": "MISSING_PACKAGE",
+          "lat": -37.55,
+          "lng": 144.02,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        }
+      ]
+    }
+  ]
+}

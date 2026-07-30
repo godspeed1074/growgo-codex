@@ -1,0 +1,125 @@
+{
+  "schemaId": "ATLAS_REGIONAL_BOUNDARY_TRANSITION_SIMULATION_HARNESS_001",
+  "simulationId": "ATLAS_REGIONAL_BOUNDARY_TRANSITION_SIMULATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "mapAttachmentId": "ATLAS_MAP_ATTACHMENT_001",
+    "coordinateDeterminismSimulationId": "ATLAS_MAP_COORDINATE_DETERMINISM_SIMULATION_001",
+    "regionalPackagePlanningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001"
+  },
+  "transitionRules": {
+    "boundaryPolicy": [
+      "map attachment planning may use region boundaries for lookup only",
+      "boundaries remain source-authoritative and read-only",
+      "cross-boundary requests must prefer deterministic nearest-bucket resolution before fallback review"
+    ],
+    "packageLoadPolicy": [
+      "package loading is metadata-only during planning",
+      "package loading must preserve packageFingerprint and sourceRevision",
+      "package loading must stop before renderer or runtime attachment"
+    ],
+    "allowedStates": [
+      "PLANNING_ONLY",
+      "LOOKUP_READY",
+      "PACKAGE_METADATA_READY",
+      "SELECTOR_HANDOFF_READY"
+    ],
+    "blockedStates": [
+      "MAP_DOWNLOADED",
+      "RENDERER_ATTACHED",
+      "RUNTIME_ACTIVATED",
+      "PLAYER_VISIBLE"
+    ]
+  },
+  "scenarios": [
+    {
+      "transitionId": "REGION_TRANSITION_WITHIN_REGION_001",
+      "transitionType": "MOVEMENT_WITHIN_SAME_REGION",
+      "description": "Movement within the same coastal region should preserve package handoff, cache continuity, recipe continuity, and selector seed.",
+      "steps": [
+        {
+          "stepId": "WITHIN_A",
+          "lat": -38.119,
+          "lng": 144.61100000000002,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        },
+        {
+          "stepId": "WITHIN_B",
+          "lat": -38.120999999999995,
+          "lng": 144.609,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        }
+      ]
+    },
+    {
+      "transitionId": "REGION_TRANSITION_CROSS_REGION_001",
+      "transitionType": "TRANSITION_BETWEEN_REGIONS",
+      "description": "Movement from coastal exploration into forest exploration should deterministically hand off package, cache key, and recipe selection.",
+      "steps": [
+        {
+          "stepId": "COASTAL_SIDE",
+          "lat": -38.12,
+          "lng": 144.61,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        },
+        {
+          "stepId": "FOREST_SIDE",
+          "lat": -37.84,
+          "lng": 145.29,
+          "environmentProfileHint": "FOREST_EXPLORATION"
+        }
+      ]
+    },
+    {
+      "transitionId": "REGION_TRANSITION_MIXED_BOUNDARY_001",
+      "transitionType": "MIXED_BIOME_BOUNDARY",
+      "description": "Movement from forest edge into a mixed biome boundary should remain deterministic, preserve seed semantics, and allow recipe continuity through approved fallback.",
+      "steps": [
+        {
+          "stepId": "FOREST_EDGE",
+          "lat": -37.84,
+          "lng": 145.29,
+          "environmentProfileHint": "FOREST_EXPLORATION"
+        },
+        {
+          "stepId": "MIXED_MARGIN",
+          "lat": -38.02,
+          "lng": 145.01,
+          "environmentProfileHint": "MIXED_EDGE_TRANSITION"
+        }
+      ]
+    },
+    {
+      "transitionId": "REGION_TRANSITION_MISSING_NEIGHBOR_001",
+      "transitionType": "MISSING_NEIGHBORING_PACKAGE",
+      "description": "Transitioning toward a neighboring area with no representative package must block safely without mutating cache or runtime state.",
+      "steps": [
+        {
+          "stepId": "VALID_START",
+          "lat": -38.12,
+          "lng": 144.61,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        },
+        {
+          "stepId": "MISSING_NEIGHBOR",
+          "lat": -37.55,
+          "lng": 144.02,
+          "environmentProfileHint": "COASTAL_EXPLORATION"
+        }
+      ]
+    },
+    {
+      "transitionId": "REGION_TRANSITION_INVALID_BOUNDARY_001",
+      "transitionType": "INVALID_BOUNDARY_STATE",
+      "description": "An invalid boundary state must block immediately and return a deterministic failure record.",
+      "steps": [
+        {
+          "stepId": "INVALID_BOUNDARY",
+          "lat": 123.45,
+          "lng": 200.01,
+          "environmentProfileHint": "FOREST_EXPLORATION"
+        }
+      ]
+    }
+  ]
+}
