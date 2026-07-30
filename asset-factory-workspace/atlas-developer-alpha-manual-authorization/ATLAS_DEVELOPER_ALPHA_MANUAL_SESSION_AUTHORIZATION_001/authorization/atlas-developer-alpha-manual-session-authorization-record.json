@@ -1,0 +1,80 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_AUTHORIZATION_RECORD_001",
+  "authorizationId": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_AUTHORIZATION_001",
+  "authorizedOn": "2026-07-30",
+  "authorizationState": "AUTHORIZED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "sessionScopeConfirmation": {
+    "environment": "DEVELOPMENT_ONLY",
+    "scopeType": "TINY_INTERNAL_ATTACHMENT_EXPERIMENT",
+    "primaryRegionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001"
+  },
+  "references": {
+    "dryRunReviewId": "ATLAS_DEVELOPER_ALPHA_DRY_RUN_REVIEW_001",
+    "finalCheckId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+    "sessionDecisionId": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+    "preparationId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001"
+  },
+  "authorizedUsers": [
+    "atlas_operator",
+    "internal_developer_reviewer"
+  ],
+  "operatorAuthorizationReference": "ATLAS_DEVELOPER_ALPHA_MANUAL_OPERATOR_AUTHORIZATION_RECORD_001",
+  "scopeConfirmationReference": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_SCOPE_CONFIRMATION_001",
+  "approvalConditions": {
+    "reviewDecision": "DRY_RUN_APPROVED_FOR_FUTURE_MANUAL_DEVELOPER_SESSION",
+    "finalReadinessState": "READY_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+    "sessionDecisionState": "GO",
+    "conditions": [
+      "runtimeExecutionEnabled must remain false",
+      "mapAttachmentAllowed must remain false",
+      "automaticRendererExecutionAllowed must remain false",
+      "test remains developer-only and internal-only",
+      "experiment stays within the single approved primary region",
+      "experiment duration must not exceed 30 minutes",
+      "manual rollback owner must remain available",
+      "any failure criteria immediately returns to planning-only state",
+      "session remains developer-only and internal-only",
+      "session uses the captured package snapshot and recipe snapshot only",
+      "session remains limited to metadata inspection and monitoring review",
+      "no runtime, renderer, map download, Blender, GLB, or asset mutation work is authorized"
+    ],
+    "successMetrics": [
+      "deterministic coordinate lookup remains stable across repeat requests",
+      "package validation produces no new blocked states in approved region",
+      "monitoring signals stay readable in developer control centre views",
+      "rollback path remains callable without state drift"
+    ]
+  },
+  "preconditions": [
+    "dry-run review remains approved for a future manual developer session",
+    "final execution check remains in READY_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION state",
+    "session execution decision remains GO",
+    "execution preparation remains PREPARED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+    "runtimeExecutionEnabled remains false",
+    "mapAttachmentAllowed remains false",
+    "automaticRendererExecutionAllowed remains false"
+  ],
+  "authorizationReview": {
+    "expiresOn": "2026-08-06",
+    "reviewRequiredBeforeExecution": true,
+    "revalidationSources": [
+      "ATLAS_DEVELOPER_ALPHA_DRY_RUN_REVIEW_001",
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+      "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001"
+    ]
+  },
+  "finalSafetyConfirmation": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "deterministicFingerprint": "ae81934c36d6b7dabdf47a4e9551c68fd1649e270b9e28ee6e95cf3942d61082"
+}

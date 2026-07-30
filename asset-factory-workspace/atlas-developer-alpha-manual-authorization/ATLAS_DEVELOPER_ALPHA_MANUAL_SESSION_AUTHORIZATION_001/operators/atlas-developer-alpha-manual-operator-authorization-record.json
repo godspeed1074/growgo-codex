@@ -1,0 +1,28 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_MANUAL_OPERATOR_AUTHORIZATION_RECORD_001",
+  "authorizationId": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_AUTHORIZATION_001",
+  "confirmedOn": "2026-07-30",
+  "authorizationMode": "manual_internal_roles_only",
+  "authorizedUsers": [
+    {
+      "role": "atlas_operator",
+      "authorizationState": "AUTHORIZED_FOR_FUTURE_MANUAL_DEVELOPER_SESSION",
+      "stopAuthority": true
+    },
+    {
+      "role": "internal_developer_reviewer",
+      "authorizationState": "AUTHORIZED_FOR_FUTURE_MANUAL_DEVELOPER_SESSION",
+      "stopAuthority": true
+    }
+  ],
+  "blockedRoles": [
+    "beta_tester",
+    "live_player",
+    "external_reviewer"
+  ],
+  "maxConcurrentOperators": 2,
+  "playerAccountsAllowed": false,
+  "internalOnly": true,
+  "operatorAuthorizationSource": "ATLAS_DEVELOPER_ALPHA_SESSION_EXECUTION_DECISION_001",
+  "deterministicFingerprint": "9ae52677675dd8e9d3d04251ac6e614a13c5cc9a24c9c1adac31e0ad80bea30f"
+}
