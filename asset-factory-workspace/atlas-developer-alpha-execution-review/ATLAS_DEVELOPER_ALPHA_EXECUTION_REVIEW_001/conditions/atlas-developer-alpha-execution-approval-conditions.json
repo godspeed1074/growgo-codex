@@ -1,0 +1,36 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_APPROVAL_CONDITIONS_001",
+  "reviewId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_REVIEW_001",
+  "conditions": [
+    "runtimeExecutionEnabled must remain false",
+    "mapAttachmentAllowed must remain false",
+    "automaticRendererExecutionAllowed must remain false",
+    "test remains developer-only and internal-only",
+    "experiment stays within the single approved primary region",
+    "experiment duration must not exceed 30 minutes",
+    "manual rollback owner must remain available",
+    "any failure criteria immediately returns to planning-only state",
+    "authorized users remain limited to atlas_operator and internal_developer_reviewer",
+    "approved region remains the single Bellarine coastal primary region",
+    "review follows the manual operator runbook without runtime activation",
+    "monitoring must be observed throughout the session",
+    "stop conditions end the session immediately with rollback note captured"
+  ],
+  "requiredPreStartConfirmations": [
+    "go/no-go record remains pass",
+    "final alpha safety audit remains pass",
+    "developer alpha rehearsal validation remains pass",
+    "all runtime and map attachment flags remain false"
+  ],
+  "blockedCapabilities": [
+    "runtime activation",
+    "renderer attachment",
+    "map downloads",
+    "Blender usage",
+    "GLB generation",
+    "asset modification",
+    "player exposure",
+    "beta or production publication"
+  ],
+  "deterministicFingerprint": "e0a8b2547b2104a385631bb565c3aa68bfcf001e320276bad871614d34d117bd"
+}

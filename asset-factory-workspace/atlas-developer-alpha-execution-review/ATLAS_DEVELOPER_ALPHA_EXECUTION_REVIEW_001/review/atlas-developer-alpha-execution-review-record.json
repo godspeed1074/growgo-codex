@@ -1,0 +1,126 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_REVIEW_RECORD_001",
+  "reviewId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_REVIEW_001",
+  "reviewedOn": "2026-07-30",
+  "references": {
+    "goNoGoRecordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+    "executionChecklistId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_CHECKLIST_001",
+    "executionRunbookId": "ATLAS_DEVELOPER_ALPHA_OPERATOR_RUNBOOK_001",
+    "rehearsalSimulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_REHEARSAL_001",
+    "finalSafetyAuditId": "ATLAS_ALPHA_FINAL_SAFETY_AUDIT_001"
+  },
+  "alphaScope": {
+    "environment": "DEVELOPMENT_ONLY",
+    "scopeType": "TINY_INTERNAL_ATTACHMENT_EXPERIMENT",
+    "permittedRegion": {
+      "primaryRegionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "latBucket": -38.12,
+      "lngBucket": 144.61,
+      "regionPolicy": "single-primary-region unless manual escalation approved"
+    },
+    "allowedActions": [
+      "manual developer inspection",
+      "metadata-only coordinate lookup rehearsal",
+      "non-player internal monitoring review"
+    ],
+    "blockedActions": [
+      "player exposure",
+      "beta distribution",
+      "production distribution",
+      "automatic renderer execution",
+      "map download expansion"
+    ]
+  },
+  "authorizedUsers": {
+    "userClasses": [
+      "internal_developer_reviewer",
+      "atlas_operator"
+    ],
+    "maxConcurrentTestUsers": 2,
+    "playerAccountsAllowed": false,
+    "internalOnly": true
+  },
+  "durationLimitMinutes": 30,
+  "safetyFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "monitoringReadiness": {
+    "status": "PASS",
+    "monitoringChecklist": [
+      "healthy signal available: RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "watch for package validation failure alerts",
+      "watch for budget warning alerts",
+      "watch for recipe fallback warning alerts",
+      "watch for emergency shutdown signal: RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ],
+    "monitoringFocus": {
+      "healthyReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "budgetWarningAlert": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT",
+      "emergencyShutdownAlert": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT"
+    }
+  },
+  "rollbackReadiness": {
+    "status": "PASS",
+    "rollbackProcedure": [
+      "owner: atlas_operator",
+      "backup owner: internal_developer_reviewer",
+      "return immediately to planning-only state",
+      "end session if any failure criteria or emergency signal is observed"
+    ]
+  },
+  "successCriteria": [
+    "deterministic coordinate lookup remains stable across repeat requests",
+    "package validation produces no new blocked states in approved region",
+    "monitoring signals stay readable in developer control centre views",
+    "rollback path remains callable without state drift"
+  ],
+  "failureCriteria": [
+    "runtimeExecutionEnabled becomes true without manual authorization",
+    "mapAttachmentAllowed becomes true outside approved experiment review",
+    "automaticRendererExecutionAllowed becomes true",
+    "package validation enters blocked state for permitted region",
+    "monitoring emits emergency shutdown or unresolved blocked condition"
+  ],
+  "rehearsalResults": {
+    "successfulSessions": 1,
+    "warningSessions": 1,
+    "stoppedSessions": 2,
+    "scenarioOutcomes": [
+      {
+        "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_SUCCESS_001",
+        "scenarioType": "SUCCESSFUL_ALPHA_SESSION",
+        "sessionOutcome": "REHEARSAL_COMPLETED",
+        "stopTriggered": false,
+        "rollbackUsed": false
+      },
+      {
+        "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_WARNING_001",
+        "scenarioType": "WARNING_EVENT",
+        "sessionOutcome": "REHEARSAL_COMPLETED_WITH_WARNING",
+        "stopTriggered": false,
+        "rollbackUsed": false
+      },
+      {
+        "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_ROLLBACK_001",
+        "scenarioType": "ROLLBACK_EVENT",
+        "sessionOutcome": "REHEARSAL_STOPPED_AND_ROLLED_BACK",
+        "stopTriggered": true,
+        "rollbackUsed": true
+      },
+      {
+        "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_EMERGENCY_STOP_001",
+        "scenarioType": "EMERGENCY_STOP_EVENT",
+        "sessionOutcome": "REHEARSAL_EMERGENCY_STOP",
+        "stopTriggered": true,
+        "rollbackUsed": true
+      }
+    ]
+  },
+  "reviewDecision": "APPROVED_FOR_FUTURE_DEVELOPER_ONLY_EXECUTION",
+  "unresolvedBlocks": [],
+  "deterministicFingerprint": "ccf7a84ecdecb829bc3ba70819e68b89d70d7a3a0a30ba5b4df6ae42ca2b6b21"
+}
