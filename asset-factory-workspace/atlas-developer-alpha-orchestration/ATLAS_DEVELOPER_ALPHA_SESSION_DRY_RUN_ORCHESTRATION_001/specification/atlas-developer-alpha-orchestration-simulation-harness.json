@@ -1,0 +1,28 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_SIMULATION_HARNESS_001",
+  "orchestrationId": "ATLAS_DEVELOPER_ALPHA_SESSION_DRY_RUN_ORCHESTRATION_001",
+  "recordedOn": "2026-07-30",
+  "references": {
+    "controlId": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001",
+    "recordFrameworkId": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_FRAMEWORK_001",
+    "preparationId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+    "monitoringSimulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+    "rehearsalSimulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_REHEARSAL_001"
+  },
+  "scenarios": [
+    "SESSION_INITIALIZATION",
+    "PREPARATION_VALIDATION",
+    "SESSION_START",
+    "HEALTHY_OPERATION",
+    "WARNING_EVENT",
+    "ROLLBACK_EVENT",
+    "SESSION_COMPLETION",
+    "REVIEW_COMPLETION"
+  ],
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "deterministicFingerprint": "c5483ab5c08111e2c9f2fc9fc3725ee83dbc35575a66b58abc3c5575d66f756a"
+}

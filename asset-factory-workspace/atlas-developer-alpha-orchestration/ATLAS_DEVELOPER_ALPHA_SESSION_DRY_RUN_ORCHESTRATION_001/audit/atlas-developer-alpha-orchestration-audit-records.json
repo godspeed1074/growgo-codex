@@ -1,0 +1,114 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_SET_001",
+  "orchestrationId": "ATLAS_DEVELOPER_ALPHA_SESSION_DRY_RUN_ORCHESTRATION_001",
+  "records": [
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_RECORD_001",
+      "auditId": "ORCH_AUDIT_SESSION_OPENED_001",
+      "auditEvent": "SESSION_OPENED",
+      "relatedStepId": "SESSION_INITIALIZATION",
+      "references": {
+        "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "preparationReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      },
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "9da60df1006688681ac3d1d3e54cfe193506d6304aafcd8bcc10fc38fc49a48f"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_RECORD_001",
+      "auditId": "ORCH_AUDIT_PRE_SESSION_CAPTURED_001",
+      "auditEvent": "PRE_SESSION_CAPTURED",
+      "relatedStepId": "PREPARATION_VALIDATION",
+      "references": {
+        "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "preparationReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      },
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "0bde2ffa9ac9b68eaa6c975505855bd42f503cfcf10510c97ea00650c35dda38"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_RECORD_001",
+      "auditId": "ORCH_AUDIT_STATE_CHANGE_001",
+      "auditEvent": "SESSION_STATE_CHANGED",
+      "relatedStepId": "SESSION_START",
+      "references": {
+        "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "preparationReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      },
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "1945c63425baa8caa5c893b3a053999e36dee0d8b5c759335c9dcf985f45eb85"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_RECORD_001",
+      "auditId": "ORCH_AUDIT_TELEMETRY_REFERENCED_001",
+      "auditEvent": "TELEMETRY_REFERENCED",
+      "relatedStepId": "HEALTHY_OPERATION",
+      "references": {
+        "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "preparationReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      },
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "3adc57638b62815382b1f07715bed13b145ba6e32045c040a52b6c019b1ce2f1"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_RECORD_001",
+      "auditId": "ORCH_AUDIT_ROLLBACK_RECORDED_001",
+      "auditEvent": "ROLLBACK_RECORDED",
+      "relatedStepId": "ROLLBACK_EVENT",
+      "references": {
+        "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "preparationReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      },
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "eb37a28f8a3b6f42160c2a02be654b8b387f4ac0f22505a5d80b77afc231421f"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_AUDIT_RECORD_001",
+      "auditId": "ORCH_AUDIT_SESSION_CLOSED_001",
+      "auditEvent": "SESSION_CLOSED",
+      "relatedStepId": "SESSION_COMPLETION",
+      "references": {
+        "finalCheckReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "preparationReference": "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      },
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "d6955d17fa0780bf90506aa1f53d5c196235acfbc3d8aa7c6c69797a121da2cd"
+    }
+  ],
+  "summary": {
+    "sessionSteps": 8,
+    "telemetryRecords": 3,
+    "auditEvents": 6
+  },
+  "deterministicFingerprint": "1e31e3ff003de1f659f101d9c6f09ed8e93bf40096e2cd926a6855a3221cd215"
+}

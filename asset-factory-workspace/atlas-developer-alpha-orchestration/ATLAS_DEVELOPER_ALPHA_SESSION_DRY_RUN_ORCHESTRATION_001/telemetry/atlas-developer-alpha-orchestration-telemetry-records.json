@@ -1,0 +1,61 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_TELEMETRY_SET_001",
+  "orchestrationId": "ATLAS_DEVELOPER_ALPHA_SESSION_DRY_RUN_ORCHESTRATION_001",
+  "records": [
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_TELEMETRY_OUTPUT_001",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "scenarioType": "HEALTHY_ATLAS_GENERATION",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "reasonCode": "RUNTIME_FLAGS_DISABLED",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "f50222bfa7cc8b531a56a04a52e85a1577a3437a23891917b025fcae1ffcfdb8"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_TELEMETRY_OUTPUT_001",
+      "telemetryId": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "scenarioType": "BUDGET_WARNING",
+      "healthState": "WARNING",
+      "alertState": "WARNING_PACKAGE_NEAR_LIMIT",
+      "rollbackSignal": "NONE",
+      "reasonCode": "RUNTIME_FLAGS_DISABLED",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "5db9d53e75572ee623cf3b4a73bd584e1201b5d730ebd57e5e336902cb12a1e6"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_ORCHESTRATION_TELEMETRY_OUTPUT_001",
+      "telemetryId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "scenarioType": "RECIPE_FALLBACK_EVENT",
+      "healthState": "WARNING",
+      "alertState": "RECIPE_FALLBACK_WARNING",
+      "rollbackSignal": "FALLBACK_TO_APPROVED_RECIPE_PATH",
+      "reasonCode": "REGION_SCOPE_VIOLATION",
+      "packageId": "ATLAS_REGION_PACKAGE_UNAPPROVED_HINTERLAND_NEG_37_55_144_02_v001",
+      "regionId": "REGION_UNAPPROVED_HINTERLAND_NEG_37_55_144_02_COASTAL_EXPLORATION",
+      "recipeResolution": null,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "13a0da879862572b342932a1489f8823d95c98d52418f9db4bf22553a1482edb"
+    }
+  ],
+  "deterministicFingerprint": "06840c3dac586db80e1ae9f84afd576251ba547ae3c980a23e49bec4c8666d94"
+}
