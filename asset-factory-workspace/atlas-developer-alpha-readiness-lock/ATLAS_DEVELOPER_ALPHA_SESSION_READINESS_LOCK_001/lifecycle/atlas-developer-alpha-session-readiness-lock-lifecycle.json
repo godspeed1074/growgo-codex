@@ -1,0 +1,15 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_LIFECYCLE_001",
+  "lockId": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_001",
+  "lifecycleStatus": "READINESS_LOCK_COMPLETE_PENDING_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "readinessState": "READINESS_LOCKED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "147f42aebbd130d406c7615f33491de31b70127a2f86dc86f49ec4e31b01118f"
+}

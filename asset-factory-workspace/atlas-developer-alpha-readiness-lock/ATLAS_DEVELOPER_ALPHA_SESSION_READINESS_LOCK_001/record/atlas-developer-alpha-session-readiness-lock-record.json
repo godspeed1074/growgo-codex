@@ -1,0 +1,86 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_RECORD_001",
+  "lockId": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_001",
+  "lockedOn": "2026-07-30",
+  "readinessState": "READINESS_LOCKED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "references": {
+    "authorizationId": "ATLAS_DEVELOPER_ALPHA_MANUAL_SESSION_AUTHORIZATION_001",
+    "finalCheckId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+    "dryRunReviewId": "ATLAS_DEVELOPER_ALPHA_DRY_RUN_REVIEW_001",
+    "controlId": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001"
+  },
+  "authorizationStatus": {
+    "authorizationState": "AUTHORIZED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+    "expiryStatus": "VALID",
+    "expiresOn": "2026-08-06"
+  },
+  "operatorAuthorization": {
+    "authorizedUsers": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ],
+    "internalOnly": true,
+    "maxConcurrentOperators": 2
+  },
+  "sessionScope": {
+    "environment": "DEVELOPMENT_ONLY",
+    "scopeType": "TINY_INTERNAL_ATTACHMENT_EXPERIMENT",
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "durationLimitMinutes": 30
+  },
+  "repositoryState": {
+    "gitStatusCaptured": true,
+    "statusLines": [
+      "?? GROWGO_SESSION_208_6_DEVELOPER_ALPHA_SESSION_READINESS_LOCK.md",
+      "?? asset-factory-workspace/atlas-developer-alpha-readiness-lock/",
+      "?? asset-factory/atlas-developer-alpha-session-readiness-lock.mjs",
+      "?? tests/asset-factory-atlas-developer-alpha-session-readiness-lock.test.mjs"
+    ],
+    "hasUncommittedChanges": true,
+    "readinessState": "REPOSITORY_STATE_LOCKED_FOR_MANUAL_PRE_FLIGHT"
+  },
+  "versionLock": {
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "packageVersion": "v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipeVersion": "v001"
+  },
+  "monitoringReadiness": {
+    "monitoringChecklist": [
+      "healthy signal available: RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "watch for package validation failure alerts",
+      "watch for budget warning alerts",
+      "watch for recipe fallback warning alerts",
+      "watch for emergency shutdown signal: RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ],
+    "monitoringFocus": {
+      "healthyReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "budgetWarningAlert": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT",
+      "emergencyShutdownAlert": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT"
+    },
+    "rehearsalHealthyOutcome": "REHEARSAL_COMPLETED",
+    "rehearsalWarningOutcome": "REHEARSAL_COMPLETED_WITH_WARNING"
+  },
+  "rollbackReadiness": {
+    "status": "PASS",
+    "rollbackProcedure": [
+      "owner: atlas_operator",
+      "backup owner: internal_developer_reviewer",
+      "return immediately to planning-only state",
+      "end session if any failure criteria or emergency signal is observed"
+    ]
+  },
+  "finalSafetyConfirmation": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "deterministicFingerprint": "3adf26bc5b189ed469db6028ea0a126ceb5c396d85c0d918c75bc886ec54fb31"
+}

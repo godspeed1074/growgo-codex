@@ -1,0 +1,90 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_FINAL_VERIFICATION_CHECKLIST_001",
+  "lockId": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_001",
+  "verifiedOn": "2026-07-30",
+  "authorizationStatus": {
+    "authorizationState": "AUTHORIZED_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+    "expiryStatus": "VALID",
+    "expiresOn": "2026-08-06"
+  },
+  "repositoryStatus": {
+    "gitStatusCaptured": true,
+    "statusLines": [
+      "?? GROWGO_SESSION_208_6_DEVELOPER_ALPHA_SESSION_READINESS_LOCK.md",
+      "?? asset-factory-workspace/atlas-developer-alpha-readiness-lock/",
+      "?? asset-factory/atlas-developer-alpha-session-readiness-lock.mjs",
+      "?? tests/asset-factory-atlas-developer-alpha-session-readiness-lock.test.mjs"
+    ],
+    "hasUncommittedChanges": true,
+    "readinessState": "REPOSITORY_STATE_LOCKED_FOR_MANUAL_PRE_FLIGHT"
+  },
+  "versionStatus": {
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "packageVersion": "v001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipeVersion": "v001"
+  },
+  "items": [
+    {
+      "itemId": "CHECK_AUTHORIZATION_VALIDITY",
+      "area": "authorization_validity",
+      "status": "PASS",
+      "evidence": "Manual session authorization remains present and valid."
+    },
+    {
+      "itemId": "CHECK_EXPIRY_STATUS",
+      "area": "expiry_status",
+      "status": "PASS",
+      "evidence": "Authorization expiry remains in the future relative to 2026-07-30."
+    },
+    {
+      "itemId": "CHECK_OPERATOR_AUTHORIZATION",
+      "area": "operator_authorization",
+      "status": "PASS",
+      "evidence": "Exactly the authorized internal operator roles remain available."
+    },
+    {
+      "itemId": "CHECK_SAFETY_FLAGS_UNCHANGED",
+      "area": "safety_flags",
+      "status": "PASS",
+      "evidence": "Runtime, map attachment, and automatic renderer execution all remain disabled."
+    },
+    {
+      "itemId": "CHECK_SESSION_SCOPE_UNCHANGED",
+      "area": "session_scope",
+      "status": "PASS",
+      "evidence": "Environment, region, package, and recipe remain locked to the approved scope."
+    },
+    {
+      "itemId": "CHECK_REPOSITORY_STATE",
+      "area": "repository_state",
+      "status": "PASS",
+      "evidence": "Repository state has been captured for final manual pre-flight comparison."
+    },
+    {
+      "itemId": "CHECK_PACKAGE_VERSIONS",
+      "area": "package_versions",
+      "status": "PASS",
+      "evidence": "Approved regional package version remains the expected v001 package."
+    },
+    {
+      "itemId": "CHECK_RECIPE_VERSIONS",
+      "area": "recipe_versions",
+      "status": "PASS",
+      "evidence": "Approved recipe reference remains COASTAL_LOCATION_RECIPE_001."
+    },
+    {
+      "itemId": "CHECK_MONITORING_READINESS",
+      "area": "monitoring_readiness",
+      "status": "PASS",
+      "evidence": "Monitoring checklist and alert references remain available for the manual session."
+    },
+    {
+      "itemId": "CHECK_ROLLBACK_READINESS",
+      "area": "rollback_readiness",
+      "status": "PASS",
+      "evidence": "Rollback ownership and allowed rollback path remain intact."
+    }
+  ],
+  "deterministicFingerprint": "9d472a5bca457eeff71358f2de0393b8f573e6526e479f1d5dcbc5e10424e038"
+}
