@@ -1,0 +1,17 @@
+{
+  "schemaId": "ATLAS_RUNTIME_MONITORING_SIMULATION_LIFECYCLE_001",
+  "simulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "lifecycleStatus": "FUTURE_RUNTIME_MONITORING_READY_FOR_IMPLEMENTATION",
+  "healthyScenarioCount": 1,
+  "warningScenarioCount": 2,
+  "blockedScenarioCount": 2,
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "2c9d9b33068d50e10a514bc89a22261c109cf4ec29ba83c9e54b100f84544d67"
+}

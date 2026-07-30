@@ -1,0 +1,76 @@
+{
+  "schemaId": "ATLAS_RUNTIME_MONITORING_SIMULATION_HARNESS_001",
+  "simulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "runtimeImplementationId": "ATLAS_RUNTIME_IMPLEMENTATION_001",
+    "runtimeAdapterSimulationId": "ATLAS_RUNTIME_ADAPTER_CONTRACT_SIMULATION_001",
+    "adminMonitoringId": "ATLAS_ADMIN_MONITORING_001",
+    "controlCentreId": "ATLAS_CONTROL_CENTRE_001",
+    "budgetValidatorId": "ATLAS_BUDGET_VALIDATOR_001",
+    "regionalPackageValidationId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001"
+  },
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "telemetryEvents": [
+    "coordinate_lookup_attempt",
+    "package_validation_result",
+    "recipe_selection_result",
+    "permission_gate_state",
+    "rollback_trigger_state",
+    "runtime_enablement_block_reason"
+  ],
+  "healthStates": [
+    "HEALTHY",
+    "WARNING",
+    "BLOCKED"
+  ],
+  "alertRules": {
+    "warningStates": [
+      "WARNING_PACKAGE_NEAR_LIMIT",
+      "WARNING_CACHE_NEAR_LIMIT",
+      "WARNING_RECIPE_COMPLEXITY_RISING",
+      "WARNING_PREVIEW_PAYLOAD_RISING",
+      "WARNING_BACKEND_REUSE_BELOW_TARGET"
+    ],
+    "blockingStates": [
+      "BLOCK_PACKAGE_SIZE_LIMIT",
+      "BLOCK_CACHE_LIMIT",
+      "BLOCK_RECIPE_COMPLEXITY_LIMIT",
+      "BLOCK_PREVIEW_PAYLOAD_LIMIT",
+      "BLOCK_REUSE_POLICY_FAILURE",
+      "BLOCK_RUNTIME_SAFETY_VIOLATION"
+    ]
+  },
+  "scenarios": [
+    {
+      "scenarioId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001",
+      "scenarioType": "HEALTHY_ATLAS_GENERATION",
+      "inheritedAdapterScenarioId": "RUNTIME_ADAPTER_VALID_PLAYER_LOCATION_REQUEST_001"
+    },
+    {
+      "scenarioId": "RUNTIME_MONITORING_PACKAGE_VALIDATION_FAILURE_001",
+      "scenarioType": "PACKAGE_VALIDATION_FAILURE",
+      "inheritedAdapterScenarioId": "RUNTIME_ADAPTER_MISSING_PACKAGE_REQUEST_001"
+    },
+    {
+      "scenarioId": "RUNTIME_MONITORING_BUDGET_WARNING_001",
+      "scenarioType": "BUDGET_WARNING",
+      "inheritedAdapterScenarioId": "RUNTIME_ADAPTER_VALID_PLAYER_LOCATION_REQUEST_001"
+    },
+    {
+      "scenarioId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001",
+      "scenarioType": "RECIPE_FALLBACK_EVENT",
+      "inheritedAdapterScenarioId": "RUNTIME_ADAPTER_BLOCKED_REGION_REQUEST_001"
+    },
+    {
+      "scenarioId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001",
+      "scenarioType": "EMERGENCY_SHUTDOWN_EVENT",
+      "inheritedAdapterScenarioId": "RUNTIME_ADAPTER_EMERGENCY_SHUTDOWN_REQUEST_001"
+    }
+  ],
+  "deterministicFingerprint": "5e99a10b448aecdfc45f24444dd7f58a18697ef103cbec9ccafce74b7bd33626"
+}

@@ -1,0 +1,72 @@
+{
+  "schemaId": "ATLAS_RUNTIME_MONITORING_ALERT_OUTPUT_SET_001",
+  "simulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "alerts": [
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_ALERT_OUTPUT_001",
+      "alertId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_ALERT",
+      "scenarioId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001",
+      "scenarioType": "HEALTHY_ATLAS_GENERATION",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "controlCentreCardId": "BACKEND_LOAD",
+      "controlCentreStatus": "HEALTHY",
+      "operatorAction": "VIEW_DASHBOARD",
+      "deterministicFingerprint": "47dda6710d20a17a3b2b666d5cfb483cf63a1ffbfc87ac1f68070b975b7e4f8d"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_ALERT_OUTPUT_001",
+      "alertId": "RUNTIME_MONITORING_PACKAGE_VALIDATION_FAILURE_001_ALERT",
+      "scenarioId": "RUNTIME_MONITORING_PACKAGE_VALIDATION_FAILURE_001",
+      "scenarioType": "PACKAGE_VALIDATION_FAILURE",
+      "healthState": "BLOCKED",
+      "alertState": "BLOCK_PACKAGE_SIZE_LIMIT",
+      "rollbackSignal": "ROLLBACK_TO_LAST_VALIDATED_PACKAGE",
+      "controlCentreCardId": "PACKAGE_HEALTH",
+      "controlCentreStatus": "BLOCKED",
+      "operatorAction": "QUEUE_REVIEW",
+      "deterministicFingerprint": "69b4401cfa6cac465090c0b15d4a1d77dfd6567b52a2bd17bceb85d9c3583c01"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_ALERT_OUTPUT_001",
+      "alertId": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT",
+      "scenarioId": "RUNTIME_MONITORING_BUDGET_WARNING_001",
+      "scenarioType": "BUDGET_WARNING",
+      "healthState": "WARNING",
+      "alertState": "WARNING_PACKAGE_NEAR_LIMIT",
+      "rollbackSignal": "NONE",
+      "controlCentreCardId": "BUDGET_STATUS",
+      "controlCentreStatus": "BLOCKED",
+      "operatorAction": "QUEUE_REVIEW",
+      "deterministicFingerprint": "4c1477b8e69f6c65cb5cb7b7dd555e524d6a3e1818d769e78052db831321dc6b"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_ALERT_OUTPUT_001",
+      "alertId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_ALERT",
+      "scenarioId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001",
+      "scenarioType": "RECIPE_FALLBACK_EVENT",
+      "healthState": "WARNING",
+      "alertState": "RECIPE_FALLBACK_WARNING",
+      "rollbackSignal": "FALLBACK_TO_APPROVED_RECIPE_PATH",
+      "controlCentreCardId": "PACKAGE_HEALTH",
+      "controlCentreStatus": "BLOCKED",
+      "operatorAction": "QUEUE_REVIEW",
+      "deterministicFingerprint": "a48961e3a33076d79765ce4283cd04c5941a23074a4dbd095cf0c617ac051191"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_ALERT_OUTPUT_001",
+      "alertId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT",
+      "scenarioId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001",
+      "scenarioType": "EMERGENCY_SHUTDOWN_EVENT",
+      "healthState": "BLOCKED",
+      "alertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "rollbackSignal": "FORCE_PLANNING_ONLY_STATE",
+      "controlCentreCardId": "PACKAGE_HEALTH",
+      "controlCentreStatus": "BLOCKED",
+      "operatorAction": "OPEN_AUDIT_TRACE",
+      "deterministicFingerprint": "113225e650049efe50632fd0e52ce435e1144ae254b6067d7769388e1a69dabe"
+    }
+  ],
+  "deterministicFingerprint": "a421e42869613bd3626bbd7257c96cc5cce88a1758845c309529592d71fdc97a"
+}

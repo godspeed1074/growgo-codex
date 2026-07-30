@@ -1,0 +1,44 @@
+{
+  "schemaId": "ATLAS_RUNTIME_MONITORING_SIMULATION_VALIDATION_001",
+  "simulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "telemetry_events_defined",
+      "ok": true
+    },
+    {
+      "name": "health_states_covered",
+      "ok": true
+    },
+    {
+      "name": "alert_rules_applied",
+      "ok": true
+    },
+    {
+      "name": "rollback_signals_defined",
+      "ok": true
+    },
+    {
+      "name": "admin_visibility_outputs_defined",
+      "ok": true
+    },
+    {
+      "name": "adapter_and_package_monitoring_safe",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "fa7f617e2c9d81fcaa1a496af05e917fd9450e72fff749519010f077bd1ebf3b"
+}

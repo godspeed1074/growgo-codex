@@ -1,0 +1,117 @@
+{
+  "schemaId": "ATLAS_RUNTIME_MONITORING_TELEMETRY_SET_001",
+  "simulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "records": [
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_TELEMETRY_RECORD_001",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "scenarioId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001",
+      "scenarioType": "HEALTHY_ATLAS_GENERATION",
+      "eventType": "coordinate_lookup_attempt",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "adminVisibility": "DASHBOARD_HEALTHY",
+      "adapterReference": "RUNTIME_ADAPTER_VALID_PLAYER_LOCATION_REQUEST_001",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "reasonCode": "RUNTIME_FLAGS_DISABLED",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "3facaec27662edcc43f3d4f4d24bf69d29dd01e3090a5c1405c68e637c610057"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_TELEMETRY_RECORD_001",
+      "telemetryId": "RUNTIME_MONITORING_PACKAGE_VALIDATION_FAILURE_001_TELEMETRY",
+      "scenarioId": "RUNTIME_MONITORING_PACKAGE_VALIDATION_FAILURE_001",
+      "scenarioType": "PACKAGE_VALIDATION_FAILURE",
+      "eventType": "package_validation_result",
+      "healthState": "BLOCKED",
+      "alertState": "BLOCK_PACKAGE_SIZE_LIMIT",
+      "rollbackSignal": "ROLLBACK_TO_LAST_VALIDATED_PACKAGE",
+      "adminVisibility": "PACKAGE_HEALTH_BLOCKED",
+      "adapterReference": "RUNTIME_ADAPTER_MISSING_PACKAGE_REQUEST_001",
+      "packageId": "ATLAS_REGION_PACKAGE_MISSING_NEG_38_50_145_50_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "recipeResolution": null,
+      "reasonCode": "SELECTOR_CONTRACT_MISMATCH",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "629f59af21d4eb9fe9cda2d4c04cc30b3e79883c4c5fc2584ad0319a4de3e606"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_TELEMETRY_RECORD_001",
+      "telemetryId": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "scenarioId": "RUNTIME_MONITORING_BUDGET_WARNING_001",
+      "scenarioType": "BUDGET_WARNING",
+      "eventType": "permission_gate_state",
+      "healthState": "WARNING",
+      "alertState": "WARNING_PACKAGE_NEAR_LIMIT",
+      "rollbackSignal": "NONE",
+      "adminVisibility": "BUDGET_WARNING_VISIBLE",
+      "adapterReference": "RUNTIME_ADAPTER_VALID_PLAYER_LOCATION_REQUEST_001",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "reasonCode": "RUNTIME_FLAGS_DISABLED",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "dbde91823eb6ee6fe7ac300e922434fb0879341a0706a6c611d8ea00c79c5555"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_TELEMETRY_RECORD_001",
+      "telemetryId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "scenarioId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001",
+      "scenarioType": "RECIPE_FALLBACK_EVENT",
+      "eventType": "recipe_selection_result",
+      "healthState": "WARNING",
+      "alertState": "RECIPE_FALLBACK_WARNING",
+      "rollbackSignal": "FALLBACK_TO_APPROVED_RECIPE_PATH",
+      "adminVisibility": "RECIPE_USAGE_WARNING",
+      "adapterReference": "RUNTIME_ADAPTER_BLOCKED_REGION_REQUEST_001",
+      "packageId": "ATLAS_REGION_PACKAGE_UNAPPROVED_HINTERLAND_NEG_37_55_144_02_v001",
+      "regionId": "REGION_UNAPPROVED_HINTERLAND_NEG_37_55_144_02_COASTAL_EXPLORATION",
+      "recipeResolution": null,
+      "reasonCode": "REGION_SCOPE_VIOLATION",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "c3718b1d5c3847fe77e61b2a4a23b6818ccd431f8db65b0a1e26347b4830c533"
+    },
+    {
+      "schemaId": "ATLAS_RUNTIME_MONITORING_TELEMETRY_RECORD_001",
+      "telemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+      "scenarioId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001",
+      "scenarioType": "EMERGENCY_SHUTDOWN_EVENT",
+      "eventType": "rollback_trigger_state",
+      "healthState": "BLOCKED",
+      "alertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "rollbackSignal": "FORCE_PLANNING_ONLY_STATE",
+      "adminVisibility": "CRITICAL_RUNTIME_BLOCK",
+      "adapterReference": "RUNTIME_ADAPTER_EMERGENCY_SHUTDOWN_REQUEST_001",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "reasonCode": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "81fde7f929ca74103c91c231642c0f1d492aab4c5e491a274be210113d393b31"
+    }
+  ],
+  "deterministicFingerprint": "a8bff985fb3da37b8479ecb468850ff4af5829b3b5ae63b9297abec8c0a11136"
+}
