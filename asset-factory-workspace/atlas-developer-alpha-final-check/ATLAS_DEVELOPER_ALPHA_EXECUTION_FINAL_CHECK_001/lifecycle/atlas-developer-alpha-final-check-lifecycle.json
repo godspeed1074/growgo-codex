@@ -1,0 +1,15 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_FINAL_CHECK_LIFECYCLE_001",
+  "checkId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+  "lifecycleStatus": "FINAL_CHECK_COMPLETE_READY_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "finalReadinessState": "READY_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "75f2198b22cd4ec7eefd1cef770fec8fdd70fe329e6d5d380ac3d6aeade43fd4"
+}
