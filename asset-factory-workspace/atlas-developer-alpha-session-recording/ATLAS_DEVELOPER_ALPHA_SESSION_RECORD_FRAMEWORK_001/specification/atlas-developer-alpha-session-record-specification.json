@@ -1,0 +1,99 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_SPECIFICATION_001",
+  "frameworkId": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_FRAMEWORK_001",
+  "recordedOn": "2026-07-30",
+  "sessionIdentitySchema": {
+    "sessionIdFormat": "ATLAS_DEVELOPER_ALPHA_SESSION_{DATE}_{REGION}_{RUN}",
+    "requiredFields": [
+      "sessionId",
+      "sessionDate",
+      "environment",
+      "regionId",
+      "packageId",
+      "recipeId",
+      "operatorRoles",
+      "approvalReference",
+      "finalCheckReference"
+    ]
+  },
+  "preSessionStateCapture": {
+    "requiredCaptures": [
+      "repositoryReadiness",
+      "sessionDecisionState",
+      "featureFlagSnapshot",
+      "alphaScope",
+      "packageSnapshot",
+      "recipeSnapshot",
+      "monitoringPreparation",
+      "rollbackReadiness"
+    ],
+    "requiredFlagStates": {
+      "runtimeExecutionEnabled": false,
+      "mapAttachmentAllowed": false,
+      "automaticRendererExecutionAllowed": false
+    }
+  },
+  "sessionEventLogging": {
+    "eventSequence": [
+      "SESSION_OPENED",
+      "PRE_SESSION_CAPTURED",
+      "COORDINATE_LOOKUP_NOTED",
+      "MONITORING_SIGNAL_OBSERVED",
+      "STOP_CONDITION_OBSERVED",
+      "ROLLBACK_RECORDED",
+      "SESSION_CLOSED"
+    ],
+    "eventRequirements": [
+      "eventId",
+      "eventType",
+      "timestamp",
+      "actorRole",
+      "summary",
+      "safetyFlags",
+      "auditReference"
+    ]
+  },
+  "telemetryCapture": {
+    "sourceSimulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+    "requiredTelemetryReferences": [
+      "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ],
+    "requiredFields": [
+      "telemetryId",
+      "healthState",
+      "alertState",
+      "rollbackSignal",
+      "reasonCode",
+      "runtimeFlags"
+    ]
+  },
+  "outcomeStates": [
+    "COMPLETED_NO_ACTION",
+    "COMPLETED_WITH_WARNING",
+    "STOPPED_AND_ROLLED_BACK",
+    "EMERGENCY_STOP_RECORDED",
+    "INVALID_SESSION_RECORD"
+  ],
+  "postSessionReviewStructure": {
+    "requiredSections": [
+      "sessionSummary",
+      "eventTimeline",
+      "telemetrySummary",
+      "successMetricReview",
+      "stopConditionReview",
+      "rollbackReview",
+      "operatorNotes",
+      "followUpActions"
+    ]
+  },
+  "auditReferences": {
+    "requiredReferences": [
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+      "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+    ],
+    "retentionPolicy": "developer_only_session_records_retained_with_audit_links"
+  },
+  "deterministicFingerprint": "6c046364472d284ad8215a1819a842995d8af960957c0a86ef37bdd4f81980a3"
+}

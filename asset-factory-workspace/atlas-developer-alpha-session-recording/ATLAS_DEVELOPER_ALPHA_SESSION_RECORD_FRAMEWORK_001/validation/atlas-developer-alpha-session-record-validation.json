@@ -1,0 +1,40 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_VALIDATION_001",
+  "frameworkId": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_FRAMEWORK_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "final_check_supports_recording_framework",
+      "ok": true
+    },
+    {
+      "name": "session_identity_and_pre_session_capture_defined",
+      "ok": true
+    },
+    {
+      "name": "event_logging_and_telemetry_capture_defined",
+      "ok": true
+    },
+    {
+      "name": "outcomes_post_session_review_and_audit_defined",
+      "ok": true
+    },
+    {
+      "name": "safety_flags_remain_disabled",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "7be0d41834f9617f391872fdf90040bb503ea63ad1ae4de8a075c26d8e1b1cee"
+}

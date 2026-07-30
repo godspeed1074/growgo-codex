@@ -1,0 +1,76 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_EVENT_SCHEMA_001",
+  "frameworkId": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_FRAMEWORK_001",
+  "sessionEventSchema": {
+    "requiredFields": {
+      "eventId": "string",
+      "eventType": "enum",
+      "timestamp": "ISO-8601 string",
+      "actorRole": "enum",
+      "summary": "string",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": "boolean false only",
+        "mapAttachmentAllowed": "boolean false only",
+        "automaticRendererExecutionAllowed": "boolean false only"
+      },
+      "telemetryReference": "nullable string",
+      "auditReference": "string",
+      "notes": "optional string"
+    },
+    "eventTypes": [
+      "SESSION_OPENED",
+      "PRE_SESSION_CAPTURED",
+      "COORDINATE_LOOKUP_NOTED",
+      "MONITORING_SIGNAL_OBSERVED",
+      "STOP_CONDITION_OBSERVED",
+      "ROLLBACK_RECORDED",
+      "SESSION_CLOSED"
+    ],
+    "actorRoles": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ]
+  },
+  "telemetrySchema": {
+    "requiredFields": [
+      "telemetryId",
+      "healthState",
+      "alertState",
+      "rollbackSignal",
+      "reasonCode",
+      "runtimeFlags"
+    ],
+    "acceptedHealthStates": [
+      "HEALTHY",
+      "WARNING",
+      "BLOCKED"
+    ],
+    "acceptedAlertStates": [
+      "NO_ALERT",
+      "WARNING_PACKAGE_NEAR_LIMIT",
+      "RECIPE_FALLBACK_WARNING",
+      "BLOCK_PACKAGE_SIZE_LIMIT",
+      "EMERGENCY_SHUTDOWN_TRIGGERED"
+    ]
+  },
+  "postSessionReviewSchema": {
+    "requiredSections": [
+      "sessionSummary",
+      "eventTimeline",
+      "telemetrySummary",
+      "successMetricReview",
+      "stopConditionReview",
+      "rollbackReview",
+      "operatorNotes",
+      "followUpActions"
+    ],
+    "requiredOutcomeStates": [
+      "COMPLETED_NO_ACTION",
+      "COMPLETED_WITH_WARNING",
+      "STOPPED_AND_ROLLED_BACK",
+      "EMERGENCY_STOP_RECORDED",
+      "INVALID_SESSION_RECORD"
+    ]
+  },
+  "deterministicFingerprint": "af8f76a9d84d9f2e83ee2d53567e289891e356354f376af3ff9f6561f13ba6a7"
+}
