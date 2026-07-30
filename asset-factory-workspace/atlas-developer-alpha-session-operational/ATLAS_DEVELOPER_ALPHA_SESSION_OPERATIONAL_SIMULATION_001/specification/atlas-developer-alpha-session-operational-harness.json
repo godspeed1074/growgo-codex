@@ -1,0 +1,19 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_HARNESS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_SIMULATION_001",
+  "recordedOn": "2026-07-30",
+  "initializationReference": "ATLAS_DEVELOPER_ALPHA_SESSION_INITIALIZATION_SIMULATION_001",
+  "controlReference": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001",
+  "recordFrameworkReference": "ATLAS_DEVELOPER_ALPHA_SESSION_RECORD_FRAMEWORK_001",
+  "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "phases": [
+    "enter_active_review_state",
+    "normal_operation",
+    "warning_event",
+    "recipe_fallback_event",
+    "pause_resume_flow",
+    "rollback_flow",
+    "session_completion"
+  ],
+  "deterministicFingerprint": "e50424650317442f1194095fb4f6d0781810206e132136ae2c27837dcc36c221"
+}

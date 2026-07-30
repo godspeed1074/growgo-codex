@@ -1,0 +1,228 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_AUDIT_OUTPUTS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_SIMULATION_001",
+  "records": [
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_001",
+      "phaseId": "ENTER_ACTIVE_REVIEW_STATE",
+      "eventType": "SESSION_STATE_CHANGED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "enter_active_review_state:SESSION_STATE_CHANGED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_002",
+      "phaseId": "ENTER_ACTIVE_REVIEW_STATE",
+      "eventType": "TELEMETRY_REFERENCED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "enter_active_review_state:TELEMETRY_REFERENCED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_003",
+      "phaseId": "NORMAL_OPERATION",
+      "eventType": "COORDINATE_LOOKUP_NOTED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "normal_operation:COORDINATE_LOOKUP_NOTED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_004",
+      "phaseId": "NORMAL_OPERATION",
+      "eventType": "MONITORING_SIGNAL_OBSERVED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "normal_operation:MONITORING_SIGNAL_OBSERVED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_005",
+      "phaseId": "WARNING_EVENT",
+      "eventType": "MONITORING_SIGNAL_OBSERVED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "warning_event:MONITORING_SIGNAL_OBSERVED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_006",
+      "phaseId": "WARNING_EVENT",
+      "eventType": "SESSION_PAUSED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "warning_event:SESSION_PAUSED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_007",
+      "phaseId": "RECIPE_FALLBACK_EVENT",
+      "eventType": "SESSION_RESUMED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "recipe_fallback_event:SESSION_RESUMED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_008",
+      "phaseId": "RECIPE_FALLBACK_EVENT",
+      "eventType": "TELEMETRY_REFERENCED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "recipe_fallback_event:TELEMETRY_REFERENCED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_009",
+      "phaseId": "PAUSE_RESUME_FLOW",
+      "eventType": "SESSION_PAUSED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "pause_resume_flow:SESSION_PAUSED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_010",
+      "phaseId": "PAUSE_RESUME_FLOW",
+      "eventType": "SESSION_RESUMED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "pause_resume_flow:SESSION_RESUMED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_011",
+      "phaseId": "ROLLBACK_FLOW",
+      "eventType": "ROLLBACK_RECORDED",
+      "actorRole": "atlas_operator",
+      "summary": "rollback_flow:ROLLBACK_RECORDED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_012",
+      "phaseId": "ROLLBACK_FLOW",
+      "eventType": "SESSION_STATE_CHANGED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "rollback_flow:SESSION_STATE_CHANGED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    },
+    {
+      "eventId": "ATLAS_ALPHA_OPERATIONAL_AUDIT_013",
+      "phaseId": "SESSION_COMPLETION",
+      "eventType": "SESSION_CLOSED",
+      "actorRole": "internal_developer_reviewer",
+      "summary": "session_completion:SESSION_CLOSED",
+      "safetyFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "auditReferences": [
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+        "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+        "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+      ]
+    }
+  ],
+  "deterministicFingerprint": "eee3035e984f84800ce5b3d09cc9844d3a446dad7ce7362744dcbd47901fb027"
+}

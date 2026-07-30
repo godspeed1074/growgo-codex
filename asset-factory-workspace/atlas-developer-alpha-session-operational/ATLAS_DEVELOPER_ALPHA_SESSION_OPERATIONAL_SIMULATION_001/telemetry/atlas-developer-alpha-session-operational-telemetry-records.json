@@ -1,0 +1,112 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_TELEMETRY_OUTPUTS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_SIMULATION_001",
+  "outputs": [
+    {
+      "phaseId": "ENTER_ACTIVE_REVIEW_STATE",
+      "phaseType": "enter_active_review_state",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "phaseId": "NORMAL_OPERATION",
+      "phaseType": "normal_operation",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "phaseId": "WARNING_EVENT",
+      "phaseType": "warning_event",
+      "telemetryId": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "healthState": "WARNING",
+      "alertState": "WARNING_PACKAGE_NEAR_LIMIT",
+      "rollbackSignal": "NONE",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "phaseId": "RECIPE_FALLBACK_EVENT",
+      "phaseType": "recipe_fallback_event",
+      "telemetryId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "healthState": "WARNING",
+      "alertState": "RECIPE_FALLBACK_WARNING",
+      "rollbackSignal": "FALLBACK_TO_APPROVED_RECIPE_PATH",
+      "recipeResolution": null,
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "phaseId": "PAUSE_RESUME_FLOW",
+      "phaseType": "pause_resume_flow",
+      "telemetryId": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "healthState": "WARNING",
+      "alertState": "WARNING_PACKAGE_NEAR_LIMIT",
+      "rollbackSignal": "NONE",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "phaseId": "ROLLBACK_FLOW",
+      "phaseType": "rollback_flow",
+      "telemetryId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "healthState": "WARNING",
+      "alertState": "RECIPE_FALLBACK_WARNING",
+      "rollbackSignal": "FALLBACK_TO_APPROVED_RECIPE_PATH",
+      "recipeResolution": null,
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "phaseId": "SESSION_COMPLETION",
+      "phaseType": "session_completion",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "recipeResolution": "COASTAL_LOCATION_RECIPE_001",
+      "continuityState": "CONTIGUOUS_MONITORING_FLOW",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    }
+  ],
+  "deterministicFingerprint": "bf4fe5290dc46721aced2b9a676f34249d6782e99c73e3a002f3fcf4b31d62e1"
+}

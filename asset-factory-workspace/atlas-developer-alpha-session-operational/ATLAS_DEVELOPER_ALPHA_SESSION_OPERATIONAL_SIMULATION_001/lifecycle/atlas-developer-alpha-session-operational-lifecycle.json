@@ -1,0 +1,14 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_LIFECYCLE_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_OPERATIONAL_SIMULATION_001",
+  "lifecycleStatus": "OPERATIONAL_READY_FOR_FUTURE_MANUAL_DEVELOPER_ALPHA_SESSION",
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "cdad44ec1c5dfcc2e0097210eb07f9dc3defe756c92892477901759a2fd84b89"
+}
