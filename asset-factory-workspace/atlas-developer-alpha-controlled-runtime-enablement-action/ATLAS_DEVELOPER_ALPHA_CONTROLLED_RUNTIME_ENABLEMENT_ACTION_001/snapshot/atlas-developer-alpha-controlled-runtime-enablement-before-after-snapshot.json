@@ -1,0 +1,38 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_BEFORE_AFTER_SNAPSHOT_001",
+  "actionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_ACTION_001",
+  "capturedOn": "2026-07-30",
+  "finalPreChangeSnapshot": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "plannedActionDelta": {
+    "runtimeExecutionEnabled": {
+      "before": false,
+      "planned": "planned transition",
+      "afterRequiredReset": false
+    },
+    "mapAttachmentAllowed": {
+      "before": false,
+      "planned": false,
+      "afterRequiredReset": false
+    },
+    "automaticRendererExecutionAllowed": {
+      "before": false,
+      "planned": false,
+      "afterRequiredReset": false
+    }
+  },
+  "approvedScope": {
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+  },
+  "deterministicFingerprint": "571e16d73966db2f40cfa7ff2f113c003ce2f1a7dd9cd43338ef43afca8fb558"
+}

@@ -1,0 +1,98 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_ACTION_RECORD_001",
+  "actionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_ACTION_001",
+  "recordedOn": "2026-07-30",
+  "actionState": "PLANNED_NOT_EXECUTED",
+  "references": {
+    "flagTransitionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_001",
+    "controlledRuntimeExecutionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_EXECUTION_001",
+    "enablementReviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001"
+  },
+  "finalPreChangeSnapshot": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "operatorAuthorization": {
+    "authorizationState": "READY_FOR_FUTURE_MANUAL_ENABLEMENT_DECISION_ONLY",
+    "authorizedRoles": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ],
+    "explicitActionRequired": true
+  },
+  "exactFlagDelta": {
+    "runtimeExecutionEnabled": {
+      "before": false,
+      "planned": "planned transition",
+      "afterRequiredReset": false
+    },
+    "mapAttachmentAllowed": {
+      "before": false,
+      "planned": false,
+      "afterRequiredReset": false
+    },
+    "automaticRendererExecutionAllowed": {
+      "before": false,
+      "planned": false,
+      "afterRequiredReset": false
+    }
+  },
+  "monitoringConfirmation": {
+    "requiredSignals": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state",
+      "runtime_enablement_block_reason"
+    ],
+    "monitoringChecklist": [
+      "watch coordinate_lookup_attempt",
+      "watch package_validation_result",
+      "watch recipe_selection_result",
+      "watch permission_gate_state",
+      "watch rollback_trigger_state",
+      "watch runtime_enablement_block_reason"
+    ],
+    "confirmationState": "READY_FOR_MANUAL_MONITORING_CONFIRMATION"
+  },
+  "rollbackReference": {
+    "rollbackState": "READY_IF_MANUAL_TRANSITION_IS_ATTEMPTED",
+    "rollbackOwner": "atlas_operator",
+    "backupRollbackOwner": "internal_developer_reviewer",
+    "planningOnlyResetTarget": "PLANNING_ONLY_STATE_WITH_RUNTIME_DISABLED"
+  },
+  "actionOutcomeStates": [
+    "PLANNED_NOT_EXECUTED",
+    "MANUAL_ENABLEMENT_APPROVED_PENDING_OPERATOR_ACTION",
+    "MANUAL_ENABLEMENT_EXECUTED_WITH_MONITORING",
+    "MANUAL_ENABLEMENT_ABORTED",
+    "MANUAL_ENABLEMENT_ROLLED_BACK"
+  ],
+  "auditRequirements": {
+    "requiredFields": [
+      "operatorId",
+      "operatorRole",
+      "timestamp",
+      "decisionReason",
+      "beforeState",
+      "approvedDelta",
+      "monitoringConfirmation",
+      "rollbackReference",
+      "outcomeState"
+    ],
+    "immutableSafetyAssertions": [
+      "mapAttachmentAllowed remains false until separate approval",
+      "automaticRendererExecutionAllowed remains false until separate approval",
+      "renderer attachment remains unauthorized",
+      "asset modification remains unauthorized"
+    ]
+  },
+  "deterministicFingerprint": "3475e5efe7176dfcc286f75a21931dee390f2e57d5e01d27e4b01fe8f0a94a4a"
+}

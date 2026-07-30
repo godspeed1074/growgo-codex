@@ -1,0 +1,37 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_ACTION_AUTHORIZATION_RECORD_001",
+  "actionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_ACTION_001",
+  "recordedOn": "2026-07-30",
+  "authorizationState": "READY_FOR_FUTURE_MANUAL_ENABLEMENT_DECISION_ONLY",
+  "sourceTransitionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_001",
+  "sourceEnablementReviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001",
+  "authorizedRoles": [
+    "atlas_operator",
+    "internal_developer_reviewer"
+  ],
+  "operatorAuthority": {
+    "internalDeveloperOnly": true,
+    "dualAwarenessRequired": true,
+    "explicitOperatorDecisionRequired": true
+  },
+  "preservedFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "blockedActions": [
+    "automatic runtime enablement",
+    "renderer attachment",
+    "map attachment",
+    "map downloads",
+    "Blender execution",
+    "GLB generation",
+    "asset modification"
+  ],
+  "deterministicFingerprint": "ab418dcbfae06a802a69cbc412f85cee40c6d7f984ec0988d1043765515cea4a"
+}
