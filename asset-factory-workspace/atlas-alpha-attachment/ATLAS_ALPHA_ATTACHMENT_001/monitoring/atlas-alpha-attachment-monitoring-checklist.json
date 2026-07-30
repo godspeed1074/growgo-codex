@@ -1,0 +1,38 @@
+{
+  "schemaId": "ATLAS_ALPHA_ATTACHMENT_MONITORING_CHECKLIST_001",
+  "alphaAttachmentId": "ATLAS_ALPHA_ATTACHMENT_001",
+  "checklist": [
+    {
+      "itemId": "CHECK_REGION_SCOPE",
+      "description": "Verify alpha region scope matches approved simulation records.",
+      "expectedStatus": "required"
+    },
+    {
+      "itemId": "CHECK_RECIPE_ALIGNMENT",
+      "description": "Verify deterministic recipe selection matches expected recipe IDs.",
+      "expectedStatus": "required"
+    },
+    {
+      "itemId": "CHECK_BOUNDARY_BEHAVIOR",
+      "description": "Verify boundary transitions remain deterministic and reviewable.",
+      "expectedStatus": "required"
+    },
+    {
+      "itemId": "CHECK_ROLLBACK_READY",
+      "description": "Verify rollback remains available before any future escalation.",
+      "expectedStatus": "required"
+    },
+    {
+      "itemId": "CHECK_EMERGENCY_DISABLE_READY",
+      "description": "Verify emergency disable remains available before any future escalation.",
+      "expectedStatus": "required"
+    }
+  ],
+  "referencedScenarioIds": [
+    "CONTROLLED_ATTACHMENT_APPROVED_ALPHA_REGION_001",
+    "CONTROLLED_ATTACHMENT_BLOCKED_REGION_001",
+    "CONTROLLED_ATTACHMENT_MISSING_PACKAGE_001",
+    "CONTROLLED_ATTACHMENT_VALIDATION_FAILURE_001",
+    "CONTROLLED_ATTACHMENT_EMERGENCY_DISABLE_001"
+  ]
+}

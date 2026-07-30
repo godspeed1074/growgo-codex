@@ -1,0 +1,53 @@
+{
+  "schemaId": "ATLAS_ALPHA_ATTACHMENT_PERMISSION_MATRIX_001",
+  "alphaAttachmentId": "ATLAS_ALPHA_ATTACHMENT_001",
+  "matrix": [
+    {
+      "area": "preview_inspection",
+      "internalDeveloperReviewer": "allowed",
+      "atlasOperator": "allowed",
+      "betaTester": "blocked",
+      "livePlayer": "blocked"
+    },
+    {
+      "area": "metadata_lookup",
+      "internalDeveloperReviewer": "allowed",
+      "atlasOperator": "allowed",
+      "betaTester": "blocked",
+      "livePlayer": "blocked"
+    },
+    {
+      "area": "renderer_attachment",
+      "internalDeveloperReviewer": "blocked",
+      "atlasOperator": "blocked",
+      "betaTester": "blocked",
+      "livePlayer": "blocked"
+    },
+    {
+      "area": "runtime_activation",
+      "internalDeveloperReviewer": "blocked",
+      "atlasOperator": "blocked",
+      "betaTester": "blocked",
+      "livePlayer": "blocked"
+    },
+    {
+      "area": "rollback_and_disable",
+      "internalDeveloperReviewer": "allowed",
+      "atlasOperator": "allowed",
+      "betaTester": "blocked",
+      "livePlayer": "blocked"
+    }
+  ],
+  "inheritedPermissionFlags": {
+    "runtimeActivationAuthorized": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false,
+    "previewInspectionAuthorized": true,
+    "metadataLookupAuthorized": true,
+    "boundaryInspectionAuthorized": true
+  },
+  "deterministicFingerprint": "fabc69d661967a799484ed61a842317df8d63bc4fa257ed776a1cf1c9619bfc8"
+}

@@ -1,0 +1,152 @@
+{
+  "schemaId": "ATLAS_ALPHA_ATTACHMENT_SPECIFICATION_001",
+  "alphaAttachmentId": "ATLAS_ALPHA_ATTACHMENT_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "controlledAttachmentPlanId": "ATLAS_CONTROLLED_MAP_ATTACHMENT_001",
+    "controlledAttachmentSimulationId": "ATLAS_CONTROLLED_ATTACHMENT_SIMULATION_001",
+    "mapPreviewAttachmentId": "ATLAS_MAP_PREVIEW_ATTACHMENT_001"
+  },
+  "alphaRegionScope": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_REGION_SCOPE_001",
+    "regionCount": 2,
+    "regions": [
+      {
+        "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+        "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+        "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+        "latBucket": -38.12,
+        "lngBucket": 144.61,
+        "previewAvailable": true
+      },
+      {
+        "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+        "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+        "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+        "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+        "latBucket": -38.02,
+        "lngBucket": 145.01,
+        "previewAvailable": true
+      }
+    ],
+    "regionPolicy": "alpha scope is restricted to preview-verified, simulation-approved regions only"
+  },
+  "allowedEnvironments": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_ALLOWED_ENVIRONMENTS_001",
+    "environments": [
+      "DEVELOPMENT_ONLY"
+    ],
+    "regionEnvironmentBindings": [
+      {
+        "environment": "DEVELOPMENT_ONLY",
+        "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+      },
+      {
+        "environment": "DEVELOPMENT_ONLY",
+        "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+        "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001"
+      }
+    ],
+    "environmentPolicy": "alpha attachment remains inside development-only environment boundaries"
+  },
+  "userAccessBoundaries": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_USER_ACCESS_BOUNDARIES_001",
+    "allowedUserTypes": [
+      "internal_developer_reviewer",
+      "atlas_operator"
+    ],
+    "blockedUserTypes": [
+      "beta_tester",
+      "live_player",
+      "anonymous_user"
+    ],
+    "accessRules": [
+      "alpha access is manual and invitation-only",
+      "no player-facing discovery is enabled",
+      "preview and review tools remain internal only"
+    ]
+  },
+  "enabledSystems": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_ENABLED_SYSTEMS_001",
+    "systems": [
+      "metadata_lookup",
+      "preview_overlay_inspection",
+      "boundary_transition_review",
+      "controlled_attachment_logging",
+      "manual_approval_gate_review"
+    ]
+  },
+  "disabledSystems": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_DISABLED_SYSTEMS_001",
+    "systems": [
+      "runtime_scene_activation",
+      "renderer_attachment",
+      "map_downloads",
+      "player_visibility",
+      "automatic_recipe_execution",
+      "asset_mutation"
+    ]
+  },
+  "monitoringRequirements": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_MONITORING_REQUIREMENTS_001",
+    "requiredSignals": [
+      "region_scope_match",
+      "package_identity_match",
+      "deterministic_recipe_match",
+      "boundary_transition_outcome",
+      "rollback_invocation_status",
+      "emergency_disable_status"
+    ],
+    "monitoringPolicy": "alpha monitoring remains metadata-only and must be reviewable before any future escalation"
+  },
+  "rollbackTriggers": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_ROLLBACK_TRIGGERS_001",
+    "triggers": [
+      "unexpected_region_scope",
+      "recipe_selection_mismatch",
+      "package_identity_mismatch",
+      "boundary_transition_failure",
+      "manual_operator_rollback"
+    ]
+  },
+  "successCriteria": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_SUCCESS_CRITERIA_001",
+    "criteria": [
+      "approved alpha scenario remains ready_for_future_alpha",
+      "blocked scenarios remain blocked deterministically",
+      "preview and package identity remain aligned",
+      "manual approval gates remain unresolved until a human approves"
+    ],
+    "referenceScenarioId": "CONTROLLED_ATTACHMENT_APPROVED_ALPHA_REGION_001"
+  },
+  "failureCriteria": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_FAILURE_CRITERIA_001",
+    "criteria": [
+      "region scope violation",
+      "missing package",
+      "validation gate failure",
+      "emergency disable triggered",
+      "attempted renderer or runtime escalation"
+    ]
+  },
+  "manualApprovalGates": {
+    "schemaId": "ATLAS_ALPHA_ATTACHMENT_MANUAL_APPROVAL_GATES_001",
+    "gates": [
+      {
+        "gateId": "ALPHA_SCOPE_APPROVAL",
+        "description": "Confirm alpha region scope and allowed environments."
+      },
+      {
+        "gateId": "ALPHA_MONITORING_APPROVAL",
+        "description": "Confirm monitoring and rollback procedures are in place."
+      },
+      {
+        "gateId": "ALPHA_HANDOFF_APPROVAL",
+        "description": "Confirm renderer handoff remains disabled pending later work."
+      }
+    ],
+    "approvalMode": "manual_only"
+  }
+}

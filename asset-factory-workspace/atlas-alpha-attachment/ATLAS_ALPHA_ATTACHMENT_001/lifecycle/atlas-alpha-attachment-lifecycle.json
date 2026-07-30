@@ -1,0 +1,13 @@
+{
+  "schemaId": "ATLAS_ALPHA_ATTACHMENT_LIFECYCLE_001",
+  "alphaAttachmentId": "ATLAS_ALPHA_ATTACHMENT_001",
+  "lifecycleStatus": "ALPHA_ATTACHMENT_SPEC_READY",
+  "manualApprovalRequired": true,
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "98eee51d6cbdb2b2b10134fd96bd767d16aa9019a34e46d49d81a10e2eabe18c"
+}
