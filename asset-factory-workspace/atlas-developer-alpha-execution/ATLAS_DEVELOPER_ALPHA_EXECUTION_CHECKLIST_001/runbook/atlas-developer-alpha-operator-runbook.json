@@ -1,0 +1,65 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_OPERATOR_RUNBOOK_001",
+  "checklistId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_CHECKLIST_001",
+  "runbookId": "ATLAS_DEVELOPER_ALPHA_OPERATOR_RUNBOOK_001",
+  "operatorRoles": [
+    "internal_developer_reviewer",
+    "atlas_operator"
+  ],
+  "sessionMode": "MANUAL_DEVELOPER_REVIEW_ONLY",
+  "preFlight": [
+    "confirm go/no-go record is pass and developer-only",
+    "confirm final alpha safety checklist remains all PASS",
+    "confirm approved primary region matches current review target",
+    "confirm rollback owner is available before session start"
+  ],
+  "executionSequence": [
+    {
+      "stepId": "VERIFY_ENVIRONMENT",
+      "instruction": "Verify all runtime and renderer flags remain false."
+    },
+    {
+      "stepId": "VERIFY_SCOPE",
+      "instruction": "Verify the approved region and internal-only user boundary before proceeding."
+    },
+    {
+      "stepId": "REHEARSE_LOOKUP",
+      "instruction": "Rehearse metadata-only coordinate lookup notes without runtime activation."
+    },
+    {
+      "stepId": "MONITOR_SIGNALS",
+      "instruction": "Observe monitoring outputs for healthy, warning, blocked, and shutdown signals."
+    },
+    {
+      "stepId": "EXIT_AND_AUDIT",
+      "instruction": "Exit within the timebox and complete audit notes whether successful or stopped."
+    }
+  ],
+  "monitoringFocus": {
+    "healthyReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+    "budgetWarningAlert": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT",
+    "emergencyShutdownAlert": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT"
+  },
+  "stopAndRollback": {
+    "stopConditions": [
+      "runtimeExecutionEnabled becomes true without manual authorization",
+      "mapAttachmentAllowed becomes true outside approved experiment review",
+      "automaticRendererExecutionAllowed becomes true",
+      "package validation enters blocked state for permitted region",
+      "monitoring emits emergency shutdown or unresolved blocked condition"
+    ],
+    "rollbackProcedure": [
+      "owner: atlas_operator",
+      "backup owner: internal_developer_reviewer",
+      "return immediately to planning-only state",
+      "end session if any failure criteria or emergency signal is observed"
+    ]
+  },
+  "exitAudit": [
+    "retain developer-only operator notes",
+    "retain monitored alert and telemetry references",
+    "retain explicit go/no-go record reference",
+    "retain rollback invocation note if used"
+  ],
+  "deterministicFingerprint": "d61e75509710ee7f419ffa47ae50e62229059913eb7873fe2e7bc564eb5b513e"
+}

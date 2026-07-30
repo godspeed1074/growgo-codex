@@ -1,0 +1,58 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_CHECKLIST_001",
+  "checklistId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_CHECKLIST_001",
+  "recordedOn": "2026-07-30",
+  "preFlightChecklist": [
+    "confirm go/no-go record is pass and developer-only",
+    "confirm final alpha safety checklist remains all PASS",
+    "confirm approved primary region matches current review target",
+    "confirm rollback owner is available before session start"
+  ],
+  "environmentVerification": [
+    "runtimeExecutionEnabled remains false",
+    "mapAttachmentAllowed remains false",
+    "automaticRendererExecutionAllowed remains false",
+    "rendererAttachmentAuthorized remains false",
+    "mapDownloadsAuthorized remains false"
+  ],
+  "operatorSteps": [
+    "open developer alpha decision records and confirm scope",
+    "review permitted region and expected recipe before any rehearsal",
+    "perform metadata-only coordinate lookup rehearsal notes",
+    "observe monitoring outputs without activating runtime",
+    "record results and end session within 30-minute window"
+  ],
+  "monitoringChecklist": [
+    "healthy signal available: RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+    "watch for package validation failure alerts",
+    "watch for budget warning alerts",
+    "watch for recipe fallback warning alerts",
+    "watch for emergency shutdown signal: RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+  ],
+  "stopConditions": [
+    "runtimeExecutionEnabled becomes true without manual authorization",
+    "mapAttachmentAllowed becomes true outside approved experiment review",
+    "automaticRendererExecutionAllowed becomes true",
+    "package validation enters blocked state for permitted region",
+    "monitoring emits emergency shutdown or unresolved blocked condition"
+  ],
+  "rollbackProcedure": [
+    "owner: atlas_operator",
+    "backup owner: internal_developer_reviewer",
+    "return immediately to planning-only state",
+    "end session if any failure criteria or emergency signal is observed"
+  ],
+  "exitProcedure": [
+    "record whether all success metrics were met",
+    "record whether any stop conditions were triggered",
+    "confirm runtime flags remained false throughout review",
+    "close the session and archive operator notes"
+  ],
+  "auditRequirements": [
+    "retain developer-only operator notes",
+    "retain monitored alert and telemetry references",
+    "retain explicit go/no-go record reference",
+    "retain rollback invocation note if used"
+  ],
+  "deterministicFingerprint": "9b8cb2f4631b491af7f75535fd21b21af12e7b89660ce78a57996c53c771ca06"
+}

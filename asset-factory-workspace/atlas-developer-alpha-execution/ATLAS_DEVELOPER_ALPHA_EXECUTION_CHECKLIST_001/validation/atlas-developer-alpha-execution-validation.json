@@ -1,0 +1,44 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_VALIDATION_001",
+  "checklistId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_CHECKLIST_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "go_record_preserved",
+      "ok": true
+    },
+    {
+      "name": "preflight_and_environment_defined",
+      "ok": true
+    },
+    {
+      "name": "operator_and_monitoring_steps_defined",
+      "ok": true
+    },
+    {
+      "name": "stop_rollback_exit_audit_defined",
+      "ok": true
+    },
+    {
+      "name": "monitoring_signals_traceable",
+      "ok": true
+    },
+    {
+      "name": "final_safety_checklist_preserved",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "dc61443518f64c63668a4f2af1da08fcf0a573ed2acf093c5e25a5f542b9a849"
+}
