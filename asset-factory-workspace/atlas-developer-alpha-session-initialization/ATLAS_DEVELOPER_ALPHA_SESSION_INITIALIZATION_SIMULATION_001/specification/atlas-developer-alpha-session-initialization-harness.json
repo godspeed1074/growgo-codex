@@ -1,0 +1,32 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_INITIALIZATION_HARNESS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_INITIALIZATION_SIMULATION_001",
+  "recordedOn": "2026-07-30",
+  "startRecordReference": "ATLAS_DEVELOPER_ALPHA_SESSION_START_RECORD_001",
+  "readinessLockReference": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_001",
+  "controlReference": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001",
+  "monitoringReference": "ATLAS_RUNTIME_MONITORING_SIMULATION_001",
+  "scenarios": [
+    {
+      "scenarioId": "ATLAS_INIT_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_SESSION_INITIALIZATION",
+      "expectedOutcome": "PRE_SESSION_CAPTURE_READY"
+    },
+    {
+      "scenarioId": "ATLAS_INIT_INVALID_AUTH_001",
+      "scenarioType": "INVALID_AUTHORIZATION",
+      "expectedOutcome": "INVALID_SESSION"
+    },
+    {
+      "scenarioId": "ATLAS_INIT_MISSING_LOCK_001",
+      "scenarioType": "MISSING_READINESS_LOCK",
+      "expectedOutcome": "INVALID_SESSION"
+    },
+    {
+      "scenarioId": "ATLAS_INIT_SAFETY_FLAG_MISMATCH_001",
+      "scenarioType": "SAFETY_FLAG_MISMATCH",
+      "expectedOutcome": "INVALID_SESSION"
+    }
+  ],
+  "deterministicFingerprint": "1accd579842fa5a3660514dec1768557b4fbe7948d2c4dd0a748dbc0600d6422"
+}

@@ -1,0 +1,63 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_INITIALIZATION_TELEMETRY_OUTPUTS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_INITIALIZATION_SIMULATION_001",
+  "outputs": [
+    {
+      "scenarioId": "ATLAS_INIT_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_SESSION_INITIALIZATION",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "reasonCode": "INITIALIZATION_READY_NO_RUNTIME_EXECUTION",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "scenarioId": "ATLAS_INIT_INVALID_AUTH_001",
+      "scenarioType": "INVALID_AUTHORIZATION",
+      "telemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+      "healthState": "BLOCKED",
+      "alertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "rollbackSignal": "FORCE_PLANNING_ONLY_STATE",
+      "reasonCode": "INITIALIZATION_BLOCKED_BEFORE_RUNTIME",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "scenarioId": "ATLAS_INIT_MISSING_LOCK_001",
+      "scenarioType": "MISSING_READINESS_LOCK",
+      "telemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+      "healthState": "BLOCKED",
+      "alertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "rollbackSignal": "FORCE_PLANNING_ONLY_STATE",
+      "reasonCode": "INITIALIZATION_BLOCKED_BEFORE_RUNTIME",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    },
+    {
+      "scenarioId": "ATLAS_INIT_SAFETY_FLAG_MISMATCH_001",
+      "scenarioType": "SAFETY_FLAG_MISMATCH",
+      "telemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+      "healthState": "BLOCKED",
+      "alertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "rollbackSignal": "FORCE_PLANNING_ONLY_STATE",
+      "reasonCode": "INITIALIZATION_BLOCKED_BEFORE_RUNTIME",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    }
+  ],
+  "deterministicFingerprint": "c858515b6a3c6d16d260cb18a1b71c39d4d7bbd12c954ab4d3fe37d49e803caa"
+}
