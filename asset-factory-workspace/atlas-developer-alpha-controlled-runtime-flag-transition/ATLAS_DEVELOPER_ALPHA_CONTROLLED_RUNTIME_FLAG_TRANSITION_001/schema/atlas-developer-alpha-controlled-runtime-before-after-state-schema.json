@@ -1,0 +1,26 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_BEFORE_AFTER_STATE_SCHEMA_001",
+  "transitionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_001",
+  "recordedOn": "2026-07-30",
+  "beforeStateSchema": {
+    "runtimeExecutionEnabled": "boolean_false_required",
+    "mapAttachmentAllowed": "boolean_false_required",
+    "automaticRendererExecutionAllowed": "boolean_false_required"
+  },
+  "plannedTransitionSchema": {
+    "runtimeExecutionEnabled": "planned transition",
+    "mapAttachmentAllowed": "boolean_false_required",
+    "automaticRendererExecutionAllowed": "boolean_false_required"
+  },
+  "afterStateSchema": {
+    "runtimeExecutionEnabled": "boolean_false_required_after_reset",
+    "mapAttachmentAllowed": "boolean_false_required",
+    "automaticRendererExecutionAllowed": "boolean_false_required"
+  },
+  "approvedScope": {
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+  },
+  "deterministicFingerprint": "01c0c6b8be4fa374cf044c8c539173da67ca0ce8b9fb13fa8bcd93cdac00de6f"
+}

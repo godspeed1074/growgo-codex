@@ -1,0 +1,25 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_TRANSITION_ROLLBACK_RECORD_001",
+  "transitionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_001",
+  "recordedOn": "2026-07-30",
+  "rollbackState": "READY_IF_MANUAL_TRANSITION_IS_ATTEMPTED",
+  "rollbackOwner": "atlas_operator",
+  "backupRollbackOwner": "internal_developer_reviewer",
+  "triggers": [
+    "package validation failure",
+    "recipe resolution outside approved recipe",
+    "permission model violation",
+    "unexpected map attachment request",
+    "unexpected renderer attachment request",
+    "emergency shutdown signal"
+  ],
+  "resetProcedure": [
+    "record rollback reason",
+    "set runtimeExecutionEnabled back to false immediately",
+    "confirm mapAttachmentAllowed remains false",
+    "confirm automaticRendererExecutionAllowed remains false",
+    "capture rollback telemetry and audit closure"
+  ],
+  "planningOnlyResetTarget": "PLANNING_ONLY_STATE_WITH_RUNTIME_DISABLED",
+  "deterministicFingerprint": "c8c0dfb472df92eb73c79cb01be8ff11149ac655eeec9a660d2e9582ba40c751"
+}

@@ -1,0 +1,99 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_RECORD_001",
+  "transitionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_FLAG_TRANSITION_001",
+  "recordedOn": "2026-07-30",
+  "transitionState": "PLANNED_NOT_EXECUTED",
+  "references": {
+    "enablementReviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001",
+    "controlledRuntimeExecutionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_EXECUTION_001",
+    "lifecycleFinalAuditId": "ATLAS_DEVELOPER_ALPHA_LIFECYCLE_FINAL_AUDIT_001"
+  },
+  "beforeStateSnapshot": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "plannedFlagTransition": {
+    "stage": "MINIMAL_RUNTIME_EXPERIMENT_WINDOW",
+    "runtimeExecutionEnabled": "planned transition",
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "executionMode": "MANUAL_CHANGE_CONTROL_ONLY"
+  },
+  "operatorAuthorization": {
+    "authorizedRoles": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ],
+    "internalDeveloperOnly": true,
+    "transitionRequiresDualAwareness": true,
+    "operatorRecordRequiredBeforeExecution": true
+  },
+  "transitionProcedure": [
+    "confirm enablement review remains approved",
+    "capture before-state snapshot immediately before any manual change",
+    "record operator identity, timestamp, and reason",
+    "change runtimeExecutionEnabled only within the approved experiment window",
+    "leave mapAttachmentAllowed unchanged and false",
+    "leave automaticRendererExecutionAllowed unchanged and false",
+    "capture telemetry throughout the window",
+    "record post-window reset back to false"
+  ],
+  "telemetryCapture": {
+    "requiredSignals": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state",
+      "runtime_enablement_block_reason"
+    ],
+    "requiredEvents": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state"
+    ],
+    "runtimeExperimentReasonCode": "PLANNED_RUNTIME_FLAG_TRANSITION_NOT_EXECUTED"
+  },
+  "rollbackProcedure": {
+    "triggers": [
+      "package validation failure",
+      "recipe resolution outside approved recipe",
+      "permission model violation",
+      "unexpected map attachment request",
+      "unexpected renderer attachment request",
+      "emergency shutdown signal"
+    ],
+    "owner": "atlas_operator",
+    "backupOwner": "internal_developer_reviewer",
+    "resetTarget": "runtimeExecutionEnabled=false",
+    "planningOnlyTarget": "PLANNING_ONLY_STATE_WITH_RUNTIME_DISABLED"
+  },
+  "auditRequirements": {
+    "requiredFields": [
+      "operatorId",
+      "operatorRole",
+      "timestamp",
+      "reason",
+      "beforeState",
+      "plannedState",
+      "postState",
+      "approvedRegion",
+      "approvedRecipe"
+    ],
+    "immutableSafetyAssertions": [
+      "mapAttachmentAllowed remains false",
+      "automaticRendererExecutionAllowed remains false",
+      "renderer attachment remains unauthorized",
+      "asset modification remains unauthorized"
+    ]
+  },
+  "deterministicFingerprint": "4239cde8db19306d108c4a3d423c73a0b47e6c4cb8b761181078e5df733b58d6"
+}
