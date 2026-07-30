@@ -1,0 +1,21 @@
+{
+  "schemaId": "COASTAL_GRAVEL_PATH_V001_VERSION_RECORD_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "previousDevelopmentVersion": null,
+  "currentDevelopmentVersion": "v001",
+  "v001": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "coastal-gravel-path-visual-approval.json",
+    "validationRecord": "coastal-gravel-path-export-validation.json",
+    "registrationRecord": "coastal-gravel-path-registration.json",
+    "developmentCatalogRecord": "coastal-gravel-path-development-catalog-entry.json",
+    "promotionRecord": "coastal-gravel-path-v001-promotion.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "promotionPerformed": true,
+  "registrationReplaced": false,
+  "registrationFingerprint": "aa0bd1850c6b2a3ad3d96c9ac2c77fc2132bd9bc8483fa859048aaf897ee6d76"
+}

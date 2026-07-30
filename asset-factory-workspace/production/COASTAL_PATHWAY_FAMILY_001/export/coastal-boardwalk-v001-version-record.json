@@ -1,0 +1,21 @@
+{
+  "schemaId": "COASTAL_BOARDWALK_V001_VERSION_RECORD_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "previousDevelopmentVersion": null,
+  "currentDevelopmentVersion": "v001",
+  "v001": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "coastal-boardwalk-visual-approval.json",
+    "validationRecord": "coastal-boardwalk-export-validation.json",
+    "registrationRecord": "coastal-boardwalk-registration.json",
+    "developmentCatalogRecord": "coastal-boardwalk-development-catalog-entry.json",
+    "promotionRecord": "coastal-boardwalk-v001-promotion.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "promotionPerformed": true,
+  "registrationReplaced": false,
+  "registrationFingerprint": "89485e5533cee1601e14ac0f6a99b2742dcd353117c20574f64bd3594f3f474b"
+}

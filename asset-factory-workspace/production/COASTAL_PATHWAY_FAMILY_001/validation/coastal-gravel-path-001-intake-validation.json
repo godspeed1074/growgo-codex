@@ -1,0 +1,61 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_VALIDATION_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "familyId": "COASTAL_PATHWAY_FAMILY_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "asset_identity_defined",
+      "ok": true
+    },
+    {
+      "name": "recipe_identity_defined",
+      "ok": true
+    },
+    {
+      "name": "family_assignment_defined",
+      "ok": true
+    },
+    {
+      "name": "lod_expectations_defined",
+      "ok": true
+    },
+    {
+      "name": "mobile_performance_budget_defined",
+      "ok": true
+    },
+    {
+      "name": "validation_requirements_defined",
+      "ok": true
+    },
+    {
+      "name": "visual_approval_criteria_defined",
+      "ok": true
+    },
+    {
+      "name": "source_export_contract_defined",
+      "ok": true
+    },
+    {
+      "name": "pre_export_visual_approval_gate_defined",
+      "ok": true
+    },
+    {
+      "name": "source_path_verification_gate_defined",
+      "ok": true
+    },
+    {
+      "name": "no_blender_files_created",
+      "ok": true
+    },
+    {
+      "name": "no_glb_outputs_created",
+      "ok": true
+    },
+    {
+      "name": "no_registration_records_created",
+      "ok": true
+    }
+  ],
+  "nextAllowedAction": "authoring_setup_only"
+}

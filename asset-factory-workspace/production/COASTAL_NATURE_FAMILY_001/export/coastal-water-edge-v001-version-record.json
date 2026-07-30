@@ -1,0 +1,21 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_V001_VERSION_RECORD_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "previousDevelopmentVersion": null,
+  "currentDevelopmentVersion": "v001",
+  "v001": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "coastal-water-edge-visual-approval.json",
+    "validationRecord": "coastal-water-edge-export-validation.json",
+    "registrationRecord": "coastal-water-edge-registration.json",
+    "developmentCatalogRecord": "coastal-water-edge-development-catalog-entry.json",
+    "promotionRecord": "coastal-water-edge-v001-promotion.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "promotionPerformed": true,
+  "registrationReplaced": false,
+  "registrationFingerprint": "a8b32bf416546f64dfb4e295287ce2567c0b72ffff9feb173e3767b15b14c2ed"
+}

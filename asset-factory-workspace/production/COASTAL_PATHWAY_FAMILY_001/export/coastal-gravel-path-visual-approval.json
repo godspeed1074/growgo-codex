@@ -1,0 +1,37 @@
+{
+  "schemaId": "COASTAL_GRAVEL_PATH_V001_VISUAL_APPROVAL_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "version": "v001",
+  "approvedOn": "2026-07-30",
+  "approvalStatus": "approved",
+  "approvalSource": "Manual visual approval confirmed in the Phase 198.5 registration request.",
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "revisionRequired": false
+  },
+  "evidenceReferences": {
+    "sourceVerification": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/coastal-gravel-path-source-verification.json",
+    "exportValidation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/validation/coastal-gravel-path-export-validation.json",
+    "exportManifest": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-export-manifest.json",
+    "exportVerificationReport": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/reports/coastal-gravel-path-export-verification-report.md"
+  },
+  "preservedHashes": {
+    "blend": "3372ca28b50489b7b1e3af95430b9296d66a365734026fa27feec6b50b0629a5",
+    "close": "8cd2a80e9ae16a6e6c17186db21fbb4872ad31b54b3491cfcb3777619f00340d",
+    "gameplay": "caca943910cc29db34ab6242e60a7d73a0ce28a8db63c94fff4c099d61cb03fa",
+    "map": "16af6dec6d366f02b328b55cda5d0b657dc5c14601b4b099ac1df498a1e21fa6"
+  },
+  "verification": {
+    "sourceVerified": true,
+    "exportValidated": true,
+    "manifestAssetIdMatches": true,
+    "manifestRecipeMatches": true
+  },
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

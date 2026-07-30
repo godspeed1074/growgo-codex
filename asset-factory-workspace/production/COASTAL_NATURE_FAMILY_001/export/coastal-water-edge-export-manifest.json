@@ -1,0 +1,42 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_WATER_EDGE_SHORE_BAND_001",
+    "MOD_WATER_EDGE_WET_MARGIN_001",
+    "MOD_WATER_EDGE_GROUND_SOCKET_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 12,
+      "triangleCount": 165,
+      "materialCount": 2,
+      "filename": "COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "sizeBytes": 69716
+    },
+    "gameplay": {
+      "meshCount": 9,
+      "triangleCount": 121,
+      "materialCount": 2,
+      "filename": "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "sizeBytes": 53732
+    },
+    "map": {
+      "meshCount": 6,
+      "triangleCount": 77,
+      "materialCount": 2,
+      "filename": "COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "sizeBytes": 37484
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "0b6da9bf140e648eb107b0d682e9fb9b13d64e298d4daca0a207539606011bcf"
+}

@@ -1,0 +1,28 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_AUTHORING_SETUP_RECORD_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_GRAVEL_PATH_001",
+  "lodProfile": "PATHWAY_LIGHTWEIGHT_001",
+  "expectedBlendFilename": "COASTAL_GRAVEL_PATH_001_v001.blend",
+  "expectedBlendLocation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_GRAVEL_PATH_001_v001.blend",
+  "expectedExportOutputs": [
+    "COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+    "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+    "COASTAL_GRAVEL_PATH_001_LOD_MAP.glb"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "runtimeActivated": false,
+  "targetRevisionVersion": "v001",
+  "modularPathAsset": true,
+  "papercutStyle": true,
+  "mobileLightweight": true
+}

@@ -1,0 +1,52 @@
+{
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "version": "v001",
+  "workflow": "Asset Factory v1 source lane cleanup",
+  "status": "COMPLETE",
+  "canonicalFamily": "COASTAL_PATHWAY_FAMILY_001",
+  "cleanupDate": "2026-07-30",
+  "comparison": {
+    "sameRevisionByIdentity": true,
+    "byteIdentical": false,
+    "notes": [
+      "Both candidates preserved the exact asset identity token.",
+      "Both candidates preserved the recipe identity token.",
+      "Both candidates preserved all required LOD roots and identity anchors.",
+      "The candidates were not byte-identical, so the non-canonical file was quarantined as evidence instead of discarded."
+    ]
+  },
+  "canonicalSource": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_GRAVEL_PATH_001_v001.blend",
+    "filename": "COASTAL_GRAVEL_PATH_001_v001.blend",
+    "sha256": "3372ca28b50489b7b1e3af95430b9296d66a365734026fa27feec6b50b0629a5",
+    "sizeBytes": 1346496,
+    "hasBlenderHeader": true,
+    "assetIdentityPresent": true,
+    "recipeIdentityPresent": true,
+    "lodRootsPresent": true,
+    "identityAnchorsPresent": true
+  },
+  "quarantinedCandidate": {
+    "originalRelativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_GRAVEL_PATH_001_v001.blend",
+    "quarantineRelativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/reports/quarantine/COASTAL_GRAVEL_PATH_001_v001_from_COASTAL_NATURE_FAMILY_001.blend",
+    "filename": "COASTAL_GRAVEL_PATH_001_v001_from_COASTAL_NATURE_FAMILY_001.blend",
+    "sha256": "02e83ab165761d3d611fa5baad871e94dbbb9a621bdca3e2ad947b20e034f0bb",
+    "sizeBytes": 1345108,
+    "hasBlenderHeader": true,
+    "assetIdentityPresent": true,
+    "recipeIdentityPresent": true,
+    "lodRootsPresent": true,
+    "identityAnchorsPresent": true
+  },
+  "finalSourceState": {
+    "canonicalSourceInPlace": true,
+    "duplicateRemovedFromNatureSourceLane": true,
+    "quarantineEvidencePreserved": true
+  },
+  "safety": {
+    "exportPerformed": false,
+    "registered": false,
+    "promoted": false,
+    "approvedAssetsModified": false
+  }
+}

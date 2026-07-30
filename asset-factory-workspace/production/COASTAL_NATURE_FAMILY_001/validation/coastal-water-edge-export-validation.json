@@ -1,0 +1,101 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_EXPORT_VALIDATION_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "version": "v001",
+  "validatedOn": "2026-07-30",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "lod": "LOD_CLOSE",
+      "filename": "COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "sha256": "9fc965aedb6d5454014f2c1de80b129c623daad2eb136bd27f1354033e16dd95",
+      "sizeBytes": 69716,
+      "meshCount": 12,
+      "triangleCount": 165,
+      "materialCount": 2,
+      "primitiveCount": 12,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_GAMEPLAY",
+      "filename": "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "sha256": "52aa060d98f77c8e7ec8fdcdbb2017bcd62bb3a319cde733130ea0c7c00c139e",
+      "sizeBytes": 53732,
+      "meshCount": 9,
+      "triangleCount": 121,
+      "materialCount": 2,
+      "primitiveCount": 9,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_MAP",
+      "filename": "COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "sha256": "3ea3341ecc439c7b8efb4d544746761aecedfd841aeaa850234174cd379bd275",
+      "sizeBytes": 37484,
+      "meshCount": 6,
+      "triangleCount": 77,
+      "materialCount": 2,
+      "primitiveCount": 6,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "triangles_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "triangles_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "meshes_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "meshes_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "primitives_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "primitives_gameplay_gt_map",
+        "ok": true
+      }
+    ]
+  },
+  "sourceVerification": {
+    "sourceBlendRelativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_WATER_EDGE_001_v001.blend",
+    "sourceBlendSha256": "b709dd778df851afdbe8548674be04086bbbb68fd3b393a3dda5a033d346263e",
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportManifest": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-export-manifest.json",
+    "deterministicFingerprint": "0b6da9bf140e648eb107b0d682e9fb9b13d64e298d4daca0a207539606011bcf"
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false,
+  "readinessForRegistration": true
+}

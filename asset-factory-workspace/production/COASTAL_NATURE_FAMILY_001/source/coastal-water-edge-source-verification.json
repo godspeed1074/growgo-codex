@@ -1,0 +1,44 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_SOURCE_VERIFICATION_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "version": "v001",
+  "verifiedOn": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_WATER_EDGE_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_WATER_EDGE_001_v001.blend",
+    "sizeBytes": 1422676,
+    "modifiedAt": "2026-07-30 14:44:48 +1000",
+    "sha256": "b709dd778df851afdbe8548674be04086bbbb68fd3b393a3dda5a033d346263e"
+  },
+  "sourceIdentityVerification": {
+    "filenameMatches": true,
+    "canonicalSourceFolder": true,
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true,
+    "noBlendFilesPresentInExport": false,
+    "assetSpecificBlendFilesPresentInExport": false,
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportFolderHygiene": {
+    "warning": "Unrelated legacy .blend files remain present in export/ and violate the ideal folder contract, but no COASTAL_WATER_EDGE_001 blend files are present there.",
+    "legacyBlendFiles": [
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v001.blend",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v001.blend1",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002.blend",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_BOTTLEBRUSH_001_v001.blend",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_BOTTLEBRUSH_001_v002.blend",
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_v001.blend"
+    ]
+  },
+  "exportReadiness": {
+    "readyToAttemptExport": true,
+    "exportCompleted": true,
+    "exportBlocked": false,
+    "blockerType": null,
+    "blockerDetail": null
+  }
+}

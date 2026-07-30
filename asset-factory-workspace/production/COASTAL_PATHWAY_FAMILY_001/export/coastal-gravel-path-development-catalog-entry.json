@@ -1,0 +1,127 @@
+{
+  "schemaId": "COASTAL_GRAVEL_PATH_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_COASTAL_GRAVEL_PATH_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "category": "terrain",
+  "familyId": "COASTAL_PATHWAY_FAMILY_001",
+  "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+  "registryRecipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+  "version": "v001",
+  "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+  "validationStatus": "approved",
+  "visualApprovalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_COASTAL_GRAVEL_PATH_001",
+    "slots": [
+      "gravel",
+      "edge_blend"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+      "sha256": "8cd2a80e9ae16a6e6c17186db21fbb4872ad31b54b3491cfcb3777619f00340d",
+      "meshCount": 11,
+      "materialCount": 2,
+      "triangleCount": 137,
+      "primitiveCount": 11
+    },
+    "gameplay": {
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+      "sha256": "caca943910cc29db34ab6242e60a7d73a0ce28a8db63c94fff4c099d61cb03fa",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 113,
+      "primitiveCount": 9
+    },
+    "map": {
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_GRAVEL_PATH_001_LOD_MAP.glb",
+      "sha256": "16af6dec6d366f02b328b55cda5d0b657dc5c14601b4b099ac1df498a1e21fa6",
+      "meshCount": 7,
+      "materialCount": 2,
+      "triangleCount": 89,
+      "primitiveCount": 7
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "PATH",
+      "TRAIL",
+      "BEACH_ACCESS_PATH",
+      "PARK_PATH",
+      "RESERVE_PATH"
+    ],
+    "supportedClassifications": [
+      "ENVIRONMENT_NAVIGATION_TERRAIN",
+      "TERRAIN_TRANSITION"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "COASTAL_GRAVEL_PATH_RECIPE_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_PATH_STRAIGHT_SEGMENT_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_PATH_EDGE_BLEND_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_PATH_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "coastal-gravel-path-registration.json",
+    "version": "v001",
+    "deterministicFingerprint": "aa0bd1850c6b2a3ad3d96c9ac2c77fc2132bd9bc8483fa859048aaf897ee6d76"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "promotionApplied": true
+  },
+  "sourcePromotionRecord": {
+    "filename": "coastal-gravel-path-v001-promotion.json",
+    "currentDevelopmentVersion": "v001"
+  }
+}

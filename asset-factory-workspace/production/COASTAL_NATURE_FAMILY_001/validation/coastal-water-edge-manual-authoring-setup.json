@@ -1,0 +1,49 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_MANUAL_AUTHORING_SETUP_001",
+  "setupId": "SETUP_COASTAL_WATER_EDGE_001_V001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_WATER_EDGE_001",
+  "lodProfile": "NATURE_LIGHTWEIGHT_001",
+  "expectedBlend": "COASTAL_WATER_EDGE_001_v001.blend",
+  "expectedBlendLocation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_WATER_EDGE_001_v001.blend",
+  "expectedExportLocation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/",
+  "expectedLodRoots": [
+    "COASTAL_WATER_EDGE_001_LOD_CLOSE_ROOT",
+    "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY_ROOT",
+    "COASTAL_WATER_EDGE_001_LOD_MAP_ROOT"
+  ],
+  "expectedIdentityAnchors": [
+    "COASTAL_WATER_EDGE_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "COASTAL_WATER_EDGE_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "folderContract": {
+    "sourceFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/",
+    "exportFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/",
+    "blendFilesAllowedInExport": false,
+    "glbFilesAllowedBeforeManualExport": false
+  },
+  "authoringDesignRules": {
+    "papercut2_5dStyle": true,
+    "lightweightMobileGeometry": true,
+    "shorelineTransitionAsset": true,
+    "repeatedPlacementReady": true,
+    "deterministicPlacementCompatible": true,
+    "coastalVegetationCompatibility": true,
+    "coastalRockCompatibility": true,
+    "avoidComplexWaterSimulation": true,
+    "avoidHeavyTransparencyMaterialCost": true
+  },
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "runtimeActivated": false,
+  "readyForBlenderGeneration": true
+}

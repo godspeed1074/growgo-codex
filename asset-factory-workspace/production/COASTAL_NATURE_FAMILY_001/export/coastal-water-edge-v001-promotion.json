@@ -1,0 +1,41 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_V001_CATALOG_PROMOTION_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "previousDevelopmentVersion": null,
+  "currentDevelopmentVersion": "v001",
+  "promotedOn": "2026-07-30",
+  "before": {
+    "registrationPromotionStatus": "approved/current candidate",
+    "developmentCatalogLifecycleStatus": "APPROVED_CURRENT_CANDIDATE",
+    "versionRecordStatus": "approved/current candidate"
+  },
+  "after": {
+    "registrationPromotionStatus": "active_development_revision",
+    "developmentCatalogLifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+    "versionRecordStatus": "active_development_revision"
+  },
+  "v001": {
+    "status": "active_development_revision",
+    "current": true,
+    "visualApprovalRecord": "coastal-water-edge-visual-approval.json",
+    "validationRecord": "coastal-water-edge-export-validation.json",
+    "registrationRecord": "coastal-water-edge-registration.json",
+    "developmentCatalogRecord": "coastal-water-edge-development-catalog-entry.json"
+  },
+  "scope": "ASSET_FACTORY_CATALOG_ONLY",
+  "published": false,
+  "runtimeActivated": false,
+  "registrationReplaced": false,
+  "visualApprovalReplaced": false,
+  "rollbackCapability": {
+    "available": true,
+    "candidateStateCanBeRestored": "approved/current candidate",
+    "historicalRecordsPreserved": true,
+    "requiredRecords": [
+      "coastal-water-edge-registration.json",
+      "coastal-water-edge-development-catalog-entry.json",
+      "coastal-water-edge-v001-version-record.json"
+    ]
+  },
+  "noOtherAssetsModified": true
+}

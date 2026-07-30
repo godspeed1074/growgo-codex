@@ -1,0 +1,38 @@
+{
+  "schemaId": "COASTAL_GRAVEL_PATH_SOURCE_VERIFICATION_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "version": "v001",
+  "verifiedOn": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_GRAVEL_PATH_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_GRAVEL_PATH_001_v001.blend",
+    "sizeBytes": 1346496,
+    "modifiedAt": "2026-07-30 15:46:31 +1000",
+    "sha256": "3372ca28b50489b7b1e3af95430b9296d66a365734026fa27feec6b50b0629a5"
+  },
+  "sourceIdentityVerification": {
+    "filenameMatches": true,
+    "canonicalSourceFolder": true,
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true,
+    "noBlendFilesPresentInExport": true,
+    "assetSpecificBlendFilesPresentInExport": false,
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportFolderHygiene": {
+    "warning": null,
+    "legacyBlendFiles": [],
+    "assetSpecificFiles": []
+  },
+  "exportReadiness": {
+    "readyToAttemptExport": true,
+    "exportCompleted": true,
+    "exportBlocked": false,
+    "blockerType": null,
+    "blockerDetail": null
+  }
+}

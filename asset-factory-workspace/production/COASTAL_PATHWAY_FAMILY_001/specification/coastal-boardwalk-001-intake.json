@@ -1,0 +1,182 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_RECORD_001",
+  "intakeId": "INTAKE_COASTAL_BOARDWALK_001_V001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-30",
+  "status": "intake_complete_authoring_not_started",
+  "assetIdentity": {
+    "assetId": "COASTAL_BOARDWALK_001",
+    "familyId": "COASTAL_PATHWAY_FAMILY_001",
+    "category": "ENVIRONMENT_NAVIGATION_STRUCTURE",
+    "assetType": "COASTAL_TIMBER_BOARDWALK_MODULE",
+    "developmentVersion": "v001",
+    "protectionState": "unregistered_new_asset",
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
+  },
+  "recipeIdentity": {
+    "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+    "recipeType": "MODULAR_ELEVATED_PATHWAY_STRUCTURE",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_BOARDWALK_001",
+    "lodProfile": "PATHWAY_LIGHTWEIGHT_001",
+    "placementContexts": [
+      "beach_boardwalk",
+      "wetland_crossing",
+      "dune_walkover",
+      "cliff_edge_access",
+      "reserve_boardwalk",
+      "creek_crossing",
+      "lookout_approach"
+    ]
+  },
+  "familyAssignment": {
+    "familyId": "COASTAL_PATHWAY_FAMILY_001",
+    "familyRole": "coastal_navigation_surface_modules",
+    "assetPack": "coastal_pathway"
+  },
+  "intakeTemplateInputs": {
+    "assetName": "COASTAL_BOARDWALK_001",
+    "family": "COASTAL_PATHWAY_FAMILY_001",
+    "purpose": "Reusable coastal timber boardwalk modules for beaches, wetlands, dunes, cliffs, reserves, creek crossings, and lookout approaches.",
+    "biomeTheme": "Australian coastal timber boardwalk and elevated shoreline access detail",
+    "expectedLods": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ],
+    "performanceBudget": {
+      "mobileFirst": true,
+      "triangleTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 220
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 140
+        },
+        "LOD_MAP": {
+          "targetMax": 72
+        }
+      },
+      "meshTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 8
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 5
+        },
+        "LOD_MAP": {
+          "targetMax": 3
+        }
+      },
+      "materialTargets": {
+        "allLods": {
+          "targetMax": 2,
+          "strategy": "shared_timber_materials"
+        }
+      }
+    },
+    "dependencies": [
+      "MOD_BOARDWALK_DECK_SEGMENT_001",
+      "MOD_BOARDWALK_POST_RAIL_SET_001",
+      "MOD_BOARDWALK_GROUND_SOCKET_COASTAL_001"
+    ],
+    "visualReferences": [
+      "Papercut 2.5D timber boardwalk pieces readable from front, side, and 45-degree views",
+      "Lightweight elevated path modules that sit naturally with coastal water edges, dunes, creek crossings, and reserve trails",
+      "Snap-compatible repeated boardwalk modules suitable for shoreline access and lookout approaches without heavy structural detail"
+    ],
+    "approvalCriteria": [
+      "Reads clearly as a timber boardwalk rather than a gravel path or generic bridge",
+      "Supports repeated placement and modular snapping without obvious rail or deck alignment errors",
+      "Maintains papercut 2.5D style and stays lightweight for mobile use",
+      "Works naturally with COASTAL_GRAVEL_PATH_001 and COASTAL_WATER_EDGE_001",
+      "LOD simplification preserves boardwalk readability, elevation feel, and route direction"
+    ]
+  },
+  "lodExpectations": {
+    "requiredLods": [
+      {
+        "lod": "LOD_CLOSE",
+        "purpose": "nearest gameplay and inspection view",
+        "expectedComplexityRank": 3
+      },
+      {
+        "lod": "LOD_GAMEPLAY",
+        "purpose": "standard in-world placement view",
+        "expectedComplexityRank": 2
+      },
+      {
+        "lod": "LOD_MAP",
+        "purpose": "far-map and low-detail placement view",
+        "expectedComplexityRank": 1
+      }
+    ],
+    "complexityOrderingRule": "LOD_CLOSE > LOD_GAMEPLAY > LOD_MAP"
+  },
+  "productionContracts": {
+    "sourceExportSeparation": {
+      "blenderSourceFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/",
+      "exportFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/",
+      "rule": "Blender source must live only in source/ and GLB outputs must live only in export/"
+    },
+    "preExportGates": {
+      "visualApprovalRequiredBeforeExport": true,
+      "sourcePathVerificationRequiredBeforeExport": true
+    }
+  },
+  "validationRequirements": {
+    "preAuthoring": [
+      "asset_identity_defined",
+      "recipe_identity_defined",
+      "family_assignment_defined",
+      "lod_expectations_defined",
+      "performance_targets_defined",
+      "visual_approval_criteria_defined",
+      "source_export_contract_defined",
+      "pre_export_gates_defined",
+      "no_blender_source_created_yet",
+      "no_glb_outputs_created_yet",
+      "no_registration_records_created"
+    ],
+    "futureProductionGates": [
+      "identity_anchor_present_per_lod",
+      "asset_identity_preserved",
+      "recipe_identity_preserved",
+      "dependency_identity_preserved",
+      "metadata_identity_preserved",
+      "no_external_dependencies",
+      "deterministic_generation",
+      "deterministic_export",
+      "lod_complexity_order_preserved",
+      "naming_and_versioning_valid",
+      "source_export_separation_preserved",
+      "source_path_verified_before_export",
+      "manual_visual_review_required_before_registration"
+    ]
+  },
+  "visualApprovalCriteria": {
+    "automatedChecksInformingReview": [
+      "LOD presence",
+      "triangle budgets",
+      "mesh budgets",
+      "shared material count",
+      "identity contract completeness",
+      "source_export_contract completeness"
+    ],
+    "humanReviewRequired": [
+      "Boardwalk reads clearly as an elevated timber walkway rather than a flat path or bridge slab",
+      "Modular pieces look snap-compatible and repeat-ready without obvious rail, post, or deck breakdown",
+      "Papercut 2.5D style remains intact without heavy timber detail or complex structure density",
+      "Placement works naturally beside COASTAL_GRAVEL_PATH_001 and COASTAL_WATER_EDGE_001",
+      "Beach, dune, wetland, creek, cliff, and lookout usage feels believable within coastal exploration areas"
+    ]
+  },
+  "authoringReadiness": {
+    "blenderFilesCreated": false,
+    "geometryGenerated": false,
+    "glbsExported": false,
+    "registered": false,
+    "readyForAuthoringSetup": true,
+    "nextPhase": "199.2_authoring_setup"
+  }
+}

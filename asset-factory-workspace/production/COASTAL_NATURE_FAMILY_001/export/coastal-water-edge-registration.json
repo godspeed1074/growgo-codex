@@ -1,0 +1,209 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_REGISTRATION_RECORD_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "category": "nature",
+  "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+  "registryRecipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "productionFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_WATER_EDGE_001",
+  "registrationStatus": "registered",
+  "validationStatus": "validated",
+  "visualApprovalStatus": "approved",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "readyForApproval": true,
+  "readyForPublishing": false,
+  "promotionStatus": "active_development_revision",
+  "currentDevelopmentRevision": true,
+  "registeredAt": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_WATER_EDGE_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/COASTAL_WATER_EDGE_001_v001.blend",
+    "sizeBytes": 1422676,
+    "sha256": "b709dd778df851afdbe8548674be04086bbbb68fd3b393a3dda5a033d346263e"
+  },
+  "registry": {
+    "assetId": "COASTAL_WATER_EDGE_001",
+    "assetFamily": "COASTAL_NATURE_FAMILY_001",
+    "assetType": "COASTAL_WATER_EDGE_TERRAIN_TRANSITION",
+    "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+    "version": "1.0.0",
+    "atlasCompatibility": {
+      "atlasCompatible": true,
+      "supportedObjectTypes": [
+        "WATER_EDGE",
+        "SHORELINE",
+        "RIVERBANK",
+        "LAKE_MARGIN",
+        "CREEK_EDGE",
+        "PARK_WATER_TRANSITION"
+      ],
+      "supportedClassifications": [
+        "NATURAL_FEATURE",
+        "TERRAIN_TRANSITION"
+      ],
+      "atlasAssignmentRecipeIds": [
+        "COASTAL_WATER_EDGE_RECIPE_001"
+      ],
+      "assignmentMode": "biome_and_context_match"
+    },
+    "biomeCompatibility": [
+      "COASTAL",
+      "BEACH_SHORELINE",
+      "ROCKY_COAST",
+      "LAKE_MARGIN",
+      "RIVERBANK",
+      "CREEK_EDGE",
+      "PARK_WATER_EDGE"
+    ],
+    "usageRules": [
+      "shoreline_transition_segment",
+      "repeatable_water_edge_placement",
+      "riverbank_transition_strip",
+      "creek_edge_transition_strip",
+      "park_water_margin_transition"
+    ],
+    "lodRules": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ]
+  },
+  "verifiedOutputs": {
+    "close": {
+      "filename": "COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "sha256": "9fc965aedb6d5454014f2c1de80b129c623daad2eb136bd27f1354033e16dd95",
+      "meshCount": 12,
+      "materialCount": 2,
+      "triangleCount": 165,
+      "primitiveCount": 12,
+      "hasExternalDependencies": false
+    },
+    "gameplay": {
+      "filename": "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "sha256": "52aa060d98f77c8e7ec8fdcdbb2017bcd62bb3a319cde733130ea0c7c00c139e",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 121,
+      "primitiveCount": 9,
+      "hasExternalDependencies": false
+    },
+    "map": {
+      "filename": "COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "sha256": "3ea3341ecc439c7b8efb4d544746761aecedfd841aeaa850234174cd379bd275",
+      "meshCount": 6,
+      "materialCount": 2,
+      "triangleCount": 77,
+      "primitiveCount": 6,
+      "hasExternalDependencies": false
+    }
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_WATER_EDGE_SHORE_BAND_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_WATER_EDGE_WET_MARGIN_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_WATER_EDGE_GROUND_SOCKET_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "verification": {
+    "registrationReady": true,
+    "blockers": [],
+    "manifestConsistency": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "export_validation_exists",
+          "ok": true
+        },
+        {
+          "name": "export_manifest_exists",
+          "ok": true
+        },
+        {
+          "name": "visual_approval_exists",
+          "ok": true
+        },
+        {
+          "name": "source_verification_exists",
+          "ok": true
+        },
+        {
+          "name": "identity_contracts_match",
+          "ok": true
+        },
+        {
+          "name": "source_export_separation_valid",
+          "ok": true
+        }
+      ]
+    },
+    "lodComplexity": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "triangles_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "triangles_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "meshes_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "meshes_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "primitives_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "primitives_gameplay_gt_map",
+          "ok": true
+        }
+      ]
+    },
+    "identityPreserved": true,
+    "recipeIdentityPreserved": true,
+    "dependencyValidationPassed": true,
+    "visualApprovalPassed": true,
+    "promotedToActiveDevelopmentRevision": true
+  },
+  "preservedContracts": {
+    "assetIdPreserved": true,
+    "sourceRecipeIdPreserved": true,
+    "registryRecipeIdPreserved": true,
+    "identityContractSchemaId": "ASSET_FACTORY_V1_SOURCE_EXPORT_IDENTITY_CONTRACT_001"
+  },
+  "sourceRecords": {
+    "authoringManifestReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-water-edge-authoring-manifest.json",
+    "sourceVerificationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-water-edge-source-verification.json",
+    "exportManifestReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-export-manifest.json",
+    "exportValidationReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-water-edge-export-validation.json",
+    "visualApprovalReference": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-visual-approval.json"
+  },
+  "historicalRevision": null,
+  "deterministicFingerprint": "a8b32bf416546f64dfb4e295287ce2567c0b72ffff9feb173e3767b15b14c2ed"
+}

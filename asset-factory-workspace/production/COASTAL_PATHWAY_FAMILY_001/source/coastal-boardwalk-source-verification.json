@@ -1,0 +1,43 @@
+{
+  "schemaId": "COASTAL_BOARDWALK_SOURCE_VERIFICATION_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "version": "v001",
+  "verifiedOn": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_BOARDWALK_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_BOARDWALK_001_v001.blend",
+    "sizeBytes": 1624372,
+    "modifiedAt": "2026-07-30 20:38:40 +1000",
+    "sha256": "a4188df3f994fedeb4b2d7a3091874cfd84cb61d7919334dea013f561696fce1"
+  },
+  "sourceIdentityVerification": {
+    "filenameMatches": true,
+    "canonicalSourceFolder": true,
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true,
+    "noBlendFilesPresentInExport": true,
+    "assetSpecificBlendFilesPresentInExport": false,
+    "sourceBlendModifiedDuringExport": false
+  },
+  "verificationMethod": {
+    "identityTokenScanCompleted": true,
+    "headlessBlenderInspectionCompleted": false,
+    "notes": "Binary string-token inspection confirmed asset, recipe, dependency, LOD root, and identity-anchor tokens. A Codex-launched Blender 4.2.23 LTS background inspection crashed before Python execution."
+  },
+  "exportFolderHygiene": {
+    "warning": null,
+    "legacyBlendFiles": [],
+    "assetSpecificFiles": []
+  },
+  "exportReadiness": {
+    "readyToAttemptExport": true,
+    "exportCompleted": true,
+    "exportBlocked": false,
+    "blockerType": null,
+    "blockerDetail": null
+  }
+}

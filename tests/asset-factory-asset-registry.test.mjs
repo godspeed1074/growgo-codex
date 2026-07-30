@@ -54,6 +54,26 @@ test("terrain feature lookup returns coastal terrain feature asset", () => {
   assert.ok(asset.biomeCompatibility.includes("CLIFF_EDGE"));
 });
 
+test("water edge lookup returns coastal shoreline transition asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("COASTAL_WATER_EDGE_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "COASTAL_NATURE_FAMILY_001");
+  assert.equal(asset.recipeId, "COASTAL_WATER_EDGE_RECIPE_001");
+  assert.ok(asset.biomeCompatibility.includes("RIVERBANK"));
+});
+
+test("gravel path lookup returns coastal pathway module asset", () => {
+  const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
+  const asset = registryLayer.getAssetById("COASTAL_GRAVEL_PATH_001");
+
+  assert.ok(asset);
+  assert.equal(asset.assetFamily, "COASTAL_PATHWAY_FAMILY_001");
+  assert.equal(asset.recipeId, "COASTAL_GRAVEL_PATH_RECIPE_001");
+  assert.ok(asset.biomeCompatibility.includes("COASTAL"));
+});
+
 test("beach lookup returns expanded beach asset family record", () => {
   const registryLayer = assetRegistryModule.createAssetFactoryRegistryLayer();
   const asset = registryLayer.getAssetById("GROUND_BEACH_SAND_001");

@@ -1,0 +1,177 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_RECORD_001",
+  "intakeId": "INTAKE_COASTAL_WATER_EDGE_001_V001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-30",
+  "status": "intake_complete_authoring_not_started",
+  "assetIdentity": {
+    "assetId": "COASTAL_WATER_EDGE_001",
+    "familyId": "COASTAL_NATURE_FAMILY_001",
+    "category": "NATURE",
+    "assetType": "COASTAL_WATER_EDGE_TERRAIN_TRANSITION",
+    "developmentVersion": "v001",
+    "protectionState": "unregistered_new_asset",
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
+  },
+  "recipeIdentity": {
+    "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+    "recipeType": "STATIC_ENVIRONMENT_TRANSITION",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_WATER_EDGE_001",
+    "lodProfile": "NATURE_LIGHTWEIGHT_001",
+    "placementContexts": [
+      "beach_shoreline",
+      "rocky_coast_edge",
+      "lake_margin",
+      "riverbank_edge",
+      "creek_edge",
+      "park_water_transition"
+    ]
+  },
+  "familyAssignment": {
+    "familyId": "COASTAL_NATURE_FAMILY_001",
+    "familyRole": "coastal_nature_terrain_transition",
+    "assetPack": "coastal_nature"
+  },
+  "intakeTemplateInputs": {
+    "assetName": "COASTAL_WATER_EDGE_001",
+    "family": "COASTAL_NATURE_FAMILY_001",
+    "purpose": "Reusable coastal shoreline transition asset for beaches, rocky coasts, lakes, rivers, creeks, and water edges.",
+    "biomeTheme": "Australian coastal and inland water-edge terrain transition detail",
+    "expectedLods": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ],
+    "performanceBudget": {
+      "mobileFirst": true,
+      "triangleTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 180
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 108
+        },
+        "LOD_MAP": {
+          "targetMax": 48
+        }
+      },
+      "meshTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 8
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 5
+        },
+        "LOD_MAP": {
+          "targetMax": 3
+        }
+      },
+      "materialTargets": {
+        "allLods": {
+          "targetMax": 2,
+          "strategy": "shared_material"
+        }
+      }
+    },
+    "dependencies": [],
+    "visualReferences": [
+      "Papercut 2.5D shoreline transition readable from front, side, and 45-degree views",
+      "Lightweight terrain-edge forms that sit naturally with coastal vegetation and rock clusters",
+      "Repeatable shoreline segments suitable for beaches, rocky coasts, lakes, rivers, and creeks without heavy water simulation"
+    ],
+    "approvalCriteria": [
+      "Reads clearly as a shoreline or water-edge transition rather than a terrain tile",
+      "Supports repeated placement without obvious tiling or edge repetition",
+      "Maintains papercut 2.5D style and stays lightweight for mobile use",
+      "Sits naturally beside existing coastal vegetation and rock assets",
+      "LOD simplification preserves transition identity and shoreline footprint"
+    ]
+  },
+  "lodExpectations": {
+    "requiredLods": [
+      {
+        "lod": "LOD_CLOSE",
+        "purpose": "nearest gameplay and inspection view",
+        "expectedComplexityRank": 3
+      },
+      {
+        "lod": "LOD_GAMEPLAY",
+        "purpose": "standard in-world placement view",
+        "expectedComplexityRank": 2
+      },
+      {
+        "lod": "LOD_MAP",
+        "purpose": "far-map and low-detail placement view",
+        "expectedComplexityRank": 1
+      }
+    ],
+    "complexityOrderingRule": "LOD_CLOSE > LOD_GAMEPLAY > LOD_MAP"
+  },
+  "productionContracts": {
+    "sourceExportSeparation": {
+      "blenderSourceFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/",
+      "exportFolder": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/",
+      "rule": "Blender source must live only in source/ and GLB outputs must live only in export/"
+    },
+    "preExportGates": {
+      "visualApprovalRequiredBeforeRegistration": true,
+      "sourcePathVerificationRequiredBeforeExport": true
+    }
+  },
+  "validationRequirements": {
+    "preAuthoring": [
+      "asset_identity_defined",
+      "recipe_identity_defined",
+      "family_assignment_defined",
+      "lod_expectations_defined",
+      "performance_targets_defined",
+      "visual_approval_criteria_defined",
+      "source_export_contract_defined",
+      "pre_export_gates_defined",
+      "no_blender_source_created_yet",
+      "no_glb_outputs_created_yet",
+      "no_registration_records_created"
+    ],
+    "futureProductionGates": [
+      "identity_anchor_present_per_lod",
+      "asset_identity_preserved",
+      "recipe_identity_preserved",
+      "dependency_identity_preserved",
+      "metadata_identity_preserved",
+      "no_external_dependencies",
+      "deterministic_generation",
+      "deterministic_export",
+      "lod_complexity_order_preserved",
+      "naming_and_versioning_valid",
+      "source_export_separation_preserved",
+      "source_path_verified_before_export",
+      "manual_visual_review_required_before_registration"
+    ]
+  },
+  "visualApprovalCriteria": {
+    "automatedChecksInformingReview": [
+      "LOD presence",
+      "triangle budgets",
+      "mesh budgets",
+      "shared material count",
+      "identity contract completeness",
+      "source_export_contract completeness"
+    ],
+    "humanReviewRequired": [
+      "Water-edge reads as a natural shoreline transition rather than a repeated tile",
+      "Silhouette remains readable from front, side, and 45-degree views",
+      "Papercut 2.5D style remains intact without heavy simulated water detail",
+      "Placement works naturally beside coastal vegetation and rock clusters",
+      "Repeated placement remains believable across beaches, rocky coasts, lakes, rivers, and creeks"
+    ]
+  },
+  "authoringReadiness": {
+    "blenderFilesCreated": false,
+    "geometryGenerated": false,
+    "glbsExported": false,
+    "registered": false,
+    "readyForAuthoringSetup": true,
+    "nextPhase": "197.2_authoring_setup"
+  }
+}

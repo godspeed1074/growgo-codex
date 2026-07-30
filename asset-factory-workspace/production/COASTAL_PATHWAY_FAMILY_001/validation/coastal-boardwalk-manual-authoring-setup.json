@@ -1,0 +1,52 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_MANUAL_AUTHORING_SETUP_001",
+  "setupId": "SETUP_COASTAL_BOARDWALK_001_V001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_BOARDWALK_001",
+  "lodProfile": "PATHWAY_LIGHTWEIGHT_001",
+  "expectedBlend": "COASTAL_BOARDWALK_001_v001.blend",
+  "expectedBlendLocation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_BOARDWALK_001_v001.blend",
+  "expectedExportLocation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/",
+  "expectedLodRoots": [
+    "COASTAL_BOARDWALK_001_LOD_CLOSE_ROOT",
+    "COASTAL_BOARDWALK_001_LOD_GAMEPLAY_ROOT",
+    "COASTAL_BOARDWALK_001_LOD_MAP_ROOT"
+  ],
+  "expectedIdentityAnchors": [
+    "COASTAL_BOARDWALK_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "COASTAL_BOARDWALK_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "COASTAL_BOARDWALK_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "folderContract": {
+    "sourceFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/",
+    "exportFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/",
+    "blendFilesAllowedInExport": false,
+    "glbFilesAllowedBeforeManualExport": false
+  },
+  "authoringDesignRules": {
+    "papercut2_5dStyle": true,
+    "lightweightMobileGeometry": true,
+    "modularSnapCompatiblePieces": true,
+    "repeatedPlacementReady": true,
+    "deterministicPlacementCompatible": true,
+    "coastalGravelPathCompatibility": true,
+    "coastalWaterEdgeCompatibility": true,
+    "straightSectionsIncluded": true,
+    "curveReadyLayout": true,
+    "futureRailsCompatibility": true,
+    "futureStairsCompatibility": true,
+    "futureLookoutPlatformCompatibility": true
+  },
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "runtimeActivated": false,
+  "readyForBlenderGeneration": true
+}

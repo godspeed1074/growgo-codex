@@ -1,0 +1,181 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_NEW_ASSET_INTAKE_RECORD_001",
+  "intakeId": "INTAKE_COASTAL_GRAVEL_PATH_001_V001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-30",
+  "status": "intake_complete_authoring_not_started",
+  "assetIdentity": {
+    "assetId": "COASTAL_GRAVEL_PATH_001",
+    "familyId": "COASTAL_PATHWAY_FAMILY_001",
+    "category": "ENVIRONMENT_NAVIGATION_TERRAIN",
+    "assetType": "COASTAL_GRAVEL_PATHWAY_MODULE",
+    "developmentVersion": "v001",
+    "protectionState": "unregistered_new_asset",
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES"
+  },
+  "recipeIdentity": {
+    "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+    "recipeType": "MODULAR_NAVIGATION_SURFACE",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_GRAVEL_PATH_001",
+    "lodProfile": "PATHWAY_LIGHTWEIGHT_001",
+    "placementContexts": [
+      "beach_access_path",
+      "reserve_walking_trail",
+      "coastal_cliff_walk",
+      "shoreline_park_path",
+      "lookout_connection_path",
+      "nature_trail_segment"
+    ]
+  },
+  "familyAssignment": {
+    "familyId": "COASTAL_PATHWAY_FAMILY_001",
+    "familyRole": "coastal_navigation_surface_modules",
+    "assetPack": "coastal_pathway"
+  },
+  "intakeTemplateInputs": {
+    "assetName": "COASTAL_GRAVEL_PATH_001",
+    "family": "COASTAL_PATHWAY_FAMILY_001",
+    "purpose": "Reusable coastal gravel walking path modules for beaches, reserves, trails, cliffs, parks, and shoreline exploration areas.",
+    "biomeTheme": "Australian coastal pathway and reserve walking-surface detail",
+    "expectedLods": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ],
+    "performanceBudget": {
+      "mobileFirst": true,
+      "triangleTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 160
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 96
+        },
+        "LOD_MAP": {
+          "targetMax": 48
+        }
+      },
+      "meshTargets": {
+        "LOD_CLOSE": {
+          "targetMax": 6
+        },
+        "LOD_GAMEPLAY": {
+          "targetMax": 4
+        },
+        "LOD_MAP": {
+          "targetMax": 2
+        }
+      },
+      "materialTargets": {
+        "allLods": {
+          "targetMax": 2,
+          "strategy": "shared_material"
+        }
+      }
+    },
+    "dependencies": [
+      "MOD_PATH_STRAIGHT_SEGMENT_001",
+      "MOD_PATH_EDGE_BLEND_001",
+      "MOD_PATH_GROUND_SOCKET_COASTAL_001"
+    ],
+    "visualReferences": [
+      "Papercut 2.5D gravel path pieces readable from front, side, and 45-degree views",
+      "Lightweight modular path segments that sit naturally with coastal vegetation, dunes, rocks, and park edges",
+      "Snap-compatible repeated pathway modules suitable for shoreline walks and reserve trails without heavy terrain simulation"
+    ],
+    "approvalCriteria": [
+      "Reads clearly as a walkable gravel path rather than bare terrain or a road",
+      "Supports repeated placement and modular snapping without visible seams dominating the layout",
+      "Maintains papercut 2.5D style and stays lightweight for mobile use",
+      "Sits naturally beside existing COASTAL_NATURE_FAMILY_001 assets",
+      "LOD simplification preserves path readability, direction, and footprint"
+    ]
+  },
+  "lodExpectations": {
+    "requiredLods": [
+      {
+        "lod": "LOD_CLOSE",
+        "purpose": "nearest gameplay and inspection view",
+        "expectedComplexityRank": 3
+      },
+      {
+        "lod": "LOD_GAMEPLAY",
+        "purpose": "standard in-world placement view",
+        "expectedComplexityRank": 2
+      },
+      {
+        "lod": "LOD_MAP",
+        "purpose": "far-map and low-detail placement view",
+        "expectedComplexityRank": 1
+      }
+    ],
+    "complexityOrderingRule": "LOD_CLOSE > LOD_GAMEPLAY > LOD_MAP"
+  },
+  "productionContracts": {
+    "sourceExportSeparation": {
+      "blenderSourceFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/",
+      "exportFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/",
+      "rule": "Blender source must live only in source/ and GLB outputs must live only in export/"
+    },
+    "preExportGates": {
+      "visualApprovalRequiredBeforeExport": true,
+      "sourcePathVerificationRequiredBeforeExport": true
+    }
+  },
+  "validationRequirements": {
+    "preAuthoring": [
+      "asset_identity_defined",
+      "recipe_identity_defined",
+      "family_assignment_defined",
+      "lod_expectations_defined",
+      "performance_targets_defined",
+      "visual_approval_criteria_defined",
+      "source_export_contract_defined",
+      "pre_export_gates_defined",
+      "no_blender_source_created_yet",
+      "no_glb_outputs_created_yet",
+      "no_registration_records_created"
+    ],
+    "futureProductionGates": [
+      "identity_anchor_present_per_lod",
+      "asset_identity_preserved",
+      "recipe_identity_preserved",
+      "dependency_identity_preserved",
+      "metadata_identity_preserved",
+      "no_external_dependencies",
+      "deterministic_generation",
+      "deterministic_export",
+      "lod_complexity_order_preserved",
+      "naming_and_versioning_valid",
+      "source_export_separation_preserved",
+      "source_path_verified_before_export",
+      "manual_visual_review_required_before_registration"
+    ]
+  },
+  "visualApprovalCriteria": {
+    "automatedChecksInformingReview": [
+      "LOD presence",
+      "triangle budgets",
+      "mesh budgets",
+      "shared material count",
+      "identity contract completeness",
+      "source_export_contract completeness"
+    ],
+    "humanReviewRequired": [
+      "Path reads clearly as a coastal walking surface rather than a road or bare terrain",
+      "Modular pieces look snap-compatible and repeat-ready without obvious visual breakdown",
+      "Papercut 2.5D style remains intact without heavy displacement or terrain simulation",
+      "Placement works naturally beside COASTAL_NATURE_FAMILY_001 assets",
+      "Reserve, beach, cliff, and park usage feels believable within shoreline exploration areas"
+    ]
+  },
+  "authoringReadiness": {
+    "blenderFilesCreated": false,
+    "geometryGenerated": false,
+    "glbsExported": false,
+    "registered": false,
+    "readyForAuthoringSetup": true,
+    "nextPhase": "198.2_authoring_setup"
+  }
+}

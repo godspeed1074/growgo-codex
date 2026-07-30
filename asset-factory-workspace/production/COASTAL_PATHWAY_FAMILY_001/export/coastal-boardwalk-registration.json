@@ -1,0 +1,214 @@
+{
+  "schemaId": "COASTAL_BOARDWALK_REGISTRATION_RECORD_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "category": "environment_navigation_structure",
+  "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+  "registryRecipeId": "COASTAL_BOARDWALK_RECIPE_001",
+  "assetFamilyId": "COASTAL_PATHWAY_FAMILY_001",
+  "productionFamilyId": "COASTAL_PATHWAY_FAMILY_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_BOARDWALK_001",
+  "registrationStatus": "registered",
+  "validationStatus": "validated",
+  "visualApprovalStatus": "approved",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "readyForApproval": true,
+  "readyForPublishing": false,
+  "promotionStatus": "active_development_revision",
+  "currentDevelopmentRevision": true,
+  "registeredAt": "2026-07-30",
+  "sourceBlend": {
+    "filename": "COASTAL_BOARDWALK_001_v001.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_BOARDWALK_001_v001.blend",
+    "sizeBytes": 1624372,
+    "sha256": "a4188df3f994fedeb4b2d7a3091874cfd84cb61d7919334dea013f561696fce1"
+  },
+  "registry": {
+    "assetId": "COASTAL_BOARDWALK_001",
+    "assetFamily": "COASTAL_PATHWAY_FAMILY_001",
+    "assetType": "COASTAL_TIMBER_BOARDWALK_MODULE",
+    "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+    "version": "1.0.0",
+    "atlasCompatibility": {
+      "atlasCompatible": true,
+      "supportedObjectTypes": [
+        "BOARDWALK",
+        "ELEVATED_PATH",
+        "COASTAL_ACCESS_WALKWAY",
+        "WETLAND_CROSSING",
+        "LOOKOUT_APPROACH"
+      ],
+      "supportedClassifications": [
+        "ENVIRONMENT_NAVIGATION_STRUCTURE",
+        "ELEVATED_TERRAIN_TRANSITION"
+      ],
+      "atlasAssignmentRecipeIds": [
+        "COASTAL_BOARDWALK_RECIPE_001"
+      ],
+      "assignmentMode": "contextual_elevated_path_match"
+    },
+    "biomeCompatibility": [
+      "COASTAL",
+      "WETLAND",
+      "DUNE_SYSTEM",
+      "CLIFF_EDGE",
+      "RESERVE_TRAIL",
+      "CREEK_EDGE"
+    ],
+    "usageRules": [
+      "beach_boardwalk",
+      "wetland_crossing",
+      "dune_walkover",
+      "cliff_edge_access",
+      "reserve_boardwalk",
+      "creek_crossing",
+      "lookout_approach"
+    ],
+    "lodRules": [
+      "LOD_CLOSE",
+      "LOD_GAMEPLAY",
+      "LOD_MAP"
+    ]
+  },
+  "verifiedOutputs": {
+    "close": {
+      "filename": "COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "sha256": "a223d20ff8de455c90b2d74e5c2be32f1b936d6a01769e5dc18bd31c3c11c19d",
+      "meshCount": 18,
+      "materialCount": 2,
+      "triangleCount": 221,
+      "primitiveCount": 18,
+      "hasExternalDependencies": false
+    },
+    "gameplay": {
+      "filename": "COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "sha256": "16a3ec5db34d674904e6554acf855d722846a147634c11bc6091bb16d455ee99",
+      "meshCount": 15,
+      "materialCount": 2,
+      "triangleCount": 185,
+      "primitiveCount": 15,
+      "hasExternalDependencies": false
+    },
+    "map": {
+      "filename": "COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "absolutePath": "/Users/michaelpeterson/Documents/Codex/2026-06-16/files-mentioned-by-the-user-root/growgo-codex/asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "sha256": "3a62663ca25559fb59a98c9a6aa10478fe54fbe643f5a331db0aab5daedce9f6",
+      "meshCount": 12,
+      "materialCount": 2,
+      "triangleCount": 149,
+      "primitiveCount": 12,
+      "hasExternalDependencies": false
+    }
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_BOARDWALK_DECK_SEGMENT_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_BOARDWALK_POST_RAIL_SET_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_BOARDWALK_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "verification": {
+    "registrationReady": true,
+    "blockers": [],
+    "manifestConsistency": {
+      "ok": true,
+      "checks": [
+        {
+          "name": "export_validation_exists",
+          "ok": true
+        },
+        {
+          "name": "export_manifest_exists",
+          "ok": true
+        },
+        {
+          "name": "visual_approval_exists",
+          "ok": true
+        },
+        {
+          "name": "source_verification_exists",
+          "ok": true
+        },
+        {
+          "name": "identity_contracts_match",
+          "ok": true
+        },
+        {
+          "name": "canonical_source_lane_valid",
+          "ok": true
+        },
+        {
+          "name": "source_export_separation_valid",
+          "ok": true
+        }
+      ]
+    },
+    "lodComplexity": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "triangles_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "triangles_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "meshes_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "meshes_gameplay_gt_map",
+          "ok": true
+        },
+        {
+          "name": "primitives_close_gt_gameplay",
+          "ok": true
+        },
+        {
+          "name": "primitives_gameplay_gt_map",
+          "ok": true
+        }
+      ]
+    },
+    "identityPreserved": true,
+    "recipeIdentityPreserved": true,
+    "dependencyValidationPassed": true,
+    "metadataIdentityPreserved": true,
+    "visualApprovalPassed": true,
+    "promotedToActiveDevelopmentRevision": true
+  },
+  "preservedContracts": {
+    "assetIdPreserved": true,
+    "sourceRecipeIdPreserved": true,
+    "registryRecipeIdPreserved": true,
+    "identityContractSchemaId": "ASSET_FACTORY_V1_SOURCE_EXPORT_IDENTITY_CONTRACT_001"
+  },
+  "sourceRecords": {
+    "authoringManifestReference": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/validation/coastal-boardwalk-authoring-manifest.json",
+    "sourceVerificationReference": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/coastal-boardwalk-source-verification.json",
+    "exportManifestReference": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-export-manifest.json",
+    "exportValidationReference": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/validation/coastal-boardwalk-export-validation.json",
+    "visualApprovalReference": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-visual-approval.json"
+  },
+  "historicalRevision": null,
+  "deterministicFingerprint": "89485e5533cee1601e14ac0f6a99b2742dcd353117c20574f64bd3594f3f474b"
+}

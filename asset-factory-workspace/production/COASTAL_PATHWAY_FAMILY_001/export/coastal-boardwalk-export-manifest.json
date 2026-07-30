@@ -1,0 +1,42 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_BOARDWALK_DECK_SEGMENT_001",
+    "MOD_BOARDWALK_POST_RAIL_SET_001",
+    "MOD_BOARDWALK_GROUND_SOCKET_COASTAL_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 18,
+      "triangleCount": 221,
+      "materialCount": 2,
+      "filename": "COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "sizeBytes": 99168
+    },
+    "gameplay": {
+      "meshCount": 15,
+      "triangleCount": 185,
+      "materialCount": 2,
+      "filename": "COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "sizeBytes": 84008
+    },
+    "map": {
+      "meshCount": 12,
+      "triangleCount": 149,
+      "materialCount": 2,
+      "filename": "COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "sizeBytes": 68528
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "178c2760a126ad95af98622ac927e9bc7ee2872068ee02f0f8979b18d04672f9"
+}

@@ -1,0 +1,128 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_COASTAL_WATER_EDGE_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "category": "nature",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+  "registryRecipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+  "version": "v001",
+  "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+  "validationStatus": "approved",
+  "visualApprovalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_COASTAL_WATER_EDGE_001",
+    "slots": [
+      "shoreline band",
+      "wet margin"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+      "sha256": "9fc965aedb6d5454014f2c1de80b129c623daad2eb136bd27f1354033e16dd95",
+      "meshCount": 12,
+      "materialCount": 2,
+      "triangleCount": 165,
+      "primitiveCount": 12
+    },
+    "gameplay": {
+      "filename": "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+      "sha256": "52aa060d98f77c8e7ec8fdcdbb2017bcd62bb3a319cde733130ea0c7c00c139e",
+      "meshCount": 9,
+      "materialCount": 2,
+      "triangleCount": 121,
+      "primitiveCount": 9
+    },
+    "map": {
+      "filename": "COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/COASTAL_WATER_EDGE_001_LOD_MAP.glb",
+      "sha256": "3ea3341ecc439c7b8efb4d544746761aecedfd841aeaa850234174cd379bd275",
+      "meshCount": 6,
+      "materialCount": 2,
+      "triangleCount": 77,
+      "primitiveCount": 6
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "WATER_EDGE",
+      "SHORELINE",
+      "RIVERBANK",
+      "LAKE_MARGIN",
+      "CREEK_EDGE",
+      "PARK_WATER_TRANSITION"
+    ],
+    "supportedClassifications": [
+      "NATURAL_FEATURE",
+      "TERRAIN_TRANSITION"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "COASTAL_WATER_EDGE_RECIPE_001"
+    ],
+    "assignmentMode": "biome_and_context_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_WATER_EDGE_SHORE_BAND_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_WATER_EDGE_WET_MARGIN_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_WATER_EDGE_GROUND_SOCKET_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "coastal-water-edge-registration.json",
+    "version": "v001",
+    "deterministicFingerprint": "a8b32bf416546f64dfb4e295287ce2567c0b72ffff9feb173e3767b15b14c2ed"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "promotionApplied": true
+  },
+  "sourcePromotionRecord": {
+    "filename": "coastal-water-edge-v001-promotion.json",
+    "currentDevelopmentVersion": "v001"
+  }
+}

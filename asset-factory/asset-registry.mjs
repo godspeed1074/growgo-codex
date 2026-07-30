@@ -106,6 +106,9 @@ export const atlasCompatibleRecipeIds = Object.freeze([
   "RECIPE_NATURE_COASTAL_ENVIRONMENT_STANDARD_001",
   "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
   "RECIPE_NATURE_FOREST_ENVIRONMENT_STANDARD_001",
+  "COASTAL_WATER_EDGE_RECIPE_001",
+  "COASTAL_GRAVEL_PATH_RECIPE_001",
+  "COASTAL_BOARDWALK_RECIPE_001",
   "BEACH_ENVIRONMENT_RECIPE_001",
   "FOREST_ENVIRONMENT_RECIPE_001",
   "RESERVE_ENVIRONMENT_RECIPE_001",
@@ -226,6 +229,11 @@ export const natureAssetPackRecipes = deepFreeze([
       "VEGETATION_ASSET_FAMILY_001",
       "GROUND_ASSET_FAMILY_001"
     ])
+  }),
+  deepFreeze({
+    recipeId: "COASTAL_WATER_EDGE_RECIPE_001",
+    recipeType: "WATER_EDGE_TERRAIN_TRANSITION_RECIPE",
+    supportedFamilies: deepFreeze(["COASTAL_NATURE_FAMILY_001"])
   }),
   deepFreeze({
     recipeId: "BEACH_ENVIRONMENT_RECIPE_001",
@@ -366,6 +374,54 @@ export const natureAssetPackRecords = deepFreeze([
       existingWorkPreserved: true,
       onboardingSource: "SESSION_186_BOTTLEBRUSH_PRODUCTION_SETUP",
       promotionSource: "SESSION_187_8_BOTTLEBRUSH_V002_PROMOTION"
+    })
+  }),
+  deepFreeze({
+    assetId: "COASTAL_WATER_EDGE_001",
+    assetFamily: "COASTAL_NATURE_FAMILY_001",
+    assetType: "COASTAL_WATER_EDGE_TERRAIN_TRANSITION",
+    recipeId: "COASTAL_WATER_EDGE_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "shoreline_transition_segment",
+      "repeatable_water_edge_placement",
+      "riverbank_transition_strip",
+      "creek_edge_transition_strip",
+      "park_water_margin_transition"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze([
+        "WATER_EDGE",
+        "SHORELINE",
+        "RIVERBANK",
+        "LAKE_MARGIN",
+        "CREEK_EDGE",
+        "PARK_WATER_TRANSITION"
+      ]),
+      supportedClassifications: deepFreeze([
+        "NATURAL_FEATURE",
+        "TERRAIN_TRANSITION"
+      ]),
+      atlasAssignmentRecipeIds: deepFreeze(["COASTAL_WATER_EDGE_RECIPE_001"]),
+      assignmentMode: "biome_and_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "BEACH_SHORELINE",
+      "ROCKY_COAST",
+      "LAKE_MARGIN",
+      "RIVERBANK",
+      "CREEK_EDGE",
+      "PARK_WATER_EDGE"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["COASTAL_WATER_EDGE_001"]),
+      sourceRecipeReferences: deepFreeze(["COASTAL_WATER_EDGE_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_197_1_COASTAL_WATER_EDGE_001_NEW_ASSET_INTAKE",
+      authoringSource: "SESSION_197_2_COASTAL_WATER_EDGE_001_AUTHORING_SETUP"
     })
   }),
   deepFreeze({
@@ -1081,6 +1137,16 @@ export const roadAndStreetAssetPackRecipes = deepFreeze([
     recipeId: "STREET_FURNITURE_RECIPE_001",
     recipeType: "STREET_FURNITURE_ROAD_RECIPE",
     supportedFamilies: deepFreeze(["STREET_FURNITURE_ASSET_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "COASTAL_GRAVEL_PATH_RECIPE_001",
+    recipeType: "COASTAL_GRAVEL_PATHWAY_RECIPE",
+    supportedFamilies: deepFreeze(["COASTAL_PATHWAY_FAMILY_001"])
+  }),
+  deepFreeze({
+    recipeId: "COASTAL_BOARDWALK_RECIPE_001",
+    recipeType: "COASTAL_BOARDWALK_RECIPE",
+    supportedFamilies: deepFreeze(["COASTAL_PATHWAY_FAMILY_001"])
   })
 ]);
 
@@ -1265,6 +1331,112 @@ export const roadAndStreetAssetPackRecords = deepFreeze([
         "barrier",
         "fence"
       ])
+    })
+  }),
+  deepFreeze({
+    assetId: "COASTAL_GRAVEL_PATH_001",
+    assetFamily: "COASTAL_PATHWAY_FAMILY_001",
+    assetType: "COASTAL_GRAVEL_PATHWAY_MODULE",
+    recipeId: "COASTAL_GRAVEL_PATH_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "beach_access_path",
+      "reserve_walking_trail",
+      "coastal_cliff_walk",
+      "shoreline_park_path",
+      "lookout_connection_path",
+      "nature_trail_segment"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze([
+        "PATH",
+        "TRAIL",
+        "BEACH_ACCESS_PATH",
+        "PARK_PATH",
+        "RESERVE_PATH"
+      ]),
+      supportedClassifications: deepFreeze([
+        "ENVIRONMENT_NAVIGATION_TERRAIN",
+        "TERRAIN_TRANSITION"
+      ]),
+      atlasAssignmentRecipeIds: deepFreeze(["COASTAL_GRAVEL_PATH_RECIPE_001"]),
+      assignmentMode: "biome_and_context_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "BEACH_ACCESS",
+      "RESERVE_TRAIL",
+      "CLIFF_WALK",
+      "SHORELINE_PARK"
+    ]),
+    geometryCompatibility: deepFreeze([
+      "LINEAR_PATH_GEOMETRY",
+      "SNAP_MODULE_GEOMETRY",
+      "TRAIL_SEGMENT_GEOMETRY",
+      "PARK_PATH_SEGMENT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["COASTAL_GRAVEL_PATH_001"]),
+      sourceRecipeReferences: deepFreeze(["COASTAL_GRAVEL_PATH_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_198_1_COASTAL_PATHWAY_FAMILY_001_NEW_ASSET_INTAKE",
+      authoringSource: "SESSION_198_2_COASTAL_GRAVEL_PATH_001_AUTHORING_SETUP"
+    })
+  }),
+  deepFreeze({
+    assetId: "COASTAL_BOARDWALK_001",
+    assetFamily: "COASTAL_PATHWAY_FAMILY_001",
+    assetType: "COASTAL_TIMBER_BOARDWALK_MODULE",
+    recipeId: "COASTAL_BOARDWALK_RECIPE_001",
+    version: "1.0.0",
+    lodRules: deepFreeze(["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"]),
+    usageRules: deepFreeze([
+      "beach_boardwalk",
+      "wetland_crossing",
+      "dune_walkover",
+      "cliff_edge_access",
+      "reserve_boardwalk",
+      "creek_crossing",
+      "lookout_approach"
+    ]),
+    atlasCompatibility: deepFreeze({
+      atlasCompatible: true,
+      supportedObjectTypes: deepFreeze([
+        "BOARDWALK",
+        "ELEVATED_PATH",
+        "COASTAL_ACCESS_WALKWAY",
+        "WETLAND_CROSSING",
+        "LOOKOUT_APPROACH"
+      ]),
+      supportedClassifications: deepFreeze([
+        "ENVIRONMENT_NAVIGATION_STRUCTURE",
+        "ELEVATED_TERRAIN_TRANSITION"
+      ]),
+      atlasAssignmentRecipeIds: deepFreeze(["COASTAL_BOARDWALK_RECIPE_001"]),
+      assignmentMode: "contextual_elevated_path_match"
+    }),
+    biomeCompatibility: deepFreeze([
+      "COASTAL",
+      "WETLAND",
+      "DUNE_SYSTEM",
+      "CLIFF_EDGE",
+      "RESERVE_TRAIL",
+      "CREEK_EDGE"
+    ]),
+    geometryCompatibility: deepFreeze([
+      "LINEAR_PATH_GEOMETRY",
+      "SNAP_MODULE_GEOMETRY",
+      "ELEVATED_WALKWAY_SEGMENT",
+      "LOOKOUT_APPROACH_SEGMENT"
+    ]),
+    metadata: deepFreeze({
+      sourceAssetReferences: deepFreeze(["COASTAL_BOARDWALK_001"]),
+      sourceRecipeReferences: deepFreeze(["COASTAL_BOARDWALK_RECIPE_001"]),
+      existingWorkPreserved: true,
+      onboardingSource: "SESSION_199_1_COASTAL_BOARDWALK_001_NEW_ASSET_INTAKE",
+      authoringSource: "SESSION_199_2_COASTAL_BOARDWALK_001_AUTHORING_SETUP"
     })
   })
 ]);

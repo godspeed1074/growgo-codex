@@ -1,0 +1,127 @@
+{
+  "schemaId": "COASTAL_BOARDWALK_DEVELOPMENT_CATALOG_ENTRY_001",
+  "catalogEntryId": "ASSET_DEV_CATALOG_COASTAL_BOARDWALK_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "category": "environment_navigation_structure",
+  "familyId": "COASTAL_PATHWAY_FAMILY_001",
+  "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+  "registryRecipeId": "COASTAL_BOARDWALK_RECIPE_001",
+  "version": "v001",
+  "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+  "validationStatus": "approved",
+  "visualApprovalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "publishStatus": "not_published",
+  "releaseStatus": "not_released",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivation": "disabled",
+    "automaticPublishing": "disabled",
+    "releaseCreation": "disabled",
+    "mapAttachment": "disabled"
+  },
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  },
+  "palette": {
+    "paletteId": "AU_COASTAL_BOARDWALK_001",
+    "slots": [
+      "timber deck",
+      "timber support"
+    ]
+  },
+  "availableLods": {
+    "close": {
+      "filename": "COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "sha256": "a223d20ff8de455c90b2d74e5c2be32f1b936d6a01769e5dc18bd31c3c11c19d",
+      "meshCount": 18,
+      "materialCount": 2,
+      "triangleCount": 221,
+      "primitiveCount": 18
+    },
+    "gameplay": {
+      "filename": "COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "sha256": "16a3ec5db34d674904e6554acf855d722846a147634c11bc6091bb16d455ee99",
+      "meshCount": 15,
+      "materialCount": 2,
+      "triangleCount": 185,
+      "primitiveCount": 15
+    },
+    "map": {
+      "filename": "COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "sha256": "3a62663ca25559fb59a98c9a6aa10478fe54fbe643f5a331db0aab5daedce9f6",
+      "meshCount": 12,
+      "materialCount": 2,
+      "triangleCount": 149,
+      "primitiveCount": 12
+    }
+  },
+  "atlasCompatibility": {
+    "atlasCompatible": true,
+    "supportedObjectTypes": [
+      "BOARDWALK",
+      "ELEVATED_PATH",
+      "COASTAL_ACCESS_WALKWAY",
+      "WETLAND_CROSSING",
+      "LOOKOUT_APPROACH"
+    ],
+    "supportedClassifications": [
+      "ENVIRONMENT_NAVIGATION_STRUCTURE",
+      "ELEVATED_TERRAIN_TRANSITION"
+    ],
+    "atlasAssignmentRecipeIds": [
+      "COASTAL_BOARDWALK_RECIPE_001"
+    ],
+    "assignmentMode": "contextual_elevated_path_match"
+  },
+  "dependencyReferences": [
+    {
+      "dependencyId": "MOD_BOARDWALK_DECK_SEGMENT_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_BOARDWALK_POST_RAIL_SET_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    },
+    {
+      "dependencyId": "MOD_BOARDWALK_GROUND_SOCKET_COASTAL_001",
+      "category": "module",
+      "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+    }
+  ],
+  "sourceRegistrationRecord": {
+    "filename": "coastal-boardwalk-registration.json",
+    "version": "v001",
+    "deterministicFingerprint": "89485e5533cee1601e14ac0f6a99b2742dcd353117c20574f64bd3594f3f474b"
+  },
+  "validation": {
+    "developmentOnly": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "noPublishSideEffects": true,
+    "noReleaseSideEffects": true,
+    "noRendererActivation": true,
+    "noMapAttachment": true,
+    "deterministicOutput": true,
+    "validationPassed": true,
+    "promotionApplied": true
+  },
+  "sourcePromotionRecord": {
+    "filename": "coastal-boardwalk-v001-promotion.json",
+    "currentDevelopmentVersion": "v001"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_MANUAL_AUTHORING_SETUP_001",
+  "setupId": "SETUP_COASTAL_GRAVEL_PATH_001_V001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_GRAVEL_PATH_001",
+  "lodProfile": "PATHWAY_LIGHTWEIGHT_001",
+  "expectedBlend": "COASTAL_GRAVEL_PATH_001_v001.blend",
+  "expectedBlendLocation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_GRAVEL_PATH_001_v001.blend",
+  "expectedExportLocation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/",
+  "expectedLodRoots": [
+    "COASTAL_GRAVEL_PATH_001_LOD_CLOSE_ROOT",
+    "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY_ROOT",
+    "COASTAL_GRAVEL_PATH_001_LOD_MAP_ROOT"
+  ],
+  "expectedIdentityAnchors": [
+    "COASTAL_GRAVEL_PATH_001_LOD_CLOSE_IDENTITY_ANCHOR",
+    "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+    "COASTAL_GRAVEL_PATH_001_LOD_MAP_IDENTITY_ANCHOR"
+  ],
+  "folderContract": {
+    "sourceFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/",
+    "exportFolder": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/",
+    "blendFilesAllowedInExport": false,
+    "glbFilesAllowedBeforeManualExport": false
+  },
+  "authoringDesignRules": {
+    "papercut2_5dStyle": true,
+    "lightweightMobileGeometry": true,
+    "modularPathPieces": true,
+    "snapCompatiblePlacement": true,
+    "repeatedPlacementReady": true,
+    "deterministicPlacementCompatible": true,
+    "coastalNatureCompatibility": true,
+    "suitableForTrails": true,
+    "suitableForBeaches": true,
+    "suitableForParksAndReserves": true
+  },
+  "manualBlenderExecutionRequired": true,
+  "blenderLaunched": false,
+  "blendGenerated": false,
+  "finalGlbsGenerated": false,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "runtimeActivated": false,
+  "readyForBlenderGeneration": true
+}

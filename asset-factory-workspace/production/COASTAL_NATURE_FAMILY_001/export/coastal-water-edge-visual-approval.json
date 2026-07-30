@@ -1,0 +1,37 @@
+{
+  "schemaId": "COASTAL_WATER_EDGE_V001_VISUAL_APPROVAL_001",
+  "assetId": "COASTAL_WATER_EDGE_001",
+  "version": "v001",
+  "approvedOn": "2026-07-30",
+  "approvalStatus": "approved",
+  "approvalSource": "Manual visual approval confirmed in the Phase 197.5 registration request.",
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "revisionRequired": false
+  },
+  "evidenceReferences": {
+    "sourceVerification": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/source/coastal-water-edge-source-verification.json",
+    "exportValidation": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/validation/coastal-water-edge-export-validation.json",
+    "exportManifest": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-export-manifest.json",
+    "exportVerificationReport": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/reports/coastal-water-edge-export-verification-report.md"
+  },
+  "preservedHashes": {
+    "blend": "b709dd778df851afdbe8548674be04086bbbb68fd3b393a3dda5a033d346263e",
+    "close": "9fc965aedb6d5454014f2c1de80b129c623daad2eb136bd27f1354033e16dd95",
+    "gameplay": "52aa060d98f77c8e7ec8fdcdbb2017bcd62bb3a319cde733130ea0c7c00c139e",
+    "map": "3ea3341ecc439c7b8efb4d544746761aecedfd841aeaa850234174cd379bd275"
+  },
+  "verification": {
+    "sourceVerified": true,
+    "exportValidated": true,
+    "manifestAssetIdMatches": true,
+    "manifestRecipeMatches": true
+  },
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

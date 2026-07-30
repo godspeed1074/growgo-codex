@@ -1,0 +1,42 @@
+{
+  "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+  "version": "v001",
+  "dependencies": [
+    "MOD_PATH_STRAIGHT_SEGMENT_001",
+    "MOD_PATH_EDGE_BLEND_001",
+    "MOD_PATH_GROUND_SOCKET_COASTAL_001"
+  ],
+  "lodOrder": [
+    "close",
+    "gameplay",
+    "map"
+  ],
+  "outputs": {
+    "close": {
+      "meshCount": 11,
+      "triangleCount": 137,
+      "materialCount": 2,
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+      "sizeBytes": 63176
+    },
+    "gameplay": {
+      "meshCount": 9,
+      "triangleCount": 113,
+      "materialCount": 2,
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+      "sizeBytes": 53100
+    },
+    "map": {
+      "meshCount": 7,
+      "triangleCount": 89,
+      "materialCount": 2,
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_MAP.glb",
+      "sizeBytes": 42828
+    }
+  },
+  "identityValidationRequired": true,
+  "externalDependenciesAllowed": false,
+  "deterministicFingerprint": "ef943aca5c278a12ed2b709e2284109c1b901b3ee55db8d2293cb31148b4615d"
+}

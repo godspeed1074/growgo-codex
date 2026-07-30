@@ -1,0 +1,116 @@
+{
+  "schemaId": "COASTAL_BOARDWALK_EXPORT_VALIDATION_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "version": "v001",
+  "validatedOn": "2026-07-30",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "lod": "LOD_CLOSE",
+      "filename": "COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+      "sha256": "a223d20ff8de455c90b2d74e5c2be32f1b936d6a01769e5dc18bd31c3c11c19d",
+      "sizeBytes": 99168,
+      "meshCount": 18,
+      "triangleCount": 221,
+      "materialCount": 2,
+      "primitiveCount": 18,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_GAMEPLAY",
+      "filename": "COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+      "sha256": "16a3ec5db34d674904e6554acf855d722846a147634c11bc6091bb16d455ee99",
+      "sizeBytes": 84008,
+      "meshCount": 15,
+      "triangleCount": 185,
+      "materialCount": 2,
+      "primitiveCount": 15,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_MAP",
+      "filename": "COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_BOARDWALK_001_LOD_MAP.glb",
+      "sha256": "3a62663ca25559fb59a98c9a6aa10478fe54fbe643f5a331db0aab5daedce9f6",
+      "sizeBytes": 68528,
+      "meshCount": 12,
+      "triangleCount": 149,
+      "materialCount": 2,
+      "primitiveCount": 12,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "triangles_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "triangles_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "meshes_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "meshes_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "primitives_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "primitives_gameplay_gt_map",
+        "ok": true
+      }
+    ]
+  },
+  "sourceVerification": {
+    "sourceBlendRelativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_BOARDWALK_001_v001.blend",
+    "sourceBlendSha256": "a4188df3f994fedeb4b2d7a3091874cfd84cb61d7919334dea013f561696fce1",
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportManifest": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-export-manifest.json",
+    "exists": true,
+    "deterministicFingerprint": "178c2760a126ad95af98622ac927e9bc7ee2872068ee02f0f8979b18d04672f9"
+  },
+  "validationSummary": {
+    "glbsExist": true,
+    "metadataValidated": true,
+    "assetIdentityValidated": true,
+    "recipeIdentityValidated": true,
+    "dependencyIdentityValidated": true,
+    "anchorIdentityValidated": true,
+    "triangleCountsValidated": true,
+    "meshCountsValidated": true,
+    "materialCountsValidated": true,
+    "primitiveCountsValidated": true,
+    "sourceHashUnchanged": true
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false,
+  "readinessForRegistration": true,
+  "blocker": null
+}

@@ -1,0 +1,37 @@
+{
+  "schemaId": "COASTAL_BOARDWALK_V001_VISUAL_APPROVAL_001",
+  "assetId": "COASTAL_BOARDWALK_001",
+  "version": "v001",
+  "approvedOn": "2026-07-30",
+  "approvalStatus": "approved",
+  "approvalSource": "Manual visual approval confirmed in the Phase 199.5 registration request.",
+  "reviewOutcome": {
+    "visualReviewComplete": true,
+    "visuallyApprovedForDevelopmentCatalog": true,
+    "revisionRequired": false
+  },
+  "evidenceReferences": {
+    "sourceVerification": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/coastal-boardwalk-source-verification.json",
+    "exportValidation": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/validation/coastal-boardwalk-export-validation.json",
+    "exportManifest": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-export-manifest.json",
+    "exportVerificationReport": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/reports/coastal-boardwalk-export-verification-report.md"
+  },
+  "preservedHashes": {
+    "blend": "a4188df3f994fedeb4b2d7a3091874cfd84cb61d7919334dea013f561696fce1",
+    "close": "a223d20ff8de455c90b2d74e5c2be32f1b936d6a01769e5dc18bd31c3c11c19d",
+    "gameplay": "16a3ec5db34d674904e6554acf855d722846a147634c11bc6091bb16d455ee99",
+    "map": "3a62663ca25559fb59a98c9a6aa10478fe54fbe643f5a331db0aab5daedce9f6"
+  },
+  "verification": {
+    "sourceVerified": true,
+    "exportValidated": true,
+    "manifestAssetIdMatches": true,
+    "manifestRecipeMatches": true
+  },
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "schemaId": "COASTAL_GRAVEL_PATH_EXPORT_VALIDATION_001",
+  "assetId": "COASTAL_GRAVEL_PATH_001",
+  "version": "v001",
+  "validatedOn": "2026-07-30",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "lod": "LOD_CLOSE",
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+      "sha256": "8cd2a80e9ae16a6e6c17186db21fbb4872ad31b54b3491cfcb3777619f00340d",
+      "sizeBytes": 63176,
+      "meshCount": 11,
+      "triangleCount": 137,
+      "materialCount": 2,
+      "primitiveCount": 11,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_GAMEPLAY",
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+      "sha256": "caca943910cc29db34ab6242e60a7d73a0ce28a8db63c94fff4c099d61cb03fa",
+      "sizeBytes": 53100,
+      "meshCount": 9,
+      "triangleCount": 113,
+      "materialCount": 2,
+      "primitiveCount": 9,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "lod": "LOD_MAP",
+      "filename": "COASTAL_GRAVEL_PATH_001_LOD_MAP.glb",
+      "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/COASTAL_GRAVEL_PATH_001_LOD_MAP.glb",
+      "sha256": "16af6dec6d366f02b328b55cda5d0b657dc5c14601b4b099ac1df498a1e21fa6",
+      "sizeBytes": 42828,
+      "meshCount": 7,
+      "triangleCount": 89,
+      "materialCount": 2,
+      "primitiveCount": 7,
+      "metadataPreserved": true,
+      "assetIdentityPreserved": true,
+      "recipeIdentityPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "triangles_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "triangles_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "meshes_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "meshes_gameplay_gt_map",
+        "ok": true
+      },
+      {
+        "name": "primitives_close_gt_gameplay",
+        "ok": true
+      },
+      {
+        "name": "primitives_gameplay_gt_map",
+        "ok": true
+      }
+    ]
+  },
+  "sourceVerification": {
+    "sourceBlendRelativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/source/COASTAL_GRAVEL_PATH_001_v001.blend",
+    "sourceBlendSha256": "3372ca28b50489b7b1e3af95430b9296d66a365734026fa27feec6b50b0629a5",
+    "sourceBlendModifiedDuringExport": false
+  },
+  "exportManifest": {
+    "relativePath": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-export-manifest.json",
+    "exists": true,
+    "deterministicFingerprint": "ef943aca5c278a12ed2b709e2284109c1b901b3ee55db8d2293cb31148b4615d"
+  },
+  "validationSummary": {
+    "glbsExist": true,
+    "metadataValidated": true,
+    "assetIdentityValidated": true,
+    "recipeIdentityValidated": true,
+    "dependencyIdentityValidated": true,
+    "anchorIdentityValidated": true,
+    "triangleCountsValidated": true,
+    "sourceHashUnchanged": true
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false,
+  "readinessForRegistration": true,
+  "blocker": null
+}
