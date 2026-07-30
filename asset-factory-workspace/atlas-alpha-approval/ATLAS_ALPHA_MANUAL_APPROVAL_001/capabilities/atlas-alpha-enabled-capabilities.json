@@ -1,0 +1,11 @@
+{
+  "schemaId": "ATLAS_ALPHA_ENABLED_CAPABILITIES_001",
+  "approvalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "capabilities": [
+    "metadata_lookup",
+    "preview_overlay_inspection",
+    "boundary_transition_review",
+    "controlled_attachment_logging",
+    "manual_approval_gate_review"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaId": "ATLAS_ALPHA_AUTHORIZED_REGION_LIST_001",
+  "approvalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "regionCount": 2,
+  "regions": [
+    {
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "latBucket": -38.12,
+      "lngBucket": 144.61,
+      "previewAvailable": true
+    },
+    {
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "latBucket": -38.02,
+      "lngBucket": 145.01,
+      "previewAvailable": true
+    }
+  ]
+}

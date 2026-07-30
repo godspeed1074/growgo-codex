@@ -1,0 +1,22 @@
+{
+  "schemaId": "ATLAS_ALPHA_REVIEW_SCHEDULE_001",
+  "approvalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "approvedOn": "2026-07-30",
+  "reviewCadence": [
+    {
+      "scheduleId": "ALPHA_DAILY_REVIEW",
+      "frequency": "DAILY",
+      "purpose": "Review region scope, package validation, and failure signals."
+    },
+    {
+      "scheduleId": "ALPHA_BOUNDARY_REVIEW",
+      "frequency": "PER_BOUNDARY_TEST_WINDOW",
+      "purpose": "Review transition behaviour and rollback readiness."
+    },
+    {
+      "scheduleId": "ALPHA_EXIT_REVIEW",
+      "frequency": "END_OF_ALPHA_WINDOW",
+      "purpose": "Review readiness for any later attachment escalation."
+    }
+  ]
+}

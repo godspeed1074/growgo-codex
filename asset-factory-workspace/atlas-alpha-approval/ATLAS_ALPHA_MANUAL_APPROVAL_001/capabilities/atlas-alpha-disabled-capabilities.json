@@ -1,0 +1,12 @@
+{
+  "schemaId": "ATLAS_ALPHA_DISABLED_CAPABILITIES_001",
+  "approvalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "capabilities": [
+    "runtime_scene_activation",
+    "renderer_attachment",
+    "map_downloads",
+    "player_visibility",
+    "automatic_recipe_execution",
+    "asset_mutation"
+  ]
+}

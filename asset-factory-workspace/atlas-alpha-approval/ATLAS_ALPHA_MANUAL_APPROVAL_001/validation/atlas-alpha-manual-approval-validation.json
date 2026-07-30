@@ -1,0 +1,42 @@
+{
+  "schemaId": "ATLAS_ALPHA_MANUAL_APPROVAL_VALIDATION_001",
+  "approvalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "readiness_review_approved",
+      "ok": true
+    },
+    {
+      "name": "approval_scope_defined",
+      "ok": true
+    },
+    {
+      "name": "authorized_regions_defined",
+      "ok": true
+    },
+    {
+      "name": "enabled_and_disabled_capabilities_defined",
+      "ok": true
+    },
+    {
+      "name": "rollback_and_review_schedule_defined",
+      "ok": true
+    },
+    {
+      "name": "approval_record_consistent",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_renderer_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "2d9cdf4bc776ef3515c407eaefb34ec5f65df3d854d3c512c949ae95ce61bb2f",
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

@@ -1,0 +1,22 @@
+{
+  "schemaId": "ATLAS_ALPHA_ROLLBACK_AUTHORITY_RECORD_001",
+  "approvalId": "ATLAS_ALPHA_MANUAL_APPROVAL_001",
+  "authorizedRoles": [
+    "internal_developer_reviewer",
+    "atlas_operator"
+  ],
+  "rollbackTriggers": [
+    "unexpected_region_scope",
+    "recipe_selection_mismatch",
+    "package_identity_mismatch",
+    "boundary_transition_failure",
+    "manual_operator_rollback"
+  ],
+  "emergencyDisableTriggers": [
+    "MANUAL_OPERATOR_DISABLE",
+    "VALIDATION_GATE_FAILURE",
+    "BOUNDARY_HANDOFF_MISMATCH",
+    "UNEXPECTED_REGION_SCOPE"
+  ],
+  "deterministicFingerprint": "7ef3bf478cca89bbbb805c2218f4056d9ee0dd17ff4f3cde9bbd85d4797ff32e"
+}
