@@ -1,0 +1,14 @@
+{
+  "schemaId": "ATLAS_ALPHA_ATTACHMENT_READINESS_LIFECYCLE_001",
+  "reviewId": "ATLAS_ALPHA_ATTACHMENT_READINESS_REVIEW_001",
+  "lifecycleStatus": "ALPHA_READY_PENDING_MANUAL_APPROVAL",
+  "readinessDecision": "READY_FOR_MANUAL_ALPHA_APPROVAL",
+  "manualApprovalRequired": true,
+  "runtimeActivationAuthorized": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "69329d140b718ae21356e6bf8174b85e5e07913791fc05623dab344fbd8b526b"
+}

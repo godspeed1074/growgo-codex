@@ -1,0 +1,54 @@
+{
+  "schemaId": "ATLAS_ALPHA_ATTACHMENT_READINESS_CHECKLIST_001",
+  "reviewId": "ATLAS_ALPHA_ATTACHMENT_READINESS_REVIEW_001",
+  "checklist": [
+    {
+      "itemId": "CHECK_SAFETY_GATES",
+      "area": "safety_gates",
+      "status": "PASS",
+      "evidence": "Alpha specification validation and blocked runtime/renderer flags."
+    },
+    {
+      "itemId": "CHECK_PERMISSIONS",
+      "area": "permissions",
+      "status": "PASS",
+      "evidence": "Permission matrix remains internal-only and non-runtime."
+    },
+    {
+      "itemId": "CHECK_MONITORING_READY",
+      "area": "monitoring_readiness",
+      "status": "PASS",
+      "evidence": "Monitoring validation passes and alpha checklist is complete."
+    },
+    {
+      "itemId": "CHECK_ROLLBACK_READY",
+      "area": "rollback_readiness",
+      "status": "PASS",
+      "evidence": "Controlled attachment simulation preserves rollback on every scenario."
+    },
+    {
+      "itemId": "CHECK_PACKAGE_VALIDATION",
+      "area": "package_validation",
+      "status": "PASS",
+      "evidence": "Regional package validation passes and blocks failures safely."
+    },
+    {
+      "itemId": "CHECK_BUDGET_VALIDATION",
+      "area": "budget_validation",
+      "status": "PASS",
+      "evidence": "Budget validator passes and representative within-budget case approves."
+    },
+    {
+      "itemId": "CHECK_DETERMINISTIC_BEHAVIOUR",
+      "area": "deterministic_behaviour",
+      "status": "PASS",
+      "evidence": "Approved alpha scenario remains deterministic and preview alignment passes."
+    },
+    {
+      "itemId": "CHECK_FAILURE_HANDLING",
+      "area": "failure_handling",
+      "status": "PASS",
+      "evidence": "Simulation covers blocked region, missing package, validation failure, and emergency disable."
+    }
+  ]
+}
