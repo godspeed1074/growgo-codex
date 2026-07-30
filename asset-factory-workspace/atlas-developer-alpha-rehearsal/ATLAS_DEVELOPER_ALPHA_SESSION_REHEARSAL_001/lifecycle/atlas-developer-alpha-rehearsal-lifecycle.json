@@ -1,0 +1,17 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_LIFECYCLE_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_REHEARSAL_001",
+  "lifecycleStatus": "READY_FOR_FUTURE_DEVELOPER_ALPHA_SESSION_REVIEW",
+  "successfulSessions": 1,
+  "warningSessions": 1,
+  "stoppedSessions": 2,
+  "runtimeExecutionEnabled": false,
+  "mapAttachmentAllowed": false,
+  "automaticRendererExecutionAllowed": false,
+  "rendererAttachmentAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "67586c956e23b9abc5cfdfc5e5ce56432fe2e4c07d98f3f4f25afaeb8f14be69"
+}

@@ -1,0 +1,43 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_HARNESS_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_REHEARSAL_001",
+  "recordedOn": "2026-07-30",
+  "references": {
+    "executionChecklistId": "ATLAS_DEVELOPER_ALPHA_EXECUTION_CHECKLIST_001",
+    "runbookId": "ATLAS_DEVELOPER_ALPHA_OPERATOR_RUNBOOK_001",
+    "goRecordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+    "finalAuditChecklistId": "ATLAS_ALPHA_FINAL_SAFETY_AUDIT_001"
+  },
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "scenarios": [
+    {
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_ALPHA_SESSION",
+      "telemetryId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "alertId": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_ALERT"
+    },
+    {
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_WARNING_001",
+      "scenarioType": "WARNING_EVENT",
+      "telemetryId": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "alertId": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT"
+    },
+    {
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_ROLLBACK_001",
+      "scenarioType": "ROLLBACK_EVENT",
+      "telemetryId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "alertId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_ALERT"
+    },
+    {
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_EMERGENCY_STOP_001",
+      "scenarioType": "EMERGENCY_STOP_EVENT",
+      "telemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+      "alertId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT"
+    }
+  ],
+  "deterministicFingerprint": "b67633c747b0a9cba5889bf74a575fed9afda5c545b5a4a1d73d825a476300f9"
+}

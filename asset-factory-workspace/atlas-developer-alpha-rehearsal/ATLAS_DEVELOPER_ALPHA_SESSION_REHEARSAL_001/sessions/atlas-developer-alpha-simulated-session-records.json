@@ -1,0 +1,91 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_SESSION_RECORD_SET_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_REHEARSAL_001",
+  "records": [
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_SESSION_RECORD_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_ALPHA_SESSION",
+      "preFlightCompleted": true,
+      "environmentVerified": true,
+      "operatorSequenceCompleted": true,
+      "monitoringObserved": true,
+      "stopTriggered": false,
+      "rollbackUsed": false,
+      "auditCompleted": true,
+      "telemetryReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "alertReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_ALERT",
+      "sessionOutcome": "REHEARSAL_COMPLETED",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "1f0edc886e28559411824249754308876fa0f7b27a7eba24a51406ba375b43db"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_SESSION_RECORD_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_WARNING_001",
+      "scenarioType": "WARNING_EVENT",
+      "preFlightCompleted": true,
+      "environmentVerified": true,
+      "operatorSequenceCompleted": true,
+      "monitoringObserved": true,
+      "stopTriggered": false,
+      "rollbackUsed": false,
+      "auditCompleted": true,
+      "telemetryReference": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+      "alertReference": "RUNTIME_MONITORING_BUDGET_WARNING_001_ALERT",
+      "sessionOutcome": "REHEARSAL_COMPLETED_WITH_WARNING",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "48eaaee1164451055cd0a3cca0f30a5de5b468806310c190568b4faff65c218f"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_SESSION_RECORD_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_ROLLBACK_001",
+      "scenarioType": "ROLLBACK_EVENT",
+      "preFlightCompleted": true,
+      "environmentVerified": true,
+      "operatorSequenceCompleted": true,
+      "monitoringObserved": true,
+      "stopTriggered": true,
+      "rollbackUsed": true,
+      "auditCompleted": true,
+      "telemetryReference": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+      "alertReference": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_ALERT",
+      "sessionOutcome": "REHEARSAL_STOPPED_AND_ROLLED_BACK",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "f5600a082903fc56090a8b7667fea23363954050343330c81c628d909393cf81"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_SESSION_RECORD_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_EMERGENCY_STOP_001",
+      "scenarioType": "EMERGENCY_STOP_EVENT",
+      "preFlightCompleted": true,
+      "environmentVerified": true,
+      "operatorSequenceCompleted": false,
+      "monitoringObserved": true,
+      "stopTriggered": true,
+      "rollbackUsed": true,
+      "auditCompleted": true,
+      "telemetryReference": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+      "alertReference": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_ALERT",
+      "sessionOutcome": "REHEARSAL_EMERGENCY_STOP",
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "ba51b226bb47a55a42b42f4b6772d5513251630023537e80fcf514464246e111"
+    }
+  ],
+  "deterministicFingerprint": "7a2a6f30fd3fb38f7c55774264c77416b12e349c459704521edba34526279079"
+}

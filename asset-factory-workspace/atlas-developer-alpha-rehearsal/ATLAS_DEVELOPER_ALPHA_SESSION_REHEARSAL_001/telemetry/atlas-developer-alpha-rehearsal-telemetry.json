@@ -1,0 +1,71 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_TELEMETRY_SET_001",
+  "simulationId": "ATLAS_DEVELOPER_ALPHA_SESSION_REHEARSAL_001",
+  "outputs": [
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_TELEMETRY_OUTPUT_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_SUCCESS_001",
+      "scenarioType": "SUCCESSFUL_ALPHA_SESSION",
+      "healthState": "HEALTHY",
+      "alertState": "NO_ALERT",
+      "rollbackSignal": "NONE",
+      "stopTriggered": false,
+      "auditCompleted": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "4d63c12ac488818325224b5ca7ac1255aa63f1d14085bd8dafc0cdcf0634c017"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_TELEMETRY_OUTPUT_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_WARNING_001",
+      "scenarioType": "WARNING_EVENT",
+      "healthState": "WARNING",
+      "alertState": "WARNING_PACKAGE_NEAR_LIMIT",
+      "rollbackSignal": "NONE",
+      "stopTriggered": false,
+      "auditCompleted": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "dd9a76d2e3ddaf10490e48c72161511e091797dc9e06f4f786b435892f51c999"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_TELEMETRY_OUTPUT_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_ROLLBACK_001",
+      "scenarioType": "ROLLBACK_EVENT",
+      "healthState": "WARNING",
+      "alertState": "RECIPE_FALLBACK_WARNING",
+      "rollbackSignal": "FALLBACK_TO_APPROVED_RECIPE_PATH",
+      "stopTriggered": true,
+      "auditCompleted": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "4b4daf01fc54cc25428d932c3c5284eac17cbb13700805891046ba7521e831c0"
+    },
+    {
+      "schemaId": "ATLAS_DEVELOPER_ALPHA_REHEARSAL_TELEMETRY_OUTPUT_001",
+      "scenarioId": "DEVELOPER_ALPHA_REHEARSAL_EMERGENCY_STOP_001",
+      "scenarioType": "EMERGENCY_STOP_EVENT",
+      "healthState": "BLOCKED",
+      "alertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+      "rollbackSignal": "FORCE_PLANNING_ONLY_STATE",
+      "stopTriggered": true,
+      "auditCompleted": true,
+      "runtimeFlags": {
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      "deterministicFingerprint": "bf84c4c4187ec7e01b2389213f410c248e9975e644dc298180e110d0f4607772"
+    }
+  ],
+  "deterministicFingerprint": "32bdba4c9363d52ab688cbe6c2eee23d4e8439872f15637079ce87c0e35f5a62"
+}
