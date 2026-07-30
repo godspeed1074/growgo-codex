@@ -1,0 +1,167 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_SPECIFICATION_001",
+  "controlId": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001",
+  "recordedOn": "2026-07-30",
+  "sessionStates": [
+    "NOT_STARTED",
+    "PRE_SESSION_CAPTURE_READY",
+    "ACTIVE_MANUAL_REVIEW",
+    "PAUSED_FOR_REVIEW",
+    "ROLLBACK_IN_PROGRESS",
+    "EMERGENCY_STOPPED",
+    "COMPLETED",
+    "INVALID_SESSION"
+  ],
+  "allowedTransitions": [
+    {
+      "from": "NOT_STARTED",
+      "to": "PRE_SESSION_CAPTURE_READY"
+    },
+    {
+      "from": "PRE_SESSION_CAPTURE_READY",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    {
+      "from": "ACTIVE_MANUAL_REVIEW",
+      "to": "PAUSED_FOR_REVIEW"
+    },
+    {
+      "from": "PAUSED_FOR_REVIEW",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    {
+      "from": "ACTIVE_MANUAL_REVIEW",
+      "to": "ROLLBACK_IN_PROGRESS"
+    },
+    {
+      "from": "PAUSED_FOR_REVIEW",
+      "to": "ROLLBACK_IN_PROGRESS"
+    },
+    {
+      "from": "ACTIVE_MANUAL_REVIEW",
+      "to": "EMERGENCY_STOPPED"
+    },
+    {
+      "from": "PAUSED_FOR_REVIEW",
+      "to": "EMERGENCY_STOPPED"
+    },
+    {
+      "from": "ROLLBACK_IN_PROGRESS",
+      "to": "COMPLETED"
+    },
+    {
+      "from": "ACTIVE_MANUAL_REVIEW",
+      "to": "COMPLETED"
+    },
+    {
+      "from": "PRE_SESSION_CAPTURE_READY",
+      "to": "INVALID_SESSION"
+    },
+    {
+      "from": "ACTIVE_MANUAL_REVIEW",
+      "to": "INVALID_SESSION"
+    },
+    {
+      "from": "PAUSED_FOR_REVIEW",
+      "to": "INVALID_SESSION"
+    }
+  ],
+  "blockedTransitions": [
+    {
+      "from": "NOT_STARTED",
+      "to": "COMPLETED"
+    },
+    {
+      "from": "NOT_STARTED",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    {
+      "from": "PRE_SESSION_CAPTURE_READY",
+      "to": "COMPLETED"
+    },
+    {
+      "from": "COMPLETED",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    {
+      "from": "EMERGENCY_STOPPED",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    {
+      "from": "EMERGENCY_STOPPED",
+      "to": "COMPLETED"
+    },
+    {
+      "from": "INVALID_SESSION",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    }
+  ],
+  "controlEvents": [
+    "OPEN_SESSION",
+    "CAPTURE_PRE_SESSION_STATE",
+    "BEGIN_MANUAL_REVIEW",
+    "PAUSE_SESSION",
+    "RESUME_SESSION",
+    "REQUEST_ROLLBACK",
+    "TRIGGER_EMERGENCY_STOP",
+    "CLOSE_SESSION",
+    "MARK_INVALID"
+  ],
+  "pauseHandling": {
+    "allowedFromStates": [
+      "ACTIVE_MANUAL_REVIEW"
+    ],
+    "pauseState": "PAUSED_FOR_REVIEW",
+    "requiredAuditEvents": [
+      "SESSION_PAUSED",
+      "SESSION_RESUMED"
+    ]
+  },
+  "rollbackHandling": {
+    "triggerTelemetryId": "RUNTIME_MONITORING_RECIPE_FALLBACK_EVENT_001_TELEMETRY",
+    "allowedFromStates": [
+      "ACTIVE_MANUAL_REVIEW",
+      "PAUSED_FOR_REVIEW"
+    ],
+    "rollbackState": "ROLLBACK_IN_PROGRESS",
+    "completionState": "COMPLETED",
+    "owners": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ]
+  },
+  "emergencyStopHandling": {
+    "triggerTelemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+    "triggerAlertState": "EMERGENCY_SHUTDOWN_TRIGGERED",
+    "terminalState": "EMERGENCY_STOPPED",
+    "restartAllowed": false
+  },
+  "monitoringHooks": {
+    "warningTelemetryId": "RUNTIME_MONITORING_BUDGET_WARNING_001_TELEMETRY",
+    "emergencyTelemetryId": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY",
+    "requiredMonitoringChecklist": [
+      "healthy signal available: RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+      "watch for package validation failure alerts",
+      "watch for budget warning alerts",
+      "watch for recipe fallback warning alerts",
+      "watch for emergency shutdown signal: RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    ]
+  },
+  "auditEventRequirements": {
+    "requiredAuditEvents": [
+      "SESSION_OPENED",
+      "PRE_SESSION_CAPTURED",
+      "SESSION_STATE_CHANGED",
+      "TELEMETRY_REFERENCED",
+      "ROLLBACK_RECORDED",
+      "EMERGENCY_STOP_RECORDED",
+      "SESSION_CLOSED"
+    ],
+    "requiredReferences": [
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+      "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+    ]
+  },
+  "deterministicFingerprint": "1abc82688c416cfdeb23b5dc7de9428ebba93100c4b33bab8a2ab9edd6137b82"
+}

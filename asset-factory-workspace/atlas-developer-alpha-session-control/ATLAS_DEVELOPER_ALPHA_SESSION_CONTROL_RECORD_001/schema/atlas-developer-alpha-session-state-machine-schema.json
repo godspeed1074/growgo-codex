@@ -1,0 +1,200 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_SESSION_STATE_MACHINE_SCHEMA_001",
+  "controlId": "ATLAS_DEVELOPER_ALPHA_SESSION_CONTROL_RECORD_001",
+  "states": [
+    {
+      "state": "NOT_STARTED",
+      "terminal": false,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "PRE_SESSION_CAPTURE_READY",
+      "terminal": false,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "ACTIVE_MANUAL_REVIEW",
+      "terminal": false,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "PAUSED_FOR_REVIEW",
+      "terminal": false,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "ROLLBACK_IN_PROGRESS",
+      "terminal": false,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "EMERGENCY_STOPPED",
+      "terminal": true,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "COMPLETED",
+      "terminal": true,
+      "requiresRuntimeDisabled": true
+    },
+    {
+      "state": "INVALID_SESSION",
+      "terminal": true,
+      "requiresRuntimeDisabled": true
+    }
+  ],
+  "transitions": {
+    "allowed": [
+      {
+        "from": "NOT_STARTED",
+        "to": "PRE_SESSION_CAPTURE_READY"
+      },
+      {
+        "from": "PRE_SESSION_CAPTURE_READY",
+        "to": "ACTIVE_MANUAL_REVIEW"
+      },
+      {
+        "from": "ACTIVE_MANUAL_REVIEW",
+        "to": "PAUSED_FOR_REVIEW"
+      },
+      {
+        "from": "PAUSED_FOR_REVIEW",
+        "to": "ACTIVE_MANUAL_REVIEW"
+      },
+      {
+        "from": "ACTIVE_MANUAL_REVIEW",
+        "to": "ROLLBACK_IN_PROGRESS"
+      },
+      {
+        "from": "PAUSED_FOR_REVIEW",
+        "to": "ROLLBACK_IN_PROGRESS"
+      },
+      {
+        "from": "ACTIVE_MANUAL_REVIEW",
+        "to": "EMERGENCY_STOPPED"
+      },
+      {
+        "from": "PAUSED_FOR_REVIEW",
+        "to": "EMERGENCY_STOPPED"
+      },
+      {
+        "from": "ROLLBACK_IN_PROGRESS",
+        "to": "COMPLETED"
+      },
+      {
+        "from": "ACTIVE_MANUAL_REVIEW",
+        "to": "COMPLETED"
+      },
+      {
+        "from": "PRE_SESSION_CAPTURE_READY",
+        "to": "INVALID_SESSION"
+      },
+      {
+        "from": "ACTIVE_MANUAL_REVIEW",
+        "to": "INVALID_SESSION"
+      },
+      {
+        "from": "PAUSED_FOR_REVIEW",
+        "to": "INVALID_SESSION"
+      }
+    ],
+    "blocked": [
+      {
+        "from": "NOT_STARTED",
+        "to": "COMPLETED"
+      },
+      {
+        "from": "NOT_STARTED",
+        "to": "ACTIVE_MANUAL_REVIEW"
+      },
+      {
+        "from": "PRE_SESSION_CAPTURE_READY",
+        "to": "COMPLETED"
+      },
+      {
+        "from": "COMPLETED",
+        "to": "ACTIVE_MANUAL_REVIEW"
+      },
+      {
+        "from": "EMERGENCY_STOPPED",
+        "to": "ACTIVE_MANUAL_REVIEW"
+      },
+      {
+        "from": "EMERGENCY_STOPPED",
+        "to": "COMPLETED"
+      },
+      {
+        "from": "INVALID_SESSION",
+        "to": "ACTIVE_MANUAL_REVIEW"
+      }
+    ]
+  },
+  "controlEventMap": {
+    "OPEN_SESSION": {
+      "from": "NOT_STARTED",
+      "to": "PRE_SESSION_CAPTURE_READY"
+    },
+    "CAPTURE_PRE_SESSION_STATE": {
+      "from": "PRE_SESSION_CAPTURE_READY",
+      "to": "PRE_SESSION_CAPTURE_READY"
+    },
+    "BEGIN_MANUAL_REVIEW": {
+      "from": "PRE_SESSION_CAPTURE_READY",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    "PAUSE_SESSION": {
+      "from": "ACTIVE_MANUAL_REVIEW",
+      "to": "PAUSED_FOR_REVIEW"
+    },
+    "RESUME_SESSION": {
+      "from": "PAUSED_FOR_REVIEW",
+      "to": "ACTIVE_MANUAL_REVIEW"
+    },
+    "REQUEST_ROLLBACK": {
+      "from": [
+        "ACTIVE_MANUAL_REVIEW",
+        "PAUSED_FOR_REVIEW"
+      ],
+      "to": "ROLLBACK_IN_PROGRESS"
+    },
+    "TRIGGER_EMERGENCY_STOP": {
+      "from": [
+        "ACTIVE_MANUAL_REVIEW",
+        "PAUSED_FOR_REVIEW"
+      ],
+      "to": "EMERGENCY_STOPPED"
+    },
+    "CLOSE_SESSION": {
+      "from": [
+        "ACTIVE_MANUAL_REVIEW",
+        "ROLLBACK_IN_PROGRESS"
+      ],
+      "to": "COMPLETED"
+    },
+    "MARK_INVALID": {
+      "from": [
+        "PRE_SESSION_CAPTURE_READY",
+        "ACTIVE_MANUAL_REVIEW",
+        "PAUSED_FOR_REVIEW"
+      ],
+      "to": "INVALID_SESSION"
+    }
+  },
+  "auditRequirements": {
+    "requiredAuditEvents": [
+      "SESSION_OPENED",
+      "PRE_SESSION_CAPTURED",
+      "SESSION_STATE_CHANGED",
+      "TELEMETRY_REFERENCED",
+      "ROLLBACK_RECORDED",
+      "EMERGENCY_STOP_RECORDED",
+      "SESSION_CLOSED"
+    ],
+    "requiredReferences": [
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_FINAL_CHECK_001",
+      "ATLAS_DEVELOPER_ALPHA_EXECUTION_PREPARATION_001",
+      "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+    ]
+  },
+  "deterministicFingerprint": "717b5cdfbc99becbfd2c07fce6e11e9f2018288712705114927fe00aaa6de396"
+}
