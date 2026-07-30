@@ -1,0 +1,21 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_PLACEMENT_INSPECTION_REPORT_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "totalPlacements": 26,
+  "roleCounts": {
+    "elevated_wet_crossing": 1,
+    "native_grass_breakup": 6,
+    "primary_path_surface": 4,
+    "understory_ground_blend": 7,
+    "terrain_detail_cluster": 2,
+    "shoreline_transition_band": 3,
+    "coastal_shrub_mass": 2,
+    "accent_native_tree": 1
+  },
+  "spacingFlags": [],
+  "spacingStatus": "PASS",
+  "firstToLastFlow": {
+    "firstPlacementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:00",
+    "lastPlacementId": "TREE_BOTTLEBRUSH_001:LOOKOUT_OR_REST_ZONE:00"
+  }
+}

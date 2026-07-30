@@ -1,0 +1,105 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_METADATA_CONTRACTS_001",
+  "validationId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_001",
+  "gameplayIntegrationReference": "ATLAS_GAMEPLAY_INTEGRATION_001",
+  "gameplayOpportunitySimulationReference": "ATLAS_GAMEPLAY_OPPORTUNITY_SIMULATION_001",
+  "achievementQuestBridgeReference": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_001",
+  "candidateValidationRecords": [
+    {
+      "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_CANDIDATE_001",
+      "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+      "scenarioType": "coastal_location",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "reviewState": "DIRECT_APPROVED",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "qualityScore": 77,
+      "difficultyBand": "HIGH",
+      "duplicateSignature": "COASTAL_LOCATION_RECIPE_001|coastal_location|COASTAL_LOOKOUT_DISCOVERY|HIGH|DIRECT_APPROVED",
+      "rewardPlanningValid": true,
+      "difficultyValid": true,
+      "locationSuitabilityValid": true,
+      "playerExperienceValid": false,
+      "opportunityCount": 17,
+      "deterministicFingerprint": "a554c72c8b9ba78e65b488fe9c0ed1d225acb9cae5dcfda9743d3d67774b1590"
+    },
+    {
+      "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_CANDIDATE_001",
+      "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+      "scenarioType": "forest_location",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "reviewState": "DIRECT_APPROVED",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "qualityScore": 77,
+      "difficultyBand": "HIGH",
+      "duplicateSignature": "FOREST_LOCATION_RECIPE_001|forest_location|FOREST_CLEARING_DISCOVERY|HIGH|DIRECT_APPROVED",
+      "rewardPlanningValid": true,
+      "difficultyValid": true,
+      "locationSuitabilityValid": true,
+      "playerExperienceValid": false,
+      "opportunityCount": 16,
+      "deterministicFingerprint": "c9d8cc347ba0ff7db0539d7e4979fdd166dfce1400c7844ad01856548627a717"
+    },
+    {
+      "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_CANDIDATE_001",
+      "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+      "scenarioType": "unsupported_location",
+      "approvedRecipeId": null,
+      "validationState": "BLOCKED",
+      "reason": "UNSUPPORTED_GAMEPLAY_CONTEXT",
+      "duplicateSignature": null,
+      "qualityScore": 0,
+      "difficultyBand": null,
+      "rewardPlanningValid": false,
+      "playerExperienceValid": true,
+      "deterministicFingerprint": "166e0c2896b31cf4a5ec96e1009f07df5b03a5354c87f70f3a74a5067a4fe9a1"
+    },
+    {
+      "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_CANDIDATE_001",
+      "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+      "scenarioType": "ambiguous_location",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "reviewState": "APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+      "validationState": "REVIEW_REQUIRED",
+      "qualityScore": 69,
+      "difficultyBand": "LIGHT",
+      "duplicateSignature": "FOREST_LOCATION_RECIPE_001|ambiguous_location|REVIEW_GATED_DISCOVERY|LIGHT|APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+      "rewardPlanningValid": true,
+      "difficultyValid": true,
+      "locationSuitabilityValid": true,
+      "playerExperienceValid": false,
+      "opportunityCount": 15,
+      "deterministicFingerprint": "534184035ae2fc6e83d9861a53d09b9029319942c1636db77cbaf44f217ff167"
+    }
+  ],
+  "duplicateSignatures": {
+    "COASTAL_LOCATION_RECIPE_001|coastal_location|COASTAL_LOOKOUT_DISCOVERY|HIGH|DIRECT_APPROVED": 1,
+    "FOREST_LOCATION_RECIPE_001|ambiguous_location|REVIEW_GATED_DISCOVERY|LIGHT|APPROVED_AMBIGUOUS_REVIEW_REQUIRED": 1,
+    "FOREST_LOCATION_RECIPE_001|forest_location|FOREST_CLEARING_DISCOVERY|HIGH|DIRECT_APPROVED": 1
+  },
+  "approvalQueuePreview": [
+    {
+      "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "qualityScore": 77,
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001"
+    },
+    {
+      "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "qualityScore": 77,
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001"
+    },
+    {
+      "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+      "validationState": "BLOCKED",
+      "qualityScore": 0,
+      "approvedRecipeId": null
+    },
+    {
+      "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+      "validationState": "REVIEW_REQUIRED",
+      "qualityScore": 69,
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001"
+    }
+  ]
+}

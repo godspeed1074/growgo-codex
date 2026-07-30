@@ -1,0 +1,762 @@
+[
+  {
+    "scenarioId": "REGIONAL_PACKAGE_COASTAL_001",
+    "package": {
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "packageVersion": "v001",
+      "schemaVersion": "v001",
+      "coordinateReference": {
+        "latBucket": -38.12,
+        "lngBucket": 144.61
+      },
+      "dataLayers": {
+        "REGION_BOUNDARY_LAYER": {
+          "boundaryPolygon": "SIMULATED_BOUNDARY",
+          "centroid": {
+            "latBucket": -38.12,
+            "lngBucket": 144.61
+          },
+          "latBucket": -38.12,
+          "lngBucket": 144.61
+        },
+        "HYDROLOGY_SIGNAL_LAYER": {
+          "shorelineSignals": [
+            "saltwater_edge",
+            "wetland_margin"
+          ],
+          "wetlandSignals": [
+            "saltwater_edge",
+            "wetland_margin"
+          ],
+          "waterwaySignals": [
+            "saltwater_edge",
+            "wetland_margin"
+          ]
+        },
+        "VEGETATION_SIGNAL_LAYER": {
+          "canopySignals": [
+            "coastal_grass",
+            "coastal_shrub",
+            "bottlebrush"
+          ],
+          "shrubSignals": [
+            "coastal_grass",
+            "coastal_shrub",
+            "bottlebrush"
+          ],
+          "groundCoverSignals": [
+            "coastal_grass",
+            "coastal_shrub",
+            "bottlebrush"
+          ]
+        },
+        "ACCESS_NETWORK_LAYER": {
+          "pathSignals": [
+            "pedestrian_path",
+            "lookout_link"
+          ],
+          "crossingSignals": [
+            "pedestrian_path",
+            "lookout_link"
+          ],
+          "accessTypeSignals": [
+            "pedestrian_path",
+            "lookout_link"
+          ]
+        },
+        "SETTLEMENT_CONTEXT_LAYER": {
+          "entrySignals": [
+            "reserve_entry"
+          ],
+          "adjacentSettlementSignals": [
+            "reserve_entry"
+          ]
+        },
+        "ENVIRONMENT_SUMMARY_LAYER": {
+          "primaryEnvironmentHint": "COASTAL_EXPLORATION",
+          "secondaryEnvironmentHints": [
+            "MIXED_EDGE_TRANSITION"
+          ],
+          "biomeHints": [
+            "COASTAL_RESERVE_TRAIL",
+            "COASTAL_WETLAND_MARGIN"
+          ],
+          "confidenceHints": {
+            "coastal": 0.91,
+            "forest": 0.2,
+            "mixed": 0.35
+          }
+        },
+        "PROVENANCE_LAYER": {
+          "sourceDatasetId": "SOURCE_DATASET_BELLARINE_001",
+          "sourceRevision": "2026-07-30:R002",
+          "provider": "SIMULATED_PROVIDER",
+          "collectedAt": "2026-07-30"
+        }
+      },
+      "environmentSummary": {
+        "primaryEnvironmentHint": "COASTAL_EXPLORATION",
+        "secondaryEnvironmentHints": [
+          "MIXED_EDGE_TRANSITION"
+        ],
+        "biomeHints": [
+          "COASTAL_RESERVE_TRAIL",
+          "COASTAL_WETLAND_MARGIN"
+        ],
+        "confidenceHints": {
+          "coastal": 0.91,
+          "forest": 0.2,
+          "mixed": 0.35
+        }
+      },
+      "classificationInputs": {
+        "landformSignals": [
+          "dune_edge",
+          "shoreline_margin",
+          "boardwalk_alignment"
+        ],
+        "vegetationSignals": [
+          "coastal_grass",
+          "coastal_shrub",
+          "bottlebrush"
+        ],
+        "hydrologySignals": [
+          "saltwater_edge",
+          "wetland_margin"
+        ],
+        "accessSignals": [
+          "pedestrian_path",
+          "lookout_link"
+        ],
+        "settlementSignals": [
+          "reserve_entry"
+        ]
+      },
+      "selectorCompatibility": {
+        "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+        "requiredSelectorFields": [
+          "worldContextId",
+          "environment",
+          "biomeProfile",
+          "routeMode",
+          "archetype",
+          "desiredFeatures",
+          "seed"
+        ]
+      },
+      "cacheMetadata": {
+        "packageFingerprint": "c34d76b593c3f097f548399c4e928fa765960d12a76cd9c4c3f743c0f29f73e1",
+        "selectorSeed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0",
+        "mobileProfile": "MOBILE_STANDARD_001"
+      },
+      "refreshMetadata": {
+        "refreshMode": "SOURCE_REVISION_REFRESH",
+        "lastRefreshReason": "SIMULATED"
+      },
+      "provenance": {
+        "sourceDatasetId": "SOURCE_DATASET_BELLARINE_001",
+        "sourceRevision": "2026-07-30:R002"
+      },
+      "scenarioType": "coastal_region_package"
+    },
+    "packageValidation": {
+      "valid": true,
+      "missingFields": [],
+      "missingLayers": []
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_FOREST_001",
+    "package": {
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+      "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+      "packageVersion": "v001",
+      "schemaVersion": "v001",
+      "coordinateReference": {
+        "latBucket": -37.84,
+        "lngBucket": 145.29
+      },
+      "dataLayers": {
+        "REGION_BOUNDARY_LAYER": {
+          "boundaryPolygon": "SIMULATED_BOUNDARY",
+          "centroid": {
+            "latBucket": -37.84,
+            "lngBucket": 145.29
+          },
+          "latBucket": -37.84,
+          "lngBucket": 145.29
+        },
+        "HYDROLOGY_SIGNAL_LAYER": {
+          "shorelineSignals": [
+            "dry_ground"
+          ],
+          "wetlandSignals": [
+            "dry_ground"
+          ],
+          "waterwaySignals": [
+            "dry_ground"
+          ]
+        },
+        "VEGETATION_SIGNAL_LAYER": {
+          "canopySignals": [
+            "forest_canopy",
+            "understory_shrub",
+            "forest_grass"
+          ],
+          "shrubSignals": [
+            "forest_canopy",
+            "understory_shrub",
+            "forest_grass"
+          ],
+          "groundCoverSignals": [
+            "forest_canopy",
+            "understory_shrub",
+            "forest_grass"
+          ]
+        },
+        "ACCESS_NETWORK_LAYER": {
+          "pathSignals": [
+            "pedestrian_path"
+          ],
+          "crossingSignals": [
+            "pedestrian_path"
+          ],
+          "accessTypeSignals": [
+            "pedestrian_path"
+          ]
+        },
+        "SETTLEMENT_CONTEXT_LAYER": {
+          "entrySignals": [
+            "reserve_trailhead"
+          ],
+          "adjacentSettlementSignals": [
+            "reserve_trailhead"
+          ]
+        },
+        "ENVIRONMENT_SUMMARY_LAYER": {
+          "primaryEnvironmentHint": "FOREST_EXPLORATION",
+          "secondaryEnvironmentHints": [
+            "MIXED_EDGE_TRANSITION"
+          ],
+          "biomeHints": [
+            "TEMPERATE_FOREST_EDGE",
+            "FOREST_TRACK_CLEARING"
+          ],
+          "confidenceHints": {
+            "coastal": 0.14,
+            "forest": 0.93,
+            "mixed": 0.41
+          }
+        },
+        "PROVENANCE_LAYER": {
+          "sourceDatasetId": "SOURCE_DATASET_DANDENONG_001",
+          "sourceRevision": "2026-07-30:R002",
+          "provider": "SIMULATED_PROVIDER",
+          "collectedAt": "2026-07-30"
+        }
+      },
+      "environmentSummary": {
+        "primaryEnvironmentHint": "FOREST_EXPLORATION",
+        "secondaryEnvironmentHints": [
+          "MIXED_EDGE_TRANSITION"
+        ],
+        "biomeHints": [
+          "TEMPERATE_FOREST_EDGE",
+          "FOREST_TRACK_CLEARING"
+        ],
+        "confidenceHints": {
+          "coastal": 0.14,
+          "forest": 0.93,
+          "mixed": 0.41
+        }
+      },
+      "classificationInputs": {
+        "landformSignals": [
+          "forest_track",
+          "clearing_node",
+          "enclosed_corridor"
+        ],
+        "vegetationSignals": [
+          "forest_canopy",
+          "understory_shrub",
+          "forest_grass"
+        ],
+        "hydrologySignals": [
+          "dry_ground"
+        ],
+        "accessSignals": [
+          "pedestrian_path"
+        ],
+        "settlementSignals": [
+          "reserve_trailhead"
+        ]
+      },
+      "selectorCompatibility": {
+        "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+        "requiredSelectorFields": [
+          "worldContextId",
+          "environment",
+          "biomeProfile",
+          "routeMode",
+          "archetype",
+          "desiredFeatures",
+          "seed"
+        ]
+      },
+      "cacheMetadata": {
+        "packageFingerprint": "f08895e06f8a11785bbc18fa790f57409d7422555436a8dbaf4fc6d510406bbe",
+        "selectorSeed": "885a3119aa809a7d4318e93d0e22d6c0b58a6c7315d237d8ebd592769c258f0a",
+        "mobileProfile": "MOBILE_STANDARD_001"
+      },
+      "refreshMetadata": {
+        "refreshMode": "SOURCE_REVISION_REFRESH",
+        "lastRefreshReason": "SIMULATED"
+      },
+      "provenance": {
+        "sourceDatasetId": "SOURCE_DATASET_DANDENONG_001",
+        "sourceRevision": "2026-07-30:R002"
+      },
+      "scenarioType": "forest_region_package"
+    },
+    "packageValidation": {
+      "valid": true,
+      "missingFields": [],
+      "missingLayers": []
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_MIXED_001",
+    "package": {
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "packageVersion": "v001",
+      "schemaVersion": "v001",
+      "coordinateReference": {
+        "latBucket": -38.02,
+        "lngBucket": 145.01
+      },
+      "dataLayers": {
+        "REGION_BOUNDARY_LAYER": {
+          "boundaryPolygon": "SIMULATED_BOUNDARY",
+          "centroid": {
+            "latBucket": -38.02,
+            "lngBucket": 145.01
+          },
+          "latBucket": -38.02,
+          "lngBucket": 145.01
+        },
+        "HYDROLOGY_SIGNAL_LAYER": {
+          "shorelineSignals": [
+            "wetland_margin",
+            "creek_edge"
+          ],
+          "wetlandSignals": [
+            "wetland_margin",
+            "creek_edge"
+          ],
+          "waterwaySignals": [
+            "wetland_margin",
+            "creek_edge"
+          ]
+        },
+        "VEGETATION_SIGNAL_LAYER": {
+          "canopySignals": [
+            "coastal_grass",
+            "forest_canopy",
+            "bottlebrush"
+          ],
+          "shrubSignals": [
+            "coastal_grass",
+            "forest_canopy",
+            "bottlebrush"
+          ],
+          "groundCoverSignals": [
+            "coastal_grass",
+            "forest_canopy",
+            "bottlebrush"
+          ]
+        },
+        "ACCESS_NETWORK_LAYER": {
+          "pathSignals": [
+            "pedestrian_path",
+            "wet_crossing"
+          ],
+          "crossingSignals": [
+            "pedestrian_path",
+            "wet_crossing"
+          ],
+          "accessTypeSignals": [
+            "pedestrian_path",
+            "wet_crossing"
+          ]
+        },
+        "SETTLEMENT_CONTEXT_LAYER": {
+          "entrySignals": [],
+          "adjacentSettlementSignals": []
+        },
+        "ENVIRONMENT_SUMMARY_LAYER": {
+          "primaryEnvironmentHint": "MIXED_EDGE_TRANSITION",
+          "secondaryEnvironmentHints": [
+            "FOREST_EXPLORATION",
+            "COASTAL_EXPLORATION"
+          ],
+          "biomeHints": [
+            "TEMPERATE_FOREST_COASTAL_MARGIN",
+            "COASTAL_WETLAND_MARGIN"
+          ],
+          "confidenceHints": {
+            "coastal": 0.52,
+            "forest": 0.71,
+            "mixed": 0.81
+          }
+        },
+        "PROVENANCE_LAYER": {
+          "sourceDatasetId": "SOURCE_DATASET_MIXED_001",
+          "sourceRevision": "2026-07-30:R002",
+          "provider": "SIMULATED_PROVIDER",
+          "collectedAt": "2026-07-30"
+        }
+      },
+      "environmentSummary": {
+        "primaryEnvironmentHint": "MIXED_EDGE_TRANSITION",
+        "secondaryEnvironmentHints": [
+          "FOREST_EXPLORATION",
+          "COASTAL_EXPLORATION"
+        ],
+        "biomeHints": [
+          "TEMPERATE_FOREST_COASTAL_MARGIN",
+          "COASTAL_WETLAND_MARGIN"
+        ],
+        "confidenceHints": {
+          "coastal": 0.52,
+          "forest": 0.71,
+          "mixed": 0.81
+        }
+      },
+      "classificationInputs": {
+        "landformSignals": [
+          "wetland_margin",
+          "forest_edge",
+          "transition_track"
+        ],
+        "vegetationSignals": [
+          "coastal_grass",
+          "forest_canopy",
+          "bottlebrush"
+        ],
+        "hydrologySignals": [
+          "wetland_margin",
+          "creek_edge"
+        ],
+        "accessSignals": [
+          "pedestrian_path",
+          "wet_crossing"
+        ],
+        "settlementSignals": []
+      },
+      "selectorCompatibility": {
+        "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+        "requiredSelectorFields": [
+          "worldContextId",
+          "environment",
+          "biomeProfile",
+          "routeMode",
+          "archetype",
+          "desiredFeatures",
+          "seed"
+        ]
+      },
+      "cacheMetadata": {
+        "packageFingerprint": "93c754d37c5524f29053c37f1d2c7e55094b75b8aa02ddeea2567c067d68bbc5",
+        "selectorSeed": "c8edee1572b4935c49b8730c9c4a879b6741cad7b8574397edf75fd2ebbf420c",
+        "mobileProfile": "MOBILE_STANDARD_001"
+      },
+      "refreshMetadata": {
+        "refreshMode": "SOURCE_REVISION_REFRESH",
+        "lastRefreshReason": "SIMULATED"
+      },
+      "provenance": {
+        "sourceDatasetId": "SOURCE_DATASET_MIXED_001",
+        "sourceRevision": "2026-07-30:R002"
+      },
+      "scenarioType": "mixed_transition_package"
+    },
+    "packageValidation": {
+      "valid": true,
+      "missingFields": [],
+      "missingLayers": []
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_UNSUPPORTED_001",
+    "package": {
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "packageId": "ATLAS_REGION_PACKAGE_ALPINE_PASS_NEG_36_99_147_11_v001",
+      "regionId": "REGION_ALPINE_PASS_NEG_36_99_147_11_UNSUPPORTED_ENVIRONMENT",
+      "packageVersion": "v001",
+      "schemaVersion": "v001",
+      "coordinateReference": {
+        "latBucket": -36.99,
+        "lngBucket": 147.11
+      },
+      "dataLayers": {
+        "REGION_BOUNDARY_LAYER": {
+          "boundaryPolygon": "SIMULATED_BOUNDARY",
+          "centroid": {
+            "latBucket": -36.99,
+            "lngBucket": 147.11
+          },
+          "latBucket": -36.99,
+          "lngBucket": 147.11
+        },
+        "HYDROLOGY_SIGNAL_LAYER": {
+          "shorelineSignals": [
+            "snow_melt"
+          ],
+          "wetlandSignals": [
+            "snow_melt"
+          ],
+          "waterwaySignals": [
+            "snow_melt"
+          ]
+        },
+        "VEGETATION_SIGNAL_LAYER": {
+          "canopySignals": [
+            "alpine_low_shrub"
+          ],
+          "shrubSignals": [
+            "alpine_low_shrub"
+          ],
+          "groundCoverSignals": [
+            "alpine_low_shrub"
+          ]
+        },
+        "ACCESS_NETWORK_LAYER": {
+          "pathSignals": [
+            "steep_pass"
+          ],
+          "crossingSignals": [
+            "steep_pass"
+          ],
+          "accessTypeSignals": [
+            "steep_pass"
+          ]
+        },
+        "SETTLEMENT_CONTEXT_LAYER": {
+          "entrySignals": [],
+          "adjacentSettlementSignals": []
+        },
+        "ENVIRONMENT_SUMMARY_LAYER": {
+          "primaryEnvironmentHint": "UNSUPPORTED_ENVIRONMENT",
+          "secondaryEnvironmentHints": [],
+          "biomeHints": [
+            "ALPINE_TUNDRA"
+          ],
+          "confidenceHints": {
+            "coastal": 0.04,
+            "forest": 0.08,
+            "mixed": 0.11
+          }
+        },
+        "PROVENANCE_LAYER": {
+          "sourceDatasetId": "SOURCE_DATASET_ALPINE_001",
+          "sourceRevision": "2026-07-30:R002",
+          "provider": "SIMULATED_PROVIDER",
+          "collectedAt": "2026-07-30"
+        }
+      },
+      "environmentSummary": {
+        "primaryEnvironmentHint": "UNSUPPORTED_ENVIRONMENT",
+        "secondaryEnvironmentHints": [],
+        "biomeHints": [
+          "ALPINE_TUNDRA"
+        ],
+        "confidenceHints": {
+          "coastal": 0.04,
+          "forest": 0.08,
+          "mixed": 0.11
+        }
+      },
+      "classificationInputs": {
+        "landformSignals": [
+          "rock_scree",
+          "snow_pass"
+        ],
+        "vegetationSignals": [
+          "alpine_low_shrub"
+        ],
+        "hydrologySignals": [
+          "snow_melt"
+        ],
+        "accessSignals": [
+          "steep_pass"
+        ],
+        "settlementSignals": []
+      },
+      "selectorCompatibility": {
+        "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+        "requiredSelectorFields": [
+          "worldContextId",
+          "environment",
+          "biomeProfile",
+          "routeMode",
+          "archetype",
+          "desiredFeatures",
+          "seed"
+        ]
+      },
+      "cacheMetadata": {
+        "packageFingerprint": "a26cec713bfe3a466298dcab4e2afb7959ad5b5df0eb70a8f5497fd084532ec0",
+        "selectorSeed": "612f21ddeac9c4ba74e02bce587f1797b3aface7831308f224ba00a6bea326d1",
+        "mobileProfile": "MOBILE_STANDARD_001"
+      },
+      "refreshMetadata": {
+        "refreshMode": "SOURCE_REVISION_REFRESH",
+        "lastRefreshReason": "SIMULATED"
+      },
+      "provenance": {
+        "sourceDatasetId": "SOURCE_DATASET_ALPINE_001",
+        "sourceRevision": "2026-07-30:R002"
+      },
+      "scenarioType": "unsupported_package"
+    },
+    "packageValidation": {
+      "valid": true,
+      "missingFields": [],
+      "missingLayers": []
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_INVALID_001",
+    "package": {
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "packageId": "ATLAS_REGION_PACKAGE_BROKEN_REGION_NEG_37_5_145_5_v001",
+      "regionId": "REGION_BROKEN_REGION_NEG_37_5_145_5_COASTAL_EXPLORATION",
+      "packageVersion": "v001",
+      "schemaVersion": "v001",
+      "coordinateReference": {
+        "latBucket": -37.5,
+        "lngBucket": 145.5
+      },
+      "dataLayers": {
+        "REGION_BOUNDARY_LAYER": {
+          "boundaryPolygon": "SIMULATED_BOUNDARY",
+          "centroid": {
+            "latBucket": -37.5,
+            "lngBucket": 145.5
+          },
+          "latBucket": -37.5,
+          "lngBucket": 145.5
+        },
+        "VEGETATION_SIGNAL_LAYER": {
+          "canopySignals": [
+            "coastal_grass"
+          ],
+          "shrubSignals": [
+            "coastal_grass"
+          ],
+          "groundCoverSignals": [
+            "coastal_grass"
+          ]
+        },
+        "ACCESS_NETWORK_LAYER": {
+          "pathSignals": [
+            "pedestrian_path"
+          ],
+          "crossingSignals": [
+            "pedestrian_path"
+          ],
+          "accessTypeSignals": [
+            "pedestrian_path"
+          ]
+        },
+        "SETTLEMENT_CONTEXT_LAYER": {
+          "entrySignals": [],
+          "adjacentSettlementSignals": []
+        },
+        "ENVIRONMENT_SUMMARY_LAYER": {
+          "primaryEnvironmentHint": "COASTAL_EXPLORATION",
+          "secondaryEnvironmentHints": [],
+          "biomeHints": [
+            "COASTAL_RESERVE_TRAIL"
+          ],
+          "confidenceHints": {
+            "coastal": 0.7,
+            "forest": 0.1,
+            "mixed": 0.2
+          }
+        },
+        "PROVENANCE_LAYER": {
+          "sourceDatasetId": "SOURCE_DATASET_INVALID_001",
+          "sourceRevision": "2026-07-30:R002",
+          "provider": "SIMULATED_PROVIDER",
+          "collectedAt": "2026-07-30"
+        }
+      },
+      "environmentSummary": {
+        "primaryEnvironmentHint": "COASTAL_EXPLORATION",
+        "secondaryEnvironmentHints": [],
+        "biomeHints": [
+          "COASTAL_RESERVE_TRAIL"
+        ],
+        "confidenceHints": {
+          "coastal": 0.7,
+          "forest": 0.1,
+          "mixed": 0.2
+        }
+      },
+      "classificationInputs": {
+        "landformSignals": [
+          "shoreline_margin"
+        ],
+        "vegetationSignals": [
+          "coastal_grass"
+        ],
+        "hydrologySignals": [
+          "saltwater_edge"
+        ],
+        "accessSignals": [
+          "pedestrian_path"
+        ],
+        "settlementSignals": []
+      },
+      "selectorCompatibility": {
+        "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+        "requiredSelectorFields": [
+          "worldContextId",
+          "environment",
+          "biomeProfile",
+          "routeMode",
+          "archetype",
+          "desiredFeatures",
+          "seed"
+        ]
+      },
+      "cacheMetadata": {
+        "packageFingerprint": "170f1214b0bee4c57e346f076fc336de8bd3cd826a0623e80fc894cb5f4d569f",
+        "selectorSeed": "73b97e00b0af9fbffd8dc4508e1ba9dfe0b953e66440e4e7231733bf0e684501",
+        "mobileProfile": "MOBILE_STANDARD_001"
+      },
+      "refreshMetadata": {
+        "refreshMode": "SOURCE_REVISION_REFRESH",
+        "lastRefreshReason": "SIMULATED"
+      },
+      "provenance": {
+        "sourceDatasetId": "SOURCE_DATASET_INVALID_001",
+        "sourceRevision": "2026-07-30:R002"
+      },
+      "scenarioType": "invalid_package"
+    },
+    "packageValidation": {
+      "valid": false,
+      "missingFields": [],
+      "missingLayers": [
+        "HYDROLOGY_SIGNAL_LAYER"
+      ]
+    }
+  }
+]

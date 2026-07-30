@@ -1,0 +1,37 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_VERSION_RECORD_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "previousApprovedVersion": null,
+  "currentApprovedVersion": "v001",
+  "published": false,
+  "runtimeActivated": false,
+  "approvalPerformed": true,
+  "v001": {
+    "version": "v001",
+    "status": "APPROVED_CURRENT",
+    "current": true,
+    "deterministicFingerprint": "c475a001c080048255059dcf60ed1f370763ef584275effdeaa53f593877c5ed",
+    "previewReviewStatus": "APPROVED_FOR_RECIPE_APPROVAL",
+    "performanceSummary": {
+      "triangleTotals": {
+        "close": 5596,
+        "gameplay": 3988,
+        "map": 2544
+      },
+      "budget": {
+        "closeMax": 7600,
+        "gameplayMax": 5200,
+        "mapMax": 2600
+      },
+      "withinBudget": {
+        "close": true,
+        "gameplay": true,
+        "map": true
+      },
+      "uniqueAssetCount": 8,
+      "maxUniqueReferencedAssetsPerLocation": 8,
+      "withinUniqueAssetCap": true
+    }
+  },
+  "versionHash": "b242598a5c210278d026e7350bfb27c9bff371669418f1ba63f4307fd6b68fc9"
+}

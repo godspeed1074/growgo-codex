@@ -1,0 +1,37 @@
+{
+  "schemaId": "ATLAS_ENGINE_RECIPE_INTEGRATION_VALIDATION_001",
+  "integrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+  "status": "pass",
+  "scenarioCount": 3,
+  "nextAllowedAction": "future_atlas_engine_development_ready",
+  "checks": [
+    {
+      "name": "selector_validation_passed",
+      "ok": true
+    },
+    {
+      "name": "approved_recipes_only",
+      "ok": true
+    },
+    {
+      "name": "environment_schema_covers_supported_recipes",
+      "ok": true
+    },
+    {
+      "name": "coordinate_seed_rules_deterministic",
+      "ok": true
+    },
+    {
+      "name": "confidence_thresholds_match_selector_behavior",
+      "ok": true
+    },
+    {
+      "name": "regional_package_compatibility_read_only",
+      "ok": true
+    },
+    {
+      "name": "future_atlas_boundary_runtime_blocked",
+      "ok": true
+    }
+  ]
+}

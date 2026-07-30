@@ -1,0 +1,14 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_INTEGRATION_LIFECYCLE_001",
+  "integrationId": "ATLAS_GAMEPLAY_INTEGRATION_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "gameplayMetadataReady": true,
+  "runtimeActivationAuthorized": false,
+  "questsCreated": false,
+  "achievementsAwarded": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "deterministicFingerprint": "276f678ec82197d50e98f01a7d33895c064f48f520f9cac0c5fa84e0257e6737"
+}

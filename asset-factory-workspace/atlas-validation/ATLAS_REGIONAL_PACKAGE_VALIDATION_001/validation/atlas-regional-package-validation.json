@@ -1,0 +1,40 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_RESULT_001",
+  "validationPlanningId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+  "status": "pass",
+  "nextAllowedAction": "future_atlas_regional_package_validation_ready",
+  "checks": [
+    {
+      "name": "deterministic_package_identity",
+      "ok": true
+    },
+    {
+      "name": "safe_failure_behaviour",
+      "ok": true
+    },
+    {
+      "name": "approved_recipe_compatibility",
+      "ok": true
+    },
+    {
+      "name": "mobile_package_suitability",
+      "ok": true
+    },
+    {
+      "name": "integrity_and_schema_gate_defined",
+      "ok": true
+    },
+    {
+      "name": "corruption_and_rollback_coverage_defined",
+      "ok": true
+    },
+    {
+      "name": "representative_failure_scenarios_block_safely",
+      "ok": true
+    },
+    {
+      "name": "runtime_and_distribution_still_blocked",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_PREVIEW_VALIDATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "generated_plan_exists",
+      "ok": true
+    },
+    {
+      "name": "dependency_map_exists",
+      "ok": true
+    },
+    {
+      "name": "placement_preview_data_created",
+      "ok": true
+    },
+    {
+      "name": "dependency_visualization_created",
+      "ok": true
+    },
+    {
+      "name": "zone_summary_created",
+      "ok": true
+    },
+    {
+      "name": "density_report_created",
+      "ok": true
+    },
+    {
+      "name": "placement_inspection_output_created",
+      "ok": true
+    },
+    {
+      "name": "visual_renderer_data_created",
+      "ok": true
+    },
+    {
+      "name": "trail_flow_review_passes",
+      "ok": true
+    },
+    {
+      "name": "vegetation_density_review_passes",
+      "ok": true
+    },
+    {
+      "name": "clearing_placement_review_passes",
+      "ok": true
+    },
+    {
+      "name": "exploration_interest_review_passes",
+      "ok": true
+    },
+    {
+      "name": "forest_transition_quality_review_passes",
+      "ok": true
+    },
+    {
+      "name": "performance_impact_review_passes",
+      "ok": true
+    },
+    {
+      "name": "no_blender_files_created",
+      "ok": true
+    },
+    {
+      "name": "no_glbs_created",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "previewFingerprint": "623da7e3a90bfb638913478c7a2bfff3f0ac8bf999b57f05c9aa1d8260a52335",
+  "nextAllowedAction": "preview_review_only"
+}

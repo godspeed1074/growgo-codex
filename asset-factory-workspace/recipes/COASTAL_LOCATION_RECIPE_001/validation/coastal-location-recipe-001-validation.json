@@ -1,0 +1,78 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_WORLD_ASSEMBLY_RECIPE_VALIDATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "recipe_identity_defined",
+      "ok": true
+    },
+    {
+      "name": "required_core_assets_are_approved",
+      "ok": true
+    },
+    {
+      "name": "approved_vegetation_assets_are_approved",
+      "ok": true
+    },
+    {
+      "name": "placement_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "deterministic_seed_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "biome_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "navigation_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "performance_constraints_defined",
+      "ok": true
+    },
+    {
+      "name": "dependencies_are_development_only",
+      "ok": true
+    },
+    {
+      "name": "no_blender_files_created",
+      "ok": true
+    },
+    {
+      "name": "no_geometry_generated",
+      "ok": true
+    },
+    {
+      "name": "no_glb_exports_created",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification_performed",
+      "ok": true
+    },
+    {
+      "name": "no_registration_records_created",
+      "ok": true
+    },
+    {
+      "name": "no_promotion_records_created",
+      "ok": true
+    }
+  ],
+  "deferredAssets": [
+    {
+      "assetId": "TREE_EUCALYPTUS_001",
+      "version": "v001",
+      "lifecycleStatus": "REGISTERED",
+      "validationStatus": "validated",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-eucalyptus-development-catalog-entry.json",
+      "reason": "Validated local asset exists, but the catalog state is not yet in an approved lifecycle band for this recipe intake."
+    }
+  ],
+  "nextAllowedAction": "recipe_generation_only"
+}

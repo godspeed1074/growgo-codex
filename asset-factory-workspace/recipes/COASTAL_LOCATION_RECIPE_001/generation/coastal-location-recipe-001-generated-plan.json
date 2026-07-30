@@ -1,0 +1,632 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_GENERATED_PLAN_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "generatedOn": "2026-07-30",
+  "generationMode": "deterministic_recipe_assembly_plan_only",
+  "seedHandling": {
+    "seed": "COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+    "locationId": "COASTAL_EXPLORATION_LOCATION_001",
+    "variantId": "DEFAULT",
+    "biomeProfile": "COASTAL_RESERVE_TRAIL",
+    "archetype": "RESERVE_LOOP",
+    "seedStrategy": "hash(recipeId, locationId, variantId, biomeProfile, placementZoneId)"
+  },
+  "zoneAllocation": [
+    {
+      "zoneId": "ENTRY_PATH_ZONE",
+      "laneStart": 0,
+      "laneEnd": 24,
+      "traversalRole": "ENTRY",
+      "requiredRoles": [
+        "primary_path_surface",
+        "understory_ground_blend"
+      ],
+      "optionalRoles": [
+        "native_grass_breakup"
+      ],
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "laneStart": 24,
+      "laneEnd": 56,
+      "traversalRole": "SHORELINE",
+      "requiredRoles": [
+        "shoreline_transition_band",
+        "terrain_detail_cluster"
+      ],
+      "optionalRoles": [
+        "native_grass_breakup",
+        "coastal_shrub_mass"
+      ],
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "WET_CROSSING_ZONE",
+      "laneStart": 56,
+      "laneEnd": 76,
+      "traversalRole": "CROSSING",
+      "requiredRoles": [
+        "elevated_wet_crossing",
+        "shoreline_transition_band"
+      ],
+      "optionalRoles": [
+        "terrain_detail_cluster"
+      ],
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "laneStart": 76,
+      "laneEnd": 112,
+      "traversalRole": "BUFFER",
+      "requiredRoles": [
+        "native_grass_breakup",
+        "coastal_shrub_mass",
+        "understory_ground_blend"
+      ],
+      "optionalRoles": [
+        "accent_native_tree"
+      ],
+      "densityProfile": "MEDIUM"
+    },
+    {
+      "zoneId": "LOOKOUT_OR_REST_ZONE",
+      "laneStart": 112,
+      "laneEnd": 144,
+      "traversalRole": "DESTINATION",
+      "requiredRoles": [
+        "primary_path_surface",
+        "terrain_detail_cluster"
+      ],
+      "optionalRoles": [
+        "accent_native_tree",
+        "elevated_wet_crossing"
+      ],
+      "densityProfile": "MEDIUM"
+    }
+  ],
+  "placementPlan": {
+    "totalPlacements": 26,
+    "placements": [
+      {
+        "placementId": "COASTAL_BOARDWALK_001:WET_CROSSING_ZONE:00",
+        "assetId": "COASTAL_BOARDWALK_001",
+        "assetVersion": "v001",
+        "role": "elevated_wet_crossing",
+        "zoneId": "WET_CROSSING_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-development-catalog-entry.json",
+        "transform": {
+          "x": 25.998,
+          "y": 2.223,
+          "rotationDegrees": 2.13,
+          "scale": 0.989
+        },
+        "notes": "wet or unstable crossing segment"
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:ENTRY_PATH_ZONE:00",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 3.388,
+          "y": 2.725,
+          "rotationDegrees": -18.11,
+          "scale": 0.941
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:ENTRY_PATH_ZONE:01",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 7.128,
+          "y": 1.851,
+          "rotationDegrees": -17.75,
+          "scale": 1.061
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:02",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 10.649,
+          "y": 2.611,
+          "rotationDegrees": 23.24,
+          "scale": 0.984
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:03",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 15.659,
+          "y": 3.929,
+          "rotationDegrees": -30.75,
+          "scale": 0.916
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:04",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 18.207,
+          "y": 2.785,
+          "rotationDegrees": 31.98,
+          "scale": 1.021
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:05",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 22.464,
+          "y": 3.993,
+          "rotationDegrees": 16.95,
+          "scale": 0.914
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_PATH_ZONE:00",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 4.097,
+          "y": 0.944,
+          "rotationDegrees": -3.44,
+          "scale": 1.019
+        },
+        "notes": "main traversable route"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_PATH_ZONE:01",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 10.04,
+          "y": 0.757,
+          "rotationDegrees": 1.55,
+          "scale": 1.025
+        },
+        "notes": "main traversable route"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:LOOKOUT_OR_REST_ZONE:02",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 15.67,
+          "y": 0.857,
+          "rotationDegrees": -1.61,
+          "scale": 1.038
+        },
+        "notes": "main traversable route"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:LOOKOUT_OR_REST_ZONE:03",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 22.37,
+          "y": 0.35,
+          "rotationDegrees": -1.18,
+          "scale": 1.036
+        },
+        "notes": "main traversable route"
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:00",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 0.349,
+          "y": 3.76,
+          "rotationDegrees": -5.6,
+          "scale": 1.058
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:01",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 3.531,
+          "y": 4.159,
+          "rotationDegrees": 19.88,
+          "scale": 1.05
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:02",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 6.099,
+          "y": 4.018,
+          "rotationDegrees": 0.68,
+          "scale": 0.906
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:03",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 9.652,
+          "y": 2.688,
+          "rotationDegrees": -7.14,
+          "scale": 0.931
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:04",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 12.758,
+          "y": 2.653,
+          "rotationDegrees": -13.3,
+          "scale": 1.072
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:05",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 15.656,
+          "y": 1.702,
+          "rotationDegrees": 1.63,
+          "scale": 0.966
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:06",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 19.542,
+          "y": 2.452,
+          "rotationDegrees": 21.2,
+          "scale": 1.01
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_ROCK_CLUSTER_001:SHORELINE_EDGE_ZONE:00",
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "assetVersion": "v001",
+        "role": "terrain_detail_cluster",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+        "transform": {
+          "x": 18.978,
+          "y": 4.378,
+          "rotationDegrees": -8.11,
+          "scale": 1.104
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_ROCK_CLUSTER_001:SHORELINE_EDGE_ZONE:01",
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "assetVersion": "v001",
+        "role": "terrain_detail_cluster",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+        "transform": {
+          "x": 28.334,
+          "y": 5.104,
+          "rotationDegrees": 12.29,
+          "scale": 1.113
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_WATER_EDGE_001:SHORELINE_EDGE_ZONE:00",
+        "assetId": "COASTAL_WATER_EDGE_001",
+        "assetVersion": "v001",
+        "role": "shoreline_transition_band",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-development-catalog-entry.json",
+        "transform": {
+          "x": 13.504,
+          "y": 5.998,
+          "rotationDegrees": -16,
+          "scale": 1.045
+        },
+        "notes": "non-traversable shoreline boundary"
+      },
+      {
+        "placementId": "COASTAL_WATER_EDGE_001:SHORELINE_EDGE_ZONE:01",
+        "assetId": "COASTAL_WATER_EDGE_001",
+        "assetVersion": "v001",
+        "role": "shoreline_transition_band",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-development-catalog-entry.json",
+        "transform": {
+          "x": 21.905,
+          "y": 5.717,
+          "rotationDegrees": 17.96,
+          "scale": 1.027
+        },
+        "notes": "non-traversable shoreline boundary"
+      },
+      {
+        "placementId": "COASTAL_WATER_EDGE_001:SHORELINE_EDGE_ZONE:02",
+        "assetId": "COASTAL_WATER_EDGE_001",
+        "assetVersion": "v001",
+        "role": "shoreline_transition_band",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-development-catalog-entry.json",
+        "transform": {
+          "x": 28.152,
+          "y": 4.685,
+          "rotationDegrees": 4.52,
+          "scale": 1.033
+        },
+        "notes": "non-traversable shoreline boundary"
+      },
+      {
+        "placementId": "SHRUB_COASTAL_LOW_001:VEGETATION_BUFFER_ZONE:00",
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "assetVersion": "v002",
+        "role": "coastal_shrub_mass",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+        "transform": {
+          "x": 42.397,
+          "y": 6.608,
+          "rotationDegrees": -4.02,
+          "scale": 0.961
+        },
+        "notes": null
+      },
+      {
+        "placementId": "SHRUB_COASTAL_LOW_001:VEGETATION_BUFFER_ZONE:01",
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "assetVersion": "v002",
+        "role": "coastal_shrub_mass",
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+        "transform": {
+          "x": 51.087,
+          "y": 7.105,
+          "rotationDegrees": 15.6,
+          "scale": 0.941
+        },
+        "notes": null
+      },
+      {
+        "placementId": "TREE_BOTTLEBRUSH_001:LOOKOUT_OR_REST_ZONE:00",
+        "assetId": "TREE_BOTTLEBRUSH_001",
+        "assetVersion": "v002",
+        "role": "accent_native_tree",
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json",
+        "transform": {
+          "x": 70.812,
+          "y": 8.779,
+          "rotationDegrees": -3.92,
+          "scale": 0.988
+        },
+        "notes": "destination anchor tree kept outside main standing space"
+      }
+    ]
+  },
+  "navigationPathLogic": {
+    "routeType": "pedestrian_exploration",
+    "primaryRouteNodeIds": [
+      "ENTRY_NODE_001",
+      "PATH_NODE_001",
+      "TRANSITION_NODE_001",
+      "DESTINATION_NODE_001"
+    ],
+    "routeNodes": [
+      {
+        "nodeId": "ENTRY_NODE_001",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "connectedTo": [
+          "PATH_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      },
+      {
+        "nodeId": "PATH_NODE_001",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "connectedTo": [
+          "ENTRY_NODE_001",
+          "TRANSITION_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      },
+      {
+        "nodeId": "TRANSITION_NODE_001",
+        "zoneId": "WET_CROSSING_ZONE",
+        "connectedTo": [
+          "PATH_NODE_001",
+          "DESTINATION_NODE_001"
+        ],
+        "surfaceRole": "elevated_wet_crossing"
+      },
+      {
+        "nodeId": "DESTINATION_NODE_001",
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "connectedTo": [
+          "TRANSITION_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      }
+    ],
+    "waterBoundaryRule": "placements tagged shoreline_transition_band are excluded from traversable route surfaces",
+    "vegetationClearanceRule": "vegetation placements must preserve a readable movement corridor around primary path and destination nodes",
+    "placementCount": 26
+  },
+  "waterTransitionRules": {
+    "boardwalkRequiredZones": [
+      "WET_CROSSING_ZONE"
+    ],
+    "waterEdgeTraversable": false,
+    "pathToBoardwalkTransitionOnlyThrough": [
+      "WET_CROSSING_ZONE"
+    ],
+    "rockClustersRestrictedTo": [
+      "SHORELINE_EDGE_ZONE",
+      "LOOKOUT_OR_REST_ZONE"
+    ]
+  },
+  "vegetationDensityRules": {
+    "ENTRY_PATH_ZONE": {
+      "density": "LOW",
+      "allowedRoles": [
+        "understory_ground_blend",
+        "native_grass_breakup"
+      ]
+    },
+    "SHORELINE_EDGE_ZONE": {
+      "density": "LOW",
+      "allowedRoles": [
+        "terrain_detail_cluster",
+        "native_grass_breakup"
+      ]
+    },
+    "VEGETATION_BUFFER_ZONE": {
+      "density": "MEDIUM",
+      "allowedRoles": [
+        "native_grass_breakup",
+        "coastal_shrub_mass",
+        "understory_ground_blend",
+        "accent_native_tree"
+      ]
+    },
+    "LOOKOUT_OR_REST_ZONE": {
+      "density": "MEDIUM",
+      "allowedRoles": [
+        "terrain_detail_cluster",
+        "accent_native_tree"
+      ]
+    }
+  },
+  "mobilePerformanceLimits": {
+    "triangleTotals": {
+      "close": 5302,
+      "gameplay": 3770,
+      "map": 2402
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2600
+    },
+    "withinBudget": {
+      "close": true,
+      "gameplay": true,
+      "map": true
+    },
+    "uniqueAssetCount": 8,
+    "maxUniqueReferencedAssetsPerLocation": 8,
+    "withinUniqueAssetCap": true
+  },
+  "unsupportedAssetsIncluded": false,
+  "runtimeSafety": {
+    "blenderFilesCreated": false,
+    "glbsCreated": false,
+    "assetsModified": false,
+    "runtimeActivated": false
+  },
+  "deterministicFingerprint": "d79d7c63652eaace3117a7bd850f0b4e01a9448036a3fcbe4ac89f11ec3d9c08"
+}

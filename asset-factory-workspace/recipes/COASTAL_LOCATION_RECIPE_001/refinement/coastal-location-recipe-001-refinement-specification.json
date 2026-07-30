@@ -1,0 +1,106 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_SPECIFICATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "basedOnReviewRecordId": "COASTAL_LOCATION_RECIPE_001_MANUAL_REVIEW_AND_TUNING_001",
+  "basedOnRecommendationSetId": "COASTAL_LOCATION_RECIPE_001_TUNING_RECOMMENDATIONS_001",
+  "planningMode": "refinement_planning_only_no_regeneration",
+  "plannedChanges": [
+    {
+      "changeId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_001",
+      "area": "shoreline_transition_improvements",
+      "priority": "HIGH",
+      "sourceRecommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_001",
+      "targetZones": [
+        "SHORELINE_EDGE_ZONE",
+        "WET_CROSSING_ZONE"
+      ],
+      "plannedRuleUpdate": "Allow one deterministic shoreline-transition support placement to bridge the approach into the boardwalk crossing.",
+      "intendedOutcome": "Boardwalk crossing reads as connected to the shoreline band instead of isolated from it.",
+      "candidateAssets": [
+        "COASTAL_WATER_EDGE_001",
+        "COASTAL_ROCK_CLUSTER_001"
+      ],
+      "placementGuardrails": {
+        "maxAdditionalPlacements": 1,
+        "preserveDensityProfiles": [
+          "LOW",
+          "LOW"
+        ],
+        "preserveTraversalRoles": [
+          "SHORELINE",
+          "CROSSING"
+        ]
+      }
+    },
+    {
+      "changeId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_002",
+      "area": "destination_zone_enhancement",
+      "priority": "HIGH",
+      "sourceRecommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_002",
+      "targetZones": [
+        "LOOKOUT_OR_REST_ZONE"
+      ],
+      "plannedRuleUpdate": "Promote one compact terrain-detail support beat to required destination support near the final path segment.",
+      "intendedOutcome": "Destination zone gains clearer arrival payoff and a stronger stop moment without crowding the bottlebrush anchor.",
+      "candidateAssets": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "COASTAL_GROUND_COVER_001"
+      ],
+      "placementGuardrails": {
+        "maxAdditionalPlacements": 1,
+        "preserveDensityProfiles": [
+          "MEDIUM"
+        ],
+        "preservePrimaryAnchor": "TREE_BOTTLEBRUSH_001"
+      }
+    },
+    {
+      "changeId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_003",
+      "area": "vegetation_density_smoothing",
+      "priority": "MEDIUM",
+      "sourceRecommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_003",
+      "targetZones": [
+        "SHORELINE_EDGE_ZONE",
+        "VEGETATION_BUFFER_ZONE"
+      ],
+      "plannedRuleUpdate": "Introduce one intermediary support accent or redistribute one vegetation-support placement closer to the shoreline edge.",
+      "intendedOutcome": "Vegetation transition reads more gradual between sparse shoreline and inland buffer zones.",
+      "candidateAssets": [
+        "COASTAL_GROUND_COVER_001",
+        "COASTAL_GRASS_TUSSOCK_001"
+      ],
+      "placementGuardrails": {
+        "maxNetPlacementIncrease": 1,
+        "shorelineDensityMustRemain": "LOW",
+        "bufferDensityMustRemain": "MEDIUM"
+      }
+    },
+    {
+      "changeId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_004",
+      "area": "exploration_interest_improvements",
+      "priority": "MEDIUM",
+      "sourceRecommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_002",
+      "targetZones": [
+        "LOOKOUT_OR_REST_ZONE"
+      ],
+      "plannedRuleUpdate": "Reserve one deterministic curiosity-support slot at the destination so future POI layering has a stable landing point.",
+      "intendedOutcome": "Endpoint feels more rewarding now and remains ready for later POI or achievement tagging.",
+      "candidateAssets": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "COASTAL_GROUND_COVER_001"
+      ],
+      "placementGuardrails": {
+        "maxAdditionalPlacements": 1,
+        "preserveViewlineToAnchor": true,
+        "preserveMobileBudgetHeadroom": true
+      }
+    }
+  ],
+  "regenerationPreconditions": [
+    "Manual review findings remain current for the targeted generated plan fingerprint.",
+    "No unsupported assets are introduced.",
+    "Zone density profiles remain inside LOW/MEDIUM expectations.",
+    "Traversal readability remains PASS after regeneration."
+  ]
+}

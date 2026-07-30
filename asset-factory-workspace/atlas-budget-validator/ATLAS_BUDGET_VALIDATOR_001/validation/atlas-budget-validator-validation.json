@@ -1,0 +1,96 @@
+{
+  "schemaId": "ATLAS_BUDGET_VALIDATOR_VALIDATION_001",
+  "validatorId": "ATLAS_BUDGET_VALIDATOR_001",
+  "status": "pass",
+  "nextAllowedAction": "future_atlas_budget_enforcement_ready",
+  "checks": [
+    {
+      "name": "package_size_limits_defined",
+      "ok": true
+    },
+    {
+      "name": "cache_limits_defined",
+      "ok": true
+    },
+    {
+      "name": "recipe_complexity_and_preview_limits_defined",
+      "ok": true
+    },
+    {
+      "name": "warning_and_blocking_states_defined",
+      "ok": true
+    },
+    {
+      "name": "approval_recommendations_defined",
+      "ok": true
+    },
+    {
+      "name": "representative_cases_match_expected_recommendations",
+      "ok": true
+    },
+    {
+      "name": "runtime_download_blender_glb_and_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "representativeEvaluations": [
+    {
+      "caseId": "BUDGET_CASE_WITHIN_LIMITS_001",
+      "warnings": [],
+      "holds": [],
+      "blocks": [],
+      "recommendation": "APPROVE_WITHIN_BUDGET"
+    },
+    {
+      "caseId": "BUDGET_CASE_WARNING_001",
+      "warnings": [
+        "WARNING_PACKAGE_NEAR_LIMIT",
+        "WARNING_CACHE_NEAR_LIMIT",
+        "WARNING_RECIPE_COMPLEXITY_RISING",
+        "WARNING_PREVIEW_PAYLOAD_RISING"
+      ],
+      "holds": [],
+      "blocks": [],
+      "recommendation": "APPROVE_WITH_WARNING"
+    },
+    {
+      "caseId": "BUDGET_CASE_HOLD_001",
+      "warnings": [
+        "WARNING_PACKAGE_NEAR_LIMIT",
+        "WARNING_CACHE_NEAR_LIMIT",
+        "WARNING_RECIPE_COMPLEXITY_RISING",
+        "WARNING_PREVIEW_PAYLOAD_RISING",
+        "WARNING_BACKEND_REUSE_BELOW_TARGET"
+      ],
+      "holds": [
+        "GENERATION_COST_SOFT_LIMIT_EXCEEDED",
+        "PREVIEW_PAYLOAD_SOFT_LIMIT_EXCEEDED"
+      ],
+      "blocks": [],
+      "recommendation": "HOLD_FOR_OPTIMIZATION"
+    },
+    {
+      "caseId": "BUDGET_CASE_BLOCK_001",
+      "warnings": [
+        "WARNING_PACKAGE_NEAR_LIMIT",
+        "WARNING_CACHE_NEAR_LIMIT",
+        "WARNING_RECIPE_COMPLEXITY_RISING",
+        "WARNING_PREVIEW_PAYLOAD_RISING",
+        "WARNING_BACKEND_REUSE_BELOW_TARGET"
+      ],
+      "holds": [
+        "PACKAGE_SIZE_SOFT_LIMIT_EXCEEDED",
+        "GENERATION_COST_SOFT_LIMIT_EXCEEDED",
+        "PREVIEW_PAYLOAD_SOFT_LIMIT_EXCEEDED"
+      ],
+      "blocks": [
+        "BLOCK_PACKAGE_SIZE_LIMIT",
+        "BLOCK_CACHE_LIMIT",
+        "BLOCK_RECIPE_COMPLEXITY_LIMIT",
+        "BLOCK_PREVIEW_PAYLOAD_LIMIT",
+        "BLOCK_REUSE_POLICY_FAILURE"
+      ],
+      "recommendation": "BLOCK_FOR_REDESIGN"
+    }
+  ]
+}

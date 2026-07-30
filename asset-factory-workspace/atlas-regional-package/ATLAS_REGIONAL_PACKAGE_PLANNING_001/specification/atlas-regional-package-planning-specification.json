@@ -1,0 +1,305 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_PLANNING_SPECIFICATION_001",
+  "planningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "regionalPackageSchema": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+    "packageLayerId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+    "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+    "requiredTopLevelFields": [
+      "packageId",
+      "regionId",
+      "packageVersion",
+      "schemaVersion",
+      "coordinateReference",
+      "dataLayers",
+      "environmentSummary",
+      "classificationInputs",
+      "selectorCompatibility",
+      "cacheMetadata",
+      "refreshMetadata"
+    ],
+    "requiredIdentityFields": [
+      "sourceDatasetId",
+      "sourceRevision",
+      "regionSlug",
+      "latBucket",
+      "lngBucket",
+      "environmentProfile"
+    ],
+    "packageEnvelopeRules": [
+      "package data remains read-only during planning",
+      "package geometry is never modified by Atlas planning layers",
+      "package contents must be sufficient for environment classification and selector handoff",
+      "package outputs remain compatible with mobile-oriented planning constraints"
+    ]
+  },
+  "dataLayerDefinitions": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_DATA_LAYERS_001",
+    "layers": [
+      {
+        "layerId": "REGION_BOUNDARY_LAYER",
+        "purpose": "Defines deterministic region bounds and coordinate buckets.",
+        "requiredFields": [
+          "boundaryPolygon",
+          "centroid",
+          "latBucket",
+          "lngBucket"
+        ]
+      },
+      {
+        "layerId": "HYDROLOGY_SIGNAL_LAYER",
+        "purpose": "Provides shoreline, creek, wetland, and water-edge signals.",
+        "requiredFields": [
+          "shorelineSignals",
+          "wetlandSignals",
+          "waterwaySignals"
+        ]
+      },
+      {
+        "layerId": "VEGETATION_SIGNAL_LAYER",
+        "purpose": "Provides canopy, shrub, grass, and biome vegetation cues.",
+        "requiredFields": [
+          "canopySignals",
+          "shrubSignals",
+          "groundCoverSignals"
+        ]
+      },
+      {
+        "layerId": "ACCESS_NETWORK_LAYER",
+        "purpose": "Provides navigation, path, crossing, and access hints.",
+        "requiredFields": [
+          "pathSignals",
+          "crossingSignals",
+          "accessTypeSignals"
+        ]
+      },
+      {
+        "layerId": "SETTLEMENT_CONTEXT_LAYER",
+        "purpose": "Provides reserve-entry, town-edge, and activity context hints.",
+        "requiredFields": [
+          "entrySignals",
+          "adjacentSettlementSignals"
+        ]
+      },
+      {
+        "layerId": "ENVIRONMENT_SUMMARY_LAYER",
+        "purpose": "Provides a normalized environment summary for classifier input.",
+        "requiredFields": [
+          "primaryEnvironmentHint",
+          "secondaryEnvironmentHints",
+          "biomeHints",
+          "confidenceHints"
+        ]
+      },
+      {
+        "layerId": "PROVENANCE_LAYER",
+        "purpose": "Preserves data origin and source revision tracking.",
+        "requiredFields": [
+          "sourceDatasetId",
+          "sourceRevision",
+          "provider",
+          "collectedAt"
+        ]
+      }
+    ]
+  },
+  "regionIdRules": {
+    "schemaId": "ATLAS_REGION_ID_RULES_001",
+    "regionIdFormat": "REGION_{REGION_SLUG}_{LAT_BUCKET}_{LNG_BUCKET}_{ENVIRONMENT_PROFILE}",
+    "packageIdFormat": "ATLAS_REGION_PACKAGE_{REGION_SLUG}_{LAT_BUCKET}_{LNG_BUCKET}_{PACKAGE_VERSION}",
+    "deterministicInputs": [
+      "regionSlug",
+      "latBucket",
+      "lngBucket",
+      "environmentProfile"
+    ],
+    "example": {
+      "regionId": "REGION_BELLARINE_COAST_-38_12_144_61_COASTAL_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_-38_12_144_61_v001"
+    },
+    "collisionPolicy": "same deterministic inputs must produce same regionId and packageId"
+  },
+  "deterministicSeedStrategy": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_SEED_STRATEGY_001",
+    "seedPolicy": "HASHED_REGION_COORDINATE_CONTEXT",
+    "selectorSeedInputs": [
+      "regionId",
+      "packageVersion",
+      "latBucket",
+      "lngBucket",
+      "primaryBiomeHint",
+      "archetypeHint",
+      "selectorVersion"
+    ],
+    "packageFingerprintInputs": [
+      "packageId",
+      "sourceRevision",
+      "schemaVersion",
+      "environmentProfile",
+      "latBucket",
+      "lngBucket"
+    ],
+    "replayGuarantees": [
+      "same package inputs yield same region identity",
+      "same package inputs yield same selector seed",
+      "same selector seed yields same approved recipe selection"
+    ]
+  },
+  "packageVersioning": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_VERSIONING_001",
+    "schemaVersion": "v001",
+    "packageVersionFormat": "v{NNN}",
+    "compatibilityDimensions": [
+      "schemaVersion",
+      "selectorVersion",
+      "integrationPlanningVersion",
+      "classificationRuleVersion"
+    ],
+    "upgradeRules": [
+      "schema changes require schemaVersion bump",
+      "selector contract changes require compatibility revalidation",
+      "source revision changes require new package fingerprint",
+      "runtime activation remains blocked regardless of package version"
+    ]
+  },
+  "cacheStrategy": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_CACHE_STRATEGY_001",
+    "cacheKeys": [
+      "packageFingerprint",
+      "sourceRevision",
+      "selectorVersion",
+      "classificationRuleVersion",
+      "mobileProfile"
+    ],
+    "cachedArtifacts": [
+      "environmentSummary",
+      "classificationInputs",
+      "selectorHandoff",
+      "recipeSelectionPreview"
+    ],
+    "invalidationTriggers": [
+      "sourceRevision change",
+      "selectorVersion change",
+      "classificationRuleVersion change",
+      "coordinate bucket change",
+      "environment profile change"
+    ],
+    "storagePolicy": "metadata_only_no_runtime_mesh_or_texture_cache"
+  },
+  "refreshStrategy": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_REFRESH_STRATEGY_001",
+    "refreshModes": [
+      "SOURCE_REVISION_REFRESH",
+      "CLASSIFICATION_RULE_REFRESH",
+      "SELECTOR_CONTRACT_REFRESH",
+      "MANUAL_REVIEW_REFRESH"
+    ],
+    "refreshChecks": [
+      "source dataset revision changed",
+      "environment summary no longer matches classifier expectations",
+      "selector input contract version changed",
+      "mobile suitability budget changed"
+    ],
+    "refreshGuardrails": [
+      "refresh is data-only",
+      "refresh never downloads maps in planning phase",
+      "refresh never activates runtime",
+      "refresh never mutates approved assets"
+    ]
+  },
+  "recipeCompatibilityContract": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_RECIPE_COMPATIBILITY_001",
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "approvedRecipeIds": [
+      "COASTAL_LOCATION_RECIPE_001",
+      "FOREST_LOCATION_RECIPE_001"
+    ],
+    "requiredSelectorFields": [
+      "worldContextId",
+      "environment",
+      "biomeProfile",
+      "routeMode",
+      "archetype",
+      "desiredFeatures",
+      "seed"
+    ],
+    "requiredEnvironment": "DEVELOPMENT_ONLY",
+    "compatibilityRules": [
+      "package must emit a complete selector handoff payload",
+      "package must only target APPROVED_CURRENT recipes through selector output",
+      "package must preserve biomeProfile, routeMode, archetype, desiredFeatures, and seed deterministically",
+      "package must remain compatible with ATLAS_ENGINE_RECIPE_INTEGRATION_001 thresholds and fallback rules"
+    ]
+  },
+  "integrationReferences": {
+    "atlasIntegrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "approvedRecipeIds": [
+      "COASTAL_LOCATION_RECIPE_001",
+      "FOREST_LOCATION_RECIPE_001"
+    ]
+  },
+  "mobileSuitabilityContract": {
+    "profileId": "MOBILE_STANDARD_001",
+    "rules": [
+      "package caches metadata only",
+      "selector handoff payload must remain compact and deterministic",
+      "refresh strategy must support low-churn updates",
+      "no heavy geometry, textures, or runtime render data inside package envelope"
+    ]
+  },
+  "representativePackages": [
+    {
+      "sourceDatasetId": "SOURCE_DATASET_BELLARINE_001",
+      "sourceRevision": "2026-07-30:R001",
+      "regionSlug": "BELLARINE_COAST",
+      "latBucket": -38.12,
+      "lngBucket": 144.61,
+      "environmentProfile": "COASTAL_EXPLORATION",
+      "primaryBiomeHint": "COASTAL_RESERVE_TRAIL",
+      "archetypeHint": "RESERVE_LOOP",
+      "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "mobileProfile": "MOBILE_STANDARD_001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "packageVersion": "v001",
+      "selectorSeed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0",
+      "packageFingerprint": "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed"
+    },
+    {
+      "sourceDatasetId": "SOURCE_DATASET_DANDENONGS_001",
+      "sourceRevision": "2026-07-30:R001",
+      "regionSlug": "DANDENONG_RANGES_EDGE",
+      "latBucket": -37.84,
+      "lngBucket": 145.29,
+      "environmentProfile": "FOREST_EXPLORATION",
+      "primaryBiomeHint": "TEMPERATE_FOREST_EDGE",
+      "archetypeHint": "FOREST_EDGE_LOOP",
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "mobileProfile": "MOBILE_STANDARD_001",
+      "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+      "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+      "packageVersion": "v001",
+      "selectorSeed": "885a3119aa809a7d4318e93d0e22d6c0b58a6c7315d237d8ebd592769c258f0a",
+      "packageFingerprint": "1dbda2e0a1edeca195c5606e4a45c8f66987dafe69dc3911af3334ad234af2c1"
+    },
+    {
+      "sourceDatasetId": "SOURCE_DATASET_MIXED_EDGE_001",
+      "sourceRevision": "2026-07-30:R001",
+      "regionSlug": "COASTAL_FOREST_MARGIN",
+      "latBucket": -38.02,
+      "lngBucket": 145.01,
+      "environmentProfile": "MIXED_EDGE_TRANSITION",
+      "primaryBiomeHint": "TEMPERATE_FOREST_COASTAL_MARGIN",
+      "archetypeHint": "RESERVE_TRACK_OUT_AND_BACK",
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "mobileProfile": "MOBILE_STANDARD_001",
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "packageVersion": "v001",
+      "selectorSeed": "c8edee1572b4935c49b8730c9c4a879b6741cad7b8574397edf75fd2ebbf420c",
+      "packageFingerprint": "8eb96000c1872696a9f398134276e4e053db6a1f6f9ce749e0f0e925964e7cd2"
+    }
+  ]
+}

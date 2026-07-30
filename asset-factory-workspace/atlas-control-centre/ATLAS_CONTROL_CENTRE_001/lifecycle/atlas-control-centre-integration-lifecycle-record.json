@@ -1,0 +1,13 @@
+{
+  "schemaId": "ATLAS_CONTROL_CENTRE_INTEGRATION_LIFECYCLE_001",
+  "controlCentreId": "ATLAS_CONTROL_CENTRE_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "dashboardReadOnly": true,
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "operatorActionMode": "MANUAL_OPERATOR_ONLY",
+  "deterministicFingerprint": "66eadf40b7486c8178bd878967d1717115028fb3d480daabc6337ec991e98b8c"
+}

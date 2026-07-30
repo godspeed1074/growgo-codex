@@ -1,0 +1,73 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REGENERATED_PREVIEW_COMPARISON_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "previousPreviewFingerprint": "b1cddd1cec29e3b2469f69d65870a39001d0002368c82f48a255d0d160de5f0b",
+  "regeneratedPreviewFingerprint": "79f3bd1db0bd7804ee4841265303a46f39d6d47e9683fac30b70fc12e3cff10e",
+  "review": {
+    "playerJourneyImprovement": {
+      "status": "PASS",
+      "before": "Original route already read clearly from entry through crossing to destination.",
+      "after": "Regenerated route keeps the same legible sequence while adding more support around the crossing and destination.",
+      "improvementConfirmed": true
+    },
+    "shorelineTransition": {
+      "status": "IMPROVED",
+      "beforeRoles": [
+        "elevated_wet_crossing"
+      ],
+      "afterRoles": [
+        "elevated_wet_crossing",
+        "shoreline_transition_band"
+      ],
+      "improvementConfirmed": true
+    },
+    "destinationQuality": {
+      "status": "IMPROVED",
+      "beforeRoles": [
+        "accent_native_tree",
+        "primary_path_surface"
+      ],
+      "afterRoles": [
+        "accent_native_tree",
+        "primary_path_surface",
+        "terrain_detail_cluster",
+        "understory_ground_blend"
+      ],
+      "improvementConfirmed": true
+    },
+    "vegetationBalance": {
+      "status": "IMPROVED",
+      "before": {
+        "shorelineVegetation": 0,
+        "bufferVegetation": 10
+      },
+      "after": {
+        "shorelineVegetation": 1,
+        "bufferVegetation": 8
+      },
+      "improvementConfirmed": true
+    },
+    "explorationInterest": {
+      "status": "IMPROVED",
+      "beforePlacementCount": 3,
+      "afterPlacementCount": 5,
+      "improvementConfirmed": true
+    },
+    "performanceImpact": {
+      "status": "ACCEPTABLE",
+      "before": 26,
+      "after": 28,
+      "triangleDelta": {
+        "close": 294,
+        "gameplay": 218,
+        "map": 142
+      },
+      "withinBudget": {
+        "close": true,
+        "gameplay": true,
+        "map": true
+      }
+    }
+  },
+  "overallStatus": "APPROVED_FOR_RECIPE_APPROVAL"
+}

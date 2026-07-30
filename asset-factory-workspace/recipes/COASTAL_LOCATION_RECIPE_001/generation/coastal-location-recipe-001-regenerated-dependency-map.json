@@ -1,0 +1,110 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REGENERATED_DEPENDENCY_MAP_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "assets": [
+    {
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "role": "primary_path_surface",
+      "familyId": "COASTAL_PATHWAY_FAMILY_001",
+      "category": "terrain",
+      "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+      "placementCount": 4,
+      "zones": [
+        "ENTRY_PATH_ZONE",
+        "LOOKOUT_OR_REST_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_BOARDWALK_001",
+      "role": "elevated_wet_crossing",
+      "familyId": "COASTAL_PATHWAY_FAMILY_001",
+      "category": "environment_navigation_structure",
+      "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-development-catalog-entry.json",
+      "placementCount": 1,
+      "zones": [
+        "WET_CROSSING_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_WATER_EDGE_001",
+      "role": "shoreline_transition_band",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-development-catalog-entry.json",
+      "placementCount": 4,
+      "zones": [
+        "SHORELINE_EDGE_ZONE",
+        "WET_CROSSING_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "role": "understory_ground_blend",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+      "placementCount": 7,
+      "zones": [
+        "ENTRY_PATH_ZONE",
+        "LOOKOUT_OR_REST_ZONE",
+        "SHORELINE_EDGE_ZONE",
+        "VEGETATION_BUFFER_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "role": "terrain_detail_cluster",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+      "placementCount": 3,
+      "zones": [
+        "LOOKOUT_OR_REST_ZONE",
+        "SHORELINE_EDGE_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "role": "native_grass_breakup",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+      "placementCount": 6,
+      "zones": [
+        "ENTRY_PATH_ZONE",
+        "VEGETATION_BUFFER_ZONE"
+      ]
+    },
+    {
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "role": "coastal_shrub_mass",
+      "familyId": "COASTAL_SHRUB_FAMILY_001",
+      "category": "nature",
+      "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+      "placementCount": 2,
+      "zones": [
+        "VEGETATION_BUFFER_ZONE"
+      ]
+    },
+    {
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "role": "accent_native_tree",
+      "familyId": "TREE_ASSET_FAMILY_001",
+      "category": "nature",
+      "recipeId": "TREE_BOTTLEBRUSH_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json",
+      "placementCount": 1,
+      "zones": [
+        "LOOKOUT_OR_REST_ZONE"
+      ]
+    }
+  ],
+  "unsupportedAssetsIncluded": false
+}

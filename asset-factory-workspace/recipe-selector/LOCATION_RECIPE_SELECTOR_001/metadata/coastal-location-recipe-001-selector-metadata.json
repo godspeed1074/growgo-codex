@@ -1,0 +1,114 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_SELECTOR_METADATA_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+  "recipeType": "WORLD_ASSEMBLY_COASTAL_EXPLORATION_LOCATION",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_EXPLORATION_001",
+  "lodProfile": "WORLD_ASSEMBLY_REFERENCED_ASSETS_ONLY",
+  "category": "WORLD_ASSEMBLY_LOCATION",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "lifecycleStatus": "APPROVED_CURRENT",
+  "approvalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "recipeFamily": "COASTAL",
+  "biomeFamily": "COASTAL_DUNE",
+  "biomeTags": [
+    "COASTAL_CLIFF_LOOKOUT",
+    "COASTAL_CREEK_MOUTH",
+    "COASTAL_DUNE_EDGE",
+    "COASTAL_RESERVE_TRAIL",
+    "COASTAL_WETLAND_MARGIN"
+  ],
+  "disallowedBiomeTags": [
+    "ALPINE_TUNDRA",
+    "INLAND_FARMLAND",
+    "URBAN_MAIN_STREET"
+  ],
+  "supportedArchetypes": [
+    "BEACH_ACCESS_SPUR",
+    "CLIFF_LOOKOUT_APPROACH",
+    "RESERVE_LOOP",
+    "WETLAND_CROSSING"
+  ],
+  "routeSignals": [
+    "PEDESTRIAN_EXPLORATION"
+  ],
+  "dependencyRoles": [
+    "ACCENT_NATIVE_TREE",
+    "COASTAL_SHRUB_MASS",
+    "ELEVATED_WET_CROSSING",
+    "NATIVE_GRASS_BREAKUP",
+    "PRIMARY_PATH_SURFACE",
+    "SHORELINE_TRANSITION_BAND",
+    "TERRAIN_DETAIL_CLUSTER",
+    "UNDERSTORY_GROUND_BLEND"
+  ],
+  "selectionCapabilities": [
+    "ACCENT_NATIVE_TREE",
+    "COASTAL_SHRUB_MASS",
+    "DESTINATION_NODE",
+    "ELEVATED_WET_CROSSING",
+    "LOOP_ROUTE",
+    "NATIVE_GRASS_BREAKUP",
+    "PRIMARY_PATH_SURFACE",
+    "SHORELINE_TRANSITION",
+    "SHORELINE_TRANSITION_BAND",
+    "TERRAIN_DETAIL_CLUSTER",
+    "UNDERSTORY_GROUND_BLEND",
+    "WATER_BOUNDARY",
+    "WET_CROSSING"
+  ],
+  "environmentRequirements": {
+    "requiredEnvironment": "DEVELOPMENT_ONLY",
+    "developmentVisible": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivationBlocked": true
+  },
+  "performanceEnvelope": {
+    "totalPlacements": 28,
+    "uniqueDependencies": 8,
+    "triangleTotals": {
+      "close": 5596,
+      "gameplay": 3988,
+      "map": 2544
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2600
+    }
+  },
+  "dependencySummary": {
+    "dependencyIds": [
+      "COASTAL_GRAVEL_PATH_001",
+      "COASTAL_BOARDWALK_001",
+      "COASTAL_WATER_EDGE_001",
+      "COASTAL_GROUND_COVER_001",
+      "COASTAL_ROCK_CLUSTER_001",
+      "COASTAL_GRASS_TUSSOCK_001",
+      "SHRUB_COASTAL_LOW_001",
+      "TREE_BOTTLEBRUSH_001"
+    ],
+    "deferredDependencyIds": [],
+    "dependencyCount": 8
+  },
+  "versionCompatibility": {
+    "supportedSelectorVersions": [
+      "LOCATION_RECIPE_SELECTOR_001"
+    ],
+    "requiredWorkflowVersion": "ASSET_FACTORY_V1",
+    "recipeVersion": "v001",
+    "approvalDate": "2026-07-30"
+  },
+  "confidenceWeights": {
+    "biomeMatch": 40,
+    "environmentMatch": 20,
+    "archetypeMatch": 15,
+    "featureMatch": 15,
+    "versionCompatibility": 10
+  }
+}

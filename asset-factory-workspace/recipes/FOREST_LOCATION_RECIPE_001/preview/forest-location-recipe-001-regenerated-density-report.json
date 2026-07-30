@@ -1,0 +1,47 @@
+[
+  {
+    "zoneId": "ENTRY_TRACK_ZONE",
+    "densityProfile": "LOW",
+    "totalPlacementCount": 4,
+    "vegetationPlacementCount": 2,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0.5,
+    "placementsPerLaneUnit": 0.182
+  },
+  {
+    "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+    "densityProfile": "MEDIUM",
+    "totalPlacementCount": 8,
+    "vegetationPlacementCount": 6,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0.75,
+    "placementsPerLaneUnit": 0.333
+  },
+  {
+    "zoneId": "CANOPY_TRACK_ZONE",
+    "densityProfile": "MEDIUM_HIGH",
+    "totalPlacementCount": 6,
+    "vegetationPlacementCount": 4,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0.667,
+    "placementsPerLaneUnit": 0.167
+  },
+  {
+    "zoneId": "CLEARING_OR_REST_ZONE",
+    "densityProfile": "LOW_MEDIUM",
+    "totalPlacementCount": 4,
+    "vegetationPlacementCount": 2,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0.5,
+    "placementsPerLaneUnit": 0.154
+  },
+  {
+    "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+    "densityProfile": "HIGH",
+    "totalPlacementCount": 6,
+    "vegetationPlacementCount": 5,
+    "structuralPlacementCount": 1,
+    "vegetationRatio": 0.833,
+    "placementsPerLaneUnit": 0.167
+  }
+]

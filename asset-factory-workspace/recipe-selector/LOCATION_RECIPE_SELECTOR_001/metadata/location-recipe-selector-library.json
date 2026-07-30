@@ -1,0 +1,81 @@
+{
+  "schemaId": "LOCATION_RECIPE_SELECTOR_LIBRARY_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "recipeCount": 2,
+  "approvedRecipesOnly": true,
+  "recipes": [
+    {
+      "recipeId": "COASTAL_LOCATION_RECIPE_001",
+      "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+      "recipeType": "WORLD_ASSEMBLY_COASTAL_EXPLORATION_LOCATION",
+      "version": "v001",
+      "biomeFamily": "COASTAL_DUNE",
+      "biomeTags": [
+        "COASTAL_CLIFF_LOOKOUT",
+        "COASTAL_CREEK_MOUTH",
+        "COASTAL_DUNE_EDGE",
+        "COASTAL_RESERVE_TRAIL",
+        "COASTAL_WETLAND_MARGIN"
+      ],
+      "supportedArchetypes": [
+        "BEACH_ACCESS_SPUR",
+        "CLIFF_LOOKOUT_APPROACH",
+        "RESERVE_LOOP",
+        "WETLAND_CROSSING"
+      ],
+      "selectionCapabilities": [
+        "ACCENT_NATIVE_TREE",
+        "COASTAL_SHRUB_MASS",
+        "DESTINATION_NODE",
+        "ELEVATED_WET_CROSSING",
+        "LOOP_ROUTE",
+        "NATIVE_GRASS_BREAKUP",
+        "PRIMARY_PATH_SURFACE",
+        "SHORELINE_TRANSITION",
+        "SHORELINE_TRANSITION_BAND",
+        "TERRAIN_DETAIL_CLUSTER",
+        "UNDERSTORY_GROUND_BLEND",
+        "WATER_BOUNDARY",
+        "WET_CROSSING"
+      ],
+      "environment": "DEVELOPMENT_ONLY",
+      "lifecycleStatus": "APPROVED_CURRENT",
+      "approvalStatus": "approved",
+      "workflowVersion": "ASSET_FACTORY_V1"
+    },
+    {
+      "recipeId": "FOREST_LOCATION_RECIPE_001",
+      "recipePackageId": "FOREST_LOCATION_RECIPE_001_PACKAGE",
+      "recipeType": "WORLD_ASSEMBLY_FOREST_EXPLORATION_LOCATION",
+      "version": "v001",
+      "biomeFamily": "TEMPERATE_FOREST",
+      "biomeTags": [
+        "FOREST_TRACK_CLEARING",
+        "TEMPERATE_FOREST_EDGE",
+        "WOODLAND_RESERVE_LOOP"
+      ],
+      "supportedArchetypes": [
+        "CLEARING_SPUR",
+        "FOREST_EDGE_LOOP",
+        "RESERVE_TRACK_OUT_AND_BACK"
+      ],
+      "selectionCapabilities": [
+        "ACCENT_NATIVE_TREE",
+        "CANOPY_ENCLOSURE",
+        "CLEARING_DESTINATION",
+        "DESTINATION_NODE",
+        "FOREST_SHRUB_MASS",
+        "LOOP_ROUTE",
+        "NATIVE_GRASS_BREAKUP",
+        "OUT_AND_BACK_ROUTE",
+        "PRIMARY_PATH_SURFACE",
+        "TERRAIN_DETAIL_CLUSTER",
+        "UNDERSTORY_GROUND_BLEND"
+      ],
+      "environment": "DEVELOPMENT_ONLY",
+      "lifecycleStatus": "APPROVED_CURRENT",
+      "approvalStatus": "approved",
+      "workflowVersion": "ASSET_FACTORY_V1"
+    }
+  ]
+}

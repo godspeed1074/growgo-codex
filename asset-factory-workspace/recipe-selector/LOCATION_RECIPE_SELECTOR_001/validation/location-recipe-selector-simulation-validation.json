@@ -1,0 +1,42 @@
+{
+  "schemaId": "LOCATION_RECIPE_SELECTOR_SIMULATION_VALIDATION_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "status": "pass",
+  "scenarioCount": 5,
+  "approvedRecipeCount": 2,
+  "nextAllowedAction": "atlas_engine_integration_planning_ready",
+  "checks": [
+    {
+      "name": "approved_recipes_only",
+      "ok": true
+    },
+    {
+      "name": "deterministic_selection",
+      "ok": true
+    },
+    {
+      "name": "correct_expected_recipe_per_scenario",
+      "ok": true
+    },
+    {
+      "name": "fallback_behavior_valid",
+      "ok": true
+    },
+    {
+      "name": "confidence_ranking_valid",
+      "ok": true
+    },
+    {
+      "name": "unsupported_environment_blocked",
+      "ok": true
+    },
+    {
+      "name": "same_inputs_same_fingerprint",
+      "ok": true
+    },
+    {
+      "name": "runtime_activation_blocked",
+      "ok": true
+    }
+  ]
+}

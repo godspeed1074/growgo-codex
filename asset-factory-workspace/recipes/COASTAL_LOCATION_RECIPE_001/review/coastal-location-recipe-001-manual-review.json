@@ -1,0 +1,100 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_MANUAL_REVIEW_RECORD_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "reviewRecordId": "COASTAL_LOCATION_RECIPE_001_MANUAL_REVIEW_AND_TUNING_001",
+  "basedOnPreviewFingerprint": "9986b1b67f3aa7b7742f20f20340180ebe4c148fb71ba9aa82fbff18a2b40396",
+  "basedOnInspectionSchemaId": "COASTAL_LOCATION_RECIPE_001_VISUAL_INSPECTION_OUTPUT_001",
+  "reviewMethod": "non_runtime_preview_package_inspection",
+  "reviewAreas": {
+    "playerJourney": {
+      "status": "PASS",
+      "evidence": [
+        "Preview flow starts in ENTRY_PATH_ZONE and ends at LOOKOUT_OR_REST_ZONE.",
+        "WET_CROSSING_ZONE provides a single crossing beat between shoreline and destination spaces.",
+        "First-to-last flow remains COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:00 -> TREE_BOTTLEBRUSH_001:LOOKOUT_OR_REST_ZONE:00."
+      ],
+      "notes": "The overall journey reads clearly as entry, shoreline encounter, crossing, recovery buffer, and destination.",
+      "tuningSignal": "stable"
+    },
+    "navigationFlow": {
+      "status": "PASS",
+      "evidence": [
+        "Primary path surface appears 4 times.",
+        "Elevated wet crossing appears 1 time.",
+        "Visual preview inspection already passed navigation clarity without runtime activation."
+      ],
+      "notes": "Navigation remains legible and sequenced correctly for a first coastal exploration layout.",
+      "tuningSignal": "stable"
+    },
+    "assetDensity": {
+      "status": "TUNE_RECOMMENDED",
+      "evidence": [
+        "Shoreline edge density is 0.156 placements per lane unit with zero vegetation support.",
+        "Vegetation buffer density rises to 0.278 placements per lane unit with full vegetation occupancy.",
+        "The density shift is readable, but it jumps abruptly between shoreline and inland buffer spaces."
+      ],
+      "notes": "Density is serviceable for preview review, but the shoreline-to-buffer transition would benefit from one extra intermediary accent cluster.",
+      "tuningSignal": "soften_transition"
+    },
+    "zoneBalance": {
+      "status": "TUNE_RECOMMENDED",
+      "evidence": [
+        "WET_CROSSING_ZONE requires shoreline_transition_band but currently presents only elevated_wet_crossing.",
+        "LOOKOUT_OR_REST_ZONE requires terrain_detail_cluster but currently presents only path and accent tree roles.",
+        "Shoreline edge zone currently carries 5 placements while the crossing zone carries 1."
+      ],
+      "notes": "Zone sequencing works, but two required-role gaps make the crossing and destination feel under-supported.",
+      "tuningSignal": "restore_required_roles"
+    },
+    "shorelineTransition": {
+      "status": "TUNE_RECOMMENDED",
+      "evidence": [
+        "COASTAL_WATER_EDGE_001 appears 3 times and is isolated to SHORELINE_EDGE_ZONE.",
+        "Boardwalk crossing is visually readable, but the transition into and out of the crossing stays sharp rather than layered.",
+        "No runtime shoreline simulation is involved; this is strictly a preview composition judgment."
+      ],
+      "notes": "A small transition support placement on the crossing approaches would make shoreline movement feel more continuous.",
+      "tuningSignal": "bridge_shoreline_transition"
+    },
+    "explorationInterest": {
+      "status": "TUNE_RECOMMENDED",
+      "evidence": [
+        "Destination zone currently has 3 placements.",
+        "TREE_BOTTLEBRUSH_001 provides a single anchor moment in the destination space.",
+        "No secondary terrain or curiosity marker currently reinforces the arrival point."
+      ],
+      "notes": "The route is pleasant, but the endpoint could carry a slightly stronger sense of payoff without breaking mobile budgets.",
+      "tuningSignal": "strengthen_destination_interest"
+    },
+    "futurePoiSuitability": {
+      "status": "PASS",
+      "evidence": [
+        "The generated recipe already separates entry, shoreline, crossing, buffer, and destination spaces into distinct tuning zones.",
+        "Those separations are compatible with future POI tags, micro-objectives, or achievement hooks without runtime work.",
+        "No unsupported assets are required to keep the current layout valid."
+      ],
+      "notes": "Future POI or achievement layering looks feasible once the crossing and destination support beats are strengthened.",
+      "tuningSignal": "stable"
+    }
+  },
+  "overallStatus": "APPROVED_WITH_TUNING_RECOMMENDATIONS",
+  "tuningRequiredAreas": [
+    "assetDensity",
+    "zoneBalance",
+    "shorelineTransition",
+    "explorationInterest"
+  ],
+  "findingsSummary": {
+    "strengths": [
+      "Player journey is legible from entry to destination.",
+      "Navigation flow remains clear without runtime assistance.",
+      "Preview stays inside current mobile-friendly placement budgets."
+    ],
+    "watchItems": [
+      "Crossing zone is missing a supporting shoreline transition role.",
+      "Destination zone is missing terrain-detail support for stronger arrival interest.",
+      "Density step between shoreline and inland vegetation zones is sharper than ideal."
+    ]
+  }
+}

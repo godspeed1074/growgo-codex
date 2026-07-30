@@ -1,0 +1,62 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_GENERATION_VALIDATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "all_dependencies_exist",
+      "ok": true
+    },
+    {
+      "name": "lifecycle_requirements_pass",
+      "ok": true
+    },
+    {
+      "name": "deterministic_output_for_same_seed",
+      "ok": true
+    },
+    {
+      "name": "unsupported_assets_blocked",
+      "ok": true
+    },
+    {
+      "name": "forest_zones_defined",
+      "ok": true
+    },
+    {
+      "name": "trail_navigation_logic_defined",
+      "ok": true
+    },
+    {
+      "name": "vegetation_density_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "clearing_and_discovery_zones_defined",
+      "ok": true
+    },
+    {
+      "name": "mobile_performance_limits_respected",
+      "ok": true
+    },
+    {
+      "name": "no_blender_files_created",
+      "ok": true
+    },
+    {
+      "name": "no_glbs_created",
+      "ok": true
+    },
+    {
+      "name": "no_assets_modified",
+      "ok": true
+    },
+    {
+      "name": "runtime_not_activated",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "79e73bdb74751defa46adacadb8e147b3a7d43bd888df432bfdc6c597403e43d",
+  "nextAllowedAction": "recipe_review_or_world_assembly_preview_only"
+}

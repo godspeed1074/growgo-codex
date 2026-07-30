@@ -1,0 +1,77 @@
+{
+  "schemaId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_SPECIFICATION_001",
+  "performancePlanningId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+    "pipelineSimulationId": "ATLAS_FULL_PIPELINE_SIMULATION_001",
+    "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001"
+  },
+  "regionalPackageEnvelope": {
+    "measuredCompressedPackageKb": [
+      72,
+      78,
+      84
+    ],
+    "averageCompressedPackageKb": 78,
+    "peakCompressedPackageKb": 84,
+    "constrainedProfileMaxKb": 64,
+    "standardProfileMaxKb": 96
+  },
+  "recipeGenerationProfile": {
+    "measuredGenerationBytes": [
+      25395,
+      29743
+    ],
+    "averageGenerationKb": 26.92,
+    "peakGenerationKb": 29.05,
+    "deterministicStagesPerSuccessfulLocation": 6,
+    "averageValidLocationConfidence": 93.33
+  },
+  "previewPayloadProfile": {
+    "measuredPreviewBytes": [
+      13742,
+      25405
+    ],
+    "averagePreviewKb": 19.11,
+    "peakPreviewKb": 24.81,
+    "previewMode": "NON_RUNTIME_ONLY",
+    "safeDistributionTarget": "metadata_preview_only"
+  },
+  "deviceCacheRequirements": {
+    "standardProfile": {
+      "warmPackageCount": 24,
+      "estimatedWarmPackageFootprintKb": 1872
+    },
+    "constrainedProfile": {
+      "warmPackageCount": 12,
+      "estimatedWarmPackageFootprintKb": 936
+    },
+    "selectorPreviewArtifactsPerPackage": 1
+  },
+  "backendProcessingExpectations": {
+    "perPackageValidationChecks": 6,
+    "perPackageClassificationPasses": 1,
+    "perPackageSelectionPasses": 1,
+    "perSuccessfulLocationRecipeGenerationPasses": 1,
+    "perSuccessfulLocationPreviewAssemblyPasses": 1,
+    "blockedPackageShortCircuitBeforeClassification": true
+  },
+  "multiplayerRegionReuse": {
+    "sharedRegionPackageByRegionId": true,
+    "sharedPreviewPackageByRecipeFingerprint": true,
+    "perPlayerUniqueSelectionOnlyWhenSeedContextDiffers": true,
+    "preferredReuseLayer": "region_package_and_recipe_fingerprint_cache"
+  },
+  "refreshFrequencyExpectations": {
+    "lowChurnPackageRefreshWindow": "7d",
+    "normalRefreshWindow": "24h",
+    "urgentSchemaOrSelectorRefreshWindow": "immediate_revalidation",
+    "refreshTriggers": [
+      "source revision change",
+      "selector version change",
+      "classification rule change",
+      "mobile profile change"
+    ]
+  }
+}

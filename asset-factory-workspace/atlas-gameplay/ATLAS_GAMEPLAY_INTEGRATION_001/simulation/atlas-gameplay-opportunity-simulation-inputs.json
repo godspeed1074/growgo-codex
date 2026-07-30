@@ -1,0 +1,34 @@
+[
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+    "scenarioType": "coastal_location",
+    "description": "Approved coastal exploration location with shoreline destination and repeatable trail flow.",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "ambiguityMode": "DIRECT",
+    "expectedBlocked": false
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+    "scenarioType": "forest_location",
+    "description": "Approved forest exploration location with canopy corridor, clearing payoff, and repeatable route structure.",
+    "recipeId": "FOREST_LOCATION_RECIPE_001",
+    "ambiguityMode": "DIRECT",
+    "expectedBlocked": false
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+    "scenarioType": "unsupported_location",
+    "description": "Unsupported gameplay context with no approved recipe backing and no safe gameplay bridge.",
+    "recipeId": null,
+    "ambiguityMode": "UNSUPPORTED",
+    "expectedBlocked": true
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+    "scenarioType": "ambiguous_location",
+    "description": "Mixed-interest location that still maps to an approved recipe but should remain visibly ambiguous in planning.",
+    "recipeId": "FOREST_LOCATION_RECIPE_001",
+    "ambiguityMode": "APPROVED_AMBIGUOUS",
+    "expectedBlocked": false
+  }
+]

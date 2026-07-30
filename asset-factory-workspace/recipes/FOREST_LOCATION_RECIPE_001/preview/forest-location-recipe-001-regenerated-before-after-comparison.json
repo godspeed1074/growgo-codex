@@ -1,0 +1,85 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REGENERATED_PREVIEW_COMPARISON_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "previousPreviewFingerprint": "623da7e3a90bfb638913478c7a2bfff3f0ac8bf999b57f05c9aa1d8260a52335",
+  "regeneratedPreviewFingerprint": "0337cef0b065bb76fb8d0134eaa99afee8f296fad8bf5ebbc702f9d99cbbd64b",
+  "review": {
+    "playerJourney": {
+      "status": "PASS",
+      "before": "Original route already read clearly from entry through canopy corridor to clearing and deep backdrop.",
+      "after": "Regenerated route keeps the same legible sequence while adding stronger support in the canopy corridor and destination half.",
+      "improvementConfirmed": true
+    },
+    "canopyCorridorQuality": {
+      "status": "IMPROVED",
+      "before": {
+        "placementCount": 5,
+        "vegetationRatio": 0.6
+      },
+      "after": {
+        "placementCount": 6,
+        "vegetationRatio": 0.667
+      },
+      "improvementConfirmed": true
+    },
+    "clearingQuality": {
+      "status": "IMPROVED",
+      "beforeRoles": [
+        "accent_native_tree",
+        "primary_path_surface",
+        "terrain_detail_cluster"
+      ],
+      "afterRoles": [
+        "accent_native_tree",
+        "forest_shrub_mass",
+        "primary_path_surface",
+        "terrain_detail_cluster"
+      ],
+      "improvementConfirmed": true
+    },
+    "explorationInterest": {
+      "status": "IMPROVED",
+      "beforeRoles": [
+        "accent_native_tree",
+        "forest_shrub_mass",
+        "native_grass_breakup"
+      ],
+      "afterRoles": [
+        "accent_native_tree",
+        "forest_shrub_mass",
+        "native_grass_breakup",
+        "terrain_detail_cluster"
+      ],
+      "improvementConfirmed": true
+    },
+    "vegetationBalance": {
+      "status": "IMPROVED",
+      "before": {
+        "canopyVegetationRatio": 0.6,
+        "transitionPlacements": 9
+      },
+      "after": {
+        "canopyVegetationRatio": 0.667,
+        "transitionPlacements": 8
+      },
+      "improvementConfirmed": true
+    },
+    "performanceImpact": {
+      "status": "ACCEPTABLE",
+      "before": 27,
+      "after": 28,
+      "triangleDelta": {
+        "close": 169,
+        "gameplay": 137,
+        "map": 97
+      },
+      "withinBudget": {
+        "close": true,
+        "gameplay": true,
+        "map": true
+      },
+      "clearingVegetationDelta": 1
+    }
+  },
+  "overallStatus": "APPROVED_FOR_RECIPE_APPROVAL"
+}

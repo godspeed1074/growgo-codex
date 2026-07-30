@@ -1,0 +1,32 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_PLANNING_VALIDATION_001",
+  "planningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+  "status": "pass",
+  "nextAllowedAction": "future_atlas_regional_development_ready",
+  "checks": [
+    {
+      "name": "deterministic_region_identity",
+      "ok": true
+    },
+    {
+      "name": "package_compatibility",
+      "ok": true
+    },
+    {
+      "name": "selector_input_compatibility",
+      "ok": true
+    },
+    {
+      "name": "deterministic_seed_strategy_valid",
+      "ok": true
+    },
+    {
+      "name": "future_mobile_suitability",
+      "ok": true
+    },
+    {
+      "name": "runtime_and_map_downloads_blocked",
+      "ok": true
+    }
+  ]
+}

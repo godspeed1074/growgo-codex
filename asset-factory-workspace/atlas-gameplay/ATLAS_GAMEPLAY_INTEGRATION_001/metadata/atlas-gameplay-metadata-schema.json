@@ -1,0 +1,76 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_METADATA_SCHEMA_001",
+  "integrationId": "ATLAS_GAMEPLAY_INTEGRATION_001",
+  "recordSchemaId": "ATLAS_GENERATED_LOCATION_GAMEPLAY_METADATA_001",
+  "requiredFields": {
+    "identity": [
+      "recipeId",
+      "locationPlanId",
+      "gameplayMetadataId",
+      "version",
+      "variantId",
+      "category"
+    ],
+    "gameplay": [
+      "gameplayTags",
+      "featureSummary",
+      "achievementSuitability",
+      "questSuitability",
+      "collectionSuitability",
+      "poiOpportunities"
+    ]
+  },
+  "supportedTagFamilies": {
+    "achievement": [
+      "SCENIC_LOOKOUT",
+      "SHORELINE_DISCOVERY",
+      "FOREST_CLEARING_DISCOVERY",
+      "ROUTE_COMPLETION",
+      "NATURE_OBSERVATION"
+    ],
+    "quest": [
+      "WALKING_ROUTE",
+      "DESTINATION_VISIT",
+      "CROSSING_INTERACTION",
+      "BIOZONE_SURVEY",
+      "DISCOVERY_LOOP"
+    ],
+    "collection": [
+      "FLORA_SAMPLE",
+      "LANDSCAPE_MEMORY",
+      "ROUTE_STAMP",
+      "TERRAIN_STUDY"
+    ],
+    "poi": [
+      "LOOKOUT",
+      "CLEARING",
+      "SHORELINE_EDGE",
+      "CROSSING",
+      "TRAIL_NODE"
+    ]
+  },
+  "scoringContract": {
+    "achievement": {
+      "HIGH": 75,
+      "MEDIUM": 50,
+      "LOW": 25
+    },
+    "quest": {
+      "HIGH": 70,
+      "MEDIUM": 45,
+      "LOW": 20
+    },
+    "collection": {
+      "HIGH": 68,
+      "MEDIUM": 42,
+      "LOW": 20
+    }
+  },
+  "safetyContract": {
+    "unsupportedGameplayHooksBlocked": true,
+    "runtimeActivationAuthorized": false,
+    "achievementsAwarded": false,
+    "questsCreated": false,
+    "playerExposureAuthorized": false
+  }
+}

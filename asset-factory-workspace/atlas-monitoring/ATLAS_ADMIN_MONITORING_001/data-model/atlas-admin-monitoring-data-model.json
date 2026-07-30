@@ -1,0 +1,100 @@
+{
+  "schemaId": "ATLAS_ADMIN_MONITORING_DATA_MODEL_001",
+  "monitoringId": "ATLAS_ADMIN_MONITORING_001",
+  "dashboardCards": [
+    {
+      "cardId": "PACKAGE_HEALTH",
+      "title": "Package Health",
+      "status": "BLOCKED",
+      "metrics": {
+        "integrityChecksPassed": 8,
+        "integrityChecksTotal": 8,
+        "blockedPipelines": 2
+      }
+    },
+    {
+      "cardId": "RECIPE_USAGE",
+      "title": "Recipe Usage",
+      "status": "WARNING",
+      "metrics": {
+        "approvedRecipeCount": 2,
+        "previewReadySelections": 3,
+        "fallbackSelections": 1
+      }
+    },
+    {
+      "cardId": "BUDGET_STATUS",
+      "title": "Budget Status",
+      "status": "BLOCKED",
+      "metrics": {
+        "warningSignals": 14,
+        "blockSignals": 5,
+        "recommendationStates": 4
+      }
+    },
+    {
+      "cardId": "BACKEND_LOAD",
+      "title": "Backend Load",
+      "status": "HEALTHY",
+      "metrics": {
+        "validationPassesPerPackage": 6,
+        "classificationPassesPerPackage": 1,
+        "successfulLocationPrepKb": 124.03
+      }
+    }
+  ],
+  "tables": {
+    "recipeUsage": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "previewReadySelections": 1
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "previewReadySelections": 2
+      }
+    ],
+    "budgetRecommendations": [
+      {
+        "caseId": "BUDGET_CASE_WITHIN_LIMITS_001",
+        "recommendation": "APPROVE_WITHIN_BUDGET",
+        "warningCount": 0,
+        "holdCount": 0,
+        "blockCount": 0
+      },
+      {
+        "caseId": "BUDGET_CASE_WARNING_001",
+        "recommendation": "APPROVE_WITH_WARNING",
+        "warningCount": 4,
+        "holdCount": 0,
+        "blockCount": 0
+      },
+      {
+        "caseId": "BUDGET_CASE_HOLD_001",
+        "recommendation": "HOLD_FOR_OPTIMIZATION",
+        "warningCount": 5,
+        "holdCount": 2,
+        "blockCount": 0
+      },
+      {
+        "caseId": "BUDGET_CASE_BLOCK_001",
+        "recommendation": "BLOCK_FOR_REDESIGN",
+        "warningCount": 5,
+        "holdCount": 3,
+        "blockCount": 5
+      }
+    ],
+    "blockedScenarios": [
+      {
+        "scenarioId": "PIPELINE_INVALID_001",
+        "scenarioType": "invalid_package",
+        "finalStage": "VALIDATION_BLOCKED"
+      },
+      {
+        "scenarioId": "PIPELINE_INCOMPATIBLE_VERSION_001",
+        "scenarioType": "incompatible_version_package",
+        "finalStage": "VALIDATION_BLOCKED"
+      }
+    ]
+  }
+}

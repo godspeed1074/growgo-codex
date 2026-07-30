@@ -1,0 +1,555 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_METADATA_CONTRACTS_001",
+  "handoffId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_001",
+  "achievementTemplates": [
+    {
+      "schemaId": "ATLAS_ACHIEVEMENT_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "difficultyBand": "HIGH",
+      "rewardPlanningInput": {
+        "rewardTheme": "COASTAL_LOOKOUT_DISCOVERY",
+        "rewardRarityHint": "HIGH",
+        "collectionWeight": 73,
+        "discoveryWeight": 80,
+        "traversalWeight": 75
+      },
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "COASTAL_LOCATION_RECIPE_001|coastal_location|COASTAL_LOOKOUT_DISCOVERY|HIGH|DIRECT_APPROVED",
+        "locationSuitabilityValid": true,
+        "rewardPlanningValid": true,
+        "playerExperienceValid": false
+      },
+      "templateCandidates": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_SCENIC_LOOKOUT",
+          "achievementCandidateType": "SCENIC_LOOKOUT",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_SHORELINE_DISCOVERY",
+          "achievementCandidateType": "SHORELINE_DISCOVERY",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_ROUTE_COMPLETION",
+          "achievementCandidateType": "ROUTE_COMPLETION",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_NATURE_OBSERVATION",
+          "achievementCandidateType": "NATURE_OBSERVATION",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        }
+      ],
+      "sourceValidationFingerprint": "a554c72c8b9ba78e65b488fe9c0ed1d225acb9cae5dcfda9743d3d67774b1590",
+      "deterministicFingerprint": "f4316045e56cc480c0c200bc77327634b5a486703d5efa35b9fe77222571aa78"
+    },
+    {
+      "schemaId": "ATLAS_ACHIEVEMENT_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "difficultyBand": "HIGH",
+      "rewardPlanningInput": {
+        "rewardTheme": "FOREST_CLEARING_DISCOVERY",
+        "rewardRarityHint": "HIGH",
+        "collectionWeight": 73,
+        "discoveryWeight": 80,
+        "traversalWeight": 75
+      },
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|forest_location|FOREST_CLEARING_DISCOVERY|HIGH|DIRECT_APPROVED",
+        "locationSuitabilityValid": true,
+        "rewardPlanningValid": true,
+        "playerExperienceValid": false
+      },
+      "templateCandidates": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_SCENIC_LOOKOUT",
+          "achievementCandidateType": "SCENIC_LOOKOUT",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_FOREST_CLEARING_DISCOVERY",
+          "achievementCandidateType": "FOREST_CLEARING_DISCOVERY",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_ROUTE_COMPLETION",
+          "achievementCandidateType": "ROUTE_COMPLETION",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_NATURE_OBSERVATION",
+          "achievementCandidateType": "NATURE_OBSERVATION",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        }
+      ],
+      "sourceValidationFingerprint": "c9d8cc347ba0ff7db0539d7e4979fdd166dfce1400c7844ad01856548627a717",
+      "deterministicFingerprint": "47edae0ab21f473fcc7098e6f375780f2b6651191aea9409847f7c3832737072"
+    },
+    {
+      "schemaId": "ATLAS_ACHIEVEMENT_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_REVIEW_REQUIRED",
+      "validationState": "REVIEW_REQUIRED",
+      "difficultyBand": "LIGHT",
+      "rewardPlanningInput": {
+        "rewardTheme": "REVIEW_GATED_DISCOVERY",
+        "rewardRarityHint": "MEDIUM",
+        "collectionWeight": 65,
+        "discoveryWeight": 68,
+        "traversalWeight": 65
+      },
+      "validationTrace": {
+        "qualityScore": 69,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|ambiguous_location|REVIEW_GATED_DISCOVERY|LIGHT|APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+        "locationSuitabilityValid": true,
+        "rewardPlanningValid": true,
+        "playerExperienceValid": false
+      },
+      "templateCandidates": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_SCENIC_LOOKOUT",
+          "achievementCandidateType": "SCENIC_LOOKOUT",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_FOREST_CLEARING_DISCOVERY",
+          "achievementCandidateType": "FOREST_CLEARING_DISCOVERY",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_ROUTE_COMPLETION",
+          "achievementCandidateType": "ROUTE_COMPLETION",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_NATURE_OBSERVATION",
+          "achievementCandidateType": "NATURE_OBSERVATION",
+          "planningOnly": true,
+          "handoffTemplateType": "ACHIEVEMENT_TEMPLATE_CANDIDATE"
+        }
+      ],
+      "sourceValidationFingerprint": "534184035ae2fc6e83d9861a53d09b9029319942c1636db77cbaf44f217ff167",
+      "deterministicFingerprint": "a5c57db8b01769709f76da2a658fbc8ad577a4f3a09cf28fcaa593c2fd2fbf92"
+    }
+  ],
+  "questTemplates": [
+    {
+      "schemaId": "ATLAS_QUEST_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "difficultyBand": "HIGH",
+      "rewardPlanningInput": {
+        "rewardTheme": "COASTAL_LOOKOUT_DISCOVERY",
+        "rewardRarityHint": "MEDIUM",
+        "collectionWeight": 73,
+        "discoveryWeight": 80,
+        "traversalWeight": 75
+      },
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "COASTAL_LOCATION_RECIPE_001|coastal_location|COASTAL_LOOKOUT_DISCOVERY|HIGH|DIRECT_APPROVED",
+        "locationSuitabilityValid": true,
+        "rewardPlanningValid": true,
+        "playerExperienceValid": false
+      },
+      "templateCandidates": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_WALKING_ROUTE",
+          "questCandidateType": "WALKING_ROUTE",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_DESTINATION_VISIT",
+          "questCandidateType": "DESTINATION_VISIT",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_CROSSING_INTERACTION",
+          "questCandidateType": "CROSSING_INTERACTION",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_BIOZONE_SURVEY",
+          "questCandidateType": "BIOZONE_SURVEY",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_DISCOVERY_LOOP",
+          "questCandidateType": "DISCOVERY_LOOP",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        }
+      ],
+      "sourceValidationFingerprint": "a554c72c8b9ba78e65b488fe9c0ed1d225acb9cae5dcfda9743d3d67774b1590",
+      "deterministicFingerprint": "4ad956ce932af39f5137c5da80395c5fea12db7bbeea34fe4083dc734a531404"
+    },
+    {
+      "schemaId": "ATLAS_QUEST_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "difficultyBand": "HIGH",
+      "rewardPlanningInput": {
+        "rewardTheme": "FOREST_CLEARING_DISCOVERY",
+        "rewardRarityHint": "MEDIUM",
+        "collectionWeight": 73,
+        "discoveryWeight": 80,
+        "traversalWeight": 75
+      },
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|forest_location|FOREST_CLEARING_DISCOVERY|HIGH|DIRECT_APPROVED",
+        "locationSuitabilityValid": true,
+        "rewardPlanningValid": true,
+        "playerExperienceValid": false
+      },
+      "templateCandidates": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_WALKING_ROUTE",
+          "questCandidateType": "WALKING_ROUTE",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_DESTINATION_VISIT",
+          "questCandidateType": "DESTINATION_VISIT",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_CROSSING_INTERACTION",
+          "questCandidateType": "CROSSING_INTERACTION",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_BIOZONE_SURVEY",
+          "questCandidateType": "BIOZONE_SURVEY",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_DISCOVERY_LOOP",
+          "questCandidateType": "DISCOVERY_LOOP",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        }
+      ],
+      "sourceValidationFingerprint": "c9d8cc347ba0ff7db0539d7e4979fdd166dfce1400c7844ad01856548627a717",
+      "deterministicFingerprint": "ed402dde8dea9dd6cfc3f10109d421da945cb7a3bbde89fd9c22ff6fa2f23830"
+    },
+    {
+      "schemaId": "ATLAS_QUEST_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_REVIEW_REQUIRED",
+      "validationState": "REVIEW_REQUIRED",
+      "difficultyBand": "LIGHT",
+      "rewardPlanningInput": {
+        "rewardTheme": "REVIEW_GATED_DISCOVERY",
+        "rewardRarityHint": "MEDIUM",
+        "collectionWeight": 65,
+        "discoveryWeight": 68,
+        "traversalWeight": 65
+      },
+      "validationTrace": {
+        "qualityScore": 69,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|ambiguous_location|REVIEW_GATED_DISCOVERY|LIGHT|APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+        "locationSuitabilityValid": true,
+        "rewardPlanningValid": true,
+        "playerExperienceValid": false
+      },
+      "templateCandidates": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_WALKING_ROUTE",
+          "questCandidateType": "WALKING_ROUTE",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_DESTINATION_VISIT",
+          "questCandidateType": "DESTINATION_VISIT",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_CROSSING_INTERACTION",
+          "questCandidateType": "CROSSING_INTERACTION",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_BIOZONE_SURVEY",
+          "questCandidateType": "BIOZONE_SURVEY",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_DISCOVERY_LOOP",
+          "questCandidateType": "DISCOVERY_LOOP",
+          "planningOnly": true,
+          "handoffTemplateType": "QUEST_TEMPLATE_CANDIDATE"
+        }
+      ],
+      "sourceValidationFingerprint": "534184035ae2fc6e83d9861a53d09b9029319942c1636db77cbaf44f217ff167",
+      "deterministicFingerprint": "844dcea127c0c77aba49a42cb7edd6f25b039cab6192521993c73a8f57a375b7"
+    }
+  ],
+  "collectionTemplates": [
+    {
+      "schemaId": "ATLAS_COLLECTION_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "COASTAL_LOCATION_RECIPE_001|coastal_location|COASTAL_LOOKOUT_DISCOVERY|HIGH|DIRECT_APPROVED"
+      },
+      "templateHooks": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_FLORA_SAMPLE",
+          "collectionHookType": "FLORA_SAMPLE",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_LANDSCAPE_MEMORY",
+          "collectionHookType": "LANDSCAPE_MEMORY",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_ROUTE_STAMP",
+          "collectionHookType": "ROUTE_STAMP",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_TERRAIN_STUDY",
+          "collectionHookType": "TERRAIN_STUDY",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        }
+      ],
+      "sourceValidationFingerprint": "a554c72c8b9ba78e65b488fe9c0ed1d225acb9cae5dcfda9743d3d67774b1590",
+      "deterministicFingerprint": "0f90f52906d03763ad86f6265bc049653d94e69839b3c665b0b03a4d7a3bcc59"
+    },
+    {
+      "schemaId": "ATLAS_COLLECTION_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|forest_location|FOREST_CLEARING_DISCOVERY|HIGH|DIRECT_APPROVED"
+      },
+      "templateHooks": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_FLORA_SAMPLE",
+          "collectionHookType": "FLORA_SAMPLE",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_LANDSCAPE_MEMORY",
+          "collectionHookType": "LANDSCAPE_MEMORY",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_ROUTE_STAMP",
+          "collectionHookType": "ROUTE_STAMP",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_TERRAIN_STUDY",
+          "collectionHookType": "TERRAIN_STUDY",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        }
+      ],
+      "sourceValidationFingerprint": "c9d8cc347ba0ff7db0539d7e4979fdd166dfce1400c7844ad01856548627a717",
+      "deterministicFingerprint": "bc01b36679071b11698e75d45fc78f5913d456ffac172d6480a672c08c0016b5"
+    },
+    {
+      "schemaId": "ATLAS_COLLECTION_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_REVIEW_REQUIRED",
+      "validationState": "REVIEW_REQUIRED",
+      "validationTrace": {
+        "qualityScore": 69,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|ambiguous_location|REVIEW_GATED_DISCOVERY|LIGHT|APPROVED_AMBIGUOUS_REVIEW_REQUIRED"
+      },
+      "templateHooks": [
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_FLORA_SAMPLE",
+          "collectionHookType": "FLORA_SAMPLE",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_LANDSCAPE_MEMORY",
+          "collectionHookType": "LANDSCAPE_MEMORY",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_ROUTE_STAMP",
+          "collectionHookType": "ROUTE_STAMP",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_TERRAIN_STUDY",
+          "collectionHookType": "TERRAIN_STUDY",
+          "planningOnly": true,
+          "handoffTemplateType": "COLLECTION_TEMPLATE_HOOK"
+        }
+      ],
+      "sourceValidationFingerprint": "534184035ae2fc6e83d9861a53d09b9029319942c1636db77cbaf44f217ff167",
+      "deterministicFingerprint": "de55704f9d79f4fb48f45add1cfcf7553619c4cee05a156623e97a2432bf5c91"
+    }
+  ],
+  "poiTemplates": [
+    {
+      "schemaId": "ATLAS_POI_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "COASTAL_LOCATION_RECIPE_001|coastal_location|COASTAL_LOOKOUT_DISCOVERY|HIGH|DIRECT_APPROVED"
+      },
+      "templateHooks": [
+        {
+          "sourceOpportunityId": "COASTAL_LOCATION_RECIPE_001_ENTRY_PATH_ZONE_TRAIL_NODE",
+          "poiHookType": "TRAIL_NODE",
+          "zoneId": "ENTRY_PATH_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "COASTAL_LOCATION_RECIPE_001_SHORELINE_EDGE_ZONE_SHORELINE_EDGE",
+          "poiHookType": "SHORELINE_EDGE",
+          "zoneId": "SHORELINE_EDGE_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "COASTAL_LOCATION_RECIPE_001_WET_CROSSING_ZONE_CROSSING",
+          "poiHookType": "CROSSING",
+          "zoneId": "WET_CROSSING_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "COASTAL_LOCATION_RECIPE_001_LOOKOUT_OR_REST_ZONE_LOOKOUT",
+          "poiHookType": "LOOKOUT",
+          "zoneId": "LOOKOUT_OR_REST_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        }
+      ],
+      "sourceValidationFingerprint": "a554c72c8b9ba78e65b488fe9c0ed1d225acb9cae5dcfda9743d3d67774b1590",
+      "deterministicFingerprint": "13401948a2acfc55e7c080a1735c85038aa8c6a07dce4fbe8610ab19fbede776"
+    },
+    {
+      "schemaId": "ATLAS_POI_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_READY",
+      "validationState": "READY_FOR_FACTORY_INPUT",
+      "validationTrace": {
+        "qualityScore": 77,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|forest_location|FOREST_CLEARING_DISCOVERY|HIGH|DIRECT_APPROVED"
+      },
+      "templateHooks": [
+        {
+          "sourceOpportunityId": "FOREST_LOCATION_RECIPE_001_ENTRY_TRACK_ZONE_TRAIL_NODE",
+          "poiHookType": "TRAIL_NODE",
+          "zoneId": "ENTRY_TRACK_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "FOREST_LOCATION_RECIPE_001_CANOPY_TRACK_ZONE_TRAIL_NODE",
+          "poiHookType": "TRAIL_NODE",
+          "zoneId": "CANOPY_TRACK_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "FOREST_LOCATION_RECIPE_001_CLEARING_OR_REST_ZONE_CLEARING",
+          "poiHookType": "CLEARING",
+          "zoneId": "CLEARING_OR_REST_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        }
+      ],
+      "sourceValidationFingerprint": "c9d8cc347ba0ff7db0539d7e4979fdd166dfce1400c7844ad01856548627a717",
+      "deterministicFingerprint": "709699d7e3f32d9a22b6f07d892eade6e564d78cee189b29874aa6054b122e67"
+    },
+    {
+      "schemaId": "ATLAS_POI_TEMPLATE_INPUT_001",
+      "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "handoffState": "HANDOFF_REVIEW_REQUIRED",
+      "validationState": "REVIEW_REQUIRED",
+      "validationTrace": {
+        "qualityScore": 69,
+        "duplicateSignature": "FOREST_LOCATION_RECIPE_001|ambiguous_location|REVIEW_GATED_DISCOVERY|LIGHT|APPROVED_AMBIGUOUS_REVIEW_REQUIRED"
+      },
+      "templateHooks": [
+        {
+          "sourceOpportunityId": "FOREST_LOCATION_RECIPE_001_ENTRY_TRACK_ZONE_TRAIL_NODE",
+          "poiHookType": "TRAIL_NODE",
+          "zoneId": "ENTRY_TRACK_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        },
+        {
+          "sourceOpportunityId": "FOREST_LOCATION_RECIPE_001_CANOPY_TRACK_ZONE_TRAIL_NODE",
+          "poiHookType": "TRAIL_NODE",
+          "zoneId": "CANOPY_TRACK_ZONE",
+          "planningOnly": true,
+          "handoffTemplateType": "POI_TEMPLATE_HOOK"
+        }
+      ],
+      "sourceValidationFingerprint": "534184035ae2fc6e83d9861a53d09b9029319942c1636db77cbaf44f217ff167",
+      "deterministicFingerprint": "476f9f3f37ce17bdea7ff84d11fa2f52e3b28f2f07b7b0abebaffdb0008bf396"
+    }
+  ]
+}

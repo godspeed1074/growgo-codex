@@ -1,0 +1,150 @@
+[
+  {
+    "zoneId": "ENTRY_TRACK_ZONE",
+    "traversalRole": "ENTRY",
+    "laneRange": {
+      "start": 0,
+      "end": 22,
+      "span": 22
+    },
+    "densityProfile": "LOW",
+    "placementCount": 4,
+    "assetIds": [
+      "COASTAL_GRAVEL_PATH_001",
+      "COASTAL_GROUND_COVER_001"
+    ],
+    "rolesPresent": [
+      "primary_path_surface",
+      "understory_ground_blend"
+    ],
+    "requiredRoles": [
+      "primary_path_surface",
+      "understory_ground_blend"
+    ],
+    "optionalRoles": [
+      "native_grass_breakup"
+    ]
+  },
+  {
+    "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+    "traversalRole": "TRANSITION",
+    "laneRange": {
+      "start": 22,
+      "end": 46,
+      "span": 24
+    },
+    "densityProfile": "MEDIUM",
+    "placementCount": 8,
+    "assetIds": [
+      "COASTAL_GRASS_TUSSOCK_001",
+      "COASTAL_GROUND_COVER_001",
+      "COASTAL_ROCK_CLUSTER_001",
+      "SHRUB_COASTAL_LOW_001"
+    ],
+    "rolesPresent": [
+      "forest_shrub_mass",
+      "native_grass_breakup",
+      "terrain_detail_cluster",
+      "understory_ground_blend"
+    ],
+    "requiredRoles": [
+      "native_grass_breakup",
+      "forest_shrub_mass",
+      "understory_ground_blend",
+      "terrain_detail_cluster"
+    ],
+    "optionalRoles": [
+      "accent_native_tree"
+    ]
+  },
+  {
+    "zoneId": "CANOPY_TRACK_ZONE",
+    "traversalRole": "MAIN_TRACK",
+    "laneRange": {
+      "start": 46,
+      "end": 82,
+      "span": 36
+    },
+    "densityProfile": "MEDIUM_HIGH",
+    "placementCount": 6,
+    "assetIds": [
+      "COASTAL_GRAVEL_PATH_001",
+      "COASTAL_GROUND_COVER_001",
+      "SHRUB_COASTAL_LOW_001"
+    ],
+    "rolesPresent": [
+      "forest_shrub_mass",
+      "primary_path_surface",
+      "understory_ground_blend"
+    ],
+    "requiredRoles": [
+      "primary_path_surface",
+      "understory_ground_blend",
+      "forest_shrub_mass"
+    ],
+    "optionalRoles": [
+      "accent_native_tree"
+    ]
+  },
+  {
+    "zoneId": "CLEARING_OR_REST_ZONE",
+    "traversalRole": "CLEARING",
+    "laneRange": {
+      "start": 82,
+      "end": 108,
+      "span": 26
+    },
+    "densityProfile": "LOW_MEDIUM",
+    "placementCount": 4,
+    "assetIds": [
+      "COASTAL_GRAVEL_PATH_001",
+      "COASTAL_ROCK_CLUSTER_001",
+      "SHRUB_COASTAL_LOW_001",
+      "TREE_BOTTLEBRUSH_001"
+    ],
+    "rolesPresent": [
+      "accent_native_tree",
+      "forest_shrub_mass",
+      "primary_path_surface",
+      "terrain_detail_cluster"
+    ],
+    "requiredRoles": [
+      "primary_path_surface",
+      "terrain_detail_cluster"
+    ],
+    "optionalRoles": [
+      "accent_native_tree",
+      "understory_ground_blend"
+    ]
+  },
+  {
+    "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+    "traversalRole": "BACKDROP",
+    "laneRange": {
+      "start": 108,
+      "end": 144,
+      "span": 36
+    },
+    "densityProfile": "HIGH",
+    "placementCount": 6,
+    "assetIds": [
+      "COASTAL_GRASS_TUSSOCK_001",
+      "COASTAL_ROCK_CLUSTER_001",
+      "SHRUB_COASTAL_LOW_001",
+      "TREE_BOTTLEBRUSH_001"
+    ],
+    "rolesPresent": [
+      "accent_native_tree",
+      "forest_shrub_mass",
+      "native_grass_breakup",
+      "terrain_detail_cluster"
+    ],
+    "requiredRoles": [
+      "forest_shrub_mass",
+      "native_grass_breakup"
+    ],
+    "optionalRoles": [
+      "accent_native_tree"
+    ]
+  }
+]

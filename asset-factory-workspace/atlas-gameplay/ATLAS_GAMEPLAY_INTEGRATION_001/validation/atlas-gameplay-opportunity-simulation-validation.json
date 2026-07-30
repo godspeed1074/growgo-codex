@@ -1,0 +1,48 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_SIMULATION_VALIDATION_001",
+  "simulationId": "ATLAS_GAMEPLAY_OPPORTUNITY_SIMULATION_001",
+  "status": "pass",
+  "scenarioCount": 4,
+  "checks": [
+    {
+      "name": "deterministic_gameplay_metadata",
+      "ok": true
+    },
+    {
+      "name": "approved_recipes_only",
+      "ok": true
+    },
+    {
+      "name": "unsupported_hooks_blocked",
+      "ok": true
+    },
+    {
+      "name": "no_live_gameplay_state_created",
+      "ok": true
+    },
+    {
+      "name": "scenario_coverage_present",
+      "ok": true
+    },
+    {
+      "name": "blocked_scenarios_do_not_emit_live_opportunities",
+      "ok": true
+    },
+    {
+      "name": "ambiguous_scenario_uses_approved_recipe_only",
+      "ok": true
+    },
+    {
+      "name": "runtime_quests_achievements_player_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "4ccf940cfcf5a8c44e31b8028845fd4f46e72c69ffcada354e0753c55f671da0",
+  "runtimeActivationAuthorized": false,
+  "questsCreated": false,
+  "achievementsAwarded": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

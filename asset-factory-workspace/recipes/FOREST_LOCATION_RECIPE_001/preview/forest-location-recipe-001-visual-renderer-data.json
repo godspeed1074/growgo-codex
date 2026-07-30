@@ -1,0 +1,358 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_VISUAL_RENDERER_DATA_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "coordinateSpace": "non_runtime_recipe_preview_2d",
+  "layers": [
+    {
+      "layerId": "trail",
+      "roles": [
+        "primary_path_surface"
+      ],
+      "colorToken": "var(--viz-series-1)"
+    },
+    {
+      "layerId": "terrain",
+      "roles": [
+        "terrain_detail_cluster",
+        "understory_ground_blend"
+      ],
+      "colorToken": "var(--viz-series-2)"
+    },
+    {
+      "layerId": "vegetation",
+      "roles": [
+        "native_grass_breakup",
+        "forest_shrub_mass",
+        "accent_native_tree"
+      ],
+      "colorToken": "var(--viz-series-3)"
+    }
+  ],
+  "marks": [
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:02",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "role": "native_grass_breakup",
+      "glyph": "grass",
+      "x": 24.532,
+      "y": 7.547,
+      "rotationDegrees": -21.78,
+      "scale": 1.04,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:03",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "role": "native_grass_breakup",
+      "glyph": "grass",
+      "x": 32.767,
+      "y": 6.563,
+      "rotationDegrees": 1.26,
+      "scale": 1.069,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:04",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "role": "native_grass_breakup",
+      "glyph": "grass",
+      "x": 38.134,
+      "y": 7.283,
+      "rotationDegrees": -2.43,
+      "scale": 0.982,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:05",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "role": "native_grass_breakup",
+      "glyph": "grass",
+      "x": 43.052,
+      "y": 9.38,
+      "rotationDegrees": 7.32,
+      "scale": 0.993,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:FOREST_EDGE_TRANSITION_ZONE:00",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "native_grass_breakup",
+      "glyph": "grass",
+      "x": 13.654,
+      "y": 2.804,
+      "rotationDegrees": -0.96,
+      "scale": 0.942,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:FOREST_EDGE_TRANSITION_ZONE:01",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "native_grass_breakup",
+      "glyph": "grass",
+      "x": 18.797,
+      "y": 3.356,
+      "rotationDegrees": -13.81,
+      "scale": 0.902,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:CANOPY_TRACK_ZONE:02",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "role": "primary_path_surface",
+      "glyph": "trail",
+      "x": 21.988,
+      "y": 1.904,
+      "rotationDegrees": 3.44,
+      "scale": 0.961,
+      "layerId": "trail"
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:CANOPY_TRACK_ZONE:03",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "role": "primary_path_surface",
+      "glyph": "trail",
+      "x": 36.655,
+      "y": 2.199,
+      "rotationDegrees": 4.01,
+      "scale": 0.987,
+      "layerId": "trail"
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:CLEARING_OR_REST_ZONE:04",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "role": "primary_path_surface",
+      "glyph": "trail",
+      "x": 40.884,
+      "y": 1.725,
+      "rotationDegrees": -2.94,
+      "scale": 1.013,
+      "layerId": "trail"
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_TRACK_ZONE:00",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "ENTRY_TRACK_ZONE",
+      "role": "primary_path_surface",
+      "glyph": "trail",
+      "x": 0.176,
+      "y": 2.014,
+      "rotationDegrees": 1.12,
+      "scale": 1.047,
+      "layerId": "trail"
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_TRACK_ZONE:01",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "ENTRY_TRACK_ZONE",
+      "role": "primary_path_surface",
+      "glyph": "trail",
+      "x": 11.856,
+      "y": 0.978,
+      "rotationDegrees": 0.03,
+      "scale": 0.998,
+      "layerId": "trail"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:CANOPY_TRACK_ZONE:05",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 27.876,
+      "y": 2.786,
+      "rotationDegrees": 2.89,
+      "scale": 1.013,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:CANOPY_TRACK_ZONE:06",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 33.576,
+      "y": 3.061,
+      "rotationDegrees": 16.37,
+      "scale": 0.948,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:ENTRY_TRACK_ZONE:00",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "ENTRY_TRACK_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 3.93,
+      "y": 1.541,
+      "rotationDegrees": -15.96,
+      "scale": 0.946,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:ENTRY_TRACK_ZONE:01",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "ENTRY_TRACK_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 6.969,
+      "y": 2.874,
+      "rotationDegrees": 12.25,
+      "scale": 0.923,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:FOREST_EDGE_TRANSITION_ZONE:02",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 13.532,
+      "y": 1.915,
+      "rotationDegrees": 9.19,
+      "scale": 1.058,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:FOREST_EDGE_TRANSITION_ZONE:03",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 18.388,
+      "y": 2.831,
+      "rotationDegrees": 2.22,
+      "scale": 0.956,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:FOREST_EDGE_TRANSITION_ZONE:04",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "understory_ground_blend",
+      "glyph": "ground",
+      "x": 21.898,
+      "y": 2.45,
+      "rotationDegrees": -19.23,
+      "scale": 0.968,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_ROCK_CLUSTER_001:CLEARING_OR_REST_ZONE:02",
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "role": "terrain_detail_cluster",
+      "glyph": "rock",
+      "x": 58.89,
+      "y": 5.769,
+      "rotationDegrees": 19.38,
+      "scale": 1,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_ROCK_CLUSTER_001:FOREST_EDGE_TRANSITION_ZONE:00",
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "terrain_detail_cluster",
+      "glyph": "rock",
+      "x": 23.011,
+      "y": 3.749,
+      "rotationDegrees": 18.89,
+      "scale": 0.948,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "COASTAL_ROCK_CLUSTER_001:FOREST_EDGE_TRANSITION_ZONE:01",
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "terrain_detail_cluster",
+      "glyph": "rock",
+      "x": 40.83,
+      "y": 3.244,
+      "rotationDegrees": -5.88,
+      "scale": 1.02,
+      "layerId": "terrain"
+    },
+    {
+      "placementId": "SHRUB_COASTAL_LOW_001:CANOPY_TRACK_ZONE:02",
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "role": "forest_shrub_mass",
+      "glyph": "shrub",
+      "x": 41.559,
+      "y": 4.194,
+      "rotationDegrees": 7.4,
+      "scale": 1.109,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "SHRUB_COASTAL_LOW_001:DEEP_FOREST_MARGIN_ZONE:03",
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "role": "forest_shrub_mass",
+      "glyph": "shrub",
+      "x": 52.275,
+      "y": 8.836,
+      "rotationDegrees": 10.5,
+      "scale": 0.996,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "SHRUB_COASTAL_LOW_001:FOREST_EDGE_TRANSITION_ZONE:00",
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "forest_shrub_mass",
+      "glyph": "shrub",
+      "x": 21.729,
+      "y": 4.276,
+      "rotationDegrees": 5.3,
+      "scale": 0.99,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "SHRUB_COASTAL_LOW_001:FOREST_EDGE_TRANSITION_ZONE:01",
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "role": "forest_shrub_mass",
+      "glyph": "shrub",
+      "x": 32.657,
+      "y": 4.315,
+      "rotationDegrees": -6.37,
+      "scale": 1.006,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "TREE_BOTTLEBRUSH_001:CLEARING_OR_REST_ZONE:00",
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "role": "accent_native_tree",
+      "glyph": "tree",
+      "x": 91.925,
+      "y": 7.948,
+      "rotationDegrees": -6.98,
+      "scale": 1.038,
+      "layerId": "vegetation"
+    },
+    {
+      "placementId": "TREE_BOTTLEBRUSH_001:DEEP_FOREST_MARGIN_ZONE:01",
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "role": "accent_native_tree",
+      "glyph": "tree",
+      "x": 117.812,
+      "y": 11.082,
+      "rotationDegrees": -11.81,
+      "scale": 1.003,
+      "layerId": "vegetation"
+    }
+  ]
+}

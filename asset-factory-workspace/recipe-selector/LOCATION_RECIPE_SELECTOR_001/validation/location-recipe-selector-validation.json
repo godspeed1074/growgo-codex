@@ -1,0 +1,37 @@
+{
+  "schemaId": "LOCATION_RECIPE_SELECTOR_VALIDATION_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "status": "pass",
+  "approvedRecipeCount": 2,
+  "nextAllowedAction": "future_atlas_engine_integration_ready",
+  "checks": [
+    {
+      "name": "approved_recipes_only",
+      "ok": true
+    },
+    {
+      "name": "development_only_visibility",
+      "ok": true
+    },
+    {
+      "name": "deterministic_selection_for_same_inputs",
+      "ok": true
+    },
+    {
+      "name": "supported_recipes_select_successfully",
+      "ok": true
+    },
+    {
+      "name": "unsupported_contexts_blocked",
+      "ok": true
+    },
+    {
+      "name": "version_compatibility_enforced",
+      "ok": true
+    },
+    {
+      "name": "runtime_activation_remains_blocked",
+      "ok": true
+    }
+  ]
+}

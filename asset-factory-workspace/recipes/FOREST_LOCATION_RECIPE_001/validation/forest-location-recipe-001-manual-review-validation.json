@@ -1,0 +1,65 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_MANUAL_REVIEW_VALIDATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "manual_review_record_created",
+      "ok": true
+    },
+    {
+      "name": "tuning_recommendations_created",
+      "ok": true
+    },
+    {
+      "name": "player_journey_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "trail_flow_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "vegetation_balance_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "clearing_quality_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "exploration_interest_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "forest_transition_quality_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "performance_profile_review_recorded",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    }
+  ],
+  "tuningRequiredAreas": [
+    "vegetationBalance",
+    "explorationInterest"
+  ],
+  "nextAllowedAction": "recipe_refinement_recommended"
+}

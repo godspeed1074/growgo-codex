@@ -1,0 +1,163 @@
+[
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+    "scenarioType": "coastal_location",
+    "outputType": "POI",
+    "blocked": false,
+    "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_ENTRY_PATH_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "traversalRole": "ENTRY",
+        "supportingRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 1,
+        "rank": 1
+      },
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_SHORELINE_EDGE_ZONE_SHORELINE_EDGE",
+        "type": "SHORELINE_EDGE",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "traversalRole": "SHORELINE",
+        "supportingRoles": [
+          "shoreline_transition_band",
+          "terrain_detail_cluster"
+        ],
+        "deterministicRank": 2,
+        "rank": 2
+      },
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_WET_CROSSING_ZONE_CROSSING",
+        "type": "CROSSING",
+        "zoneId": "WET_CROSSING_ZONE",
+        "traversalRole": "CROSSING",
+        "supportingRoles": [
+          "elevated_wet_crossing",
+          "shoreline_transition_band"
+        ],
+        "deterministicRank": 3,
+        "rank": 3
+      },
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_LOOKOUT_OR_REST_ZONE_LOOKOUT",
+        "type": "LOOKOUT",
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "traversalRole": "DESTINATION",
+        "supportingRoles": [
+          "primary_path_surface",
+          "terrain_detail_cluster"
+        ],
+        "deterministicRank": 4,
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "ef1fa20cc2c02e0196e9c26ecd16a6cf5943b2645f9ada3b01a9f96e9ee1a08b"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+    "scenarioType": "forest_location",
+    "outputType": "POI",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "opportunityCount": 3,
+    "opportunities": [
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_ENTRY_TRACK_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "traversalRole": "ENTRY",
+        "supportingRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 1,
+        "rank": 1
+      },
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_CANOPY_TRACK_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "traversalRole": "MAIN_TRACK",
+        "supportingRoles": [
+          "forest_shrub_mass",
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 2,
+        "rank": 2
+      },
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_CLEARING_OR_REST_ZONE_CLEARING",
+        "type": "CLEARING",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "traversalRole": "CLEARING",
+        "supportingRoles": [
+          "primary_path_surface",
+          "terrain_detail_cluster"
+        ],
+        "deterministicRank": 3,
+        "rank": 3
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "c97073de14a6f438c053d88cd94d201ec195ded3ef9d8e41b6c9eb25b9d6e67a"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+    "scenarioType": "unsupported_location",
+    "outputType": "POI",
+    "blocked": true,
+    "approvedRecipeId": null,
+    "opportunityCount": 0,
+    "opportunities": [],
+    "reason": "UNSUPPORTED_GAMEPLAY_CONTEXT",
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "259caeb1a8996d7c2f3f7ac44fb49d535b7dd9dc91829211ed065468a659e7ce"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+    "scenarioType": "ambiguous_location",
+    "outputType": "POI",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+    "opportunityCount": 2,
+    "opportunities": [
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_ENTRY_TRACK_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "traversalRole": "ENTRY",
+        "supportingRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 1,
+        "rank": 1
+      },
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_CANOPY_TRACK_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "traversalRole": "MAIN_TRACK",
+        "supportingRoles": [
+          "forest_shrub_mass",
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 2,
+        "rank": 2
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "1d89514281540f5c893de26918a1e1e1f2d09e1507e238ab7e33e03907b8b14c"
+  }
+]

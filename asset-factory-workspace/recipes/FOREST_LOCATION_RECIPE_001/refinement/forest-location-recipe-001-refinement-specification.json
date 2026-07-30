@@ -1,0 +1,89 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REFINEMENT_SPECIFICATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "basedOnReviewRecordId": "FOREST_LOCATION_RECIPE_001_MANUAL_REVIEW_AND_TUNING_001",
+  "basedOnRecommendationSetId": "FOREST_LOCATION_RECIPE_001_TUNING_RECOMMENDATIONS_001",
+  "planningMode": "refinement_planning_only_no_regeneration",
+  "plannedChanges": [
+    {
+      "changeId": "FOREST_LOCATION_RECIPE_001_REFINEMENT_001",
+      "area": "canopy_corridor_enclosure_improvement",
+      "priority": "HIGH",
+      "sourceRecommendationId": "FOREST_LOCATION_RECIPE_001_TUNING_REC_001",
+      "targetZones": [
+        "CANOPY_TRACK_ZONE"
+      ],
+      "plannedRuleUpdate": "Allow one deterministic soft-enclosure support placement in the canopy corridor to strengthen the sense of moving under deeper forest cover.",
+      "intendedOutcome": "Canopy track reads more enclosed than the edge-transition zone while preserving trail legibility.",
+      "candidateAssets": [
+        "SHRUB_COASTAL_LOW_001",
+        "COASTAL_GROUND_COVER_001"
+      ],
+      "placementGuardrails": {
+        "maxAdditionalPlacements": 1,
+        "preserveDensityProfiles": [
+          "MEDIUM_HIGH"
+        ],
+        "preserveTraversalRole": "MAIN_TRACK",
+        "preserveMovementCorridor": true
+      }
+    },
+    {
+      "changeId": "FOREST_LOCATION_RECIPE_001_REFINEMENT_002",
+      "area": "clearing_payoff_enhancement",
+      "priority": "HIGH",
+      "sourceRecommendationId": "FOREST_LOCATION_RECIPE_001_TUNING_REC_002",
+      "targetZones": [
+        "CLEARING_OR_REST_ZONE"
+      ],
+      "plannedRuleUpdate": "Reserve one compact support beat at the clearing edge so the pause zone feels more intentional without crowding the standing area.",
+      "intendedOutcome": "Clearing remains readable but gains a slightly stronger arrival payoff and rest-point identity.",
+      "candidateAssets": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "SHRUB_COASTAL_LOW_001"
+      ],
+      "placementGuardrails": {
+        "maxAdditionalPlacements": 1,
+        "preserveDensityProfiles": [
+          "LOW_MEDIUM"
+        ],
+        "preserveStandingArea": true,
+        "preservePrimaryAnchor": "TREE_BOTTLEBRUSH_001"
+      }
+    },
+    {
+      "changeId": "FOREST_LOCATION_RECIPE_001_REFINEMENT_003",
+      "area": "exploration_curiosity_improvement",
+      "priority": "MEDIUM",
+      "sourceRecommendationId": "FOREST_LOCATION_RECIPE_001_TUNING_REC_002",
+      "targetZones": [
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE"
+      ],
+      "plannedRuleUpdate": "Reserve one deterministic curiosity-support slot between the clearing and deep-margin threshold so the second half of the route carries a clearer discovery beat.",
+      "intendedOutcome": "Exploration interest becomes more staged across destination and backdrop zones without relying on unsupported canopy assets.",
+      "candidateAssets": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "SHRUB_COASTAL_LOW_001",
+        "TREE_BOTTLEBRUSH_001"
+      ],
+      "placementGuardrails": {
+        "maxNetPlacementIncrease": 1,
+        "preserveDensityProfiles": [
+          "LOW_MEDIUM",
+          "HIGH"
+        ],
+        "preserveDeferredCanopySpace": true,
+        "preserveMobileBudgetHeadroom": true
+      }
+    }
+  ],
+  "regenerationPreconditions": [
+    "Manual review findings remain current for the targeted forest generated-plan fingerprint.",
+    "No unsupported assets are introduced and TREE_EUCALYPTUS_001 remains deferred.",
+    "Canopy corridor must remain trail-readable after enclosure reinforcement.",
+    "Clearing standing area must remain readable after payoff enhancement.",
+    "No runtime activation, Blender usage, GLB generation, or asset mutation is allowed during planning."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaId": "ATLAS_FULL_PIPELINE_SIMULATION_LIFECYCLE_RECORD_001",
+  "simulationId": "ATLAS_FULL_PIPELINE_SIMULATION_001",
+  "lifecycleStatus": "READY",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

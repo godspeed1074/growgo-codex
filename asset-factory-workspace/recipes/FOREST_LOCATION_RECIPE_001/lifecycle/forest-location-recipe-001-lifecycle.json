@@ -1,0 +1,14 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_LIFECYCLE_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "lifecycleState": "GENERATION_READY",
+  "currentVersion": "v001",
+  "factoryReference": "LOCATION_RECIPE_FACTORY_001",
+  "deterministicFingerprint": "02056e58f274c990754843c279fc852535b6b5487cbb6ee2f0be5c1ee47fc1d8",
+  "safety": {
+    "blenderUsed": false,
+    "glbsCreated": false,
+    "assetsModified": false,
+    "runtimeActivated": false
+  }
+}

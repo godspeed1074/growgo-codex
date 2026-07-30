@@ -1,0 +1,97 @@
+{
+  "schemaId": "ATLAS_ADMIN_MONITORING_SPECIFICATION_001",
+  "monitoringId": "ATLAS_ADMIN_MONITORING_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "budgetValidatorId": "ATLAS_BUDGET_VALIDATOR_001",
+    "regionalPackageValidationId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001",
+    "costPerformanceId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_001",
+    "pipelineSimulationId": "ATLAS_FULL_PIPELINE_SIMULATION_001"
+  },
+  "atlasDashboardMetrics": {
+    "totalApprovedRecipes": 2,
+    "selectorRequiredFields": 7,
+    "packageValidationChecks": 8,
+    "budgetValidationChecks": 7,
+    "pipelineScenarioCount": 5,
+    "pipelinePreviewReadyCount": 3,
+    "pipelineBlockedCount": 2
+  },
+  "packageHealthMonitoring": {
+    "healthStates": [
+      "HEALTHY",
+      "WARNING",
+      "BLOCKED"
+    ],
+    "integrityPassCount": 8,
+    "integrityTotalCount": 8,
+    "mobileSuitabilityCheckPresent": true,
+    "schemaAndRollbackCoveragePresent": true
+  },
+  "recipeUsageAnalytics": {
+    "approvedRecipeIds": [
+      "COASTAL_LOCATION_RECIPE_001",
+      "FOREST_LOCATION_RECIPE_001"
+    ],
+    "usageByRecipeId": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "previewReadySelections": 1
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "previewReadySelections": 2
+      }
+    ],
+    "fallbackSelections": 1
+  },
+  "budgetWarnings": {
+    "warningStateCount": 5,
+    "totalRepresentativeWarnings": 14,
+    "recommendationStates": [
+      "APPROVE_WITHIN_BUDGET",
+      "APPROVE_WITH_WARNING",
+      "HOLD_FOR_OPTIMIZATION",
+      "BLOCK_FOR_REDESIGN"
+    ]
+  },
+  "validationFailures": {
+    "pipelineBlockedCount": 2,
+    "invalidPackageBlocks": 1,
+    "incompatibleVersionBlocks": 1,
+    "budgetBlockSignals": 5
+  },
+  "generationStatistics": {
+    "averageGenerationKb": 26.92,
+    "peakGenerationKb": 29.05,
+    "successfulLocationConfidenceAverage": 93.33,
+    "deterministicStagesPerSuccessfulLocation": 6
+  },
+  "backendWorkloadIndicators": {
+    "validationPassesPerPackage": 6,
+    "classificationPassesPerPackage": 1,
+    "selectionPassesPerPackage": 1,
+    "blockedPackageShortCircuit": true,
+    "computeClasses": {
+      "classificationComputeBudgetClass": "LOW",
+      "selectionComputeBudgetClass": "LOW",
+      "recipeGenerationComputeBudgetClass": "LOW_TO_MEDIUM",
+      "previewAssemblyComputeBudgetClass": "LOW",
+      "blockedPackageProcessingBudgetClass": "VERY_LOW"
+    }
+  },
+  "costVisibility": {
+    "averagePerRegionStorageKb": 97.11,
+    "averagePerGeneratedLocationArtifactKb": 46.03,
+    "standardRegionFetchKb": 78,
+    "successfulEndToEndLocationPrepKb": 124.03,
+    "firebaseCostPressureDrivers": [
+      "duplicate package writes across refreshes",
+      "per-player preview duplication instead of fingerprint reuse",
+      "high-frequency invalidation causing cache churn",
+      "chatty metadata reads without bundled region indexes"
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_LIFECYCLE_RULES_001",
+  "handoffId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "allowedStates": [
+    "PLANNING_ONLY",
+    "HANDOFF_REVIEW_REQUIRED",
+    "HANDOFF_READY"
+  ],
+  "blockedStates": [
+    "QUEST_CREATED",
+    "ACHIEVEMENT_CREATED",
+    "REWARD_GRANTED",
+    "RUNTIME_ACTIVATED",
+    "PLAYER_VISIBLE"
+  ],
+  "handoffStateSummary": {
+    "achievementReady": 2,
+    "achievementReview": 1,
+    "questReady": 2,
+    "questReview": 1,
+    "collectionReady": 2,
+    "poiReady": 2
+  },
+  "questsCreated": false,
+  "achievementsCreated": false,
+  "rewardsCreated": false,
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false
+}

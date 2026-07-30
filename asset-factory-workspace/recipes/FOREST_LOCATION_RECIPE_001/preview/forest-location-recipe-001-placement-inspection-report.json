@@ -1,0 +1,19 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_PLACEMENT_INSPECTION_REPORT_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "totalPlacements": 27,
+  "roleCounts": {
+    "native_grass_breakup": 6,
+    "primary_path_surface": 5,
+    "understory_ground_blend": 7,
+    "terrain_detail_cluster": 3,
+    "forest_shrub_mass": 4,
+    "accent_native_tree": 2
+  },
+  "spacingFlags": [],
+  "spacingStatus": "PASS",
+  "firstToLastFlow": {
+    "firstPlacementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:02",
+    "lastPlacementId": "TREE_BOTTLEBRUSH_001:DEEP_FOREST_MARGIN_ZONE:01"
+  }
+}

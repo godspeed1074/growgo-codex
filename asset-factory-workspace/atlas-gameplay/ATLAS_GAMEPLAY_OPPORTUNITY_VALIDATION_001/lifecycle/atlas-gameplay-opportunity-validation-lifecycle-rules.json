@@ -1,0 +1,27 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_LIFECYCLE_RULES_001",
+  "validationId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "allowedStates": [
+    "PLANNING_ONLY",
+    "VALIDATION_REVIEW",
+    "APPROVAL_GATE_READY",
+    "FACTORY_INPUT_READY"
+  ],
+  "blockedStates": [
+    "QUEST_CREATED",
+    "ACHIEVEMENT_CREATED",
+    "REWARD_GRANTED",
+    "RUNTIME_ACTIVATED",
+    "PLAYER_VISIBLE"
+  ],
+  "approvalReadyCount": 2,
+  "reviewRequiredCount": 1,
+  "blockedCount": 1,
+  "questsCreated": false,
+  "achievementsCreated": false,
+  "rewardsCreated": false,
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false,
+  "deterministicFingerprint": "32481a545b6f43881fc54032df66185afcd4d17895027445936089bac0574a51"
+}

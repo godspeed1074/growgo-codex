@@ -1,0 +1,114 @@
+[
+  {
+    "scenarioId": "REGIONAL_PACKAGE_COASTAL_001",
+    "classification": {
+      "scenarioId": "REGIONAL_PACKAGE_COASTAL_001",
+      "classificationStatus": "DIRECT_CONFIDENT_CLASSIFICATION",
+      "primaryEnvironmentType": "COASTAL_EXPLORATION",
+      "secondaryEnvironmentType": "MIXED_EDGE_TRANSITION",
+      "primaryBiomeTag": "COASTAL_RESERVE_TRAIL",
+      "secondaryBiomeTags": [
+        "COASTAL_CREEK_MOUTH",
+        "COASTAL_WETLAND_MARGIN",
+        "TEMPERATE_FOREST_COASTAL_MARGIN"
+      ],
+      "navigationProfile": {
+        "routeMode": "pedestrian_exploration"
+      },
+      "archetypeHint": "RESERVE_LOOP",
+      "environmentConfidence": 68,
+      "confidenceReason": "dominant_environment_signal_cluster",
+      "channelScores": {
+        "coastal": 89,
+        "forest": 10,
+        "mixed": 32,
+        "unsupported": 0
+      },
+      "ambiguityGap": 57
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_FOREST_001",
+    "classification": {
+      "scenarioId": "REGIONAL_PACKAGE_FOREST_001",
+      "classificationStatus": "DIRECT_CONFIDENT_CLASSIFICATION",
+      "primaryEnvironmentType": "FOREST_EXPLORATION",
+      "secondaryEnvironmentType": "MIXED_EDGE_TRANSITION",
+      "primaryBiomeTag": "TEMPERATE_FOREST_EDGE",
+      "secondaryBiomeTags": [
+        "FOREST_TRACK_CLEARING",
+        "TEMPERATE_FOREST_COASTAL_MARGIN",
+        "WOODLAND_RESERVE_LOOP"
+      ],
+      "navigationProfile": {
+        "routeMode": "pedestrian_exploration"
+      },
+      "archetypeHint": "FOREST_EDGE_LOOP",
+      "environmentConfidence": 80,
+      "confidenceReason": "dominant_environment_signal_cluster",
+      "channelScores": {
+        "coastal": 6,
+        "forest": 75,
+        "mixed": 13,
+        "unsupported": 0
+      },
+      "ambiguityGap": 62
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_MIXED_001",
+    "classification": {
+      "scenarioId": "REGIONAL_PACKAGE_MIXED_001",
+      "classificationStatus": "AMBIGUOUS_CLASSIFICATION",
+      "primaryEnvironmentType": "MIXED_EDGE_TRANSITION",
+      "secondaryEnvironmentType": "COASTAL_EXPLORATION",
+      "primaryBiomeTag": "TEMPERATE_FOREST_COASTAL_MARGIN",
+      "secondaryBiomeTags": [
+        "COASTAL_RESERVE_TRAIL",
+        "COASTAL_WETLAND_MARGIN",
+        "FOREST_EDGE_TRANSITION"
+      ],
+      "navigationProfile": {
+        "routeMode": "pedestrian_exploration"
+      },
+      "archetypeHint": "RESERVE_TRACK_OUT_AND_BACK",
+      "environmentConfidence": 41,
+      "confidenceReason": "mixed_environment_signal_cluster",
+      "channelScores": {
+        "coastal": 54,
+        "forest": 39,
+        "mixed": 65,
+        "unsupported": 0
+      },
+      "ambiguityGap": 11
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_UNSUPPORTED_001",
+    "classification": {
+      "scenarioId": "REGIONAL_PACKAGE_UNSUPPORTED_001",
+      "classificationStatus": "BLOCKED_UNSUPPORTED",
+      "primaryEnvironmentType": null,
+      "secondaryEnvironmentType": null,
+      "primaryBiomeTag": "ALPINE_TUNDRA",
+      "secondaryBiomeTags": [],
+      "navigationProfile": {
+        "routeMode": "pedestrian_exploration"
+      },
+      "archetypeHint": "MOUNTAIN_PASS",
+      "environmentConfidence": 0,
+      "confidenceReason": "unsupported_environment_signals_dominate",
+      "channelScores": {
+        "coastal": 0,
+        "forest": 0,
+        "mixed": 0,
+        "unsupported": 80
+      },
+      "ambiguityGap": 0
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_INVALID_001",
+    "classification": null
+  }
+]

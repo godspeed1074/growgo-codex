@@ -1,0 +1,157 @@
+[
+  {
+    "scenarioId": "COASTAL_ENVIRONMENT_001",
+    "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "confidenceScore": 100,
+    "fallbackApplied": false,
+    "blocked": false,
+    "ranking": [
+      {
+        "rank": 1,
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 100,
+        "biomeMatch": 40,
+        "environmentMatch": 20,
+        "archetypeMatch": 15,
+        "featureMatch": 15,
+        "versionCompatibility": 10
+      },
+      {
+        "rank": 2,
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 35,
+        "biomeMatch": 0,
+        "environmentMatch": 20,
+        "archetypeMatch": 0,
+        "featureMatch": 5,
+        "versionCompatibility": 10
+      }
+    ]
+  },
+  {
+    "scenarioId": "FOREST_ENVIRONMENT_001",
+    "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "confidenceScore": 100,
+    "fallbackApplied": false,
+    "blocked": false,
+    "ranking": [
+      {
+        "rank": 1,
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 100,
+        "biomeMatch": 40,
+        "environmentMatch": 20,
+        "archetypeMatch": 15,
+        "featureMatch": 15,
+        "versionCompatibility": 10
+      },
+      {
+        "rank": 2,
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 37,
+        "biomeMatch": 0,
+        "environmentMatch": 20,
+        "archetypeMatch": 0,
+        "featureMatch": 7,
+        "versionCompatibility": 10
+      }
+    ]
+  },
+  {
+    "scenarioId": "MIXED_BIOME_ENVIRONMENT_001",
+    "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "confidenceScore": 97,
+    "fallbackApplied": false,
+    "blocked": false,
+    "ranking": [
+      {
+        "rank": 1,
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 97,
+        "biomeMatch": 40,
+        "environmentMatch": 20,
+        "archetypeMatch": 15,
+        "featureMatch": 12,
+        "versionCompatibility": 10
+      },
+      {
+        "rank": 2,
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 35,
+        "biomeMatch": 0,
+        "environmentMatch": 20,
+        "archetypeMatch": 0,
+        "featureMatch": 5,
+        "versionCompatibility": 10
+      }
+    ]
+  },
+  {
+    "scenarioId": "UNSUPPORTED_ENVIRONMENT_001",
+    "selectedRecipeId": null,
+    "confidenceScore": 0,
+    "fallbackApplied": false,
+    "blocked": true,
+    "ranking": [
+      {
+        "rank": 1,
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": false,
+        "totalScore": 32,
+        "biomeMatch": 0,
+        "environmentMatch": 20,
+        "archetypeMatch": 0,
+        "featureMatch": 2,
+        "versionCompatibility": 10
+      },
+      {
+        "rank": 2,
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 30,
+        "biomeMatch": 0,
+        "environmentMatch": 20,
+        "archetypeMatch": 0,
+        "featureMatch": 0,
+        "versionCompatibility": 10
+      }
+    ]
+  },
+  {
+    "scenarioId": "AMBIGUOUS_ENVIRONMENT_001",
+    "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "confidenceScore": 80,
+    "fallbackApplied": true,
+    "blocked": false,
+    "ranking": [
+      {
+        "rank": 1,
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 80,
+        "biomeMatch": 20,
+        "environmentMatch": 20,
+        "archetypeMatch": 15,
+        "featureMatch": 15,
+        "versionCompatibility": 10
+      },
+      {
+        "rank": 2,
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "totalScore": 32,
+        "biomeMatch": 0,
+        "environmentMatch": 20,
+        "archetypeMatch": 0,
+        "featureMatch": 2,
+        "versionCompatibility": 10
+      }
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "schemaId": "LOCATION_RECIPE_SELECTOR_SPECIFICATION_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "referenceFactoryId": "LOCATION_RECIPE_FACTORY_001",
+  "approvedRecipeCount": 2,
+  "metadataSchema": {
+    "requiredFields": [
+      "recipeId",
+      "recipePackageId",
+      "version",
+      "biomeTags",
+      "supportedArchetypes",
+      "selectionCapabilities",
+      "environmentRequirements",
+      "versionCompatibility",
+      "performanceEnvelope"
+    ],
+    "approvedRecipeOnly": true,
+    "developmentOnlyRecipes": true
+  },
+  "selectionInputSchema": {
+    "requiredFields": [
+      "worldContextId",
+      "environment",
+      "biomeProfile",
+      "routeMode",
+      "archetype",
+      "desiredFeatures",
+      "seed"
+    ],
+    "optionalFields": [
+      "selectorVersion",
+      "preferredRecipeId"
+    ]
+  },
+  "selectionRules": {
+    "approvedLifecycleStates": [
+      "APPROVED_CURRENT"
+    ],
+    "requiredApprovalStatus": "approved",
+    "requiredEnvironment": "DEVELOPMENT_ONLY",
+    "versionCompatibilityRule": "recipe workflow version must match selector workflow version and recipe version must be an exact approved catalog version",
+    "scoring": {
+      "biomeMatch": 40,
+      "environmentMatch": 20,
+      "archetypeMatch": 15,
+      "featureMatch": 15,
+      "versionCompatibility": 10
+    },
+    "deterministicTieBreak": "hash(recipeId, biomeProfile, archetype, desiredFeatures, seed)",
+    "fallbackPolicy": {
+      "mode": "highest_confidence_approved_recipe",
+      "minimumConfidence": 35,
+      "ifNoEligibleRecipe": "BLOCK_UNSUPPORTED_CONTEXT",
+      "biomeFallbackOrder": [
+        "same_biome_tag",
+        "same_biome_family",
+        "highest_confidence"
+      ]
+    }
+  },
+  "validationRules": {
+    "sameInputsProduceSameRecipe": true,
+    "unsupportedRecipesBlocked": true,
+    "unapprovedRecipesBlocked": true,
+    "deterministicSelectionRequired": true,
+    "runtimeActivationBlocked": true
+  },
+  "futureAtlasIntegrationReadiness": {
+    "readOnlySelector": true,
+    "runtimeActivationRequired": false,
+    "safeForMetadataDrivenAtlasLookup": true
+  },
+  "factoryReference": {
+    "factoryId": "LOCATION_RECIPE_FACTORY_001",
+    "lifecycleStatus": "READY",
+    "referenceRecipeId": "COASTAL_LOCATION_RECIPE_001"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_TUNING_RECOMMENDATIONS_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "derivedFromReviewRecordId": "FOREST_LOCATION_RECIPE_001_MANUAL_REVIEW_AND_TUNING_001",
+  "recommendationCount": 2,
+  "recommendations": [
+    {
+      "recommendationId": "FOREST_LOCATION_RECIPE_001_TUNING_REC_001",
+      "priority": "HIGH",
+      "area": "vegetationBalance",
+      "title": "Reinforce the canopy corridor with one extra soft enclosure beat",
+      "rationale": "The canopy track reads slightly lighter than the transition zone, which softens the sense of moving under stronger forest cover.",
+      "recommendedAdjustment": "Trial one additional shrub or understory support placement within CANOPY_TRACK_ZONE so the corridor feels more enclosed without crowding the walking lane.",
+      "affectedRoles": [
+        "forest_shrub_mass",
+        "understory_ground_blend"
+      ],
+      "candidateAssets": [
+        "SHRUB_COASTAL_LOW_001",
+        "COASTAL_GROUND_COVER_001"
+      ],
+      "deterministicGuardrail": "Tie any added placement to the existing canopy-track seed band and preserve the current readable movement corridor."
+    },
+    {
+      "recommendationId": "FOREST_LOCATION_RECIPE_001_TUNING_REC_002",
+      "priority": "HIGH",
+      "area": "explorationInterest",
+      "title": "Strengthen the clearing-to-backdrop payoff with a secondary curiosity beat",
+      "rationale": "The route has a valid clearing anchor, but the same accent-tree family is currently doing most of the discovery work across both destination zones.",
+      "recommendedAdjustment": "Add one small supporting point of interest near the clearing edge or deep-margin threshold so the later half of the walk feels more intentionally staged.",
+      "affectedRoles": [
+        "terrain_detail_cluster",
+        "accent_native_tree",
+        "forest_shrub_mass"
+      ],
+      "candidateAssets": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "TREE_BOTTLEBRUSH_001",
+        "SHRUB_COASTAL_LOW_001"
+      ],
+      "deterministicGuardrail": "Keep the existing clearing anchor tree as the primary focal beat and avoid introducing unsupported assets."
+    }
+  ]
+}

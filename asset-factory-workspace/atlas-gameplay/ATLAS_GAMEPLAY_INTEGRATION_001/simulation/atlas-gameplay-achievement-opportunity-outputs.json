@@ -1,0 +1,119 @@
+[
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+    "scenarioType": "coastal_location",
+    "outputType": "ACHIEVEMENT",
+    "blocked": false,
+    "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "suitabilityScore": 80,
+    "suitabilityBand": "HIGH",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_SCENIC_LOOKOUT",
+        "achievementTag": "SCENIC_LOOKOUT",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_SHORELINE_DISCOVERY",
+        "achievementTag": "SHORELINE_DISCOVERY",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_ROUTE_COMPLETION",
+        "achievementTag": "ROUTE_COMPLETION",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_NATURE_OBSERVATION",
+        "achievementTag": "NATURE_OBSERVATION",
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "5e9875996636533fbacd5881fe469f60e641776e2c869d8d6beb246ddcdcc46f"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+    "scenarioType": "forest_location",
+    "outputType": "ACHIEVEMENT",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "suitabilityScore": 80,
+    "suitabilityBand": "HIGH",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_SCENIC_LOOKOUT",
+        "achievementTag": "SCENIC_LOOKOUT",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_FOREST_CLEARING_DISCOVERY",
+        "achievementTag": "FOREST_CLEARING_DISCOVERY",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_ROUTE_COMPLETION",
+        "achievementTag": "ROUTE_COMPLETION",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_NATURE_OBSERVATION",
+        "achievementTag": "NATURE_OBSERVATION",
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "206987ff332d72e3f0764780372046228ba255b7cbea15e7ad1ce6ac50a72e1f"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+    "scenarioType": "unsupported_location",
+    "outputType": "ACHIEVEMENT",
+    "blocked": true,
+    "approvedRecipeId": null,
+    "opportunityCount": 0,
+    "opportunities": [],
+    "reason": "UNSUPPORTED_GAMEPLAY_CONTEXT",
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "5ea1a1a69f1ae70f7f682af40a0c3cb35372994f570ff7b0f5f355d65dc33f55"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+    "scenarioType": "ambiguous_location",
+    "outputType": "ACHIEVEMENT",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+    "suitabilityScore": 68,
+    "suitabilityBand": "MEDIUM",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_SCENIC_LOOKOUT",
+        "achievementTag": "SCENIC_LOOKOUT",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_FOREST_CLEARING_DISCOVERY",
+        "achievementTag": "FOREST_CLEARING_DISCOVERY",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_ROUTE_COMPLETION",
+        "achievementTag": "ROUTE_COMPLETION",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_NATURE_OBSERVATION",
+        "achievementTag": "NATURE_OBSERVATION",
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "d669dbef52fd074481d8c030310e46de2f5c51a28ddc1461cfc1966df28fd15c"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "schemaId": "ATLAS_PACKAGE_OPTIMIZATION_LIFECYCLE_RECORD_001",
+  "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "regionalPackagePlanningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+  "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

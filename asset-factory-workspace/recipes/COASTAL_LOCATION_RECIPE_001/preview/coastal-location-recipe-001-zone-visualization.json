@@ -1,0 +1,113 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_ZONE_VISUALIZATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "zones": [
+    {
+      "zoneId": "ENTRY_PATH_ZONE",
+      "traversalRole": "ENTRY",
+      "laneRange": {
+        "start": 0,
+        "end": 24,
+        "span": 24
+      },
+      "placementCount": 7,
+      "densityProfile": "LOW",
+      "rolesPresent": [
+        "native_grass_breakup",
+        "primary_path_surface",
+        "understory_ground_blend"
+      ],
+      "assetIds": [
+        "COASTAL_GRASS_TUSSOCK_001",
+        "COASTAL_GRAVEL_PATH_001",
+        "COASTAL_GROUND_COVER_001"
+      ],
+      "vegetationRatio": 0.714,
+      "placementsPerLaneUnit": 0.292
+    },
+    {
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "traversalRole": "SHORELINE",
+      "laneRange": {
+        "start": 24,
+        "end": 56,
+        "span": 32
+      },
+      "placementCount": 5,
+      "densityProfile": "LOW",
+      "rolesPresent": [
+        "shoreline_transition_band",
+        "terrain_detail_cluster"
+      ],
+      "assetIds": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "COASTAL_WATER_EDGE_001"
+      ],
+      "vegetationRatio": 0,
+      "placementsPerLaneUnit": 0.156
+    },
+    {
+      "zoneId": "WET_CROSSING_ZONE",
+      "traversalRole": "CROSSING",
+      "laneRange": {
+        "start": 56,
+        "end": 76,
+        "span": 20
+      },
+      "placementCount": 1,
+      "densityProfile": "LOW",
+      "rolesPresent": [
+        "elevated_wet_crossing"
+      ],
+      "assetIds": [
+        "COASTAL_BOARDWALK_001"
+      ],
+      "vegetationRatio": 0,
+      "placementsPerLaneUnit": 0.05
+    },
+    {
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "traversalRole": "BUFFER",
+      "laneRange": {
+        "start": 76,
+        "end": 112,
+        "span": 36
+      },
+      "placementCount": 10,
+      "densityProfile": "MEDIUM",
+      "rolesPresent": [
+        "coastal_shrub_mass",
+        "native_grass_breakup",
+        "understory_ground_blend"
+      ],
+      "assetIds": [
+        "COASTAL_GRASS_TUSSOCK_001",
+        "COASTAL_GROUND_COVER_001",
+        "SHRUB_COASTAL_LOW_001"
+      ],
+      "vegetationRatio": 1,
+      "placementsPerLaneUnit": 0.278
+    },
+    {
+      "zoneId": "LOOKOUT_OR_REST_ZONE",
+      "traversalRole": "DESTINATION",
+      "laneRange": {
+        "start": 112,
+        "end": 144,
+        "span": 32
+      },
+      "placementCount": 3,
+      "densityProfile": "MEDIUM",
+      "rolesPresent": [
+        "accent_native_tree",
+        "primary_path_surface"
+      ],
+      "assetIds": [
+        "COASTAL_GRAVEL_PATH_001",
+        "TREE_BOTTLEBRUSH_001"
+      ],
+      "vegetationRatio": 0.333,
+      "placementsPerLaneUnit": 0.094
+    }
+  ]
+}

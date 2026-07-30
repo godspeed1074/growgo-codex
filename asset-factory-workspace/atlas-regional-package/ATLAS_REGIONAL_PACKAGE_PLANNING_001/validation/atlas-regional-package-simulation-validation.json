@@ -1,0 +1,33 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_SIMULATION_VALIDATION_001",
+  "planningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+  "status": "pass",
+  "scenarioCount": 5,
+  "nextAllowedAction": "future_atlas_development_ready",
+  "checks": [
+    {
+      "name": "deterministic_package_identity",
+      "ok": true
+    },
+    {
+      "name": "correct_classifier_inputs",
+      "ok": true
+    },
+    {
+      "name": "correct_recipe_selection",
+      "ok": true
+    },
+    {
+      "name": "blocked_invalid_data",
+      "ok": true
+    },
+    {
+      "name": "package_compatibility_with_integration",
+      "ok": true
+    },
+    {
+      "name": "runtime_activation_blocked",
+      "ok": true
+    }
+  ]
+}

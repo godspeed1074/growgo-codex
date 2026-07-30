@@ -1,0 +1,119 @@
+[
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+    "scenarioType": "coastal_location",
+    "outputType": "COLLECTION",
+    "blocked": false,
+    "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "suitabilityScore": 73,
+    "suitabilityBand": "HIGH",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_FLORA_SAMPLE",
+        "collectionTag": "FLORA_SAMPLE",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_LANDSCAPE_MEMORY",
+        "collectionTag": "LANDSCAPE_MEMORY",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_ROUTE_STAMP",
+        "collectionTag": "ROUTE_STAMP",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_TERRAIN_STUDY",
+        "collectionTag": "TERRAIN_STUDY",
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "6626d5ee1aef4a97da120778c7b2f1166eac205068468cd05326f84253bfea2e"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+    "scenarioType": "forest_location",
+    "outputType": "COLLECTION",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "suitabilityScore": 73,
+    "suitabilityBand": "HIGH",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_FLORA_SAMPLE",
+        "collectionTag": "FLORA_SAMPLE",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_LANDSCAPE_MEMORY",
+        "collectionTag": "LANDSCAPE_MEMORY",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_ROUTE_STAMP",
+        "collectionTag": "ROUTE_STAMP",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_TERRAIN_STUDY",
+        "collectionTag": "TERRAIN_STUDY",
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "5d84d24741f3e74a5cf323cde204582c165f6b900920ff67ac11bbd503a76ec7"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+    "scenarioType": "unsupported_location",
+    "outputType": "COLLECTION",
+    "blocked": true,
+    "approvedRecipeId": null,
+    "opportunityCount": 0,
+    "opportunities": [],
+    "reason": "UNSUPPORTED_GAMEPLAY_CONTEXT",
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "f2a0985c03486d1acbf1b71c4523a117331ca038c22c504884f0beef20c97710"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+    "scenarioType": "ambiguous_location",
+    "outputType": "COLLECTION",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+    "suitabilityScore": 65,
+    "suitabilityBand": "MEDIUM",
+    "opportunityCount": 4,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_FLORA_SAMPLE",
+        "collectionTag": "FLORA_SAMPLE",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_LANDSCAPE_MEMORY",
+        "collectionTag": "LANDSCAPE_MEMORY",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_ROUTE_STAMP",
+        "collectionTag": "ROUTE_STAMP",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_TERRAIN_STUDY",
+        "collectionTag": "TERRAIN_STUDY",
+        "rank": 4
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "2703603fb38470cb41d2e33effb52df0c940efb39558d61539124552b6fde9ff"
+  }
+]

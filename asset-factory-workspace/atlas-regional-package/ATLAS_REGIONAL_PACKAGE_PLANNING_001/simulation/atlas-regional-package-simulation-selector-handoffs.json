@@ -1,0 +1,259 @@
+[
+  {
+    "scenarioId": "REGIONAL_PACKAGE_COASTAL_001",
+    "selectorHandoff": {
+      "worldContextId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION_WORLD_CONTEXT",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "COASTAL_RESERVE_TRAIL",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "RESERVE_LOOP",
+      "desiredFeatures": [
+        "shoreline_transition",
+        "wet_crossing",
+        "loop_route"
+      ],
+      "seed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0",
+      "selectorVersion": "LOCATION_RECIPE_SELECTOR_001"
+    },
+    "selectorResult": {
+      "context": {
+        "worldContextId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION_WORLD_CONTEXT",
+        "environment": "DEVELOPMENT_ONLY",
+        "biomeProfile": "COASTAL_RESERVE_TRAIL",
+        "routeMode": "pedestrian_exploration",
+        "archetype": "RESERVE_LOOP",
+        "desiredFeatures": [
+          "LOOP_ROUTE",
+          "SHORELINE_TRANSITION",
+          "WET_CROSSING"
+        ],
+        "seed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0",
+        "selectorVersion": "LOCATION_RECIPE_SELECTOR_001"
+      },
+      "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 100,
+      "fallbackApplied": false,
+      "blocked": false,
+      "reason": "direct_match",
+      "scoredCandidates": [
+        {
+          "recipeId": "COASTAL_LOCATION_RECIPE_001",
+          "eligible": true,
+          "checks": {
+            "approvedRecipe": true,
+            "approvedLifecycle": true,
+            "requiredEnvironment": true,
+            "versionCompatibility": true
+          },
+          "componentScores": {
+            "biomeMatch": 40,
+            "environmentMatch": 20,
+            "archetypeMatch": 15,
+            "featureMatch": 15,
+            "versionCompatibility": 10
+          },
+          "totalScore": 100,
+          "tieBreak": "1ec495dd796bf7b66f722d6ec354f50cb38351c6ad703ebdff6d5df73d363471"
+        },
+        {
+          "recipeId": "FOREST_LOCATION_RECIPE_001",
+          "eligible": true,
+          "checks": {
+            "approvedRecipe": true,
+            "approvedLifecycle": true,
+            "requiredEnvironment": true,
+            "versionCompatibility": true
+          },
+          "componentScores": {
+            "biomeMatch": 0,
+            "environmentMatch": 20,
+            "archetypeMatch": 0,
+            "featureMatch": 5,
+            "versionCompatibility": 10
+          },
+          "totalScore": 35,
+          "tieBreak": "69e279a245ebd4ba3129de11da79134a99a0e1d103897c0f4b5905eaf257ee18"
+        }
+      ]
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_FOREST_001",
+    "selectorHandoff": {
+      "worldContextId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION_WORLD_CONTEXT",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "TEMPERATE_FOREST_EDGE",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "FOREST_EDGE_LOOP",
+      "desiredFeatures": [
+        "canopy_enclosure",
+        "clearing_destination",
+        "loop_route"
+      ],
+      "seed": "885a3119aa809a7d4318e93d0e22d6c0b58a6c7315d237d8ebd592769c258f0a",
+      "selectorVersion": "LOCATION_RECIPE_SELECTOR_001"
+    },
+    "selectorResult": {
+      "context": {
+        "worldContextId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION_WORLD_CONTEXT",
+        "environment": "DEVELOPMENT_ONLY",
+        "biomeProfile": "TEMPERATE_FOREST_EDGE",
+        "routeMode": "pedestrian_exploration",
+        "archetype": "FOREST_EDGE_LOOP",
+        "desiredFeatures": [
+          "CANOPY_ENCLOSURE",
+          "CLEARING_DESTINATION",
+          "LOOP_ROUTE"
+        ],
+        "seed": "885a3119aa809a7d4318e93d0e22d6c0b58a6c7315d237d8ebd592769c258f0a",
+        "selectorVersion": "LOCATION_RECIPE_SELECTOR_001"
+      },
+      "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 100,
+      "fallbackApplied": false,
+      "blocked": false,
+      "reason": "direct_match",
+      "scoredCandidates": [
+        {
+          "recipeId": "COASTAL_LOCATION_RECIPE_001",
+          "eligible": true,
+          "checks": {
+            "approvedRecipe": true,
+            "approvedLifecycle": true,
+            "requiredEnvironment": true,
+            "versionCompatibility": true
+          },
+          "componentScores": {
+            "biomeMatch": 0,
+            "environmentMatch": 20,
+            "archetypeMatch": 0,
+            "featureMatch": 7,
+            "versionCompatibility": 10
+          },
+          "totalScore": 37,
+          "tieBreak": "b2bf2a4b938444175725860532def1c120ca59ab2fd8ddbf6cfcbf2349ae2c5e"
+        },
+        {
+          "recipeId": "FOREST_LOCATION_RECIPE_001",
+          "eligible": true,
+          "checks": {
+            "approvedRecipe": true,
+            "approvedLifecycle": true,
+            "requiredEnvironment": true,
+            "versionCompatibility": true
+          },
+          "componentScores": {
+            "biomeMatch": 40,
+            "environmentMatch": 20,
+            "archetypeMatch": 15,
+            "featureMatch": 15,
+            "versionCompatibility": 10
+          },
+          "totalScore": 100,
+          "tieBreak": "1bba60620105276001f5fd22e1d4a8fd79916b97c1dc96e48f9df18e048804e7"
+        }
+      ]
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_MIXED_001",
+    "selectorHandoff": {
+      "worldContextId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION_WORLD_CONTEXT",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "TEMPERATE_FOREST_COASTAL_MARGIN",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "RESERVE_TRACK_OUT_AND_BACK",
+      "desiredFeatures": [
+        "canopy_enclosure",
+        "clearing_destination"
+      ],
+      "seed": "c8edee1572b4935c49b8730c9c4a879b6741cad7b8574397edf75fd2ebbf420c",
+      "selectorVersion": "LOCATION_RECIPE_SELECTOR_001"
+    },
+    "selectorResult": {
+      "context": {
+        "worldContextId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION_WORLD_CONTEXT",
+        "environment": "DEVELOPMENT_ONLY",
+        "biomeProfile": "TEMPERATE_FOREST_COASTAL_MARGIN",
+        "routeMode": "pedestrian_exploration",
+        "archetype": "RESERVE_TRACK_OUT_AND_BACK",
+        "desiredFeatures": [
+          "CANOPY_ENCLOSURE",
+          "CLEARING_DESTINATION"
+        ],
+        "seed": "c8edee1572b4935c49b8730c9c4a879b6741cad7b8574397edf75fd2ebbf420c",
+        "selectorVersion": "LOCATION_RECIPE_SELECTOR_001"
+      },
+      "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 80,
+      "fallbackApplied": true,
+      "blocked": false,
+      "reason": "approved_recipe_fallback_selected",
+      "scoredCandidates": [
+        {
+          "recipeId": "COASTAL_LOCATION_RECIPE_001",
+          "eligible": true,
+          "checks": {
+            "approvedRecipe": true,
+            "approvedLifecycle": true,
+            "requiredEnvironment": true,
+            "versionCompatibility": true
+          },
+          "componentScores": {
+            "biomeMatch": 0,
+            "environmentMatch": 20,
+            "archetypeMatch": 0,
+            "featureMatch": 2,
+            "versionCompatibility": 10
+          },
+          "totalScore": 32,
+          "tieBreak": "4a6da9bb7eec7f432801e9a409fed870c14d98427cbe8f43a5b192b83ee0f292"
+        },
+        {
+          "recipeId": "FOREST_LOCATION_RECIPE_001",
+          "eligible": true,
+          "checks": {
+            "approvedRecipe": true,
+            "approvedLifecycle": true,
+            "requiredEnvironment": true,
+            "versionCompatibility": true
+          },
+          "componentScores": {
+            "biomeMatch": 20,
+            "environmentMatch": 20,
+            "archetypeMatch": 15,
+            "featureMatch": 15,
+            "versionCompatibility": 10
+          },
+          "totalScore": 80,
+          "tieBreak": "58179317caab69d2a58b37af4b8b2f738960d5179ead09c3448a139550a065d6"
+        }
+      ]
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_UNSUPPORTED_001",
+    "selectorHandoff": null,
+    "selectorResult": {
+      "selectedRecipeId": null,
+      "confidenceScore": 0,
+      "fallbackApplied": false,
+      "blocked": true,
+      "reason": "unsupported_package_classification"
+    }
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_INVALID_001",
+    "selectorHandoff": null,
+    "selectorResult": {
+      "selectedRecipeId": null,
+      "confidenceScore": 0,
+      "fallbackApplied": false,
+      "blocked": true,
+      "reason": "invalid_regional_package"
+    }
+  }
+]

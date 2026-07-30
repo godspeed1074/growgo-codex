@@ -1,0 +1,212 @@
+{
+  "schemaId": "ATLAS_CONTROL_CENTRE_INTEGRATION_SPECIFICATION_001",
+  "controlCentreId": "ATLAS_CONTROL_CENTRE_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "monitoringId": "ATLAS_ADMIN_MONITORING_001",
+    "budgetValidatorId": "ATLAS_BUDGET_VALIDATOR_001",
+    "regionalPackageValidationId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+    "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001"
+  },
+  "atlasDashboardIntegration": {
+    "integrationMode": "READ_ONLY_PLANNING",
+    "dashboardCards": [
+      {
+        "cardId": "PACKAGE_HEALTH",
+        "title": "Package Health",
+        "status": "BLOCKED"
+      },
+      {
+        "cardId": "RECIPE_USAGE",
+        "title": "Recipe Usage",
+        "status": "WARNING"
+      },
+      {
+        "cardId": "BUDGET_STATUS",
+        "title": "Budget Status",
+        "status": "BLOCKED"
+      },
+      {
+        "cardId": "BACKEND_LOAD",
+        "title": "Backend Load",
+        "status": "HEALTHY"
+      }
+    ],
+    "summaryMetrics": {
+      "approvedRecipeCount": 2,
+      "blockedScenarioCount": 2,
+      "budgetWarningSignals": 14,
+      "budgetBlockSignals": 5
+    }
+  },
+  "recipeManagementViews": {
+    "viewIds": [
+      "APPROVED_RECIPE_LIBRARY",
+      "RECIPE_USAGE_HEATMAP",
+      "RECIPE_VERSION_COMPARE",
+      "RECIPE_APPROVAL_QUEUE"
+    ],
+    "requiredFields": [
+      "recipeId",
+      "version",
+      "lifecycleStatus",
+      "previewReadySelections",
+      "fallbackSelections",
+      "deterministicFingerprint"
+    ],
+    "dataSources": [
+      "LOCATION_RECIPE_FACTORY_001",
+      "ATLAS_ADMIN_MONITORING_001"
+    ]
+  },
+  "packageHealthViews": {
+    "healthStates": [
+      "HEALTHY",
+      "WARNING",
+      "BLOCKED"
+    ],
+    "viewIds": [
+      "PACKAGE_HEALTH_OVERVIEW",
+      "BLOCKED_PACKAGE_QUEUE",
+      "SCHEMA_AND_FINGERPRINT_STATUS",
+      "MOBILE_SUITABILITY_STATUS"
+    ],
+    "requiredChecks": [
+      "deterministic_package_identity",
+      "safe_failure_behaviour",
+      "approved_recipe_compatibility",
+      "mobile_package_suitability",
+      "integrity_and_schema_gate_defined",
+      "corruption_and_rollback_coverage_defined",
+      "representative_failure_scenarios_block_safely",
+      "runtime_and_distribution_still_blocked"
+    ]
+  },
+  "budgetAlertWorkflows": {
+    "workflowStates": [
+      "APPROVE_WITHIN_BUDGET",
+      "APPROVE_WITH_WARNING",
+      "HOLD_FOR_OPTIMIZATION",
+      "BLOCK_FOR_REDESIGN"
+    ],
+    "alertBands": {
+      "warningStates": [
+        "WARNING_PACKAGE_NEAR_LIMIT",
+        "WARNING_CACHE_NEAR_LIMIT",
+        "WARNING_RECIPE_COMPLEXITY_RISING",
+        "WARNING_PREVIEW_PAYLOAD_RISING",
+        "WARNING_BACKEND_REUSE_BELOW_TARGET"
+      ],
+      "blockingStates": [
+        "BLOCK_PACKAGE_SIZE_LIMIT",
+        "BLOCK_CACHE_LIMIT",
+        "BLOCK_RECIPE_COMPLEXITY_LIMIT",
+        "BLOCK_PREVIEW_PAYLOAD_LIMIT",
+        "BLOCK_REUSE_POLICY_FAILURE",
+        "BLOCK_RUNTIME_SAFETY_VIOLATION"
+      ]
+    },
+    "operatorResponses": [
+      "ACKNOWLEDGE_WARNING",
+      "QUEUE_OPTIMIZATION_REVIEW",
+      "HOLD_FOR_PACKAGE_REDESIGN",
+      "REQUEST_RECIPE_DENSITY_REVIEW"
+    ]
+  },
+  "approvalWorkflows": {
+    "phases": [
+      "PACKAGE_VALIDATION_REVIEW",
+      "RECIPE_COMPATIBILITY_REVIEW",
+      "BUDGET_RECOMMENDATION_REVIEW",
+      "CONTROL_CENTRE_SIGNOFF_READY"
+    ],
+    "readinessRequirements": [
+      "package_validation_pass",
+      "recipe_factory_reference_valid",
+      "budget_recommendation_not_blocked",
+      "no_runtime_authorization"
+    ],
+    "outputs": [
+      "operator_review_note",
+      "approval_queue_entry",
+      "comparison_snapshot"
+    ]
+  },
+  "versionComparison": {
+    "comparisonTargets": [
+      "regional_package_schema_version",
+      "recipe_version",
+      "selector_contract_version",
+      "budget_validator_threshold_set"
+    ],
+    "comparisonViews": [
+      "CURRENT_VS_CANDIDATE",
+      "FINGERPRINT_DIFF",
+      "RECOMMENDATION_DIFF"
+    ],
+    "deterministicComparisonRequired": true
+  },
+  "operatorActions": {
+    "allowedActions": [
+      "VIEW_DASHBOARD",
+      "COMPARE_RECORDS",
+      "ACKNOWLEDGE_ALERT",
+      "QUEUE_REVIEW",
+      "EXPORT_REPORT",
+      "OPEN_AUDIT_TRACE"
+    ],
+    "blockedActions": [
+      "ACTIVATE_RUNTIME",
+      "DOWNLOAD_PACKAGES",
+      "MODIFY_ASSETS",
+      "PUBLISH_TO_PLAYERS",
+      "PROMOTE_WITHOUT_APPROVAL"
+    ],
+    "authorizationMode": "MANUAL_OPERATOR_ONLY"
+  },
+  "auditLogging": {
+    "logTypes": [
+      "VIEW_EVENT",
+      "ALERT_ACKNOWLEDGEMENT",
+      "REVIEW_QUEUE_EVENT",
+      "VERSION_COMPARISON_EVENT",
+      "EXPORT_REPORT_EVENT"
+    ],
+    "requiredFields": [
+      "eventId",
+      "eventType",
+      "sourceRecordId",
+      "operatorAction",
+      "timestamp",
+      "readOnly"
+    ],
+    "appendOnly": true
+  },
+  "controlAreas": [
+    "DASHBOARD",
+    "RECIPES",
+    "PACKAGES",
+    "BUDGET",
+    "APPROVALS",
+    "VERSIONS",
+    "AUDIT"
+  ],
+  "representativeSignals": {
+    "monitoringStatuses": [
+      "BLOCKED",
+      "WARNING",
+      "BLOCKED",
+      "HEALTHY"
+    ],
+    "budgetRecommendations": [
+      "APPROVE_WITHIN_BUDGET",
+      "APPROVE_WITH_WARNING",
+      "HOLD_FOR_OPTIMIZATION",
+      "BLOCK_FOR_REDESIGN"
+    ],
+    "blockedScenarioIds": [
+      "PIPELINE_INVALID_001",
+      "PIPELINE_INCOMPATIBLE_VERSION_001"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REGENERATION_VALIDATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "previous_fingerprint_loaded",
+      "ok": true
+    },
+    {
+      "name": "new_fingerprint_generated",
+      "ok": true
+    },
+    {
+      "name": "fingerprint_changed_after_refinement",
+      "ok": true
+    },
+    {
+      "name": "canopy_corridor_enclosure_applied",
+      "ok": true
+    },
+    {
+      "name": "clearing_payoff_applied",
+      "ok": true
+    },
+    {
+      "name": "exploration_curiosity_applied",
+      "ok": true
+    },
+    {
+      "name": "deterministic_output_for_same_seed",
+      "ok": true
+    },
+    {
+      "name": "performance_limits_respected",
+      "ok": true
+    },
+    {
+      "name": "only_approved_dependencies_used",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "3be53b84ead3a3368055d1c0c2def863217b43a03fadbdc6ec2f966a51a837f1",
+  "nextAllowedAction": "preview_review_ready"
+}

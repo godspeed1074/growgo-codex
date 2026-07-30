@@ -1,0 +1,53 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REGENERATED_PREVIEW_REVIEW_VALIDATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "regenerated_preview_package_created",
+      "ok": true
+    },
+    {
+      "name": "before_after_comparison_created",
+      "ok": true
+    },
+    {
+      "name": "shoreline_transition_improvement_confirmed",
+      "ok": true
+    },
+    {
+      "name": "destination_quality_improvement_confirmed",
+      "ok": true
+    },
+    {
+      "name": "vegetation_balance_improvement_confirmed",
+      "ok": true
+    },
+    {
+      "name": "exploration_interest_improvement_confirmed",
+      "ok": true
+    },
+    {
+      "name": "performance_impact_acceptably_within_budget",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "nextAllowedAction": "recipe_approval_ready"
+}

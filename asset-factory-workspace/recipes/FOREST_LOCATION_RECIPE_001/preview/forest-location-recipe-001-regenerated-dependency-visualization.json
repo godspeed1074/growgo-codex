@@ -1,0 +1,109 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REGENERATED_DEPENDENCY_VISUALIZATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "nodes": [
+    {
+      "nodeId": "COASTAL_GRAVEL_PATH_001",
+      "label": "COASTAL_GRAVEL_PATH_001",
+      "category": "terrain",
+      "role": "primary_path_surface",
+      "placementCount": 5,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "CLEARING_OR_REST_ZONE",
+        "ENTRY_TRACK_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_GROUND_COVER_001",
+      "label": "COASTAL_GROUND_COVER_001",
+      "category": "nature",
+      "role": "understory_ground_blend",
+      "placementCount": 8,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "ENTRY_TRACK_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_ROCK_CLUSTER_001",
+      "label": "COASTAL_ROCK_CLUSTER_001",
+      "category": "nature",
+      "role": "terrain_detail_cluster",
+      "placementCount": 4,
+      "zones": [
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_GRASS_TUSSOCK_001",
+      "label": "COASTAL_GRASS_TUSSOCK_001",
+      "category": "nature",
+      "role": "native_grass_breakup",
+      "placementCount": 5,
+      "zones": [
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "SHRUB_COASTAL_LOW_001",
+      "label": "SHRUB_COASTAL_LOW_001",
+      "category": "nature",
+      "role": "forest_shrub_mass",
+      "placementCount": 4,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "TREE_BOTTLEBRUSH_001",
+      "label": "TREE_BOTTLEBRUSH_001",
+      "category": "nature",
+      "role": "accent_native_tree",
+      "placementCount": 2,
+      "zones": [
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "COASTAL_GRAVEL_PATH_001",
+      "to": "COASTAL_GROUND_COVER_001",
+      "relation": "forest_location_recipe_sequence",
+      "reason": "primary_path_surface layers before understory_ground_blend in the forest preview dependency stack"
+    },
+    {
+      "from": "COASTAL_GROUND_COVER_001",
+      "to": "COASTAL_ROCK_CLUSTER_001",
+      "relation": "forest_location_recipe_sequence",
+      "reason": "understory_ground_blend layers before terrain_detail_cluster in the forest preview dependency stack"
+    },
+    {
+      "from": "COASTAL_ROCK_CLUSTER_001",
+      "to": "COASTAL_GRASS_TUSSOCK_001",
+      "relation": "forest_location_recipe_sequence",
+      "reason": "terrain_detail_cluster layers before native_grass_breakup in the forest preview dependency stack"
+    },
+    {
+      "from": "COASTAL_GRASS_TUSSOCK_001",
+      "to": "SHRUB_COASTAL_LOW_001",
+      "relation": "forest_location_recipe_sequence",
+      "reason": "native_grass_breakup layers before forest_shrub_mass in the forest preview dependency stack"
+    },
+    {
+      "from": "SHRUB_COASTAL_LOW_001",
+      "to": "TREE_BOTTLEBRUSH_001",
+      "relation": "forest_location_recipe_sequence",
+      "reason": "forest_shrub_mass layers before accent_native_tree in the forest preview dependency stack"
+    }
+  ]
+}

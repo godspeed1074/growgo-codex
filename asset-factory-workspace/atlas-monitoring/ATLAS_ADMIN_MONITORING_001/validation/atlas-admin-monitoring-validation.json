@@ -1,0 +1,36 @@
+{
+  "schemaId": "ATLAS_ADMIN_MONITORING_VALIDATION_001",
+  "monitoringId": "ATLAS_ADMIN_MONITORING_001",
+  "status": "pass",
+  "nextAllowedAction": "future_atlas_operations_visibility_ready",
+  "checks": [
+    {
+      "name": "atlas_dashboard_metrics_defined",
+      "ok": true
+    },
+    {
+      "name": "package_health_monitoring_defined",
+      "ok": true
+    },
+    {
+      "name": "recipe_usage_analytics_defined",
+      "ok": true
+    },
+    {
+      "name": "budget_and_failure_visibility_defined",
+      "ok": true
+    },
+    {
+      "name": "generation_and_backend_indicators_defined",
+      "ok": true
+    },
+    {
+      "name": "admin_data_model_defined",
+      "ok": true
+    },
+    {
+      "name": "runtime_download_blender_glb_and_asset_mutation_blocked",
+      "ok": true
+    }
+  ]
+}

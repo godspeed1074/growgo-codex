@@ -1,0 +1,64 @@
+{
+  "schemaId": "LOCATION_RECIPE_FACTORY_VALIDATION_001",
+  "factoryId": "LOCATION_RECIPE_FACTORY_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "reference_recipe_approved",
+      "ok": true
+    },
+    {
+      "name": "reference_catalog_is_development_only",
+      "ok": true
+    },
+    {
+      "name": "reference_version_current_approved",
+      "ok": true
+    },
+    {
+      "name": "recipe_schema_defined",
+      "ok": true
+    },
+    {
+      "name": "lifecycle_states_defined",
+      "ok": true
+    },
+    {
+      "name": "dependency_validation_defined",
+      "ok": true
+    },
+    {
+      "name": "deterministic_generation_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "preview_workflow_defined",
+      "ok": true
+    },
+    {
+      "name": "approval_workflow_defined",
+      "ok": true
+    },
+    {
+      "name": "versioning_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "nextAllowedAction": "future_recipe_creation_ready"
+}

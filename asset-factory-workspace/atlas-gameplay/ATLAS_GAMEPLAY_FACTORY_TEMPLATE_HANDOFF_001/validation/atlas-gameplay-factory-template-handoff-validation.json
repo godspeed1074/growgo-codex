@@ -1,0 +1,56 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_VALIDATION_001",
+  "handoffId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "opportunity_template_contracts_defined",
+      "ok": true
+    },
+    {
+      "name": "achievement_input_schema_defined",
+      "ok": true
+    },
+    {
+      "name": "quest_input_schema_defined",
+      "ok": true
+    },
+    {
+      "name": "collection_input_schema_defined",
+      "ok": true
+    },
+    {
+      "name": "poi_input_schema_defined",
+      "ok": true
+    },
+    {
+      "name": "difficulty_handoff_defined",
+      "ok": true
+    },
+    {
+      "name": "reward_planning_handoff_defined",
+      "ok": true
+    },
+    {
+      "name": "validation_handoff_defined",
+      "ok": true
+    },
+    {
+      "name": "ready_and_review_states_preserved",
+      "ok": true
+    },
+    {
+      "name": "no_live_creation_or_runtime_state",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "272127c75326d92b55df53aa2beb2eaa7c6f71ee1989f9647e71a5d57ac9c9a2",
+  "questsCreated": false,
+  "achievementsCreated": false,
+  "rewardsCreated": false,
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

@@ -1,0 +1,37 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_VERSION_RECORD_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "previousApprovedVersion": null,
+  "currentApprovedVersion": "v001",
+  "published": false,
+  "runtimeActivated": false,
+  "approvalPerformed": true,
+  "v001": {
+    "version": "v001",
+    "status": "APPROVED_CURRENT",
+    "current": true,
+    "deterministicFingerprint": "3be53b84ead3a3368055d1c0c2def863217b43a03fadbdc6ec2f966a51a837f1",
+    "previewReviewStatus": "APPROVED_FOR_RECIPE_APPROVAL",
+    "performanceSummary": {
+      "triangleTotals": {
+        "close": 6792,
+        "gameplay": 4708,
+        "map": 2740
+      },
+      "budget": {
+        "closeMax": 7600,
+        "gameplayMax": 5200,
+        "mapMax": 2800
+      },
+      "withinBudget": {
+        "close": true,
+        "gameplay": true,
+        "map": true
+      },
+      "uniqueAssetCount": 6,
+      "maxUniqueReferencedAssetsPerLocation": 6,
+      "withinUniqueAssetCap": true
+    }
+  },
+  "versionHash": "b70e820af4fc355672d8bf829ac8eb68c121f6cadb906ffff651e367f74af4c9"
+}

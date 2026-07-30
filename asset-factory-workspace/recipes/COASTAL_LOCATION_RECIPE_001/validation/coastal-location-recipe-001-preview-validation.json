@@ -1,0 +1,70 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_PREVIEW_VALIDATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "generated_plan_exists",
+      "ok": true
+    },
+    {
+      "name": "dependency_map_exists",
+      "ok": true
+    },
+    {
+      "name": "placement_preview_data_created",
+      "ok": true
+    },
+    {
+      "name": "dependency_visualization_created",
+      "ok": true
+    },
+    {
+      "name": "zone_summary_created",
+      "ok": true
+    },
+    {
+      "name": "density_report_created",
+      "ok": true
+    },
+    {
+      "name": "navigation_flow_review_passes",
+      "ok": true
+    },
+    {
+      "name": "water_transition_review_passes",
+      "ok": true
+    },
+    {
+      "name": "vegetation_density_review_passes",
+      "ok": true
+    },
+    {
+      "name": "asset_spacing_review_passes",
+      "ok": true
+    },
+    {
+      "name": "performance_budget_review_passes",
+      "ok": true
+    },
+    {
+      "name": "no_blender_files_created",
+      "ok": true
+    },
+    {
+      "name": "no_glbs_created",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "previewFingerprint": "b1cddd1cec29e3b2469f69d65870a39001d0002368c82f48a255d0d160de5f0b",
+  "nextAllowedAction": "preview_review_only"
+}

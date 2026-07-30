@@ -1,0 +1,201 @@
+{
+  "schemaId": "ATLAS_PACKAGE_OPTIMIZATION_SPECIFICATION_001",
+  "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "regionalPackagePlanningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001"
+  },
+  "compressionStrategy": {
+    "schemaId": "ATLAS_PACKAGE_COMPRESSION_STRATEGY_001",
+    "compressionProfileId": "MOBILE_METADATA_COMPACT_001",
+    "supportedMethods": [
+      "FIELD_DICTIONARY_COMPACTION",
+      "ENUM_NORMALIZATION",
+      "DELTA_FREE_COORDINATE_BUCKETING",
+      "REDUNDANT_SIGNAL_DEDUPLICATION",
+      "JSON_GZIP_AT_REST"
+    ],
+    "preservedFields": [
+      "packageId",
+      "regionId",
+      "packageVersion",
+      "schemaVersion",
+      "selectorCompatibility",
+      "cacheMetadata.packageFingerprint"
+    ],
+    "forbiddenLosses": [
+      "selector seed mutation",
+      "recipe compatibility mutation",
+      "identity field removal",
+      "provenance removal"
+    ]
+  },
+  "dataLayerReductionRules": {
+    "schemaId": "ATLAS_PACKAGE_DATA_LAYER_REDUCTION_RULES_001",
+    "reductionPriority": [
+      "drop duplicate descriptive strings after dictionary mapping",
+      "collapse repeated signal arrays to normalized token sets",
+      "reduce non-selector-critical secondary hints first",
+      "retain all selector-critical fields and provenance"
+    ],
+    "selectorCriticalLayers": [
+      "REGION_BOUNDARY_LAYER",
+      "HYDROLOGY_SIGNAL_LAYER",
+      "VEGETATION_SIGNAL_LAYER",
+      "ACCESS_NETWORK_LAYER",
+      "ENVIRONMENT_SUMMARY_LAYER",
+      "PROVENANCE_LAYER"
+    ],
+    "reducibleLayers": [
+      "SETTLEMENT_CONTEXT_LAYER.secondaryHints",
+      "ENVIRONMENT_SUMMARY_LAYER.secondaryEnvironmentHints",
+      "cacheMetadata.noncriticalDebugNotes"
+    ],
+    "hardMinimumPackageShape": "all selectorCompatibility, identity, cache fingerprint, and environment summary fields preserved"
+  },
+  "mobileStorageBudgets": {
+    "schemaId": "ATLAS_PACKAGE_MOBILE_STORAGE_BUDGETS_001",
+    "profiles": [
+      {
+        "profileId": "MOBILE_STANDARD_001",
+        "maxCompressedPackageKb": 96,
+        "maxWarmCachePackages": 24,
+        "maxSelectorPreviewArtifactsPerPackage": 1,
+        "notes": "Primary target for development planning and preview-ready selector handoff."
+      },
+      {
+        "profileId": "MOBILE_CONSTRAINED_001",
+        "maxCompressedPackageKb": 64,
+        "maxWarmCachePackages": 12,
+        "maxSelectorPreviewArtifactsPerPackage": 1,
+        "notes": "Fallback budget for older or storage-constrained mobile devices."
+      }
+    ]
+  },
+  "cacheLifecycle": {
+    "schemaId": "ATLAS_PACKAGE_CACHE_LIFECYCLE_001",
+    "states": [
+      "COLD",
+      "INDEXED",
+      "WARM",
+      "NEARBY_READY",
+      "STALE",
+      "EVICTED"
+    ],
+    "promotionRules": [
+      "COLD to INDEXED when package identity and selector compatibility validate",
+      "INDEXED to WARM when region enters likely exploration neighborhood",
+      "WARM to NEARBY_READY when adjacent to active player corridor or preview focus"
+    ],
+    "evictionRules": [
+      "STALE when source revision or selector contract changes",
+      "EVICTED when storage budget pressure exceeds profile cap",
+      "selector-critical metadata retained in index even after preview artifact eviction"
+    ]
+  },
+  "regionalPackagePriorityRules": {
+    "schemaId": "ATLAS_PACKAGE_PRIORITY_RULES_001",
+    "priorityFactors": [
+      "current region relevance",
+      "adjacent region proximity",
+      "expected selector usefulness",
+      "recipe diversity value",
+      "refresh cost"
+    ],
+    "priorityBands": [
+      "IMMEDIATE",
+      "NEARBY",
+      "BACKGROUND",
+      "ARCHIVE_ONLY"
+    ],
+    "deterministicPriorityPolicy": "priority score must be derived from region identity, adjacency band, selector relevance, and cache age"
+  },
+  "nearbyRegionLoadingStrategy": {
+    "schemaId": "ATLAS_NEARBY_REGION_LOADING_STRATEGY_001",
+    "loadingBands": [
+      {
+        "band": "CURRENT_REGION",
+        "maxPackages": 1,
+        "expectedState": "NEARBY_READY"
+      },
+      {
+        "band": "ADJACENT_REGION_RING",
+        "maxPackages": 4,
+        "expectedState": "WARM"
+      },
+      {
+        "band": "EXTENDED_CONTEXT_RING",
+        "maxPackages": 8,
+        "expectedState": "INDEXED"
+      }
+    ],
+    "selectorReadinessRule": "only CURRENT_REGION and ADJACENT_REGION_RING packages are expected to carry ready selector handoff caches",
+    "mobileGuard": "loading strategy must remain within MOBILE_STANDARD_001 warm package cap"
+  },
+  "refreshAndVersionStrategy": {
+    "schemaId": "ATLAS_PACKAGE_REFRESH_AND_VERSION_STRATEGY_001",
+    "refreshTriggers": [
+      "source revision change",
+      "selector version change",
+      "classification rule change",
+      "mobile profile change"
+    ],
+    "versionPreservationRules": [
+      "package identity fields must remain stable when only compression strategy changes",
+      "package fingerprint must change when source revision changes",
+      "selector compatibility version must be revalidated on every selector contract bump"
+    ],
+    "lightweightRefreshRule": "non-identity cache refreshes may occur without rebuilding the full region package envelope"
+  },
+  "offlineFallbackStrategy": {
+    "schemaId": "ATLAS_PACKAGE_OFFLINE_FALLBACK_STRATEGY_001",
+    "offlineModes": [
+      "INDEX_ONLY",
+      "LAST_VALID_SELECTOR_HANDOFF",
+      "NO_SELECTION_BLOCK"
+    ],
+    "allowedOfflineArtifacts": [
+      "package identity",
+      "environment summary",
+      "last validated selector handoff",
+      "package fingerprint"
+    ],
+    "blockedOfflineBehaviors": [
+      "map download",
+      "runtime render activation",
+      "asset mutation",
+      "unvalidated selector reconstruction from missing data"
+    ]
+  },
+  "representativeOptimizationExamples": [
+    {
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "compressedPackageKb": 72,
+      "mobileProfile": "MOBILE_STANDARD_001",
+      "priorityBand": "IMMEDIATE",
+      "selectorSeed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0",
+      "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001"
+    },
+    {
+      "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+      "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+      "compressedPackageKb": 78,
+      "mobileProfile": "MOBILE_STANDARD_001",
+      "priorityBand": "NEARBY",
+      "selectorSeed": "885a3119aa809a7d4318e93d0e22d6c0b58a6c7315d237d8ebd592769c258f0a",
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001"
+    },
+    {
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "compressedPackageKb": 84,
+      "mobileProfile": "MOBILE_STANDARD_001",
+      "priorityBand": "NEARBY",
+      "selectorSeed": "c8edee1572b4935c49b8730c9c4a879b6741cad7b8574397edf75fd2ebbf420c",
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REGENERATED_DEPENDENCY_VISUALIZATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "nodes": [
+    {
+      "nodeId": "COASTAL_GRAVEL_PATH_001",
+      "label": "COASTAL_GRAVEL_PATH_001",
+      "category": "terrain",
+      "role": "primary_path_surface",
+      "placementCount": 4,
+      "zones": [
+        "ENTRY_PATH_ZONE",
+        "LOOKOUT_OR_REST_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_BOARDWALK_001",
+      "label": "COASTAL_BOARDWALK_001",
+      "category": "environment_navigation_structure",
+      "role": "elevated_wet_crossing",
+      "placementCount": 1,
+      "zones": [
+        "WET_CROSSING_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_WATER_EDGE_001",
+      "label": "COASTAL_WATER_EDGE_001",
+      "category": "nature",
+      "role": "shoreline_transition_band",
+      "placementCount": 4,
+      "zones": [
+        "SHORELINE_EDGE_ZONE",
+        "WET_CROSSING_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_GROUND_COVER_001",
+      "label": "COASTAL_GROUND_COVER_001",
+      "category": "nature",
+      "role": "understory_ground_blend",
+      "placementCount": 7,
+      "zones": [
+        "ENTRY_PATH_ZONE",
+        "LOOKOUT_OR_REST_ZONE",
+        "SHORELINE_EDGE_ZONE",
+        "VEGETATION_BUFFER_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_ROCK_CLUSTER_001",
+      "label": "COASTAL_ROCK_CLUSTER_001",
+      "category": "nature",
+      "role": "terrain_detail_cluster",
+      "placementCount": 3,
+      "zones": [
+        "LOOKOUT_OR_REST_ZONE",
+        "SHORELINE_EDGE_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_GRASS_TUSSOCK_001",
+      "label": "COASTAL_GRASS_TUSSOCK_001",
+      "category": "nature",
+      "role": "native_grass_breakup",
+      "placementCount": 6,
+      "zones": [
+        "ENTRY_PATH_ZONE",
+        "VEGETATION_BUFFER_ZONE"
+      ]
+    },
+    {
+      "nodeId": "SHRUB_COASTAL_LOW_001",
+      "label": "SHRUB_COASTAL_LOW_001",
+      "category": "nature",
+      "role": "coastal_shrub_mass",
+      "placementCount": 2,
+      "zones": [
+        "VEGETATION_BUFFER_ZONE"
+      ]
+    },
+    {
+      "nodeId": "TREE_BOTTLEBRUSH_001",
+      "label": "TREE_BOTTLEBRUSH_001",
+      "category": "nature",
+      "role": "accent_native_tree",
+      "placementCount": 1,
+      "zones": [
+        "LOOKOUT_OR_REST_ZONE"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "COASTAL_GRAVEL_PATH_001",
+      "to": "COASTAL_BOARDWALK_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "primary_path_surface layers before elevated_wet_crossing in the preview dependency stack"
+    },
+    {
+      "from": "COASTAL_BOARDWALK_001",
+      "to": "COASTAL_WATER_EDGE_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "elevated_wet_crossing layers before shoreline_transition_band in the preview dependency stack"
+    },
+    {
+      "from": "COASTAL_WATER_EDGE_001",
+      "to": "COASTAL_GROUND_COVER_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "shoreline_transition_band layers before understory_ground_blend in the preview dependency stack"
+    },
+    {
+      "from": "COASTAL_GROUND_COVER_001",
+      "to": "COASTAL_ROCK_CLUSTER_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "understory_ground_blend layers before terrain_detail_cluster in the preview dependency stack"
+    },
+    {
+      "from": "COASTAL_ROCK_CLUSTER_001",
+      "to": "COASTAL_GRASS_TUSSOCK_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "terrain_detail_cluster layers before native_grass_breakup in the preview dependency stack"
+    },
+    {
+      "from": "COASTAL_GRASS_TUSSOCK_001",
+      "to": "SHRUB_COASTAL_LOW_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "native_grass_breakup layers before coastal_shrub_mass in the preview dependency stack"
+    },
+    {
+      "from": "SHRUB_COASTAL_LOW_001",
+      "to": "TREE_BOTTLEBRUSH_001",
+      "relation": "coastal_location_recipe_sequence",
+      "reason": "coastal_shrub_mass layers before accent_native_tree in the preview dependency stack"
+    }
+  ]
+}

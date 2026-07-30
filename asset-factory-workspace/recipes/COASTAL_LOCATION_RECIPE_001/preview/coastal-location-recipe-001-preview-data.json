@@ -1,0 +1,329 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_PLACEMENT_PREVIEW_DATA_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "previewMode": "non_runtime_2d_layout_reference",
+  "zoneSummaryReference": "coastal-location-recipe-001-zone-summary.json",
+  "totalPlacements": 26,
+  "previewPlacements": [
+    {
+      "placementId": "COASTAL_BOARDWALK_001:WET_CROSSING_ZONE:00",
+      "assetId": "COASTAL_BOARDWALK_001",
+      "zoneId": "WET_CROSSING_ZONE",
+      "role": "elevated_wet_crossing",
+      "previewGlyph": "boardwalk",
+      "x": 25.998,
+      "y": 2.223,
+      "rotationDegrees": 2.13,
+      "scale": 0.989
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:ENTRY_PATH_ZONE:00",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "native_grass_breakup",
+      "previewGlyph": "vegetation",
+      "x": 3.388,
+      "y": 2.725,
+      "rotationDegrees": -18.11,
+      "scale": 0.941
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:ENTRY_PATH_ZONE:01",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "native_grass_breakup",
+      "previewGlyph": "vegetation",
+      "x": 7.128,
+      "y": 1.851,
+      "rotationDegrees": -17.75,
+      "scale": 1.061
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:02",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "native_grass_breakup",
+      "previewGlyph": "vegetation",
+      "x": 10.649,
+      "y": 2.611,
+      "rotationDegrees": 23.24,
+      "scale": 0.984
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:03",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "native_grass_breakup",
+      "previewGlyph": "vegetation",
+      "x": 15.659,
+      "y": 3.929,
+      "rotationDegrees": -30.75,
+      "scale": 0.916
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:04",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "native_grass_breakup",
+      "previewGlyph": "vegetation",
+      "x": 18.207,
+      "y": 2.785,
+      "rotationDegrees": 31.98,
+      "scale": 1.021
+    },
+    {
+      "placementId": "COASTAL_GRASS_TUSSOCK_001:VEGETATION_BUFFER_ZONE:05",
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "native_grass_breakup",
+      "previewGlyph": "vegetation",
+      "x": 22.464,
+      "y": 3.993,
+      "rotationDegrees": 16.95,
+      "scale": 0.914
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_PATH_ZONE:00",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "primary_path_surface",
+      "previewGlyph": "path",
+      "x": 4.097,
+      "y": 0.944,
+      "rotationDegrees": -3.44,
+      "scale": 1.019
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_PATH_ZONE:01",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "primary_path_surface",
+      "previewGlyph": "path",
+      "x": 10.04,
+      "y": 0.757,
+      "rotationDegrees": 1.55,
+      "scale": 1.025
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:LOOKOUT_OR_REST_ZONE:02",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "LOOKOUT_OR_REST_ZONE",
+      "role": "primary_path_surface",
+      "previewGlyph": "path",
+      "x": 15.67,
+      "y": 0.857,
+      "rotationDegrees": -1.61,
+      "scale": 1.038
+    },
+    {
+      "placementId": "COASTAL_GRAVEL_PATH_001:LOOKOUT_OR_REST_ZONE:03",
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "zoneId": "LOOKOUT_OR_REST_ZONE",
+      "role": "primary_path_surface",
+      "previewGlyph": "path",
+      "x": 22.37,
+      "y": 0.35,
+      "rotationDegrees": -1.18,
+      "scale": 1.036
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:00",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 0.349,
+      "y": 3.76,
+      "rotationDegrees": -5.6,
+      "scale": 1.058
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:01",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 3.531,
+      "y": 4.159,
+      "rotationDegrees": 19.88,
+      "scale": 1.05
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:ENTRY_PATH_ZONE:02",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "ENTRY_PATH_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 6.099,
+      "y": 4.018,
+      "rotationDegrees": 0.68,
+      "scale": 0.906
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:03",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 9.652,
+      "y": 2.688,
+      "rotationDegrees": -7.14,
+      "scale": 0.931
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:04",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 12.758,
+      "y": 2.653,
+      "rotationDegrees": -13.3,
+      "scale": 1.072
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:05",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 15.656,
+      "y": 1.702,
+      "rotationDegrees": 1.63,
+      "scale": 0.966
+    },
+    {
+      "placementId": "COASTAL_GROUND_COVER_001:VEGETATION_BUFFER_ZONE:06",
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "understory_ground_blend",
+      "previewGlyph": "vegetation",
+      "x": 19.542,
+      "y": 2.452,
+      "rotationDegrees": 21.2,
+      "scale": 1.01
+    },
+    {
+      "placementId": "COASTAL_ROCK_CLUSTER_001:SHORELINE_EDGE_ZONE:00",
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "role": "terrain_detail_cluster",
+      "previewGlyph": "rock",
+      "x": 18.978,
+      "y": 4.378,
+      "rotationDegrees": -8.11,
+      "scale": 1.104
+    },
+    {
+      "placementId": "COASTAL_ROCK_CLUSTER_001:SHORELINE_EDGE_ZONE:01",
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "role": "terrain_detail_cluster",
+      "previewGlyph": "rock",
+      "x": 28.334,
+      "y": 5.104,
+      "rotationDegrees": 12.29,
+      "scale": 1.113
+    },
+    {
+      "placementId": "COASTAL_WATER_EDGE_001:SHORELINE_EDGE_ZONE:00",
+      "assetId": "COASTAL_WATER_EDGE_001",
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "role": "shoreline_transition_band",
+      "previewGlyph": "water_edge",
+      "x": 13.504,
+      "y": 5.998,
+      "rotationDegrees": -16,
+      "scale": 1.045
+    },
+    {
+      "placementId": "COASTAL_WATER_EDGE_001:SHORELINE_EDGE_ZONE:01",
+      "assetId": "COASTAL_WATER_EDGE_001",
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "role": "shoreline_transition_band",
+      "previewGlyph": "water_edge",
+      "x": 21.905,
+      "y": 5.717,
+      "rotationDegrees": 17.96,
+      "scale": 1.027
+    },
+    {
+      "placementId": "COASTAL_WATER_EDGE_001:SHORELINE_EDGE_ZONE:02",
+      "assetId": "COASTAL_WATER_EDGE_001",
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "role": "shoreline_transition_band",
+      "previewGlyph": "water_edge",
+      "x": 28.152,
+      "y": 4.685,
+      "rotationDegrees": 4.52,
+      "scale": 1.033
+    },
+    {
+      "placementId": "SHRUB_COASTAL_LOW_001:VEGETATION_BUFFER_ZONE:00",
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "coastal_shrub_mass",
+      "previewGlyph": "vegetation",
+      "x": 42.397,
+      "y": 6.608,
+      "rotationDegrees": -4.02,
+      "scale": 0.961
+    },
+    {
+      "placementId": "SHRUB_COASTAL_LOW_001:VEGETATION_BUFFER_ZONE:01",
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "role": "coastal_shrub_mass",
+      "previewGlyph": "vegetation",
+      "x": 51.087,
+      "y": 7.105,
+      "rotationDegrees": 15.6,
+      "scale": 0.941
+    },
+    {
+      "placementId": "TREE_BOTTLEBRUSH_001:LOOKOUT_OR_REST_ZONE:00",
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "zoneId": "LOOKOUT_OR_REST_ZONE",
+      "role": "accent_native_tree",
+      "previewGlyph": "tree",
+      "x": 70.812,
+      "y": 8.779,
+      "rotationDegrees": -3.92,
+      "scale": 0.988
+    }
+  ],
+  "previewBounds": {
+    "minX": 0.349,
+    "maxX": 70.812,
+    "minY": 0.35,
+    "maxY": 8.779
+  },
+  "overview": [
+    {
+      "zoneId": "ENTRY_PATH_ZONE",
+      "placementCount": 7,
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "SHORELINE_EDGE_ZONE",
+      "placementCount": 5,
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "WET_CROSSING_ZONE",
+      "placementCount": 1,
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "VEGETATION_BUFFER_ZONE",
+      "placementCount": 10,
+      "densityProfile": "MEDIUM"
+    },
+    {
+      "zoneId": "LOOKOUT_OR_REST_ZONE",
+      "placementCount": 3,
+      "densityProfile": "MEDIUM"
+    }
+  ]
+}

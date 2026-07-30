@@ -1,0 +1,93 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_APPROVED_CATALOG_ENTRY_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+  "version": "v001",
+  "lifecycleStatus": "APPROVED_CURRENT",
+  "environment": "DEVELOPMENT_ONLY",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivationBlocked": true
+  },
+  "deterministicFingerprint": "c475a001c080048255059dcf60ed1f370763ef584275effdeaa53f593877c5ed",
+  "placementSummary": {
+    "totalPlacements": 28,
+    "uniqueDependencies": 8
+  },
+  "performanceSummary": {
+    "triangleTotals": {
+      "close": 5596,
+      "gameplay": 3988,
+      "map": 2544
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2600
+    },
+    "withinBudget": {
+      "close": true,
+      "gameplay": true,
+      "map": true
+    },
+    "uniqueAssetCount": 8,
+    "maxUniqueReferencedAssetsPerLocation": 8,
+    "withinUniqueAssetCap": true
+  },
+  "dependencyReferences": [
+    {
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "role": "primary_path_surface",
+      "placementCount": 4
+    },
+    {
+      "assetId": "COASTAL_BOARDWALK_001",
+      "role": "elevated_wet_crossing",
+      "placementCount": 1
+    },
+    {
+      "assetId": "COASTAL_WATER_EDGE_001",
+      "role": "shoreline_transition_band",
+      "placementCount": 4
+    },
+    {
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "role": "understory_ground_blend",
+      "placementCount": 7
+    },
+    {
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "role": "terrain_detail_cluster",
+      "placementCount": 3
+    },
+    {
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "role": "native_grass_breakup",
+      "placementCount": 6
+    },
+    {
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "role": "coastal_shrub_mass",
+      "placementCount": 2
+    },
+    {
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "role": "accent_native_tree",
+      "placementCount": 1
+    }
+  ],
+  "approvalReference": "coastal-location-recipe-001-approval.json",
+  "publishStatus": "not_published",
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  }
+}

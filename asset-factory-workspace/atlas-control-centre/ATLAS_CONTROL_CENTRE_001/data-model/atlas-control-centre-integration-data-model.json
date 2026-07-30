@@ -1,0 +1,150 @@
+{
+  "schemaId": "ATLAS_CONTROL_CENTRE_INTEGRATION_DATA_MODEL_001",
+  "controlCentreId": "ATLAS_CONTROL_CENTRE_001",
+  "dashboardPanels": [
+    {
+      "panelId": "ATLAS_OVERVIEW",
+      "title": "Atlas Overview",
+      "status": "BLOCKED",
+      "metrics": {
+        "approvedRecipes": 2,
+        "blockedScenarios": 2,
+        "budgetWarnings": 14
+      }
+    },
+    {
+      "panelId": "RECIPE_MANAGEMENT",
+      "title": "Recipe Management",
+      "status": "WARNING",
+      "metrics": {
+        "approvedRecipeCount": 2,
+        "fallbackSelections": 1,
+        "recipeViews": 4
+      }
+    },
+    {
+      "panelId": "PACKAGE_HEALTH",
+      "title": "Package Health",
+      "status": "BLOCKED",
+      "metrics": {
+        "validationChecks": 8,
+        "blockedPackages": 2,
+        "mobileSuitabilityTracked": true
+      }
+    },
+    {
+      "panelId": "BUDGET_ALERTS",
+      "title": "Budget Alerts",
+      "status": "BLOCKED",
+      "metrics": {
+        "approveWithWarning": 1,
+        "holdForOptimization": 1,
+        "blockForRedesign": 1
+      }
+    },
+    {
+      "panelId": "APPROVAL_AND_AUDIT",
+      "title": "Approval and Audit",
+      "status": "HEALTHY",
+      "metrics": {
+        "approvalPhases": 4,
+        "auditLogTypes": 5,
+        "allowedOperatorActions": 6
+      }
+    }
+  ],
+  "views": {
+    "recipeManagement": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "previewReadySelections": 1,
+        "lifecycleStatus": "APPROVED_CURRENT",
+        "comparisonReady": true
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "previewReadySelections": 2,
+        "lifecycleStatus": "APPROVED_CURRENT",
+        "comparisonReady": true
+      }
+    ],
+    "packageHealth": [
+      {
+        "scenarioId": "PIPELINE_INVALID_001",
+        "status": "BLOCKED",
+        "recommendedAction": "QUEUE_REVIEW"
+      },
+      {
+        "scenarioId": "PIPELINE_INCOMPATIBLE_VERSION_001",
+        "status": "BLOCKED",
+        "recommendedAction": "QUEUE_REVIEW"
+      }
+    ],
+    "budgetAlerts": [
+      {
+        "caseId": "BUDGET_CASE_WITHIN_LIMITS_001",
+        "recommendation": "APPROVE_WITHIN_BUDGET",
+        "warningCount": 0,
+        "blockCount": 0,
+        "operatorAction": "ACKNOWLEDGE_WARNING"
+      },
+      {
+        "caseId": "BUDGET_CASE_WARNING_001",
+        "recommendation": "APPROVE_WITH_WARNING",
+        "warningCount": 4,
+        "blockCount": 0,
+        "operatorAction": "ACKNOWLEDGE_WARNING"
+      },
+      {
+        "caseId": "BUDGET_CASE_HOLD_001",
+        "recommendation": "HOLD_FOR_OPTIMIZATION",
+        "warningCount": 5,
+        "blockCount": 0,
+        "operatorAction": "QUEUE_OPTIMIZATION_REVIEW"
+      },
+      {
+        "caseId": "BUDGET_CASE_BLOCK_001",
+        "recommendation": "BLOCK_FOR_REDESIGN",
+        "warningCount": 5,
+        "blockCount": 5,
+        "operatorAction": "HOLD_FOR_PACKAGE_REDESIGN"
+      }
+    ],
+    "versionComparison": [
+      {
+        "comparisonId": "RECIPE_FACTORY_VS_PACKAGE_VALIDATION",
+        "leftVersion": "LOCATION_RECIPE_FACTORY_001",
+        "rightVersion": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+        "comparisonMode": "CURRENT_VS_CANDIDATE",
+        "deterministic": true
+      }
+    ],
+    "auditTrailTemplates": [
+      {
+        "eventType": "VIEW_EVENT",
+        "readOnly": true,
+        "appendOnly": true
+      },
+      {
+        "eventType": "ALERT_ACKNOWLEDGEMENT",
+        "readOnly": true,
+        "appendOnly": true
+      },
+      {
+        "eventType": "REVIEW_QUEUE_EVENT",
+        "readOnly": true,
+        "appendOnly": true
+      },
+      {
+        "eventType": "VERSION_COMPARISON_EVENT",
+        "readOnly": true,
+        "appendOnly": true
+      },
+      {
+        "eventType": "EXPORT_REPORT_EVENT",
+        "readOnly": true,
+        "appendOnly": true
+      }
+    ]
+  }
+}

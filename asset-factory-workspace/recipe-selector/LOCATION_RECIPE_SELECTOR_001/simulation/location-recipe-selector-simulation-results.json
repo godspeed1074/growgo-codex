@@ -1,0 +1,357 @@
+[
+  {
+    "scenarioId": "COASTAL_ENVIRONMENT_001",
+    "scenarioType": "coastal_environment",
+    "description": "Direct coastal reserve context with shoreline transition and wet-crossing cues.",
+    "selectionResult": {
+      "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 100,
+      "fallbackApplied": false,
+      "blocked": false,
+      "reason": "direct_match"
+    },
+    "deterministicReplay": {
+      "selectedRecipeIdMatches": true,
+      "confidenceMatches": true,
+      "fallbackMatches": true
+    },
+    "rankingSummary": {
+      "topRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "topScore": 100,
+      "runnerUpRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "runnerUpScore": 35,
+      "confidenceMargin": 65
+    },
+    "scoredCandidates": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 40,
+          "environmentMatch": 20,
+          "archetypeMatch": 15,
+          "featureMatch": 15,
+          "versionCompatibility": 10
+        },
+        "totalScore": 100,
+        "tieBreak": "b282067c3bf6e08dc607206c09e5e5b8266a73d09401229e338e501064df6abd"
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 0,
+          "environmentMatch": 20,
+          "archetypeMatch": 0,
+          "featureMatch": 5,
+          "versionCompatibility": 10
+        },
+        "totalScore": 35,
+        "tieBreak": "e4d3808bdcfd0fcf85966a04d28dced3426ce307b7ac7aa1d5d4c2b6fc83b631"
+      }
+    ],
+    "expectation": {
+      "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "expectedFallbackApplied": false,
+      "selectedRecipeMatchesExpectation": true,
+      "fallbackMatchesExpectation": true
+    }
+  },
+  {
+    "scenarioId": "FOREST_ENVIRONMENT_001",
+    "scenarioType": "forest_environment",
+    "description": "Direct temperate forest route with canopy enclosure and clearing destination intent.",
+    "selectionResult": {
+      "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 100,
+      "fallbackApplied": false,
+      "blocked": false,
+      "reason": "direct_match"
+    },
+    "deterministicReplay": {
+      "selectedRecipeIdMatches": true,
+      "confidenceMatches": true,
+      "fallbackMatches": true
+    },
+    "rankingSummary": {
+      "topRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "topScore": 100,
+      "runnerUpRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "runnerUpScore": 37,
+      "confidenceMargin": 63
+    },
+    "scoredCandidates": [
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 40,
+          "environmentMatch": 20,
+          "archetypeMatch": 15,
+          "featureMatch": 15,
+          "versionCompatibility": 10
+        },
+        "totalScore": 100,
+        "tieBreak": "7bf5f70df2371858be2f9593be9eadd921f48e4dd57e7076232bd10ea2702ba4"
+      },
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 0,
+          "environmentMatch": 20,
+          "archetypeMatch": 0,
+          "featureMatch": 7,
+          "versionCompatibility": 10
+        },
+        "totalScore": 37,
+        "tieBreak": "36bc2b9796fcc801554c41affb5446289316dbf3055501ff5d83bfecc85fc217"
+      }
+    ],
+    "expectation": {
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "expectedFallbackApplied": false,
+      "selectedRecipeMatchesExpectation": true,
+      "fallbackMatchesExpectation": true
+    }
+  },
+  {
+    "scenarioId": "MIXED_BIOME_ENVIRONMENT_001",
+    "scenarioType": "mixed_biome_environment",
+    "description": "Coastal wetland-edge route asking for some forest-like enclosure without losing shoreline structure.",
+    "selectionResult": {
+      "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 97,
+      "fallbackApplied": false,
+      "blocked": false,
+      "reason": "direct_match"
+    },
+    "deterministicReplay": {
+      "selectedRecipeIdMatches": true,
+      "confidenceMatches": true,
+      "fallbackMatches": true
+    },
+    "rankingSummary": {
+      "topRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "topScore": 97,
+      "runnerUpRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "runnerUpScore": 35,
+      "confidenceMargin": 62
+    },
+    "scoredCandidates": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 40,
+          "environmentMatch": 20,
+          "archetypeMatch": 15,
+          "featureMatch": 12,
+          "versionCompatibility": 10
+        },
+        "totalScore": 97,
+        "tieBreak": "5863f2e319d36866a33813a0272804942acfdbf3c7bfc13f1c16747572164000"
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 0,
+          "environmentMatch": 20,
+          "archetypeMatch": 0,
+          "featureMatch": 5,
+          "versionCompatibility": 10
+        },
+        "totalScore": 35,
+        "tieBreak": "8d1a7aca9fa3adf6b438ca2a577e6cd00a1d9e8f75e5630d2f2f7ad6c55afbec"
+      }
+    ],
+    "expectation": {
+      "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "expectedFallbackApplied": false,
+      "selectedRecipeMatchesExpectation": true,
+      "fallbackMatchesExpectation": true
+    }
+  },
+  {
+    "scenarioId": "UNSUPPORTED_ENVIRONMENT_001",
+    "scenarioType": "unsupported_environment",
+    "description": "Unsupported alpine-style context that should be blocked rather than forced into a recipe.",
+    "selectionResult": {
+      "selectedRecipeId": null,
+      "selectedVersion": null,
+      "confidenceScore": 0,
+      "fallbackApplied": false,
+      "blocked": true,
+      "reason": "unsupported_context_or_no_approved_recipe_match"
+    },
+    "deterministicReplay": {
+      "selectedRecipeIdMatches": true,
+      "confidenceMatches": true,
+      "fallbackMatches": true
+    },
+    "rankingSummary": {
+      "topRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "topScore": 32,
+      "runnerUpRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "runnerUpScore": 30,
+      "confidenceMargin": 2
+    },
+    "scoredCandidates": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": false,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 0,
+          "environmentMatch": 20,
+          "archetypeMatch": 0,
+          "featureMatch": 2,
+          "versionCompatibility": 10
+        },
+        "totalScore": 32,
+        "tieBreak": "4615477446a3ebe91b59738cdf3e5f43012533ed2a99cbb6d6a4a15ae8894174"
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 0,
+          "environmentMatch": 20,
+          "archetypeMatch": 0,
+          "featureMatch": 0,
+          "versionCompatibility": 10
+        },
+        "totalScore": 30,
+        "tieBreak": "0a834fc2128112590fd562ad55d16cbeab696d1d65c332b86b9927ef6383b32b"
+      }
+    ],
+    "expectation": {
+      "expectedRecipeId": null,
+      "expectedFallbackApplied": false,
+      "selectedRecipeMatchesExpectation": true,
+      "fallbackMatchesExpectation": true
+    }
+  },
+  {
+    "scenarioId": "AMBIGUOUS_ENVIRONMENT_001",
+    "scenarioType": "ambiguous_environment",
+    "description": "Borderline forest context that should still land on an approved fallback without pretending it is a perfect biome fit.",
+    "selectionResult": {
+      "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "selectedVersion": "v001",
+      "confidenceScore": 80,
+      "fallbackApplied": true,
+      "blocked": false,
+      "reason": "approved_recipe_fallback_selected"
+    },
+    "deterministicReplay": {
+      "selectedRecipeIdMatches": true,
+      "confidenceMatches": true,
+      "fallbackMatches": true
+    },
+    "rankingSummary": {
+      "topRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "topScore": 80,
+      "runnerUpRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "runnerUpScore": 32,
+      "confidenceMargin": 48
+    },
+    "scoredCandidates": [
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 20,
+          "environmentMatch": 20,
+          "archetypeMatch": 15,
+          "featureMatch": 15,
+          "versionCompatibility": 10
+        },
+        "totalScore": 80,
+        "tieBreak": "692aa00914db3238c264155e7c980856c22d2a40f552bbd2df64f5af24e0a759"
+      },
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "eligible": true,
+        "checks": {
+          "approvedRecipe": true,
+          "approvedLifecycle": true,
+          "requiredEnvironment": true,
+          "versionCompatibility": true
+        },
+        "componentScores": {
+          "biomeMatch": 0,
+          "environmentMatch": 20,
+          "archetypeMatch": 0,
+          "featureMatch": 2,
+          "versionCompatibility": 10
+        },
+        "totalScore": 32,
+        "tieBreak": "cf6edf079f71557074237b594c084ca0ee9e6770068d017cdfd7693e0724825f"
+      }
+    ],
+    "expectation": {
+      "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "expectedFallbackApplied": true,
+      "selectedRecipeMatchesExpectation": true,
+      "fallbackMatchesExpectation": true
+    }
+  }
+]

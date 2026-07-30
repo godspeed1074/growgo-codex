@@ -1,0 +1,59 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_BEFORE_AFTER_RULE_COMPARISON_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "comparisons": [
+    {
+      "area": "shoreline_transition_improvements",
+      "before": {
+        "crossingRequiredRoles": [
+          "elevated_wet_crossing",
+          "shoreline_transition_band"
+        ],
+        "crossingObservedGap": "shoreline_transition_band absent from the current crossing preview composition"
+      },
+      "after": {
+        "plannedSupportRule": "one deterministic shoreline-transition support placement is allowed on crossing approaches",
+        "expectedResolvedGap": "crossing preview should show both elevated crossing and shoreline transition support"
+      }
+    },
+    {
+      "area": "destination_zone_enhancement",
+      "before": {
+        "destinationRequiredRoles": [
+          "primary_path_surface",
+          "terrain_detail_cluster"
+        ],
+        "destinationObservedGap": "terrain_detail_cluster absent from the current destination preview composition"
+      },
+      "after": {
+        "plannedSupportRule": "destination must retain path plus one compact terrain-detail accent near arrival",
+        "expectedResolvedGap": "destination preview should show a clearer arrival beat while preserving the bottlebrush anchor"
+      }
+    },
+    {
+      "area": "vegetation_density_smoothing",
+      "before": {
+        "shorelineDensityProfile": "LOW",
+        "bufferDensityProfile": "MEDIUM",
+        "observedGradient": "shoreline remains sparse while vegetation buffer jumps immediately to full support coverage"
+      },
+      "after": {
+        "plannedDensityRule": "add or redistribute one transitional support accent between shoreline and inland buffer",
+        "expectedGradient": "density progression should remain readable but feel less abrupt"
+      }
+    },
+    {
+      "area": "exploration_interest_improvements",
+      "before": {
+        "destinationInterestState": "single bottlebrush anchor with limited secondary curiosity support",
+        "poiReadinessState": "future POI is possible but not yet visually reinforced"
+      },
+      "after": {
+        "plannedInterestRule": "destination reserves one compact curiosity-support slot",
+        "expectedPoiReadinessState": "future POI or achievement tagging gains a clearer visual landing point"
+      }
+    }
+  ],
+  "noGeneratedPlanMutation": true,
+  "noAssetMutation": true
+}

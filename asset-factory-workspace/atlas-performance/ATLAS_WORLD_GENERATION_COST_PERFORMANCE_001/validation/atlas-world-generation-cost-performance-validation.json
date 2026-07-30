@@ -1,0 +1,36 @@
+{
+  "schemaId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_VALIDATION_001",
+  "performancePlanningId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_001",
+  "status": "pass",
+  "nextAllowedAction": "future_atlas_engineering_budget_ready",
+  "checks": [
+    {
+      "name": "regional_package_sizes_within_standard_budget",
+      "ok": true
+    },
+    {
+      "name": "preview_payloads_remain_metadata_only_and_lightweight",
+      "ok": true
+    },
+    {
+      "name": "device_cache_requirements_match_optimization_budgets",
+      "ok": true
+    },
+    {
+      "name": "backend_processing_short_circuits_invalid_packages",
+      "ok": true
+    },
+    {
+      "name": "multiplayer_region_reuse_defined",
+      "ok": true
+    },
+    {
+      "name": "firebase_cost_assumptions_are_reuse_first",
+      "ok": true
+    },
+    {
+      "name": "runtime_map_blender_glb_and_asset_mutation_blocked",
+      "ok": true
+    }
+  ]
+}

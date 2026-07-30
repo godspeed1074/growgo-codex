@@ -1,0 +1,186 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_INTEGRATION_SPECIFICATION_001",
+  "integrationId": "ATLAS_GAMEPLAY_INTEGRATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "integratedSystems": {
+    "achievementFactory": "PLANNING_BRIDGE_ONLY",
+    "questFactory": "PLANNING_BRIDGE_ONLY",
+    "collections": "PLANNING_BRIDGE_ONLY",
+    "poiSystems": "PLANNING_BRIDGE_ONLY"
+  },
+  "references": {
+    "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001",
+    "regionalPackageValidationId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+    "budgetValidatorId": "ATLAS_BUDGET_VALIDATOR_001",
+    "adminMonitoringId": "ATLAS_ADMIN_MONITORING_001"
+  },
+  "locationGameplayTags": {
+    "categories": [
+      "EXPLORATION",
+      "SCENIC_DESTINATION",
+      "NATURE_DISCOVERY",
+      "TRAIL_PROGRESS",
+      "TRANSITION_POINT",
+      "COLLECTION_OPPORTUNITY",
+      "POI_CANDIDATE"
+    ],
+    "sourceFields": [
+      "recipeType",
+      "biomeProfile",
+      "archetype",
+      "zoneAllocation",
+      "placementPlan"
+    ],
+    "deterministicOrdering": true
+  },
+  "featureExtractionRules": {
+    "zoneSignals": [
+      "traversalRole",
+      "densityProfile",
+      "requiredRoles",
+      "optionalRoles"
+    ],
+    "placementSignals": [
+      "assetId",
+      "role",
+      "zoneId",
+      "notes"
+    ],
+    "derivedFeatures": [
+      "routeLengthBand",
+      "destinationType",
+      "transitionPresence",
+      "floraDensityBand",
+      "traversalComplexity"
+    ],
+    "unsupportedHooksPolicy": "BLOCK_UNSUPPORTED_GAMEPLAY_HOOK"
+  },
+  "achievementSuitabilityScoring": {
+    "scoreRange": [
+      0,
+      100
+    ],
+    "weightedFactors": [
+      {
+        "factor": "destination_quality",
+        "weight": 0.3
+      },
+      {
+        "factor": "exploration_interest",
+        "weight": 0.25
+      },
+      {
+        "factor": "scenic_uniqueness",
+        "weight": 0.25
+      },
+      {
+        "factor": "route_completion_clarity",
+        "weight": 0.2
+      }
+    ],
+    "thresholdBands": {
+      "HIGH": 75,
+      "MEDIUM": 50,
+      "LOW": 25
+    }
+  },
+  "questSuitabilityScoring": {
+    "scoreRange": [
+      0,
+      100
+    ],
+    "weightedFactors": [
+      {
+        "factor": "traversal_structure",
+        "weight": 0.3
+      },
+      {
+        "factor": "interaction_opportunities",
+        "weight": 0.25
+      },
+      {
+        "factor": "zone_progression",
+        "weight": 0.25
+      },
+      {
+        "factor": "revisit_value",
+        "weight": 0.2
+      }
+    ],
+    "thresholdBands": {
+      "HIGH": 70,
+      "MEDIUM": 45,
+      "LOW": 20
+    }
+  },
+  "collectionSuitabilityScoring": {
+    "scoreRange": [
+      0,
+      100
+    ],
+    "weightedFactors": [
+      {
+        "factor": "flora_diversity",
+        "weight": 0.35
+      },
+      {
+        "factor": "landmark_memory",
+        "weight": 0.25
+      },
+      {
+        "factor": "zone_variety",
+        "weight": 0.25
+      },
+      {
+        "factor": "repeatable_visibility",
+        "weight": 0.15
+      }
+    ],
+    "thresholdBands": {
+      "HIGH": 68,
+      "MEDIUM": 42,
+      "LOW": 20
+    }
+  },
+  "poiOpportunityMapping": {
+    "opportunityTypes": [
+      "LOOKOUT",
+      "CLEARING",
+      "CROSSING",
+      "TRAIL_NODE",
+      "SHORELINE_EDGE"
+    ],
+    "sourceSignals": [
+      "DESTINATION traversalRole",
+      "CLEARING traversalRole",
+      "CROSSING traversalRole",
+      "shoreline_transition_band role",
+      "terrain_detail_cluster role"
+    ],
+    "deterministicSelectionPolicy": "stable_by_zone_order_then_role_priority"
+  },
+  "gameplayMetadataContract": {
+    "requiredIdentityFields": [
+      "recipeId",
+      "locationPlanId",
+      "gameplayMetadataId",
+      "version",
+      "variantId",
+      "category"
+    ],
+    "requiredGameplayFields": [
+      "gameplayTags",
+      "featureSummary",
+      "achievementSuitability",
+      "questSuitability",
+      "collectionSuitability",
+      "poiOpportunities"
+    ],
+    "supportedRecipeIds": [
+      "COASTAL_LOCATION_RECIPE_001",
+      "FOREST_LOCATION_RECIPE_001"
+    ],
+    "playerExposureBlockedByDefault": true,
+    "runtimeActivationBlockedByDefault": true
+  }
+}

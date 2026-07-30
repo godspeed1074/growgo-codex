@@ -1,0 +1,66 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REGENERATION_VALIDATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "previous_fingerprint_loaded",
+      "ok": true
+    },
+    {
+      "name": "new_fingerprint_generated",
+      "ok": true
+    },
+    {
+      "name": "fingerprint_changed_after_refinement",
+      "ok": true
+    },
+    {
+      "name": "shoreline_transition_support_added",
+      "ok": true
+    },
+    {
+      "name": "destination_terrain_support_added",
+      "ok": true
+    },
+    {
+      "name": "vegetation_density_smoothing_applied",
+      "ok": true
+    },
+    {
+      "name": "exploration_interest_support_added",
+      "ok": true
+    },
+    {
+      "name": "deterministic_output_for_same_seed",
+      "ok": true
+    },
+    {
+      "name": "performance_limits_respected",
+      "ok": true
+    },
+    {
+      "name": "only_approved_dependencies_used",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "c475a001c080048255059dcf60ed1f370763ef584275effdeaa53f593877c5ed",
+  "nextAllowedAction": "preview_review_ready"
+}

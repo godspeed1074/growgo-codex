@@ -1,0 +1,99 @@
+[
+  {
+    "scenarioId": "COASTAL_ENVIRONMENT_001",
+    "scenarioType": "coastal_environment",
+    "description": "Direct coastal reserve context with shoreline transition and wet-crossing cues.",
+    "context": {
+      "worldContextId": "WORLD_CONTEXT_COASTAL_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "COASTAL_RESERVE_TRAIL",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "RESERVE_LOOP",
+      "desiredFeatures": [
+        "shoreline_transition",
+        "wet_crossing",
+        "loop_route"
+      ],
+      "seed": "LOCATION_RECIPE_SELECTOR_SIMULATION:COASTAL_ENVIRONMENT_001"
+    },
+    "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "expectedFallbackApplied": false
+  },
+  {
+    "scenarioId": "FOREST_ENVIRONMENT_001",
+    "scenarioType": "forest_environment",
+    "description": "Direct temperate forest route with canopy enclosure and clearing destination intent.",
+    "context": {
+      "worldContextId": "WORLD_CONTEXT_FOREST_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "TEMPERATE_FOREST_EDGE",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "FOREST_EDGE_LOOP",
+      "desiredFeatures": [
+        "canopy_enclosure",
+        "clearing_destination",
+        "loop_route"
+      ],
+      "seed": "LOCATION_RECIPE_SELECTOR_SIMULATION:FOREST_ENVIRONMENT_001"
+    },
+    "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "expectedFallbackApplied": false
+  },
+  {
+    "scenarioId": "MIXED_BIOME_ENVIRONMENT_001",
+    "scenarioType": "mixed_biome_environment",
+    "description": "Coastal wetland-edge route asking for some forest-like enclosure without losing shoreline structure.",
+    "context": {
+      "worldContextId": "WORLD_CONTEXT_MIXED_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "COASTAL_WETLAND_MARGIN",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "WETLAND_CROSSING",
+      "desiredFeatures": [
+        "shoreline_transition",
+        "canopy_enclosure",
+        "wet_crossing"
+      ],
+      "seed": "LOCATION_RECIPE_SELECTOR_SIMULATION:MIXED_BIOME_ENVIRONMENT_001"
+    },
+    "expectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "expectedFallbackApplied": false
+  },
+  {
+    "scenarioId": "UNSUPPORTED_ENVIRONMENT_001",
+    "scenarioType": "unsupported_environment",
+    "description": "Unsupported alpine-style context that should be blocked rather than forced into a recipe.",
+    "context": {
+      "worldContextId": "WORLD_CONTEXT_UNSUPPORTED_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "ALPINE_TUNDRA",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "MOUNTAIN_PASS",
+      "desiredFeatures": [
+        "snow_corridor"
+      ],
+      "seed": "LOCATION_RECIPE_SELECTOR_SIMULATION:UNSUPPORTED_ENVIRONMENT_001"
+    },
+    "expectedRecipeId": null,
+    "expectedFallbackApplied": false
+  },
+  {
+    "scenarioId": "AMBIGUOUS_ENVIRONMENT_001",
+    "scenarioType": "ambiguous_environment",
+    "description": "Borderline forest context that should still land on an approved fallback without pretending it is a perfect biome fit.",
+    "context": {
+      "worldContextId": "WORLD_CONTEXT_AMBIGUOUS_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "biomeProfile": "TEMPERATE_FOREST_COASTAL_MARGIN",
+      "routeMode": "pedestrian_exploration",
+      "archetype": "RESERVE_TRACK_OUT_AND_BACK",
+      "desiredFeatures": [
+        "canopy_enclosure",
+        "clearing_destination"
+      ],
+      "seed": "LOCATION_RECIPE_SELECTOR_SIMULATION:AMBIGUOUS_ENVIRONMENT_001"
+    },
+    "expectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "expectedFallbackApplied": true
+  }
+]

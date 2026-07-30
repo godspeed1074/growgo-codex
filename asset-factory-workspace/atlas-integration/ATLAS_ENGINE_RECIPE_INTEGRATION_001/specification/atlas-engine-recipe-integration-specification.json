@@ -1,0 +1,234 @@
+{
+  "schemaId": "ATLAS_ENGINE_RECIPE_INTEGRATION_SPECIFICATION_001",
+  "integrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "selectorReference": {
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "approvedRecipeCount": 2,
+    "approvedRecipeIds": [
+      "COASTAL_LOCATION_RECIPE_001",
+      "FOREST_LOCATION_RECIPE_001"
+    ]
+  },
+  "environmentClassificationSchema": {
+    "schemaId": "ATLAS_ENVIRONMENT_CLASSIFICATION_SCHEMA_001",
+    "classifierId": "ATLAS_ENVIRONMENT_CLASSIFIER_001",
+    "sourceTruthPolicy": "REAL_WORLD_ENVIRONMENT_DATA_IS_AUTHORITATIVE",
+    "requiredInputFields": [
+      "regionPackageId",
+      "worldContextId",
+      "coordinateReference",
+      "landformSignals",
+      "vegetationSignals",
+      "hydrologySignals",
+      "accessSignals",
+      "settlementSignals"
+    ],
+    "classificationFields": [
+      "primaryEnvironmentType",
+      "secondaryEnvironmentType",
+      "primaryBiomeTag",
+      "secondaryBiomeTags",
+      "navigationProfile",
+      "archetypeHint",
+      "environmentConfidence"
+    ],
+    "supportedEnvironmentTypes": [
+      "COASTAL_EXPLORATION",
+      "FOREST_EXPLORATION",
+      "MIXED_EDGE_TRANSITION"
+    ],
+    "unsupportedEnvironmentHandling": {
+      "mode": "BLOCK_SELECTION",
+      "reasonCode": "UNSUPPORTED_ENVIRONMENT_CLASSIFICATION"
+    }
+  },
+  "biomeTaggingRules": {
+    "schemaId": "ATLAS_BIOME_TAGGING_RULES_001",
+    "primaryBiomeResolutionOrder": [
+      "water_edge_and_dune_signals",
+      "forest_canopy_and_understory_signals",
+      "mixed_transition_signals"
+    ],
+    "tagMappings": [
+      {
+        "environmentType": "COASTAL_EXPLORATION",
+        "allowedBiomeTags": [
+          "COASTAL_DUNE_EDGE",
+          "COASTAL_WETLAND_MARGIN",
+          "COASTAL_RESERVE_TRAIL",
+          "COASTAL_CLIFF_LOOKOUT",
+          "COASTAL_CREEK_MOUTH"
+        ],
+        "preferredRecipes": [
+          "COASTAL_LOCATION_RECIPE_001"
+        ]
+      },
+      {
+        "environmentType": "FOREST_EXPLORATION",
+        "allowedBiomeTags": [
+          "TEMPERATE_FOREST_EDGE",
+          "FOREST_TRACK_CLEARING",
+          "WOODLAND_RESERVE_LOOP"
+        ],
+        "preferredRecipes": [
+          "FOREST_LOCATION_RECIPE_001"
+        ]
+      },
+      {
+        "environmentType": "MIXED_EDGE_TRANSITION",
+        "allowedBiomeTags": [
+          "COASTAL_WETLAND_MARGIN",
+          "TEMPERATE_FOREST_COASTAL_MARGIN",
+          "FOREST_EDGE_TRANSITION"
+        ],
+        "preferredRecipes": [
+          "COASTAL_LOCATION_RECIPE_001",
+          "FOREST_LOCATION_RECIPE_001"
+        ]
+      }
+    ],
+    "disallowedBiomeTags": [
+      "ALPINE_TUNDRA",
+      "INLAND_FARMLAND",
+      "URBAN_MAIN_STREET"
+    ]
+  },
+  "selectorInputContract": {
+    "schemaId": "ATLAS_SELECTOR_INPUT_CONTRACT_001",
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+    "requiredFields": [
+      "worldContextId",
+      "environment",
+      "biomeProfile",
+      "routeMode",
+      "archetype",
+      "desiredFeatures",
+      "seed"
+    ],
+    "mappedFromEnvironmentClassification": {
+      "worldContextId": "region_package.worldContextId",
+      "environment": "environment_separation.currentEnvironment",
+      "biomeProfile": "environment_classification.primaryBiomeTag",
+      "routeMode": "navigation_profile.routeMode",
+      "archetype": "environment_classification.archetypeHint",
+      "desiredFeatures": "environment_feature_inference.desiredFeatures",
+      "seed": "coordinate_seed_contract.selectorSeed"
+    },
+    "optionalFields": {
+      "selectorVersion": "LOCATION_RECIPE_SELECTOR_001",
+      "preferredRecipeId": "environment_feature_inference.preferredRecipeId"
+    },
+    "preconditions": [
+      "environment must be DEVELOPMENT_ONLY",
+      "recipe selector validation must pass",
+      "recipe selector simulation validation must pass",
+      "runtime activation remains false"
+    ]
+  },
+  "confidenceThresholds": {
+    "schemaId": "ATLAS_RECIPE_SELECTION_CONFIDENCE_THRESHOLDS_001",
+    "directSelectionMinimum": 60,
+    "approvedFallbackMinimum": 35,
+    "ambiguityReviewBand": {
+      "min": 35,
+      "max": 84
+    },
+    "unsupportedBelow": 35,
+    "interpretation": {
+      "highConfidence": "Direct biome/archetype alignment. Safe to choose approved recipe without manual review.",
+      "mediumConfidence": "Approved fallback allowed. Selection is deterministic but should be visible in preview planning.",
+      "lowConfidence": "Block selection and require new recipe or classifier update."
+    }
+  },
+  "fallbackStrategy": {
+    "schemaId": "ATLAS_RECIPE_SELECTION_FALLBACK_STRATEGY_001",
+    "approvedRecipesOnly": true,
+    "fallbackOrder": [
+      "same_biome_tag",
+      "same_biome_family",
+      "highest_confidence_approved_recipe"
+    ],
+    "blockedWhen": [
+      "confidence below approvedFallbackMinimum",
+      "environment not DEVELOPMENT_ONLY",
+      "recipe not APPROVED_CURRENT",
+      "selector version incompatibility",
+      "runtime activation requested"
+    ],
+    "supportedOutcomes": [
+      "DIRECT_RECIPE_SELECTION",
+      "APPROVED_RECIPE_FALLBACK",
+      "BLOCK_UNSUPPORTED_CONTEXT"
+    ]
+  },
+  "coordinateSeedRules": {
+    "schemaId": "ATLAS_COORDINATE_RECIPE_SEED_RULES_001",
+    "seedPolicy": "DETERMINISTIC_COORDINATE_HASH",
+    "requiredSeedInputs": [
+      "regionPackageId",
+      "worldContextId",
+      "coordinateReference.latBucket",
+      "coordinateReference.lngBucket",
+      "primaryBiomeTag",
+      "archetypeHint",
+      "selectorVersion"
+    ],
+    "formula": "hash(regionPackageId, worldContextId, latBucket, lngBucket, primaryBiomeTag, archetypeHint, selectorVersion)",
+    "replayGuarantees": [
+      "same region package and coordinate bucket yield same selector seed",
+      "same selector seed yields same approved recipe result",
+      "seed changes only when classification-relevant context changes"
+    ],
+    "coordinateBucketing": {
+      "latBucketPrecisionDegrees": 0.01,
+      "lngBucketPrecisionDegrees": 0.01,
+      "bucketPurpose": "stabilize recipe selection against insignificant coordinate jitter"
+    }
+  },
+  "regionalPackageCompatibility": {
+    "schemaId": "ATLAS_REGION_PACKAGE_COMPATIBILITY_001",
+    "acceptedSources": [
+      "GROWGO_REGION_IMPORT_PACKAGE_001",
+      "future_runtime_region_packages",
+      "prepared_real_world_region_packages"
+    ],
+    "requiredPackageFields": [
+      "regionPackageId",
+      "packageVersion",
+      "coordinateReference",
+      "environmentSummary",
+      "classificationInputs"
+    ],
+    "packageBoundaryRules": [
+      "Atlas may classify and choose approved recipes",
+      "Atlas must not modify package geometry",
+      "Atlas must not invent map features",
+      "Atlas must not activate runtime rendering from planning phase"
+    ]
+  },
+  "futureAtlasEngineIntegrationBoundaries": {
+    "schemaId": "ATLAS_ENGINE_RECIPE_INTEGRATION_BOUNDARIES_001",
+    "planningLayerOnly": true,
+    "allowedResponsibilities": [
+      "classify environment",
+      "derive biome tags",
+      "construct selector input contract",
+      "choose approved recipe deterministically",
+      "record confidence and fallback state"
+    ],
+    "blockedResponsibilities": [
+      "runtime activation",
+      "map attachment",
+      "renderer execution",
+      "asset modification",
+      "recipe mutation",
+      "package geometry mutation"
+    ],
+    "futureAtlasBoundary": {
+      "integrationPoint": "selector_input_contract_to_LOCATION_RECIPE_SELECTOR_001",
+      "outputProduct": "approved_recipe_selection_plan",
+      "runtimeStillBlocked": true
+    }
+  }
+}

@@ -1,0 +1,784 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REGENERATED_PLAN_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "generatedOn": "2026-07-30",
+  "generationMode": "deterministic_recipe_assembly_plan_refined",
+  "seedHandling": {
+    "seed": "FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+    "locationId": "FOREST_EXPLORATION_LOCATION_001",
+    "variantId": "DEFAULT",
+    "biomeProfile": "TEMPERATE_FOREST_EDGE",
+    "archetype": "FOREST_EDGE_LOOP",
+    "seedStrategy": "hash(recipeId, locationId, variantId, biomeProfile, placementZoneId)"
+  },
+  "zoneAllocation": [
+    {
+      "zoneId": "ENTRY_TRACK_ZONE",
+      "laneStart": 0,
+      "laneEnd": 22,
+      "traversalRole": "ENTRY",
+      "requiredRoles": [
+        "primary_path_surface",
+        "understory_ground_blend"
+      ],
+      "optionalRoles": [
+        "native_grass_breakup"
+      ],
+      "densityProfile": "LOW"
+    },
+    {
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "laneStart": 22,
+      "laneEnd": 46,
+      "traversalRole": "TRANSITION",
+      "requiredRoles": [
+        "native_grass_breakup",
+        "forest_shrub_mass",
+        "understory_ground_blend",
+        "terrain_detail_cluster"
+      ],
+      "optionalRoles": [
+        "accent_native_tree"
+      ],
+      "densityProfile": "MEDIUM"
+    },
+    {
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "laneStart": 46,
+      "laneEnd": 82,
+      "traversalRole": "MAIN_TRACK",
+      "requiredRoles": [
+        "primary_path_surface",
+        "understory_ground_blend",
+        "forest_shrub_mass"
+      ],
+      "optionalRoles": [
+        "accent_native_tree"
+      ],
+      "densityProfile": "MEDIUM_HIGH"
+    },
+    {
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "laneStart": 82,
+      "laneEnd": 108,
+      "traversalRole": "CLEARING",
+      "requiredRoles": [
+        "primary_path_surface",
+        "terrain_detail_cluster"
+      ],
+      "optionalRoles": [
+        "accent_native_tree",
+        "understory_ground_blend"
+      ],
+      "densityProfile": "LOW_MEDIUM"
+    },
+    {
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "laneStart": 108,
+      "laneEnd": 144,
+      "traversalRole": "BACKDROP",
+      "requiredRoles": [
+        "forest_shrub_mass",
+        "native_grass_breakup"
+      ],
+      "optionalRoles": [
+        "accent_native_tree"
+      ],
+      "densityProfile": "HIGH"
+    }
+  ],
+  "placementPlan": {
+    "totalPlacements": 28,
+    "placements": [
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:02",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 24.532,
+          "y": 7.547,
+          "rotationDegrees": -21.78,
+          "scale": 1.04
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:03",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 32.767,
+          "y": 6.563,
+          "rotationDegrees": 1.26,
+          "scale": 1.069
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:DEEP_FOREST_MARGIN_ZONE:04",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 38.134,
+          "y": 7.283,
+          "rotationDegrees": -2.43,
+          "scale": 0.982
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:FOREST_EDGE_TRANSITION_ZONE:00",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 13.654,
+          "y": 2.804,
+          "rotationDegrees": -0.96,
+          "scale": 0.942
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRASS_TUSSOCK_001:FOREST_EDGE_TRANSITION_ZONE:01",
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "assetVersion": "v001",
+        "role": "native_grass_breakup",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+        "transform": {
+          "x": 18.797,
+          "y": 3.356,
+          "rotationDegrees": -13.81,
+          "scale": 0.902
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:CANOPY_TRACK_ZONE:02",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 21.988,
+          "y": 1.904,
+          "rotationDegrees": 3.44,
+          "scale": 0.961
+        },
+        "notes": "primary forest walking route"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:CANOPY_TRACK_ZONE:03",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 36.655,
+          "y": 2.199,
+          "rotationDegrees": 4.01,
+          "scale": 0.987
+        },
+        "notes": "primary forest walking route"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:CLEARING_OR_REST_ZONE:04",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 40.884,
+          "y": 1.725,
+          "rotationDegrees": -2.94,
+          "scale": 1.013
+        },
+        "notes": "clearing standing surface"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_TRACK_ZONE:00",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 0.176,
+          "y": 2.014,
+          "rotationDegrees": 1.12,
+          "scale": 1.047
+        },
+        "notes": "primary forest walking route"
+      },
+      {
+        "placementId": "COASTAL_GRAVEL_PATH_001:ENTRY_TRACK_ZONE:01",
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "assetVersion": "v001",
+        "role": "primary_path_surface",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+        "transform": {
+          "x": 11.856,
+          "y": 0.978,
+          "rotationDegrees": 0.03,
+          "scale": 0.998
+        },
+        "notes": "primary forest walking route"
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:CANOPY_TRACK_ZONE:05",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 27.876,
+          "y": 2.786,
+          "rotationDegrees": 2.89,
+          "scale": 1.013
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:CANOPY_TRACK_ZONE:06",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 33.576,
+          "y": 3.061,
+          "rotationDegrees": 16.37,
+          "scale": 0.948
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:CANOPY_TRACK_ZONE:07",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 31.199,
+          "y": 4.705,
+          "rotationDegrees": -5.79,
+          "scale": 0.958
+        },
+        "notes": "refinement support for stronger canopy enclosure"
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:ENTRY_TRACK_ZONE:00",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 3.93,
+          "y": 1.541,
+          "rotationDegrees": -15.96,
+          "scale": 0.946
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:ENTRY_TRACK_ZONE:01",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 6.969,
+          "y": 2.874,
+          "rotationDegrees": 12.25,
+          "scale": 0.923
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:FOREST_EDGE_TRANSITION_ZONE:02",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 13.532,
+          "y": 1.915,
+          "rotationDegrees": 9.19,
+          "scale": 1.058
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:FOREST_EDGE_TRANSITION_ZONE:03",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 18.388,
+          "y": 2.831,
+          "rotationDegrees": 2.22,
+          "scale": 0.956
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_GROUND_COVER_001:FOREST_EDGE_TRANSITION_ZONE:04",
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "assetVersion": "v002",
+        "role": "understory_ground_blend",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+        "transform": {
+          "x": 21.898,
+          "y": 2.45,
+          "rotationDegrees": -19.23,
+          "scale": 0.968
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_ROCK_CLUSTER_001:CLEARING_OR_REST_ZONE:02",
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "assetVersion": "v001",
+        "role": "terrain_detail_cluster",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+        "transform": {
+          "x": 58.89,
+          "y": 5.769,
+          "rotationDegrees": 19.38,
+          "scale": 1
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_ROCK_CLUSTER_001:DEEP_FOREST_MARGIN_ZONE:03",
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "assetVersion": "v001",
+        "role": "terrain_detail_cluster",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+        "transform": {
+          "x": 98.219,
+          "y": 7.633,
+          "rotationDegrees": 6.33,
+          "scale": 0.963
+        },
+        "notes": "refinement curiosity beat between clearing and deep-margin threshold"
+      },
+      {
+        "placementId": "COASTAL_ROCK_CLUSTER_001:FOREST_EDGE_TRANSITION_ZONE:00",
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "assetVersion": "v001",
+        "role": "terrain_detail_cluster",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+        "transform": {
+          "x": 23.011,
+          "y": 3.749,
+          "rotationDegrees": 18.89,
+          "scale": 0.948
+        },
+        "notes": null
+      },
+      {
+        "placementId": "COASTAL_ROCK_CLUSTER_001:FOREST_EDGE_TRANSITION_ZONE:01",
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "assetVersion": "v001",
+        "role": "terrain_detail_cluster",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+        "transform": {
+          "x": 40.83,
+          "y": 3.244,
+          "rotationDegrees": -5.88,
+          "scale": 1.02
+        },
+        "notes": null
+      },
+      {
+        "placementId": "SHRUB_COASTAL_LOW_001:CANOPY_TRACK_ZONE:02",
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "assetVersion": "v002",
+        "role": "forest_shrub_mass",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+        "transform": {
+          "x": 41.559,
+          "y": 4.194,
+          "rotationDegrees": 7.4,
+          "scale": 1.109
+        },
+        "notes": null
+      },
+      {
+        "placementId": "SHRUB_COASTAL_LOW_001:CLEARING_OR_REST_ZONE:04",
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "assetVersion": "v002",
+        "role": "forest_shrub_mass",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+        "transform": {
+          "x": 83.148,
+          "y": 6.267,
+          "rotationDegrees": -8.05,
+          "scale": 1.046
+        },
+        "notes": "refinement support for stronger clearing payoff"
+      },
+      {
+        "placementId": "SHRUB_COASTAL_LOW_001:DEEP_FOREST_MARGIN_ZONE:03",
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "assetVersion": "v002",
+        "role": "forest_shrub_mass",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+        "transform": {
+          "x": 52.275,
+          "y": 8.836,
+          "rotationDegrees": 10.5,
+          "scale": 0.996
+        },
+        "notes": "backdrop mass preserving future eucalyptus space"
+      },
+      {
+        "placementId": "SHRUB_COASTAL_LOW_001:FOREST_EDGE_TRANSITION_ZONE:00",
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "assetVersion": "v002",
+        "role": "forest_shrub_mass",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+        "transform": {
+          "x": 21.729,
+          "y": 4.276,
+          "rotationDegrees": 5.3,
+          "scale": 0.99
+        },
+        "notes": null
+      },
+      {
+        "placementId": "TREE_BOTTLEBRUSH_001:CLEARING_OR_REST_ZONE:00",
+        "assetId": "TREE_BOTTLEBRUSH_001",
+        "assetVersion": "v002",
+        "role": "accent_native_tree",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json",
+        "transform": {
+          "x": 91.925,
+          "y": 7.948,
+          "rotationDegrees": -6.98,
+          "scale": 1.038
+        },
+        "notes": "clearing anchor tree kept outside standing center"
+      },
+      {
+        "placementId": "TREE_BOTTLEBRUSH_001:DEEP_FOREST_MARGIN_ZONE:01",
+        "assetId": "TREE_BOTTLEBRUSH_001",
+        "assetVersion": "v002",
+        "role": "accent_native_tree",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "lodHint": "LOD_GAMEPLAY",
+        "dependencyRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json",
+        "transform": {
+          "x": 117.812,
+          "y": 11.082,
+          "rotationDegrees": -11.81,
+          "scale": 1.003
+        },
+        "notes": "deep-margin marker tree"
+      }
+    ]
+  },
+  "forestZones": [
+    {
+      "zoneId": "ENTRY_TRACK_ZONE",
+      "purpose": "forest arrival, track legibility, and movement orientation",
+      "allowedAssetRoles": [
+        "primary_path_surface",
+        "understory_ground_blend"
+      ],
+      "placementRule": "A readable walking surface must anchor the arrival track, with low ground-cover support allowed on edges but not across the standing corridor."
+    },
+    {
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "purpose": "transition from open approach into denser vegetation character",
+      "allowedAssetRoles": [
+        "native_grass_breakup",
+        "forest_shrub_mass",
+        "understory_ground_blend",
+        "terrain_detail_cluster"
+      ],
+      "placementRule": "Edge-transition zones should step up vegetation density gradually while preserving sight-line breaks and occasional stone or root-like terrain accents."
+    },
+    {
+      "zoneId": "CANOPY_TRACK_ZONE",
+      "purpose": "main forest walking lane under stronger vegetation cover",
+      "allowedAssetRoles": [
+        "primary_path_surface",
+        "understory_ground_blend",
+        "forest_shrub_mass",
+        "accent_native_tree"
+      ],
+      "placementRule": "The main forest track remains traversable and readable while the surrounding vegetation mass increases in depth and enclosure."
+    },
+    {
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "purpose": "pause point, small clearing, or scenic turn-out within the forest walk",
+      "allowedAssetRoles": [
+        "primary_path_surface",
+        "terrain_detail_cluster",
+        "accent_native_tree",
+        "understory_ground_blend"
+      ],
+      "placementRule": "Clearings need one readable standing area plus one or more anchoring accents to create a sense of destination or rest."
+    },
+    {
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "purpose": "dense backdrop and future canopy-support zone",
+      "allowedAssetRoles": [
+        "forest_shrub_mass",
+        "native_grass_breakup",
+        "accent_native_tree"
+      ],
+      "placementRule": "The deep forest margin builds the impression of thicker growth behind the main route and reserves space for later canopy-tree promotion."
+    }
+  ],
+  "trailNavigationLogic": {
+    "routeType": "pedestrian_forest_exploration",
+    "primaryRouteNodeIds": [
+      "FOREST_ENTRY_NODE_001",
+      "FOREST_EDGE_NODE_001",
+      "CANOPY_NODE_001",
+      "CLEARING_NODE_001",
+      "RETURN_NODE_001"
+    ],
+    "routeNodes": [
+      {
+        "nodeId": "FOREST_ENTRY_NODE_001",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "connectedTo": [
+          "FOREST_EDGE_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      },
+      {
+        "nodeId": "FOREST_EDGE_NODE_001",
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "connectedTo": [
+          "FOREST_ENTRY_NODE_001",
+          "CANOPY_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      },
+      {
+        "nodeId": "CANOPY_NODE_001",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "connectedTo": [
+          "FOREST_EDGE_NODE_001",
+          "CLEARING_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      },
+      {
+        "nodeId": "CLEARING_NODE_001",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "connectedTo": [
+          "CANOPY_NODE_001",
+          "RETURN_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      },
+      {
+        "nodeId": "RETURN_NODE_001",
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "connectedTo": [
+          "CLEARING_NODE_001"
+        ],
+        "surfaceRole": "primary_path_surface"
+      }
+    ],
+    "trailLegibilityRule": "primary path placements must remain readable through entry, canopy corridor, and clearing arrival",
+    "clearanceRule": "shrub and grass placements must not overlap the standing corridor around canopy and clearing route nodes",
+    "placementCount": 28
+  },
+  "vegetationDensityRules": {
+    "ENTRY_TRACK_ZONE": {
+      "density": "LOW",
+      "allowedRoles": [
+        "primary_path_surface",
+        "understory_ground_blend",
+        "native_grass_breakup"
+      ]
+    },
+    "FOREST_EDGE_TRANSITION_ZONE": {
+      "density": "MEDIUM",
+      "allowedRoles": [
+        "native_grass_breakup",
+        "forest_shrub_mass",
+        "understory_ground_blend",
+        "terrain_detail_cluster"
+      ]
+    },
+    "CANOPY_TRACK_ZONE": {
+      "density": "MEDIUM_HIGH",
+      "allowedRoles": [
+        "primary_path_surface",
+        "understory_ground_blend",
+        "forest_shrub_mass",
+        "accent_native_tree"
+      ]
+    },
+    "CLEARING_OR_REST_ZONE": {
+      "density": "LOW_MEDIUM",
+      "allowedRoles": [
+        "primary_path_surface",
+        "terrain_detail_cluster",
+        "accent_native_tree",
+        "forest_shrub_mass",
+        "understory_ground_blend"
+      ]
+    },
+    "DEEP_FOREST_MARGIN_ZONE": {
+      "density": "HIGH",
+      "allowedRoles": [
+        "forest_shrub_mass",
+        "native_grass_breakup",
+        "accent_native_tree"
+      ]
+    }
+  },
+  "clearingDiscoveryZones": [
+    {
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "zoneType": "standing_clearing",
+      "standingAreaRequired": true,
+      "intendedUse": "pause_point_and_light_destination",
+      "supportedAnchors": [
+        "terrain_detail_cluster",
+        "accent_native_tree"
+      ]
+    },
+    {
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "zoneType": "discovery_backdrop",
+      "standingAreaRequired": false,
+      "intendedUse": "future_canopy_interest_and_depth",
+      "supportedAnchors": [
+        "forest_shrub_mass",
+        "accent_native_tree",
+        "terrain_detail_cluster"
+      ]
+    }
+  ],
+  "explorationInterestPoints": [
+    {
+      "pointId": "FOREST_CLEARING_MARKER_001",
+      "zoneId": "CLEARING_OR_REST_ZONE",
+      "interestType": "arrival_pause",
+      "description": "Small clearing with anchor tree and rock detail.",
+      "discoveryWeight": "MEDIUM"
+    },
+    {
+      "pointId": "FOREST_TRANSITION_SCREEN_001",
+      "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+      "interestType": "sightline_break",
+      "description": "Shrub and grass layering creates enclosure before the canopy track.",
+      "discoveryWeight": "MEDIUM"
+    },
+    {
+      "pointId": "FOREST_MARGIN_FUTURE_CANOPY_001",
+      "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+      "interestType": "future_uplift_reserved",
+      "description": "Reserved visual mass area for later eucalyptus canopy promotion plus a compact curiosity-support beat.",
+      "discoveryWeight": "LOW"
+    }
+  ],
+  "mobilePerformanceLimits": {
+    "triangleTotals": {
+      "close": 6792,
+      "gameplay": 4708,
+      "map": 2740
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2800
+    },
+    "withinBudget": {
+      "close": true,
+      "gameplay": true,
+      "map": true
+    },
+    "uniqueAssetCount": 6,
+    "maxUniqueReferencedAssetsPerLocation": 6,
+    "withinUniqueAssetCap": true
+  },
+  "unsupportedAssetsIncluded": false,
+  "runtimeSafety": {
+    "blenderFilesCreated": false,
+    "glbsCreated": false,
+    "assetsModified": false,
+    "runtimeActivated": false
+  },
+  "deterministicFingerprint": "3be53b84ead3a3368055d1c0c2def863217b43a03fadbdc6ec2f966a51a837f1",
+  "refinementState": {
+    "refinementApplied": true,
+    "refinementAreas": [
+      "canopy_corridor_enclosure_improvement",
+      "clearing_payoff_enhancement",
+      "exploration_curiosity_improvement"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaId": "LOCATION_RECIPE_SELECTOR_LIFECYCLE_RECORD_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "lifecycleStatus": "READY",
+  "approvedRecipeIds": [
+    "COASTAL_LOCATION_RECIPE_001",
+    "FOREST_LOCATION_RECIPE_001"
+  ],
+  "supportedBiomeFamilies": [
+    "COASTAL_DUNE",
+    "TEMPERATE_FOREST"
+  ],
+  "environment": "DEVELOPMENT_ONLY",
+  "runtimeActivationAuthorized": false,
+  "betaBlocked": true,
+  "productionBlocked": true,
+  "readyForAtlasIntegration": true
+}

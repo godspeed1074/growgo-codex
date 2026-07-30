@@ -1,0 +1,56 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_INTEGRATION_VALIDATION_001",
+  "integrationId": "ATLAS_GAMEPLAY_INTEGRATION_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "generated_locations_can_produce_gameplay_metadata",
+      "ok": true
+    },
+    {
+      "name": "location_gameplay_tags_defined",
+      "ok": true
+    },
+    {
+      "name": "feature_extraction_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "achievement_suitability_scoring_defined",
+      "ok": true
+    },
+    {
+      "name": "quest_suitability_scoring_defined",
+      "ok": true
+    },
+    {
+      "name": "collection_suitability_scoring_defined",
+      "ok": true
+    },
+    {
+      "name": "poi_opportunity_mapping_defined",
+      "ok": true
+    },
+    {
+      "name": "unsupported_gameplay_hooks_blocked",
+      "ok": true
+    },
+    {
+      "name": "deterministic_output_preserved",
+      "ok": true
+    },
+    {
+      "name": "runtime_gameplay_player_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "supportedRecipeCount": 2,
+  "deterministicFingerprint": "276f678ec82197d50e98f01a7d33895c064f48f520f9cac0c5fa84e0257e6737",
+  "runtimeActivationAuthorized": false,
+  "questsCreated": false,
+  "achievementsAwarded": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

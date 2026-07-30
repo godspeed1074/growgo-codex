@@ -1,0 +1,13 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_PLANNING_LIFECYCLE_RECORD_001",
+  "planningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "atlasIntegrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+  "packageSchemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

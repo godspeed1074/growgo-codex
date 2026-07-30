@@ -1,0 +1,106 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_APPROVAL_RECORD_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+  "recipeType": "WORLD_ASSEMBLY_COASTAL_EXPLORATION_LOCATION",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_COASTAL_EXPLORATION_001",
+  "lodProfile": "WORLD_ASSEMBLY_REFERENCED_ASSETS_ONLY",
+  "category": "WORLD_ASSEMBLY_LOCATION",
+  "approvalStatus": "approved",
+  "lifecycleStatus": "APPROVED_CURRENT",
+  "approvedOn": "2026-07-30",
+  "approvedFromRegeneratedFingerprint": "c475a001c080048255059dcf60ed1f370763ef584275effdeaa53f593877c5ed",
+  "priorPreviewFingerprint": "b1cddd1cec29e3b2469f69d65870a39001d0002368c82f48a255d0d160de5f0b",
+  "regeneratedPreviewFingerprint": "79f3bd1db0bd7804ee4841265303a46f39d6d47e9683fac30b70fc12e3cff10e",
+  "dependencyIds": [
+    "COASTAL_GRAVEL_PATH_001",
+    "COASTAL_BOARDWALK_001",
+    "COASTAL_WATER_EDGE_001",
+    "COASTAL_GROUND_COVER_001",
+    "COASTAL_ROCK_CLUSTER_001",
+    "COASTAL_GRASS_TUSSOCK_001",
+    "SHRUB_COASTAL_LOW_001",
+    "TREE_BOTTLEBRUSH_001"
+  ],
+  "performanceSummary": {
+    "triangleTotals": {
+      "close": 5596,
+      "gameplay": 3988,
+      "map": 2544
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2600
+    },
+    "withinBudget": {
+      "close": true,
+      "gameplay": true,
+      "map": true
+    },
+    "uniqueAssetCount": 8,
+    "maxUniqueReferencedAssetsPerLocation": 8,
+    "withinUniqueAssetCap": true
+  },
+  "refinementReference": {
+    "schemaId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_SPECIFICATION_001",
+    "plannedChangeCount": 4
+  },
+  "comparisonSummary": {
+    "overallStatus": "APPROVED_FOR_RECIPE_APPROVAL",
+    "shorelineTransition": "IMPROVED",
+    "destinationQuality": "IMPROVED",
+    "vegetationBalance": "IMPROVED",
+    "explorationInterest": "IMPROVED",
+    "performanceImpact": "ACCEPTABLE"
+  },
+  "verification": {
+    "status": "pass",
+    "checks": [
+      {
+        "name": "improvements_confirmed",
+        "ok": true
+      },
+      {
+        "name": "dependencies_valid",
+        "ok": true
+      },
+      {
+        "name": "deterministic_fingerprint_recorded",
+        "ok": true
+      },
+      {
+        "name": "performance_budgets_acceptable",
+        "ok": true
+      },
+      {
+        "name": "no_unsupported_assets_included",
+        "ok": true
+      },
+      {
+        "name": "no_blender_usage",
+        "ok": true
+      },
+      {
+        "name": "no_glb_generation",
+        "ok": true
+      },
+      {
+        "name": "no_asset_modification",
+        "ok": true
+      },
+      {
+        "name": "no_runtime_activation",
+        "ok": true
+      }
+    ]
+  },
+  "safety": {
+    "blenderUsed": false,
+    "glbsCreated": false,
+    "assetsModified": false,
+    "runtimeActivated": false
+  }
+}

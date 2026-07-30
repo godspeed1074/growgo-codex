@@ -1,0 +1,103 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_SELECTOR_METADATA_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "recipePackageId": "FOREST_LOCATION_RECIPE_001_PACKAGE",
+  "recipeType": "WORLD_ASSEMBLY_FOREST_EXPLORATION_LOCATION",
+  "version": "v001",
+  "variantId": "DEFAULT",
+  "paletteId": "AU_TEMPERATE_FOREST_EXPLORATION_001",
+  "lodProfile": "WORLD_ASSEMBLY_REFERENCED_ASSETS_ONLY",
+  "category": "WORLD_ASSEMBLY_LOCATION",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "lifecycleStatus": "APPROVED_CURRENT",
+  "approvalStatus": "approved",
+  "environment": "DEVELOPMENT_ONLY",
+  "recipeFamily": "FOREST",
+  "biomeFamily": "TEMPERATE_FOREST",
+  "biomeTags": [
+    "FOREST_TRACK_CLEARING",
+    "TEMPERATE_FOREST_EDGE",
+    "WOODLAND_RESERVE_LOOP"
+  ],
+  "disallowedBiomeTags": [],
+  "supportedArchetypes": [
+    "CLEARING_SPUR",
+    "FOREST_EDGE_LOOP",
+    "RESERVE_TRACK_OUT_AND_BACK"
+  ],
+  "routeSignals": [
+    "FOREST_NAVIGATION_SHOULD_PRIORITIZE_READABLE_WALKING_ROUTES,_LOW_OBSTRUCTION,_AND_A_CLEAR_DESTINATION_OR_RETURN_LOGIC."
+  ],
+  "dependencyRoles": [
+    "ACCENT_NATIVE_TREE",
+    "FOREST_SHRUB_MASS",
+    "NATIVE_GRASS_BREAKUP",
+    "PRIMARY_PATH_SURFACE",
+    "TERRAIN_DETAIL_CLUSTER",
+    "UNDERSTORY_GROUND_BLEND"
+  ],
+  "selectionCapabilities": [
+    "ACCENT_NATIVE_TREE",
+    "CANOPY_ENCLOSURE",
+    "CLEARING_DESTINATION",
+    "DESTINATION_NODE",
+    "FOREST_SHRUB_MASS",
+    "LOOP_ROUTE",
+    "NATIVE_GRASS_BREAKUP",
+    "OUT_AND_BACK_ROUTE",
+    "PRIMARY_PATH_SURFACE",
+    "TERRAIN_DETAIL_CLUSTER",
+    "UNDERSTORY_GROUND_BLEND"
+  ],
+  "environmentRequirements": {
+    "requiredEnvironment": "DEVELOPMENT_ONLY",
+    "developmentVisible": true,
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivationBlocked": true
+  },
+  "performanceEnvelope": {
+    "totalPlacements": 28,
+    "uniqueDependencies": 6,
+    "triangleTotals": {
+      "close": 6792,
+      "gameplay": 4708,
+      "map": 2740
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2800
+    }
+  },
+  "dependencySummary": {
+    "dependencyIds": [
+      "COASTAL_GRAVEL_PATH_001",
+      "COASTAL_GROUND_COVER_001",
+      "COASTAL_ROCK_CLUSTER_001",
+      "COASTAL_GRASS_TUSSOCK_001",
+      "SHRUB_COASTAL_LOW_001",
+      "TREE_BOTTLEBRUSH_001"
+    ],
+    "deferredDependencyIds": [
+      "TREE_EUCALYPTUS_001"
+    ],
+    "dependencyCount": 6
+  },
+  "versionCompatibility": {
+    "supportedSelectorVersions": [
+      "LOCATION_RECIPE_SELECTOR_001"
+    ],
+    "requiredWorkflowVersion": "ASSET_FACTORY_V1",
+    "recipeVersion": "v001",
+    "approvalDate": "2026-07-30"
+  },
+  "confidenceWeights": {
+    "biomeMatch": 40,
+    "environmentMatch": 20,
+    "archetypeMatch": 15,
+    "featureMatch": 15,
+    "versionCompatibility": 10
+  }
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "scenarioId": "PIPELINE_COASTAL_001",
+    "scenarioType": "coastal_package",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "validationPassed": true,
+    "optimizationPassed": true,
+    "classificationStatus": "DIRECT_CONFIDENT_CLASSIFICATION",
+    "selectedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "confidenceScore": 100,
+    "generationFingerprint": "e336c382cab9379a1a41061bc2fad915dfa4d54f30084c195e26dcb360be838c",
+    "previewFingerprint": "0044da2474cd7b10fece9c3bbedb92547eb8483ce636c8c31a35750e83893eaa",
+    "finalStage": "PREVIEW_READY"
+  },
+  {
+    "scenarioId": "PIPELINE_FOREST_001",
+    "scenarioType": "forest_package",
+    "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+    "validationPassed": true,
+    "optimizationPassed": true,
+    "classificationStatus": "DIRECT_CONFIDENT_CLASSIFICATION",
+    "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "confidenceScore": 100,
+    "generationFingerprint": "93677f7ebb89b6fe38f4f9d42544452894d484e702b056f54547dedce0f688e4",
+    "previewFingerprint": "ff44a691322ec37d6a6deeb680e5b6459bf4db62b6046a81bb8d54e67a26d0e1",
+    "finalStage": "PREVIEW_READY"
+  },
+  {
+    "scenarioId": "PIPELINE_MIXED_001",
+    "scenarioType": "mixed_transition_package",
+    "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+    "validationPassed": true,
+    "optimizationPassed": true,
+    "classificationStatus": "AMBIGUOUS_CLASSIFICATION",
+    "selectedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "confidenceScore": 80,
+    "generationFingerprint": "465f632fed459d91f9077a322a43bf73a338b07fb59dc9cbe9cd09707654a7d6",
+    "previewFingerprint": "97844ce1b9d88512a4ded7425b61133b01884422cea3019d63304d109f91c91b",
+    "finalStage": "PREVIEW_READY"
+  },
+  {
+    "scenarioId": "PIPELINE_INVALID_001",
+    "scenarioType": "invalid_package",
+    "packageId": "ATLAS_REGION_PACKAGE_BROKEN_REGION_NEG_37_5_145_5_v001",
+    "validationPassed": false,
+    "optimizationPassed": false,
+    "classificationStatus": "NOT_RUN",
+    "selectedRecipeId": null,
+    "confidenceScore": 0,
+    "generationFingerprint": null,
+    "previewFingerprint": null,
+    "finalStage": "VALIDATION_BLOCKED"
+  },
+  {
+    "scenarioId": "PIPELINE_INCOMPATIBLE_VERSION_001",
+    "scenarioType": "incompatible_version_package",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "validationPassed": false,
+    "optimizationPassed": false,
+    "classificationStatus": "NOT_RUN",
+    "selectedRecipeId": null,
+    "confidenceScore": 0,
+    "generationFingerprint": null,
+    "previewFingerprint": null,
+    "finalStage": "VALIDATION_BLOCKED"
+  }
+]

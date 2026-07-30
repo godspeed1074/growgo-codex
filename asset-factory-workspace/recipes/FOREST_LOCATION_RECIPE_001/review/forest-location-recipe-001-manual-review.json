@@ -1,0 +1,98 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_MANUAL_REVIEW_RECORD_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "reviewRecordId": "FOREST_LOCATION_RECIPE_001_MANUAL_REVIEW_AND_TUNING_001",
+  "basedOnPreviewFingerprint": "623da7e3a90bfb638913478c7a2bfff3f0ac8bf999b57f05c9aa1d8260a52335",
+  "basedOnInspectionSchemaId": "FOREST_LOCATION_RECIPE_001_VISUAL_RENDERER_DATA_001",
+  "reviewMethod": "non_runtime_preview_package_inspection",
+  "reviewAreas": {
+    "playerJourney": {
+      "status": "PASS",
+      "evidence": [
+        "The preview moves cleanly from entry track to edge transition, then into canopy track, clearing, and deep backdrop.",
+        "Zone progression covers 5 distinct forest beats.",
+        "Total preview placements: 27."
+      ],
+      "notes": "The route already reads as a small forest walk with a clear arrival sequence and a distinct pause point.",
+      "tuningSignal": "stable"
+    },
+    "trailFlow": {
+      "status": "PASS",
+      "evidence": [
+        "Primary path surface appears 5 times.",
+        "Trail nodes passed the preview flow checks without runtime assistance.",
+        "No spacing flags were raised in placement inspection."
+      ],
+      "notes": "Trail legibility is solid for a first forest layout and does not need structural correction before refinement.",
+      "tuningSignal": "stable"
+    },
+    "vegetationBalance": {
+      "status": "TUNE_RECOMMENDED",
+      "evidence": [
+        "Transition vegetation ratio is 0.778.",
+        "Canopy-track vegetation ratio is 0.6.",
+        "Deep-margin vegetation ratio rises to 1."
+      ],
+      "notes": "The deep backdrop reads correctly as dense, but the main canopy corridor dips a little lighter than the transition band and could carry one more soft enclosure cue.",
+      "tuningSignal": "reinforce_canopy_density"
+    },
+    "clearingQuality": {
+      "status": "PASS",
+      "evidence": [
+        "Clearing zone contains 3 placements with path, rock detail, and anchor tree roles.",
+        "Clearing vegetation ratio stays low at 0.333.",
+        "The standing area remains visually readable."
+      ],
+      "notes": "The clearing works as a pause point and already feels distinct from the denser track zones.",
+      "tuningSignal": "stable"
+    },
+    "explorationInterest": {
+      "status": "TUNE_RECOMMENDED",
+      "evidence": [
+        "Interest points exist in both the clearing and deep-margin zones.",
+        "TREE_BOTTLEBRUSH_001 is doing double duty as both destination anchor and background marker.",
+        "Deferred eucalyptus uplift is intentionally reserved for a later lifecycle phase."
+      ],
+      "notes": "The route already has interest, but the payoff is still modest because the current anchor tree is carrying both highlight moments without a second supporting curiosity beat.",
+      "tuningSignal": "strengthen_interest_spacing"
+    },
+    "forestTransitionQuality": {
+      "status": "PASS",
+      "evidence": [
+        "Transition zone presents all required roles: forest_shrub_mass, native_grass_breakup, terrain_detail_cluster, understory_ground_blend.",
+        "Transition density is MEDIUM.",
+        "Entry density is LOW and deep-margin density is HIGH."
+      ],
+      "notes": "The entry-to-forest change reads gradual rather than abrupt, which is the right foundation for later canopy uplift.",
+      "tuningSignal": "stable"
+    },
+    "performanceProfile": {
+      "status": "PASS",
+      "evidence": [
+        "Preview validation already passed performance impact.",
+        "Close triangles remain within budget at verified preview state.",
+        "Unique referenced assets remain capped at 6."
+      ],
+      "notes": "Performance profile is healthy enough that refinement can focus on composition rather than reduction.",
+      "tuningSignal": "stable"
+    }
+  },
+  "overallStatus": "APPROVED_WITH_TUNING_RECOMMENDATIONS",
+  "tuningRequiredAreas": [
+    "vegetationBalance",
+    "explorationInterest"
+  ],
+  "findingsSummary": {
+    "strengths": [
+      "Player journey is clear from entry to clearing.",
+      "Trail legibility and spacing are already stable.",
+      "Forest transition layering is strong enough for future canopy uplift."
+    ],
+    "watchItems": [
+      "Canopy corridor reads slightly lighter than the transition zone.",
+      "Exploration payoff is present but still modest for the destination half of the walk.",
+      "The same accent tree family is carrying both destination and backdrop interest."
+    ]
+  }
+}

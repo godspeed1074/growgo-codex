@@ -1,0 +1,139 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_SPECIFICATION_001",
+  "handoffId": "ATLAS_GAMEPLAY_FACTORY_TEMPLATE_HANDOFF_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "gameplayOpportunityValidationId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_001",
+    "achievementQuestFactoryBridgeId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_001",
+    "achievementFactory": "ACHIEVEMENT_FACTORY_PLANNING_TARGET",
+    "questFactory": "QUEST_FACTORY_PLANNING_TARGET",
+    "collections": "COLLECTIONS_PLANNING_TARGET",
+    "poiSystems": "POI_SYSTEMS_PLANNING_TARGET"
+  },
+  "opportunityTemplateContracts": {
+    "contractFamilies": [
+      "ACHIEVEMENT_TEMPLATE_INPUT",
+      "QUEST_TEMPLATE_INPUT",
+      "COLLECTION_TEMPLATE_INPUT",
+      "POI_TEMPLATE_INPUT"
+    ],
+    "requiredSharedFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "handoffState",
+      "validationState",
+      "difficultyBand",
+      "rewardPlanningInput",
+      "sourceValidationFingerprint"
+    ],
+    "supportedHandoffStates": [
+      "HANDOFF_READY",
+      "HANDOFF_REVIEW_REQUIRED",
+      "HANDOFF_BLOCKED"
+    ]
+  },
+  "achievementInputSchema": {
+    "schemaId": "ATLAS_ACHIEVEMENT_TEMPLATE_INPUT_001",
+    "requiredFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "achievementCandidateType",
+      "difficultyBand",
+      "rewardPlanningInput",
+      "validationState"
+    ],
+    "handoffRules": [
+      "READY_FOR_FACTORY_INPUT becomes HANDOFF_READY",
+      "REVIEW_REQUIRED becomes HANDOFF_REVIEW_REQUIRED",
+      "BLOCKED remains HANDOFF_BLOCKED",
+      "planningOnly flag must stay true"
+    ]
+  },
+  "questInputSchema": {
+    "schemaId": "ATLAS_QUEST_TEMPLATE_INPUT_001",
+    "requiredFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "questCandidateType",
+      "difficultyBand",
+      "rewardPlanningInput",
+      "validationState"
+    ],
+    "handoffRules": [
+      "quest candidates require validated traversal or destination structure",
+      "planningOnly flag must stay true",
+      "review-required candidates may hand off only as template-review items"
+    ]
+  },
+  "collectionInputSchema": {
+    "schemaId": "ATLAS_COLLECTION_TEMPLATE_INPUT_001",
+    "requiredFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "collectionHookType",
+      "validationState",
+      "handoffState"
+    ],
+    "handoffRules": [
+      "collection hooks may not create collection rewards",
+      "unsupported or blocked scenarios may not hand off hooks"
+    ]
+  },
+  "poiInputSchema": {
+    "schemaId": "ATLAS_POI_TEMPLATE_INPUT_001",
+    "requiredFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "poiHookType",
+      "zoneId",
+      "validationState",
+      "handoffState"
+    ],
+    "handoffRules": [
+      "poi hooks remain planning-only and preview-safe",
+      "review-required candidates must remain review-visible"
+    ]
+  },
+  "difficultyHandoff": {
+    "supportedBands": [
+      "VERY_LIGHT",
+      "LIGHT",
+      "MODERATE",
+      "HIGH"
+    ],
+    "rules": [
+      "difficulty is copied from validated bridge inputs",
+      "blocked scenarios do not hand off difficulty",
+      "review-required scenarios preserve their lower-confidence difficulty band"
+    ]
+  },
+  "rewardPlanningHandoff": {
+    "requiredFields": [
+      "rewardTheme",
+      "rewardRarityHint",
+      "collectionWeight",
+      "discoveryWeight",
+      "traversalWeight"
+    ],
+    "rules": [
+      "reward inputs are planning hints only",
+      "no reward grant record may be emitted",
+      "reward theme must match scenario or review state"
+    ]
+  },
+  "validationHandoff": {
+    "requiredFields": [
+      "validationState",
+      "qualityScore",
+      "duplicateSignature",
+      "locationSuitabilityValid",
+      "rewardPlanningValid",
+      "playerExperienceValid"
+    ],
+    "rules": [
+      "handoff must preserve source validation state exactly",
+      "handoff must preserve duplicate signature traceability",
+      "handoff must expose whether a candidate was review-required or blocked"
+    ]
+  }
+}

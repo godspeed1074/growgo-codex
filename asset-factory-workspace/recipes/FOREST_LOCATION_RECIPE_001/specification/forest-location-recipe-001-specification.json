@@ -1,0 +1,457 @@
+{
+  "schemaId": "LOCATION_RECIPE_FACTORY_V1_INTAKE_001",
+  "recipePackageId": "FOREST_LOCATION_RECIPE_001_PACKAGE",
+  "factoryId": "LOCATION_RECIPE_FACTORY_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-30",
+  "status": "recipe_intake_complete_generation_not_started",
+  "recipeIdentity": {
+    "recipeId": "FOREST_LOCATION_RECIPE_001",
+    "recipeType": "WORLD_ASSEMBLY_FOREST_EXPLORATION_LOCATION",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_TEMPERATE_FOREST_EXPLORATION_001",
+    "lodProfile": "WORLD_ASSEMBLY_REFERENCED_ASSETS_ONLY",
+    "category": "WORLD_ASSEMBLY_LOCATION",
+    "identityPolicy": "DEPENDENCY_REFERENCED_ONLY"
+  },
+  "biomeClassification": {
+    "primaryBiome": "TEMPERATE_FOREST",
+    "supportedBiomeProfiles": [
+      "TEMPERATE_FOREST_EDGE",
+      "FOREST_TRACK_CLEARING",
+      "WOODLAND_RESERVE_LOOP"
+    ],
+    "biomeIntent": "Reusable forest-edge and reserve-walk compositions using approved development-catalog assets plus deferred canopy uplift."
+  },
+  "assetDependencies": {
+    "requiredCoreAssets": [
+      {
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "version": "v001",
+        "role": "primary_path_surface",
+        "familyId": "COASTAL_PATHWAY_FAMILY_001",
+        "category": "terrain",
+        "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "trail_spine",
+          "reserve_loop",
+          "forest_walk"
+        ],
+        "availableLods": {
+          "close": "COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_GRAVEL_PATH_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 137,
+          "gameplayTriangles": 113,
+          "mapTriangles": 89,
+          "closeMaterials": 2
+        },
+        "atlasCompatibility": {
+          "atlasCompatible": true,
+          "supportedObjectTypes": [
+            "PATH",
+            "TRAIL",
+            "BEACH_ACCESS_PATH",
+            "PARK_PATH",
+            "RESERVE_PATH"
+          ],
+          "supportedClassifications": [
+            "ENVIRONMENT_NAVIGATION_TERRAIN",
+            "TERRAIN_TRANSITION"
+          ],
+          "atlasAssignmentRecipeIds": [
+            "COASTAL_GRAVEL_PATH_RECIPE_001"
+          ],
+          "assignmentMode": "biome_and_context_match"
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json"
+      },
+      {
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "version": "v002",
+        "role": "understory_ground_blend",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "leaf_litter_margin",
+          "trail_edge_fill",
+          "forest_floor_blend"
+        ],
+        "availableLods": {
+          "close": "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 173,
+          "gameplayTriangles": 129,
+          "mapTriangles": 97,
+          "closeMaterials": 2
+        },
+        "atlasCompatibility": {
+          "atlasCompatible": true,
+          "supportedObjectTypes": [
+            "GROUND_COVER",
+            "ROADSIDE",
+            "TRAIL_EDGE",
+            "DUNE_MARGIN",
+            "PARK_UNDERSTORY"
+          ],
+          "supportedClassifications": [
+            "NATURAL_FEATURE",
+            "GROUND_COVER"
+          ],
+          "atlasAssignmentRecipeIds": [
+            "COASTAL_GROUND_COVER_RECIPE_001"
+          ],
+          "assignmentMode": "biome_and_context_match"
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json"
+      },
+      {
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "version": "v001",
+        "role": "terrain_detail_cluster",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "trailside_rock",
+          "forest_outcrop",
+          "clearing_margin"
+        ],
+        "availableLods": {
+          "close": "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 129,
+          "gameplayTriangles": 97,
+          "mapTriangles": 65,
+          "closeMaterials": 2
+        },
+        "atlasCompatibility": {
+          "atlasCompatible": true,
+          "supportedObjectTypes": [
+            "ROCK_CLUSTER",
+            "SHORELINE_DETAIL",
+            "TRAILSIDE_DETAIL",
+            "CLIFF_BASE_DETAIL",
+            "PARK_TERRAIN_DETAIL"
+          ],
+          "supportedClassifications": [
+            "NATURAL_FEATURE",
+            "TERRAIN_DETAIL"
+          ],
+          "atlasAssignmentRecipeIds": [
+            "COASTAL_ROCK_CLUSTER_RECIPE_001"
+          ],
+          "assignmentMode": "biome_and_context_match"
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json"
+      }
+    ],
+    "approvedVegetationAssets": [
+      {
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "version": "v001",
+        "role": "native_grass_breakup",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "forest_edge_grass",
+          "light_gap_ground",
+          "track_margin"
+        ],
+        "availableLods": {
+          "close": "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 133,
+          "gameplayTriangles": 89,
+          "mapTriangles": 65,
+          "closeMaterials": 1
+        },
+        "atlasCompatibility": {
+          "atlasCompatible": true,
+          "supportedObjectTypes": [
+            "GRASS",
+            "ROADSIDE",
+            "TRAIL_EDGE",
+            "DUNE_EDGE",
+            "RESERVE_GROUND"
+          ],
+          "supportedClassifications": [
+            "NATURAL_FEATURE",
+            "GROUND_COVER"
+          ],
+          "atlasAssignmentRecipeIds": [
+            "COASTAL_GRASS_TUSSOCK_RECIPE_001"
+          ],
+          "assignmentMode": "biome_and_context_match"
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json"
+      },
+      {
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "version": "v002",
+        "role": "forest_shrub_mass",
+        "familyId": "COASTAL_SHRUB_FAMILY_001",
+        "category": "nature",
+        "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "midstory_cluster",
+          "track_bend_screen",
+          "forest_edge_shrub"
+        ],
+        "availableLods": {
+          "close": "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+          "gameplay": "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+          "map": "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 341,
+          "gameplayTriangles": 241,
+          "mapTriangles": 101,
+          "closeMaterials": 4
+        },
+        "atlasCompatibility": {
+          "atlasCompatible": true,
+          "supportedObjectTypes": [
+            "SHRUB",
+            "PARK",
+            "TRAIL_EDGE",
+            "GARDEN_EDGE"
+          ],
+          "supportedClassifications": [
+            "NATURAL_FEATURE",
+            "PARK"
+          ],
+          "atlasAssignmentRecipeIds": [
+            "SHRUB_COASTAL_LOW_RECIPE_001"
+          ],
+          "assignmentMode": "biome_and_context_match"
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json"
+      },
+      {
+        "assetId": "TREE_BOTTLEBRUSH_001",
+        "version": "v002",
+        "role": "accent_native_tree",
+        "familyId": "TREE_ASSET_FAMILY_001",
+        "category": "nature",
+        "recipeId": "TREE_BOTTLEBRUSH_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "APPROVED_CURRENT",
+        "validationStatus": "approved",
+        "visualApprovalStatus": null,
+        "placementTags": [
+          "trail_marker_tree",
+          "clearing_anchor",
+          "transition_tree"
+        ],
+        "availableLods": {
+          "close": "TREE_BOTTLEBRUSH_001_v002_LOD_CLOSE.glb",
+          "gameplay": "TREE_BOTTLEBRUSH_001_v002_LOD_GAMEPLAY.glb",
+          "map": "TREE_BOTTLEBRUSH_001_v002_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 1089,
+          "gameplayTriangles": 657,
+          "mapTriangles": 265,
+          "closeMaterials": 6
+        },
+        "atlasCompatibility": {
+          "atlasCompatible": true,
+          "supportedObjectTypes": [
+            "TREE",
+            "PARK",
+            "STREET_TREE",
+            "TRAIL_EDGE"
+          ],
+          "supportedClassifications": [
+            "NATURAL_FEATURE",
+            "PARK"
+          ],
+          "atlasAssignmentRecipeIds": [
+            "RECIPE_NATURE_ROADSIDE_NATIVE_STANDARD_001",
+            "RECIPE_NATURE_PARK_STANDARD_001"
+          ],
+          "assignmentMode": "biome_and_context_match"
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json"
+      }
+    ],
+    "deferredAssets": [
+      {
+        "assetId": "TREE_EUCALYPTUS_001",
+        "version": "v001",
+        "plannedRole": "forest_canopy_tree",
+        "lifecycleStatus": "REGISTERED",
+        "validationStatus": "validated",
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-eucalyptus-development-catalog-entry.json",
+        "reason": "TREE_EUCALYPTUS_001 is validated and registered for development use, but has not yet reached an approved lifecycle state required by LOCATION_RECIPE_FACTORY_001 intake rules."
+      }
+    ]
+  },
+  "placementRules": {
+    "zoneDefinitions": [
+      {
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "purpose": "forest arrival, track legibility, and movement orientation",
+        "allowedAssetRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "placementRule": "A readable walking surface must anchor the arrival track, with low ground-cover support allowed on edges but not across the standing corridor."
+      },
+      {
+        "zoneId": "FOREST_EDGE_TRANSITION_ZONE",
+        "purpose": "transition from open approach into denser vegetation character",
+        "allowedAssetRoles": [
+          "native_grass_breakup",
+          "forest_shrub_mass",
+          "understory_ground_blend",
+          "terrain_detail_cluster"
+        ],
+        "placementRule": "Edge-transition zones should step up vegetation density gradually while preserving sight-line breaks and occasional stone or root-like terrain accents."
+      },
+      {
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "purpose": "main forest walking lane under stronger vegetation cover",
+        "allowedAssetRoles": [
+          "primary_path_surface",
+          "understory_ground_blend",
+          "forest_shrub_mass",
+          "accent_native_tree"
+        ],
+        "placementRule": "The main forest track remains traversable and readable while the surrounding vegetation mass increases in depth and enclosure."
+      },
+      {
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "purpose": "pause point, small clearing, or scenic turn-out within the forest walk",
+        "allowedAssetRoles": [
+          "primary_path_surface",
+          "terrain_detail_cluster",
+          "accent_native_tree",
+          "understory_ground_blend"
+        ],
+        "placementRule": "Clearings need one readable standing area plus one or more anchoring accents to create a sense of destination or rest."
+      },
+      {
+        "zoneId": "DEEP_FOREST_MARGIN_ZONE",
+        "purpose": "dense backdrop and future canopy-support zone",
+        "allowedAssetRoles": [
+          "forest_shrub_mass",
+          "native_grass_breakup",
+          "accent_native_tree"
+        ],
+        "placementRule": "The deep forest margin builds the impression of thicker growth behind the main route and reserves space for later canopy-tree promotion."
+      }
+    ],
+    "deterministicPlacementIntent": [
+      "keep primary walking corridor legible from entry to clearing",
+      "increase vegetation mass gradually from edge to deep forest margin",
+      "reserve canopy-support composition space for future eucalyptus promotion"
+    ]
+  },
+  "deterministicSeedRules": {
+    "seedStrategy": "hash(recipeId, locationId, variantId, biomeProfile, placementZoneId)",
+    "requiredSeedFields": [
+      "seed",
+      "locationId",
+      "variantId",
+      "biomeProfile",
+      "archetype"
+    ],
+    "sameSeedMustProduceSameFingerprint": true
+  },
+  "navigationRules": {
+    "supportedArchetypes": [
+      "FOREST_EDGE_LOOP",
+      "CLEARING_SPUR",
+      "RESERVE_TRACK_OUT_AND_BACK"
+    ],
+    "routeIntent": "Forest navigation should prioritize readable walking routes, low obstruction, and a clear destination or return logic.",
+    "standingZoneRule": "At least one clearing or pause zone must preserve a readable standing area free of dense vegetation overlap."
+  },
+  "previewRequirements": {
+    "mode": "NON_RUNTIME_ONLY",
+    "requiredArtifacts": [
+      "placement_preview_data",
+      "dependency_visualization",
+      "zone_summary",
+      "density_report"
+    ],
+    "requiredReviewChecks": [
+      "player_journey",
+      "navigation_flow",
+      "water_transition",
+      "vegetation_density",
+      "asset_spacing",
+      "performance_budgets",
+      "forest_density_gradient"
+    ]
+  },
+  "validationRequirements": {
+    "requiredChecks": [
+      "factory_reference_ready",
+      "approved_dependencies_exist",
+      "unsupported_assets_blocked",
+      "deterministic_seed_rules_defined",
+      "preview_requirements_defined",
+      "approval_workflow_defined"
+    ],
+    "nextAllowedAction": "recipe_generation_only"
+  },
+  "approvalWorkflow": {
+    "prerequisites": [
+      "regeneration_validation_pass",
+      "preview_review_validation_pass",
+      "improvements_confirmed",
+      "dependencies_valid",
+      "performance_budgets_acceptable"
+    ],
+    "producedRecords": [
+      "recipe_approval_record",
+      "approved_recipe_catalog_entry",
+      "recipe_version_record"
+    ],
+    "publishBlockedByDefault": true
+  },
+  "versioningRules": {
+    "oneCurrentApprovedVersionPerRecipe": true,
+    "previousApprovedVersionPreserved": true,
+    "runtimeActivationBlockedInFactory": true,
+    "publishStateDefault": "not_published"
+  },
+  "deterministicFingerprint": "02056e58f274c990754843c279fc852535b6b5487cbb6ee2f0be5c1ee47fc1d8"
+}

@@ -1,0 +1,15 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_LIFECYCLE_RECORD_001",
+  "validationPlanningId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "releaseGateState": "READY_FOR_FUTURE_DISTRIBUTION",
+  "regionalPackagePlanningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+  "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false,
+  "packageDistributionAuthorized": false
+}

@@ -1,0 +1,27 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_VISUAL_INSPECTION_OUTPUT_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "review": {
+    "playerFlow": {
+      "status": "PASS",
+      "summary": "Entry path, crossing transition, and destination zone remain visually understandable in the non-runtime preview."
+    },
+    "assetSpacing": {
+      "status": "PASS",
+      "summary": "Placement spacing stays readable across neighboring assets."
+    },
+    "zoneTransitions": {
+      "status": "PASS",
+      "summary": "Path-to-boardwalk transitions remain isolated to the wet-crossing zone and preserve the intended movement flow."
+    },
+    "densityBalance": {
+      "status": "PASS",
+      "summary": "Vegetation density builds in the buffer zone without overwhelming the entry corridor or shoreline edge."
+    },
+    "navigationClarity": {
+      "status": "PASS",
+      "summary": "Primary path and crossing markers remain visually distinct enough for inspection-oriented review."
+    }
+  }
+}

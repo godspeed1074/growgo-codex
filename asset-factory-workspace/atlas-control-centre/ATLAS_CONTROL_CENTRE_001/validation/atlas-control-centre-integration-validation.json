@@ -1,0 +1,53 @@
+{
+  "schemaId": "ATLAS_CONTROL_CENTRE_INTEGRATION_VALIDATION_001",
+  "controlCentreId": "ATLAS_CONTROL_CENTRE_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "dashboard_integration_defined",
+      "ok": true
+    },
+    {
+      "name": "recipe_management_views_defined",
+      "ok": true
+    },
+    {
+      "name": "package_health_views_defined",
+      "ok": true
+    },
+    {
+      "name": "budget_alert_workflows_defined",
+      "ok": true
+    },
+    {
+      "name": "approval_workflows_defined",
+      "ok": true
+    },
+    {
+      "name": "version_comparison_defined",
+      "ok": true
+    },
+    {
+      "name": "operator_actions_defined",
+      "ok": true
+    },
+    {
+      "name": "audit_logging_defined",
+      "ok": true
+    },
+    {
+      "name": "data_model_defined",
+      "ok": true
+    },
+    {
+      "name": "runtime_player_blender_glb_asset_mutation_blocked",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "66eadf40b7486c8178bd878967d1717115028fb3d480daabc6337ec991e98b8c",
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

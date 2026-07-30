@@ -1,0 +1,42 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_BEFORE_AFTER_RULE_COMPARISON_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "comparisons": [
+    {
+      "area": "canopy_corridor_enclosure_improvement",
+      "before": {
+        "canopyDensityProfile": "MEDIUM_HIGH",
+        "canopyObservedCondition": "canopy corridor reads lighter than the forest-edge transition band",
+        "tuningSignal": "reinforce_canopy_density"
+      },
+      "after": {
+        "plannedSupportRule": "one deterministic soft-enclosure support placement may be added in CANOPY_TRACK_ZONE",
+        "expectedResolvedCondition": "canopy corridor should read more enclosed while preserving the movement lane"
+      }
+    },
+    {
+      "area": "clearing_payoff_enhancement",
+      "before": {
+        "clearingDensityProfile": "LOW_MEDIUM",
+        "clearingObservedCondition": "clearing is readable but light on supporting payoff beyond the main anchor"
+      },
+      "after": {
+        "plannedSupportRule": "one compact support beat may be placed at the clearing edge without reducing standing readability",
+        "expectedResolvedCondition": "clearing should feel more intentional as a pause-point destination"
+      }
+    },
+    {
+      "area": "exploration_curiosity_improvement",
+      "before": {
+        "destinationInterestState": "interest is present but the same accent-tree family carries both destination and backdrop emphasis",
+        "deferredCanopyState": "future eucalyptus uplift remains intentionally deferred"
+      },
+      "after": {
+        "plannedInterestRule": "reserve one deterministic curiosity-support slot between clearing and deep-margin zones",
+        "expectedPoiReadinessState": "later half of the route should carry a clearer secondary discovery beat without using unsupported canopy assets"
+      }
+    }
+  ],
+  "noGeneratedPlanMutation": true,
+  "noAssetMutation": true
+}

@@ -1,0 +1,52 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_REFINEMENT_VALIDATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "refinement_specification_created",
+      "ok": true
+    },
+    {
+      "name": "shoreline_transition_change_planned",
+      "ok": true
+    },
+    {
+      "name": "destination_enhancement_planned",
+      "ok": true
+    },
+    {
+      "name": "density_smoothing_planned",
+      "ok": true
+    },
+    {
+      "name": "exploration_interest_planned",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "updatedValidationRequirements": [
+    "Regenerated preview must resolve shoreline_transition_band support in WET_CROSSING_ZONE.",
+    "Regenerated preview must resolve terrain_detail_cluster support in LOOKOUT_OR_REST_ZONE.",
+    "Shoreline-to-buffer density gradient must remain deterministic while reading less abruptly.",
+    "Destination zone must preserve bottlebrush anchor visibility while increasing arrival interest.",
+    "No runtime activation, Blender usage, or asset mutation is allowed during planning."
+  ],
+  "nextAllowedAction": "recipe_regeneration_ready"
+}

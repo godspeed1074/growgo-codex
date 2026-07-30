@@ -1,0 +1,134 @@
+[
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001",
+    "scenarioType": "coastal_location",
+    "outputType": "QUEST",
+    "blocked": false,
+    "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "suitabilityScore": 75,
+    "suitabilityBand": "HIGH",
+    "opportunityCount": 5,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_WALKING_ROUTE",
+        "questTag": "WALKING_ROUTE",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_DESTINATION_VISIT",
+        "questTag": "DESTINATION_VISIT",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_CROSSING_INTERACTION",
+        "questTag": "CROSSING_INTERACTION",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_BIOZONE_SURVEY",
+        "questTag": "BIOZONE_SURVEY",
+        "rank": 4
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_COASTAL_LOCATION_001_DISCOVERY_LOOP",
+        "questTag": "DISCOVERY_LOOP",
+        "rank": 5
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "87a28fbe33fcbf1c46b82c3497af29ae51cc334d3107837f2dfbcd7019d09150"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001",
+    "scenarioType": "forest_location",
+    "outputType": "QUEST",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "DIRECT_APPROVED",
+    "suitabilityScore": 75,
+    "suitabilityBand": "HIGH",
+    "opportunityCount": 5,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_WALKING_ROUTE",
+        "questTag": "WALKING_ROUTE",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_DESTINATION_VISIT",
+        "questTag": "DESTINATION_VISIT",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_CROSSING_INTERACTION",
+        "questTag": "CROSSING_INTERACTION",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_BIOZONE_SURVEY",
+        "questTag": "BIOZONE_SURVEY",
+        "rank": 4
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_FOREST_LOCATION_001_DISCOVERY_LOOP",
+        "questTag": "DISCOVERY_LOOP",
+        "rank": 5
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "8ba7325b4ba88e7a45a8503bdff756c3430ef7dfeab21fa35b7481a183940205"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_UNSUPPORTED_LOCATION_001",
+    "scenarioType": "unsupported_location",
+    "outputType": "QUEST",
+    "blocked": true,
+    "approvedRecipeId": null,
+    "opportunityCount": 0,
+    "opportunities": [],
+    "reason": "UNSUPPORTED_GAMEPLAY_CONTEXT",
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "6f9ba06e353ddc65c4b83a7d74f24d1a12ffd9634d92530e709bfc9f09dcb4b1"
+  },
+  {
+    "scenarioId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001",
+    "scenarioType": "ambiguous_location",
+    "outputType": "QUEST",
+    "blocked": false,
+    "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+    "reviewState": "APPROVED_AMBIGUOUS_REVIEW_REQUIRED",
+    "suitabilityScore": 65,
+    "suitabilityBand": "MEDIUM",
+    "opportunityCount": 5,
+    "opportunities": [
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_WALKING_ROUTE",
+        "questTag": "WALKING_ROUTE",
+        "rank": 1
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_DESTINATION_VISIT",
+        "questTag": "DESTINATION_VISIT",
+        "rank": 2
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_CROSSING_INTERACTION",
+        "questTag": "CROSSING_INTERACTION",
+        "rank": 3
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_BIOZONE_SURVEY",
+        "questTag": "BIOZONE_SURVEY",
+        "rank": 4
+      },
+      {
+        "opportunityId": "ATLAS_GAMEPLAY_AMBIGUOUS_LOCATION_001_DISCOVERY_LOOP",
+        "questTag": "DISCOVERY_LOOP",
+        "rank": 5
+      }
+    ],
+    "liveGameplayStateCreated": false,
+    "deterministicFingerprint": "7b30fe396a33c74b0005978489101c67ae6e74c72ebc617d39c8acf9c6a75586"
+  }
+]

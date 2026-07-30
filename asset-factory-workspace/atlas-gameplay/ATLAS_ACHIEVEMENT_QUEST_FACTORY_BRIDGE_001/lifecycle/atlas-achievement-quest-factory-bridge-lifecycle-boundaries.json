@@ -1,0 +1,27 @@
+{
+  "schemaId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_LIFECYCLE_001",
+  "bridgeId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "allowedStates": [
+    "PLANNING_ONLY",
+    "FACTORY_INPUT_READY",
+    "REVIEW_REQUIRED"
+  ],
+  "blockedStates": [
+    "QUEST_CREATED",
+    "ACHIEVEMENT_CREATED",
+    "REWARD_GRANTED",
+    "RUNTIME_ACTIVATED",
+    "PLAYER_VISIBLE"
+  ],
+  "achievementFactoryInputCount": 3,
+  "questFactoryInputCount": 3,
+  "collectionHookCount": 3,
+  "poiHookCount": 3,
+  "questsCreated": false,
+  "achievementsCreated": false,
+  "rewardsCreated": false,
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false,
+  "deterministicFingerprint": "9a87386eb1641149dd220d2c8d36e6d2b8f75aad9fe7870b6c61f69b04eed527"
+}

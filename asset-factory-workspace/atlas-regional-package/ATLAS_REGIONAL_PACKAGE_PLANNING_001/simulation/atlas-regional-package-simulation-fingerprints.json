@@ -1,0 +1,22 @@
+[
+  {
+    "scenarioId": "REGIONAL_PACKAGE_COASTAL_001",
+    "packageFingerprint": "c34d76b593c3f097f548399c4e928fa765960d12a76cd9c4c3f743c0f29f73e1"
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_FOREST_001",
+    "packageFingerprint": "f08895e06f8a11785bbc18fa790f57409d7422555436a8dbaf4fc6d510406bbe"
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_MIXED_001",
+    "packageFingerprint": "93c754d37c5524f29053c37f1d2c7e55094b75b8aa02ddeea2567c067d68bbc5"
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_UNSUPPORTED_001",
+    "packageFingerprint": "a26cec713bfe3a466298dcab4e2afb7959ad5b5df0eb70a8f5497fd084532ec0"
+  },
+  {
+    "scenarioId": "REGIONAL_PACKAGE_INVALID_001",
+    "packageFingerprint": "170f1214b0bee4c57e346f076fc336de8bd3cd826a0623e80fc894cb5f4d569f"
+  }
+]

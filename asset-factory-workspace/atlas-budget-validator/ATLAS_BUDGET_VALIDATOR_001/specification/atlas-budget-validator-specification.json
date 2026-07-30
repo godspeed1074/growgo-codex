@@ -1,0 +1,135 @@
+{
+  "schemaId": "ATLAS_BUDGET_VALIDATOR_SPECIFICATION_001",
+  "validatorId": "ATLAS_BUDGET_VALIDATOR_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "costPerformanceId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_001",
+    "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+    "recipeFactoryId": "LOCATION_RECIPE_FACTORY_001"
+  },
+  "packageSizeLimits": {
+    "schemaId": "ATLAS_PACKAGE_SIZE_LIMITS_001",
+    "standardProfileMaxKb": 96,
+    "constrainedProfileMaxKb": 64,
+    "warningThresholdKb": 85.8,
+    "softLimitKb": 88.2,
+    "hardBlockKb": 96,
+    "rationale": [
+      "warning begins slightly above the measured average package size",
+      "soft limit allows small growth above the current measured peak",
+      "hard block aligns with the established mobile standard package cap"
+    ]
+  },
+  "cacheLimits": {
+    "schemaId": "ATLAS_CACHE_LIMITS_001",
+    "standardWarmPackageCount": 24,
+    "constrainedWarmPackageCount": 12,
+    "standardEstimatedFootprintKb": 1872,
+    "constrainedEstimatedFootprintKb": 936,
+    "warningThresholdRatio": 0.9,
+    "blockThresholdRatio": 1
+  },
+  "recipeComplexityLimits": {
+    "schemaId": "ATLAS_RECIPE_COMPLEXITY_LIMITS_001",
+    "averageGenerationKb": 26.92,
+    "peakGenerationKb": 29.05,
+    "warningGenerationKb": 30.96,
+    "hardBlockGenerationKb": 39.22,
+    "deterministicStagesPerSuccessfulLocation": 6,
+    "referenceRecipeCount": 1
+  },
+  "generationCostThresholds": {
+    "schemaId": "ATLAS_GENERATION_COST_THRESHOLDS_001",
+    "validationPassesPerPackage": 6,
+    "classificationPassesPerPackage": 1,
+    "selectionPassesPerPackage": 1,
+    "recipeGenerationPassesPerSuccessfulLocation": 1,
+    "previewAssemblyPassesPerSuccessfulLocation": 1,
+    "blockedShortCircuitRequired": true
+  },
+  "previewPayloadLimits": {
+    "schemaId": "ATLAS_PREVIEW_PAYLOAD_LIMITS_001",
+    "averagePreviewKb": 19.11,
+    "peakPreviewKb": 24.81,
+    "warningPreviewKb": 23.89,
+    "hardBlockPreviewKb": 48,
+    "previewMode": "NON_RUNTIME_ONLY",
+    "safeDistributionTarget": "metadata_preview_only"
+  },
+  "warningStates": {
+    "schemaId": "ATLAS_BUDGET_WARNING_STATES_001",
+    "states": [
+      "WARNING_PACKAGE_NEAR_LIMIT",
+      "WARNING_CACHE_NEAR_LIMIT",
+      "WARNING_RECIPE_COMPLEXITY_RISING",
+      "WARNING_PREVIEW_PAYLOAD_RISING",
+      "WARNING_BACKEND_REUSE_BELOW_TARGET"
+    ],
+    "policy": "warn without blocking when within caution band but still under hard limits"
+  },
+  "blockingStates": {
+    "schemaId": "ATLAS_BUDGET_BLOCKING_STATES_001",
+    "states": [
+      "BLOCK_PACKAGE_SIZE_LIMIT",
+      "BLOCK_CACHE_LIMIT",
+      "BLOCK_RECIPE_COMPLEXITY_LIMIT",
+      "BLOCK_PREVIEW_PAYLOAD_LIMIT",
+      "BLOCK_REUSE_POLICY_FAILURE",
+      "BLOCK_RUNTIME_SAFETY_VIOLATION"
+    ],
+    "policy": "block future Atlas engineering handoff when hard budget or safety gates fail"
+  },
+  "approvalRecommendations": {
+    "schemaId": "ATLAS_BUDGET_APPROVAL_RECOMMENDATIONS_001",
+    "recommendationStates": [
+      "APPROVE_WITHIN_BUDGET",
+      "APPROVE_WITH_WARNING",
+      "HOLD_FOR_OPTIMIZATION",
+      "BLOCK_FOR_REDESIGN"
+    ],
+    "rules": [
+      "approve within budget when all limits pass with no warnings",
+      "approve with warning when only warning-band thresholds are crossed",
+      "hold for optimization when soft limits are exceeded but hard blocks are not",
+      "block for redesign when any hard block threshold or safety violation occurs"
+    ]
+  },
+  "representativeBudgetCases": [
+    {
+      "caseId": "BUDGET_CASE_WITHIN_LIMITS_001",
+      "packageSizeKb": 78,
+      "warmPackageCount": 20,
+      "generationKb": 26.92,
+      "previewKb": 19.11,
+      "reuseRate": 0.85,
+      "expectedRecommendation": "APPROVE_WITHIN_BUDGET"
+    },
+    {
+      "caseId": "BUDGET_CASE_WARNING_001",
+      "packageSizeKb": 85.8,
+      "warmPackageCount": 23,
+      "generationKb": 30.96,
+      "previewKb": 23.89,
+      "reuseRate": 0.72,
+      "expectedRecommendation": "APPROVE_WITH_WARNING"
+    },
+    {
+      "caseId": "BUDGET_CASE_HOLD_001",
+      "packageSizeKb": 88.2,
+      "warmPackageCount": 24,
+      "generationKb": 32.51,
+      "previewKb": 25.08,
+      "reuseRate": 0.68,
+      "expectedRecommendation": "HOLD_FOR_OPTIMIZATION"
+    },
+    {
+      "caseId": "BUDGET_CASE_BLOCK_001",
+      "packageSizeKb": 100,
+      "warmPackageCount": 26,
+      "generationKb": 41.22,
+      "previewKb": 52,
+      "reuseRate": 0.4,
+      "expectedRecommendation": "BLOCK_FOR_REDESIGN"
+    }
+  ]
+}

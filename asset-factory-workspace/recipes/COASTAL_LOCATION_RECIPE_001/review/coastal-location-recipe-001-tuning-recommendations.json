@@ -1,0 +1,60 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_TUNING_RECOMMENDATIONS_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "derivedFromReviewRecordId": "COASTAL_LOCATION_RECIPE_001_MANUAL_REVIEW_AND_TUNING_001",
+  "recommendationCount": 3,
+  "recommendations": [
+    {
+      "recommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_001",
+      "priority": "HIGH",
+      "area": "shorelineTransition",
+      "title": "Carry shoreline transition support into the crossing approaches",
+      "rationale": "The crossing zone requires shoreline_transition_band but currently contains only the elevated boardwalk beat.",
+      "recommendedAdjustment": "Introduce one lightweight shoreline transition support placement adjacent to the wet crossing approaches so the boardwalk feels grounded in the coastal edge rather than dropped onto it.",
+      "affectedRoles": [
+        "shoreline_transition_band",
+        "elevated_wet_crossing"
+      ],
+      "candidateAssets": [
+        "COASTAL_WATER_EDGE_001",
+        "COASTAL_ROCK_CLUSTER_001"
+      ],
+      "deterministicGuardrail": "Keep the added support tied to the existing crossing zone seed so placement remains reproducible."
+    },
+    {
+      "recommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_002",
+      "priority": "HIGH",
+      "area": "destinationInterest",
+      "title": "Strengthen the lookout/rest destination with one terrain-detail support beat",
+      "rationale": "LOOKOUT_OR_REST_ZONE currently lacks the required terrain_detail_cluster role, which leaves the endpoint visually thin.",
+      "recommendedAdjustment": "Add one compact terrain or edge-detail accent near the destination path segment so the final zone feels intentional without becoming crowded.",
+      "affectedRoles": [
+        "terrain_detail_cluster",
+        "primary_path_surface"
+      ],
+      "candidateAssets": [
+        "COASTAL_ROCK_CLUSTER_001",
+        "COASTAL_GROUND_COVER_001"
+      ],
+      "deterministicGuardrail": "Preserve the bottlebrush as the primary destination anchor and keep added detail below current MEDIUM density expectations."
+    },
+    {
+      "recommendationId": "COASTAL_LOCATION_RECIPE_001_TUNING_REC_003",
+      "priority": "MEDIUM",
+      "area": "densityGradient",
+      "title": "Soften the shoreline-to-buffer density jump",
+      "rationale": "The shoreline zone is sparse while the inland vegetation buffer immediately jumps to full vegetation occupancy.",
+      "recommendedAdjustment": "Trial one intermediary accent placement or redistribute one existing understory element closer to the shoreline edge so the transition reads more gradual.",
+      "affectedRoles": [
+        "understory_ground_blend",
+        "native_grass_breakup"
+      ],
+      "candidateAssets": [
+        "COASTAL_GROUND_COVER_001",
+        "COASTAL_GRASS_TUSSOCK_001"
+      ],
+      "deterministicGuardrail": "Maintain LOW shoreline density and avoid adding enough placements to obscure path readability."
+    }
+  ]
+}

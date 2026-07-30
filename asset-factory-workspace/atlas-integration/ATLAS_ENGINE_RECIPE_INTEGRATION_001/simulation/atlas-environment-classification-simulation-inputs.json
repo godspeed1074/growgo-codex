@@ -1,0 +1,149 @@
+[
+  {
+    "scenarioId": "CLASSIFY_COASTAL_001",
+    "scenarioType": "coastal_environment",
+    "description": "Strong shoreline, dune, and wet-crossing signals with coastal pedestrian access.",
+    "regionPackageId": "SIM_REGION_PACKAGE_COASTAL_001",
+    "worldContextId": "SIM_WORLD_CONTEXT_COASTAL_001",
+    "coordinateReference": {
+      "lat": -38.1214,
+      "lng": 144.6139
+    },
+    "landformSignals": [
+      "dune_edge",
+      "boardwalk_alignment",
+      "shoreline_margin"
+    ],
+    "vegetationSignals": [
+      "coastal_grass",
+      "coastal_shrub",
+      "bottlebrush"
+    ],
+    "hydrologySignals": [
+      "saltwater_edge",
+      "wetland_margin"
+    ],
+    "accessSignals": [
+      "pedestrian_path",
+      "lookout_link"
+    ],
+    "settlementSignals": [
+      "reserve_entry"
+    ]
+  },
+  {
+    "scenarioId": "CLASSIFY_FOREST_001",
+    "scenarioType": "forest_environment",
+    "description": "Clear canopy, understory, clearing, and forest-track signals.",
+    "regionPackageId": "SIM_REGION_PACKAGE_FOREST_001",
+    "worldContextId": "SIM_WORLD_CONTEXT_FOREST_001",
+    "coordinateReference": {
+      "lat": -37.8402,
+      "lng": 145.2911
+    },
+    "landformSignals": [
+      "forest_track",
+      "clearing_node",
+      "enclosed_corridor"
+    ],
+    "vegetationSignals": [
+      "forest_canopy",
+      "understory_shrub",
+      "forest_grass"
+    ],
+    "hydrologySignals": [
+      "dry_ground"
+    ],
+    "accessSignals": [
+      "pedestrian_path"
+    ],
+    "settlementSignals": [
+      "reserve_trailhead"
+    ]
+  },
+  {
+    "scenarioId": "CLASSIFY_MIXED_001",
+    "scenarioType": "mixed_transition",
+    "description": "Wet coastal edge with enough canopy pressure to read as a mixed transition.",
+    "regionPackageId": "SIM_REGION_PACKAGE_MIXED_001",
+    "worldContextId": "SIM_WORLD_CONTEXT_MIXED_001",
+    "coordinateReference": {
+      "lat": -38.0219,
+      "lng": 145.0133
+    },
+    "landformSignals": [
+      "wetland_margin",
+      "forest_edge",
+      "transition_track"
+    ],
+    "vegetationSignals": [
+      "coastal_grass",
+      "forest_canopy",
+      "bottlebrush"
+    ],
+    "hydrologySignals": [
+      "wetland_margin",
+      "creek_edge"
+    ],
+    "accessSignals": [
+      "pedestrian_path",
+      "wet_crossing"
+    ],
+    "settlementSignals": []
+  },
+  {
+    "scenarioId": "CLASSIFY_UNSUPPORTED_001",
+    "scenarioType": "unsupported_environment",
+    "description": "Cold alpine-style signals that should be blocked by the planning layer.",
+    "regionPackageId": "SIM_REGION_PACKAGE_UNSUPPORTED_001",
+    "worldContextId": "SIM_WORLD_CONTEXT_UNSUPPORTED_001",
+    "coordinateReference": {
+      "lat": -36.9912,
+      "lng": 147.1131
+    },
+    "landformSignals": [
+      "rock_scree",
+      "snow_pass"
+    ],
+    "vegetationSignals": [
+      "alpine_low_shrub"
+    ],
+    "hydrologySignals": [
+      "snow_melt"
+    ],
+    "accessSignals": [
+      "steep_pass"
+    ],
+    "settlementSignals": []
+  },
+  {
+    "scenarioId": "CLASSIFY_AMBIGUOUS_001",
+    "scenarioType": "ambiguous_environment",
+    "description": "Borderline forest-coastal margin with balanced transition signals.",
+    "regionPackageId": "SIM_REGION_PACKAGE_AMBIGUOUS_001",
+    "worldContextId": "SIM_WORLD_CONTEXT_AMBIGUOUS_001",
+    "coordinateReference": {
+      "lat": -37.9981,
+      "lng": 145.0822
+    },
+    "landformSignals": [
+      "forest_edge",
+      "reserve_track",
+      "coastal_margin"
+    ],
+    "vegetationSignals": [
+      "forest_canopy",
+      "coastal_shrub",
+      "bottlebrush"
+    ],
+    "hydrologySignals": [
+      "creek_edge"
+    ],
+    "accessSignals": [
+      "pedestrian_path"
+    ],
+    "settlementSignals": [
+      "reserve_entry"
+    ]
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_VALIDATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "factory_reference_ready",
+      "ok": true
+    },
+    {
+      "name": "approved_dependencies_exist",
+      "ok": true
+    },
+    {
+      "name": "unsupported_assets_blocked",
+      "ok": true
+    },
+    {
+      "name": "deterministic_seed_rules_defined",
+      "ok": true
+    },
+    {
+      "name": "preview_requirements_defined",
+      "ok": true
+    },
+    {
+      "name": "approval_workflow_defined",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "02056e58f274c990754843c279fc852535b6b5487cbb6ee2f0be5c1ee47fc1d8",
+  "nextAllowedAction": "recipe_generation_only"
+}

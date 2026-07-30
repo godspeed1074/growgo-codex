@@ -1,0 +1,141 @@
+{
+  "schemaId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_SPECIFICATION_001",
+  "bridgeId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "gameplayIntegrationId": "ATLAS_GAMEPLAY_INTEGRATION_001",
+    "gameplayOpportunitySimulationId": "ATLAS_GAMEPLAY_OPPORTUNITY_SIMULATION_001",
+    "achievementFactory": "ACHIEVEMENT_FACTORY_PLANNING_TARGET",
+    "questFactory": "QUEST_FACTORY_PLANNING_TARGET"
+  },
+  "opportunityToAchievementMapping": {
+    "sourceOutputType": "ACHIEVEMENT",
+    "requiredFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "suitabilityScore",
+      "suitabilityBand",
+      "opportunities"
+    ],
+    "mappingRules": [
+      "SCENIC_LOOKOUT -> scenic_discovery_achievement_candidate",
+      "SHORELINE_DISCOVERY -> coastal_progress_achievement_candidate",
+      "FOREST_CLEARING_DISCOVERY -> forest_discovery_achievement_candidate",
+      "ROUTE_COMPLETION -> traversal_completion_achievement_candidate",
+      "NATURE_OBSERVATION -> observation_achievement_candidate"
+    ],
+    "blockedWhen": [
+      "scenario blocked unsupported",
+      "approvedRecipeId missing",
+      "live gameplay requested"
+    ]
+  },
+  "opportunityToQuestMapping": {
+    "sourceOutputType": "QUEST",
+    "requiredFields": [
+      "scenarioId",
+      "approvedRecipeId",
+      "suitabilityScore",
+      "suitabilityBand",
+      "opportunities"
+    ],
+    "mappingRules": [
+      "WALKING_ROUTE -> route_following_quest_candidate",
+      "DESTINATION_VISIT -> destination_visit_quest_candidate",
+      "CROSSING_INTERACTION -> transition_interaction_quest_candidate",
+      "BIOZONE_SURVEY -> ecology_survey_quest_candidate",
+      "DISCOVERY_LOOP -> exploration_loop_quest_candidate"
+    ],
+    "blockedWhen": [
+      "scenario blocked unsupported",
+      "review state unresolved",
+      "quest creation requested"
+    ]
+  },
+  "collectionHookMapping": {
+    "sourceOutputType": "COLLECTION",
+    "hookTargets": [
+      "flora_sample_collection_hook",
+      "landscape_memory_collection_hook",
+      "route_stamp_collection_hook",
+      "terrain_study_collection_hook"
+    ],
+    "requiredFields": [
+      "scenarioId",
+      "collectionTag",
+      "rank"
+    ],
+    "deterministicOrdering": true
+  },
+  "poiHookMapping": {
+    "sourceOutputType": "POI",
+    "hookTargets": [
+      "poi_preview_candidate",
+      "poi_discovery_candidate",
+      "poi_route_anchor_candidate"
+    ],
+    "requiredFields": [
+      "scenarioId",
+      "type",
+      "zoneId",
+      "rank"
+    ],
+    "deterministicOrdering": true
+  },
+  "difficultyEstimation": {
+    "bands": [
+      "VERY_LIGHT",
+      "LIGHT",
+      "MODERATE",
+      "HIGH"
+    ],
+    "inputs": [
+      "quest suitability score",
+      "achievement suitability score",
+      "routeLengthBand",
+      "traversalComplexity",
+      "reviewState"
+    ],
+    "estimationRules": [
+      "blocked scenarios do not produce difficulty",
+      "ambiguous review state caps difficulty at MODERATE planning confidence",
+      "moderate traversal complexity increases quest difficulty band"
+    ]
+  },
+  "rewardPlanningInputs": {
+    "supportedRewardInputs": [
+      "rewardTheme",
+      "rewardRarityHint",
+      "collectionWeight",
+      "discoveryWeight",
+      "traversalWeight"
+    ],
+    "sourceSignals": [
+      "opportunity type",
+      "suitability score",
+      "featureSummary.destinationType",
+      "featureSummary.floraDensityBand"
+    ],
+    "rewardsCreatedByBridge": false
+  },
+  "validationRules": {
+    "approvedRecipesOnly": true,
+    "deterministicMappingsRequired": true,
+    "unsupportedContextsBlocked": true,
+    "liveGameplayStateBlocked": true
+  },
+  "lifecycleBoundaries": {
+    "allowedStates": [
+      "PLANNING_ONLY",
+      "FACTORY_INPUT_READY",
+      "REVIEW_REQUIRED"
+    ],
+    "blockedStates": [
+      "QUEST_CREATED",
+      "ACHIEVEMENT_CREATED",
+      "REWARD_GRANTED",
+      "RUNTIME_ACTIVATED",
+      "PLAYER_VISIBLE"
+    ]
+  }
+}

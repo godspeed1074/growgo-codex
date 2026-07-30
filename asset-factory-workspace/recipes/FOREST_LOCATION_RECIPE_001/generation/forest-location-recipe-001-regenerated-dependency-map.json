@@ -1,0 +1,98 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REGENERATED_DEPENDENCY_MAP_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "assets": [
+    {
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "role": "primary_path_surface",
+      "familyId": "COASTAL_PATHWAY_FAMILY_001",
+      "category": "terrain",
+      "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json",
+      "placementCount": 5,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "CLEARING_OR_REST_ZONE",
+        "ENTRY_TRACK_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "role": "understory_ground_blend",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json",
+      "placementCount": 8,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "ENTRY_TRACK_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "role": "terrain_detail_cluster",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json",
+      "placementCount": 4,
+      "zones": [
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "role": "native_grass_breakup",
+      "familyId": "COASTAL_NATURE_FAMILY_001",
+      "category": "nature",
+      "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json",
+      "placementCount": 5,
+      "zones": [
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "role": "forest_shrub_mass",
+      "familyId": "COASTAL_SHRUB_FAMILY_001",
+      "category": "nature",
+      "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json",
+      "placementCount": 4,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "role": "accent_native_tree",
+      "familyId": "TREE_ASSET_FAMILY_001",
+      "category": "nature",
+      "recipeId": "TREE_BOTTLEBRUSH_RECIPE_001",
+      "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json",
+      "placementCount": 2,
+      "zones": [
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE"
+      ]
+    }
+  ],
+  "deferredAssets": [
+    {
+      "assetId": "TREE_EUCALYPTUS_001",
+      "plannedRole": "forest_canopy_tree",
+      "lifecycleStatus": "REGISTERED",
+      "reason": "TREE_EUCALYPTUS_001 is validated and registered for development use, but has not yet reached an approved lifecycle state required by LOCATION_RECIPE_FACTORY_001 intake rules."
+    }
+  ],
+  "unsupportedAssetsIncluded": false
+}

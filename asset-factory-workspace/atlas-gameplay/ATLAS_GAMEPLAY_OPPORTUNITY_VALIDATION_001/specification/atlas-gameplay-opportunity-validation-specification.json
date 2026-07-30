@@ -1,0 +1,132 @@
+{
+  "schemaId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_SPECIFICATION_001",
+  "validationId": "ATLAS_GAMEPLAY_OPPORTUNITY_VALIDATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "gameplayIntegrationId": "ATLAS_GAMEPLAY_INTEGRATION_001",
+    "gameplayOpportunitySimulationId": "ATLAS_GAMEPLAY_OPPORTUNITY_SIMULATION_001",
+    "achievementQuestFactoryBridgeId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_001"
+  },
+  "opportunityQualityScoring": {
+    "scoreRange": [
+      0,
+      100
+    ],
+    "weightedFactors": [
+      {
+        "factor": "suitability_score",
+        "weight": 0.35
+      },
+      {
+        "factor": "location_feature_clarity",
+        "weight": 0.2
+      },
+      {
+        "factor": "opportunity_count_balance",
+        "weight": 0.15
+      },
+      {
+        "factor": "review_state_confidence",
+        "weight": 0.15
+      },
+      {
+        "factor": "player_experience_safety",
+        "weight": 0.15
+      }
+    ],
+    "decisionBands": {
+      "APPROVE": 75,
+      "REVIEW": 50,
+      "HOLD": 30
+    }
+  },
+  "duplicatePrevention": {
+    "duplicateSignatureFields": [
+      "approvedRecipeId",
+      "scenarioType",
+      "opportunityType",
+      "rewardTheme",
+      "difficultyBand"
+    ],
+    "duplicatePolicies": [
+      "identical signatures in the same validation batch must be flagged",
+      "duplicate signatures may survive only when sourceOpportunityId differs and review state is explicit",
+      "blocked scenarios cannot generate duplicate candidates"
+    ],
+    "deterministicOrderingRequired": true
+  },
+  "difficultyValidation": {
+    "allowedBands": [
+      "VERY_LIGHT",
+      "LIGHT",
+      "MODERATE",
+      "HIGH"
+    ],
+    "validationRules": [
+      "blocked scenarios cannot emit difficulty",
+      "ambiguous review state cannot exceed MODERATE",
+      "moderate traversal complexity may raise but not skip directly to HIGH without strong scores"
+    ]
+  },
+  "locationSuitabilityChecks": {
+    "requiredFields": [
+      "routeLengthBand",
+      "destinationType",
+      "transitionPresence",
+      "floraDensityBand",
+      "traversalComplexity"
+    ],
+    "checks": [
+      "coastal opportunities require shoreline or destination evidence for scenic hooks",
+      "forest opportunities require canopy or clearing evidence for forest hooks",
+      "quest candidates require traversable route evidence",
+      "collection candidates require discovery or flora evidence"
+    ]
+  },
+  "rewardPlanningValidation": {
+    "requiredFields": [
+      "rewardTheme",
+      "rewardRarityHint",
+      "collectionWeight",
+      "discoveryWeight",
+      "traversalWeight"
+    ],
+    "rules": [
+      "reward theme must align with scenario type or review state",
+      "reward rarity hint must be LOW, MEDIUM, or HIGH",
+      "weights must remain numeric planning signals only",
+      "no reward objects or payout records may be created"
+    ]
+  },
+  "playerExperienceRules": {
+    "rules": [
+      "unsupported scenarios must block instead of generating thin content",
+      "ambiguous scenarios must remain visible for review",
+      "opportunity density should stay readable rather than noisy",
+      "difficulty should scale with traversal clarity and destination strength"
+    ],
+    "blockedOutcomes": [
+      "confusing duplicate hooks",
+      "unsupported environment hooks",
+      "live player state mutation",
+      "reward inflation via repeated signatures"
+    ]
+  },
+  "approvalGates": {
+    "states": [
+      "READY_FOR_FACTORY_INPUT",
+      "REVIEW_REQUIRED",
+      "HOLD",
+      "BLOCKED"
+    ],
+    "gateChecks": [
+      "quality_score_band_valid",
+      "duplicate_signature_policy_passes",
+      "difficulty_band_valid",
+      "location_suitability_valid",
+      "reward_planning_valid",
+      "player_experience_rules_valid"
+    ],
+    "approvedRecipesOnly": true
+  }
+}

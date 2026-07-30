@@ -1,0 +1,50 @@
+{
+  "schemaId": "ATLAS_WORLD_GENERATION_COST_MODEL_ASSUMPTIONS_001",
+  "performancePlanningId": "ATLAS_WORLD_GENERATION_COST_PERFORMANCE_001",
+  "assumptionsVersion": "v001",
+  "storageAssumptions": {
+    "packageStoredAsMetadataBlob": true,
+    "previewStoredAsMetadataBlob": true,
+    "recipeGenerationStoredAsDeterministicJson": true,
+    "averagePerRegionStorageKb": 97.11,
+    "averagePerGeneratedLocationArtifactKb": 46.03
+  },
+  "bandwidthAssumptions": {
+    "standardRegionFetchKb": 78,
+    "previewInspectionFetchKb": 19.11,
+    "successfulEndToEndLocationPrepKb": 124.03,
+    "blockedInvalidPackageBandwidthWasteKb": 78
+  },
+  "scalingAssumptions": {
+    "concurrentPlayersPerHotRegion": 20,
+    "sharedRegionReuseRate": 0.85,
+    "packageCacheHitTarget": 0.8,
+    "previewReuseHitTarget": 0.7,
+    "selectorComputationCostClass": "LOW",
+    "deterministicRecipeGenerationCostClass": "LOW_TO_MEDIUM"
+  },
+  "firebaseBackendConsiderations": {
+    "pricingInputsMode": "assumption_only_no_live_pricing_lookup",
+    "preferredBlobStorage": "store region package and preview payloads as immutable versioned blobs",
+    "preferredIndexStorage": "store lightweight region metadata, fingerprints, and availability indexes separately",
+    "costPressureDrivers": [
+      "duplicate package writes across refreshes",
+      "per-player preview duplication instead of fingerprint reuse",
+      "high-frequency invalidation causing cache churn",
+      "chatty metadata reads without bundled region indexes"
+    ],
+    "mitigationRules": [
+      "reuse packages by regionId and fingerprint",
+      "reuse preview payloads by deterministic recipe fingerprint",
+      "short-circuit invalid packages before downstream stages",
+      "prefer batched metadata fetches over many small reads"
+    ]
+  },
+  "backendProcessingAssumptions": {
+    "classificationComputeBudgetClass": "LOW",
+    "selectionComputeBudgetClass": "LOW",
+    "recipeGenerationComputeBudgetClass": "LOW_TO_MEDIUM",
+    "previewAssemblyComputeBudgetClass": "LOW",
+    "blockedPackageProcessingBudgetClass": "VERY_LOW"
+  }
+}

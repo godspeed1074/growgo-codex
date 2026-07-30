@@ -1,0 +1,119 @@
+{
+  "schemaId": "LOCATION_RECIPE_FACTORY_SPECIFICATION_001",
+  "factoryId": "LOCATION_RECIPE_FACTORY_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "referenceRecipe": {
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+    "version": "v001",
+    "lifecycleStatus": "APPROVED_CURRENT",
+    "deterministicFingerprint": "c475a001c080048255059dcf60ed1f370763ef584275effdeaa53f593877c5ed"
+  },
+  "recipeSchema": {
+    "requiredIdentityFields": [
+      "recipeId",
+      "recipePackageId",
+      "recipeType",
+      "version",
+      "variantId",
+      "paletteId",
+      "lodProfile",
+      "category",
+      "identityPolicy"
+    ],
+    "requiredDependencyFields": [
+      "assetId",
+      "version",
+      "role",
+      "familyId",
+      "category",
+      "recipeId",
+      "environment",
+      "lifecycleStatus",
+      "validationStatus",
+      "sourceCatalogRecord"
+    ],
+    "requiredOutputRecords": [
+      "specification",
+      "generation",
+      "preview",
+      "review",
+      "refinement",
+      "approval",
+      "catalog",
+      "version"
+    ]
+  },
+  "lifecycleStates": [
+    "INTAKE_DEFINED",
+    "GENERATION_READY",
+    "GENERATED",
+    "PREVIEW_READY",
+    "PREVIEW_REVIEWED",
+    "REFINEMENT_PLANNED",
+    "REGENERATED",
+    "APPROVAL_READY",
+    "APPROVED_CURRENT"
+  ],
+  "dependencyValidation": {
+    "allowedDependencyLifecycleStates": [
+      "ACTIVE_DEVELOPMENT_REVISION",
+      "APPROVED_CURRENT",
+      "APPROVED_CURRENT_CANDIDATE"
+    ],
+    "requiredDependencyStatuses": {
+      "validationStatus": "approved",
+      "environment": "DEVELOPMENT_ONLY"
+    },
+    "unsupportedAssetsPolicy": "BLOCK_RECIPE"
+  },
+  "deterministicGenerationRules": {
+    "requiredSeedFields": [
+      "seed",
+      "locationId",
+      "variantId",
+      "biomeProfile",
+      "archetype"
+    ],
+    "fingerprintPolicy": "hash(recipeId, locationPlanId, zoneAllocation, placementTransforms)",
+    "sameSeedMustProduceSameFingerprint": true,
+    "refinementMustProduceNewFingerprintWhenPlanChanges": true
+  },
+  "previewWorkflow": {
+    "mode": "NON_RUNTIME_ONLY",
+    "requiredArtifacts": [
+      "placement_preview_data",
+      "dependency_visualization",
+      "zone_summary",
+      "density_report"
+    ],
+    "requiredReviewChecks": [
+      "navigation_flow",
+      "water_transition",
+      "vegetation_density",
+      "asset_spacing",
+      "performance_budgets"
+    ]
+  },
+  "approvalWorkflow": {
+    "prerequisites": [
+      "regeneration_validation_pass",
+      "preview_review_validation_pass",
+      "improvements_confirmed",
+      "dependencies_valid",
+      "performance_budgets_acceptable"
+    ],
+    "producedRecords": [
+      "recipe_approval_record",
+      "approved_recipe_catalog_entry",
+      "recipe_version_record"
+    ],
+    "publishBlockedByDefault": true
+  },
+  "versioningRules": {
+    "oneCurrentApprovedVersionPerRecipe": true,
+    "previousApprovedVersionPreserved": true,
+    "runtimeActivationBlockedInFactory": true,
+    "publishStateDefault": "not_published"
+  }
+}

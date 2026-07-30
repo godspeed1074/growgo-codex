@@ -1,0 +1,56 @@
+{
+  "schemaId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_VALIDATION_001",
+  "bridgeId": "ATLAS_ACHIEVEMENT_QUEST_FACTORY_BRIDGE_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "opportunity_to_achievement_mapping_defined",
+      "ok": true
+    },
+    {
+      "name": "opportunity_to_quest_mapping_defined",
+      "ok": true
+    },
+    {
+      "name": "collection_hook_mapping_defined",
+      "ok": true
+    },
+    {
+      "name": "poi_hook_mapping_defined",
+      "ok": true
+    },
+    {
+      "name": "difficulty_estimation_defined",
+      "ok": true
+    },
+    {
+      "name": "reward_planning_inputs_defined",
+      "ok": true
+    },
+    {
+      "name": "approved_recipes_only",
+      "ok": true
+    },
+    {
+      "name": "unsupported_simulation_scenarios_remain_blocked",
+      "ok": true
+    },
+    {
+      "name": "no_quests_achievements_rewards_runtime_or_player_state_created",
+      "ok": true
+    },
+    {
+      "name": "deterministic_bridge_outputs",
+      "ok": true
+    }
+  ],
+  "deterministicFingerprint": "9a87386eb1641149dd220d2c8d36e6d2b8f75aad9fe7870b6c61f69b04eed527",
+  "questsCreated": false,
+  "achievementsCreated": false,
+  "rewardsCreated": false,
+  "runtimeActivationAuthorized": false,
+  "playerExposureAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

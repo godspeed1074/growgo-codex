@@ -1,0 +1,113 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_DEPENDENCY_VISUALIZATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "nodes": [
+    {
+      "nodeId": "COASTAL_GRAVEL_PATH_001",
+      "label": "COASTAL_GRAVEL_PATH_001",
+      "category": "terrain",
+      "role": "primary_path_surface",
+      "placementCount": 5,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "CLEARING_OR_REST_ZONE",
+        "ENTRY_TRACK_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_GROUND_COVER_001",
+      "label": "COASTAL_GROUND_COVER_001",
+      "category": "nature",
+      "role": "understory_ground_blend",
+      "placementCount": 7,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "ENTRY_TRACK_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_ROCK_CLUSTER_001",
+      "label": "COASTAL_ROCK_CLUSTER_001",
+      "category": "nature",
+      "role": "terrain_detail_cluster",
+      "placementCount": 3,
+      "zones": [
+        "CLEARING_OR_REST_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "COASTAL_GRASS_TUSSOCK_001",
+      "label": "COASTAL_GRASS_TUSSOCK_001",
+      "category": "nature",
+      "role": "native_grass_breakup",
+      "placementCount": 6,
+      "zones": [
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "SHRUB_COASTAL_LOW_001",
+      "label": "SHRUB_COASTAL_LOW_001",
+      "category": "nature",
+      "role": "forest_shrub_mass",
+      "placementCount": 4,
+      "zones": [
+        "CANOPY_TRACK_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE",
+        "FOREST_EDGE_TRANSITION_ZONE"
+      ]
+    },
+    {
+      "nodeId": "TREE_BOTTLEBRUSH_001",
+      "label": "TREE_BOTTLEBRUSH_001",
+      "category": "nature",
+      "role": "accent_native_tree",
+      "placementCount": 2,
+      "zones": [
+        "CLEARING_OR_REST_ZONE",
+        "DEEP_FOREST_MARGIN_ZONE"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "COASTAL_GRAVEL_PATH_001",
+      "to": "COASTAL_GROUND_COVER_001",
+      "relation": "forest_recipe_layering_sequence",
+      "reason": "primary_path_surface contributes before understory_ground_blend in the forest preview stack"
+    },
+    {
+      "from": "COASTAL_GROUND_COVER_001",
+      "to": "COASTAL_ROCK_CLUSTER_001",
+      "relation": "forest_recipe_layering_sequence",
+      "reason": "understory_ground_blend contributes before terrain_detail_cluster in the forest preview stack"
+    },
+    {
+      "from": "COASTAL_ROCK_CLUSTER_001",
+      "to": "COASTAL_GRASS_TUSSOCK_001",
+      "relation": "forest_recipe_layering_sequence",
+      "reason": "terrain_detail_cluster contributes before native_grass_breakup in the forest preview stack"
+    },
+    {
+      "from": "COASTAL_GRASS_TUSSOCK_001",
+      "to": "SHRUB_COASTAL_LOW_001",
+      "relation": "forest_recipe_layering_sequence",
+      "reason": "native_grass_breakup contributes before forest_shrub_mass in the forest preview stack"
+    },
+    {
+      "from": "SHRUB_COASTAL_LOW_001",
+      "to": "TREE_BOTTLEBRUSH_001",
+      "relation": "forest_recipe_layering_sequence",
+      "reason": "forest_shrub_mass contributes before accent_native_tree in the forest preview stack"
+    },
+    {
+      "from": "TREE_EUCALYPTUS_001",
+      "to": "CANOPY_TRACK_ZONE",
+      "relation": "deferred_forest_canopy_uplift",
+      "reason": "TREE_EUCALYPTUS_001 is validated and registered for development use, but has not yet reached an approved lifecycle state required by LOCATION_RECIPE_FACTORY_001 intake rules."
+    }
+  ]
+}

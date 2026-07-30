@@ -1,0 +1,67 @@
+[
+  {
+    "scenarioId": "CLASSIFY_COASTAL_001",
+    "biomeConfidence": {
+      "environmentConfidence": 68,
+      "ambiguityGap": 57,
+      "channelScores": {
+        "coastal": 89,
+        "forest": 10,
+        "mixed": 32,
+        "unsupported": 0
+      }
+    }
+  },
+  {
+    "scenarioId": "CLASSIFY_FOREST_001",
+    "biomeConfidence": {
+      "environmentConfidence": 80,
+      "ambiguityGap": 62,
+      "channelScores": {
+        "coastal": 6,
+        "forest": 75,
+        "mixed": 13,
+        "unsupported": 0
+      }
+    }
+  },
+  {
+    "scenarioId": "CLASSIFY_MIXED_001",
+    "biomeConfidence": {
+      "environmentConfidence": 41,
+      "ambiguityGap": 11,
+      "channelScores": {
+        "coastal": 54,
+        "forest": 39,
+        "mixed": 65,
+        "unsupported": 0
+      }
+    }
+  },
+  {
+    "scenarioId": "CLASSIFY_UNSUPPORTED_001",
+    "biomeConfidence": {
+      "environmentConfidence": 0,
+      "ambiguityGap": 0,
+      "channelScores": {
+        "coastal": 0,
+        "forest": 0,
+        "mixed": 0,
+        "unsupported": 80
+      }
+    }
+  },
+  {
+    "scenarioId": "CLASSIFY_AMBIGUOUS_001",
+    "biomeConfidence": {
+      "environmentConfidence": 40,
+      "ambiguityGap": 9,
+      "channelScores": {
+        "coastal": 44,
+        "forest": 37,
+        "mixed": 53,
+        "unsupported": 0
+      }
+    }
+  }
+]

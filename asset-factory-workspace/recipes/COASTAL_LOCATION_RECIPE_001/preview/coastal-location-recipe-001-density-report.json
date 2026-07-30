@@ -1,0 +1,47 @@
+[
+  {
+    "zoneId": "ENTRY_PATH_ZONE",
+    "densityProfile": "LOW",
+    "totalPlacementCount": 7,
+    "vegetationPlacementCount": 5,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0.714,
+    "placementsPerLaneUnit": 0.292
+  },
+  {
+    "zoneId": "SHORELINE_EDGE_ZONE",
+    "densityProfile": "LOW",
+    "totalPlacementCount": 5,
+    "vegetationPlacementCount": 0,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0,
+    "placementsPerLaneUnit": 0.156
+  },
+  {
+    "zoneId": "WET_CROSSING_ZONE",
+    "densityProfile": "LOW",
+    "totalPlacementCount": 1,
+    "vegetationPlacementCount": 0,
+    "structuralPlacementCount": 1,
+    "vegetationRatio": 0,
+    "placementsPerLaneUnit": 0.05
+  },
+  {
+    "zoneId": "VEGETATION_BUFFER_ZONE",
+    "densityProfile": "MEDIUM",
+    "totalPlacementCount": 10,
+    "vegetationPlacementCount": 10,
+    "structuralPlacementCount": 0,
+    "vegetationRatio": 1,
+    "placementsPerLaneUnit": 0.278
+  },
+  {
+    "zoneId": "LOOKOUT_OR_REST_ZONE",
+    "densityProfile": "MEDIUM",
+    "totalPlacementCount": 3,
+    "vegetationPlacementCount": 1,
+    "structuralPlacementCount": 2,
+    "vegetationRatio": 0.333,
+    "placementsPerLaneUnit": 0.094
+  }
+]

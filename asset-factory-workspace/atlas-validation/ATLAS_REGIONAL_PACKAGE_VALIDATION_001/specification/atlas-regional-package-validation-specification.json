@@ -1,0 +1,411 @@
+{
+  "schemaId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_SPECIFICATION_001",
+  "validationPlanningId": "ATLAS_REGIONAL_PACKAGE_VALIDATION_001",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "references": {
+    "regionalPackagePlanningId": "ATLAS_REGIONAL_PACKAGE_PLANNING_001",
+    "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+    "selectorId": "LOCATION_RECIPE_SELECTOR_001"
+  },
+  "integrityChecks": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_INTEGRITY_CHECKS_001",
+    "requiredTopLevelFields": [
+      "packageId",
+      "regionId",
+      "packageVersion",
+      "schemaVersion",
+      "coordinateReference",
+      "dataLayers",
+      "environmentSummary",
+      "classificationInputs",
+      "selectorCompatibility",
+      "cacheMetadata",
+      "refreshMetadata"
+    ],
+    "requiredIdentityFields": [
+      "sourceDatasetId",
+      "sourceRevision",
+      "regionSlug",
+      "latBucket",
+      "lngBucket",
+      "environmentProfile"
+    ],
+    "requiredDataLayers": [
+      "REGION_BOUNDARY_LAYER",
+      "HYDROLOGY_SIGNAL_LAYER",
+      "VEGETATION_SIGNAL_LAYER",
+      "ACCESS_NETWORK_LAYER",
+      "SETTLEMENT_CONTEXT_LAYER",
+      "ENVIRONMENT_SUMMARY_LAYER",
+      "PROVENANCE_LAYER"
+    ],
+    "requiredCacheKeys": [
+      "packageFingerprint",
+      "sourceRevision",
+      "selectorVersion",
+      "classificationRuleVersion",
+      "mobileProfile"
+    ],
+    "integrityRules": [
+      "packageId and regionId must be present before selector handoff",
+      "all required data layers must exist before classification",
+      "cacheMetadata.packageFingerprint must exist before validation completes",
+      "provenance fields must remain intact through optimization and refresh"
+    ]
+  },
+  "schemaValidationRules": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_VALIDATION_001",
+    "requiredSchemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+    "requiredPackageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+    "requiredSchemaVersion": "v001",
+    "compatibilityDimensions": [
+      "schemaVersion",
+      "selectorVersion",
+      "integrationPlanningVersion",
+      "classificationRuleVersion"
+    ],
+    "schemaFailurePolicy": "block package from selector handoff and mark validation lifecycle BLOCKED_SCHEMA"
+  },
+  "dependencyValidationRules": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_DEPENDENCY_VALIDATION_001",
+    "selectorDependency": {
+      "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+      "requiredSelectorFields": [
+        "worldContextId",
+        "environment",
+        "biomeProfile",
+        "routeMode",
+        "archetype",
+        "desiredFeatures",
+        "seed"
+      ],
+      "requiredEnvironment": "DEVELOPMENT_ONLY"
+    },
+    "approvedRecipes": [
+      {
+        "recipeId": "COASTAL_LOCATION_RECIPE_001",
+        "version": "v001",
+        "lifecycleStatus": "APPROVED_CURRENT",
+        "environment": "DEVELOPMENT_ONLY"
+      },
+      {
+        "recipeId": "FOREST_LOCATION_RECIPE_001",
+        "version": "v001",
+        "lifecycleStatus": "APPROVED_CURRENT",
+        "environment": "DEVELOPMENT_ONLY"
+      }
+    ],
+    "dependencyRules": [
+      "only approved selector-compatible recipes may be targeted",
+      "selector handoff must preserve required environment and seed fields",
+      "unsupported or unpublished recipes must block package readiness"
+    ]
+  },
+  "recipeCompatibilityValidationRules": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_RECIPE_COMPATIBILITY_VALIDATION_001",
+    "selectorCompatibilityContract": {
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_RECIPE_COMPATIBILITY_001",
+      "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+      "approvedRecipeIds": [
+        "COASTAL_LOCATION_RECIPE_001",
+        "FOREST_LOCATION_RECIPE_001"
+      ],
+      "requiredSelectorFields": [
+        "worldContextId",
+        "environment",
+        "biomeProfile",
+        "routeMode",
+        "archetype",
+        "desiredFeatures",
+        "seed"
+      ],
+      "requiredEnvironment": "DEVELOPMENT_ONLY",
+      "compatibilityRules": [
+        "package must emit a complete selector handoff payload",
+        "package must only target APPROVED_CURRENT recipes through selector output",
+        "package must preserve biomeProfile, routeMode, archetype, desiredFeatures, and seed deterministically",
+        "package must remain compatible with ATLAS_ENGINE_RECIPE_INTEGRATION_001 thresholds and fallback rules"
+      ]
+    },
+    "acceptanceRules": [
+      "package must produce complete selector handoff payload",
+      "package may only target approved current recipes",
+      "package must preserve deterministic seed inputs",
+      "package must preserve fallback compatibility with ATLAS_ENGINE_RECIPE_INTEGRATION_001"
+    ],
+    "rejectionPolicy": "reject package if selectorCompatibility or approvedRecipeIds drift from approved contract"
+  },
+  "fingerprintVerificationRules": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_FINGERPRINT_VERIFICATION_001",
+    "fingerprintInputs": [
+      "packageId",
+      "sourceRevision",
+      "schemaVersion",
+      "environmentProfile",
+      "latBucket",
+      "lngBucket"
+    ],
+    "identityReplayRules": [
+      "same package identity inputs must reproduce same package fingerprint",
+      "fingerprint mismatch must block selector handoff",
+      "fingerprint mismatch must preserve last validated package for rollback"
+    ],
+    "verificationAlgorithm": "sha256_pipe_joined_identity_fields"
+  },
+  "corruptionHandling": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_CORRUPTION_HANDLING_001",
+    "corruptionStates": [
+      "BLOCKED_CORRUPT",
+      "BLOCKED_SCHEMA",
+      "BLOCKED_DEPENDENCY",
+      "BLOCKED_COMPATIBILITY",
+      "BLOCKED_FINGERPRINT",
+      "BLOCKED_MOBILE_BUDGET"
+    ],
+    "reasonCodes": [
+      "MISSING_REQUIRED_LAYER",
+      "MISSING_REQUIRED_IDENTITY",
+      "INVALID_SCHEMA_VERSION",
+      "SELECTOR_CONTRACT_MISMATCH",
+      "APPROVED_RECIPE_DRIFT",
+      "FINGERPRINT_MISMATCH",
+      "MOBILE_STORAGE_BUDGET_EXCEEDED"
+    ],
+    "safeFailureBehaviour": [
+      "block selector handoff immediately",
+      "preserve last validated package metadata",
+      "do not activate runtime",
+      "do not download replacement maps in planning phase",
+      "do not mutate package payload"
+    ]
+  },
+  "rollbackStrategy": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_ROLLBACK_STRATEGY_001",
+    "rollbackTarget": "LAST_VALIDATED_PACKAGE_FINGERPRINT",
+    "rollbackStates": [
+      "VALIDATED_INTERNAL",
+      "ROLLBACK_READY",
+      "ROLLED_BACK_LAST_VALIDATED"
+    ],
+    "rollbackRules": [
+      "rollback may only target a previously validated package fingerprint",
+      "rollback preserves regionId and package identity lineage",
+      "rollback remains metadata-only and runtime-blocked",
+      "rollback requires a corruption or incompatibility reason code"
+    ]
+  },
+  "releaseGating": {
+    "schemaId": "ATLAS_REGIONAL_PACKAGE_RELEASE_GATING_001",
+    "lifecycleStates": [
+      "DRAFT_PACKAGE",
+      "INTERNAL_VALIDATION_PENDING",
+      "VALIDATED_INTERNAL",
+      "ROLLBACK_READY",
+      "READY_FOR_FUTURE_DISTRIBUTION",
+      "BLOCKED"
+    ],
+    "requiredGateChecks": [
+      "integrity_checks_pass",
+      "schema_validation_pass",
+      "dependency_validation_pass",
+      "recipe_compatibility_validation_pass",
+      "fingerprint_verification_pass",
+      "mobile_suitability_pass"
+    ],
+    "releaseRules": [
+      "packages may not advance beyond internal validation when runtime remains blocked",
+      "distribution readiness does not authorize runtime activation",
+      "invalid or corrupt packages cannot bypass rollback gate"
+    ]
+  },
+  "mobileSuitabilityContract": {
+    "optimizationId": "ATLAS_PACKAGE_OPTIMIZATION_001",
+    "profileId": "MOBILE_STANDARD_001",
+    "maxCompressedPackageKb": 96,
+    "preservedFields": [
+      "packageId",
+      "regionId",
+      "packageVersion",
+      "schemaVersion",
+      "selectorCompatibility",
+      "cacheMetadata.packageFingerprint"
+    ],
+    "selectorCriticalLayers": [
+      "REGION_BOUNDARY_LAYER",
+      "HYDROLOGY_SIGNAL_LAYER",
+      "VEGETATION_SIGNAL_LAYER",
+      "ACCESS_NETWORK_LAYER",
+      "ENVIRONMENT_SUMMARY_LAYER",
+      "PROVENANCE_LAYER"
+    ]
+  },
+  "representativeValidationScenarios": [
+    {
+      "scenarioId": "REGIONAL_PACKAGE_VALIDATION_VALID_1",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "schemaVersion": "v001",
+      "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "requiredFieldsPresent": true,
+      "requiredIdentityPresent": true,
+      "dataLayersPresent": [
+        "REGION_BOUNDARY_LAYER",
+        "HYDROLOGY_SIGNAL_LAYER",
+        "VEGETATION_SIGNAL_LAYER",
+        "ACCESS_NETWORK_LAYER",
+        "SETTLEMENT_CONTEXT_LAYER",
+        "ENVIRONMENT_SUMMARY_LAYER",
+        "PROVENANCE_LAYER"
+      ],
+      "selectorCompatibilityComplete": true,
+      "computedFingerprint": "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed",
+      "declaredFingerprint": "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed",
+      "compressedPackageKb": 72,
+      "mobileBudgetKb": 96,
+      "recipeApproved": true,
+      "valid": true
+    },
+    {
+      "scenarioId": "REGIONAL_PACKAGE_VALIDATION_VALID_2",
+      "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+      "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "schemaVersion": "v001",
+      "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "requiredFieldsPresent": true,
+      "requiredIdentityPresent": true,
+      "dataLayersPresent": [
+        "REGION_BOUNDARY_LAYER",
+        "HYDROLOGY_SIGNAL_LAYER",
+        "VEGETATION_SIGNAL_LAYER",
+        "ACCESS_NETWORK_LAYER",
+        "SETTLEMENT_CONTEXT_LAYER",
+        "ENVIRONMENT_SUMMARY_LAYER",
+        "PROVENANCE_LAYER"
+      ],
+      "selectorCompatibilityComplete": true,
+      "computedFingerprint": "1dbda2e0a1edeca195c5606e4a45c8f66987dafe69dc3911af3334ad234af2c1",
+      "declaredFingerprint": "1dbda2e0a1edeca195c5606e4a45c8f66987dafe69dc3911af3334ad234af2c1",
+      "compressedPackageKb": 78,
+      "mobileBudgetKb": 96,
+      "recipeApproved": true,
+      "valid": true
+    },
+    {
+      "scenarioId": "REGIONAL_PACKAGE_VALIDATION_VALID_3",
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "schemaVersion": "v001",
+      "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "requiredFieldsPresent": true,
+      "requiredIdentityPresent": true,
+      "dataLayersPresent": [
+        "REGION_BOUNDARY_LAYER",
+        "HYDROLOGY_SIGNAL_LAYER",
+        "VEGETATION_SIGNAL_LAYER",
+        "ACCESS_NETWORK_LAYER",
+        "SETTLEMENT_CONTEXT_LAYER",
+        "ENVIRONMENT_SUMMARY_LAYER",
+        "PROVENANCE_LAYER"
+      ],
+      "selectorCompatibilityComplete": true,
+      "computedFingerprint": "8eb96000c1872696a9f398134276e4e053db6a1f6f9ce749e0f0e925964e7cd2",
+      "declaredFingerprint": "8eb96000c1872696a9f398134276e4e053db6a1f6f9ce749e0f0e925964e7cd2",
+      "compressedPackageKb": 84,
+      "mobileBudgetKb": 96,
+      "recipeApproved": true,
+      "valid": true
+    },
+    {
+      "scenarioId": "REGIONAL_PACKAGE_VALIDATION_CORRUPT_001",
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "schemaVersion": "v001",
+      "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+      "approvedRecipeId": "COASTAL_LOCATION_RECIPE_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "requiredFieldsPresent": false,
+      "requiredIdentityPresent": false,
+      "dataLayersPresent": [
+        "REGION_BOUNDARY_LAYER",
+        "HYDROLOGY_SIGNAL_LAYER",
+        "VEGETATION_SIGNAL_LAYER",
+        "ACCESS_NETWORK_LAYER",
+        "SETTLEMENT_CONTEXT_LAYER",
+        "ENVIRONMENT_SUMMARY_LAYER"
+      ],
+      "selectorCompatibilityComplete": false,
+      "computedFingerprint": "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed",
+      "declaredFingerprint": "corrupt-fingerprint",
+      "compressedPackageKb": 72,
+      "mobileBudgetKb": 96,
+      "recipeApproved": true,
+      "valid": false
+    },
+    {
+      "scenarioId": "REGIONAL_PACKAGE_VALIDATION_INCOMPATIBLE_RECIPE_001",
+      "packageId": "ATLAS_REGION_PACKAGE_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_v001",
+      "regionId": "REGION_DANDENONG_RANGES_EDGE_NEG_37_84_145_29_FOREST_EXPLORATION",
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "schemaVersion": "v001",
+      "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+      "approvedRecipeId": "UNAPPROVED_RECIPE_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "requiredFieldsPresent": true,
+      "requiredIdentityPresent": true,
+      "dataLayersPresent": [
+        "REGION_BOUNDARY_LAYER",
+        "HYDROLOGY_SIGNAL_LAYER",
+        "VEGETATION_SIGNAL_LAYER",
+        "ACCESS_NETWORK_LAYER",
+        "SETTLEMENT_CONTEXT_LAYER",
+        "ENVIRONMENT_SUMMARY_LAYER",
+        "PROVENANCE_LAYER"
+      ],
+      "selectorCompatibilityComplete": true,
+      "computedFingerprint": "1dbda2e0a1edeca195c5606e4a45c8f66987dafe69dc3911af3334ad234af2c1",
+      "declaredFingerprint": "1dbda2e0a1edeca195c5606e4a45c8f66987dafe69dc3911af3334ad234af2c1",
+      "compressedPackageKb": 78,
+      "mobileBudgetKb": 96,
+      "recipeApproved": false,
+      "valid": false
+    },
+    {
+      "scenarioId": "REGIONAL_PACKAGE_VALIDATION_OVERSIZE_001",
+      "packageId": "ATLAS_REGION_PACKAGE_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_v001",
+      "regionId": "REGION_COASTAL_FOREST_MARGIN_NEG_38_02_145_01_MIXED_EDGE_TRANSITION",
+      "schemaId": "ATLAS_REGIONAL_PACKAGE_SCHEMA_001",
+      "schemaVersion": "v001",
+      "packageType": "ATLAS_REGION_CONTEXT_PACKAGE",
+      "approvedRecipeId": "FOREST_LOCATION_RECIPE_001",
+      "environment": "DEVELOPMENT_ONLY",
+      "requiredFieldsPresent": true,
+      "requiredIdentityPresent": true,
+      "dataLayersPresent": [
+        "REGION_BOUNDARY_LAYER",
+        "HYDROLOGY_SIGNAL_LAYER",
+        "VEGETATION_SIGNAL_LAYER",
+        "ACCESS_NETWORK_LAYER",
+        "SETTLEMENT_CONTEXT_LAYER",
+        "ENVIRONMENT_SUMMARY_LAYER",
+        "PROVENANCE_LAYER"
+      ],
+      "selectorCompatibilityComplete": true,
+      "computedFingerprint": "8eb96000c1872696a9f398134276e4e053db6a1f6f9ce749e0f0e925964e7cd2",
+      "declaredFingerprint": "8eb96000c1872696a9f398134276e4e053db6a1f6f9ce749e0f0e925964e7cd2",
+      "compressedPackageKb": 104,
+      "mobileBudgetKb": 96,
+      "recipeApproved": true,
+      "valid": false
+    }
+  ]
+}

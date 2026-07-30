@@ -1,0 +1,478 @@
+{
+  "schemaId": "ASSET_FACTORY_V1_WORLD_ASSEMBLY_RECIPE_INTAKE_001",
+  "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+  "workflowVersion": "ASSET_FACTORY_V1",
+  "createdOn": "2026-07-30",
+  "status": "recipe_intake_complete_generation_not_started",
+  "recipeIdentity": {
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipeType": "WORLD_ASSEMBLY_COASTAL_EXPLORATION_LOCATION",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_COASTAL_EXPLORATION_001",
+    "lodProfile": "WORLD_ASSEMBLY_REFERENCED_ASSETS_ONLY",
+    "category": "WORLD_ASSEMBLY_LOCATION",
+    "identityPolicy": "DEPENDENCY_REFERENCED_ONLY"
+  },
+  "assetDependencies": {
+    "requiredCoreAssets": [
+      {
+        "assetId": "COASTAL_GRAVEL_PATH_001",
+        "version": "v001",
+        "role": "primary_path_surface",
+        "familyId": "COASTAL_PATHWAY_FAMILY_001",
+        "category": "terrain",
+        "recipeId": "COASTAL_GRAVEL_PATH_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "trail_spine",
+          "beach_access",
+          "reserve_link"
+        ],
+        "availableLods": {
+          "close": "COASTAL_GRAVEL_PATH_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_GRAVEL_PATH_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_GRAVEL_PATH_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 137,
+          "gameplayTriangles": 113,
+          "mapTriangles": 89,
+          "closeMaterials": 2
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-gravel-path-development-catalog-entry.json"
+      },
+      {
+        "assetId": "COASTAL_BOARDWALK_001",
+        "version": "v001",
+        "role": "elevated_wet_crossing",
+        "familyId": "COASTAL_PATHWAY_FAMILY_001",
+        "category": "environment_navigation_structure",
+        "recipeId": "COASTAL_BOARDWALK_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "wetland_crossing",
+          "dune_walkover",
+          "lookout_approach"
+        ],
+        "availableLods": {
+          "close": "COASTAL_BOARDWALK_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_BOARDWALK_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_BOARDWALK_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 221,
+          "gameplayTriangles": 185,
+          "mapTriangles": 149,
+          "closeMaterials": 2
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_PATHWAY_FAMILY_001/export/coastal-boardwalk-development-catalog-entry.json"
+      },
+      {
+        "assetId": "COASTAL_WATER_EDGE_001",
+        "version": "v001",
+        "role": "shoreline_transition_band",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_WATER_EDGE_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "water_margin",
+          "creek_edge",
+          "shoreline_buffer"
+        ],
+        "availableLods": {
+          "close": "COASTAL_WATER_EDGE_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_WATER_EDGE_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_WATER_EDGE_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 165,
+          "gameplayTriangles": 121,
+          "mapTriangles": 77,
+          "closeMaterials": 2
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-water-edge-development-catalog-entry.json"
+      },
+      {
+        "assetId": "COASTAL_GROUND_COVER_001",
+        "version": "v002",
+        "role": "understory_ground_blend",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_GROUND_COVER_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "path_edge",
+          "dune_margin",
+          "rest_area_fill"
+        ],
+        "availableLods": {
+          "close": "COASTAL_GROUND_COVER_001_v002_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_GROUND_COVER_001_v002_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_GROUND_COVER_001_v002_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 173,
+          "gameplayTriangles": 129,
+          "mapTriangles": 97,
+          "closeMaterials": 2
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-ground-cover-v002-development-catalog-entry.json"
+      },
+      {
+        "assetId": "COASTAL_ROCK_CLUSTER_001",
+        "version": "v001",
+        "role": "terrain_detail_cluster",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_ROCK_CLUSTER_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "shoreline_detail",
+          "cliff_base",
+          "lookout_margin"
+        ],
+        "availableLods": {
+          "close": "COASTAL_ROCK_CLUSTER_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_ROCK_CLUSTER_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_ROCK_CLUSTER_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 129,
+          "gameplayTriangles": 97,
+          "mapTriangles": 65,
+          "closeMaterials": 2
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-rock-cluster-development-catalog-entry.json"
+      }
+    ],
+    "approvedVegetationAssets": [
+      {
+        "assetId": "COASTAL_GRASS_TUSSOCK_001",
+        "version": "v001",
+        "role": "native_grass_breakup",
+        "familyId": "COASTAL_NATURE_FAMILY_001",
+        "category": "nature",
+        "recipeId": "COASTAL_GRASS_TUSSOCK_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "trail_edge",
+          "dune_edge",
+          "reserve_ground"
+        ],
+        "availableLods": {
+          "close": "COASTAL_GRASS_TUSSOCK_001_LOD_CLOSE.glb",
+          "gameplay": "COASTAL_GRASS_TUSSOCK_001_LOD_GAMEPLAY.glb",
+          "map": "COASTAL_GRASS_TUSSOCK_001_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 133,
+          "gameplayTriangles": 89,
+          "mapTriangles": 65,
+          "closeMaterials": 1
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/coastal-grass-tussock-development-catalog-entry.json"
+      },
+      {
+        "assetId": "SHRUB_COASTAL_LOW_001",
+        "version": "v002",
+        "role": "coastal_shrub_mass",
+        "familyId": "COASTAL_SHRUB_FAMILY_001",
+        "category": "nature",
+        "recipeId": "SHRUB_COASTAL_LOW_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "ACTIVE_DEVELOPMENT_REVISION",
+        "validationStatus": "approved",
+        "visualApprovalStatus": "approved",
+        "placementTags": [
+          "windbreak",
+          "garden_edge",
+          "shelter_cluster"
+        ],
+        "availableLods": {
+          "close": "SHRUB_COASTAL_LOW_001_v002_LOD_CLOSE.glb",
+          "gameplay": "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+          "map": "SHRUB_COASTAL_LOW_001_v002_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 341,
+          "gameplayTriangles": 241,
+          "mapTriangles": 101,
+          "closeMaterials": 4
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/shrub-coastal-low-development-catalog-entry.json"
+      },
+      {
+        "assetId": "TREE_BOTTLEBRUSH_001",
+        "version": "v002",
+        "role": "accent_native_tree",
+        "familyId": "TREE_ASSET_FAMILY_001",
+        "category": "nature",
+        "recipeId": "TREE_BOTTLEBRUSH_RECIPE_001",
+        "environment": "DEVELOPMENT_ONLY",
+        "lifecycleStatus": "APPROVED_CURRENT",
+        "validationStatus": "approved",
+        "visualApprovalStatus": null,
+        "placementTags": [
+          "gateway_marker",
+          "lookout_shade",
+          "park_anchor"
+        ],
+        "availableLods": {
+          "close": "TREE_BOTTLEBRUSH_001_v002_LOD_CLOSE.glb",
+          "gameplay": "TREE_BOTTLEBRUSH_001_v002_LOD_GAMEPLAY.glb",
+          "map": "TREE_BOTTLEBRUSH_001_v002_LOD_MAP.glb"
+        },
+        "metrics": {
+          "closeTriangles": 1089,
+          "gameplayTriangles": 657,
+          "mapTriangles": 265,
+          "closeMaterials": 6
+        },
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-bottlebrush-development-catalog-entry.json"
+      }
+    ],
+    "deferredAssets": [
+      {
+        "assetId": "TREE_EUCALYPTUS_001",
+        "version": "v001",
+        "lifecycleStatus": "REGISTERED",
+        "validationStatus": "validated",
+        "sourceCatalogRecord": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/tree-eucalyptus-development-catalog-entry.json",
+        "reason": "Validated local asset exists, but the catalog state is not yet in an approved lifecycle band for this recipe intake."
+      }
+    ]
+  },
+  "placementRules": {
+    "zoneDefinitions": [
+      {
+        "zoneId": "ENTRY_PATH_ZONE",
+        "purpose": "primary coastal arrival and pedestrian guidance",
+        "allowedAssetRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "placementRule": "COASTAL_GRAVEL_PATH_001 anchors the entry corridor and may be flanked by ground cover or grass without obstructing walkability."
+      },
+      {
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "purpose": "visual shoreline transition and non-navigable water boundary",
+        "allowedAssetRoles": [
+          "shoreline_transition_band",
+          "terrain_detail_cluster"
+        ],
+        "placementRule": "COASTAL_WATER_EDGE_001 defines the water boundary and must remain non-traversable, with rock clusters used only as edge-weighted accents."
+      },
+      {
+        "zoneId": "WET_CROSSING_ZONE",
+        "purpose": "wetland, dune, creek, or unstable ground passage",
+        "allowedAssetRoles": [
+          "elevated_wet_crossing",
+          "shoreline_transition_band"
+        ],
+        "placementRule": "COASTAL_BOARDWALK_001 is used only where a grade break, water-adjacent crossing, or unstable terrain transition makes gravel path placement unsuitable."
+      },
+      {
+        "zoneId": "VEGETATION_BUFFER_ZONE",
+        "purpose": "soften edges and establish coastal biome character",
+        "allowedAssetRoles": [
+          "native_grass_breakup",
+          "coastal_shrub_mass",
+          "accent_native_tree",
+          "understory_ground_blend"
+        ],
+        "placementRule": "Vegetation layers must preserve sight lines on navigation edges while building denser masses behind paths, boardwalk entries, and lookout margins."
+      },
+      {
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "purpose": "small pause point, scenic turnout, or destination node",
+        "allowedAssetRoles": [
+          "primary_path_surface",
+          "elevated_wet_crossing",
+          "terrain_detail_cluster",
+          "accent_native_tree"
+        ],
+        "placementRule": "Destination nodes may terminate a path or complete a loop, but must keep at least one readable standing zone clear of dense vegetation or water-edge collision."
+      }
+    ],
+    "adjacencyRules": [
+      "COASTAL_GRAVEL_PATH_001 may transition into COASTAL_BOARDWALK_001 only through an explicit wet-crossing or unstable-ground zone.",
+      "COASTAL_WATER_EDGE_001 must sit adjacent to shoreline, creek, inlet, or wet-margin bands and may not be placed as a free-floating inland strip.",
+      "COASTAL_ROCK_CLUSTER_001 should reinforce edges, corners, and lookout bases rather than fill traversal lanes.",
+      "Ground cover, grass, shrubs, and bottlebrush masses should layer from low to high away from the walkable corridor to preserve path readability."
+    ],
+    "repeatedPlacementCompatibility": {
+      "deterministicPlacementCompatible": true,
+      "repeatedPlacementReady": true,
+      "snapOrAlignmentExpectation": "Path and boardwalk segments should be assembled on deterministic lane points rather than freehand artist offsets."
+    }
+  },
+  "deterministicSeedRules": {
+    "seedStrategy": "hash(recipeId, locationId, variantId, biomeProfile, placementZoneId)",
+    "seedInputs": [
+      "recipeId",
+      "locationId",
+      "variantId",
+      "biomeProfile",
+      "placementZoneId"
+    ],
+    "deterministicGuarantees": [
+      "same seed input set yields the same dependency ordering and placement slot choices",
+      "vegetation jitter remains bounded to per-zone placement envelopes",
+      "boardwalk usage appears only when a zone is tagged as wet crossing or unstable terrain"
+    ],
+    "allowedRandomisation": {
+      "shorelineEdgeOffsetMeters": {
+        "min": -0.35,
+        "max": 0.35
+      },
+      "vegetationScatterMeters": {
+        "min": -0.75,
+        "max": 0.75
+      },
+      "rockRotationDegrees": {
+        "min": -18,
+        "max": 18
+      }
+    }
+  },
+  "biomeRules": {
+    "allowedBiomeProfiles": [
+      "COASTAL_DUNE_EDGE",
+      "COASTAL_WETLAND_MARGIN",
+      "COASTAL_RESERVE_TRAIL",
+      "COASTAL_CLIFF_LOOKOUT",
+      "COASTAL_CREEK_MOUTH"
+    ],
+    "disallowedBiomeProfiles": [
+      "URBAN_MAIN_STREET",
+      "INLAND_FARMLAND",
+      "ALPINE_TUNDRA"
+    ],
+    "compatibilityNotes": [
+      "Boardwalk emphasis rises in wetland, creek, and dune-protection contexts.",
+      "Rock density rises around cliff and lookout margins.",
+      "Bottlebrush and shrubs are optional accent vegetation rather than mandatory core traversal assets."
+    ]
+  },
+  "navigationRules": {
+    "navigationMode": "pedestrian_exploration",
+    "routeRequirements": [
+      "every location must expose at least one continuous traversable route from entry zone to a scenic or loop completion destination",
+      "water-edge bands remain visual boundaries and are never traversable route surfaces",
+      "boardwalk entries and exits must reconnect to path-capable terrain or a designated destination node"
+    ],
+    "accessibilityGuidance": [
+      "prefer gravel path for flat dry approaches",
+      "use boardwalk where terrain becomes wet, fragile, elevated, or erosion-sensitive",
+      "keep vegetation clear of the primary movement corridor"
+    ],
+    "supportedArchetypes": [
+      "BEACH_ACCESS_SPUR",
+      "RESERVE_LOOP",
+      "WETLAND_CROSSING",
+      "CLIFF_LOOKOUT_APPROACH"
+    ]
+  },
+  "validationRequirements": {
+    "recipeIntakeChecks": [
+      "recipe_identity_defined",
+      "required_core_assets_are_approved",
+      "approved_vegetation_assets_are_approved",
+      "placement_rules_defined",
+      "deterministic_seed_rules_defined",
+      "biome_rules_defined",
+      "navigation_rules_defined",
+      "performance_constraints_defined",
+      "dependencies_are_development_only",
+      "no_blender_files_created",
+      "no_geometry_generated",
+      "no_glb_exports_created",
+      "no_asset_modification_performed",
+      "no_registration_records_created",
+      "no_promotion_records_created"
+    ],
+    "futureGenerationChecks": [
+      "deterministic_recipe_generation",
+      "approved_dependency_resolution_only",
+      "location_layout_seed_replay_supported",
+      "navigation_path_continuity_preserved",
+      "water_edge_non_traversable_boundaries_preserved",
+      "instance_caps_respected",
+      "performance_budget_respected",
+      "no_runtime_activation_side_effects"
+    ]
+  },
+  "performanceConstraints": {
+    "mobileFirst": true,
+    "maxUniqueReferencedAssetsPerLocation": 8,
+    "maxMaterialFamiliesPerLocation": 8,
+    "preferredInstanceCaps": {
+      "COASTAL_GRAVEL_PATH_001": 14,
+      "COASTAL_BOARDWALK_001": 10,
+      "COASTAL_WATER_EDGE_001": 12,
+      "COASTAL_GROUND_COVER_001": 24,
+      "COASTAL_ROCK_CLUSTER_001": 12,
+      "COASTAL_GRASS_TUSSOCK_001": 20,
+      "SHRUB_COASTAL_LOW_001": 10,
+      "TREE_BOTTLEBRUSH_001": 4
+    },
+    "archetypeTriangleBudgets": {
+      "BEACH_ACCESS_SPUR": {
+        "closeMax": 5200,
+        "gameplayMax": 3600,
+        "mapMax": 1800
+      },
+      "RESERVE_LOOP": {
+        "closeMax": 7600,
+        "gameplayMax": 5200,
+        "mapMax": 2600
+      },
+      "WETLAND_CROSSING": {
+        "closeMax": 6800,
+        "gameplayMax": 4700,
+        "mapMax": 2400
+      },
+      "CLIFF_LOOKOUT_APPROACH": {
+        "closeMax": 7200,
+        "gameplayMax": 5000,
+        "mapMax": 2500
+      }
+    },
+    "performanceNotes": [
+      "prefer repeated placement of a small set of approved modules over introducing extra asset families",
+      "avoid dense tree clustering in narrow traversal spaces",
+      "water-edge visuals must remain lightweight and avoid simulation-heavy materials"
+    ]
+  },
+  "authoringReadiness": {
+    "blenderFilesCreated": false,
+    "geometryGenerated": false,
+    "glbsExported": false,
+    "assetsModified": false,
+    "registered": false,
+    "promoted": false,
+    "readyForRecipeGeneration": true,
+    "nextPhase": "200.2_recipe_generation"
+  },
+  "deterministicFingerprint": "9205056bcc36cd3232ded0c824f4b9abc8eaa24683e4c048ad051b0da5529d0f"
+}

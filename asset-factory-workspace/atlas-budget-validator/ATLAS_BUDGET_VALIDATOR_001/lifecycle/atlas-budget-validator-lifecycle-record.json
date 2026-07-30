@@ -1,0 +1,11 @@
+{
+  "schemaId": "ATLAS_BUDGET_VALIDATOR_LIFECYCLE_RECORD_001",
+  "validatorId": "ATLAS_BUDGET_VALIDATOR_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "recommendationPolicyReady": true,
+  "runtimeActivationAuthorized": false,
+  "downloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

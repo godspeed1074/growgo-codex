@@ -1,0 +1,33 @@
+{
+  "schemaId": "ATLAS_ENVIRONMENT_CLASSIFICATION_SIMULATION_VALIDATION_001",
+  "integrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+  "status": "pass",
+  "scenarioCount": 5,
+  "nextAllowedAction": "future_atlas_engine_development_ready",
+  "checks": [
+    {
+      "name": "deterministic_classification",
+      "ok": true
+    },
+    {
+      "name": "correct_recipe_handoff",
+      "ok": true
+    },
+    {
+      "name": "confidence_handling_valid",
+      "ok": true
+    },
+    {
+      "name": "unsupported_blocking_valid",
+      "ok": true
+    },
+    {
+      "name": "runtime_activation_blocked",
+      "ok": true
+    },
+    {
+      "name": "approved_recipes_only_handoff",
+      "ok": true
+    }
+  ]
+}

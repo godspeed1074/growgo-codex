@@ -1,0 +1,226 @@
+[
+  {
+    "schemaId": "ATLAS_GENERATED_LOCATION_GAMEPLAY_METADATA_001",
+    "gameplayMetadataId": "COASTAL_LOCATION_RECIPE_001_GAMEPLAY_METADATA_001",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipePackageId": "COASTAL_LOCATION_RECIPE_001_PACKAGE",
+    "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "category": "ATLAS_GENERATED_LOCATION_GAMEPLAY_METADATA",
+    "gameplayTags": [
+      "COLLECTION_OPPORTUNITY",
+      "EXPLORATION",
+      "NATURE_DISCOVERY",
+      "POI_CANDIDATE",
+      "SCENIC_DESTINATION",
+      "SHORELINE_EXPLORATION",
+      "TRAIL_PROGRESS",
+      "TRANSITION_POINT"
+    ],
+    "featureSummary": {
+      "primaryBiome": "COASTAL_RESERVE_TRAIL",
+      "archetype": "RESERVE_LOOP",
+      "routeLengthBand": "MEDIUM",
+      "destinationType": "DESTINATION",
+      "transitionPresence": true,
+      "floraDensityBand": "MODERATE",
+      "traversalComplexity": "MODERATE",
+      "uniqueAssetCount": 8
+    },
+    "achievementSuitability": {
+      "score": 80,
+      "band": "HIGH",
+      "reasons": [
+        "destination present",
+        "exploration interest improved",
+        "clear traversal route"
+      ]
+    },
+    "questSuitability": {
+      "score": 75,
+      "band": "HIGH",
+      "reasons": [
+        "structured zone progression",
+        "repeatable traversal path",
+        "interactive transition or detail opportunities"
+      ]
+    },
+    "collectionSuitability": {
+      "score": 73,
+      "band": "HIGH",
+      "reasons": [
+        "flora variety present",
+        "multiple readable collection zones"
+      ]
+    },
+    "poiOpportunities": [
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_ENTRY_PATH_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "ENTRY_PATH_ZONE",
+        "traversalRole": "ENTRY",
+        "supportingRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 1
+      },
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_SHORELINE_EDGE_ZONE_SHORELINE_EDGE",
+        "type": "SHORELINE_EDGE",
+        "zoneId": "SHORELINE_EDGE_ZONE",
+        "traversalRole": "SHORELINE",
+        "supportingRoles": [
+          "shoreline_transition_band",
+          "terrain_detail_cluster"
+        ],
+        "deterministicRank": 2
+      },
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_WET_CROSSING_ZONE_CROSSING",
+        "type": "CROSSING",
+        "zoneId": "WET_CROSSING_ZONE",
+        "traversalRole": "CROSSING",
+        "supportingRoles": [
+          "elevated_wet_crossing",
+          "shoreline_transition_band"
+        ],
+        "deterministicRank": 3
+      },
+      {
+        "poiOpportunityId": "COASTAL_LOCATION_RECIPE_001_LOOKOUT_OR_REST_ZONE_LOOKOUT",
+        "type": "LOOKOUT",
+        "zoneId": "LOOKOUT_OR_REST_ZONE",
+        "traversalRole": "DESTINATION",
+        "supportingRoles": [
+          "primary_path_surface",
+          "terrain_detail_cluster"
+        ],
+        "deterministicRank": 4
+      }
+    ],
+    "gameplayHooks": {
+      "supported": {
+        "achievementFactory": true,
+        "questFactory": true,
+        "collections": true,
+        "poiSystems": true
+      },
+      "blocked": {
+        "runtimeQuestCreation": true,
+        "runtimeAchievementAwarding": true,
+        "livePoiActivation": true,
+        "playerExposure": true
+      }
+    },
+    "deterministicFingerprint": "9e1e15029ac9055d2cd1ed8cc5a159d65b68dec4de5fe2f15ca24f546a3caaa5"
+  },
+  {
+    "schemaId": "ATLAS_GENERATED_LOCATION_GAMEPLAY_METADATA_001",
+    "gameplayMetadataId": "FOREST_LOCATION_RECIPE_001_GAMEPLAY_METADATA_001",
+    "recipeId": "FOREST_LOCATION_RECIPE_001",
+    "recipePackageId": "FOREST_LOCATION_RECIPE_001_PACKAGE",
+    "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+    "version": "v001",
+    "variantId": "DEFAULT",
+    "category": "ATLAS_GENERATED_LOCATION_GAMEPLAY_METADATA",
+    "gameplayTags": [
+      "CANOPY_EXPLORATION",
+      "COLLECTION_OPPORTUNITY",
+      "EXPLORATION",
+      "NATURE_DISCOVERY",
+      "POI_CANDIDATE",
+      "SCENIC_DESTINATION",
+      "TRAIL_PROGRESS",
+      "TRANSITION_POINT"
+    ],
+    "featureSummary": {
+      "primaryBiome": "TEMPERATE_FOREST_EDGE",
+      "archetype": "FOREST_EDGE_LOOP",
+      "routeLengthBand": "MEDIUM",
+      "destinationType": "CLEARING",
+      "transitionPresence": true,
+      "floraDensityBand": "HIGH_VARIATION",
+      "traversalComplexity": "MODERATE",
+      "uniqueAssetCount": 6
+    },
+    "achievementSuitability": {
+      "score": 80,
+      "band": "HIGH",
+      "reasons": [
+        "destination present",
+        "exploration interest improved",
+        "clear traversal route"
+      ]
+    },
+    "questSuitability": {
+      "score": 75,
+      "band": "HIGH",
+      "reasons": [
+        "structured zone progression",
+        "repeatable traversal path",
+        "interactive transition or detail opportunities"
+      ]
+    },
+    "collectionSuitability": {
+      "score": 73,
+      "band": "HIGH",
+      "reasons": [
+        "flora variety present",
+        "multiple readable collection zones"
+      ]
+    },
+    "poiOpportunities": [
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_ENTRY_TRACK_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "ENTRY_TRACK_ZONE",
+        "traversalRole": "ENTRY",
+        "supportingRoles": [
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 1
+      },
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_CANOPY_TRACK_ZONE_TRAIL_NODE",
+        "type": "TRAIL_NODE",
+        "zoneId": "CANOPY_TRACK_ZONE",
+        "traversalRole": "MAIN_TRACK",
+        "supportingRoles": [
+          "forest_shrub_mass",
+          "primary_path_surface",
+          "understory_ground_blend"
+        ],
+        "deterministicRank": 2
+      },
+      {
+        "poiOpportunityId": "FOREST_LOCATION_RECIPE_001_CLEARING_OR_REST_ZONE_CLEARING",
+        "type": "CLEARING",
+        "zoneId": "CLEARING_OR_REST_ZONE",
+        "traversalRole": "CLEARING",
+        "supportingRoles": [
+          "primary_path_surface",
+          "terrain_detail_cluster"
+        ],
+        "deterministicRank": 3
+      }
+    ],
+    "gameplayHooks": {
+      "supported": {
+        "achievementFactory": true,
+        "questFactory": true,
+        "collections": true,
+        "poiSystems": true
+      },
+      "blocked": {
+        "runtimeQuestCreation": true,
+        "runtimeAchievementAwarding": true,
+        "livePoiActivation": true,
+        "playerExposure": true
+      }
+    },
+    "deterministicFingerprint": "bda6bffa0bf4fcd67648004e1b99850ffa77b061420df3b39a8e1c4511c12502"
+  }
+]

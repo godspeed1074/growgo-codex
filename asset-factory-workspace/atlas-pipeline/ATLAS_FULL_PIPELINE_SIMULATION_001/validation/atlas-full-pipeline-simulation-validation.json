@@ -1,0 +1,45 @@
+{
+  "schemaId": "ATLAS_FULL_PIPELINE_SIMULATION_VALIDATION_001",
+  "simulationId": "ATLAS_FULL_PIPELINE_SIMULATION_001",
+  "status": "pass",
+  "scenarioCount": 5,
+  "nextAllowedAction": "future_atlas_end_to_end_development_ready",
+  "checks": [
+    {
+      "name": "deterministic_pipeline_identity",
+      "ok": true
+    },
+    {
+      "name": "approved_recipes_only_used",
+      "ok": true
+    },
+    {
+      "name": "coastal_pipeline_reaches_preview",
+      "ok": true
+    },
+    {
+      "name": "forest_pipeline_reaches_preview",
+      "ok": true
+    },
+    {
+      "name": "mixed_transition_pipeline_reaches_preview_with_forest_selection",
+      "ok": true
+    },
+    {
+      "name": "invalid_package_blocked_safely",
+      "ok": true
+    },
+    {
+      "name": "incompatible_version_package_blocked_safely",
+      "ok": true
+    },
+    {
+      "name": "factory_and_runtime_safety_preserved",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_map_blender_glb_or_asset_mutation",
+      "ok": true
+    }
+  ]
+}

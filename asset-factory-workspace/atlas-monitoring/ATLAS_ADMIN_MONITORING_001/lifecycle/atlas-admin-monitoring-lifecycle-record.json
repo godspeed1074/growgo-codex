@@ -1,0 +1,11 @@
+{
+  "schemaId": "ATLAS_ADMIN_MONITORING_LIFECYCLE_RECORD_001",
+  "monitoringId": "ATLAS_ADMIN_MONITORING_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "dashboardReadOnly": true,
+  "runtimeActivationAuthorized": false,
+  "downloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

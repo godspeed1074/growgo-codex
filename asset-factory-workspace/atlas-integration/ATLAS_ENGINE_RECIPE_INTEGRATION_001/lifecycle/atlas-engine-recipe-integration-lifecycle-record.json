@@ -1,0 +1,17 @@
+{
+  "schemaId": "ATLAS_ENGINE_RECIPE_INTEGRATION_LIFECYCLE_RECORD_001",
+  "integrationId": "ATLAS_ENGINE_RECIPE_INTEGRATION_001",
+  "lifecycleStatus": "PLANNING_READY",
+  "selectorId": "LOCATION_RECIPE_SELECTOR_001",
+  "approvedRecipeCount": 2,
+  "supportedEnvironmentTypes": [
+    "COASTAL_EXPLORATION",
+    "FOREST_EXPLORATION",
+    "MIXED_EDGE_TRANSITION"
+  ],
+  "runtimeActivationAuthorized": false,
+  "mapDownloadsAuthorized": false,
+  "blenderAuthorized": false,
+  "glbAuthorized": false,
+  "assetModificationAuthorized": false
+}

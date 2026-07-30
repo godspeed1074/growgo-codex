@@ -1,0 +1,48 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_REFINEMENT_VALIDATION_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "locationPlanId": "FOREST_EXPLORATION_LOCATION_001:FOREST_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "refinement_specification_created",
+      "ok": true
+    },
+    {
+      "name": "canopy_enclosure_change_planned",
+      "ok": true
+    },
+    {
+      "name": "clearing_payoff_change_planned",
+      "ok": true
+    },
+    {
+      "name": "exploration_curiosity_change_planned",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    },
+    {
+      "name": "no_blender_usage",
+      "ok": true
+    },
+    {
+      "name": "no_glb_generation",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    }
+  ],
+  "updatedValidationRequirements": [
+    "Regenerated preview must make CANOPY_TRACK_ZONE read more enclosed than the forest-edge transition while preserving trail legibility.",
+    "Regenerated preview must preserve a readable clearing standing area while increasing clearing payoff.",
+    "Regenerated preview must add a clearer secondary discovery beat between clearing and deep-margin zones.",
+    "TREE_EUCALYPTUS_001 must remain deferred until its lifecycle state changes.",
+    "No runtime activation, Blender usage, GLB generation, or asset mutation is allowed during planning."
+  ],
+  "nextAllowedAction": "recipe_regeneration_ready"
+}

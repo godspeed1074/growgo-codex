@@ -1,0 +1,62 @@
+{
+  "schemaId": "COASTAL_LOCATION_RECIPE_001_VISUAL_PREVIEW_VALIDATION_001",
+  "recipeId": "COASTAL_LOCATION_RECIPE_001",
+  "locationPlanId": "COASTAL_EXPLORATION_LOCATION_001:COASTAL_LOCATION_RECIPE_001:DEFAULT:SEED_001",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "preview_renderer_data_format_created",
+      "ok": true
+    },
+    {
+      "name": "visual_inspection_output_created",
+      "ok": true
+    },
+    {
+      "name": "zone_visualization_created",
+      "ok": true
+    },
+    {
+      "name": "placement_inspection_report_created",
+      "ok": true
+    },
+    {
+      "name": "player_flow_review_passes",
+      "ok": true
+    },
+    {
+      "name": "asset_spacing_review_passes",
+      "ok": true
+    },
+    {
+      "name": "zone_transition_review_passes",
+      "ok": true
+    },
+    {
+      "name": "density_balance_review_passes",
+      "ok": true
+    },
+    {
+      "name": "navigation_clarity_review_passes",
+      "ok": true
+    },
+    {
+      "name": "no_runtime_activation",
+      "ok": true
+    },
+    {
+      "name": "no_blender_files_created",
+      "ok": true
+    },
+    {
+      "name": "no_glbs_created",
+      "ok": true
+    },
+    {
+      "name": "no_asset_modification",
+      "ok": true
+    }
+  ],
+  "visualPreviewFingerprint": "9986b1b67f3aa7b7742f20f20340180ebe4c148fb71ba9aa82fbff18a2b40396",
+  "nextAllowedAction": "manual_visual_preview_review_only"
+}

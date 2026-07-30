@@ -1,0 +1,86 @@
+{
+  "schemaId": "FOREST_LOCATION_RECIPE_001_APPROVED_CATALOG_ENTRY_001",
+  "recipeId": "FOREST_LOCATION_RECIPE_001",
+  "recipePackageId": "FOREST_LOCATION_RECIPE_001_PACKAGE",
+  "version": "v001",
+  "lifecycleStatus": "APPROVED_CURRENT",
+  "environment": "DEVELOPMENT_ONLY",
+  "visibility": {
+    "development": true,
+    "beta": false,
+    "production": false
+  },
+  "environmentGuards": {
+    "betaBlocked": true,
+    "productionBlocked": true,
+    "runtimeActivationBlocked": true
+  },
+  "deterministicFingerprint": "3be53b84ead3a3368055d1c0c2def863217b43a03fadbdc6ec2f966a51a837f1",
+  "placementSummary": {
+    "totalPlacements": 28,
+    "uniqueDependencies": 6,
+    "deferredDependencies": [
+      "TREE_EUCALYPTUS_001"
+    ]
+  },
+  "performanceSummary": {
+    "triangleTotals": {
+      "close": 6792,
+      "gameplay": 4708,
+      "map": 2740
+    },
+    "budget": {
+      "closeMax": 7600,
+      "gameplayMax": 5200,
+      "mapMax": 2800
+    },
+    "withinBudget": {
+      "close": true,
+      "gameplay": true,
+      "map": true
+    },
+    "uniqueAssetCount": 6,
+    "maxUniqueReferencedAssetsPerLocation": 6,
+    "withinUniqueAssetCap": true
+  },
+  "dependencyReferences": [
+    {
+      "assetId": "COASTAL_GRAVEL_PATH_001",
+      "role": "primary_path_surface",
+      "placementCount": 5
+    },
+    {
+      "assetId": "COASTAL_GROUND_COVER_001",
+      "role": "understory_ground_blend",
+      "placementCount": 8
+    },
+    {
+      "assetId": "COASTAL_ROCK_CLUSTER_001",
+      "role": "terrain_detail_cluster",
+      "placementCount": 4
+    },
+    {
+      "assetId": "COASTAL_GRASS_TUSSOCK_001",
+      "role": "native_grass_breakup",
+      "placementCount": 5
+    },
+    {
+      "assetId": "SHRUB_COASTAL_LOW_001",
+      "role": "forest_shrub_mass",
+      "placementCount": 4
+    },
+    {
+      "assetId": "TREE_BOTTLEBRUSH_001",
+      "role": "accent_native_tree",
+      "placementCount": 2
+    }
+  ],
+  "approvalReference": "forest-location-recipe-001-approval.json",
+  "publishStatus": "not_published",
+  "runtimeSafetyFlags": {
+    "lifecycleExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "runtimeExecutionAuthorized": false
+  }
+}
