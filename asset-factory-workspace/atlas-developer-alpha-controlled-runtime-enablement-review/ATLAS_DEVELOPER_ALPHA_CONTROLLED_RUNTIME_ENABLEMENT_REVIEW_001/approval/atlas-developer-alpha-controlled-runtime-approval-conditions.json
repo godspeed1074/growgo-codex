@@ -1,0 +1,28 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_APPROVAL_CONDITIONS_001",
+  "reviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001",
+  "recordedOn": "2026-07-30",
+  "enablementState": "READY_FOR_MANUAL_RUNTIME_FLAG_TRANSITION_REVIEW",
+  "conditions": [
+    "runtimeExecutionEnabled remains false until separate manual transition action is recorded",
+    "approved scope remains limited to one internal developer-only region",
+    "approved recipe remains COASTAL_LOCATION_RECIPE_001 only",
+    "package version remains locked to v001",
+    "mapAttachmentAllowed remains false",
+    "automaticRendererExecutionAllowed remains false",
+    "renderer attachment remains unauthorized",
+    "map downloads remain unauthorized",
+    "rollback owner and backup owner remain available throughout review window",
+    "any failure criteria immediately returns the process to planning-only state"
+  ],
+  "blockedActions": [
+    "runtime enablement without explicit operator record",
+    "map attachment",
+    "renderer attachment",
+    "map download",
+    "Blender execution",
+    "GLB generation",
+    "asset modification"
+  ],
+  "deterministicFingerprint": "29048e78a5d1575b73cafb724268b3367be9a89ce7d79a0b4a03b5966f59e550"
+}

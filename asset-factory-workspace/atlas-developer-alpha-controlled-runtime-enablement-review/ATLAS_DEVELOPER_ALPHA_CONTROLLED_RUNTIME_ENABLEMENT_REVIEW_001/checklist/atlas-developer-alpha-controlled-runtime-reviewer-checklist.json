@@ -1,0 +1,58 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_REVIEWER_CHECKLIST_001",
+  "reviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001",
+  "checkedOn": "2026-07-30",
+  "checklist": [
+    {
+      "name": "experiment_scope_confirmed",
+      "result": "PASS",
+      "evidence": "MINIMAL_CONTROLLED_RUNTIME_PATHWAY"
+    },
+    {
+      "name": "approved_region_confirmed",
+      "result": "PASS",
+      "evidence": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+    },
+    {
+      "name": "approved_recipe_confirmed",
+      "result": "PASS",
+      "evidence": "COASTAL_LOCATION_RECIPE_001"
+    },
+    {
+      "name": "package_version_confirmed",
+      "result": "PASS",
+      "evidence": "v001"
+    },
+    {
+      "name": "runtime_flag_transition_plan_reviewed",
+      "result": "PASS",
+      "evidence": "every runtimeExecutionEnabled change must be recorded before and after transition"
+    },
+    {
+      "name": "rollback_procedure_confirmed",
+      "result": "PASS",
+      "evidence": "PLANNING_ONLY_STATE_WITH_RUNTIME_DISABLED"
+    },
+    {
+      "name": "monitoring_readiness_confirmed",
+      "result": "PASS",
+      "evidence": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+    },
+    {
+      "name": "operator_authority_confirmed",
+      "result": "PASS",
+      "evidence": "atlas_operator, internal_developer_reviewer"
+    },
+    {
+      "name": "success_criteria_confirmed",
+      "result": "PASS",
+      "evidence": "6 criteria"
+    },
+    {
+      "name": "failure_criteria_confirmed",
+      "result": "PASS",
+      "evidence": "6 criteria"
+    }
+  ],
+  "deterministicFingerprint": "e104c7b8f9e9e618f2ae8f065b33560cc320dd6a5040bdf6cdac80c9623566ae"
+}

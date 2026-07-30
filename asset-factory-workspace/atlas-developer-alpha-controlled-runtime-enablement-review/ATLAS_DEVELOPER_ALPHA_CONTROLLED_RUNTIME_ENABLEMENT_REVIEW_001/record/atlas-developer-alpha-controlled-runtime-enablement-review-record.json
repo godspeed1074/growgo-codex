@@ -1,0 +1,119 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_RECORD_001",
+  "reviewId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_ENABLEMENT_REVIEW_001",
+  "reviewedOn": "2026-07-30",
+  "reviewStatus": "APPROVED_PENDING_MANUAL_RUNTIME_FLAG_TRANSITION",
+  "references": {
+    "controlledRuntimeExecutionId": "ATLAS_DEVELOPER_ALPHA_CONTROLLED_RUNTIME_EXECUTION_001",
+    "lifecycleFinalAuditId": "ATLAS_DEVELOPER_ALPHA_LIFECYCLE_FINAL_AUDIT_001",
+    "readinessLockId": "ATLAS_DEVELOPER_ALPHA_SESSION_READINESS_LOCK_001",
+    "runtimeMonitoringSimulationId": "ATLAS_RUNTIME_MONITORING_SIMULATION_001"
+  },
+  "experimentScope": {
+    "environment": "DEVELOPMENT_ONLY",
+    "scopeType": "MINIMAL_CONTROLLED_RUNTIME_PATHWAY",
+    "internalDeveloperOnly": true
+  },
+  "approvedRuntimeWindow": {
+    "approvedRegion": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "approvedRecipe": "COASTAL_LOCATION_RECIPE_001",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "packageVersion": "v001",
+    "recipeVersion": "v001"
+  },
+  "runtimeFlagTransitionPlan": {
+    "currentFlags": {
+      "runtimeExecutionEnabled": false,
+      "mapAttachmentAllowed": false,
+      "automaticRendererExecutionAllowed": false
+    },
+    "plannedTransition": [
+      {
+        "stage": "PRE_ENABLEMENT_REVIEW",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "MINIMAL_RUNTIME_EXPERIMENT_WINDOW",
+        "runtimeExecutionEnabled": "planned transition",
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      },
+      {
+        "stage": "POST_EXPERIMENT_RESET",
+        "runtimeExecutionEnabled": false,
+        "mapAttachmentAllowed": false,
+        "automaticRendererExecutionAllowed": false
+      }
+    ]
+  },
+  "rollbackProcedure": {
+    "triggers": [
+      "package validation failure",
+      "recipe resolution outside approved recipe",
+      "permission model violation",
+      "unexpected map attachment request",
+      "unexpected renderer attachment request",
+      "emergency shutdown signal"
+    ],
+    "owner": "atlas_operator",
+    "backupOwner": "internal_developer_reviewer",
+    "rollbackTarget": "PLANNING_ONLY_STATE_WITH_RUNTIME_DISABLED"
+  },
+  "monitoringReadiness": {
+    "requiredSignals": [
+      "coordinate_lookup_attempt",
+      "package_validation_result",
+      "recipe_selection_result",
+      "permission_gate_state",
+      "rollback_trigger_state",
+      "runtime_enablement_block_reason"
+    ],
+    "checklist": [
+      "watch coordinate_lookup_attempt",
+      "watch package_validation_result",
+      "watch recipe_selection_result",
+      "watch permission_gate_state",
+      "watch rollback_trigger_state",
+      "watch runtime_enablement_block_reason"
+    ],
+    "healthyReference": "RUNTIME_MONITORING_HEALTHY_GENERATION_001_TELEMETRY",
+    "emergencyReference": "RUNTIME_MONITORING_EMERGENCY_SHUTDOWN_001_TELEMETRY"
+  },
+  "operatorAuthority": {
+    "authorizedUsers": [
+      "atlas_operator",
+      "internal_developer_reviewer"
+    ],
+    "internalOnly": true,
+    "maxConcurrentOperators": 2
+  },
+  "successCriteria": [
+    "single approved region remains the only runtime scope",
+    "single approved recipe remains the only runtime resolution",
+    "runtimeExecutionEnabled change remains manual and auditable",
+    "mapAttachmentAllowed stays false",
+    "automaticRendererExecutionAllowed stays false",
+    "monitoring remains readable through the full experiment window"
+  ],
+  "failureCriteria": [
+    "any recipe other than COASTAL_LOCATION_RECIPE_001 is resolved",
+    "any region outside REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION is touched",
+    "mapAttachmentAllowed becomes true",
+    "automaticRendererExecutionAllowed becomes true",
+    "rendererAttachmentAuthorized becomes true without separate approval",
+    "runtime telemetry enters blocked or emergency state without immediate rollback"
+  ],
+  "safetyState": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false,
+    "rendererAttachmentAuthorized": false,
+    "mapDownloadsAuthorized": false,
+    "blenderAuthorized": false,
+    "glbAuthorized": false,
+    "assetModificationAuthorized": false
+  },
+  "deterministicFingerprint": "cd3a8abf95181a5fe378470ea19bfe41474f8dff51ea69db70e0fae7f74fae8a"
+}
