@@ -1,0 +1,18 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_DECISION_RATIONALE_001",
+  "recordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+  "rationaleSummary": "Proceed to a tiny developer-only go/no-go review because the final alpha safety audit passed and runtime remains fully disabled.",
+  "supportingReasons": [
+    "final alpha safety audit passed",
+    "developer alpha decision validation passed",
+    "permitted scope is limited to one internal primary region",
+    "rollback owner and failure criteria are already defined"
+  ],
+  "blockedCapabilitiesReminder": [
+    "runtime activation remains blocked",
+    "renderer attachment remains blocked",
+    "map downloads remain blocked",
+    "asset modification remains blocked"
+  ],
+  "deterministicFingerprint": "10ab2f55d6a91111e2bb491d77baa8a71b5e7d50c8b5770429fbba6d66eb7144"
+}

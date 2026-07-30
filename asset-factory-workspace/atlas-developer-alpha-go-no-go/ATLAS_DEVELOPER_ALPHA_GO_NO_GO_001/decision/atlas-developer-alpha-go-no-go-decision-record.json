@@ -1,0 +1,17 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_DECISION_RECORD_001",
+  "recordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+  "decisionId": "ATLAS_DEVELOPER_ALPHA_ATTACHMENT_DECISION_001",
+  "decisionDate": "2026-07-30",
+  "decisionState": "GO_FOR_TINY_DEVELOPER_ALPHA_REVIEW_ONLY",
+  "decisionMode": "manual_internal_review",
+  "finalAuditStatus": "pass",
+  "decisionValidationStatus": "pass",
+  "experimentState": "DECISION_PENDING_MANUAL_GO_NO_GO",
+  "runtimeFlags": {
+    "runtimeExecutionEnabled": false,
+    "mapAttachmentAllowed": false,
+    "automaticRendererExecutionAllowed": false
+  },
+  "deterministicFingerprint": "4003b9de13ecb8a106cf0ef1e2a9fc3fc50bf63380142348db64ba4774307760"
+}

@@ -1,0 +1,12 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_REVIEWER_RECORD_001",
+  "recordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+  "reviewerRoles": [
+    "atlas_operator",
+    "internal_developer_reviewer"
+  ],
+  "reviewMode": "manual_dual_role_internal_review",
+  "approvalRequirement": "both reviewer roles must remain internal and developer-only",
+  "reviewDate": "2026-07-30",
+  "deterministicFingerprint": "f23d7473b2ca7e12d9288b9cfc159df956aa72a4046059c8be0a0c7d6b3398ed"
+}

@@ -1,0 +1,28 @@
+{
+  "schemaId": "ATLAS_DEVELOPER_ALPHA_CONDITIONS_OF_APPROVAL_001",
+  "recordId": "ATLAS_DEVELOPER_ALPHA_GO_NO_GO_001",
+  "conditions": [
+    "runtimeExecutionEnabled must remain false",
+    "mapAttachmentAllowed must remain false",
+    "automaticRendererExecutionAllowed must remain false",
+    "test remains developer-only and internal-only",
+    "experiment stays within the single approved primary region",
+    "experiment duration must not exceed 30 minutes",
+    "manual rollback owner must remain available",
+    "any failure criteria immediately returns to planning-only state"
+  ],
+  "successMetrics": [
+    "deterministic coordinate lookup remains stable across repeat requests",
+    "package validation produces no new blocked states in approved region",
+    "monitoring signals stay readable in developer control centre views",
+    "rollback path remains callable without state drift"
+  ],
+  "failureCriteria": [
+    "runtimeExecutionEnabled becomes true without manual authorization",
+    "mapAttachmentAllowed becomes true outside approved experiment review",
+    "automaticRendererExecutionAllowed becomes true",
+    "package validation enters blocked state for permitted region",
+    "monitoring emits emergency shutdown or unresolved blocked condition"
+  ],
+  "deterministicFingerprint": "8b5a00675894667153c9d426a5407cc3054662865b086a9f9fe9226dbe08dcdd"
+}
