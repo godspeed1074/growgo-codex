@@ -9,15 +9,19 @@ const evidencePath = path.join(
   "GROWGO_SESSION_211_5_MANUAL_DEVELOPER_EXECUTION_EVIDENCE_CAPTURE.md"
 );
 
-test("phase 211.5 evidence capture document preserves pending-manual-evidence truth", () => {
+test("phase 211.5 evidence capture document preserves verified manual-evidence truth", () => {
   const source = fs.readFileSync(evidencePath, "utf8");
 
-  assert.match(source, /overall phase: `PENDING_MANUAL_OPERATOR_EVIDENCE`/);
-  assert.match(source, /approved live diagnostic: `PENDING`/);
-  assert.match(source, /unsupported live diagnostic: `PENDING`/);
-  assert.match(source, /no-automatic-invocation observation: `PENDING`/);
+  assert.match(source, /overall phase: `PASS`/);
+  assert.match(source, /approved live diagnostic: `VERIFIED`/);
+  assert.match(source, /unsupported live diagnostic: `VERIFIED`/);
+  assert.match(source, /no-automatic-invocation observation: `VERIFIED`/);
   assert.match(source, /application code changes in Phase 211\.5: `NO`/);
   assert.match(source, /Do not fabricate browser results/i);
+  assert.match(source, /"executionStatus": "PASS"/);
+  assert.match(source, /"browserUsed": "Safari"/);
+  assert.match(source, /"developmentPageAddress": "http:\/\/127\.0\.0\.1:8000"/);
+  assert.match(source, /"operatorConfirmation": "YES"/);
 });
 
 test("phase 211.5 evidence capture document includes the exact operator paste-back contract", () => {
@@ -40,6 +44,9 @@ test("phase 211.5 evidence capture document includes the exact operator paste-ba
   );
   assert.match(source, /COASTAL_LOCATION_RECIPE_001/);
   assert.match(source, /REGION_OUT_OF_SCOPE/);
+  assert.match(source, /ATLAS_LIVE_MAP_CENTRE_DIAGNOSTIC_RESULT_001/);
+  assert.match(source, /"confidenceScore": 100/);
+  assert.match(source, /"fallbackApplied": false/);
 });
 
 test("phase 211.5 evidence capture document preserves atlas safety flags as false", () => {

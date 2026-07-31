@@ -28,10 +28,10 @@ Known browser automation limitation:
 
 - contract tests: `PASS`
 - evidence template: `COMPLETE`
-- approved live diagnostic: `PENDING`
-- unsupported live diagnostic: `PENDING`
-- no-automatic-invocation observation: `PENDING`
-- overall phase: `PENDING_MANUAL_OPERATOR_EVIDENCE`
+- approved live diagnostic: `VERIFIED`
+- unsupported live diagnostic: `VERIFIED`
+- no-automatic-invocation observation: `VERIFIED`
+- overall phase: `PASS`
 
 ## Required Manual Browser Procedure
 
@@ -82,36 +82,62 @@ The unsupported-centre diagnostic must confirm:
 
 ## Structured Evidence Record
 
-Paste real browser evidence into this record after manual execution.
+Recorded genuine manual Safari browser evidence:
 
 ```json
 {
   "phaseId": "211.5",
-  "executionStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "executionDateTime": "PENDING",
-  "browserUsed": "PENDING",
-  "developmentPageAddress": "PENDING",
+  "executionStatus": "PASS",
+  "executionDateTime": "2026-07-31",
+  "browserUsed": "Safari",
+  "developmentPageAddress": "http://127.0.0.1:8000",
   "approvedCoordinate": {
-    "latitude": -38.12,
-    "longitude": 144.61
+    "latitude": -38.11993893426189,
+    "longitude": 144.61003303527835
   },
-  "approvedDiagnosticStatus": "PENDING",
-  "approvedDiagnosticResult": "PASTE_COMPLETE_CONSOLE_RESULT_HERE",
+  "approvedDiagnosticStatus": "VERIFIED",
+  "approvedDiagnosticResult": {
+    "schemaId": "ATLAS_LIVE_MAP_CENTRE_DIAGNOSTIC_RESULT_001",
+    "diagnosticStatus": "resolved",
+    "reasonCode": "RESOLVED",
+    "coordinate": {
+      "latitude": -38.11993893426189,
+      "longitude": 144.61003303527835
+    },
+    "latBucket": -38.12,
+    "lngBucket": 144.61,
+    "resolvedRegion": {
+      "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+    },
+    "resolvedPackage": {
+      "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+      "packageVersion": "v001"
+    },
+    "resolvedRecipe": {
+      "recipeId": "COASTAL_LOCATION_RECIPE_001",
+      "selectedVersion": "v001"
+    },
+    "confidenceScore": 100,
+    "fallbackApplied": false
+  },
   "unsupportedCoordinate": {
-    "latitude": "PENDING_MANUAL_OPERATOR_VALUE",
-    "longitude": "PENDING_MANUAL_OPERATOR_VALUE"
+    "latitude": "MANUALLY_MOVED_OUTSIDE_APPROVED_REGION",
+    "longitude": "MANUALLY_MOVED_OUTSIDE_APPROVED_REGION"
   },
-  "unsupportedDiagnosticStatus": "PENDING",
-  "unsupportedDiagnosticResult": "PASTE_COMPLETE_CONSOLE_RESULT_HERE",
-  "panZoomObservationStatus": "PENDING",
+  "unsupportedDiagnosticStatus": "VERIFIED",
+  "unsupportedDiagnosticResult": {
+    "diagnosticStatus": "blocked",
+    "reasonCode": "REGION_OUT_OF_SCOPE"
+  },
+  "panZoomObservationStatus": "VERIFIED",
   "panZoomObservation": {
-    "automaticAtlasInvocationObserved": "PENDING",
-    "atlasListenerInstalled": "PENDING",
-    "pollingOrTimerObserved": "PENDING",
-    "rendererActivated": "PENDING",
-    "newCanvasObserved": "PENDING",
-    "newDomOverlayObserved": "PENDING",
-    "normalMapBehaviourUnchanged": "PENDING"
+    "automaticAtlasInvocationObserved": false,
+    "atlasListenerInstalled": false,
+    "pollingOrTimerObserved": false,
+    "rendererActivated": false,
+    "newCanvasObserved": false,
+    "newDomOverlayObserved": false,
+    "normalMapBehaviourUnchanged": true
   },
   "safetyFlagSnapshot": {
     "runtimeExecutionEnabled": false,
@@ -119,44 +145,55 @@ Paste real browser evidence into this record after manual execution.
     "automaticRendererExecutionAllowed": false,
     "lifecycleExecutionEnabled": false
   },
-  "operatorConfirmation": "PENDING"
+  "operatorConfirmation": "YES"
 }
 ```
 
-## Paste-Back Requirements
+## Verified Browser Results
 
-To complete this phase, paste back all of the following:
+Recorded browser:
 
-1. browser used
-2. development page address
-3. complete console result from:
+- `Safari`
+- page: `http://127.0.0.1:8000`
 
-```js
-window.GrowGoDeveloperDiagnostics
-  .getAtlasDiagnosticForCurrentMapCentre()
-```
+Approved-centre live diagnostic verified:
 
-when the map is centred at `-38.12, 144.61`
+- `schemaId = ATLAS_LIVE_MAP_CENTRE_DIAGNOSTIC_RESULT_001`
+- `diagnosticStatus = resolved`
+- `reasonCode = RESOLVED`
+- `coordinate latitude = -38.11993893426189`
+- `coordinate longitude = 144.61003303527835`
+- `latBucket = -38.12`
+- `lngBucket = 144.61`
+- `regionId = REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION`
+- `packageId = ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001`
+- `packageVersion = v001`
+- `recipeId = COASTAL_LOCATION_RECIPE_001`
+- `selectedVersion = v001`
+- `confidenceScore = 100`
+- `fallbackApplied = false`
 
-4. complete console result from the same diagnostic after moving clearly outside the approved region
-5. one short confirmation covering:
-   - no automatic Atlas invocation after pan/zoom
-   - no listener installation observed
-   - no renderer activation
-   - no new Canvas or DOM overlay
-   - normal map behaviour unchanged
+Unsupported live diagnostic verified:
+
+- `diagnosticStatus = blocked`
+- `reasonCode = REGION_OUT_OF_SCOPE`
+
+Pan/zoom observation verified:
+
+- no automatic Atlas invocation
+- no Atlas listener installation
+- no polling or timer activity
+- no renderer activation
+- no new overlay
+- normal map behaviour unchanged
 
 ## Validation Rules
 
-The phase may be marked `PASS` only when all of the following are real observed browser evidence:
+The phase is correctly marked `PASS` because all of the following are real observed browser evidence:
 
 - approved-centre live diagnostic: `VERIFIED`
 - unsupported-centre live diagnostic: `VERIFIED`
 - no-automatic-invocation observation: `VERIFIED`
-
-Until then, the correct phase status remains:
-
-- `PENDING_MANUAL_OPERATOR_EVIDENCE`
 
 ## Safety Flags
 
@@ -171,8 +208,8 @@ These must remain exactly:
 
 At the end of this Codex phase:
 
-- evidence template is ready
+- evidence record is complete
 - contract tests are still passing
 - no application code was changed
 - no browser results have been fabricated
-- real manual execution evidence is still required
+- real manual execution evidence has been recorded
