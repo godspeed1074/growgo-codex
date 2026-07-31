@@ -1,6 +1,10 @@
 import { createDevelopmentAlphaController } from "./development-alpha-controller.mjs";
 import { createDevelopmentAlphaFirebaseRuntime } from "./development-alpha-runtime.mjs";
 import {
+  createControlledOneSessionDeveloperMapAttachmentAuthorization,
+  installControlledOneSessionDeveloperMapAttachmentAuthorization
+} from "./developer-only-atlas-map-attachment-authorization.mjs";
+import {
   createGatedDeveloperOnlyAtlasMapAttachmentController,
   installGatedDeveloperOnlyAtlasMapAttachmentController
 } from "./developer-only-atlas-map-attachment-controller.mjs";
@@ -11,18 +15,26 @@ import {
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
 
-installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge({
-  globalObject: globalThis,
-  bridge: createDeveloperOnlyLiveMapCentreAtlasBridge({
-    getGrowGoMap() {
-      return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
-    }
-  })
+const atlasLiveMapCentreBridge = createDeveloperOnlyLiveMapCentreAtlasBridge({
+  getGrowGoMap() {
+    return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
+  }
 });
 
-installGatedDeveloperOnlyAtlasMapAttachmentController({
+installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge({
   globalObject: globalThis,
-  controller: createGatedDeveloperOnlyAtlasMapAttachmentController({
+  bridge: atlasLiveMapCentreBridge
+});
+
+const atlasMapAttachmentAuthorization =
+  createControlledOneSessionDeveloperMapAttachmentAuthorization({
+    getSafetyFlags() {
+      return atlasLiveMapCentreBridge.getSafetyFlags();
+    }
+  });
+
+const atlasMapAttachmentController =
+  createGatedDeveloperOnlyAtlasMapAttachmentController({
     getGrowGoMap() {
       return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
     },
@@ -31,8 +43,21 @@ installGatedDeveloperOnlyAtlasMapAttachmentController({
         globalThis?.GrowGoDeveloperDiagnostics?.getAtlasDiagnosticForCurrentMapCentre;
 
       return typeof diagnosticFunction === "function" ? diagnosticFunction() : null;
+    },
+    getAuthorizationState() {
+      return atlasMapAttachmentAuthorization.readAttachmentAuthorizationStateForController();
     }
-  })
+  });
+
+installGatedDeveloperOnlyAtlasMapAttachmentController({
+  globalObject: globalThis,
+  controller: atlasMapAttachmentController
+});
+
+installControlledOneSessionDeveloperMapAttachmentAuthorization({
+  globalObject: globalThis,
+  authorization: atlasMapAttachmentAuthorization,
+  controller: atlasMapAttachmentController
 });
 
 const panel = buildPanel();
