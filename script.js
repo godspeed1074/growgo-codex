@@ -60,6 +60,59 @@ bootstrapGrowGoScriptExecutionDiagnosticForLocalDev({
   localDevExecutionDiagnostic: true
 });
 
+function bootstrapGrowGoDeveloperDiagnosticsForLocalDev(options = {}) {
+  const windowExists = typeof window !== "undefined" && window;
+  const hostname =
+    windowExists && window.location && typeof window.location.hostname === "string"
+      ? window.location.hostname
+      : "";
+  const isLocalDevHost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname === "::1";
+  const allowBootstrap = options.localDevBootstrap === true;
+
+  if (!windowExists || !isLocalDevHost || !allowBootstrap) {
+    return {
+      phase: 211.2,
+      name: "growgo-map-getter-diagnostic-bootstrap",
+      ok: true,
+      attached: false,
+      reason: !windowExists
+        ? "window-unavailable"
+        : !isLocalDevHost
+          ? "local-dev-host-required"
+          : "local-dev-bootstrap-flag-required"
+    };
+  }
+
+  const namespaceKey = "GrowGoDeveloperDiagnostics";
+  const existingNamespace =
+    typeof window[namespaceKey] === "object" && window[namespaceKey] ? window[namespaceKey] : {};
+
+  window[namespaceKey] = {
+    ...existingNamespace,
+    available: true,
+    source: "phase-211.2-growgo-map-getter",
+    localDev: true,
+    getGrowGoMap
+  };
+
+  return {
+    phase: 211.2,
+    name: "growgo-map-getter-diagnostic-bootstrap",
+    ok: true,
+    attached: true,
+    namespace: namespaceKey,
+    getterName: "getGrowGoMap"
+  };
+}
+
+bootstrapGrowGoDeveloperDiagnosticsForLocalDev({
+  localDevBootstrap: true
+});
+
 function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -12150,6 +12203,12 @@ let pinsLayer;
 let playerMarker;
 let captureRing;
 let playerLatLng = null;
+
+/* GROWGO MAP GETTER DIAGNOSTIC START */
+function getGrowGoMap() {
+  return map ?? null;
+}
+/* GROWGO MAP GETTER DIAGNOSTIC END */
 
 let pinStore = new Map();
 let capturedPOIs = new Map();
