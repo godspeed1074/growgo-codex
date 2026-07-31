@@ -1,7 +1,20 @@
 import { createDevelopmentAlphaController } from "./development-alpha-controller.mjs";
 import { createDevelopmentAlphaFirebaseRuntime } from "./development-alpha-runtime.mjs";
+import {
+  createDeveloperOnlyLiveMapCentreAtlasBridge,
+  installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge
+} from "./developer-only-live-map-centre-atlas-bridge.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
+
+installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge({
+  globalObject: globalThis,
+  bridge: createDeveloperOnlyLiveMapCentreAtlasBridge({
+    getGrowGoMap() {
+      return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
+    }
+  })
+});
 
 const panel = buildPanel();
 const elements = bindPanelElements(panel);
