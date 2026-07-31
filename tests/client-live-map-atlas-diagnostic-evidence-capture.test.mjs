@@ -57,3 +57,16 @@ test("phase 211.5 evidence capture document preserves atlas safety flags as fals
   assert.match(source, /"automaticRendererExecutionAllowed": false/);
   assert.match(source, /"lifecycleExecutionEnabled": false/);
 });
+
+test("phase 211.5 evidence capture document classifies supporting-service and network errors as non-blocking observations", () => {
+  const source = fs.readFileSync(evidencePath, "utf8");
+
+  assert.match(source, /Non-Blocking External \/ Local Environment Observations/);
+  assert.match(source, /127\.0\.0\.1:9099/);
+  assert.match(source, /127\.0\.0\.1:5003/);
+  assert.match(source, /429 Too Many Requests/);
+  assert.match(source, /zoom `20` returned `400`/);
+  assert.match(source, /favicon\.ico/);
+  assert.match(source, /did not prevent:/);
+  assert.match(source, /No Atlas or map application code changes are required/);
+});

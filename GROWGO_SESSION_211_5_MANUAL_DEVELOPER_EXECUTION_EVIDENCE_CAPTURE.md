@@ -187,6 +187,26 @@ Pan/zoom observation verified:
 - no new overlay
 - normal map behaviour unchanged
 
+## Non-Blocking External / Local Environment Observations
+
+These live-session observations were present in Safari during the manual verification session and are classified as non-blocking external or local-environment conditions for Phase 211.5:
+
+- Firebase Auth Emulator at `127.0.0.1:9099` was unavailable
+- Firebase Functions Emulator at `127.0.0.1:5003` was unavailable
+- public Overpass requests returned `429 Too Many Requests`
+- some OpenStreetMap tile requests at zoom `20` returned `400`
+- `favicon.ico` returned `404`
+
+These observations did not prevent:
+
+- the live Leaflet map getter from returning the existing map
+- explicit Atlas diagnostic invocation
+- approved-region resolution
+- out-of-scope fail-closed verification
+- confirmation that Atlas added no listeners, renderer work, polling, or overlays
+
+No Atlas or map application code changes are required from these observations for Phase 211.5.
+
 ## Validation Rules
 
 The phase is correctly marked `PASS` because all of the following are real observed browser evidence:
