@@ -1,6 +1,10 @@
 import { createDevelopmentAlphaController } from "./development-alpha-controller.mjs";
 import { createDevelopmentAlphaFirebaseRuntime } from "./development-alpha-runtime.mjs";
 import {
+  createGatedDeveloperOnlyAtlasMapAttachmentController,
+  installGatedDeveloperOnlyAtlasMapAttachmentController
+} from "./developer-only-atlas-map-attachment-controller.mjs";
+import {
   createDeveloperOnlyLiveMapCentreAtlasBridge,
   installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge
 } from "./developer-only-live-map-centre-atlas-bridge.mjs";
@@ -12,6 +16,21 @@ installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge({
   bridge: createDeveloperOnlyLiveMapCentreAtlasBridge({
     getGrowGoMap() {
       return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
+    }
+  })
+});
+
+installGatedDeveloperOnlyAtlasMapAttachmentController({
+  globalObject: globalThis,
+  controller: createGatedDeveloperOnlyAtlasMapAttachmentController({
+    getGrowGoMap() {
+      return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
+    },
+    runAtlasDiagnostic() {
+      const diagnosticFunction =
+        globalThis?.GrowGoDeveloperDiagnostics?.getAtlasDiagnosticForCurrentMapCentre;
+
+      return typeof diagnosticFunction === "function" ? diagnosticFunction() : null;
     }
   })
 });
