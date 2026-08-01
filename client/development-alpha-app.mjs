@@ -12,6 +12,13 @@ import {
   createDeveloperOnlyLiveMapCentreAtlasBridge,
   installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge
 } from "./developer-only-live-map-centre-atlas-bridge.mjs";
+import {
+  createDeveloperOnlyLiveAtlasRendererHandoffReadiness,
+  installDeveloperOnlyLiveAtlasRendererHandoffReadiness
+} from "./developer-only-live-atlas-renderer-handoff-readiness.mjs";
+import {
+  createDiscoveredGrowGoCustom25DRendererConsumerDescriptor
+} from "./developer-only-atlas-renderer-zero-draw-handoff.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
 
@@ -58,6 +65,24 @@ installControlledOneSessionDeveloperMapAttachmentAuthorization({
   globalObject: globalThis,
   authorization: atlasMapAttachmentAuthorization,
   controller: atlasMapAttachmentController
+});
+
+const atlasRendererHandoffReadiness =
+  createDeveloperOnlyLiveAtlasRendererHandoffReadiness({
+    getAtlasDiagnosticForCurrentMapCentre() {
+      const diagnosticFunction =
+        globalThis?.GrowGoDeveloperDiagnostics?.getAtlasDiagnosticForCurrentMapCentre;
+
+      return typeof diagnosticFunction === "function" ? diagnosticFunction() : null;
+    },
+    getRendererConsumerDescriptor() {
+      return createDiscoveredGrowGoCustom25DRendererConsumerDescriptor();
+    }
+  });
+
+installDeveloperOnlyLiveAtlasRendererHandoffReadiness({
+  globalObject: globalThis,
+  readiness: atlasRendererHandoffReadiness
 });
 
 const panel = buildPanel();
