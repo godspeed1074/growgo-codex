@@ -5,6 +5,10 @@ import {
   installControlledOneSessionDeveloperMapAttachmentAuthorization
 } from "./developer-only-atlas-map-attachment-authorization.mjs";
 import {
+  createControlledOneSessionDeveloperRendererHandoffAuthorization,
+  installControlledOneSessionDeveloperRendererHandoffAuthorization
+} from "./developer-only-atlas-renderer-handoff-authorization.mjs";
+import {
   createGatedDeveloperOnlyAtlasMapAttachmentController,
   installGatedDeveloperOnlyAtlasMapAttachmentController
 } from "./developer-only-atlas-map-attachment-controller.mjs";
@@ -83,6 +87,18 @@ const atlasRendererHandoffReadiness =
 installDeveloperOnlyLiveAtlasRendererHandoffReadiness({
   globalObject: globalThis,
   readiness: atlasRendererHandoffReadiness
+});
+
+const atlasRendererHandoffAuthorization =
+  createControlledOneSessionDeveloperRendererHandoffAuthorization({
+    getCurrentReadiness() {
+      return atlasRendererHandoffReadiness.getAtlasRendererHandoffReadiness();
+    }
+  });
+
+installControlledOneSessionDeveloperRendererHandoffAuthorization({
+  globalObject: globalThis,
+  authorization: atlasRendererHandoffAuthorization
 });
 
 const panel = buildPanel();

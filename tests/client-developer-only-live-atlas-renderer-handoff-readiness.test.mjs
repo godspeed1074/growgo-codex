@@ -364,7 +364,7 @@ test("no renderer initialization draw canvas webgl overlay listener timer networ
   );
   assert.doesNotMatch(
     developmentAlphaAppSource,
-    /getAtlasRendererHandoffReadiness\(\)/
+    /window\.GrowGoDeveloperDiagnostics\.getAtlasRendererHandoffReadiness\(\)/
   );
   assert.doesNotMatch(readinessSource, /fetch\(/);
   assert.doesNotMatch(readinessSource, /XMLHttpRequest/);

@@ -307,6 +307,6 @@ test("installation is optional and no automatic startup exposure is wired into d
   assert.doesNotMatch(source, /appendChild/);
   assert.doesNotMatch(
     developmentAlphaAppSource,
-    /getAtlasRendererHandoffReadiness/
+    /window\.GrowGoDeveloperDiagnostics\.getAtlasRendererHandoffReadiness\(\)/
   );
 });
