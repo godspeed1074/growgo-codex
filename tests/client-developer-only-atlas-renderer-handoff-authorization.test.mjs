@@ -111,6 +111,9 @@ test("default state is unauthorized with canonical false flags and no effective 
   assert.equal(status.authorizationActive, false);
   assert.equal(status.sessionId, null);
   assert.equal(status.authorizationConsumed, false);
+  assert.equal(status.authorizationInvalidated, false);
+  assert.equal(status.invalidationReasonCode, null);
+  assert.equal(status.invalidatedAtReadinessReasonCode, null);
   assert.equal(status.authorizationRevoked, false);
   assert.equal(status.currentReadinessMatchesAuthorization, false);
   assert.equal(status.rendererInitializationAllowed, false);
@@ -328,7 +331,102 @@ test("successful isolated consumption marks authorization consumed and blocks se
   assert.equal(status.canonicalLifecycleExecutionEnabled, false);
 });
 
-test("readiness drift fails closed for out-of-scope movement fingerprint drift and selector-seed drift", () => {
+test("first readiness drift permanently invalidates the active session until explicit revoke", () => {
+  const harness = buildIntegratedNamespace({
+    createSessionId: ({ counter }) => `ATLAS_RENDERER_HANDOFF_ONE_SESSION_${String(counter).padStart(3, "0")}`
+  });
+
+  const firstAuthorization = harness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  const sessionOneId = firstAuthorization.authorizationStatus.sessionId;
+  const initialStatus = harness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  harness.map.setCenter({ lat: -38.9, lng: 145.5 });
+  const driftedStatus = harness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  harness.map.setCenter({ lat: -38.12, lng: 144.61 });
+  const restoredReadiness = harness.diagnostics.getAtlasRendererHandoffReadiness();
+  const restoredStatus = harness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+  const blockedConsumption =
+    harness.authorization.consumeAuthorizedRendererHandoffAttempt();
+  const duplicateAuthorization =
+    harness.diagnostics.authorizeAtlasRendererHandoffSession({
+      confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+    });
+
+  assert.equal(initialStatus.authorizationActive, true);
+  assert.equal(initialStatus.authorizationInvalidated, false);
+  assert.equal(initialStatus.currentReadinessMatchesAuthorization, true);
+  assert.equal(initialStatus.currentReadinessReasonCode, "READINESS_MATCHED");
+  assert.equal(initialStatus.rendererInitializationAllowed, true);
+  assert.equal(initialStatus.rendererAttachmentAllowed, true);
+  assert.equal(initialStatus.drawAllowed, true);
+  assert.equal(sessionOneId, "ATLAS_RENDERER_HANDOFF_ONE_SESSION_001");
+
+  assert.equal(driftedStatus.authorizationActive, true);
+  assert.equal(driftedStatus.authorizationInvalidated, true);
+  assert.equal(driftedStatus.invalidationReasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(driftedStatus.invalidatedAtReadinessReasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(driftedStatus.currentReadinessMatchesAuthorization, false);
+  assert.equal(driftedStatus.currentReadinessReasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(driftedStatus.rendererInitializationAllowed, false);
+  assert.equal(driftedStatus.rendererAttachmentAllowed, false);
+  assert.equal(driftedStatus.drawAllowed, false);
+
+  assert.equal(restoredReadiness.diagnosticStatus, "resolved");
+  assert.equal(restoredReadiness.reasonCode, "RESOLVED");
+  assert.equal(restoredStatus.authorizationActive, true);
+  assert.equal(restoredStatus.sessionId, sessionOneId);
+  assert.equal(restoredStatus.authorizationInvalidated, true);
+  assert.equal(restoredStatus.currentReadinessMatchesAuthorization, false);
+  assert.equal(restoredStatus.currentReadinessReasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(restoredStatus.rendererInitializationAllowed, false);
+  assert.equal(restoredStatus.rendererAttachmentAllowed, false);
+  assert.equal(restoredStatus.drawAllowed, false);
+
+  assert.equal(blockedConsumption.reasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(duplicateAuthorization.reasonCode, "ALREADY_AUTHORIZED");
+});
+
+test("explicit revoke clears invalidated session state and fresh authorization gets a distinct session id", () => {
+  const harness = buildIntegratedNamespace({
+    createSessionId: ({ counter }) => `ATLAS_RENDERER_HANDOFF_ONE_SESSION_${String(counter).padStart(3, "0")}`
+  });
+
+  const firstAuthorization = harness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  harness.map.setCenter({ lat: -38.9, lng: 145.5 });
+  const invalidatedStatus = harness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+  const revokeResult = harness.diagnostics.revokeAtlasRendererHandoffSession();
+  const afterRevokeStatus = harness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  harness.map.setCenter({ lat: -38.12, lng: 144.61 });
+  const secondAuthorization = harness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  const secondStatus = harness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  assert.equal(invalidatedStatus.authorizationInvalidated, true);
+  assert.equal(revokeResult.reasonCode, "REVOKED");
+  assert.equal(afterRevokeStatus.authorizationActive, false);
+  assert.equal(afterRevokeStatus.authorizationInvalidated, false);
+  assert.equal(afterRevokeStatus.invalidationReasonCode, null);
+  assert.equal(afterRevokeStatus.invalidatedAtReadinessReasonCode, null);
+
+  assert.equal(secondAuthorization.reasonCode, "AUTHORIZED_RENDERER_HANDOFF_ONE_SESSION");
+  assert.notEqual(
+    secondAuthorization.authorizationStatus.sessionId,
+    firstAuthorization.authorizationStatus.sessionId
+  );
+  assert.equal(secondStatus.authorizationActive, true);
+  assert.equal(secondStatus.authorizationInvalidated, false);
+  assert.equal(secondStatus.currentReadinessMatchesAuthorization, true);
+  assert.equal(secondStatus.currentReadinessReasonCode, "READINESS_MATCHED");
+});
+
+test("readiness drift fails closed for out-of-scope movement fingerprint drift selector-seed drift and all listed identity failures", () => {
   const outOfScopeHarness = buildIntegratedNamespace();
   outOfScopeHarness.diagnostics.authorizeAtlasRendererHandoffSession({
     confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
@@ -390,15 +488,232 @@ test("readiness drift fails closed for out-of-scope movement fingerprint drift a
   const seedStatus = seedHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
   const seedConsume = seedHarness.authorization.consumeAuthorizedRendererHandoffAttempt();
 
+  let mutatedPackageId = false;
+  const packageIdHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace();
+      return () => {
+        const base = local.readiness.getAtlasRendererHandoffReadiness();
+        if (!mutatedPackageId) {
+          return base;
+        }
+        return Object.freeze({
+          ...base,
+          resolvedPackage: Object.freeze({
+            ...base.resolvedPackage,
+            packageId: "DIFFERENT_PACKAGE_ID"
+          })
+        });
+      };
+    })()
+  });
+  packageIdHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  mutatedPackageId = true;
+  const packageIdStatus =
+    packageIdHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let mutatedPackageVersion = false;
+  const packageVersionHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace();
+      return () => {
+        const base = local.readiness.getAtlasRendererHandoffReadiness();
+        if (!mutatedPackageVersion) {
+          return base;
+        }
+        return Object.freeze({
+          ...base,
+          resolvedPackage: Object.freeze({
+            ...base.resolvedPackage,
+            packageVersion: "v999"
+          })
+        });
+      };
+    })()
+  });
+  packageVersionHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  mutatedPackageVersion = true;
+  const packageVersionStatus =
+    packageVersionHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let mutatedRecipeId = false;
+  const recipeIdHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace();
+      return () => {
+        const base = local.readiness.getAtlasRendererHandoffReadiness();
+        if (!mutatedRecipeId) {
+          return base;
+        }
+        return Object.freeze({
+          ...base,
+          resolvedRecipe: Object.freeze({
+            ...base.resolvedRecipe,
+            recipeId: "DIFFERENT_RECIPE_ID"
+          })
+        });
+      };
+    })()
+  });
+  recipeIdHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  mutatedRecipeId = true;
+  const recipeIdStatus =
+    recipeIdHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let mutatedRecipeVersion = false;
+  const recipeVersionHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace();
+      return () => {
+        const base = local.readiness.getAtlasRendererHandoffReadiness();
+        if (!mutatedRecipeVersion) {
+          return base;
+        }
+        return Object.freeze({
+          ...base,
+          resolvedRecipe: Object.freeze({
+            ...base.resolvedRecipe,
+            selectedVersion: "v999"
+          })
+        });
+      };
+    })()
+  });
+  recipeVersionHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  mutatedRecipeVersion = true;
+  const recipeVersionStatus =
+    recipeVersionHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let missingReadiness = false;
+  const missingReadinessHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace();
+      return () => {
+        if (!missingReadiness) {
+          return local.readiness.getAtlasRendererHandoffReadiness();
+        }
+        return null;
+      };
+    })()
+  });
+  missingReadinessHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  missingReadiness = true;
+  const missingReadinessStatus =
+    missingReadinessHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let invalidDiagnostic = false;
+  const invalidDiagnosticHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace();
+      return () => {
+        if (!invalidDiagnostic) {
+          return local.readiness.getAtlasRendererHandoffReadiness();
+        }
+        return Object.freeze({
+          schemaId: "ATLAS_RENDERER_HANDOFF_READINESS_DIAGNOSTIC_RESULT_001",
+          diagnosticStatus: "resolved",
+          reasonCode: "RESOLVED",
+          rendererHandoffStatus: "ready_for_future_renderer_attachment",
+          rendererConsumerAvailable: true,
+          rendererIdentityValidated: true,
+          resolvedRegion: null,
+          resolvedPackage: null,
+          resolvedRecipe: null,
+          selectorSeed: null,
+          safetyFlagSnapshot: Object.freeze({
+            runtimeExecutionEnabled: false,
+            mapAttachmentAllowed: false,
+            automaticRendererExecutionAllowed: false,
+            lifecycleExecutionEnabled: false
+          })
+        });
+      };
+    })()
+  });
+  invalidDiagnosticHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  invalidDiagnostic = true;
+  const invalidDiagnosticStatus =
+    invalidDiagnosticHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let rendererUnavailable = false;
+  const rendererUnavailableHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace({
+        rendererDescriptor: () =>
+          rendererUnavailable
+            ? null
+            : handoffModule.createDiscoveredGrowGoCustom25DRendererConsumerDescriptor()
+      });
+      return () => local.readiness.getAtlasRendererHandoffReadiness();
+    })()
+  });
+  rendererUnavailableHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  rendererUnavailable = true;
+  const rendererUnavailableStatus =
+    rendererUnavailableHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
+  let rendererIdentityMismatch = false;
+  const rendererIdentityMismatchHarness = buildIntegratedNamespace({
+    getCurrentReadiness: (() => {
+      const local = buildIntegratedNamespace({
+        rendererDescriptor: () =>
+          rendererIdentityMismatch
+            ? Object.freeze({
+                ...handoffModule.createDiscoveredGrowGoCustom25DRendererConsumerDescriptor(),
+                drawEntryPoint: "drawSomethingElse"
+              })
+            : handoffModule.createDiscoveredGrowGoCustom25DRendererConsumerDescriptor()
+      });
+      return () => local.readiness.getAtlasRendererHandoffReadiness();
+    })()
+  });
+  rendererIdentityMismatchHarness.diagnostics.authorizeAtlasRendererHandoffSession({
+    confirmation: "AUTHORIZE_ATLAS_RENDERER_HANDOFF_ONE_SESSION"
+  });
+  rendererIdentityMismatch = true;
+  const rendererIdentityMismatchStatus =
+    rendererIdentityMismatchHarness.diagnostics.getAtlasRendererHandoffAuthorizationStatus();
+
   assert.equal(outOfScopeStatus.currentReadinessMatchesAuthorization, false);
+  assert.equal(outOfScopeStatus.authorizationInvalidated, true);
   assert.equal(outOfScopeStatus.currentReadinessReasonCode, "REGION_OUT_OF_SCOPE");
   assert.equal(outOfScopeConsume.reasonCode, "REGION_OUT_OF_SCOPE");
   assert.equal(fingerprintStatus.currentReadinessMatchesAuthorization, false);
+  assert.equal(fingerprintStatus.authorizationInvalidated, true);
   assert.equal(fingerprintStatus.currentReadinessReasonCode, "PACKAGE_FINGERPRINT_DRIFTED");
   assert.equal(fingerprintConsume.reasonCode, "PACKAGE_FINGERPRINT_DRIFTED");
   assert.equal(seedStatus.currentReadinessMatchesAuthorization, false);
+  assert.equal(seedStatus.authorizationInvalidated, true);
   assert.equal(seedStatus.currentReadinessReasonCode, "SELECTOR_SEED_DRIFTED");
   assert.equal(seedConsume.reasonCode, "SELECTOR_SEED_DRIFTED");
+  assert.equal(packageIdStatus.currentReadinessReasonCode, "PACKAGE_ID_DRIFTED");
+  assert.equal(packageVersionStatus.currentReadinessReasonCode, "PACKAGE_VERSION_DRIFTED");
+  assert.equal(recipeIdStatus.currentReadinessReasonCode, "RECIPE_ID_DRIFTED");
+  assert.equal(recipeVersionStatus.currentReadinessReasonCode, "RECIPE_VERSION_DRIFTED");
+  assert.equal(missingReadinessStatus.currentReadinessReasonCode, "MISSING_READINESS_RESULT");
+  assert.equal(invalidDiagnosticStatus.currentReadinessReasonCode, "INVALID_READINESS_RESULT");
+  assert.equal(
+    rendererUnavailableStatus.currentReadinessReasonCode,
+    "RENDERER_CONSUMER_UNAVAILABLE"
+  );
+  assert.equal(
+    rendererIdentityMismatchStatus.currentReadinessReasonCode,
+    "RENDERER_IDENTITY_MISMATCH"
+  );
 });
 
 test("explicit revoke is idempotent and fresh instances start unauthorized with no retained state", () => {

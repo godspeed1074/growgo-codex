@@ -239,6 +239,32 @@ function compareAuthorizationToReadiness(activeSession, normalizedReadiness) {
   };
 }
 
+function latchAuthorizationInvalidation(activeSession, normalizedReadiness, readinessComparison) {
+  if (!activeSession || activeSession.authorizationConsumed === true) {
+    return;
+  }
+
+  if (activeSession.authorizationInvalidated === true) {
+    return;
+  }
+
+  const shouldInvalidate =
+    !normalizedReadiness?.ok || readinessComparison?.matches !== true;
+
+  if (!shouldInvalidate) {
+    return;
+  }
+
+  const invalidationReasonCode =
+    readinessComparison?.reasonCode ??
+    normalizedReadiness?.reasonCode ??
+    "INVALID_READINESS_RESULT";
+
+  activeSession.authorizationInvalidated = true;
+  activeSession.invalidationReasonCode = invalidationReasonCode;
+  activeSession.invalidatedAtReadinessReasonCode = invalidationReasonCode;
+}
+
 export function createControlledOneSessionDeveloperRendererHandoffAuthorization(
   options = {}
 ) {
@@ -270,10 +296,24 @@ export function createControlledOneSessionDeveloperRendererHandoffAuthorization(
     const readiness = getCurrentReadiness();
     const normalizedReadiness = normalizeReadiness(readiness);
     const safetyFlags = normalizedReadiness.safetyFlags ?? defaultSafetyFlags();
-    const readinessComparison = compareAuthorizationToReadiness(
+    const rawReadinessComparison = compareAuthorizationToReadiness(
       activeSession,
       normalizedReadiness
     );
+    latchAuthorizationInvalidation(
+      activeSession,
+      normalizedReadiness,
+      rawReadinessComparison
+    );
+    const readinessComparison =
+      activeSession?.authorizationInvalidated === true
+        ? {
+            matches: false,
+            reasonCode:
+              activeSession.invalidationReasonCode ??
+              rawReadinessComparison.reasonCode
+          }
+        : rawReadinessComparison;
     const authorizationActive =
       !!activeSession &&
       activeSession.authorizationConsumed !== true &&
@@ -301,6 +341,10 @@ export function createControlledOneSessionDeveloperRendererHandoffAuthorization(
         : false,
       sessionId: activeSession?.sessionId ?? null,
       authorizationConsumed: activeSession?.authorizationConsumed ?? false,
+      authorizationInvalidated: activeSession?.authorizationInvalidated ?? false,
+      invalidationReasonCode: activeSession?.invalidationReasonCode ?? null,
+      invalidatedAtReadinessReasonCode:
+        activeSession?.invalidatedAtReadinessReasonCode ?? null,
       authorizationRevoked,
       approvedReadinessBound: !!activeSession,
       currentReadinessMatchesAuthorization,
@@ -395,6 +439,9 @@ export function createControlledOneSessionDeveloperRendererHandoffAuthorization(
       confirmationAccepted: true,
       sessionId,
       authorizationConsumed: false,
+      authorizationInvalidated: false,
+      invalidationReasonCode: null,
+      invalidatedAtReadinessReasonCode: null,
       boundRegionId: normalizedReadiness.snapshot.regionId,
       boundPackageId: normalizedReadiness.snapshot.packageId,
       boundPackageVersion: normalizedReadiness.snapshot.packageVersion,
@@ -463,6 +510,15 @@ export function createControlledOneSessionDeveloperRendererHandoffAuthorization(
       );
     }
 
+    if (activeSession.authorizationInvalidated === true) {
+      return buildOperationResult(
+        "consume",
+        "blocked",
+        activeSession.invalidationReasonCode ?? "AUTHORIZATION_INVALIDATED",
+        buildAuthorizationStatus()
+      );
+    }
+
     if (authorizationRevoked === true) {
       return buildOperationResult(
         "consume",
@@ -477,6 +533,20 @@ export function createControlledOneSessionDeveloperRendererHandoffAuthorization(
       activeSession,
       normalizedReadiness
     );
+    latchAuthorizationInvalidation(
+      activeSession,
+      normalizedReadiness,
+      readinessComparison
+    );
+
+    if (activeSession.authorizationInvalidated === true) {
+      return buildOperationResult(
+        "consume",
+        "blocked",
+        activeSession.invalidationReasonCode ?? "AUTHORIZATION_INVALIDATED",
+        buildAuthorizationStatus()
+      );
+    }
 
     if (!normalizedReadiness.ok) {
       return buildOperationResult(
