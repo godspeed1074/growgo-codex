@@ -63,7 +63,7 @@ Expected on the live page:
 - browser: `Safari`
 - page: `http://127.0.0.1:8000`
 - execution status:
-  - `PENDING_MANUAL_OPERATOR_EVIDENCE`
+  - `PASS`
 
 ## Manual Safari Retest Procedure
 
@@ -259,30 +259,235 @@ returns fresh unauthorized state.
 
 ## Structured Evidence Record
 
-Paste genuine Safari retest results here after manual execution:
+Recorded genuine Safari retest results:
 
 ```json
 {
   "phaseId": "211.17b",
-  "executionStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "executionDateTime": "PENDING_MANUAL_OPERATOR_EVIDENCE",
+  "executionStatus": "PASS",
+  "executionDateTime": "2026-08-01T00:00:00+10:00",
   "browserUsed": "Safari",
   "developmentPageAddress": "http://127.0.0.1:8000",
-  "interfaceAvailability": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "initialAuthorizationStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "approvedReadinessResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "successfulAuthorizationResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionOneAuthorizedStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "outOfScopeReadinessResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionOneDriftedStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "restoredApprovedReadinessResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionOneStillInvalidAfterReturnStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "repeatedStatusInspectionResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionOneRevokeResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionTwoAuthorizationResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionTwoFreshStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "sessionTwoRevokeResult": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "postReloadAuthorizationStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
+  "supportingEnvironmentWarning": {
+    "http429Observed": true,
+    "classification": "NON_BLOCKING_SUPPORTING_ENVIRONMENT_WARNING",
+    "developerInterfacesLoadedCorrectly": true
+  },
+  "interfaceAvailability": [
+    "function",
+    "function",
+    "function",
+    "function"
+  ],
+  "initialAuthorizationStatus": {
+    "schemaId": "ATLAS_RENDERER_HANDOFF_AUTHORIZATION_STATUS_001",
+    "authorizationActive": false,
+    "authorizationConsumed": false,
+    "authorizationInvalidated": false,
+    "authorizationRevoked": false,
+    "authorizationSource": "canonical",
+    "approvedReadinessBound": false,
+    "sessionId": null,
+    "rendererInitializationAllowed": false,
+    "rendererAttachmentAllowed": false,
+    "drawAllowed": false,
+    "rendererInitialized": false,
+    "rendererAttached": false,
+    "drawRequested": false,
+    "canvasCreated": false,
+    "webglContextCreated": false,
+    "overlayCreated": false,
+    "listenerAdded": false,
+    "networkRequested": false,
+    "assetDownloadRequested": false,
+    "persistentAuthorization": false,
+    "storageUsed": false
+  },
+  "approvedReadinessResult": {
+    "coordinate": {
+      "latitude": -38.12,
+      "longitude": 144.61,
+      "latBucket": -38.12,
+      "lngBucket": 144.61
+    },
+    "diagnosticStatus": "resolved",
+    "reasonCode": "RESOLVED",
+    "rendererHandoffStatus": "ready_for_future_renderer_attachment",
+    "rendererConsumerAvailable": true,
+    "rendererIdentityValidated": true,
+    "regionId": "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    "packageId": "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+    "packageVersion": "v001",
+    "packageFingerprint": "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed",
+    "recipeId": "COASTAL_LOCATION_RECIPE_001",
+    "recipeVersion": "v001",
+    "selectorSeed": "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0"
+  },
+  "successfulAuthorizationResult": {
+    "operation": "authorize",
+    "outcome": "authorized",
+    "reasonCode": "AUTHORIZED_RENDERER_HANDOFF_ONE_SESSION",
+    "sessionId": "ATLAS_RENDERER_HANDOFF_ONE_SESSION_001"
+  },
+  "sessionOneAuthorizedStatus": {
+    "authorizationActive": true,
+    "authorizationConsumed": false,
+    "authorizationInvalidated": false,
+    "approvedReadinessBound": true,
+    "currentReadinessMatchesAuthorization": true,
+    "currentReadinessReasonCode": "READINESS_MATCHED",
+    "rendererInitializationAllowed": true,
+    "rendererAttachmentAllowed": true,
+    "drawAllowed": true,
+    "rendererInitialized": false,
+    "rendererAttached": false,
+    "drawRequested": false,
+    "canvasCreated": false,
+    "webglContextCreated": false,
+    "overlayCreated": false,
+    "listenerAdded": false,
+    "networkRequested": false,
+    "assetDownloadRequested": false
+  },
+  "outOfScopeReadinessResult": {
+    "coordinate": {
+      "latitude": -38.45,
+      "longitude": 145.22
+    },
+    "diagnosticStatus": "blocked",
+    "reasonCode": "REGION_OUT_OF_SCOPE",
+    "rendererHandoffStatus": "blocked",
+    "resolvedRegion": null,
+    "resolvedPackage": null,
+    "resolvedRecipe": null,
+    "selectorSeed": null
+  },
+  "sessionOneDriftedStatus": {
+    "sessionId": "ATLAS_RENDERER_HANDOFF_ONE_SESSION_001",
+    "authorizationActive": true,
+    "authorizationInvalidated": true,
+    "authorizationConsumed": false,
+    "currentReadinessMatchesAuthorization": false,
+    "currentReadinessReasonCode": "REGION_OUT_OF_SCOPE",
+    "invalidationReasonCode": "REGION_OUT_OF_SCOPE",
+    "invalidatedAtReadinessReasonCode": "REGION_OUT_OF_SCOPE",
+    "rendererInitializationAllowed": false,
+    "rendererAttachmentAllowed": false,
+    "drawAllowed": false,
+    "rendererInitialized": false,
+    "rendererAttached": false,
+    "drawRequested": false
+  },
+  "restoredApprovedReadinessResult": {
+    "coordinate": {
+      "latitude": -38.12,
+      "longitude": 144.61
+    },
+    "diagnosticStatus": "resolved",
+    "reasonCode": "RESOLVED",
+    "rendererHandoffStatus": "ready_for_future_renderer_attachment",
+    "rendererConsumerAvailable": true,
+    "rendererIdentityValidated": true
+  },
+  "sessionOneStillInvalidAfterReturnStatus": {
+    "sessionId": "ATLAS_RENDERER_HANDOFF_ONE_SESSION_001",
+    "authorizationInvalidated": true,
+    "currentReadinessMatchesAuthorization": false,
+    "currentReadinessReasonCode": "REGION_OUT_OF_SCOPE",
+    "invalidationReasonCode": "REGION_OUT_OF_SCOPE",
+    "invalidatedAtReadinessReasonCode": "REGION_OUT_OF_SCOPE",
+    "rendererInitializationAllowed": false,
+    "rendererAttachmentAllowed": false,
+    "drawAllowed": false
+  },
+  "repeatedStatusInspectionResult": {
+    "operation": "authorize",
+    "outcome": "noop",
+    "reasonCode": "ALREADY_AUTHORIZED",
+    "sessionOneNotRepaired": true,
+    "replacementSessionCreated": false
+  },
+  "sessionOneRevokeResult": {
+    "revoke": {
+      "operation": "revoke",
+      "outcome": "revoked",
+      "reasonCode": "REVOKED",
+      "authorizationActive": false,
+      "authorizationSource": "canonical"
+    },
+    "repeatedRevoke": {
+      "operation": "revoke",
+      "outcome": "noop",
+      "reasonCode": "ALREADY_REVOKED",
+      "authorizationActive": false
+    }
+  },
+  "sessionTwoAuthorizationResult": {
+    "operation": "authorize",
+    "outcome": "authorized",
+    "reasonCode": "AUTHORIZED_RENDERER_HANDOFF_ONE_SESSION",
+    "sessionId": "ATLAS_RENDERER_HANDOFF_ONE_SESSION_002"
+  },
+  "sessionTwoFreshStatus": {
+    "authorizationActive": true,
+    "authorizationConsumed": false,
+    "authorizationInvalidated": false,
+    "currentReadinessMatchesAuthorization": true,
+    "currentReadinessReasonCode": "READINESS_MATCHED",
+    "rendererInitializationAllowed": true,
+    "rendererAttachmentAllowed": true,
+    "drawAllowed": true,
+    "rendererInitialized": false,
+    "rendererAttached": false,
+    "drawRequested": false,
+    "canvasCreated": false,
+    "webglContextCreated": false,
+    "overlayCreated": false,
+    "listenerAdded": false,
+    "networkRequested": false,
+    "assetDownloadRequested": false,
+    "sessionOneId": "ATLAS_RENDERER_HANDOFF_ONE_SESSION_001",
+    "sessionTwoId": "ATLAS_RENDERER_HANDOFF_ONE_SESSION_002",
+    "distinctIdentity": true,
+    "inheritedInvalidation": false
+  },
+  "sessionTwoRevokeResult": {
+    "operation": "revoke",
+    "outcome": "revoked",
+    "reasonCode": "REVOKED",
+    "authorizationActive": false,
+    "authorizationSource": "canonical"
+  },
+  "postReloadAuthorizationStatus": {
+    "authorizationActive": false,
+    "authorizationConsumed": false,
+    "authorizationInvalidated": false,
+    "authorizationRevoked": false,
+    "approvedReadinessBound": false,
+    "sessionId": null,
+    "rendererInitializationAllowed": false,
+    "rendererAttachmentAllowed": false,
+    "drawAllowed": false,
+    "rendererInitialized": false,
+    "rendererAttached": false,
+    "drawRequested": false,
+    "persistentAuthorization": false,
+    "storageUsed": false
+  },
+  "postReloadAtlasAttachmentStatus": {
+    "schemaId": "ATLAS_MAP_ATTACHMENT_CONTROLLER_STATUS_001",
+    "attached": false,
+    "ownedListenerCount": 0,
+    "diagnosticInvocationCount": 0,
+    "lastDiagnosticStatus": null,
+    "lastReasonCode": null,
+    "rendererActivity": false,
+    "overlayActivity": false,
+    "networkActivity": false,
+    "pollingOrTimerActivity": false,
+    "automaticStartupAttachment": false,
+    "livePageDetachedByDefault": true
+  },
   "canonicalSafetyFlagSnapshot": {
     "runtimeExecutionEnabled": false,
     "mapAttachmentAllowed": false,
@@ -290,62 +495,56 @@ Paste genuine Safari retest results here after manual execution:
     "lifecycleExecutionEnabled": false
   },
   "operatorConfirmation": {
-    "permissionDidNotHealAfterReturningToApprovedScope": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "freshSessionUsedDistinctSessionId": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noRendererInitializationOccurred": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noRendererAttachmentOccurred": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noDrawingOccurred": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noCanvasAppeared": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noWebglSurfaceAppeared": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noDomOverlayAppeared": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noListenerWasAdded": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noPollingOrTimerActivityAppeared": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noNetworkRequestOccurred": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "noAssetDownloadOccurred": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-    "normalLeafletMapBehaviorRemainedUnchanged": "PENDING_MANUAL_OPERATOR_EVIDENCE"
+    "sessionOneAuthorizedSuccessfully": true,
+    "regionOutOfScopePermanentlyInvalidatedSessionOne": true,
+    "permissionDidNotHealAfterReturningToApprovedScope": true,
+    "duplicateAuthorizationDidNotRepairOrReplaceSessionOne": true,
+    "explicitRevokeClearedSessionOne": true,
+    "repeatedRevokeWasSafe": true,
+    "freshSessionUsedDistinctSessionId": true,
+    "sessionTwoInheritedNoInvalidation": true,
+    "sessionTwoRevokeSucceeded": true,
+    "reloadRestoredCleanUnauthorizedState": true,
+    "noPermissionPersisted": true,
+    "noRendererInitializationOccurred": true,
+    "noRendererAttachmentOccurred": true,
+    "noDrawingOccurred": true,
+    "noCanvasAppeared": true,
+    "noWebglSurfaceAppeared": true,
+    "noDomOverlayAppeared": true,
+    "noListenerWasAdded": true,
+    "noPollingOrTimerActivityAppeared": true,
+    "noNetworkRequestOccurred": true,
+    "noAssetDownloadOccurred": true,
+    "normalLeafletMapBehaviorRemainedUnchanged": true
   }
 }
 ```
 
-## Required Manual Evidence Still Needed
+## Verified Manual Evidence Summary
 
-Paste back the full Safari console results for:
-
-1. interface availability
-2. initial authorization status
-3. approved readiness result
-4. successful authorization result
-5. authorized Session 1 status
-6. out-of-scope readiness result
-7. Session 1 drifted status
-8. restored approved readiness result
-9. Session 1 still-invalid status after return
-10. repeated status inspection result
-11. Session 1 revoke result
-12. Session 2 authorization result
-13. Session 2 fresh status
-14. Session 2 revoke result
-15. post-reload authorization status
-
-Also confirm in plain language:
-
-- whether permission stayed spoiled after returning to the approved coordinate
-- whether the fresh session got a different session ID
-- whether any renderer, canvas, WebGL, overlay, listener, timer, network, or asset activity occurred
+- Session 1 authorized successfully for the approved Bellarine readiness.
+- Moving out of scope to `-38.45, 145.22` permanently invalidated Session 1 with `REGION_OUT_OF_SCOPE`.
+- Returning to the approved Bellarine coordinate restored readiness but did not repair Session 1.
+- Duplicate authorization before revoke returned `ALREADY_AUTHORIZED` and did not create a replacement session.
+- Explicit revoke cleared Session 1, and repeated revoke remained safe.
+- Session 2 required fresh explicit authorization, received a distinct session ID, and inherited no invalidation.
+- Reload restored a clean unauthorized state with no persistence.
+- Renderer activity remained fully asleep throughout.
 
 ## Status Breakdown
 
 - evidence template:
   - `COMPLETE`
 - manual Safari retest:
-  - `PENDING`
+  - `VERIFIED`
 - drift invalidation:
-  - `PENDING`
+  - `VERIFIED`
 - no automatic permission restoration:
-  - `PENDING`
+  - `VERIFIED`
 - fresh-session recovery:
-  - `PENDING`
+  - `VERIFIED`
 - renderer inactivity:
-  - `PENDING`
+  - `VERIFIED`
 - overall Phase 211.17b:
-  - `PENDING_MANUAL_OPERATOR_EVIDENCE`
+  - `PASS`
