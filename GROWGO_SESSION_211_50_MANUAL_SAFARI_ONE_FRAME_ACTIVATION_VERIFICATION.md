@@ -4,14 +4,11 @@
 
 Prepare the exact honest Safari checklist and evidence record for the first real developer-only Atlas custom 2.5D one-frame execution.
 
-This phase does **not** run the live command automatically.
+This phase did **not** run the live command automatically.
 
-This phase does **not** fabricate evidence.
+This phase preserves the first genuine Safari failure honestly.
 
-Until genuine Safari output is supplied:
-
-- `executionStatus = PENDING_MANUAL_OPERATOR_EVIDENCE`
-- overall verification is **not** PASS yet
+This file must not fabricate success evidence.
 
 ## Preflight
 
@@ -66,9 +63,34 @@ Expected on the live page:
 - browser: `Safari`
 - page: `http://127.0.0.1:8000`
 - execution date:
-  - `PENDING_GENUINE_SAFARI_RUN`
+  - `Sunday, August 2, 2026`
 - manual Safari verification:
-  - `PENDING_MANUAL_OPERATOR_EVIDENCE`
+  - `FAILED FIRST LIVE EXECUTION PRESERVED`
+
+## First Safari Attempt Findings
+
+Recorded genuine first Safari one-frame command result:
+
+- `outcome = failed_closed`
+- `reasonCode = MAXIMUM_CALL_STACK_SIZE_EXCEEDED`
+- `authorizationConsumed = true`
+- `adapterInvoked = true`
+- `surfacePrepared = true`
+- `frameSnapshotCreated = false`
+- `drawAttemptCount = 0`
+- `completedFrameCount = 0`
+- `cleanupAttemptCount = 1`
+- `cleanupCompleted = true`
+- `referencesReleased = true`
+- `permanentlyClosed = true`
+
+Safety remained intact during the failed first live execution:
+
+- no real draw occurred
+- no listener remained
+- no overlay remained
+- no network activity occurred
+- all four canonical safety flags remained false
 
 ## Manual Safari Procedure
 
@@ -243,31 +265,45 @@ Also paste back a short human observation for:
 - whether any continuous redraw occurred
 - whether any unexpected canvas, overlay, listener, timer, network, or asset activity was observed
 
-## Structured Evidence Record Template
+## Structured Evidence Record
 
 ```json
 {
   "phaseId": "211.50",
-  "executionStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "executionDateTime": "PENDING_GENUINE_SAFARI_RUN",
+  "executionStatus": "FAIL — MAXIMUM_CALL_STACK_SIZE_EXCEEDED",
+  "executionDateTime": "Sunday, August 2, 2026",
   "browserUsed": "Safari",
   "developmentPageAddress": "http://127.0.0.1:8000",
-  "requiredInterfacesPresent": "PENDING_OPERATOR_PASTE",
-  "commandExistsResult": "PENDING_OPERATOR_PASTE",
-  "approvedReadinessResult": "PENDING_OPERATOR_PASTE",
-  "authorizationResult": "PENDING_OPERATOR_PASTE",
-  "preRunAuthorizationStatus": "PENDING_OPERATOR_PASTE",
-  "firstOneFrameCommandResult": "PENDING_OPERATOR_PASTE",
+  "requiredInterfacesPresent": ["function", "function", "function", "function"],
+  "commandExistsResult": "function",
+  "approvedReadinessResult": "GENUINE_SAFARI_OUTPUT_RECORDED_EXTERNALLY",
+  "authorizationResult": "GENUINE_SAFARI_OUTPUT_RECORDED_EXTERNALLY",
+  "preRunAuthorizationStatus": "GENUINE_SAFARI_OUTPUT_RECORDED_EXTERNALLY",
   "visualObservation": {
-    "temporaryOneFrameAppeared": "PENDING_OPERATOR_CONFIRMATION",
-    "visibleForOnePaint": "PENDING_OPERATOR_CONFIRMATION",
-    "cleanupRemovedTemporaryFrame": "PENDING_OPERATOR_CONFIRMATION",
-    "continuousAnimationObserved": "PENDING_OPERATOR_CONFIRMATION"
+    "temporaryOneFrameAppeared": false,
+    "visibleForOnePaint": false,
+    "cleanupRemovedTemporaryFrame": true,
+    "continuousAnimationObserved": false
   },
-  "postRunAuthorizationStatus": "PENDING_OPERATOR_PASTE",
-  "secondOneFrameCommandResult": "PENDING_OPERATOR_PASTE",
-  "postReloadAuthorizationStatus": "PENDING_OPERATOR_PASTE",
-  "postReloadReadinessResult": "PENDING_OPERATOR_PASTE",
+  "firstOneFrameCommandResult": {
+    "outcome": "failed_closed",
+    "reasonCode": "MAXIMUM_CALL_STACK_SIZE_EXCEEDED",
+    "authorizationConsumed": true,
+    "adapterInvoked": true,
+    "surfacePrepared": true,
+    "lifecycleRegistered": true,
+    "frameSnapshotCreated": false,
+    "drawAttemptCount": 0,
+    "completedFrameCount": 0,
+    "cleanupAttemptCount": 1,
+    "cleanupCompleted": true,
+    "referencesReleased": true,
+    "permanentlyClosed": true
+  },
+  "postRunAuthorizationStatus": "FAILED_COMMAND_CLOSED_AFTER_FIRST_ATTEMPT",
+  "secondOneFrameCommandResult": "NOT_RETRIED_IN_PHASE_211_50",
+  "postReloadAuthorizationStatus": "FRESH_RETEST_REQUIRED_AFTER_FIX",
+  "postReloadReadinessResult": "FRESH_RETEST_REQUIRED_AFTER_FIX",
   "canonicalSafetyFlagSnapshot": {
     "runtimeExecutionEnabled": false,
     "mapAttachmentAllowed": false,
@@ -275,45 +311,54 @@ Also paste back a short human observation for:
     "lifecycleExecutionEnabled": false
   },
   "operatorConfirmation": {
-    "commandWasNotRunAutomatically": "PENDING_OPERATOR_CONFIRMATION",
-    "noMoveendTriggeredExecutionOccurred": "PENDING_OPERATOR_CONFIRMATION",
-    "noZoomendTriggeredExecutionOccurred": "PENDING_OPERATOR_CONFIRMATION",
-    "noTimerOrPollingExecutionOccurred": "PENDING_OPERATOR_CONFIRMATION",
-    "authorizationConsumedExactlyOnce": "PENDING_OPERATOR_CONFIRMATION",
-    "secondInvocationWasBlocked": "PENDING_OPERATOR_CONFIRMATION",
-    "postReloadStateWasClean": "PENDING_OPERATOR_CONFIRMATION"
+    "commandWasNotRunAutomatically": true,
+    "noMoveendTriggeredExecutionOccurred": true,
+    "noZoomendTriggeredExecutionOccurred": true,
+    "noTimerOrPollingExecutionOccurred": true,
+    "authorizationConsumedExactlyOnce": true,
+    "firstLiveExecutionFailedBeforeSnapshotCompleted": true,
+    "noDrawOccurred": true,
+    "cleanupSucceeded": true,
+    "freshSafariRetestRequiredAfterFix": true
   },
-  "nonBlockingObservedConditions": "PENDING_OPERATOR_PASTE_IF_ANY"
+  "nonBlockingObservedConditions": "NO_EXTRA_NON_BLOCKING_CONDITIONS_RECORDED_IN_THIS_FAILED_FIRST_ATTEMPT"
 }
 ```
 
 ## Current Honest Status
 
-Current state before real Safari evidence:
+Current state after the failed first genuine Safari execution:
 
 - command implementation prepared:
   - `yes`
-- manual Safari checklist prepared:
+- first genuine Safari live command output recorded:
   - `yes`
-- evidence template prepared:
-  - `yes`
-- genuine Safari live command output recorded:
+- first genuine Safari live command passed:
   - `no`
+- failed first Safari evidence preserved:
+  - `yes`
+- fresh Safari retest required after fix:
+  - `yes`
 - overall Phase 211.50:
-  - `PENDING_MANUAL_OPERATOR_EVIDENCE`
+  - `FAIL — MAXIMUM_CALL_STACK_SIZE_EXCEEDED`
 
-## What Must Not Be Claimed Yet
+## Fresh Retest Still Required
 
-Do **not** claim yet that:
+After the recursion fix lands, a new Safari verification is required to confirm:
 
-- the frame visibly appeared in Safari
-- cleanup visibly succeeded in Safari
-- second invocation was genuinely blocked in Safari
-- reload genuinely restored clean state in Safari
-- Phase 211.50 is PASS
+- one snapshot completes
+- one draw completes
+- the temporary frame becomes visibly observable for one paint
+- cleanup still succeeds exactly once
+- second invocation is blocked after a successful first run
+- reload restores a clean state
 
-Those require real operator evidence pasted back from Safari.
+Do **not** claim yet that Phase 211.50 has been corrected in Safari.
+
+That requires a fresh retest after the 211.50a fix.
 
 ## Next Step
 
-Run the manual Safari procedure above and paste back the exact outputs and observations for closeout.
+Apply the recursion fix, then run a fresh Safari retest for:
+
+- `211.50b — Manual Safari One-Frame Activation Retest`

@@ -121,7 +121,7 @@ test("script.js remains a classic script and drawCustom25DMapCanvas creates one 
   );
   assert.match(
     strippedDrawMapCanvasBody,
-    /return drawCustom25DMapCanvasWithFrameSnapshot\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
+    /return drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
   );
 });
 

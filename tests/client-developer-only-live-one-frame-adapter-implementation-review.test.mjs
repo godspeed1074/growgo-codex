@@ -138,7 +138,15 @@ test("centralized frame-root snapshot remains active and the live draw path stil
   assert.match(scriptSource, /frameViewportSnapshot = createCustom25DFrameViewportSnapshot\(\{\s*map,\s*canvas\s*\}\);/);
   assert.match(
     scriptSource,
-    /return drawCustom25DMapCanvasWithFrameSnapshot\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
+    /return drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
+  );
+  assert.match(
+    scriptSource,
+    /const createCustom25DFrameViewportSnapshotPrivateImplementation =\s*createCustom25DFrameViewportSnapshot;/
+  );
+  assert.match(
+    scriptSource,
+    /const drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation =\s*drawCustom25DMapCanvasWithFrameSnapshot;/
   );
   assert.match(scriptSource, /L\.DomUtil\.setPosition\(canvas, topLeft\);/);
   assert.match(scriptSource, /canvas\.width = normalizedFrameViewportSnapshot\.backingWidth;/);

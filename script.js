@@ -15423,12 +15423,18 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
   };
 }
 
+const createCustom25DFrameViewportSnapshotPrivateImplementation =
+  createCustom25DFrameViewportSnapshot;
+const drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation =
+  drawCustom25DMapCanvasWithFrameSnapshot;
+
 function createCustom25DFrameViewportSnapshotForOneFrame({
   map,
   canvas
 } = {}) {
   try {
-    const frameViewportSnapshot = createCustom25DFrameViewportSnapshot({
+    const frameViewportSnapshot =
+      createCustom25DFrameViewportSnapshotPrivateImplementation({
       map,
       canvas
     });
@@ -15454,7 +15460,8 @@ function drawCustom25DOneFrameFromSnapshot({
   canvas,
   frameViewportSnapshot
 } = {}) {
-  const drawResult = drawCustom25DMapCanvasWithFrameSnapshot({
+  const drawResult =
+    drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation({
     canvas,
     frameViewportSnapshot
   });
@@ -15562,7 +15569,7 @@ function drawCustom25DMapCanvas(canvas) {
   };
   const bounds = frameViewportSnapshot;
   const topLeft = frameViewportSnapshot.canvasLayerPosition;
-  return drawCustom25DMapCanvasWithFrameSnapshot({
+  return drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation({
     canvas,
     frameViewportSnapshot
   });

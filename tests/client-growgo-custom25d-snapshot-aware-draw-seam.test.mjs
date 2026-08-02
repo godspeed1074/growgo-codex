@@ -262,11 +262,15 @@ test("drawCustom25DMapCanvas still exists, creates one frame snapshot, and deleg
   );
   assert.match(
     strippedDrawMapCanvasBody,
-    /return drawCustom25DMapCanvasWithFrameSnapshot\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
+    /return drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
   );
   assert.equal(
     strippedDrawMapCanvasBody.match(/createCustom25DFrameViewportSnapshot\(/g)?.length ?? 0,
     1
+  );
+  assert.doesNotMatch(
+    strippedDrawMapCanvasBody,
+    /return drawCustom25DMapCanvas\(\s*canvas\s*\)/
   );
 });
 

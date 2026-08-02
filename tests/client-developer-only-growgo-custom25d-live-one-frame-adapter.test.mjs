@@ -69,6 +69,8 @@ const bridgeSnapshotBody = extractFunctionBody(
 const bridgeDrawBody = extractFunctionBody("drawCustom25DOneFrameFromSnapshot");
 const bridgeGetterBody = extractFunctionBody("getCustom25DOneFrameBridge");
 const strippedBridgeGetterBody = stripComments(bridgeGetterBody);
+const strippedBridgeSnapshotBody = stripComments(bridgeSnapshotBody);
+const strippedBridgeDrawBody = stripComments(bridgeDrawBody);
 
 function createImmutableSnapshot() {
   const north = -38.12;
@@ -100,6 +102,10 @@ function compileBridgeEnvironment(options = {}) {
   };
 
   const evaluationSource = `
+const createCustom25DFrameViewportSnapshotPrivateImplementation =
+  createCustom25DFrameViewportSnapshot;
+const drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation =
+  drawCustom25DMapCanvasWithFrameSnapshot;
 ${bridgeSnapshotBody}
 ${bridgeDrawBody}
 ${bridgeGetterBody}
@@ -544,6 +550,22 @@ test("narrow script bridge exists, exposes snapshot creation and snapshot-aware 
   assert.match(scriptSource, /getCustom25DOneFrameBridge/);
   assert.match(scriptSource, /createCustom25DFrameViewportSnapshotForOneFrame/);
   assert.match(scriptSource, /drawCustom25DOneFrameFromSnapshot/);
+  assert.match(
+    strippedBridgeSnapshotBody,
+    /createCustom25DFrameViewportSnapshotPrivateImplementation\(\s*\{\s*map,\s*canvas\s*\}\s*\)/
+  );
+  assert.match(
+    strippedBridgeDrawBody,
+    /drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\)/
+  );
+  assert.doesNotMatch(
+    strippedBridgeSnapshotBody,
+    /const frameViewportSnapshot =\s*createCustom25DFrameViewportSnapshotForOneFrame\(\s*\{/
+  );
+  assert.doesNotMatch(
+    strippedBridgeDrawBody,
+    /const drawResult =\s*drawCustom25DOneFrameFromSnapshot\(\s*\{/
+  );
   assert.doesNotMatch(
     strippedBridgeGetterBody,
     /initCustom25DMapExperiment|custom25DMapLayer|consumeAuthorizedRendererHandoffAttempt|authorizeAtlasRendererHandoffSession/
