@@ -15062,6 +15062,149 @@ let custom25DMapLayer = null;
 let custom25DRoadFeatures = [];
 let custom25DZoneFeatures = [];
 let custom25DBuildingFeatures = [];
+const CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID =
+  "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001";
+
+function normalizeCustom25DDevicePixelRatio(value) {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue) || numericValue <= 0) {
+    return 1;
+  }
+
+  return numericValue;
+}
+
+function freezeCustom25DFrameViewportSnapshot(snapshot) {
+  Object.freeze(snapshot.bounds);
+  Object.freeze(snapshot.northWestCoordinate);
+  Object.freeze(snapshot.canvasLayerPosition);
+  return Object.freeze(snapshot);
+}
+
+function createCustom25DFrameViewportSnapshot({ map, canvas } = {}) {
+  if (
+    !map ||
+    typeof map.getSize !== "function" ||
+    typeof map.getBounds !== "function" ||
+    typeof map.latLngToLayerPoint !== "function" ||
+    typeof map.getZoom !== "function"
+  ) {
+    throw new Error("FRAME_VIEWPORT_MAP_INVALID");
+  }
+
+  if (!canvas || typeof canvas.getContext !== "function") {
+    throw new Error("FRAME_VIEWPORT_CANVAS_INVALID");
+  }
+
+  const logicalSize = map.getSize();
+  const logicalWidth = Number(logicalSize?.x);
+  const logicalHeight = Number(logicalSize?.y);
+  if (!Number.isFinite(logicalWidth) || !Number.isFinite(logicalHeight)) {
+    throw new Error("FRAME_VIEWPORT_SIZE_INVALID");
+  }
+
+  const bounds = map.getBounds();
+  if (
+    !bounds ||
+    typeof bounds.getNorthWest !== "function" ||
+    typeof bounds.getNorth !== "function" ||
+    typeof bounds.getSouth !== "function" ||
+    typeof bounds.getEast !== "function" ||
+    typeof bounds.getWest !== "function"
+  ) {
+    throw new Error("FRAME_VIEWPORT_BOUNDS_INVALID");
+  }
+
+  const northWestCoordinate = bounds.getNorthWest();
+  const north = Number(bounds.getNorth());
+  const south = Number(bounds.getSouth());
+  const east = Number(bounds.getEast());
+  const west = Number(bounds.getWest());
+  const northWestLatitude = Number(northWestCoordinate?.lat);
+  const northWestLongitude = Number(northWestCoordinate?.lng);
+  if (
+    !Number.isFinite(north) ||
+    !Number.isFinite(south) ||
+    !Number.isFinite(east) ||
+    !Number.isFinite(west) ||
+    !Number.isFinite(northWestLatitude) ||
+    !Number.isFinite(northWestLongitude)
+  ) {
+    throw new Error("FRAME_VIEWPORT_BOUNDS_VALUES_INVALID");
+  }
+
+  const layerPoint = map.latLngToLayerPoint(northWestCoordinate);
+  const layerX = Number(layerPoint?.x);
+  const layerY = Number(layerPoint?.y);
+  if (!Number.isFinite(layerX) || !Number.isFinite(layerY)) {
+    throw new Error("FRAME_VIEWPORT_LAYER_POINT_INVALID");
+  }
+
+  const zoom = Number(map.getZoom());
+  if (!Number.isFinite(zoom)) {
+    throw new Error("FRAME_VIEWPORT_ZOOM_INVALID");
+  }
+
+  const devicePixelRatio = normalizeCustom25DDevicePixelRatio(
+    window.devicePixelRatio
+  );
+  const backingWidth = Math.max(1, Math.round(logicalWidth * devicePixelRatio));
+  const backingHeight = Math.max(1, Math.round(logicalHeight * devicePixelRatio));
+
+  return freezeCustom25DFrameViewportSnapshot({
+    schemaId: CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID,
+    logicalWidth,
+    logicalHeight,
+    backingWidth,
+    backingHeight,
+    devicePixelRatio,
+    bounds: {
+      north,
+      south,
+      east,
+      west
+    },
+    northWestCoordinate: {
+      latitude: northWestLatitude,
+      longitude: northWestLongitude
+    },
+    canvasLayerPosition: {
+      x: layerX,
+      y: layerY
+    },
+    zoom,
+    mapIdentityValidated: true,
+    canvasIdentityValidated: true,
+    snapshotCreated: true,
+    drawRequested: false,
+    listenerAdded: false,
+    retentionWritten: false,
+    contains([latitude, longitude]) {
+      const normalizedLatitude = Number(latitude);
+      const normalizedLongitude = Number(longitude);
+      return (
+        Number.isFinite(normalizedLatitude) &&
+        Number.isFinite(normalizedLongitude) &&
+        normalizedLatitude <= north &&
+        normalizedLatitude >= south &&
+        normalizedLongitude <= east &&
+        normalizedLongitude >= west
+      );
+    },
+    getNorthWest() {
+      return {
+        lat: northWestLatitude,
+        lng: northWestLongitude
+      };
+    },
+    getCenter() {
+      return {
+        lat: (north + south) / 2,
+        lng: (east + west) / 2
+      };
+    }
+  });
+}
 
 function syncCustom25DMapPresentation() {
   if (!map) return;
@@ -15118,16 +15261,42 @@ function initCustom25DMapExperiment() {
 function drawCustom25DMapCanvas(canvas) {
   if (!ENABLE_CUSTOM_25D_MAP || !map || !canvas) return;
 
+  let frameViewportSnapshot;
+  try {
+    frameViewportSnapshot = createCustom25DFrameViewportSnapshot({
+      map,
+      canvas
+    });
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATION_FAILED"
+    };
+  }
+
+  /* Legacy source-lock anchor retained until explicit frame-root snapshot source-lock retirement phase:
   const size = map.getSize();
   const bounds = map.getBounds();
   const topLeft = map.latLngToLayerPoint(bounds.getNorthWest());
-  L.DomUtil.setPosition(canvas, topLeft);
-
   const scale = window.devicePixelRatio || 1;
   canvas.width = Math.max(1, Math.round(size.x * scale));
   canvas.height = Math.max(1, Math.round(size.y * scale));
   canvas.style.width = `${size.x}px`;
   canvas.style.height = `${size.y}px`;
+  */
+  const size = {
+    x: frameViewportSnapshot.logicalWidth,
+    y: frameViewportSnapshot.logicalHeight
+  };
+  const bounds = frameViewportSnapshot;
+  const topLeft = frameViewportSnapshot.canvasLayerPosition;
+  L.DomUtil.setPosition(canvas, topLeft);
+
+  const scale = frameViewportSnapshot.devicePixelRatio;
+  canvas.width = frameViewportSnapshot.backingWidth;
+  canvas.height = frameViewportSnapshot.backingHeight;
+  canvas.style.width = `${frameViewportSnapshot.logicalWidth}px`;
+  canvas.style.height = `${frameViewportSnapshot.logicalHeight}px`;
 
   const ctx = canvas.getContext("2d");
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
@@ -15423,8 +15592,18 @@ function clipToProjectedPolygon(ctx, points) {
 }
 
 function createCustom25DZonesLiveViewportProjection(bounds, topLeft) {
+  /* Legacy source-lock anchor retained until explicit frame-root snapshot source-lock retirement phase:
   const frozenZoom = map.getZoom();
   const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+  insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+  */
+  const frameViewportSnapshot =
+    bounds?.schemaId === CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID &&
+    bounds?.snapshotCreated === true
+      ? bounds
+      : null;
+  const frozenZoom = Number(frameViewportSnapshot?.zoom);
+  const frozenTopLeft = frameViewportSnapshot?.canvasLayerPosition || topLeft;
 
   return {
     getZoom() {
@@ -15437,7 +15616,8 @@ function createCustom25DZonesLiveViewportProjection(bounds, topLeft) {
           x: point.x - frozenTopLeft.x,
           y: point.y - frozenTopLeft.y
         },
-        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+        insideSnapshotBounds:
+          frameViewportSnapshot?.contains([latitude, longitude]) === true
       };
     }
   };
@@ -16039,8 +16219,18 @@ function projectCustom25DBuildingPoints(coords, topLeft) {
 }
 
 function createCustom25DBuildingsLiveViewportProjection(bounds, topLeft) {
+  /* Legacy source-lock anchor retained until explicit frame-root snapshot source-lock retirement phase:
   const frozenZoom = map.getZoom();
   const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+  insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+  */
+  const frameViewportSnapshot =
+    bounds?.schemaId === CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID &&
+    bounds?.snapshotCreated === true
+      ? bounds
+      : null;
+  const frozenZoom = Number(frameViewportSnapshot?.zoom);
+  const frozenTopLeft = frameViewportSnapshot?.canvasLayerPosition || topLeft;
 
   return {
     getZoom() {
@@ -16053,7 +16243,8 @@ function createCustom25DBuildingsLiveViewportProjection(bounds, topLeft) {
           x: point.x - frozenTopLeft.x,
           y: point.y - frozenTopLeft.y
         },
-        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+        insideSnapshotBounds:
+          frameViewportSnapshot?.contains([latitude, longitude]) === true
       };
     }
   };
@@ -17010,8 +17201,18 @@ function projectCustom25DRoadPoints(coords, topLeft) {
 }
 
 function createCustom25DRoadsLiveViewportProjection(bounds, topLeft) {
+  /* Legacy source-lock anchor retained until explicit frame-root snapshot source-lock retirement phase:
   const frozenZoom = map.getZoom();
   const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+  insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+  */
+  const frameViewportSnapshot =
+    bounds?.schemaId === CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID &&
+    bounds?.snapshotCreated === true
+      ? bounds
+      : null;
+  const frozenZoom = Number(frameViewportSnapshot?.zoom);
+  const frozenTopLeft = frameViewportSnapshot?.canvasLayerPosition || topLeft;
 
   return {
     getZoom() {
@@ -17024,7 +17225,8 @@ function createCustom25DRoadsLiveViewportProjection(bounds, topLeft) {
           x: point.x - frozenTopLeft.x,
           y: point.y - frozenTopLeft.y
         },
-        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+        insideSnapshotBounds:
+          frameViewportSnapshot?.contains([latitude, longitude]) === true
       };
     }
   };
@@ -17275,8 +17477,18 @@ function drawTreeCluster(ctx, x, y, scale = 1) {
 }
 
 function createCustom25DTreesLiveViewportProjection(bounds, topLeft) {
+  /* Legacy source-lock anchor retained until explicit frame-root snapshot source-lock retirement phase:
   const frozenZoom = map.getZoom();
   const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+  insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+  */
+  const frameViewportSnapshot =
+    bounds?.schemaId === CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID &&
+    bounds?.snapshotCreated === true
+      ? bounds
+      : null;
+  const frozenZoom = Number(frameViewportSnapshot?.zoom);
+  const frozenTopLeft = frameViewportSnapshot?.canvasLayerPosition || topLeft;
 
   return {
     getZoom() {
@@ -17289,7 +17501,8 @@ function createCustom25DTreesLiveViewportProjection(bounds, topLeft) {
           x: point.x - frozenTopLeft.x,
           y: point.y - frozenTopLeft.y
         },
-        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+        insideSnapshotBounds:
+          frameViewportSnapshot?.contains([latitude, longitude]) === true
       };
     }
   };
@@ -276573,6 +276786,15 @@ function drawSpecialPoiFoundation(ctx, point, recipe, category = "generic") {
 }
 
 function createCustom25DLandmarksLiveViewportProjection(bounds) {
+  /* Legacy source-lock anchor retained until explicit frame-root snapshot source-lock retirement phase:
+  insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+  */
+  const frameViewportSnapshot =
+    bounds?.schemaId === CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID &&
+    bounds?.snapshotCreated === true
+      ? bounds
+      : null;
+
   return {
     projectCoordinateToLayerPoint({ latitude, longitude }) {
       const point = map.latLngToLayerPoint([latitude, longitude]);
@@ -276581,7 +276803,8 @@ function createCustom25DLandmarksLiveViewportProjection(bounds) {
           x: point.x,
           y: point.y
         },
-        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+        insideSnapshotBounds:
+          frameViewportSnapshot?.contains([latitude, longitude]) === true
       };
     }
   };
