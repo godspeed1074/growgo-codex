@@ -15206,6 +15206,222 @@ function createCustom25DFrameViewportSnapshot({ map, canvas } = {}) {
   });
 }
 
+function normalizeCustom25DFrameViewportSnapshotForDraw(frameViewportSnapshot) {
+  if (!frameViewportSnapshot || typeof frameViewportSnapshot !== "object") {
+    throw new Error("FRAME_VIEWPORT_SNAPSHOT_INVALID");
+  }
+
+  const logicalWidth = Number(frameViewportSnapshot.logicalWidth);
+  const logicalHeight = Number(frameViewportSnapshot.logicalHeight);
+  const backingWidth = Number(frameViewportSnapshot.backingWidth);
+  const backingHeight = Number(frameViewportSnapshot.backingHeight);
+  const devicePixelRatio = normalizeCustom25DDevicePixelRatio(
+    frameViewportSnapshot.devicePixelRatio
+  );
+  const zoom = Number(frameViewportSnapshot.zoom);
+
+  if (
+    !Number.isFinite(logicalWidth) ||
+    !Number.isFinite(logicalHeight) ||
+    !Number.isFinite(backingWidth) ||
+    !Number.isFinite(backingHeight) ||
+    !Number.isFinite(devicePixelRatio) ||
+    !Number.isFinite(zoom)
+  ) {
+    throw new Error("FRAME_VIEWPORT_SNAPSHOT_VALUES_INVALID");
+  }
+
+  if (
+    logicalWidth <= 0 ||
+    logicalHeight <= 0 ||
+    backingWidth <= 0 ||
+    backingHeight <= 0 ||
+    devicePixelRatio <= 0
+  ) {
+    throw new Error("FRAME_VIEWPORT_SNAPSHOT_VALUES_INVALID");
+  }
+
+  const boundsSource = frameViewportSnapshot.bounds;
+  const north = Number(
+    typeof boundsSource?.getNorth === "function"
+      ? boundsSource.getNorth()
+      : boundsSource?.north
+  );
+  const south = Number(
+    typeof boundsSource?.getSouth === "function"
+      ? boundsSource.getSouth()
+      : boundsSource?.south
+  );
+  const east = Number(
+    typeof boundsSource?.getEast === "function"
+      ? boundsSource.getEast()
+      : boundsSource?.east
+  );
+  const west = Number(
+    typeof boundsSource?.getWest === "function"
+      ? boundsSource.getWest()
+      : boundsSource?.west
+  );
+
+  if (
+    !Number.isFinite(north) ||
+    !Number.isFinite(south) ||
+    !Number.isFinite(east) ||
+    !Number.isFinite(west) ||
+    north < south
+  ) {
+    throw new Error("FRAME_VIEWPORT_SNAPSHOT_BOUNDS_INVALID");
+  }
+
+  const northWestSource =
+    frameViewportSnapshot.northWestCoordinate ??
+    (typeof boundsSource?.getNorthWest === "function"
+      ? boundsSource.getNorthWest()
+      : null);
+  const northWestLatitude = Number(
+    northWestSource?.latitude ?? northWestSource?.lat
+  );
+  const northWestLongitude = Number(
+    northWestSource?.longitude ?? northWestSource?.lng
+  );
+
+  if (!Number.isFinite(northWestLatitude) || !Number.isFinite(northWestLongitude)) {
+    throw new Error("FRAME_VIEWPORT_SNAPSHOT_NORTH_WEST_INVALID");
+  }
+
+  const canvasLayerPositionSource = frameViewportSnapshot.canvasLayerPosition;
+  const layerX = Number(canvasLayerPositionSource?.x);
+  const layerY = Number(canvasLayerPositionSource?.y);
+
+  if (!Number.isFinite(layerX) || !Number.isFinite(layerY)) {
+    throw new Error("FRAME_VIEWPORT_SNAPSHOT_POSITION_INVALID");
+  }
+
+  return freezeCustom25DFrameViewportSnapshot({
+    schemaId:
+      frameViewportSnapshot.schemaId ?? CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID,
+    logicalWidth,
+    logicalHeight,
+    backingWidth,
+    backingHeight,
+    devicePixelRatio,
+    bounds: {
+      north,
+      south,
+      east,
+      west
+    },
+    northWestCoordinate: {
+      latitude: northWestLatitude,
+      longitude: northWestLongitude
+    },
+    canvasLayerPosition: {
+      x: layerX,
+      y: layerY
+    },
+    zoom,
+    mapIdentityValidated: frameViewportSnapshot.mapIdentityValidated === true,
+    canvasIdentityValidated:
+      frameViewportSnapshot.canvasIdentityValidated === true,
+    snapshotCreated: frameViewportSnapshot.snapshotCreated !== false,
+    drawRequested: false,
+    listenerAdded: false,
+    retentionWritten: false,
+    contains([latitude, longitude]) {
+      const normalizedLatitude = Number(latitude);
+      const normalizedLongitude = Number(longitude);
+      return (
+        Number.isFinite(normalizedLatitude) &&
+        Number.isFinite(normalizedLongitude) &&
+        normalizedLatitude <= north &&
+        normalizedLatitude >= south &&
+        normalizedLongitude <= east &&
+        normalizedLongitude >= west
+      );
+    },
+    getNorthWest() {
+      return {
+        lat: northWestLatitude,
+        lng: northWestLongitude
+      };
+    },
+    getCenter() {
+      return {
+        lat: (north + south) / 2,
+        lng: (east + west) / 2
+      };
+    }
+  });
+}
+
+function drawCustom25DMapCanvasWithFrameSnapshot({
+  canvas,
+  frameViewportSnapshot
+} = {}) {
+  if (!canvas || typeof canvas.getContext !== "function") {
+    return {
+      outcome: "blocked",
+      reasonCode: "FRAME_DRAW_CANVAS_INVALID"
+    };
+  }
+
+  let normalizedFrameViewportSnapshot;
+  try {
+    normalizedFrameViewportSnapshot =
+      normalizeCustom25DFrameViewportSnapshotForDraw(frameViewportSnapshot);
+  } catch (error) {
+    return {
+      outcome: "blocked",
+      reasonCode:
+        typeof error?.message === "string" && error.message
+          ? error.message
+          : "FRAME_VIEWPORT_SNAPSHOT_INVALID"
+    };
+  }
+
+  const size = {
+    x: normalizedFrameViewportSnapshot.logicalWidth,
+    y: normalizedFrameViewportSnapshot.logicalHeight
+  };
+  const bounds = normalizedFrameViewportSnapshot;
+  const topLeft = normalizedFrameViewportSnapshot.canvasLayerPosition;
+
+  L.DomUtil.setPosition(canvas, topLeft);
+
+  const scale = normalizedFrameViewportSnapshot.devicePixelRatio;
+  canvas.width = normalizedFrameViewportSnapshot.backingWidth;
+  canvas.height = normalizedFrameViewportSnapshot.backingHeight;
+  canvas.style.width = `${normalizedFrameViewportSnapshot.logicalWidth}px`;
+  canvas.style.height = `${normalizedFrameViewportSnapshot.logicalHeight}px`;
+
+  const ctx = canvas.getContext("2d");
+  if (
+    !ctx ||
+    typeof ctx.setTransform !== "function" ||
+    typeof ctx.clearRect !== "function"
+  ) {
+    return {
+      outcome: "blocked",
+      reasonCode: "FRAME_DRAW_CONTEXT_INVALID"
+    };
+  }
+
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  ctx.clearRect(0, 0, size.x, size.y);
+
+  drawCustom25DBackground(ctx, size, bounds);
+  drawCustom25DZonesLiveCallsite(ctx, bounds, topLeft);
+  drawCustom25DBuildingsLiveCallsite(ctx, bounds, topLeft);
+  drawCustom25DRoadsLiveCallsite(ctx, bounds, topLeft);
+  drawCustom25DTreesLiveCallsite(ctx, bounds, topLeft);
+  renderCustomLandmarkLayerLiveCallsite(ctx, bounds);
+
+  return {
+    outcome: "drawn",
+    reasonCode: "FRAME_DRAW_COMPLETED"
+  };
+}
+
 function syncCustom25DMapPresentation() {
   if (!map) return;
 
@@ -15290,37 +15506,33 @@ function drawCustom25DMapCanvas(canvas) {
   };
   const bounds = frameViewportSnapshot;
   const topLeft = frameViewportSnapshot.canvasLayerPosition;
+  return drawCustom25DMapCanvasWithFrameSnapshot({
+    canvas,
+    frameViewportSnapshot
+  });
+
+  /* Legacy source-lock anchor retained until explicit snapshot-aware draw seam source-lock retirement phase:
   L.DomUtil.setPosition(canvas, topLeft);
-
-  const scale = frameViewportSnapshot.devicePixelRatio;
-  canvas.width = frameViewportSnapshot.backingWidth;
-  canvas.height = frameViewportSnapshot.backingHeight;
-  canvas.style.width = `${frameViewportSnapshot.logicalWidth}px`;
-  canvas.style.height = `${frameViewportSnapshot.logicalHeight}px`;
-
+  const scale = window.devicePixelRatio || 1;
+  canvas.width = Math.max(1, Math.round(size.x * scale));
+  canvas.height = Math.max(1, Math.round(size.y * scale));
+  canvas.style.width = `${size.x}px`;
+  canvas.style.height = `${size.y}px`;
   const ctx = canvas.getContext("2d");
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
   ctx.clearRect(0, 0, size.x, size.y);
-
   drawCustom25DBackground(ctx, size, bounds);
   drawCustom25DZonesLiveCallsite(ctx, bounds, topLeft);
+  drawCustom25DBuildingsLiveCallsite(ctx, bounds, topLeft);
+  drawCustom25DRoadsLiveCallsite(ctx, bounds, topLeft);
+  drawCustom25DTreesLiveCallsite(ctx, bounds, topLeft);
+  renderCustomLandmarkLayerLiveCallsite(ctx, bounds);
+  */
   /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DZones(ctx, bounds, topLeft);
-  */
-  drawCustom25DBuildingsLiveCallsite(ctx, bounds, topLeft);
-  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DBuildings(ctx, bounds, topLeft);
-  */
-  drawCustom25DRoadsLiveCallsite(ctx, bounds, topLeft);
-  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DRoads(ctx, bounds, topLeft);
-  */
-  drawCustom25DTreesLiveCallsite(ctx, bounds, topLeft);
-  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DTrees(ctx, size, bounds);
-  */
-  renderCustomLandmarkLayerLiveCallsite(ctx, bounds);
-  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DLandmarkFoundation(ctx, bounds, topLeft);
   */
 }

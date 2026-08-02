@@ -63,6 +63,9 @@ function countMatches(source, pattern) {
 const frameSnapshotBody = extractFunctionBody(
   "createCustom25DFrameViewportSnapshot"
 );
+const drawMapCanvasWithFrameSnapshotBody = extractFunctionBody(
+  "drawCustom25DMapCanvasWithFrameSnapshot"
+);
 const drawMapCanvasBody = extractFunctionBody("drawCustom25DMapCanvas");
 const initMapExperimentBody = extractFunctionBody("initCustom25DMapExperiment");
 
@@ -83,6 +86,9 @@ const landmarkViewportFactoryBody = extractFunctionBody(
 );
 
 const strippedFrameSnapshotBody = stripComments(frameSnapshotBody);
+const strippedDrawMapCanvasWithFrameSnapshotBody = stripComments(
+  drawMapCanvasWithFrameSnapshotBody
+);
 const strippedDrawMapCanvasBody = stripComments(drawMapCanvasBody);
 const strippedZoneViewportFactoryBody = stripComments(zoneViewportFactoryBody);
 const strippedBuildingViewportFactoryBody = stripComments(
@@ -112,6 +118,10 @@ test("script.js remains a classic script and drawCustom25DMapCanvas creates one 
   assert.match(
     strippedDrawMapCanvasBody,
     /const topLeft = frameViewportSnapshot\.canvasLayerPosition;/
+  );
+  assert.match(
+    strippedDrawMapCanvasBody,
+    /return drawCustom25DMapCanvasWithFrameSnapshot\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
   );
 });
 
@@ -148,39 +158,39 @@ test("the frame-root snapshot owns exactly one size bounds north-west top-left z
   );
 });
 
-test("Canvas position logical size and backing size are applied once from the shared snapshot", () => {
+test("snapshot-aware draw seam applies Canvas position logical size and backing size once from the shared snapshot", () => {
   assert.equal(
     countMatches(
-      strippedDrawMapCanvasBody,
+      strippedDrawMapCanvasWithFrameSnapshotBody,
       /L\.DomUtil\.setPosition\(canvas, topLeft\);/g
     ),
     1
   );
   assert.equal(
     countMatches(
-      strippedDrawMapCanvasBody,
-      /canvas\.style\.width = `\$\{frameViewportSnapshot\.logicalWidth\}px`;/g
+      strippedDrawMapCanvasWithFrameSnapshotBody,
+      /canvas\.style\.width = `\$\{normalizedFrameViewportSnapshot\.logicalWidth\}px`;/g
     ),
     1
   );
   assert.equal(
     countMatches(
-      strippedDrawMapCanvasBody,
-      /canvas\.style\.height = `\$\{frameViewportSnapshot\.logicalHeight\}px`;/g
+      strippedDrawMapCanvasWithFrameSnapshotBody,
+      /canvas\.style\.height = `\$\{normalizedFrameViewportSnapshot\.logicalHeight\}px`;/g
     ),
     1
   );
   assert.equal(
     countMatches(
-      strippedDrawMapCanvasBody,
-      /canvas\.width = frameViewportSnapshot\.backingWidth;/g
+      strippedDrawMapCanvasWithFrameSnapshotBody,
+      /canvas\.width = normalizedFrameViewportSnapshot\.backingWidth;/g
     ),
     1
   );
   assert.equal(
     countMatches(
-      strippedDrawMapCanvasBody,
-      /canvas\.height = frameViewportSnapshot\.backingHeight;/g
+      strippedDrawMapCanvasWithFrameSnapshotBody,
+      /canvas\.height = normalizedFrameViewportSnapshot\.backingHeight;/g
     ),
     1
   );
@@ -256,7 +266,7 @@ test("one frame projection capability is reused and coordinate-space behavior st
 
 test("layer draw order initializer ownership listener behavior and safety flags remain unchanged", () => {
   assert.match(
-    strippedDrawMapCanvasBody,
+    strippedDrawMapCanvasWithFrameSnapshotBody,
     /drawCustom25DBackground\(ctx, size, bounds\);[\s\S]*drawCustom25DZonesLiveCallsite\(ctx, bounds, topLeft\);[\s\S]*drawCustom25DBuildingsLiveCallsite\(ctx, bounds, topLeft\);[\s\S]*drawCustom25DRoadsLiveCallsite\(ctx, bounds, topLeft\);[\s\S]*drawCustom25DTreesLiveCallsite\(ctx, bounds, topLeft\);[\s\S]*renderCustomLandmarkLayerLiveCallsite\(ctx, bounds\);/s
   );
 

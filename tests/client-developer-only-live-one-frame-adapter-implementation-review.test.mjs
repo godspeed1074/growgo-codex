@@ -129,9 +129,13 @@ test("drawCustom25DMapCanvas remains private, initCustom25DMapExperiment remains
 test("centralized frame-root snapshot remains active and the live draw path still owns snapshot creation internally", () => {
   assert.match(scriptSource, /function createCustom25DFrameViewportSnapshot\(\{ map, canvas \} = \{\}\)/);
   assert.match(scriptSource, /frameViewportSnapshot = createCustom25DFrameViewportSnapshot\(\{\s*map,\s*canvas\s*\}\);/);
+  assert.match(
+    scriptSource,
+    /return drawCustom25DMapCanvasWithFrameSnapshot\(\s*\{\s*canvas,\s*frameViewportSnapshot\s*\}\s*\);/
+  );
   assert.match(scriptSource, /L\.DomUtil\.setPosition\(canvas, topLeft\);/);
-  assert.match(scriptSource, /canvas\.width = frameViewportSnapshot\.backingWidth;/);
-  assert.match(scriptSource, /canvas\.height = frameViewportSnapshot\.backingHeight;/);
+  assert.match(scriptSource, /canvas\.width = normalizedFrameViewportSnapshot\.backingWidth;/);
+  assert.match(scriptSource, /canvas\.height = normalizedFrameViewportSnapshot\.backingHeight;/);
   assert.match(scriptSource, /drawCustom25DZonesLiveCallsite\(ctx, bounds, topLeft\);/);
   assert.match(scriptSource, /drawCustom25DBuildingsLiveCallsite\(ctx, bounds, topLeft\);/);
   assert.match(scriptSource, /drawCustom25DRoadsLiveCallsite\(ctx, bounds, topLeft\);/);
