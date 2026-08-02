@@ -15150,7 +15150,10 @@ function drawCustom25DMapCanvas(canvas) {
   /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DTrees(ctx, size, bounds);
   */
+  renderCustomLandmarkLayerLiveCallsite(ctx, bounds);
+  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DLandmarkFoundation(ctx, bounds, topLeft);
+  */
 }
 
 function setCustom25DMapRoadFeatures(roadWays) {
@@ -276569,6 +276572,136 @@ function drawSpecialPoiFoundation(ctx, point, recipe, category = "generic") {
   ctx.restore();
 }
 
+function createCustom25DLandmarksLiveViewportProjection(bounds) {
+  return {
+    projectCoordinateToLayerPoint({ latitude, longitude }) {
+      const point = map.latLngToLayerPoint([latitude, longitude]);
+      return {
+        layerPoint: {
+          x: point.x,
+          y: point.y
+        },
+        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+      };
+    }
+  };
+}
+
+function drawCustom25DLandmarksViewportInjected(ctx, landmarks, viewportProjection) {
+  if (!Array.isArray(landmarks) || !landmarks.length) {
+    return {
+      outcome: "noop",
+      reasonCode: "LANDMARK_FEATURES_EMPTY"
+    };
+  }
+
+  let drawn = 0;
+  let eligibleLandmarkCount = 0;
+  let skippedLandmarkCount = 0;
+  let projectionCount = 0;
+
+  for (const marker of landmarks) {
+    const latitude = Number(marker?.lat);
+    const longitude = Number(marker?.lng);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      skippedLandmarkCount += 1;
+      continue;
+    }
+
+    let projected;
+    try {
+      projected = viewportProjection.projectCoordinateToLayerPoint({
+        latitude,
+        longitude
+      });
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "LANDMARK_PROJECTION_FAILED",
+        drawn,
+        eligibleLandmarkCount,
+        skippedLandmarkCount,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += 1;
+    const layerPoint = projected?.layerPoint;
+    if (
+      !layerPoint ||
+      !Number.isFinite(Number(layerPoint.x)) ||
+      !Number.isFinite(Number(layerPoint.y))
+    ) {
+      return {
+        outcome: "blocked",
+        reasonCode: "LANDMARK_PROJECTION_INVALID",
+        drawn,
+        eligibleLandmarkCount,
+        skippedLandmarkCount,
+        projectionCount
+      };
+    }
+
+    if (projected.insideSnapshotBounds !== true) {
+      skippedLandmarkCount += 1;
+      continue;
+    }
+
+    eligibleLandmarkCount += 1;
+    const rendererCategory = marker.rendererCategory || marker.category || "generic";
+    drawSpecialPoiFoundation(
+      ctx,
+      {
+        x: Number(layerPoint.x),
+        y: Number(layerPoint.y)
+      },
+      getLandmarkVisualRecipe(rendererCategory),
+      rendererCategory
+    );
+    drawn += 1;
+  }
+
+  return {
+    outcome: "success",
+    reasonCode: "LANDMARKS_DRAWN_WITH_VIEWPORT",
+    drawn,
+    eligibleLandmarkCount,
+    skippedLandmarkCount,
+    projectionCount
+  };
+}
+
+function renderCustomLandmarkLayerLiveCallsite(ctx, bounds) {
+  const activeLandmarks = getActiveCustom25DLandmarkData();
+  const testMarkers = getCustom25DLandmarkTestMarkers(bounds);
+  const allMarkers = [...activeLandmarks, ...testMarkers];
+  if (!allMarkers.length) return;
+
+  let viewportProjection;
+  try {
+    viewportProjection = createCustom25DLandmarksLiveViewportProjection(bounds);
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "LANDMARK_VIEWPORT_CREATION_FAILED"
+    };
+  }
+
+  try {
+    return drawCustom25DLandmarksViewportInjected(
+      ctx,
+      allMarkers,
+      viewportProjection
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "LANDMARK_LAYER_DRAW_FAILED"
+    };
+  }
+}
+
 function renderCustomLandmarkLayer(ctx, bounds) {
   const activeLandmarks = getActiveCustom25DLandmarkData();
   const testMarkers = getCustom25DLandmarkTestMarkers(bounds);
@@ -276586,7 +276719,7 @@ function renderCustomLandmarkLayer(ctx, bounds) {
 function drawCustom25DLandmarkFoundation(ctx, bounds) {
   if (!ENABLE_CUSTOM_25D_MAP) return;
   if (!ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS && !ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA) return;
-  renderCustomLandmarkLayer(ctx, bounds);
+  return renderCustomLandmarkLayer(ctx, bounds);
 }
 /* CUSTOM 2.5D MAP EXPERIMENT END */
 /* CUSTOM 2.5D MAP EXPERIMENT END */
