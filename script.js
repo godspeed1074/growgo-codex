@@ -15146,7 +15146,10 @@ function drawCustom25DMapCanvas(canvas) {
   /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DRoads(ctx, bounds, topLeft);
   */
+  drawCustom25DTreesLiveCallsite(ctx, bounds, topLeft);
+  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DTrees(ctx, size, bounds);
+  */
   drawCustom25DLandmarkFoundation(ctx, bounds, topLeft);
 }
 
@@ -17266,6 +17269,245 @@ function drawTreeCluster(ctx, x, y, scale = 1) {
   ctx.beginPath();
   ctx.arc(x - 1.4 * scale, y - 3.2 * scale, 1.8 * scale, 0, Math.PI * 2);
   ctx.fill();
+}
+
+function createCustom25DTreesLiveViewportProjection(bounds, topLeft) {
+  const frozenZoom = map.getZoom();
+  const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+
+  return {
+    getZoom() {
+      return frozenZoom;
+    },
+    projectCoordinateToCanvasPoint({ latitude, longitude }) {
+      const point = map.latLngToLayerPoint([latitude, longitude]);
+      return {
+        canvasPoint: {
+          x: point.x - frozenTopLeft.x,
+          y: point.y - frozenTopLeft.y
+        },
+        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+      };
+    }
+  };
+}
+
+function projectCustom25DTreePointsWithViewport(coords, viewportProjection) {
+  if (!Array.isArray(coords) || coords.length < 3) {
+    return {
+      outcome: "skip",
+      reasonCode: "TREE_COORDS_INVALID",
+      points: [],
+      insideViewport: false,
+      projectionCount: 0
+    };
+  }
+
+  const points = [];
+  let projectionCount = 0;
+  let insideViewport = false;
+
+  for (const coordinate of coords) {
+    if (!Array.isArray(coordinate) || coordinate.length < 2) {
+      return {
+        outcome: "skip",
+        reasonCode: "TREE_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    const latitude = Number(coordinate[0]);
+    const longitude = Number(coordinate[1]);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      return {
+        outcome: "skip",
+        reasonCode: "TREE_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    let projected;
+    try {
+      projected = viewportProjection.projectCoordinateToCanvasPoint({
+        latitude,
+        longitude
+      });
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "TREE_PROJECTION_FAILED",
+        points: [],
+        insideViewport: false,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += 1;
+    const canvasPoint = projected?.canvasPoint;
+    if (
+      !canvasPoint ||
+      !Number.isFinite(Number(canvasPoint.x)) ||
+      !Number.isFinite(Number(canvasPoint.y))
+    ) {
+      return {
+        outcome: "blocked",
+        reasonCode: "TREE_PROJECTION_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    if (projected.insideSnapshotBounds === true) {
+      insideViewport = true;
+    }
+
+    points.push({
+      x: Number(canvasPoint.x),
+      y: Number(canvasPoint.y)
+    });
+  }
+
+  return {
+    outcome: "ready",
+    reasonCode: "TREE_POINTS_PROJECTED",
+    points,
+    insideViewport,
+    projectionCount
+  };
+}
+
+function drawCustom25DTreesViewportInjected(ctx, treeFeatures, viewportProjection) {
+  if (!Array.isArray(treeFeatures) || !treeFeatures.length) {
+    return {
+      outcome: "noop",
+      reasonCode: "TREE_FEATURES_EMPTY"
+    };
+  }
+
+  const zoom = Number(viewportProjection.getZoom());
+  if (!Number.isFinite(zoom)) {
+    return {
+      outcome: "blocked",
+      reasonCode: "TREE_VIEWPORT_ZOOM_INVALID"
+    };
+  }
+
+  if (!shouldDrawZoneDetailsAtZoom(zoom, "medium")) {
+    return {
+      outcome: "noop",
+      reasonCode: "TREE_ZOOM_BELOW_THRESHOLD",
+      zoom
+    };
+  }
+
+  let drawn = 0;
+  let projectionCount = 0;
+
+  for (const feature of treeFeatures) {
+    if (feature?.zoneType !== "park") continue;
+    if (!Array.isArray(feature?.coords) || feature.coords.length < 3) continue;
+
+    let projection;
+    try {
+      projection = projectCustom25DTreePointsWithViewport(
+        feature.coords,
+        viewportProjection
+      );
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "TREE_LAYER_DRAW_FAILED",
+        zoom,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += projection.projectionCount || 0;
+    if (projection.outcome === "blocked") {
+      return {
+        outcome: "blocked",
+        reasonCode: projection.reasonCode,
+        zoom,
+        projectionCount
+      };
+    }
+
+    if (
+      projection.outcome !== "ready" ||
+      !projection.insideViewport ||
+      projection.points.length < 3
+    ) {
+      continue;
+    }
+
+    const seed = hashFeatureSeed(feature.id);
+    const clippedBounds = getProjectedBounds(projection.points);
+    ctx.save();
+    clipToProjectedPolygon(ctx, projection.points);
+
+    const clusterCount = zoom >= 18 ? 5 : 3;
+    for (let i = 0; i < clusterCount; i += 1) {
+      const rx = (Math.abs(Math.sin(seed + i * 17.3)) % 1);
+      const ry = (Math.abs(Math.sin(seed + i * 29.7)) % 1);
+      const x =
+        clippedBounds.minX +
+        rx * Math.max(12, clippedBounds.maxX - clippedBounds.minX);
+      const y =
+        clippedBounds.minY +
+        ry * Math.max(12, clippedBounds.maxY - clippedBounds.minY);
+      const scale =
+        zoom >= 18 ? 0.9 + ((i % 3) * 0.08) : 0.72 + ((i % 2) * 0.05);
+      drawTreeCluster(ctx, x, y, scale);
+    }
+
+    ctx.restore();
+    drawn += 1;
+  }
+
+  return {
+    outcome: "success",
+    reasonCode: "TREES_DRAWN_WITH_VIEWPORT",
+    zoom,
+    drawn,
+    projectionCount
+  };
+}
+
+function drawCustom25DTreesLiveCallsite(ctx, bounds, topLeft) {
+  if (!Array.isArray(custom25DZoneFeatures) || !custom25DZoneFeatures.length) return;
+
+  let viewportProjection;
+  try {
+    viewportProjection = createCustom25DTreesLiveViewportProjection(
+      bounds,
+      topLeft
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "TREE_VIEWPORT_CREATION_FAILED"
+    };
+  }
+
+  try {
+    return drawCustom25DTreesViewportInjected(
+      ctx,
+      custom25DZoneFeatures,
+      viewportProjection
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "TREE_LAYER_DRAW_FAILED"
+    };
+  }
 }
 
 function drawCustom25DTrees(ctx, size, bounds) {
