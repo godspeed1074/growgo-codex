@@ -621,6 +621,39 @@ test("one isolated fake execution completes with one surface, one registration, 
   assert.equal(status.referencesReleased, true);
 });
 
+test("deferred cleanup mode keeps one completed frame available until explicit cleanup release", () => {
+  const env = createFakeAdapterEnvironment();
+
+  const drawResult = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter({
+    deferCleanupUntilRelease: true
+  });
+  const midStatus = env.adapter.getAdapterStatus();
+
+  assert.equal(drawResult.outcome, "pending_cleanup");
+  assert.equal(drawResult.reasonCode, "DEFERRED_CLEANUP_PENDING");
+  assert.equal(drawResult.completedFrameCount, 1);
+  assert.equal(drawResult.cleanupAttemptCount, 0);
+  assert.equal(drawResult.cleanupCompleted, false);
+  assert.equal(drawResult.referencesReleased, false);
+  assert.equal(drawResult.permanentlyClosed, false);
+
+  assert.equal(midStatus.adapterStatus, "awaiting_cleanup_release");
+  assert.equal(env.calls.cleanup, 0);
+
+  const cleanupResult = env.adapter.completeDeferredCleanup();
+  const finalStatus = env.adapter.getAdapterStatus();
+
+  assert.equal(cleanupResult.outcome, "completed");
+  assert.equal(cleanupResult.cleanupAttemptCount, 1);
+  assert.equal(cleanupResult.cleanupCompleted, true);
+  assert.equal(cleanupResult.referencesReleased, true);
+  assert.equal(cleanupResult.permanentlyClosed, true);
+  assert.equal(env.calls.cleanup, 1);
+
+  assert.equal(finalStatus.adapterStatus, "completed");
+  assert.equal(finalStatus.permanentlyClosed, true);
+});
+
 test("second invocation is blocked after the first execution closes the adapter", () => {
   const env = createFakeAdapterEnvironment();
 
@@ -757,14 +790,22 @@ test("snapshot failure, draw failure, draw exception, and cleanup failure all pr
   ]);
 });
 
-test("no live activation command exists, no startup or moveend invocation exists, and no real renderer action occurs during tests", () => {
+test("manual command remains outside script.js, the adapter stays disconnected from startup and movement wiring, and no real renderer action occurs during tests", () => {
   assert.doesNotMatch(
     scriptSource,
-    /runAtlasRendererHandoffLiveOneFrameAttempt|executeGatedLiveOneFrameIntegration/
+    /runAuthorizedAtlasCustom25DOneFrame|executeGatedLiveOneFrameIntegration/
+  );
+  assert.match(
+    developmentAlphaAppSource,
+    /installDeveloperOnlyAtlasCustom25DOneFrameCommand/
+  );
+  assert.match(
+    developmentAlphaAppSource,
+    /createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter/
   );
   assert.doesNotMatch(
     developmentAlphaAppSource,
-    /runAtlasRendererHandoffLiveOneFrameAttempt|executeGatedLiveOneFrameIntegration|createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter/
+    /executeGatedLiveOneFrameIntegration|moveend zoomend|initCustom25DMapExperiment\(/
   );
   assert.match(scriptSource, /getCustom25DOneFrameBridge/);
   assert.match(scriptSource, /getGrowGoMap/);

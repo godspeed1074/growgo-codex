@@ -161,9 +161,8 @@ test("phase 211.48 design source-locks the required ordering blocked cases and r
   }
 });
 
-test("phase 211.48 preserves the current exposure boundary and keeps the future command absent from live sources", () => {
+test("phase 211.48 preserves the command boundary by keeping script.js passive and raw live seams unexposed", () => {
   assert.doesNotMatch(scriptSource, new RegExp(FUTURE_COMMAND_NAME));
-  assert.doesNotMatch(developmentAlphaSource, new RegExp(FUTURE_COMMAND_NAME));
   assert.doesNotMatch(scriptSource, new RegExp(REQUIRED_CONFIRMATION));
   assert.doesNotMatch(developmentAlphaSource, new RegExp(REQUIRED_CONFIRMATION));
 
@@ -171,12 +170,16 @@ test("phase 211.48 preserves the current exposure boundary and keeps the future 
     scriptSource,
     /consumeAuthorizedRendererHandoffAttempt|executeDeveloperOnlyLiveOneFrameAdapter/
   );
-  assert.doesNotMatch(
-    developmentAlphaSource,
-    /consumeAuthorizedRendererHandoffAttempt|executeDeveloperOnlyLiveOneFrameAdapter/
-  );
 
   assert.match(scriptSource, /getCustom25DOneFrameBridge/);
+  assert.match(
+    developmentAlphaSource,
+    /installDeveloperOnlyAtlasCustom25DOneFrameCommand/
+  );
+  assert.doesNotMatch(
+    developmentAlphaSource,
+    /GrowGoDeveloperDiagnostics\.[\s\S]*consumeAuthorizedRendererHandoffAttempt|GrowGoDeveloperDiagnostics\.[\s\S]*executeDeveloperOnlyLiveOneFrameAdapter|GrowGoDeveloperDiagnostics\.[\s\S]*completeDeferredCleanup/
+  );
   assert.match(adapterSource, /executeDeveloperOnlyLiveOneFrameAdapter/);
   assert.match(authorizationSource, /consumeAuthorizedRendererHandoffAttempt/);
   assert.match(readinessSource, /getAtlasRendererHandoffReadiness/);

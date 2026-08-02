@@ -21,6 +21,13 @@ import {
   installDeveloperOnlyLiveAtlasRendererHandoffReadiness
 } from "./developer-only-live-atlas-renderer-handoff-readiness.mjs";
 import {
+  createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter
+} from "./developer-only-growgo-custom25d-live-one-frame-adapter.mjs";
+import {
+  createDeveloperOnlyAtlasCustom25DOneFrameCommand,
+  installDeveloperOnlyAtlasCustom25DOneFrameCommand
+} from "./developer-only-atlas-custom25d-one-frame-command.mjs";
+import {
   createDiscoveredGrowGoCustom25DRendererConsumerDescriptor
 } from "./developer-only-atlas-renderer-zero-draw-handoff.mjs";
 
@@ -99,6 +106,27 @@ const atlasRendererHandoffAuthorization =
 installControlledOneSessionDeveloperRendererHandoffAuthorization({
   globalObject: globalThis,
   authorization: atlasRendererHandoffAuthorization
+});
+
+const growGoCustom25DLiveOneFrameAdapter =
+  createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter();
+
+const atlasCustom25DOneFrameCommand =
+  createDeveloperOnlyAtlasCustom25DOneFrameCommand({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    readinessProvider: () =>
+      atlasRendererHandoffReadiness.getAtlasRendererHandoffReadiness(),
+    authorizationStatusProvider: () =>
+      atlasRendererHandoffAuthorization.getAtlasRendererHandoffAuthorizationStatus(),
+    authorizationConsume: () =>
+      atlasRendererHandoffAuthorization.consumeAuthorizedRendererHandoffAttempt(),
+    adapterProvider: () => growGoCustom25DLiveOneFrameAdapter,
+    animationFrameProvider: (callback) => globalThis?.requestAnimationFrame?.(callback)
+  });
+
+installDeveloperOnlyAtlasCustom25DOneFrameCommand({
+  globalObject: globalThis,
+  command: atlasCustom25DOneFrameCommand
 });
 
 const panel = buildPanel();

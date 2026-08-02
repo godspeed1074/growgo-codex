@@ -388,7 +388,8 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     surface: null,
     lifecycleOwner: null,
     frameViewportSnapshot: null,
-    drawOperation: null
+    drawOperation: null,
+    deferredCleanupPending: false
   };
 
   function clearRefs() {
@@ -397,7 +398,8 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       surface: null,
       lifecycleOwner: null,
       frameViewportSnapshot: null,
-      drawOperation: null
+      drawOperation: null,
+      deferredCleanupPending: false
     };
   }
 
@@ -451,8 +453,57 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     });
   }
 
-  function executeDeveloperOnlyLiveOneFrameAdapter() {
-    if (status.permanentlyClosed) {
+  function finalizeDeferredCleanup() {
+    if (!currentRefs.deferredCleanupPending || !currentRefs.lifecycleOwner) {
+      return createResult({
+        operation: "complete_deferred_live_one_frame_cleanup",
+        outcome: "blocked",
+        reasonCode: "DEFERRED_CLEANUP_NOT_PENDING",
+        status: updateStatus({
+          adapterStatus: status.permanentlyClosed ? status.adapterStatus : "blocked",
+          reasonCode: "DEFERRED_CLEANUP_NOT_PENDING"
+        })
+      });
+    }
+
+    let cleanupResult;
+    try {
+      cleanupResult = currentRefs.lifecycleOwner.disposeOwnedResources();
+    } catch (error) {
+      cleanupResult = {
+        outcome: "failed_closed",
+        reasonCode: toReasonCode(error, "DEFERRED_CLEANUP_EXCEPTION"),
+        cleanupFailureReasons: [toReasonCode(error, "DEFERRED_CLEANUP_EXCEPTION")]
+      };
+    }
+
+    const cleanupPatch = deriveCleanupPatch(cleanupResult);
+    const finalReasonCode = cleanupPatch.cleanupFailed
+      ? cleanupPatch.cleanupFailureReasons[0] ?? "CLEANUP_FAILED"
+      : "LIVE_ONE_FRAME_DRAW_COMPLETED";
+
+    currentRefs.deferredCleanupPending = false;
+
+    return finalize(
+      "complete_deferred_live_one_frame_cleanup",
+      cleanupPatch.cleanupFailed ? "failed_closed" : "completed",
+      finalReasonCode,
+      {
+        ...cleanupPatch,
+        referencesReleased: true,
+        permanentlyClosed: true,
+        adapterStatus: cleanupPatch.cleanupFailed
+          ? "failed_closed"
+          : "completed"
+      }
+    );
+  }
+
+  function executeDeveloperOnlyLiveOneFrameAdapter(options = {}) {
+    const deferCleanupUntilRelease =
+      isObjectLike(options) && options.deferCleanupUntilRelease === true;
+
+    if (status.permanentlyClosed || currentRefs.deferredCleanupPending) {
       return blockSecondInvocation();
     }
 
@@ -779,11 +830,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       canvas: surfaceResult.surface.canvas
     });
 
-    const cleanupResult = lifecycleOwner.disposeOwnedResources();
-    const cleanupPatch = deriveCleanupPatch(cleanupResult);
     const drawReasonCode = drawResult?.reasonCode ?? "DRAW_OPERATION_FAILED";
 
     if (drawResult?.outcome !== "completed") {
+      const cleanupResult = lifecycleOwner.disposeOwnedResources();
+      const cleanupPatch = deriveCleanupPatch(cleanupResult);
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -801,6 +852,30 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
+    if (deferCleanupUntilRelease) {
+      currentRefs.deferredCleanupPending = true;
+      const pendingStatus = updateStatus({
+        surfacePrepared: true,
+        lifecycleRegistered: true,
+        frameSnapshotCreated: true,
+        drawAttemptCount: drawResult?.drawAttemptCount ?? 1,
+        completedFrameCount: drawResult?.completedFrameCount ?? 1,
+        ownershipMode:
+          translationResult.lifecycleBundle.ownershipMode ?? "ONE_FRAME_SURFACE_ONLY",
+        adapterStatus: "awaiting_cleanup_release",
+        reasonCode: "DEFERRED_CLEANUP_PENDING"
+      });
+
+      return createResult({
+        operation: "execute_developer_only_live_one_frame_adapter",
+        outcome: "pending_cleanup",
+        reasonCode: "DEFERRED_CLEANUP_PENDING",
+        status: pendingStatus
+      });
+    }
+
+    const cleanupResult = lifecycleOwner.disposeOwnedResources();
+    const cleanupPatch = deriveCleanupPatch(cleanupResult);
     const finalReasonCode = cleanupPatch.cleanupFailed
       ? cleanupPatch.cleanupFailureReasons[0] ?? "CLEANUP_FAILED"
       : drawReasonCode;
@@ -824,6 +899,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
 
   return deepFreeze({
     getAdapterStatus,
-    executeDeveloperOnlyLiveOneFrameAdapter
+    executeDeveloperOnlyLiveOneFrameAdapter,
+    completeDeferredCleanup: finalizeDeferredCleanup
   });
 }

@@ -64,7 +64,7 @@ const lifecycleOwnerModule = await import(
   )
 );
 
-const FUTURE_BROWSER_COMMAND = "runAtlasRendererHandoffLiveOneFrameAttempt";
+const MANUAL_BROWSER_COMMAND = "runAuthorizedAtlasCustom25DOneFrame";
 
 test("phase 211.44 integration contract remains disconnected from startup and development alpha wiring", () => {
   assert.doesNotMatch(
@@ -85,12 +85,15 @@ test("phase 211.44 integration contract remains disconnected from startup and de
   );
 });
 
-test("no live activation browser command exists and live authorization consumption remains unexposed", () => {
-  assert.doesNotMatch(scriptSource, new RegExp(FUTURE_BROWSER_COMMAND));
-  assert.doesNotMatch(developmentAlphaSource, new RegExp(FUTURE_BROWSER_COMMAND));
+test("manual one-frame browser command is exposed only through development alpha and live authorization consumption remains unexposed", () => {
+  assert.doesNotMatch(scriptSource, new RegExp(MANUAL_BROWSER_COMMAND));
+  assert.match(
+    developmentAlphaSource,
+    /installDeveloperOnlyAtlasCustom25DOneFrameCommand/
+  );
   assert.doesNotMatch(
     developmentAlphaSource,
-    /consumeAuthorizedRendererHandoffAttempt/
+    /GrowGoDeveloperDiagnostics[\s\S]{0,400}consumeAuthorizedRendererHandoffAttempt/
   );
   assert.match(
     authorizationSource,
@@ -107,6 +110,10 @@ test("no live activation browser command exists and live authorization consumpti
   assert.doesNotMatch(
     authorizationSource,
     /namespace\.consumeAuthorizedRendererHandoffAttempt/
+  );
+  assert.doesNotMatch(
+    developmentAlphaSource,
+    /GrowGoDeveloperDiagnostics[\s\S]{0,400}(executeDeveloperOnlyLiveOneFrameAdapter|completeDeferredCleanup)/
   );
 });
 
@@ -213,7 +220,7 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
   );
 });
 
-test("all four canonical safety flags remain false and no startup or moveend live adapter activation exists", () => {
+test("all four canonical safety flags remain false and the manual command stays disconnected from startup or movement wiring", () => {
   for (const source of [
     integrationContractSource,
     authorizationSource,
@@ -234,10 +241,14 @@ test("all four canonical safety flags remain false and no startup or moveend liv
 
   assert.doesNotMatch(
     scriptSource,
-    /runAtlasRendererHandoffLiveOneFrameAttempt|executeGatedLiveOneFrameIntegration|consumeAuthorizedRendererHandoffAttempt\(/
+    /runAuthorizedAtlasCustom25DOneFrame|executeGatedLiveOneFrameIntegration|consumeAuthorizedRendererHandoffAttempt\(/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /installDeveloperOnlyAtlasCustom25DOneFrameCommand/
   );
   assert.doesNotMatch(
     developmentAlphaSource,
-    /runAtlasRendererHandoffLiveOneFrameAttempt|executeGatedLiveOneFrameIntegration/
+    /moveend zoomend|initCustom25DMapExperiment\(|executeGatedLiveOneFrameIntegration/
   );
 });

@@ -733,7 +733,7 @@ test("explicit revoke is idempotent and fresh instances start unauthorized with 
   assert.equal(fresh.authorizationRevoked, false);
 });
 
-test("no startup authorization no persistence no renderer work and no browser consume interface are introduced", () => {
+test("no startup authorization no persistence no renderer work and no public browser consume interface are introduced", () => {
   assert.doesNotMatch(authorizationSource, /localStorage/);
   assert.doesNotMatch(authorizationSource, /sessionStorage/);
   assert.doesNotMatch(authorizationSource, /indexedDB/i);
@@ -750,8 +750,12 @@ test("no startup authorization no persistence no renderer work and no browser co
     developmentAlphaAppSource,
     /installControlledOneSessionDeveloperRendererHandoffAuthorization/
   );
+  assert.match(
+    developmentAlphaAppSource,
+    /installDeveloperOnlyAtlasCustom25DOneFrameCommand/
+  );
   assert.doesNotMatch(
     developmentAlphaAppSource,
-    /consumeAuthorizedRendererHandoffAttempt/
+    /GrowGoDeveloperDiagnostics\.[\s\S]*consumeAuthorizedRendererHandoffAttempt|GrowGoDeveloperDiagnostics\.[\s\S]*executeDeveloperOnlyLiveOneFrameAdapter|GrowGoDeveloperDiagnostics\.[\s\S]*completeDeferredCleanup/
   );
 });

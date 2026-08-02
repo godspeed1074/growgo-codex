@@ -295,7 +295,7 @@ test("live surface operations and live draw operations remain disconnected, whil
   );
 });
 
-test("session coordination remains fake-only, no browser consumption seam is exposed, startup ownership stays unchanged, and all four canonical safety flags remain false", () => {
+test("session coordination remains fake-only, raw browser consumption stays unexposed, startup ownership stays unchanged, and all four canonical safety flags remain false", () => {
   assert.doesNotMatch(sessionCoordinatorSource, /GrowGoDeveloperDiagnostics/);
   assert.doesNotMatch(
     sessionCoordinatorSource,
@@ -314,9 +314,13 @@ test("session coordination remains fake-only, no browser consumption seam is exp
     developmentAlphaAppSource,
     /installDeveloperOnlyLiveAtlasRendererHandoffReadiness/
   );
+  assert.match(
+    developmentAlphaAppSource,
+    /installDeveloperOnlyAtlasCustom25DOneFrameCommand/
+  );
   assert.doesNotMatch(
     developmentAlphaAppSource,
-    /consumeAuthorizedRendererHandoffAttempt|simulateOneFrameActivation|execute_authorized_one_frame_session/
+    /GrowGoDeveloperDiagnostics\.[\s\S]*consumeAuthorizedRendererHandoffAttempt|GrowGoDeveloperDiagnostics\.[\s\S]*executeDeveloperOnlyLiveOneFrameAdapter|GrowGoDeveloperDiagnostics\.[\s\S]*completeDeferredCleanup|simulateOneFrameActivation|execute_authorized_one_frame_session/
   );
 
   assert.match(scriptSource, /let custom25DMapLayer = null;/);
