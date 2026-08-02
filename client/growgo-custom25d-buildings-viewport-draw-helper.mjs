@@ -1865,9 +1865,11 @@ export function inspectGrowGoCustom25DBuildingsViewportDrawHelperSourceLock({
     latLngToLayerPointFound: scriptSource.includes(
       "const point = map.latLngToLayerPoint([lat, lng]);"
     ),
-    shopRecipeGlobalZoomFound: scriptSource.includes(
-      "const zoom = map?.getZoom?.() || 0;"
-    ),
+    shopRecipeGlobalZoomFound:
+      scriptSource.includes("const zoom = map?.getZoom?.() || 0;") ||
+      scriptSource.includes(
+        "const zoom = Number(zoomOverride) || 0;"
+      ),
     drawOrderFound:
       scriptSource.includes("const style = getBuildingStyleForFeature(feature, zoom);") &&
       scriptSource.includes("const shopRecipe = getShopRecipeForFeature(feature);") &&
@@ -1916,7 +1918,7 @@ export function inspectGrowGoCustom25DBuildingsViewportDrawHelperSourceLock({
       "bounds.contains([lat, lng])",
       "projectCustom25DBuildingPoints(feature.coords, topLeft)",
       "map.latLngToLayerPoint([lat, lng])",
-      "getShopRecipeForFeature(feature) -> map?.getZoom?.() || 0"
+      "getShopRecipeForFeature(feature) -> global-or-injected zoom fallback"
     ])
   });
 }

@@ -15138,7 +15138,10 @@ function drawCustom25DMapCanvas(canvas) {
   /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DZones(ctx, bounds, topLeft);
   */
+  drawCustom25DBuildingsLiveCallsite(ctx, bounds, topLeft);
+  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DBuildings(ctx, bounds, topLeft);
+  */
   drawCustom25DRoads(ctx, bounds, topLeft);
   drawCustom25DTrees(ctx, size, bounds);
   drawCustom25DLandmarkFoundation(ctx, bounds, topLeft);
@@ -15959,8 +15962,8 @@ function getShopVariantFromSeed(seed, shopKey) {
   };
 }
 
-function getShopRecipeForFeature(feature) {
-  const zoom = map?.getZoom?.() || 0;
+function getShopRecipeForFeature(feature, zoomOverride = map?.getZoom?.() || 0) {
+  const zoom = Number(zoomOverride) || 0;
   if (!shouldDrawShopAtZoom(zoom)) return null;
   if (!isCommercialFeature(feature)) return null;
 
@@ -16024,6 +16027,232 @@ function projectCustom25DBuildingPoints(coords, topLeft) {
       y: point.y - topLeft.y
     };
   });
+}
+
+function createCustom25DBuildingsLiveViewportProjection(bounds, topLeft) {
+  const frozenZoom = map.getZoom();
+  const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+
+  return {
+    getZoom() {
+      return frozenZoom;
+    },
+    projectCoordinateToCanvasPoint({ latitude, longitude }) {
+      const point = map.latLngToLayerPoint([latitude, longitude]);
+      return {
+        canvasPoint: {
+          x: point.x - frozenTopLeft.x,
+          y: point.y - frozenTopLeft.y
+        },
+        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+      };
+    }
+  };
+}
+
+function projectCustom25DBuildingPointsWithViewport(coords, viewportProjection) {
+  if (!Array.isArray(coords) || coords.length < 3) {
+    return {
+      outcome: "skip",
+      reasonCode: "BUILDING_COORDS_INVALID",
+      points: [],
+      insideViewport: false,
+      projectionCount: 0
+    };
+  }
+
+  const points = [];
+  let projectionCount = 0;
+  let insideViewport = false;
+
+  for (const coordinate of coords) {
+    if (!Array.isArray(coordinate) || coordinate.length < 2) {
+      return {
+        outcome: "skip",
+        reasonCode: "BUILDING_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    const latitude = Number(coordinate[0]);
+    const longitude = Number(coordinate[1]);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      return {
+        outcome: "skip",
+        reasonCode: "BUILDING_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    let projected;
+    try {
+      projected = viewportProjection.projectCoordinateToCanvasPoint({
+        latitude,
+        longitude
+      });
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "BUILDING_PROJECTION_FAILED",
+        points: [],
+        insideViewport: false,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += 1;
+    const canvasPoint = projected?.canvasPoint;
+    if (
+      !canvasPoint ||
+      !Number.isFinite(Number(canvasPoint.x)) ||
+      !Number.isFinite(Number(canvasPoint.y))
+    ) {
+      return {
+        outcome: "blocked",
+        reasonCode: "BUILDING_PROJECTION_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    if (projected.insideSnapshotBounds === true) {
+      insideViewport = true;
+    }
+
+    points.push({
+      x: Number(canvasPoint.x),
+      y: Number(canvasPoint.y)
+    });
+  }
+
+  return {
+    outcome: "ready",
+    reasonCode: "BUILDING_POINTS_PROJECTED",
+    points,
+    insideViewport,
+    projectionCount
+  };
+}
+
+function drawCustom25DBuildingsViewportInjected(ctx, buildingFeatures, viewportProjection) {
+  if (!Array.isArray(buildingFeatures) || !buildingFeatures.length) {
+    return {
+      outcome: "noop",
+      reasonCode: "BUILDING_FEATURES_EMPTY"
+    };
+  }
+
+  const zoom = Number(viewportProjection.getZoom());
+  if (!Number.isFinite(zoom)) {
+    return {
+      outcome: "blocked",
+      reasonCode: "BUILDING_VIEWPORT_ZOOM_INVALID"
+    };
+  }
+
+  if (!shouldDrawBuildingAtZoom(zoom)) {
+    return {
+      outcome: "noop",
+      reasonCode: "BUILDING_ZOOM_BELOW_THRESHOLD",
+      zoom
+    };
+  }
+
+  const maxBuildings = zoom >= 18 ? 120 : zoom >= 17 ? 80 : 45;
+  let drawn = 0;
+  let projectionCount = 0;
+
+  for (const feature of buildingFeatures) {
+    if (drawn >= maxBuildings) continue;
+    if (!Array.isArray(feature?.coords) || feature.coords.length < 3) continue;
+
+    let projection;
+    try {
+      projection = projectCustom25DBuildingPointsWithViewport(
+        feature.coords,
+        viewportProjection
+      );
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "BUILDING_LAYER_DRAW_FAILED",
+        zoom,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += projection.projectionCount || 0;
+    if (projection.outcome === "blocked") {
+      return {
+        outcome: "blocked",
+        reasonCode: projection.reasonCode,
+        zoom,
+        projectionCount
+      };
+    }
+
+    if (
+      projection.outcome !== "ready" ||
+      !projection.insideViewport ||
+      projection.points.length < 3
+    ) {
+      continue;
+    }
+
+    const style = getBuildingStyleForFeature(feature, zoom);
+    const shopRecipe = getShopRecipeForFeature(feature, zoom);
+    if (shopRecipe) {
+      drawShop25D(ctx, projection.points, style, zoom, shopRecipe);
+    } else {
+      drawGeneric25DBuilding(ctx, projection.points, style, zoom);
+    }
+    drawn += 1;
+  }
+
+  return {
+    outcome: "success",
+    reasonCode: "BUILDINGS_DRAWN_WITH_VIEWPORT",
+    zoom,
+    drawn,
+    projectionCount
+  };
+}
+
+function drawCustom25DBuildingsLiveCallsite(ctx, bounds, topLeft) {
+  if (!Array.isArray(custom25DBuildingFeatures) || !custom25DBuildingFeatures.length) return;
+
+  let viewportProjection;
+  try {
+    viewportProjection = createCustom25DBuildingsLiveViewportProjection(
+      bounds,
+      topLeft
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "BUILDING_VIEWPORT_CREATION_FAILED"
+    };
+  }
+
+  try {
+    return drawCustom25DBuildingsViewportInjected(
+      ctx,
+      custom25DBuildingFeatures,
+      viewportProjection
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "BUILDING_LAYER_DRAW_FAILED"
+    };
+  }
 }
 
 function getBuildingCentroid(points) {

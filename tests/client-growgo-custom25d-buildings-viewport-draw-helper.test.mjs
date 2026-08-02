@@ -231,7 +231,7 @@ test("module import has no side effects, helper exists, style config exists, and
   assert.match(inspection.directGlobalReads[4], /map\.latLngToLayerPoint/);
   assert.match(
     inspection.directGlobalReads[5],
-    /getShopRecipeForFeature\(feature\) -> map\?\./
+    /getShopRecipeForFeature\(feature\) -> global-or-injected zoom fallback/
   );
   assert.doesNotMatch(
     developmentAlphaAppSource,
