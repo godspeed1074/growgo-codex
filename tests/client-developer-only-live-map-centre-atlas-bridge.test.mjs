@@ -201,7 +201,7 @@ test("bridge installs the developer-facing function into the developer diagnosti
   );
 });
 
-test("bridge adds no event listeners and performs no renderer or network activity", () => {
+test("bridge adds no event listeners and development alpha uses only explicit diagnostic reads with no renderer or network side effects", () => {
   assert.doesNotMatch(bridgeSource, /addEventListener/);
   assert.doesNotMatch(bridgeSource, /\.on\(/);
   assert.doesNotMatch(bridgeSource, /fetch\(/);
@@ -212,9 +212,13 @@ test("bridge adds no event listeners and performs no renderer or network activit
     developmentAlphaAppSource,
     /installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge/
   );
-  assert.doesNotMatch(
+  assert.match(
     developmentAlphaAppSource,
     /getAtlasDiagnosticForCurrentMapCentre\(\)/
+  );
+  assert.doesNotMatch(
+    developmentAlphaAppSource,
+    /runAtlasRendererHandoffLiveOneFrameAttempt|executeGatedLiveOneFrameIntegration|drawCustom25DMapCanvas\(/
   );
 });
 

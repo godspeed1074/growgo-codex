@@ -96,7 +96,8 @@ function bootstrapGrowGoDeveloperDiagnosticsForLocalDev(options = {}) {
     available: true,
     source: "phase-211.2-growgo-map-getter",
     localDev: true,
-    getGrowGoMap
+    getGrowGoMap,
+    getCustom25DOneFrameBridge
   };
 
   return {
@@ -15420,6 +15421,61 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
     outcome: "drawn",
     reasonCode: "FRAME_DRAW_COMPLETED"
   };
+}
+
+function createCustom25DFrameViewportSnapshotForOneFrame({
+  map,
+  canvas
+} = {}) {
+  try {
+    const frameViewportSnapshot = createCustom25DFrameViewportSnapshot({
+      map,
+      canvas
+    });
+
+    return Object.freeze({
+      outcome: "snapshot_created",
+      reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+      frameViewportSnapshot
+    });
+  } catch (error) {
+    return Object.freeze({
+      outcome: "blocked",
+      reasonCode:
+        typeof error?.message === "string" && error.message
+          ? error.message
+          : "FRAME_VIEWPORT_SNAPSHOT_CREATION_FAILED",
+      frameViewportSnapshot: null
+    });
+  }
+}
+
+function drawCustom25DOneFrameFromSnapshot({
+  canvas,
+  frameViewportSnapshot
+} = {}) {
+  const drawResult = drawCustom25DMapCanvasWithFrameSnapshot({
+    canvas,
+    frameViewportSnapshot
+  });
+
+  if (!drawResult || typeof drawResult !== "object") {
+    return Object.freeze({
+      outcome: "blocked",
+      reasonCode: "FRAME_DRAW_RESULT_INVALID"
+    });
+  }
+
+  return Object.freeze({
+    ...drawResult
+  });
+}
+
+function getCustom25DOneFrameBridge() {
+  return Object.freeze({
+    createCustom25DFrameViewportSnapshotForOneFrame,
+    drawCustom25DOneFrameFromSnapshot
+  });
 }
 
 function syncCustom25DMapPresentation() {
