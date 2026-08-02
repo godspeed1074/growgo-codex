@@ -15142,7 +15142,10 @@ function drawCustom25DMapCanvas(canvas) {
   /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DBuildings(ctx, bounds, topLeft);
   */
+  drawCustom25DRoadsLiveCallsite(ctx, bounds, topLeft);
+  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DRoads(ctx, bounds, topLeft);
+  */
   drawCustom25DTrees(ctx, size, bounds);
   drawCustom25DLandmarkFoundation(ctx, bounds, topLeft);
 }
@@ -16998,6 +17001,232 @@ function projectCustom25DRoadPoints(coords, topLeft) {
       y: point.y - topLeft.y
     };
   });
+}
+
+function createCustom25DRoadsLiveViewportProjection(bounds, topLeft) {
+  const frozenZoom = map.getZoom();
+  const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+
+  return {
+    getZoom() {
+      return frozenZoom;
+    },
+    projectCoordinateToCanvasPoint({ latitude, longitude }) {
+      const point = map.latLngToLayerPoint([latitude, longitude]);
+      return {
+        canvasPoint: {
+          x: point.x - frozenTopLeft.x,
+          y: point.y - frozenTopLeft.y
+        },
+        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+      };
+    }
+  };
+}
+
+function projectCustom25DRoadPointsWithViewport(coords, viewportProjection) {
+  if (!Array.isArray(coords) || coords.length < 2) {
+    return {
+      outcome: "skip",
+      reasonCode: "ROAD_COORDS_INVALID",
+      points: [],
+      insideViewport: false,
+      projectionCount: 0
+    };
+  }
+
+  const points = [];
+  let projectionCount = 0;
+  let insideViewport = false;
+
+  for (const coordinate of coords) {
+    if (!Array.isArray(coordinate) || coordinate.length < 2) {
+      return {
+        outcome: "skip",
+        reasonCode: "ROAD_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    const latitude = Number(coordinate[0]);
+    const longitude = Number(coordinate[1]);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      return {
+        outcome: "skip",
+        reasonCode: "ROAD_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    let projected;
+    try {
+      projected = viewportProjection.projectCoordinateToCanvasPoint({
+        latitude,
+        longitude
+      });
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ROAD_PROJECTION_FAILED",
+        points: [],
+        insideViewport: false,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += 1;
+    const canvasPoint = projected?.canvasPoint;
+    if (
+      !canvasPoint ||
+      !Number.isFinite(Number(canvasPoint.x)) ||
+      !Number.isFinite(Number(canvasPoint.y))
+    ) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ROAD_PROJECTION_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    if (projected.insideSnapshotBounds === true) {
+      insideViewport = true;
+    }
+
+    points.push({
+      x: Number(canvasPoint.x),
+      y: Number(canvasPoint.y)
+    });
+  }
+
+  return {
+    outcome: "ready",
+    reasonCode: "ROAD_POINTS_PROJECTED",
+    points,
+    insideViewport,
+    projectionCount
+  };
+}
+
+function drawCustom25DRoadsViewportInjected(ctx, roadFeatures, viewportProjection) {
+  if (!Array.isArray(roadFeatures) || !roadFeatures.length) {
+    return {
+      outcome: "noop",
+      reasonCode: "ROAD_FEATURES_EMPTY"
+    };
+  }
+
+  const zoom = Number(viewportProjection.getZoom());
+  if (!Number.isFinite(zoom)) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ROAD_VIEWPORT_ZOOM_INVALID"
+    };
+  }
+
+  let drawn = 0;
+  let eligibleRoadCount = 0;
+  let skippedRoadCount = 0;
+  let projectionCount = 0;
+
+  for (const road of roadFeatures) {
+    if (!Array.isArray(road?.coords) || road.coords.length < 2) {
+      skippedRoadCount += 1;
+      continue;
+    }
+
+    let projection;
+    try {
+      projection = projectCustom25DRoadPointsWithViewport(
+        road.coords,
+        viewportProjection
+      );
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ROAD_LAYER_DRAW_FAILED",
+        zoom,
+        drawn,
+        eligibleRoadCount,
+        skippedRoadCount,
+        projectionCount,
+        error
+      };
+    }
+
+    projectionCount += projection.projectionCount || 0;
+    if (projection.outcome === "blocked") {
+      return {
+        outcome: "blocked",
+        reasonCode: projection.reasonCode,
+        zoom,
+        drawn,
+        eligibleRoadCount,
+        skippedRoadCount,
+        projectionCount
+      };
+    }
+
+    if (
+      projection.outcome !== "ready" ||
+      !projection.insideViewport ||
+      projection.points.length < 2
+    ) {
+      skippedRoadCount += 1;
+      continue;
+    }
+
+    eligibleRoadCount += 1;
+    const style = getRoadStyleForFeature(road.highway, zoom);
+    drawCustom25DRoad(ctx, projection.points, style);
+    drawn += 1;
+  }
+
+  return {
+    outcome: "success",
+    reasonCode: "ROADS_DRAWN_WITH_VIEWPORT",
+    zoom,
+    drawn,
+    eligibleRoadCount,
+    skippedRoadCount,
+    projectionCount
+  };
+}
+
+function drawCustom25DRoadsLiveCallsite(ctx, bounds, topLeft) {
+  if (!Array.isArray(custom25DRoadFeatures) || !custom25DRoadFeatures.length) return;
+
+  let viewportProjection;
+  try {
+    viewportProjection = createCustom25DRoadsLiveViewportProjection(
+      bounds,
+      topLeft
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ROAD_VIEWPORT_CREATION_FAILED"
+    };
+  }
+
+  try {
+    return drawCustom25DRoadsViewportInjected(
+      ctx,
+      custom25DRoadFeatures,
+      viewportProjection
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ROAD_LAYER_DRAW_FAILED"
+    };
+  }
 }
 
 function drawCustom25DRoads(ctx, bounds, topLeft) {
