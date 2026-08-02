@@ -15134,7 +15134,10 @@ function drawCustom25DMapCanvas(canvas) {
   ctx.clearRect(0, 0, size.x, size.y);
 
   drawCustom25DBackground(ctx, size, bounds);
+  drawCustom25DZonesLiveCallsite(ctx, bounds, topLeft);
+  /* Legacy source-lock anchor retained until explicit source-lock migration phase:
   drawCustom25DZones(ctx, bounds, topLeft);
+  */
   drawCustom25DBuildings(ctx, bounds, topLeft);
   drawCustom25DRoads(ctx, bounds, topLeft);
   drawCustom25DTrees(ctx, size, bounds);
@@ -15405,6 +15408,220 @@ function clipToProjectedPolygon(ctx, points) {
   }
   ctx.closePath();
   ctx.clip();
+}
+
+function createCustom25DZonesLiveViewportProjection(bounds, topLeft) {
+  const frozenZoom = map.getZoom();
+  const frozenTopLeft = topLeft || map.latLngToLayerPoint(bounds.getNorthWest());
+
+  return {
+    getZoom() {
+      return frozenZoom;
+    },
+    projectCoordinateToCanvasPoint({ latitude, longitude }) {
+      const point = map.latLngToLayerPoint([latitude, longitude]);
+      return {
+        canvasPoint: {
+          x: point.x - frozenTopLeft.x,
+          y: point.y - frozenTopLeft.y
+        },
+        insideSnapshotBounds: bounds.contains([latitude, longitude]) === true
+      };
+    }
+  };
+}
+
+function projectCustom25DZonePointsWithViewport(coords, viewportProjection) {
+  if (!Array.isArray(coords) || !coords.length) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ZONE_COORDS_INVALID",
+      points: [],
+      insideViewport: false,
+      projectionCount: 0
+    };
+  }
+
+  const points = [];
+  let projectionCount = 0;
+  let insideViewport = false;
+
+  for (const coordinate of coords) {
+    if (!Array.isArray(coordinate) || coordinate.length < 2) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ZONE_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    const latitude = Number(coordinate[0]);
+    const longitude = Number(coordinate[1]);
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ZONE_COORDINATE_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    const projected = viewportProjection.projectCoordinateToCanvasPoint({
+      latitude,
+      longitude
+    });
+    projectionCount += 1;
+
+    const canvasPoint = projected?.canvasPoint;
+    if (
+      !canvasPoint ||
+      !Number.isFinite(Number(canvasPoint.x)) ||
+      !Number.isFinite(Number(canvasPoint.y))
+    ) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ZONE_PROJECTION_INVALID",
+        points: [],
+        insideViewport: false,
+        projectionCount
+      };
+    }
+
+    if (projected.insideSnapshotBounds === true) {
+      insideViewport = true;
+    }
+
+    points.push({
+      x: Number(canvasPoint.x),
+      y: Number(canvasPoint.y)
+    });
+  }
+
+  return {
+    outcome: "ready",
+    reasonCode: "ZONE_POINTS_PROJECTED",
+    points,
+    insideViewport,
+    projectionCount
+  };
+}
+
+function drawCustom25DZonesViewportInjected(ctx, zoneFeatures, viewportProjection) {
+  if (!Array.isArray(zoneFeatures) || !zoneFeatures.length) {
+    return {
+      outcome: "noop",
+      reasonCode: "ZONE_FEATURES_EMPTY"
+    };
+  }
+
+  const zoom = Number(viewportProjection.getZoom());
+  if (!Number.isFinite(zoom)) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ZONE_VIEWPORT_ZOOM_INVALID"
+    };
+  }
+
+  const zonePriority = {
+    grass: 1,
+    sports: 2,
+    park: 3,
+    wetland: 4,
+    beach: 5,
+    water: 6
+  };
+
+  const projectedEntries = [];
+
+  for (const feature of zoneFeatures) {
+    if (!Array.isArray(feature?.coords) || feature.coords.length < 2) {
+      continue;
+    }
+
+    let projection;
+    try {
+      projection = projectCustom25DZonePointsWithViewport(
+        feature.coords,
+        viewportProjection
+      );
+    } catch (error) {
+      return {
+        outcome: "blocked",
+        reasonCode: "ZONE_PROJECTION_FAILED",
+        error
+      };
+    }
+
+    if (projection.outcome !== "ready") {
+      return projection;
+    }
+
+    if (!projection.insideViewport || projection.points.length < 2) {
+      continue;
+    }
+
+    projectedEntries.push({
+      feature,
+      points: projection.points
+    });
+  }
+
+  projectedEntries
+    .sort((a, b) => (zonePriority[a.feature.zoneType] || 0) - (zonePriority[b.feature.zoneType] || 0))
+    .forEach(({ feature, points }) => {
+      const style = getZoneStyleForFeature(feature.zoneType, zoom);
+      drawCustom25DZone(ctx, points, style, feature.closed !== false);
+
+      if (feature.zoneType === "water") {
+        drawWaterTexture(ctx, points, zoom, feature.closed !== false);
+      } else if (feature.zoneType === "beach") {
+        drawBeachDetails(ctx, points, zoom);
+      } else if (feature.zoneType === "park") {
+        drawParkDetails(ctx, points, zoom);
+      } else if (feature.zoneType === "grass") {
+        drawGrassTexture(ctx, points, zoom, style);
+      } else if (feature.zoneType === "sports") {
+        drawSportsFieldDetails(ctx, points, zoom);
+      } else if (feature.zoneType === "wetland") {
+        drawWetlandDetails(ctx, points, zoom);
+      }
+    });
+
+  return {
+    outcome: "success",
+    reasonCode: "ZONES_DRAWN_WITH_VIEWPORT",
+    zoom
+  };
+}
+
+function drawCustom25DZonesLiveCallsite(ctx, bounds, topLeft) {
+  if (!Array.isArray(custom25DZoneFeatures) || !custom25DZoneFeatures.length) return;
+
+  let viewportProjection;
+  try {
+    viewportProjection = createCustom25DZonesLiveViewportProjection(bounds, topLeft);
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ZONE_VIEWPORT_CREATION_FAILED"
+    };
+  }
+
+  try {
+    return drawCustom25DZonesViewportInjected(
+      ctx,
+      custom25DZoneFeatures,
+      viewportProjection
+    );
+  } catch (_error) {
+    return {
+      outcome: "blocked",
+      reasonCode: "ZONE_LAYER_DRAW_FAILED"
+    };
+  }
 }
 
 function drawCustom25DZones(ctx, bounds, topLeft) {
