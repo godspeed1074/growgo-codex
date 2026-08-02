@@ -270,6 +270,43 @@ test("missing map missing canvas missing listener unexpected event names and ret
   assert.equal(badRetention.status.cleanupFailed, true);
 });
 
+test("explicit one-frame ownership mode accepts absent listener and retention ownership without weakening continuous cleanup rules", () => {
+  const env = createFakeEnvironment();
+  const owner =
+    moduleUnderTest.createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner({
+      expectedPaneName: "custom25DMapPane",
+      expectedRetentionSlot: "custom25DMapLayer",
+      removeCanvas: env.removeCanvas,
+      removePaneIfEmpty: env.removePaneIfEmpty
+    });
+
+  const registration = owner.registerOwnedResources({
+    ...env.bundle,
+    ownershipMode: "ONE_FRAME_SURFACE_ONLY",
+    listener: null,
+    redrawCallback: null,
+    listenerEventNames: [],
+    retentionSlot: "custom25DMapLayer",
+    retentionSlotName: undefined,
+    clearRetentionSlot: null,
+    retentionResetRequired: false,
+    paneOwned: false,
+    paneOwnershipProven: false
+  });
+  const dispose = owner.disposeOwnedResources();
+
+  assert.equal(registration.outcome, "registered");
+  assert.equal(registration.status.ownershipMode, "ONE_FRAME_SURFACE_ONLY");
+  assert.equal(registration.status.listenerRetained, false);
+  assert.equal(registration.status.redrawCallbackRetained, false);
+  assert.deepEqual(registration.status.listenerEventNames, []);
+  assert.equal(env.calls.off.length, 0);
+  assert.equal(env.calls.retentionReset, 0);
+  assert.deepEqual(env.calls.removeCanvas, [env.canvas]);
+  assert.equal(env.calls.removePane.length, 0);
+  assert.equal(dispose.outcome, "disposed");
+});
+
 test("cleanup removes exact owned resources preserves unrelated resources and clears retained references", () => {
   const env = createFakeEnvironment();
   const owner =

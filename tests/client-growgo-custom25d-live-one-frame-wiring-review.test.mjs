@@ -261,7 +261,7 @@ test("the live surface bundle satisfies the live draw contract, but lifecycle re
     surfaceResult.surface
   );
   assert.equal(registrationResult.outcome, "failed_closed");
-  assert.equal(registrationResult.reasonCode, "LISTENER_REQUIRED");
+  assert.equal(registrationResult.reasonCode, "REDRAW_CALLBACK_REQUIRED");
 });
 
 test("live surface operations and live draw operations remain disconnected, while the review stays classified as a translation gap", () => {

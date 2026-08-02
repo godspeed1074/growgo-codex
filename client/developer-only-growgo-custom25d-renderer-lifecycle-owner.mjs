@@ -18,6 +18,8 @@ const OPERATION_SCHEMA_ID =
   "GROWGO_CUSTOM_25D_RENDERER_LIFECYCLE_OWNER_OPERATION_RESULT_001";
 const SOURCE_LOCK_SCHEMA_ID =
   "GROWGO_CUSTOM_25D_RENDERER_OWNERSHIP_SOURCE_LOCK_001";
+const OWNERSHIP_MODE_CONTINUOUS = "CONTINUOUS_RENDERER";
+const OWNERSHIP_MODE_ONE_FRAME = "ONE_FRAME_SURFACE_ONLY";
 
 function canonicalSafetyFlags() {
   return deepFreeze({
@@ -86,6 +88,7 @@ function createInitialStatus(expectedPaneName, expectedRetentionSlot) {
     realListenerAdded: false,
     realDrawRequested: false,
     automaticInvocation: false,
+    ownershipMode: null,
     expectedPaneName,
     expectedRetentionSlot,
     retainedPaneName: null,
@@ -254,28 +257,55 @@ export function createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner({
       return "CANVAS_REQUIRED";
     }
 
-    if (typeof bundle.listener !== "function") {
-      return "LISTENER_REQUIRED";
+    const ownershipMode =
+      bundle.ownershipMode === OWNERSHIP_MODE_ONE_FRAME
+        ? OWNERSHIP_MODE_ONE_FRAME
+        : OWNERSHIP_MODE_CONTINUOUS;
+    if (typeof bundle.redrawCallback !== "function") {
+      if (ownershipMode !== OWNERSHIP_MODE_ONE_FRAME) {
+        return "REDRAW_CALLBACK_REQUIRED";
+      }
+      if (bundle.redrawCallback !== null) {
+        return "REDRAW_CALLBACK_REQUIRED";
+      }
     }
 
-    if (typeof bundle.redrawCallback !== "function") {
-      return "REDRAW_CALLBACK_REQUIRED";
+    if (typeof bundle.listener !== "function") {
+      if (ownershipMode !== OWNERSHIP_MODE_ONE_FRAME) {
+        return "LISTENER_REQUIRED";
+      }
+      if (bundle.listener !== null) {
+        return "LISTENER_REQUIRED";
+      }
     }
 
     const listenerEventNames = normalizeEventNames(bundle.listenerEventNames);
-    if (
+    if (ownershipMode === OWNERSHIP_MODE_ONE_FRAME) {
+      if (listenerEventNames.length !== 0) {
+        return "UNEXPECTED_EVENT_NAMES";
+      }
+    } else if (
       listenerEventNames.length !== 1 ||
       listenerEventNames[0] !== "moveend zoomend"
     ) {
       return "UNEXPECTED_EVENT_NAMES";
     }
 
-    if (bundle.retentionSlotName !== expectedRetentionSlot) {
+    const retentionSlotName =
+      bundle.retentionSlotName ?? bundle.retentionSlot ?? null;
+    if (retentionSlotName !== expectedRetentionSlot) {
       return "RETENTION_SLOT_IDENTITY_MISMATCH";
     }
 
     if (bundle.paneName !== expectedPaneName) {
       return "PANE_IDENTITY_MISMATCH";
+    }
+
+    if (
+      ownershipMode === OWNERSHIP_MODE_ONE_FRAME &&
+      bundle.retentionResetRequired === false
+    ) {
+      return null;
     }
 
     if (typeof bundle.clearRetentionSlot !== "function") {
@@ -306,26 +336,43 @@ export function createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner({
     }
 
     ownedBundle = {
+      ownershipMode:
+        bundle.ownershipMode === OWNERSHIP_MODE_ONE_FRAME
+          ? OWNERSHIP_MODE_ONE_FRAME
+          : OWNERSHIP_MODE_CONTINUOUS,
       map: bundle.map,
       pane: bundle.pane ?? null,
       paneName: bundle.paneName,
       canvas: bundle.canvas,
-      listener: bundle.listener,
-      redrawCallback: bundle.redrawCallback,
+      listener: typeof bundle.listener === "function" ? bundle.listener : null,
+      redrawCallback:
+        typeof bundle.redrawCallback === "function"
+          ? bundle.redrawCallback
+          : null,
       listenerEventNames: normalizeEventNames(bundle.listenerEventNames),
-      retentionSlotName: bundle.retentionSlotName,
-      clearRetentionSlot: bundle.clearRetentionSlot,
-      paneOwnershipProven: bundle.paneOwnershipProven === true
+      retentionSlotName:
+        bundle.retentionSlotName ?? bundle.retentionSlot ?? expectedRetentionSlot,
+      clearRetentionSlot:
+        typeof bundle.clearRetentionSlot === "function"
+          ? bundle.clearRetentionSlot
+          : null,
+      retentionResetRequired:
+        bundle.retentionResetRequired !== false ||
+        (bundle.ownershipMode !== OWNERSHIP_MODE_ONE_FRAME &&
+          typeof bundle.clearRetentionSlot === "function"),
+      paneOwnershipProven:
+        bundle.paneOwnershipProven === true || bundle.paneOwned === true
     };
 
     return buildResult("register", "registered", "OWNERSHIP_REGISTERED", {
       lifecycleState: "registered",
       ownershipRegistered: true,
+      ownershipMode: ownedBundle.ownershipMode,
       mapRetained: true,
       paneRetained: !!ownedBundle.pane,
       canvasRetained: true,
-      listenerRetained: true,
-      redrawCallbackRetained: true,
+      listenerRetained: !!ownedBundle.listener,
+      redrawCallbackRetained: !!ownedBundle.redrawCallback,
       listenerEventNames: ownedBundle.listenerEventNames,
       retainedPaneName: ownedBundle.paneName,
       retainedRetentionSlot: ownedBundle.retentionSlotName,
@@ -356,11 +403,16 @@ export function createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner({
     let retentionResetAttemptCount = 0;
 
     try {
-      listenerRemovalAttemptCount = 1;
-      ownedBundle.map.off(
-        ownedBundle.listenerEventNames[0],
-        ownedBundle.listener
-      );
+      if (
+        ownedBundle.listener &&
+        ownedBundle.listenerEventNames.length > 0
+      ) {
+        listenerRemovalAttemptCount = 1;
+        ownedBundle.map.off(
+          ownedBundle.listenerEventNames[0],
+          ownedBundle.listener
+        );
+      }
     } catch (error) {
       failureReasons.push(toReasonCode(error, "LISTENER_REMOVAL_FAILED"));
     }
@@ -378,8 +430,15 @@ export function createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner({
     }
 
     try {
-      retentionResetAttemptCount = 1;
-      ownedBundle.clearRetentionSlot();
+      if (ownedBundle.retentionResetRequired === true) {
+        retentionResetAttemptCount = 1;
+        if (typeof ownedBundle.clearRetentionSlot !== "function") {
+          throw Object.assign(new Error("clearRetentionSlot missing"), {
+            reasonCode: "RETENTION_RESET_FAILED"
+          });
+        }
+        ownedBundle.clearRetentionSlot();
+      }
     } catch (error) {
       failureReasons.push(toReasonCode(error, "RETENTION_RESET_FAILED"));
     }
