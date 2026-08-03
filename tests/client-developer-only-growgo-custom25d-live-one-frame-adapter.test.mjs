@@ -120,6 +120,7 @@ module.exports = {
     module: { exports: {} },
     exports: {},
     Object,
+    map: null,
     traceAtlasOneFrameCall(functionName, callback) {
       return callback();
     },
@@ -158,6 +159,7 @@ module.exports = {
 function createFakeAdapterEnvironment(overrides = {}) {
   const calls = {
     mapProvider: 0,
+    rawLeafletMapProvider: 0,
     leafletProvider: 0,
     devicePixelRatioProvider: 0,
     surfaceOperationsFactory: 0,
@@ -267,6 +269,16 @@ function createFakeAdapterEnvironment(overrides = {}) {
               calls.mapProvider += 1;
               if (overrides.mapProviderThrows) {
                 throw overrides.mapProviderThrows;
+              }
+              return map;
+            },
+      rawLeafletMapProvider:
+        overrides.omitRawLeafletMapProvider === true
+          ? null
+          : () => {
+              calls.rawLeafletMapProvider += 1;
+              if (overrides.rawLeafletMapProviderThrows) {
+                throw overrides.rawLeafletMapProviderThrows;
               }
               return map;
             },
@@ -579,8 +591,10 @@ test("narrow script bridge exists, exposes snapshot creation and snapshot-aware 
 
   assert.deepEqual(Object.keys(bridge).sort(), [
     "createCustom25DFrameViewportSnapshotForOneFrame",
-    "drawCustom25DOneFrameFromSnapshot"
+    "drawCustom25DOneFrameFromSnapshot",
+    "rawLeafletMapReference"
   ]);
+  assert.equal(bridge.rawLeafletMapReference, null);
   assert.equal(calls.snapshot, 0);
   assert.equal(calls.draw, 0);
 
@@ -625,7 +639,8 @@ test("one isolated fake execution completes with one surface, one registration, 
   assert.equal(result.permanentlyClosed, true);
   assert.equal(result.ownershipMode, "ONE_FRAME_SURFACE_ONLY");
 
-  assert.equal(env.calls.mapProvider, 1);
+  assert.equal(env.calls.mapProvider, 0);
+  assert.equal(env.calls.rawLeafletMapProvider, 1);
   assert.equal(env.calls.leafletProvider, 1);
   assert.equal(env.calls.surfaceOperationsFactory, 1);
   assert.equal(env.calls.lifecycleTranslationFactory, 1);
@@ -695,7 +710,7 @@ test("every missing provider or missing live capability fails closed", () => {
   const cases = [
     {
       label: "missing map provider",
-      overrides: { omitMapProvider: true },
+      overrides: { omitMapProvider: true, omitRawLeafletMapProvider: true },
       reasonCode: "MISSING_MAP_PROVIDER"
     },
     {
@@ -830,6 +845,10 @@ test("manual command remains outside script.js, the adapter stays disconnected f
   assert.match(
     developmentAlphaAppSource,
     /createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter/
+  );
+  assert.match(
+    developmentAlphaAppSource,
+    /rawLeafletMapProviderFromBridgeReference/
   );
   assert.doesNotMatch(
     developmentAlphaAppSource,

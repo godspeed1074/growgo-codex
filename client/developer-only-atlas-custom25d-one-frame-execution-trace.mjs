@@ -213,9 +213,16 @@ export function installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
   globalObject.__GROWGO_ATLAS_ONE_FRAME_TRACE__ = {
     enter: trace.enter,
     exit: trace.exit,
+    reset: trace.reset,
     getTraceSnapshot: trace.getTraceSnapshot
   };
 
+  namespace.resetAtlasCustom25DOneFrameExecutionTrace = (reasonCode) =>
+    trace.reset(
+      typeof reasonCode === "string" && reasonCode.trim()
+        ? reasonCode.trim()
+        : "TRACE_RESET_FROM_BROWSER_NAMESPACE"
+    );
   namespace.getAtlasCustom25DOneFrameExecutionTrace = () =>
     trace.getTraceSnapshot();
 

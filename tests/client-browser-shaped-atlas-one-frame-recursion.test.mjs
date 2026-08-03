@@ -225,6 +225,9 @@ function createSnapshotResult({ map, canvas, mapStub } = {}) {
 function installNamespaceHarness({
   recursiveSnapshotBridge = false,
   recursiveSnapshotMapProxy = false,
+  recursivePublicGetGrowGoMap = false,
+  useStableRawLeafletMapProvider = true,
+  useBridgeRawLeafletMapReference = false,
   forceRecursiveSnapshotMapForBridge = false,
   explicitReturnWrapper = true,
   snapshotMapNormalizer
@@ -310,7 +313,7 @@ function installNamespaceHarness({
       createCustom25DFrameViewportSnapshot({ map, canvas })
     )();
 
-  const scriptBridge = Object.freeze({
+  const scriptBridge = {
     createCustom25DFrameViewportSnapshotForOneFrame: trace.wrap(
       "createCustom25DFrameViewportSnapshotForOneFrame",
       ({ map, canvas } = {}) => {
@@ -338,7 +341,19 @@ function installNamespaceHarness({
         });
       }
     )
+  };
+
+  Object.defineProperty(scriptBridge, "rawLeafletMapReference", {
+    enumerable: true,
+    get:
+      recursivePublicGetGrowGoMap && useBridgeRawLeafletMapReference
+        ? trace.wrap("bridgePublicGetGrowGoMap", () =>
+            globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap()
+          )
+        : () => mapStub
   });
+
+  Object.freeze(scriptBridge);
 
   namespace.getCustom25DOneFrameBridge = trace.wrap(
     "getCustom25DOneFrameBridge",
@@ -372,6 +387,13 @@ function installNamespaceHarness({
     );
   }
 
+  if (recursivePublicGetGrowGoMap) {
+    globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap = trace.wrap(
+      "reboundPublicGetGrowGoMap",
+      () => globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap()
+    );
+  }
+
   if (recursiveSnapshotMapProxy) {
     recursiveMapProxy = {
       __growgoRawLeafletMap: mapStub,
@@ -393,9 +415,12 @@ function installNamespaceHarness({
   const capturedMapGetter = trace.wrap("capturedScriptGetGrowGoMap", () =>
     scriptGetGrowGoMap()
   );
+  const capturedRawLeafletMapProvider = trace.wrap("rawLeafletMapProvider", () =>
+    capturedMapGetter()
+  );
 
   const liveBridge = bridgeModule.createDeveloperOnlyLiveMapCentreAtlasBridge({
-    getGrowGoMap: capturedMapGetter,
+    getGrowGoMap: capturedRawLeafletMapProvider,
     atlasAdapter: createReadinessAdapter()
   });
 
@@ -464,10 +489,21 @@ function installNamespaceHarness({
       : forceRecursiveSnapshotMapForBridge
         ? () => recursiveMapProxy
         : undefined;
+  const publicDiagnosticsMapProvider = trace.wrap("getGrowGoMap", () =>
+    globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap()
+  );
+  const bridgeRawLeafletMapProvider = trace.wrap(
+    "bridge.rawLeafletMapReference",
+    () => capturedBridge.rawLeafletMapReference
+  );
 
   const realAdapter =
     adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
-      mapProvider: capturedMapGetter,
+      rawLeafletMapProvider: useStableRawLeafletMapProvider
+        ? useBridgeRawLeafletMapReference
+          ? bridgeRawLeafletMapProvider
+          : capturedRawLeafletMapProvider
+        : publicDiagnosticsMapProvider,
       leafletProvider: () => globalObject.L,
       devicePixelRatioProvider: () => globalObject.devicePixelRatio,
       snapshotMapNormalizer: effectiveSnapshotMapNormalizer,
@@ -727,6 +763,129 @@ test("browser-shaped snapshot-stage raw-map normalization unwraps a recursive di
   assert.equal(traceSnapshot.overflowPrevented, false);
   assert.equal(
     traceSnapshot.last50FunctionNames.includes("proxyGetSize"),
+    false
+  );
+});
+
+test("browser-shaped public getGrowGoMap recursion is reproducible before the fix and eliminated by the stable raw Leaflet map provider", async () => {
+  const brokenHarness = installNamespaceHarness({
+    recursivePublicGetGrowGoMap: true,
+    useStableRawLeafletMapProvider: false
+  });
+  const fixedHarness = installNamespaceHarness({
+    recursivePublicGetGrowGoMap: true,
+    useStableRawLeafletMapProvider: true
+  });
+
+  const brokenResult =
+    await brokenHarness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+      confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+    });
+
+  assert.equal(brokenResult.outcome, "failed_closed");
+  assert.equal(brokenResult.reasonCode, "TRACE_MAX_DEPTH_EXCEEDED");
+  assert.equal(brokenResult.surfacePrepared, false);
+  assert.equal(brokenResult.frameSnapshotCreated, false);
+  assert.equal(brokenResult.drawAttemptCount, 0);
+  assert.equal(brokenResult.cleanupAttemptCount, 0);
+
+  const brokenTrace =
+    brokenHarness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
+  assert.equal(brokenTrace.recursionDetected, true);
+  assert.equal(brokenTrace.overflowPrevented, true);
+  assert.equal(
+    brokenTrace.repeatedCallChain.every(
+      (name) => name === "reboundPublicGetGrowGoMap"
+    ),
+    true
+  );
+
+  const fixedResult =
+    await fixedHarness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+      confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+    });
+
+  assert.equal(fixedResult.outcome, "completed");
+  assert.equal(fixedResult.surfacePrepared, true);
+  assert.equal(fixedResult.frameSnapshotCreated, true);
+  assert.equal(fixedResult.drawAttemptCount, 1);
+  assert.equal(fixedResult.completedFrameCount, 1);
+  assert.equal(fixedResult.cleanupAttemptCount, 1);
+  assert.equal(fixedResult.cleanupCompleted, true);
+  assert.equal(fixedResult.referencesReleased, true);
+
+  const fixedTrace =
+    fixedHarness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
+  assert.equal(fixedTrace.overflowPrevented, false);
+  assert.equal(
+    fixedTrace.last50FunctionNames.includes("reboundPublicGetGrowGoMap"),
+    false
+  );
+  assert.equal(
+    fixedTrace.last50FunctionNames.includes("rawLeafletMapProvider"),
+    true
+  );
+});
+
+test("browser-shaped bridge raw map reference reproduces bridge to public getGrowGoMap recursion before the fix and completes through bridge raw map reference after the fix", async () => {
+  const brokenHarness = installNamespaceHarness({
+    recursivePublicGetGrowGoMap: true,
+    useStableRawLeafletMapProvider: true,
+    useBridgeRawLeafletMapReference: true
+  });
+  const fixedHarness = installNamespaceHarness({
+    recursivePublicGetGrowGoMap: false,
+    useStableRawLeafletMapProvider: true,
+    useBridgeRawLeafletMapReference: true
+  });
+
+  const brokenResult =
+    await brokenHarness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+      confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+    });
+
+  assert.equal(brokenResult.outcome, "failed_closed");
+  assert.equal(brokenResult.reasonCode, "TRACE_MAX_DEPTH_EXCEEDED");
+
+  const brokenTrace =
+    brokenHarness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
+  assert.equal(brokenTrace.recursionDetected, true);
+  assert.equal(
+    brokenTrace.last50FunctionNames.slice(0, 4).includes("getCustom25DOneFrameBridge"),
+    true
+  );
+  assert.equal(
+    brokenTrace.last50FunctionNames.includes("bridgePublicGetGrowGoMap"),
+    true
+  );
+  assert.equal(
+    brokenTrace.repeatedCallChain.every((name) => name === "reboundPublicGetGrowGoMap"),
+    true
+  );
+
+  const fixedResult =
+    await fixedHarness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+      confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+    });
+
+  assert.equal(fixedResult.outcome, "completed");
+  assert.equal(fixedResult.surfacePrepared, true);
+  assert.equal(fixedResult.frameSnapshotCreated, true);
+  assert.equal(fixedResult.drawAttemptCount, 1);
+  assert.equal(fixedResult.completedFrameCount, 1);
+  assert.equal(fixedResult.cleanupAttemptCount, 1);
+  assert.equal(fixedResult.cleanupCompleted, true);
+  assert.equal(fixedResult.referencesReleased, true);
+
+  const fixedTrace =
+    fixedHarness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
+  assert.equal(fixedTrace.overflowPrevented, false);
+  assert.equal(
+    fixedTrace.last50FunctionNames.includes("bridge.rawLeafletMapReference"),
+    true
+  );
+  assert.equal(
+    fixedTrace.repeatedCallChain.includes("getGrowGoMap"),
     false
   );
 });

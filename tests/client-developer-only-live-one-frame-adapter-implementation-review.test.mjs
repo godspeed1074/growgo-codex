@@ -236,11 +236,27 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
   );
   assert.match(
     developmentAlphaSource,
-    /readGrowGoMapForAtlas/
+    /createCapturedRawLeafletMapProvider/
   );
   assert.match(
     developmentAlphaSource,
-    /const custom25DOneFrameBridgeFromScriptDiagnostics =/
+    /rawLeafletMapProviderFromScriptDiagnostics/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /createCapturedOneFrameBridgeProvider/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /capturedOneFrameBridgeFromScriptDiagnostics/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /rawLeafletMapProviderFromBridgeReference/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /const capturedOneFrameBridgeFromScriptDiagnostics =/
   );
   assert.match(
     developmentAlphaSource,
@@ -252,7 +268,7 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
   );
   assert.doesNotMatch(
     developmentAlphaSource,
-    /readCustom25DOneFrameBridgeForAtlas/
+    /readGrowGoMapForAtlas|readCustom25DOneFrameBridgeForAtlas/
   );
   assert.doesNotMatch(
     developmentAlphaSource,

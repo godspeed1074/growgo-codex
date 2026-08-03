@@ -55,34 +55,64 @@ function captureDiagnosticsFunction(functionName) {
   return typeof candidate === "function" ? candidate.bind(namespace) : null;
 }
 
+function createCapturedRawLeafletMapProvider(mapGetter) {
+  const capturedMapGetter = typeof mapGetter === "function" ? mapGetter : null;
+
+  return atlasCustom25DOneFrameExecutionTrace.wrap(
+    "rawLeafletMapProvider",
+    () => capturedMapGetter?.() ?? null
+  );
+}
+
+function createCapturedOneFrameBridgeProvider(bridgeGetter) {
+  const capturedBridgeGetter = typeof bridgeGetter === "function" ? bridgeGetter : null;
+  let cachedBridge = undefined;
+
+  return atlasCustom25DOneFrameExecutionTrace.wrap(
+    "capturedOneFrameBridgeProvider",
+    () => {
+      if (cachedBridge !== undefined) {
+        return cachedBridge;
+      }
+
+      cachedBridge = capturedBridgeGetter?.() ?? null;
+      return cachedBridge;
+    }
+  );
+}
+
 const getGrowGoMapFromScriptDiagnostics = captureDiagnosticsFunction("getGrowGoMap");
 const getCustom25DOneFrameBridgeFromScriptDiagnostics = captureDiagnosticsFunction(
   "getCustom25DOneFrameBridge"
 );
-const custom25DOneFrameBridgeFromScriptDiagnostics =
-  getCustom25DOneFrameBridgeFromScriptDiagnostics?.() ?? null;
+const capturedOneFrameBridgeFromScriptDiagnostics =
+  createCapturedOneFrameBridgeProvider(getCustom25DOneFrameBridgeFromScriptDiagnostics);
+const readCapturedOneFrameBridgeFromScriptDiagnostics = () =>
+  capturedOneFrameBridgeFromScriptDiagnostics();
 const createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics =
-  typeof custom25DOneFrameBridgeFromScriptDiagnostics
+  typeof readCapturedOneFrameBridgeFromScriptDiagnostics()
     ?.createCustom25DFrameViewportSnapshotForOneFrame === "function"
-    ? custom25DOneFrameBridgeFromScriptDiagnostics.createCustom25DFrameViewportSnapshotForOneFrame.bind(
-        custom25DOneFrameBridgeFromScriptDiagnostics
+    ? readCapturedOneFrameBridgeFromScriptDiagnostics().createCustom25DFrameViewportSnapshotForOneFrame.bind(
+        readCapturedOneFrameBridgeFromScriptDiagnostics()
       )
     : null;
 const drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics =
-  typeof custom25DOneFrameBridgeFromScriptDiagnostics?.drawCustom25DOneFrameFromSnapshot ===
+  typeof readCapturedOneFrameBridgeFromScriptDiagnostics()?.drawCustom25DOneFrameFromSnapshot ===
   "function"
-    ? custom25DOneFrameBridgeFromScriptDiagnostics.drawCustom25DOneFrameFromSnapshot.bind(
-        custom25DOneFrameBridgeFromScriptDiagnostics
+    ? readCapturedOneFrameBridgeFromScriptDiagnostics().drawCustom25DOneFrameFromSnapshot.bind(
+        readCapturedOneFrameBridgeFromScriptDiagnostics()
       )
     : null;
-
-const readGrowGoMapForAtlas = atlasCustom25DOneFrameExecutionTrace.wrap(
-  "getGrowGoMap",
-  () => getGrowGoMapFromScriptDiagnostics?.() ?? null
+const rawLeafletMapProviderFromBridgeReference = atlasCustom25DOneFrameExecutionTrace.wrap(
+  "rawLeafletMapProvider",
+  () => readCapturedOneFrameBridgeFromScriptDiagnostics()?.rawLeafletMapReference ?? null
 );
 
+const rawLeafletMapProviderFromScriptDiagnostics =
+  createCapturedRawLeafletMapProvider(getGrowGoMapFromScriptDiagnostics);
+
 const atlasLiveMapCentreBridge = createDeveloperOnlyLiveMapCentreAtlasBridge({
-  getGrowGoMap: readGrowGoMapForAtlas
+  getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics
 });
 
 installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge({
@@ -99,7 +129,7 @@ const atlasMapAttachmentAuthorization =
 
 const atlasMapAttachmentController =
   createGatedDeveloperOnlyAtlasMapAttachmentController({
-    getGrowGoMap: readGrowGoMapForAtlas,
+    getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics,
     runAtlasDiagnostic() {
       const diagnosticFunction =
         globalThis?.GrowGoDeveloperDiagnostics?.getAtlasDiagnosticForCurrentMapCentre;
@@ -154,7 +184,7 @@ installControlledOneSessionDeveloperRendererHandoffAuthorization({
 
 const growGoCustom25DLiveOneFrameAdapter =
   createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
-    mapProvider: readGrowGoMapForAtlas,
+    rawLeafletMapProvider: rawLeafletMapProviderFromBridgeReference,
     frameSnapshotProvider: () =>
       atlasCustom25DOneFrameExecutionTrace.wrap(
         "createCustom25DFrameViewportSnapshotForOneFrame",

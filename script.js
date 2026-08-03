@@ -15513,6 +15513,7 @@ function drawCustom25DOneFrameFromSnapshot({
 function getCustom25DOneFrameBridge() {
   return traceAtlasOneFrameCall("getCustom25DOneFrameBridge", () =>
     Object.freeze({
+      rawLeafletMapReference: map ?? null,
       createCustom25DFrameViewportSnapshotForOneFrame,
       drawCustom25DOneFrameFromSnapshot
     })

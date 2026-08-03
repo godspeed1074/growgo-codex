@@ -56,6 +56,25 @@ function isObjectLike(value) {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
 
+function traceSafariSnapshotRuntime(functionName, callback) {
+  const trace = globalThis?.__GROWGO_ATLAS_ONE_FRAME_TRACE__;
+
+  if (
+    !trace ||
+    typeof trace.enter !== "function" ||
+    typeof trace.exit !== "function"
+  ) {
+    return callback();
+  }
+
+  trace.enter(functionName);
+  try {
+    return callback();
+  } finally {
+    trace.exit(functionName);
+  }
+}
+
 function createInitialStatus({
   mapProviderAvailable,
   leafletProviderAvailable,
@@ -172,7 +191,9 @@ function defaultLeafletProvider() {
 }
 
 function defaultDevicePixelRatioProvider() {
-  return globalThis?.devicePixelRatio;
+  return traceSafariSnapshotRuntime("devicePixelRatioProvider", () =>
+    globalThis?.devicePixelRatio
+  );
 }
 
 function removeCanvasExact(canvas) {
@@ -277,40 +298,57 @@ function isSnapshotBridgeCompatibleMap(value) {
 }
 
 function resolveSnapshotMapTarget(map) {
-  const candidates = [
-    map?.__growgoRawLeafletMap,
-    map?.__rawLeafletMap,
-    map?.rawLeafletMap,
-    map?.leafletMap,
-    map
-  ];
+  return traceSafariSnapshotRuntime("resolveSnapshotMapTarget", () => {
+    const candidates = [
+      map?.__growgoRawLeafletMap,
+      map?.__rawLeafletMap,
+      map?.rawLeafletMap,
+      map?.leafletMap,
+      map
+    ];
 
-  for (const candidate of candidates) {
-    if (isSnapshotBridgeCompatibleMap(candidate)) {
-      return candidate;
+    for (const candidate of candidates) {
+      if (isSnapshotBridgeCompatibleMap(candidate)) {
+        return candidate;
+      }
     }
-  }
 
-  return map;
+    return map;
+  });
 }
 
 function defaultSnapshotMapNormalizer(map) {
-  const target = resolveSnapshotMapTarget(map);
+  return traceSafariSnapshotRuntime("defaultSnapshotMapNormalizer", () => {
+    const target = resolveSnapshotMapTarget(map);
 
-  if (!isSnapshotBridgeCompatibleMap(target)) {
-    return target;
-  }
+    if (!isSnapshotBridgeCompatibleMap(target)) {
+      return target;
+    }
 
-  const getSize = target.getSize.bind(target);
-  const getBounds = target.getBounds.bind(target);
-  const latLngToLayerPoint = target.latLngToLayerPoint.bind(target);
-  const getZoom = target.getZoom.bind(target);
+    const getSize = target.getSize.bind(target);
+    const getBounds = target.getBounds.bind(target);
+    const latLngToLayerPoint = target.latLngToLayerPoint.bind(target);
+    const getZoom = target.getZoom.bind(target);
 
-  return Object.freeze({
-    getSize: () => getSize(),
-    getBounds: () => getBounds(),
-    latLngToLayerPoint: (coordinate) => latLngToLayerPoint(coordinate),
-    getZoom: () => getZoom()
+    return Object.freeze({
+      getSize: () =>
+        traceSafariSnapshotRuntime("normalizedSnapshotMap.getSize", () =>
+          getSize()
+        ),
+      getBounds: () =>
+        traceSafariSnapshotRuntime("normalizedSnapshotMap.getBounds", () =>
+          getBounds()
+        ),
+      latLngToLayerPoint: (coordinate) =>
+        traceSafariSnapshotRuntime(
+          "normalizedSnapshotMap.latLngToLayerPoint",
+          () => latLngToLayerPoint(coordinate)
+        ),
+      getZoom: () =>
+        traceSafariSnapshotRuntime("normalizedSnapshotMap.getZoom", () =>
+          getZoom()
+        )
+    });
   });
 }
 
@@ -421,6 +459,7 @@ function firstMissingDependencyReason({
 
 export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   mapProvider = defaultMapProvider,
+  rawLeafletMapProvider = mapProvider,
   leafletProvider = defaultLeafletProvider,
   devicePixelRatioProvider = defaultDevicePixelRatioProvider,
   surfaceOperationsFactory = defaultSurfaceOperationsFactory,
@@ -432,7 +471,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   snapshotMapNormalizer = defaultSnapshotMapNormalizer
 } = {}) {
   const constructionFlags = {
-    mapProviderAvailable: typeof mapProvider === "function",
+    mapProviderAvailable: typeof rawLeafletMapProvider === "function",
     leafletProviderAvailable: typeof leafletProvider === "function",
     surfaceOperationsAvailable: typeof surfaceOperationsFactory === "function",
     lifecycleTranslationAvailable:
@@ -603,7 +642,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     let lifecycleRegistered = false;
 
     try {
-      map = mapProvider();
+      map = rawLeafletMapProvider();
     } catch (error) {
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
