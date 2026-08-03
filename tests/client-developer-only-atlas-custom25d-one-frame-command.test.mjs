@@ -449,3 +449,20 @@ test("install helper exposes only the manual command on the diagnostics namespac
   assert.equal(typeof namespace.runAuthorizedAtlasCustom25DOneFrame, "function");
   assert.deepEqual(Object.keys(namespace), ["runAuthorizedAtlasCustom25DOneFrame"]);
 });
+
+test("installed namespace command explicitly returns the underlying promise result", async () => {
+  const namespace = {};
+  const command = createEnvironment().command;
+
+  moduleUnderTest.installDeveloperOnlyAtlasCustom25DOneFrameCommand({
+    globalObject: { GrowGoDeveloperDiagnostics: namespace },
+    command
+  });
+
+  const result = await namespace.runAuthorizedAtlasCustom25DOneFrame({
+    confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+  });
+
+  assert.equal(result.commandId, "TEST_COMMAND_001");
+  assert.equal(result.outcome, "completed");
+});

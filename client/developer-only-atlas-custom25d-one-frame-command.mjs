@@ -1185,8 +1185,10 @@ export function installDeveloperOnlyAtlasCustom25DOneFrameCommand({
     return null;
   }
 
-  namespace.runAuthorizedAtlasCustom25DOneFrame = (input) =>
-    command.runAuthorizedAtlasCustom25DOneFrame(input);
+  namespace.runAuthorizedAtlasCustom25DOneFrame =
+    function runAuthorizedAtlasCustom25DOneFrameFromNamespace(input) {
+      return command.runAuthorizedAtlasCustom25DOneFrame(input);
+    };
 
   return namespace;
 }

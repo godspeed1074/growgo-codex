@@ -9,7 +9,7 @@ const evidencePath = path.join(
   "GROWGO_SESSION_211_50B_MANUAL_SAFARI_ONE_FRAME_ACTIVATION_RETEST.md"
 );
 
-test("phase 211.50b evidence prep records the correct branch checkpoint and pending Safari retest status", () => {
+test("phase 211.50b evidence preserves the correct branch checkpoint and the second failed Safari retest honestly", () => {
   const source = fs.readFileSync(evidencePath, "utf8");
 
   assert.match(
@@ -23,10 +23,11 @@ test("phase 211.50b evidence prep records the correct branch checkpoint and pend
   );
   assert.match(source, /focused one-frame command \/ adapter \/ bridge \/ snapshot \/ lifecycle suites:\s+- `PASS`/);
   assert.match(source, /full filtered Phase 211\.18 through 211\.50 regression band:\s+- `PASS`/);
-  assert.match(source, /"executionStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE"/);
+  assert.match(source, /"executionStatus": "FAIL"/);
   assert.match(source, /"browser": "Safari"/);
   assert.match(source, /"pageAddress": "http:\/\/127\.0\.0\.1:8000"/);
-  assert.match(source, /overall Phase 211\.50b:\s+- `PENDING_MANUAL_OPERATOR_EVIDENCE`/);
+  assert.match(source, /MAXIMUM_CALL_STACK_SIZE_EXCEEDED/);
+  assert.match(source, /overall Phase 211\.50b:\s+- `FAIL`/);
 });
 
 test("phase 211.50b evidence prep preserves the exact Safari retest procedure and forbids wrong-confirmation testing in the same page instance", () => {
@@ -50,11 +51,11 @@ test("phase 211.50b evidence prep preserves the exact Safari retest procedure an
   );
   assert.match(source, /Do \*\*not\*\* test the wrong command confirmation in this page instance\./);
   assert.match(source, /COMMAND_ALREADY_USED/);
-  assert.match(source, /PENDING_OPERATOR_PASTE/);
-  assert.match(source, /PENDING_OPERATOR_CONFIRMATION/);
+  assert.match(source, /FAILED_CLOSED_MAXIMUM_CALL_STACK_SIZE_EXCEEDED/);
+  assert.match(source, /SURFACE_PREPARED_ONLY/);
 });
 
-test("phase 211.50b evidence prep source-locks the required Safari localhost approved-readiness and one-shot safety expectations", () => {
+test("phase 211.50b evidence source-locks the failed Safari result and preserved safety expectations", () => {
   const source = fs.readFileSync(evidencePath, "utf8");
 
   assert.match(source, /browser: `Safari`/);
@@ -63,14 +64,16 @@ test("phase 211.50b evidence prep source-locks the required Safari localhost app
   assert.match(source, /rendererHandoffStatus = ready_for_future_renderer_attachment/);
   assert.match(source, /authorizationActive = true/);
   assert.match(source, /authorizationConsumed = false/);
-  assert.match(source, /frameSnapshotCreated = true/);
-  assert.match(source, /drawAttemptCount = 1/);
-  assert.match(source, /completedFrameCount = 1/);
+  assert.match(source, /frameSnapshotCreated = false/);
+  assert.match(source, /drawAttemptCount = 0/);
+  assert.match(source, /completedFrameCount = 0/);
   assert.match(source, /cleanupAttemptCount = 1/);
   assert.match(source, /cleanupCompleted = true/);
   assert.match(source, /runtimeExecutionEnabled": false/);
   assert.match(source, /mapAttachmentAllowed": false/);
   assert.match(source, /automaticRendererExecutionAllowed": false/);
   assert.match(source, /lifecycleExecutionEnabled": false/);
+  assert.match(source, /authorizationConsumed = true/);
+  assert.match(source, /no persistent Canvas, listener, pane, or overlay remained/);
   assert.doesNotMatch(source, /overall Phase 211\.50b:\s+- `PASS`/);
 });

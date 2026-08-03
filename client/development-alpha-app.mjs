@@ -28,15 +28,50 @@ import {
   installDeveloperOnlyAtlasCustom25DOneFrameCommand
 } from "./developer-only-atlas-custom25d-one-frame-command.mjs";
 import {
+  createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace,
+  installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace
+} from "./developer-only-atlas-custom25d-one-frame-execution-trace.mjs";
+import {
   createDiscoveredGrowGoCustom25DRendererConsumerDescriptor
 } from "./developer-only-atlas-renderer-zero-draw-handoff.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
+const atlasCustom25DOneFrameExecutionTrace =
+  createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace();
+
+installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
+  globalObject: globalThis,
+  trace: atlasCustom25DOneFrameExecutionTrace
+});
+
+function readDiagnosticsNamespace() {
+  const namespace = globalThis?.GrowGoDeveloperDiagnostics;
+  return namespace && typeof namespace === "object" ? namespace : null;
+}
+
+function captureDiagnosticsFunction(functionName) {
+  const namespace = readDiagnosticsNamespace();
+  const candidate = namespace?.[functionName];
+  return typeof candidate === "function" ? candidate.bind(namespace) : null;
+}
+
+const getGrowGoMapFromScriptDiagnostics = captureDiagnosticsFunction("getGrowGoMap");
+const getCustom25DOneFrameBridgeFromScriptDiagnostics = captureDiagnosticsFunction(
+  "getCustom25DOneFrameBridge"
+);
+
+const readGrowGoMapForAtlas = atlasCustom25DOneFrameExecutionTrace.wrap(
+  "getGrowGoMap",
+  () => getGrowGoMapFromScriptDiagnostics?.() ?? null
+);
+
+const readCustom25DOneFrameBridgeForAtlas =
+  atlasCustom25DOneFrameExecutionTrace.wrap("getCustom25DOneFrameBridge", () =>
+    getCustom25DOneFrameBridgeFromScriptDiagnostics?.() ?? null
+  );
 
 const atlasLiveMapCentreBridge = createDeveloperOnlyLiveMapCentreAtlasBridge({
-  getGrowGoMap() {
-    return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
-  }
+  getGrowGoMap: readGrowGoMapForAtlas
 });
 
 installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge({
@@ -53,9 +88,7 @@ const atlasMapAttachmentAuthorization =
 
 const atlasMapAttachmentController =
   createGatedDeveloperOnlyAtlasMapAttachmentController({
-    getGrowGoMap() {
-      return globalThis?.GrowGoDeveloperDiagnostics?.getGrowGoMap?.() ?? null;
-    },
+    getGrowGoMap: readGrowGoMapForAtlas,
     runAtlasDiagnostic() {
       const diagnosticFunction =
         globalThis?.GrowGoDeveloperDiagnostics?.getAtlasDiagnosticForCurrentMapCentre;
@@ -109,7 +142,22 @@ installControlledOneSessionDeveloperRendererHandoffAuthorization({
 });
 
 const growGoCustom25DLiveOneFrameAdapter =
-  createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter();
+  createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+    mapProvider: readGrowGoMapForAtlas,
+    frameSnapshotBridgeProvider:
+      atlasCustom25DOneFrameExecutionTrace.wrap(
+        "createCustom25DFrameViewportSnapshotForOneFrame",
+        () =>
+          readCustom25DOneFrameBridgeForAtlas()
+            ?.createCustom25DFrameViewportSnapshotForOneFrame ?? null
+      ),
+    drawFunctionProvider: atlasCustom25DOneFrameExecutionTrace.wrap(
+      "drawCustom25DOneFrameFromSnapshot",
+      () =>
+        readCustom25DOneFrameBridgeForAtlas()?.drawCustom25DOneFrameFromSnapshot ??
+        null
+    )
+  });
 
 const atlasCustom25DOneFrameCommand =
   createDeveloperOnlyAtlasCustom25DOneFrameCommand({

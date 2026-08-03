@@ -56,6 +56,9 @@ function loadGrowGoMapGetterHarness({
   vm.runInContext(
     `
 let map = __mapValue;
+function getCustom25DOneFrameBridge() {
+  return null;
+}
 ${getterBlockMatch[1]}
 ${bootstrapBlockMatch[0]}
 module.exports = {

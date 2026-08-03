@@ -220,7 +220,19 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
   );
   assert.match(
     developmentAlphaSource,
-    /globalThis\?\.GrowGoDeveloperDiagnostics\?\.getGrowGoMap\?\.\(\) \?\? null/
+    /captureDiagnosticsFunction\("getGrowGoMap"\)/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /atlasCustom25DOneFrameExecutionTrace/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /readGrowGoMapForAtlas/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /readCustom25DOneFrameBridgeForAtlas/
   );
   assert.doesNotMatch(
     developmentAlphaSource,

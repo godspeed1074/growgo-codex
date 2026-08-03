@@ -297,6 +297,6 @@ test("layer draw order initializer ownership listener behavior and safety flags 
 
   assert.doesNotMatch(
     developmentAlphaAppSource,
-    /createCustom25DFrameViewportSnapshot|normalizeCustom25DDevicePixelRatio/
+    /createCustom25DFrameViewportSnapshot\(|normalizeCustom25DDevicePixelRatio/
   );
 });

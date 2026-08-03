@@ -2,16 +2,23 @@
 
 ## Goal
 
-Prepare a clean honest Safari retest checklist for the corrected one-frame bridge after the Phase 211.50a recursion fix.
+Preserve the second genuine Safari retest honestly after the Phase 211.50a recursion fix still failed in live Safari.
 
 This phase does **not** run the live command automatically.
 
 This phase does **not** fabricate Safari success evidence.
 
-Until genuine Safari output is supplied:
+Confirmed second Safari retest truth:
 
-- `executionStatus = PENDING_MANUAL_OPERATOR_EVIDENCE`
-- overall verification is **not** PASS yet
+- `executionStatus = FAIL`
+- second Safari retest still produced `MAXIMUM_CALL_STACK_SIZE_EXCEEDED`
+- `surfacePrepared = true`
+- `frameSnapshotCreated = false`
+- `drawAttemptCount = 0`
+- `completedFrameCount = 0`
+- `cleanupCompleted = true`
+- `authorizationConsumed = true`
+- no persistent Canvas, listener, pane, or overlay remained after cleanup
 
 ## Preflight
 
@@ -72,9 +79,9 @@ Expected on the live page:
 - browser: `Safari`
 - page: `http://127.0.0.1:8000`
 - execution date:
-  - `PENDING_GENUINE_SAFARI_RETEST`
+  - `SECOND_GENUINE_SAFARI_RETEST_COMPLETED_BEFORE_PHASE_211_50C`
 - execution status:
-  - `PENDING_MANUAL_OPERATOR_EVIDENCE`
+  - `FAIL`
 
 ## Manual Safari Retest Procedure
 
@@ -163,36 +170,35 @@ await window.GrowGoDeveloperDiagnostics
 
 Record the complete returned object.
 
-Required success values:
+Observed second Safari retest values:
 
-- `outcome = completed` or equivalent success outcome
-- `commandState = completed`
+- `outcome = failed_closed`
+- `reasonCode = MAXIMUM_CALL_STACK_SIZE_EXCEEDED`
 - `confirmationAccepted = true`
 - `authorizationConsumed = true`
 - `adapterInvoked = true`
 - `surfacePrepared = true`
-- `lifecycleRegistered = true`
-- `frameSnapshotCreated = true`
-- `drawAttemptCount = 1`
-- `completedFrameCount = 1`
-- `animationFrameScheduleCount = 1`
-- `paintBoundaryReached = true`
+- `frameSnapshotCreated = false`
+- `drawAttemptCount = 0`
+- `completedFrameCount = 0`
 - `cleanupAttemptCount = 1`
 - `cleanupCompleted = true`
 - `cleanupFailed = false`
 - `referencesReleased = true`
 - `permanentlyClosed = true`
-- no `MAXIMUM_CALL_STACK_SIZE_EXCEEDED` reason
+- no snapshot object returned
+- no draw attempted
 
 10. Visual observation:
 
-Record honestly:
+Recorded honestly:
 
-- whether one temporary 2.5D frame appeared
-- whether it was visible for one paint
-- whether it disappeared after cleanup
-- whether the normal Leaflet map remained
-- whether any Canvas, pane, overlay, or artifact remained
+- temporary one-frame surface was prepared
+- frame snapshot was not created
+- draw was not attempted
+- cleanup completed
+- authorization was consumed
+- no persistent Canvas, listener, pane, overlay, or artifact remained
 
 11. Check authorization after execution:
 
@@ -298,28 +304,28 @@ Also paste back short human observations for:
 ```json
 {
   "phaseId": "211.50b",
-  "executionStatus": "PENDING_MANUAL_OPERATOR_EVIDENCE",
-  "executionDateTime": "PENDING_GENUINE_SAFARI_RETEST",
-  "operator": "PENDING_OPERATOR_NAME",
+  "executionStatus": "FAIL",
+  "executionDateTime": "SECOND_GENUINE_SAFARI_RETEST_COMPLETED_BEFORE_PHASE_211_50C",
+  "operator": "RECORDED_FROM_GENUINE_SAFARI_RETEST",
   "browser": "Safari",
   "pageAddress": "http://127.0.0.1:8000",
-  "interfaceCheck": "PENDING_OPERATOR_PASTE",
-  "approvedReadinessResult": "PENDING_OPERATOR_PASTE",
-  "authorizationResult": "PENDING_OPERATOR_PASTE",
-  "preExecutionAuthorizationStatus": "PENDING_OPERATOR_PASTE",
-  "oneFrameCommandResult": "PENDING_OPERATOR_PASTE",
+  "interfaceCheck": "CONFIRMED",
+  "approvedReadinessResult": "CONFIRMED",
+  "authorizationResult": "AUTHORIZED",
+  "preExecutionAuthorizationStatus": "AUTHORIZATION_ACTIVE",
+  "oneFrameCommandResult": "FAILED_CLOSED_MAXIMUM_CALL_STACK_SIZE_EXCEEDED",
   "visualObservation": {
-    "temporaryOneFrameAppeared": "PENDING_OPERATOR_CONFIRMATION",
-    "visibleForOnePaint": "PENDING_OPERATOR_CONFIRMATION",
-    "disappearedAfterCleanup": "PENDING_OPERATOR_CONFIRMATION",
-    "normalLeafletMapRemained": "PENDING_OPERATOR_CONFIRMATION",
-    "artifactRemained": "PENDING_OPERATOR_CONFIRMATION"
+    "temporaryOneFrameAppeared": "SURFACE_PREPARED_ONLY",
+    "visibleForOnePaint": "NO",
+    "disappearedAfterCleanup": "YES",
+    "normalLeafletMapRemained": "YES",
+    "artifactRemained": "NO"
   },
-  "postExecutionAuthorizationStatus": "PENDING_OPERATOR_PASTE",
-  "postExecutionMapAttachmentStatus": "PENDING_OPERATOR_PASTE",
-  "secondExecutionResult": "PENDING_OPERATOR_PASTE",
-  "postReloadAuthorizationStatus": "PENDING_OPERATOR_PASTE",
-  "postReloadMapAttachmentStatus": "PENDING_OPERATOR_PASTE",
+  "postExecutionAuthorizationStatus": "AUTHORIZATION_CONSUMED",
+  "postExecutionMapAttachmentStatus": "CLEAN",
+  "secondExecutionResult": "NOT_RUN_AFTER_FAILURE_DURING_SAME_RETEST",
+  "postReloadAuthorizationStatus": "NOT_CAPTURED_IN_PHASE_211_50C",
+  "postReloadMapAttachmentStatus": "NOT_CAPTURED_IN_PHASE_211_50C",
   "safetyFlagSnapshot": {
     "runtimeExecutionEnabled": false,
     "mapAttachmentAllowed": false,
@@ -327,19 +333,19 @@ Also paste back short human observations for:
     "lifecycleExecutionEnabled": false
   },
   "operatorConfirmation": {
-    "usedSafari": "PENDING_OPERATOR_CONFIRMATION",
-    "usedLocalhostPage": "PENDING_OPERATOR_CONFIRMATION",
-    "usedExactCommandFunction": "PENDING_OPERATOR_CONFIRMATION",
-    "approvedReadinessConfirmed": "PENDING_OPERATOR_CONFIRMATION",
-    "freshAuthorizationConfirmed": "PENDING_OPERATOR_CONFIRMATION",
-    "wrongConfirmationWasNotTestedInThisPageInstance": "PENDING_OPERATOR_CONFIRMATION",
-    "oneSnapshotCompleted": "PENDING_OPERATOR_CONFIRMATION",
-    "oneDrawCompleted": "PENDING_OPERATOR_CONFIRMATION",
-    "oneCleanupCompleted": "PENDING_OPERATOR_CONFIRMATION",
-    "secondExecutionBlocked": "PENDING_OPERATOR_CONFIRMATION",
-    "postReloadStateWasClean": "PENDING_OPERATOR_CONFIRMATION"
+    "usedSafari": "YES",
+    "usedLocalhostPage": "YES",
+    "usedExactCommandFunction": "YES",
+    "approvedReadinessConfirmed": "YES",
+    "freshAuthorizationConfirmed": "YES",
+    "wrongConfirmationWasNotTestedInThisPageInstance": "YES",
+    "oneSnapshotCompleted": "NO",
+    "oneDrawCompleted": "NO",
+    "oneCleanupCompleted": "YES",
+    "secondExecutionBlocked": "NOT_RECORDED_IN_SECOND_FAILED_RETEST",
+    "postReloadStateWasClean": "NOT_RECORDED_IN_PHASE_211_50C"
   },
-  "observedSupportingEnvironmentErrors": "PENDING_OPERATOR_PASTE_IF_ANY"
+  "observedSupportingEnvironmentErrors": "MAXIMUM_CALL_STACK_SIZE_EXCEEDED"
 }
 ```
 
@@ -354,9 +360,9 @@ Current state before the corrected Safari retest:
 - filtered Phase 211.18 through 211.50 regression band passing:
   - `yes`
 - genuine corrected Safari retest output recorded:
-  - `no`
+  - `yes`
 - overall Phase 211.50b:
-  - `PENDING_MANUAL_OPERATOR_EVIDENCE`
+  - `FAIL`
 
 ## What Must Not Be Claimed Yet
 
