@@ -25,6 +25,14 @@ const bridgeModule = await import(
     "developer-only-live-map-centre-atlas-bridge.mjs"
   )
 );
+const adapterModule = await import(
+  path.join(
+    repoRoot,
+    "client",
+    "developer-only-growgo-custom25d-live-one-frame-adapter.mjs"
+  )
+);
+
 function createSafetyFlags() {
   return Object.freeze({
     runtimeExecutionEnabled: false,
@@ -34,10 +42,88 @@ function createSafetyFlags() {
   });
 }
 
+function createBoundsStub() {
+  return {
+    getNorthWest() {
+      return { lat: -38.0, lng: 144.5 };
+    },
+    getNorth() {
+      return -38.0;
+    },
+    getSouth() {
+      return -38.2;
+    },
+    getEast() {
+      return 144.7;
+    },
+    getWest() {
+      return 144.5;
+    }
+  };
+}
+
 function createMapStub() {
+  const panes = new Map();
+
+  function createPane(paneName) {
+    const pane = {
+      dataset: { owner: paneName },
+      childElementCount: 0,
+      remove() {}
+    };
+
+    panes.set(paneName, pane);
+    return pane;
+  }
+
   return {
     getCenter() {
       return { lat: -38.12, lng: 144.61 };
+    },
+    getPane(paneName) {
+      return panes.get(paneName) ?? null;
+    },
+    createPane,
+    off() {},
+    getSize() {
+      return { x: 640, y: 360 };
+    },
+    getBounds() {
+      return createBoundsStub();
+    },
+    latLngToLayerPoint() {
+      return { x: 12, y: 24 };
+    },
+    getZoom() {
+      return 15;
+    }
+  };
+}
+
+function createLeafletStub() {
+  return {
+    DomUtil: {
+      create(tagName, className) {
+        const canvas = {
+          tagName,
+          className,
+          style: {},
+          width: 0,
+          height: 0,
+          getContext() {
+            return {
+              setTransform() {},
+              clearRect() {}
+            };
+          },
+          remove() {}
+        };
+
+        return canvas;
+      },
+      setPosition(canvas, point) {
+        canvas.__leafletPosition = { x: point.x, y: point.y };
+      }
     }
   };
 }
@@ -107,9 +193,41 @@ function createAuthorization() {
   };
 }
 
+function createSnapshotResult({ map, canvas, mapStub } = {}) {
+  return Object.freeze({
+    outcome: "snapshot_created",
+    reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+    frameViewportSnapshot: Object.freeze({
+      logicalWidth: 640,
+      logicalHeight: 360,
+      backingWidth: 1280,
+      backingHeight: 720,
+      devicePixelRatio: 2,
+      bounds: Object.freeze({
+        north: -38.0,
+        south: -38.2,
+        east: 144.7,
+        west: 144.5
+      }),
+      northWestCoordinate: Object.freeze({
+        latitude: -38.0,
+        longitude: 144.5
+      }),
+      canvasLayerPosition: Object.freeze({ x: 12, y: 24 }),
+      zoom: 15,
+      mapIdentityValidated: map === mapStub,
+      canvasIdentityValidated: !!canvas,
+      snapshotCreated: true
+    })
+  });
+}
+
 function installNamespaceHarness({
-  recursivePublicGetter = false,
-  explicitReturnWrapper = true
+  recursiveSnapshotBridge = false,
+  recursiveSnapshotMapProxy = false,
+  forceRecursiveSnapshotMapForBridge = false,
+  explicitReturnWrapper = true,
+  snapshotMapNormalizer
 } = {}) {
   const trace =
     traceModule.createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
@@ -118,48 +236,14 @@ function installNamespaceHarness({
   trace.reset("TRACE_RESET_FOR_BROWSER_HARNESS");
 
   const mapStub = createMapStub();
+  const leafletStub = createLeafletStub();
+  const bridgeState = {
+    snapshotCount: 0,
+    drawCount: 0
+  };
+
   const namespace = {
-    getGrowGoMap() {
-      return mapStub;
-    },
-    getCustom25DOneFrameBridge() {
-      return Object.freeze({
-        createCustom25DFrameViewportSnapshotForOneFrame({ map, canvas } = {}) {
-          return Object.freeze({
-            outcome: "snapshot_created",
-            reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
-            frameViewportSnapshot: Object.freeze({
-              logicalWidth: 640,
-              logicalHeight: 360,
-              backingWidth: 1280,
-              backingHeight: 720,
-              devicePixelRatio: 2,
-              bounds: Object.freeze({
-                north: -38.0,
-                south: -38.2,
-                east: 144.7,
-                west: 144.5
-              }),
-              northWestCoordinate: Object.freeze({
-                latitude: -38.0,
-                longitude: 144.5
-              }),
-              canvasLayerPosition: Object.freeze({ x: 12, y: 24 }),
-              zoom: 15,
-              mapIdentityValidated: map === mapStub,
-              canvasIdentityValidated: !!canvas,
-              snapshotCreated: true
-            })
-          });
-        },
-        drawCustom25DOneFrameFromSnapshot() {
-          return Object.freeze({
-            outcome: "drawn",
-            reasonCode: "FRAME_DRAW_COMPLETED"
-          });
-        }
-      });
-    }
+    getGrowGoMap: trace.wrap("getGrowGoMap", () => mapStub)
   };
 
   const globalObject = {
@@ -168,8 +252,98 @@ function installNamespaceHarness({
       callback(16);
       return 1;
     },
+    devicePixelRatio: 2,
+    L: leafletStub,
     GrowGoDeveloperDiagnostics: namespace
   };
+
+  const createCustom25DFrameViewportSnapshot = ({ map, canvas } = {}) =>
+    trace.wrap("createCustom25DFrameViewportSnapshot", () => {
+      if (!map || typeof map.getSize !== "function") {
+        throw new Error("FRAME_VIEWPORT_MAP_INVALID");
+      }
+
+      if (!canvas || typeof canvas.getContext !== "function") {
+        throw new Error("FRAME_VIEWPORT_CANVAS_INVALID");
+      }
+
+      const logicalSize = map.getSize();
+      const bounds = map.getBounds();
+      const northWestCoordinate = bounds.getNorthWest();
+      const layerPoint = map.latLngToLayerPoint(northWestCoordinate);
+      const zoom = map.getZoom();
+      const logicalWidth = Number(logicalSize?.x);
+      const logicalHeight = Number(logicalSize?.y);
+
+      return Object.freeze({
+        logicalWidth,
+        logicalHeight,
+        backingWidth: logicalWidth * (globalObject.devicePixelRatio || 1),
+        backingHeight: logicalHeight * (globalObject.devicePixelRatio || 1),
+        devicePixelRatio: globalObject.devicePixelRatio || 1,
+        bounds: Object.freeze({
+          north: Number(bounds.getNorth()),
+          south: Number(bounds.getSouth()),
+          east: Number(bounds.getEast()),
+          west: Number(bounds.getWest())
+        }),
+        northWestCoordinate: Object.freeze({
+          latitude: Number(northWestCoordinate?.lat),
+          longitude: Number(northWestCoordinate?.lng)
+        }),
+        canvasLayerPosition: Object.freeze({
+          x: Number(layerPoint?.x),
+          y: Number(layerPoint?.y)
+        }),
+        zoom: Number(zoom),
+        mapIdentityValidated: map === mapStub,
+        canvasIdentityValidated: !!canvas,
+        snapshotCreated: true
+      });
+    })();
+
+  const createCustom25DFrameViewportSnapshotPrivateImplementation = ({
+    map,
+    canvas
+  } = {}) =>
+    trace.wrap("createCustom25DFrameViewportSnapshotPrivateImplementation", () =>
+      createCustom25DFrameViewportSnapshot({ map, canvas })
+    )();
+
+  const scriptBridge = Object.freeze({
+    createCustom25DFrameViewportSnapshotForOneFrame: trace.wrap(
+      "createCustom25DFrameViewportSnapshotForOneFrame",
+      ({ map, canvas } = {}) => {
+        bridgeState.snapshotCount += 1;
+        return Object.freeze({
+          outcome: "snapshot_created",
+          reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+          frameViewportSnapshot:
+            createCustom25DFrameViewportSnapshotPrivateImplementation({
+              map,
+              canvas
+            })
+        });
+      }
+    ),
+    drawCustom25DOneFrameFromSnapshot: trace.wrap(
+      "drawCustom25DOneFrameFromSnapshot",
+      ({ canvas, frameViewportSnapshot } = {}) => {
+        bridgeState.drawCount += 1;
+        return Object.freeze({
+          outcome: canvas && frameViewportSnapshot ? "drawn" : "blocked",
+          reasonCode: canvas && frameViewportSnapshot
+            ? "FRAME_DRAW_COMPLETED"
+            : "FRAME_DRAW_RESULT_INVALID"
+        });
+      }
+    )
+  });
+
+  namespace.getCustom25DOneFrameBridge = trace.wrap(
+    "getCustom25DOneFrameBridge",
+    () => scriptBridge
+  );
 
   traceModule.installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
     globalObject,
@@ -178,28 +352,50 @@ function installNamespaceHarness({
 
   const scriptGetGrowGoMap = namespace.getGrowGoMap.bind(namespace);
   const scriptGetBridge = namespace.getCustom25DOneFrameBridge.bind(namespace);
-
-  const reboundPublicMapGetter = trace.wrap(
-    "reboundGrowGoMapGetter",
-    () => globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap()
+  let recursiveMapProxy = null;
+  const snapshotStagePublicGetGrowGoMap = trace.wrap(
+    "publicGetGrowGoMap",
+    () => recursiveMapProxy
   );
+  const capturedBridge = scriptGetBridge();
+  const capturedSnapshot =
+    capturedBridge.createCustom25DFrameViewportSnapshotForOneFrame.bind(
+      capturedBridge
+    );
+  const capturedDraw =
+    capturedBridge.drawCustom25DOneFrameFromSnapshot.bind(capturedBridge);
 
-  if (recursivePublicGetter) {
-    globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap = reboundPublicMapGetter;
+  if (recursiveSnapshotBridge) {
+    globalObject.GrowGoDeveloperDiagnostics.getCustom25DOneFrameBridge = trace.wrap(
+      "reboundPublicBridgeGetter",
+      () => globalObject.GrowGoDeveloperDiagnostics.getCustom25DOneFrameBridge()
+    );
   }
 
-  const capturedMapGetter = trace.wrap(
-    "capturedScriptGetGrowGoMap",
-    () => scriptGetGrowGoMap()
+  if (recursiveSnapshotMapProxy) {
+    recursiveMapProxy = {
+      __growgoRawLeafletMap: mapStub,
+      getSize: trace.wrap("proxyGetSize", () =>
+        snapshotStagePublicGetGrowGoMap().getSize()
+      ),
+      getBounds: trace.wrap("proxyGetBounds", () =>
+        snapshotStagePublicGetGrowGoMap().getBounds()
+      ),
+      latLngToLayerPoint: trace.wrap("proxyLatLngToLayerPoint", (coordinate) =>
+        snapshotStagePublicGetGrowGoMap().latLngToLayerPoint(coordinate)
+      ),
+      getZoom: trace.wrap("proxyGetZoom", () =>
+        snapshotStagePublicGetGrowGoMap().getZoom()
+      )
+    };
+  }
+
+  const capturedMapGetter = trace.wrap("capturedScriptGetGrowGoMap", () =>
+    scriptGetGrowGoMap()
   );
-  const publicMapGetter = trace.wrap(
-    "publicDiagnosticsGetGrowGoMap",
-    () => globalObject.GrowGoDeveloperDiagnostics.getGrowGoMap()
-  );
-  const resolvedMapGetter = recursivePublicGetter ? publicMapGetter : capturedMapGetter;
 
   const liveBridge = bridgeModule.createDeveloperOnlyLiveMapCentreAtlasBridge({
-    getGrowGoMap: resolvedMapGetter,
+    getGrowGoMap: capturedMapGetter,
     atlasAdapter: createReadinessAdapter()
   });
 
@@ -260,81 +456,69 @@ function installNamespaceHarness({
     authorization.getAtlasRendererHandoffAuthorizationStatus;
 
   const adapterState = {
-    snapshotCount: 0,
-    drawCount: 0,
-    cleanupCount: 0
+    completeDeferredCleanupCount: 0
   };
+  const effectiveSnapshotMapNormalizer =
+    typeof snapshotMapNormalizer === "function"
+      ? snapshotMapNormalizer
+      : forceRecursiveSnapshotMapForBridge
+        ? () => recursiveMapProxy
+        : undefined;
+
+  const realAdapter =
+    adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+      mapProvider: capturedMapGetter,
+      leafletProvider: () => globalObject.L,
+      devicePixelRatioProvider: () => globalObject.devicePixelRatio,
+      snapshotMapNormalizer: effectiveSnapshotMapNormalizer,
+      frameSnapshotProvider: recursiveSnapshotBridge
+        ? () =>
+            trace.wrap("lazySnapshotBridgeProvider", (input) => {
+              try {
+                return globalObject.GrowGoDeveloperDiagnostics.getCustom25DOneFrameBridge()
+                  .createCustom25DFrameViewportSnapshotForOneFrame(input);
+              } catch (error) {
+                return Object.freeze({
+                  outcome: "blocked",
+                  reasonCode:
+                    typeof error?.reasonCode === "string" && error.reasonCode
+                      ? error.reasonCode
+                      : "TRACE_MAX_DEPTH_EXCEEDED",
+                  frameViewportSnapshot: Object.freeze({})
+                });
+              }
+            })
+        : () =>
+            trace.wrap(
+              "capturedSnapshotBridgeInvocation",
+              (input) => {
+                try {
+                  return capturedSnapshot(input);
+                } catch (error) {
+                  if (error?.reasonCode === "TRACE_MAX_DEPTH_EXCEEDED") {
+                    throw new Error("MAXIMUM_CALL_STACK_SIZE_EXCEEDED");
+                  }
+
+                  throw error;
+                }
+              }
+            ),
+      drawFunctionProvider: () =>
+        trace.wrap("drawCustom25DOneFrameFromSnapshot", (input) => capturedDraw(input))
+    });
 
   const adapter = {
     getAdapterStatus() {
-      return {
-        adapterReady: true,
-        schemaId: "GROWGO_CUSTOM25D_DEVELOPER_ONLY_LIVE_ONE_FRAME_ADAPTER_STATUS_001"
-      };
+      return realAdapter.getAdapterStatus();
     },
-    executeDeveloperOnlyLiveOneFrameAdapter() {
-      const resolvedMap = resolvedMapGetter();
-      const bridge = recursivePublicGetter
-        ? globalObject.GrowGoDeveloperDiagnostics.getCustom25DOneFrameBridge()
-        : scriptGetBridge();
-      const canvas = {
-        className: "custom-25d-map-canvas",
-        style: {},
-        getContext() {
-          return {
-            setTransform() {},
-            clearRect() {}
-          };
-        }
-      };
-
-      const snapshotResult = trace.wrap(
-        "createCustom25DFrameViewportSnapshotForOneFrame",
-        bridge.createCustom25DFrameViewportSnapshotForOneFrame
-      )({
-        map: resolvedMap,
-        canvas
-      });
-      adapterState.snapshotCount += 1;
-
-      const drawResult = trace.wrap(
-        "drawCustom25DOneFrameFromSnapshot",
-        bridge.drawCustom25DOneFrameFromSnapshot
-      )({
-        canvas,
-        frameViewportSnapshot: snapshotResult.frameViewportSnapshot
-      });
-      adapterState.drawCount += 1;
-
-      return {
-        outcome: "pending_cleanup",
-        reasonCode: "DEFERRED_CLEANUP_PENDING",
-        surfacePrepared: true,
-        lifecycleRegistered: true,
-        frameSnapshotCreated:
-          snapshotResult.outcome === "snapshot_created" &&
-          drawResult.outcome === "drawn",
-        drawAttemptCount: 1,
-        completedFrameCount: drawResult.outcome === "drawn" ? 1 : 0,
-        cleanupAttemptCount: 0,
-        cleanupCompleted: false,
-        referencesReleased: false,
-        permanentlyClosed: false
-      };
-    },
-    completeDeferredCleanup() {
-      adapterState.cleanupCount += 1;
-      return {
-        outcome: "completed",
-        reasonCode: "LIVE_ONE_FRAME_DRAW_COMPLETED",
-        cleanupAttemptCount: 1,
-        cleanupCompleted: true,
-        cleanupFailed: false,
-        cleanupFailureReasons: [],
-        referencesReleased: true,
-        permanentlyClosed: true
-      };
-    }
+    executeDeveloperOnlyLiveOneFrameAdapter: trace.wrap(
+      "adapterInvocation",
+      (options) => realAdapter.executeDeveloperOnlyLiveOneFrameAdapter(options)
+    ),
+    completeDeferredCleanup: trace.wrap("completeDeferredCleanup", (...args) => {
+      adapterState.completeDeferredCleanupCount += 1;
+      return realAdapter.completeDeferredCleanup(...args);
+    })
   };
 
   const command = commandModule.createDeveloperOnlyAtlasCustom25DOneFrameCommand({
@@ -362,40 +546,120 @@ function installNamespaceHarness({
   }
 
   return {
-    trace,
     namespace: globalObject.GrowGoDeveloperDiagnostics,
+    bridgeState,
     adapterState
   };
 }
 
-test("browser-shaped rebound public getter wiring reproduces the old recursion chain and trace catches the repeated calls", async () => {
+test("browser-shaped lazy public snapshot bridge wiring reproduces the old recursion boundary and trace catches the repeated chain", async () => {
   const harness = installNamespaceHarness({
-    recursivePublicGetter: true
+    recursiveSnapshotBridge: true
   });
 
-  await assert.rejects(
-    () =>
-      harness.namespace.runAuthorizedAtlasCustom25DOneFrame({
-        confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
-      }),
-    /TRACE_MAX_DEPTH_EXCEEDED/
-  );
+  const result = await harness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+    confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+  });
+
+  assert.equal(result.outcome, "failed_closed");
+  assert.equal(result.reasonCode, "TRACE_MAX_DEPTH_EXCEEDED");
+  assert.equal(result.surfacePrepared, true);
+  assert.equal(result.frameSnapshotCreated, false);
+  assert.equal(result.drawAttemptCount, 0);
+  assert.equal(result.completedFrameCount, 0);
+  assert.equal(result.realDrawFunctionCalled, false);
+  assert.equal(result.cleanupAttemptCount, 1);
+  assert.equal(result.cleanupCompleted, true);
+  assert.equal(result.referencesReleased, true);
+  assert.equal(harness.bridgeState.snapshotCount, 0);
+  assert.equal(harness.bridgeState.drawCount, 0);
 
   const traceSnapshot =
     harness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
 
   assert.equal(traceSnapshot.recursionDetected, true);
   assert.equal(traceSnapshot.overflowPrevented, true);
-  assert.equal(traceSnapshot.repeatedCallChain.length >= 3, true);
-  for (const name of traceSnapshot.repeatedCallChain) {
-    assert.equal(name, "reboundGrowGoMapGetter");
-  }
-  assert.equal(traceSnapshot.last30FunctionNames.length > 0, true);
+  assert.equal(traceSnapshot.repeatedCallChain.length >= 2, true);
+  assert.equal(
+    traceSnapshot.repeatedCallChain.every(
+      (name) => name === "reboundPublicBridgeGetter"
+    ),
+    true
+  );
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes("lazySnapshotBridgeProvider"),
+    true
+  );
 });
 
-test("browser-shaped captured script getter wiring completes one snapshot, one draw, one cleanup, and returns the real command result object", async () => {
+test("browser-shaped snapshot-stage map proxy recursion reproduces surface prepared then stack overflow before snapshot creation with bounded trace evidence", async () => {
   const harness = installNamespaceHarness({
-    recursivePublicGetter: false,
+    recursiveSnapshotMapProxy: true,
+    forceRecursiveSnapshotMapForBridge: true
+  });
+
+  const result = await harness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+    confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+  });
+
+  assert.equal(result.outcome, "failed_closed");
+  assert.equal(result.reasonCode, "MAXIMUM_CALL_STACK_SIZE_EXCEEDED");
+  assert.equal(result.surfacePrepared, true);
+  assert.equal(result.frameSnapshotCreated, false);
+  assert.equal(result.drawAttemptCount, 0);
+  assert.equal(result.completedFrameCount, 0);
+  assert.equal(result.realDrawFunctionCalled, false);
+  assert.equal(result.cleanupAttemptCount, 1);
+  assert.equal(result.cleanupCompleted, true);
+  assert.equal(result.referencesReleased, true);
+  assert.equal(harness.bridgeState.snapshotCount, 1);
+  assert.equal(harness.bridgeState.drawCount, 0);
+
+  const traceSnapshot =
+    harness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
+
+  assert.equal(traceSnapshot.recursionDetected, true);
+  assert.equal(traceSnapshot.overflowPrevented, true);
+  assert.equal(Array.isArray(traceSnapshot.last50Calls), true);
+  assert.equal(traceSnapshot.last50Calls.length > 0, true);
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes(
+      "createCustom25DFrameViewportSnapshotForOneFrame"
+    ),
+    true
+  );
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes(
+      "createCustom25DFrameViewportSnapshotPrivateImplementation"
+    ),
+    true
+  );
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes(
+      "createCustom25DFrameViewportSnapshot"
+    ),
+    true
+  );
+  assert.equal(traceSnapshot.last50FunctionNames.includes("proxyGetSize"), true);
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes("publicGetGrowGoMap"),
+    true
+  );
+  assert.equal(
+    traceSnapshot.last50Calls.some(
+      (event, index, events) =>
+        event.phase === "entry" &&
+        event.functionName === "proxyGetSize" &&
+        events[index + 1]?.phase === "entry" &&
+        events[index + 1]?.functionName === "publicGetGrowGoMap"
+    ),
+    true
+  );
+});
+
+test("browser-shaped stable bridge capture completes one snapshot, one draw, one cleanup, and returns the real command result object", async () => {
+  const harness = installNamespaceHarness({
+    recursiveSnapshotBridge: false,
     explicitReturnWrapper: true
   });
 
@@ -411,9 +675,9 @@ test("browser-shaped captured script getter wiring completes one snapshot, one d
   assert.equal(result.cleanupAttemptCount, 1);
   assert.equal(result.cleanupCompleted, true);
   assert.equal(result.referencesReleased, true);
-  assert.equal(harness.adapterState.snapshotCount, 1);
-  assert.equal(harness.adapterState.drawCount, 1);
-  assert.equal(harness.adapterState.cleanupCount, 1);
+  assert.equal(harness.bridgeState.snapshotCount, 1);
+  assert.equal(harness.bridgeState.drawCount, 1);
+  assert.equal(harness.adapterState.completeDeferredCleanupCount, 1);
   assert.equal(result.canonicalSafetyFlagSnapshot.runtimeExecutionEnabled, false);
   assert.equal(result.canonicalSafetyFlagSnapshot.mapAttachmentAllowed, false);
   assert.equal(
@@ -424,17 +688,56 @@ test("browser-shaped captured script getter wiring completes one snapshot, one d
 
   const traceSnapshot =
     harness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
-  assert.equal(traceSnapshot.recursionDetected, false);
+  assert.equal(traceSnapshot.overflowPrevented, false);
   assert.equal(traceSnapshot.maxObservedDepth > 0, true);
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes(
+      "createCustom25DFrameViewportSnapshotForOneFrame"
+    ),
+    true
+  );
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes("proxyGetSize"),
+    false
+  );
+});
+
+test("browser-shaped snapshot-stage raw-map normalization unwraps a recursive diagnostics proxy and restores one snapshot one draw one cleanup", async () => {
+  const harness = installNamespaceHarness({
+    recursiveSnapshotMapProxy: true
+  });
+
+  const result = await harness.namespace.runAuthorizedAtlasCustom25DOneFrame({
+    confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+  });
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(result.surfacePrepared, true);
+  assert.equal(result.frameSnapshotCreated, true);
+  assert.equal(result.drawAttemptCount, 1);
+  assert.equal(result.completedFrameCount, 1);
+  assert.equal(result.cleanupAttemptCount, 1);
+  assert.equal(result.cleanupCompleted, true);
+  assert.equal(result.referencesReleased, true);
+  assert.equal(harness.bridgeState.snapshotCount, 1);
+  assert.equal(harness.bridgeState.drawCount, 1);
+
+  const traceSnapshot =
+    harness.namespace.getAtlasCustom25DOneFrameExecutionTrace();
+  assert.equal(traceSnapshot.overflowPrevented, false);
+  assert.equal(
+    traceSnapshot.last50FunctionNames.includes("proxyGetSize"),
+    false
+  );
 });
 
 test("browser-shaped namespace wrapper must return the underlying one-frame command promise result instead of undefined", async () => {
   const harness = installNamespaceHarness({
-    recursivePublicGetter: false,
+    recursiveSnapshotBridge: false,
     explicitReturnWrapper: true
   });
   const brokenHarness = installNamespaceHarness({
-    recursivePublicGetter: false,
+    recursiveSnapshotBridge: false,
     explicitReturnWrapper: false
   });
 

@@ -17,7 +17,8 @@ function createInitialState(maxDepth) {
     maxDepth,
     currentDepth: 0,
     maxObservedDepth: 0,
-    last30FunctionNames: [],
+    last50FunctionNames: [],
+    last50Calls: [],
     activeCallStack: [],
     repeatedCallChain: [],
     recursionDetected: false,
@@ -28,8 +29,17 @@ function createInitialState(maxDepth) {
   };
 }
 
-function cloneArrayTail(values, limit = 30) {
+function cloneArrayTail(values, limit = 50) {
   return values.slice(Math.max(0, values.length - limit));
+}
+
+function createTraceEvent({ phase, functionName, depth, repeatCount }) {
+  return deepFreeze({
+    phase,
+    functionName,
+    depth,
+    repeatCount
+  });
 }
 
 export function createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
@@ -51,17 +61,29 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
         ? functionName.trim()
         : "anonymous";
     const nextStack = [...state.activeCallStack, normalizedFunctionName];
-    const nextLast30 = cloneArrayTail([...state.last30FunctionNames, normalizedFunctionName]);
+    const nextLast50 = cloneArrayTail([...state.last50FunctionNames, normalizedFunctionName]);
     const nextDepth = nextStack.length;
+    const repeatCount =
+      nextStack.filter((entry) => entry === normalizedFunctionName).length;
     const repeatedCallChain = nextStack.filter(
       (entry, index) => entry === normalizedFunctionName && index < nextStack.length - 1
     );
+    const nextLast50Calls = cloneArrayTail([
+      ...state.last50Calls,
+      createTraceEvent({
+        phase: "entry",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        repeatCount
+      })
+    ]);
 
     state = {
       ...state,
       currentDepth: nextDepth,
       maxObservedDepth: Math.max(state.maxObservedDepth, nextDepth),
-      last30FunctionNames: nextLast30,
+      last50FunctionNames: nextLast50,
+      last50Calls: nextLast50Calls,
       activeCallStack: nextStack,
       totalEntryCount: state.totalEntryCount + 1,
       repeatedCallChain:
@@ -94,10 +116,23 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
         : "anonymous";
     const nextStack = [...state.activeCallStack];
     const top = nextStack.pop() ?? null;
+    const remainingRepeatCount = nextStack.filter(
+      (entry) => entry === normalizedFunctionName
+    ).length;
+    const nextLast50Calls = cloneArrayTail([
+      ...state.last50Calls,
+      createTraceEvent({
+        phase: "exit",
+        functionName: normalizedFunctionName,
+        depth: nextStack.length,
+        repeatCount: remainingRepeatCount
+      })
+    ]);
 
     state = {
       ...state,
       activeCallStack: nextStack,
+      last50Calls: nextLast50Calls,
       currentDepth: nextStack.length,
       totalExitCount: state.totalExitCount + 1,
       reasonCode:
@@ -135,7 +170,8 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
       maxDepth: state.maxDepth,
       currentDepth: state.currentDepth,
       maxObservedDepth: state.maxObservedDepth,
-      last30FunctionNames: [...state.last30FunctionNames],
+      last50FunctionNames: [...state.last50FunctionNames],
+      last50Calls: [...state.last50Calls],
       activeCallStack: [...state.activeCallStack],
       repeatedCallChain: [...state.repeatedCallChain],
       recursionDetected: state.recursionDetected,
@@ -148,6 +184,8 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
 
   return deepFreeze({
     reset,
+    enter,
+    exit,
     wrap,
     wrapAsync,
     getTraceSnapshot
@@ -171,6 +209,12 @@ export function installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
   if (!namespace) {
     return null;
   }
+
+  globalObject.__GROWGO_ATLAS_ONE_FRAME_TRACE__ = {
+    enter: trace.enter,
+    exit: trace.exit,
+    getTraceSnapshot: trace.getTraceSnapshot
+  };
 
   namespace.getAtlasCustom25DOneFrameExecutionTrace = () =>
     trace.getTraceSnapshot();

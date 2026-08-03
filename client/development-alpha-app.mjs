@@ -59,16 +59,27 @@ const getGrowGoMapFromScriptDiagnostics = captureDiagnosticsFunction("getGrowGoM
 const getCustom25DOneFrameBridgeFromScriptDiagnostics = captureDiagnosticsFunction(
   "getCustom25DOneFrameBridge"
 );
+const custom25DOneFrameBridgeFromScriptDiagnostics =
+  getCustom25DOneFrameBridgeFromScriptDiagnostics?.() ?? null;
+const createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics =
+  typeof custom25DOneFrameBridgeFromScriptDiagnostics
+    ?.createCustom25DFrameViewportSnapshotForOneFrame === "function"
+    ? custom25DOneFrameBridgeFromScriptDiagnostics.createCustom25DFrameViewportSnapshotForOneFrame.bind(
+        custom25DOneFrameBridgeFromScriptDiagnostics
+      )
+    : null;
+const drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics =
+  typeof custom25DOneFrameBridgeFromScriptDiagnostics?.drawCustom25DOneFrameFromSnapshot ===
+  "function"
+    ? custom25DOneFrameBridgeFromScriptDiagnostics.drawCustom25DOneFrameFromSnapshot.bind(
+        custom25DOneFrameBridgeFromScriptDiagnostics
+      )
+    : null;
 
 const readGrowGoMapForAtlas = atlasCustom25DOneFrameExecutionTrace.wrap(
   "getGrowGoMap",
   () => getGrowGoMapFromScriptDiagnostics?.() ?? null
 );
-
-const readCustom25DOneFrameBridgeForAtlas =
-  atlasCustom25DOneFrameExecutionTrace.wrap("getCustom25DOneFrameBridge", () =>
-    getCustom25DOneFrameBridgeFromScriptDiagnostics?.() ?? null
-  );
 
 const atlasLiveMapCentreBridge = createDeveloperOnlyLiveMapCentreAtlasBridge({
   getGrowGoMap: readGrowGoMapForAtlas
@@ -144,19 +155,20 @@ installControlledOneSessionDeveloperRendererHandoffAuthorization({
 const growGoCustom25DLiveOneFrameAdapter =
   createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     mapProvider: readGrowGoMapForAtlas,
-    frameSnapshotBridgeProvider:
+    frameSnapshotProvider: () =>
       atlasCustom25DOneFrameExecutionTrace.wrap(
         "createCustom25DFrameViewportSnapshotForOneFrame",
-        () =>
-          readCustom25DOneFrameBridgeForAtlas()
-            ?.createCustom25DFrameViewportSnapshotForOneFrame ?? null
+        (input) =>
+          createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics?.(
+            input
+          ) ?? null
       ),
-    drawFunctionProvider: atlasCustom25DOneFrameExecutionTrace.wrap(
-      "drawCustom25DOneFrameFromSnapshot",
-      () =>
-        readCustom25DOneFrameBridgeForAtlas()?.drawCustom25DOneFrameFromSnapshot ??
-        null
-    )
+    drawFunctionProvider: () =>
+      atlasCustom25DOneFrameExecutionTrace.wrap(
+        "drawCustom25DOneFrameFromSnapshot",
+        (input) =>
+          drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics?.(input) ?? null
+      )
   });
 
 const atlasCustom25DOneFrameCommand =

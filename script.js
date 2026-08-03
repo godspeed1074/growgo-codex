@@ -114,6 +114,25 @@ bootstrapGrowGoDeveloperDiagnosticsForLocalDev({
   localDevBootstrap: true
 });
 
+function traceAtlasOneFrameCall(functionName, callback) {
+  const trace = globalThis?.__GROWGO_ATLAS_ONE_FRAME_TRACE__;
+
+  if (
+    !trace ||
+    typeof trace.enter !== "function" ||
+    typeof trace.exit !== "function"
+  ) {
+    return callback();
+  }
+
+  trace.enter(functionName);
+  try {
+    return callback();
+  } finally {
+    trace.exit(functionName);
+  }
+}
+
 function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
   const hostname =
@@ -12207,7 +12226,7 @@ let playerLatLng = null;
 
 /* GROWGO MAP GETTER DIAGNOSTIC START */
 function getGrowGoMap() {
-  return map ?? null;
+  return traceAtlasOneFrameCall("getGrowGoMap", () => map ?? null);
 }
 /* GROWGO MAP GETTER DIAGNOSTIC END */
 
@@ -15083,127 +15102,129 @@ function freezeCustom25DFrameViewportSnapshot(snapshot) {
 }
 
 function createCustom25DFrameViewportSnapshot({ map, canvas } = {}) {
-  if (
-    !map ||
-    typeof map.getSize !== "function" ||
-    typeof map.getBounds !== "function" ||
-    typeof map.latLngToLayerPoint !== "function" ||
-    typeof map.getZoom !== "function"
-  ) {
-    throw new Error("FRAME_VIEWPORT_MAP_INVALID");
-  }
-
-  if (!canvas || typeof canvas.getContext !== "function") {
-    throw new Error("FRAME_VIEWPORT_CANVAS_INVALID");
-  }
-
-  const logicalSize = map.getSize();
-  const logicalWidth = Number(logicalSize?.x);
-  const logicalHeight = Number(logicalSize?.y);
-  if (!Number.isFinite(logicalWidth) || !Number.isFinite(logicalHeight)) {
-    throw new Error("FRAME_VIEWPORT_SIZE_INVALID");
-  }
-
-  const bounds = map.getBounds();
-  if (
-    !bounds ||
-    typeof bounds.getNorthWest !== "function" ||
-    typeof bounds.getNorth !== "function" ||
-    typeof bounds.getSouth !== "function" ||
-    typeof bounds.getEast !== "function" ||
-    typeof bounds.getWest !== "function"
-  ) {
-    throw new Error("FRAME_VIEWPORT_BOUNDS_INVALID");
-  }
-
-  const northWestCoordinate = bounds.getNorthWest();
-  const north = Number(bounds.getNorth());
-  const south = Number(bounds.getSouth());
-  const east = Number(bounds.getEast());
-  const west = Number(bounds.getWest());
-  const northWestLatitude = Number(northWestCoordinate?.lat);
-  const northWestLongitude = Number(northWestCoordinate?.lng);
-  if (
-    !Number.isFinite(north) ||
-    !Number.isFinite(south) ||
-    !Number.isFinite(east) ||
-    !Number.isFinite(west) ||
-    !Number.isFinite(northWestLatitude) ||
-    !Number.isFinite(northWestLongitude)
-  ) {
-    throw new Error("FRAME_VIEWPORT_BOUNDS_VALUES_INVALID");
-  }
-
-  const layerPoint = map.latLngToLayerPoint(northWestCoordinate);
-  const layerX = Number(layerPoint?.x);
-  const layerY = Number(layerPoint?.y);
-  if (!Number.isFinite(layerX) || !Number.isFinite(layerY)) {
-    throw new Error("FRAME_VIEWPORT_LAYER_POINT_INVALID");
-  }
-
-  const zoom = Number(map.getZoom());
-  if (!Number.isFinite(zoom)) {
-    throw new Error("FRAME_VIEWPORT_ZOOM_INVALID");
-  }
-
-  const devicePixelRatio = normalizeCustom25DDevicePixelRatio(
-    window.devicePixelRatio
-  );
-  const backingWidth = Math.max(1, Math.round(logicalWidth * devicePixelRatio));
-  const backingHeight = Math.max(1, Math.round(logicalHeight * devicePixelRatio));
-
-  return freezeCustom25DFrameViewportSnapshot({
-    schemaId: CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID,
-    logicalWidth,
-    logicalHeight,
-    backingWidth,
-    backingHeight,
-    devicePixelRatio,
-    bounds: {
-      north,
-      south,
-      east,
-      west
-    },
-    northWestCoordinate: {
-      latitude: northWestLatitude,
-      longitude: northWestLongitude
-    },
-    canvasLayerPosition: {
-      x: layerX,
-      y: layerY
-    },
-    zoom,
-    mapIdentityValidated: true,
-    canvasIdentityValidated: true,
-    snapshotCreated: true,
-    drawRequested: false,
-    listenerAdded: false,
-    retentionWritten: false,
-    contains([latitude, longitude]) {
-      const normalizedLatitude = Number(latitude);
-      const normalizedLongitude = Number(longitude);
-      return (
-        Number.isFinite(normalizedLatitude) &&
-        Number.isFinite(normalizedLongitude) &&
-        normalizedLatitude <= north &&
-        normalizedLatitude >= south &&
-        normalizedLongitude <= east &&
-        normalizedLongitude >= west
-      );
-    },
-    getNorthWest() {
-      return {
-        lat: northWestLatitude,
-        lng: northWestLongitude
-      };
-    },
-    getCenter() {
-      return {
-        lat: (north + south) / 2,
-        lng: (east + west) / 2
-      };
+  return traceAtlasOneFrameCall("createCustom25DFrameViewportSnapshot", () => {
+    if (
+      !map ||
+      typeof map.getSize !== "function" ||
+      typeof map.getBounds !== "function" ||
+      typeof map.latLngToLayerPoint !== "function" ||
+      typeof map.getZoom !== "function"
+    ) {
+      throw new Error("FRAME_VIEWPORT_MAP_INVALID");
     }
+
+    if (!canvas || typeof canvas.getContext !== "function") {
+      throw new Error("FRAME_VIEWPORT_CANVAS_INVALID");
+    }
+
+    const logicalSize = map.getSize();
+    const logicalWidth = Number(logicalSize?.x);
+    const logicalHeight = Number(logicalSize?.y);
+    if (!Number.isFinite(logicalWidth) || !Number.isFinite(logicalHeight)) {
+      throw new Error("FRAME_VIEWPORT_SIZE_INVALID");
+    }
+
+    const bounds = map.getBounds();
+    if (
+      !bounds ||
+      typeof bounds.getNorthWest !== "function" ||
+      typeof bounds.getNorth !== "function" ||
+      typeof bounds.getSouth !== "function" ||
+      typeof bounds.getEast !== "function" ||
+      typeof bounds.getWest !== "function"
+    ) {
+      throw new Error("FRAME_VIEWPORT_BOUNDS_INVALID");
+    }
+
+    const northWestCoordinate = bounds.getNorthWest();
+    const north = Number(bounds.getNorth());
+    const south = Number(bounds.getSouth());
+    const east = Number(bounds.getEast());
+    const west = Number(bounds.getWest());
+    const northWestLatitude = Number(northWestCoordinate?.lat);
+    const northWestLongitude = Number(northWestCoordinate?.lng);
+    if (
+      !Number.isFinite(north) ||
+      !Number.isFinite(south) ||
+      !Number.isFinite(east) ||
+      !Number.isFinite(west) ||
+      !Number.isFinite(northWestLatitude) ||
+      !Number.isFinite(northWestLongitude)
+    ) {
+      throw new Error("FRAME_VIEWPORT_BOUNDS_VALUES_INVALID");
+    }
+
+    const layerPoint = map.latLngToLayerPoint(northWestCoordinate);
+    const layerX = Number(layerPoint?.x);
+    const layerY = Number(layerPoint?.y);
+    if (!Number.isFinite(layerX) || !Number.isFinite(layerY)) {
+      throw new Error("FRAME_VIEWPORT_LAYER_POINT_INVALID");
+    }
+
+    const zoom = Number(map.getZoom());
+    if (!Number.isFinite(zoom)) {
+      throw new Error("FRAME_VIEWPORT_ZOOM_INVALID");
+    }
+
+    const devicePixelRatio = normalizeCustom25DDevicePixelRatio(
+      window.devicePixelRatio
+    );
+    const backingWidth = Math.max(1, Math.round(logicalWidth * devicePixelRatio));
+    const backingHeight = Math.max(1, Math.round(logicalHeight * devicePixelRatio));
+
+    return freezeCustom25DFrameViewportSnapshot({
+      schemaId: CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID,
+      logicalWidth,
+      logicalHeight,
+      backingWidth,
+      backingHeight,
+      devicePixelRatio,
+      bounds: {
+        north,
+        south,
+        east,
+        west
+      },
+      northWestCoordinate: {
+        latitude: northWestLatitude,
+        longitude: northWestLongitude
+      },
+      canvasLayerPosition: {
+        x: layerX,
+        y: layerY
+      },
+      zoom,
+      mapIdentityValidated: true,
+      canvasIdentityValidated: true,
+      snapshotCreated: true,
+      drawRequested: false,
+      listenerAdded: false,
+      retentionWritten: false,
+      contains([latitude, longitude]) {
+        const normalizedLatitude = Number(latitude);
+        const normalizedLongitude = Number(longitude);
+        return (
+          Number.isFinite(normalizedLatitude) &&
+          Number.isFinite(normalizedLongitude) &&
+          normalizedLatitude <= north &&
+          normalizedLatitude >= south &&
+          normalizedLongitude <= east &&
+          normalizedLongitude >= west
+        );
+      },
+      getNorthWest() {
+        return {
+          lat: northWestLatitude,
+          lng: northWestLongitude
+        };
+      },
+      getCenter() {
+        return {
+          lat: (north + south) / 2,
+          lng: (east + west) / 2
+        };
+      }
+    });
   });
 }
 
@@ -15423,8 +15444,14 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
   };
 }
 
-const createCustom25DFrameViewportSnapshotPrivateImplementation =
-  createCustom25DFrameViewportSnapshot;
+const createCustom25DFrameViewportSnapshotPrivateImplementation = ({
+  map,
+  canvas
+} = {}) =>
+  traceAtlasOneFrameCall(
+    "createCustom25DFrameViewportSnapshotPrivateImplementation",
+    () => createCustom25DFrameViewportSnapshot({ map, canvas })
+  );
 const drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation =
   drawCustom25DMapCanvasWithFrameSnapshot;
 
@@ -15432,28 +15459,33 @@ function createCustom25DFrameViewportSnapshotForOneFrame({
   map,
   canvas
 } = {}) {
-  try {
-    const frameViewportSnapshot =
-      createCustom25DFrameViewportSnapshotPrivateImplementation({
-      map,
-      canvas
-    });
+  return traceAtlasOneFrameCall(
+    "createCustom25DFrameViewportSnapshotForOneFrame",
+    () => {
+      try {
+        const frameViewportSnapshot =
+          createCustom25DFrameViewportSnapshotPrivateImplementation({
+            map,
+            canvas
+          });
 
-    return Object.freeze({
-      outcome: "snapshot_created",
-      reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
-      frameViewportSnapshot
-    });
-  } catch (error) {
-    return Object.freeze({
-      outcome: "blocked",
-      reasonCode:
-        typeof error?.message === "string" && error.message
-          ? error.message
-          : "FRAME_VIEWPORT_SNAPSHOT_CREATION_FAILED",
-      frameViewportSnapshot: null
-    });
-  }
+        return Object.freeze({
+          outcome: "snapshot_created",
+          reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+          frameViewportSnapshot
+        });
+      } catch (error) {
+        return Object.freeze({
+          outcome: "blocked",
+          reasonCode:
+            typeof error?.message === "string" && error.message
+              ? error.message
+              : "FRAME_VIEWPORT_SNAPSHOT_CREATION_FAILED",
+          frameViewportSnapshot: null
+        });
+      }
+    }
+  );
 }
 
 function drawCustom25DOneFrameFromSnapshot({
@@ -15479,10 +15511,12 @@ function drawCustom25DOneFrameFromSnapshot({
 }
 
 function getCustom25DOneFrameBridge() {
-  return Object.freeze({
-    createCustom25DFrameViewportSnapshotForOneFrame,
-    drawCustom25DOneFrameFromSnapshot
-  });
+  return traceAtlasOneFrameCall("getCustom25DOneFrameBridge", () =>
+    Object.freeze({
+      createCustom25DFrameViewportSnapshotForOneFrame,
+      drawCustom25DOneFrameFromSnapshot
+    })
+  );
 }
 
 function syncCustom25DMapPresentation() {

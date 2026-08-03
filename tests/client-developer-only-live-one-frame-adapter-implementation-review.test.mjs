@@ -142,7 +142,15 @@ test("centralized frame-root snapshot remains active and the live draw path stil
   );
   assert.match(
     scriptSource,
-    /const createCustom25DFrameViewportSnapshotPrivateImplementation =\s*createCustom25DFrameViewportSnapshot;/
+    /const createCustom25DFrameViewportSnapshotPrivateImplementation =\s*\(\{\s*map,\s*canvas\s*\}\s*=\s*\{\}\)\s*=>/
+  );
+  assert.match(
+    scriptSource,
+    /traceAtlasOneFrameCall\(\s*"createCustom25DFrameViewportSnapshotPrivateImplementation"/
+  );
+  assert.match(
+    scriptSource,
+    /createCustom25DFrameViewportSnapshot\(\{\s*map,\s*canvas\s*\}\)/
   );
   assert.match(
     scriptSource,
@@ -231,6 +239,18 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
     /readGrowGoMapForAtlas/
   );
   assert.match(
+    developmentAlphaSource,
+    /const custom25DOneFrameBridgeFromScriptDiagnostics =/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /const createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics =/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /const drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics =/
+  );
+  assert.doesNotMatch(
     developmentAlphaSource,
     /readCustom25DOneFrameBridgeForAtlas/
   );

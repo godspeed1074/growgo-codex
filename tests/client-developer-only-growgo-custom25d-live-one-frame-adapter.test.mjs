@@ -120,6 +120,9 @@ module.exports = {
     module: { exports: {} },
     exports: {},
     Object,
+    traceAtlasOneFrameCall(functionName, callback) {
+      return callback();
+    },
     createCustom25DFrameViewportSnapshot(input = {}) {
       calls.snapshot += 1;
       if (options.snapshotThrows) {
@@ -772,7 +775,10 @@ test("snapshot failure, draw failure, draw exception, and cleanup failure all pr
   });
   const snapshotFailureResult =
     snapshotFailure.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
-  assert.equal(snapshotFailureResult.reasonCode, "INVALID_FRAME_SNAPSHOT_RESULT");
+  assert.equal(
+    snapshotFailureResult.reasonCode,
+    "FRAME_VIEWPORT_SNAPSHOT_VALUES_INVALID"
+  );
   assert.equal(snapshotFailureResult.cleanupAttemptCount, 1);
   assert.equal(snapshotFailureResult.cleanupCompleted, true);
 

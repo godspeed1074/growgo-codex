@@ -266,7 +266,67 @@ function validateLeaflet(leaflet) {
   );
 }
 
+function isSnapshotBridgeCompatibleMap(value) {
+  return (
+    isObjectLike(value) &&
+    typeof value.getSize === "function" &&
+    typeof value.getBounds === "function" &&
+    typeof value.latLngToLayerPoint === "function" &&
+    typeof value.getZoom === "function"
+  );
+}
+
+function resolveSnapshotMapTarget(map) {
+  const candidates = [
+    map?.__growgoRawLeafletMap,
+    map?.__rawLeafletMap,
+    map?.rawLeafletMap,
+    map?.leafletMap,
+    map
+  ];
+
+  for (const candidate of candidates) {
+    if (isSnapshotBridgeCompatibleMap(candidate)) {
+      return candidate;
+    }
+  }
+
+  return map;
+}
+
+function defaultSnapshotMapNormalizer(map) {
+  const target = resolveSnapshotMapTarget(map);
+
+  if (!isSnapshotBridgeCompatibleMap(target)) {
+    return target;
+  }
+
+  const getSize = target.getSize.bind(target);
+  const getBounds = target.getBounds.bind(target);
+  const latLngToLayerPoint = target.latLngToLayerPoint.bind(target);
+  const getZoom = target.getZoom.bind(target);
+
+  return Object.freeze({
+    getSize: () => getSize(),
+    getBounds: () => getBounds(),
+    latLngToLayerPoint: (coordinate) => latLngToLayerPoint(coordinate),
+    getZoom: () => getZoom()
+  });
+}
+
 function normalizeBridgeSnapshotResult(result) {
+  if (
+    isObjectLike(result) &&
+    typeof result.outcome === "string" &&
+    result.outcome !== "snapshot_created"
+  ) {
+    return {
+      ok: false,
+      reasonCode: result.reasonCode ?? "FRAME_SNAPSHOT_BRIDGE_BLOCKED",
+      frameViewportSnapshot: null
+    };
+  }
+
   if (isObjectLike(result) && isObjectLike(result.frameViewportSnapshot)) {
     if (result.outcome && result.outcome !== "snapshot_created") {
       return {
@@ -368,7 +428,8 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   lifecycleOwnerFactory = defaultLifecycleOwnerFactory,
   frameSnapshotProvider = defaultFrameSnapshotBridgeProvider,
   drawFunctionProvider = defaultDrawBridgeProvider,
-  drawOperationFactory = defaultDrawOperationFactory
+  drawOperationFactory = defaultDrawOperationFactory,
+  snapshotMapNormalizer = defaultSnapshotMapNormalizer
 } = {}) {
   const constructionFlags = {
     mapProviderAvailable: typeof mapProvider === "function",
@@ -535,6 +596,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     let drawBridge = null;
     let drawOperation = null;
     let frameViewportSnapshot = null;
+    let snapshotCompatibleMap = null;
     let surfaceResult = null;
     let translationResult = null;
     let drawResult = null;
@@ -786,8 +848,27 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
 
     let snapshotBridgeResult;
     try {
+      snapshotCompatibleMap = snapshotMapNormalizer(map);
+    } catch (error) {
+      const cleanupResult = lifecycleOwner.disposeOwnedResources();
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        toReasonCode(error, "SNAPSHOT_MAP_NORMALIZATION_EXCEPTION"),
+        {
+          surfacePrepared: true,
+          lifecycleRegistered: true,
+          frameSnapshotCreated: false,
+          ownershipMode:
+            translationResult.lifecycleBundle.ownershipMode ?? "ONE_FRAME_SURFACE_ONLY",
+          ...deriveCleanupPatch(cleanupResult)
+        }
+      );
+    }
+
+    try {
       snapshotBridgeResult = snapshotBridge({
-        map,
+        map: snapshotCompatibleMap,
         canvas: surfaceResult.surface.canvas
       });
     } catch (error) {

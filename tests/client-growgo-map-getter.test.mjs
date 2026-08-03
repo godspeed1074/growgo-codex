@@ -59,6 +59,9 @@ let map = __mapValue;
 function getCustom25DOneFrameBridge() {
   return null;
 }
+function traceAtlasOneFrameCall(functionName, callback) {
+  return callback();
+}
 ${getterBlockMatch[1]}
 ${bootstrapBlockMatch[0]}
 module.exports = {
