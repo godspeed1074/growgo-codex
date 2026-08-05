@@ -22,7 +22,7 @@ import {
 } from "./developer-only-live-atlas-renderer-handoff-readiness.mjs";
 import {
   createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter
-} from "./developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150x";
+} from "./developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150am";
 import {
   createDeveloperOnlyAtlasCustom25DOneFrameCommand,
   installDeveloperOnlyAtlasCustom25DOneFrameCommand
@@ -226,6 +226,9 @@ const diagnosticsNamespace =
 if (diagnosticsNamespace) {
   diagnosticsNamespace.getCustom25DOneFrameAdapterRuntimeIdentity = () =>
     growGoCustom25DLiveOneFrameAdapter.getCustom25DOneFrameAdapterRuntimeIdentity?.() ??
+    null;
+  diagnosticsNamespace.getCustom25DOneFrameLifecycleTranslationRuntimeIdentity = () =>
+    growGoCustom25DLiveOneFrameAdapter.getCustom25DOneFrameLifecycleTranslationRuntimeIdentity?.() ??
     null;
   diagnosticsNamespace.getCustom25DOneFrameAdapterExecutionIdentity = () =>
     growGoCustom25DLiveOneFrameAdapter.getCustom25DOneFrameAdapterExecutionIdentity?.() ??

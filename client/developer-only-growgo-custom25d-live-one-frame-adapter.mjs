@@ -1,5 +1,5 @@
 import { createGrowGoCustom25DLiveOneFrameSurfaceOperations } from "./growgo-custom25d-live-one-frame-surface-operations.mjs";
-import { createGrowGoCustom25DOneFrameSurfaceLifecycleTranslation } from "./growgo-custom25d-one-frame-surface-lifecycle-translation.mjs";
+import { createGrowGoCustom25DOneFrameSurfaceLifecycleTranslation } from "./growgo-custom25d-one-frame-surface-lifecycle-translation.mjs?v=atlas21150al";
 import { createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner } from "./developer-only-growgo-custom25d-renderer-lifecycle-owner.mjs";
 import { createGrowGoCustom25DLiveOneFrameDrawOperation } from "./growgo-custom25d-live-one-frame-draw-operation.mjs";
 
@@ -22,9 +22,9 @@ const STATUS_SCHEMA_ID =
 const RESULT_SCHEMA_ID =
   "GROWGO_CUSTOM25D_DEVELOPER_ONLY_LIVE_ONE_FRAME_ADAPTER_RESULT_001";
 const EXACT_PANE_NAME = "custom25DMapPane";
-const ADAPTER_VERSION_TAG = "atlas21150x";
+const ADAPTER_VERSION_TAG = "atlas21150am";
 const ADAPTER_SOURCE_TAG =
-  "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150x";
+  "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150am";
 const MODULE_LOAD_TIMESTAMP = new Date().toISOString();
 
 function canonicalSafetyFlags() {
@@ -991,6 +991,26 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     lifecycleGateJsonSerializationInvoked: false,
     lifecycleGateObjectFreezeInvoked: false,
     lifecycleGateStructuredCloneInvoked: false,
+    drawInvocationEntered: false,
+    drawInvocationFunctionName: null,
+    drawOperationExecutionEntered: false,
+    drawOperationExecutionReturned: false,
+    drawMutationAttempted: false,
+    drawMutationCompleted: false,
+    drawMutationTargetType: null,
+    drawMutationPropertyName: null,
+    drawMutationTargetFrozen: null,
+    drawMutationTargetSealed: null,
+    drawMutationTargetExtensible: null,
+    drawMutationPropertyDescriptorPresent: null,
+    drawMutationPropertyWritable: null,
+    drawMutationPropertyHasSetter: null,
+    drawLastCompletedFunction: null,
+    drawNextExpectedFunction: null,
+    drawFailureFunction: null,
+    drawExceptionName: null,
+    drawExceptionMessage: null,
+    drawExceptionReasonCode: null,
     payloadAssemblyEntryFunction: null,
     payloadAssemblyContextCreationAttempted: false,
     payloadAssemblyContextCreationCompleted: false,
@@ -1053,6 +1073,17 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
 
   function getCustom25DOneFrameAdapterRuntimeIdentity() {
     return runtimeIdentity;
+  }
+
+  function getCustom25DOneFrameLifecycleTranslationRuntimeIdentity() {
+    const identity =
+      activeLifecycleTranslationTraceSource
+        ?.getCustom25DOneFrameLifecycleTranslationRuntimeIdentity?.() ??
+      lifecycleTranslationFactory()
+        ?.getCustom25DOneFrameLifecycleTranslationRuntimeIdentity?.() ??
+      null;
+
+    return identity ? deepFreeze({ ...identity }) : null;
   }
 
   function getCustom25DOneFrameAdapterExecutionIdentity() {
@@ -1434,6 +1465,26 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       lifecycleGateJsonSerializationInvoked: false,
       lifecycleGateObjectFreezeInvoked: false,
       lifecycleGateStructuredCloneInvoked: false,
+      drawInvocationEntered: false,
+      drawInvocationFunctionName: null,
+      drawOperationExecutionEntered: false,
+      drawOperationExecutionReturned: false,
+      drawMutationAttempted: false,
+      drawMutationCompleted: false,
+      drawMutationTargetType: null,
+      drawMutationPropertyName: null,
+      drawMutationTargetFrozen: null,
+      drawMutationTargetSealed: null,
+      drawMutationTargetExtensible: null,
+      drawMutationPropertyDescriptorPresent: null,
+      drawMutationPropertyWritable: null,
+      drawMutationPropertyHasSetter: null,
+      drawLastCompletedFunction: null,
+      drawNextExpectedFunction: null,
+      drawFailureFunction: null,
+      drawExceptionName: null,
+      drawExceptionMessage: null,
+      drawExceptionReasonCode: null,
       payloadAssemblyEntryFunction: null,
       payloadAssemblyContextCreationAttempted: false,
       payloadAssemblyContextCreationCompleted: false,
@@ -3478,10 +3529,66 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       frameSnapshotCreated: true
     });
 
+    const drawMutationDescriptor = Object.getOwnPropertyDescriptor(
+      activeFrameViewportSnapshot?.canvasLayerPosition ?? {},
+      "x"
+    );
+
+    executionIdentityState = {
+      ...executionIdentityState,
+      drawInvocationEntered: true,
+      drawInvocationFunctionName: "drawOperation.drawPreparedSurfaceExactlyOnce",
+      drawOperationExecutionEntered: true,
+      drawOperationExecutionReturned: false,
+      drawMutationAttempted: true,
+      drawMutationCompleted: false,
+      drawMutationTargetType: describeMapObjectType(
+        activeFrameViewportSnapshot?.canvasLayerPosition ?? null
+      ),
+      drawMutationPropertyName: "canvasLayerPosition.x/y → mutable local copy",
+      drawMutationTargetFrozen: Object.isFrozen(
+        activeFrameViewportSnapshot?.canvasLayerPosition ?? {}
+      ),
+      drawMutationTargetSealed: Object.isSealed(
+        activeFrameViewportSnapshot?.canvasLayerPosition ?? {}
+      ),
+      drawMutationTargetExtensible: Object.isExtensible(
+        activeFrameViewportSnapshot?.canvasLayerPosition ?? {}
+      ),
+      drawMutationPropertyDescriptorPresent: !!drawMutationDescriptor,
+      drawMutationPropertyWritable:
+        drawMutationDescriptor?.writable ?? null,
+      drawMutationPropertyHasSetter:
+        typeof drawMutationDescriptor?.set === "function",
+      drawLastCompletedFunction: "adapter.assignFrameSnapshotCreated",
+      drawNextExpectedFunction: "drawOperation.drawPreparedSurfaceExactlyOnce",
+      drawFailureFunction: null,
+      drawExceptionName: null,
+      drawExceptionMessage: null,
+      drawExceptionReasonCode: null
+    };
+
     drawResult = drawOperation.drawPreparedSurfaceExactlyOnce({
       surface: surfaceResult.surface,
       canvas: surfaceResult.surface.canvas
     });
+
+    executionIdentityState = {
+      ...executionIdentityState,
+      drawOperationExecutionReturned: true,
+      drawMutationCompleted: drawResult?.outcome === "completed",
+      drawLastCompletedFunction: "drawOperation.drawPreparedSurfaceExactlyOnce",
+      drawNextExpectedFunction:
+        drawResult?.outcome === "completed"
+          ? "lifecycleOwner.disposeOwnedResources"
+          : "lifecycleOwner.disposeOwnedResources",
+      drawFailureFunction:
+        drawResult?.outcome === "completed"
+          ? null
+          : "drawOperation.drawPreparedSurfaceExactlyOnce",
+      drawExceptionReasonCode:
+        drawResult?.outcome === "completed" ? null : drawResult?.reasonCode ?? null
+    };
 
     const drawReasonCode = drawResult?.reasonCode ?? "DRAW_OPERATION_FAILED";
 
@@ -3553,6 +3660,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   return deepFreeze({
     getAdapterStatus,
     getCustom25DOneFrameAdapterRuntimeIdentity,
+    getCustom25DOneFrameLifecycleTranslationRuntimeIdentity,
     getCustom25DOneFrameAdapterExecutionIdentity,
     executeDeveloperOnlyLiveOneFrameAdapter,
     completeDeferredCleanup: finalizeDeferredCleanup

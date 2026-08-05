@@ -1,4 +1,8 @@
 let ACTIVE_LIFECYCLE_TRANSLATION_TRACE = null;
+const TRANSLATION_VERSION_TAG = "atlas21150al";
+const TRANSLATION_SOURCE_TAG =
+  "client/growgo-custom25d-one-frame-surface-lifecycle-translation.mjs?v=atlas21150al";
+const MODULE_LOAD_TIMESTAMP = new Date().toISOString();
 
 function appendLifecycleTranslationTraceCall(trace, functionName, phase) {
   if (!trace) {
@@ -162,6 +166,17 @@ function snapshotLifecycleTranslationTrace(trace) {
     lifecycleTranslationOverflowPrevented: trace.overflowPrevented,
     lifecycleTranslationLastFunction: trace.lastFunction,
     lifecycleTranslationPreviousFunction: trace.previousFunction
+  });
+}
+
+function createLifecycleTranslationRuntimeIdentity() {
+  return deepFreeze({
+    translationVersionTag: TRANSLATION_VERSION_TAG,
+    translationSourceTag: TRANSLATION_SOURCE_TAG,
+    moduleLoadTimestamp: MODULE_LOAD_TIMESTAMP,
+    cycleSafeDeepFreezeInstalled: true,
+    weakSetCycleProtectionInstalled: true,
+    translationTraceInstalled: true
   });
 }
 
@@ -341,6 +356,10 @@ export function createGrowGoCustom25DOneFrameSurfaceLifecycleTranslation({
 
   function getLifecycleTranslationTrace() {
     return snapshotLifecycleTranslationTrace(lifecycleTranslationTrace);
+  }
+
+  function getCustom25DOneFrameLifecycleTranslationRuntimeIdentity() {
+    return createLifecycleTranslationRuntimeIdentity();
   }
 
   function buildClosedResult(reasonCode, patch = {}) {
@@ -523,6 +542,7 @@ export function createGrowGoCustom25DOneFrameSurfaceLifecycleTranslation({
 
   return deepFreeze({
     getTranslationStatus,
+    getCustom25DOneFrameLifecycleTranslationRuntimeIdentity,
     getLifecycleTranslationTrace,
     translatePreparedSurfaceToLifecycleBundle
   });

@@ -105,7 +105,10 @@ function createLayerRecorder() {
   };
 }
 
-function compileSnapshotAwareHelpers({ recorder } = {}) {
+function compileSnapshotAwareHelpers({
+  recorder,
+  mutatePositionPointInPlace = false
+} = {}) {
   const evaluationSource = `
 const CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID =
   "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001";
@@ -136,6 +139,10 @@ module.exports = {
     L: {
       DomUtil: {
         setPosition(canvas, point) {
+          if (mutatePositionPointInPlace) {
+            point.x = Math.round(point.x);
+            point.y = Math.round(point.y);
+          }
           canvas.position = { x: point.x, y: point.y };
         }
       }
@@ -334,6 +341,28 @@ test("canvas and context behavior remain equivalent, transform and clear happen 
     recorder.calls.map((entry) => entry.name),
     ["background", "zones", "buildings", "roads", "trees", "landmarks"]
   );
+});
+
+test("snapshot-aware seam uses a mutable local position handoff so in-place Leaflet positioning does not mutate the frozen snapshot", () => {
+  const recorder = createLayerRecorder();
+  const { helpers } = compileSnapshotAwareHelpers({
+    recorder,
+    mutatePositionPointInPlace: true
+  });
+  const context2d = createFakeContext2D();
+  const canvas = createFakeCanvas(context2d);
+  const snapshot = createImmutableFrameSnapshot({ x: 12.4, y: 34.6 });
+
+  const result = helpers.drawCustom25DMapCanvasWithFrameSnapshot({
+    canvas,
+    frameViewportSnapshot: snapshot
+  });
+
+  assert.equal(result.outcome, "drawn");
+  assert.equal(result.reasonCode, "FRAME_DRAW_COMPLETED");
+  assert.deepEqual(canvas.position, { x: 12, y: 35 });
+  assert.deepEqual(snapshot.canvasLayerPosition, { x: 12.4, y: 34.6 });
+  assert.equal(Object.isFrozen(snapshot.canvasLayerPosition), true);
 });
 
 test("zones, buildings, roads, trees, and landmarks paths remain unchanged, startup remains unchanged, and no browser activation command exists", () => {

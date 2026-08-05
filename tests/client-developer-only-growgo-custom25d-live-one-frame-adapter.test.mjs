@@ -706,6 +706,7 @@ test("one isolated fake execution completes with one surface, one registration, 
 
   const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
   const status = env.adapter.getAdapterStatus();
+  const identity = env.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
 
   assert.equal(result.outcome, "completed");
   assert.equal(result.reasonCode, "LIVE_ONE_FRAME_DRAW_COMPLETED");
@@ -751,6 +752,34 @@ test("one isolated fake execution completes with one surface, one registration, 
   assert.equal(env.calls.drawOperation, 1);
   assert.equal(env.calls.drawBridge, 1);
   assert.equal(env.calls.cleanup, 1);
+
+  assert.equal(identity.drawInvocationEntered, true);
+  assert.equal(
+    identity.drawInvocationFunctionName,
+    "drawOperation.drawPreparedSurfaceExactlyOnce"
+  );
+  assert.equal(identity.drawOperationExecutionEntered, true);
+  assert.equal(identity.drawOperationExecutionReturned, true);
+  assert.equal(identity.drawMutationAttempted, true);
+  assert.equal(identity.drawMutationCompleted, true);
+  assert.equal(
+    identity.drawMutationPropertyName,
+    "canvasLayerPosition.x/y → mutable local copy"
+  );
+  assert.equal(identity.drawMutationTargetFrozen, true);
+  assert.equal(identity.drawMutationPropertyDescriptorPresent, true);
+  assert.equal(identity.drawMutationPropertyWritable, false);
+  assert.equal(identity.drawMutationPropertyHasSetter, false);
+  assert.equal(
+    identity.drawLastCompletedFunction,
+    "drawOperation.drawPreparedSurfaceExactlyOnce"
+  );
+  assert.equal(
+    identity.drawNextExpectedFunction,
+    "lifecycleOwner.disposeOwnedResources"
+  );
+  assert.equal(identity.drawFailureFunction, null);
+  assert.equal(identity.drawExceptionReasonCode, null);
 
   assert.equal(status.adapterStatus, "completed");
   assert.equal(status.permanentlyClosed, true);

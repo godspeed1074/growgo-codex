@@ -17,18 +17,18 @@ const adapterModule = await import(
   )
 );
 
-test("phase 211.50y keeps the page and module graph pointed at atlas21150x", () => {
+test("phase 211.50am keeps the page and module graph pointed at atlas21150am and atlas21150al", () => {
   assert.match(
     indexSource,
-    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21150x"><\/script>/
+    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21150am"><\/script>/
   );
   assert.match(
     developmentAlphaAppSource,
-    /from "\.\/developer-only-growgo-custom25d-live-one-frame-adapter\.mjs\?v=atlas21150x"/
+    /from "\.\/developer-only-growgo-custom25d-live-one-frame-adapter\.mjs\?v=atlas21150am"/
   );
 });
 
-test("phase 211.50y adapter runtime identity reports atlas21150x and installed post-callback trace fields", () => {
+test("phase 211.50am adapter runtime identity reports atlas21150am and installed post-callback trace fields", () => {
   const adapter = adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     rawLeafletMapReference: { id: "identity-map" },
     leafletProvider: () => ({
@@ -129,12 +129,33 @@ test("phase 211.50y adapter runtime identity reports atlas21150x and installed p
 
   const identity = adapter.getCustom25DOneFrameAdapterRuntimeIdentity();
 
-  assert.equal(identity.adapterVersionTag, "atlas21150x");
+  assert.equal(identity.adapterVersionTag, "atlas21150am");
   assert.equal(
     identity.adapterSourceTag,
-    "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150x"
+    "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150am"
   );
   assert.equal(identity.postCallbackTraceFieldsInstalled, true);
+  assert.equal(typeof identity.moduleLoadTimestamp, "string");
+  assert.ok(identity.moduleLoadTimestamp.length > 0);
+});
+
+test("phase 211.50am lifecycle translation runtime identity reports the cycle-safe atlas21150al module", () => {
+  const adapter = adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+    lifecycleTranslationFactory: undefined
+  });
+
+  const identity =
+    adapter.getCustom25DOneFrameLifecycleTranslationRuntimeIdentity();
+
+  assert.deepEqual(identity, {
+    translationVersionTag: "atlas21150al",
+    translationSourceTag:
+      "client/growgo-custom25d-one-frame-surface-lifecycle-translation.mjs?v=atlas21150al",
+    moduleLoadTimestamp: identity.moduleLoadTimestamp,
+    cycleSafeDeepFreezeInstalled: true,
+    weakSetCycleProtectionInstalled: true,
+    translationTraceInstalled: true
+  });
   assert.equal(typeof identity.moduleLoadTimestamp, "string");
   assert.ok(identity.moduleLoadTimestamp.length > 0);
 });
@@ -245,7 +266,7 @@ test("phase 211.50z adapter execution identity reports the live instrumented exe
   );
   assert.equal(
     before.adapterExecuteFunctionSourceTag,
-    "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150x"
+    "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150am"
   );
   assert.equal(before.adapterEntryReached, false);
   assert.equal(before.adapterEntryFunctionName, "executeDeveloperOnlyLiveOneFrameAdapter");

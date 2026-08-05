@@ -16206,8 +16206,12 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
   };
   const bounds = normalizedFrameViewportSnapshot;
   const topLeft = normalizedFrameViewportSnapshot.canvasLayerPosition;
+  const mutableCanvasLayerPosition = {
+    x: topLeft.x,
+    y: topLeft.y
+  };
 
-  L.DomUtil.setPosition(canvas, topLeft);
+  L.DomUtil.setPosition(canvas, mutableCanvasLayerPosition);
 
   const scale = normalizedFrameViewportSnapshot.devicePixelRatio;
   canvas.width = normalizedFrameViewportSnapshot.backingWidth;
