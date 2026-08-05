@@ -571,7 +571,9 @@ function createFakeAdapterEnvironment(overrides = {}) {
                 }
               };
             },
-      postDrawOperationContinuationHooks: overrides.postDrawOperationContinuationHooks
+      postDrawOperationContinuationHooks: overrides.postDrawOperationContinuationHooks,
+      postLifecycleOwnerContinuationHooks:
+        overrides.postLifecycleOwnerContinuationHooks
     })
   };
 
@@ -1865,6 +1867,82 @@ test("post-draw-operation continuation completes refs assignments, surface prepa
   assert.equal(identity.preparedSurfaceMapReadAttempted, true);
   assert.equal(identity.preparedSurfaceMapReadCompleted, true);
   assert.equal(identity.preparedSurfaceMapPresent, true);
+  assert.equal(identity.postPreparedSurfaceMapReadContinuationEntered, true);
+  assert.equal(
+    identity.postPreparedSurfaceMapReadNextFunction,
+    "payload entry marker write"
+  );
+  assert.equal(identity.preparedSurfacePayloadLocalCreationAttempted, true);
+  assert.equal(identity.preparedSurfacePayloadLocalCreationCompleted, true);
+  assert.equal(identity.preparedSurfacePayloadLocalType, "object:Object");
+  assert.equal(identity.preparedSurfaceMapLocalAssignmentAttempted, true);
+  assert.equal(identity.preparedSurfaceMapLocalAssignmentCompleted, true);
+  assert.equal(identity.preparedSurfaceCanvasLocalAssignmentAttempted, true);
+  assert.equal(identity.preparedSurfaceCanvasLocalAssignmentCompleted, true);
+  assert.equal(identity.preparedSurfaceOwnerLocalAssignmentAttempted, true);
+  assert.equal(identity.preparedSurfaceOwnerLocalAssignmentCompleted, true);
+  assert.equal(identity.payloadEntryTraceMutationAttempted, true);
+  assert.equal(identity.payloadEntryTraceMutationCompleted, true);
+  assert.equal(
+    identity.postMapReadLastCompletedStatement,
+    "payload entry trace mutation"
+  );
+  assert.equal(
+    identity.postMapReadNextExpectedStatement,
+    "payload entry marker write"
+  );
+  assert.equal(identity.postMapReadFailureFunction, null);
+  assert.equal(identity.postMapReadExceptionName, null);
+  assert.equal(identity.postMapReadExceptionMessage, null);
+  assert.equal(identity.postMapReadExceptionReasonCode, null);
+  assert.equal(identity.postMapReadObjectSpreadInvoked, true);
+  assert.equal(identity.postMapReadStructuredCloneInvoked, false);
+  assert.equal(identity.postMapReadObjectFreezeInvoked, false);
+  assert.equal(identity.postMapReadJsonSerializationInvoked, false);
+  assert.equal(identity.postMapReadPropertyEnumerationInvoked, false);
+  assert.equal(identity.postMapReadGetterInvoked, false);
+  assert.equal(identity.postMapReadSetterInvoked, false);
+  assert.equal(identity.postMapReadProxyTrapInvoked, false);
+  assert.equal(identity.postMapReadRecursiveCallbackInvoked, false);
+  assert.equal(identity.postMapReadDiagnosticsLookupInvoked, false);
+  assert.equal(identity.lifecycleRegistrationStateAssignmentAttempted, true);
+  assert.equal(identity.lifecycleRegistrationStateAssignmentCompleted, true);
+  assert.equal(identity.lifecycleRegistrationStateValue, true);
+  assert.equal(identity.lifecycleTranslationGateEntered, true);
+  assert.equal(identity.lifecycleTranslationGateOperandOneEvaluated, true);
+  assert.equal(identity.lifecycleTranslationGateOperandOneValue, false);
+  assert.equal(identity.lifecycleTranslationGateOperandTwoEvaluated, true);
+  assert.equal(identity.lifecycleTranslationGateOperandTwoValue, false);
+  assert.equal(identity.lifecycleTranslationObjectSpreadAttempted, true);
+  assert.equal(identity.lifecycleTranslationObjectSpreadCompleted, true);
+  assert.equal(identity.lifecycleTranslationFunctionSelected, true);
+  assert.equal(identity.lifecycleTranslationFunctionEntered, true);
+  assert.equal(identity.lifecycleTranslationFunctionReturned, true);
+  assert.equal(identity.lifecycleTranslationResultType, "object:Object");
+  assert.equal(identity.lifecycleTranslationResultStatus, "translated");
+  assert.equal(identity.lifecycleRegisteredStatusWriteAttempted, true);
+  assert.equal(identity.lifecycleRegisteredStatusWriteCompleted, true);
+  assert.equal(
+    identity.lifecycleGateLastCompletedStep,
+    "lifecycleRegistered status write"
+  );
+  assert.equal(
+    identity.lifecycleGateNextExpectedStep,
+    "payload-entry trace mutation"
+  );
+  assert.equal(identity.lifecycleGateFailureFunction, null);
+  assert.equal(identity.lifecycleGateExceptionName, null);
+  assert.equal(identity.lifecycleGateExceptionMessage, null);
+  assert.equal(identity.lifecycleGateExceptionReasonCode, null);
+  assert.equal(identity.lifecycleGateObjectSpreadInvoked, true);
+  assert.equal(identity.lifecycleGateGetterInvoked, false);
+  assert.equal(identity.lifecycleGateSetterInvoked, false);
+  assert.equal(identity.lifecycleGateProxyTrapInvoked, false);
+  assert.equal(identity.lifecycleGateRecursiveCallbackInvoked, false);
+  assert.equal(identity.lifecycleGateDiagnosticsLookupInvoked, false);
+  assert.equal(identity.lifecycleGateJsonSerializationInvoked, false);
+  assert.equal(identity.lifecycleGateObjectFreezeInvoked, false);
+  assert.equal(identity.lifecycleGateStructuredCloneInvoked, false);
   assert.equal(identity.preparedSurfaceLifecycleOwnerReadAttempted, true);
   assert.equal(identity.preparedSurfaceLifecycleOwnerReadCompleted, true);
   assert.equal(identity.preparedSurfaceLifecycleOwnerPresent, false);
@@ -1878,6 +1956,34 @@ test("post-draw-operation continuation completes refs assignments, surface prepa
     "currentRefs.lifecycleOwner"
   );
   assert.equal(identity.payloadLifecycleOwnerResolutionFailureReason, null);
+  assert.equal(identity.resolvedLifecycleOwnerLocalAssignmentAttempted, true);
+  assert.equal(identity.resolvedLifecycleOwnerLocalAssignmentCompleted, true);
+  assert.equal(identity.resolvedLifecycleOwnerMatchesCurrentRefs, true);
+  assert.equal(identity.resolvedLifecycleOwnerIdentityType, "object:Object");
+  assert.equal(identity.postLifecycleOwnerContinuationEntered, true);
+  assert.equal(identity.payloadEntryMarkerWriteAttempted, true);
+  assert.equal(identity.payloadEntryMarkerWriteCompleted, true);
+  assert.equal(identity.payloadContextConstructorSelected, true);
+  assert.equal(identity.payloadContextConstructorEntered, true);
+  assert.equal(identity.payloadContextConstructorReturned, true);
+  assert.equal(identity.payloadContextConstructorResultType, "object:Object");
+  assert.equal(
+    identity.postLifecycleOwnerLastCompletedStep,
+    "payload guard evaluation entered"
+  );
+  assert.equal(
+    identity.postLifecycleOwnerNextExpectedStep,
+    "payload guard evaluation completed"
+  );
+  assert.equal(identity.postLifecycleOwnerFailureFunction, null);
+  assert.equal(identity.postLifecycleOwnerExceptionName, null);
+  assert.equal(identity.postLifecycleOwnerExceptionMessage, null);
+  assert.equal(identity.postLifecycleOwnerExceptionReasonCode, null);
+  assert.equal(identity.postLifecycleOwnerGetterInvoked, false);
+  assert.equal(identity.postLifecycleOwnerSetterInvoked, false);
+  assert.equal(identity.postLifecycleOwnerProxyTrapInvoked, false);
+  assert.equal(identity.postLifecycleOwnerRecursiveCallbackInvoked, false);
+  assert.equal(identity.postLifecycleOwnerDiagnosticsLookupInvoked, false);
   assert.equal(identity.payloadAssemblyEntryAttempted, true);
   assert.equal(identity.payloadAssemblyEntryCompleted, true);
   assert.equal(
@@ -1957,6 +2063,7 @@ test("prepared surface continuation records explicit missing canvas and missing 
     missingCanvasIdentity.payloadLifecycleOwnerResolutionSource,
     "currentRefs.lifecycleOwner"
   );
+  assert.equal(missingCanvasIdentity.resolvedLifecycleOwnerMatchesCurrentRefs, true);
   assert.equal(missingCanvasIdentity.payloadAssemblyEntryCompleted, true);
   assert.equal(
     missingCanvasIdentity.payloadAssemblyEntryFunction,
@@ -2021,6 +2128,7 @@ test("prepared surface continuation records explicit missing canvas and missing 
     missingMapIdentity.payloadLifecycleOwnerResolutionSource,
     "currentRefs.lifecycleOwner"
   );
+  assert.equal(missingMapIdentity.resolvedLifecycleOwnerMatchesCurrentRefs, true);
   assert.equal(missingMapIdentity.payloadAssemblyEntryCompleted, true);
   assert.equal(missingMapIdentity.payloadAssemblyContextCreationAttempted, true);
   assert.equal(missingMapIdentity.payloadAssemblyContextCreationCompleted, true);
@@ -2115,6 +2223,342 @@ test("payload lifecycle owner resolves from currentRefs when the prepared surfac
   assert.equal(env.calls.lifecycleOwnerFactory, 1);
   assert.equal(lifecycleOwner.registerCount, 1);
   assert.equal(lifecycleOwner.disposeCount, 1);
+});
+
+test("post-lifecycle-owner continuation identifies payload entry marker and payload context constructor boundaries", () => {
+  const markerWriteEnv = createFakeAdapterEnvironment({
+    postLifecycleOwnerContinuationHooks: {
+      beforePayloadEntryMarkerWrite() {
+        throw new Error("PAYLOAD_ENTRY_MARKER_WRITE_EXCEPTION");
+      }
+    }
+  });
+  const markerWriteResult =
+    markerWriteEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const markerWriteIdentity =
+    markerWriteEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(markerWriteResult.outcome, "failed_closed");
+  assert.equal(
+    markerWriteResult.reasonCode,
+    "PAYLOAD_ENTRY_MARKER_WRITE_EXCEPTION"
+  );
+  assert.equal(markerWriteIdentity.payloadEntryMarkerWriteAttempted, true);
+  assert.equal(markerWriteIdentity.payloadEntryMarkerWriteCompleted, false);
+  assert.equal(
+    markerWriteIdentity.postLifecycleOwnerFailureFunction,
+    "payload entry marker write"
+  );
+  assert.equal(
+    markerWriteIdentity.postLifecycleOwnerExceptionReasonCode,
+    "PAYLOAD_ENTRY_MARKER_WRITE_EXCEPTION"
+  );
+  assert.equal(markerWriteIdentity.payloadContextConstructorEntered, false);
+  assert.equal(markerWriteIdentity.payloadGuardEvaluationAttempted, false);
+
+  const payloadContextEnv = createFakeAdapterEnvironment({
+    postLifecycleOwnerContinuationHooks: {
+      beforePayloadContextConstructor() {
+        throw new Error("PAYLOAD_CONTEXT_CREATION_EXCEPTION");
+      }
+    }
+  });
+  const payloadContextResult =
+    payloadContextEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const payloadContextIdentity =
+    payloadContextEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(payloadContextResult.outcome, "failed_closed");
+  assert.equal(
+    payloadContextResult.reasonCode,
+    "PAYLOAD_CONTEXT_CREATION_EXCEPTION"
+  );
+  assert.equal(payloadContextIdentity.payloadEntryMarkerWriteCompleted, true);
+  assert.equal(payloadContextIdentity.payloadContextConstructorSelected, true);
+  assert.equal(payloadContextIdentity.payloadContextConstructorEntered, false);
+  assert.equal(payloadContextIdentity.payloadContextConstructorReturned, false);
+  assert.equal(
+    payloadContextIdentity.payloadAssemblyFailureFunction,
+    "payload context creation"
+  );
+  assert.equal(
+    payloadContextIdentity.payloadAssemblyExceptionReasonCode,
+    "PAYLOAD_CONTEXT_CREATION_EXCEPTION"
+  );
+  assert.equal(payloadContextIdentity.payloadGuardEvaluationAttempted, false);
+});
+
+test("post-map-read continuation identifies complex object spread and trace/status mutation boundaries before payload entry marker", () => {
+  const complexSpreadEnv = createFakeAdapterEnvironment({
+    postLifecycleOwnerContinuationHooks: {
+      beforePayloadEntryTraceMutation() {
+        throw new Error("COMPLEX_OBJECT_SPREAD_EXCEPTION");
+      }
+    }
+  });
+  const complexSpreadResult =
+    complexSpreadEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const complexSpreadIdentity =
+    complexSpreadEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(complexSpreadResult.outcome, "failed_closed");
+  assert.equal(complexSpreadResult.reasonCode, "COMPLEX_OBJECT_SPREAD_EXCEPTION");
+  assert.equal(complexSpreadIdentity.preparedSurfaceMapReadCompleted, true);
+  assert.equal(complexSpreadIdentity.payloadEntryTraceMutationAttempted, true);
+  assert.equal(complexSpreadIdentity.payloadEntryTraceMutationCompleted, false);
+  assert.equal(
+    complexSpreadIdentity.postMapReadFailureFunction,
+    "payload entry trace mutation"
+  );
+  assert.equal(
+    complexSpreadIdentity.postMapReadExceptionReasonCode,
+    "COMPLEX_OBJECT_SPREAD_EXCEPTION"
+  );
+  assert.equal(complexSpreadIdentity.payloadEntryMarkerWriteAttempted, false);
+
+  const traceMutationEnv = createFakeAdapterEnvironment({
+    postLifecycleOwnerContinuationHooks: {
+      beforePayloadEntryTraceMutation() {
+        throw new Error("TRACE_STATUS_MUTATION_EXCEPTION");
+      }
+    }
+  });
+  const traceMutationResult =
+    traceMutationEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const traceMutationIdentity =
+    traceMutationEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(traceMutationResult.outcome, "failed_closed");
+  assert.equal(traceMutationResult.reasonCode, "TRACE_STATUS_MUTATION_EXCEPTION");
+  assert.equal(traceMutationIdentity.payloadEntryTraceMutationAttempted, true);
+  assert.equal(traceMutationIdentity.payloadEntryTraceMutationCompleted, false);
+  assert.equal(
+    traceMutationIdentity.postMapReadFailureFunction,
+    "payload entry trace mutation"
+  );
+  assert.equal(
+    traceMutationIdentity.postMapReadExceptionReasonCode,
+    "TRACE_STATUS_MUTATION_EXCEPTION"
+  );
+  assert.equal(traceMutationIdentity.payloadEntryMarkerWriteAttempted, false);
+});
+
+test("lifecycle translation gate traces operands, translation return, and lifecycleRegistered status write", () => {
+  const env = createFakeAdapterEnvironment();
+  const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const identity = env.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(identity.lifecycleRegistrationStateAssignmentAttempted, true);
+  assert.equal(identity.lifecycleRegistrationStateAssignmentCompleted, true);
+  assert.equal(identity.lifecycleRegistrationStateValue, true);
+  assert.equal(identity.lifecycleTranslationGateEntered, true);
+  assert.equal(identity.lifecycleTranslationGateOperandOneEvaluated, true);
+  assert.equal(identity.lifecycleTranslationGateOperandOneValue, false);
+  assert.equal(identity.lifecycleTranslationGateOperandTwoEvaluated, true);
+  assert.equal(identity.lifecycleTranslationGateOperandTwoValue, false);
+  assert.equal(identity.lifecycleTranslationObjectSpreadAttempted, true);
+  assert.equal(identity.lifecycleTranslationObjectSpreadCompleted, true);
+  assert.equal(identity.lifecycleTranslationFunctionSelected, true);
+  assert.equal(identity.lifecycleTranslationFunctionEntered, true);
+  assert.equal(identity.lifecycleTranslationFunctionReturned, true);
+  assert.equal(identity.lifecycleTranslationResultType, "object:Object");
+  assert.equal(identity.lifecycleTranslationResultStatus, "translated");
+  assert.equal(identity.lifecycleRegisteredStatusWriteAttempted, true);
+  assert.equal(identity.lifecycleRegisteredStatusWriteCompleted, true);
+  assert.equal(identity.payloadEntryTraceMutationAttempted, true);
+});
+
+test("lifecycle translation gate isolates operand and object-spread failures", () => {
+  const translationFailureEnv = createFakeAdapterEnvironment({
+    translationFailure: "LIFECYCLE_TRANSLATION_FAILED_BY_TEST"
+  });
+  const translationFailureResult =
+    translationFailureEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const translationFailureIdentity =
+    translationFailureEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(translationFailureResult.outcome, "failed_closed");
+  assert.equal(
+    translationFailureResult.reasonCode,
+    "LIFECYCLE_TRANSLATION_FAILED_BY_TEST"
+  );
+  assert.equal(translationFailureIdentity.lifecycleTranslationGateEntered, true);
+  assert.equal(
+    translationFailureIdentity.lifecycleTranslationGateOperandOneValue,
+    true
+  );
+  assert.equal(
+    translationFailureIdentity.lifecycleGateFailureFunction,
+    "lifecycle translation gate"
+  );
+  assert.equal(
+    translationFailureIdentity.lifecycleGateExceptionReasonCode,
+    "LIFECYCLE_TRANSLATION_FAILED_BY_TEST"
+  );
+  assert.equal(
+    translationFailureIdentity.lifecycleRegisteredStatusWriteAttempted,
+    false
+  );
+
+  const objectSpreadEnv = createFakeAdapterEnvironment({
+    translationFailure: "LIFECYCLE_OBJECT_SPREAD_EXCEPTION"
+  });
+  const objectSpreadResult =
+    objectSpreadEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const objectSpreadIdentity =
+    objectSpreadEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(objectSpreadResult.outcome, "failed_closed");
+  assert.equal(
+    objectSpreadIdentity.lifecycleTranslationObjectSpreadAttempted,
+    true
+  );
+  assert.equal(
+    objectSpreadIdentity.lifecycleGateObjectSpreadInvoked,
+    true
+  );
+});
+
+test("cyclic browser-shaped lifecycle translation returns once, captures the repeated helper chain, and keeps one cleanup owner", () => {
+  const map = { id: "cyclic-map" };
+  const pane = { dataset: { owner: "custom25DMapPane" } };
+  const canvas = {
+    className: "custom-25d-map-canvas",
+    style: {},
+    parentNode: pane
+  };
+  map.pane = pane;
+  pane.canvas = canvas;
+  canvas.map = map;
+  map.self = map;
+
+  const preparedSurface = {
+    schemaId: "GROWGO_CUSTOM25D_LIVE_ONE_FRAME_SURFACE_BUNDLE_001",
+    map,
+    pane,
+    canvas,
+    paneName: "custom25DMapPane",
+    canvasClassName: "custom-25d-map-canvas",
+    paneReused: true,
+    paneCreated: false,
+    paneOwnedByOperation: false,
+    canvasOwnedByOperation: true,
+    canvasAppended: true,
+    cleanupRequired: true,
+    rollbackAvailable: true,
+    listenerAdded: false,
+    retentionWritten: false,
+    drawRequested: false
+  };
+
+  let disposeCount = 0;
+  const lifecycleOwner = {
+    registerOwnedResources() {
+      return {
+        outcome: "registered",
+        reasonCode: "OWNERSHIP_REGISTERED",
+        status: { ownershipRegistered: true }
+      };
+    },
+    disposeOwnedResources() {
+      disposeCount += 1;
+      return {
+        outcome: "disposed",
+        reasonCode: "CLEANUP_COMPLETED",
+        status: {
+          cleanupCompleted: true,
+          cleanupFailed: false,
+          cleanupFailureReasons: []
+        }
+      };
+    },
+    getLifecycleOwnerStatus() {
+      return { cleanupCompleted: disposeCount > 0 };
+    }
+  };
+
+  const adapter = moduleUnderTest.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+    mapProvider: () => map,
+    rawLeafletMapProvider: () => map,
+    rawLeafletMapReference: map,
+    leafletProvider: () => ({
+      DomUtil: {
+        create() {},
+        setPosition() {}
+      }
+    }),
+    devicePixelRatioProvider: () => 2,
+    surfaceOperationsFactory: () => ({
+      prepareOneFrameSurface() {
+        return {
+          outcome: "prepared",
+          reasonCode: "LIVE_SURFACE_PREPARED",
+          surface: preparedSurface
+        };
+      },
+      rollbackPreparedSurface() {
+        return {
+          outcome: "rolled_back",
+          reasonCode: "ROLLBACK_COMPLETED",
+          rollbackCompleted: true,
+          rollbackFailureReason: null
+        };
+      }
+    }),
+    lifecycleOwnerFactory: () => lifecycleOwner,
+    frameSnapshotProvider: () => () => ({
+      outcome: "snapshot_created",
+      reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+      frameViewportSnapshot: createImmutableSnapshot()
+    }),
+    drawFunctionProvider: () => () => ({
+      outcome: "drawn",
+      reasonCode: "FRAME_DRAW_COMPLETED"
+    }),
+    drawOperationFactory: ({ drawFunctionProvider }) => ({
+      drawPreparedSurfaceExactlyOnce(input) {
+        const drawResult = drawFunctionProvider()(input);
+        return drawResult?.outcome === "drawn"
+          ? {
+              outcome: "completed",
+              reasonCode: "LIVE_ONE_FRAME_DRAW_COMPLETED",
+              drawAttemptCount: 1,
+              completedFrameCount: 1
+            }
+          : {
+              outcome: "failed_closed",
+              reasonCode: drawResult?.reasonCode ?? "DRAW_BRIDGE_FAILED",
+              drawAttemptCount: 1,
+              completedFrameCount: 0
+            };
+      }
+    }),
+    snapshotMapNormalizer: (value) => value
+  });
+
+  const result = adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const identity = adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(identity.lifecycleTranslationFunctionEntered, true);
+  assert.equal(identity.lifecycleTranslationFunctionReturned, true);
+  assert.equal(identity.lifecycleTranslationResultType, "object:Object");
+  assert.equal(identity.lifecycleTranslationResultStatus, "translated");
+  assert.equal(identity.lifecycleTranslationTraceEntered, true);
+  assert.equal(identity.lifecycleTranslationTraceExited, true);
+  assert.equal(identity.lifecycleTranslationRecursionDetected, true);
+  assert.equal(identity.lifecycleTranslationOverflowPrevented, true);
+  assert.deepEqual(identity.lifecycleTranslationRepeatedCallChain, [
+    "translatePreparedSurfaceToLifecycleBundle",
+    "createResult",
+    "deepFreeze",
+    "deepFreeze"
+  ]);
+  assert.equal(identity.lifecycleRegisteredStatusWriteAttempted, true);
+  assert.equal(identity.lifecycleRegisteredStatusWriteCompleted, true);
+  assert.equal(identity.payloadEntryTraceMutationAttempted, true);
+  assert.equal(disposeCount, 1);
 });
 
 test("post-draw-operation continuation reports exact simulated assignment, status-write, and surface-preparation boundaries", () => {

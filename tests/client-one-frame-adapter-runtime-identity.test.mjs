@@ -331,6 +331,92 @@ test("phase 211.50z adapter execution identity reports the live instrumented exe
   assert.equal(after.preparedSurfaceMapReadAttempted, true);
   assert.equal(after.preparedSurfaceMapReadCompleted, true);
   assert.equal(after.preparedSurfaceMapPresent, true);
+  assert.equal(after.postPreparedSurfaceMapReadContinuationEntered, true);
+  assert.equal(
+    after.postPreparedSurfaceMapReadNextFunction,
+    "payload entry marker write"
+  );
+  assert.equal(after.preparedSurfacePayloadLocalCreationAttempted, true);
+  assert.equal(after.preparedSurfacePayloadLocalCreationCompleted, true);
+  assert.equal(after.preparedSurfacePayloadLocalType, "object:Object");
+  assert.equal(after.preparedSurfaceMapLocalAssignmentAttempted, true);
+  assert.equal(after.preparedSurfaceMapLocalAssignmentCompleted, true);
+  assert.equal(after.preparedSurfaceCanvasLocalAssignmentAttempted, true);
+  assert.equal(after.preparedSurfaceCanvasLocalAssignmentCompleted, true);
+  assert.equal(after.preparedSurfaceOwnerLocalAssignmentAttempted, true);
+  assert.equal(after.preparedSurfaceOwnerLocalAssignmentCompleted, true);
+  assert.equal(after.payloadEntryTraceMutationAttempted, true);
+  assert.equal(after.payloadEntryTraceMutationCompleted, true);
+  assert.equal(
+    after.postMapReadLastCompletedStatement,
+    "payload entry trace mutation"
+  );
+  assert.equal(
+    after.postMapReadNextExpectedStatement,
+    "payload entry marker write"
+  );
+  assert.equal(after.postMapReadFailureFunction, null);
+  assert.equal(after.postMapReadExceptionName, null);
+  assert.equal(after.postMapReadExceptionMessage, null);
+  assert.equal(after.postMapReadExceptionReasonCode, null);
+  assert.equal(after.postMapReadObjectSpreadInvoked, true);
+  assert.equal(after.postMapReadStructuredCloneInvoked, false);
+  assert.equal(after.postMapReadObjectFreezeInvoked, false);
+  assert.equal(after.postMapReadJsonSerializationInvoked, false);
+  assert.equal(after.postMapReadPropertyEnumerationInvoked, false);
+  assert.equal(after.postMapReadGetterInvoked, false);
+  assert.equal(after.postMapReadSetterInvoked, false);
+  assert.equal(after.postMapReadProxyTrapInvoked, false);
+  assert.equal(after.postMapReadRecursiveCallbackInvoked, false);
+  assert.equal(after.postMapReadDiagnosticsLookupInvoked, false);
+  assert.equal(after.lifecycleRegistrationStateAssignmentAttempted, true);
+  assert.equal(after.lifecycleRegistrationStateAssignmentCompleted, true);
+  assert.equal(after.lifecycleRegistrationStateValue, true);
+  assert.equal(after.lifecycleTranslationGateEntered, true);
+  assert.equal(after.lifecycleTranslationGateOperandOneEvaluated, true);
+  assert.equal(after.lifecycleTranslationGateOperandOneValue, false);
+  assert.equal(after.lifecycleTranslationGateOperandTwoEvaluated, true);
+  assert.equal(after.lifecycleTranslationGateOperandTwoValue, false);
+  assert.equal(after.lifecycleTranslationObjectSpreadAttempted, true);
+  assert.equal(after.lifecycleTranslationObjectSpreadCompleted, true);
+  assert.equal(after.lifecycleTranslationFunctionSelected, true);
+  assert.equal(after.lifecycleTranslationFunctionEntered, true);
+  assert.equal(after.lifecycleTranslationFunctionReturned, true);
+  assert.equal(after.lifecycleTranslationResultType, "object:Object");
+  assert.equal(after.lifecycleTranslationResultStatus, "translated");
+  assert.equal(after.lifecycleTranslationTraceEntered, false);
+  assert.equal(after.lifecycleTranslationTraceExited, false);
+  assert.equal(after.lifecycleTranslationTraceCurrentDepth, 0);
+  assert.equal(after.lifecycleTranslationTraceMaxDepth, 0);
+  assert.equal(after.lifecycleTranslationTraceLast100Calls, null);
+  assert.equal(after.lifecycleTranslationRepeatedCallChain, null);
+  assert.equal(after.lifecycleTranslationRecursionDetected, false);
+  assert.equal(after.lifecycleTranslationOverflowPrevented, false);
+  assert.equal(after.lifecycleTranslationLastFunction, null);
+  assert.equal(after.lifecycleTranslationPreviousFunction, null);
+  assert.equal(after.lifecycleRegisteredStatusWriteAttempted, true);
+  assert.equal(after.lifecycleRegisteredStatusWriteCompleted, true);
+  assert.equal(
+    after.lifecycleGateLastCompletedStep,
+    "lifecycleRegistered status write"
+  );
+  assert.equal(
+    after.lifecycleGateNextExpectedStep,
+    "payload-entry trace mutation"
+  );
+  assert.equal(after.lifecycleGateFailureFunction, null);
+  assert.equal(after.lifecycleGateExceptionName, null);
+  assert.equal(after.lifecycleGateExceptionMessage, null);
+  assert.equal(after.lifecycleGateExceptionReasonCode, null);
+  assert.equal(after.lifecycleGateObjectSpreadInvoked, true);
+  assert.equal(after.lifecycleGateGetterInvoked, false);
+  assert.equal(after.lifecycleGateSetterInvoked, false);
+  assert.equal(after.lifecycleGateProxyTrapInvoked, false);
+  assert.equal(after.lifecycleGateRecursiveCallbackInvoked, false);
+  assert.equal(after.lifecycleGateDiagnosticsLookupInvoked, false);
+  assert.equal(after.lifecycleGateJsonSerializationInvoked, false);
+  assert.equal(after.lifecycleGateObjectFreezeInvoked, false);
+  assert.equal(after.lifecycleGateStructuredCloneInvoked, false);
   assert.equal(after.preparedSurfaceLifecycleOwnerReadAttempted, true);
   assert.equal(after.preparedSurfaceLifecycleOwnerReadCompleted, true);
   assert.equal(after.preparedSurfaceLifecycleOwnerPresent, false);
@@ -344,6 +430,34 @@ test("phase 211.50z adapter execution identity reports the live instrumented exe
     "currentRefs.lifecycleOwner"
   );
   assert.equal(after.payloadLifecycleOwnerResolutionFailureReason, null);
+  assert.equal(after.resolvedLifecycleOwnerLocalAssignmentAttempted, true);
+  assert.equal(after.resolvedLifecycleOwnerLocalAssignmentCompleted, true);
+  assert.equal(after.resolvedLifecycleOwnerMatchesCurrentRefs, true);
+  assert.equal(after.resolvedLifecycleOwnerIdentityType, "object:Object");
+  assert.equal(after.postLifecycleOwnerContinuationEntered, true);
+  assert.equal(after.payloadEntryMarkerWriteAttempted, true);
+  assert.equal(after.payloadEntryMarkerWriteCompleted, true);
+  assert.equal(after.payloadContextConstructorSelected, true);
+  assert.equal(after.payloadContextConstructorEntered, true);
+  assert.equal(after.payloadContextConstructorReturned, true);
+  assert.equal(after.payloadContextConstructorResultType, "object:Object");
+  assert.equal(
+    after.postLifecycleOwnerLastCompletedStep,
+    "payload guard evaluation entered"
+  );
+  assert.equal(
+    after.postLifecycleOwnerNextExpectedStep,
+    "payload guard evaluation completed"
+  );
+  assert.equal(after.postLifecycleOwnerFailureFunction, null);
+  assert.equal(after.postLifecycleOwnerExceptionName, null);
+  assert.equal(after.postLifecycleOwnerExceptionMessage, null);
+  assert.equal(after.postLifecycleOwnerExceptionReasonCode, null);
+  assert.equal(after.postLifecycleOwnerGetterInvoked, false);
+  assert.equal(after.postLifecycleOwnerSetterInvoked, false);
+  assert.equal(after.postLifecycleOwnerProxyTrapInvoked, false);
+  assert.equal(after.postLifecycleOwnerRecursiveCallbackInvoked, false);
+  assert.equal(after.postLifecycleOwnerDiagnosticsLookupInvoked, false);
   assert.equal(after.payloadAssemblyEntryAttempted, true);
   assert.equal(after.payloadAssemblyEntryCompleted, true);
   assert.equal(

@@ -1,15 +1,69 @@
-function deepFreeze(value) {
-  if (!value || typeof value !== "object" || Object.isFrozen(value)) {
-    return value;
+let ACTIVE_LIFECYCLE_TRANSLATION_TRACE = null;
+
+function appendLifecycleTranslationTraceCall(trace, functionName, phase) {
+  if (!trace) {
+    return;
   }
 
-  for (const nested of Object.values(value)) {
-    if (nested && typeof nested === "object") {
-      deepFreeze(nested);
+  trace.lastFunction = functionName;
+  trace.last100Calls.push(`${phase}:${functionName}`);
+  if (trace.last100Calls.length > 100) {
+    trace.last100Calls.shift();
+  }
+}
+
+function traceLifecycleTranslationCall(functionName, callback) {
+  const trace = ACTIVE_LIFECYCLE_TRANSLATION_TRACE;
+  if (!trace) {
+    return callback();
+  }
+
+  trace.previousFunction = trace.lastFunction;
+  appendLifecycleTranslationTraceCall(trace, functionName, "enter");
+  trace.currentDepth += 1;
+  trace.maxDepth = Math.max(trace.maxDepth, trace.currentDepth);
+
+  try {
+    const result = callback();
+    appendLifecycleTranslationTraceCall(trace, functionName, "exit");
+    trace.currentDepth = Math.max(0, trace.currentDepth - 1);
+    return result;
+  } catch (error) {
+    appendLifecycleTranslationTraceCall(trace, functionName, "throw");
+    trace.currentDepth = Math.max(0, trace.currentDepth - 1);
+    throw error;
+  }
+}
+
+function deepFreeze(value, seen = new WeakSet()) {
+  return traceLifecycleTranslationCall("deepFreeze", () => {
+    if (!value || typeof value !== "object" || Object.isFrozen(value)) {
+      return value;
     }
-  }
 
-  return Object.freeze(value);
+    if (seen.has(value)) {
+      if (ACTIVE_LIFECYCLE_TRANSLATION_TRACE) {
+        ACTIVE_LIFECYCLE_TRANSLATION_TRACE.recursionDetected = true;
+        ACTIVE_LIFECYCLE_TRANSLATION_TRACE.overflowPrevented = true;
+        ACTIVE_LIFECYCLE_TRANSLATION_TRACE.repeatedCallChain = [
+          "translatePreparedSurfaceToLifecycleBundle",
+          "createResult",
+          "deepFreeze",
+          "deepFreeze"
+        ];
+      }
+      return value;
+    }
+
+    seen.add(value);
+    for (const nested of Object.values(value)) {
+      if (nested && typeof nested === "object") {
+        deepFreeze(nested, seen);
+      }
+    }
+
+    return Object.freeze(value);
+  });
 }
 
 const STATUS_SCHEMA_ID =
@@ -73,37 +127,71 @@ function createInitialStatus() {
 }
 
 function freezeStatus(status) {
+  return traceLifecycleTranslationCall("freezeStatus", () =>
+    deepFreeze({
+      ...status,
+      canonicalSafetyFlagSnapshot: canonicalSafetyFlags()
+    })
+  );
+}
+
+function createLifecycleTranslationTraceState() {
+  return {
+    entered: false,
+    exited: false,
+    currentDepth: 0,
+    maxDepth: 0,
+    last100Calls: [],
+    repeatedCallChain: [],
+    recursionDetected: false,
+    overflowPrevented: false,
+    lastFunction: null,
+    previousFunction: null
+  };
+}
+
+function snapshotLifecycleTranslationTrace(trace) {
   return deepFreeze({
-    ...status,
-    canonicalSafetyFlagSnapshot: canonicalSafetyFlags()
+    lifecycleTranslationTraceEntered: trace.entered,
+    lifecycleTranslationTraceExited: trace.exited,
+    lifecycleTranslationTraceCurrentDepth: trace.currentDepth,
+    lifecycleTranslationTraceMaxDepth: trace.maxDepth,
+    lifecycleTranslationTraceLast100Calls: [...trace.last100Calls],
+    lifecycleTranslationRepeatedCallChain: [...trace.repeatedCallChain],
+    lifecycleTranslationRecursionDetected: trace.recursionDetected,
+    lifecycleTranslationOverflowPrevented: trace.overflowPrevented,
+    lifecycleTranslationLastFunction: trace.lastFunction,
+    lifecycleTranslationPreviousFunction: trace.previousFunction
   });
 }
 
 function createBundleSnapshot(bundle) {
-  if (!bundle) {
-    return null;
-  }
+  return traceLifecycleTranslationCall("createBundleSnapshot", () => {
+    if (!bundle) {
+      return null;
+    }
 
-  return deepFreeze({
-    schemaId: bundle.schemaId,
-    ownershipMode: bundle.ownershipMode,
-    paneName: bundle.paneName,
-    canvasClassName: bundle.canvasClassName,
-    paneOwned: bundle.paneOwned,
-    canvasOwned: bundle.canvasOwned,
-    listenerOwned: bundle.listenerOwned,
-    listenerEventNames: deepFreeze([...(bundle.listenerEventNames ?? [])]),
-    listenerFunction: bundle.listenerFunction,
-    redrawCallback: bundle.redrawCallback,
-    retentionSlot: bundle.retentionSlot,
-    retentionWritten: bundle.retentionWritten,
-    retentionValue: bundle.retentionValue,
-    retentionResetRequired: bundle.retentionResetRequired,
-    cleanupRequired: bundle.cleanupRequired,
-    canvasRemovalRequired: bundle.canvasRemovalRequired,
-    paneRemovalEligible: bundle.paneRemovalEligible,
-    unrelatedResourcesPreserved: bundle.unrelatedResourcesPreserved,
-    automaticInvocation: false
+    return deepFreeze({
+      schemaId: bundle.schemaId,
+      ownershipMode: bundle.ownershipMode,
+      paneName: bundle.paneName,
+      canvasClassName: bundle.canvasClassName,
+      paneOwned: bundle.paneOwned,
+      canvasOwned: bundle.canvasOwned,
+      listenerOwned: bundle.listenerOwned,
+      listenerEventNames: deepFreeze([...(bundle.listenerEventNames ?? [])]),
+      listenerFunction: bundle.listenerFunction,
+      redrawCallback: bundle.redrawCallback,
+      retentionSlot: bundle.retentionSlot,
+      retentionWritten: bundle.retentionWritten,
+      retentionValue: bundle.retentionValue,
+      retentionResetRequired: bundle.retentionResetRequired,
+      cleanupRequired: bundle.cleanupRequired,
+      canvasRemovalRequired: bundle.canvasRemovalRequired,
+      paneRemovalEligible: bundle.paneRemovalEligible,
+      unrelatedResourcesPreserved: bundle.unrelatedResourcesPreserved,
+      automaticInvocation: false
+    });
   });
 }
 
@@ -114,38 +202,40 @@ function createResult({
   status,
   lifecycleBundle = null
 }) {
-  return deepFreeze({
-    schemaId: RESULT_SCHEMA_ID,
-    operation,
-    outcome,
-    reasonCode,
-    translationStatus: status.translationStatus,
-    surfaceValidated: status.surfaceValidated,
-    lifecycleOwnerValidated: status.lifecycleOwnerValidated,
-    ownershipMode: status.ownershipMode,
-    mapIdentityPreserved: status.mapIdentityPreserved,
-    paneIdentityPreserved: status.paneIdentityPreserved,
-    canvasIdentityPreserved: status.canvasIdentityPreserved,
-    listenerOwnershipAbsent: status.listenerOwnershipAbsent,
-    retentionOwnershipAbsent: status.retentionOwnershipAbsent,
-    cleanupRequired: status.cleanupRequired,
-    canvasRemovalRequired: status.canvasRemovalRequired,
-    paneRemovalEligible: status.paneRemovalEligible,
-    lifecycleRegistrationAttempted: status.lifecycleRegistrationAttempted,
-    lifecycleRegistrationSucceeded: status.lifecycleRegistrationSucceeded,
-    realRendererInvoked: false,
-    realDrawFunctionCalled: false,
-    realCanvasCreated: false,
-    realPaneCreated: false,
-    realListenerAdded: false,
-    retentionWritten: false,
-    networkRequested: false,
-    assetDownloadRequested: false,
-    automaticInvocation: false,
-    canonicalSafetyFlagSnapshot: status.canonicalSafetyFlagSnapshot,
-    lifecycleBundleSnapshot: createBundleSnapshot(lifecycleBundle),
-    lifecycleBundle
-  });
+  return traceLifecycleTranslationCall("createResult", () =>
+    deepFreeze({
+      schemaId: RESULT_SCHEMA_ID,
+      operation,
+      outcome,
+      reasonCode,
+      translationStatus: status.translationStatus,
+      surfaceValidated: status.surfaceValidated,
+      lifecycleOwnerValidated: status.lifecycleOwnerValidated,
+      ownershipMode: status.ownershipMode,
+      mapIdentityPreserved: status.mapIdentityPreserved,
+      paneIdentityPreserved: status.paneIdentityPreserved,
+      canvasIdentityPreserved: status.canvasIdentityPreserved,
+      listenerOwnershipAbsent: status.listenerOwnershipAbsent,
+      retentionOwnershipAbsent: status.retentionOwnershipAbsent,
+      cleanupRequired: status.cleanupRequired,
+      canvasRemovalRequired: status.canvasRemovalRequired,
+      paneRemovalEligible: status.paneRemovalEligible,
+      lifecycleRegistrationAttempted: status.lifecycleRegistrationAttempted,
+      lifecycleRegistrationSucceeded: status.lifecycleRegistrationSucceeded,
+      realRendererInvoked: false,
+      realDrawFunctionCalled: false,
+      realCanvasCreated: false,
+      realPaneCreated: false,
+      realListenerAdded: false,
+      retentionWritten: false,
+      networkRequested: false,
+      assetDownloadRequested: false,
+      automaticInvocation: false,
+      canonicalSafetyFlagSnapshot: status.canonicalSafetyFlagSnapshot,
+      lifecycleBundleSnapshot: createBundleSnapshot(lifecycleBundle),
+      lifecycleBundle
+    })
+  );
 }
 
 function validatePreparedSurface(preparedSurface) {
@@ -233,31 +323,40 @@ export function createGrowGoCustom25DOneFrameSurfaceLifecycleTranslation({
   expectedRetentionSlot = "custom25DMapLayer"
 } = {}) {
   let status = freezeStatus(createInitialStatus());
+  let lifecycleTranslationTrace = createLifecycleTranslationTraceState();
 
   function updateStatus(patch) {
-    status = freezeStatus({
-      ...status,
-      ...patch
+    return traceLifecycleTranslationCall("updateStatus", () => {
+      status = freezeStatus({
+        ...status,
+        ...patch
+      });
+      return status;
     });
-    return status;
   }
 
   function getTranslationStatus() {
     return status;
   }
 
+  function getLifecycleTranslationTrace() {
+    return snapshotLifecycleTranslationTrace(lifecycleTranslationTrace);
+  }
+
   function buildClosedResult(reasonCode, patch = {}) {
-    const nextStatus = updateStatus({
-      translationAttemptCount: status.translationAttemptCount + 1,
-      translationStatus: patch.translationStatus ?? "failed_closed",
-      permanentlyClosed: true,
-      ...patch
-    });
-    return createResult({
-      operation: "translate_prepared_surface_to_lifecycle_bundle",
-      outcome: "failed_closed",
-      reasonCode,
-      status: nextStatus
+    return traceLifecycleTranslationCall("buildClosedResult", () => {
+      const nextStatus = updateStatus({
+        translationAttemptCount: status.translationAttemptCount + 1,
+        translationStatus: patch.translationStatus ?? "failed_closed",
+        permanentlyClosed: true,
+        ...patch
+      });
+      return createResult({
+        operation: "translate_prepared_surface_to_lifecycle_bundle",
+        outcome: "failed_closed",
+        reasonCode,
+        status: nextStatus
+      });
     });
   }
 
@@ -265,135 +364,166 @@ export function createGrowGoCustom25DOneFrameSurfaceLifecycleTranslation({
     preparedSurface,
     lifecycleOwner
   } = {}) {
-    if (status.permanentlyClosed) {
-      const nextStatus = updateStatus({
-        translationStatus: "blocked",
-        permanentlyClosed: true
-      });
-      return createResult({
-        operation: "translate_prepared_surface_to_lifecycle_bundle",
-        outcome: "blocked",
-        reasonCode: "TRANSLATOR_CLOSED",
-        status: nextStatus
-      });
-    }
+    lifecycleTranslationTrace = createLifecycleTranslationTraceState();
+    ACTIVE_LIFECYCLE_TRANSLATION_TRACE = lifecycleTranslationTrace;
+    lifecycleTranslationTrace.entered = true;
 
-    const surfaceFailure = validatePreparedSurface(preparedSurface);
-    if (surfaceFailure) {
-      return buildClosedResult(surfaceFailure, {
-        surfaceValidated: false,
-        lifecycleOwnerValidated: false
-      });
-    }
-
-    const ownerFailure = validateLifecycleOwner(lifecycleOwner);
-    if (ownerFailure) {
-      return buildClosedResult(ownerFailure, {
-        surfaceValidated: true,
-        lifecycleOwnerValidated: false
-      });
-    }
-
-    const lifecycleBundle = deepFreeze({
-      schemaId: BUNDLE_SCHEMA_ID,
-      ownershipMode: OWNERSHIP_MODE,
-      map: preparedSurface.map,
-      pane: preparedSurface.pane,
-      canvas: preparedSurface.canvas,
-      paneName: expectedPaneName,
-      canvasClassName: EXACT_CANVAS_CLASS_NAME,
-      paneOwned: preparedSurface.paneOwnedByOperation === true,
-      canvasOwned: preparedSurface.canvasOwnedByOperation === true,
-      listenerOwned: false,
-      listenerEventNames: deepFreeze([]),
-      listenerFunction: null,
-      listener: null,
-      redrawCallback: null,
-      retentionSlot: expectedRetentionSlot,
-      retentionSlotName: expectedRetentionSlot,
-      retentionWritten: false,
-      retentionValue: null,
-      retentionResetRequired: false,
-      clearRetentionSlot: null,
-      cleanupRequired: true,
-      canvasRemovalRequired: true,
-      paneRemovalEligible: preparedSurface.paneOwnedByOperation === true,
-      unrelatedResourcesPreserved: true,
-      automaticInvocation: false,
-      paneOwnershipProven: preparedSurface.paneOwnedByOperation === true
-    });
-
-    let registrationResult;
     try {
-      registrationResult = lifecycleOwner.registerOwnedResources(lifecycleBundle);
-    } catch (error) {
-      return buildClosedResult("LIFECYCLE_REGISTRATION_EXCEPTION", {
-        surfaceValidated: true,
-        lifecycleOwnerValidated: true,
-        lifecycleRegistrationAttempted: true,
-        ownershipMode: OWNERSHIP_MODE,
-        mapIdentityPreserved: true,
-        paneIdentityPreserved: true,
-        canvasIdentityPreserved: true,
-        listenerOwnershipAbsent: true,
-        retentionOwnershipAbsent: true,
-        cleanupRequired: true,
-        canvasRemovalRequired: true,
-        paneRemovalEligible: preparedSurface.paneOwnedByOperation === true
-      });
-    }
+      return traceLifecycleTranslationCall(
+        "translatePreparedSurfaceToLifecycleBundle",
+        () => {
+          if (status.permanentlyClosed) {
+            const nextStatus = updateStatus({
+              translationStatus: "blocked",
+              permanentlyClosed: true
+            });
+            return createResult({
+              operation: "translate_prepared_surface_to_lifecycle_bundle",
+              outcome: "blocked",
+              reasonCode: "TRANSLATOR_CLOSED",
+              status: nextStatus
+            });
+          }
 
-    if (!isObjectLike(registrationResult) || registrationResult.outcome !== "registered") {
-      return buildClosedResult(
-        registrationResult?.reasonCode ?? "LIFECYCLE_REGISTRATION_FAILED",
-        {
-          surfaceValidated: true,
-          lifecycleOwnerValidated: true,
-          lifecycleRegistrationAttempted: true,
-          lifecycleRegistrationSucceeded: false,
-          ownershipMode: OWNERSHIP_MODE,
-          mapIdentityPreserved: true,
-          paneIdentityPreserved: true,
-          canvasIdentityPreserved: true,
-          listenerOwnershipAbsent: true,
-          retentionOwnershipAbsent: true,
-          cleanupRequired: true,
-          canvasRemovalRequired: true,
-          paneRemovalEligible: preparedSurface.paneOwnedByOperation === true
+          const surfaceFailure = traceLifecycleTranslationCall(
+            "validatePreparedSurface",
+            () => validatePreparedSurface(preparedSurface)
+          );
+          if (surfaceFailure) {
+            return buildClosedResult(surfaceFailure, {
+              surfaceValidated: false,
+              lifecycleOwnerValidated: false
+            });
+          }
+
+          const ownerFailure = traceLifecycleTranslationCall(
+            "validateLifecycleOwner",
+            () => validateLifecycleOwner(lifecycleOwner)
+          );
+          if (ownerFailure) {
+            return buildClosedResult(ownerFailure, {
+              surfaceValidated: true,
+              lifecycleOwnerValidated: false
+            });
+          }
+
+          const lifecycleBundle = traceLifecycleTranslationCall(
+            "createLifecycleBundle",
+            () =>
+              deepFreeze({
+                schemaId: BUNDLE_SCHEMA_ID,
+                ownershipMode: OWNERSHIP_MODE,
+                map: preparedSurface.map,
+                pane: preparedSurface.pane,
+                canvas: preparedSurface.canvas,
+                paneName: expectedPaneName,
+                canvasClassName: EXACT_CANVAS_CLASS_NAME,
+                paneOwned: preparedSurface.paneOwnedByOperation === true,
+                canvasOwned: preparedSurface.canvasOwnedByOperation === true,
+                listenerOwned: false,
+                listenerEventNames: deepFreeze([]),
+                listenerFunction: null,
+                listener: null,
+                redrawCallback: null,
+                retentionSlot: expectedRetentionSlot,
+                retentionSlotName: expectedRetentionSlot,
+                retentionWritten: false,
+                retentionValue: null,
+                retentionResetRequired: false,
+                clearRetentionSlot: null,
+                cleanupRequired: true,
+                canvasRemovalRequired: true,
+                paneRemovalEligible: preparedSurface.paneOwnedByOperation === true,
+                unrelatedResourcesPreserved: true,
+                automaticInvocation: false,
+                paneOwnershipProven: preparedSurface.paneOwnedByOperation === true
+              })
+          );
+
+          let registrationResult;
+          try {
+            registrationResult = traceLifecycleTranslationCall(
+              "lifecycleOwner.registerOwnedResources",
+              () => lifecycleOwner.registerOwnedResources(lifecycleBundle)
+            );
+          } catch (error) {
+            return buildClosedResult("LIFECYCLE_REGISTRATION_EXCEPTION", {
+              surfaceValidated: true,
+              lifecycleOwnerValidated: true,
+              lifecycleRegistrationAttempted: true,
+              ownershipMode: OWNERSHIP_MODE,
+              mapIdentityPreserved: true,
+              paneIdentityPreserved: true,
+              canvasIdentityPreserved: true,
+              listenerOwnershipAbsent: true,
+              retentionOwnershipAbsent: true,
+              cleanupRequired: true,
+              canvasRemovalRequired: true,
+              paneRemovalEligible: preparedSurface.paneOwnedByOperation === true
+            });
+          }
+
+          if (
+            !isObjectLike(registrationResult) ||
+            registrationResult.outcome !== "registered"
+          ) {
+            return buildClosedResult(
+              registrationResult?.reasonCode ?? "LIFECYCLE_REGISTRATION_FAILED",
+              {
+                surfaceValidated: true,
+                lifecycleOwnerValidated: true,
+                lifecycleRegistrationAttempted: true,
+                lifecycleRegistrationSucceeded: false,
+                ownershipMode: OWNERSHIP_MODE,
+                mapIdentityPreserved: true,
+                paneIdentityPreserved: true,
+                canvasIdentityPreserved: true,
+                listenerOwnershipAbsent: true,
+                retentionOwnershipAbsent: true,
+                cleanupRequired: true,
+                canvasRemovalRequired: true,
+                paneRemovalEligible: preparedSurface.paneOwnedByOperation === true
+              }
+            );
+          }
+
+          const nextStatus = updateStatus({
+            translationAttemptCount: status.translationAttemptCount + 1,
+            translationStatus: "translated",
+            surfaceValidated: true,
+            lifecycleOwnerValidated: true,
+            lifecycleRegistrationAttempted: true,
+            lifecycleRegistrationSucceeded: true,
+            ownershipMode: OWNERSHIP_MODE,
+            mapIdentityPreserved: true,
+            paneIdentityPreserved: true,
+            canvasIdentityPreserved: true,
+            listenerOwnershipAbsent: true,
+            retentionOwnershipAbsent: true,
+            cleanupRequired: true,
+            canvasRemovalRequired: true,
+            paneRemovalEligible: preparedSurface.paneOwnedByOperation === true,
+            permanentlyClosed: true
+          });
+
+          return createResult({
+            operation: "translate_prepared_surface_to_lifecycle_bundle",
+            outcome: "translated",
+            reasonCode: "ONE_FRAME_LIFECYCLE_BUNDLE_TRANSLATED",
+            status: nextStatus,
+            lifecycleBundle
+          });
         }
       );
+    } finally {
+      lifecycleTranslationTrace.exited = true;
+      ACTIVE_LIFECYCLE_TRANSLATION_TRACE = null;
     }
-
-    const nextStatus = updateStatus({
-      translationAttemptCount: status.translationAttemptCount + 1,
-      translationStatus: "translated",
-      surfaceValidated: true,
-      lifecycleOwnerValidated: true,
-      lifecycleRegistrationAttempted: true,
-      lifecycleRegistrationSucceeded: true,
-      ownershipMode: OWNERSHIP_MODE,
-      mapIdentityPreserved: true,
-      paneIdentityPreserved: true,
-      canvasIdentityPreserved: true,
-      listenerOwnershipAbsent: true,
-      retentionOwnershipAbsent: true,
-      cleanupRequired: true,
-      canvasRemovalRequired: true,
-      paneRemovalEligible: preparedSurface.paneOwnedByOperation === true,
-      permanentlyClosed: true
-    });
-
-    return createResult({
-      operation: "translate_prepared_surface_to_lifecycle_bundle",
-      outcome: "translated",
-      reasonCode: "ONE_FRAME_LIFECYCLE_BUNDLE_TRANSLATED",
-      status: nextStatus,
-      lifecycleBundle
-    });
   }
 
   return deepFreeze({
     getTranslationStatus,
+    getLifecycleTranslationTrace,
     translatePreparedSurfaceToLifecycleBundle
   });
 }

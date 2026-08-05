@@ -769,7 +769,8 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   drawFunctionProvider = defaultDrawBridgeProvider,
   drawOperationFactory = defaultDrawOperationFactory,
   snapshotMapNormalizer = defaultSnapshotMapNormalizer,
-  postDrawOperationContinuationHooks = null
+  postDrawOperationContinuationHooks = null,
+  postLifecycleOwnerContinuationHooks = null
 } = {}) {
   const constructionFlags = {
     mapProviderAvailable:
@@ -884,6 +885,29 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     payloadLifecycleOwnerResolved: false,
     payloadLifecycleOwnerResolutionSource: null,
     payloadLifecycleOwnerResolutionFailureReason: null,
+    resolvedLifecycleOwnerLocalAssignmentAttempted: false,
+    resolvedLifecycleOwnerLocalAssignmentCompleted: false,
+    resolvedLifecycleOwnerMatchesCurrentRefs: false,
+    resolvedLifecycleOwnerIdentityType: null,
+    postLifecycleOwnerContinuationEntered: false,
+    postLifecycleOwnerNextFunction: null,
+    payloadEntryMarkerWriteAttempted: false,
+    payloadEntryMarkerWriteCompleted: false,
+    payloadContextConstructorSelected: false,
+    payloadContextConstructorEntered: false,
+    payloadContextConstructorReturned: false,
+    payloadContextConstructorResultType: null,
+    postLifecycleOwnerLastCompletedStep: null,
+    postLifecycleOwnerNextExpectedStep: null,
+    postLifecycleOwnerFailureFunction: null,
+    postLifecycleOwnerExceptionName: null,
+    postLifecycleOwnerExceptionMessage: null,
+    postLifecycleOwnerExceptionReasonCode: null,
+    postLifecycleOwnerGetterInvoked: false,
+    postLifecycleOwnerSetterInvoked: false,
+    postLifecycleOwnerProxyTrapInvoked: false,
+    postLifecycleOwnerRecursiveCallbackInvoked: false,
+    postLifecycleOwnerDiagnosticsLookupInvoked: false,
     payloadAssemblyEntryAttempted: false,
     payloadAssemblyEntryCompleted: false,
     preparedSurfaceContinuationLastCompletedStep: null,
@@ -896,6 +920,77 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     preparedSurfaceProxyTrapInvoked: false,
     preparedSurfaceRecursiveCallbackInvoked: false,
     preparedSurfaceDiagnosticsLookupInvoked: false,
+    postPreparedSurfaceMapReadContinuationEntered: false,
+    postPreparedSurfaceMapReadNextFunction: null,
+    preparedSurfacePayloadLocalCreationAttempted: false,
+    preparedSurfacePayloadLocalCreationCompleted: false,
+    preparedSurfacePayloadLocalType: null,
+    preparedSurfaceMapLocalAssignmentAttempted: false,
+    preparedSurfaceMapLocalAssignmentCompleted: false,
+    preparedSurfaceCanvasLocalAssignmentAttempted: false,
+    preparedSurfaceCanvasLocalAssignmentCompleted: false,
+    preparedSurfaceOwnerLocalAssignmentAttempted: false,
+    preparedSurfaceOwnerLocalAssignmentCompleted: false,
+    payloadEntryTraceMutationAttempted: false,
+    payloadEntryTraceMutationCompleted: false,
+    postMapReadLastCompletedStatement: null,
+    postMapReadNextExpectedStatement: null,
+    postMapReadFailureFunction: null,
+    postMapReadExceptionName: null,
+    postMapReadExceptionMessage: null,
+    postMapReadExceptionReasonCode: null,
+    postMapReadObjectSpreadInvoked: false,
+    postMapReadStructuredCloneInvoked: false,
+    postMapReadObjectFreezeInvoked: false,
+    postMapReadJsonSerializationInvoked: false,
+    postMapReadPropertyEnumerationInvoked: false,
+    postMapReadGetterInvoked: false,
+    postMapReadSetterInvoked: false,
+    postMapReadProxyTrapInvoked: false,
+    postMapReadRecursiveCallbackInvoked: false,
+    postMapReadDiagnosticsLookupInvoked: false,
+    lifecycleRegistrationStateAssignmentAttempted: false,
+    lifecycleRegistrationStateAssignmentCompleted: false,
+    lifecycleRegistrationStateValue: null,
+    lifecycleTranslationGateEntered: false,
+    lifecycleTranslationGateOperandOneEvaluated: false,
+    lifecycleTranslationGateOperandOneValue: null,
+    lifecycleTranslationGateOperandTwoEvaluated: false,
+    lifecycleTranslationGateOperandTwoValue: null,
+    lifecycleTranslationObjectSpreadAttempted: false,
+    lifecycleTranslationObjectSpreadCompleted: false,
+    lifecycleTranslationFunctionSelected: false,
+    lifecycleTranslationFunctionEntered: false,
+    lifecycleTranslationFunctionReturned: false,
+    lifecycleTranslationResultType: null,
+    lifecycleTranslationResultStatus: null,
+    lifecycleTranslationTraceEntered: false,
+    lifecycleTranslationTraceExited: false,
+    lifecycleTranslationTraceCurrentDepth: 0,
+    lifecycleTranslationTraceMaxDepth: 0,
+    lifecycleTranslationTraceLast100Calls: null,
+    lifecycleTranslationRepeatedCallChain: null,
+    lifecycleTranslationRecursionDetected: false,
+    lifecycleTranslationOverflowPrevented: false,
+    lifecycleTranslationLastFunction: null,
+    lifecycleTranslationPreviousFunction: null,
+    lifecycleRegisteredStatusWriteAttempted: false,
+    lifecycleRegisteredStatusWriteCompleted: false,
+    lifecycleGateLastCompletedStep: null,
+    lifecycleGateNextExpectedStep: null,
+    lifecycleGateFailureFunction: null,
+    lifecycleGateExceptionName: null,
+    lifecycleGateExceptionMessage: null,
+    lifecycleGateExceptionReasonCode: null,
+    lifecycleGateObjectSpreadInvoked: false,
+    lifecycleGateGetterInvoked: false,
+    lifecycleGateSetterInvoked: false,
+    lifecycleGateProxyTrapInvoked: false,
+    lifecycleGateRecursiveCallbackInvoked: false,
+    lifecycleGateDiagnosticsLookupInvoked: false,
+    lifecycleGateJsonSerializationInvoked: false,
+    lifecycleGateObjectFreezeInvoked: false,
+    lifecycleGateStructuredCloneInvoked: false,
     payloadAssemblyEntryFunction: null,
     payloadAssemblyContextCreationAttempted: false,
     payloadAssemblyContextCreationCompleted: false,
@@ -931,6 +1026,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     drawOperation: null,
     deferredCleanupPending: false
   };
+  let activeLifecycleTranslationTraceSource = null;
 
   function clearRefs() {
     currentRefs = {
@@ -973,6 +1069,14 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     return undefined;
   }
 
+  function notifyPostLifecycleOwnerContinuationHook(name, payload = {}) {
+    const hook = postLifecycleOwnerContinuationHooks?.[name];
+    if (typeof hook === "function") {
+      return hook(payload);
+    }
+    return undefined;
+  }
+
   function recordPostDrawStep(patch = {}) {
     executionIdentityState = {
       ...executionIdentityState,
@@ -991,6 +1095,62 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     executionIdentityState = {
       ...executionIdentityState,
       ...patch
+    };
+  }
+
+  function recordPostLifecycleOwnerStep(patch = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      ...patch
+    };
+  }
+
+  function recordPostMapReadStep(patch = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      ...patch
+    };
+  }
+
+  function recordLifecycleGateStep(patch = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      ...patch
+    };
+  }
+
+  function syncLifecycleTranslationTraceSnapshot() {
+    if (
+      !activeLifecycleTranslationTraceSource ||
+      typeof activeLifecycleTranslationTraceSource.getLifecycleTranslationTrace !==
+        "function"
+    ) {
+      return;
+    }
+
+    const trace = activeLifecycleTranslationTraceSource.getLifecycleTranslationTrace();
+    executionIdentityState = {
+      ...executionIdentityState,
+      lifecycleTranslationTraceEntered:
+        trace?.lifecycleTranslationTraceEntered ?? false,
+      lifecycleTranslationTraceExited:
+        trace?.lifecycleTranslationTraceExited ?? false,
+      lifecycleTranslationTraceCurrentDepth:
+        trace?.lifecycleTranslationTraceCurrentDepth ?? 0,
+      lifecycleTranslationTraceMaxDepth:
+        trace?.lifecycleTranslationTraceMaxDepth ?? 0,
+      lifecycleTranslationTraceLast100Calls:
+        trace?.lifecycleTranslationTraceLast100Calls ?? null,
+      lifecycleTranslationRepeatedCallChain:
+        trace?.lifecycleTranslationRepeatedCallChain ?? null,
+      lifecycleTranslationRecursionDetected:
+        trace?.lifecycleTranslationRecursionDetected ?? false,
+      lifecycleTranslationOverflowPrevented:
+        trace?.lifecycleTranslationOverflowPrevented ?? false,
+      lifecycleTranslationLastFunction:
+        trace?.lifecycleTranslationLastFunction ?? null,
+      lifecycleTranslationPreviousFunction:
+        trace?.lifecycleTranslationPreviousFunction ?? null
     };
   }
 
@@ -1168,6 +1328,29 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       payloadLifecycleOwnerResolved: false,
       payloadLifecycleOwnerResolutionSource: null,
       payloadLifecycleOwnerResolutionFailureReason: null,
+      resolvedLifecycleOwnerLocalAssignmentAttempted: false,
+      resolvedLifecycleOwnerLocalAssignmentCompleted: false,
+      resolvedLifecycleOwnerMatchesCurrentRefs: false,
+      resolvedLifecycleOwnerIdentityType: null,
+      postLifecycleOwnerContinuationEntered: false,
+      postLifecycleOwnerNextFunction: null,
+      payloadEntryMarkerWriteAttempted: false,
+      payloadEntryMarkerWriteCompleted: false,
+      payloadContextConstructorSelected: false,
+      payloadContextConstructorEntered: false,
+      payloadContextConstructorReturned: false,
+      payloadContextConstructorResultType: null,
+      postLifecycleOwnerLastCompletedStep: null,
+      postLifecycleOwnerNextExpectedStep: null,
+      postLifecycleOwnerFailureFunction: null,
+      postLifecycleOwnerExceptionName: null,
+      postLifecycleOwnerExceptionMessage: null,
+      postLifecycleOwnerExceptionReasonCode: null,
+      postLifecycleOwnerGetterInvoked: false,
+      postLifecycleOwnerSetterInvoked: false,
+      postLifecycleOwnerProxyTrapInvoked: false,
+      postLifecycleOwnerRecursiveCallbackInvoked: false,
+      postLifecycleOwnerDiagnosticsLookupInvoked: false,
       payloadAssemblyEntryAttempted: false,
       payloadAssemblyEntryCompleted: false,
       preparedSurfaceContinuationLastCompletedStep: null,
@@ -1180,6 +1363,77 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       preparedSurfaceProxyTrapInvoked: false,
       preparedSurfaceRecursiveCallbackInvoked: false,
       preparedSurfaceDiagnosticsLookupInvoked: false,
+      postPreparedSurfaceMapReadContinuationEntered: false,
+      postPreparedSurfaceMapReadNextFunction: null,
+      preparedSurfacePayloadLocalCreationAttempted: false,
+      preparedSurfacePayloadLocalCreationCompleted: false,
+      preparedSurfacePayloadLocalType: null,
+      preparedSurfaceMapLocalAssignmentAttempted: false,
+      preparedSurfaceMapLocalAssignmentCompleted: false,
+      preparedSurfaceCanvasLocalAssignmentAttempted: false,
+      preparedSurfaceCanvasLocalAssignmentCompleted: false,
+      preparedSurfaceOwnerLocalAssignmentAttempted: false,
+      preparedSurfaceOwnerLocalAssignmentCompleted: false,
+      payloadEntryTraceMutationAttempted: false,
+      payloadEntryTraceMutationCompleted: false,
+      postMapReadLastCompletedStatement: null,
+      postMapReadNextExpectedStatement: null,
+      postMapReadFailureFunction: null,
+      postMapReadExceptionName: null,
+      postMapReadExceptionMessage: null,
+      postMapReadExceptionReasonCode: null,
+      postMapReadObjectSpreadInvoked: false,
+      postMapReadStructuredCloneInvoked: false,
+      postMapReadObjectFreezeInvoked: false,
+      postMapReadJsonSerializationInvoked: false,
+      postMapReadPropertyEnumerationInvoked: false,
+      postMapReadGetterInvoked: false,
+      postMapReadSetterInvoked: false,
+      postMapReadProxyTrapInvoked: false,
+      postMapReadRecursiveCallbackInvoked: false,
+      postMapReadDiagnosticsLookupInvoked: false,
+      lifecycleRegistrationStateAssignmentAttempted: false,
+      lifecycleRegistrationStateAssignmentCompleted: false,
+      lifecycleRegistrationStateValue: null,
+      lifecycleTranslationGateEntered: false,
+      lifecycleTranslationGateOperandOneEvaluated: false,
+      lifecycleTranslationGateOperandOneValue: null,
+      lifecycleTranslationGateOperandTwoEvaluated: false,
+      lifecycleTranslationGateOperandTwoValue: null,
+      lifecycleTranslationObjectSpreadAttempted: false,
+      lifecycleTranslationObjectSpreadCompleted: false,
+      lifecycleTranslationFunctionSelected: false,
+      lifecycleTranslationFunctionEntered: false,
+      lifecycleTranslationFunctionReturned: false,
+      lifecycleTranslationResultType: null,
+      lifecycleTranslationResultStatus: null,
+      lifecycleTranslationTraceEntered: false,
+      lifecycleTranslationTraceExited: false,
+      lifecycleTranslationTraceCurrentDepth: 0,
+      lifecycleTranslationTraceMaxDepth: 0,
+      lifecycleTranslationTraceLast100Calls: null,
+      lifecycleTranslationRepeatedCallChain: null,
+      lifecycleTranslationRecursionDetected: false,
+      lifecycleTranslationOverflowPrevented: false,
+      lifecycleTranslationLastFunction: null,
+      lifecycleTranslationPreviousFunction: null,
+      lifecycleRegisteredStatusWriteAttempted: false,
+      lifecycleRegisteredStatusWriteCompleted: false,
+      lifecycleGateLastCompletedStep: null,
+      lifecycleGateNextExpectedStep: null,
+      lifecycleGateFailureFunction: null,
+      lifecycleGateExceptionName: null,
+      lifecycleGateExceptionMessage: null,
+      lifecycleGateExceptionReasonCode: null,
+      lifecycleGateObjectSpreadInvoked: false,
+      lifecycleGateGetterInvoked: false,
+      lifecycleGateSetterInvoked: false,
+      lifecycleGateProxyTrapInvoked: false,
+      lifecycleGateRecursiveCallbackInvoked: false,
+      lifecycleGateDiagnosticsLookupInvoked: false,
+      lifecycleGateJsonSerializationInvoked: false,
+      lifecycleGateObjectFreezeInvoked: false,
+      lifecycleGateStructuredCloneInvoked: false,
       payloadAssemblyEntryFunction: null,
       payloadAssemblyContextCreationAttempted: false,
       payloadAssemblyContextCreationCompleted: false,
@@ -1459,6 +1713,7 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
         nextFunctionAfterAdapterEntry: "adapter.lifecycleTranslationFactory"
       };
       lifecycleTranslation = lifecycleTranslationFactory();
+      activeLifecycleTranslationTraceSource = lifecycleTranslation;
     } catch (error) {
       executionIdentityState = {
         ...executionIdentityState,
@@ -2028,6 +2283,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     let preparedSurfaceNestedLifecycleOwnerPresent = false;
     let payloadLifecycleOwner = null;
     let payloadLifecycleOwnerResolutionSource = null;
+    let resolvedLifecycleOwner = null;
+    let preparedSurfacePayloadLocal = null;
+    let preparedSurfaceMapLocal = null;
+    let preparedSurfaceCanvasLocal = null;
+    let preparedSurfaceOwnerLocal = null;
 
     try {
       recordPreparedSurfaceStep({
@@ -2232,6 +2492,59 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     try {
+      recordPostLifecycleOwnerStep({
+        resolvedLifecycleOwnerLocalAssignmentAttempted: true,
+        postLifecycleOwnerContinuationEntered: true,
+        postLifecycleOwnerNextFunction: "resolved lifecycle owner local assignment",
+        postLifecycleOwnerNextExpectedStep:
+          "resolved lifecycle owner local assignment"
+      });
+      resolvedLifecycleOwner = payloadLifecycleOwner;
+      recordPostLifecycleOwnerStep({
+        resolvedLifecycleOwnerLocalAssignmentCompleted: true,
+        resolvedLifecycleOwnerIdentityType: describeValueType(resolvedLifecycleOwner),
+        resolvedLifecycleOwnerMatchesCurrentRefs:
+          resolvedLifecycleOwner === currentRefs.lifecycleOwner,
+        postLifecycleOwnerLastCompletedStep:
+          "resolved lifecycle owner local assignment",
+        postLifecycleOwnerNextExpectedStep:
+          "currentRefs.lifecycleOwner identity comparison",
+        postLifecycleOwnerNextFunction:
+          "currentRefs.lifecycleOwner identity comparison"
+      });
+      notifyPostLifecycleOwnerContinuationHook(
+        "afterResolvedLifecycleOwnerLocalAssignment",
+        {
+          resolvedLifecycleOwner,
+          currentRefs
+        }
+      );
+      recordPostLifecycleOwnerStep({
+        postLifecycleOwnerLastCompletedStep:
+          "currentRefs.lifecycleOwner identity comparison",
+        postLifecycleOwnerNextExpectedStep: "preparedSurface map read",
+        postLifecycleOwnerNextFunction: "preparedSurface map read"
+      });
+    } catch (error) {
+      const resolvedLifecycleOwnerAssignmentReasonCode =
+        "RESOLVED_LIFECYCLE_OWNER_ASSIGNMENT_EXCEPTION";
+      recordPostLifecycleOwnerStep({
+        postLifecycleOwnerFailureFunction:
+          "resolved lifecycle owner local assignment",
+        postLifecycleOwnerExceptionName: error?.name ?? "Error",
+        postLifecycleOwnerExceptionMessage: error?.message ?? null,
+        postLifecycleOwnerExceptionReasonCode:
+          resolvedLifecycleOwnerAssignmentReasonCode,
+        postLifecycleOwnerSetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        resolvedLifecycleOwnerAssignmentReasonCode
+      );
+    }
+
+    try {
       recordPreparedSurfaceStep({
         preparedSurfaceMapReadAttempted: true,
         preparedSurfaceContinuationNextExpectedStep: "preparedSurface map read"
@@ -2261,7 +2574,85 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
+    try {
+      recordPostMapReadStep({
+        postPreparedSurfaceMapReadContinuationEntered: true,
+        postPreparedSurfaceMapReadNextFunction: "preparedSurfacePayload local creation",
+        postMapReadNextExpectedStatement:
+          "preparedSurfacePayload local creation"
+      });
+      preparedSurfacePayloadLocal = preparedSurfacePayload;
+      recordPostMapReadStep({
+        preparedSurfacePayloadLocalCreationAttempted: true,
+        preparedSurfacePayloadLocalCreationCompleted: true,
+        preparedSurfacePayloadLocalType: describeValueType(
+          preparedSurfacePayloadLocal
+        ),
+        postMapReadLastCompletedStatement:
+          "preparedSurfacePayload local creation",
+        postMapReadNextExpectedStatement: "preparedSurfaceMap local assignment",
+        postPreparedSurfaceMapReadNextFunction:
+          "preparedSurfaceMap local assignment"
+      });
+      preparedSurfaceMapLocal = preparedSurfaceMap;
+      recordPostMapReadStep({
+        preparedSurfaceMapLocalAssignmentAttempted: true,
+        preparedSurfaceMapLocalAssignmentCompleted: true,
+        postMapReadLastCompletedStatement:
+          "preparedSurfaceMap local assignment",
+        postMapReadNextExpectedStatement: "preparedSurfaceCanvas local assignment",
+        postPreparedSurfaceMapReadNextFunction:
+          "preparedSurfaceCanvas local assignment"
+      });
+      preparedSurfaceCanvasLocal = preparedSurfaceCanvas;
+      recordPostMapReadStep({
+        preparedSurfaceCanvasLocalAssignmentAttempted: true,
+        preparedSurfaceCanvasLocalAssignmentCompleted: true,
+        postMapReadLastCompletedStatement:
+          "preparedSurfaceCanvas local assignment",
+        postMapReadNextExpectedStatement: "preparedSurfaceOwner local assignment",
+        postPreparedSurfaceMapReadNextFunction:
+          "preparedSurfaceOwner local assignment"
+      });
+      preparedSurfaceOwnerLocal = resolvedLifecycleOwner;
+      recordPostMapReadStep({
+        preparedSurfaceOwnerLocalAssignmentAttempted: true,
+        preparedSurfaceOwnerLocalAssignmentCompleted: true,
+        postMapReadLastCompletedStatement:
+          "preparedSurfaceOwner local assignment",
+        postMapReadNextExpectedStatement:
+          "prepared surface validity gate",
+        postPreparedSurfaceMapReadNextFunction:
+          "prepared surface validity gate"
+      });
+      notifyPostLifecycleOwnerContinuationHook("afterPreparedSurfaceMapReadLocals", {
+        preparedSurfacePayloadLocal,
+        preparedSurfaceMapLocal,
+        preparedSurfaceCanvasLocal,
+        preparedSurfaceOwnerLocal
+      });
+    } catch (error) {
+      const payloadLocalCreationReasonCode = "PAYLOAD_LOCAL_CREATION_EXCEPTION";
+      recordPostMapReadStep({
+        postMapReadFailureFunction: "payload local creation",
+        postMapReadExceptionName: error?.name ?? "Error",
+        postMapReadExceptionMessage: error?.message ?? null,
+        postMapReadExceptionReasonCode: payloadLocalCreationReasonCode,
+        postMapReadSetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        payloadLocalCreationReasonCode
+      );
+    }
+
     if (preparedSurfaceStatusValue !== "prepared" || !preparedSurfacePayload) {
+      recordPostMapReadStep({
+        postMapReadLastCompletedStatement: "prepared surface validity gate",
+        postMapReadNextExpectedStatement: "currentRefs.surface assignment",
+        postPreparedSurfaceMapReadNextFunction: "currentRefs.surface assignment"
+      });
       markAdapterPostCallbackTrace({
         adapterPostCallbackResolutionNextStep: "adapter.prepareOneFrameSurface",
         adapterEarlyReturnReason:
@@ -2280,14 +2671,37 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
-    currentRefs.surface = preparedSurfacePayload;
+    currentRefs.surface = preparedSurfacePayloadLocal;
+    recordPostMapReadStep({
+      postMapReadLastCompletedStatement: "currentRefs.surface assignment",
+      postMapReadNextExpectedStatement:
+        "surface preparation completion milestones",
+      postPreparedSurfaceMapReadNextFunction:
+        "surface preparation completion milestones"
+    });
     markSnapshotHandoffMilestone("reachedSurfacePreparationCompletion");
     markInvocationBoundaryMilestone("reachedSurfacePrepared");
+    recordPostMapReadStep({
+      postMapReadLastCompletedStatement:
+        "surface preparation completion milestones",
+      postMapReadNextExpectedStatement: "surfacePrepared status write",
+      postPreparedSurfaceMapReadNextFunction: "surfacePrepared status write"
+    });
     updateStatus({
       surfacePrepared: true
     });
+    recordPostMapReadStep({
+      postMapReadObjectSpreadInvoked: true,
+      postMapReadLastCompletedStatement: "surfacePrepared status write",
+      postMapReadNextExpectedStatement: "lifecycle translation",
+      postPreparedSurfaceMapReadNextFunction: "lifecycle translation"
+    });
 
     try {
+      recordLifecycleGateStep({
+        lifecycleTranslationFunctionSelected: true,
+        lifecycleGateNextExpectedStep: "lifecycle translation function entry"
+      });
       markAdapterPostCallbackTrace({
         adapterPostCallbackResolutionNextStep:
           "adapter.translatePreparedSurfaceToLifecycleBundle",
@@ -2299,25 +2713,105 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       translationResult = traceInvocationBoundary(
         "adapter.translatePreparedSurfaceToLifecycleBundle",
         () => {
+          recordLifecycleGateStep({
+            lifecycleTranslationFunctionEntered: true,
+            lifecycleGateLastCompletedStep:
+              "lifecycle translation function entry",
+            lifecycleGateNextExpectedStep:
+              "lifecycle translation function return"
+          });
           markInvocationBoundaryMilestone("reachedSurfaceOwnershipConversion");
           return lifecycleTranslation.translatePreparedSurfaceToLifecycleBundle({
-            preparedSurface: preparedSurfacePayload,
+            preparedSurface: preparedSurfacePayloadLocal,
             lifecycleOwner
           });
         }
       );
+      syncLifecycleTranslationTraceSnapshot();
+      recordLifecycleGateStep({
+        lifecycleTranslationFunctionReturned: true,
+        lifecycleTranslationResultType: describeValueType(translationResult),
+        lifecycleTranslationResultStatus: translationResult?.outcome ?? null,
+        lifecycleGateLastCompletedStep:
+          "lifecycle translation function return",
+        lifecycleGateNextExpectedStep:
+          "lifecycle registration state derivation"
+      });
+      recordPostMapReadStep({
+        postMapReadObjectSpreadInvoked: true,
+        postMapReadLastCompletedStatement: "lifecycle translation",
+        postMapReadNextExpectedStatement:
+          "lifecycle registration state derivation",
+        postPreparedSurfaceMapReadNextFunction:
+          "lifecycle registration state derivation"
+      });
     } catch (error) {
+      syncLifecycleTranslationTraceSnapshot();
       translationResult = {
         outcome: "failed_closed",
         reasonCode: toReasonCode(error, "LIFECYCLE_TRANSLATION_EXCEPTION")
       };
+      recordLifecycleGateStep({
+        lifecycleGateFailureFunction:
+          "adapter.translatePreparedSurfaceToLifecycleBundle",
+        lifecycleGateExceptionName: error?.name ?? "Error",
+        lifecycleGateExceptionMessage: error?.message ?? null,
+        lifecycleGateExceptionReasonCode: toReasonCode(
+          error,
+          "LIFECYCLE_TRANSLATION_EXCEPTION"
+        )
+      });
     }
 
+    recordLifecycleGateStep({
+      lifecycleRegistrationStateAssignmentAttempted: true,
+      lifecycleGateNextExpectedStep:
+        "lifecycle registration state derivation"
+    });
     lifecycleRegistered =
       translationResult?.lifecycleRegistrationSucceeded === true ||
       translationResult?.lifecycleRegistrationAttempted === true;
+    recordLifecycleGateStep({
+      lifecycleRegistrationStateAssignmentCompleted: true,
+      lifecycleRegistrationStateValue: lifecycleRegistered,
+      lifecycleGateLastCompletedStep:
+        "lifecycle registration state derivation",
+      lifecycleGateNextExpectedStep: "lifecycle translation gate"
+    });
+    recordPostMapReadStep({
+      postMapReadLastCompletedStatement:
+        "lifecycle registration state derivation",
+      postMapReadNextExpectedStatement: "lifecycle translation gate",
+      postPreparedSurfaceMapReadNextFunction: "lifecycle translation gate"
+    });
 
-    if (translationResult?.outcome !== "translated" || !translationResult?.lifecycleBundle) {
+    recordLifecycleGateStep({
+      lifecycleTranslationGateEntered: true,
+      lifecycleGateNextExpectedStep: "lifecycle translation gate operand one"
+    });
+    const lifecycleTranslationGateOperandOneValue =
+      translationResult?.outcome !== "translated";
+    recordLifecycleGateStep({
+      lifecycleTranslationGateOperandOneEvaluated: true,
+      lifecycleTranslationGateOperandOneValue,
+      lifecycleGateLastCompletedStep:
+        "lifecycle translation gate operand one",
+      lifecycleGateNextExpectedStep: "lifecycle translation gate operand two"
+    });
+    const lifecycleTranslationGateOperandTwoValue =
+      !translationResult?.lifecycleBundle;
+    recordLifecycleGateStep({
+      lifecycleTranslationGateOperandTwoEvaluated: true,
+      lifecycleTranslationGateOperandTwoValue,
+      lifecycleGateLastCompletedStep:
+        "lifecycle translation gate operand two",
+      lifecycleGateNextExpectedStep: "lifecycle translation gate branch"
+    });
+
+    if (
+      lifecycleTranslationGateOperandOneValue ||
+      lifecycleTranslationGateOperandTwoValue
+    ) {
       markAdapterPostCallbackTrace({
         adapterPostCallbackResolutionNextStep:
           "adapter.translatePreparedSurfaceToLifecycleBundle",
@@ -2328,6 +2822,14 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
         payloadAssemblyNotReachedBranchReason:
           translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED",
         payloadAssemblyNotReachedReturnReason:
+          translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED"
+      });
+      recordLifecycleGateStep({
+        lifecycleTranslationObjectSpreadAttempted: true,
+        lifecycleTranslationObjectSpreadCompleted: true,
+        lifecycleGateObjectSpreadInvoked: true,
+        lifecycleGateFailureFunction: "lifecycle translation gate",
+        lifecycleGateExceptionReasonCode:
           translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED"
       });
       const rollbackResult = surfaceOperations.rollbackPreparedSurface({
@@ -2350,12 +2852,40 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
+    recordLifecycleGateStep({
+      lifecycleTranslationObjectSpreadAttempted: true,
+      lifecycleTranslationObjectSpreadCompleted: true,
+      lifecycleGateObjectSpreadInvoked: true,
+      lifecycleGateLastCompletedStep: "lifecycle translation gate",
+      lifecycleGateNextExpectedStep: "lifecycleRegistered status write"
+    });
+    recordPostMapReadStep({
+      postMapReadLastCompletedStatement: "lifecycle translation gate",
+      postMapReadNextExpectedStatement: "lifecycleRegistered status write",
+      postPreparedSurfaceMapReadNextFunction: "lifecycleRegistered status write"
+    });
+    recordLifecycleGateStep({
+      lifecycleRegisteredStatusWriteAttempted: true,
+      lifecycleGateNextExpectedStep: "lifecycleRegistered status write"
+    });
     updateStatus({
       lifecycleRegistered: true,
       ownershipMode:
         translationResult.lifecycleBundle.ownershipMode ??
         translationResult.ownershipMode ??
         "ONE_FRAME_SURFACE_ONLY"
+    });
+    recordLifecycleGateStep({
+      lifecycleRegisteredStatusWriteCompleted: true,
+      lifecycleGateLastCompletedStep: "lifecycleRegistered status write",
+      lifecycleGateNextExpectedStep: "payload-entry trace mutation"
+    });
+    recordPostMapReadStep({
+      postMapReadObjectSpreadInvoked: true,
+      postMapReadLastCompletedStatement: "lifecycleRegistered status write",
+      postMapReadNextExpectedStatement: "snapshotCompatibleMap normalization",
+      postPreparedSurfaceMapReadNextFunction:
+        "snapshotCompatibleMap normalization"
     });
 
     let snapshotBridgeResult;
@@ -2372,6 +2902,13 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
           return snapshotMapNormalizer(map);
         }
       );
+      recordPostMapReadStep({
+        postMapReadLastCompletedStatement:
+          "snapshotCompatibleMap normalization",
+        postMapReadNextExpectedStatement: "payload entry trace mutation",
+        postPreparedSurfaceMapReadNextFunction:
+          "payload entry trace mutation"
+      });
     } catch (error) {
       markAdapterPostCallbackTrace({
         adapterPostCallbackResolutionNextStep: "adapter.resolveSnapshotCompatibleMap",
@@ -2417,11 +2954,85 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
-    recordPreparedSurfaceStep({
-      payloadAssemblyEntryAttempted: true,
-      preparedSurfaceContinuationLastCompletedStep: "payload assembly entry attempted",
-      preparedSurfaceContinuationNextExpectedStep: "payload assembly guard evaluation"
-    });
+    try {
+      recordPostMapReadStep({
+        payloadEntryTraceMutationAttempted: true,
+        postMapReadObjectSpreadInvoked: true,
+        postMapReadNextExpectedStatement: "payload entry marker write",
+        postPreparedSurfaceMapReadNextFunction: "payload entry marker write"
+      });
+      notifyPostLifecycleOwnerContinuationHook("beforePayloadEntryTraceMutation", {
+        preparedSurfacePayloadLocal,
+        preparedSurfaceMapLocal,
+        preparedSurfaceCanvasLocal,
+        preparedSurfaceOwnerLocal,
+        snapshotCompatibleMap
+      });
+      recordPostLifecycleOwnerStep({
+        payloadEntryMarkerWriteAttempted: true,
+        postLifecycleOwnerNextFunction: "payload entry marker write",
+        postLifecycleOwnerNextExpectedStep: "payload entry marker write"
+      });
+      recordPostMapReadStep({
+        payloadEntryTraceMutationCompleted: true,
+        postMapReadLastCompletedStatement: "payload entry trace mutation",
+        postMapReadNextExpectedStatement: "payload entry marker write",
+        postPreparedSurfaceMapReadNextFunction: "payload entry marker write"
+      });
+      notifyPostLifecycleOwnerContinuationHook("beforePayloadEntryMarkerWrite", {
+        resolvedLifecycleOwner,
+        currentRefs
+      });
+      recordPreparedSurfaceStep({
+        payloadAssemblyEntryAttempted: true,
+        preparedSurfaceContinuationLastCompletedStep:
+          "payload assembly entry attempted",
+        preparedSurfaceContinuationNextExpectedStep:
+          "payload assembly guard evaluation"
+      });
+      recordPostLifecycleOwnerStep({
+        payloadEntryMarkerWriteCompleted: true,
+        postLifecycleOwnerLastCompletedStep: "payload entry marker write",
+        postLifecycleOwnerNextExpectedStep: "payload context constructor",
+        postLifecycleOwnerNextFunction: "payload context constructor"
+      });
+      notifyPostLifecycleOwnerContinuationHook("afterPayloadEntryMarkerWrite", {
+        resolvedLifecycleOwner,
+        currentRefs
+      });
+    } catch (error) {
+      const payloadEntryTraceMutationReasonCode =
+        error?.message === "COMPLEX_OBJECT_SPREAD_EXCEPTION"
+          ? "COMPLEX_OBJECT_SPREAD_EXCEPTION"
+          : error?.message === "TRACE_STATUS_MUTATION_EXCEPTION"
+            ? "TRACE_STATUS_MUTATION_EXCEPTION"
+            : "PAYLOAD_ENTRY_MARKER_WRITE_EXCEPTION";
+      recordPostMapReadStep({
+        postMapReadFailureFunction: "payload entry trace mutation",
+        postMapReadExceptionName: error?.name ?? "Error",
+        postMapReadExceptionMessage: error?.message ?? null,
+        postMapReadExceptionReasonCode: payloadEntryTraceMutationReasonCode
+      });
+      const payloadEntryMarkerWriteReasonCode =
+        "PAYLOAD_ENTRY_MARKER_WRITE_EXCEPTION";
+      recordPostLifecycleOwnerStep({
+        postLifecycleOwnerFailureFunction: "payload entry marker write",
+        postLifecycleOwnerExceptionName: error?.name ?? "Error",
+        postLifecycleOwnerExceptionMessage: error?.message ?? null,
+        postLifecycleOwnerExceptionReasonCode:
+          payloadEntryTraceMutationReasonCode,
+        postLifecycleOwnerSetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        payloadEntryTraceMutationReasonCode ===
+          "PAYLOAD_ENTRY_MARKER_WRITE_EXCEPTION"
+          ? payloadEntryMarkerWriteReasonCode
+          : payloadEntryTraceMutationReasonCode
+      );
+    }
+
     recordPayloadAssemblyStep({
       payloadAssemblyEntryFunction: "adapter.assembleSnapshotHandoffPayload",
       payloadAssemblyLastCompletedStep: "payload assembly entry attempted",
@@ -2440,9 +3051,25 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     let payloadContextHasDrawOperation;
     let payloadContextHasCallbacks;
     try {
+      recordPostLifecycleOwnerStep({
+        payloadContextConstructorSelected: true,
+        postLifecycleOwnerNextFunction: "payload context constructor",
+        postLifecycleOwnerNextExpectedStep: "payload context constructor"
+      });
       recordPayloadAssemblyStep({
         payloadAssemblyContextCreationAttempted: true,
         payloadAssemblyNextFunction: "payload context creation"
+      });
+      notifyPostLifecycleOwnerContinuationHook(
+        "beforePayloadContextConstructor",
+        {
+          resolvedLifecycleOwner,
+          currentRefs,
+          snapshotCompatibleMap
+        }
+      );
+      recordPostLifecycleOwnerStep({
+        payloadContextConstructorEntered: true
       });
       surfaceInput = preparedSurfacePayload;
       surfaceInputHasCanvas = !!surfaceInput?.canvas;
@@ -2456,6 +3083,14 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       payloadContextHasDrawOperation = !!drawOperation;
       payloadContextHasCallbacks =
         handoffSnapshotCallbackAssigned && handoffDrawCallbackAssigned;
+      const payloadContextConstructorResult = {
+        surfaceInput,
+        viewportInput,
+        handoffMapInput,
+        handoffCanvasInput,
+        handoffSnapshotCallbackAssigned,
+        handoffDrawCallbackAssigned
+      };
       recordPayloadAssemblyStep({
         payloadAssemblyContextCreationCompleted: true,
         payloadContextHasMap: !!handoffMapInput,
@@ -2466,6 +3101,23 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
         payloadAssemblyLastCompletedStep: "payload context creation",
         payloadAssemblyNextFunction: "payload guard evaluation"
       });
+      recordPostLifecycleOwnerStep({
+        payloadContextConstructorReturned: true,
+        payloadContextConstructorResultType: describeValueType(
+          payloadContextConstructorResult
+        ),
+        postLifecycleOwnerLastCompletedStep: "payload context constructor",
+        postLifecycleOwnerNextExpectedStep: "payload guard evaluation entered",
+        postLifecycleOwnerNextFunction: "payload guard evaluation"
+      });
+      notifyPostLifecycleOwnerContinuationHook(
+        "afterPayloadContextConstructor",
+        {
+          resolvedLifecycleOwner,
+          currentRefs,
+          payloadContextConstructorResult
+        }
+      );
     } catch (error) {
       const payloadContextCreationReasonCode =
         "PAYLOAD_CONTEXT_CREATION_EXCEPTION";
@@ -2486,6 +3138,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     let payloadAssemblyGuardSkippedReason;
     let payloadAssemblyGuardResult;
     try {
+      recordPostLifecycleOwnerStep({
+        postLifecycleOwnerLastCompletedStep: "payload guard evaluation entered",
+        postLifecycleOwnerNextExpectedStep: "payload guard evaluation completed",
+        postLifecycleOwnerNextFunction: "payload guard evaluation"
+      });
       recordPayloadAssemblyStep({
         payloadGuardEvaluationAttempted: true,
         payloadAssemblyNextFunction: "payload guard evaluation"

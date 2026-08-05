@@ -220,6 +220,39 @@ test("lifecycle registration succeeds once and no cleanup executes during transl
   assert.equal(env.calls.retentionReset, 0);
 });
 
+test("cyclic browser-shaped surface references no longer recurse during lifecycle translation and the repeated deepFreeze chain is captured", () => {
+  const env = createEnvironment();
+  env.map.self = env.map;
+  env.canvas.map = env.map;
+  env.pane.canvas = env.canvas;
+  env.map.pane = env.pane;
+
+  const result = env.translator.translatePreparedSurfaceToLifecycleBundle({
+    preparedSurface: env.preparedSurface,
+    lifecycleOwner: env.lifecycleOwner
+  });
+  const trace = env.translator.getLifecycleTranslationTrace();
+
+  assert.equal(result.outcome, "translated");
+  assert.equal(result.reasonCode, "ONE_FRAME_LIFECYCLE_BUNDLE_TRANSLATED");
+  assert.equal(trace.lifecycleTranslationTraceEntered, true);
+  assert.equal(trace.lifecycleTranslationTraceExited, true);
+  assert.equal(trace.lifecycleTranslationRecursionDetected, true);
+  assert.equal(trace.lifecycleTranslationOverflowPrevented, true);
+  assert.deepEqual(trace.lifecycleTranslationRepeatedCallChain, [
+    "translatePreparedSurfaceToLifecycleBundle",
+    "createResult",
+    "deepFreeze",
+    "deepFreeze"
+  ]);
+  assert.equal(
+    trace.lifecycleTranslationTraceLast100Calls.some((entry) =>
+      entry.includes("deepFreeze")
+    ),
+    true
+  );
+});
+
 test("missing surface invalid schema incorrect pane canvas identity unowned canvas unappended canvas cleanup false rollback unavailable listenerAdded retentionWritten and drawRequested all block", () => {
   const missingSurfaceEnv = createEnvironment();
   const invalidSchemaEnv = createEnvironment();
