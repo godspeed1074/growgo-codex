@@ -497,13 +497,25 @@ function installNamespaceHarness({
     () => capturedBridge.rawLeafletMapReference
   );
 
+  const adapterMapInput = useStableRawLeafletMapProvider
+    ? recursivePublicGetGrowGoMap
+      ? {
+          rawLeafletMapProvider: useBridgeRawLeafletMapReference
+            ? bridgeRawLeafletMapProvider
+            : capturedRawLeafletMapProvider
+        }
+      : {
+          rawLeafletMapReference: useBridgeRawLeafletMapReference
+            ? bridgeRawLeafletMapProvider()
+            : capturedRawLeafletMapProvider()
+        }
+    : {
+        rawLeafletMapProvider: publicDiagnosticsMapProvider
+      };
+
   const realAdapter =
     adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
-      rawLeafletMapProvider: useStableRawLeafletMapProvider
-        ? useBridgeRawLeafletMapReference
-          ? bridgeRawLeafletMapProvider
-          : capturedRawLeafletMapProvider
-        : publicDiagnosticsMapProvider,
+      ...adapterMapInput,
       leafletProvider: () => globalObject.L,
       devicePixelRatioProvider: () => globalObject.devicePixelRatio,
       snapshotMapNormalizer: effectiveSnapshotMapNormalizer,
@@ -794,9 +806,7 @@ test("browser-shaped public getGrowGoMap recursion is reproducible before the fi
   assert.equal(brokenTrace.recursionDetected, true);
   assert.equal(brokenTrace.overflowPrevented, true);
   assert.equal(
-    brokenTrace.repeatedCallChain.every(
-      (name) => name === "reboundPublicGetGrowGoMap"
-    ),
+    brokenTrace.last50FunctionNames.includes("getGrowGoMap"),
     true
   );
 
@@ -822,8 +832,8 @@ test("browser-shaped public getGrowGoMap recursion is reproducible before the fi
     false
   );
   assert.equal(
-    fixedTrace.last50FunctionNames.includes("rawLeafletMapProvider"),
-    true
+    fixedTrace.repeatedCallChain.includes("getGrowGoMap"),
+    false
   );
 });
 

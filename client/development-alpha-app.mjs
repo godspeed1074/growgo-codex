@@ -22,7 +22,7 @@ import {
 } from "./developer-only-live-atlas-renderer-handoff-readiness.mjs";
 import {
   createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter
-} from "./developer-only-growgo-custom25d-live-one-frame-adapter.mjs";
+} from "./developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150x";
 import {
   createDeveloperOnlyAtlasCustom25DOneFrameCommand,
   installDeveloperOnlyAtlasCustom25DOneFrameCommand
@@ -85,28 +85,26 @@ const getGrowGoMapFromScriptDiagnostics = captureDiagnosticsFunction("getGrowGoM
 const getCustom25DOneFrameBridgeFromScriptDiagnostics = captureDiagnosticsFunction(
   "getCustom25DOneFrameBridge"
 );
-const capturedOneFrameBridgeFromScriptDiagnostics =
+const capturedOneFrameBridgeProviderFromScriptDiagnostics =
   createCapturedOneFrameBridgeProvider(getCustom25DOneFrameBridgeFromScriptDiagnostics);
-const readCapturedOneFrameBridgeFromScriptDiagnostics = () =>
-  capturedOneFrameBridgeFromScriptDiagnostics();
+const capturedOneFrameBridgeFromScriptDiagnostics =
+  capturedOneFrameBridgeProviderFromScriptDiagnostics();
 const createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics =
-  typeof readCapturedOneFrameBridgeFromScriptDiagnostics()
+  typeof capturedOneFrameBridgeFromScriptDiagnostics
     ?.createCustom25DFrameViewportSnapshotForOneFrame === "function"
-    ? readCapturedOneFrameBridgeFromScriptDiagnostics().createCustom25DFrameViewportSnapshotForOneFrame.bind(
-        readCapturedOneFrameBridgeFromScriptDiagnostics()
+    ? capturedOneFrameBridgeFromScriptDiagnostics.createCustom25DFrameViewportSnapshotForOneFrame.bind(
+        capturedOneFrameBridgeFromScriptDiagnostics
       )
     : null;
 const drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics =
-  typeof readCapturedOneFrameBridgeFromScriptDiagnostics()?.drawCustom25DOneFrameFromSnapshot ===
+  typeof capturedOneFrameBridgeFromScriptDiagnostics?.drawCustom25DOneFrameFromSnapshot ===
   "function"
-    ? readCapturedOneFrameBridgeFromScriptDiagnostics().drawCustom25DOneFrameFromSnapshot.bind(
-        readCapturedOneFrameBridgeFromScriptDiagnostics()
+    ? capturedOneFrameBridgeFromScriptDiagnostics.drawCustom25DOneFrameFromSnapshot.bind(
+        capturedOneFrameBridgeFromScriptDiagnostics
       )
     : null;
-const rawLeafletMapProviderFromBridgeReference = atlasCustom25DOneFrameExecutionTrace.wrap(
-  "rawLeafletMapProvider",
-  () => readCapturedOneFrameBridgeFromScriptDiagnostics()?.rawLeafletMapReference ?? null
-);
+const rawLeafletMapReferenceFromBridge = capturedOneFrameBridgeFromScriptDiagnostics
+  ?.rawLeafletMapReference ?? null;
 
 const rawLeafletMapProviderFromScriptDiagnostics =
   createCapturedRawLeafletMapProvider(getGrowGoMapFromScriptDiagnostics);
@@ -184,7 +182,7 @@ installControlledOneSessionDeveloperRendererHandoffAuthorization({
 
 const growGoCustom25DLiveOneFrameAdapter =
   createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
-    rawLeafletMapProvider: rawLeafletMapProviderFromBridgeReference,
+    rawLeafletMapReference: rawLeafletMapReferenceFromBridge,
     frameSnapshotProvider: () =>
       atlasCustom25DOneFrameExecutionTrace.wrap(
         "createCustom25DFrameViewportSnapshotForOneFrame",
@@ -218,6 +216,21 @@ installDeveloperOnlyAtlasCustom25DOneFrameCommand({
   globalObject: globalThis,
   command: atlasCustom25DOneFrameCommand
 });
+
+const diagnosticsNamespace =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : null;
+
+if (diagnosticsNamespace) {
+  diagnosticsNamespace.getCustom25DOneFrameAdapterRuntimeIdentity = () =>
+    growGoCustom25DLiveOneFrameAdapter.getCustom25DOneFrameAdapterRuntimeIdentity?.() ??
+    null;
+  diagnosticsNamespace.getCustom25DOneFrameAdapterExecutionIdentity = () =>
+    growGoCustom25DLiveOneFrameAdapter.getCustom25DOneFrameAdapterExecutionIdentity?.() ??
+    null;
+}
 
 const panel = buildPanel();
 const elements = bindPanelElements(panel);

@@ -59,6 +59,15 @@ let map = __mapValue;
 function getCustom25DOneFrameBridge() {
   return null;
 }
+function getCustom25DOneFrameBridgeDebug() {
+  return null;
+}
+function getCustom25DOneFrameSnapshotBoundaryTrace() {
+  return null;
+}
+function resetCustom25DOneFrameSnapshotBoundaryTrace() {
+  return null;
+}
 function traceAtlasOneFrameCall(functionName, callback) {
   return callback();
 }
@@ -148,6 +157,16 @@ test("getter bootstrap exposes a developer-only namespace on local dev hosts", (
   assert.equal(namespace.available, true);
   assert.equal(namespace.localDev, true);
   assert.equal(typeof namespace.getGrowGoMap, "function");
+  assert.equal(typeof namespace.getCustom25DOneFrameBridge, "function");
+  assert.equal(typeof namespace.getCustom25DOneFrameBridgeDebug, "function");
+  assert.equal(
+    typeof namespace.getCustom25DOneFrameSnapshotBoundaryTrace,
+    "function"
+  );
+  assert.equal(
+    typeof namespace.resetCustom25DOneFrameSnapshotBoundaryTrace,
+    "function"
+  );
   assert.equal(namespace.getGrowGoMap(), ownedMap);
 });
 

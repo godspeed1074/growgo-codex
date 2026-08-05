@@ -12,6 +12,13 @@ const moduleUnderTest = await import(
     "developer-only-atlas-custom25d-one-frame-command.mjs"
   )
 );
+const adapterModule = await import(
+  path.join(
+    repoRoot,
+    "client",
+    "developer-only-growgo-custom25d-live-one-frame-adapter.mjs"
+  )
+);
 
 const developmentAlphaAppSource = fs.readFileSync(
   path.join(repoRoot, "client", "development-alpha-app.mjs"),
@@ -436,7 +443,7 @@ test("public results are deeply immutable and the browser exposure stays narrow"
   assert.doesNotMatch(commandSource, /localStorage|sessionStorage|fetch\(|XMLHttpRequest|WebSocket/);
 });
 
-test("install helper exposes only the manual command on the diagnostics namespace", () => {
+test("install helper exposes the manual command plus invocation-boundary trace helpers on the diagnostics namespace", () => {
   const namespace = {};
   const command = createEnvironment().command;
   const installed =
@@ -447,7 +454,368 @@ test("install helper exposes only the manual command on the diagnostics namespac
 
   assert.equal(installed, namespace);
   assert.equal(typeof namespace.runAuthorizedAtlasCustom25DOneFrame, "function");
-  assert.deepEqual(Object.keys(namespace), ["runAuthorizedAtlasCustom25DOneFrame"]);
+  assert.equal(
+    typeof namespace.resetCustom25DOneFrameInvocationBoundaryTrace,
+    "function"
+  );
+  assert.equal(
+    typeof namespace.getCustom25DOneFrameInvocationBoundaryTrace,
+    "function"
+  );
+  assert.equal(
+    typeof namespace.resetAtlasCustom25DOneFrameInvocationBoundaryTrace,
+    "function"
+  );
+  assert.equal(
+    typeof namespace.getAtlasCustom25DOneFrameInvocationBoundaryTrace,
+    "function"
+  );
+  assert.deepEqual(new Set(Object.keys(namespace)), new Set([
+    "getCustom25DOneFrameInvocationBoundaryTrace",
+    "getAtlasCustom25DOneFrameInvocationBoundaryTrace",
+    "getCustom25DOneFramePreSnapshotHandoffTrace",
+    "resetCustom25DOneFrameInvocationBoundaryTrace",
+    "resetAtlasCustom25DOneFrameInvocationBoundaryTrace",
+    "resetCustom25DOneFramePreSnapshotHandoffTrace",
+    "runAuthorizedAtlasCustom25DOneFrame"
+  ]));
+});
+
+test("invocation-boundary trace captures the exact pre-snapshot failing function without changing safety flags", async () => {
+  const previousNamespace = globalThis.GrowGoDeveloperDiagnostics;
+  try {
+    const command = createEnvironment({
+      adapter: adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+        rawLeafletMapReference: { id: "live-map" },
+        leafletProvider: () => ({
+          DomUtil: {
+            create() {},
+            setPosition() {}
+          }
+        }),
+        surfaceOperationsFactory: () => ({
+          prepareOneFrameSurface() {
+            return {
+              outcome: "prepared",
+              reasonCode: "LIVE_SURFACE_PREPARED",
+              surface: {
+                map: { id: "live-map" },
+                pane: { dataset: { owner: "custom25DMapPane" } },
+                canvas: { className: "custom-25d-map-canvas" }
+              }
+            };
+          },
+          rollbackPreparedSurface() {
+            return {
+              outcome: "rolled_back",
+              reasonCode: "ROLLBACK_COMPLETED",
+              rollbackCompleted: true,
+              rollbackFailureReason: null
+            };
+          }
+        }),
+        lifecycleTranslationFactory: () => ({
+          translatePreparedSurfaceToLifecycleBundle({ preparedSurface }) {
+            return {
+              outcome: "translated",
+              reasonCode: "ONE_FRAME_LIFECYCLE_BUNDLE_TRANSLATED",
+              lifecycleRegistrationAttempted: true,
+              lifecycleRegistrationSucceeded: true,
+              lifecycleBundle: {
+                ownershipMode: "ONE_FRAME_SURFACE_ONLY",
+                map: preparedSurface.map,
+                pane: preparedSurface.pane,
+                canvas: preparedSurface.canvas
+              }
+            };
+          }
+        }),
+        lifecycleOwnerFactory: () => ({
+          registerOwnedResources() {
+            return {
+              outcome: "registered",
+              reasonCode: "OWNERSHIP_REGISTERED",
+              status: { ownershipRegistered: true }
+            };
+          },
+          disposeOwnedResources() {
+            return {
+              outcome: "disposed",
+              reasonCode: "CLEANUP_COMPLETED",
+              status: {
+                cleanupCompleted: true,
+                cleanupFailed: false,
+                cleanupFailureReasons: []
+              }
+            };
+          }
+        }),
+        frameSnapshotProvider: () => () => {
+          throw new RangeError("Maximum call stack size exceeded");
+        },
+        drawFunctionProvider: () => () => ({
+          outcome: "drawn",
+          reasonCode: "FRAME_DRAW_COMPLETED"
+        }),
+        drawOperationFactory: () => ({
+          drawPreparedSurfaceExactlyOnce() {
+            return {
+              outcome: "completed",
+              reasonCode: "LIVE_ONE_FRAME_DRAW_COMPLETED",
+              drawAttemptCount: 1,
+              completedFrameCount: 1
+            };
+          }
+        })
+      })
+    }).command;
+
+    const globalObject = globalThis;
+    globalThis.GrowGoDeveloperDiagnostics = {};
+    moduleUnderTest.installDeveloperOnlyAtlasCustom25DOneFrameCommand({
+      globalObject,
+      command
+    });
+
+    globalThis.GrowGoDeveloperDiagnostics
+      .resetCustom25DOneFrameInvocationBoundaryTrace("TEST_PREP");
+
+    const result = await globalThis.GrowGoDeveloperDiagnostics
+      .runAuthorizedAtlasCustom25DOneFrame({
+        confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+      });
+    const trace = globalThis.GrowGoDeveloperDiagnostics
+      .getCustom25DOneFrameInvocationBoundaryTrace();
+
+    assert.equal(result.outcome, "failed_closed");
+    assert.equal(result.reasonCode, "MAXIMUM_CALL_STACK_SIZE_EXCEEDED");
+    assert.equal(result.frameSnapshotCreated, false);
+    assert.equal(result.drawAttemptCount, 0);
+    assert.equal(result.commandBridgeAvailable, false);
+    assert.equal(result.adapterBridgeAvailable, false);
+    assert.equal(result.bridgeSource, null);
+    assert.equal(result.adapterReceivedBridge, false);
+    assert.equal(
+      result.adapterBridgeResolutionFunction,
+      "adapter.resolveRuntimeOneFrameBridge"
+    );
+    assert.equal(result.hasBridge, true);
+    assert.equal(result.hasRawLeafletMapReference, true);
+    assert.equal(result.mapObjectType, "object:Object");
+    assert.equal(result.mapValidationResult, "present");
+    assert.equal(result.mapValidationFailureReason, null);
+    assert.equal(result.mapAvailabilityFailureFunction, null);
+    assert.equal(result.surfacePreparationInputReady, true);
+    assert.equal(trace.reachedSurfacePrepared, true);
+    assert.equal(trace.reachedSnapshotArgumentConstruction, true);
+    assert.equal(trace.reachedSnapshotBridgeInvocation, true);
+    assert.equal(trace.reachedCreateCustom25DFrameViewportSnapshotCaller, true);
+    assert.equal(trace.lastFailedFunctionName, "adapter.invokeFrameSnapshotBridge");
+    assert.equal(
+      trace.previousFunctionNameBeforeFailure,
+      "adapter.invokeFrameSnapshotBridge"
+    );
+    assert.equal(trace.lastExceptionName, "RangeError");
+    assert.equal(trace.lastExceptionReasonCode, "MAXIMUM_CALL_STACK_SIZE_EXCEEDED");
+    assert.equal(trace.stackOverflowDetected, true);
+    assert.deepEqual(result.canonicalSafetyFlagSnapshot, {
+      runtimeExecutionEnabled: false,
+      mapAttachmentAllowed: false,
+      automaticRendererExecutionAllowed: false,
+      lifecycleExecutionEnabled: false
+    });
+  } finally {
+    if (previousNamespace === undefined) {
+      delete globalThis.GrowGoDeveloperDiagnostics;
+    } else {
+      globalThis.GrowGoDeveloperDiagnostics = previousNamespace;
+    }
+    delete globalThis.__GROWGO_ATLAS_ONE_FRAME_INVOCATION_BOUNDARY_TRACE__;
+  }
+});
+
+test("command reports global bridge availability and adapter bridge recovery when the adapter loses its startup handoff", async () => {
+  const previousNamespace = globalThis.GrowGoDeveloperDiagnostics;
+  try {
+    let snapshotCalls = 0;
+    let drawCalls = 0;
+    const lateMap = {
+      id: "bridge-map",
+      getPane() {
+        return { dataset: { owner: "custom25DMapPane" } };
+      },
+      createPane() {
+        return { dataset: { owner: "custom25DMapPane" } };
+      },
+      getSize() {
+        return { x: 640, y: 360 };
+      },
+      getBounds() {
+        return {
+          getNorthWest() {
+            return { lat: -38.1, lng: 145.2 };
+          }
+        };
+      },
+      latLngToLayerPoint() {
+        return { x: 12, y: 34 };
+      },
+      getZoom() {
+        return 16;
+      }
+    };
+
+    globalThis.GrowGoDeveloperDiagnostics = {
+      getCustom25DOneFrameBridge() {
+        return {
+          rawLeafletMapReference: lateMap,
+          createCustom25DFrameViewportSnapshotForOneFrame() {
+            snapshotCalls += 1;
+            return {
+              outcome: "snapshot_created",
+              reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+              frameViewportSnapshot: {
+                logicalWidth: 640,
+                logicalHeight: 360,
+                backingWidth: 1280,
+                backingHeight: 720,
+                devicePixelRatio: 2,
+                zoom: 16
+              }
+            };
+          },
+          drawCustom25DOneFrameFromSnapshot() {
+            drawCalls += 1;
+            return {
+              outcome: "drawn",
+              reasonCode: "FRAME_DRAW_COMPLETED"
+            };
+          }
+        };
+      },
+      getCustom25DOneFrameBridgeDebug() {
+        return {
+          bridgeSource: "phase-211.50m-freeze-raw-leaflet-map-object"
+        };
+      }
+    };
+
+    const command = createEnvironment({
+      adapter: adapterModule.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+        rawLeafletMapReference: null,
+        rawLeafletMapProvider: null,
+        leafletProvider: () => ({
+          DomUtil: {
+            create() {},
+            setPosition() {}
+          }
+        }),
+        surfaceOperationsFactory: () => ({
+          prepareOneFrameSurface() {
+            return {
+              outcome: "prepared",
+              reasonCode: "LIVE_SURFACE_PREPARED",
+              surface: {
+                map: lateMap,
+                pane: { dataset: { owner: "custom25DMapPane" } },
+                canvas: { className: "custom-25d-map-canvas" }
+              }
+            };
+          },
+          rollbackPreparedSurface() {
+            return {
+              outcome: "rolled_back",
+              reasonCode: "ROLLBACK_COMPLETED",
+              rollbackCompleted: true,
+              rollbackFailureReason: null
+            };
+          }
+        }),
+        lifecycleTranslationFactory: () => ({
+          translatePreparedSurfaceToLifecycleBundle({ preparedSurface }) {
+            return {
+              outcome: "translated",
+              reasonCode: "ONE_FRAME_LIFECYCLE_BUNDLE_TRANSLATED",
+              lifecycleRegistrationAttempted: true,
+              lifecycleRegistrationSucceeded: true,
+              lifecycleBundle: {
+                ownershipMode: "ONE_FRAME_SURFACE_ONLY",
+                map: preparedSurface.map,
+                pane: preparedSurface.pane,
+                canvas: preparedSurface.canvas
+              }
+            };
+          }
+        }),
+        lifecycleOwnerFactory: () => ({
+          registerOwnedResources() {
+            return {
+              outcome: "registered",
+              reasonCode: "OWNERSHIP_REGISTERED",
+              status: { ownershipRegistered: true }
+            };
+          },
+          disposeOwnedResources() {
+            return {
+              outcome: "disposed",
+              reasonCode: "CLEANUP_COMPLETED",
+              status: {
+                cleanupCompleted: true,
+                cleanupFailed: false,
+                cleanupFailureReasons: []
+              }
+            };
+          }
+        }),
+        frameSnapshotProvider: () => null,
+        drawFunctionProvider: () => null,
+        drawOperationFactory: ({ drawFunctionProvider }) => ({
+          drawPreparedSurfaceExactlyOnce(input) {
+            const draw = drawFunctionProvider();
+            const bridgeResult = draw(input);
+            return {
+              outcome: bridgeResult?.outcome === "drawn" ? "completed" : "failed_closed",
+              reasonCode:
+                bridgeResult?.outcome === "drawn"
+                  ? "LIVE_ONE_FRAME_DRAW_COMPLETED"
+                  : bridgeResult?.reasonCode ?? "DRAW_BRIDGE_FAILED",
+              drawAttemptCount: 1,
+              completedFrameCount: bridgeResult?.outcome === "drawn" ? 1 : 0
+            };
+          }
+        })
+      })
+    }).command;
+
+    const result = await command.runAuthorizedAtlasCustom25DOneFrame({
+      confirmation: "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME"
+    });
+
+    assert.equal(result.outcome, "completed");
+    assert.equal(result.commandBridgeAvailable, true);
+    assert.equal(result.adapterBridgeAvailable, true);
+    assert.equal(
+      result.bridgeSource,
+      "phase-211.50m-freeze-raw-leaflet-map-object"
+    );
+    assert.equal(result.adapterReceivedBridge, true);
+    assert.equal(
+      result.adapterBridgeResolutionFunction,
+      "adapter.resolveInjectedRuntimeOneFrameBridge"
+    );
+    assert.equal(result.hasRawLeafletMapReference, true);
+    assert.equal(result.frameSnapshotCreated, true);
+    assert.equal(result.completedFrameCount, 1);
+    assert.equal(snapshotCalls, 1);
+    assert.equal(drawCalls, 1);
+  } finally {
+    if (previousNamespace === undefined) {
+      delete globalThis.GrowGoDeveloperDiagnostics;
+    } else {
+      globalThis.GrowGoDeveloperDiagnostics = previousNamespace;
+    }
+    delete globalThis.__GROWGO_ATLAS_ONE_FRAME_INVOCATION_BOUNDARY_TRACE__;
+  }
 });
 
 test("installed namespace command explicitly returns the underlying promise result", async () => {

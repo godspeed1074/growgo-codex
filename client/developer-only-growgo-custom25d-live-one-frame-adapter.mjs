@@ -22,6 +22,10 @@ const STATUS_SCHEMA_ID =
 const RESULT_SCHEMA_ID =
   "GROWGO_CUSTOM25D_DEVELOPER_ONLY_LIVE_ONE_FRAME_ADAPTER_RESULT_001";
 const EXACT_PANE_NAME = "custom25DMapPane";
+const ADAPTER_VERSION_TAG = "atlas21150x";
+const ADAPTER_SOURCE_TAG =
+  "client/developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150x";
+const MODULE_LOAD_TIMESTAMP = new Date().toISOString();
 
 function canonicalSafetyFlags() {
   return deepFreeze({
@@ -56,6 +60,89 @@ function isObjectLike(value) {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
 
+function describeMapObjectType(value) {
+  if (value === null) {
+    return "null";
+  }
+
+  if (value === undefined) {
+    return "undefined";
+  }
+
+  if (Array.isArray(value)) {
+    return "array";
+  }
+
+  const valueType = typeof value;
+  if (valueType !== "object") {
+    return valueType;
+  }
+
+  const constructorName =
+    typeof value?.constructor?.name === "string" && value.constructor.name.trim()
+      ? value.constructor.name.trim()
+      : "Object";
+
+  return `object:${constructorName}`;
+}
+
+function readRuntimeOneFrameBridgeNamespace() {
+  const namespace = globalThis?.GrowGoDeveloperDiagnostics;
+  return namespace && typeof namespace === "object" ? namespace : null;
+}
+
+function resolveRuntimeOneFrameBridge() {
+  const namespace = readRuntimeOneFrameBridgeNamespace();
+  const bridgeGetter = namespace?.getCustom25DOneFrameBridge;
+  const bridgeDebugGetter = namespace?.getCustom25DOneFrameBridgeDebug;
+
+  if (typeof bridgeGetter !== "function") {
+    return {
+      bridgeAvailable: false,
+      bridge: null,
+      bridgeSource: null,
+      hasRawLeafletMapReference: false,
+      adapterReceivedBridge: false,
+      adapterBridgeResolutionFunction: "adapter.resolveRuntimeOneFrameBridge"
+    };
+  }
+
+  const bridge = bridgeGetter.call(namespace) ?? null;
+  const debug =
+    typeof bridgeDebugGetter === "function" ? bridgeDebugGetter.call(namespace) : null;
+
+  return {
+    bridgeAvailable: !!bridge && typeof bridge === "object",
+    bridge,
+    bridgeSource:
+      (typeof debug?.bridgeSource === "string" && debug.bridgeSource) ||
+      "UNKNOWN_BRIDGE_SOURCE",
+    hasRawLeafletMapReference: !!bridge?.rawLeafletMapReference,
+    adapterReceivedBridge: !!bridge && typeof bridge === "object",
+    adapterBridgeResolutionFunction: "adapter.resolveRuntimeOneFrameBridge"
+  };
+}
+
+function resolveInjectedRuntimeOneFrameBridge(options = {}) {
+  const injectedBridge = options?.bridge ?? null;
+  const injectedBridgeSource =
+    typeof options?.bridgeSource === "string" && options.bridgeSource
+      ? options.bridgeSource
+      : null;
+  const injectedHasRawLeafletMapReference =
+    options?.hasRawLeafletMapReference === true ||
+    !!injectedBridge?.rawLeafletMapReference;
+
+  return {
+    bridgeAvailable: !!injectedBridge && typeof injectedBridge === "object",
+    bridge: injectedBridge,
+    bridgeSource: injectedBridgeSource,
+    hasRawLeafletMapReference: injectedHasRawLeafletMapReference,
+    adapterReceivedBridge: !!injectedBridge && typeof injectedBridge === "object",
+    adapterBridgeResolutionFunction: "adapter.resolveInjectedRuntimeOneFrameBridge"
+  };
+}
+
 function traceSafariSnapshotRuntime(functionName, callback) {
   const trace = globalThis?.__GROWGO_ATLAS_ONE_FRAME_TRACE__;
 
@@ -72,6 +159,145 @@ function traceSafariSnapshotRuntime(functionName, callback) {
     return callback();
   } finally {
     trace.exit(functionName);
+  }
+}
+
+function readInvocationBoundaryTrace() {
+  const trace = globalThis?.__GROWGO_ATLAS_ONE_FRAME_INVOCATION_BOUNDARY_TRACE__;
+
+  if (
+    !trace ||
+    typeof trace.enter !== "function" ||
+    typeof trace.exit !== "function" ||
+    typeof trace.exception !== "function"
+  ) {
+    return null;
+  }
+
+  return trace;
+}
+
+function markInvocationBoundaryMilestone(milestoneName) {
+  const trace = readInvocationBoundaryTrace();
+  if (trace && typeof trace.mark === "function") {
+    trace.mark(milestoneName);
+  }
+}
+
+function traceInvocationBoundary(functionName, callback, detail = null) {
+  const trace = readInvocationBoundaryTrace();
+
+  if (!trace) {
+    return callback();
+  }
+
+  trace.enter(functionName, detail);
+  try {
+    const result = callback();
+    trace.exit(functionName, detail);
+    return result;
+  } catch (error) {
+    trace.exception(functionName, error, detail);
+    throw error;
+  }
+}
+
+function readSnapshotHandoffTrace() {
+  const trace = globalThis?.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__;
+
+  if (
+    !trace ||
+    typeof trace.enter !== "function" ||
+    typeof trace.exit !== "function" ||
+    typeof trace.exception !== "function"
+  ) {
+    return null;
+  }
+
+  return trace;
+}
+
+function readPreSnapshotHandoffTrace() {
+  const trace = globalThis?.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+
+  if (
+    !trace ||
+    typeof trace.enter !== "function" ||
+    typeof trace.exit !== "function" ||
+    typeof trace.exception !== "function" ||
+    typeof trace.update !== "function"
+  ) {
+    return null;
+  }
+
+  return trace;
+}
+
+function updatePreSnapshotHandoffTrace(patch = {}) {
+  const trace = readPreSnapshotHandoffTrace();
+  if (trace) {
+    trace.update(patch);
+  }
+}
+
+function tracePreSnapshotHandoff(functionName, callback, detail = null) {
+  const trace = readPreSnapshotHandoffTrace();
+
+  if (!trace) {
+    return callback();
+  }
+
+  trace.enter(functionName, detail);
+  try {
+    const result = callback();
+    trace.exit(functionName, detail);
+    return result;
+  } catch (error) {
+    trace.exception(functionName, error, detail);
+    throw error;
+  }
+}
+
+function markAdapterPostCallbackTrace(patch = {}) {
+  updatePreSnapshotHandoffTrace({
+    adapterPostCallbackResolutionNextStep: null,
+    adapterEarlyReturnReason: null,
+    adapterExecutionCompletionReason: null,
+    ...patch
+  });
+}
+
+function describeValueType(value) {
+  if (value === null) return "null";
+  if (Array.isArray(value)) return "array";
+  if (typeof value === "object") {
+    return `object:${value?.constructor?.name ?? "Object"}`;
+  }
+  return typeof value;
+}
+
+function markSnapshotHandoffMilestone(milestoneName) {
+  const trace = readSnapshotHandoffTrace();
+  if (trace && typeof trace.mark === "function") {
+    trace.mark(milestoneName);
+  }
+}
+
+function traceSnapshotHandoff(functionName, callback, detail = null) {
+  const trace = readSnapshotHandoffTrace();
+
+  if (!trace) {
+    return callback();
+  }
+
+  trace.enter(functionName, detail);
+  try {
+    const result = callback();
+    trace.exit(functionName, detail);
+    return result;
+  } catch (error) {
+    trace.exception(functionName, error, detail);
+    throw error;
   }
 }
 
@@ -129,6 +355,18 @@ function createInitialStatus({
     retentionWritten: false,
     browserActivationExposed: false,
     automaticInvocation: false,
+    hasBridge: frameSnapshotBridgeAvailable,
+    adapterBridgeAvailable: false,
+    commandBridgeAvailable: false,
+    bridgeSource: null,
+    adapterReceivedBridge: false,
+    adapterBridgeResolutionFunction: null,
+    hasRawLeafletMapReference: false,
+    mapObjectType: "unresolved",
+    mapValidationResult: "unresolved",
+    mapValidationFailureReason: null,
+    mapAvailabilityFailureFunction: null,
+    surfacePreparationInputReady: false,
     canonicalSafetyFlagSnapshot: canonicalSafetyFlags()
   };
 }
@@ -178,6 +416,18 @@ function createResult({ operation, outcome, reasonCode, status }) {
     retentionWritten: status.retentionWritten,
     browserActivationExposed: status.browserActivationExposed,
     automaticInvocation: status.automaticInvocation,
+    hasBridge: status.hasBridge,
+    adapterBridgeAvailable: status.adapterBridgeAvailable,
+    commandBridgeAvailable: status.commandBridgeAvailable,
+    bridgeSource: status.bridgeSource,
+    adapterReceivedBridge: status.adapterReceivedBridge,
+    adapterBridgeResolutionFunction: status.adapterBridgeResolutionFunction,
+    hasRawLeafletMapReference: status.hasRawLeafletMapReference,
+    mapObjectType: status.mapObjectType,
+    mapValidationResult: status.mapValidationResult,
+    mapValidationFailureReason: status.mapValidationFailureReason,
+    mapAvailabilityFailureFunction: status.mapAvailabilityFailureFunction,
+    surfacePreparationInputReady: status.surfacePreparationInputReady,
     canonicalSafetyFlagSnapshot: status.canonicalSafetyFlagSnapshot
   });
 }
@@ -457,9 +707,59 @@ function firstMissingDependencyReason({
   return "ADAPTER_DEPENDENCY_MISSING";
 }
 
+function resolveRuntimeRawLeafletMapReference({
+  rawLeafletMapReference,
+  rawLeafletMapProvider,
+  runtimeBridge
+} = {}) {
+  if (rawLeafletMapReference !== undefined && rawLeafletMapReference !== null) {
+    return {
+      ok: true,
+      map: rawLeafletMapReference,
+      source: "rawLeafletMapReference",
+      error: null
+    };
+  }
+
+  if (runtimeBridge?.rawLeafletMapReference) {
+    return {
+      ok: true,
+      map: runtimeBridge.rawLeafletMapReference,
+      source: "runtimeBridge.rawLeafletMapReference",
+      error: null
+    };
+  }
+
+  if (typeof rawLeafletMapProvider !== "function") {
+    return {
+      ok: true,
+      map: null,
+      source: "rawLeafletMapProvider",
+      error: null
+    };
+  }
+
+  try {
+    return {
+      ok: true,
+      map: rawLeafletMapProvider(),
+      source: "rawLeafletMapProvider",
+      error: null
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      map: null,
+      source: "rawLeafletMapProvider",
+      error
+    };
+  }
+}
+
 export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   mapProvider = defaultMapProvider,
   rawLeafletMapProvider = mapProvider,
+  rawLeafletMapReference,
   leafletProvider = defaultLeafletProvider,
   devicePixelRatioProvider = defaultDevicePixelRatioProvider,
   surfaceOperationsFactory = defaultSurfaceOperationsFactory,
@@ -468,10 +768,13 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   frameSnapshotProvider = defaultFrameSnapshotBridgeProvider,
   drawFunctionProvider = defaultDrawBridgeProvider,
   drawOperationFactory = defaultDrawOperationFactory,
-  snapshotMapNormalizer = defaultSnapshotMapNormalizer
+  snapshotMapNormalizer = defaultSnapshotMapNormalizer,
+  postDrawOperationContinuationHooks = null
 } = {}) {
   const constructionFlags = {
-    mapProviderAvailable: typeof rawLeafletMapProvider === "function",
+    mapProviderAvailable:
+      rawLeafletMapReference !== undefined ||
+      typeof rawLeafletMapProvider === "function",
     leafletProviderAvailable: typeof leafletProvider === "function",
     surfaceOperationsAvailable: typeof surfaceOperationsFactory === "function",
     lifecycleTranslationAvailable:
@@ -480,6 +783,143 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     frameSnapshotBridgeAvailable: typeof frameSnapshotProvider === "function",
     drawBridgeAvailable: typeof drawFunctionProvider === "function",
     drawOperationAvailable: typeof drawOperationFactory === "function"
+  };
+  const runtimeIdentity = deepFreeze({
+    adapterVersionTag: ADAPTER_VERSION_TAG,
+    adapterSourceTag: ADAPTER_SOURCE_TAG,
+    moduleLoadTimestamp: MODULE_LOAD_TIMESTAMP,
+    postCallbackTraceFieldsInstalled: true
+  });
+  let executionIdentityState = {
+    adapterExecuteFunctionName: "executeDeveloperOnlyLiveOneFrameAdapter",
+    adapterExecuteFunctionSourceTag: ADAPTER_SOURCE_TAG,
+    postCallbackInstrumentationWrapperEntered: false,
+    payloadAssemblyInstrumentationEntered: false,
+    activeAdapterFunctionReferenceMatchesInstrumentedModuleExport: true,
+    adapterEntryReached: false,
+    adapterEntryFunctionName: "executeDeveloperOnlyLiveOneFrameAdapter",
+    adapterEntryReturnPath: null,
+    adapterEarlyReturnReason: null,
+    nextFunctionAfterAdapterEntry: null,
+    bridgeResolutionStarted: false,
+    snapshotBridgeResolutionStarted: false,
+    drawBridgeResolutionStarted: false,
+    postCallbackWrapperNextFunction: null,
+    postCallbackWrapperExitReason: null,
+    payloadAssemblyGuardEvaluated: false,
+    payloadAssemblyGuardResult: null,
+    payloadAssemblySkippedReason: null,
+    createDrawOperationEntered: false,
+    createDrawOperationFunctionName: "adapter.createDrawOperation",
+    createDrawOperationFactoryAvailable: false,
+    createDrawOperationFactoryCallable: false,
+    createDrawOperationInputCanvasPresent: false,
+    createDrawOperationInputMapPresent: false,
+    createDrawOperationInputDrawCallbackPresent: false,
+    createDrawOperationReturned: false,
+    createDrawOperationResultType: null,
+    createDrawOperationFailureReason: null,
+    createDrawOperationLastFunction: null,
+    createDrawOperationPreviousFunction: null,
+    createDrawOperationExceptionName: null,
+    createDrawOperationExceptionMessage: null,
+    createDrawOperationExceptionReasonCode: null,
+    createDrawOperationSelfCallDetected: false,
+    createDrawOperationExecuteFunctionCallDetected: false,
+    createDrawOperationDiagnosticsNamespaceCallDetected: false,
+    createDrawOperationSnapshotBridgeCallDetected: false,
+    createDrawOperationDrawBridgeResolverCallDetected: false,
+    createDrawOperationLifecycleTranslationCallDetected: false,
+    postDrawOperationContinuationEntered: false,
+    drawOperationLocalAssignmentAttempted: false,
+    drawOperationLocalAssignmentCompleted: false,
+    currentRefsMapAssignmentAttempted: false,
+    currentRefsMapAssignmentCompleted: false,
+    currentRefsLifecycleOwnerAssignmentAttempted: false,
+    currentRefsLifecycleOwnerAssignmentCompleted: false,
+    currentRefsDrawOperationAssignmentAttempted: false,
+    currentRefsDrawOperationAssignmentCompleted: false,
+    prepareOneFrameSurfaceSelected: false,
+    prepareOneFrameSurfaceCallAttempted: false,
+    prepareOneFrameSurfaceCallEntered: false,
+    prepareOneFrameSurfaceCallReturned: false,
+    prepareOneFrameSurfaceResultType: null,
+    surfacePreparationInputReadyStatusWriteAttempted: false,
+    surfacePreparationInputReadyStatusWriteCompleted: false,
+    postDrawOperationLastCompletedStep: null,
+    postDrawOperationNextExpectedStep: null,
+    postDrawOperationFailureFunction: null,
+    postDrawOperationExceptionName: null,
+    postDrawOperationExceptionMessage: null,
+    postDrawOperationExceptionReasonCode: null,
+    postDrawOperationPropertySetterInvoked: false,
+    postDrawOperationProxyTrapInvoked: false,
+    postDrawOperationGetterInvoked: false,
+    postDrawOperationDiagnosticsLookupInvoked: false,
+    postDrawOperationRecursiveCallbackInvoked: false,
+    preparedSurfaceLocalAssignmentAttempted: false,
+    preparedSurfaceLocalAssignmentCompleted: false,
+    preparedSurfacePresent: false,
+    preparedSurfaceType: null,
+    preparedSurfaceKeys: null,
+    preparedSurfaceStatusReadAttempted: false,
+    preparedSurfaceStatusReadCompleted: false,
+    preparedSurfaceStatusValue: null,
+    preparedSurfaceReasonReadAttempted: false,
+    preparedSurfaceReasonReadCompleted: false,
+    preparedSurfaceReasonValue: null,
+    preparedSurfaceCanvasReadAttempted: false,
+    preparedSurfaceCanvasReadCompleted: false,
+    preparedSurfaceCanvasPresent: false,
+    preparedSurfaceMapReadAttempted: false,
+    preparedSurfaceMapReadCompleted: false,
+    preparedSurfaceMapPresent: false,
+    preparedSurfaceLifecycleOwnerReadAttempted: false,
+    preparedSurfaceLifecycleOwnerReadCompleted: false,
+    preparedSurfaceLifecycleOwnerPresent: false,
+    preparedSurfaceLifecycleOwnerSource: null,
+    preparedSurfaceLifecycleOwnerPropertyName: null,
+    preparedSurfaceNestedLifecycleOwnerPresent: false,
+    currentRefsLifecycleOwnerPresentAfterSurfacePreparation: false,
+    payloadLifecycleOwnerResolved: false,
+    payloadLifecycleOwnerResolutionSource: null,
+    payloadLifecycleOwnerResolutionFailureReason: null,
+    payloadAssemblyEntryAttempted: false,
+    payloadAssemblyEntryCompleted: false,
+    preparedSurfaceContinuationLastCompletedStep: null,
+    preparedSurfaceContinuationNextExpectedStep: null,
+    preparedSurfaceContinuationFailureFunction: null,
+    preparedSurfaceContinuationExceptionName: null,
+    preparedSurfaceContinuationExceptionMessage: null,
+    preparedSurfaceContinuationExceptionReasonCode: null,
+    preparedSurfaceGetterInvoked: false,
+    preparedSurfaceProxyTrapInvoked: false,
+    preparedSurfaceRecursiveCallbackInvoked: false,
+    preparedSurfaceDiagnosticsLookupInvoked: false,
+    payloadAssemblyEntryFunction: null,
+    payloadAssemblyContextCreationAttempted: false,
+    payloadAssemblyContextCreationCompleted: false,
+    payloadGuardEvaluationAttempted: false,
+    payloadGuardEvaluationCompleted: false,
+    payloadGuardResult: null,
+    payloadGuardFailureReason: null,
+    payloadContextHasMap: false,
+    payloadContextHasCanvas: false,
+    payloadContextHasViewport: false,
+    payloadContextHasDrawOperation: false,
+    payloadContextHasCallbacks: false,
+    handoffCreationAfterGuardAttempted: false,
+    handoffCreationAfterGuardCompleted: false,
+    payloadAssemblyNextFunction: null,
+    payloadAssemblyLastCompletedStep: null,
+    payloadAssemblyFailureFunction: null,
+    payloadAssemblyExceptionName: null,
+    payloadAssemblyExceptionMessage: null,
+    payloadAssemblyExceptionReasonCode: null,
+    payloadAssemblyGetterInvoked: false,
+    payloadAssemblyProxyTrapInvoked: false,
+    payloadAssemblyRecursiveCallbackInvoked: false,
+    payloadAssemblyDiagnosticsLookupInvoked: false
   };
 
   let status = freezeStatus(createInitialStatus(constructionFlags));
@@ -513,6 +953,45 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
 
   function getAdapterStatus() {
     return status;
+  }
+
+  function getCustom25DOneFrameAdapterRuntimeIdentity() {
+    return runtimeIdentity;
+  }
+
+  function getCustom25DOneFrameAdapterExecutionIdentity() {
+    return deepFreeze({
+      ...executionIdentityState
+    });
+  }
+
+  function notifyContinuationHook(name, payload = {}) {
+    const hook = postDrawOperationContinuationHooks?.[name];
+    if (typeof hook === "function") {
+      return hook(payload);
+    }
+    return undefined;
+  }
+
+  function recordPostDrawStep(patch = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      ...patch
+    };
+  }
+
+  function recordPreparedSurfaceStep(patch = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      ...patch
+    };
+  }
+
+  function recordPayloadAssemblyStep(patch = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      ...patch
+    };
   }
 
   function finalize(operation, outcome, reasonCode, patch = {}) {
@@ -600,10 +1079,153 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
   }
 
   function executeDeveloperOnlyLiveOneFrameAdapter(options = {}) {
+    executionIdentityState = {
+      ...executionIdentityState,
+      adapterEntryReached: true,
+      adapterEntryFunctionName: "executeDeveloperOnlyLiveOneFrameAdapter",
+      adapterEntryReturnPath: null,
+      adapterEarlyReturnReason: null,
+      nextFunctionAfterAdapterEntry: "adapter.resolveInjectedRuntimeOneFrameBridge",
+      bridgeResolutionStarted: false,
+      snapshotBridgeResolutionStarted: false,
+      drawBridgeResolutionStarted: false,
+      postCallbackWrapperNextFunction: null,
+      postCallbackWrapperExitReason: null,
+      payloadAssemblyGuardEvaluated: false,
+      payloadAssemblyGuardResult: null,
+      payloadAssemblySkippedReason: null,
+      createDrawOperationEntered: false,
+      createDrawOperationFactoryAvailable: typeof drawOperationFactory !== "undefined",
+      createDrawOperationFactoryCallable: typeof drawOperationFactory === "function",
+      createDrawOperationInputCanvasPresent: false,
+      createDrawOperationInputMapPresent: false,
+      createDrawOperationInputDrawCallbackPresent: false,
+      createDrawOperationReturned: false,
+      createDrawOperationResultType: null,
+      createDrawOperationFailureReason: null,
+      createDrawOperationLastFunction: null,
+      createDrawOperationPreviousFunction: null,
+      createDrawOperationExceptionName: null,
+      createDrawOperationExceptionMessage: null,
+      createDrawOperationExceptionReasonCode: null,
+      createDrawOperationSelfCallDetected: false,
+      createDrawOperationExecuteFunctionCallDetected: false,
+      createDrawOperationDiagnosticsNamespaceCallDetected: false,
+      createDrawOperationSnapshotBridgeCallDetected: false,
+      createDrawOperationDrawBridgeResolverCallDetected: false,
+      createDrawOperationLifecycleTranslationCallDetected: false,
+      postDrawOperationContinuationEntered: false,
+      drawOperationLocalAssignmentAttempted: false,
+      drawOperationLocalAssignmentCompleted: false,
+      currentRefsMapAssignmentAttempted: false,
+      currentRefsMapAssignmentCompleted: false,
+      currentRefsLifecycleOwnerAssignmentAttempted: false,
+      currentRefsLifecycleOwnerAssignmentCompleted: false,
+      currentRefsDrawOperationAssignmentAttempted: false,
+      currentRefsDrawOperationAssignmentCompleted: false,
+      prepareOneFrameSurfaceSelected: false,
+      prepareOneFrameSurfaceCallAttempted: false,
+      prepareOneFrameSurfaceCallEntered: false,
+      prepareOneFrameSurfaceCallReturned: false,
+      prepareOneFrameSurfaceResultType: null,
+      surfacePreparationInputReadyStatusWriteAttempted: false,
+      surfacePreparationInputReadyStatusWriteCompleted: false,
+      postDrawOperationLastCompletedStep: null,
+      postDrawOperationNextExpectedStep: null,
+      postDrawOperationFailureFunction: null,
+      postDrawOperationExceptionName: null,
+      postDrawOperationExceptionMessage: null,
+      postDrawOperationExceptionReasonCode: null,
+      postDrawOperationPropertySetterInvoked: false,
+      postDrawOperationProxyTrapInvoked: false,
+      postDrawOperationGetterInvoked: false,
+      postDrawOperationDiagnosticsLookupInvoked: false,
+      postDrawOperationRecursiveCallbackInvoked: false,
+      preparedSurfaceLocalAssignmentAttempted: false,
+      preparedSurfaceLocalAssignmentCompleted: false,
+      preparedSurfacePresent: false,
+      preparedSurfaceType: null,
+      preparedSurfaceKeys: null,
+      preparedSurfaceStatusReadAttempted: false,
+      preparedSurfaceStatusReadCompleted: false,
+      preparedSurfaceStatusValue: null,
+      preparedSurfaceReasonReadAttempted: false,
+      preparedSurfaceReasonReadCompleted: false,
+      preparedSurfaceReasonValue: null,
+      preparedSurfaceCanvasReadAttempted: false,
+      preparedSurfaceCanvasReadCompleted: false,
+      preparedSurfaceCanvasPresent: false,
+      preparedSurfaceMapReadAttempted: false,
+      preparedSurfaceMapReadCompleted: false,
+      preparedSurfaceMapPresent: false,
+      preparedSurfaceLifecycleOwnerReadAttempted: false,
+      preparedSurfaceLifecycleOwnerReadCompleted: false,
+      preparedSurfaceLifecycleOwnerPresent: false,
+      preparedSurfaceLifecycleOwnerSource: null,
+      preparedSurfaceLifecycleOwnerPropertyName: null,
+      preparedSurfaceNestedLifecycleOwnerPresent: false,
+      currentRefsLifecycleOwnerPresentAfterSurfacePreparation: false,
+      payloadLifecycleOwnerResolved: false,
+      payloadLifecycleOwnerResolutionSource: null,
+      payloadLifecycleOwnerResolutionFailureReason: null,
+      payloadAssemblyEntryAttempted: false,
+      payloadAssemblyEntryCompleted: false,
+      preparedSurfaceContinuationLastCompletedStep: null,
+      preparedSurfaceContinuationNextExpectedStep: null,
+      preparedSurfaceContinuationFailureFunction: null,
+      preparedSurfaceContinuationExceptionName: null,
+      preparedSurfaceContinuationExceptionMessage: null,
+      preparedSurfaceContinuationExceptionReasonCode: null,
+      preparedSurfaceGetterInvoked: false,
+      preparedSurfaceProxyTrapInvoked: false,
+      preparedSurfaceRecursiveCallbackInvoked: false,
+      preparedSurfaceDiagnosticsLookupInvoked: false,
+      payloadAssemblyEntryFunction: null,
+      payloadAssemblyContextCreationAttempted: false,
+      payloadAssemblyContextCreationCompleted: false,
+      payloadGuardEvaluationAttempted: false,
+      payloadGuardEvaluationCompleted: false,
+      payloadGuardResult: null,
+      payloadGuardFailureReason: null,
+      payloadContextHasMap: false,
+      payloadContextHasCanvas: false,
+      payloadContextHasViewport: false,
+      payloadContextHasDrawOperation: false,
+      payloadContextHasCallbacks: false,
+      handoffCreationAfterGuardAttempted: false,
+      handoffCreationAfterGuardCompleted: false,
+      payloadAssemblyNextFunction: null,
+      payloadAssemblyLastCompletedStep: null,
+      payloadAssemblyFailureFunction: null,
+      payloadAssemblyExceptionName: null,
+      payloadAssemblyExceptionMessage: null,
+      payloadAssemblyExceptionReasonCode: null,
+      payloadAssemblyGetterInvoked: false,
+      payloadAssemblyProxyTrapInvoked: false,
+      payloadAssemblyRecursiveCallbackInvoked: false,
+      payloadAssemblyDiagnosticsLookupInvoked: false,
+      postCallbackInstrumentationWrapperEntered: true,
+      payloadAssemblyInstrumentationEntered: false,
+      activeAdapterFunctionReferenceMatchesInstrumentedModuleExport: true
+    };
     const deferCleanupUntilRelease =
       isObjectLike(options) && options.deferCleanupUntilRelease === true;
+    updatePreSnapshotHandoffTrace({
+      adapterEntryBridgeReceived: !!options?.bridge,
+      adapterEntryBridgeSource:
+        typeof options?.bridgeSource === "string" ? options.bridgeSource : null,
+      adapterEntryRawLeafletMapReference:
+        options?.hasRawLeafletMapReference === true ||
+        !!options?.bridge?.rawLeafletMapReference
+    });
+    markInvocationBoundaryMilestone("reachedAdapterExecutePath");
 
     if (status.permanentlyClosed || currentRefs.deferredCleanupPending) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "blockSecondInvocation",
+        adapterEarlyReturnReason: "ADAPTER_ALREADY_CLOSED"
+      };
       return blockSecondInvocation();
     }
 
@@ -616,6 +1238,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     });
 
     if (!status.adapterReady) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: firstMissingDependencyReason(constructionFlags)
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -640,28 +1267,130 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     let translationResult = null;
     let drawResult = null;
     let lifecycleRegistered = false;
+    executionIdentityState = {
+      ...executionIdentityState,
+      bridgeResolutionStarted: true
+    };
+    const injectedBridgeDiagnostics = traceInvocationBoundary(
+      "adapter.resolveInjectedRuntimeOneFrameBridge",
+      () => resolveInjectedRuntimeOneFrameBridge(options)
+    );
+    const runtimeBridgeDiagnostics =
+      injectedBridgeDiagnostics.bridgeAvailable === true
+        ? injectedBridgeDiagnostics
+        : traceInvocationBoundary(
+            "adapter.resolveRuntimeOneFrameBridge",
+            () => resolveRuntimeOneFrameBridge()
+          );
 
-    try {
-      map = rawLeafletMapProvider();
-    } catch (error) {
+    const runtimeMapResolution = traceInvocationBoundary(
+      "adapter.resolveRuntimeRawLeafletMapReference",
+      () =>
+        resolveRuntimeRawLeafletMapReference({
+          rawLeafletMapReference,
+          rawLeafletMapProvider,
+          runtimeBridge: runtimeBridgeDiagnostics.bridge
+        })
+    );
+
+    if (!runtimeMapResolution.ok) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(
+          runtimeMapResolution.error,
+          "MAP_PROVIDER_EXCEPTION"
+        )
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
-        toReasonCode(error, "MAP_PROVIDER_EXCEPTION")
+        toReasonCode(runtimeMapResolution.error, "MAP_PROVIDER_EXCEPTION"),
+        {
+          hasBridge: constructionFlags.frameSnapshotBridgeAvailable,
+          adapterBridgeAvailable: runtimeBridgeDiagnostics.bridgeAvailable === true,
+          commandBridgeAvailable: runtimeBridgeDiagnostics.bridgeAvailable === true,
+          bridgeSource: runtimeBridgeDiagnostics.bridgeSource,
+          adapterReceivedBridge:
+            runtimeBridgeDiagnostics.adapterReceivedBridge === true,
+          adapterBridgeResolutionFunction:
+            runtimeBridgeDiagnostics.adapterBridgeResolutionFunction,
+          hasRawLeafletMapReference: false,
+          mapObjectType: "provider_exception",
+          mapValidationResult: "provider_exception",
+          mapValidationFailureReason: toReasonCode(
+            runtimeMapResolution.error,
+            "MAP_PROVIDER_EXCEPTION"
+          ),
+          mapAvailabilityFailureFunction:
+            "adapter.resolveRuntimeRawLeafletMapReference"
+        }
       );
     }
+
+    map = runtimeMapResolution.map ?? null;
+
+    updateStatus({
+      hasBridge: constructionFlags.frameSnapshotBridgeAvailable,
+      adapterBridgeAvailable: runtimeBridgeDiagnostics.bridgeAvailable === true,
+      commandBridgeAvailable: runtimeBridgeDiagnostics.bridgeAvailable === true,
+      bridgeSource: runtimeBridgeDiagnostics.bridgeSource,
+      adapterReceivedBridge:
+        runtimeBridgeDiagnostics.adapterReceivedBridge === true,
+      adapterBridgeResolutionFunction:
+        runtimeBridgeDiagnostics.adapterBridgeResolutionFunction,
+      hasRawLeafletMapReference: map !== null,
+      mapObjectType: describeMapObjectType(map),
+      mapValidationResult: map ? "present" : "missing",
+      mapValidationFailureReason: map ? null : "MAP_REFERENCE_MISSING",
+      mapAvailabilityFailureFunction: map
+        ? null
+        : "adapter.resolveRuntimeRawLeafletMapReference",
+      surfacePreparationInputReady: map !== null
+    });
 
     if (!map) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "MAP_UNAVAILABLE"
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
-        "MAP_UNAVAILABLE"
+        "MAP_UNAVAILABLE",
+        {
+          hasBridge: constructionFlags.frameSnapshotBridgeAvailable,
+          adapterBridgeAvailable: runtimeBridgeDiagnostics.bridgeAvailable === true,
+          commandBridgeAvailable: runtimeBridgeDiagnostics.bridgeAvailable === true,
+          bridgeSource: runtimeBridgeDiagnostics.bridgeSource,
+          adapterReceivedBridge:
+            runtimeBridgeDiagnostics.adapterReceivedBridge === true,
+          adapterBridgeResolutionFunction:
+            runtimeBridgeDiagnostics.adapterBridgeResolutionFunction,
+          hasRawLeafletMapReference: false,
+          mapObjectType: describeMapObjectType(map),
+          mapValidationResult: "missing",
+          mapValidationFailureReason: "MAP_REFERENCE_MISSING",
+          mapAvailabilityFailureFunction:
+            "adapter.resolveRuntimeRawLeafletMapReference",
+          surfacePreparationInputReady: false
+        }
       );
     }
 
     try {
+      executionIdentityState = {
+        ...executionIdentityState,
+        nextFunctionAfterAdapterEntry: "adapter.leafletProvider"
+      };
       leaflet = leafletProvider();
     } catch (error) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(error, "LEAFLET_PROVIDER_EXCEPTION")
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -670,6 +1399,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     if (!validateLeaflet(leaflet)) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "LEAFLET_PROVIDER_INVALID"
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -678,11 +1412,23 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     try {
+      executionIdentityState = {
+        ...executionIdentityState,
+        nextFunctionAfterAdapterEntry: "adapter.surfaceOperationsFactory"
+      };
       surfaceOperations = surfaceOperationsFactory({
         leafletProvider: leaflet,
         devicePixelRatioProvider
       });
     } catch (error) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "SURFACE_OPERATIONS_FACTORY_EXCEPTION"
+        )
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -695,6 +1441,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       typeof surfaceOperations.prepareOneFrameSurface !== "function" ||
       typeof surfaceOperations.rollbackPreparedSurface !== "function"
     ) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "SURFACE_OPERATIONS_UNAVAILABLE"
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -703,8 +1454,20 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     try {
+      executionIdentityState = {
+        ...executionIdentityState,
+        nextFunctionAfterAdapterEntry: "adapter.lifecycleTranslationFactory"
+      };
       lifecycleTranslation = lifecycleTranslationFactory();
     } catch (error) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "LIFECYCLE_TRANSLATION_FACTORY_EXCEPTION"
+        )
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -717,6 +1480,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       typeof lifecycleTranslation.translatePreparedSurfaceToLifecycleBundle !==
         "function"
     ) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "LIFECYCLE_TRANSLATION_UNAVAILABLE"
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -725,8 +1493,17 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     try {
+      executionIdentityState = {
+        ...executionIdentityState,
+        nextFunctionAfterAdapterEntry: "adapter.lifecycleOwnerFactory"
+      };
       lifecycleOwner = lifecycleOwnerFactory();
     } catch (error) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(error, "LIFECYCLE_OWNER_FACTORY_EXCEPTION")
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -739,6 +1516,11 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       typeof lifecycleOwner.registerOwnedResources !== "function" ||
       typeof lifecycleOwner.disposeOwnedResources !== "function"
     ) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "LIFECYCLE_OWNER_UNAVAILABLE"
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -747,8 +1529,37 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     try {
-      snapshotBridge = frameSnapshotProvider();
+      executionIdentityState = {
+        ...executionIdentityState,
+        nextFunctionAfterAdapterEntry: "adapter.resolveFrameSnapshotBridge",
+        snapshotBridgeResolutionStarted: true
+      };
+      snapshotBridge = tracePreSnapshotHandoff(
+        "adapter.resolveFrameSnapshotBridge",
+        () =>
+          traceInvocationBoundary("adapter.resolveFrameSnapshotBridge", () => {
+            markInvocationBoundaryMilestone("reachedSnapshotBridgeProvider");
+            const providerBridge = frameSnapshotProvider();
+            if (typeof providerBridge === "function") {
+              return providerBridge;
+            }
+            const runtimeBridgeSnapshotFunction =
+              runtimeBridgeDiagnostics.bridge
+                ?.createCustom25DFrameViewportSnapshotForOneFrame;
+            return typeof runtimeBridgeSnapshotFunction === "function"
+              ? runtimeBridgeSnapshotFunction.bind(runtimeBridgeDiagnostics.bridge)
+              : providerBridge;
+          })
+      );
     } catch (error) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "FRAME_SNAPSHOT_BRIDGE_PROVIDER_EXCEPTION"
+        )
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -757,6 +1568,15 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     if (typeof snapshotBridge !== "function") {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "FRAME_SNAPSHOT_BRIDGE_UNAVAILABLE"
+      };
+      updatePreSnapshotHandoffTrace({
+        snapshotCallbackExists: snapshotBridge !== undefined && snapshotBridge !== null,
+        snapshotCallbackCallable: false
+      });
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -764,9 +1584,38 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
+    updatePreSnapshotHandoffTrace({
+      snapshotCallbackExists: true,
+      snapshotCallbackCallable: true
+    });
+
     try {
-      drawBridge = drawFunctionProvider();
+      executionIdentityState = {
+        ...executionIdentityState,
+        nextFunctionAfterAdapterEntry: "adapter.resolveDrawBridge",
+        drawBridgeResolutionStarted: true
+      };
+      drawBridge = tracePreSnapshotHandoff(
+        "adapter.resolveDrawBridge",
+        () =>
+          traceInvocationBoundary("adapter.resolveDrawBridge", () => {
+            const providerDrawBridge = drawFunctionProvider();
+            if (typeof providerDrawBridge === "function") {
+              return providerDrawBridge;
+            }
+            const runtimeBridgeDrawFunction =
+              runtimeBridgeDiagnostics.bridge?.drawCustom25DOneFrameFromSnapshot;
+            return typeof runtimeBridgeDrawFunction === "function"
+              ? runtimeBridgeDrawFunction.bind(runtimeBridgeDiagnostics.bridge)
+              : providerDrawBridge;
+          })
+      );
     } catch (error) {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: toReasonCode(error, "DRAW_BRIDGE_PROVIDER_EXCEPTION")
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -775,6 +1624,15 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     }
 
     if (typeof drawBridge !== "function") {
+      executionIdentityState = {
+        ...executionIdentityState,
+        adapterEntryReturnPath: "finalize",
+        adapterEarlyReturnReason: "DRAW_BRIDGE_UNAVAILABLE"
+      };
+      updatePreSnapshotHandoffTrace({
+        drawCallbackExists: drawBridge !== undefined && drawBridge !== null,
+        drawCallbackCallable: false
+      });
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -782,9 +1640,62 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
+    updatePreSnapshotHandoffTrace({
+      drawCallbackExists: true,
+      drawCallbackCallable: true,
+      adapterPostCallbackResolutionNextStep: "adapter.createDrawOperation",
+      adapterEarlyReturnReason: null,
+      adapterExecutionCompletionReason: null,
+      payloadAssemblyEntryMarked: false,
+      payloadAssemblyEntryFunction: "adapter.assembleSnapshotHandoffPayload",
+      payloadAssemblyNotReachedBranchReason: null,
+      payloadAssemblyNotReachedReturnReason: null,
+      postDrawBridgeNextFunction: "adapter.createDrawOperation"
+    });
+    executionIdentityState = {
+      ...executionIdentityState,
+      postCallbackWrapperNextFunction: "adapter.createDrawOperation",
+      postCallbackWrapperExitReason: null,
+      payloadAssemblyGuardEvaluated: false,
+      payloadAssemblyGuardResult: null,
+      payloadAssemblySkippedReason: null,
+      createDrawOperationEntered: false,
+      createDrawOperationFactoryAvailable: typeof drawOperationFactory !== "undefined",
+      createDrawOperationFactoryCallable: typeof drawOperationFactory === "function",
+      createDrawOperationInputCanvasPresent: false,
+      createDrawOperationInputMapPresent: !!map,
+      createDrawOperationInputDrawCallbackPresent: typeof drawBridge === "function",
+      createDrawOperationReturned: false,
+      createDrawOperationResultType: null,
+      createDrawOperationFailureReason: null,
+      createDrawOperationLastFunction: null,
+      createDrawOperationPreviousFunction: null,
+      createDrawOperationExceptionName: null,
+      createDrawOperationExceptionMessage: null,
+      createDrawOperationExceptionReasonCode: null,
+      createDrawOperationSelfCallDetected: false,
+      createDrawOperationExecuteFunctionCallDetected: false,
+      createDrawOperationDiagnosticsNamespaceCallDetected: false,
+      createDrawOperationSnapshotBridgeCallDetected: false,
+      createDrawOperationDrawBridgeResolverCallDetected: false,
+      createDrawOperationLifecycleTranslationCallDetected: false
+    };
+
     let activeFrameViewportSnapshot = null;
 
     try {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.createDrawOperation",
+        nextFunctionAfterAdapterEntry: "adapter.createDrawOperation",
+        postDrawBridgeNextFunction: "adapter.createDrawOperation"
+      });
+      executionIdentityState = {
+        ...executionIdentityState,
+        createDrawOperationEntered: true,
+        createDrawOperationPreviousFunction:
+          executionIdentityState.createDrawOperationLastFunction,
+        createDrawOperationLastFunction: "adapter.createDrawOperation"
+      };
       drawOperation = drawOperationFactory({
         drawFunctionProvider: () => ({ surface, canvas }) =>
           drawBridge({
@@ -794,6 +1705,36 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
           })
       });
     } catch (error) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.createDrawOperation",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "DRAW_OPERATION_FACTORY_EXCEPTION"
+        ),
+        adapterExecutionCompletionReason: toReasonCode(
+          error,
+          "DRAW_OPERATION_FACTORY_EXCEPTION"
+        ),
+        payloadAssemblyNotReachedBranchReason: "DRAW_OPERATION_FACTORY_EXCEPTION",
+        payloadAssemblyNotReachedReturnReason: toReasonCode(
+          error,
+          "DRAW_OPERATION_FACTORY_EXCEPTION"
+        )
+      });
+      executionIdentityState = {
+        ...executionIdentityState,
+        createDrawOperationReturned: false,
+        createDrawOperationFailureReason: toReasonCode(
+          error,
+          "DRAW_OPERATION_FACTORY_EXCEPTION"
+        ),
+        createDrawOperationExceptionName: error?.name ?? "Error",
+        createDrawOperationExceptionMessage: error?.message ?? null,
+        createDrawOperationExceptionReasonCode: toReasonCode(
+          error,
+          "DRAW_OPERATION_FACTORY_EXCEPTION"
+        )
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -805,20 +1746,269 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       !drawOperation ||
       typeof drawOperation.drawPreparedSurfaceExactlyOnce !== "function"
     ) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.createDrawOperation",
+        adapterEarlyReturnReason: "DRAW_OPERATION_UNAVAILABLE",
+        adapterExecutionCompletionReason: "DRAW_OPERATION_UNAVAILABLE",
+        payloadAssemblyNotReachedBranchReason: "DRAW_OPERATION_UNAVAILABLE",
+        payloadAssemblyNotReachedReturnReason: "DRAW_OPERATION_UNAVAILABLE"
+      });
+      executionIdentityState = {
+        ...executionIdentityState,
+        createDrawOperationReturned: true,
+        createDrawOperationResultType:
+          drawOperation === null
+            ? "null"
+            : Array.isArray(drawOperation)
+              ? "array"
+              : typeof drawOperation === "object"
+                ? `object:${drawOperation?.constructor?.name ?? "Object"}`
+                : typeof drawOperation,
+        createDrawOperationFailureReason: "DRAW_OPERATION_UNAVAILABLE"
+      };
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
         "DRAW_OPERATION_UNAVAILABLE"
       );
     }
-
-    currentRefs.map = map;
-    currentRefs.lifecycleOwner = lifecycleOwner;
-    currentRefs.drawOperation = drawOperation;
+    executionIdentityState = {
+      ...executionIdentityState,
+      createDrawOperationReturned: true,
+      createDrawOperationResultType:
+        typeof drawOperation === "object"
+          ? `object:${drawOperation?.constructor?.name ?? "Object"}`
+          : typeof drawOperation
+    };
+    recordPostDrawStep({
+      postDrawOperationContinuationEntered: true,
+      drawOperationLocalAssignmentAttempted: true,
+      drawOperationLocalAssignmentCompleted: true,
+      postDrawOperationLastCompletedStep: "drawOperationLocalAssignmentCompleted",
+      postDrawOperationNextExpectedStep: "currentRefs.map assignment"
+    });
 
     try {
-      surfaceResult = surfaceOperations.prepareOneFrameSurface({ map });
+      recordPostDrawStep({
+        currentRefsMapAssignmentAttempted: true,
+        postDrawOperationNextExpectedStep: "currentRefs.map assignment"
+      });
+      notifyContinuationHook("beforeCurrentRefsMapAssignment", { map, currentRefs });
+      currentRefs.map = map;
+      notifyContinuationHook("afterCurrentRefsMapAssignment", { map, currentRefs });
+      recordPostDrawStep({
+        currentRefsMapAssignmentCompleted: true,
+        postDrawOperationLastCompletedStep: "currentRefs.map assignment",
+        postDrawOperationNextExpectedStep: "currentRefs.lifecycleOwner assignment"
+      });
     } catch (error) {
+      recordPostDrawStep({
+        postDrawOperationFailureFunction: "currentRefs.map assignment",
+        postDrawOperationExceptionName: error?.name ?? "Error",
+        postDrawOperationExceptionMessage: error?.message ?? null,
+        postDrawOperationExceptionReasonCode: toReasonCode(
+          error,
+          "CURRENT_REFS_MAP_ASSIGNMENT_EXCEPTION"
+        ),
+        postDrawOperationPropertySetterInvoked: true,
+        postDrawOperationFailureReason:
+          toReasonCode(error, "CURRENT_REFS_MAP_ASSIGNMENT_EXCEPTION")
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        "CURRENT_REFS_MAP_ASSIGNMENT_EXCEPTION"
+      );
+    }
+
+    try {
+      recordPostDrawStep({
+        currentRefsLifecycleOwnerAssignmentAttempted: true,
+        postDrawOperationNextExpectedStep: "currentRefs.lifecycleOwner assignment"
+      });
+      notifyContinuationHook("beforeCurrentRefsLifecycleOwnerAssignment", {
+        lifecycleOwner,
+        currentRefs
+      });
+      currentRefs.lifecycleOwner = lifecycleOwner;
+      notifyContinuationHook("afterCurrentRefsLifecycleOwnerAssignment", {
+        lifecycleOwner,
+        currentRefs
+      });
+      recordPostDrawStep({
+        currentRefsLifecycleOwnerAssignmentCompleted: true,
+        postDrawOperationLastCompletedStep: "currentRefs.lifecycleOwner assignment",
+        postDrawOperationNextExpectedStep: "currentRefs.drawOperation assignment"
+      });
+    } catch (error) {
+      recordPostDrawStep({
+        postDrawOperationFailureFunction: "currentRefs.lifecycleOwner assignment",
+        postDrawOperationExceptionName: error?.name ?? "Error",
+        postDrawOperationExceptionMessage: error?.message ?? null,
+        postDrawOperationExceptionReasonCode: toReasonCode(
+          error,
+          "CURRENT_REFS_LIFECYCLE_ASSIGNMENT_EXCEPTION"
+        ),
+        postDrawOperationPropertySetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        "CURRENT_REFS_LIFECYCLE_ASSIGNMENT_EXCEPTION"
+      );
+    }
+
+    try {
+      recordPostDrawStep({
+        currentRefsDrawOperationAssignmentAttempted: true,
+        postDrawOperationNextExpectedStep: "currentRefs.drawOperation assignment"
+      });
+      notifyContinuationHook("beforeCurrentRefsDrawOperationAssignment", {
+        drawOperation,
+        currentRefs
+      });
+      currentRefs.drawOperation = drawOperation;
+      notifyContinuationHook("afterCurrentRefsDrawOperationAssignment", {
+        drawOperation,
+        currentRefs
+      });
+      recordPostDrawStep({
+        currentRefsDrawOperationAssignmentCompleted: true,
+        postDrawOperationLastCompletedStep: "currentRefs.drawOperation assignment",
+        postDrawOperationNextExpectedStep:
+          "updateStatus(surfacePreparationInputReady)"
+      });
+    } catch (error) {
+      recordPostDrawStep({
+        postDrawOperationFailureFunction: "currentRefs.drawOperation assignment",
+        postDrawOperationExceptionName: error?.name ?? "Error",
+        postDrawOperationExceptionMessage: error?.message ?? null,
+        postDrawOperationExceptionReasonCode: toReasonCode(
+          error,
+          "CURRENT_REFS_DRAW_OPERATION_ASSIGNMENT_EXCEPTION"
+        ),
+        postDrawOperationPropertySetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        "CURRENT_REFS_DRAW_OPERATION_ASSIGNMENT_EXCEPTION"
+      );
+    }
+
+    markAdapterPostCallbackTrace({
+      adapterPostCallbackResolutionNextStep: "adapter.prepareOneFrameSurface",
+      nextFunctionAfterAdapterEntry: "adapter.prepareOneFrameSurface",
+      postDrawBridgeNextFunction: "adapter.prepareOneFrameSurface"
+    });
+    recordPostDrawStep({
+      prepareOneFrameSurfaceSelected: true,
+      postDrawOperationLastCompletedStep: "adapter.prepareOneFrameSurface selected",
+      postDrawOperationNextExpectedStep:
+        "updateStatus(surfacePreparationInputReady)"
+    });
+
+    try {
+      notifyContinuationHook("beforeSurfacePreparationInputReadyStatusWrite", {
+        map,
+        currentRefs
+      });
+      recordPostDrawStep({
+        surfacePreparationInputReadyStatusWriteAttempted: true
+      });
+      updateStatus({
+        surfacePreparationInputReady: true
+      });
+      recordPostDrawStep({
+        surfacePreparationInputReadyStatusWriteCompleted: true,
+        postDrawOperationLastCompletedStep:
+          "updateStatus(surfacePreparationInputReady)",
+        postDrawOperationNextExpectedStep: "surfaceOperations.prepareOneFrameSurface"
+      });
+      notifyContinuationHook("afterSurfacePreparationInputReadyStatusWrite", {
+        map,
+        currentRefs
+      });
+    } catch (error) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.prepareOneFrameSurface",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION"
+        ),
+        adapterExecutionCompletionReason: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION"
+        ),
+        payloadAssemblyNotReachedBranchReason:
+          "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION",
+        payloadAssemblyNotReachedReturnReason: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION"
+        )
+      });
+      recordPostDrawStep({
+        postDrawOperationFailureFunction:
+          "updateStatus(surfacePreparationInputReady)",
+        postDrawOperationExceptionName: error?.name ?? "Error",
+        postDrawOperationExceptionMessage: error?.message ?? null,
+        postDrawOperationExceptionReasonCode: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION"
+        )
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        toReasonCode(error, "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION")
+      );
+    }
+
+    try {
+      recordPostDrawStep({
+        prepareOneFrameSurfaceCallAttempted: true,
+        prepareOneFrameSurfaceCallEntered: true
+      });
+      notifyContinuationHook("beforePrepareOneFrameSurface", { map, currentRefs });
+      surfaceResult = surfaceOperations.prepareOneFrameSurface({ map });
+      notifyContinuationHook("afterPrepareOneFrameSurface", {
+        map,
+        currentRefs,
+        surfaceResult
+      });
+      recordPostDrawStep({
+        prepareOneFrameSurfaceCallReturned: true,
+        prepareOneFrameSurfaceResultType: describeValueType(surfaceResult),
+        postDrawOperationLastCompletedStep:
+          "surfaceOperations.prepareOneFrameSurface returned",
+        postDrawOperationNextExpectedStep: "payload assembly entry"
+      });
+    } catch (error) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.prepareOneFrameSurface",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_EXCEPTION"
+        ),
+        adapterExecutionCompletionReason: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_EXCEPTION"
+        ),
+        payloadAssemblyNotReachedBranchReason: "SURFACE_PREPARATION_EXCEPTION",
+        payloadAssemblyNotReachedReturnReason: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_EXCEPTION"
+        )
+      });
+      recordPostDrawStep({
+        postDrawOperationFailureFunction: "adapter.prepareOneFrameSurface",
+        postDrawOperationExceptionName: error?.name ?? "Error",
+        postDrawOperationExceptionMessage: error?.message ?? null,
+        postDrawOperationExceptionReasonCode: toReasonCode(
+          error,
+          "SURFACE_PREPARATION_EXCEPTION"
+        )
+      });
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
@@ -826,25 +2016,296 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
-    if (surfaceResult?.outcome !== "prepared" || !surfaceResult?.surface) {
+    let preparedSurface = null;
+    let preparedSurfaceStatusValue = null;
+    let preparedSurfaceReasonValue = null;
+    let preparedSurfacePayload = null;
+    let preparedSurfaceCanvas = null;
+    let preparedSurfaceMap = null;
+    let preparedSurfaceLifecycleOwner = null;
+    let preparedSurfaceLifecycleOwnerSource = null;
+    let preparedSurfaceLifecycleOwnerPropertyName = null;
+    let preparedSurfaceNestedLifecycleOwnerPresent = false;
+    let payloadLifecycleOwner = null;
+    let payloadLifecycleOwnerResolutionSource = null;
+
+    try {
+      recordPreparedSurfaceStep({
+        preparedSurfaceLocalAssignmentAttempted: true,
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface local assignment"
+      });
+      preparedSurface = surfaceResult;
+      recordPreparedSurfaceStep({
+        preparedSurfaceLocalAssignmentCompleted: true,
+        preparedSurfacePresent: preparedSurface !== null && preparedSurface !== undefined,
+        preparedSurfaceType: describeValueType(preparedSurface),
+        preparedSurfaceKeys:
+          preparedSurface && typeof preparedSurface === "object"
+            ? Object.keys(preparedSurface)
+            : [],
+        preparedSurfaceContinuationLastCompletedStep:
+          "preparedSurface local assignment",
+        preparedSurfaceContinuationNextExpectedStep:
+          "preparedSurface status/reason read"
+      });
+    } catch (error) {
+      const preparedSurfaceLocalAssignmentReasonCode =
+        "PREPARED_SURFACE_LOCAL_ASSIGNMENT_EXCEPTION";
+      recordPreparedSurfaceStep({
+        preparedSurfaceContinuationFailureFunction: "preparedSurface local assignment",
+        preparedSurfaceContinuationExceptionName: error?.name ?? "Error",
+        preparedSurfaceContinuationExceptionMessage: error?.message ?? null,
+        preparedSurfaceContinuationExceptionReasonCode:
+          preparedSurfaceLocalAssignmentReasonCode,
+        preparedSurfaceProxyTrapInvoked: true
+      });
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
         "failed_closed",
-        surfaceResult?.reasonCode ?? "SURFACE_PREPARATION_FAILED"
+        preparedSurfaceLocalAssignmentReasonCode
       );
     }
 
-    currentRefs.surface = surfaceResult.surface;
+    try {
+      recordPreparedSurfaceStep({
+        preparedSurfaceStatusReadAttempted: true,
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface status read"
+      });
+      preparedSurfaceStatusValue = preparedSurface?.outcome ?? null;
+      recordPreparedSurfaceStep({
+        preparedSurfaceStatusReadCompleted: true,
+        preparedSurfaceStatusValue,
+        preparedSurfaceContinuationLastCompletedStep: "preparedSurface status read",
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface reason read"
+      });
+    } catch (error) {
+      const preparedSurfaceStatusReadReasonCode =
+        "PREPARED_SURFACE_STATUS_READ_EXCEPTION";
+      recordPreparedSurfaceStep({
+        preparedSurfaceContinuationFailureFunction: "preparedSurface.outcome read",
+        preparedSurfaceContinuationExceptionName: error?.name ?? "Error",
+        preparedSurfaceContinuationExceptionMessage: error?.message ?? null,
+        preparedSurfaceContinuationExceptionReasonCode:
+          preparedSurfaceStatusReadReasonCode,
+        preparedSurfaceGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        preparedSurfaceStatusReadReasonCode
+      );
+    }
+
+    try {
+      recordPreparedSurfaceStep({
+        preparedSurfaceReasonReadAttempted: true,
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface reason read"
+      });
+      preparedSurfaceReasonValue = preparedSurface?.reasonCode ?? null;
+      recordPreparedSurfaceStep({
+        preparedSurfaceReasonReadCompleted: true,
+        preparedSurfaceReasonValue,
+        preparedSurfaceContinuationLastCompletedStep: "preparedSurface reason read",
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface canvas read"
+      });
+    } catch (error) {
+      const preparedSurfaceReasonReadReasonCode =
+        "PREPARED_SURFACE_REASON_READ_EXCEPTION";
+      recordPreparedSurfaceStep({
+        preparedSurfaceContinuationFailureFunction: "preparedSurface.reasonCode read",
+        preparedSurfaceContinuationExceptionName: error?.name ?? "Error",
+        preparedSurfaceContinuationExceptionMessage: error?.message ?? null,
+        preparedSurfaceContinuationExceptionReasonCode:
+          preparedSurfaceReasonReadReasonCode,
+        preparedSurfaceGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        preparedSurfaceReasonReadReasonCode
+      );
+    }
+
+    try {
+      recordPreparedSurfaceStep({
+        preparedSurfaceCanvasReadAttempted: true,
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface canvas read"
+      });
+      preparedSurfacePayload = preparedSurface?.surface ?? null;
+      preparedSurfaceCanvas = preparedSurfacePayload?.canvas ?? null;
+      recordPreparedSurfaceStep({
+        preparedSurfaceCanvasReadCompleted: true,
+        preparedSurfaceCanvasPresent: !!preparedSurfaceCanvas,
+        preparedSurfaceContinuationLastCompletedStep: "preparedSurface canvas read",
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface lifecycle read"
+      });
+    } catch (error) {
+      const preparedSurfaceCanvasReadReasonCode =
+        "PREPARED_SURFACE_CANVAS_READ_EXCEPTION";
+      recordPreparedSurfaceStep({
+        preparedSurfaceContinuationFailureFunction: "preparedSurface.surface.canvas read",
+        preparedSurfaceContinuationExceptionName: error?.name ?? "Error",
+        preparedSurfaceContinuationExceptionMessage: error?.message ?? null,
+        preparedSurfaceContinuationExceptionReasonCode:
+          preparedSurfaceCanvasReadReasonCode,
+        preparedSurfaceGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        preparedSurfaceCanvasReadReasonCode
+      );
+    }
+
+    try {
+      recordPreparedSurfaceStep({
+        preparedSurfaceLifecycleOwnerReadAttempted: true,
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface lifecycle read"
+      });
+      preparedSurfaceNestedLifecycleOwnerPresent =
+        !!preparedSurfacePayload?.operationState?.lifecycleOwner ||
+        !!preparedSurface?.operationState?.lifecycleOwner;
+      if (preparedSurfacePayload?.lifecycleOwner) {
+        preparedSurfaceLifecycleOwner = preparedSurfacePayload.lifecycleOwner;
+        preparedSurfaceLifecycleOwnerSource = "preparedSurface.surface.lifecycleOwner";
+        preparedSurfaceLifecycleOwnerPropertyName = "lifecycleOwner";
+      } else if (preparedSurface?.lifecycleOwner) {
+        preparedSurfaceLifecycleOwner = preparedSurface.lifecycleOwner;
+        preparedSurfaceLifecycleOwnerSource = "preparedSurface.lifecycleOwner";
+        preparedSurfaceLifecycleOwnerPropertyName = "lifecycleOwner";
+      } else if (preparedSurfacePayload?.operationState?.lifecycleOwner) {
+        preparedSurfaceLifecycleOwner =
+          preparedSurfacePayload.operationState.lifecycleOwner;
+        preparedSurfaceLifecycleOwnerSource =
+          "preparedSurface.surface.operationState.lifecycleOwner";
+        preparedSurfaceLifecycleOwnerPropertyName = "operationState.lifecycleOwner";
+      } else if (preparedSurface?.operationState?.lifecycleOwner) {
+        preparedSurfaceLifecycleOwner =
+          preparedSurface.operationState.lifecycleOwner;
+        preparedSurfaceLifecycleOwnerSource =
+          "preparedSurface.operationState.lifecycleOwner";
+        preparedSurfaceLifecycleOwnerPropertyName = "operationState.lifecycleOwner";
+      }
+      const currentRefsLifecycleOwnerPresentAfterSurfacePreparation =
+        !!currentRefs.lifecycleOwner;
+      if (currentRefsLifecycleOwnerPresentAfterSurfacePreparation) {
+        payloadLifecycleOwner = currentRefs.lifecycleOwner;
+        payloadLifecycleOwnerResolutionSource = "currentRefs.lifecycleOwner";
+      } else if (preparedSurfaceLifecycleOwner) {
+        payloadLifecycleOwner = preparedSurfaceLifecycleOwner;
+        payloadLifecycleOwnerResolutionSource =
+          preparedSurfaceLifecycleOwnerSource;
+      }
+      recordPreparedSurfaceStep({
+        preparedSurfaceLifecycleOwnerReadCompleted: true,
+        preparedSurfaceLifecycleOwnerPresent: !!preparedSurfaceLifecycleOwner,
+        preparedSurfaceLifecycleOwnerSource,
+        preparedSurfaceLifecycleOwnerPropertyName,
+        preparedSurfaceNestedLifecycleOwnerPresent,
+        currentRefsLifecycleOwnerPresentAfterSurfacePreparation,
+        payloadLifecycleOwnerResolved: !!payloadLifecycleOwner,
+        payloadLifecycleOwnerResolutionSource,
+        payloadLifecycleOwnerResolutionFailureReason: payloadLifecycleOwner
+          ? null
+          : "LIFECYCLE_OWNER_SOURCE_UNRESOLVED",
+        preparedSurfaceContinuationLastCompletedStep:
+          "preparedSurface lifecycle read",
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface map read"
+      });
+    } catch (error) {
+      const preparedSurfaceLifecycleReadReasonCode =
+        "PREPARED_SURFACE_LIFECYCLE_READ_EXCEPTION";
+      recordPreparedSurfaceStep({
+        preparedSurfaceContinuationFailureFunction:
+          "preparedSurface.surface.lifecycleOwner read",
+        preparedSurfaceContinuationExceptionName: error?.name ?? "Error",
+        preparedSurfaceContinuationExceptionMessage: error?.message ?? null,
+        preparedSurfaceContinuationExceptionReasonCode:
+          preparedSurfaceLifecycleReadReasonCode,
+        preparedSurfaceGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        preparedSurfaceLifecycleReadReasonCode
+      );
+    }
+
+    try {
+      recordPreparedSurfaceStep({
+        preparedSurfaceMapReadAttempted: true,
+        preparedSurfaceContinuationNextExpectedStep: "preparedSurface map read"
+      });
+      preparedSurfaceMap = preparedSurfacePayload?.map ?? null;
+      recordPreparedSurfaceStep({
+        preparedSurfaceMapReadCompleted: true,
+        preparedSurfaceMapPresent: !!preparedSurfaceMap,
+        preparedSurfaceContinuationLastCompletedStep: "preparedSurface map read",
+        preparedSurfaceContinuationNextExpectedStep: "payload assembly entry"
+      });
+    } catch (error) {
+      const preparedSurfaceMapReadReasonCode =
+        "PREPARED_SURFACE_MAP_READ_EXCEPTION";
+      recordPreparedSurfaceStep({
+        preparedSurfaceContinuationFailureFunction: "preparedSurface.surface.map read",
+        preparedSurfaceContinuationExceptionName: error?.name ?? "Error",
+        preparedSurfaceContinuationExceptionMessage: error?.message ?? null,
+        preparedSurfaceContinuationExceptionReasonCode:
+          preparedSurfaceMapReadReasonCode,
+        preparedSurfaceGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        preparedSurfaceMapReadReasonCode
+      );
+    }
+
+    if (preparedSurfaceStatusValue !== "prepared" || !preparedSurfacePayload) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.prepareOneFrameSurface",
+        adapterEarlyReturnReason:
+          preparedSurfaceReasonValue ?? "SURFACE_PREPARATION_FAILED",
+        adapterExecutionCompletionReason:
+          preparedSurfaceReasonValue ?? "SURFACE_PREPARATION_FAILED",
+        payloadAssemblyNotReachedBranchReason:
+          preparedSurfaceReasonValue ?? "SURFACE_PREPARATION_FAILED",
+        payloadAssemblyNotReachedReturnReason:
+          preparedSurfaceReasonValue ?? "SURFACE_PREPARATION_FAILED"
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        preparedSurfaceReasonValue ?? "SURFACE_PREPARATION_FAILED"
+      );
+    }
+
+    currentRefs.surface = preparedSurfacePayload;
+    markSnapshotHandoffMilestone("reachedSurfacePreparationCompletion");
+    markInvocationBoundaryMilestone("reachedSurfacePrepared");
     updateStatus({
       surfacePrepared: true
     });
 
     try {
-      translationResult =
-        lifecycleTranslation.translatePreparedSurfaceToLifecycleBundle({
-          preparedSurface: surfaceResult.surface,
-          lifecycleOwner
-        });
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep:
+          "adapter.translatePreparedSurfaceToLifecycleBundle",
+        nextFunctionAfterAdapterEntry:
+          "adapter.translatePreparedSurfaceToLifecycleBundle",
+        postDrawBridgeNextFunction:
+          "adapter.translatePreparedSurfaceToLifecycleBundle"
+      });
+      translationResult = traceInvocationBoundary(
+        "adapter.translatePreparedSurfaceToLifecycleBundle",
+        () => {
+          markInvocationBoundaryMilestone("reachedSurfaceOwnershipConversion");
+          return lifecycleTranslation.translatePreparedSurfaceToLifecycleBundle({
+            preparedSurface: preparedSurfacePayload,
+            lifecycleOwner
+          });
+        }
+      );
     } catch (error) {
       translationResult = {
         outcome: "failed_closed",
@@ -857,8 +2318,20 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       translationResult?.lifecycleRegistrationAttempted === true;
 
     if (translationResult?.outcome !== "translated" || !translationResult?.lifecycleBundle) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep:
+          "adapter.translatePreparedSurfaceToLifecycleBundle",
+        adapterEarlyReturnReason:
+          translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED",
+        adapterExecutionCompletionReason:
+          translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED",
+        payloadAssemblyNotReachedBranchReason:
+          translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED",
+        payloadAssemblyNotReachedReturnReason:
+          translationResult?.reasonCode ?? "LIFECYCLE_TRANSLATION_FAILED"
+      });
       const rollbackResult = surfaceOperations.rollbackPreparedSurface({
-        surface: surfaceResult.surface
+        surface: preparedSurfacePayload
       });
 
       return finalize(
@@ -887,8 +2360,47 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
 
     let snapshotBridgeResult;
     try {
-      snapshotCompatibleMap = snapshotMapNormalizer(map);
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.resolveSnapshotCompatibleMap",
+        nextFunctionAfterAdapterEntry: "adapter.resolveSnapshotCompatibleMap",
+        postDrawBridgeNextFunction: "adapter.resolveSnapshotCompatibleMap"
+      });
+      snapshotCompatibleMap = traceInvocationBoundary(
+        "adapter.resolveSnapshotCompatibleMap",
+        () => {
+          markInvocationBoundaryMilestone("reachedSnapshotMapNormalization");
+          return snapshotMapNormalizer(map);
+        }
+      );
     } catch (error) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.resolveSnapshotCompatibleMap",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "SNAPSHOT_MAP_NORMALIZATION_EXCEPTION"
+        ),
+        adapterExecutionCompletionReason: toReasonCode(
+          error,
+          "SNAPSHOT_MAP_NORMALIZATION_EXCEPTION"
+        ),
+        payloadAssemblyNotReachedBranchReason:
+          "SNAPSHOT_MAP_NORMALIZATION_EXCEPTION",
+        payloadAssemblyNotReachedReturnReason: toReasonCode(
+          error,
+          "SNAPSHOT_MAP_NORMALIZATION_EXCEPTION"
+        ),
+        handoffCreationSucceeded: false,
+        handoffCreationFailureReason: toReasonCode(
+          error,
+          "SNAPSHOT_ARGUMENT_CONSTRUCTION_EXCEPTION"
+        ),
+        handoffObjectCreated: false,
+        handoffObjectHasMap: false,
+        handoffObjectHasCanvas: false,
+        handoffObjectHasFrameSnapshot: false,
+        handoffObjectHasViewportData: false,
+        handoffObjectHasCallbacks: false
+      });
       const cleanupResult = lifecycleOwner.disposeOwnedResources();
       return finalize(
         "execute_developer_only_live_one_frame_adapter",
@@ -905,11 +2417,365 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
       );
     }
 
+    recordPreparedSurfaceStep({
+      payloadAssemblyEntryAttempted: true,
+      preparedSurfaceContinuationLastCompletedStep: "payload assembly entry attempted",
+      preparedSurfaceContinuationNextExpectedStep: "payload assembly guard evaluation"
+    });
+    recordPayloadAssemblyStep({
+      payloadAssemblyEntryFunction: "adapter.assembleSnapshotHandoffPayload",
+      payloadAssemblyLastCompletedStep: "payload assembly entry attempted",
+      payloadAssemblyNextFunction: "payload context creation"
+    });
+
+    let surfaceInput;
+    let surfaceInputHasCanvas;
+    let surfaceInputHasMap;
+    let surfaceInputHasViewport;
+    let viewportInput;
+    let handoffMapInput;
+    let handoffCanvasInput;
+    let handoffSnapshotCallbackAssigned;
+    let handoffDrawCallbackAssigned;
+    let payloadContextHasDrawOperation;
+    let payloadContextHasCallbacks;
     try {
-      snapshotBridgeResult = snapshotBridge({
-        map: snapshotCompatibleMap,
-        canvas: surfaceResult.surface.canvas
+      recordPayloadAssemblyStep({
+        payloadAssemblyContextCreationAttempted: true,
+        payloadAssemblyNextFunction: "payload context creation"
       });
+      surfaceInput = preparedSurfacePayload;
+      surfaceInputHasCanvas = !!surfaceInput?.canvas;
+      surfaceInputHasMap = !!surfaceInput?.map;
+      surfaceInputHasViewport = !!surfaceInput?.viewport;
+      viewportInput = surfaceInput?.viewport ?? snapshotCompatibleMap ?? null;
+      handoffMapInput = snapshotCompatibleMap ?? null;
+      handoffCanvasInput = surfaceInput?.canvas ?? null;
+      handoffSnapshotCallbackAssigned = typeof snapshotBridge === "function";
+      handoffDrawCallbackAssigned = typeof drawBridge === "function";
+      payloadContextHasDrawOperation = !!drawOperation;
+      payloadContextHasCallbacks =
+        handoffSnapshotCallbackAssigned && handoffDrawCallbackAssigned;
+      recordPayloadAssemblyStep({
+        payloadAssemblyContextCreationCompleted: true,
+        payloadContextHasMap: !!handoffMapInput,
+        payloadContextHasCanvas: !!handoffCanvasInput,
+        payloadContextHasViewport: !!viewportInput,
+        payloadContextHasDrawOperation,
+        payloadContextHasCallbacks,
+        payloadAssemblyLastCompletedStep: "payload context creation",
+        payloadAssemblyNextFunction: "payload guard evaluation"
+      });
+    } catch (error) {
+      const payloadContextCreationReasonCode =
+        "PAYLOAD_CONTEXT_CREATION_EXCEPTION";
+      recordPayloadAssemblyStep({
+        payloadAssemblyFailureFunction: "payload context creation",
+        payloadAssemblyExceptionName: error?.name ?? "Error",
+        payloadAssemblyExceptionMessage: error?.message ?? null,
+        payloadAssemblyExceptionReasonCode: payloadContextCreationReasonCode,
+        payloadAssemblyGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        payloadContextCreationReasonCode
+      );
+    }
+
+    let payloadAssemblyGuardSkippedReason;
+    let payloadAssemblyGuardResult;
+    try {
+      recordPayloadAssemblyStep({
+        payloadGuardEvaluationAttempted: true,
+        payloadAssemblyNextFunction: "payload guard evaluation"
+      });
+      payloadAssemblyGuardSkippedReason =
+        !surfaceInput
+          ? "SURFACE_INPUT_MISSING"
+          : !handoffCanvasInput
+            ? "SURFACE_INPUT_CANVAS_MISSING"
+            : !handoffMapInput
+              ? "SNAPSHOT_COMPATIBLE_MAP_MISSING"
+              : !viewportInput
+                ? "VIEWPORT_INPUT_MISSING"
+                : !handoffSnapshotCallbackAssigned
+                  ? "SNAPSHOT_CALLBACK_MISSING"
+                  : !handoffDrawCallbackAssigned
+                    ? "DRAW_CALLBACK_MISSING"
+                    : null;
+      payloadAssemblyGuardResult = payloadAssemblyGuardSkippedReason === null;
+      recordPayloadAssemblyStep({
+        payloadGuardEvaluationCompleted: true,
+        payloadGuardResult: payloadAssemblyGuardResult,
+        payloadGuardFailureReason: payloadAssemblyGuardSkippedReason,
+        payloadAssemblyLastCompletedStep: "payload guard evaluation",
+        payloadAssemblyNextFunction: payloadAssemblyGuardResult
+          ? "handoff object creation"
+          : "handoff skipped after payload guard"
+      });
+    } catch (error) {
+      const payloadGuardEvaluationReasonCode =
+        "PAYLOAD_GUARD_EVALUATION_EXCEPTION";
+      recordPayloadAssemblyStep({
+        payloadAssemblyFailureFunction: "payload guard evaluation",
+        payloadAssemblyExceptionName: error?.name ?? "Error",
+        payloadAssemblyExceptionMessage: error?.message ?? null,
+        payloadAssemblyExceptionReasonCode: payloadGuardEvaluationReasonCode,
+        payloadAssemblyGetterInvoked: true
+      });
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        payloadGuardEvaluationReasonCode
+      );
+    }
+
+    updatePreSnapshotHandoffTrace({
+      adapterPostCallbackResolutionNextStep: "adapter.assembleSnapshotHandoffPayload",
+      adapterEarlyReturnReason: null,
+      adapterExecutionCompletionReason: "PAYLOAD_ASSEMBLY_REACHED",
+      nextFunctionAfterAdapterEntry: "adapter.assembleSnapshotHandoffPayload",
+      payloadAssemblyEntryMarked: true,
+      handoffPayloadAssemblyStarted: false,
+      handoffPayloadAssemblyFunction: "adapter.assembleSnapshotHandoffPayload",
+      payloadAssemblyNotReachedBranchReason: null,
+      payloadAssemblyNotReachedReturnReason: null,
+      surfaceInputPresent: !!surfaceInput,
+      surfaceInputHasCanvas,
+      surfaceInputHasMap,
+      surfaceInputHasViewport,
+      handoffMapAssigned: false,
+      handoffCanvasAssigned: false,
+      handoffViewportAssigned: false,
+      handoffSnapshotCallbackAssigned: false,
+      handoffDrawCallbackAssigned: false,
+      handoffCreationBranchEntered: false,
+      handoffCreationSkippedReason: null,
+      handoffCreationAttempted: false,
+      handoffCreationSucceeded: false,
+      handoffCreationFailureReason: null,
+      handoffCreationFunction: "adapter.createSnapshotBridgeInput",
+      handoffRequiredMapPresent: !!handoffMapInput,
+      handoffRequiredCanvasPresent: !!handoffCanvasInput,
+      handoffRequiredSnapshotCallbackPresent: handoffSnapshotCallbackAssigned,
+      handoffRequiredDrawCallbackPresent: handoffDrawCallbackAssigned,
+      handoffViewportDataPresent: !!viewportInput,
+      handoffObjectHasFrameSnapshot: false,
+      handoffObjectHasViewportData: false,
+      handoffObjectHasCallbacks: false
+    });
+    recordPreparedSurfaceStep({
+      payloadAssemblyEntryCompleted: true,
+      preparedSurfaceContinuationLastCompletedStep: "payload assembly entry",
+      preparedSurfaceContinuationNextExpectedStep: "payload assembly guard evaluation"
+    });
+    executionIdentityState = {
+      ...executionIdentityState,
+      postCallbackWrapperNextFunction: "adapter.assembleSnapshotHandoffPayload",
+      postCallbackWrapperExitReason: null,
+      payloadAssemblyGuardEvaluated: true,
+      payloadAssemblyGuardResult,
+      payloadAssemblySkippedReason: payloadAssemblyGuardSkippedReason,
+      payloadAssemblyInstrumentationEntered: true
+    };
+
+    let snapshotBridgeInput;
+    try {
+      recordPayloadAssemblyStep({
+        handoffCreationAfterGuardAttempted: true,
+        payloadAssemblyNextFunction: "handoff object creation"
+      });
+      snapshotBridgeInput = tracePreSnapshotHandoff(
+        "adapter.assembleSnapshotHandoffPayload",
+        () =>
+          traceInvocationBoundary("adapter.assembleSnapshotHandoffPayload", () => {
+            updatePreSnapshotHandoffTrace({
+              handoffPayloadAssemblyStarted: true,
+              handoffMapAssigned: !!handoffMapInput,
+              handoffCanvasAssigned: !!handoffCanvasInput,
+              handoffViewportAssigned: !!viewportInput,
+              handoffSnapshotCallbackAssigned,
+              handoffDrawCallbackAssigned
+            });
+
+            if (payloadAssemblyGuardSkippedReason) {
+              markAdapterPostCallbackTrace({
+                adapterPostCallbackResolutionNextStep:
+                  "adapter.assembleSnapshotHandoffPayload",
+                adapterEarlyReturnReason: payloadAssemblyGuardSkippedReason,
+                adapterExecutionCompletionReason:
+                  "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED",
+                handoffCreationBranchEntered: false,
+                handoffCreationSkippedReason: payloadAssemblyGuardSkippedReason,
+                handoffCreationAttempted: false,
+                handoffCreationSucceeded: false,
+                handoffCreationFailureReason: payloadAssemblyGuardSkippedReason,
+                handoffObjectCreated: false,
+                handoffObjectHasMap: false,
+                handoffObjectHasCanvas: false,
+                handoffObjectHasFrameSnapshot: false,
+                handoffObjectHasViewportData: false,
+                handoffObjectHasCallbacks: false
+              });
+              executionIdentityState = {
+                ...executionIdentityState,
+                postCallbackWrapperExitReason: payloadAssemblyGuardSkippedReason,
+                payloadAssemblySkippedReason: payloadAssemblyGuardSkippedReason
+              };
+              recordPayloadAssemblyStep({
+                handoffCreationAfterGuardCompleted: false,
+                payloadAssemblyLastCompletedStep: "payload guard evaluation",
+                payloadAssemblyNextFunction: "handoff skipped after payload guard"
+              });
+              return null;
+            }
+
+            updatePreSnapshotHandoffTrace({
+              adapterExecutionCompletionReason: "HANDOFF_CREATION_REACHED",
+              handoffCreationBranchEntered: true,
+              handoffCreationSkippedReason: null,
+              handoffCreationAttempted: true
+            });
+
+            return tracePreSnapshotHandoff(
+              "adapter.createSnapshotBridgeInput",
+              () =>
+                traceInvocationBoundary("adapter.createSnapshotBridgeInput", () => {
+              markInvocationBoundaryMilestone(
+                    "reachedSnapshotArgumentConstruction"
+                  );
+                  executionIdentityState = {
+                    ...executionIdentityState,
+                    nextFunctionAfterAdapterEntry: "adapter.createSnapshotBridgeInput"
+                  };
+                  recordPayloadAssemblyStep({
+                    handoffCreationAfterGuardCompleted: true,
+                    payloadAssemblyLastCompletedStep: "handoff object creation",
+                    payloadAssemblyNextFunction: "snapshot callback invocation"
+                  });
+                  return {
+                    map: handoffMapInput,
+                    canvas: handoffCanvasInput
+                  };
+                })
+            );
+          })
+      );
+    } catch (error) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.createSnapshotBridgeInput",
+        adapterEarlyReturnReason: toReasonCode(
+          error,
+          "SNAPSHOT_ARGUMENT_CONSTRUCTION_EXCEPTION"
+        ),
+        adapterExecutionCompletionReason: toReasonCode(
+          error,
+          "SNAPSHOT_ARGUMENT_CONSTRUCTION_EXCEPTION"
+        ),
+        handoffCreationSucceeded: false,
+        handoffCreationFailureReason: toReasonCode(
+          error,
+          "SNAPSHOT_ARGUMENT_CONSTRUCTION_EXCEPTION"
+        ),
+        handoffObjectCreated: false,
+        handoffObjectHasMap: false,
+        handoffObjectHasCanvas: false,
+        handoffObjectHasFrameSnapshot: false,
+        handoffObjectHasViewportData: false,
+        handoffObjectHasCallbacks: false
+      });
+      const cleanupResult = lifecycleOwner.disposeOwnedResources();
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        toReasonCode(error, "SNAPSHOT_ARGUMENT_CONSTRUCTION_EXCEPTION"),
+        {
+          surfacePrepared: true,
+          lifecycleRegistered: true,
+          frameSnapshotCreated: false,
+          ownershipMode:
+            translationResult.lifecycleBundle.ownershipMode ?? "ONE_FRAME_SURFACE_ONLY",
+          ...deriveCleanupPatch(cleanupResult)
+        }
+      );
+    }
+
+    if (!snapshotBridgeInput) {
+      markAdapterPostCallbackTrace({
+        adapterPostCallbackResolutionNextStep: "adapter.assembleSnapshotHandoffPayload",
+        adapterEarlyReturnReason: "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED",
+        adapterExecutionCompletionReason: "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED"
+      });
+      const cleanupResult = lifecycleOwner.disposeOwnedResources();
+      return finalize(
+        "execute_developer_only_live_one_frame_adapter",
+        "failed_closed",
+        "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED",
+        {
+          surfacePrepared: true,
+          lifecycleRegistered: true,
+          frameSnapshotCreated: false,
+          ownershipMode:
+            translationResult.lifecycleBundle.ownershipMode ?? "ONE_FRAME_SURFACE_ONLY",
+          ...deriveCleanupPatch(cleanupResult)
+        }
+      );
+    }
+
+    updatePreSnapshotHandoffTrace({
+      adapterPostCallbackResolutionNextStep: "adapter.invokeSnapshotCallback",
+      adapterExecutionCompletionReason: "SNAPSHOT_INVOCATION_REACHED",
+      nextFunctionAfterAdapterEntry: "adapter.invokeSnapshotCallback",
+      handoffCreationSucceeded: true,
+      handoffObjectCreated: true,
+      handoffCreationFailureReason: null,
+      handoffObjectHasMap: !!snapshotBridgeInput?.map,
+      handoffObjectHasCanvas: !!snapshotBridgeInput?.canvas,
+      handoffObjectHasFrameSnapshot: false,
+      handoffObjectHasViewportData: !!viewportInput,
+      handoffObjectHasCallbacks:
+        handoffSnapshotCallbackAssigned && handoffDrawCallbackAssigned,
+      handoffRequiredMapPresent: !!snapshotBridgeInput?.map,
+      handoffRequiredCanvasPresent: !!snapshotBridgeInput?.canvas,
+      handoffRequiredSnapshotCallbackPresent: handoffSnapshotCallbackAssigned,
+      handoffRequiredDrawCallbackPresent: handoffDrawCallbackAssigned,
+      handoffViewportDataPresent: !!viewportInput
+    });
+    executionIdentityState = {
+      ...executionIdentityState,
+      nextFunctionAfterAdapterEntry: "adapter.invokeSnapshotCallback"
+    };
+
+    try {
+      snapshotBridgeResult = traceInvocationBoundary(
+        "adapter.invokeFrameSnapshotBridge",
+        () => {
+          markInvocationBoundaryMilestone("reachedSnapshotBridgeInvocation");
+          markInvocationBoundaryMilestone(
+            "reachedCreateCustom25DFrameViewportSnapshotCaller"
+          );
+          markSnapshotHandoffMilestone("reachedSnapshotHandoffCall");
+          return tracePreSnapshotHandoff(
+            "adapter.invokeSnapshotCallback",
+            () =>
+              traceSnapshotHandoff(
+                "adapter.invokeFrameSnapshotBridge",
+                () => snapshotBridge(snapshotBridgeInput),
+                {
+                  hasMap: !!snapshotBridgeInput?.map,
+                  hasCanvas: !!snapshotBridgeInput?.canvas
+                }
+              ),
+            {
+              snapshotCallbackExists: !!snapshotBridge,
+              snapshotCallbackCallable: typeof snapshotBridge === "function",
+              hasMap: !!snapshotBridgeInput?.map,
+              hasCanvas: !!snapshotBridgeInput?.canvas
+            }
+          );
+        }
+      );
     } catch (error) {
       snapshotBridgeResult = {
         outcome: "failed_closed",
@@ -940,6 +2806,16 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
     frameViewportSnapshot = normalizedSnapshot.frameViewportSnapshot;
     activeFrameViewportSnapshot = frameViewportSnapshot;
     currentRefs.frameViewportSnapshot = frameViewportSnapshot;
+
+    traceSnapshotHandoff(
+      "adapter.assignFrameSnapshotCreated",
+      () => {
+        markSnapshotHandoffMilestone("reachedFrameSnapshotCreatedAssignment");
+      },
+      {
+        hasFrameViewportSnapshot: !!frameViewportSnapshot
+      }
+    );
 
     updateStatus({
       frameSnapshotCreated: true
@@ -1019,6 +2895,8 @@ export function createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
 
   return deepFreeze({
     getAdapterStatus,
+    getCustom25DOneFrameAdapterRuntimeIdentity,
+    getCustom25DOneFrameAdapterExecutionIdentity,
     executeDeveloperOnlyLiveOneFrameAdapter,
     completeDeferredCleanup: finalizeDeferredCleanup
   });

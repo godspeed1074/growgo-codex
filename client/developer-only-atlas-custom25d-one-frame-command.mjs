@@ -20,6 +20,10 @@ const READINESS_SCHEMA_ID =
   "ATLAS_RENDERER_HANDOFF_READINESS_DIAGNOSTIC_RESULT_001";
 const AUTHORIZATION_SCHEMA_ID =
   "ATLAS_RENDERER_HANDOFF_AUTHORIZATION_STATUS_001";
+const INVOCATION_BOUNDARY_TRACE_SCHEMA_ID =
+  "ATLAS_CUSTOM25D_ONE_FRAME_INVOCATION_BOUNDARY_TRACE_001";
+const PRE_SNAPSHOT_HANDOFF_TRACE_SCHEMA_ID =
+  "ATLAS_CUSTOM25D_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE_001";
 const REQUIRED_CONFIRMATION =
   "RUN_AUTHORIZED_ATLAS_CUSTOM25D_ONE_FRAME";
 const LOCAL_DEVELOPMENT_HOSTS = new Set([
@@ -28,6 +32,8 @@ const LOCAL_DEVELOPMENT_HOSTS = new Set([
   "0.0.0.0",
   "::1"
 ]);
+const INVOCATION_BOUNDARY_TRACE_LIMIT = 100;
+const PRE_SNAPSHOT_HANDOFF_TRACE_LIMIT = 100;
 
 function defaultSafetyFlags() {
   return deepFreeze({
@@ -64,6 +70,474 @@ function toReasonCode(error, fallback) {
   }
 
   return fallback;
+}
+
+function createInitialInvocationBoundaryTraceState() {
+  return {
+    currentDepth: 0,
+    maxObservedDepth: 0,
+    last100FunctionNames: [],
+    last100Calls: [],
+    totalEntryCount: 0,
+    totalExitCount: 0,
+    totalExceptionCount: 0,
+    lastFailedFunctionName: null,
+    previousFunctionNameBeforeFailure: null,
+    lastExceptionName: null,
+    lastExceptionMessage: null,
+    lastExceptionReasonCode: null,
+    stackOverflowDetected: false,
+    reachedRunAuthorizedAtlasCustom25DOneFrame: false,
+    reachedAdapterExecutePath: false,
+    reachedSurfacePrepared: false,
+    reachedSurfaceOwnershipConversion: false,
+    reachedSnapshotBridgeProvider: false,
+    reachedSnapshotMapNormalization: false,
+    reachedSnapshotArgumentConstruction: false,
+    reachedSnapshotBridgeInvocation: false,
+    reachedCreateCustom25DFrameViewportSnapshotCaller: false,
+    reasonCode: "INVOCATION_BOUNDARY_TRACE_IDLE"
+  };
+}
+
+function createInitialPreSnapshotHandoffTraceState() {
+  return {
+    currentDepth: 0,
+    maxObservedDepth: 0,
+    last100FunctionNames: [],
+    last100Calls: [],
+    totalEntryCount: 0,
+    totalExitCount: 0,
+    totalExceptionCount: 0,
+    lastFailedFunctionName: null,
+    previousFunctionNameBeforeFailure: null,
+    lastExceptionName: null,
+    lastExceptionMessage: null,
+    lastExceptionReasonCode: null,
+    stackOverflowDetected: false,
+    commandBridgePassed: false,
+    commandBridgeSource: null,
+    commandHasRawLeafletMapReference: false,
+    adapterEntryBridgeReceived: false,
+    adapterEntryBridgeSource: null,
+    adapterEntryRawLeafletMapReference: false,
+    snapshotCallbackExists: false,
+    snapshotCallbackCallable: false,
+    drawCallbackExists: false,
+    drawCallbackCallable: false,
+    handoffObjectCreated: false,
+    handoffObjectHasMap: false,
+    handoffObjectHasCanvas: false,
+    reasonCode: "PRE_SNAPSHOT_HANDOFF_TRACE_IDLE"
+  };
+}
+
+function cloneInvocationBoundaryTraceTail(values) {
+  return values.slice(Math.max(0, values.length - INVOCATION_BOUNDARY_TRACE_LIMIT));
+}
+
+function clonePreSnapshotHandoffTraceTail(values) {
+  return values.slice(Math.max(0, values.length - PRE_SNAPSHOT_HANDOFF_TRACE_LIMIT));
+}
+
+function createInvocationBoundaryTraceEvent({
+  phase,
+  functionName,
+  depth,
+  detail = null,
+  reasonCode = null
+}) {
+  return deepFreeze({
+    phase,
+    functionName,
+    depth,
+    detail,
+    reasonCode
+  });
+}
+
+function createPreSnapshotHandoffTraceEvent({
+  phase,
+  functionName,
+  depth,
+  detail = null,
+  reasonCode = null
+}) {
+  return deepFreeze({
+    phase,
+    functionName,
+    depth,
+    detail,
+    reasonCode
+  });
+}
+
+function createInvocationBoundaryTraceStore() {
+  let state = createInitialInvocationBoundaryTraceState();
+
+  function pushEvent(event) {
+    state = {
+      ...state,
+      last100Calls: cloneInvocationBoundaryTraceTail([...state.last100Calls, event]),
+      last100FunctionNames: cloneInvocationBoundaryTraceTail([
+        ...state.last100FunctionNames,
+        event.functionName
+      ])
+    };
+  }
+
+  function mark(milestoneName) {
+    if (!Object.prototype.hasOwnProperty.call(state, milestoneName)) {
+      return;
+    }
+
+    state = {
+      ...state,
+      [milestoneName]: true
+    };
+  }
+
+  function enter(functionName, detail = null) {
+    const normalizedFunctionName =
+      typeof functionName === "string" && functionName.trim()
+        ? functionName.trim()
+        : "anonymous";
+    const nextDepth = state.currentDepth + 1;
+    state = {
+      ...state,
+      currentDepth: nextDepth,
+      maxObservedDepth: Math.max(state.maxObservedDepth, nextDepth),
+      totalEntryCount: state.totalEntryCount + 1,
+      reasonCode: "INVOCATION_BOUNDARY_TRACE_ACTIVE"
+    };
+
+    pushEvent(
+      createInvocationBoundaryTraceEvent({
+        phase: "entry",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        detail
+      })
+    );
+  }
+
+  function exit(functionName, detail = null) {
+    const normalizedFunctionName =
+      typeof functionName === "string" && functionName.trim()
+        ? functionName.trim()
+        : "anonymous";
+    const depth = state.currentDepth;
+
+    pushEvent(
+      createInvocationBoundaryTraceEvent({
+        phase: "exit",
+        functionName: normalizedFunctionName,
+        depth,
+        detail
+      })
+    );
+
+    state = {
+      ...state,
+      currentDepth: Math.max(0, state.currentDepth - 1),
+      totalExitCount: state.totalExitCount + 1
+    };
+  }
+
+  function exception(functionName, error, detail = null) {
+    const normalizedFunctionName =
+      typeof functionName === "string" && functionName.trim()
+        ? functionName.trim()
+        : "anonymous";
+    const reasonCode = toReasonCode(error, "INVOCATION_BOUNDARY_TRACE_EXCEPTION");
+    const previousFunctionNameBeforeFailure =
+      state.last100FunctionNames[Math.max(0, state.last100FunctionNames.length - 1)] ??
+      null;
+    const stackOverflowDetected =
+      reasonCode === "MAXIMUM_CALL_STACK_SIZE_EXCEEDED" ||
+      reasonCode === "TRACE_MAX_DEPTH_EXCEEDED" ||
+      /maximum call stack size exceeded/i.test(String(reasonCode));
+
+    pushEvent(
+      createInvocationBoundaryTraceEvent({
+        phase: "exception",
+        functionName: normalizedFunctionName,
+        depth: state.currentDepth,
+        detail,
+        reasonCode
+      })
+    );
+
+    state = {
+      ...state,
+      currentDepth: Math.max(0, state.currentDepth - 1),
+      totalExitCount: state.totalExitCount + 1,
+      totalExceptionCount: state.totalExceptionCount + 1,
+      lastFailedFunctionName: normalizedFunctionName,
+      previousFunctionNameBeforeFailure,
+      lastExceptionName:
+        typeof error?.name === "string" && error.name ? error.name : "Error",
+      lastExceptionMessage:
+        typeof error?.message === "string" && error.message ? error.message : null,
+      lastExceptionReasonCode: reasonCode,
+      stackOverflowDetected: state.stackOverflowDetected || stackOverflowDetected,
+      reasonCode
+    };
+  }
+
+  function reset(reasonCode = "INVOCATION_BOUNDARY_TRACE_RESET") {
+    state = {
+      ...createInitialInvocationBoundaryTraceState(),
+      reasonCode
+    };
+    return getSnapshot();
+  }
+
+  function getSnapshot() {
+    return deepFreeze({
+      schemaId: INVOCATION_BOUNDARY_TRACE_SCHEMA_ID,
+      currentDepth: state.currentDepth,
+      maxObservedDepth: state.maxObservedDepth,
+      last100FunctionNames: [...state.last100FunctionNames],
+      last100Calls: [...state.last100Calls],
+      totalEntryCount: state.totalEntryCount,
+      totalExitCount: state.totalExitCount,
+      totalExceptionCount: state.totalExceptionCount,
+      lastFailedFunctionName: state.lastFailedFunctionName,
+      previousFunctionNameBeforeFailure: state.previousFunctionNameBeforeFailure,
+      lastExceptionName: state.lastExceptionName,
+      lastExceptionMessage: state.lastExceptionMessage,
+      lastExceptionReasonCode: state.lastExceptionReasonCode,
+      stackOverflowDetected: state.stackOverflowDetected,
+      reachedRunAuthorizedAtlasCustom25DOneFrame:
+        state.reachedRunAuthorizedAtlasCustom25DOneFrame,
+      reachedAdapterExecutePath: state.reachedAdapterExecutePath,
+      reachedSurfacePrepared: state.reachedSurfacePrepared,
+      reachedSurfaceOwnershipConversion: state.reachedSurfaceOwnershipConversion,
+      reachedSnapshotBridgeProvider: state.reachedSnapshotBridgeProvider,
+      reachedSnapshotMapNormalization: state.reachedSnapshotMapNormalization,
+      reachedSnapshotArgumentConstruction: state.reachedSnapshotArgumentConstruction,
+      reachedSnapshotBridgeInvocation: state.reachedSnapshotBridgeInvocation,
+      reachedCreateCustom25DFrameViewportSnapshotCaller:
+        state.reachedCreateCustom25DFrameViewportSnapshotCaller,
+      reasonCode: state.reasonCode
+    });
+  }
+
+  return {
+    enter,
+    exit,
+    exception,
+    mark,
+    reset,
+    getSnapshot
+  };
+}
+
+function createPreSnapshotHandoffTraceStore() {
+  let state = createInitialPreSnapshotHandoffTraceState();
+
+  function pushEvent(event) {
+    state = {
+      ...state,
+      last100Calls: clonePreSnapshotHandoffTraceTail([...state.last100Calls, event]),
+      last100FunctionNames: clonePreSnapshotHandoffTraceTail([
+        ...state.last100FunctionNames,
+        event.functionName
+      ])
+    };
+  }
+
+  function enter(functionName, detail = null) {
+    const normalizedFunctionName =
+      typeof functionName === "string" && functionName.trim()
+        ? functionName.trim()
+        : "anonymous";
+    const nextDepth = state.currentDepth + 1;
+    state = {
+      ...state,
+      currentDepth: nextDepth,
+      maxObservedDepth: Math.max(state.maxObservedDepth, nextDepth),
+      totalEntryCount: state.totalEntryCount + 1,
+      reasonCode: "PRE_SNAPSHOT_HANDOFF_TRACE_ACTIVE"
+    };
+
+    pushEvent(
+      createPreSnapshotHandoffTraceEvent({
+        phase: "entry",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        detail
+      })
+    );
+  }
+
+  function exit(functionName, detail = null) {
+    const normalizedFunctionName =
+      typeof functionName === "string" && functionName.trim()
+        ? functionName.trim()
+        : "anonymous";
+    const depth = state.currentDepth;
+
+    pushEvent(
+      createPreSnapshotHandoffTraceEvent({
+        phase: "exit",
+        functionName: normalizedFunctionName,
+        depth,
+        detail
+      })
+    );
+
+    state = {
+      ...state,
+      currentDepth: Math.max(0, state.currentDepth - 1),
+      totalExitCount: state.totalExitCount + 1
+    };
+  }
+
+  function exception(functionName, error, detail = null) {
+    const normalizedFunctionName =
+      typeof functionName === "string" && functionName.trim()
+        ? functionName.trim()
+        : "anonymous";
+    const reasonCode = toReasonCode(error, "PRE_SNAPSHOT_HANDOFF_TRACE_EXCEPTION");
+    const previousFunctionNameBeforeFailure =
+      state.last100FunctionNames[Math.max(0, state.last100FunctionNames.length - 1)] ??
+      null;
+    const stackOverflowDetected =
+      reasonCode === "MAXIMUM_CALL_STACK_SIZE_EXCEEDED" ||
+      /maximum call stack size exceeded/i.test(String(reasonCode));
+
+    pushEvent(
+      createPreSnapshotHandoffTraceEvent({
+        phase: "exception",
+        functionName: normalizedFunctionName,
+        depth: state.currentDepth,
+        detail,
+        reasonCode
+      })
+    );
+
+    state = {
+      ...state,
+      currentDepth: Math.max(0, state.currentDepth - 1),
+      totalExitCount: state.totalExitCount + 1,
+      totalExceptionCount: state.totalExceptionCount + 1,
+      lastFailedFunctionName: normalizedFunctionName,
+      previousFunctionNameBeforeFailure,
+      lastExceptionName:
+        typeof error?.name === "string" && error.name ? error.name : "Error",
+      lastExceptionMessage:
+        typeof error?.message === "string" && error.message ? error.message : null,
+      lastExceptionReasonCode: reasonCode,
+      stackOverflowDetected: state.stackOverflowDetected || stackOverflowDetected,
+      reasonCode
+    };
+  }
+
+  function update(patch = {}) {
+    state = {
+      ...state,
+      ...patch
+    };
+  }
+
+  function reset(reasonCode = "PRE_SNAPSHOT_HANDOFF_TRACE_RESET") {
+    state = {
+      ...createInitialPreSnapshotHandoffTraceState(),
+      reasonCode
+    };
+    return getSnapshot();
+  }
+
+  function getSnapshot() {
+    return deepFreeze({
+      schemaId: PRE_SNAPSHOT_HANDOFF_TRACE_SCHEMA_ID,
+      currentDepth: state.currentDepth,
+      maxObservedDepth: state.maxObservedDepth,
+      last100FunctionNames: [...state.last100FunctionNames],
+      last100Calls: [...state.last100Calls],
+      totalEntryCount: state.totalEntryCount,
+      totalExitCount: state.totalExitCount,
+      totalExceptionCount: state.totalExceptionCount,
+      lastFailedFunctionName: state.lastFailedFunctionName,
+      previousFunctionNameBeforeFailure: state.previousFunctionNameBeforeFailure,
+      lastExceptionName: state.lastExceptionName,
+      lastExceptionMessage: state.lastExceptionMessage,
+      lastExceptionReasonCode: state.lastExceptionReasonCode,
+      stackOverflowDetected: state.stackOverflowDetected,
+      commandBridgePassed: state.commandBridgePassed,
+      commandBridgeSource: state.commandBridgeSource,
+      commandHasRawLeafletMapReference: state.commandHasRawLeafletMapReference,
+      adapterEntryBridgeReceived: state.adapterEntryBridgeReceived,
+      adapterEntryBridgeSource: state.adapterEntryBridgeSource,
+      adapterEntryRawLeafletMapReference: state.adapterEntryRawLeafletMapReference,
+      snapshotCallbackExists: state.snapshotCallbackExists,
+      snapshotCallbackCallable: state.snapshotCallbackCallable,
+      drawCallbackExists: state.drawCallbackExists,
+      drawCallbackCallable: state.drawCallbackCallable,
+      handoffObjectCreated: state.handoffObjectCreated,
+      handoffObjectHasMap: state.handoffObjectHasMap,
+      handoffObjectHasCanvas: state.handoffObjectHasCanvas,
+      reasonCode: state.reasonCode
+    });
+  }
+
+  return {
+    enter,
+    exit,
+    exception,
+    update,
+    reset,
+    getSnapshot
+  };
+}
+
+function ensureInvocationBoundaryTrace(globalObject = globalThis) {
+  if (!globalObject) {
+    return null;
+  }
+
+  if (!globalObject.__GROWGO_ATLAS_ONE_FRAME_INVOCATION_BOUNDARY_TRACE__) {
+    globalObject.__GROWGO_ATLAS_ONE_FRAME_INVOCATION_BOUNDARY_TRACE__ =
+      createInvocationBoundaryTraceStore();
+  }
+
+  return globalObject.__GROWGO_ATLAS_ONE_FRAME_INVOCATION_BOUNDARY_TRACE__;
+}
+
+function ensurePreSnapshotHandoffTrace(globalObject = globalThis) {
+  if (!globalObject) {
+    return null;
+  }
+
+  if (!globalObject.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__) {
+    globalObject.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ =
+      createPreSnapshotHandoffTraceStore();
+  }
+
+  return globalObject.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+}
+
+async function traceInvocationBoundary(functionName, callback, detail = null) {
+  const trace = ensureInvocationBoundaryTrace(globalThis);
+
+  if (!trace) {
+    return callback();
+  }
+
+  trace.enter(functionName, detail);
+  try {
+    return await callback();
+  } catch (error) {
+    trace.exception(functionName, error, detail);
+    throw error;
+  }
+  finally {
+    if (trace.getSnapshot().lastFailedFunctionName !== functionName) {
+      trace.exit(functionName, detail);
+    }
+  }
 }
 
 function canonicalSafetyFlagsAreClosed(flags) {
@@ -253,6 +727,34 @@ function normalizeAuthorizationStatus(status) {
   };
 }
 
+function readCommandBridgeDiagnostics() {
+  const namespace = globalThis?.GrowGoDeveloperDiagnostics;
+  const bridgeGetter = namespace?.getCustom25DOneFrameBridge;
+  const bridgeDebugGetter = namespace?.getCustom25DOneFrameBridgeDebug;
+
+  if (typeof bridgeGetter !== "function") {
+    return {
+      commandBridgeAvailable: false,
+      bridgeSource: null,
+      bridge: null,
+      hasRawLeafletMapReference: false
+    };
+  }
+
+  const bridge = bridgeGetter.call(namespace) ?? null;
+  const debug =
+    typeof bridgeDebugGetter === "function" ? bridgeDebugGetter.call(namespace) : null;
+
+  return {
+    commandBridgeAvailable: !!bridge && typeof bridge === "object",
+    bridge,
+    bridgeSource:
+      (typeof debug?.bridgeSource === "string" && debug.bridgeSource) ||
+      "UNKNOWN_BRIDGE_SOURCE",
+    hasRawLeafletMapReference: !!bridge?.rawLeafletMapReference
+  };
+}
+
 function compareIdentity(firstSnapshot, secondSnapshot) {
   if (firstSnapshot.regionId !== secondSnapshot.regionId) return "BOUND_REGION_ID_MISMATCH";
   if (firstSnapshot.packageId !== secondSnapshot.packageId) return "BOUND_PACKAGE_ID_MISMATCH";
@@ -337,6 +839,18 @@ function createInitialStatus() {
     networkRequested: false,
     assetDownloadRequested: false,
     automaticInvocation: false,
+    commandBridgeAvailable: false,
+    adapterBridgeAvailable: false,
+    bridgeSource: null,
+    adapterReceivedBridge: false,
+    adapterBridgeResolutionFunction: null,
+    hasBridge: false,
+    hasRawLeafletMapReference: false,
+    mapObjectType: "unresolved",
+    mapValidationResult: "unresolved",
+    mapValidationFailureReason: null,
+    mapAvailabilityFailureFunction: null,
+    surfacePreparationInputReady: false,
     confirmationAccepted: false,
     localDevelopmentHost: false,
     canonicalSafetyFlagSnapshot: defaultSafetyFlags()
@@ -404,6 +918,18 @@ function createResult({ status, operation, outcome, reasonCode }) {
     networkRequested: status.networkRequested,
     assetDownloadRequested: status.assetDownloadRequested,
     automaticInvocation: status.automaticInvocation,
+    commandBridgeAvailable: status.commandBridgeAvailable,
+    adapterBridgeAvailable: status.adapterBridgeAvailable,
+    bridgeSource: status.bridgeSource,
+    adapterReceivedBridge: status.adapterReceivedBridge,
+    adapterBridgeResolutionFunction: status.adapterBridgeResolutionFunction,
+    hasBridge: status.hasBridge,
+    hasRawLeafletMapReference: status.hasRawLeafletMapReference,
+    mapObjectType: status.mapObjectType,
+    mapValidationResult: status.mapValidationResult,
+    mapValidationFailureReason: status.mapValidationFailureReason,
+    mapAvailabilityFailureFunction: status.mapAvailabilityFailureFunction,
+    surfacePreparationInputReady: status.surfacePreparationInputReady,
     canonicalSafetyFlagSnapshot: status.canonicalSafetyFlagSnapshot
   });
 }
@@ -477,47 +1003,50 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
   }
 
   async function runAuthorizedAtlasCustom25DOneFrame(input = {}) {
-    const commandId = status.commandId ?? createCommandId();
-    const executionAttemptCount = status.executionAttemptCount + 1;
+    return traceInvocationBoundary("runAuthorizedAtlasCustom25DOneFrame", async () => {
+      const commandId = status.commandId ?? createCommandId();
+      const executionAttemptCount = status.executionAttemptCount + 1;
+      const invocationTrace = ensureInvocationBoundaryTrace(globalThis);
+      invocationTrace?.mark("reachedRunAuthorizedAtlasCustom25DOneFrame");
 
-    if (status.permanentlyClosed || status.executionAttemptCount > 0) {
-      return finish(
-        "run_authorized_atlas_custom25d_one_frame",
-        "blocked",
-        "COMMAND_ALREADY_USED",
-        {
-          commandId,
-          commandState: "blocked",
-          executionAttemptCount,
-          secondExecutionBlocked: true,
-          permanentlyClosed: status.permanentlyClosed || status.executionAttemptCount > 0
-        }
-      );
-    }
+      if (status.permanentlyClosed || status.executionAttemptCount > 0) {
+        return finish(
+          "run_authorized_atlas_custom25d_one_frame",
+          "blocked",
+          "COMMAND_ALREADY_USED",
+          {
+            commandId,
+            commandState: "blocked",
+            executionAttemptCount,
+            secondExecutionBlocked: true,
+            permanentlyClosed: status.permanentlyClosed || status.executionAttemptCount > 0
+          }
+        );
+      }
 
-    updateStatus({
-      commandId,
-      executionAttemptCount,
-      commandState: "validating_host"
-    });
+      updateStatus({
+        commandId,
+        executionAttemptCount,
+        commandState: "validating_host"
+      });
 
-    const hostname = getHostname();
-    const localDevelopmentHost = isLocalDevelopmentHost(hostname);
-    if (!localDevelopmentHost) {
-      return finish(
-        "run_authorized_atlas_custom25d_one_frame",
-        "blocked",
-        "LOCAL_DEVELOPMENT_HOST_REQUIRED",
-        {
-          commandId,
-          commandState: "blocked",
-          localDevelopmentHost: false,
-          permanentlyClosed: true
-        }
-      );
-    }
+      const hostname = getHostname();
+      const localDevelopmentHost = isLocalDevelopmentHost(hostname);
+      if (!localDevelopmentHost) {
+        return finish(
+          "run_authorized_atlas_custom25d_one_frame",
+          "blocked",
+          "LOCAL_DEVELOPMENT_HOST_REQUIRED",
+          {
+            commandId,
+            commandState: "blocked",
+            localDevelopmentHost: false,
+            permanentlyClosed: true
+          }
+        );
+      }
 
-    updateStatus({
+      updateStatus({
       commandId,
       localDevelopmentHost: true,
       commandState: "validating_confirmation"
@@ -688,6 +1217,14 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
     });
 
     const adapter = getAdapter();
+    const commandBridgeDiagnostics = readCommandBridgeDiagnostics();
+    const preSnapshotHandoffTrace = ensurePreSnapshotHandoffTrace(globalThis);
+    preSnapshotHandoffTrace?.update({
+      commandBridgePassed: commandBridgeDiagnostics.commandBridgeAvailable === true,
+      commandBridgeSource: commandBridgeDiagnostics.bridgeSource ?? null,
+      commandHasRawLeafletMapReference:
+        commandBridgeDiagnostics.hasRawLeafletMapReference === true
+    });
     const adapterValidation = validateAdapter(adapter);
     if (!adapterValidation.ok) {
       return finish(
@@ -702,6 +1239,9 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
           readinessReadCount: 1,
           authorizationValidated: true,
           authorizationSessionId: authorizationStatus.sessionId,
+          commandBridgeAvailable:
+            commandBridgeDiagnostics.commandBridgeAvailable === true,
+          bridgeSource: commandBridgeDiagnostics.bridgeSource,
           canonicalSafetyFlagSnapshot: combinedSafetyFlags,
           permanentlyClosed: true
         }
@@ -738,6 +1278,9 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
       authorizationValidated: true,
       authorizationSessionId: authorizationStatus.sessionId,
       adapterReady: true,
+      commandBridgeAvailable:
+        commandBridgeDiagnostics.commandBridgeAvailable === true,
+      bridgeSource: commandBridgeDiagnostics.bridgeSource,
       canonicalSafetyFlagSnapshot: combinedSafetyFlags
     });
 
@@ -889,33 +1432,43 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
       canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags
     });
 
-    let adapterResult;
-    try {
-      adapterResult = adapter.executeDeveloperOnlyLiveOneFrameAdapter({
-        deferCleanupUntilRelease: true
-      });
-    } catch (error) {
-      return finish(
-        "run_authorized_atlas_custom25d_one_frame",
-        "failed_closed",
-        toReasonCode(error, "ADAPTER_INVOCATION_EXCEPTION"),
-        {
-          commandId,
-          confirmationAccepted: true,
-          localDevelopmentHost: true,
-          commandState: "failed_closed",
-          readinessReadCount: 1,
-          readinessRevalidationCount: 1,
-          authorizationValidated: true,
-          authorizationSessionId: authorizationStatus.sessionId,
-          authorizationConsumeAttemptCount: 1,
-          authorizationConsumed: true,
-          adapterReady: true,
-          canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags,
-          permanentlyClosed: true
-        }
-      );
-    }
+      let adapterResult;
+      try {
+        adapterResult = await traceInvocationBoundary(
+          "command.adapter.executeDeveloperOnlyLiveOneFrameAdapter",
+          () => {
+            invocationTrace?.mark("reachedAdapterExecutePath");
+            return adapter.executeDeveloperOnlyLiveOneFrameAdapter({
+              deferCleanupUntilRelease: true,
+              bridge: commandBridgeDiagnostics.bridge ?? null,
+              bridgeSource: commandBridgeDiagnostics.bridgeSource ?? null,
+              hasRawLeafletMapReference:
+                commandBridgeDiagnostics.hasRawLeafletMapReference === true
+            });
+          }
+        );
+      } catch (error) {
+        return finish(
+          "run_authorized_atlas_custom25d_one_frame",
+          "failed_closed",
+          toReasonCode(error, "ADAPTER_INVOCATION_EXCEPTION"),
+          {
+            commandId,
+            confirmationAccepted: true,
+            localDevelopmentHost: true,
+            commandState: "failed_closed",
+            readinessReadCount: 1,
+            readinessRevalidationCount: 1,
+            authorizationValidated: true,
+            authorizationSessionId: authorizationStatus.sessionId,
+            authorizationConsumeAttemptCount: 1,
+            authorizationConsumed: true,
+            adapterReady: true,
+            canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags,
+            permanentlyClosed: true
+          }
+        );
+      }
 
     if (adapterResult?.outcome !== "pending_cleanup") {
       return finish(
@@ -946,19 +1499,41 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
           cleanupFailed: adapterResult?.cleanupFailed === true,
           cleanupFailureReasons: adapterResult?.cleanupFailureReasons ?? [],
           referencesReleased: adapterResult?.referencesReleased === true,
+          commandBridgeAvailable:
+            commandBridgeDiagnostics.commandBridgeAvailable === true,
+          adapterBridgeAvailable:
+            adapterResult?.adapterBridgeAvailable === true,
+          bridgeSource:
+            adapterResult?.bridgeSource ?? commandBridgeDiagnostics.bridgeSource,
+          adapterReceivedBridge:
+            adapterResult?.adapterReceivedBridge === true,
+          adapterBridgeResolutionFunction:
+            adapterResult?.adapterBridgeResolutionFunction ?? null,
+          hasBridge: adapterResult?.hasBridge === true,
+          hasRawLeafletMapReference:
+            adapterResult?.hasRawLeafletMapReference === true,
+          mapObjectType: adapterResult?.mapObjectType ?? "unresolved",
+          mapValidationResult:
+            adapterResult?.mapValidationResult ?? "unresolved",
+          mapValidationFailureReason:
+            adapterResult?.mapValidationFailureReason ?? null,
+          mapAvailabilityFailureFunction:
+            adapterResult?.mapAvailabilityFailureFunction ?? null,
+          surfacePreparationInputReady:
+            adapterResult?.surfacePreparationInputReady === true,
           canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags,
           permanentlyClosed: true
         }
       );
     }
 
-    if (
+      if (
       adapterResult.completedFrameCount !== 1 ||
       adapterResult.drawAttemptCount !== 1 ||
       adapterResult.surfacePrepared !== true ||
       adapterResult.lifecycleRegistered !== true ||
       adapterResult.frameSnapshotCreated !== true
-    ) {
+      ) {
       let cleanupResult;
       try {
         cleanupResult = adapter.completeDeferredCleanup();
@@ -996,6 +1571,28 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
           cleanupFailed: cleanupResult?.cleanupFailed === true,
           cleanupFailureReasons: cleanupResult?.cleanupFailureReasons ?? [],
           referencesReleased: cleanupResult?.referencesReleased === true,
+          commandBridgeAvailable:
+            commandBridgeDiagnostics.commandBridgeAvailable === true,
+          adapterBridgeAvailable:
+            adapterResult?.adapterBridgeAvailable === true,
+          bridgeSource:
+            adapterResult?.bridgeSource ?? commandBridgeDiagnostics.bridgeSource,
+          adapterReceivedBridge:
+            adapterResult?.adapterReceivedBridge === true,
+          adapterBridgeResolutionFunction:
+            adapterResult?.adapterBridgeResolutionFunction ?? null,
+          hasBridge: adapterResult?.hasBridge === true,
+          hasRawLeafletMapReference:
+            adapterResult?.hasRawLeafletMapReference === true,
+          mapObjectType: adapterResult?.mapObjectType ?? "unresolved",
+          mapValidationResult:
+            adapterResult?.mapValidationResult ?? "unresolved",
+          mapValidationFailureReason:
+            adapterResult?.mapValidationFailureReason ?? null,
+          mapAvailabilityFailureFunction:
+            adapterResult?.mapAvailabilityFailureFunction ?? null,
+          surfacePreparationInputReady:
+            adapterResult?.surfacePreparationInputReady === true,
           canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags,
           permanentlyClosed: true
         }
@@ -1020,6 +1617,28 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
       frameSnapshotCreated: true,
       drawAttemptCount: 1,
       completedFrameCount: 1,
+      commandBridgeAvailable:
+        commandBridgeDiagnostics.commandBridgeAvailable === true,
+      adapterBridgeAvailable:
+        adapterResult?.adapterBridgeAvailable === true,
+      bridgeSource:
+        adapterResult?.bridgeSource ?? commandBridgeDiagnostics.bridgeSource,
+      adapterReceivedBridge:
+        adapterResult?.adapterReceivedBridge === true,
+      adapterBridgeResolutionFunction:
+        adapterResult?.adapterBridgeResolutionFunction ?? null,
+      hasBridge: adapterResult?.hasBridge === true,
+      hasRawLeafletMapReference:
+        adapterResult?.hasRawLeafletMapReference === true,
+      mapObjectType: adapterResult?.mapObjectType ?? "unresolved",
+      mapValidationResult:
+        adapterResult?.mapValidationResult ?? "unresolved",
+      mapValidationFailureReason:
+        adapterResult?.mapValidationFailureReason ?? null,
+      mapAvailabilityFailureFunction:
+        adapterResult?.mapAvailabilityFailureFunction ?? null,
+      surfacePreparationInputReady:
+        adapterResult?.surfacePreparationInputReady === true,
       canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags
     });
 
@@ -1120,10 +1739,10 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
       cleanupResult?.outcome === "failed_closed" ||
       cleanupFailureReasons.length > 0;
 
-    return finish(
-      "run_authorized_atlas_custom25d_one_frame",
-      cleanupFailed ? "failed_closed" : "completed",
-      cleanupFailed
+      return finish(
+        "run_authorized_atlas_custom25d_one_frame",
+        cleanupFailed ? "failed_closed" : "completed",
+        cleanupFailed
         ? cleanupFailureReasons[0] ?? cleanupResult?.reasonCode ?? "CLEANUP_FAILED"
         : "MANUAL_GATED_ONE_FRAME_COMMAND_COMPLETED",
       {
@@ -1154,7 +1773,8 @@ export function createDeveloperOnlyAtlasCustom25DOneFrameCommand({
         canonicalSafetyFlagSnapshot: secondReadiness.safetyFlags,
         permanentlyClosed: true
       }
-    );
+      );
+    });
   }
 
   return deepFreeze({
@@ -1184,6 +1804,22 @@ export function installDeveloperOnlyAtlasCustom25DOneFrameCommand({
   if (!namespace) {
     return null;
   }
+
+  const invocationBoundaryTrace = ensureInvocationBoundaryTrace(globalObject);
+  const preSnapshotHandoffTrace = ensurePreSnapshotHandoffTrace(globalObject);
+
+  namespace.resetCustom25DOneFrameInvocationBoundaryTrace = (reasonCode) =>
+    invocationBoundaryTrace?.reset(reasonCode) ?? null;
+  namespace.getCustom25DOneFrameInvocationBoundaryTrace = () =>
+    invocationBoundaryTrace?.getSnapshot() ?? null;
+  namespace.resetAtlasCustom25DOneFrameInvocationBoundaryTrace = (reasonCode) =>
+    invocationBoundaryTrace?.reset(reasonCode) ?? null;
+  namespace.getAtlasCustom25DOneFrameInvocationBoundaryTrace = () =>
+    invocationBoundaryTrace?.getSnapshot() ?? null;
+  namespace.resetCustom25DOneFramePreSnapshotHandoffTrace = (reasonCode) =>
+    preSnapshotHandoffTrace?.reset(reasonCode) ?? null;
+  namespace.getCustom25DOneFramePreSnapshotHandoffTrace = () =>
+    preSnapshotHandoffTrace?.getSnapshot() ?? null;
 
   namespace.runAuthorizedAtlasCustom25DOneFrame =
     function runAuthorizedAtlasCustom25DOneFrameFromNamespace(input) {

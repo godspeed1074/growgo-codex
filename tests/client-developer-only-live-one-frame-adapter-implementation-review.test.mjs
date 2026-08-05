@@ -223,6 +223,10 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
     /window\[namespaceKey\] = \{[\s\S]*getGrowGoMap/
   );
   assert.match(
+    scriptSource,
+    /window\[namespaceKey\] = \{[\s\S]*getCustom25DOneFrameBridgeDebug/
+  );
+  assert.match(
     readinessSource,
     /namespace\.getAtlasRendererHandoffReadiness/
   );
@@ -248,15 +252,23 @@ test("readiness, live map access, and classic-script bridge facts are source-loc
   );
   assert.match(
     developmentAlphaSource,
+    /capturedOneFrameBridgeProviderFromScriptDiagnostics/
+  );
+  assert.match(
+    developmentAlphaSource,
     /capturedOneFrameBridgeFromScriptDiagnostics/
   );
   assert.match(
     developmentAlphaSource,
-    /rawLeafletMapProviderFromBridgeReference/
+    /rawLeafletMapReferenceFromBridge/
   );
   assert.match(
     developmentAlphaSource,
-    /const capturedOneFrameBridgeFromScriptDiagnostics =/
+    /const capturedOneFrameBridgeProviderFromScriptDiagnostics =/
+  );
+  assert.match(
+    developmentAlphaSource,
+    /const capturedOneFrameBridgeFromScriptDiagnostics =\s*\n?\s*capturedOneFrameBridgeProviderFromScriptDiagnostics\(\)/
   );
   assert.match(
     developmentAlphaSource,

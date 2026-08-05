@@ -97,7 +97,12 @@ function bootstrapGrowGoDeveloperDiagnosticsForLocalDev(options = {}) {
     source: "phase-211.2-growgo-map-getter",
     localDev: true,
     getGrowGoMap,
-    getCustom25DOneFrameBridge
+    getCustom25DOneFrameBridge,
+    getCustom25DOneFrameBridgeDebug,
+    getCustom25DOneFrameSnapshotHandoffTrace,
+    resetCustom25DOneFrameSnapshotHandoffTrace,
+    getCustom25DOneFrameSnapshotBoundaryTrace,
+    resetCustom25DOneFrameSnapshotBoundaryTrace
   };
 
   return {
@@ -12228,6 +12233,100 @@ let playerLatLng = null;
 function getGrowGoMap() {
   return traceAtlasOneFrameCall("getGrowGoMap", () => map ?? null);
 }
+
+const CUSTOM_25D_ONE_FRAME_BRIDGE_SOURCE =
+  "phase-211.50m-freeze-raw-leaflet-map-object";
+let custom25DOneFrameBridgeBootstrapMapGetterCalls = 0;
+let custom25DOneFrameBridgeRuntimeMapGetterCalls = 0;
+let custom25DOneFrameBridgeSingleton = null;
+let custom25DOneFrameBridgeDebugSnapshot = Object.freeze({
+  bridgeSource: CUSTOM_25D_ONE_FRAME_BRIDGE_SOURCE,
+  bridgeCreationTimestamp: null,
+  hasRawLeafletMapReference: false,
+  rawLeafletMapReferenceType: "null",
+  rawLeafletMapReferenceIdentity: null,
+  usesRawLeafletMapReference: true,
+  usesPublicGetGrowGoMap: false,
+  usesRawLeafletMapProvider: false,
+  runtimeMapGetterCalls: 0,
+  bootstrapMapGetterCalls: 0
+});
+
+function describeCustom25DOneFrameBridgeReferenceType(reference) {
+  if (reference === null) {
+    return "null";
+  }
+
+  if (Array.isArray(reference)) {
+    return "array";
+  }
+
+  return typeof reference;
+}
+
+function createFrozenCustom25DOneFrameBridge(rawLeafletMapReference) {
+  custom25DOneFrameBridgeSingleton = Object.freeze({
+    rawLeafletMapReference,
+    createCustom25DFrameViewportSnapshotForOneFrame,
+    drawCustom25DOneFrameFromSnapshot
+  });
+
+  custom25DOneFrameBridgeDebugSnapshot = Object.freeze({
+    bridgeSource: CUSTOM_25D_ONE_FRAME_BRIDGE_SOURCE,
+    bridgeCreationTimestamp: new Date().toISOString(),
+    hasRawLeafletMapReference: rawLeafletMapReference !== null,
+    rawLeafletMapReferenceType:
+      describeCustom25DOneFrameBridgeReferenceType(rawLeafletMapReference),
+    rawLeafletMapReferenceIdentity: rawLeafletMapReference,
+    usesRawLeafletMapReference: true,
+    usesPublicGetGrowGoMap: false,
+    usesRawLeafletMapProvider: false,
+    runtimeMapGetterCalls: custom25DOneFrameBridgeRuntimeMapGetterCalls,
+    bootstrapMapGetterCalls: custom25DOneFrameBridgeBootstrapMapGetterCalls
+  });
+
+  return custom25DOneFrameBridgeSingleton;
+}
+
+function readStableCustom25DOneFrameBridge() {
+  if (
+    custom25DOneFrameBridgeSingleton &&
+    custom25DOneFrameBridgeDebugSnapshot.hasRawLeafletMapReference
+  ) {
+    return custom25DOneFrameBridgeSingleton;
+  }
+
+  if (
+    custom25DOneFrameBridgeSingleton &&
+    !custom25DOneFrameBridgeDebugSnapshot.hasRawLeafletMapReference &&
+    map === null
+  ) {
+    return custom25DOneFrameBridgeSingleton;
+  }
+
+  custom25DOneFrameBridgeBootstrapMapGetterCalls += 1;
+  const rawLeafletMapReference = getGrowGoMap();
+
+  return createFrozenCustom25DOneFrameBridge(rawLeafletMapReference);
+}
+
+function getCustom25DOneFrameBridgeDebug() {
+  return traceAtlasOneFrameCall("getCustom25DOneFrameBridgeDebug", () => {
+    const stableBridge = readStableCustom25DOneFrameBridge();
+    const liveLeafletMapReference = map ?? null;
+
+    return Object.freeze({
+      ...custom25DOneFrameBridgeDebugSnapshot,
+      rawLeafletMapReferenceIdentity: stableBridge?.rawLeafletMapReference ?? null,
+      liveLeafletMapReferenceIdentity: liveLeafletMapReference,
+      usesRawLeafletMapProvider: false,
+      runtimeMapGetterCalls: custom25DOneFrameBridgeRuntimeMapGetterCalls,
+      bootstrapMapGetterCalls: custom25DOneFrameBridgeBootstrapMapGetterCalls,
+      rawLeafletMapReferenceMatchesCurrentMap:
+        (stableBridge?.rawLeafletMapReference ?? null) === liveLeafletMapReference
+    });
+  });
+}
 /* GROWGO MAP GETTER DIAGNOSTIC END */
 
 let pinStore = new Map();
@@ -15084,6 +15183,629 @@ let custom25DZoneFeatures = [];
 let custom25DBuildingFeatures = [];
 const CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID =
   "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001";
+const CUSTOM_25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE_SCHEMA_ID =
+  "GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE_001";
+const CUSTOM_25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE_LIMIT = 100;
+const CUSTOM_25D_ONE_FRAME_SNAPSHOT_BOUNDARY_TRACE_SCHEMA_ID =
+  "GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_BOUNDARY_TRACE_001";
+const CUSTOM_25D_ONE_FRAME_SNAPSHOT_BOUNDARY_TRACE_LIMIT = 100;
+
+function createInitialCustom25DOneFrameSnapshotHandoffTraceState() {
+  return {
+    currentDepth: 0,
+    maxObservedDepth: 0,
+    last100Calls: [],
+    last100FunctionNames: [],
+    totalEntryCount: 0,
+    totalExitCount: 0,
+    totalExceptionCount: 0,
+    lastFailedFunctionName: null,
+    previousFunctionNameBeforeFailure: null,
+    lastExceptionName: null,
+    lastExceptionMessage: null,
+    lastExceptionReasonCode: null,
+    stackOverflowDetected: false,
+    reachedSurfacePreparationCompletion: false,
+    reachedSnapshotHandoffCall: false,
+    reachedCreateCustom25DFrameViewportSnapshotForOneFrame: false,
+    reachedCreateCustom25DFrameViewportSnapshotPrivateImplementation: false,
+    reachedCreateCustom25DFrameViewportSnapshot: false,
+    reachedSnapshotReturn: false,
+    reachedFrameSnapshotCreatedAssignment: false,
+    reasonCode: "SNAPSHOT_HANDOFF_TRACE_IDLE"
+  };
+}
+
+let custom25DOneFrameSnapshotHandoffTraceState =
+  createInitialCustom25DOneFrameSnapshotHandoffTraceState();
+
+function cloneCustom25DOneFrameSnapshotHandoffTraceTail(values) {
+  return values.slice(
+    Math.max(0, values.length - CUSTOM_25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE_LIMIT)
+  );
+}
+
+function createCustom25DOneFrameSnapshotHandoffTraceEvent({
+  phase,
+  functionName,
+  depth,
+  detail = null,
+  reasonCode = null
+}) {
+  return Object.freeze({
+    phase,
+    functionName,
+    depth,
+    detail,
+    reasonCode
+  });
+}
+
+function pushCustom25DOneFrameSnapshotHandoffTraceEvent(event) {
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...custom25DOneFrameSnapshotHandoffTraceState,
+    last100Calls: cloneCustom25DOneFrameSnapshotHandoffTraceTail([
+      ...custom25DOneFrameSnapshotHandoffTraceState.last100Calls,
+      event
+    ]),
+    last100FunctionNames: cloneCustom25DOneFrameSnapshotHandoffTraceTail([
+      ...custom25DOneFrameSnapshotHandoffTraceState.last100FunctionNames,
+      event.functionName
+    ])
+  };
+}
+
+function markCustom25DOneFrameSnapshotHandoffTraceMilestone(milestoneName) {
+  if (
+    typeof milestoneName !== "string" ||
+    !Object.prototype.hasOwnProperty.call(
+      custom25DOneFrameSnapshotHandoffTraceState,
+      milestoneName
+    )
+  ) {
+    return;
+  }
+
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...custom25DOneFrameSnapshotHandoffTraceState,
+    [milestoneName]: true
+  };
+}
+
+function resetCustom25DOneFrameSnapshotHandoffTrace(
+  reasonCode = "SNAPSHOT_HANDOFF_TRACE_RESET"
+) {
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...createInitialCustom25DOneFrameSnapshotHandoffTraceState(),
+    reasonCode
+  };
+  return getCustom25DOneFrameSnapshotHandoffTrace();
+}
+
+function getCustom25DOneFrameSnapshotHandoffTrace() {
+  return Object.freeze({
+    schemaId: CUSTOM_25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE_SCHEMA_ID,
+    currentDepth: custom25DOneFrameSnapshotHandoffTraceState.currentDepth,
+    maxObservedDepth: custom25DOneFrameSnapshotHandoffTraceState.maxObservedDepth,
+    last100Calls: Object.freeze([
+      ...custom25DOneFrameSnapshotHandoffTraceState.last100Calls
+    ]),
+    last100FunctionNames: Object.freeze([
+      ...custom25DOneFrameSnapshotHandoffTraceState.last100FunctionNames
+    ]),
+    totalEntryCount: custom25DOneFrameSnapshotHandoffTraceState.totalEntryCount,
+    totalExitCount: custom25DOneFrameSnapshotHandoffTraceState.totalExitCount,
+    totalExceptionCount:
+      custom25DOneFrameSnapshotHandoffTraceState.totalExceptionCount,
+    lastFailedFunctionName:
+      custom25DOneFrameSnapshotHandoffTraceState.lastFailedFunctionName,
+    previousFunctionNameBeforeFailure:
+      custom25DOneFrameSnapshotHandoffTraceState.previousFunctionNameBeforeFailure,
+    lastExceptionName:
+      custom25DOneFrameSnapshotHandoffTraceState.lastExceptionName,
+    lastExceptionMessage:
+      custom25DOneFrameSnapshotHandoffTraceState.lastExceptionMessage,
+    lastExceptionReasonCode:
+      custom25DOneFrameSnapshotHandoffTraceState.lastExceptionReasonCode,
+    stackOverflowDetected:
+      custom25DOneFrameSnapshotHandoffTraceState.stackOverflowDetected,
+    reachedSurfacePreparationCompletion:
+      custom25DOneFrameSnapshotHandoffTraceState.reachedSurfacePreparationCompletion,
+    reachedSnapshotHandoffCall:
+      custom25DOneFrameSnapshotHandoffTraceState.reachedSnapshotHandoffCall,
+    reachedCreateCustom25DFrameViewportSnapshotForOneFrame:
+      custom25DOneFrameSnapshotHandoffTraceState
+        .reachedCreateCustom25DFrameViewportSnapshotForOneFrame,
+    reachedCreateCustom25DFrameViewportSnapshotPrivateImplementation:
+      custom25DOneFrameSnapshotHandoffTraceState
+        .reachedCreateCustom25DFrameViewportSnapshotPrivateImplementation,
+    reachedCreateCustom25DFrameViewportSnapshot:
+      custom25DOneFrameSnapshotHandoffTraceState
+        .reachedCreateCustom25DFrameViewportSnapshot,
+    reachedSnapshotReturn:
+      custom25DOneFrameSnapshotHandoffTraceState.reachedSnapshotReturn,
+    reachedFrameSnapshotCreatedAssignment:
+      custom25DOneFrameSnapshotHandoffTraceState
+        .reachedFrameSnapshotCreatedAssignment,
+    reasonCode: custom25DOneFrameSnapshotHandoffTraceState.reasonCode
+  });
+}
+
+function traceCustom25DOneFrameSnapshotHandoff(functionName, callback, detail = null) {
+  const normalizedFunctionName =
+    typeof functionName === "string" && functionName.trim()
+      ? functionName.trim()
+      : "anonymous";
+  const nextDepth = custom25DOneFrameSnapshotHandoffTraceState.currentDepth + 1;
+
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...custom25DOneFrameSnapshotHandoffTraceState,
+    currentDepth: nextDepth,
+    maxObservedDepth: Math.max(
+      custom25DOneFrameSnapshotHandoffTraceState.maxObservedDepth,
+      nextDepth
+    ),
+    totalEntryCount:
+      custom25DOneFrameSnapshotHandoffTraceState.totalEntryCount + 1,
+    reasonCode: "SNAPSHOT_HANDOFF_TRACE_ACTIVE"
+  };
+
+  pushCustom25DOneFrameSnapshotHandoffTraceEvent(
+    createCustom25DOneFrameSnapshotHandoffTraceEvent({
+      phase: "entry",
+      functionName: normalizedFunctionName,
+      depth: nextDepth,
+      detail
+    })
+  );
+
+  try {
+    const result = callback();
+
+    pushCustom25DOneFrameSnapshotHandoffTraceEvent(
+      createCustom25DOneFrameSnapshotHandoffTraceEvent({
+        phase: "exit",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        detail
+      })
+    );
+
+    custom25DOneFrameSnapshotHandoffTraceState = {
+      ...custom25DOneFrameSnapshotHandoffTraceState,
+      currentDepth: Math.max(
+        0,
+        custom25DOneFrameSnapshotHandoffTraceState.currentDepth - 1
+      ),
+      totalExitCount:
+        custom25DOneFrameSnapshotHandoffTraceState.totalExitCount + 1
+    };
+
+    return result;
+  } catch (error) {
+    const reasonCode =
+      typeof error?.reasonCode === "string" && error.reasonCode
+        ? error.reasonCode
+        : typeof error?.message === "string" && error.message
+          ? error.message
+          : "SNAPSHOT_HANDOFF_TRACE_EXCEPTION";
+    const lastFunctionNamesBeforeFailure =
+      custom25DOneFrameSnapshotHandoffTraceState.last100FunctionNames;
+    const previousFunctionNameBeforeFailure =
+      lastFunctionNamesBeforeFailure[
+        Math.max(0, lastFunctionNamesBeforeFailure.length - 1)
+      ] ?? null;
+    const stackOverflowDetected =
+      reasonCode === "MAXIMUM_CALL_STACK_SIZE_EXCEEDED" ||
+      /maximum call stack size exceeded/i.test(String(reasonCode));
+
+    pushCustom25DOneFrameSnapshotHandoffTraceEvent(
+      createCustom25DOneFrameSnapshotHandoffTraceEvent({
+        phase: "exception",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        detail,
+        reasonCode
+      })
+    );
+
+    custom25DOneFrameSnapshotHandoffTraceState = {
+      ...custom25DOneFrameSnapshotHandoffTraceState,
+      currentDepth: Math.max(
+        0,
+        custom25DOneFrameSnapshotHandoffTraceState.currentDepth - 1
+      ),
+      totalExitCount:
+        custom25DOneFrameSnapshotHandoffTraceState.totalExitCount + 1,
+      totalExceptionCount:
+        custom25DOneFrameSnapshotHandoffTraceState.totalExceptionCount + 1,
+      lastFailedFunctionName: normalizedFunctionName,
+      previousFunctionNameBeforeFailure,
+      lastExceptionName:
+        typeof error?.name === "string" && error.name ? error.name : "Error",
+      lastExceptionMessage:
+        typeof error?.message === "string" && error.message ? error.message : null,
+      lastExceptionReasonCode: reasonCode,
+      stackOverflowDetected:
+        custom25DOneFrameSnapshotHandoffTraceState.stackOverflowDetected ||
+        stackOverflowDetected,
+      reasonCode
+    };
+
+    throw error;
+  }
+}
+
+function enterCustom25DOneFrameSnapshotHandoffTrace(functionName, detail = null) {
+  const normalizedFunctionName =
+    typeof functionName === "string" && functionName.trim()
+      ? functionName.trim()
+      : "anonymous";
+  const nextDepth = custom25DOneFrameSnapshotHandoffTraceState.currentDepth + 1;
+
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...custom25DOneFrameSnapshotHandoffTraceState,
+    currentDepth: nextDepth,
+    maxObservedDepth: Math.max(
+      custom25DOneFrameSnapshotHandoffTraceState.maxObservedDepth,
+      nextDepth
+    ),
+    totalEntryCount:
+      custom25DOneFrameSnapshotHandoffTraceState.totalEntryCount + 1,
+    reasonCode: "SNAPSHOT_HANDOFF_TRACE_ACTIVE"
+  };
+
+  pushCustom25DOneFrameSnapshotHandoffTraceEvent(
+    createCustom25DOneFrameSnapshotHandoffTraceEvent({
+      phase: "entry",
+      functionName: normalizedFunctionName,
+      depth: nextDepth,
+      detail
+    })
+  );
+}
+
+function exitCustom25DOneFrameSnapshotHandoffTrace(functionName, detail = null) {
+  const normalizedFunctionName =
+    typeof functionName === "string" && functionName.trim()
+      ? functionName.trim()
+      : "anonymous";
+  const depth = custom25DOneFrameSnapshotHandoffTraceState.currentDepth;
+
+  pushCustom25DOneFrameSnapshotHandoffTraceEvent(
+    createCustom25DOneFrameSnapshotHandoffTraceEvent({
+      phase: "exit",
+      functionName: normalizedFunctionName,
+      depth,
+      detail
+    })
+  );
+
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...custom25DOneFrameSnapshotHandoffTraceState,
+    currentDepth: Math.max(
+      0,
+      custom25DOneFrameSnapshotHandoffTraceState.currentDepth - 1
+    ),
+    totalExitCount:
+      custom25DOneFrameSnapshotHandoffTraceState.totalExitCount + 1
+  };
+}
+
+function exceptionCustom25DOneFrameSnapshotHandoffTrace(
+  functionName,
+  error,
+  detail = null
+) {
+  const normalizedFunctionName =
+    typeof functionName === "string" && functionName.trim()
+      ? functionName.trim()
+      : "anonymous";
+  const reasonCode =
+    typeof error?.reasonCode === "string" && error.reasonCode
+      ? error.reasonCode
+      : typeof error?.message === "string" && error.message
+        ? error.message
+        : "SNAPSHOT_HANDOFF_TRACE_EXCEPTION";
+  const lastFunctionNamesBeforeFailure =
+    custom25DOneFrameSnapshotHandoffTraceState.last100FunctionNames;
+  const previousFunctionNameBeforeFailure =
+    lastFunctionNamesBeforeFailure[
+      Math.max(0, lastFunctionNamesBeforeFailure.length - 1)
+    ] ?? null;
+  const stackOverflowDetected =
+    reasonCode === "MAXIMUM_CALL_STACK_SIZE_EXCEEDED" ||
+    /maximum call stack size exceeded/i.test(String(reasonCode));
+
+  pushCustom25DOneFrameSnapshotHandoffTraceEvent(
+    createCustom25DOneFrameSnapshotHandoffTraceEvent({
+      phase: "exception",
+      functionName: normalizedFunctionName,
+      depth: custom25DOneFrameSnapshotHandoffTraceState.currentDepth,
+      detail,
+      reasonCode
+    })
+  );
+
+  custom25DOneFrameSnapshotHandoffTraceState = {
+    ...custom25DOneFrameSnapshotHandoffTraceState,
+    currentDepth: Math.max(
+      0,
+      custom25DOneFrameSnapshotHandoffTraceState.currentDepth - 1
+    ),
+    totalExitCount:
+      custom25DOneFrameSnapshotHandoffTraceState.totalExitCount + 1,
+    totalExceptionCount:
+      custom25DOneFrameSnapshotHandoffTraceState.totalExceptionCount + 1,
+    lastFailedFunctionName: normalizedFunctionName,
+    previousFunctionNameBeforeFailure,
+    lastExceptionName:
+      typeof error?.name === "string" && error.name ? error.name : "Error",
+    lastExceptionMessage:
+      typeof error?.message === "string" && error.message ? error.message : null,
+    lastExceptionReasonCode: reasonCode,
+    stackOverflowDetected:
+      custom25DOneFrameSnapshotHandoffTraceState.stackOverflowDetected ||
+      stackOverflowDetected,
+    reasonCode
+  };
+}
+
+if (typeof globalThis !== "undefined" && globalThis) {
+  globalThis.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__ = {
+    enter: enterCustom25DOneFrameSnapshotHandoffTrace,
+    exit: exitCustom25DOneFrameSnapshotHandoffTrace,
+    exception: exceptionCustom25DOneFrameSnapshotHandoffTrace,
+    mark: markCustom25DOneFrameSnapshotHandoffTraceMilestone,
+    reset: resetCustom25DOneFrameSnapshotHandoffTrace,
+    getSnapshot: getCustom25DOneFrameSnapshotHandoffTrace
+  };
+}
+
+function createInitialCustom25DOneFrameSnapshotBoundaryTraceState() {
+  return {
+    currentDepth: 0,
+    maxObservedDepth: 0,
+    last100Calls: [],
+    last100FunctionNames: [],
+    totalEntryCount: 0,
+    totalExitCount: 0,
+    totalExceptionCount: 0,
+    lastFailedFunctionName: null,
+    previousFunctionNameBeforeFailure: null,
+    lastExceptionName: null,
+    lastExceptionMessage: null,
+    lastExceptionReasonCode: null,
+    stackOverflowDetected: false,
+    reachedSnapshotValidation: false,
+    reachedMapGetSize: false,
+    reachedMapGetBounds: false,
+    reachedNorthWestConversion: false,
+    reachedLatLngToLayerPoint: false,
+    reachedDevicePixelRatioRead: false,
+    createCustom25DFrameRootViewportSnapshotPresent: false,
+    reasonCode: "SNAPSHOT_BOUNDARY_TRACE_IDLE"
+  };
+}
+
+let custom25DOneFrameSnapshotBoundaryTraceState =
+  createInitialCustom25DOneFrameSnapshotBoundaryTraceState();
+
+function cloneCustom25DOneFrameSnapshotBoundaryTraceTail(values) {
+  return values.slice(
+    Math.max(0, values.length - CUSTOM_25D_ONE_FRAME_SNAPSHOT_BOUNDARY_TRACE_LIMIT)
+  );
+}
+
+function createCustom25DOneFrameSnapshotBoundaryTraceEvent({
+  phase,
+  functionName,
+  depth,
+  detail = null,
+  reasonCode = null
+}) {
+  return Object.freeze({
+    phase,
+    functionName,
+    depth,
+    detail,
+    reasonCode
+  });
+}
+
+function pushCustom25DOneFrameSnapshotBoundaryTraceEvent(event) {
+  custom25DOneFrameSnapshotBoundaryTraceState = {
+    ...custom25DOneFrameSnapshotBoundaryTraceState,
+    last100Calls: cloneCustom25DOneFrameSnapshotBoundaryTraceTail([
+      ...custom25DOneFrameSnapshotBoundaryTraceState.last100Calls,
+      event
+    ]),
+    last100FunctionNames: cloneCustom25DOneFrameSnapshotBoundaryTraceTail([
+      ...custom25DOneFrameSnapshotBoundaryTraceState.last100FunctionNames,
+      event.functionName
+    ])
+  };
+}
+
+function markCustom25DOneFrameSnapshotBoundaryTraceMilestone(milestoneName) {
+  if (
+    typeof milestoneName !== "string" ||
+    !Object.prototype.hasOwnProperty.call(
+      custom25DOneFrameSnapshotBoundaryTraceState,
+      milestoneName
+    )
+  ) {
+    return;
+  }
+
+  custom25DOneFrameSnapshotBoundaryTraceState = {
+    ...custom25DOneFrameSnapshotBoundaryTraceState,
+    [milestoneName]: true
+  };
+}
+
+function resetCustom25DOneFrameSnapshotBoundaryTrace(
+  reasonCode = "SNAPSHOT_BOUNDARY_TRACE_RESET"
+) {
+  custom25DOneFrameSnapshotBoundaryTraceState = {
+    ...createInitialCustom25DOneFrameSnapshotBoundaryTraceState(),
+    reasonCode
+  };
+  return getCustom25DOneFrameSnapshotBoundaryTrace();
+}
+
+function getCustom25DOneFrameSnapshotBoundaryTrace() {
+  return Object.freeze({
+    schemaId: CUSTOM_25D_ONE_FRAME_SNAPSHOT_BOUNDARY_TRACE_SCHEMA_ID,
+    currentDepth: custom25DOneFrameSnapshotBoundaryTraceState.currentDepth,
+    maxObservedDepth:
+      custom25DOneFrameSnapshotBoundaryTraceState.maxObservedDepth,
+    last100Calls: Object.freeze([
+      ...custom25DOneFrameSnapshotBoundaryTraceState.last100Calls
+    ]),
+    last100FunctionNames: Object.freeze([
+      ...custom25DOneFrameSnapshotBoundaryTraceState.last100FunctionNames
+    ]),
+    totalEntryCount: custom25DOneFrameSnapshotBoundaryTraceState.totalEntryCount,
+    totalExitCount: custom25DOneFrameSnapshotBoundaryTraceState.totalExitCount,
+    totalExceptionCount:
+      custom25DOneFrameSnapshotBoundaryTraceState.totalExceptionCount,
+    lastFailedFunctionName:
+      custom25DOneFrameSnapshotBoundaryTraceState.lastFailedFunctionName,
+    previousFunctionNameBeforeFailure:
+      custom25DOneFrameSnapshotBoundaryTraceState.previousFunctionNameBeforeFailure,
+    lastExceptionName:
+      custom25DOneFrameSnapshotBoundaryTraceState.lastExceptionName,
+    lastExceptionMessage:
+      custom25DOneFrameSnapshotBoundaryTraceState.lastExceptionMessage,
+    lastExceptionReasonCode:
+      custom25DOneFrameSnapshotBoundaryTraceState.lastExceptionReasonCode,
+    stackOverflowDetected:
+      custom25DOneFrameSnapshotBoundaryTraceState.stackOverflowDetected,
+    reachedSnapshotValidation:
+      custom25DOneFrameSnapshotBoundaryTraceState.reachedSnapshotValidation,
+    reachedMapGetSize:
+      custom25DOneFrameSnapshotBoundaryTraceState.reachedMapGetSize,
+    reachedMapGetBounds:
+      custom25DOneFrameSnapshotBoundaryTraceState.reachedMapGetBounds,
+    reachedNorthWestConversion:
+      custom25DOneFrameSnapshotBoundaryTraceState.reachedNorthWestConversion,
+    reachedLatLngToLayerPoint:
+      custom25DOneFrameSnapshotBoundaryTraceState.reachedLatLngToLayerPoint,
+    reachedDevicePixelRatioRead:
+      custom25DOneFrameSnapshotBoundaryTraceState.reachedDevicePixelRatioRead,
+    createCustom25DFrameRootViewportSnapshotPresent:
+      custom25DOneFrameSnapshotBoundaryTraceState
+        .createCustom25DFrameRootViewportSnapshotPresent,
+    reasonCode: custom25DOneFrameSnapshotBoundaryTraceState.reasonCode
+  });
+}
+
+function traceCustom25DOneFrameSnapshotBoundary(functionName, callback, detail = null) {
+  const normalizedFunctionName =
+    typeof functionName === "string" && functionName.trim()
+      ? functionName.trim()
+      : "anonymous";
+  const nextDepth = custom25DOneFrameSnapshotBoundaryTraceState.currentDepth + 1;
+
+  custom25DOneFrameSnapshotBoundaryTraceState = {
+    ...custom25DOneFrameSnapshotBoundaryTraceState,
+    currentDepth: nextDepth,
+    maxObservedDepth: Math.max(
+      custom25DOneFrameSnapshotBoundaryTraceState.maxObservedDepth,
+      nextDepth
+    ),
+    totalEntryCount:
+      custom25DOneFrameSnapshotBoundaryTraceState.totalEntryCount + 1,
+    reasonCode: "SNAPSHOT_BOUNDARY_TRACE_ACTIVE"
+  };
+
+  pushCustom25DOneFrameSnapshotBoundaryTraceEvent(
+    createCustom25DOneFrameSnapshotBoundaryTraceEvent({
+      phase: "entry",
+      functionName: normalizedFunctionName,
+      depth: nextDepth,
+      detail
+    })
+  );
+
+  try {
+    const result = callback();
+
+    pushCustom25DOneFrameSnapshotBoundaryTraceEvent(
+      createCustom25DOneFrameSnapshotBoundaryTraceEvent({
+        phase: "exit",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        detail
+      })
+    );
+
+    custom25DOneFrameSnapshotBoundaryTraceState = {
+      ...custom25DOneFrameSnapshotBoundaryTraceState,
+      currentDepth: Math.max(
+        0,
+        custom25DOneFrameSnapshotBoundaryTraceState.currentDepth - 1
+      ),
+      totalExitCount:
+        custom25DOneFrameSnapshotBoundaryTraceState.totalExitCount + 1
+    };
+
+    return result;
+  } catch (error) {
+    const reasonCode =
+      typeof error?.reasonCode === "string" && error.reasonCode
+        ? error.reasonCode
+        : typeof error?.message === "string" && error.message
+          ? error.message
+          : "SNAPSHOT_BOUNDARY_TRACE_EXCEPTION";
+    const lastFunctionNamesBeforeFailure =
+      custom25DOneFrameSnapshotBoundaryTraceState.last100FunctionNames;
+    const previousFunctionNameBeforeFailure =
+      lastFunctionNamesBeforeFailure[
+        Math.max(0, lastFunctionNamesBeforeFailure.length - 1)
+      ] ?? null;
+    const stackOverflowDetected =
+      reasonCode === "MAXIMUM_CALL_STACK_SIZE_EXCEEDED" ||
+      reasonCode === "TRACE_MAX_DEPTH_EXCEEDED" ||
+      /maximum call stack size exceeded/i.test(String(reasonCode));
+
+    pushCustom25DOneFrameSnapshotBoundaryTraceEvent(
+      createCustom25DOneFrameSnapshotBoundaryTraceEvent({
+        phase: "exception",
+        functionName: normalizedFunctionName,
+        depth: nextDepth,
+        detail,
+        reasonCode
+      })
+    );
+
+    custom25DOneFrameSnapshotBoundaryTraceState = {
+      ...custom25DOneFrameSnapshotBoundaryTraceState,
+      currentDepth: Math.max(
+        0,
+        custom25DOneFrameSnapshotBoundaryTraceState.currentDepth - 1
+      ),
+      totalExitCount:
+        custom25DOneFrameSnapshotBoundaryTraceState.totalExitCount + 1,
+      totalExceptionCount:
+        custom25DOneFrameSnapshotBoundaryTraceState.totalExceptionCount + 1,
+      lastFailedFunctionName: normalizedFunctionName,
+      previousFunctionNameBeforeFailure,
+      lastExceptionName:
+        typeof error?.name === "string" && error.name ? error.name : "Error",
+      lastExceptionMessage:
+        typeof error?.message === "string" && error.message ? error.message : null,
+      lastExceptionReasonCode: reasonCode,
+      stackOverflowDetected:
+        custom25DOneFrameSnapshotBoundaryTraceState.stackOverflowDetected ||
+        stackOverflowDetected,
+      reasonCode
+    };
+
+    throw error;
+  }
+}
 
 function normalizeCustom25DDevicePixelRatio(value) {
   const numericValue = Number(value);
@@ -15103,128 +15825,205 @@ function freezeCustom25DFrameViewportSnapshot(snapshot) {
 
 function createCustom25DFrameViewportSnapshot({ map, canvas } = {}) {
   return traceAtlasOneFrameCall("createCustom25DFrameViewportSnapshot", () => {
-    if (
-      !map ||
-      typeof map.getSize !== "function" ||
-      typeof map.getBounds !== "function" ||
-      typeof map.latLngToLayerPoint !== "function" ||
-      typeof map.getZoom !== "function"
-    ) {
-      throw new Error("FRAME_VIEWPORT_MAP_INVALID");
-    }
-
-    if (!canvas || typeof canvas.getContext !== "function") {
-      throw new Error("FRAME_VIEWPORT_CANVAS_INVALID");
-    }
-
-    const logicalSize = map.getSize();
-    const logicalWidth = Number(logicalSize?.x);
-    const logicalHeight = Number(logicalSize?.y);
-    if (!Number.isFinite(logicalWidth) || !Number.isFinite(logicalHeight)) {
-      throw new Error("FRAME_VIEWPORT_SIZE_INVALID");
-    }
-
-    const bounds = map.getBounds();
-    if (
-      !bounds ||
-      typeof bounds.getNorthWest !== "function" ||
-      typeof bounds.getNorth !== "function" ||
-      typeof bounds.getSouth !== "function" ||
-      typeof bounds.getEast !== "function" ||
-      typeof bounds.getWest !== "function"
-    ) {
-      throw new Error("FRAME_VIEWPORT_BOUNDS_INVALID");
-    }
-
-    const northWestCoordinate = bounds.getNorthWest();
-    const north = Number(bounds.getNorth());
-    const south = Number(bounds.getSouth());
-    const east = Number(bounds.getEast());
-    const west = Number(bounds.getWest());
-    const northWestLatitude = Number(northWestCoordinate?.lat);
-    const northWestLongitude = Number(northWestCoordinate?.lng);
-    if (
-      !Number.isFinite(north) ||
-      !Number.isFinite(south) ||
-      !Number.isFinite(east) ||
-      !Number.isFinite(west) ||
-      !Number.isFinite(northWestLatitude) ||
-      !Number.isFinite(northWestLongitude)
-    ) {
-      throw new Error("FRAME_VIEWPORT_BOUNDS_VALUES_INVALID");
-    }
-
-    const layerPoint = map.latLngToLayerPoint(northWestCoordinate);
-    const layerX = Number(layerPoint?.x);
-    const layerY = Number(layerPoint?.y);
-    if (!Number.isFinite(layerX) || !Number.isFinite(layerY)) {
-      throw new Error("FRAME_VIEWPORT_LAYER_POINT_INVALID");
-    }
-
-    const zoom = Number(map.getZoom());
-    if (!Number.isFinite(zoom)) {
-      throw new Error("FRAME_VIEWPORT_ZOOM_INVALID");
-    }
-
-    const devicePixelRatio = normalizeCustom25DDevicePixelRatio(
-      window.devicePixelRatio
+    markCustom25DOneFrameSnapshotHandoffTraceMilestone(
+      "reachedCreateCustom25DFrameViewportSnapshot"
     );
-    const backingWidth = Math.max(1, Math.round(logicalWidth * devicePixelRatio));
-    const backingHeight = Math.max(1, Math.round(logicalHeight * devicePixelRatio));
+    return traceCustom25DOneFrameSnapshotHandoff(
+      "createCustom25DFrameViewportSnapshot",
+      () =>
+        traceCustom25DOneFrameSnapshotBoundary(
+          "createCustom25DFrameViewportSnapshot",
+          () => {
+        traceCustom25DOneFrameSnapshotBoundary("snapshot.validation", () => {
+          markCustom25DOneFrameSnapshotBoundaryTraceMilestone(
+            "reachedSnapshotValidation"
+          );
 
-    return freezeCustom25DFrameViewportSnapshot({
-      schemaId: CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID,
-      logicalWidth,
-      logicalHeight,
-      backingWidth,
-      backingHeight,
-      devicePixelRatio,
-      bounds: {
-        north,
-        south,
-        east,
-        west
-      },
-      northWestCoordinate: {
-        latitude: northWestLatitude,
-        longitude: northWestLongitude
-      },
-      canvasLayerPosition: {
-        x: layerX,
-        y: layerY
-      },
-      zoom,
-      mapIdentityValidated: true,
-      canvasIdentityValidated: true,
-      snapshotCreated: true,
-      drawRequested: false,
-      listenerAdded: false,
-      retentionWritten: false,
-      contains([latitude, longitude]) {
-        const normalizedLatitude = Number(latitude);
-        const normalizedLongitude = Number(longitude);
-        return (
-          Number.isFinite(normalizedLatitude) &&
-          Number.isFinite(normalizedLongitude) &&
-          normalizedLatitude <= north &&
-          normalizedLatitude >= south &&
-          normalizedLongitude <= east &&
-          normalizedLongitude >= west
+          if (
+            !map ||
+            typeof map.getSize !== "function" ||
+            typeof map.getBounds !== "function" ||
+            typeof map.latLngToLayerPoint !== "function" ||
+            typeof map.getZoom !== "function"
+          ) {
+            throw new Error("FRAME_VIEWPORT_MAP_INVALID");
+          }
+
+          if (!canvas || typeof canvas.getContext !== "function") {
+            throw new Error("FRAME_VIEWPORT_CANVAS_INVALID");
+          }
+        });
+
+        const logicalSize = traceCustom25DOneFrameSnapshotBoundary(
+          "snapshot.map.getSize",
+          () => {
+            const nextLogicalSize = map.getSize();
+            markCustom25DOneFrameSnapshotBoundaryTraceMilestone(
+              "reachedMapGetSize"
+            );
+            return nextLogicalSize;
+          }
         );
-      },
-      getNorthWest() {
-        return {
-          lat: northWestLatitude,
-          lng: northWestLongitude
-        };
-      },
-      getCenter() {
-        return {
-          lat: (north + south) / 2,
-          lng: (east + west) / 2
-        };
+        const logicalWidth = Number(logicalSize?.x);
+        const logicalHeight = Number(logicalSize?.y);
+        if (!Number.isFinite(logicalWidth) || !Number.isFinite(logicalHeight)) {
+          throw new Error("FRAME_VIEWPORT_SIZE_INVALID");
+        }
+
+        const bounds = traceCustom25DOneFrameSnapshotBoundary(
+          "snapshot.map.getBounds",
+          () => {
+            const nextBounds = map.getBounds();
+            markCustom25DOneFrameSnapshotBoundaryTraceMilestone(
+              "reachedMapGetBounds"
+            );
+            return nextBounds;
+          }
+        );
+        if (
+          !bounds ||
+          typeof bounds.getNorthWest !== "function" ||
+          typeof bounds.getNorth !== "function" ||
+          typeof bounds.getSouth !== "function" ||
+          typeof bounds.getEast !== "function" ||
+          typeof bounds.getWest !== "function"
+        ) {
+          throw new Error("FRAME_VIEWPORT_BOUNDS_INVALID");
+        }
+
+        const northWestCoordinate = traceCustom25DOneFrameSnapshotBoundary(
+          "snapshot.bounds.getNorthWest",
+          () => {
+            const nextNorthWestCoordinate = bounds.getNorthWest();
+            markCustom25DOneFrameSnapshotBoundaryTraceMilestone(
+              "reachedNorthWestConversion"
+            );
+            return nextNorthWestCoordinate;
+          }
+        );
+        const north = Number(bounds.getNorth());
+        const south = Number(bounds.getSouth());
+        const east = Number(bounds.getEast());
+        const west = Number(bounds.getWest());
+        const northWestLatitude = Number(northWestCoordinate?.lat);
+        const northWestLongitude = Number(northWestCoordinate?.lng);
+        if (
+          !Number.isFinite(north) ||
+          !Number.isFinite(south) ||
+          !Number.isFinite(east) ||
+          !Number.isFinite(west) ||
+          !Number.isFinite(northWestLatitude) ||
+          !Number.isFinite(northWestLongitude)
+        ) {
+          throw new Error("FRAME_VIEWPORT_BOUNDS_VALUES_INVALID");
+        }
+
+        const layerPoint = traceCustom25DOneFrameSnapshotBoundary(
+          "snapshot.map.latLngToLayerPoint",
+          () => {
+            const nextLayerPoint = map.latLngToLayerPoint(northWestCoordinate);
+            markCustom25DOneFrameSnapshotBoundaryTraceMilestone(
+              "reachedLatLngToLayerPoint"
+            );
+            return nextLayerPoint;
+          }
+        );
+        const layerX = Number(layerPoint?.x);
+        const layerY = Number(layerPoint?.y);
+        if (!Number.isFinite(layerX) || !Number.isFinite(layerY)) {
+          throw new Error("FRAME_VIEWPORT_LAYER_POINT_INVALID");
+        }
+
+        const zoom = Number(map.getZoom());
+        if (!Number.isFinite(zoom)) {
+          throw new Error("FRAME_VIEWPORT_ZOOM_INVALID");
+        }
+
+        const devicePixelRatio = traceCustom25DOneFrameSnapshotBoundary(
+          "snapshot.window.devicePixelRatio",
+          () => {
+            const nextDevicePixelRatio = normalizeCustom25DDevicePixelRatio(
+              window.devicePixelRatio
+            );
+            markCustom25DOneFrameSnapshotBoundaryTraceMilestone(
+              "reachedDevicePixelRatioRead"
+            );
+            return nextDevicePixelRatio;
+          }
+        );
+        const backingWidth = Math.max(
+          1,
+          Math.round(logicalWidth * devicePixelRatio)
+        );
+        const backingHeight = Math.max(
+          1,
+          Math.round(logicalHeight * devicePixelRatio)
+        );
+
+        return traceCustom25DOneFrameSnapshotBoundary(
+          "snapshot.validation.result",
+          () =>
+            freezeCustom25DFrameViewportSnapshot({
+              schemaId: CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID,
+              logicalWidth,
+              logicalHeight,
+              backingWidth,
+              backingHeight,
+              devicePixelRatio,
+              bounds: {
+                north,
+                south,
+                east,
+                west
+              },
+              northWestCoordinate: {
+                latitude: northWestLatitude,
+                longitude: northWestLongitude
+              },
+              canvasLayerPosition: {
+                x: layerX,
+                y: layerY
+              },
+              zoom,
+              mapIdentityValidated: true,
+              canvasIdentityValidated: true,
+              snapshotCreated: true,
+              drawRequested: false,
+              listenerAdded: false,
+              retentionWritten: false,
+              contains([latitude, longitude]) {
+                const normalizedLatitude = Number(latitude);
+                const normalizedLongitude = Number(longitude);
+                return (
+                  Number.isFinite(normalizedLatitude) &&
+                  Number.isFinite(normalizedLongitude) &&
+                  normalizedLatitude <= north &&
+                  normalizedLatitude >= south &&
+                  normalizedLongitude <= east &&
+                  normalizedLongitude >= west
+                );
+              },
+              getNorthWest() {
+                return {
+                  lat: northWestLatitude,
+                  lng: northWestLongitude
+                };
+              },
+              getCenter() {
+                return {
+                  lat: (north + south) / 2,
+                  lng: (east + west) / 2
+                };
+              }
+            })
+        );
+          }
+        ),
+      {
+        hasMap: !!map,
+        hasCanvas: !!canvas
       }
-    });
+    );
   });
 }
 
@@ -15450,7 +16249,23 @@ const createCustom25DFrameViewportSnapshotPrivateImplementation = ({
 } = {}) =>
   traceAtlasOneFrameCall(
     "createCustom25DFrameViewportSnapshotPrivateImplementation",
-    () => createCustom25DFrameViewportSnapshot({ map, canvas })
+    () => {
+      markCustom25DOneFrameSnapshotHandoffTraceMilestone(
+        "reachedCreateCustom25DFrameViewportSnapshotPrivateImplementation"
+      );
+      return traceCustom25DOneFrameSnapshotHandoff(
+        "createCustom25DFrameViewportSnapshotPrivateImplementation",
+        () =>
+          traceCustom25DOneFrameSnapshotBoundary(
+            "createCustom25DFrameViewportSnapshotPrivateImplementation",
+            () => createCustom25DFrameViewportSnapshot({ map, canvas })
+          ),
+        {
+          hasMap: !!map,
+          hasCanvas: !!canvas
+        }
+      );
+    }
   );
 const drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation =
   drawCustom25DMapCanvasWithFrameSnapshot;
@@ -15462,28 +16277,48 @@ function createCustom25DFrameViewportSnapshotForOneFrame({
   return traceAtlasOneFrameCall(
     "createCustom25DFrameViewportSnapshotForOneFrame",
     () => {
-      try {
-        const frameViewportSnapshot =
-          createCustom25DFrameViewportSnapshotPrivateImplementation({
-            map,
-            canvas
-          });
+      markCustom25DOneFrameSnapshotHandoffTraceMilestone(
+        "reachedCreateCustom25DFrameViewportSnapshotForOneFrame"
+      );
+      return traceCustom25DOneFrameSnapshotHandoff(
+        "createCustom25DFrameViewportSnapshotForOneFrame",
+        () =>
+          traceCustom25DOneFrameSnapshotBoundary(
+            "createCustom25DFrameViewportSnapshotForOneFrame",
+            () => {
+              try {
+                const frameViewportSnapshot =
+                  createCustom25DFrameViewportSnapshotPrivateImplementation({
+                    map,
+                    canvas
+                  });
 
-        return Object.freeze({
-          outcome: "snapshot_created",
-          reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
-          frameViewportSnapshot
-        });
-      } catch (error) {
-        return Object.freeze({
-          outcome: "blocked",
-          reasonCode:
-            typeof error?.message === "string" && error.message
-              ? error.message
-              : "FRAME_VIEWPORT_SNAPSHOT_CREATION_FAILED",
-          frameViewportSnapshot: null
-        });
-      }
+                markCustom25DOneFrameSnapshotHandoffTraceMilestone(
+                  "reachedSnapshotReturn"
+                );
+
+                return Object.freeze({
+                  outcome: "snapshot_created",
+                  reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+                  frameViewportSnapshot
+                });
+              } catch (error) {
+                return Object.freeze({
+                  outcome: "blocked",
+                  reasonCode:
+                    typeof error?.message === "string" && error.message
+                      ? error.message
+                      : "FRAME_VIEWPORT_SNAPSHOT_CREATION_FAILED",
+                  frameViewportSnapshot: null
+                });
+              }
+            }
+          ),
+        {
+          hasMap: !!map,
+          hasCanvas: !!canvas
+        }
+      );
     }
   );
 }
@@ -15511,12 +16346,9 @@ function drawCustom25DOneFrameFromSnapshot({
 }
 
 function getCustom25DOneFrameBridge() {
-  return traceAtlasOneFrameCall("getCustom25DOneFrameBridge", () =>
-    Object.freeze({
-      rawLeafletMapReference: map ?? null,
-      createCustom25DFrameViewportSnapshotForOneFrame,
-      drawCustom25DOneFrameFromSnapshot
-    })
+  return traceAtlasOneFrameCall(
+    "getCustom25DOneFrameBridge",
+    readStableCustom25DOneFrameBridge
   );
 }
 

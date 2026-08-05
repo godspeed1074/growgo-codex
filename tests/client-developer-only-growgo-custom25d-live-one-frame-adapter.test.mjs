@@ -67,6 +67,12 @@ const bridgeSnapshotBody = extractFunctionBody(
   "createCustom25DFrameViewportSnapshotForOneFrame"
 );
 const bridgeDrawBody = extractFunctionBody("drawCustom25DOneFrameFromSnapshot");
+const bridgeReferenceTypeBody = extractFunctionBody(
+  "describeCustom25DOneFrameBridgeReferenceType"
+);
+const bridgeFactoryBody = extractFunctionBody("createFrozenCustom25DOneFrameBridge");
+const bridgeReaderBody = extractFunctionBody("readStableCustom25DOneFrameBridge");
+const bridgeDebugBody = extractFunctionBody("getCustom25DOneFrameBridgeDebug");
 const bridgeGetterBody = extractFunctionBody("getCustom25DOneFrameBridge");
 const strippedBridgeGetterBody = stripComments(bridgeGetterBody);
 const strippedBridgeSnapshotBody = stripComments(bridgeSnapshotBody);
@@ -101,18 +107,51 @@ function compileBridgeEnvironment(options = {}) {
     draw: 0
   };
 
-  const evaluationSource = `
+const evaluationSource = `
 const createCustom25DFrameViewportSnapshotPrivateImplementation =
   createCustom25DFrameViewportSnapshot;
 const drawCustom25DMapCanvasWithFrameSnapshotPrivateImplementation =
   drawCustom25DMapCanvasWithFrameSnapshot;
+function getGrowGoMap() {
+  return map ?? null;
+}
+function traceCustom25DOneFrameSnapshotBoundary(functionName, callback) {
+  return callback();
+}
+function traceCustom25DOneFrameSnapshotHandoff(functionName, callback) {
+  return callback();
+}
+function markCustom25DOneFrameSnapshotHandoffTraceMilestone() {}
+function markCustom25DOneFrameSnapshotBoundaryTraceMilestone() {}
+const CUSTOM_25D_ONE_FRAME_BRIDGE_SOURCE =
+  "phase-211.50m-freeze-raw-leaflet-map-object";
+let custom25DOneFrameBridgeBootstrapMapGetterCalls = 0;
+let custom25DOneFrameBridgeRuntimeMapGetterCalls = 0;
+let custom25DOneFrameBridgeSingleton = null;
+let custom25DOneFrameBridgeDebugSnapshot = Object.freeze({
+  bridgeSource: CUSTOM_25D_ONE_FRAME_BRIDGE_SOURCE,
+  bridgeCreationTimestamp: null,
+  hasRawLeafletMapReference: false,
+  rawLeafletMapReferenceType: "null",
+  rawLeafletMapReferenceIdentity: null,
+  usesRawLeafletMapReference: true,
+  usesPublicGetGrowGoMap: false,
+  usesRawLeafletMapProvider: false,
+  runtimeMapGetterCalls: 0,
+  bootstrapMapGetterCalls: 0
+});
 ${bridgeSnapshotBody}
 ${bridgeDrawBody}
+${bridgeReferenceTypeBody}
+${bridgeFactoryBody}
+${bridgeReaderBody}
+${bridgeDebugBody}
 ${bridgeGetterBody}
 module.exports = {
   createCustom25DFrameViewportSnapshotForOneFrame,
   drawCustom25DOneFrameFromSnapshot,
-  getCustom25DOneFrameBridge
+  getCustom25DOneFrameBridge,
+  getCustom25DOneFrameBridgeDebug
 };
 `;
 
@@ -120,7 +159,8 @@ module.exports = {
     module: { exports: {} },
     exports: {},
     Object,
-    map: null,
+    Date,
+    map: options.mapValue ?? null,
     traceAtlasOneFrameCall(functionName, callback) {
       return callback();
     },
@@ -282,6 +322,8 @@ function createFakeAdapterEnvironment(overrides = {}) {
               }
               return map;
             },
+      rawLeafletMapReference:
+        overrides.omitRawLeafletMapReference === true ? undefined : map,
       leafletProvider:
         overrides.omitLeafletProvider === true
           ? null
@@ -528,7 +570,8 @@ function createFakeAdapterEnvironment(overrides = {}) {
                   }
                 }
               };
-            }
+            },
+      postDrawOperationContinuationHooks: overrides.postDrawOperationContinuationHooks
     })
   };
 
@@ -555,6 +598,18 @@ test("module import has no side effects, factory exists, and construction reads 
   assert.equal(status.permanentlyClosed, false);
   assert.equal(status.browserActivationExposed, false);
   assert.equal(status.automaticInvocation, false);
+  assert.equal(status.hasBridge, true);
+  assert.equal(status.adapterBridgeAvailable, false);
+  assert.equal(status.commandBridgeAvailable, false);
+  assert.equal(status.bridgeSource, null);
+  assert.equal(status.adapterReceivedBridge, false);
+  assert.equal(status.adapterBridgeResolutionFunction, null);
+  assert.equal(status.hasRawLeafletMapReference, false);
+  assert.equal(status.mapObjectType, "unresolved");
+  assert.equal(status.mapValidationResult, "unresolved");
+  assert.equal(status.mapValidationFailureReason, null);
+  assert.equal(status.mapAvailabilityFailureFunction, null);
+  assert.equal(status.surfacePreparationInputReady, false);
 
   for (const count of Object.values(env.calls)) {
     assert.equal(count, 0);
@@ -620,6 +675,30 @@ test("narrow script bridge exists, exposes snapshot creation and snapshot-aware 
   assert.equal(calls.draw, 1);
 });
 
+test("script bridge is memoized after raw map capture and debug confirms the raw reference path", () => {
+  const ownedMap = { id: "leaflet-map-instance" };
+  const { bridgeModule } = compileBridgeEnvironment({
+    mapValue: ownedMap
+  });
+
+  const firstBridge = bridgeModule.getCustom25DOneFrameBridge();
+  const secondBridge = bridgeModule.getCustom25DOneFrameBridge();
+  const debug = bridgeModule.getCustom25DOneFrameBridgeDebug();
+
+  assert.equal(firstBridge, secondBridge);
+  assert.equal(firstBridge.rawLeafletMapReference, ownedMap);
+  assert.equal(debug.hasRawLeafletMapReference, true);
+  assert.equal(debug.rawLeafletMapReferenceIdentity, ownedMap);
+  assert.equal(debug.liveLeafletMapReferenceIdentity, ownedMap);
+  assert.equal(debug.rawLeafletMapReferenceMatchesCurrentMap, true);
+  assert.equal(debug.usesPublicGetGrowGoMap, false);
+  assert.equal(debug.usesRawLeafletMapReference, true);
+  assert.equal(debug.usesRawLeafletMapProvider, false);
+  assert.equal(debug.runtimeMapGetterCalls, 0);
+  assert.equal(debug.bootstrapMapGetterCalls, 1);
+  assert.equal(typeof debug.bridgeCreationTimestamp, "string");
+});
+
 test("one isolated fake execution completes with one surface, one registration, one snapshot, one draw, one cleanup, reference release, and permanent closure", () => {
   const env = createFakeAdapterEnvironment();
 
@@ -638,9 +717,24 @@ test("one isolated fake execution completes with one surface, one registration, 
   assert.equal(result.referencesReleased, true);
   assert.equal(result.permanentlyClosed, true);
   assert.equal(result.ownershipMode, "ONE_FRAME_SURFACE_ONLY");
+  assert.equal(result.hasBridge, true);
+  assert.equal(result.adapterBridgeAvailable, false);
+  assert.equal(result.commandBridgeAvailable, false);
+  assert.equal(result.bridgeSource, null);
+  assert.equal(result.adapterReceivedBridge, false);
+  assert.equal(
+    result.adapterBridgeResolutionFunction,
+    "adapter.resolveRuntimeOneFrameBridge"
+  );
+  assert.equal(result.hasRawLeafletMapReference, true);
+  assert.equal(result.mapObjectType, "object:Object");
+  assert.equal(result.mapValidationResult, "present");
+  assert.equal(result.mapValidationFailureReason, null);
+  assert.equal(result.mapAvailabilityFailureFunction, null);
+  assert.equal(result.surfacePreparationInputReady, true);
 
   assert.equal(env.calls.mapProvider, 0);
-  assert.equal(env.calls.rawLeafletMapProvider, 1);
+  assert.equal(env.calls.rawLeafletMapProvider, 0);
   assert.equal(env.calls.leafletProvider, 1);
   assert.equal(env.calls.surfaceOperationsFactory, 1);
   assert.equal(env.calls.lifecycleTranslationFactory, 1);
@@ -659,6 +753,228 @@ test("one isolated fake execution completes with one surface, one registration, 
   assert.equal(status.adapterStatus, "completed");
   assert.equal(status.permanentlyClosed, true);
   assert.equal(status.referencesReleased, true);
+});
+
+test("late runtime raw map provider is accepted even when no raw map reference existed at adapter construction", () => {
+  const lateMap = {
+    id: "late-live-map",
+    getPane() {
+      return { dataset: { owner: "custom25DMapPane" } };
+    },
+    createPane() {
+      return { dataset: { owner: "custom25DMapPane" } };
+    },
+    getSize() {
+      return { x: 640, y: 360 };
+    },
+    getBounds() {
+      return {
+        getNorthWest() {
+          return { lat: -38.1, lng: 145.2 };
+        }
+      };
+    },
+    latLngToLayerPoint() {
+      return { x: 12, y: 34 };
+    },
+    getZoom() {
+      return 16;
+    }
+  };
+
+  const env = createFakeAdapterEnvironment({
+    omitRawLeafletMapReference: true,
+    map: lateMap
+  });
+
+  const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(result.reasonCode, "LIVE_ONE_FRAME_DRAW_COMPLETED");
+  assert.equal(result.hasRawLeafletMapReference, true);
+  assert.equal(result.mapValidationResult, "present");
+  assert.equal(result.mapValidationFailureReason, null);
+  assert.equal(result.mapAvailabilityFailureFunction, null);
+  assert.equal(env.calls.rawLeafletMapProvider, 1);
+});
+
+test("injected runtime bridge restores lost adapter bridge handoff for map, snapshot, and draw", () => {
+  const previousNamespace = globalThis.GrowGoDeveloperDiagnostics;
+  try {
+    const lateMap = {
+      id: "bridge-map",
+      getPane() {
+        return { dataset: { owner: "custom25DMapPane" } };
+      },
+      createPane() {
+        return { dataset: { owner: "custom25DMapPane" } };
+      },
+      getSize() {
+        return { x: 640, y: 360 };
+      },
+      getBounds() {
+        return {
+          getNorthWest() {
+            return { lat: -38.1, lng: 145.2 };
+          }
+        };
+      },
+      latLngToLayerPoint() {
+        return { x: 12, y: 34 };
+      },
+      getZoom() {
+        return 16;
+      }
+    };
+
+    let snapshotCalls = 0;
+    let drawCalls = 0;
+
+    globalThis.GrowGoDeveloperDiagnostics = {
+      getCustom25DOneFrameBridge() {
+        return {
+          rawLeafletMapReference: lateMap,
+          createCustom25DFrameViewportSnapshotForOneFrame() {
+            snapshotCalls += 1;
+            return {
+              outcome: "snapshot_created",
+              reasonCode: "FRAME_VIEWPORT_SNAPSHOT_CREATED",
+              frameViewportSnapshot: createImmutableSnapshot()
+            };
+          },
+          drawCustom25DOneFrameFromSnapshot() {
+            drawCalls += 1;
+            return {
+              outcome: "drawn",
+              reasonCode: "FRAME_DRAW_COMPLETED"
+            };
+          }
+        };
+      },
+      getCustom25DOneFrameBridgeDebug() {
+        return {
+          bridgeSource: "phase-211.50m-freeze-raw-leaflet-map-object"
+        };
+      }
+    };
+
+    const adapter = moduleUnderTest.createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter({
+      rawLeafletMapReference: undefined,
+      rawLeafletMapProvider: () => null,
+      leafletProvider: () => ({
+        DomUtil: {
+          create() {},
+          setPosition() {}
+        }
+      }),
+      surfaceOperationsFactory: () => ({
+        prepareOneFrameSurface() {
+          return {
+            outcome: "prepared",
+            reasonCode: "LIVE_SURFACE_PREPARED",
+            surface: {
+              map: lateMap,
+              pane: { dataset: { owner: "custom25DMapPane" } },
+              canvas: { className: "custom-25d-map-canvas" }
+            }
+          };
+        },
+        rollbackPreparedSurface() {
+          return {
+            outcome: "rolled_back",
+            reasonCode: "ROLLBACK_COMPLETED",
+            rollbackCompleted: true,
+            rollbackFailureReason: null
+          };
+        }
+      }),
+      lifecycleTranslationFactory: () => ({
+        translatePreparedSurfaceToLifecycleBundle({ preparedSurface }) {
+          return {
+            outcome: "translated",
+            reasonCode: "ONE_FRAME_LIFECYCLE_BUNDLE_TRANSLATED",
+            lifecycleRegistrationAttempted: true,
+            lifecycleRegistrationSucceeded: true,
+            lifecycleBundle: {
+              ownershipMode: "ONE_FRAME_SURFACE_ONLY",
+              map: preparedSurface.map,
+              pane: preparedSurface.pane,
+              canvas: preparedSurface.canvas
+            }
+          };
+        }
+      }),
+      lifecycleOwnerFactory: () => ({
+        registerOwnedResources() {
+          return {
+            outcome: "registered",
+            reasonCode: "OWNERSHIP_REGISTERED",
+            status: { ownershipRegistered: true }
+          };
+        },
+        disposeOwnedResources() {
+          return {
+            outcome: "disposed",
+            reasonCode: "CLEANUP_COMPLETED",
+            status: {
+              cleanupCompleted: true,
+              cleanupFailed: false,
+              cleanupFailureReasons: []
+            }
+          };
+        }
+      }),
+      frameSnapshotProvider: () => null,
+      drawFunctionProvider: () => null,
+      drawOperationFactory: ({ drawFunctionProvider }) => ({
+        drawPreparedSurfaceExactlyOnce(input) {
+          const draw = drawFunctionProvider();
+          const bridgeResult = draw(input);
+          return {
+            outcome: bridgeResult?.outcome === "drawn" ? "completed" : "failed_closed",
+            reasonCode:
+              bridgeResult?.outcome === "drawn"
+                ? "LIVE_ONE_FRAME_DRAW_COMPLETED"
+                : bridgeResult?.reasonCode ?? "DRAW_BRIDGE_FAILED",
+            drawAttemptCount: 1,
+            completedFrameCount: bridgeResult?.outcome === "drawn" ? 1 : 0
+          };
+        }
+      })
+    });
+
+    const bridge = globalThis.GrowGoDeveloperDiagnostics.getCustom25DOneFrameBridge();
+    const result = adapter.executeDeveloperOnlyLiveOneFrameAdapter({
+      bridge,
+      bridgeSource: "phase-211.50m-freeze-raw-leaflet-map-object",
+      hasRawLeafletMapReference: true
+    });
+
+    assert.equal(result.outcome, "completed");
+    assert.equal(result.reasonCode, "LIVE_ONE_FRAME_DRAW_COMPLETED");
+    assert.equal(result.adapterBridgeAvailable, true);
+    assert.equal(result.commandBridgeAvailable, true);
+    assert.equal(
+      result.bridgeSource,
+      "phase-211.50m-freeze-raw-leaflet-map-object"
+    );
+    assert.equal(result.adapterReceivedBridge, true);
+    assert.equal(
+      result.adapterBridgeResolutionFunction,
+      "adapter.resolveInjectedRuntimeOneFrameBridge"
+    );
+    assert.equal(result.hasRawLeafletMapReference, true);
+    assert.equal(result.mapValidationResult, "present");
+    assert.equal(result.surfacePreparationInputReady, true);
+    assert.equal(snapshotCalls, 1);
+    assert.equal(drawCalls, 1);
+  } finally {
+    if (previousNamespace === undefined) {
+      delete globalThis.GrowGoDeveloperDiagnostics;
+    } else {
+      globalThis.GrowGoDeveloperDiagnostics = previousNamespace;
+    }
+  }
 });
 
 test("deferred cleanup mode keeps one completed frame available until explicit cleanup release", () => {
@@ -710,7 +1026,11 @@ test("every missing provider or missing live capability fails closed", () => {
   const cases = [
     {
       label: "missing map provider",
-      overrides: { omitMapProvider: true, omitRawLeafletMapProvider: true },
+      overrides: {
+        omitMapProvider: true,
+        omitRawLeafletMapProvider: true,
+        omitRawLeafletMapReference: true
+      },
       reasonCode: "MISSING_MAP_PROVIDER"
     },
     {
@@ -777,6 +1097,1084 @@ test("every missing provider or missing live capability fails closed", () => {
     assert.equal(result.reasonCode, reasonCode, label);
     assert.equal(result.permanentlyClosed, true, label);
     assert.equal(result.referencesReleased, true, label);
+  }
+});
+
+test("MAP_UNAVAILABLE result records developer-only raw map availability diagnostics", () => {
+  const env = createFakeAdapterEnvironment({ map: null });
+
+  const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const status = env.adapter.getAdapterStatus();
+
+  assert.equal(result.reasonCode, "MAP_UNAVAILABLE");
+  assert.equal(result.hasBridge, true);
+  assert.equal(result.adapterBridgeAvailable, false);
+  assert.equal(result.commandBridgeAvailable, false);
+  assert.equal(result.bridgeSource, null);
+  assert.equal(result.adapterReceivedBridge, false);
+  assert.equal(
+    result.adapterBridgeResolutionFunction,
+    "adapter.resolveRuntimeOneFrameBridge"
+  );
+  assert.equal(result.hasRawLeafletMapReference, false);
+  assert.equal(result.mapObjectType, "null");
+  assert.equal(result.mapValidationResult, "missing");
+  assert.equal(result.mapValidationFailureReason, "MAP_REFERENCE_MISSING");
+  assert.equal(
+    result.mapAvailabilityFailureFunction,
+    "adapter.resolveRuntimeRawLeafletMapReference"
+  );
+  assert.equal(result.surfacePreparationInputReady, false);
+  assert.equal(status.mapValidationResult, "missing");
+});
+
+test("snapshot handoff trace captures the pre-assignment failure boundary when snapshot creation overflows", () => {
+  const previousTrace = globalThis.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__;
+  try {
+    let traceState = {
+      currentDepth: 0,
+      maxObservedDepth: 0,
+      last100Calls: [],
+      last100FunctionNames: [],
+      totalEntryCount: 0,
+      totalExitCount: 0,
+      totalExceptionCount: 0,
+      lastFailedFunctionName: null,
+      previousFunctionNameBeforeFailure: null,
+      lastExceptionName: null,
+      lastExceptionMessage: null,
+      lastExceptionReasonCode: null,
+      stackOverflowDetected: false,
+      reachedSurfacePreparationCompletion: false,
+      reachedSnapshotHandoffCall: false,
+      reachedCreateCustom25DFrameViewportSnapshotForOneFrame: false,
+      reachedCreateCustom25DFrameViewportSnapshotPrivateImplementation: false,
+      reachedCreateCustom25DFrameViewportSnapshot: false,
+      reachedSnapshotReturn: false,
+      reachedFrameSnapshotCreatedAssignment: false,
+      reasonCode: "TEST_PREP"
+    };
+
+    globalThis.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__ = {
+      enter(functionName, detail = null) {
+        traceState.currentDepth += 1;
+        traceState.maxObservedDepth = Math.max(
+          traceState.maxObservedDepth,
+          traceState.currentDepth
+        );
+        traceState.totalEntryCount += 1;
+        traceState.last100Calls.push({
+          phase: "entry",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        traceState.last100FunctionNames.push(functionName);
+      },
+      exit(functionName, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exit",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+      },
+      exception(functionName, error, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exception",
+          functionName,
+          depth: traceState.currentDepth,
+          detail,
+          reasonCode: error?.message ?? "ERROR"
+        });
+        traceState.previousFunctionNameBeforeFailure =
+          traceState.last100FunctionNames[traceState.last100FunctionNames.length - 1] ??
+          null;
+        traceState.lastFailedFunctionName = functionName;
+        traceState.lastExceptionName = error?.name ?? "Error";
+        traceState.lastExceptionMessage = error?.message ?? null;
+        traceState.lastExceptionReasonCode = error?.message ?? "ERROR";
+        traceState.stackOverflowDetected = /maximum call stack size exceeded/i.test(
+          String(error?.message ?? "")
+        );
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+        traceState.totalExceptionCount += 1;
+      },
+      mark(name) {
+        traceState[name] = true;
+      },
+      reset(reasonCode = "RESET") {
+        traceState = {
+          ...traceState,
+          currentDepth: 0,
+          maxObservedDepth: 0,
+          last100Calls: [],
+          last100FunctionNames: [],
+          totalEntryCount: 0,
+          totalExitCount: 0,
+          totalExceptionCount: 0,
+          lastFailedFunctionName: null,
+          previousFunctionNameBeforeFailure: null,
+          lastExceptionName: null,
+          lastExceptionMessage: null,
+          lastExceptionReasonCode: null,
+          stackOverflowDetected: false,
+          reachedSurfacePreparationCompletion: false,
+          reachedSnapshotHandoffCall: false,
+          reachedCreateCustom25DFrameViewportSnapshotForOneFrame: false,
+          reachedCreateCustom25DFrameViewportSnapshotPrivateImplementation: false,
+          reachedCreateCustom25DFrameViewportSnapshot: false,
+          reachedSnapshotReturn: false,
+          reachedFrameSnapshotCreatedAssignment: false,
+          reasonCode
+        };
+      },
+      getSnapshot() {
+        return traceState;
+      }
+    };
+
+    const env = createFakeAdapterEnvironment({
+      frameSnapshotBridgeThrows: new RangeError("Maximum call stack size exceeded")
+    });
+    const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+    const trace = globalThis.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__.getSnapshot();
+
+    assert.equal(result.outcome, "failed_closed");
+    assert.equal(result.reasonCode, "MAXIMUM_CALL_STACK_SIZE_EXCEEDED");
+    assert.equal(result.surfacePrepared, true);
+    assert.equal(result.frameSnapshotCreated, false);
+    assert.equal(trace.reachedSurfacePreparationCompletion, true);
+    assert.equal(trace.reachedSnapshotHandoffCall, true);
+    assert.equal(trace.reachedFrameSnapshotCreatedAssignment, false);
+    assert.equal(trace.lastFailedFunctionName, "adapter.invokeFrameSnapshotBridge");
+    assert.equal(trace.lastExceptionName, "RangeError");
+    assert.equal(trace.lastExceptionReasonCode, "Maximum call stack size exceeded");
+    assert.equal(trace.stackOverflowDetected, true);
+  } finally {
+    if (previousTrace === undefined) {
+      delete globalThis.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__;
+    } else {
+      globalThis.__GROWGO_CUSTOM25D_ONE_FRAME_SNAPSHOT_HANDOFF_TRACE__ = previousTrace;
+    }
+  }
+});
+
+test("pre-snapshot handoff trace records handoff creation attempt and required field presence before snapshot invocation", () => {
+  const previousTrace = globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+  try {
+    let traceState = {
+      currentDepth: 0,
+      maxObservedDepth: 0,
+      last100Calls: [],
+      last100FunctionNames: [],
+      totalEntryCount: 0,
+      totalExitCount: 0,
+      totalExceptionCount: 0,
+      lastFailedFunctionName: null,
+      previousFunctionNameBeforeFailure: null,
+      lastExceptionName: null,
+      lastExceptionMessage: null,
+      lastExceptionReasonCode: null,
+      stackOverflowDetected: false,
+      reasonCode: "TEST_HANDOFF_CREATION",
+      adapterPostCallbackResolutionNextStep: null,
+      adapterEarlyReturnReason: null,
+      adapterExecutionCompletionReason: null,
+      payloadAssemblyEntryMarked: false,
+      payloadAssemblyEntryFunction: null,
+      payloadAssemblyNotReachedBranchReason: null,
+      payloadAssemblyNotReachedReturnReason: null,
+      postDrawBridgeNextFunction: null,
+      handoffPayloadAssemblyStarted: false,
+      handoffPayloadAssemblyFunction: null,
+      surfaceInputPresent: false,
+      surfaceInputHasCanvas: false,
+      surfaceInputHasMap: false,
+      surfaceInputHasViewport: false,
+      handoffMapAssigned: false,
+      handoffCanvasAssigned: false,
+      handoffViewportAssigned: false,
+      handoffSnapshotCallbackAssigned: false,
+      handoffDrawCallbackAssigned: false,
+      handoffCreationBranchEntered: false,
+      handoffCreationSkippedReason: null,
+      handoffCreationAttempted: false,
+      handoffCreationSucceeded: false,
+      handoffCreationFailureReason: null,
+      handoffCreationFunction: null,
+      handoffRequiredMapPresent: false,
+      handoffRequiredCanvasPresent: false,
+      handoffRequiredSnapshotCallbackPresent: false,
+      handoffRequiredDrawCallbackPresent: false,
+      handoffViewportDataPresent: false,
+      handoffObjectCreated: false,
+      handoffObjectHasMap: false,
+      handoffObjectHasCanvas: false,
+      handoffObjectHasFrameSnapshot: false,
+      handoffObjectHasViewportData: false,
+      handoffObjectHasCallbacks: false
+    };
+
+    globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ = {
+      enter(functionName, detail = null) {
+        traceState.currentDepth += 1;
+        traceState.maxObservedDepth = Math.max(
+          traceState.maxObservedDepth,
+          traceState.currentDepth
+        );
+        traceState.totalEntryCount += 1;
+        traceState.last100FunctionNames.push(functionName);
+        traceState.last100Calls.push({
+          phase: "enter",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        if (traceState.last100Calls.length > 100) {
+          traceState.last100Calls.shift();
+        }
+        if (traceState.last100FunctionNames.length > 100) {
+          traceState.last100FunctionNames.shift();
+        }
+      },
+      exit(functionName, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exit",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        if (traceState.last100Calls.length > 100) {
+          traceState.last100Calls.shift();
+        }
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+      },
+      exception(functionName, error, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exception",
+          functionName,
+          depth: traceState.currentDepth,
+          detail,
+          reasonCode: error?.message ?? "ERROR"
+        });
+        if (traceState.last100Calls.length > 100) {
+          traceState.last100Calls.shift();
+        }
+        traceState.previousFunctionNameBeforeFailure =
+          traceState.last100FunctionNames[traceState.last100FunctionNames.length - 1] ??
+          null;
+        traceState.lastFailedFunctionName = functionName;
+        traceState.lastExceptionName = error?.name ?? "Error";
+        traceState.lastExceptionMessage = error?.message ?? null;
+        traceState.lastExceptionReasonCode = error?.message ?? "ERROR";
+        traceState.stackOverflowDetected = /maximum call stack size exceeded/i.test(
+          String(error?.message ?? "")
+        );
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+        traceState.totalExceptionCount += 1;
+      },
+      update(patch = {}) {
+        traceState = {
+          ...traceState,
+          ...patch
+        };
+      },
+      getSnapshot() {
+        return traceState;
+      }
+    };
+
+    const env = createFakeAdapterEnvironment();
+    const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+    const trace =
+      globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__.getSnapshot();
+
+    assert.equal(result.outcome, "completed");
+    assert.equal(result.frameSnapshotCreated, true);
+    assert.equal(
+      trace.adapterPostCallbackResolutionNextStep,
+      "adapter.invokeSnapshotCallback"
+    );
+    assert.equal(trace.adapterEarlyReturnReason, null);
+    assert.equal(
+      trace.adapterExecutionCompletionReason,
+      "SNAPSHOT_INVOCATION_REACHED"
+    );
+    assert.equal(trace.payloadAssemblyEntryMarked, true);
+    assert.equal(
+      trace.payloadAssemblyEntryFunction,
+      "adapter.assembleSnapshotHandoffPayload"
+    );
+    assert.equal(trace.payloadAssemblyNotReachedBranchReason, null);
+    assert.equal(trace.payloadAssemblyNotReachedReturnReason, null);
+    assert.equal(
+      trace.postDrawBridgeNextFunction,
+      "adapter.resolveSnapshotCompatibleMap"
+    );
+    assert.equal(trace.handoffPayloadAssemblyStarted, true);
+    assert.equal(
+      trace.handoffPayloadAssemblyFunction,
+      "adapter.assembleSnapshotHandoffPayload"
+    );
+    assert.equal(trace.surfaceInputPresent, true);
+    assert.equal(trace.surfaceInputHasCanvas, true);
+    assert.equal(trace.surfaceInputHasMap, true);
+    assert.equal(trace.surfaceInputHasViewport, false);
+    assert.equal(trace.handoffMapAssigned, true);
+    assert.equal(trace.handoffCanvasAssigned, true);
+    assert.equal(trace.handoffViewportAssigned, true);
+    assert.equal(trace.handoffSnapshotCallbackAssigned, true);
+    assert.equal(trace.handoffDrawCallbackAssigned, true);
+    assert.equal(trace.handoffCreationBranchEntered, true);
+    assert.equal(trace.handoffCreationSkippedReason, null);
+    assert.equal(trace.handoffCreationFunction, "adapter.createSnapshotBridgeInput");
+    assert.equal(trace.handoffCreationAttempted, true);
+    assert.equal(trace.handoffCreationSucceeded, true);
+    assert.equal(trace.handoffCreationFailureReason, null);
+    assert.equal(trace.handoffRequiredMapPresent, true);
+    assert.equal(trace.handoffRequiredCanvasPresent, true);
+    assert.equal(trace.handoffRequiredSnapshotCallbackPresent, true);
+    assert.equal(trace.handoffRequiredDrawCallbackPresent, true);
+    assert.equal(trace.handoffViewportDataPresent, true);
+    assert.equal(trace.handoffObjectCreated, true);
+    assert.equal(trace.handoffObjectHasMap, true);
+    assert.equal(trace.handoffObjectHasCanvas, true);
+    assert.equal(trace.handoffObjectHasFrameSnapshot, false);
+    assert.equal(trace.handoffObjectHasViewportData, true);
+    assert.equal(trace.handoffObjectHasCallbacks, true);
+    assert.equal(trace.totalExceptionCount, 0);
+    assert.equal(
+      trace.last100FunctionNames.includes("adapter.createSnapshotBridgeInput"),
+      true
+    );
+    assert.equal(
+      trace.last100FunctionNames.includes("adapter.invokeSnapshotCallback"),
+      true
+    );
+  } finally {
+    if (previousTrace === undefined) {
+      delete globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+    } else {
+      globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ = previousTrace;
+    }
+  }
+});
+
+test("pre-snapshot handoff trace records skipped handoff payload assembly when required payload is missing", () => {
+  const previousTrace = globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+  try {
+    let traceState = {
+      currentDepth: 0,
+      maxObservedDepth: 0,
+      last100Calls: [],
+      last100FunctionNames: [],
+      totalEntryCount: 0,
+      totalExitCount: 0,
+      totalExceptionCount: 0,
+      lastFailedFunctionName: null,
+      previousFunctionNameBeforeFailure: null,
+      lastExceptionName: null,
+      lastExceptionMessage: null,
+      lastExceptionReasonCode: null,
+      stackOverflowDetected: false,
+      reasonCode: "TEST_HANDOFF_SKIP",
+      adapterPostCallbackResolutionNextStep: null,
+      adapterEarlyReturnReason: null,
+      adapterExecutionCompletionReason: null,
+      payloadAssemblyEntryMarked: false,
+      payloadAssemblyEntryFunction: null,
+      payloadAssemblyNotReachedBranchReason: null,
+      payloadAssemblyNotReachedReturnReason: null,
+      postDrawBridgeNextFunction: null,
+      handoffPayloadAssemblyStarted: false,
+      handoffPayloadAssemblyFunction: null,
+      surfaceInputPresent: false,
+      surfaceInputHasCanvas: false,
+      surfaceInputHasMap: false,
+      surfaceInputHasViewport: false,
+      handoffMapAssigned: false,
+      handoffCanvasAssigned: false,
+      handoffViewportAssigned: false,
+      handoffSnapshotCallbackAssigned: false,
+      handoffDrawCallbackAssigned: false,
+      handoffCreationBranchEntered: false,
+      handoffCreationSkippedReason: null,
+      handoffCreationAttempted: false,
+      handoffCreationSucceeded: false,
+      handoffCreationFailureReason: null,
+      handoffCreationFunction: null,
+      handoffRequiredMapPresent: false,
+      handoffRequiredCanvasPresent: false,
+      handoffRequiredSnapshotCallbackPresent: false,
+      handoffRequiredDrawCallbackPresent: false,
+      handoffViewportDataPresent: false,
+      handoffObjectCreated: false,
+      handoffObjectHasMap: false,
+      handoffObjectHasCanvas: false,
+      handoffObjectHasFrameSnapshot: false,
+      handoffObjectHasViewportData: false,
+      handoffObjectHasCallbacks: false
+    };
+
+    globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ = {
+      enter(functionName, detail = null) {
+        traceState.currentDepth += 1;
+        traceState.maxObservedDepth = Math.max(
+          traceState.maxObservedDepth,
+          traceState.currentDepth
+        );
+        traceState.totalEntryCount += 1;
+        traceState.last100FunctionNames.push(functionName);
+        traceState.last100Calls.push({
+          phase: "enter",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        if (traceState.last100Calls.length > 100) {
+          traceState.last100Calls.shift();
+        }
+        if (traceState.last100FunctionNames.length > 100) {
+          traceState.last100FunctionNames.shift();
+        }
+      },
+      exit(functionName, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exit",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        if (traceState.last100Calls.length > 100) {
+          traceState.last100Calls.shift();
+        }
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+      },
+      exception(functionName, error, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exception",
+          functionName,
+          depth: traceState.currentDepth,
+          detail,
+          reasonCode: error?.message ?? "ERROR"
+        });
+        if (traceState.last100Calls.length > 100) {
+          traceState.last100Calls.shift();
+        }
+        traceState.previousFunctionNameBeforeFailure =
+          traceState.last100FunctionNames[traceState.last100FunctionNames.length - 1] ??
+          null;
+        traceState.lastFailedFunctionName = functionName;
+        traceState.lastExceptionName = error?.name ?? "Error";
+        traceState.lastExceptionMessage = error?.message ?? null;
+        traceState.lastExceptionReasonCode = error?.message ?? "ERROR";
+        traceState.stackOverflowDetected = /maximum call stack size exceeded/i.test(
+          String(error?.message ?? "")
+        );
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+        traceState.totalExceptionCount += 1;
+      },
+      update(patch = {}) {
+        traceState = {
+          ...traceState,
+          ...patch
+        };
+      },
+      getSnapshot() {
+        return traceState;
+      }
+    };
+
+    const env = createFakeAdapterEnvironment({
+      surface: {
+        map: { id: "fake-live-map" },
+        pane: { dataset: { owner: "custom25DMapPane" } },
+        canvas: null
+      }
+    });
+    const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+    const trace =
+      globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__.getSnapshot();
+
+    assert.equal(result.outcome, "failed_closed");
+    assert.equal(result.reasonCode, "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED");
+    assert.equal(result.frameSnapshotCreated, false);
+    assert.equal(
+      trace.adapterPostCallbackResolutionNextStep,
+      "adapter.assembleSnapshotHandoffPayload"
+    );
+    assert.equal(
+      trace.adapterEarlyReturnReason,
+      "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED"
+    );
+    assert.equal(
+      trace.adapterExecutionCompletionReason,
+      "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED"
+    );
+    assert.equal(trace.payloadAssemblyEntryMarked, true);
+    assert.equal(
+      trace.payloadAssemblyEntryFunction,
+      "adapter.assembleSnapshotHandoffPayload"
+    );
+    assert.equal(trace.payloadAssemblyNotReachedBranchReason, null);
+    assert.equal(trace.payloadAssemblyNotReachedReturnReason, null);
+    assert.equal(
+      trace.postDrawBridgeNextFunction,
+      "adapter.resolveSnapshotCompatibleMap"
+    );
+    assert.equal(trace.handoffPayloadAssemblyStarted, true);
+    assert.equal(
+      trace.handoffPayloadAssemblyFunction,
+      "adapter.assembleSnapshotHandoffPayload"
+    );
+    assert.equal(trace.surfaceInputPresent, true);
+    assert.equal(trace.surfaceInputHasCanvas, false);
+    assert.equal(trace.surfaceInputHasMap, true);
+    assert.equal(trace.handoffMapAssigned, true);
+    assert.equal(trace.handoffCanvasAssigned, false);
+    assert.equal(trace.handoffViewportAssigned, true);
+    assert.equal(trace.handoffSnapshotCallbackAssigned, true);
+    assert.equal(trace.handoffDrawCallbackAssigned, true);
+    assert.equal(trace.handoffCreationBranchEntered, false);
+    assert.equal(
+      trace.handoffCreationSkippedReason,
+      "SURFACE_INPUT_CANVAS_MISSING"
+    );
+    assert.equal(trace.handoffCreationAttempted, false);
+    assert.equal(trace.handoffCreationSucceeded, false);
+    assert.equal(
+      trace.handoffCreationFailureReason,
+      "SURFACE_INPUT_CANVAS_MISSING"
+    );
+    assert.equal(trace.handoffObjectCreated, false);
+    assert.equal(trace.handoffObjectHasCanvas, false);
+    assert.equal(trace.totalExceptionCount, 0);
+    assert.equal(
+      trace.last100FunctionNames.includes("adapter.assembleSnapshotHandoffPayload"),
+      true
+    );
+    assert.equal(
+      trace.last100FunctionNames.includes("adapter.createSnapshotBridgeInput"),
+      false
+    );
+  } finally {
+    if (previousTrace === undefined) {
+      delete globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+    } else {
+      globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ = previousTrace;
+    }
+  }
+});
+
+test("pre-snapshot handoff trace records the exact not-reached branch when execution returns before payload assembly begins", () => {
+  const previousTrace = globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+  try {
+    let traceState = {
+      currentDepth: 0,
+      maxObservedDepth: 0,
+      last100Calls: [],
+      last100FunctionNames: [],
+      totalEntryCount: 0,
+      totalExitCount: 0,
+      totalExceptionCount: 0,
+      lastFailedFunctionName: null,
+      previousFunctionNameBeforeFailure: null,
+      lastExceptionName: null,
+      lastExceptionMessage: null,
+      lastExceptionReasonCode: null,
+      stackOverflowDetected: false,
+      reasonCode: "TEST_NOT_REACHED",
+      adapterPostCallbackResolutionNextStep: null,
+      adapterEarlyReturnReason: null,
+      adapterExecutionCompletionReason: null,
+      payloadAssemblyEntryMarked: false,
+      payloadAssemblyEntryFunction: null,
+      payloadAssemblyNotReachedBranchReason: null,
+      payloadAssemblyNotReachedReturnReason: null,
+      postDrawBridgeNextFunction: null
+    };
+
+    globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ = {
+      enter(functionName, detail = null) {
+        traceState.currentDepth += 1;
+        traceState.maxObservedDepth = Math.max(
+          traceState.maxObservedDepth,
+          traceState.currentDepth
+        );
+        traceState.totalEntryCount += 1;
+        traceState.last100FunctionNames.push(functionName);
+        traceState.last100Calls.push({
+          phase: "enter",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        if (traceState.last100Calls.length > 100) traceState.last100Calls.shift();
+        if (traceState.last100FunctionNames.length > 100) {
+          traceState.last100FunctionNames.shift();
+        }
+      },
+      exit(functionName, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exit",
+          functionName,
+          depth: traceState.currentDepth,
+          detail
+        });
+        if (traceState.last100Calls.length > 100) traceState.last100Calls.shift();
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+      },
+      exception(functionName, error, detail = null) {
+        traceState.last100Calls.push({
+          phase: "exception",
+          functionName,
+          depth: traceState.currentDepth,
+          detail,
+          reasonCode: error?.message ?? "ERROR"
+        });
+        if (traceState.last100Calls.length > 100) traceState.last100Calls.shift();
+        traceState.previousFunctionNameBeforeFailure =
+          traceState.last100FunctionNames[traceState.last100FunctionNames.length - 1] ??
+          null;
+        traceState.lastFailedFunctionName = functionName;
+        traceState.lastExceptionName = error?.name ?? "Error";
+        traceState.lastExceptionMessage = error?.message ?? null;
+        traceState.lastExceptionReasonCode = error?.message ?? "ERROR";
+        traceState.stackOverflowDetected = /maximum call stack size exceeded/i.test(
+          String(error?.message ?? "")
+        );
+        traceState.currentDepth = Math.max(0, traceState.currentDepth - 1);
+        traceState.totalExitCount += 1;
+        traceState.totalExceptionCount += 1;
+      },
+      update(patch = {}) {
+        traceState = {
+          ...traceState,
+          ...patch
+        };
+      },
+      getSnapshot() {
+        return traceState;
+      }
+    };
+
+    const env = createFakeAdapterEnvironment({
+      drawOperationFactoryResult: {}
+    });
+    const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+    const trace =
+      globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__.getSnapshot();
+
+    assert.equal(result.outcome, "failed_closed");
+    assert.equal(result.reasonCode, "DRAW_OPERATION_UNAVAILABLE");
+    assert.equal(
+      trace.adapterPostCallbackResolutionNextStep,
+      "adapter.createDrawOperation"
+    );
+    assert.equal(trace.adapterEarlyReturnReason, "DRAW_OPERATION_UNAVAILABLE");
+    assert.equal(
+      trace.adapterExecutionCompletionReason,
+      "DRAW_OPERATION_UNAVAILABLE"
+    );
+    assert.equal(trace.payloadAssemblyEntryMarked, false);
+    assert.equal(
+      trace.payloadAssemblyEntryFunction,
+      "adapter.assembleSnapshotHandoffPayload"
+    );
+    assert.equal(
+      trace.payloadAssemblyNotReachedBranchReason,
+      "DRAW_OPERATION_UNAVAILABLE"
+    );
+    assert.equal(
+      trace.payloadAssemblyNotReachedReturnReason,
+      "DRAW_OPERATION_UNAVAILABLE"
+    );
+    assert.equal(trace.postDrawBridgeNextFunction, "adapter.createDrawOperation");
+    assert.equal(
+      trace.last100FunctionNames.includes("adapter.resolveDrawBridge"),
+      true
+    );
+    assert.equal(
+      trace.last100FunctionNames.includes("adapter.assembleSnapshotHandoffPayload"),
+      false
+    );
+    assert.equal(trace.totalExceptionCount, 0);
+  } finally {
+    if (previousTrace === undefined) {
+      delete globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__;
+    } else {
+      globalThis.__GROWGO_ATLAS_ONE_FRAME_PRE_SNAPSHOT_HANDOFF_TRACE__ = previousTrace;
+    }
+  }
+});
+
+test("post-draw-operation continuation completes refs assignments, surface preparation, status write, and payload entry on the normal path", () => {
+  const env = createFakeAdapterEnvironment();
+
+  const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const identity = env.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(identity.createDrawOperationReturned, true);
+  assert.equal(identity.postDrawOperationContinuationEntered, true);
+  assert.equal(identity.drawOperationLocalAssignmentAttempted, true);
+  assert.equal(identity.drawOperationLocalAssignmentCompleted, true);
+  assert.equal(identity.currentRefsMapAssignmentAttempted, true);
+  assert.equal(identity.currentRefsMapAssignmentCompleted, true);
+  assert.equal(identity.currentRefsLifecycleOwnerAssignmentAttempted, true);
+  assert.equal(identity.currentRefsLifecycleOwnerAssignmentCompleted, true);
+  assert.equal(identity.currentRefsDrawOperationAssignmentAttempted, true);
+  assert.equal(identity.currentRefsDrawOperationAssignmentCompleted, true);
+  assert.equal(identity.prepareOneFrameSurfaceSelected, true);
+  assert.equal(identity.prepareOneFrameSurfaceCallAttempted, true);
+  assert.equal(identity.prepareOneFrameSurfaceCallEntered, true);
+  assert.equal(identity.prepareOneFrameSurfaceCallReturned, true);
+  assert.equal(identity.prepareOneFrameSurfaceResultType, "object:Object");
+  assert.equal(identity.surfacePreparationInputReadyStatusWriteAttempted, true);
+  assert.equal(identity.surfacePreparationInputReadyStatusWriteCompleted, true);
+  assert.equal(
+    identity.postDrawOperationLastCompletedStep,
+    "surfaceOperations.prepareOneFrameSurface returned"
+  );
+  assert.equal(identity.postDrawOperationNextExpectedStep, "payload assembly entry");
+  assert.equal(identity.postDrawOperationFailureFunction, null);
+  assert.equal(identity.postDrawOperationExceptionName, null);
+  assert.equal(identity.preparedSurfaceLocalAssignmentAttempted, true);
+  assert.equal(identity.preparedSurfaceLocalAssignmentCompleted, true);
+  assert.equal(identity.preparedSurfacePresent, true);
+  assert.equal(identity.preparedSurfaceType, "object:Object");
+  assert.deepEqual(identity.preparedSurfaceKeys, ["outcome", "reasonCode", "surface"]);
+  assert.equal(identity.preparedSurfaceStatusReadAttempted, true);
+  assert.equal(identity.preparedSurfaceStatusReadCompleted, true);
+  assert.equal(identity.preparedSurfaceStatusValue, "prepared");
+  assert.equal(identity.preparedSurfaceReasonReadAttempted, true);
+  assert.equal(identity.preparedSurfaceReasonReadCompleted, true);
+  assert.equal(identity.preparedSurfaceReasonValue, "LIVE_SURFACE_PREPARED");
+  assert.equal(identity.preparedSurfaceCanvasReadAttempted, true);
+  assert.equal(identity.preparedSurfaceCanvasReadCompleted, true);
+  assert.equal(identity.preparedSurfaceCanvasPresent, true);
+  assert.equal(identity.preparedSurfaceMapReadAttempted, true);
+  assert.equal(identity.preparedSurfaceMapReadCompleted, true);
+  assert.equal(identity.preparedSurfaceMapPresent, true);
+  assert.equal(identity.preparedSurfaceLifecycleOwnerReadAttempted, true);
+  assert.equal(identity.preparedSurfaceLifecycleOwnerReadCompleted, true);
+  assert.equal(identity.preparedSurfaceLifecycleOwnerPresent, false);
+  assert.equal(identity.preparedSurfaceLifecycleOwnerSource, null);
+  assert.equal(identity.preparedSurfaceLifecycleOwnerPropertyName, null);
+  assert.equal(identity.preparedSurfaceNestedLifecycleOwnerPresent, false);
+  assert.equal(identity.currentRefsLifecycleOwnerPresentAfterSurfacePreparation, true);
+  assert.equal(identity.payloadLifecycleOwnerResolved, true);
+  assert.equal(
+    identity.payloadLifecycleOwnerResolutionSource,
+    "currentRefs.lifecycleOwner"
+  );
+  assert.equal(identity.payloadLifecycleOwnerResolutionFailureReason, null);
+  assert.equal(identity.payloadAssemblyEntryAttempted, true);
+  assert.equal(identity.payloadAssemblyEntryCompleted, true);
+  assert.equal(
+    identity.preparedSurfaceContinuationLastCompletedStep,
+    "payload assembly entry"
+  );
+  assert.equal(
+    identity.preparedSurfaceContinuationNextExpectedStep,
+    "payload assembly guard evaluation"
+  );
+  assert.equal(identity.preparedSurfaceContinuationFailureFunction, null);
+  assert.equal(identity.preparedSurfaceContinuationExceptionName, null);
+  assert.equal(identity.preparedSurfaceContinuationExceptionMessage, null);
+  assert.equal(identity.preparedSurfaceContinuationExceptionReasonCode, null);
+  assert.equal(identity.preparedSurfaceGetterInvoked, false);
+  assert.equal(identity.preparedSurfaceProxyTrapInvoked, false);
+  assert.equal(identity.preparedSurfaceRecursiveCallbackInvoked, false);
+  assert.equal(identity.preparedSurfaceDiagnosticsLookupInvoked, false);
+  assert.equal(
+    identity.payloadAssemblyEntryFunction,
+    "adapter.assembleSnapshotHandoffPayload"
+  );
+  assert.equal(identity.payloadAssemblyContextCreationAttempted, true);
+  assert.equal(identity.payloadAssemblyContextCreationCompleted, true);
+  assert.equal(identity.payloadGuardEvaluationAttempted, true);
+  assert.equal(identity.payloadGuardEvaluationCompleted, true);
+  assert.equal(identity.payloadGuardResult, true);
+  assert.equal(identity.payloadGuardFailureReason, null);
+  assert.equal(identity.payloadContextHasMap, true);
+  assert.equal(identity.payloadContextHasCanvas, true);
+  assert.equal(identity.payloadContextHasViewport, true);
+  assert.equal(identity.payloadContextHasDrawOperation, true);
+  assert.equal(identity.payloadContextHasCallbacks, true);
+  assert.equal(identity.handoffCreationAfterGuardAttempted, true);
+  assert.equal(identity.handoffCreationAfterGuardCompleted, true);
+  assert.equal(identity.payloadAssemblyNextFunction, "snapshot callback invocation");
+  assert.equal(identity.payloadAssemblyLastCompletedStep, "handoff object creation");
+  assert.equal(identity.payloadAssemblyFailureFunction, null);
+  assert.equal(identity.payloadAssemblyExceptionName, null);
+  assert.equal(identity.payloadAssemblyExceptionMessage, null);
+  assert.equal(identity.payloadAssemblyExceptionReasonCode, null);
+  assert.equal(identity.payloadAssemblyGetterInvoked, false);
+  assert.equal(identity.payloadAssemblyProxyTrapInvoked, false);
+  assert.equal(identity.payloadAssemblyRecursiveCallbackInvoked, false);
+  assert.equal(identity.payloadAssemblyDiagnosticsLookupInvoked, false);
+  assert.equal(identity.payloadAssemblyGuardEvaluated, true);
+  assert.equal(identity.payloadAssemblyInstrumentationEntered, true);
+  assert.equal(result.canonicalSafetyFlagSnapshot.runtimeExecutionEnabled, false);
+  assert.equal(result.canonicalSafetyFlagSnapshot.mapAttachmentAllowed, false);
+  assert.equal(
+    result.canonicalSafetyFlagSnapshot.automaticRendererExecutionAllowed,
+    false
+  );
+  assert.equal(result.canonicalSafetyFlagSnapshot.lifecycleExecutionEnabled, false);
+});
+
+test("prepared surface continuation records explicit missing canvas and missing map signals before payload assembly", () => {
+  const missingCanvasEnv = createFakeAdapterEnvironment({
+    surface: {
+      id: "missing-canvas-surface",
+      map: { id: "surface-map" },
+      pane: { dataset: { owner: "custom25DMapPane" } }
+    }
+  });
+  const missingCanvasResult =
+    missingCanvasEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const missingCanvasIdentity =
+    missingCanvasEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(missingCanvasResult.outcome, "failed_closed");
+  assert.equal(missingCanvasResult.reasonCode, "HANDOFF_PAYLOAD_ASSEMBLY_SKIPPED");
+  assert.equal(missingCanvasIdentity.preparedSurfaceCanvasReadCompleted, true);
+  assert.equal(missingCanvasIdentity.preparedSurfaceCanvasPresent, false);
+  assert.equal(missingCanvasIdentity.currentRefsLifecycleOwnerPresentAfterSurfacePreparation, true);
+  assert.equal(missingCanvasIdentity.payloadLifecycleOwnerResolved, true);
+  assert.equal(
+    missingCanvasIdentity.payloadLifecycleOwnerResolutionSource,
+    "currentRefs.lifecycleOwner"
+  );
+  assert.equal(missingCanvasIdentity.payloadAssemblyEntryCompleted, true);
+  assert.equal(
+    missingCanvasIdentity.payloadAssemblyEntryFunction,
+    "adapter.assembleSnapshotHandoffPayload"
+  );
+  assert.equal(missingCanvasIdentity.payloadAssemblyContextCreationAttempted, true);
+  assert.equal(missingCanvasIdentity.payloadAssemblyContextCreationCompleted, true);
+  assert.equal(missingCanvasIdentity.payloadGuardEvaluationAttempted, true);
+  assert.equal(missingCanvasIdentity.payloadAssemblyGuardEvaluated, true);
+  assert.equal(missingCanvasIdentity.payloadGuardEvaluationCompleted, true);
+  assert.equal(missingCanvasIdentity.payloadAssemblyGuardResult, false);
+  assert.equal(
+    missingCanvasIdentity.payloadGuardFailureReason,
+    "SURFACE_INPUT_CANVAS_MISSING"
+  );
+  assert.equal(missingCanvasIdentity.payloadContextHasMap, true);
+  assert.equal(missingCanvasIdentity.payloadContextHasCanvas, false);
+  assert.equal(missingCanvasIdentity.payloadContextHasViewport, true);
+  assert.equal(missingCanvasIdentity.payloadContextHasDrawOperation, true);
+  assert.equal(missingCanvasIdentity.payloadContextHasCallbacks, true);
+  assert.equal(missingCanvasIdentity.handoffCreationAfterGuardAttempted, true);
+  assert.equal(missingCanvasIdentity.handoffCreationAfterGuardCompleted, false);
+  assert.equal(
+    missingCanvasIdentity.payloadAssemblyLastCompletedStep,
+    "payload guard evaluation"
+  );
+  assert.equal(
+    missingCanvasIdentity.payloadAssemblyNextFunction,
+    "handoff skipped after payload guard"
+  );
+  assert.equal(
+    missingCanvasIdentity.payloadAssemblySkippedReason,
+    "SURFACE_INPUT_CANVAS_MISSING"
+  );
+  assert.equal(
+    missingCanvasIdentity.preparedSurfaceContinuationLastCompletedStep,
+    "payload assembly entry"
+  );
+
+  const missingMapEnv = createFakeAdapterEnvironment({
+    surface: {
+      id: "missing-map-surface",
+      canvas: {
+        className: "custom-25d-map-canvas",
+        style: {},
+        parentNode: { dataset: { owner: "custom25DMapPane" } }
+      },
+      pane: { dataset: { owner: "custom25DMapPane" } }
+    }
+  });
+  const missingMapResult =
+    missingMapEnv.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const missingMapIdentity =
+    missingMapEnv.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(missingMapResult.outcome, "completed");
+  assert.equal(missingMapIdentity.preparedSurfaceMapReadCompleted, true);
+  assert.equal(missingMapIdentity.preparedSurfaceMapPresent, false);
+  assert.equal(missingMapIdentity.currentRefsLifecycleOwnerPresentAfterSurfacePreparation, true);
+  assert.equal(missingMapIdentity.payloadLifecycleOwnerResolved, true);
+  assert.equal(
+    missingMapIdentity.payloadLifecycleOwnerResolutionSource,
+    "currentRefs.lifecycleOwner"
+  );
+  assert.equal(missingMapIdentity.payloadAssemblyEntryCompleted, true);
+  assert.equal(missingMapIdentity.payloadAssemblyContextCreationAttempted, true);
+  assert.equal(missingMapIdentity.payloadAssemblyContextCreationCompleted, true);
+  assert.equal(missingMapIdentity.payloadGuardEvaluationAttempted, true);
+  assert.equal(missingMapIdentity.payloadAssemblyGuardEvaluated, true);
+  assert.equal(missingMapIdentity.payloadGuardEvaluationCompleted, true);
+  assert.equal(missingMapIdentity.payloadAssemblyGuardResult, true);
+  assert.equal(missingMapIdentity.payloadContextHasMap, true);
+  assert.equal(missingMapIdentity.payloadContextHasCanvas, true);
+  assert.equal(missingMapIdentity.payloadContextHasViewport, true);
+  assert.equal(missingMapIdentity.handoffCreationAfterGuardAttempted, true);
+  assert.equal(missingMapIdentity.handoffCreationAfterGuardCompleted, true);
+});
+
+test("prepared surface continuation identifies the exact property read when a prepared surface getter fails", () => {
+  const env = createFakeAdapterEnvironment({
+    surface: {
+      get canvas() {
+        throw new Error("PREPARED_SURFACE_CANVAS_GETTER_EXPLODED");
+      },
+      map: { id: "surface-map" },
+      pane: { dataset: { owner: "custom25DMapPane" } }
+    }
+  });
+
+  const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const identity = env.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(result.outcome, "failed_closed");
+  assert.equal(result.reasonCode, "PREPARED_SURFACE_CANVAS_READ_EXCEPTION");
+  assert.equal(
+    identity.preparedSurfaceContinuationFailureFunction,
+    "preparedSurface.surface.canvas read"
+  );
+  assert.equal(
+    identity.preparedSurfaceContinuationExceptionReasonCode,
+    "PREPARED_SURFACE_CANVAS_READ_EXCEPTION"
+  );
+  assert.equal(identity.preparedSurfaceGetterInvoked, true);
+  assert.equal(identity.payloadAssemblyEntryAttempted, false);
+  assert.equal(identity.payloadAssemblyContextCreationAttempted, false);
+  assert.equal(identity.payloadGuardEvaluationAttempted, false);
+});
+
+test("payload lifecycle owner resolves from currentRefs when the prepared surface contract omits it, without creating a duplicate owner", () => {
+  const lifecycleOwner = {
+    disposeCount: 0,
+    registerCount: 0,
+    registerOwnedResources() {
+      this.registerCount += 1;
+      return {
+        outcome: "registered",
+        reasonCode: "OWNERSHIP_REGISTERED",
+        status: { ownershipRegistered: true }
+      };
+    },
+    disposeOwnedResources() {
+      this.disposeCount += 1;
+      return {
+        outcome: "disposed",
+        reasonCode: "CLEANUP_COMPLETED",
+        status: {
+          cleanupCompleted: true,
+          cleanupFailed: false,
+          cleanupFailureReasons: []
+        }
+      };
+    },
+    getLifecycleOwnerStatus() {
+      return { cleanupCompleted: this.disposeCount > 0 };
+    }
+  };
+
+  const env = createFakeAdapterEnvironment({ lifecycleOwner });
+  const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+  const identity = env.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(identity.preparedSurfaceCanvasPresent, true);
+  assert.equal(identity.preparedSurfaceMapPresent, true);
+  assert.equal(identity.preparedSurfaceLifecycleOwnerPresent, false);
+  assert.equal(identity.currentRefsLifecycleOwnerPresentAfterSurfacePreparation, true);
+  assert.equal(identity.payloadLifecycleOwnerResolved, true);
+  assert.equal(
+    identity.payloadLifecycleOwnerResolutionSource,
+    "currentRefs.lifecycleOwner"
+  );
+  assert.equal(identity.payloadAssemblyEntryAttempted, true);
+  assert.equal(identity.payloadAssemblyEntryCompleted, true);
+  assert.equal(identity.payloadAssemblyContextCreationAttempted, true);
+  assert.equal(identity.payloadGuardEvaluationAttempted, true);
+  assert.equal(env.calls.lifecycleOwnerFactory, 1);
+  assert.equal(lifecycleOwner.registerCount, 1);
+  assert.equal(lifecycleOwner.disposeCount, 1);
+});
+
+test("post-draw-operation continuation reports exact simulated assignment, status-write, and surface-preparation boundaries", () => {
+  const cases = [
+    {
+      label: "map assignment",
+      hookName: "beforeCurrentRefsMapAssignment",
+      reasonCode: "CURRENT_REFS_MAP_ASSIGNMENT_EXCEPTION",
+      failureFunction: "currentRefs.map assignment"
+    },
+    {
+      label: "lifecycle assignment",
+      hookName: "beforeCurrentRefsLifecycleOwnerAssignment",
+      reasonCode: "CURRENT_REFS_LIFECYCLE_ASSIGNMENT_EXCEPTION",
+      failureFunction: "currentRefs.lifecycleOwner assignment"
+    },
+    {
+      label: "draw operation assignment",
+      hookName: "beforeCurrentRefsDrawOperationAssignment",
+      reasonCode: "CURRENT_REFS_DRAW_OPERATION_ASSIGNMENT_EXCEPTION",
+      failureFunction: "currentRefs.drawOperation assignment"
+    },
+    {
+      label: "status write",
+      hookName: "beforeSurfacePreparationInputReadyStatusWrite",
+      reasonCode: "SURFACE_PREPARATION_STATUS_WRITE_EXCEPTION",
+      failureFunction: "updateStatus(surfacePreparationInputReady)"
+    },
+    {
+      label: "surface preparation entry",
+      hookName: "beforePrepareOneFrameSurface",
+      reasonCode: "SURFACE_PREPARATION_EXCEPTION",
+      failureFunction: "adapter.prepareOneFrameSurface"
+    }
+  ];
+
+  for (const testCase of cases) {
+    const env = createFakeAdapterEnvironment({
+      postDrawOperationContinuationHooks: {
+        [testCase.hookName]() {
+          throw new Error(testCase.reasonCode);
+        }
+      }
+    });
+
+    const result = env.adapter.executeDeveloperOnlyLiveOneFrameAdapter();
+    const identity = env.adapter.getCustom25DOneFrameAdapterExecutionIdentity();
+
+    assert.equal(result.outcome, "failed_closed", testCase.label);
+    assert.equal(result.reasonCode, testCase.reasonCode, testCase.label);
+    assert.equal(
+      identity.postDrawOperationFailureFunction,
+      testCase.failureFunction,
+      testCase.label
+    );
+    assert.equal(
+      identity.postDrawOperationExceptionReasonCode,
+      testCase.reasonCode,
+      testCase.label
+    );
   }
 });
 
@@ -848,7 +2246,7 @@ test("manual command remains outside script.js, the adapter stays disconnected f
   );
   assert.match(
     developmentAlphaAppSource,
-    /rawLeafletMapProviderFromBridgeReference/
+    /rawLeafletMapReferenceFromBridge/
   );
   assert.doesNotMatch(
     developmentAlphaAppSource,
