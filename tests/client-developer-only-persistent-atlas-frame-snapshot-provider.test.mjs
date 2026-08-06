@@ -7,7 +7,9 @@ import {
   createPersistentAtlasFrameSnapshot,
   createPersistentAtlasFrameSnapshotProvider,
   getPersistentAtlasFrameSnapshotStatus,
+  normalizePersistentAtlasFrameSnapshotForContract,
   releasePersistentAtlasFrameSnapshot,
+  toOneFrameViewportSnapshotContract,
   validatePersistentAtlasFrameSnapshot
 } from "../client/developer-only-persistent-atlas-frame-snapshot-provider.mjs";
 
@@ -632,7 +634,7 @@ test("36. no scheduler\/listener\/controller connection", () => {
 test("37. no live rendering or startup behavior", () => {
   const appSource = fs.readFileSync(appPath, "utf8");
   const scriptSource = fs.readFileSync(scriptPath, "utf8");
-  assert.doesNotMatch(appSource, /developer-only-persistent-atlas-frame-snapshot-provider/);
+  assert.match(appSource, /developer-only-persistent-atlas-frame-snapshot-provider/);
   assert.doesNotMatch(scriptSource, /developer-only-persistent-atlas-frame-snapshot-provider/);
 });
 
@@ -640,4 +642,54 @@ test("38. all four canonical safety flags remain false", () => {
   const { provider } = createHarness();
   const status = getPersistentAtlasFrameSnapshotStatus(provider);
   assertCanonicalFlags(status.canonicalSafetyFlags);
+});
+
+test("39. one-frame viewport snapshot contract normalizes into persistent scalars", () => {
+  const normalized = normalizePersistentAtlasFrameSnapshotForContract({
+    rawSnapshot: {
+      logicalWidth: 640,
+      logicalHeight: 360,
+      backingWidth: 1280,
+      backingHeight: 720,
+      devicePixelRatio: 2,
+      bounds: { north: -38.1, south: -38.2, east: 144.7, west: 144.5 },
+      northWestCoordinate: { latitude: -38.1, longitude: 144.5 },
+      canvasLayerPosition: { x: 12, y: 18 },
+      zoom: 14
+    },
+    map: createFakeMap(),
+    identity: createIdentity(),
+    lifecycleIdentity: createLifecycleIdentity(),
+    redrawReason: "initial_attach",
+    snapshotId: "SNAP_001",
+    snapshotGenerationId: "SNAP_GEN_001",
+    snapshotCreatedAt: "2026-08-06T12:00:00.000Z"
+  });
+
+  assert.equal(normalized.viewportWidth, 640);
+  assert.equal(normalized.viewportHeight, 360);
+  assert.equal(normalized.pixelRatio, 2);
+  assert.equal(normalized.canvasLayerPositionX, 12);
+  assert.equal(normalized.canvasLayerPositionY, 18);
+  assert.equal(normalized.projectedViewportBounds.northWestLatitude, -38.1);
+  assert.equal(normalized.projectedViewportBounds.southEastLongitude, 144.7);
+});
+
+test("40. persistent normalized snapshot converts back to one-frame draw contract", () => {
+  const snapshot = createPersistentAtlasFrameSnapshot(createHarness().provider, {
+    redrawReason: "initial_attach"
+  });
+  const frameViewportSnapshot = toOneFrameViewportSnapshotContract(snapshot);
+
+  assert.equal(frameViewportSnapshot.logicalWidth, 640);
+  assert.equal(frameViewportSnapshot.logicalHeight, 360);
+  assert.equal(frameViewportSnapshot.backingWidth, 1280);
+  assert.equal(frameViewportSnapshot.devicePixelRatio, 2);
+  assert.deepEqual(frameViewportSnapshot.canvasLayerPosition, { x: 12, y: 18 });
+  assert.deepEqual(frameViewportSnapshot.bounds, {
+    north: -38.1,
+    south: -38.2,
+    east: 144.7,
+    west: 144.5
+  });
 });

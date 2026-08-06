@@ -44,6 +44,10 @@ import {
 import {
   createGrowGoCustom25DLiveOneFrameSurfaceOperations
 } from "./growgo-custom25d-live-one-frame-surface-operations.mjs";
+import {
+  normalizePersistentAtlasFrameSnapshotForContract,
+  toOneFrameViewportSnapshotContract
+} from "./developer-only-persistent-atlas-frame-snapshot-provider.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
 const atlasCustom25DOneFrameExecutionTrace =
@@ -143,6 +147,7 @@ const persistentMapIdentityTokens = new WeakMap();
 let persistentMapIdentityCounter = 0;
 let persistentSessionCandidateCounter = 0;
 let persistentSessionCandidateId = null;
+let persistentSnapshotCounter = 0;
 let persistentPreparedSurface = null;
 let persistentLifecycleOwner = null;
 let persistentLifecycleOwnerId = null;
@@ -220,6 +225,17 @@ function clearPersistentRuntimeReferences() {
   persistentLifecycleOwnerId = null;
   persistentLifecycleGenerationId = null;
   persistentSurfaceOwnerId = null;
+}
+
+function createPersistentSnapshotIdentifiers() {
+  persistentSnapshotCounter += 1;
+  const sequence = String(persistentSnapshotCounter).padStart(3, "0");
+
+  return {
+    snapshotId: `PERSISTENT_ATLAS_SNAPSHOT_${sequence}`,
+    snapshotGenerationId: `PERSISTENT_ATLAS_SNAPSHOT_GENERATION_${sequence}`,
+    snapshotCreatedAt: "2026-08-06T00:00:00.000Z"
+  };
 }
 
 function readApprovedPersistentReadinessIdentity(map) {
@@ -507,34 +523,54 @@ const controlledPersistentAtlasIntegration =
       }
     },
     frameSnapshotProvider: {
-      createPersistentSnapshot({ map } = {}) {
+      createPersistentSnapshot({ map, identity, reason } = {}) {
         if (!persistentPreparedSurface?.canvas) {
           throw Object.assign(new Error("PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"), {
             reasonCode: "PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"
           });
         }
 
-        const snapshot =
+        const snapshotResult =
           createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics?.({
             map,
             canvas: persistentPreparedSurface.canvas
           }) ?? null;
 
-        if (!snapshot || typeof snapshot !== "object") {
+        if (
+          !snapshotResult ||
+          typeof snapshotResult !== "object" ||
+          snapshotResult.outcome === "blocked" ||
+          !snapshotResult.frameViewportSnapshot
+        ) {
           throw Object.assign(new Error("SNAPSHOT_PROVIDER_FAILED"), {
-            reasonCode: "SNAPSHOT_PROVIDER_FAILED"
+            reasonCode: snapshotResult?.reasonCode ?? "SNAPSHOT_PROVIDER_FAILED"
           });
         }
 
-        return Object.isFrozen(snapshot) ? snapshot : Object.freeze(snapshot);
+        const identifiers = createPersistentSnapshotIdentifiers();
+
+        return normalizePersistentAtlasFrameSnapshotForContract({
+          rawSnapshot: snapshotResult.frameViewportSnapshot,
+          map,
+          identity,
+          lifecycleIdentity: {
+            lifecycleOwnerId: persistentLifecycleOwnerId,
+            lifecycleGenerationId: persistentLifecycleGenerationId,
+            surfaceOwnerId: persistentSurfaceOwnerId
+          },
+          redrawReason: reason,
+          ...identifiers
+        });
       }
     },
     frameDrawProvider: {
       drawPersistentFrame({ canvas, snapshot } = {}) {
+        const frameViewportSnapshot =
+          toOneFrameViewportSnapshotContract(snapshot);
         const drawResult =
           drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics?.({
             canvas: canvas ?? persistentPreparedSurface?.canvas ?? null,
-            frameViewportSnapshot: snapshot
+            frameViewportSnapshot
           }) ?? null;
 
         if (

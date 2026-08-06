@@ -481,33 +481,77 @@ function buildNormalizedSnapshot({
   snapshotCreatedAt
 }) {
   const normalizedRawSnapshot = normalizeSnapshotValue(rawSnapshot);
-  const size =
-    normalizedRawSnapshot.viewportSize ??
-    normalizedRawSnapshot.size ??
-    (typeof map.getSize === "function" ? map.getSize() : null);
-  const center =
-    normalizedRawSnapshot.center ??
-    (typeof map.getCenter === "function" ? map.getCenter() : null);
-  const pixelOrigin =
-    normalizedRawSnapshot.pixelOrigin ??
-    (typeof map.getPixelOrigin === "function" ? map.getPixelOrigin() : null);
   const bounds =
     normalizedRawSnapshot.projectedViewportBounds ??
     normalizedRawSnapshot.bounds ??
     (typeof map.getBounds === "function" ? map.getBounds() : null);
+  const normalizedBounds = normalizeSnapshotValue(bounds);
+  const normalizedSize =
+    normalizedRawSnapshot.viewportSize != null ||
+    normalizedRawSnapshot.size != null
+      ? normalizeSnapshotValue(
+          normalizedRawSnapshot.viewportSize ?? normalizedRawSnapshot.size
+        )
+      : Number.isFinite(Number(normalizedRawSnapshot.logicalWidth)) &&
+          Number.isFinite(Number(normalizedRawSnapshot.logicalHeight))
+        ? {
+            x: Number(normalizedRawSnapshot.logicalWidth),
+            y: Number(normalizedRawSnapshot.logicalHeight)
+          }
+        : normalizeSnapshotValue(
+            typeof map.getSize === "function" ? map.getSize() : null
+          );
+  const normalizedCenter =
+    normalizedRawSnapshot.center != null
+      ? normalizeSnapshotValue(normalizedRawSnapshot.center)
+      : normalizedBounds?.northWest != null &&
+          normalizedBounds?.southEast != null
+        ? {
+            lat:
+              (Number(normalizedBounds.northWest.lat) +
+                Number(normalizedBounds.southEast.lat)) /
+              2,
+            lng:
+              (Number(normalizedBounds.northWest.lng) +
+                Number(normalizedBounds.southEast.lng)) /
+              2
+          }
+        : normalizeSnapshotValue(
+            typeof map.getCenter === "function" ? map.getCenter() : null
+          );
+  const normalizedPixelOrigin = normalizeSnapshotValue(
+    normalizedRawSnapshot.pixelOrigin ??
+      (typeof map.getPixelOrigin === "function" ? map.getPixelOrigin() : null)
+  );
   const zoom =
     normalizedRawSnapshot.zoom ??
     (typeof map.getZoom === "function" ? map.getZoom() : null);
-
-  const normalizedSize = normalizeSnapshotValue(size);
-  const normalizedCenter = normalizeSnapshotValue(center);
-  const normalizedPixelOrigin = normalizeSnapshotValue(pixelOrigin);
-  const normalizedBounds = normalizeSnapshotValue(bounds);
   const normalizedCanvasLayerPosition = normalizeSnapshotValue(
     normalizedRawSnapshot.canvasLayerPosition ??
       normalizedRawSnapshot.canvasPosition ??
       null
   );
+  const normalizedProjectedViewportBounds =
+    normalizedBounds == null
+      ? null
+      : normalizedBounds.northWest != null && normalizedBounds.southEast != null
+        ? {
+            northWestLatitude: normalizedBounds.northWest.lat ?? null,
+            northWestLongitude: normalizedBounds.northWest.lng ?? null,
+            southEastLatitude: normalizedBounds.southEast.lat ?? null,
+            southEastLongitude: normalizedBounds.southEast.lng ?? null
+          }
+        : normalizedBounds.north != null &&
+            normalizedBounds.south != null &&
+            normalizedBounds.east != null &&
+            normalizedBounds.west != null
+          ? {
+              northWestLatitude: normalizedBounds.north ?? null,
+              northWestLongitude: normalizedBounds.west ?? null,
+              southEastLatitude: normalizedBounds.south ?? null,
+              southEastLongitude: normalizedBounds.east ?? null
+            }
+          : null;
 
   return deepFreeze({
     schemaId: SNAPSHOT_SCHEMA_ID,
@@ -530,9 +574,13 @@ function buildNormalizedSnapshot({
     viewportWidth: normalizedSize?.x ?? null,
     viewportHeight: normalizedSize?.y ?? null,
     pixelRatio:
-      normalizedRawSnapshot.pixelRatio == null
+      normalizedRawSnapshot.pixelRatio == null &&
+      normalizedRawSnapshot.devicePixelRatio == null
         ? null
-        : Number(normalizedRawSnapshot.pixelRatio),
+        : Number(
+            normalizedRawSnapshot.pixelRatio ??
+              normalizedRawSnapshot.devicePixelRatio
+          ),
     zoom: zoom == null ? null : Number(zoom),
     centerLatitude: normalizedCenter?.lat ?? null,
     centerLongitude: normalizedCenter?.lng ?? null,
@@ -541,15 +589,79 @@ function buildNormalizedSnapshot({
     canvasLayerPositionX: normalizedCanvasLayerPosition?.x ?? null,
     canvasLayerPositionY: normalizedCanvasLayerPosition?.y ?? null,
     projectedViewportBounds:
-      normalizedBounds == null
+      normalizedProjectedViewportBounds == null
         ? null
         : deepFreeze({
-            northWestLatitude: normalizedBounds.northWest?.lat ?? null,
-            northWestLongitude: normalizedBounds.northWest?.lng ?? null,
-            southEastLatitude: normalizedBounds.southEast?.lat ?? null,
-            southEastLongitude: normalizedBounds.southEast?.lng ?? null
+            northWestLatitude:
+              normalizedProjectedViewportBounds.northWestLatitude ?? null,
+            northWestLongitude:
+              normalizedProjectedViewportBounds.northWestLongitude ?? null,
+            southEastLatitude:
+              normalizedProjectedViewportBounds.southEastLatitude ?? null,
+            southEastLongitude:
+              normalizedProjectedViewportBounds.southEastLongitude ?? null
           }),
     scalarPayload: normalizedRawSnapshot.scalarPayload ?? {}
+  });
+}
+
+export function normalizePersistentAtlasFrameSnapshotForContract(args) {
+  return buildNormalizedSnapshot(args);
+}
+
+export function toOneFrameViewportSnapshotContract(snapshot) {
+  if (!snapshot || typeof snapshot !== "object") {
+    throw Object.assign(new Error("FRAME_VIEWPORT_SNAPSHOT_INVALID"), {
+      reasonCode: "FRAME_VIEWPORT_SNAPSHOT_INVALID"
+    });
+  }
+
+  const northLatitude = Number(
+    snapshot.projectedViewportBounds?.northWestLatitude
+  );
+  const southLatitude = Number(
+    snapshot.projectedViewportBounds?.southEastLatitude
+  );
+  const westLongitude = Number(
+    snapshot.projectedViewportBounds?.northWestLongitude
+  );
+  const eastLongitude = Number(
+    snapshot.projectedViewportBounds?.southEastLongitude
+  );
+  const north = Math.max(northLatitude, southLatitude);
+  const south = Math.min(northLatitude, southLatitude);
+  const west = Math.min(westLongitude, eastLongitude);
+  const east = Math.max(westLongitude, eastLongitude);
+  const logicalWidth = Number(snapshot.viewportWidth);
+  const logicalHeight = Number(snapshot.viewportHeight);
+  const devicePixelRatio = Number(snapshot.pixelRatio);
+  const zoom = Number(snapshot.zoom);
+  const canvasLayerPositionX = Number(snapshot.canvasLayerPositionX);
+  const canvasLayerPositionY = Number(snapshot.canvasLayerPositionY);
+
+  return deepFreeze({
+    schemaId: "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001",
+    logicalWidth,
+    logicalHeight,
+    backingWidth: Math.round(logicalWidth * devicePixelRatio),
+    backingHeight: Math.round(logicalHeight * devicePixelRatio),
+    devicePixelRatio,
+    bounds: deepFreeze({ north, south, east, west }),
+    northWestCoordinate: deepFreeze({
+      latitude: north,
+      longitude: west
+    }),
+    canvasLayerPosition: deepFreeze({
+      x: canvasLayerPositionX,
+      y: canvasLayerPositionY
+    }),
+    zoom,
+    mapIdentityValidated: true,
+    canvasIdentityValidated: true,
+    snapshotCreated: true,
+    drawRequested: false,
+    listenerAdded: false,
+    retentionWritten: false
   });
 }
 

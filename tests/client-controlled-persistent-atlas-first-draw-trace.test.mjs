@@ -181,6 +181,7 @@ test("1. successful fake first draw records a frozen serializable trace", () => 
   assert.equal(trace.snapshotGenerationId, "SNAP_GEN_TRACE_001");
   assert.equal(trace.mapIdentityId, "MAP_TRACE_001");
   assert.equal(trace.sessionId, "SESSION_TRACE_001");
+  assert.match(trace.canvasIdentityId, /^CANVAS_/);
   assert.equal(trace.cleanupStarted, false);
   assert.equal(trace.thrownErrorName, null);
   assertCanonicalFlags(trace.canonicalSafetyFlags);

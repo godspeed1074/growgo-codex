@@ -119,6 +119,7 @@ function cloneStatus(state) {
     failedClosed: state.failedClosed,
     surfaceOwnerId: state.surfaceOwnerId,
     lifecycleOwnerId: state.lifecycleOwnerId,
+    canvasIdentityId: state.canvasIdentityId,
     mapIdentityId: state.mapIdentityId,
     sessionId: state.sessionId,
     boundRegionId: state.boundRegionId,
@@ -221,6 +222,7 @@ export function createControlledPersistentAtlasRetainedSurfaceWrapper({
     failedClosed: false,
     surfaceOwnerId: null,
     lifecycleOwnerId: null,
+    canvasIdentityId: null,
     mapIdentityId: null,
     sessionId: null,
     boundRegionId: null,
@@ -263,6 +265,9 @@ export function createControlledPersistentAtlasRetainedSurfaceWrapper({
   function updateOwnershipState() {
     state.ownedCanvasCount = internal.canvas ? 1 : 0;
     state.ownedPaneCount = internal.pane ? 1 : 0;
+    state.canvasIdentityId = internal.canvas
+      ? getToken("canvas", internal.canvas)
+      : null;
     state.lifecycleOwnerPresent = !!internal.lifecycleOwner;
     state.referencesReleased =
       !internal.surface &&

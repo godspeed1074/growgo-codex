@@ -429,6 +429,7 @@ function createFakeCanvas(context2d = createFakeContext2D()) {
     className: "custom-25d-map-canvas",
     width: 0,
     height: 0,
+    position: null,
     style: {
       width: "0px",
       height: "0px",
