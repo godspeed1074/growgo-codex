@@ -49,6 +49,12 @@ class FakeBounds {
   }
 }
 
+class UnsupportedRawReference {
+  constructor(label = "unsupported") {
+    this.label = label;
+  }
+}
+
 function assertCanonicalFlags(flags) {
   assert.deepEqual(flags, {
     runtimeExecutionEnabled: false,
@@ -150,6 +156,9 @@ function createHarness({
         pixelOrigin: args.map.getPixelOrigin(),
         projectedViewportBounds: args.map.getBounds(),
         canvasLayerPosition: new FakePoint(12, 18),
+        contains() {
+          return true;
+        },
         scalarPayload: {
           viewportLabel: "atlas-main"
         }
@@ -325,6 +334,55 @@ test("11. raw listener/callback reference rejected", () => {
         redrawReason: "initial_attach"
       }),
     (error) => error.reasonCode === "RAW_REFERENCE_DETECTED"
+  );
+});
+
+test("11a. exact raw-reference field path is reported for unsupported scalar payload values", () => {
+  const { provider } = createHarness({
+    snapshotFactory: (state, args) => ({
+      viewportSize: args.map.getSize(),
+      pixelRatio: 2,
+      zoom: args.map.getZoom(),
+      center: args.map.getCenter(),
+      pixelOrigin: args.map.getPixelOrigin(),
+      projectedViewportBounds: args.map.getBounds(),
+      canvasLayerPosition: new FakePoint(12, 18),
+      scalarPayload: {
+        unsupportedField: new UnsupportedRawReference("bad-ref")
+      }
+    })
+  });
+
+  assert.throws(
+    () =>
+      createPersistentAtlasFrameSnapshot(provider, {
+        redrawReason: "initial_attach"
+      }),
+    (error) => {
+      assert.equal(error.reasonCode, "RAW_REFERENCE_DETECTED");
+      assert.equal(
+        error.rawReferenceFieldPath,
+        "rawSnapshot.scalarPayload.unsupportedField"
+      );
+      assert.equal(error.rawReferenceType, "object");
+      assert.equal(
+        error.rawReferenceConstructorName,
+        "UnsupportedRawReference"
+      );
+      return true;
+    }
+  );
+
+  const status = getPersistentAtlasFrameSnapshotStatus(provider);
+  assert.equal(status.rawReferenceDetected, true);
+  assert.equal(
+    status.rawReferenceFieldPath,
+    "rawSnapshot.scalarPayload.unsupportedField"
+  );
+  assert.equal(status.rawReferenceType, "object");
+  assert.equal(
+    status.rawReferenceConstructorName,
+    "UnsupportedRawReference"
   );
 });
 
@@ -673,6 +731,37 @@ test("39. one-frame viewport snapshot contract normalizes into persistent scalar
   assert.equal(normalized.canvasLayerPositionY, 18);
   assert.equal(normalized.projectedViewportBounds.northWestLatitude, -38.1);
   assert.equal(normalized.projectedViewportBounds.southEastLongitude, 144.7);
+});
+
+test("39a. real one-frame helper methods do not survive persistent normalization", () => {
+  const normalized = normalizePersistentAtlasFrameSnapshotForContract({
+    rawSnapshot: {
+      logicalWidth: 640,
+      logicalHeight: 360,
+      backingWidth: 1280,
+      backingHeight: 720,
+      devicePixelRatio: 2,
+      bounds: { north: -38.1, south: -38.2, east: 144.7, west: 144.5 },
+      northWestCoordinate: { latitude: -38.1, longitude: 144.5 },
+      canvasLayerPosition: { x: 12, y: 18 },
+      zoom: 14,
+      contains() {
+        return true;
+      }
+    },
+    map: createFakeMap(),
+    identity: createIdentity(),
+    lifecycleIdentity: createLifecycleIdentity(),
+    redrawReason: "initial_attach",
+    snapshotId: "SNAP_002",
+    snapshotGenerationId: "SNAP_GEN_002",
+    snapshotCreatedAt: "2026-08-06T12:00:00.000Z"
+  });
+
+  assert.equal(normalized.snapshotId, "SNAP_002");
+  assert.equal(normalized.snapshotGenerationId, "SNAP_GEN_002");
+  assert.equal("contains" in normalized, false);
+  assert.equal(typeof JSON.stringify(normalized), "string");
 });
 
 test("40. persistent normalized snapshot converts back to one-frame draw contract", () => {

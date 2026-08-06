@@ -109,6 +109,30 @@ function toReasonCode(error, fallback) {
   return fallback;
 }
 
+function describeRawReference(value) {
+  const valueType = typeof value;
+  return {
+    rawReferenceType:
+      value == null ? String(value) : valueType === "object" ? "object" : valueType,
+    rawReferenceConstructorName:
+      value && typeof value === "object" && value.constructor?.name
+        ? value.constructor.name
+        : valueType === "function" && value.name
+          ? value.name
+          : null
+  };
+}
+
+function createRawReferenceError(fieldPath, value) {
+  const descriptor = describeRawReference(value);
+  return Object.assign(new Error("RAW_REFERENCE_DETECTED"), {
+    reasonCode: "RAW_REFERENCE_DETECTED",
+    rawReferenceFieldPath: fieldPath,
+    rawReferenceType: descriptor.rawReferenceType,
+    rawReferenceConstructorName: descriptor.rawReferenceConstructorName
+  });
+}
+
 function isPlainObject(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
@@ -203,7 +227,20 @@ function identityComplete(identity) {
   );
 }
 
-function normalizeSnapshotValue(value) {
+function validateRawSnapshotEnvelope(rawSnapshot) {
+  for (const [key, value] of Object.entries(rawSnapshot)) {
+    if (FORBIDDEN_REFERENCE_KEYS.has(key)) {
+      throw createRawReferenceError(`rawSnapshot.${key}`, value);
+    }
+
+    const valueType = typeof value;
+    if ((valueType === "function" || valueType === "symbol") && key !== "contains") {
+      throw createRawReferenceError(`rawSnapshot.${key}`, value);
+    }
+  }
+}
+
+function normalizeSnapshotValue(value, path = "rawSnapshot") {
   if (value == null) {
     return value;
   }
@@ -218,13 +255,13 @@ function normalizeSnapshotValue(value) {
   }
 
   if (valueType === "function" || valueType === "symbol") {
-    throw Object.assign(new Error("RAW_REFERENCE_DETECTED"), {
-      reasonCode: "RAW_REFERENCE_DETECTED"
-    });
+    throw createRawReferenceError(path, value);
   }
 
   if (Array.isArray(value)) {
-    return value.map((entry) => normalizeSnapshotValue(entry));
+    return value.map((entry, index) =>
+      normalizeSnapshotValue(entry, `${path}[${index}]`)
+    );
   }
 
   if (isPointLike(value)) {
@@ -243,25 +280,21 @@ function normalizeSnapshotValue(value) {
 
   if (isBoundsLike(value)) {
     return {
-      northWest: normalizeSnapshotValue(value.getNorthWest()),
-      southEast: normalizeSnapshotValue(value.getSouthEast())
+      northWest: normalizeSnapshotValue(value.getNorthWest(), `${path}.northWest`),
+      southEast: normalizeSnapshotValue(value.getSouthEast(), `${path}.southEast`)
     };
   }
 
   if (!isPlainObject(value)) {
-    throw Object.assign(new Error("RAW_REFERENCE_DETECTED"), {
-      reasonCode: "RAW_REFERENCE_DETECTED"
-    });
+    throw createRawReferenceError(path, value);
   }
 
   const normalized = {};
   for (const [key, nested] of Object.entries(value)) {
     if (FORBIDDEN_REFERENCE_KEYS.has(key)) {
-      throw Object.assign(new Error("RAW_REFERENCE_DETECTED"), {
-        reasonCode: "RAW_REFERENCE_DETECTED"
-      });
+      throw createRawReferenceError(`${path}.${key}`, nested);
     }
-    normalized[key] = normalizeSnapshotValue(nested);
+    normalized[key] = normalizeSnapshotValue(nested, `${path}.${key}`);
   }
   return normalized;
 }
@@ -308,6 +341,9 @@ function freezeStatus(state) {
     freshSnapshotRequired: state.freshSnapshotRequired,
     priorSnapshotReuseDetected: state.priorSnapshotReuseDetected,
     rawReferenceDetected: state.rawReferenceDetected,
+    rawReferenceFieldPath: state.rawReferenceFieldPath,
+    rawReferenceType: state.rawReferenceType,
+    rawReferenceConstructorName: state.rawReferenceConstructorName,
     readinessDriftDetected: state.readinessDriftDetected,
     identityMismatchDetected: state.identityMismatchDetected,
     lastMismatchField: state.lastMismatchField,
@@ -480,30 +516,48 @@ function buildNormalizedSnapshot({
   snapshotGenerationId,
   snapshotCreatedAt
 }) {
-  const normalizedRawSnapshot = normalizeSnapshotValue(rawSnapshot);
+  if (!rawSnapshot || typeof rawSnapshot !== "object") {
+    throw Object.assign(new Error("INVALID_SNAPSHOT_SHAPE"), {
+      reasonCode: "INVALID_SNAPSHOT_SHAPE"
+    });
+  }
+
+  validateRawSnapshotEnvelope(rawSnapshot);
+
   const bounds =
-    normalizedRawSnapshot.projectedViewportBounds ??
-    normalizedRawSnapshot.bounds ??
+    rawSnapshot.projectedViewportBounds ??
+    rawSnapshot.bounds ??
     (typeof map.getBounds === "function" ? map.getBounds() : null);
-  const normalizedBounds = normalizeSnapshotValue(bounds);
+  const normalizedBounds = normalizeSnapshotValue(
+    bounds,
+    rawSnapshot.projectedViewportBounds != null
+      ? "rawSnapshot.projectedViewportBounds"
+      : rawSnapshot.bounds != null
+        ? "rawSnapshot.bounds"
+        : "map.getBounds()"
+  );
   const normalizedSize =
-    normalizedRawSnapshot.viewportSize != null ||
-    normalizedRawSnapshot.size != null
+    rawSnapshot.viewportSize != null ||
+    rawSnapshot.size != null
       ? normalizeSnapshotValue(
-          normalizedRawSnapshot.viewportSize ?? normalizedRawSnapshot.size
+          rawSnapshot.viewportSize ?? rawSnapshot.size,
+          rawSnapshot.viewportSize != null
+            ? "rawSnapshot.viewportSize"
+            : "rawSnapshot.size"
         )
-      : Number.isFinite(Number(normalizedRawSnapshot.logicalWidth)) &&
-          Number.isFinite(Number(normalizedRawSnapshot.logicalHeight))
+      : Number.isFinite(Number(rawSnapshot.logicalWidth)) &&
+          Number.isFinite(Number(rawSnapshot.logicalHeight))
         ? {
-            x: Number(normalizedRawSnapshot.logicalWidth),
-            y: Number(normalizedRawSnapshot.logicalHeight)
+            x: Number(rawSnapshot.logicalWidth),
+            y: Number(rawSnapshot.logicalHeight)
           }
         : normalizeSnapshotValue(
-            typeof map.getSize === "function" ? map.getSize() : null
+            typeof map.getSize === "function" ? map.getSize() : null,
+            "map.getSize()"
           );
   const normalizedCenter =
-    normalizedRawSnapshot.center != null
-      ? normalizeSnapshotValue(normalizedRawSnapshot.center)
+    rawSnapshot.center != null
+      ? normalizeSnapshotValue(rawSnapshot.center, "rawSnapshot.center")
       : normalizedBounds?.northWest != null &&
           normalizedBounds?.southEast != null
         ? {
@@ -517,19 +571,30 @@ function buildNormalizedSnapshot({
               2
           }
         : normalizeSnapshotValue(
-            typeof map.getCenter === "function" ? map.getCenter() : null
+            typeof map.getCenter === "function" ? map.getCenter() : null,
+            "map.getCenter()"
           );
   const normalizedPixelOrigin = normalizeSnapshotValue(
-    normalizedRawSnapshot.pixelOrigin ??
-      (typeof map.getPixelOrigin === "function" ? map.getPixelOrigin() : null)
+    rawSnapshot.pixelOrigin ??
+      (typeof map.getPixelOrigin === "function" ? map.getPixelOrigin() : null),
+    rawSnapshot.pixelOrigin != null
+      ? "rawSnapshot.pixelOrigin"
+      : "map.getPixelOrigin()"
   );
   const zoom =
-    normalizedRawSnapshot.zoom ??
+    rawSnapshot.zoom ??
     (typeof map.getZoom === "function" ? map.getZoom() : null);
   const normalizedCanvasLayerPosition = normalizeSnapshotValue(
-    normalizedRawSnapshot.canvasLayerPosition ??
-      normalizedRawSnapshot.canvasPosition ??
-      null
+    rawSnapshot.canvasLayerPosition ?? rawSnapshot.canvasPosition ?? null,
+    rawSnapshot.canvasLayerPosition != null
+      ? "rawSnapshot.canvasLayerPosition"
+      : rawSnapshot.canvasPosition != null
+        ? "rawSnapshot.canvasPosition"
+        : "rawSnapshot.canvasLayerPosition"
+  );
+  const normalizedScalarPayload = normalizeSnapshotValue(
+    rawSnapshot.scalarPayload ?? {},
+    "rawSnapshot.scalarPayload"
   );
   const normalizedProjectedViewportBounds =
     normalizedBounds == null
@@ -574,13 +639,10 @@ function buildNormalizedSnapshot({
     viewportWidth: normalizedSize?.x ?? null,
     viewportHeight: normalizedSize?.y ?? null,
     pixelRatio:
-      normalizedRawSnapshot.pixelRatio == null &&
-      normalizedRawSnapshot.devicePixelRatio == null
+      rawSnapshot.pixelRatio == null &&
+      rawSnapshot.devicePixelRatio == null
         ? null
-        : Number(
-            normalizedRawSnapshot.pixelRatio ??
-              normalizedRawSnapshot.devicePixelRatio
-          ),
+        : Number(rawSnapshot.pixelRatio ?? rawSnapshot.devicePixelRatio),
     zoom: zoom == null ? null : Number(zoom),
     centerLatitude: normalizedCenter?.lat ?? null,
     centerLongitude: normalizedCenter?.lng ?? null,
@@ -601,7 +663,7 @@ function buildNormalizedSnapshot({
             southEastLongitude:
               normalizedProjectedViewportBounds.southEastLongitude ?? null
           }),
-    scalarPayload: normalizedRawSnapshot.scalarPayload ?? {}
+    scalarPayload: normalizedScalarPayload
   });
 }
 
@@ -698,6 +760,9 @@ export function createPersistentAtlasFrameSnapshotProvider({
     freshSnapshotRequired: true,
     priorSnapshotReuseDetected: false,
     rawReferenceDetected: false,
+    rawReferenceFieldPath: null,
+    rawReferenceType: null,
+    rawReferenceConstructorName: null,
     readinessDriftDetected: false,
     identityMismatchDetected: false,
     lastMismatchField: null,
@@ -751,6 +816,9 @@ export function createPersistentAtlasFrameSnapshot(
   state.snapshotCreateAttemptCount += 1;
   state.priorSnapshotReuseDetected = false;
   state.rawReferenceDetected = false;
+  state.rawReferenceFieldPath = null;
+  state.rawReferenceType = null;
+  state.rawReferenceConstructorName = null;
   state.readinessDriftDetected = false;
   state.identityMismatchDetected = false;
   state.lastMismatchField = null;
@@ -855,9 +923,26 @@ export function createPersistentAtlasFrameSnapshot(
   } catch (error) {
     const reasonCode = toReasonCode(error, "SNAPSHOT_CREATION_FAILED");
     state.rawReferenceDetected = reasonCode === "RAW_REFERENCE_DETECTED";
+    state.rawReferenceFieldPath =
+      reasonCode === "RAW_REFERENCE_DETECTED"
+        ? sanitizeScalarString(error.rawReferenceFieldPath)
+        : null;
+    state.rawReferenceType =
+      reasonCode === "RAW_REFERENCE_DETECTED"
+        ? sanitizeScalarString(error.rawReferenceType)
+        : null;
+    state.rawReferenceConstructorName =
+      reasonCode === "RAW_REFERENCE_DETECTED"
+        ? sanitizeScalarString(error.rawReferenceConstructorName)
+        : null;
     state.lastFailureReason = reasonCode;
     setState(provider, "failed_closed");
-    throw Object.assign(new Error(reasonCode), { reasonCode });
+    throw Object.assign(new Error(reasonCode), {
+      reasonCode,
+      rawReferenceFieldPath: state.rawReferenceFieldPath,
+      rawReferenceType: state.rawReferenceType,
+      rawReferenceConstructorName: state.rawReferenceConstructorName
+    });
   }
 }
 
@@ -873,6 +958,9 @@ export function validatePersistentAtlasFrameSnapshot(provider, snapshot) {
   state.snapshotValidationAttemptCount += 1;
   state.priorSnapshotReuseDetected = false;
   state.rawReferenceDetected = false;
+  state.rawReferenceFieldPath = null;
+  state.rawReferenceType = null;
+  state.rawReferenceConstructorName = null;
   state.readinessDriftDetected = false;
   state.identityMismatchDetected = false;
   state.lastMismatchField = null;
@@ -1089,6 +1177,9 @@ export function getPersistentAtlasFrameSnapshotStatus(provider) {
       freshSnapshotRequired: true,
       priorSnapshotReuseDetected: false,
       rawReferenceDetected: false,
+      rawReferenceFieldPath: null,
+      rawReferenceType: null,
+      rawReferenceConstructorName: null,
       readinessDriftDetected: false,
       identityMismatchDetected: false,
       lastMismatchField: null,
