@@ -14,6 +14,9 @@ const getterBlockMatch = scriptSource.match(
 const bootstrapBlockMatch = scriptSource.match(
   /function bootstrapGrowGoDeveloperDiagnosticsForLocalDev\(options = \{\}\) \{[\s\S]*?\n\}\n\nbootstrapGrowGoDeveloperDiagnosticsForLocalDev\(\{\n  localDevBootstrap: true\n\}\);/
 );
+const drawSeamIdentityBody = scriptSource.match(
+  /function getCustom25DDrawSeamRuntimeIdentity\(\) \{[\s\S]*?\n\}/
+);
 
 async function loadAtlasAdapter() {
   return import(path.join(repoRoot, "client", "developer-only-atlas-map-adapter.mjs"));
@@ -28,6 +31,10 @@ function loadGrowGoMapGetterHarness({
   assert.ok(
     bootstrapBlockMatch,
     "growgo map getter bootstrap should exist in script.js"
+  );
+  assert.ok(
+    drawSeamIdentityBody,
+    "draw seam runtime identity should exist in script.js"
   );
 
   const windowObject = includeWindow
@@ -56,10 +63,19 @@ function loadGrowGoMapGetterHarness({
   vm.runInContext(
     `
 let map = __mapValue;
+const CUSTOM_25D_DRAW_SEAM_VERSION_TAG = "atlas21150an";
+const CUSTOM_25D_DRAW_SEAM_SOURCE_TAG = "script.js?v=atlas21150an";
+const CUSTOM_25D_DRAW_SEAM_SCRIPT_LOAD_TIMESTAMP = new Date().toISOString();
 function getCustom25DOneFrameBridge() {
   return null;
 }
 function getCustom25DOneFrameBridgeDebug() {
+  return null;
+}
+function getCustom25DOneFrameSnapshotHandoffTrace() {
+  return null;
+}
+function resetCustom25DOneFrameSnapshotHandoffTrace() {
   return null;
 }
 function getCustom25DOneFrameSnapshotBoundaryTrace() {
@@ -68,13 +84,21 @@ function getCustom25DOneFrameSnapshotBoundaryTrace() {
 function resetCustom25DOneFrameSnapshotBoundaryTrace() {
   return null;
 }
+function getCustom25DDrawMutationTrace() {
+  return null;
+}
+function resetCustom25DDrawMutationTrace() {
+  return null;
+}
 function traceAtlasOneFrameCall(functionName, callback) {
   return callback();
 }
 ${getterBlockMatch[1]}
+${drawSeamIdentityBody[0]}
 ${bootstrapBlockMatch[0]}
 module.exports = {
   getGrowGoMap,
+  getCustom25DDrawSeamRuntimeIdentity,
   bootstrapGrowGoDeveloperDiagnosticsForLocalDev,
   getWindowNamespace() {
     return typeof window !== "undefined" ? window.GrowGoDeveloperDiagnostics ?? null : null;
@@ -157,6 +181,12 @@ test("getter bootstrap exposes a developer-only namespace on local dev hosts", (
   assert.equal(namespace.available, true);
   assert.equal(namespace.localDev, true);
   assert.equal(typeof namespace.getGrowGoMap, "function");
+  assert.equal(
+    typeof namespace.getCustom25DDrawSeamRuntimeIdentity,
+    "function"
+  );
+  assert.equal(typeof namespace.getCustom25DDrawMutationTrace, "function");
+  assert.equal(typeof namespace.resetCustom25DDrawMutationTrace, "function");
   assert.equal(typeof namespace.getCustom25DOneFrameBridge, "function");
   assert.equal(typeof namespace.getCustom25DOneFrameBridgeDebug, "function");
   assert.equal(
@@ -168,6 +198,23 @@ test("getter bootstrap exposes a developer-only namespace on local dev hosts", (
     "function"
   );
   assert.equal(namespace.getGrowGoMap(), ownedMap);
+});
+
+test("draw seam runtime identity reports atlas21150an delivery through the developer diagnostics namespace", () => {
+  const { helpers } = loadGrowGoMapGetterHarness({
+    mapValue: { id: "leaflet-map-instance" },
+    hostname: "localhost"
+  });
+
+  const identity = helpers.getWindowNamespace().getCustom25DDrawSeamRuntimeIdentity();
+
+  assert.equal(identity.drawSeamVersionTag, "atlas21150an");
+  assert.equal(identity.drawSeamSourceTag, "script.js?v=atlas21150an");
+  assert.equal(identity.mutableCanvasLayerPositionCopyInstalled, true);
+  assert.equal(identity.immutableSnapshotPositionPreserved, true);
+  assert.equal(identity.leafletReceivesMutablePositionCopy, true);
+  assert.equal(typeof identity.scriptLoadTimestamp, "string");
+  assert.ok(identity.scriptLoadTimestamp.length > 0);
 });
 
 test("getter bootstrap fails closed outside local dev hosts", () => {

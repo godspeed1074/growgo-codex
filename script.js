@@ -11,6 +11,176 @@ const ENABLE_CUSTOM_25D_MAP = false;
 const ENABLE_CUSTOM_25D_LANDMARK_TEST_MARKERS = false;
 const ENABLE_CUSTOM_25D_LANDMARK_SAMPLE_DATA = false;
 const ENABLE_CUSTOM_25D_DINOSAUR_SITES_AU_DATA = false;
+const CUSTOM_25D_DRAW_SEAM_VERSION_TAG = "atlas21150an";
+const CUSTOM_25D_DRAW_SEAM_SOURCE_TAG = "script.js?v=atlas21150an";
+const CUSTOM_25D_DRAW_SEAM_SCRIPT_LOAD_TIMESTAMP = new Date().toISOString();
+let custom25DDrawMutationTraceState = Object.freeze({
+  drawMutationSequenceStarted: false,
+  drawMutationSequenceCompleted: false,
+  drawMutationIndex: 0,
+  drawMutationFunctionName: null,
+  drawMutationTargetLabel: null,
+  drawMutationTargetType: null,
+  drawMutationPropertyName: null,
+  drawMutationValueType: null,
+  drawMutationTargetFrozen: null,
+  drawMutationTargetSealed: null,
+  drawMutationTargetExtensible: null,
+  drawMutationPropertyDescriptorPresent: null,
+  drawMutationPropertyWritable: null,
+  drawMutationPropertyHasSetter: null,
+  drawMutationAttempted: false,
+  drawMutationCompleted: false,
+  drawMutationLastCompletedIndex: 0,
+  drawMutationNextExpectedIndex: 1,
+  drawMutationFailureFunction: null,
+  drawMutationExceptionName: null,
+  drawMutationExceptionMessage: null,
+  drawMutationExceptionReasonCode: null
+});
+
+function describeCustom25DDrawMutationTargetType(value) {
+  if (value === null) return "null";
+  if (typeof value === "undefined") return "undefined";
+  if (Array.isArray(value)) return "array";
+  if (typeof value !== "object") return typeof value;
+  const constructorName =
+    typeof value?.constructor?.name === "string" && value.constructor.name.trim()
+      ? value.constructor.name.trim()
+      : "Object";
+  return `object:${constructorName}`;
+}
+
+function toCustom25DDrawMutationReasonCode(error, fallback) {
+  if (!error) {
+    return fallback;
+  }
+
+  if (typeof error.reasonCode === "string" && error.reasonCode.trim()) {
+    return error.reasonCode;
+  }
+
+  if (typeof error.code === "string" && error.code.trim()) {
+    return error.code;
+  }
+
+  if (typeof error.message === "string" && error.message.trim()) {
+    return error.message.trim().replace(/\s+/g, "_").toUpperCase();
+  }
+
+  return fallback;
+}
+
+function resetCustom25DDrawMutationTrace(reasonCode = "MANUAL_RESET") {
+  custom25DDrawMutationTraceState = Object.freeze({
+    drawMutationSequenceStarted: false,
+    drawMutationSequenceCompleted: false,
+    drawMutationIndex: 0,
+    drawMutationFunctionName: null,
+    drawMutationTargetLabel: null,
+    drawMutationTargetType: null,
+    drawMutationPropertyName: null,
+    drawMutationValueType: null,
+    drawMutationTargetFrozen: null,
+    drawMutationTargetSealed: null,
+    drawMutationTargetExtensible: null,
+    drawMutationPropertyDescriptorPresent: null,
+    drawMutationPropertyWritable: null,
+    drawMutationPropertyHasSetter: null,
+    drawMutationAttempted: false,
+    drawMutationCompleted: false,
+    drawMutationLastCompletedIndex: 0,
+    drawMutationNextExpectedIndex: 1,
+    drawMutationFailureFunction: null,
+    drawMutationExceptionName: null,
+    drawMutationExceptionMessage: null,
+    drawMutationExceptionReasonCode: reasonCode
+  });
+  return custom25DDrawMutationTraceState;
+}
+
+function getCustom25DDrawMutationTrace() {
+  return custom25DDrawMutationTraceState;
+}
+
+function updateCustom25DDrawMutationTrace(patch = {}) {
+  custom25DDrawMutationTraceState = Object.freeze({
+    ...custom25DDrawMutationTraceState,
+    ...patch
+  });
+  return custom25DDrawMutationTraceState;
+}
+
+function traceCustom25DDrawMutation({
+  index,
+  functionName,
+  targetLabel,
+  targetObject,
+  propertyName,
+  value
+} = {}, callback) {
+  const descriptor =
+    targetObject && (typeof targetObject === "object" || typeof targetObject === "function")
+      ? Object.getOwnPropertyDescriptor(targetObject, propertyName)
+      : null;
+
+  updateCustom25DDrawMutationTrace({
+    drawMutationSequenceStarted: true,
+    drawMutationIndex: index,
+    drawMutationFunctionName: functionName,
+    drawMutationTargetLabel: targetLabel,
+    drawMutationTargetType: describeCustom25DDrawMutationTargetType(targetObject),
+    drawMutationPropertyName: propertyName,
+    drawMutationValueType:
+      value === null ? "null" : Array.isArray(value) ? "array" : typeof value,
+    drawMutationTargetFrozen:
+      !!targetObject &&
+      (typeof targetObject === "object" || typeof targetObject === "function")
+        ? Object.isFrozen(targetObject)
+        : null,
+    drawMutationTargetSealed:
+      !!targetObject &&
+      (typeof targetObject === "object" || typeof targetObject === "function")
+        ? Object.isSealed(targetObject)
+        : null,
+    drawMutationTargetExtensible:
+      !!targetObject &&
+      (typeof targetObject === "object" || typeof targetObject === "function")
+        ? Object.isExtensible(targetObject)
+        : null,
+    drawMutationPropertyDescriptorPresent: !!descriptor,
+    drawMutationPropertyWritable: descriptor?.writable ?? null,
+    drawMutationPropertyHasSetter: typeof descriptor?.set === "function",
+    drawMutationAttempted: true,
+    drawMutationCompleted: false,
+    drawMutationNextExpectedIndex: index + 1,
+    drawMutationFailureFunction: null,
+    drawMutationExceptionName: null,
+    drawMutationExceptionMessage: null,
+    drawMutationExceptionReasonCode: null
+  });
+
+  try {
+    const result = callback();
+    updateCustom25DDrawMutationTrace({
+      drawMutationCompleted: true,
+      drawMutationLastCompletedIndex: index
+    });
+    return result;
+  } catch (error) {
+    updateCustom25DDrawMutationTrace({
+      drawMutationCompleted: false,
+      drawMutationFailureFunction: functionName,
+      drawMutationExceptionName: error?.name ?? "Error",
+      drawMutationExceptionMessage: error?.message ?? String(error),
+      drawMutationExceptionReasonCode: toCustom25DDrawMutationReasonCode(
+        error,
+        "DRAW_MUTATION_EXCEPTION"
+      )
+    });
+    throw error;
+  }
+}
 
 function bootstrapGrowGoScriptExecutionDiagnosticForLocalDev(options = {}) {
   const windowExists = typeof window !== "undefined" && window;
@@ -97,6 +267,9 @@ function bootstrapGrowGoDeveloperDiagnosticsForLocalDev(options = {}) {
     source: "phase-211.2-growgo-map-getter",
     localDev: true,
     getGrowGoMap,
+    getCustom25DDrawSeamRuntimeIdentity,
+    getCustom25DDrawMutationTrace,
+    resetCustom25DDrawMutationTrace,
     getCustom25DOneFrameBridge,
     getCustom25DOneFrameBridgeDebug,
     getCustom25DOneFrameSnapshotHandoffTrace,
@@ -16179,6 +16352,8 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
   canvas,
   frameViewportSnapshot
 } = {}) {
+  resetCustom25DDrawMutationTrace("DRAW_SEQUENCE_START");
+
   if (!canvas || typeof canvas.getContext !== "function") {
     return {
       outcome: "blocked",
@@ -16211,13 +16386,64 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
     y: topLeft.y
   };
 
-  L.DomUtil.setPosition(canvas, mutableCanvasLayerPosition);
+  applyCustom25DCanvasPositionWithLeafletFallback({
+    canvas,
+    mutableCanvasLayerPosition
+  });
 
   const scale = normalizedFrameViewportSnapshot.devicePixelRatio;
-  canvas.width = normalizedFrameViewportSnapshot.backingWidth;
-  canvas.height = normalizedFrameViewportSnapshot.backingHeight;
-  canvas.style.width = `${normalizedFrameViewportSnapshot.logicalWidth}px`;
-  canvas.style.height = `${normalizedFrameViewportSnapshot.logicalHeight}px`;
+  traceCustom25DDrawMutation(
+    {
+      index: 3,
+      functionName: "drawCustom25DMapCanvasWithFrameSnapshot",
+      targetLabel: "canvas.width",
+      targetObject: canvas,
+      propertyName: "width",
+      value: normalizedFrameViewportSnapshot.backingWidth
+    },
+    () => {
+      canvas.width = normalizedFrameViewportSnapshot.backingWidth;
+    }
+  );
+  traceCustom25DDrawMutation(
+    {
+      index: 4,
+      functionName: "drawCustom25DMapCanvasWithFrameSnapshot",
+      targetLabel: "canvas.height",
+      targetObject: canvas,
+      propertyName: "height",
+      value: normalizedFrameViewportSnapshot.backingHeight
+    },
+    () => {
+      canvas.height = normalizedFrameViewportSnapshot.backingHeight;
+    }
+  );
+  traceCustom25DDrawMutation(
+    {
+      index: 5,
+      functionName: "drawCustom25DMapCanvasWithFrameSnapshot",
+      targetLabel: "canvas.style.width",
+      targetObject: canvas.style,
+      propertyName: "width",
+      value: `${normalizedFrameViewportSnapshot.logicalWidth}px`
+    },
+    () => {
+      canvas.style.width = `${normalizedFrameViewportSnapshot.logicalWidth}px`;
+    }
+  );
+  traceCustom25DDrawMutation(
+    {
+      index: 6,
+      functionName: "drawCustom25DMapCanvasWithFrameSnapshot",
+      targetLabel: "canvas.style.height",
+      targetObject: canvas.style,
+      propertyName: "height",
+      value: `${normalizedFrameViewportSnapshot.logicalHeight}px`
+    },
+    () => {
+      canvas.style.height = `${normalizedFrameViewportSnapshot.logicalHeight}px`;
+    }
+  );
 
   const ctx = canvas.getContext("2d");
   if (
@@ -16231,8 +16457,32 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
     };
   }
 
-  ctx.setTransform(scale, 0, 0, scale, 0, 0);
-  ctx.clearRect(0, 0, size.x, size.y);
+  traceCustom25DDrawMutation(
+    {
+      index: 7,
+      functionName: "drawCustom25DMapCanvasWithFrameSnapshot",
+      targetLabel: "canvasContext2D.transformState",
+      targetObject: ctx,
+      propertyName: "setTransform",
+      value: [scale, 0, 0, scale, 0, 0]
+    },
+    () => {
+      ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    }
+  );
+  traceCustom25DDrawMutation(
+    {
+      index: 8,
+      functionName: "drawCustom25DMapCanvasWithFrameSnapshot",
+      targetLabel: "canvasContext2D.clearRect",
+      targetObject: ctx,
+      propertyName: "clearRect",
+      value: [0, 0, size.x, size.y]
+    },
+    () => {
+      ctx.clearRect(0, 0, size.x, size.y);
+    }
+  );
 
   drawCustom25DBackground(ctx, size, bounds);
   drawCustom25DZonesLiveCallsite(ctx, bounds, topLeft);
@@ -16241,10 +16491,89 @@ function drawCustom25DMapCanvasWithFrameSnapshot({
   drawCustom25DTreesLiveCallsite(ctx, bounds, topLeft);
   renderCustomLandmarkLayerLiveCallsite(ctx, bounds);
 
+  updateCustom25DDrawMutationTrace({
+    drawMutationSequenceCompleted: true
+  });
+
   return {
     outcome: "drawn",
     reasonCode: "FRAME_DRAW_COMPLETED"
   };
+}
+
+function getCustom25DDrawSeamRuntimeIdentity() {
+  return Object.freeze({
+    drawSeamVersionTag: CUSTOM_25D_DRAW_SEAM_VERSION_TAG,
+    drawSeamSourceTag: CUSTOM_25D_DRAW_SEAM_SOURCE_TAG,
+    scriptLoadTimestamp: CUSTOM_25D_DRAW_SEAM_SCRIPT_LOAD_TIMESTAMP,
+    mutableCanvasLayerPositionCopyInstalled: true,
+    immutableSnapshotPositionPreserved: true,
+    leafletReceivesMutablePositionCopy: true
+  });
+}
+
+function applyCustom25DCanvasPositionWithLeafletFallback({
+  canvas,
+  mutableCanvasLayerPosition
+} = {}) {
+  return traceCustom25DDrawMutation(
+    {
+      index: 1,
+      functionName: "applyCustom25DCanvasPositionWithLeafletFallback",
+      targetLabel: "canvas._leaflet_pos",
+      targetObject: canvas,
+      propertyName: "_leaflet_pos",
+      value: mutableCanvasLayerPosition
+    },
+    () => {
+      try {
+        L.DomUtil.setPosition(canvas, mutableCanvasLayerPosition);
+        return;
+      } catch (error) {
+        const reasonCode = toCustom25DDrawMutationReasonCode(
+          error,
+          "LEAFLET_POSITION_MUTATION_FAILED"
+        );
+        const isReadonlyMutation =
+          reasonCode.startsWith("ATTEMPTED_TO_ASSIGN_TO_READONLY_PROPERTY") ||
+          reasonCode.startsWith("CANNOT_ASSIGN_TO_READ_ONLY_PROPERTY") ||
+          reasonCode.startsWith(
+            "CANNOT_ADD_PROPERTY__LEAFLET_POS,_OBJECT_IS_NOT_EXTENSIBLE"
+          ) ||
+          reasonCode === "LEAFLET_POSITION_MUTATION_FAILED";
+
+        if (!isReadonlyMutation || !canvas?.style) {
+          throw error;
+        }
+
+        updateCustom25DDrawMutationTrace({
+          drawMutationTargetFrozen:
+            typeof canvas === "object" && canvas ? Object.isFrozen(canvas) : null,
+          drawMutationTargetSealed:
+            typeof canvas === "object" && canvas ? Object.isSealed(canvas) : null,
+          drawMutationTargetExtensible:
+            typeof canvas === "object" && canvas ? Object.isExtensible(canvas) : null,
+          drawMutationExceptionName: error?.name ?? "Error",
+          drawMutationExceptionMessage: error?.message ?? String(error),
+          drawMutationExceptionReasonCode: reasonCode
+        });
+
+        traceCustom25DDrawMutation(
+          {
+            index: 2,
+            functionName: "applyCustom25DCanvasPositionWithLeafletFallback",
+            targetLabel: "canvas.style.transform",
+            targetObject: canvas.style,
+            propertyName: "transform",
+            value: `translate3d(${mutableCanvasLayerPosition.x}px, ${mutableCanvasLayerPosition.y}px, 0px)`
+          },
+          () => {
+            canvas.style.transform = `translate3d(${mutableCanvasLayerPosition.x}px, ${mutableCanvasLayerPosition.y}px, 0px)`;
+          }
+        );
+      }
+    }
+  );
 }
 
 const createCustom25DFrameViewportSnapshotPrivateImplementation = ({

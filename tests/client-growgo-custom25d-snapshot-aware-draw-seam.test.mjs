@@ -68,6 +68,22 @@ const createFrameViewportSnapshotBody = extractFunctionBody(
 const normalizeSnapshotForDrawBody = extractFunctionBody(
   "normalizeCustom25DFrameViewportSnapshotForDraw"
 );
+const describeDrawMutationTargetTypeBody = extractFunctionBody(
+  "describeCustom25DDrawMutationTargetType"
+);
+const toDrawMutationReasonCodeBody = extractFunctionBody(
+  "toCustom25DDrawMutationReasonCode"
+);
+const resetDrawMutationTraceBody = extractFunctionBody(
+  "resetCustom25DDrawMutationTrace"
+);
+const updateDrawMutationTraceBody = extractFunctionBody(
+  "updateCustom25DDrawMutationTrace"
+);
+const traceDrawMutationBody = extractFunctionBody("traceCustom25DDrawMutation");
+const applyCanvasPositionFallbackBody = extractFunctionBody(
+  "applyCustom25DCanvasPositionWithLeafletFallback"
+);
 const drawWithSnapshotBody = extractFunctionBody(
   "drawCustom25DMapCanvasWithFrameSnapshot"
 );
@@ -109,12 +125,42 @@ function compileSnapshotAwareHelpers({
   recorder,
   mutatePositionPointInPlace = false
 } = {}) {
-  const evaluationSource = `
+const evaluationSource = `
 const CUSTOM_25D_FRAME_VIEWPORT_SNAPSHOT_SCHEMA_ID =
   "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001";
+let custom25DDrawMutationTraceState = Object.freeze({
+  drawMutationSequenceStarted: false,
+  drawMutationSequenceCompleted: false,
+  drawMutationIndex: 0,
+  drawMutationFunctionName: null,
+  drawMutationTargetLabel: null,
+  drawMutationTargetType: null,
+  drawMutationPropertyName: null,
+  drawMutationValueType: null,
+  drawMutationTargetFrozen: null,
+  drawMutationTargetSealed: null,
+  drawMutationTargetExtensible: null,
+  drawMutationPropertyDescriptorPresent: null,
+  drawMutationPropertyWritable: null,
+  drawMutationPropertyHasSetter: null,
+  drawMutationAttempted: false,
+  drawMutationCompleted: false,
+  drawMutationLastCompletedIndex: 0,
+  drawMutationNextExpectedIndex: 1,
+  drawMutationFailureFunction: null,
+  drawMutationExceptionName: null,
+  drawMutationExceptionMessage: null,
+  drawMutationExceptionReasonCode: null
+});
 ${normalizeDevicePixelRatioBody}
 ${freezeFrameViewportSnapshotBody}
 ${normalizeSnapshotForDrawBody}
+${describeDrawMutationTargetTypeBody}
+${toDrawMutationReasonCodeBody}
+${resetDrawMutationTraceBody}
+${updateDrawMutationTraceBody}
+${traceDrawMutationBody}
+${applyCanvasPositionFallbackBody}
 ${drawWithSnapshotBody}
 ${createFrameViewportSnapshotBody}
 ${drawMapCanvasBody}
@@ -122,7 +168,10 @@ module.exports = {
   normalizeCustom25DFrameViewportSnapshotForDraw,
   drawCustom25DMapCanvasWithFrameSnapshot,
   drawCustom25DMapCanvas,
-  createCustom25DFrameViewportSnapshot
+  createCustom25DFrameViewportSnapshot,
+  getCustom25DDrawMutationTrace() {
+    return custom25DDrawMutationTraceState;
+  }
 };
 `;
 
@@ -139,6 +188,7 @@ module.exports = {
     L: {
       DomUtil: {
         setPosition(canvas, point) {
+          context.__lastLeafletPositionPoint = point;
           if (mutatePositionPointInPlace) {
             point.x = Math.round(point.x);
             point.y = Math.round(point.y);
@@ -261,7 +311,8 @@ function createImmutableFrameSnapshot(overrides = {}) {
 }
 
 test("drawCustom25DMapCanvas still exists, creates one frame snapshot, and delegates to the snapshot-aware seam", () => {
-  assert.match(indexSource, /<script src="script\.js\?v=cards14"><\/script>/);
+  assert.match(indexSource, /<script src="script\.js\?v=atlas21150an"><\/script>/);
+  assert.doesNotMatch(indexSource, /<script src="script\.js\?v=cards14"><\/script>/);
   assert.match(strippedDrawMapCanvasBody, /function drawCustom25DMapCanvas\(canvas\)/);
   assert.match(
     strippedDrawMapCanvasBody,
@@ -345,7 +396,7 @@ test("canvas and context behavior remain equivalent, transform and clear happen 
 
 test("snapshot-aware seam uses a mutable local position handoff so in-place Leaflet positioning does not mutate the frozen snapshot", () => {
   const recorder = createLayerRecorder();
-  const { helpers } = compileSnapshotAwareHelpers({
+  const { helpers, context } = compileSnapshotAwareHelpers({
     recorder,
     mutatePositionPointInPlace: true
   });
@@ -363,6 +414,42 @@ test("snapshot-aware seam uses a mutable local position handoff so in-place Leaf
   assert.deepEqual(canvas.position, { x: 12, y: 35 });
   assert.deepEqual(snapshot.canvasLayerPosition, { x: 12.4, y: 34.6 });
   assert.equal(Object.isFrozen(snapshot.canvasLayerPosition), true);
+  assert.notEqual(context.__lastLeafletPositionPoint, snapshot.canvasLayerPosition);
+  assert.equal(Object.isFrozen(context.__lastLeafletPositionPoint), false);
+});
+
+test("snapshot-aware seam falls back when Leaflet tries to write _leaflet_pos onto a read-only canvas, and records that exact mutation boundary", () => {
+  const recorder = createLayerRecorder();
+  const { helpers, context } = compileSnapshotAwareHelpers({
+    recorder
+  });
+  const context2d = createFakeContext2D();
+  const canvas = createFakeCanvas(context2d);
+  canvas.style.transform = "";
+
+  context.L.DomUtil.setPosition = (targetCanvas, point) => {
+    context.__lastLeafletPositionPoint = point;
+    const error = new TypeError("Attempted to assign to readonly property.");
+    throw error;
+  };
+
+  const snapshot = createImmutableFrameSnapshot({ x: 19, y: 28 });
+  const result = helpers.drawCustom25DMapCanvasWithFrameSnapshot({
+    canvas,
+    frameViewportSnapshot: snapshot
+  });
+  const trace = helpers.getCustom25DDrawMutationTrace();
+
+  assert.equal(result.outcome, "drawn");
+  assert.equal(result.reasonCode, "FRAME_DRAW_COMPLETED");
+  assert.equal(
+    canvas.style.transform,
+    "translate3d(19px, 28px, 0px)"
+  );
+  assert.equal(trace.drawMutationSequenceStarted, true);
+  assert.equal(trace.drawMutationSequenceCompleted, true);
+  assert.equal(trace.drawMutationLastCompletedIndex, 8);
+  assert.equal(trace.drawMutationFailureFunction, null);
 });
 
 test("zones, buildings, roads, trees, and landmarks paths remain unchanged, startup remains unchanged, and no browser activation command exists", () => {
