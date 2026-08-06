@@ -235,6 +235,17 @@ export function createDeveloperOnlyControlledPersistentAtlasManualCommand({
     return sanitizeIntegrationStatus(status);
   }
 
+  function readFirstDrawTrace() {
+    const integration = getIntegration();
+    const trace =
+      integration &&
+      typeof integration.getIntegratedPersistentAtlasFirstDrawTrace === "function"
+        ? integration.getIntegratedPersistentAtlasFirstDrawTrace()
+        : null;
+
+    return deepFreeze(sanitizePlainObject(trace) ?? null);
+  }
+
   function readCompositionStatus() {
     return deepFreeze(
       sanitizePlainObject(compositionStatusProvider?.()) ?? {
@@ -475,6 +486,8 @@ export function createDeveloperOnlyControlledPersistentAtlasManualCommand({
     detachControlledPersistentAtlas,
     revokeControlledPersistentAtlas,
     invalidateControlledPersistentAtlas
+    ,
+    getControlledPersistentAtlasFirstDrawTrace: readFirstDrawTrace
   });
 }
 
@@ -513,6 +526,8 @@ export function installDeveloperOnlyControlledPersistentAtlasManualCommand({
     command.requestControlledPersistentAtlasRedraw(input);
   namespace.getControlledPersistentAtlasStatus = () =>
     command.getControlledPersistentAtlasStatus();
+  namespace.getControlledPersistentAtlasFirstDrawTrace = () =>
+    command.getControlledPersistentAtlasFirstDrawTrace?.() ?? null;
   namespace.detachControlledPersistentAtlas = (input) =>
     command.detachControlledPersistentAtlas(input);
   namespace.revokeControlledPersistentAtlas = (input) =>

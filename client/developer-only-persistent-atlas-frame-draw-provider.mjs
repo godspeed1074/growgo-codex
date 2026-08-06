@@ -232,6 +232,52 @@ function syncState(provider) {
   state.referencesReleased = internal.mutableDrawState == null;
 }
 
+function sanitizeTraceString(value) {
+  return value == null ? null : String(value);
+}
+
+function sanitizeTraceStack(error) {
+  if (typeof error?.stack !== "string" || !error.stack.trim()) {
+    return null;
+  }
+
+  return error.stack
+    .split("\n")
+    .slice(0, 12)
+    .map((line) => line.trim())
+    .join("\n");
+}
+
+function recordStepTrace(provider, patch = {}) {
+  const recorder = provider?.__deps?.stepTraceRecorder;
+  if (typeof recorder !== "function") {
+    return;
+  }
+
+  recorder(
+    deepFreeze({
+      step: sanitizeTraceString(patch.step),
+      phase: sanitizeTraceString(patch.phase) ?? "persistent_first_draw",
+      timestamp:
+        sanitizeTraceString(patch.timestamp) ??
+        sanitizeTraceString(provider?.__deps?.timeProvider?.()) ??
+        null,
+      redrawReason: sanitizeTraceString(patch.redrawReason) ?? null,
+      snapshotId: sanitizeTraceString(patch.snapshotId) ?? null,
+      snapshotGenerationId:
+        sanitizeTraceString(patch.snapshotGenerationId) ?? null,
+      lifecycleOwnerId: sanitizeTraceString(patch.lifecycleOwnerId) ?? null,
+      surfaceOwnerId: sanitizeTraceString(patch.surfaceOwnerId) ?? null,
+      canvasIdentityId: sanitizeTraceString(patch.canvasIdentityId) ?? null,
+      thrownErrorName: sanitizeTraceString(patch.thrownErrorName) ?? null,
+      thrownErrorMessage: sanitizeTraceString(patch.thrownErrorMessage) ?? null,
+      thrownErrorStack: sanitizeTraceString(patch.thrownErrorStack) ?? null,
+      normalizedReasonCode:
+        sanitizeTraceString(patch.normalizedReasonCode) ?? null
+    })
+  );
+}
+
 function setState(provider, next) {
   const state = provider.__state;
   state.state = next;
@@ -303,7 +349,8 @@ export function createPersistentAtlasFrameDrawProvider({
   mutableDrawStateProvider = unavailable("DRAW_PROVIDER_UNAVAILABLE"),
   canvasPositionAdapter = unavailable("DRAW_PROVIDER_UNAVAILABLE"),
   drawStateReleaseProvider = unavailable("DRAW_PROVIDER_UNAVAILABLE"),
-  timeProvider = unavailable("DRAW_PROVIDER_UNAVAILABLE")
+  timeProvider = unavailable("DRAW_PROVIDER_UNAVAILABLE"),
+  stepTraceRecorder = null
 } = {}) {
   const state = {
     state: "idle",
@@ -364,7 +411,8 @@ export function createPersistentAtlasFrameDrawProvider({
       mutableDrawStateProvider,
       canvasPositionAdapter,
       drawStateReleaseProvider,
-      timeProvider
+      timeProvider,
+      stepTraceRecorder
     }
   });
 }
@@ -725,6 +773,33 @@ export function drawPersistentAtlasFrame(
     });
     internal.isDrawing = true;
     setState(provider, "preparing_draw_state");
+    recordStepTrace(provider, {
+      step: "surface_validated",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+    });
+    recordStepTrace(provider, {
+      step: "lifecycle_validated",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.lifecycleValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+    });
+    recordStepTrace(provider, {
+      step: "snapshot_validated",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+    });
 
     state.mutableStateCreateAttemptCount += 1;
     let mutableDrawState;
@@ -741,7 +816,32 @@ export function drawPersistentAtlasFrame(
       }
       internal.mutableDrawState = mutableDrawState;
       state.mutableStateCreateCompletedCount += 1;
+      recordStepTrace(provider, {
+        step: "mutable_draw_state_created",
+        redrawReason: validated.redrawReason,
+        snapshotId: snapshot?.snapshotId ?? null,
+        snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+        lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+        surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+        canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+      });
     } catch (error) {
+      recordStepTrace(provider, {
+        step: "mutable_draw_state_created",
+        redrawReason: validated.redrawReason,
+        snapshotId: snapshot?.snapshotId ?? null,
+        snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+        lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+        surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+        canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId,
+        thrownErrorName: error?.name ?? "Error",
+        thrownErrorMessage: error?.message ?? String(error),
+        thrownErrorStack: sanitizeTraceStack(error),
+        normalizedReasonCode: toReasonCode(
+          error,
+          "MUTABLE_DRAW_STATE_CREATION_FAILED"
+        )
+      });
       throw Object.assign(
         new Error(toReasonCode(error, "MUTABLE_DRAW_STATE_CREATION_FAILED")),
         { reasonCode: toReasonCode(error, "MUTABLE_DRAW_STATE_CREATION_FAILED") }
@@ -768,17 +868,57 @@ export function drawPersistentAtlasFrame(
           : "direct_leaflet_position");
       state.lastPositionAdapterPath = positionAdapterPath;
       state.positionAdaptCompletedCount += 1;
+      recordStepTrace(provider, {
+        step: "canvas_position_adapted",
+        redrawReason: validated.redrawReason,
+        snapshotId: snapshot?.snapshotId ?? null,
+        snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+        lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+        surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+        canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+      });
     } catch (error) {
       const reasonCode = toReasonCode(error, "CANVAS_POSITION_ADAPTATION_FAILED");
       if (reasonCode === "READONLY_CANVAS_POSITION_FALLBACK_USED") {
         state.readonlyPositionFallbackUsed = true;
         state.lastPositionAdapterPath = "readonly_canvas_position_fallback";
+        recordStepTrace(provider, {
+          step: "canvas_position_adapted",
+          redrawReason: validated.redrawReason,
+          snapshotId: snapshot?.snapshotId ?? null,
+          snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+          lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+          surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+          canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+        });
       } else {
+        recordStepTrace(provider, {
+          step: "canvas_position_adapted",
+          redrawReason: validated.redrawReason,
+          snapshotId: snapshot?.snapshotId ?? null,
+          snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+          lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+          surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+          canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId,
+          thrownErrorName: error?.name ?? "Error",
+          thrownErrorMessage: error?.message ?? String(error),
+          thrownErrorStack: sanitizeTraceStack(error),
+          normalizedReasonCode: reasonCode
+        });
         throw Object.assign(new Error(reasonCode), { reasonCode });
       }
     }
 
     setState(provider, "drawing");
+    recordStepTrace(provider, {
+      step: "draw_provider_entered",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+    });
     const drawResult = deps.snapshotAwareDrawProvider({
       snapshot,
       canvas: retainedSurface.canvas,
@@ -791,6 +931,16 @@ export function drawPersistentAtlasFrame(
     const drawProviderReason =
       sanitizeString(drawResult?.reasonCode) ?? "DRAW_COMPLETED";
     state.lastDrawProviderReason = drawProviderReason;
+    recordStepTrace(provider, {
+      step: "draw_provider_completed",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId,
+      normalizedReasonCode: drawProviderReason
+    });
 
     const snapshotAfter = JSON.stringify(snapshot);
     state.snapshotMutationDetected = snapshotBefore !== snapshotAfter;
@@ -818,20 +968,68 @@ export function drawPersistentAtlasFrame(
       failureReason: null
     });
 
+    recordStepTrace(provider, {
+      step: "draw_state_release_started",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+    });
     releasePersistentAtlasDrawState(provider, { reason: "draw_completed" });
+    recordStepTrace(provider, {
+      step: "draw_state_release_completed",
+      redrawReason: validated.redrawReason,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+      lifecycleOwnerId: validated.lifecycleValidation.lifecycleOwnerId,
+      surfaceOwnerId: validated.retainedSurfaceValidation.surfaceOwnerId,
+      canvasIdentityId: validated.retainedSurfaceValidation.canvasIdentityId
+    });
     state.lastFailureReason = null;
     setState(provider, "idle");
     return result;
   } catch (error) {
     const reasonCode = toReasonCode(error, "DRAW_EXECUTION_FAILED");
     state.lastFailureReason = reasonCode;
+    recordStepTrace(provider, {
+      step:
+        state.drawStateReleaseAttemptCount > state.drawStateReleaseCompletedCount
+          ? "draw_state_release_started"
+          : state.lastPositionAdapterPath == null
+            ? "draw_provider_entered"
+            : "draw_provider_completed",
+      thrownErrorName: error?.name ?? "Error",
+      thrownErrorMessage: error?.message ?? String(error),
+      thrownErrorStack: sanitizeTraceStack(error),
+      normalizedReasonCode: reasonCode
+    });
     try {
+      recordStepTrace(provider, {
+        step: "draw_state_release_started",
+        normalizedReasonCode: reasonCode
+      });
       releasePersistentAtlasDrawState(provider, { reason: "draw_failed" });
+      recordStepTrace(provider, {
+        step: "draw_state_release_completed",
+        normalizedReasonCode: reasonCode
+      });
     } catch (releaseError) {
       state.lastFailureReason = toReasonCode(
         releaseError,
         "DRAW_STATE_RELEASE_FAILED"
       );
+      recordStepTrace(provider, {
+        step: "draw_state_release_completed",
+        thrownErrorName: releaseError?.name ?? "Error",
+        thrownErrorMessage: releaseError?.message ?? String(releaseError),
+        thrownErrorStack: sanitizeTraceStack(releaseError),
+        normalizedReasonCode: toReasonCode(
+          releaseError,
+          "DRAW_STATE_RELEASE_FAILED"
+        )
+      });
     }
     setState(provider, "failed_closed");
     throw Object.assign(new Error(reasonCode), { reasonCode });

@@ -185,7 +185,8 @@ export function createControlledPersistentAtlasSchedulerListenerContract({
   listenerRegistrar = unavailable("PERSISTENT_LISTENER_REGISTRAR_UNAVAILABLE"),
   listenerRemover = unavailable("PERSISTENT_LISTENER_REMOVER_UNAVAILABLE"),
   identityProvider = unavailable("STALE_SESSION"),
-  drawExecutor = unavailable("DRAW_EXECUTION_FAILED")
+  drawExecutor = unavailable("DRAW_EXECUTION_FAILED"),
+  stepTraceRecorder = null
 } = {}) {
   const internal = {
     listenerCallbacks: {
@@ -272,6 +273,20 @@ export function createControlledPersistentAtlasSchedulerListenerContract({
       setState("failed_closed");
     }
     return reasonCode;
+  }
+
+  function recordTrace(step, patch = {}) {
+    if (typeof stepTraceRecorder !== "function") {
+      return;
+    }
+
+    stepTraceRecorder(
+      deepFreeze({
+        step,
+        phase: "persistent_first_draw",
+        ...patch
+      })
+    );
   }
 
   function getCurrentBinding() {
@@ -466,6 +481,7 @@ export function createControlledPersistentAtlasSchedulerListenerContract({
   }
 
   function runQueuedPersistentRedraw({ token } = {}) {
+    recordTrace("frame_callback_entered");
     if (!internal.queuedFrameHandle || token !== internal.queuedFrameToken) {
       state.staleCallbackDetected = true;
       state.staleCallbackIgnoredCount += 1;
@@ -503,6 +519,9 @@ export function createControlledPersistentAtlasSchedulerListenerContract({
 
     try {
       checkPermissionAndIdentity();
+      recordTrace("redraw_permission_validated", {
+        normalizedReasonCode: "REDRAW_PERMISSION_VALIDATED"
+      });
     } catch (error) {
       internal.queuedFrameHandle = null;
       syncStateFlags();

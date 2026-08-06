@@ -39,6 +39,8 @@ const STATUS_SCHEMA_ID =
   "GROWGO_CONTROLLED_PERSISTENT_ATLAS_CONTRACT_INTEGRATION_STATUS_001";
 const RESULT_SCHEMA_ID =
   "GROWGO_CONTROLLED_PERSISTENT_ATLAS_CONTRACT_INTEGRATION_RESULT_001";
+const FIRST_DRAW_TRACE_SCHEMA_ID =
+  "GROWGO_CONTROLLED_PERSISTENT_ATLAS_FIRST_DRAW_TRACE_001";
 
 const ATTACH_CONFIRMATION = "ATTACH_CONTROLLED_PERSISTENT_ATLAS";
 const DETACH_CONFIRMATION = "DETACH_CONTROLLED_PERSISTENT_ATLAS";
@@ -159,6 +161,56 @@ function detectIdentityDrift(currentIdentity, boundIdentity) {
   return null;
 }
 
+function sanitizeTraceStack(error) {
+  if (typeof error?.stack !== "string" || !error.stack.trim()) {
+    return null;
+  }
+
+  return error.stack
+    .split("\n")
+    .slice(0, 12)
+    .map((line) => line.trim())
+    .join("\n");
+}
+
+function createFirstDrawTraceState() {
+  return {
+    schemaId: FIRST_DRAW_TRACE_SCHEMA_ID,
+    traceActive: false,
+    traceCompleted: false,
+    phase: "persistent_first_draw",
+    step: null,
+    stepAttemptCount: 0,
+    stepCompletedCount: 0,
+    timestamp: null,
+    sessionId: null,
+    mapIdentityId: null,
+    snapshotId: null,
+    snapshotGenerationId: null,
+    lifecycleOwnerId: null,
+    surfaceOwnerId: null,
+    canvasIdentityId: null,
+    redrawReason: null,
+    thrownErrorName: null,
+    thrownErrorMessage: null,
+    thrownErrorStack: null,
+    normalizedReasonCode: null,
+    originatingFailureReason: null,
+    cleanupStarted: false,
+    cleanupCompleted: false,
+    cleanupFailureReasons: []
+  };
+}
+
+function cloneFirstDrawTrace(trace) {
+  return {
+    ...createFirstDrawTraceState(),
+    ...trace,
+    cleanupFailureReasons: [...(trace?.cleanupFailureReasons ?? [])],
+    canonicalSafetyFlags: canonicalSafetyFlags()
+  };
+}
+
 function cloneStatus(state) {
   return {
     schemaId: STATUS_SCHEMA_ID,
@@ -266,6 +318,7 @@ export function createControlledPersistentAtlasContractIntegration({
     attachInProgress: false,
     detachInProgress: false,
     cleanupStarted: false,
+    firstDrawTrace: createFirstDrawTraceState(),
     shadowController: null,
     syncDepth: 0
   };
@@ -321,6 +374,88 @@ export function createControlledPersistentAtlasContractIntegration({
     referencesReleased: true
   };
 
+  function resetControlledPersistentAtlasFirstDrawTrace(
+    reasonCode = "MANUAL_RESET"
+  ) {
+    internal.firstDrawTrace = {
+      ...createFirstDrawTraceState(),
+      normalizedReasonCode: reasonCode
+    };
+
+    return getControlledPersistentAtlasFirstDrawTrace();
+  }
+
+  function updateControlledPersistentAtlasFirstDrawTrace(step, patch = {}) {
+    const previous = internal.firstDrawTrace ?? createFirstDrawTraceState();
+    const normalizedReasonCode =
+      patch.normalizedReasonCode ??
+      previous.normalizedReasonCode ??
+      null;
+
+    internal.firstDrawTrace = {
+      ...previous,
+      traceActive: true,
+      phase: patch.phase ?? previous.phase ?? "persistent_first_draw",
+      step,
+      stepAttemptCount: previous.stepAttemptCount + 1,
+      stepCompletedCount:
+        patch.completed === false
+          ? previous.stepCompletedCount
+          : previous.stepCompletedCount + 1,
+      timestamp: new Date("2026-08-06T00:00:00.000Z").toISOString(),
+      sessionId:
+        patch.sessionId ?? internal.currentIdentity?.sessionId ?? previous.sessionId,
+      mapIdentityId:
+        patch.mapIdentityId ??
+        internal.currentIdentity?.mapIdentityId ??
+        previous.mapIdentityId,
+      snapshotId: patch.snapshotId ?? previous.snapshotId,
+      snapshotGenerationId:
+        patch.snapshotGenerationId ?? previous.snapshotGenerationId,
+      lifecycleOwnerId:
+        patch.lifecycleOwnerId ??
+        internal.currentLifecycleOwnerId ??
+        previous.lifecycleOwnerId,
+      surfaceOwnerId: patch.surfaceOwnerId ?? previous.surfaceOwnerId,
+      canvasIdentityId: patch.canvasIdentityId ?? previous.canvasIdentityId,
+      redrawReason:
+        patch.redrawReason ?? state.lastRequestedRedrawReason ?? previous.redrawReason,
+      thrownErrorName: patch.thrownErrorName ?? previous.thrownErrorName,
+      thrownErrorMessage:
+        patch.thrownErrorMessage ?? previous.thrownErrorMessage,
+      thrownErrorStack: patch.thrownErrorStack ?? previous.thrownErrorStack,
+      normalizedReasonCode,
+      originatingFailureReason:
+        previous.originatingFailureReason ??
+        patch.originatingFailureReason ??
+        (patch.thrownErrorName ? normalizedReasonCode : null),
+      cleanupStarted:
+        patch.cleanupStarted ?? previous.cleanupStarted ?? false,
+      cleanupCompleted:
+        patch.cleanupCompleted ?? previous.cleanupCompleted ?? false,
+      cleanupFailureReasons:
+        patch.cleanupFailureReasons != null
+          ? [...patch.cleanupFailureReasons]
+          : [...(previous.cleanupFailureReasons ?? [])],
+      traceCompleted: patch.traceCompleted ?? previous.traceCompleted ?? false
+    };
+  }
+
+  function captureFirstDrawError(step, error, fallbackReason) {
+    updateControlledPersistentAtlasFirstDrawTrace(step, {
+      completed: false,
+      thrownErrorName: error?.name ?? "Error",
+      thrownErrorMessage: error?.message ?? String(error),
+      thrownErrorStack: sanitizeTraceStack(error),
+      normalizedReasonCode: toReasonCode(error, fallbackReason),
+      originatingFailureReason: toReasonCode(error, fallbackReason)
+    });
+  }
+
+  function getControlledPersistentAtlasFirstDrawTrace() {
+    return deepFreeze(cloneFirstDrawTrace(internal.firstDrawTrace));
+  }
+
   const authorization = createControlledPersistentAtlasAuthorization({
     hostnameProvider,
     identityProvider: () => ({ ...sanitizeIdentity(identitySnapshotProvider.getPersistentAttachmentIdentity({ map: internal.currentMap })) }),
@@ -335,6 +470,50 @@ export function createControlledPersistentAtlasContractIntegration({
     createSessionId: () => sanitizeIdentity(identitySnapshotProvider.getPersistentAttachmentIdentity({ map: internal.currentMap })).sessionId,
     nowProvider: () => new Date("2026-08-06T00:00:00.000Z").toISOString()
   });
+
+  const instrumentedFrameSnapshotProvider = {
+    createPersistentSnapshot(args) {
+      const snapshot = frameSnapshotProvider.createPersistentSnapshot(args);
+      updateControlledPersistentAtlasFirstDrawTrace("snapshot_created", {
+        snapshotId: snapshot?.snapshotId ?? null,
+        snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+        redrawReason: args?.reason ?? null,
+        completed: true
+      });
+      updateControlledPersistentAtlasFirstDrawTrace("snapshot_validated", {
+        snapshotId: snapshot?.snapshotId ?? null,
+        snapshotGenerationId: snapshot?.snapshotGenerationId ?? null,
+        redrawReason: args?.reason ?? null,
+        normalizedReasonCode: "SNAPSHOT_VALIDATED"
+      });
+      return snapshot;
+    }
+  };
+
+  const instrumentedFrameDrawProvider = {
+    drawPersistentFrame(args) {
+      updateControlledPersistentAtlasFirstDrawTrace("draw_provider_entered", {
+        snapshotId: args?.snapshot?.snapshotId ?? null,
+        snapshotGenerationId: args?.snapshot?.snapshotGenerationId ?? null,
+        redrawReason: args?.reason ?? args?.snapshot?.redrawReason ?? null
+      });
+
+      try {
+        const result = frameDrawProvider.drawPersistentFrame(args);
+        updateControlledPersistentAtlasFirstDrawTrace("draw_provider_completed", {
+          snapshotId: args?.snapshot?.snapshotId ?? null,
+          snapshotGenerationId: args?.snapshot?.snapshotGenerationId ?? null,
+          redrawReason: args?.reason ?? args?.snapshot?.redrawReason ?? null,
+          normalizedReasonCode:
+            result?.reasonCode ?? "PERSISTENT_DRAW_PROVIDER_COMPLETED"
+        });
+        return result;
+      } catch (error) {
+        captureFirstDrawError("draw_provider_entered", error, "DRAW_PROVIDER_FAILED");
+        throw error;
+      }
+    }
+  };
 
   const adapter = createControlledPersistentAtlasLiveAdapter({
     rawMapProvider,
@@ -367,8 +546,8 @@ export function createControlledPersistentAtlasContractIntegration({
     },
     retainedSurfaceProvider,
     retainedLifecycleOwnerProvider,
-    frameSnapshotProvider,
-    frameDrawProvider,
+    frameSnapshotProvider: instrumentedFrameSnapshotProvider,
+    frameDrawProvider: instrumentedFrameDrawProvider,
     animationFrameScheduler,
     animationFrameCanceller,
     approvedListenerRegistrar,
@@ -438,8 +617,20 @@ export function createControlledPersistentAtlasContractIntegration({
       return cancelQueuedPersistentRedraw(scheduler);
     },
     referenceReleaseProvider(payload) {
+      updateControlledPersistentAtlasFirstDrawTrace("cleanup_handoff_started", {
+        cleanupStarted: true
+      });
       referenceReleaseProvider(payload);
       const cleanupResult = retainedCleanupProvider.cleanupPersistentAttachment(payload) ?? {};
+      updateControlledPersistentAtlasFirstDrawTrace("cleanup_handoff_completed", {
+        cleanupStarted: true,
+        cleanupCompleted: cleanupResult.cleanupCompleted === true,
+        cleanupFailureReasons: cleanupResult.cleanupFailureReasons ?? [],
+        normalizedReasonCode:
+          cleanupResult.reasonCode ??
+          "CONTROLLED_PERSISTENT_ATLAS_CLEANUP_COMPLETED",
+        traceCompleted: true
+      });
       if (cleanupResult.cleanupCompleted === false) {
         throw Object.assign(new Error(cleanupResult.reasonCode ?? "REFERENCE_RELEASE_FAILED"), {
           reasonCode: cleanupResult.reasonCode ?? "REFERENCE_RELEASE_FAILED"
@@ -493,6 +684,9 @@ export function createControlledPersistentAtlasContractIntegration({
         lifecycleOwnerId: internal.currentLifecycleOwnerId ?? state.lifecycleOwnerId
       };
     },
+    stepTraceRecorder(patch = {}) {
+      updateControlledPersistentAtlasFirstDrawTrace(patch.step, patch);
+    },
     drawExecutor({ reason }) {
       const validation = validatePersistentSurface(wrapper);
       if (validation.outcome !== "valid") {
@@ -500,12 +694,30 @@ export function createControlledPersistentAtlasContractIntegration({
           reasonCode: validation.reasonCode
         });
       }
+      updateControlledPersistentAtlasFirstDrawTrace("surface_validated", {
+        redrawReason: reason,
+        lifecycleOwnerId:
+          getPersistentSurfaceWrapperStatus(wrapper).lifecycleOwnerId ?? null,
+        surfaceOwnerId:
+          getPersistentSurfaceWrapperStatus(wrapper).surfaceOwnerId ?? null,
+        canvasIdentityId:
+          getPersistentSurfaceWrapperStatus(wrapper).canvasIdentityId ?? null
+      });
       const reused = reusePersistentSurface(wrapper);
       if (reused.outcome !== "reused") {
         throw Object.assign(new Error(reused.reasonCode), {
           reasonCode: reused.reasonCode
         });
       }
+      updateControlledPersistentAtlasFirstDrawTrace("lifecycle_validated", {
+        redrawReason: reason,
+        lifecycleOwnerId:
+          getPersistentSurfaceWrapperStatus(wrapper).lifecycleOwnerId ?? null,
+        surfaceOwnerId:
+          getPersistentSurfaceWrapperStatus(wrapper).surfaceOwnerId ?? null,
+        canvasIdentityId:
+          getPersistentSurfaceWrapperStatus(wrapper).canvasIdentityId ?? null
+      });
       const snapshot = adapter.createFrameSnapshot({
         map: internal.currentMap,
         identity: internal.currentIdentity,
@@ -599,6 +811,19 @@ export function createControlledPersistentAtlasContractIntegration({
       internal.attached &&
       !internal.detachInProgress
     ) {
+      if (
+        schedulerStatus.lastFailureReason &&
+        !internal.firstDrawTrace.originatingFailureReason
+      ) {
+        updateControlledPersistentAtlasFirstDrawTrace(
+          internal.firstDrawTrace.step ?? "draw_provider_entered",
+          {
+            completed: false,
+            normalizedReasonCode: schedulerStatus.lastFailureReason,
+            originatingFailureReason: schedulerStatus.lastFailureReason
+          }
+        );
+      }
       internal.detachInProgress = true;
       state.cleanupAttemptCount += 1;
       releasePersistentSurface(wrapper, {
@@ -639,6 +864,16 @@ export function createControlledPersistentAtlasContractIntegration({
 
   function failAndCleanup(reasonCode) {
     state.lastFailureReason = reasonCode;
+    if (!internal.firstDrawTrace.originatingFailureReason) {
+      updateControlledPersistentAtlasFirstDrawTrace(
+        internal.firstDrawTrace.step ?? "draw_provider_entered",
+        {
+          completed: false,
+          normalizedReasonCode: reasonCode,
+          originatingFailureReason: reasonCode
+        }
+      );
+    }
     if (internal.attached || getPersistentSurfaceWrapperStatus(wrapper).retained) {
       internal.detachInProgress = true;
       state.cleanupAttemptCount += 1;
@@ -676,6 +911,7 @@ export function createControlledPersistentAtlasContractIntegration({
 
   function attachIntegratedPersistentAtlas({ confirmation } = {}) {
     state.attachAttemptCount += 1;
+    resetControlledPersistentAtlasFirstDrawTrace("ATTACH_SEQUENCE_STARTED");
     if (confirmation !== ATTACH_CONFIRMATION) {
       state.lastFailureReason = "INVALID_CONFIRMATION";
       syncState();
@@ -906,6 +1142,11 @@ export function createControlledPersistentAtlasContractIntegration({
     return deepFreeze(cloneStatus(state));
   }
 
+  function getIntegratedPersistentAtlasFirstDrawTrace() {
+    syncState();
+    return getControlledPersistentAtlasFirstDrawTrace();
+  }
+
   syncState();
 
   return {
@@ -915,7 +1156,10 @@ export function createControlledPersistentAtlasContractIntegration({
     detachIntegratedPersistentAtlas,
     revokeIntegratedPersistentAtlas,
     invalidateIntegratedPersistentAtlas,
-    getIntegratedPersistentAtlasStatus
+    getIntegratedPersistentAtlasStatus,
+    getIntegratedPersistentAtlasFirstDrawTrace,
+    resetIntegratedPersistentAtlasFirstDrawTrace:
+      resetControlledPersistentAtlasFirstDrawTrace
   };
 }
 
@@ -945,4 +1189,8 @@ export function invalidateIntegratedPersistentAtlas(integration, ...args) {
 
 export function getIntegratedPersistentAtlasStatus(integration, ...args) {
   return integration.getIntegratedPersistentAtlasStatus(...args);
+}
+
+export function getIntegratedPersistentAtlasFirstDrawTrace(integration, ...args) {
+  return integration.getIntegratedPersistentAtlasFirstDrawTrace(...args);
 }

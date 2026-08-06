@@ -813,3 +813,68 @@ test("38. all four canonical safety flags remain false", () => {
   const status = getPersistentAtlasFrameDrawStatus(harness.provider);
   assertCanonicalFlags(status.canonicalSafetyFlags);
 });
+
+test("39. step trace records mutable draw state through draw completion", () => {
+  const steps = [];
+  const harness = createHarness();
+
+  harness.provider.__deps.stepTraceRecorder = (entry) => {
+    steps.push(entry.step);
+  };
+
+  drawPersistentAtlasFrame(harness.provider, {
+    snapshot: harness.snapshot,
+    retainedSurface: harness.retainedSurface,
+    lifecycleOwner: harness.lifecycleOwner,
+    authorization: harness.authorization,
+    drawGenerationId: harness.drawGenerationId
+  });
+
+  assert.deepEqual(steps, [
+    "surface_validated",
+    "lifecycle_validated",
+    "snapshot_validated",
+    "mutable_draw_state_created",
+    "canvas_position_adapted",
+    "draw_provider_entered",
+    "draw_provider_completed",
+    "draw_state_release_started",
+    "draw_state_release_completed"
+  ]);
+});
+
+test("40. step trace preserves Canvas-position failure boundary", () => {
+  const entries = [];
+  const harness = createHarness({
+    canvasPositionAdapter: () => {
+      throw Object.assign(new Error("CANVAS_POSITION_ADAPTATION_FAILED"), {
+        reasonCode: "CANVAS_POSITION_ADAPTATION_FAILED"
+      });
+    }
+  });
+
+  harness.provider.__deps.stepTraceRecorder = (entry) => {
+    entries.push(entry);
+  };
+
+  assert.throws(
+    () =>
+      drawPersistentAtlasFrame(harness.provider, {
+        snapshot: harness.snapshot,
+        retainedSurface: harness.retainedSurface,
+        lifecycleOwner: harness.lifecycleOwner,
+        authorization: harness.authorization,
+        drawGenerationId: harness.drawGenerationId
+      }),
+    (error) => error.reasonCode === "CANVAS_POSITION_ADAPTATION_FAILED"
+  );
+
+  const failedStep = entries.find(
+    (entry) =>
+      entry.step === "canvas_position_adapted" &&
+      entry.normalizedReasonCode === "CANVAS_POSITION_ADAPTATION_FAILED"
+  );
+
+  assert.ok(failedStep);
+  assert.equal(failedStep.thrownErrorName, "Error");
+});
