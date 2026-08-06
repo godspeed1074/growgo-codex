@@ -149,22 +149,57 @@ let persistentLifecycleOwnerId = null;
 let persistentLifecycleGenerationId = null;
 let persistentSurfaceOwnerId = null;
 
-function resolvePersistentMapIdentityId(map) {
-  if (!map || typeof map !== "object") {
+function readPersistentBridgeMapReference(bridge) {
+  return bridge?.rawLeafletMapReference ?? null;
+}
+
+function resolvePersistentAuthoritativeMapReference(preferredMap = null) {
+  const bridgeFromCapturedProvider =
+    capturedOneFrameBridgeProviderFromScriptDiagnostics?.() ?? null;
+  const bridgeFromDirectGetter =
+    typeof getCustom25DOneFrameBridgeFromScriptDiagnostics === "function"
+      ? getCustom25DOneFrameBridgeFromScriptDiagnostics() ?? null
+      : null;
+
+  const capturedBridgeMap = readPersistentBridgeMapReference(
+    bridgeFromCapturedProvider
+  );
+  const directBridgeMap = readPersistentBridgeMapReference(bridgeFromDirectGetter);
+  const authoritativeBridgeMap = capturedBridgeMap ?? directBridgeMap ?? null;
+
+  if (
+    preferredMap &&
+    authoritativeBridgeMap &&
+    preferredMap !== authoritativeBridgeMap
+  ) {
+    throw Object.assign(new Error("STALE_MAP_REFERENCE"), {
+      reasonCode: "STALE_MAP_REFERENCE"
+    });
+  }
+
+  const resolvedMap = preferredMap ?? authoritativeBridgeMap ?? null;
+
+  if (!resolvedMap || typeof resolvedMap !== "object") {
     throw Object.assign(new Error("MAP_UNAVAILABLE"), {
       reasonCode: "MAP_UNAVAILABLE"
     });
   }
 
-  if (!persistentMapIdentityTokens.has(map)) {
+  return resolvedMap;
+}
+
+function resolvePersistentMapIdentityId(map) {
+  const authoritativeMap = resolvePersistentAuthoritativeMapReference(map);
+
+  if (!persistentMapIdentityTokens.has(authoritativeMap)) {
     persistentMapIdentityCounter += 1;
     persistentMapIdentityTokens.set(
-      map,
+      authoritativeMap,
       `LIVE_PERSISTENT_ATLAS_MAP_${String(persistentMapIdentityCounter).padStart(3, "0")}`
     );
   }
 
-  return persistentMapIdentityTokens.get(map);
+  return persistentMapIdentityTokens.get(authoritativeMap);
 }
 
 function ensurePersistentSessionCandidateId() {
@@ -220,9 +255,11 @@ function readApprovedPersistentReadinessIdentity(map) {
     });
   }
 
+  const authoritativeMap = resolvePersistentAuthoritativeMapReference(map);
+
   const identity = Object.freeze({
     sessionId: ensurePersistentSessionCandidateId(),
-    mapIdentityId: resolvePersistentMapIdentityId(map),
+    mapIdentityId: resolvePersistentMapIdentityId(authoritativeMap),
     regionId: readiness?.resolvedRegion?.regionId ?? null,
     packageId: readiness?.resolvedPackage?.packageId ?? null,
     packageVersion: readiness?.resolvedPackage?.packageVersion ?? null,
@@ -360,16 +397,7 @@ const controlledPersistentAtlasIntegration =
     hostnameProvider: () => globalThis?.location?.hostname ?? "",
     rawMapProvider: {
       resolveRawMap() {
-        const map =
-          rawLeafletMapReferenceFromBridge ??
-          rawLeafletMapProviderFromScriptDiagnostics?.() ??
-          null;
-
-        if (!map) {
-          throw Object.assign(new Error("MAP_UNAVAILABLE"), {
-            reasonCode: "MAP_UNAVAILABLE"
-          });
-        }
+        const map = resolvePersistentAuthoritativeMapReference();
 
         return {
           map,
@@ -532,10 +560,7 @@ const controlledPersistentAtlasIntegration =
       globalThis?.cancelAnimationFrame?.(handle);
     },
     approvedListenerRegistrar(eventName, callback) {
-      const map =
-        rawLeafletMapReferenceFromBridge ??
-        rawLeafletMapProviderFromScriptDiagnostics?.() ??
-        null;
+      const map = resolvePersistentAuthoritativeMapReference();
 
       if (!map || typeof map.on !== "function") {
         throw Object.assign(new Error("LISTENER_REGISTRATION_FAILED"), {
