@@ -65,4 +65,9 @@ test("phase 211.50 evidence record preserves canonical false flags and forbids f
   assert.match(source, /first genuine Safari live command output recorded:\s+- `yes`/i);
   assert.match(source, /first genuine Safari live command passed:\s+- `no`/i);
   assert.match(source, /failed first Safari evidence preserved:\s+- `yes`/i);
+  assert.match(
+    source,
+    /GROWGO_SESSION_211_50AQ_MANUAL_SAFARI_ONE_FRAME_ACTIVATION_CLOSEOUT\.md/
+  );
+  assert.match(source, /Historical Closeout Addendum/);
 });

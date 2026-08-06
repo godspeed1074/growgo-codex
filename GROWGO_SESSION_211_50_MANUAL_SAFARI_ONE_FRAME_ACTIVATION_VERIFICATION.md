@@ -362,3 +362,22 @@ That requires a fresh retest after the 211.50a fix.
 Apply the recursion fix, then run a fresh Safari retest for:
 
 - `211.50b — Manual Safari One-Frame Activation Retest`
+
+## Historical Closeout Addendum
+
+This first-failure evidence record remains intentionally preserved as the honest starting point of the Safari investigation.
+
+It must continue to show that the first genuine Safari execution on Sunday, August 2, 2026 failed with:
+
+- `MAXIMUM_CALL_STACK_SIZE_EXCEEDED`
+- `frameSnapshotCreated = false`
+- `drawAttemptCount = 0`
+- `cleanupCompleted = true`
+
+Later phases identified and corrected the real causes without rewriting this record.
+
+Final closeout evidence is recorded separately in:
+
+- `GROWGO_SESSION_211_50AQ_MANUAL_SAFARI_ONE_FRAME_ACTIVATION_CLOSEOUT.md`
+
+That closeout preserves this initial failed attempt, records the final successful real Safari execution, and confirms that the canonical safety flags remained false throughout the investigation.

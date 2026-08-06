@@ -75,5 +75,10 @@ test("phase 211.50b evidence source-locks the failed Safari result and preserved
   assert.match(source, /lifecycleExecutionEnabled": false/);
   assert.match(source, /authorizationConsumed = true/);
   assert.match(source, /no persistent Canvas, listener, pane, or overlay remained/);
+  assert.match(
+    source,
+    /GROWGO_SESSION_211_50AQ_MANUAL_SAFARI_ONE_FRAME_ACTIVATION_CLOSEOUT\.md/
+  );
+  assert.match(source, /Historical Closeout Addendum/);
   assert.doesNotMatch(source, /overall Phase 211\.50b:\s+- `PASS`/);
 });

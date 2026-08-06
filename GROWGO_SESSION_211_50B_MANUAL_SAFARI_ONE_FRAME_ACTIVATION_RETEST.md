@@ -379,3 +379,23 @@ Those require genuine Safari retest evidence pasted back from the operator.
 ## Next Step
 
 Run the manual Safari retest above and paste back the exact outputs and visual observations for closeout.
+
+## Historical Closeout Addendum
+
+This second-failure Safari retest record remains intentionally preserved as evidence that the live Safari path still failed after the early recursion repair attempt.
+
+It must continue to show:
+
+- `MAXIMUM_CALL_STACK_SIZE_EXCEEDED`
+- `surfacePrepared = true`
+- `frameSnapshotCreated = false`
+- `drawAttemptCount = 0`
+- `cleanupCompleted = true`
+
+Later phases corrected the remaining Safari-only issues without rewriting this failed retest history.
+
+Final closeout evidence is recorded separately in:
+
+- `GROWGO_SESSION_211_50AQ_MANUAL_SAFARI_ONE_FRAME_ACTIVATION_CLOSEOUT.md`
+
+That closeout preserves this failed retest, lists the root causes and fixes applied across the later phases, and records the eventual successful real Safari execution with exact cleanup and safety-flag proof.
