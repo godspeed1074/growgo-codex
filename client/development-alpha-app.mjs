@@ -28,12 +28,22 @@ import {
   installDeveloperOnlyAtlasCustom25DOneFrameCommand
 } from "./developer-only-atlas-custom25d-one-frame-command.mjs";
 import {
+  createControlledPersistentAtlasContractIntegration
+} from "./developer-only-controlled-persistent-atlas-contract-integration.mjs";
+import {
+  createDeveloperOnlyControlledPersistentAtlasManualCommand,
+  installDeveloperOnlyControlledPersistentAtlasManualCommand
+} from "./developer-only-controlled-persistent-atlas-manual-command.mjs";
+import {
   createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace,
   installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace
 } from "./developer-only-atlas-custom25d-one-frame-execution-trace.mjs";
 import {
   createDiscoveredGrowGoCustom25DRendererConsumerDescriptor
 } from "./developer-only-atlas-renderer-zero-draw-handoff.mjs";
+import {
+  createGrowGoCustom25DLiveOneFrameSurfaceOperations
+} from "./growgo-custom25d-live-one-frame-surface-operations.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
 const atlasCustom25DOneFrameExecutionTrace =
@@ -108,6 +118,128 @@ const rawLeafletMapReferenceFromBridge = capturedOneFrameBridgeFromScriptDiagnos
 
 const rawLeafletMapProviderFromScriptDiagnostics =
   createCapturedRawLeafletMapProvider(getGrowGoMapFromScriptDiagnostics);
+
+function toReasonCode(error, fallback) {
+  if (!error) {
+    return fallback;
+  }
+
+  if (typeof error.reasonCode === "string" && error.reasonCode.trim()) {
+    return error.reasonCode;
+  }
+
+  if (typeof error.code === "string" && error.code.trim()) {
+    return error.code;
+  }
+
+  if (typeof error.message === "string" && error.message.trim()) {
+    return error.message.trim().replace(/\s+/g, "_").toUpperCase();
+  }
+
+  return fallback;
+}
+
+const persistentMapIdentityTokens = new WeakMap();
+let persistentMapIdentityCounter = 0;
+let persistentSessionCandidateCounter = 0;
+let persistentSessionCandidateId = null;
+let persistentPreparedSurface = null;
+let persistentLifecycleOwner = null;
+let persistentLifecycleOwnerId = null;
+let persistentLifecycleGenerationId = null;
+let persistentSurfaceOwnerId = null;
+
+function resolvePersistentMapIdentityId(map) {
+  if (!map || typeof map !== "object") {
+    throw Object.assign(new Error("MAP_UNAVAILABLE"), {
+      reasonCode: "MAP_UNAVAILABLE"
+    });
+  }
+
+  if (!persistentMapIdentityTokens.has(map)) {
+    persistentMapIdentityCounter += 1;
+    persistentMapIdentityTokens.set(
+      map,
+      `LIVE_PERSISTENT_ATLAS_MAP_${String(persistentMapIdentityCounter).padStart(3, "0")}`
+    );
+  }
+
+  return persistentMapIdentityTokens.get(map);
+}
+
+function ensurePersistentSessionCandidateId() {
+  if (persistentSessionCandidateId) {
+    return persistentSessionCandidateId;
+  }
+
+  persistentSessionCandidateCounter += 1;
+  persistentSessionCandidateId = `LIVE_PERSISTENT_ATLAS_SESSION_${String(
+    persistentSessionCandidateCounter
+  ).padStart(3, "0")}`;
+  return persistentSessionCandidateId;
+}
+
+function clearPersistentRuntimeReferences() {
+  persistentPreparedSurface = null;
+  persistentLifecycleOwner = null;
+  persistentLifecycleOwnerId = null;
+  persistentLifecycleGenerationId = null;
+  persistentSurfaceOwnerId = null;
+}
+
+function readApprovedPersistentReadinessIdentity(map) {
+  const readiness = atlasRendererHandoffReadiness.getAtlasRendererHandoffReadiness();
+
+  if (!readiness || readiness.diagnosticStatus === "blocked") {
+    throw Object.assign(
+      new Error(
+        readiness?.rendererHandoff?.reasonCode ??
+          readiness?.reasonCode ??
+          "READINESS_REJECTED"
+      ),
+      {
+        reasonCode:
+          readiness?.rendererHandoff?.reasonCode ??
+          readiness?.reasonCode ??
+          "READINESS_REJECTED"
+      }
+    );
+  }
+
+  if (
+    readiness.schemaId !== "ATLAS_RENDERER_HANDOFF_READINESS_DIAGNOSTIC_RESULT_001" ||
+    readiness.diagnosticStatus !== "resolved" ||
+    readiness.reasonCode !== "RESOLVED" ||
+    readiness.rendererHandoffStatus !== "ready_for_future_renderer_attachment"
+  ) {
+    throw Object.assign(new Error("READINESS_REJECTED"), {
+      reasonCode:
+        readiness?.rendererHandoff?.reasonCode ??
+        readiness?.reasonCode ??
+        "READINESS_REJECTED"
+    });
+  }
+
+  const identity = Object.freeze({
+    sessionId: ensurePersistentSessionCandidateId(),
+    mapIdentityId: resolvePersistentMapIdentityId(map),
+    regionId: readiness?.resolvedRegion?.regionId ?? null,
+    packageId: readiness?.resolvedPackage?.packageId ?? null,
+    packageVersion: readiness?.resolvedPackage?.packageVersion ?? null,
+    packageFingerprint: readiness?.resolvedPackage?.packageFingerprint ?? null,
+    recipeId: readiness?.resolvedRecipe?.recipeId ?? null,
+    recipeVersion: readiness?.resolvedRecipe?.selectedVersion ?? null,
+    selectorSeed: readiness?.selectorSeed ?? null
+  });
+
+  if (Object.values(identity).some((value) => value == null)) {
+    throw Object.assign(new Error("READINESS_IDENTITY_INVALID"), {
+      reasonCode: "READINESS_IDENTITY_INVALID"
+    });
+  }
+
+  return identity;
+}
 
 const atlasLiveMapCentreBridge = createDeveloperOnlyLiveMapCentreAtlasBridge({
   getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics
@@ -215,6 +347,270 @@ const atlasCustom25DOneFrameCommand =
 installDeveloperOnlyAtlasCustom25DOneFrameCommand({
   globalObject: globalThis,
   command: atlasCustom25DOneFrameCommand
+});
+
+const persistentOneFrameSurfaceOperations =
+  createGrowGoCustom25DLiveOneFrameSurfaceOperations({
+    leafletProvider: globalThis?.L ?? null,
+    devicePixelRatioProvider: () => globalThis?.devicePixelRatio ?? 1
+  });
+
+const controlledPersistentAtlasIntegration =
+  createControlledPersistentAtlasContractIntegration({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    rawMapProvider: {
+      resolveRawMap() {
+        const map =
+          rawLeafletMapReferenceFromBridge ??
+          rawLeafletMapProviderFromScriptDiagnostics?.() ??
+          null;
+
+        if (!map) {
+          throw Object.assign(new Error("MAP_UNAVAILABLE"), {
+            reasonCode: "MAP_UNAVAILABLE"
+          });
+        }
+
+        return {
+          map,
+          mapIdentityId: resolvePersistentMapIdentityId(map)
+        };
+      }
+    },
+    readinessProvider: {
+      getPersistentAttachmentReadiness({ map } = {}) {
+        try {
+          return {
+            approved: true,
+            reasonCode: "READINESS_APPROVED",
+            identity: readApprovedPersistentReadinessIdentity(map)
+          };
+        } catch (error) {
+          return {
+            approved: false,
+            reasonCode: toReasonCode(error, "READINESS_REJECTED"),
+            identity: null
+          };
+        }
+      }
+    },
+    identitySnapshotProvider: {
+      getPersistentAttachmentIdentity({ map } = {}) {
+        return readApprovedPersistentReadinessIdentity(map);
+      }
+    },
+    retainedSurfaceProvider: {
+      preparePersistentSurface({ map, identity } = {}) {
+        const prepared = persistentOneFrameSurfaceOperations.prepareOneFrameSurface({
+          map
+        });
+
+        if (prepared?.outcome !== "prepared" || !prepared?.surface) {
+          throw Object.assign(
+            new Error(prepared?.reasonCode ?? "RETAINED_SURFACE_PROVIDER_FAILED"),
+            {
+              reasonCode:
+                prepared?.reasonCode ?? "RETAINED_SURFACE_PROVIDER_FAILED"
+            }
+          );
+        }
+
+        persistentPreparedSurface = prepared.surface;
+        persistentSurfaceOwnerId = `LIVE_PERSISTENT_SURFACE_${identity?.sessionId ?? "UNKNOWN"}`;
+        persistentLifecycleOwnerId = `LIVE_PERSISTENT_LIFECYCLE_${identity?.sessionId ?? "UNKNOWN"}`;
+        persistentLifecycleGenerationId = `${persistentLifecycleOwnerId}_GEN_001`;
+
+        return {
+          pane: prepared.surface.pane,
+          canvas: prepared.surface.canvas,
+          surfaceOwnerId: persistentSurfaceOwnerId,
+          lifecycleOwnerId: persistentLifecycleOwnerId
+        };
+      }
+    },
+    retainedLifecycleOwnerProvider: {
+      createLifecycleOwner({ identity } = {}) {
+        if (!persistentPreparedSurface) {
+          throw Object.assign(new Error("MISSING_PREPARED_SURFACE"), {
+            reasonCode: "MISSING_PREPARED_SURFACE"
+          });
+        }
+
+        if (!persistentLifecycleOwner) {
+          const ownerId =
+            persistentLifecycleOwnerId ??
+            `LIVE_PERSISTENT_LIFECYCLE_${identity?.sessionId ?? "UNKNOWN"}`;
+          const generationId =
+            persistentLifecycleGenerationId ?? `${ownerId}_GEN_001`;
+          const surfaceOwnerId =
+            persistentSurfaceOwnerId ??
+            `LIVE_PERSISTENT_SURFACE_${identity?.sessionId ?? "UNKNOWN"}`;
+
+          persistentLifecycleOwnerId = ownerId;
+          persistentLifecycleGenerationId = generationId;
+          persistentSurfaceOwnerId = surfaceOwnerId;
+
+          persistentLifecycleOwner = {
+            ownerId,
+            id: ownerId,
+            registerOwnedResources() {
+              return true;
+            },
+            disposeOwnedResources() {
+              return true;
+            },
+            getLifecycleOwnerStatus() {
+              return Object.freeze({
+                lifecycleOwnerId: ownerId,
+                lifecycleGenerationId: generationId,
+                surfaceOwnerId
+              });
+            }
+          };
+        }
+
+        return {
+          lifecycleOwner: persistentLifecycleOwner,
+          lifecycleOwnerId: persistentLifecycleOwnerId,
+          ownerId: persistentLifecycleOwnerId,
+          lifecycleGenerationId: persistentLifecycleGenerationId,
+          surfaceOwnerId: persistentSurfaceOwnerId
+        };
+      }
+    },
+    frameSnapshotProvider: {
+      createPersistentSnapshot({ map } = {}) {
+        if (!persistentPreparedSurface?.canvas) {
+          throw Object.assign(new Error("PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"), {
+            reasonCode: "PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"
+          });
+        }
+
+        const snapshot =
+          createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics?.({
+            map,
+            canvas: persistentPreparedSurface.canvas
+          }) ?? null;
+
+        if (!snapshot || typeof snapshot !== "object") {
+          throw Object.assign(new Error("SNAPSHOT_PROVIDER_FAILED"), {
+            reasonCode: "SNAPSHOT_PROVIDER_FAILED"
+          });
+        }
+
+        return Object.isFrozen(snapshot) ? snapshot : Object.freeze(snapshot);
+      }
+    },
+    frameDrawProvider: {
+      drawPersistentFrame({ canvas, snapshot } = {}) {
+        const drawResult =
+          drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics?.({
+            canvas: canvas ?? persistentPreparedSurface?.canvas ?? null,
+            frameViewportSnapshot: snapshot
+          }) ?? null;
+
+        if (
+          !drawResult ||
+          (drawResult.outcome === "blocked" &&
+            typeof drawResult.reasonCode === "string")
+        ) {
+          throw Object.assign(
+            new Error(drawResult?.reasonCode ?? "DRAW_PROVIDER_FAILED"),
+            {
+              reasonCode: drawResult?.reasonCode ?? "DRAW_PROVIDER_FAILED"
+            }
+          );
+        }
+
+        return drawResult;
+      }
+    },
+    animationFrameScheduler(callback) {
+      return globalThis?.requestAnimationFrame?.(() => callback());
+    },
+    animationFrameCanceller(handle) {
+      globalThis?.cancelAnimationFrame?.(handle);
+    },
+    approvedListenerRegistrar(eventName, callback) {
+      const map =
+        rawLeafletMapReferenceFromBridge ??
+        rawLeafletMapProviderFromScriptDiagnostics?.() ??
+        null;
+
+      if (!map || typeof map.on !== "function") {
+        throw Object.assign(new Error("LISTENER_REGISTRATION_FAILED"), {
+          reasonCode: "LISTENER_REGISTRATION_FAILED"
+        });
+      }
+
+      map.on(eventName, callback);
+      return {
+        map,
+        eventName,
+        callback
+      };
+    },
+    approvedListenerRemover(registration) {
+      registration?.map?.off?.(registration?.eventName, registration?.callback);
+    },
+    retainedCleanupProvider: {
+      cleanupPersistentAttachment({ lifecycleOwner } = {}) {
+        const cleanupFailureReasons = [];
+
+        if (persistentPreparedSurface) {
+          const rollback =
+            persistentOneFrameSurfaceOperations.rollbackPreparedSurface({
+              surface: persistentPreparedSurface
+            });
+
+          if (
+            rollback?.outcome === "failed_closed" &&
+            typeof rollback?.reasonCode === "string"
+          ) {
+            cleanupFailureReasons.push(rollback.reasonCode);
+          }
+        }
+
+        try {
+          lifecycleOwner?.disposeOwnedResources?.();
+        } catch (error) {
+          cleanupFailureReasons.push(
+            toReasonCode(error, "LIFECYCLE_OWNER_RELEASE_FAILED")
+          );
+        }
+
+        clearPersistentRuntimeReferences();
+
+        return {
+          cleanupCompleted: cleanupFailureReasons.length === 0,
+          reasonCode:
+            cleanupFailureReasons[0] ?? "CONTROLLED_PERSISTENT_ATLAS_CLEANUP_COMPLETED",
+          cleanupFailureReasons,
+          referencesReleased: cleanupFailureReasons.length === 0
+        };
+      }
+    }
+  });
+
+const controlledPersistentAtlasManualCommand =
+  createDeveloperOnlyControlledPersistentAtlasManualCommand({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    integrationProvider: () => controlledPersistentAtlasIntegration,
+    compositionStatusProvider: () =>
+      Object.freeze({
+        schemaId:
+          "GROWGO_CONTROLLED_PERSISTENT_ATLAS_LIVE_MANUAL_COMMAND_COMPOSITION_STATUS_001",
+        state: "developer_only_manual_command_ready",
+        bridgeSource:
+          "captured_one_frame_bridge_and_renderer_handoff_readiness",
+        rootSeamsMapped: true,
+        startupInvocationPrevented: true
+      })
+  });
+
+installDeveloperOnlyControlledPersistentAtlasManualCommand({
+  globalObject: globalThis,
+  command: controlledPersistentAtlasManualCommand
 });
 
 const diagnosticsNamespace =
