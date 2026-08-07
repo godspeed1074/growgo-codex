@@ -205,6 +205,77 @@ function sanitizeScalarString(value) {
   return value == null ? null : String(value);
 }
 
+function sanitizeTraceStringArray(values) {
+  if (!Array.isArray(values)) {
+    return [];
+  }
+  return values
+    .map((value) => sanitizeScalarString(value))
+    .filter((value) => typeof value === "string");
+}
+
+function summarizeSnapshotBoundsShape(bounds) {
+  if (bounds == null) {
+    return {
+      boundsPresent: false,
+      boundsType: null,
+      boundsKeys: [],
+      northWestLatitude: null,
+      northWestLongitude: null,
+      southEastLatitude: null,
+      southEastLongitude: null,
+      north: null,
+      south: null,
+      east: null,
+      west: null
+    };
+  }
+
+  const boundsType = Array.isArray(bounds)
+    ? "array"
+    : typeof bounds === "object"
+      ? "object"
+      : typeof bounds;
+  const boundsKeys =
+    bounds && typeof bounds === "object" && !Array.isArray(bounds)
+      ? sanitizeTraceStringArray(Object.keys(bounds).sort())
+      : [];
+
+  return {
+    boundsPresent: true,
+    boundsType,
+    boundsKeys,
+    northWestLatitude:
+      Number.isFinite(Number(bounds?.northWestLatitude))
+        ? Number(bounds.northWestLatitude)
+        : Number.isFinite(Number(bounds?.northWest?.lat))
+          ? Number(bounds.northWest.lat)
+          : null,
+    northWestLongitude:
+      Number.isFinite(Number(bounds?.northWestLongitude))
+        ? Number(bounds.northWestLongitude)
+        : Number.isFinite(Number(bounds?.northWest?.lng))
+          ? Number(bounds.northWest.lng)
+          : null,
+    southEastLatitude:
+      Number.isFinite(Number(bounds?.southEastLatitude))
+        ? Number(bounds.southEastLatitude)
+        : Number.isFinite(Number(bounds?.southEast?.lat))
+          ? Number(bounds.southEast.lat)
+          : null,
+    southEastLongitude:
+      Number.isFinite(Number(bounds?.southEastLongitude))
+        ? Number(bounds.southEastLongitude)
+        : Number.isFinite(Number(bounds?.southEast?.lng))
+          ? Number(bounds.southEast.lng)
+          : null,
+    north: Number.isFinite(Number(bounds?.north)) ? Number(bounds.north) : null,
+    south: Number.isFinite(Number(bounds?.south)) ? Number(bounds.south) : null,
+    east: Number.isFinite(Number(bounds?.east)) ? Number(bounds.east) : null,
+    west: Number.isFinite(Number(bounds?.west)) ? Number(bounds.west) : null
+  };
+}
+
 function sanitizeIdentityBundle({
   identitySnapshot = {},
   lifecycleIdentity = {}
@@ -691,15 +762,40 @@ function buildNormalizedSnapshot({
 }
 
 export function normalizePersistentAtlasFrameSnapshotForContract(args) {
-  return buildNormalizedSnapshot(args);
+  args?.traceRecorder?.({
+    normalizationStage: "persistent_normalization_input",
+    stage: "persistent_normalization_input",
+    ...summarizeSnapshotBoundsShape(
+      args?.rawSnapshot?.projectedViewportBounds ??
+        args?.rawSnapshot?.bounds ??
+        null
+    )
+  });
+  const normalized = buildNormalizedSnapshot(args);
+  args?.traceRecorder?.({
+    normalizationStage: "persistent_normalization_output",
+    stage: "persistent_normalization_output",
+    snapshotId: sanitizeScalarString(normalized?.snapshotId),
+    snapshotGenerationId: sanitizeScalarString(normalized?.snapshotGenerationId),
+    ...summarizeSnapshotBoundsShape(normalized?.projectedViewportBounds ?? null)
+  });
+  return normalized;
 }
 
-export function toOneFrameViewportSnapshotContract(snapshot) {
+export function toOneFrameViewportSnapshotContract(snapshot, { traceRecorder } = {}) {
   if (!snapshot || typeof snapshot !== "object") {
     throw Object.assign(new Error("FRAME_VIEWPORT_SNAPSHOT_INVALID"), {
       reasonCode: "FRAME_VIEWPORT_SNAPSHOT_INVALID"
     });
   }
+
+  traceRecorder?.({
+    normalizationStage: "draw_contract_conversion_input",
+    stage: "draw_contract_conversion_input",
+    snapshotId: sanitizeScalarString(snapshot?.snapshotId),
+    snapshotGenerationId: sanitizeScalarString(snapshot?.snapshotGenerationId),
+    ...summarizeSnapshotBoundsShape(snapshot?.projectedViewportBounds ?? null)
+  });
 
   const northLatitude = Number(
     snapshot.projectedViewportBounds?.northWestLatitude
@@ -724,7 +820,7 @@ export function toOneFrameViewportSnapshotContract(snapshot) {
   const canvasLayerPositionX = Number(snapshot.canvasLayerPositionX);
   const canvasLayerPositionY = Number(snapshot.canvasLayerPositionY);
 
-  return deepFreeze({
+  const result = deepFreeze({
     schemaId: "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001",
     logicalWidth,
     logicalHeight,
@@ -748,6 +844,35 @@ export function toOneFrameViewportSnapshotContract(snapshot) {
     listenerAdded: false,
     retentionWritten: false
   });
+
+  traceRecorder?.({
+    normalizationStage: "draw_contract_conversion_output",
+    stage: "draw_contract_conversion_output",
+    snapshotId: sanitizeScalarString(snapshot?.snapshotId),
+    snapshotGenerationId: sanitizeScalarString(snapshot?.snapshotGenerationId),
+    ...summarizeSnapshotBoundsShape(result?.bounds ?? null)
+  });
+
+  const boundsValidationPassed = [
+    result?.bounds?.north,
+    result?.bounds?.south,
+    result?.bounds?.east,
+    result?.bounds?.west
+  ].every((value) => Number.isFinite(Number(value)));
+
+  traceRecorder?.({
+    normalizationStage: "bounds_validation",
+    stage: "bounds_validation",
+    snapshotId: sanitizeScalarString(snapshot?.snapshotId),
+    snapshotGenerationId: sanitizeScalarString(snapshot?.snapshotGenerationId),
+    boundsValidationPassed,
+    boundsFailureReason: boundsValidationPassed
+      ? null
+      : "FRAME_VIEWPORT_SNAPSHOT_BOUNDS_INVALID",
+    ...summarizeSnapshotBoundsShape(result?.bounds ?? null)
+  });
+
+  return result;
 }
 
 export function createPersistentAtlasFrameSnapshotProvider({

@@ -335,7 +335,10 @@ function createHarness({
   hostname = "127.0.0.1",
   persistentStatusOverrides = {},
   drawIntegrationOverrides = {},
-  allowSelectorSeedOverride = false
+  allowSelectorSeedOverride = false,
+  snapshotTraceProvider = null,
+  snapshotTraceResetter = null,
+  snapshotTraceUpdater = null
 } = {}) {
   const drawHarness = createPopulationDrawIntegrationHarness(
     drawIntegrationOverrides
@@ -345,7 +348,40 @@ function createHarness({
     persistentStatusProvider: () =>
       createPersistentStatus(persistentStatusOverrides),
     populationDrawIntegration: drawHarness.integration,
-    allowSelectorSeedOverride
+    allowSelectorSeedOverride,
+    snapshotTraceProvider:
+      snapshotTraceProvider ??
+      (() =>
+        Object.freeze({
+          schemaId:
+            "GROWGO_DEVELOPER_ONLY_ATLAS_ASSET_POPULATION_PREVIEW_SNAPSHOT_TRACE_001",
+          previewTraceActive: false,
+          previewTraceCompleted: false,
+          populationPlanId: null,
+          batchId: null,
+          snapshotId: null,
+          snapshotGenerationId: null,
+          normalizationStage: null,
+          boundsValidationPassed: null,
+          boundsFailureReason: null,
+          lastFailureReason: null,
+          stages: Object.freeze({
+            one_frame_snapshot_created: null,
+            persistent_normalization_input: null,
+            persistent_normalization_output: null,
+            draw_contract_conversion_input: null,
+            draw_contract_conversion_output: null,
+            bounds_validation: null
+          }),
+          canonicalSafetyFlags: Object.freeze({
+            runtimeExecutionEnabled: false,
+            mapAttachmentAllowed: false,
+            automaticRendererExecutionAllowed: false,
+            lifecycleExecutionEnabled: false
+          })
+        })),
+    snapshotTraceResetter: snapshotTraceResetter ?? (() => null),
+    snapshotTraceUpdater: snapshotTraceUpdater ?? (() => null)
   });
 
   return {
@@ -806,6 +842,73 @@ test("11. preview status is frozen, serializable, and exposes no raw refs", () =
   assertCanonicalFlags(status.canonicalSafetyFlags);
 });
 
+test("11a. preview snapshot trace starts empty, frozen, and serializable", () => {
+  const harness = createHarness();
+  const trace = harness.preview.getAtlasAssetPopulationPreviewSnapshotTrace();
+
+  assert.equal(Object.isFrozen(trace), true);
+  assert.equal(trace.previewTraceActive, false);
+  assert.equal(trace.previewTraceCompleted, false);
+  assert.equal(trace.stages.one_frame_snapshot_created, null);
+  assert.doesNotThrow(() => JSON.stringify(trace));
+  assertCanonicalFlags(trace.canonicalSafetyFlags);
+});
+
+test("11b. preview snapshot trace can expose scalar-only bounds metadata", () => {
+  const harness = createHarness({
+    snapshotTraceProvider: () =>
+      Object.freeze({
+        schemaId:
+          "GROWGO_DEVELOPER_ONLY_ATLAS_ASSET_POPULATION_PREVIEW_SNAPSHOT_TRACE_001",
+        previewTraceActive: true,
+        previewTraceCompleted: false,
+        populationPlanId: "PLAN_001",
+        batchId: "BATCH_001",
+        snapshotId: "SNAP_001",
+        snapshotGenerationId: "SNAP_GEN_001",
+        normalizationStage: "draw_contract_conversion_output",
+        boundsValidationPassed: false,
+        boundsFailureReason: "FRAME_VIEWPORT_SNAPSHOT_BOUNDS_INVALID",
+        lastFailureReason: "FRAME_VIEWPORT_SNAPSHOT_BOUNDS_INVALID",
+        stages: Object.freeze({
+          one_frame_snapshot_created: Object.freeze({
+            boundsPresent: true,
+            boundsType: "object",
+            boundsKeys: Object.freeze(["bounds", "logicalWidth"]),
+            northWestLatitude: -38.1,
+            northWestLongitude: 144.5,
+            southEastLatitude: -38.2,
+            southEastLongitude: 144.7,
+            north: -38.1,
+            south: -38.2,
+            east: 144.7,
+            west: 144.5
+          }),
+          persistent_normalization_input: null,
+          persistent_normalization_output: null,
+          draw_contract_conversion_input: null,
+          draw_contract_conversion_output: null,
+          bounds_validation: null
+        }),
+        canonicalSafetyFlags: Object.freeze({
+          runtimeExecutionEnabled: false,
+          mapAttachmentAllowed: false,
+          automaticRendererExecutionAllowed: false,
+          lifecycleExecutionEnabled: false
+        })
+      })
+  });
+
+  const trace = harness.preview.getAtlasAssetPopulationPreviewSnapshotTrace();
+  assert.deepEqual(trace.stages.one_frame_snapshot_created.boundsKeys, [
+    "bounds",
+    "logicalWidth"
+  ]);
+  assert.equal("map" in trace, false);
+  assert.equal("canvas" in trace, false);
+  assert.equal("pane" in trace, false);
+});
+
 test("12. installer extends the existing diagnostics namespace with preview methods", () => {
   const harness = createHarness();
 
@@ -821,6 +924,14 @@ test("12. installer extends the existing diagnostics namespace with preview meth
   );
   assert.equal(
     typeof harness.namespace.GrowGoDeveloperDiagnostics.getAtlasAssetPopulationPreviewStatus,
+    "function"
+  );
+  assert.equal(
+    typeof harness.namespace.GrowGoDeveloperDiagnostics.getAtlasAssetPopulationPreviewSnapshotTrace,
+    "function"
+  );
+  assert.equal(
+    typeof harness.namespace.GrowGoDeveloperDiagnostics.resetAtlasAssetPopulationPreviewSnapshotTrace,
     "function"
   );
   assert.equal(

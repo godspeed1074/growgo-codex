@@ -909,3 +909,88 @@ test("40. persistent normalized snapshot converts back to one-frame draw contrac
     west: 144.5
   });
 });
+
+test("41. trace recorder captures normalization and draw-contract bounds stages", () => {
+  const traceEntries = [];
+  const normalized = normalizePersistentAtlasFrameSnapshotForContract({
+    rawSnapshot: {
+      logicalWidth: 640,
+      logicalHeight: 360,
+      devicePixelRatio: 2,
+      bounds: { north: -38.1, south: -38.2, east: 144.7, west: 144.5 },
+      canvasLayerPosition: { x: 12, y: 18 },
+      zoom: 14
+    },
+    map: createFakeMap(),
+    identity: createIdentity(),
+    lifecycleIdentity: createLifecycleIdentity(),
+    redrawReason: "initial_attach",
+    snapshotId: "SNAP_TRACE_001",
+    snapshotGenerationId: "SNAP_GEN_TRACE_001",
+    snapshotCreatedAt: "2026-08-06T12:00:00.000Z",
+    traceRecorder(entry) {
+      traceEntries.push(JSON.parse(JSON.stringify(entry)));
+    }
+  });
+
+  toOneFrameViewportSnapshotContract(normalized, {
+    traceRecorder(entry) {
+      traceEntries.push(JSON.parse(JSON.stringify(entry)));
+    }
+  });
+
+  assert.deepEqual(
+    traceEntries.map((entry) => entry.stage),
+    [
+      "persistent_normalization_input",
+      "persistent_normalization_output",
+      "draw_contract_conversion_input",
+      "draw_contract_conversion_output",
+      "bounds_validation"
+    ]
+  );
+  assert.equal(traceEntries[0].north, -38.1);
+  assert.equal(traceEntries[1].northWestLatitude, -38.1);
+  assert.equal(traceEntries[3].west, 144.5);
+  assert.equal(traceEntries[4].boundsValidationPassed, true);
+});
+
+test("42. trace recorder captures invalid bounds without changing behavior", () => {
+  const traceEntries = [];
+  const invalidSnapshot = Object.freeze({
+    schemaId: "GROWGO_PERSISTENT_ATLAS_FRAME_SNAPSHOT_001",
+    snapshotId: "SNAP_INVALID_001",
+    snapshotGenerationId: "SNAP_GEN_INVALID_001",
+    viewportWidth: 640,
+    viewportHeight: 360,
+    pixelRatio: 2,
+    zoom: 14,
+    canvasLayerPositionX: 12,
+    canvasLayerPositionY: 18,
+    projectedViewportBounds: Object.freeze({
+      northWestLongitude: 144.5,
+      southEastLatitude: -38.2,
+      southEastLongitude: 144.7
+    })
+  });
+
+  const frameViewportSnapshot = toOneFrameViewportSnapshotContract(
+    invalidSnapshot,
+    {
+      traceRecorder(entry) {
+        traceEntries.push(JSON.parse(JSON.stringify(entry)));
+      }
+    }
+  );
+
+  assert.equal(
+    frameViewportSnapshot.schemaId,
+    "GROWGO_CUSTOM25D_FRAME_VIEWPORT_SNAPSHOT_001"
+  );
+  assert.equal(traceEntries.at(-1).stage, "bounds_validation");
+  assert.equal(traceEntries.at(-1).boundsValidationPassed, false);
+  assert.equal(
+    traceEntries.at(-1).boundsFailureReason,
+    "FRAME_VIEWPORT_SNAPSHOT_BOUNDS_INVALID"
+  );
+});

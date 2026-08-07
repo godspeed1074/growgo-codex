@@ -12,6 +12,8 @@ const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_ASSET_POPULATION_PREVIEW_STATUS_001";
 const RESULT_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_ASSET_POPULATION_PREVIEW_RESULT_001";
+const SNAPSHOT_TRACE_SCHEMA_ID =
+  "GROWGO_DEVELOPER_ONLY_ATLAS_ASSET_POPULATION_PREVIEW_SNAPSHOT_TRACE_001";
 
 export const PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION =
   "PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION";
@@ -278,6 +280,31 @@ function buildResult({
   });
 }
 
+function buildEmptySnapshotTrace() {
+  return deepFreeze({
+    schemaId: SNAPSHOT_TRACE_SCHEMA_ID,
+    previewTraceActive: false,
+    previewTraceCompleted: false,
+    populationPlanId: null,
+    batchId: null,
+    snapshotId: null,
+    snapshotGenerationId: null,
+    normalizationStage: null,
+    boundsValidationPassed: null,
+    boundsFailureReason: null,
+    lastFailureReason: null,
+    stages: deepFreeze({
+      one_frame_snapshot_created: null,
+      persistent_normalization_input: null,
+      persistent_normalization_output: null,
+      draw_contract_conversion_input: null,
+      draw_contract_conversion_output: null,
+      bounds_validation: null
+    }),
+    canonicalSafetyFlags: canonicalSafetyFlags()
+  });
+}
+
 function assertPreviewPreconditions(status) {
   if (status.revoked === true || status.authorizationState === "revoked") {
     throw Object.assign(new Error("ATLAS_REVOKED"), {
@@ -425,7 +452,10 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
   populationPlanner = createDeveloperOnlyAtlasWorldPopulationPlanner(),
   populationDrawIntegration = null,
   previewFixtureResolver = resolveBuiltInFixture,
-  allowSelectorSeedOverride = false
+  allowSelectorSeedOverride = false,
+  snapshotTraceProvider = () => buildEmptySnapshotTrace(),
+  snapshotTraceResetter = () => buildEmptySnapshotTrace(),
+  snapshotTraceUpdater = () => buildEmptySnapshotTrace()
 } = {}) {
   const state = {
     previewAvailable: false,
@@ -478,6 +508,16 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
     return buildStatus(state);
   }
 
+  function getAtlasAssetPopulationPreviewSnapshotTrace() {
+    const trace = snapshotTraceProvider?.();
+    return deepFreeze(sanitizePlainObject(trace) ?? buildEmptySnapshotTrace());
+  }
+
+  function resetAtlasAssetPopulationPreviewSnapshotTrace(reasonCode = null) {
+    const trace = snapshotTraceResetter?.(sanitizeString(reasonCode));
+    return deepFreeze(sanitizePlainObject(trace) ?? buildEmptySnapshotTrace());
+  }
+
   function previewAtlasAssetPopulation({
     confirmation,
     previewFixtureId = ATLAS_POPULATION_PREVIEW_BELLARINE_001,
@@ -517,6 +557,7 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
     }
 
     try {
+      snapshotTraceResetter?.("PREVIEW_COMMAND_STARTED");
       const persistentStatus = readPersistentStatus();
       syncActiveIdentityState(state, persistentStatus, selectorSeed);
       assertPreviewPreconditions(persistentStatus);
@@ -596,6 +637,12 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
       state.currentInstanceIds = plan.commands.map((command) => command.instanceId);
       state.lastFailureReason = null;
       state.activeSelectorSeed = resolvedSelectorSeed;
+      snapshotTraceUpdater?.({
+        previewTraceCompleted: true,
+        populationPlanId: plan.populationPlanId,
+        batchId: batch.batchId,
+        lastFailureReason: null
+      });
 
       return buildResult({
         command: "previewAtlasAssetPopulation",
@@ -606,6 +653,10 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
     } catch (error) {
       state.lastFailureReason = toReasonCode(error, "PREVIEW_SUBMISSION_FAILED");
       state.plannerInputIdentityValid = false;
+      snapshotTraceUpdater?.({
+        previewTraceCompleted: true,
+        lastFailureReason: state.lastFailureReason
+      });
       return buildResult({
         command: "previewAtlasAssetPopulation",
         outcome: "failed_closed",
@@ -640,6 +691,7 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
     }
 
     try {
+      snapshotTraceResetter?.("PREVIEW_CLEAR_STARTED");
       const persistentStatus = readPersistentStatus();
       syncActiveIdentityState(state, persistentStatus, null);
       assertPreviewPreconditions(persistentStatus);
@@ -676,6 +728,12 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
       state.currentInstanceIds = [];
       state.lastFailureReason = null;
       state.activeSelectorSeed = null;
+      snapshotTraceUpdater?.({
+        previewTraceCompleted: true,
+        populationPlanId: clearPlan.populationPlanId,
+        batchId: batch.batchId,
+        lastFailureReason: null
+      });
 
       return buildResult({
         command: "clearAtlasAssetPopulationPreview",
@@ -686,6 +744,10 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
     } catch (error) {
       state.lastFailureReason = toReasonCode(error, "PREVIEW_CLEAR_FAILED");
       state.plannerInputIdentityValid = false;
+      snapshotTraceUpdater?.({
+        previewTraceCompleted: true,
+        lastFailureReason: state.lastFailureReason
+      });
       return buildResult({
         command: "clearAtlasAssetPopulationPreview",
         outcome: "failed_closed",
@@ -697,6 +759,8 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
 
   return deepFreeze({
     getAtlasAssetPopulationPreviewStatus,
+    getAtlasAssetPopulationPreviewSnapshotTrace,
+    resetAtlasAssetPopulationPreviewSnapshotTrace,
     previewAtlasAssetPopulation,
     clearAtlasAssetPopulationPreview
   });
@@ -711,6 +775,8 @@ export function installDeveloperOnlyAtlasAssetPopulationPreview({
     !globalObject ||
     !preview ||
     typeof preview.getAtlasAssetPopulationPreviewStatus !== "function" ||
+    typeof preview.getAtlasAssetPopulationPreviewSnapshotTrace !== "function" ||
+    typeof preview.resetAtlasAssetPopulationPreviewSnapshotTrace !== "function" ||
     typeof preview.previewAtlasAssetPopulation !== "function" ||
     typeof preview.clearAtlasAssetPopulationPreview !== "function"
   ) {
@@ -730,6 +796,10 @@ export function installDeveloperOnlyAtlasAssetPopulationPreview({
     preview.previewAtlasAssetPopulation(input);
   namespace.getAtlasAssetPopulationPreviewStatus = () =>
     preview.getAtlasAssetPopulationPreviewStatus();
+  namespace.getAtlasAssetPopulationPreviewSnapshotTrace = () =>
+    preview.getAtlasAssetPopulationPreviewSnapshotTrace();
+  namespace.resetAtlasAssetPopulationPreviewSnapshotTrace = (reasonCode) =>
+    preview.resetAtlasAssetPopulationPreviewSnapshotTrace(reasonCode);
   namespace.clearAtlasAssetPopulationPreview = (input) =>
     preview.clearAtlasAssetPopulationPreview(input);
 

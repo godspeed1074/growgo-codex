@@ -167,6 +167,28 @@ const persistentSnapshotDiagnosticsState = {
   snapshotValidationAttemptCount: 0,
   snapshotValidationCompletedCount: 0
 };
+const atlasAssetPopulationPreviewSnapshotTraceState = {
+  schemaId:
+    "GROWGO_DEVELOPER_ONLY_ATLAS_ASSET_POPULATION_PREVIEW_SNAPSHOT_TRACE_001",
+  previewTraceActive: false,
+  previewTraceCompleted: false,
+  populationPlanId: null,
+  batchId: null,
+  snapshotId: null,
+  snapshotGenerationId: null,
+  normalizationStage: null,
+  boundsValidationPassed: null,
+  boundsFailureReason: null,
+  lastFailureReason: null,
+  stages: {
+    one_frame_snapshot_created: null,
+    persistent_normalization_input: null,
+    persistent_normalization_output: null,
+    draw_contract_conversion_input: null,
+    draw_contract_conversion_output: null,
+    bounds_validation: null
+  }
+};
 let persistentPreparedSurface = null;
 let persistentLifecycleOwner = null;
 let persistentLifecycleOwnerId = null;
@@ -244,6 +266,165 @@ function clearPersistentRuntimeReferences() {
   persistentLifecycleOwnerId = null;
   persistentLifecycleGenerationId = null;
   persistentSurfaceOwnerId = null;
+}
+
+function canonicalPreviewTraceStageSnapshot(boundsShape = {}) {
+  return Object.freeze({
+    boundsPresent: boundsShape.boundsPresent === true,
+    boundsType:
+      typeof boundsShape.boundsType === "string" ? boundsShape.boundsType : null,
+    boundsKeys: Object.freeze(
+      Array.isArray(boundsShape.boundsKeys)
+        ? boundsShape.boundsKeys
+            .map((value) => (value == null ? null : String(value)))
+            .filter((value) => typeof value === "string")
+        : []
+    ),
+    northWestLatitude:
+      Number.isFinite(Number(boundsShape.northWestLatitude))
+        ? Number(boundsShape.northWestLatitude)
+        : null,
+    northWestLongitude:
+      Number.isFinite(Number(boundsShape.northWestLongitude))
+        ? Number(boundsShape.northWestLongitude)
+        : null,
+    southEastLatitude:
+      Number.isFinite(Number(boundsShape.southEastLatitude))
+        ? Number(boundsShape.southEastLatitude)
+        : null,
+    southEastLongitude:
+      Number.isFinite(Number(boundsShape.southEastLongitude))
+        ? Number(boundsShape.southEastLongitude)
+        : null,
+    north: Number.isFinite(Number(boundsShape.north)) ? Number(boundsShape.north) : null,
+    south: Number.isFinite(Number(boundsShape.south)) ? Number(boundsShape.south) : null,
+    east: Number.isFinite(Number(boundsShape.east)) ? Number(boundsShape.east) : null,
+    west: Number.isFinite(Number(boundsShape.west)) ? Number(boundsShape.west) : null
+  });
+}
+
+function resetAtlasAssetPopulationPreviewSnapshotTrace(lastFailureReason = null) {
+  atlasAssetPopulationPreviewSnapshotTraceState.previewTraceActive = false;
+  atlasAssetPopulationPreviewSnapshotTraceState.previewTraceCompleted = false;
+  atlasAssetPopulationPreviewSnapshotTraceState.populationPlanId = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.batchId = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.snapshotId = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.snapshotGenerationId = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.normalizationStage = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.boundsValidationPassed = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.boundsFailureReason = null;
+  atlasAssetPopulationPreviewSnapshotTraceState.lastFailureReason =
+    lastFailureReason == null ? null : String(lastFailureReason);
+  atlasAssetPopulationPreviewSnapshotTraceState.stages = {
+    one_frame_snapshot_created: null,
+    persistent_normalization_input: null,
+    persistent_normalization_output: null,
+    draw_contract_conversion_input: null,
+    draw_contract_conversion_output: null,
+    bounds_validation: null
+  };
+  return readAtlasAssetPopulationPreviewSnapshotTrace();
+}
+
+function updateAtlasAssetPopulationPreviewSnapshotTrace(patch = {}) {
+  const stageName =
+    typeof patch.stage === "string" ? patch.stage : null;
+  atlasAssetPopulationPreviewSnapshotTraceState.previewTraceActive = true;
+  if (patch.previewTraceCompleted != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.previewTraceCompleted =
+      patch.previewTraceCompleted === true;
+  }
+  if (patch.populationPlanId != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.populationPlanId = String(
+      patch.populationPlanId
+    );
+  }
+  if (patch.batchId != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.batchId = String(patch.batchId);
+  }
+  if (patch.snapshotId != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.snapshotId = String(
+      patch.snapshotId
+    );
+  }
+  if (patch.snapshotGenerationId != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.snapshotGenerationId = String(
+      patch.snapshotGenerationId
+    );
+  }
+  if (patch.normalizationStage != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.normalizationStage = String(
+      patch.normalizationStage
+    );
+  }
+  if (patch.boundsValidationPassed != null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.boundsValidationPassed =
+      patch.boundsValidationPassed === true;
+  }
+  if (patch.boundsFailureReason != null || patch.boundsFailureReason === null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.boundsFailureReason =
+      patch.boundsFailureReason == null ? null : String(patch.boundsFailureReason);
+  }
+  if (patch.lastFailureReason != null || patch.lastFailureReason === null) {
+    atlasAssetPopulationPreviewSnapshotTraceState.lastFailureReason =
+      patch.lastFailureReason == null ? null : String(patch.lastFailureReason);
+  }
+
+  if (stageName) {
+    atlasAssetPopulationPreviewSnapshotTraceState.stages[stageName] =
+      canonicalPreviewTraceStageSnapshot(patch);
+  }
+
+  return readAtlasAssetPopulationPreviewSnapshotTrace();
+}
+
+function readAtlasAssetPopulationPreviewSnapshotTrace() {
+  return Object.freeze({
+    schemaId: atlasAssetPopulationPreviewSnapshotTraceState.schemaId,
+    previewTraceActive:
+      atlasAssetPopulationPreviewSnapshotTraceState.previewTraceActive === true,
+    previewTraceCompleted:
+      atlasAssetPopulationPreviewSnapshotTraceState.previewTraceCompleted === true,
+    populationPlanId:
+      atlasAssetPopulationPreviewSnapshotTraceState.populationPlanId,
+    batchId: atlasAssetPopulationPreviewSnapshotTraceState.batchId,
+    snapshotId: atlasAssetPopulationPreviewSnapshotTraceState.snapshotId,
+    snapshotGenerationId:
+      atlasAssetPopulationPreviewSnapshotTraceState.snapshotGenerationId,
+    normalizationStage:
+      atlasAssetPopulationPreviewSnapshotTraceState.normalizationStage,
+    boundsValidationPassed:
+      atlasAssetPopulationPreviewSnapshotTraceState.boundsValidationPassed,
+    boundsFailureReason:
+      atlasAssetPopulationPreviewSnapshotTraceState.boundsFailureReason,
+    lastFailureReason:
+      atlasAssetPopulationPreviewSnapshotTraceState.lastFailureReason,
+    stages: Object.freeze({
+      one_frame_snapshot_created:
+        atlasAssetPopulationPreviewSnapshotTraceState.stages
+          .one_frame_snapshot_created,
+      persistent_normalization_input:
+        atlasAssetPopulationPreviewSnapshotTraceState.stages
+          .persistent_normalization_input,
+      persistent_normalization_output:
+        atlasAssetPopulationPreviewSnapshotTraceState.stages
+          .persistent_normalization_output,
+      draw_contract_conversion_input:
+        atlasAssetPopulationPreviewSnapshotTraceState.stages
+          .draw_contract_conversion_input,
+      draw_contract_conversion_output:
+        atlasAssetPopulationPreviewSnapshotTraceState.stages
+          .draw_contract_conversion_output,
+      bounds_validation:
+        atlasAssetPopulationPreviewSnapshotTraceState.stages.bounds_validation
+    }),
+    canonicalSafetyFlags: Object.freeze({
+      runtimeExecutionEnabled: false,
+      mapAttachmentAllowed: false,
+      automaticRendererExecutionAllowed: false,
+      lifecycleExecutionEnabled: false
+    })
+  });
 }
 
 function createPersistentSnapshotIdentifiers() {
@@ -769,6 +950,101 @@ const atlasPopulationPreviewSnapshotProvider =
         );
       }
 
+      updateAtlasAssetPopulationPreviewSnapshotTrace({
+        stage: "one_frame_snapshot_created",
+        normalizationStage: "one_frame_snapshot_created",
+        snapshotId,
+        snapshotGenerationId,
+        ...{
+          boundsPresent:
+            snapshotResult.frameViewportSnapshot?.bounds != null ||
+            snapshotResult.frameViewportSnapshot?.projectedViewportBounds != null,
+          boundsType:
+            snapshotResult.frameViewportSnapshot?.projectedViewportBounds != null
+              ? typeof snapshotResult.frameViewportSnapshot.projectedViewportBounds
+              : snapshotResult.frameViewportSnapshot?.bounds != null
+                ? typeof snapshotResult.frameViewportSnapshot.bounds
+                : null,
+          boundsKeys:
+            snapshotResult.frameViewportSnapshot?.projectedViewportBounds &&
+            typeof snapshotResult.frameViewportSnapshot.projectedViewportBounds ===
+              "object"
+              ? Object.keys(
+                  snapshotResult.frameViewportSnapshot.projectedViewportBounds
+                ).sort()
+              : snapshotResult.frameViewportSnapshot?.bounds &&
+                  typeof snapshotResult.frameViewportSnapshot.bounds === "object"
+                ? Object.keys(snapshotResult.frameViewportSnapshot.bounds).sort()
+                : [],
+          northWestLatitude:
+            Number.isFinite(
+              Number(
+                snapshotResult.frameViewportSnapshot?.projectedViewportBounds
+                  ?.northWestLatitude
+              )
+            )
+              ? Number(
+                  snapshotResult.frameViewportSnapshot.projectedViewportBounds
+                    .northWestLatitude
+                )
+              : Number.isFinite(
+                    Number(
+                      snapshotResult.frameViewportSnapshot?.northWestCoordinate
+                        ?.latitude
+                    )
+                  )
+                ? Number(
+                    snapshotResult.frameViewportSnapshot.northWestCoordinate
+                      .latitude
+                  )
+                : null,
+          northWestLongitude:
+            Number.isFinite(
+              Number(
+                snapshotResult.frameViewportSnapshot?.projectedViewportBounds
+                  ?.northWestLongitude
+              )
+            )
+              ? Number(
+                  snapshotResult.frameViewportSnapshot.projectedViewportBounds
+                    .northWestLongitude
+                )
+              : Number.isFinite(
+                    Number(
+                      snapshotResult.frameViewportSnapshot?.northWestCoordinate
+                        ?.longitude
+                    )
+                  )
+                ? Number(
+                    snapshotResult.frameViewportSnapshot.northWestCoordinate
+                      .longitude
+                  )
+                : null,
+          southEastLatitude: null,
+          southEastLongitude: null,
+          north: Number.isFinite(
+            Number(snapshotResult.frameViewportSnapshot?.bounds?.north)
+          )
+            ? Number(snapshotResult.frameViewportSnapshot.bounds.north)
+            : null,
+          south: Number.isFinite(
+            Number(snapshotResult.frameViewportSnapshot?.bounds?.south)
+          )
+            ? Number(snapshotResult.frameViewportSnapshot.bounds.south)
+            : null,
+          east: Number.isFinite(
+            Number(snapshotResult.frameViewportSnapshot?.bounds?.east)
+          )
+            ? Number(snapshotResult.frameViewportSnapshot.bounds.east)
+            : null,
+          west: Number.isFinite(
+            Number(snapshotResult.frameViewportSnapshot?.bounds?.west)
+          )
+            ? Number(snapshotResult.frameViewportSnapshot.bounds.west)
+            : null
+        }
+      });
+
       return normalizePersistentAtlasFrameSnapshotForContract({
         rawSnapshot: snapshotResult.frameViewportSnapshot,
         map,
@@ -781,7 +1057,8 @@ const atlasPopulationPreviewSnapshotProvider =
         redrawReason,
         snapshotId,
         snapshotGenerationId,
-        snapshotCreatedAt
+        snapshotCreatedAt,
+        traceRecorder: updateAtlasAssetPopulationPreviewSnapshotTrace
       });
     },
     mapProvider() {
@@ -889,7 +1166,15 @@ const atlasPopulationDrawIntegration = createAtlasPopulationDrawIntegration({
     drawGenerationId,
     redrawReason
   } = {}) {
-    const frameViewportSnapshot = toOneFrameViewportSnapshotContract(snapshot);
+    updateAtlasAssetPopulationPreviewSnapshotTrace({
+      populationPlanId: populationBatch?.populationPlanId ?? null,
+      batchId: populationBatch?.batchId ?? null,
+      snapshotId: snapshot?.snapshotId ?? null,
+      snapshotGenerationId: snapshot?.snapshotGenerationId ?? null
+    });
+    const frameViewportSnapshot = toOneFrameViewportSnapshotContract(snapshot, {
+      traceRecorder: updateAtlasAssetPopulationPreviewSnapshotTrace
+    });
     const drawResult =
       drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics?.({
         canvas: canvas ?? persistentPreparedSurface?.canvas ?? null,
@@ -956,7 +1241,10 @@ const atlasAssetPopulationPreview =
     persistentStatusProvider: () =>
       controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
       null,
-    populationDrawIntegration: atlasPopulationDrawIntegration
+    populationDrawIntegration: atlasPopulationDrawIntegration,
+    snapshotTraceProvider: readAtlasAssetPopulationPreviewSnapshotTrace,
+    snapshotTraceResetter: resetAtlasAssetPopulationPreviewSnapshotTrace,
+    snapshotTraceUpdater: updateAtlasAssetPopulationPreviewSnapshotTrace
   });
 
 const controlledPersistentAtlasManualCommand =
