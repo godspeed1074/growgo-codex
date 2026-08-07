@@ -625,6 +625,20 @@ function buildNormalizedSnapshot({
               southEastLatitude: normalizedBounds.south ?? null,
               southEastLongitude: normalizedBounds.east ?? null
             }
+          : normalizedBounds.northWestLatitude != null &&
+              normalizedBounds.northWestLongitude != null &&
+              normalizedBounds.southEastLatitude != null &&
+              normalizedBounds.southEastLongitude != null
+            ? {
+                northWestLatitude:
+                  normalizedBounds.northWestLatitude ?? null,
+                northWestLongitude:
+                  normalizedBounds.northWestLongitude ?? null,
+                southEastLatitude:
+                  normalizedBounds.southEastLatitude ?? null,
+                southEastLongitude:
+                  normalizedBounds.southEastLongitude ?? null
+              }
           : null;
 
   return deepFreeze({

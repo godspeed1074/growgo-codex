@@ -820,6 +820,47 @@ test("39a. real one-frame helper methods do not survive persistent normalization
   assert.equal(typeof JSON.stringify(normalized), "string");
 });
 
+test("39aa. already-normalized projected viewport bounds survive provider normalization", () => {
+  const normalized = normalizePersistentAtlasFrameSnapshotForContract({
+    rawSnapshot: {
+      logicalWidth: 640,
+      logicalHeight: 360,
+      backingWidth: 1280,
+      backingHeight: 720,
+      devicePixelRatio: 2,
+      bounds: { north: -38.1, south: -38.2, east: 144.7, west: 144.5 },
+      northWestCoordinate: { latitude: -38.1, longitude: 144.5 },
+      canvasLayerPosition: { x: 12, y: 18 },
+      zoom: 14
+    },
+    map: createFakeMap(),
+    identity: createIdentity(),
+    lifecycleIdentity: createLifecycleIdentity(),
+    redrawReason: "initial_attach",
+    snapshotId: "SNAP_002A",
+    snapshotGenerationId: "SNAP_GEN_002A",
+    snapshotCreatedAt: "2026-08-06T12:00:00.000Z"
+  });
+
+  const renormalized = normalizePersistentAtlasFrameSnapshotForContract({
+    rawSnapshot: normalized,
+    map: createFakeMap(),
+    identity: createIdentity(),
+    lifecycleIdentity: createLifecycleIdentity(),
+    redrawReason: "follow_up_redraw",
+    snapshotId: "SNAP_002B",
+    snapshotGenerationId: "SNAP_GEN_002B",
+    snapshotCreatedAt: "2026-08-06T12:00:01.000Z"
+  });
+
+  assert.deepEqual(renormalized.projectedViewportBounds, {
+    northWestLatitude: -38.1,
+    northWestLongitude: 144.5,
+    southEastLatitude: -38.2,
+    southEastLongitude: 144.7
+  });
+});
+
 test("39b. successful persistent snapshot contains no functions or custom class instances", () => {
   const { provider } = createHarness();
   const snapshot = createPersistentAtlasFrameSnapshot(provider, {
