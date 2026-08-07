@@ -15,7 +15,8 @@ import {
 import {
   createDeveloperOnlyControlledAutomaticAtlasPopulationToggle,
   ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION,
-  DISABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  DISABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION,
+  installDeveloperOnlyControlledAutomaticAtlasPopulationToggle
 } from "../client/developer-only-controlled-automatic-atlas-population-toggle.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -643,6 +644,78 @@ test("status immutable serializable", () => {
   const status = harness.toggle.getControlledAutomaticAtlasPopulationStatus();
   assert.equal(Object.isFrozen(status), true);
   assert.doesNotThrow(() => JSON.stringify(status));
+});
+
+test("adapter diagnostics getter returns frozen serializable adapter status", () => {
+  const harness = createHarness();
+  const status = harness.toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus();
+  assert.equal(status.schemaId, "GROWGO_DEVELOPER_ONLY_ATLAS_AUTOMATIC_POPULATION_LIVE_EVENT_ADAPTER_STATUS_001");
+  assert.equal(Object.isFrozen(status), true);
+  assert.doesNotThrow(() => JSON.stringify(status));
+});
+
+test("adapter diagnostics exposes disabled-state listener counts safely", () => {
+  const harness = createHarness();
+  const status = harness.toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus();
+  assert.equal(status.enabled, false);
+  assert.equal(status.state, "disabled");
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.moveendRegistered, false);
+  assert.equal(status.zoomendRegistered, false);
+  assert.equal(status.resizeRegistered, false);
+});
+
+test("adapter diagnostics exposes enabled-state counters safely", () => {
+  const harness = createHarness();
+  harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  harness.trigger("moveend");
+  const status = harness.toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus();
+  assert.equal(status.enabled, true);
+  assert.equal(status.state, "enabled");
+  assert.equal(status.ownedListenerCount, 3);
+  assert.equal(status.moveendRegistered, true);
+  assert.equal(status.zoomendRegistered, true);
+  assert.equal(status.resizeRegistered, true);
+  assert.equal(status.eventReceivedCount, 1);
+  assert.equal(status.eventForwardedCount, 1);
+  assert.equal(status.eventRejectedCount, 0);
+  assert.equal(status.moveendReceivedCount, 1);
+});
+
+test("adapter diagnostics exposes no raw refs", () => {
+  const harness = createHarness();
+  const status = harness.toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus();
+  for (const key of [
+    "map",
+    "callbacks",
+    "listenerFunctions",
+    "eventObject",
+    "controller",
+    "renderer",
+    "canvas",
+    "dom"
+  ]) {
+    assert.equal(key in status, false);
+  }
+});
+
+test("install exposes adapter diagnostics getter on the existing namespace", () => {
+  const harness = createHarness();
+  const globalObject = { GrowGoDeveloperDiagnostics: {} };
+  const namespace = installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
+    globalObject,
+    toggle: harness.toggle
+  });
+  assert.equal(namespace, globalObject.GrowGoDeveloperDiagnostics);
+  assert.equal(
+    typeof globalObject.GrowGoDeveloperDiagnostics.getAtlasAutomaticPopulationLiveEventAdapterStatus,
+    "function"
+  );
+  const status =
+    globalObject.GrowGoDeveloperDiagnostics.getAtlasAutomaticPopulationLiveEventAdapterStatus();
+  assert.equal(status.schemaId, "GROWGO_DEVELOPER_ONLY_ATLAS_AUTOMATIC_POPULATION_LIVE_EVENT_ADAPTER_STATUS_001");
 });
 
 test("command results immutable serializable", () => {

@@ -472,6 +472,7 @@ export function createDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
       return isLocalDevelopmentHost(hostnameProvider?.());
     },
     getControlledAutomaticAtlasPopulationStatus: readStatus,
+    getAtlasAutomaticPopulationLiveEventAdapterStatus: readAdapterStatus,
     enableControlledAutomaticAtlasPopulation,
     disableControlledAutomaticAtlasPopulation
   });
@@ -486,6 +487,7 @@ export function installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     !globalObject ||
     !toggle ||
     typeof toggle.getControlledAutomaticAtlasPopulationStatus !== "function" ||
+    typeof toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus !== "function" ||
     typeof toggle.enableControlledAutomaticAtlasPopulation !== "function" ||
     typeof toggle.disableControlledAutomaticAtlasPopulation !== "function"
   ) {
@@ -511,6 +513,8 @@ export function installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     toggle.disableControlledAutomaticAtlasPopulation(input);
   namespace.getControlledAutomaticAtlasPopulationStatus = () =>
     toggle.getControlledAutomaticAtlasPopulationStatus();
+  namespace.getAtlasAutomaticPopulationLiveEventAdapterStatus = () =>
+    toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus();
 
   return namespace;
 }
