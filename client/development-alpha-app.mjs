@@ -35,6 +35,10 @@ import {
   installDeveloperOnlyControlledPersistentAtlasManualCommand
 } from "./developer-only-controlled-persistent-atlas-manual-command.mjs";
 import {
+  createDeveloperOnlyAtlasAssetPopulationPreview,
+  installDeveloperOnlyAtlasAssetPopulationPreview
+} from "./developer-only-atlas-asset-population-preview.mjs";
+import {
   createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace,
   installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace
 } from "./developer-only-atlas-custom25d-one-frame-execution-trace.mjs";
@@ -45,9 +49,13 @@ import {
   createGrowGoCustom25DLiveOneFrameSurfaceOperations
 } from "./growgo-custom25d-live-one-frame-surface-operations.mjs";
 import {
+  createPersistentAtlasFrameSnapshotProvider,
   normalizePersistentAtlasFrameSnapshotForContract,
   toOneFrameViewportSnapshotContract
 } from "./developer-only-persistent-atlas-frame-snapshot-provider.mjs";
+import {
+  createAtlasPopulationDrawIntegration
+} from "./developer-only-atlas-population-draw-integration.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
 const atlasCustom25DOneFrameExecutionTrace =
@@ -725,6 +733,232 @@ const controlledPersistentAtlasIntegration =
     }
   });
 
+const atlasPopulationPreviewSnapshotProvider =
+  createPersistentAtlasFrameSnapshotProvider({
+    oneFrameSnapshotProvider({
+      map,
+      identitySnapshot,
+      redrawReason,
+      snapshotId,
+      snapshotGenerationId,
+      snapshotCreatedAt
+    } = {}) {
+      if (!persistentPreparedSurface?.canvas) {
+        throw Object.assign(new Error("PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"), {
+          reasonCode: "PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"
+        });
+      }
+
+      const snapshotResult =
+        createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics?.({
+          map,
+          canvas: persistentPreparedSurface.canvas
+        }) ?? null;
+
+      if (
+        !snapshotResult ||
+        typeof snapshotResult !== "object" ||
+        snapshotResult.outcome === "blocked" ||
+        !snapshotResult.frameViewportSnapshot
+      ) {
+        throw Object.assign(
+          new Error(snapshotResult?.reasonCode ?? "SNAPSHOT_PROVIDER_FAILED"),
+          {
+            reasonCode: snapshotResult?.reasonCode ?? "SNAPSHOT_PROVIDER_FAILED"
+          }
+        );
+      }
+
+      return normalizePersistentAtlasFrameSnapshotForContract({
+        rawSnapshot: snapshotResult.frameViewportSnapshot,
+        map,
+        identity: identitySnapshot,
+        lifecycleIdentity: {
+          lifecycleOwnerId: persistentLifecycleOwnerId,
+          lifecycleGenerationId: persistentLifecycleGenerationId,
+          surfaceOwnerId: persistentSurfaceOwnerId
+        },
+        redrawReason,
+        snapshotId,
+        snapshotGenerationId,
+        snapshotCreatedAt
+      });
+    },
+    mapProvider() {
+      const map = resolvePersistentAuthoritativeMapReference();
+      return {
+        map,
+        mapIdentityId: resolvePersistentMapIdentityId(map)
+      };
+    },
+    readinessProvider() {
+      return {
+        diagnosticStatus: "approved",
+        reasonCode: "READINESS_APPROVED",
+        ...readApprovedPersistentReadinessIdentity()
+      };
+    },
+    identityProvider() {
+      return readApprovedPersistentReadinessIdentity();
+    },
+    lifecycleIdentityProvider() {
+      return {
+        lifecycleOwnerId: persistentLifecycleOwnerId,
+        lifecycleGenerationId: persistentLifecycleGenerationId,
+        surfaceOwnerId: persistentSurfaceOwnerId
+      };
+    },
+    snapshotReleaseProvider() {
+      return {
+        released: true
+      };
+    },
+    timeProvider: () => new Date().toISOString()
+  });
+
+const atlasPopulationDrawIntegration = createAtlasPopulationDrawIntegration({
+  snapshotProvider: atlasPopulationPreviewSnapshotProvider,
+  atlasIdentityProvider: () => readApprovedPersistentReadinessIdentity(),
+  retainedSurfaceResolver() {
+    if (!persistentPreparedSurface?.canvas || !persistentPreparedSurface?.pane) {
+      throw Object.assign(new Error("RETAINED_SURFACE_UNAVAILABLE"), {
+        reasonCode: "RETAINED_SURFACE_UNAVAILABLE"
+      });
+    }
+
+    return {
+      canvas: persistentPreparedSurface.canvas,
+      pane: persistentPreparedSurface.pane
+    };
+  },
+  retainedSurfaceValidator() {
+    const status =
+      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ?? {};
+    return {
+      ok: true,
+      canvasIdentityId: "LIVE_PERSISTENT_CANVAS_001",
+      paneIdentityId: "LIVE_PERSISTENT_PANE_001",
+      sessionId: status.sessionId ?? null,
+      mapIdentityId: status.mapIdentityId ?? null,
+      surfaceOwnerId: persistentSurfaceOwnerId
+    };
+  },
+  lifecycleOwnerResolver() {
+    if (!persistentLifecycleOwner) {
+      throw Object.assign(new Error("LIFECYCLE_OWNER_UNAVAILABLE"), {
+        reasonCode: "LIFECYCLE_OWNER_UNAVAILABLE"
+      });
+    }
+    return persistentLifecycleOwner;
+  },
+  lifecycleOwnerValidator() {
+    return {
+      ok: true,
+      lifecycleOwnerId: persistentLifecycleOwnerId,
+      lifecycleGenerationId: persistentLifecycleGenerationId,
+      surfaceOwnerId: persistentSurfaceOwnerId
+    };
+  },
+  authorizationResolver() {
+    return controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ?? null;
+  },
+  authorizationValidator({ drawGenerationId, redrawReason }) {
+    const status =
+      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ?? {};
+    if (status.attached !== true || status.redrawPermissionAllowed !== true) {
+      return {
+        ok: false,
+        reasonCode: "AUTHORIZATION_DENIED"
+      };
+    }
+    return {
+      ok: true,
+      authorized: true,
+      sessionId: status.sessionId ?? null,
+      mapIdentityId: status.mapIdentityId ?? null,
+      drawGenerationId,
+      redrawReason
+    };
+  },
+  populationBatchDrawProvider({
+    canvas,
+    pane,
+    snapshot,
+    mutableDrawState,
+    populationBatch,
+    drawGenerationId,
+    redrawReason
+  } = {}) {
+    const frameViewportSnapshot = toOneFrameViewportSnapshotContract(snapshot);
+    const drawResult =
+      drawCustom25DOneFrameFromSnapshotFromScriptDiagnostics?.({
+        canvas: canvas ?? persistentPreparedSurface?.canvas ?? null,
+        pane: pane ?? persistentPreparedSurface?.pane ?? null,
+        frameViewportSnapshot,
+        mutableDrawState,
+        populationBatch,
+        drawGenerationId,
+        redrawReason
+      }) ?? null;
+
+    if (
+      !drawResult ||
+      (drawResult.outcome === "blocked" &&
+        typeof drawResult.reasonCode === "string")
+    ) {
+      throw Object.assign(
+        new Error(drawResult?.reasonCode ?? "DRAW_PROVIDER_FAILED"),
+        {
+          reasonCode: drawResult?.reasonCode ?? "DRAW_PROVIDER_FAILED"
+        }
+      );
+    }
+
+    return drawResult;
+  },
+  mutableDrawStateProvider({ snapshotScalars, drawGenerationId, redrawReason } = {}) {
+    return {
+      snapshotScalars,
+      drawGenerationId,
+      redrawReason,
+      canvasLayerPosition: {
+        x: Number(snapshotScalars?.canvasLayerPosition?.x ?? 0),
+        y: Number(snapshotScalars?.canvasLayerPosition?.y ?? 0)
+      }
+    };
+  },
+  canvasPositionAdapter({ canvas, mutableCanvasLayerPosition } = {}) {
+    const mutablePosition = {
+      x: Number(mutableCanvasLayerPosition?.x ?? 0),
+      y: Number(mutableCanvasLayerPosition?.y ?? 0)
+    };
+
+    if (globalThis?.L?.DomUtil?.setPosition && canvas) {
+      try {
+        globalThis.L.DomUtil.setPosition(canvas, mutablePosition);
+      } catch {
+        canvas._leaflet_pos = mutablePosition;
+      }
+    }
+
+    return {
+      positionAdapterPath: "direct_leaflet_position"
+    };
+  },
+  drawStateReleaseProvider() {},
+  batchReferenceReleaseProvider() {},
+  timeProvider: () => new Date().toISOString()
+});
+
+const atlasAssetPopulationPreview =
+  createDeveloperOnlyAtlasAssetPopulationPreview({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    persistentStatusProvider: () =>
+      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+      null,
+    populationDrawIntegration: atlasPopulationDrawIntegration
+  });
+
 const controlledPersistentAtlasManualCommand =
   createDeveloperOnlyControlledPersistentAtlasManualCommand({
     hostnameProvider: () => globalThis?.location?.hostname ?? "",
@@ -745,6 +979,11 @@ const controlledPersistentAtlasManualCommand =
 installDeveloperOnlyControlledPersistentAtlasManualCommand({
   globalObject: globalThis,
   command: controlledPersistentAtlasManualCommand
+});
+
+installDeveloperOnlyAtlasAssetPopulationPreview({
+  globalObject: globalThis,
+  preview: atlasAssetPopulationPreview
 });
 
 const diagnosticsNamespace =
