@@ -96,9 +96,11 @@ function sanitizePersistentStatus(status) {
     attached: safe.attached === true,
     redrawPermissionAllowed: safe.redrawPermissionAllowed === true,
     authorizationState: safe.authorizationState ?? "inactive",
+    attachPermissionConsumed: safe.attachPermissionConsumed === true,
     invalidated: safe.invalidated === true,
     revoked: safe.revoked === true,
     failedClosed: safe.failedClosed === true,
+    retainedSurfaceState: sanitizeString(safe.retainedSurfaceState) ?? "empty",
     lifecycleOwnerId: sanitizeString(safe.lifecycleOwnerId),
     mapIdentityId: sanitizeString(safe.mapIdentityId),
     regionId: sanitizeString(safe.regionId),
@@ -134,13 +136,13 @@ function freezeResult(command, outcome, reasonCode, status, extra = {}) {
 
 function detectPersistentInvalidationReason(persistentStatus) {
   if (persistentStatus.attached !== true) {
-    return "PERSISTENT_ATLAS_DETACHED";
+    return "PERSISTENT_ATLAS_NOT_ATTACHED";
   }
   if (persistentStatus.revoked === true) {
     return "PERSISTENT_ATLAS_REVOKED";
   }
   if (persistentStatus.authorizationState === "expired") {
-    return "PERSISTENT_ATLAS_AUTH_EXPIRED";
+    return "PERSISTENT_ATLAS_EXPIRED";
   }
   if (persistentStatus.invalidated === true) {
     return persistentStatus.lastFailureReason ?? "PERSISTENT_ATLAS_INVALIDATED";
@@ -148,6 +150,85 @@ function detectPersistentInvalidationReason(persistentStatus) {
   if (persistentStatus.failedClosed === true) {
     return persistentStatus.lastFailureReason ?? "PERSISTENT_ATLAS_FAILED_CLOSED";
   }
+  return null;
+}
+
+function hasEligiblePersistentAuthorizationState(persistentStatus) {
+  return (
+    persistentStatus.authorizationState === "active" ||
+    persistentStatus.authorizationState === "authorized" ||
+    persistentStatus.authorizationState === "attach_permission_consumed"
+  );
+}
+
+function detectPersistentEnableBlockReason(persistentStatus) {
+  if (persistentStatus.revoked === true) {
+    return "PERSISTENT_ATLAS_REVOKED";
+  }
+
+  if (persistentStatus.authorizationState === "expired") {
+    return "PERSISTENT_ATLAS_EXPIRED";
+  }
+
+  if (persistentStatus.invalidated === true) {
+    return persistentStatus.lastFailureReason ?? "PERSISTENT_ATLAS_INVALIDATED";
+  }
+
+  if (persistentStatus.failedClosed === true) {
+    return persistentStatus.lastFailureReason ?? "PERSISTENT_ATLAS_FAILED_CLOSED";
+  }
+
+  if (!hasEligiblePersistentAuthorizationState(persistentStatus)) {
+    return "PERSISTENT_ATLAS_UNAUTHORIZED";
+  }
+
+  if (!persistentStatus.sessionId) {
+    return "PERSISTENT_ATLAS_UNAUTHORIZED";
+  }
+
+  if (
+    persistentStatus.authorizationState === "attach_permission_consumed" &&
+    persistentStatus.attachPermissionConsumed !== true
+  ) {
+    return "PERSISTENT_ATLAS_UNAUTHORIZED";
+  }
+
+  if (
+    persistentStatus.attached !== true ||
+    persistentStatus.integrationState !== "attached_idle"
+  ) {
+    return "PERSISTENT_ATLAS_NOT_ATTACHED";
+  }
+
+  if (persistentStatus.redrawPermissionAllowed !== true) {
+    return "PERSISTENT_ATLAS_REDRAW_NOT_ALLOWED";
+  }
+
+  if (
+    persistentStatus.retainedSurfaceState === "releasing" ||
+    persistentStatus.retainedSurfaceState === "empty"
+  ) {
+    return "PERSISTENT_SURFACE_OR_LIFECYCLE_UNAVAILABLE";
+  }
+
+  if (
+    !persistentStatus.lifecycleOwnerId ||
+    persistentStatus.ownedCanvasCount < 1 ||
+    persistentStatus.ownedPaneCount < 1
+  ) {
+    return "PERSISTENT_SURFACE_OR_LIFECYCLE_UNAVAILABLE";
+  }
+
+  if (
+    !persistentStatus.mapIdentityId ||
+    !persistentStatus.regionId ||
+    !persistentStatus.packageId ||
+    !persistentStatus.recipeId ||
+    !persistentStatus.selectorSeed
+  ) {
+    return "PERSISTENT_ATLAS_IDENTITY_MISMATCH";
+  }
+
   return null;
 }
 
@@ -304,30 +385,10 @@ export function createDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     if (state.automaticPopulationEnabled === true) {
       return blocked(command, "AUTOMATIC_POPULATION_ALREADY_ENABLED");
     }
-    if (persistentStatus.authorizationState !== "authorized") {
-      return blocked(command, "PERSISTENT_ATLAS_UNAUTHORIZED");
-    }
-    if (persistentStatus.attached !== true || persistentStatus.integrationState !== "attached_idle") {
-      return blocked(command, "PERSISTENT_ATLAS_DETACHED");
-    }
-    if (persistentStatus.redrawPermissionAllowed !== true) {
-      return blocked(command, "PERSISTENT_REDRAW_NOT_ALLOWED");
-    }
-    if (
-      !persistentStatus.lifecycleOwnerId ||
-      persistentStatus.ownedCanvasCount < 1 ||
-      persistentStatus.ownedPaneCount < 1
-    ) {
-      return blocked(command, "PERSISTENT_SURFACE_OR_LIFECYCLE_UNAVAILABLE");
-    }
-    if (
-      !persistentStatus.mapIdentityId ||
-      !persistentStatus.regionId ||
-      !persistentStatus.packageId ||
-      !persistentStatus.recipeId ||
-      !persistentStatus.selectorSeed
-    ) {
-      return blocked(command, "PERSISTENT_IDENTITY_UNAVAILABLE");
+    const persistentBlockReason =
+      detectPersistentEnableBlockReason(persistentStatus);
+    if (persistentBlockReason) {
+      return blocked(command, persistentBlockReason);
     }
     if (readiness?.approved !== true) {
       return blocked(

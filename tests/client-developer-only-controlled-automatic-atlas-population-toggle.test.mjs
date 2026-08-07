@@ -107,10 +107,12 @@ function createHarness() {
       integrationState: "attached_idle",
       attached: true,
       redrawPermissionAllowed: true,
-      authorizationState: "authorized",
+      authorizationState: "attach_permission_consumed",
+      attachPermissionConsumed: true,
       invalidated: false,
       revoked: false,
       failedClosed: false,
+      retainedSurfaceState: "ready",
       lifecycleOwnerId: "LIFECYCLE_OWNER_001",
       mapIdentityId: "MAP_BELLARINE_001",
       regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
@@ -311,13 +313,16 @@ test("enable blocked if Atlas unauthorized", () => {
   assert.equal(result.reasonCode, "PERSISTENT_ATLAS_UNAUTHORIZED");
 });
 
-test("enable blocked if Atlas detached", () => {
+test("enable blocked after authorization but before attach", () => {
   const harness = createHarness();
+  harness.mutable.persistentStatus.authorizationState = "active";
+  harness.mutable.persistentStatus.attachPermissionConsumed = false;
   harness.mutable.persistentStatus.attached = false;
+  harness.mutable.persistentStatus.integrationState = "authorized";
   const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
     confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
   });
-  assert.equal(result.reasonCode, "PERSISTENT_ATLAS_DETACHED");
+  assert.equal(result.reasonCode, "PERSISTENT_ATLAS_NOT_ATTACHED");
 });
 
 test("enable blocked if redraw permission false", () => {
@@ -326,7 +331,7 @@ test("enable blocked if redraw permission false", () => {
   const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
     confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
   });
-  assert.equal(result.reasonCode, "PERSISTENT_REDRAW_NOT_ALLOWED");
+  assert.equal(result.reasonCode, "PERSISTENT_ATLAS_REDRAW_NOT_ALLOWED");
 });
 
 test("enable blocked if readiness blocked", () => {
@@ -346,6 +351,54 @@ test("enable succeeds when attached_idle", () => {
   });
   assert.equal(result.outcome, "enabled");
   assert.equal(result.automaticPopulationEnabled, true);
+});
+
+test("enable succeeds with attach_permission_consumed", () => {
+  const harness = createHarness();
+  harness.mutable.persistentStatus.authorizationState = "attach_permission_consumed";
+  harness.mutable.persistentStatus.attachPermissionConsumed = true;
+  const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  assert.equal(result.outcome, "enabled");
+  assert.equal(result.reasonCode, "AUTOMATIC_POPULATION_ENABLED");
+});
+
+test("enable blocked when invalidated", () => {
+  const harness = createHarness();
+  harness.mutable.persistentStatus.invalidated = true;
+  harness.mutable.persistentStatus.lastFailureReason = "REGION_OUT_OF_SCOPE";
+  const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  assert.equal(result.reasonCode, "REGION_OUT_OF_SCOPE");
+});
+
+test("enable blocked when revoked", () => {
+  const harness = createHarness();
+  harness.mutable.persistentStatus.revoked = true;
+  const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  assert.equal(result.reasonCode, "PERSISTENT_ATLAS_REVOKED");
+});
+
+test("enable blocked when expired", () => {
+  const harness = createHarness();
+  harness.mutable.persistentStatus.authorizationState = "expired";
+  const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  assert.equal(result.reasonCode, "PERSISTENT_ATLAS_EXPIRED");
+});
+
+test("enable blocked on identity drift", () => {
+  const harness = createHarness();
+  harness.mutable.persistentStatus.recipeId = null;
+  const result = harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  assert.equal(result.reasonCode, "PERSISTENT_ATLAS_IDENTITY_MISMATCH");
 });
 
 test("controller enabled once", () => {
@@ -546,7 +599,7 @@ test("detach disables automatic population", () => {
   harness.mutable.persistentStatus.attached = false;
   const status = harness.toggle.getControlledAutomaticAtlasPopulationStatus();
   assert.equal(status.automaticPopulationEnabled, false);
-  assert.equal(status.invalidationReason, "PERSISTENT_ATLAS_DETACHED");
+  assert.equal(status.invalidationReason, "PERSISTENT_ATLAS_NOT_ATTACHED");
 });
 
 test("revoke disables automatic population", () => {
@@ -568,7 +621,7 @@ test("expired auth disables automatic population", () => {
   harness.mutable.persistentStatus.authorizationState = "expired";
   const status = harness.toggle.getControlledAutomaticAtlasPopulationStatus();
   assert.equal(status.automaticPopulationEnabled, false);
-  assert.equal(status.invalidationReason, "PERSISTENT_ATLAS_AUTH_EXPIRED");
+  assert.equal(status.invalidationReason, "PERSISTENT_ATLAS_EXPIRED");
 });
 
 test("no auto-reattach", () => {
