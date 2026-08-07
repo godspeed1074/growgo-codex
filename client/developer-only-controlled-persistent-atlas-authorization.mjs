@@ -254,9 +254,27 @@ export function createControlledPersistentAtlasAuthorization({
     return matches;
   }
 
+  function shouldRefreshIdentityForStatusRead() {
+    return (
+      state.authorizationActive === true &&
+      state.revoked === false &&
+      state.invalidated === false &&
+      state.expired === false
+    );
+  }
+
   function getStatus() {
     markExpiredIfNeeded();
-    refreshIdentityMatch();
+    if (shouldRefreshIdentityForStatusRead()) {
+      try {
+        refreshIdentityMatch();
+      } catch (error) {
+        state.currentIdentityMatchesBoundIdentity = false;
+        setFailure(
+          toReasonCode(error, "PERSISTENT_STATUS_IDENTITY_REFRESH_FAILED")
+        );
+      }
+    }
     updateDerivedFlags();
     return freezeStatus(state);
   }

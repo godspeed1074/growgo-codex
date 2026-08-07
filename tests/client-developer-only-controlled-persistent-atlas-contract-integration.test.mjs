@@ -81,6 +81,7 @@ function createHarness({
   const queued = [];
   let integration;
   let followUpConsumed = false;
+  let identitySnapshotFailureReasonCode = null;
 
   const metrics = {
     registeredEvents: [],
@@ -124,6 +125,11 @@ function createHarness({
     },
     identitySnapshotProvider: {
       getPersistentAttachmentIdentity() {
+        if (identitySnapshotFailureReasonCode) {
+          throw Object.assign(new Error(identitySnapshotFailureReasonCode), {
+            reasonCode: identitySnapshotFailureReasonCode
+          });
+        }
         return { ...identity };
       }
     },
@@ -282,6 +288,9 @@ function createHarness({
     },
     setReadiness(overrides) {
       Object.assign(readinessState, overrides);
+    },
+    setIdentitySnapshotFailure(reasonCode = null) {
+      identitySnapshotFailureReasonCode = reasonCode;
     },
     setSurfaceLifecycleOwnerId(nextOwnerId) {
       lifecycleState.surfaceLifecycleOwnerId = nextOwnerId;
@@ -610,6 +619,34 @@ test("24a. readiness invalidation while attached triggers cleanup and preserves 
   assert.equal(status.cleanupCompleted, true);
   assert.equal(status.referencesReleased, true);
   assert.equal(status.lastFailureReason, "REGION_OUT_OF_SCOPE");
+});
+
+test("24aa. invalidated status reads remain non-throwing after cleanup", () => {
+  const harness = createHarness({ manualScheduler: true });
+  authorizeAndAttach(harness, { flushInitial: false });
+  harness.flushOne();
+  harness.setReadiness({
+    approved: false,
+    reasonCode: "REGION_OUT_OF_SCOPE"
+  });
+
+  requestIntegratedPersistentAtlasRedraw(harness.integration, {
+    confirmation: REDRAW,
+    reason: "moveend"
+  });
+
+  harness.setIdentitySnapshotFailure("REGION_OUT_OF_SCOPE");
+
+  assert.doesNotThrow(() => getIntegratedPersistentAtlasStatus(harness.integration));
+  const status = getIntegratedPersistentAtlasStatus(harness.integration);
+  assert.equal(status.integrationState, "invalidated");
+  assert.equal(status.authorizationState, "invalidated");
+  assert.equal(status.lastFailureReason, "REGION_OUT_OF_SCOPE");
+  assert.equal(status.cleanupCompleted, true);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
 });
 
 test("24b. package drift while attached triggers cleanup and preserves reason", () => {

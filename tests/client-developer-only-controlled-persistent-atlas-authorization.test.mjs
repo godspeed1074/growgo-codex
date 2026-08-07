@@ -49,14 +49,16 @@ function createHarness({
   lifecycleMatches = true,
   lifecycleReasonCode = "LIFECYCLE_OWNER_MISMATCH",
   expiry = false,
-  identityOverrides = {}
+  identityOverrides = {},
+  identityProviderOverride = null
 } = {}) {
   const identity = buildIdentity(identityOverrides);
   let authorizationCounter = 0;
 
   const contract = createControlledPersistentAtlasAuthorization({
     hostnameProvider: () => hostname,
-    identityProvider: () => ({ ...identity }),
+    identityProvider: () =>
+      identityProviderOverride ? identityProviderOverride(identity) : { ...identity },
     readinessProvider: () => ({
       approved: readinessApproved,
       reasonCode: readinessReasonCode
@@ -244,6 +246,110 @@ test("identity drift invalidates for map region package fingerprint recipe and s
       true
     );
   }
+});
+
+test("invalidated status read remains non-throwing and preserves invalidation reason", () => {
+  let identityReads = 0;
+  const harness = createHarness({
+    identityProviderOverride(identity) {
+      identityReads += 1;
+      return { ...identity };
+    }
+  });
+
+  authorizePersistentAtlasSession(harness.contract, {
+    confirmation: AUTHORIZE_CONTROLLED_PERSISTENT_ATLAS_ONE_SESSION
+  });
+  consumePersistentAttachPermission(harness.contract);
+  harness.setControllerAttached(true);
+  invalidatePersistentAtlasSession(harness.contract, {
+    reasonCode: "REGION_OUT_OF_SCOPE"
+  });
+
+  const beforeReads = identityReads;
+  const status = getPersistentAtlasAuthorizationStatus(harness.contract);
+
+  assert.equal(status.authorizationState, "invalidated");
+  assert.equal(status.invalidationReasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(status.redrawPermissionAllowed, false);
+  assert.equal(identityReads, beforeReads);
+  assert.doesNotThrow(() => getPersistentAtlasAuthorizationStatus(harness.contract));
+});
+
+test("revoked and expired status reads remain non-throwing", () => {
+  let revokedShouldThrow = false;
+  const revoked = createHarness({
+    identityProviderOverride() {
+      if (revokedShouldThrow) {
+        throw Object.assign(new Error("REGION_OUT_OF_SCOPE"), {
+          reasonCode: "REGION_OUT_OF_SCOPE"
+        });
+      }
+      return buildIdentity();
+    }
+  });
+  authorizePersistentAtlasSession(revoked.contract, {
+    confirmation: AUTHORIZE_CONTROLLED_PERSISTENT_ATLAS_ONE_SESSION
+  });
+  consumePersistentAttachPermission(revoked.contract);
+  revoked.setControllerAttached(true);
+  revokePersistentAtlasSession(revoked.contract);
+  revokedShouldThrow = true;
+  assert.doesNotThrow(() => getPersistentAtlasAuthorizationStatus(revoked.contract));
+  assert.equal(
+    getPersistentAtlasAuthorizationStatus(revoked.contract).authorizationState,
+    "revoked"
+  );
+
+  let expiredShouldThrow = false;
+  const expired = createHarness({
+    expiry: true,
+    identityProviderOverride() {
+      if (expiredShouldThrow) {
+        throw Object.assign(new Error("REGION_OUT_OF_SCOPE"), {
+          reasonCode: "REGION_OUT_OF_SCOPE"
+        });
+      }
+      return buildIdentity();
+    }
+  });
+  authorizePersistentAtlasSession(expired.contract, {
+    confirmation: AUTHORIZE_CONTROLLED_PERSISTENT_ATLAS_ONE_SESSION
+  });
+  expiredShouldThrow = true;
+  assert.doesNotThrow(() => getPersistentAtlasAuthorizationStatus(expired.contract));
+  assert.equal(
+    getPersistentAtlasAuthorizationStatus(expired.contract).authorizationState,
+    "expired"
+  );
+});
+
+test("active status read catches identity refresh failures and normalizes them into status", () => {
+  let shouldThrow = false;
+  const harness = createHarness({
+    identityProviderOverride() {
+      if (shouldThrow) {
+        throw Object.assign(new Error("REGION_OUT_OF_SCOPE"), {
+          reasonCode: "REGION_OUT_OF_SCOPE"
+        });
+      }
+      return buildIdentity();
+    }
+  });
+
+  authorizePersistentAtlasSession(harness.contract, {
+    confirmation: AUTHORIZE_CONTROLLED_PERSISTENT_ATLAS_ONE_SESSION
+  });
+  consumePersistentAttachPermission(harness.contract);
+  harness.setControllerAttached(true);
+  shouldThrow = true;
+
+  const status = getPersistentAtlasAuthorizationStatus(harness.contract);
+  assert.equal(status.authorizationState, "attach_permission_consumed");
+  assert.equal(status.currentIdentityMatchesBoundIdentity, false);
+  assert.equal(status.redrawPermissionAllowed, false);
+  assert.equal(status.lastFailureReason, "REGION_OUT_OF_SCOPE");
+  assert.doesNotThrow(() => JSON.stringify(status));
 });
 
 test("readiness blocked invalidates and stale session is blocked", () => {

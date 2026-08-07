@@ -71,6 +71,7 @@ function createHarness({
   const queued = [];
   let integration;
   let followUpConsumed = false;
+  let identitySnapshotFailureReasonCode = null;
 
   const metrics = {
     registeredEvents: [],
@@ -108,6 +109,11 @@ function createHarness({
     },
     identitySnapshotProvider: {
       getPersistentAttachmentIdentity() {
+        if (identitySnapshotFailureReasonCode) {
+          throw Object.assign(new Error(identitySnapshotFailureReasonCode), {
+            reasonCode: identitySnapshotFailureReasonCode
+          });
+        }
         return { ...identity };
       }
     },
@@ -218,6 +224,9 @@ function createHarness({
         remaining -= 1;
         queued.shift()();
       }
+    },
+    setIdentitySnapshotFailure(reasonCode = null) {
+      identitySnapshotFailureReasonCode = reasonCode;
     }
   };
 }
@@ -585,6 +594,35 @@ test("14b. successful snapshot diagnostics clear stale raw-reference metadata", 
   assert.equal(snapshotStatus.rawReferenceConstructorName, null);
   assert.equal(snapshotStatus.snapshotCreateAttemptCount, 2);
   assert.equal(snapshotStatus.snapshotCreateCompletedCount, 1);
+});
+
+test("14c. invalidated status reads remain non-throwing and preserve cleanup visibility", () => {
+  const harness = createHarness({ manualScheduler: true });
+  harness.command.authorizeControlledPersistentAtlas({
+    confirmation: AUTHORIZE_CONTROLLED_PERSISTENT_ATLAS_ONE_SESSION
+  });
+  harness.command.attachControlledPersistentAtlas({
+    confirmation: ATTACH_CONTROLLED_PERSISTENT_ATLAS
+  });
+  harness.flushOne();
+
+  harness.command.invalidateControlledPersistentAtlas({
+    confirmation: INVALIDATE_CONTROLLED_PERSISTENT_ATLAS,
+    reasonCode: "MANUAL_INVALIDATION"
+  });
+  harness.setIdentitySnapshotFailure("REGION_OUT_OF_SCOPE");
+
+  assert.doesNotThrow(() => harness.command.getControlledPersistentAtlasStatus());
+  const status = harness.command.getControlledPersistentAtlasStatus();
+  assert.equal(status.integrationStatus.integrationState, "invalidated");
+  assert.equal(status.integrationStatus.cleanupCompleted, true);
+  assert.equal(status.integrationStatus.referencesReleased, true);
+  assert.equal(status.integrationStatus.ownedCanvasCount, 0);
+  assert.equal(status.integrationStatus.ownedPaneCount, 0);
+  assert.equal(status.integrationStatus.ownedListenerCount, 0);
+  assert.equal(status.integrationStatus.lastFailureReason, "MANUAL_INVALIDATION");
+  assert.equal(status.authorizationStatus.redrawPermissionAllowed, false);
+  assert.doesNotThrow(() => JSON.stringify(status));
 });
 
 test("15. command source and app wiring include the developer-only persistent diagnostics surface with no polling", () => {
