@@ -385,6 +385,8 @@ function freezeStatus(state) {
     rejectedCommandCount: state.rejectedCommandCount,
     drawSubmitted: state.drawSubmitted,
     drawCompleted: state.drawCompleted,
+    requestedRedrawReason: state.requestedRedrawReason,
+    acceptedRedrawReason: state.acceptedRedrawReason,
     drawFailureReason: state.drawFailureReason,
     referencesReleased: state.referencesReleased,
     lastFailureReason: state.lastFailureReason,
@@ -567,6 +569,8 @@ export function createAtlasPopulationDrawIntegration({
     rejectedCommandCount: 0,
     drawSubmitted: false,
     drawCompleted: false,
+    requestedRedrawReason: null,
+    acceptedRedrawReason: null,
     drawFailureReason: null,
     referencesReleased: true,
     lastFailureReason: null
@@ -708,6 +712,8 @@ export function submitAtlasPopulationPlanForDraw(
 
   state.drawSubmitted = false;
   state.drawCompleted = false;
+  state.requestedRedrawReason = sanitizeString(redrawReason);
+  state.acceptedRedrawReason = null;
   state.drawFailureReason = null;
   state.referencesReleased = false;
 
@@ -739,6 +745,7 @@ export function submitAtlasPopulationPlanForDraw(
     snapshot = createPersistentAtlasFrameSnapshot(internal.snapshotProvider, {
       redrawReason
     });
+    state.acceptedRedrawReason = sanitizeString(snapshot?.redrawReason) ?? sanitizeString(redrawReason);
 
     internal.drawGenerationCounter += 1;
     const drawGenerationId = `POPULATION_DRAW_GEN_${String(
@@ -813,6 +820,8 @@ export function getAtlasPopulationDrawIntegrationStatus(integration) {
       rejectedCommandCount: 0,
       drawSubmitted: false,
       drawCompleted: false,
+      requestedRedrawReason: null,
+      acceptedRedrawReason: null,
       drawFailureReason: null,
       referencesReleased: false,
       lastFailureReason: "POPULATION_DRAW_INTEGRATION_UNAVAILABLE"

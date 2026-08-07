@@ -624,6 +624,24 @@ test("7. submit sends one validated batch through the persistent draw seam and p
     harness.state.receivedBatches[0].commands.map((command) => command.lod),
     plan.commands.map((command) => command.lod)
   );
+  const status = getAtlasPopulationDrawIntegrationStatus(harness.integration);
+  assert.equal(status.requestedRedrawReason, "manual_redraw");
+  assert.equal(status.acceptedRedrawReason, "manual_redraw");
+});
+
+test("7a. event redraw reasons are accepted when submitted through the draw integration", () => {
+  const harness = createHarness();
+  const plan = createValidPopulationPlan();
+
+  const result = submitAtlasPopulationPlanForDraw(harness.integration, {
+    plan,
+    redrawReason: "moveend"
+  });
+
+  assert.equal(result.drawCompleted, true);
+  const status = getAtlasPopulationDrawIntegrationStatus(harness.integration);
+  assert.equal(status.requestedRedrawReason, "moveend");
+  assert.equal(status.acceptedRedrawReason, "moveend");
 });
 
 test("8. the same retained canvas is reused across repeated submissions and no second renderer path exists", () => {

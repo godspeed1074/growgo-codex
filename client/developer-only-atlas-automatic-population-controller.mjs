@@ -1046,7 +1046,8 @@ export function runQueuedAutomaticViewportPopulationRefresh(controller) {
     const integrationResult = deps.populationDrawIntegration({
       generation,
       plan,
-      currentPopulation: clonePlain(internal.currentPopulation)
+      currentPopulation: clonePlain(internal.currentPopulation),
+      redrawReason: generation.triggerReason
     });
     internal.submissionActive = false;
 
