@@ -304,7 +304,12 @@ function createPersistentStatus(overrides = {}) {
     redrawQueued: false,
     failedClosed: false,
     cleanupCompleted: false,
-    authorizationState: "active",
+    detaching: false,
+    revoked: false,
+    invalidated: false,
+    expired: false,
+    authorizationState: "attach_permission_consumed",
+    attachPermissionConsumed: true,
     redrawPermissionAllowed: true,
     mapIdentityId: "MAP_A",
     regionId: "BELLARINE",
@@ -315,6 +320,8 @@ function createPersistentStatus(overrides = {}) {
     recipeVersion: "RECIPE_V001",
     selectorSeed: "WORLD_SELECTOR_SEED_001",
     sessionId: "SESSION_A",
+    retainedSurfaceState: "ready",
+    lifecycleOwnerId: "LIFECYCLE_OWNER_A",
     ownedCanvasCount: 1,
     ownedPaneCount: 1,
     ownedListenerCount: 3,
@@ -398,7 +405,138 @@ test("3. preview requires Atlas attached and idle with valid ownership", () => {
     stateBlocked.preview.previewAtlasAssetPopulation({
       confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
     }).reasonCode,
-    "WRONG_INTEGRATION_STATE"
+    "ATLAS_NOT_ATTACHED"
+  );
+});
+
+test("3a. preview is accepted for the real live post-attach authorization state", () => {
+  const harness = createHarness({
+    persistentStatusOverrides: {
+      integrationState: "attached_idle",
+      authorizationState: "attach_permission_consumed",
+      attachPermissionConsumed: true,
+      redrawPermissionAllowed: true,
+      attached: true,
+      sessionId: "LIVE_PERSISTENT_ATLAS_SESSION_001",
+      retainedSurfaceState: "ready",
+      lifecycleOwnerId: "LIFECYCLE_OWNER_A",
+      ownedCanvasCount: 1,
+      ownedPaneCount: 1,
+      ownedListenerCount: 3
+    }
+  });
+
+  const result = harness.preview.previewAtlasAssetPopulation({
+    confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+  });
+
+  assert.equal(result.outcome, "completed");
+});
+
+test("3b. preview does not require authorizationState active after attach", () => {
+  const harness = createHarness({
+    persistentStatusOverrides: {
+      authorizationState: "attach_permission_consumed",
+      attachPermissionConsumed: true
+    }
+  });
+
+  const result = harness.preview.previewAtlasAssetPopulation({
+    confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+  });
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(result.reasonCode, "PREVIEW_SUBMITTED");
+});
+
+test("3c. preview remains blocked before attach even after authorization", () => {
+  const harness = createHarness({
+    persistentStatusOverrides: {
+      authorizationState: "active",
+      attachPermissionConsumed: false,
+      attached: false
+    }
+  });
+
+  const result = harness.preview.previewAtlasAssetPopulation({
+    confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+  });
+
+  assert.equal(result.reasonCode, "ATLAS_NOT_ATTACHED");
+});
+
+test("3d. preview returns the most specific persistent authorization blocker", () => {
+  const redrawBlocked = createHarness({
+    persistentStatusOverrides: {
+      redrawPermissionAllowed: false
+    }
+  });
+  const invalidated = createHarness({
+    persistentStatusOverrides: {
+      invalidated: true,
+      authorizationState: "invalidated",
+      lastFailureReason: "ATLAS_READINESS_BLOCKED"
+    }
+  });
+  const revoked = createHarness({
+    persistentStatusOverrides: {
+      revoked: true,
+      authorizationState: "revoked"
+    }
+  });
+  const expired = createHarness({
+    persistentStatusOverrides: {
+      expired: true,
+      authorizationState: "expired"
+    }
+  });
+  const sessionMismatch = createHarness({
+    persistentStatusOverrides: {
+      sessionId: null
+    }
+  });
+  const identityDrift = createHarness({
+    persistentStatusOverrides: {
+      redrawPermissionAllowed: false,
+      lastFailureReason: "ATLAS_IDENTITY_MISMATCH"
+    }
+  });
+
+  assert.equal(
+    redrawBlocked.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "ATLAS_REDRAW_NOT_ALLOWED"
+  );
+  assert.equal(
+    invalidated.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "ATLAS_READINESS_BLOCKED"
+  );
+  assert.equal(
+    revoked.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "ATLAS_REVOKED"
+  );
+  assert.equal(
+    expired.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "ATLAS_EXPIRED"
+  );
+  assert.equal(
+    sessionMismatch.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "ATLAS_IDENTITY_MISMATCH"
+  );
+  assert.equal(
+    identityDrift.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "ATLAS_IDENTITY_MISMATCH"
   );
 });
 

@@ -96,7 +96,12 @@ function sanitizePersistentStatus(status) {
     redrawQueued: safe.redrawQueued === true,
     failedClosed: safe.failedClosed === true,
     cleanupCompleted: safe.cleanupCompleted === true,
+    detaching: safe.detaching === true,
+    revoked: safe.revoked === true,
+    invalidated: safe.invalidated === true,
+    expired: safe.expired === true,
     authorizationState: safe.authorizationState ?? "inactive",
+    attachPermissionConsumed: safe.attachPermissionConsumed === true,
     redrawPermissionAllowed: safe.redrawPermissionAllowed === true,
     mapIdentityId: safe.mapIdentityId ?? null,
     regionId: safe.regionId ?? null,
@@ -107,12 +112,36 @@ function sanitizePersistentStatus(status) {
     recipeVersion: safe.recipeVersion ?? null,
     selectorSeed: safe.selectorSeed ?? null,
     sessionId: safe.sessionId ?? null,
+    retainedSurfaceState: safe.retainedSurfaceState ?? "empty",
+    lifecycleOwnerId: safe.lifecycleOwnerId ?? null,
     ownedCanvasCount: Number(safe.ownedCanvasCount ?? 0),
     ownedPaneCount: Number(safe.ownedPaneCount ?? 0),
     ownedListenerCount: Number(safe.ownedListenerCount ?? 0),
     cleanupAttemptCount: Number(safe.cleanupAttemptCount ?? 0),
     lastFailureReason: safe.lastFailureReason ?? null
   });
+}
+
+function hasRequiredPersistentIdentity(status) {
+  return [
+    status.mapIdentityId,
+    status.regionId,
+    status.packageId,
+    status.recipeId,
+    status.selectorSeed,
+    status.sessionId
+  ].every((value) => typeof value === "string" && value.trim().length > 0);
+}
+
+function resolveInvalidationReason(status) {
+  const reason = sanitizeString(status.lastFailureReason);
+  if (
+    reason === "ATLAS_IDENTITY_MISMATCH" ||
+    reason === "ATLAS_READINESS_BLOCKED"
+  ) {
+    return reason;
+  }
+  return "ATLAS_INVALIDATED";
 }
 
 function makeFeature({
@@ -250,7 +279,33 @@ function buildResult({
 }
 
 function assertPreviewPreconditions(status) {
-  if (status.authorizationState !== "active") {
+  if (status.revoked === true || status.authorizationState === "revoked") {
+    throw Object.assign(new Error("ATLAS_REVOKED"), {
+      reasonCode: "ATLAS_REVOKED"
+    });
+  }
+  if (status.expired === true || status.authorizationState === "expired") {
+    throw Object.assign(new Error("ATLAS_EXPIRED"), {
+      reasonCode: "ATLAS_EXPIRED"
+    });
+  }
+  if (status.invalidated === true || status.authorizationState === "invalidated") {
+    throw Object.assign(new Error(resolveInvalidationReason(status)), {
+      reasonCode: resolveInvalidationReason(status)
+    });
+  }
+  if (
+    status.authorizationState !== "active" &&
+    status.authorizationState !== "attach_permission_consumed"
+  ) {
+    throw Object.assign(new Error("ATLAS_NOT_AUTHORIZED"), {
+      reasonCode: "ATLAS_NOT_AUTHORIZED"
+    });
+  }
+  if (
+    status.authorizationState === "attach_permission_consumed" &&
+    status.attachPermissionConsumed !== true
+  ) {
     throw Object.assign(new Error("ATLAS_NOT_AUTHORIZED"), {
       reasonCode: "ATLAS_NOT_AUTHORIZED"
     });
@@ -261,13 +316,42 @@ function assertPreviewPreconditions(status) {
     });
   }
   if (status.integrationState !== "attached_idle") {
-    throw Object.assign(new Error("WRONG_INTEGRATION_STATE"), {
-      reasonCode: "WRONG_INTEGRATION_STATE"
+    throw Object.assign(new Error("ATLAS_NOT_ATTACHED"), {
+      reasonCode: "ATLAS_NOT_ATTACHED"
     });
   }
   if (status.redrawPermissionAllowed !== true) {
-    throw Object.assign(new Error("READINESS_BLOCKED"), {
-      reasonCode: "READINESS_BLOCKED"
+    const reasonCode =
+      sanitizeString(status.lastFailureReason) === "ATLAS_IDENTITY_MISMATCH"
+        ? "ATLAS_IDENTITY_MISMATCH"
+        : sanitizeString(status.lastFailureReason) === "ATLAS_READINESS_BLOCKED"
+          ? "ATLAS_READINESS_BLOCKED"
+          : "ATLAS_REDRAW_NOT_ALLOWED";
+    throw Object.assign(new Error(reasonCode), {
+      reasonCode
+    });
+  }
+  if (status.detaching === true || status.cleanupCompleted === true) {
+    throw Object.assign(new Error("ATLAS_NOT_ATTACHED"), {
+      reasonCode: "ATLAS_NOT_ATTACHED"
+    });
+  }
+  if (!hasRequiredPersistentIdentity(status)) {
+    throw Object.assign(new Error("ATLAS_IDENTITY_MISMATCH"), {
+      reasonCode: "ATLAS_IDENTITY_MISMATCH"
+    });
+  }
+  if (status.retainedSurfaceState !== "ready") {
+    throw Object.assign(new Error("ATLAS_NOT_ATTACHED"), {
+      reasonCode: "ATLAS_NOT_ATTACHED"
+    });
+  }
+  if (
+    typeof status.lifecycleOwnerId !== "string" ||
+    status.lifecycleOwnerId.trim().length === 0
+  ) {
+    throw Object.assign(new Error("ATLAS_IDENTITY_MISMATCH"), {
+      reasonCode: "ATLAS_IDENTITY_MISMATCH"
     });
   }
   if (status.ownedCanvasCount !== 1) {
