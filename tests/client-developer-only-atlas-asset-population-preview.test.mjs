@@ -152,11 +152,11 @@ function createPopulationDrawIntegrationHarness(overrides = {}) {
       return {
         diagnosticStatus: "approved",
         reasonCode: "READINESS_APPROVED",
-        regionId: "BELLARINE",
-        packageId: "ATLAS_DEVELOPER_PACKAGE",
+        regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
         packageVersion: "2026.08.07",
         packageFingerprint: "PKG_FP_001",
-        recipeId: "RECREATION_AREA_RECIPE_001",
+        recipeId: "COASTAL_LOCATION_RECIPE_001",
         recipeVersion: "RECIPE_V001",
         selectorSeed: "WORLD_SELECTOR_SEED_001"
       };
@@ -165,11 +165,11 @@ function createPopulationDrawIntegrationHarness(overrides = {}) {
       return {
         sessionId: "SESSION_A",
         mapIdentityId: "MAP_A",
-        regionId: "BELLARINE",
-        packageId: "ATLAS_DEVELOPER_PACKAGE",
+        regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
         packageVersion: "2026.08.07",
         packageFingerprint: "PKG_FP_001",
-        recipeId: "RECREATION_AREA_RECIPE_001",
+        recipeId: "COASTAL_LOCATION_RECIPE_001",
         recipeVersion: "RECIPE_V001",
         selectorSeed: "WORLD_SELECTOR_SEED_001"
       };
@@ -193,9 +193,9 @@ function createPopulationDrawIntegrationHarness(overrides = {}) {
     atlasIdentityProvider:
       overrides.atlasIdentityProvider ??
       (() => ({
-        regionId: "BELLARINE",
-        packageId: "ATLAS_DEVELOPER_PACKAGE",
-        recipeId: "RECREATION_AREA_RECIPE_001",
+        regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+        recipeId: "COASTAL_LOCATION_RECIPE_001",
         selectorSeed: "WORLD_SELECTOR_SEED_001"
       })),
     retainedSurfaceResolver:
@@ -312,11 +312,11 @@ function createPersistentStatus(overrides = {}) {
     attachPermissionConsumed: true,
     redrawPermissionAllowed: true,
     mapIdentityId: "MAP_A",
-    regionId: "BELLARINE",
-    packageId: "ATLAS_DEVELOPER_PACKAGE",
+    regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+    packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
     packageVersion: "2026.08.07",
     packageFingerprint: "PKG_FP_001",
-    recipeId: "RECREATION_AREA_RECIPE_001",
+    recipeId: "COASTAL_LOCATION_RECIPE_001",
     recipeVersion: "RECIPE_V001",
     selectorSeed: "WORLD_SELECTOR_SEED_001",
     sessionId: "SESSION_A",
@@ -551,6 +551,21 @@ test("4. approved built-in fixture resolves and creates a deterministic populati
   assert.equal(result.outcome, "completed");
   assert.match(result.previewStatus.populationPlanId, /^ATLAS_POPULATION_PLAN_/);
   assert.equal(result.previewStatus.previewFixtureId, ATLAS_POPULATION_PREVIEW_BELLARINE_001);
+  assert.equal(
+    result.previewStatus.resolvedPreviewFixtureId,
+    ATLAS_POPULATION_PREVIEW_BELLARINE_001
+  );
+  assert.equal(
+    result.previewStatus.activeRegionId,
+    "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    result.previewStatus.activePackageId,
+    "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+  );
+  assert.equal(result.previewStatus.activeRecipeId, "COASTAL_LOCATION_RECIPE_001");
+  assert.equal(result.previewStatus.activeSelectorSeedPresent, true);
+  assert.equal(result.previewStatus.plannerInputIdentityValid, true);
 });
 
 test("5. preview uses approved asset IDs only and submits one deterministic batch", () => {
@@ -570,6 +585,57 @@ test("5. preview uses approved asset IDs only and submits one deterministic batc
     true
   );
   assert.equal(harness.drawHarness.state.receivedBatches.length, 1);
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].regionId,
+    "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].packageId,
+    "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+  );
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].recipeId,
+    "COASTAL_LOCATION_RECIPE_001"
+  );
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].selectorSeed,
+    "WORLD_SELECTOR_SEED_001"
+  );
+});
+
+test("5a. fixture cannot override active region package or recipe identity", () => {
+  const harness = createHarness();
+  const preview = createDeveloperOnlyAtlasAssetPopulationPreview({
+    hostnameProvider: () => "127.0.0.1",
+    persistentStatusProvider: () => createPersistentStatus(),
+    populationDrawIntegration: harness.drawHarness.integration,
+    previewFixtureResolver: () => ({
+      fixtureId: ATLAS_POPULATION_PREVIEW_BELLARINE_001,
+      regionId: "OUTSIDE_SCOPE",
+      packageId: "OTHER_PACKAGE",
+      recipeId: "OTHER_RECIPE",
+      viewportId: "ATLAS_PREVIEW_VIEWPORT_BELLARINE_001",
+      features: []
+    })
+  });
+
+  const result = preview.previewAtlasAssetPopulation({
+    confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+  });
+
+  assert.equal(result.outcome, "completed");
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].regionId,
+    "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].packageId,
+    "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+  );
+  assert.equal(
+    harness.drawHarness.state.receivedBatches[0].recipeId,
+    "COASTAL_LOCATION_RECIPE_001"
+  );
 });
 
 test("6. preview reuses the same retained canvas and does not create a second canvas or renderer path", () => {
@@ -683,6 +749,46 @@ test("10. planner failure and draw failure fail closed without leaking preview r
   assert.equal(drawFailureHarness.drawHarness.state.batchReferenceReleaseCalls, 1);
 });
 
+test("10a. missing active identity fields fail closed with specific planner identity reasons", () => {
+  const missingRegion = createHarness({
+    persistentStatusOverrides: { regionId: null }
+  });
+  const missingPackage = createHarness({
+    persistentStatusOverrides: { packageId: null }
+  });
+  const missingRecipe = createHarness({
+    persistentStatusOverrides: { recipeId: null }
+  });
+  const missingSeed = createHarness({
+    persistentStatusOverrides: { selectorSeed: null }
+  });
+
+  assert.equal(
+    missingRegion.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "INVALID_REGION_ID"
+  );
+  assert.equal(
+    missingPackage.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "INVALID_PACKAGE_ID"
+  );
+  assert.equal(
+    missingRecipe.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "INVALID_RECIPE_ID"
+  );
+  assert.equal(
+    missingSeed.preview.previewAtlasAssetPopulation({
+      confirmation: PREVIEW_CONTROLLED_ATLAS_ASSET_POPULATION
+    }).reasonCode,
+    "MISSING_SELECTOR_SEED"
+  );
+});
+
 test("11. preview status is frozen, serializable, and exposes no raw refs", () => {
   const harness = createHarness();
 
@@ -729,9 +835,9 @@ test("13. selector seed override is blocked unless explicitly allowed", () => {
     allowSelectorSeedOverride: true,
     drawIntegrationOverrides: {
       atlasIdentityProvider: () => ({
-        regionId: "BELLARINE",
-        packageId: "ATLAS_DEVELOPER_PACKAGE",
-        recipeId: "RECREATION_AREA_RECIPE_001",
+        regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
+        packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+        recipeId: "COASTAL_LOCATION_RECIPE_001",
         selectorSeed: "OVERRIDE_SEED"
       })
     },

@@ -125,10 +125,6 @@ function sanitizePersistentStatus(status) {
 function hasRequiredPersistentIdentity(status) {
   return [
     status.mapIdentityId,
-    status.regionId,
-    status.packageId,
-    status.recipeId,
-    status.selectorSeed,
     status.sessionId
   ].every((value) => typeof value === "string" && value.trim().length > 0);
 }
@@ -180,8 +176,6 @@ function resolveBuiltInFixture(fixtureId) {
 
   return deepFreeze({
     fixtureId,
-    regionId: "BELLARINE",
-    recipeId: "RECREATION_AREA_RECIPE_001",
     viewportId: "ATLAS_PREVIEW_VIEWPORT_BELLARINE_001",
     features: deepFreeze([
       makeFeature({
@@ -247,6 +241,12 @@ function buildStatus(state) {
     previewAvailable: state.previewAvailable,
     previewActive: state.previewActive,
     previewFixtureId: state.previewFixtureId,
+    resolvedPreviewFixtureId: state.resolvedPreviewFixtureId,
+    activeRegionId: state.activeRegionId,
+    activePackageId: state.activePackageId,
+    activeRecipeId: state.activeRecipeId,
+    activeSelectorSeedPresent: state.activeSelectorSeedPresent,
+    plannerInputIdentityValid: state.plannerInputIdentityValid,
     populationPlanId: state.populationPlanId,
     batchId: state.batchId,
     plannedCommandCount: state.plannedCommandCount,
@@ -376,6 +376,49 @@ function assertPreviewPreconditions(status) {
   }
 }
 
+function syncActiveIdentityState(state, status, selectorSeedOverride) {
+  state.activeRegionId = sanitizeString(status.regionId);
+  state.activePackageId = sanitizeString(status.packageId);
+  state.activeRecipeId = sanitizeString(status.recipeId);
+  state.activeSelectorSeedPresent = Boolean(
+    sanitizeString(selectorSeedOverride) ?? sanitizeString(status.selectorSeed)
+  );
+}
+
+function assertPlannerIdentity(status, selectorSeedOverride) {
+  if (!sanitizeString(status.regionId)) {
+    throw Object.assign(new Error("INVALID_REGION_ID"), {
+      reasonCode: "INVALID_REGION_ID"
+    });
+  }
+  if (!sanitizeString(status.packageId)) {
+    throw Object.assign(new Error("INVALID_PACKAGE_ID"), {
+      reasonCode: "INVALID_PACKAGE_ID"
+    });
+  }
+  if (!sanitizeString(status.recipeId)) {
+    throw Object.assign(new Error("INVALID_RECIPE_ID"), {
+      reasonCode: "INVALID_RECIPE_ID"
+    });
+  }
+  if (!(sanitizeString(selectorSeedOverride) ?? sanitizeString(status.selectorSeed))) {
+    throw Object.assign(new Error("MISSING_SELECTOR_SEED"), {
+      reasonCode: "MISSING_SELECTOR_SEED"
+    });
+  }
+}
+
+function identitiesMatch(left, right) {
+  return (
+    sanitizeString(left.regionId) === sanitizeString(right.regionId) &&
+    sanitizeString(left.packageId) === sanitizeString(right.packageId) &&
+    sanitizeString(left.recipeId) === sanitizeString(right.recipeId) &&
+    sanitizeString(left.selectorSeed) === sanitizeString(right.selectorSeed) &&
+    sanitizeString(left.sessionId) === sanitizeString(right.sessionId) &&
+    sanitizeString(left.mapIdentityId) === sanitizeString(right.mapIdentityId)
+  );
+}
+
 export function createDeveloperOnlyAtlasAssetPopulationPreview({
   hostnameProvider = () => "",
   persistentStatusProvider = () => null,
@@ -388,6 +431,12 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
     previewAvailable: false,
     previewActive: false,
     previewFixtureId: null,
+    resolvedPreviewFixtureId: null,
+    activeRegionId: null,
+    activePackageId: null,
+    activeRecipeId: null,
+    activeSelectorSeedPresent: false,
+    plannerInputIdentityValid: false,
     populationPlanId: null,
     batchId: null,
     plannedCommandCount: 0,
@@ -469,8 +518,12 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
 
     try {
       const persistentStatus = readPersistentStatus();
+      syncActiveIdentityState(state, persistentStatus, selectorSeed);
       assertPreviewPreconditions(persistentStatus);
+      assertPlannerIdentity(persistentStatus, selectorSeed);
+      state.plannerInputIdentityValid = true;
       const fixture = previewFixtureResolver(previewFixtureId);
+      state.resolvedPreviewFixtureId = fixture.fixtureId;
       const resolvedSelectorSeed =
         sanitizeString(selectorSeed) ??
         sanitizeString(persistentStatus.selectorSeed) ??
@@ -499,6 +552,25 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
         viewportId: fixture.viewportId,
         features: fixture.features
       });
+      const refreshedPersistentStatus = readPersistentStatus();
+      if (
+        !identitiesMatch(
+          {
+            ...persistentStatus,
+            selectorSeed: resolvedSelectorSeed
+          },
+          {
+            ...refreshedPersistentStatus,
+            selectorSeed:
+              sanitizeString(selectorSeed) ??
+              sanitizeString(refreshedPersistentStatus.selectorSeed)
+          }
+        )
+      ) {
+        throw Object.assign(new Error("ATLAS_IDENTITY_MISMATCH"), {
+          reasonCode: "ATLAS_IDENTITY_MISMATCH"
+        });
+      }
 
       const batch = validateAtlasPopulationPlanForDraw(
         populationDrawIntegration,
@@ -533,6 +605,7 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
       });
     } catch (error) {
       state.lastFailureReason = toReasonCode(error, "PREVIEW_SUBMISSION_FAILED");
+      state.plannerInputIdentityValid = false;
       return buildResult({
         command: "previewAtlasAssetPopulation",
         outcome: "failed_closed",
@@ -568,7 +641,10 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
 
     try {
       const persistentStatus = readPersistentStatus();
+      syncActiveIdentityState(state, persistentStatus, null);
       assertPreviewPreconditions(persistentStatus);
+      assertPlannerIdentity(persistentStatus, null);
+      state.plannerInputIdentityValid = true;
       const clearPlan = buildClearPlan(
         persistentStatus,
         sanitizeString(persistentStatus.selectorSeed) ??
@@ -609,6 +685,7 @@ export function createDeveloperOnlyAtlasAssetPopulationPreview({
       });
     } catch (error) {
       state.lastFailureReason = toReasonCode(error, "PREVIEW_CLEAR_FAILED");
+      state.plannerInputIdentityValid = false;
       return buildResult({
         command: "clearAtlasAssetPopulationPreview",
         outcome: "failed_closed",

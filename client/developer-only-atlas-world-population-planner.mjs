@@ -20,13 +20,22 @@ const DEFAULT_FEATURE_BUDGET = Object.freeze({
   maximumVegetationCommands: 18,
   maximumBuildingCommands: 4
 });
+const APPROVED_PLAN_REGIONS = new Set([
+  "BELLARINE",
+  "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+]);
+const APPROVED_PLAN_PACKAGES = new Set([
+  "ATLAS_DEVELOPER_PACKAGE",
+  "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+]);
 const APPROVED_PLAN_RECIPES = new Set([
   "TREE_EUCALYPTUS_RECIPE_001",
   "TREE_BOTTLEBRUSH_RECIPE_001",
   "SHRUB_COASTAL_LOW_RECIPE_001",
   "SPORTS_OVAL_RECIPE_001",
   "RECREATION_AREA_RECIPE_001",
-  "BUILDING_CIVIC_SPORTS_PAVILION_001"
+  "BUILDING_CIVIC_SPORTS_PAVILION_001",
+  "COASTAL_LOCATION_RECIPE_001"
 ]);
 
 function deepFreeze(value, seen = new WeakSet()) {
@@ -426,13 +435,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     sanitizeString(input.viewportOrTileIdentity);
   const budget = normalizeBudget(input.performanceBudget);
 
-  if (!regionId || regionId !== "BELLARINE") {
+  if (!regionId || !APPROVED_PLAN_REGIONS.has(regionId)) {
     state.lastFailureReason = "INVALID_REGION_ID";
     throw Object.assign(new Error("INVALID_REGION_ID"), {
       reasonCode: "INVALID_REGION_ID"
     });
   }
-  if (!packageId || packageId !== "ATLAS_DEVELOPER_PACKAGE") {
+  if (!packageId || !APPROVED_PLAN_PACKAGES.has(packageId)) {
     state.lastFailureReason = "INVALID_PACKAGE_ID";
     throw Object.assign(new Error("INVALID_PACKAGE_ID"), {
       reasonCode: "INVALID_PACKAGE_ID"

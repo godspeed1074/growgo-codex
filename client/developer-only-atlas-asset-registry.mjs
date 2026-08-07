@@ -4,8 +4,14 @@ const STATUS_SCHEMA_ID =
 export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_VERSION =
   "atlas_asset_registry_v1";
 
-const DEFAULT_APPROVED_REGIONS = Object.freeze(["BELLARINE"]);
-const DEFAULT_APPROVED_PACKAGES = Object.freeze(["ATLAS_DEVELOPER_PACKAGE"]);
+const DEFAULT_APPROVED_REGIONS = Object.freeze([
+  "BELLARINE",
+  "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION"
+]);
+const DEFAULT_APPROVED_PACKAGES = Object.freeze([
+  "ATLAS_DEVELOPER_PACKAGE",
+  "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
+]);
 
 export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze([
   Object.freeze({
@@ -16,7 +22,10 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     assetReferenceId: "TREE_EUCALYPTUS_001@v001",
     approvedRegions: DEFAULT_APPROVED_REGIONS,
     approvedPackages: DEFAULT_APPROVED_PACKAGES,
-    approvedRecipeIds: Object.freeze(["TREE_EUCALYPTUS_RECIPE_001"]),
+    approvedRecipeIds: Object.freeze([
+      "TREE_EUCALYPTUS_RECIPE_001",
+      "COASTAL_LOCATION_RECIPE_001"
+    ]),
     placementRules: Object.freeze({
       placementClass: "vegetation",
       supportedPlacementKinds: Object.freeze(["vegetation"]),
@@ -52,7 +61,10 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     assetReferenceId: "TREE_BOTTLEBRUSH_001@v002",
     approvedRegions: DEFAULT_APPROVED_REGIONS,
     approvedPackages: DEFAULT_APPROVED_PACKAGES,
-    approvedRecipeIds: Object.freeze(["TREE_BOTTLEBRUSH_RECIPE_001"]),
+    approvedRecipeIds: Object.freeze([
+      "TREE_BOTTLEBRUSH_RECIPE_001",
+      "COASTAL_LOCATION_RECIPE_001"
+    ]),
     placementRules: Object.freeze({
       placementClass: "vegetation",
       supportedPlacementKinds: Object.freeze(["vegetation", "landmark"]),
@@ -88,7 +100,10 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     assetReferenceId: "SHRUB_COASTAL_LOW_001@v002",
     approvedRegions: DEFAULT_APPROVED_REGIONS,
     approvedPackages: DEFAULT_APPROVED_PACKAGES,
-    approvedRecipeIds: Object.freeze(["SHRUB_COASTAL_LOW_RECIPE_001"]),
+    approvedRecipeIds: Object.freeze([
+      "SHRUB_COASTAL_LOW_RECIPE_001",
+      "COASTAL_LOCATION_RECIPE_001"
+    ]),
     placementRules: Object.freeze({
       placementClass: "vegetation",
       supportedPlacementKinds: Object.freeze(["vegetation"]),
@@ -127,7 +142,8 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     approvedRecipeIds: Object.freeze([
       "BUILDING_CIVIC_SPORTS_PAVILION_001",
       "SPORTS_OVAL_RECIPE_001",
-      "RECREATION_AREA_RECIPE_001"
+      "RECREATION_AREA_RECIPE_001",
+      "COASTAL_LOCATION_RECIPE_001"
     ]),
     placementRules: Object.freeze({
       placementClass: "building",
