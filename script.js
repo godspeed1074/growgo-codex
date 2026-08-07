@@ -267,6 +267,7 @@ function bootstrapGrowGoDeveloperDiagnosticsForLocalDev(options = {}) {
     source: "phase-211.2-growgo-map-getter",
     localDev: true,
     getGrowGoMap,
+    getCustom25DCurrentViewportFeatureSource,
     getCustom25DDrawSeamRuntimeIdentity,
     getCustom25DDrawMutationTrace,
     resetCustom25DDrawMutationTrace,
@@ -16822,6 +16823,115 @@ function setCustom25DMapBuildingFeatures(buildingFeatures) {
   if (ENABLE_CUSTOM_25D_MAP && custom25DMapLayer?.redraw) {
     custom25DMapLayer.redraw();
   }
+}
+
+function sanitizeCustom25DCoordinatePair(pair) {
+  if (!Array.isArray(pair) || pair.length < 2) {
+    return null;
+  }
+
+  const latitude = Number(pair[0]);
+  const longitude = Number(pair[1]);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return null;
+  }
+
+  return Object.freeze([
+    Number(latitude.toFixed(6)),
+    Number(longitude.toFixed(6))
+  ]);
+}
+
+function sanitizeCustom25DCoordinatePairs(coords) {
+  if (!Array.isArray(coords)) {
+    return Object.freeze([]);
+  }
+
+  return Object.freeze(
+    coords
+      .map(sanitizeCustom25DCoordinatePair)
+      .filter(Boolean)
+  );
+}
+
+function sanitizeCustom25DPointLike(value) {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const lat = Number(value.lat ?? value.latitude);
+  const lng = Number(value.lng ?? value.longitude);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return null;
+  }
+
+  return Object.freeze({
+    latitude: Number(lat.toFixed(6)),
+    longitude: Number(lng.toFixed(6))
+  });
+}
+
+function sanitizeCustom25DViewportFeatureSource() {
+  return Object.freeze({
+    schemaId: "GROWGO_CUSTOM25D_CURRENT_VIEWPORT_FEATURE_SOURCE_001",
+    zoneFeatures: Object.freeze(
+      (Array.isArray(custom25DZoneFeatures) ? custom25DZoneFeatures : []).map(
+        (feature) =>
+          Object.freeze({
+            id: typeof feature?.id === "string" ? feature.id : null,
+            zoneType: typeof feature?.zoneType === "string" ? feature.zoneType : null,
+            coords: sanitizeCustom25DCoordinatePairs(feature?.coords),
+            closed: feature?.closed === true,
+            leisure: typeof feature?.leisure === "string" ? feature.leisure : null,
+            landuse: typeof feature?.landuse === "string" ? feature.landuse : null,
+            natural: typeof feature?.natural === "string" ? feature.natural : null,
+            waterway: typeof feature?.waterway === "string" ? feature.waterway : null,
+            boundary: typeof feature?.boundary === "string" ? feature.boundary : null
+          })
+      )
+    ),
+    buildingFeatures: Object.freeze(
+      (Array.isArray(custom25DBuildingFeatures)
+        ? custom25DBuildingFeatures
+        : []
+      ).map((feature) =>
+        Object.freeze({
+          id: typeof feature?.id === "string" ? feature.id : null,
+          coords: sanitizeCustom25DCoordinatePairs(feature?.coords),
+          center: sanitizeCustom25DPointLike(feature?.center),
+          buildingType:
+            typeof feature?.buildingType === "string" ? feature.buildingType : null,
+          shopTag: typeof feature?.shopTag === "string" ? feature.shopTag : null,
+          amenity: typeof feature?.amenity === "string" ? feature.amenity : null,
+          office: typeof feature?.office === "string" ? feature.office : null,
+          cuisine: typeof feature?.cuisine === "string" ? feature.cuisine : null,
+          tourism: typeof feature?.tourism === "string" ? feature.tourism : null,
+          leisure: typeof feature?.leisure === "string" ? feature.leisure : null,
+          landuse: typeof feature?.landuse === "string" ? feature.landuse : null,
+          buildingArea: Number.isFinite(Number(feature?.buildingArea))
+            ? Number(feature.buildingArea)
+            : null,
+          nearCoast: feature?.nearCoast === true
+        })
+      )
+    ),
+    roadWays: Object.freeze(
+      (Array.isArray(custom25DRoadFeatures) ? custom25DRoadFeatures : []).map((road) =>
+        Object.freeze({
+          id:
+            typeof road?.id === "string" || typeof road?.id === "number"
+              ? String(road.id)
+              : null,
+          highway: typeof road?.highway === "string" ? road.highway : null,
+          coords: sanitizeCustom25DCoordinatePairs(road?.coords)
+        })
+      )
+    )
+  });
+}
+
+function getCustom25DCurrentViewportFeatureSource() {
+  return sanitizeCustom25DViewportFeatureSource();
 }
 
 function custom25DSeedFromBounds(bounds) {
@@ -282084,6 +282194,12 @@ function extractMapFeaturesFromOverpass(data) {
         zoneType,
         coords,
         closed: coords.length >= 4 && coords[0][0] === coords[coords.length - 1][0] && coords[0][1] === coords[coords.length - 1][1]
+        ,
+        leisure: tags.leisure || "",
+        landuse: tags.landuse || "",
+        natural: tags.natural || "",
+        waterway: tags.waterway || "",
+        boundary: tags.boundary || ""
       });
     }
     /* CUSTOM 2.5D MAP EXPERIMENT END */

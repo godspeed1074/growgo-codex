@@ -39,6 +39,13 @@ import {
   installDeveloperOnlyAtlasAssetPopulationPreview
 } from "./developer-only-atlas-asset-population-preview.mjs";
 import {
+  createDeveloperOnlyAtlasLiveFeatureInputAdapter
+} from "./developer-only-atlas-live-feature-input-adapter.mjs";
+import {
+  createDeveloperOnlyAtlasControlledViewportPopulationPreview,
+  installDeveloperOnlyAtlasControlledViewportPopulationPreview
+} from "./developer-only-atlas-controlled-viewport-population-preview.mjs";
+import {
   createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace,
   installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace
 } from "./developer-only-atlas-custom25d-one-frame-execution-trace.mjs";
@@ -104,6 +111,8 @@ function createCapturedOneFrameBridgeProvider(bridgeGetter) {
 }
 
 const getGrowGoMapFromScriptDiagnostics = captureDiagnosticsFunction("getGrowGoMap");
+const getCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics =
+  captureDiagnosticsFunction("getCustom25DCurrentViewportFeatureSource");
 const getCustom25DOneFrameBridgeFromScriptDiagnostics = captureDiagnosticsFunction(
   "getCustom25DOneFrameBridge"
 );
@@ -149,6 +158,26 @@ function toReasonCode(error, fallback) {
   }
 
   return fallback;
+}
+
+function hashAtlasViewportIdentity(input) {
+  const serialized = JSON.stringify(input);
+  let h1 = 0xdeadbeef ^ serialized.length;
+  let h2 = 0x41c6ce57 ^ serialized.length;
+  for (let index = 0; index < serialized.length; index += 1) {
+    const code = serialized.charCodeAt(index);
+    h1 = Math.imul(h1 ^ code, 2654435761);
+    h2 = Math.imul(h2 ^ code, 1597334677);
+  }
+  h1 =
+    Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
+    Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 =
+    Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
+    Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return `${(h2 >>> 0).toString(16).padStart(8, "0")}${(h1 >>> 0)
+    .toString(16)
+    .padStart(8, "0")}`.toUpperCase();
 }
 
 const persistentMapIdentityTokens = new WeakMap();
@@ -1247,6 +1276,70 @@ const atlasAssetPopulationPreview =
     snapshotTraceUpdater: updateAtlasAssetPopulationPreviewSnapshotTrace
   });
 
+const atlasLiveFeatureInputAdapter =
+  createDeveloperOnlyAtlasLiveFeatureInputAdapter({
+    featureSourceProvider: () =>
+      getCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics?.() ?? null,
+    viewportProvider: () => {
+      const map = resolvePersistentAuthoritativeMapReference();
+      const identity = readApprovedPersistentReadinessIdentity(map);
+      const bounds = map?.getBounds?.();
+      const northWest = bounds?.getNorthWest?.();
+      const southEast = bounds?.getSouthEast?.();
+      if (!northWest || !southEast) {
+        throw Object.assign(new Error("INVALID_VIEWPORT"), {
+          reasonCode: "INVALID_VIEWPORT"
+        });
+      }
+
+      const north = Math.max(Number(northWest.lat), Number(southEast.lat));
+      const south = Math.min(Number(northWest.lat), Number(southEast.lat));
+      const east = Math.max(Number(northWest.lng), Number(southEast.lng));
+      const west = Math.min(Number(northWest.lng), Number(southEast.lng));
+
+      return Object.freeze({
+        viewportIdentity: `ATLAS_LIVE_VIEWPORT_${hashAtlasViewportIdentity({
+          mapIdentityId: identity.mapIdentityId,
+          regionId: identity.regionId,
+          packageId: identity.packageId,
+          recipeId: identity.recipeId,
+          selectorSeed: identity.selectorSeed,
+          north,
+          south,
+          east,
+          west,
+          zoom: Number(map?.getZoom?.() ?? 0)
+        })}`,
+        mapIdentityId: identity.mapIdentityId,
+        regionId: identity.regionId,
+        packageId: identity.packageId,
+        recipeId: identity.recipeId,
+        selectorSeed: identity.selectorSeed,
+        zoom: Number(map?.getZoom?.() ?? 0),
+        bounds: Object.freeze({
+          north,
+          south,
+          east,
+          west
+        })
+      });
+    },
+    identityProvider: () =>
+      readApprovedPersistentReadinessIdentity(
+        resolvePersistentAuthoritativeMapReference()
+      )
+  });
+
+const atlasControlledViewportPopulationPreview =
+  createDeveloperOnlyAtlasControlledViewportPopulationPreview({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    persistentStatusProvider: () =>
+      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+      null,
+    liveFeatureInputAdapter: atlasLiveFeatureInputAdapter,
+    populationDrawIntegration: atlasPopulationDrawIntegration
+  });
+
 const controlledPersistentAtlasManualCommand =
   createDeveloperOnlyControlledPersistentAtlasManualCommand({
     hostnameProvider: () => globalThis?.location?.hostname ?? "",
@@ -1272,6 +1365,11 @@ installDeveloperOnlyControlledPersistentAtlasManualCommand({
 installDeveloperOnlyAtlasAssetPopulationPreview({
   globalObject: globalThis,
   preview: atlasAssetPopulationPreview
+});
+
+installDeveloperOnlyAtlasControlledViewportPopulationPreview({
+  globalObject: globalThis,
+  preview: atlasControlledViewportPopulationPreview
 });
 
 const diagnosticsNamespace =
