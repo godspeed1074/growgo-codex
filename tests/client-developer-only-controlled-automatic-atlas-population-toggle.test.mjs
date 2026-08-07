@@ -100,11 +100,39 @@ function flushAutomaticExecution() {
   return new Promise((resolve) => queueMicrotask(resolve));
 }
 
+function createDrawReasonTraceState() {
+  return {
+    schemaId: "GROWGO_DEVELOPER_ONLY_ATLAS_POPULATION_DRAW_REASON_TRACE_001",
+    requestedRedrawReason: null,
+    controllerTriggerReason: null,
+    generationTriggerReason: null,
+    populationDrawReason: null,
+    persistentRedrawReason: null,
+    redrawReasonAccepted: null,
+    redrawReasonRejected: null,
+    lastFailureReason: null,
+    traceCompleted: false
+  };
+}
+
+function readDrawReasonTrace(traceState) {
+  return Object.freeze({
+    ...JSON.parse(JSON.stringify(traceState)),
+    canonicalSafetyFlags: Object.freeze({
+      runtimeExecutionEnabled: false,
+      mapAttachmentAllowed: false,
+      automaticRendererExecutionAllowed: false,
+      lifecycleExecutionEnabled: false
+    })
+  });
+}
+
 function createHarness() {
   const metrics = {
     mapOnCalls: [],
     mapOffCalls: []
   };
+  const drawReasonTrace = createDrawReasonTraceState();
 
   const mutable = {
     hostname: "127.0.0.1",
@@ -206,11 +234,27 @@ function createHarness() {
     },
     populationDrawIntegration: ({ generation, plan }) => {
       const configured = drawByGeneration.get(generation.viewportGenerationId) ?? {};
+      const redrawReason =
+        configured.redrawReason ?? generation.triggerReason ?? "manual_redraw";
+      drawReasonTrace.controllerTriggerReason = generation.triggerReason ?? null;
+      drawReasonTrace.generationTriggerReason = generation.triggerReason ?? null;
+      drawReasonTrace.populationDrawReason = redrawReason;
+      drawReasonTrace.requestedRedrawReason = redrawReason;
+      drawReasonTrace.persistentRedrawReason = redrawReason;
+      drawReasonTrace.redrawReasonAccepted = null;
+      drawReasonTrace.redrawReasonRejected = null;
+      drawReasonTrace.lastFailureReason = null;
+      drawReasonTrace.traceCompleted = false;
       if (configured.failureReason) {
+        drawReasonTrace.redrawReasonRejected = redrawReason;
+        drawReasonTrace.lastFailureReason = configured.failureReason;
+        drawReasonTrace.traceCompleted = true;
         throw Object.assign(new Error(configured.failureReason), {
           reasonCode: configured.failureReason
         });
       }
+      drawReasonTrace.redrawReasonAccepted = redrawReason;
+      drawReasonTrace.traceCompleted = true;
       return {
         submission: {
           batchId: configured.batchId ?? `BATCH_${generation.viewportGenerationId}`,
@@ -257,7 +301,14 @@ function createHarness() {
         ? { approved: true, reasonCode: "READINESS_APPROVED" }
         : { approved: false, reasonCode: mutable.readinessReasonCode },
     controller,
-    liveEventAdapter
+    liveEventAdapter,
+    drawReasonTraceProvider: () => readDrawReasonTrace(drawReasonTrace),
+    drawReasonTraceResetter: (reasonCode = null) => {
+      const nextState = createDrawReasonTraceState();
+      nextState.lastFailureReason = reasonCode == null ? null : String(reasonCode);
+      Object.assign(drawReasonTrace, nextState);
+      return readDrawReasonTrace(drawReasonTrace);
+    }
   });
 
   return {
@@ -266,6 +317,7 @@ function createHarness() {
     toggle,
     mutable,
     metrics,
+    drawReasonTrace,
     setFeature(generationId, config) {
       featureByGeneration.set(generationId, config);
     },
@@ -713,6 +765,62 @@ test("adapter diagnostics exposes no raw refs", () => {
   }
 });
 
+for (const eventName of ["moveend", "zoomend", "resize"]) {
+  test(`${eventName} reason preserved through automatic population draw trace`, async () => {
+    const harness = createHarness();
+    harness.toggle.enableControlledAutomaticAtlasPopulation({
+      confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+    });
+    harness.trigger(eventName);
+    await flushAutomaticExecution();
+    const trace = harness.toggle.getAtlasPopulationDrawReasonTrace();
+    assert.equal(trace.controllerTriggerReason, eventName);
+    assert.equal(trace.generationTriggerReason, eventName);
+    assert.equal(trace.populationDrawReason, eventName);
+    assert.equal(trace.persistentRedrawReason, eventName);
+    assert.equal(trace.redrawReasonAccepted, eventName);
+    assert.equal(trace.redrawReasonRejected, null);
+    assert.equal(trace.traceCompleted, true);
+    assertCanonicalFlags(trace.canonicalSafetyFlags);
+  });
+}
+
+test("invalid redraw reason detected in automatic population draw trace", async () => {
+  const harness = createHarness();
+  harness.toggle.enableControlledAutomaticAtlasPopulation({
+    confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
+  });
+  harness.trigger("moveend");
+  const queued = getAutomaticViewportPopulationControllerStatus(harness.controller);
+  harness.setDraw(queued.queuedViewportGenerationId, {
+    redrawReason: "automatic_viewport_population",
+    failureReason: "INVALID_REDRAW_REASON"
+  });
+  await flushAutomaticExecution();
+  const trace = harness.toggle.getAtlasPopulationDrawReasonTrace();
+  assert.equal(trace.controllerTriggerReason, "moveend");
+  assert.equal(trace.populationDrawReason, "automatic_viewport_population");
+  assert.equal(trace.redrawReasonAccepted, null);
+  assert.equal(trace.redrawReasonRejected, "automatic_viewport_population");
+  assert.equal(trace.lastFailureReason, "INVALID_REDRAW_REASON");
+  assert.equal(trace.traceCompleted, true);
+});
+
+test("automatic population draw reason trace is frozen and serializable", () => {
+  const harness = createHarness();
+  const trace = harness.toggle.getAtlasPopulationDrawReasonTrace();
+  assert.equal(Object.isFrozen(trace), true);
+  assert.doesNotThrow(() => JSON.stringify(trace));
+});
+
+test("automatic population draw reason trace can be reset", () => {
+  const harness = createHarness();
+  const reset = harness.toggle.resetAtlasPopulationDrawReasonTrace("RESET_FOR_TEST");
+  assert.equal(reset.lastFailureReason, "RESET_FOR_TEST");
+  assert.equal(reset.traceCompleted, false);
+  assert.equal(reset.requestedRedrawReason, null);
+});
+
 test("install exposes adapter diagnostics getter on the existing namespace", () => {
   const harness = createHarness();
   const globalObject = { GrowGoDeveloperDiagnostics: {} };
@@ -725,9 +833,23 @@ test("install exposes adapter diagnostics getter on the existing namespace", () 
     typeof globalObject.GrowGoDeveloperDiagnostics.getAtlasAutomaticPopulationLiveEventAdapterStatus,
     "function"
   );
+  assert.equal(
+    typeof globalObject.GrowGoDeveloperDiagnostics.getAtlasPopulationDrawReasonTrace,
+    "function"
+  );
+  assert.equal(
+    typeof globalObject.GrowGoDeveloperDiagnostics.resetAtlasPopulationDrawReasonTrace,
+    "function"
+  );
   const status =
     globalObject.GrowGoDeveloperDiagnostics.getAtlasAutomaticPopulationLiveEventAdapterStatus();
   assert.equal(status.schemaId, "GROWGO_DEVELOPER_ONLY_ATLAS_AUTOMATIC_POPULATION_LIVE_EVENT_ADAPTER_STATUS_001");
+  const trace =
+    globalObject.GrowGoDeveloperDiagnostics.getAtlasPopulationDrawReasonTrace();
+  assert.equal(
+    trace.schemaId,
+    "GROWGO_DEVELOPER_ONLY_ATLAS_POPULATION_DRAW_REASON_TRACE_001"
+  );
 });
 
 test("command results immutable serializable", () => {

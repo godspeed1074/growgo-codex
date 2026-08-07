@@ -234,6 +234,19 @@ const atlasAssetPopulationPreviewSnapshotTraceState = {
     bounds_validation: null
   }
 };
+const atlasPopulationDrawReasonTraceState = {
+  schemaId:
+    "GROWGO_DEVELOPER_ONLY_ATLAS_POPULATION_DRAW_REASON_TRACE_001",
+  requestedRedrawReason: null,
+  controllerTriggerReason: null,
+  generationTriggerReason: null,
+  populationDrawReason: null,
+  persistentRedrawReason: null,
+  redrawReasonAccepted: null,
+  redrawReasonRejected: null,
+  lastFailureReason: null,
+  traceCompleted: false
+};
 let persistentPreparedSurface = null;
 let persistentLifecycleOwner = null;
 let persistentLifecycleOwnerId = null;
@@ -501,6 +514,110 @@ function readPersistentSnapshotDiagnosticsStatus() {
       persistentSnapshotDiagnosticsState.snapshotValidationAttemptCount,
     snapshotValidationCompletedCount:
       persistentSnapshotDiagnosticsState.snapshotValidationCompletedCount
+  });
+}
+
+function resetAtlasPopulationDrawReasonTrace(reasonCode = null) {
+  atlasPopulationDrawReasonTraceState.requestedRedrawReason = null;
+  atlasPopulationDrawReasonTraceState.controllerTriggerReason = null;
+  atlasPopulationDrawReasonTraceState.generationTriggerReason = null;
+  atlasPopulationDrawReasonTraceState.populationDrawReason = null;
+  atlasPopulationDrawReasonTraceState.persistentRedrawReason = null;
+  atlasPopulationDrawReasonTraceState.redrawReasonAccepted = null;
+  atlasPopulationDrawReasonTraceState.redrawReasonRejected = null;
+  atlasPopulationDrawReasonTraceState.lastFailureReason =
+    reasonCode == null ? null : String(reasonCode);
+  atlasPopulationDrawReasonTraceState.traceCompleted = false;
+  return readAtlasPopulationDrawReasonTrace();
+}
+
+function updateAtlasPopulationDrawReasonTrace(patch = {}) {
+  if (patch.requestedRedrawReason != null || patch.requestedRedrawReason === null) {
+    atlasPopulationDrawReasonTraceState.requestedRedrawReason =
+      patch.requestedRedrawReason == null ? null : String(patch.requestedRedrawReason);
+  }
+  if (
+    patch.controllerTriggerReason != null ||
+    patch.controllerTriggerReason === null
+  ) {
+    atlasPopulationDrawReasonTraceState.controllerTriggerReason =
+      patch.controllerTriggerReason == null
+        ? null
+        : String(patch.controllerTriggerReason);
+  }
+  if (
+    patch.generationTriggerReason != null ||
+    patch.generationTriggerReason === null
+  ) {
+    atlasPopulationDrawReasonTraceState.generationTriggerReason =
+      patch.generationTriggerReason == null
+        ? null
+        : String(patch.generationTriggerReason);
+  }
+  if (patch.populationDrawReason != null || patch.populationDrawReason === null) {
+    atlasPopulationDrawReasonTraceState.populationDrawReason =
+      patch.populationDrawReason == null ? null : String(patch.populationDrawReason);
+  }
+  if (
+    patch.persistentRedrawReason != null ||
+    patch.persistentRedrawReason === null
+  ) {
+    atlasPopulationDrawReasonTraceState.persistentRedrawReason =
+      patch.persistentRedrawReason == null
+        ? null
+        : String(patch.persistentRedrawReason);
+  }
+  if (
+    patch.redrawReasonAccepted != null ||
+    patch.redrawReasonAccepted === null
+  ) {
+    atlasPopulationDrawReasonTraceState.redrawReasonAccepted =
+      patch.redrawReasonAccepted == null
+        ? null
+        : String(patch.redrawReasonAccepted);
+  }
+  if (
+    patch.redrawReasonRejected != null ||
+    patch.redrawReasonRejected === null
+  ) {
+    atlasPopulationDrawReasonTraceState.redrawReasonRejected =
+      patch.redrawReasonRejected == null
+        ? null
+        : String(patch.redrawReasonRejected);
+  }
+  if (patch.lastFailureReason != null || patch.lastFailureReason === null) {
+    atlasPopulationDrawReasonTraceState.lastFailureReason =
+      patch.lastFailureReason == null ? null : String(patch.lastFailureReason);
+  }
+  if (patch.traceCompleted != null) {
+    atlasPopulationDrawReasonTraceState.traceCompleted = patch.traceCompleted === true;
+  }
+  return readAtlasPopulationDrawReasonTrace();
+}
+
+function readAtlasPopulationDrawReasonTrace() {
+  return Object.freeze({
+    schemaId: atlasPopulationDrawReasonTraceState.schemaId,
+    requestedRedrawReason: atlasPopulationDrawReasonTraceState.requestedRedrawReason,
+    controllerTriggerReason:
+      atlasPopulationDrawReasonTraceState.controllerTriggerReason,
+    generationTriggerReason:
+      atlasPopulationDrawReasonTraceState.generationTriggerReason,
+    populationDrawReason: atlasPopulationDrawReasonTraceState.populationDrawReason,
+    persistentRedrawReason:
+      atlasPopulationDrawReasonTraceState.persistentRedrawReason,
+    redrawReasonAccepted:
+      atlasPopulationDrawReasonTraceState.redrawReasonAccepted,
+    redrawReasonRejected:
+      atlasPopulationDrawReasonTraceState.redrawReasonRejected,
+    lastFailureReason: atlasPopulationDrawReasonTraceState.lastFailureReason,
+    traceCompleted: atlasPopulationDrawReasonTraceState.traceCompleted === true,
+    canonicalSafetyFlags: Object.freeze({
+      runtimeExecutionEnabled: false,
+      mapAttachmentAllowed: false,
+      automaticRendererExecutionAllowed: false,
+      lifecycleExecutionEnabled: false
+    })
   });
 }
 
@@ -1277,6 +1394,7 @@ const atlasPopulationDrawIntegration = createAtlasPopulationDrawIntegration({
   },
   drawStateReleaseProvider() {},
   batchReferenceReleaseProvider() {},
+  drawReasonTraceRecorder: updateAtlasPopulationDrawReasonTrace,
   timeProvider: () => new Date().toISOString()
 });
 
@@ -1418,9 +1536,29 @@ const atlasAutomaticPopulationController =
         }
       }),
     populationDrawIntegration: ({ generation, plan } = {}) => {
+      updateAtlasPopulationDrawReasonTrace({
+        controllerTriggerReason: generation?.triggerReason ?? null,
+        generationTriggerReason: generation?.triggerReason ?? null,
+        lastFailureReason: null,
+        traceCompleted: false
+      });
+      const populationDrawReason = "automatic_viewport_population";
+      updateAtlasPopulationDrawReasonTrace({
+        requestedRedrawReason: populationDrawReason,
+        populationDrawReason,
+        persistentRedrawReason: populationDrawReason,
+        redrawReasonAccepted: null,
+        redrawReasonRejected: null,
+        lastFailureReason: null,
+        traceCompleted: false
+      });
       const result = submitAtlasPopulationPlanForDraw(atlasPopulationDrawIntegration, {
         plan,
-        redrawReason: "automatic_viewport_population"
+        redrawReason: populationDrawReason
+      });
+      updateAtlasPopulationDrawReasonTrace({
+        lastFailureReason: null,
+        traceCompleted: true
       });
       return {
         submission: {
@@ -1501,7 +1639,9 @@ const controlledAutomaticAtlasPopulationToggle =
       };
     },
     controller: atlasAutomaticPopulationController,
-    liveEventAdapter: atlasAutomaticPopulationLiveEventAdapter
+    liveEventAdapter: atlasAutomaticPopulationLiveEventAdapter,
+    drawReasonTraceProvider: readAtlasPopulationDrawReasonTrace,
+    drawReasonTraceResetter: resetAtlasPopulationDrawReasonTrace
   });
 
 const atlasControlledViewportPopulationPreview =

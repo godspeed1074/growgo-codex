@@ -169,6 +169,7 @@ function createHarness(overrides = {}) {
     receivedCanvases: [],
     receivedDrawGenerationIds: [],
     receivedRedrawReasons: [],
+    drawReasonTraceEvents: [],
     secondRendererCalls: 0,
     layerCalls: 0,
     markerCalls: 0
@@ -391,6 +392,11 @@ function createHarness(overrides = {}) {
       overrides.batchReferenceReleaseProvider ??
       (() => {
         state.batchReferenceReleaseCalls += 1;
+      }),
+    drawReasonTraceRecorder:
+      overrides.drawReasonTraceRecorder ??
+      ((event) => {
+        state.drawReasonTraceEvents.push(JSON.parse(JSON.stringify(event)));
       }),
     timeProvider: () => "2026-08-07T12:00:00.000Z",
     drawCommandBudget: overrides.drawCommandBudget ?? 24
@@ -642,6 +648,71 @@ test("7a. event redraw reasons are accepted when submitted through the draw inte
   const status = getAtlasPopulationDrawIntegrationStatus(harness.integration);
   assert.equal(status.requestedRedrawReason, "moveend");
   assert.equal(status.acceptedRedrawReason, "moveend");
+});
+
+test("7b. draw integration traces persistent redraw request input and accepted redraw validation", () => {
+  const harness = createHarness();
+  const plan = createValidPopulationPlan();
+
+  submitAtlasPopulationPlanForDraw(harness.integration, {
+    plan,
+    redrawReason: "zoomend"
+  });
+
+  assert.equal(harness.state.drawReasonTraceEvents.length, 2);
+  assert.deepEqual(harness.state.drawReasonTraceEvents[0], {
+    stage: "persistent_redraw_request_input",
+    requestedRedrawReason: "zoomend",
+    persistentRedrawReason: "zoomend",
+    redrawReasonAccepted: null,
+    redrawReasonRejected: null,
+    lastFailureReason: null,
+    traceCompleted: false
+  });
+  assert.deepEqual(harness.state.drawReasonTraceEvents[1], {
+    stage: "redraw_validation_result",
+    requestedRedrawReason: "zoomend",
+    persistentRedrawReason: "zoomend",
+    redrawReasonAccepted: "zoomend",
+    redrawReasonRejected: null,
+    lastFailureReason: null,
+    traceCompleted: true
+  });
+});
+
+test("7c. draw integration traces invalid redraw reason rejection without changing draw behavior", () => {
+  const harness = createHarness();
+  const plan = createValidPopulationPlan();
+
+  assert.throws(
+    () =>
+      submitAtlasPopulationPlanForDraw(harness.integration, {
+        plan,
+        redrawReason: "automatic_viewport_population"
+      }),
+    /INVALID_REDRAW_REASON/
+  );
+
+  assert.equal(harness.state.drawCalls, 0);
+  assert.equal(harness.state.drawReasonTraceEvents.length, 2);
+  assert.deepEqual(harness.state.drawReasonTraceEvents[0], {
+    stage: "persistent_redraw_request_input",
+    requestedRedrawReason: "automatic_viewport_population",
+    persistentRedrawReason: "automatic_viewport_population",
+    redrawReasonAccepted: null,
+    redrawReasonRejected: null,
+    lastFailureReason: null,
+    traceCompleted: false
+  });
+  assert.deepEqual(harness.state.drawReasonTraceEvents[1], {
+    stage: "redraw_validation_result",
+    requestedRedrawReason: "automatic_viewport_population",
+    persistentRedrawReason: "automatic_viewport_population",
+    redrawReasonAccepted: null,
+    redrawReasonRejected: "automatic_viewport_population",
+    lastFailureReason: "INVALID_REDRAW_REASON",
+    traceCompleted: true
+  });
 });
 
 test("8. the same retained canvas is reused across repeated submissions and no second renderer path exists", () => {

@@ -556,6 +556,7 @@ export function createAtlasPopulationDrawIntegration({
   canvasPositionAdapter = unavailable("DRAW_PROVIDER_UNAVAILABLE"),
   drawStateReleaseProvider = unavailable("DRAW_PROVIDER_UNAVAILABLE"),
   batchReferenceReleaseProvider = () => {},
+  drawReasonTraceRecorder = null,
   timeProvider = () => new Date().toISOString(),
   drawCommandBudget = DEFAULT_DRAW_COMMAND_BUDGET
 } = {}) {
@@ -602,6 +603,7 @@ export function createAtlasPopulationDrawIntegration({
       canvasPositionAdapter,
       drawStateReleaseProvider,
       batchReferenceReleaseProvider,
+      drawReasonTraceRecorder,
       timeProvider
     }
   });
@@ -717,6 +719,21 @@ export function submitAtlasPopulationPlanForDraw(
   state.drawFailureReason = null;
   state.referencesReleased = false;
 
+  const traceRecorder =
+    typeof deps.drawReasonTraceRecorder === "function"
+      ? deps.drawReasonTraceRecorder
+      : null;
+
+  traceRecorder?.({
+    stage: "persistent_redraw_request_input",
+    requestedRedrawReason: state.requestedRedrawReason,
+    persistentRedrawReason: state.requestedRedrawReason,
+    redrawReasonAccepted: null,
+    redrawReasonRejected: null,
+    lastFailureReason: null,
+    traceCompleted: false
+  });
+
   try {
     batch = validateAtlasPopulationPlanForDraw(integration, plan);
     internal.currentPopulationBatch = batch;
@@ -746,6 +763,15 @@ export function submitAtlasPopulationPlanForDraw(
       redrawReason
     });
     state.acceptedRedrawReason = sanitizeString(snapshot?.redrawReason) ?? sanitizeString(redrawReason);
+    traceRecorder?.({
+      stage: "redraw_validation_result",
+      requestedRedrawReason: state.requestedRedrawReason,
+      persistentRedrawReason: state.requestedRedrawReason,
+      redrawReasonAccepted: state.acceptedRedrawReason,
+      redrawReasonRejected: null,
+      lastFailureReason: null,
+      traceCompleted: true
+    });
 
     internal.drawGenerationCounter += 1;
     const drawGenerationId = `POPULATION_DRAW_GEN_${String(
@@ -786,6 +812,15 @@ export function submitAtlasPopulationPlanForDraw(
     const reasonCode = toReasonCode(error, "POPULATION_DRAW_SUBMISSION_FAILED");
     state.drawFailureReason = reasonCode;
     state.lastFailureReason = reasonCode;
+    traceRecorder?.({
+      stage: "redraw_validation_result",
+      requestedRedrawReason: state.requestedRedrawReason,
+      persistentRedrawReason: state.requestedRedrawReason,
+      redrawReasonAccepted: null,
+      redrawReasonRejected: state.requestedRedrawReason,
+      lastFailureReason: reasonCode,
+      traceCompleted: true
+    });
     throw Object.assign(new Error(reasonCode), { reasonCode });
   } finally {
     try {

@@ -240,7 +240,9 @@ export function createDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     reasonCode: "READINESS_APPROVED"
   }),
   controller = null,
-  liveEventAdapter = null
+  liveEventAdapter = null,
+  drawReasonTraceProvider = () => null,
+  drawReasonTraceResetter = () => null
 } = {}) {
   const state = {
     commandAvailable: false,
@@ -267,6 +269,16 @@ export function createDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
 
   function readAdapterStatus() {
     return getAtlasAutomaticPopulationLiveEventAdapterStatus(liveEventAdapter);
+  }
+
+  function readDrawReasonTrace() {
+    return deepFreeze(sanitizePlainObject(drawReasonTraceProvider?.() ?? null) ?? {});
+  }
+
+  function resetDrawReasonTrace(reasonCode = null) {
+    return deepFreeze(
+      sanitizePlainObject(drawReasonTraceResetter?.(reasonCode) ?? null) ?? {}
+    );
   }
 
   function syncDriftIfNeeded() {
@@ -473,6 +485,8 @@ export function createDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     },
     getControlledAutomaticAtlasPopulationStatus: readStatus,
     getAtlasAutomaticPopulationLiveEventAdapterStatus: readAdapterStatus,
+    getAtlasPopulationDrawReasonTrace: readDrawReasonTrace,
+    resetAtlasPopulationDrawReasonTrace: resetDrawReasonTrace,
     enableControlledAutomaticAtlasPopulation,
     disableControlledAutomaticAtlasPopulation
   });
@@ -488,6 +502,8 @@ export function installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     !toggle ||
     typeof toggle.getControlledAutomaticAtlasPopulationStatus !== "function" ||
     typeof toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus !== "function" ||
+    typeof toggle.getAtlasPopulationDrawReasonTrace !== "function" ||
+    typeof toggle.resetAtlasPopulationDrawReasonTrace !== "function" ||
     typeof toggle.enableControlledAutomaticAtlasPopulation !== "function" ||
     typeof toggle.disableControlledAutomaticAtlasPopulation !== "function"
   ) {
@@ -515,6 +531,10 @@ export function installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
     toggle.getControlledAutomaticAtlasPopulationStatus();
   namespace.getAtlasAutomaticPopulationLiveEventAdapterStatus = () =>
     toggle.getAtlasAutomaticPopulationLiveEventAdapterStatus();
+  namespace.getAtlasPopulationDrawReasonTrace = () =>
+    toggle.getAtlasPopulationDrawReasonTrace();
+  namespace.resetAtlasPopulationDrawReasonTrace = (reasonCode) =>
+    toggle.resetAtlasPopulationDrawReasonTrace(reasonCode);
 
   return namespace;
 }
