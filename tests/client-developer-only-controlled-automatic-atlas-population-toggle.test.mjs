@@ -246,14 +246,16 @@ function createHarness() {
       drawReasonTrace.lastFailureReason = null;
       drawReasonTrace.traceCompleted = false;
       if (configured.failureReason) {
-        drawReasonTrace.redrawReasonRejected = redrawReason;
+        drawReasonTrace.redrawReasonAccepted = false;
+        drawReasonTrace.redrawReasonRejected = true;
         drawReasonTrace.lastFailureReason = configured.failureReason;
         drawReasonTrace.traceCompleted = true;
         throw Object.assign(new Error(configured.failureReason), {
           reasonCode: configured.failureReason
         });
       }
-      drawReasonTrace.redrawReasonAccepted = redrawReason;
+      drawReasonTrace.redrawReasonAccepted = true;
+      drawReasonTrace.redrawReasonRejected = false;
       drawReasonTrace.traceCompleted = true;
       return {
         submission: {
@@ -778,8 +780,8 @@ for (const eventName of ["moveend", "zoomend", "resize"]) {
     assert.equal(trace.generationTriggerReason, eventName);
     assert.equal(trace.populationDrawReason, eventName);
     assert.equal(trace.persistentRedrawReason, eventName);
-    assert.equal(trace.redrawReasonAccepted, eventName);
-    assert.equal(trace.redrawReasonRejected, null);
+    assert.equal(trace.redrawReasonAccepted, true);
+    assert.equal(trace.redrawReasonRejected, false);
     assert.equal(trace.traceCompleted, true);
     assertCanonicalFlags(trace.canonicalSafetyFlags);
   });
@@ -800,8 +802,8 @@ test("invalid redraw reason detected in automatic population draw trace", async 
   const trace = harness.toggle.getAtlasPopulationDrawReasonTrace();
   assert.equal(trace.controllerTriggerReason, "moveend");
   assert.equal(trace.populationDrawReason, "automatic_viewport_population");
-  assert.equal(trace.redrawReasonAccepted, null);
-  assert.equal(trace.redrawReasonRejected, "automatic_viewport_population");
+  assert.equal(trace.redrawReasonAccepted, false);
+  assert.equal(trace.redrawReasonRejected, true);
   assert.equal(trace.lastFailureReason, "INVALID_REDRAW_REASON");
   assert.equal(trace.traceCompleted, true);
 });

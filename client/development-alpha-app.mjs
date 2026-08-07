@@ -567,23 +567,13 @@ function updateAtlasPopulationDrawReasonTrace(patch = {}) {
         ? null
         : String(patch.persistentRedrawReason);
   }
-  if (
-    patch.redrawReasonAccepted != null ||
-    patch.redrawReasonAccepted === null
-  ) {
+  if (Object.prototype.hasOwnProperty.call(patch, "redrawReasonAccepted")) {
     atlasPopulationDrawReasonTraceState.redrawReasonAccepted =
-      patch.redrawReasonAccepted == null
-        ? null
-        : String(patch.redrawReasonAccepted);
+      patch.redrawReasonAccepted == null ? null : patch.redrawReasonAccepted === true;
   }
-  if (
-    patch.redrawReasonRejected != null ||
-    patch.redrawReasonRejected === null
-  ) {
+  if (Object.prototype.hasOwnProperty.call(patch, "redrawReasonRejected")) {
     atlasPopulationDrawReasonTraceState.redrawReasonRejected =
-      patch.redrawReasonRejected == null
-        ? null
-        : String(patch.redrawReasonRejected);
+      patch.redrawReasonRejected == null ? null : patch.redrawReasonRejected === true;
   }
   if (patch.lastFailureReason != null || patch.lastFailureReason === null) {
     atlasPopulationDrawReasonTraceState.lastFailureReason =
@@ -1542,7 +1532,11 @@ const atlasAutomaticPopulationController =
         lastFailureReason: null,
         traceCompleted: false
       });
-      const populationDrawReason = "automatic_viewport_population";
+      const populationDrawReason =
+        typeof generation?.triggerReason === "string" &&
+        generation.triggerReason.trim()
+          ? generation.triggerReason
+          : "manual_redraw";
       updateAtlasPopulationDrawReasonTrace({
         requestedRedrawReason: populationDrawReason,
         populationDrawReason,

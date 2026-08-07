@@ -673,8 +673,8 @@ test("7b. draw integration traces persistent redraw request input and accepted r
     stage: "redraw_validation_result",
     requestedRedrawReason: "zoomend",
     persistentRedrawReason: "zoomend",
-    redrawReasonAccepted: "zoomend",
-    redrawReasonRejected: null,
+    redrawReasonAccepted: true,
+    redrawReasonRejected: false,
     lastFailureReason: null,
     traceCompleted: true
   });
@@ -708,8 +708,8 @@ test("7c. draw integration traces invalid redraw reason rejection without changi
     stage: "redraw_validation_result",
     requestedRedrawReason: "automatic_viewport_population",
     persistentRedrawReason: "automatic_viewport_population",
-    redrawReasonAccepted: null,
-    redrawReasonRejected: "automatic_viewport_population",
+    redrawReasonAccepted: false,
+    redrawReasonRejected: true,
     lastFailureReason: "INVALID_REDRAW_REASON",
     traceCompleted: true
   });

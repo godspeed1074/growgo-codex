@@ -767,8 +767,8 @@ export function submitAtlasPopulationPlanForDraw(
       stage: "redraw_validation_result",
       requestedRedrawReason: state.requestedRedrawReason,
       persistentRedrawReason: state.requestedRedrawReason,
-      redrawReasonAccepted: state.acceptedRedrawReason,
-      redrawReasonRejected: null,
+      redrawReasonAccepted: true,
+      redrawReasonRejected: false,
       lastFailureReason: null,
       traceCompleted: true
     });
@@ -816,8 +816,8 @@ export function submitAtlasPopulationPlanForDraw(
       stage: "redraw_validation_result",
       requestedRedrawReason: state.requestedRedrawReason,
       persistentRedrawReason: state.requestedRedrawReason,
-      redrawReasonAccepted: null,
-      redrawReasonRejected: state.requestedRedrawReason,
+      redrawReasonAccepted: false,
+      redrawReasonRejected: true,
       lastFailureReason: reasonCode,
       traceCompleted: true
     });
