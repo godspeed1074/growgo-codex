@@ -67,10 +67,17 @@ function createHarness({
   followUpDuringFirstDraw = false
 } = {}) {
   const identity = createIdentity(identityOverrides);
+  const readinessState = {
+    approved: readinessApproved,
+    reasonCode: readinessReasonCode
+  };
   const map = { kind: "fake-map" };
   const canvas = { kind: "fake-canvas" };
   const pane = { kind: "fake-pane" };
   const lifecycleOwner = { kind: "fake-lifecycle-owner", ownerId: "LIFECYCLE_OWNER_A" };
+  const lifecycleState = {
+    surfaceLifecycleOwnerId: "LIFECYCLE_OWNER_A"
+  };
   const queued = [];
   let integration;
   let followUpConsumed = false;
@@ -106,8 +113,8 @@ function createHarness({
     readinessProvider: {
       getPersistentAttachmentReadiness() {
         return {
-          approved: readinessApproved,
-          reasonCode: readinessReasonCode,
+          approved: readinessState.approved,
+          reasonCode: readinessState.reasonCode,
           identity: {
             ...identity,
             ...readinessIdentityOverrides
@@ -132,7 +139,7 @@ function createHarness({
           canvas,
           pane,
           surfaceOwnerId: "SURFACE_OWNER_A",
-          lifecycleOwnerId: "LIFECYCLE_OWNER_A"
+          lifecycleOwnerId: lifecycleState.surfaceLifecycleOwnerId
         };
       }
     },
@@ -272,6 +279,12 @@ function createHarness({
     metrics,
     setIdentity(overrides) {
       Object.assign(identity, overrides);
+    },
+    setReadiness(overrides) {
+      Object.assign(readinessState, overrides);
+    },
+    setSurfaceLifecycleOwnerId(nextOwnerId) {
+      lifecycleState.surfaceLifecycleOwnerId = nextOwnerId;
     },
     flushOne() {
       const callback = queued.shift();
@@ -531,6 +544,12 @@ test("22. invalidation triggers cleanup", () => {
   const status = getIntegratedPersistentAtlasStatus(harness.integration);
   assert.equal(status.invalidated, true);
   assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.attached, false);
+  assert.equal(status.cleanupCompleted, true);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(status.lastFailureReason, "IDENTITY_MISMATCH");
 });
 
 test("23. stale callback after detach is ignored", () => {
@@ -551,6 +570,110 @@ test("24. identity drift fails closed", () => {
     reason: "moveend"
   });
   assert.equal(result.reasonCode, "STALE_MAP_IDENTITY");
+  const status = getIntegratedPersistentAtlasStatus(harness.integration);
+  assert.equal(status.invalidated, true);
+  assert.equal(status.attached, false);
+  assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.queuedFrameCount, 0);
+  assert.equal(status.cleanupCompleted, true);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(status.lastFailureReason, "STALE_MAP_IDENTITY");
+});
+
+test("24a. readiness invalidation while attached triggers cleanup and preserves reason", () => {
+  const harness = createHarness({ manualScheduler: true });
+  authorizeAndAttach(harness, { flushInitial: false });
+  harness.flushOne();
+  harness.setReadiness({
+    approved: false,
+    reasonCode: "REGION_OUT_OF_SCOPE"
+  });
+
+  const result = requestIntegratedPersistentAtlasRedraw(harness.integration, {
+    confirmation: REDRAW,
+    reason: "moveend"
+  });
+
+  assert.equal(result.reasonCode, "READINESS_BLOCKED");
+  const status = getIntegratedPersistentAtlasStatus(harness.integration);
+  assert.equal(status.invalidated, true);
+  assert.equal(status.authorizationState, "invalidated");
+  assert.equal(status.redrawPermissionAllowed, false);
+  assert.equal(status.attached, false);
+  assert.equal(status.integrationState, "invalidated");
+  assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.queuedFrameCount, 0);
+  assert.equal(status.cleanupCompleted, true);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(status.lastFailureReason, "REGION_OUT_OF_SCOPE");
+});
+
+test("24b. package drift while attached triggers cleanup and preserves reason", () => {
+  const harness = createHarness({ manualScheduler: true });
+  authorizeAndAttach(harness, { flushInitial: false });
+  harness.flushOne();
+  harness.setIdentity({ packageFingerprint: "PKG_FP_002" });
+
+  const result = requestIntegratedPersistentAtlasRedraw(harness.integration, {
+    confirmation: REDRAW,
+    reason: "moveend"
+  });
+
+  assert.equal(result.reasonCode, "STALE_REGION_PACKAGE_RECIPE_IDENTITY");
+  const status = getIntegratedPersistentAtlasStatus(harness.integration);
+  assert.equal(status.invalidated, true);
+  assert.equal(status.attached, false);
+  assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.cleanupCompleted, true);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(status.lastFailureReason, "STALE_REGION_PACKAGE_RECIPE_IDENTITY");
+});
+
+test("24c. lifecycle drift while attached triggers cleanup and preserves reason", () => {
+  const harness = createHarness();
+  authorizeAndAttach(harness);
+  const result = invalidateIntegratedPersistentAtlas(harness.integration, {
+    reasonCode: "LIFECYCLE_OWNER_MISMATCH"
+  });
+
+  assert.equal(result.reasonCode, "AUTHORIZATION_INVALIDATED");
+  const status = getIntegratedPersistentAtlasStatus(harness.integration);
+  assert.equal(status.invalidated, true);
+  assert.equal(status.attached, false);
+  assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.cleanupCompleted, true);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(status.lastFailureReason, "LIFECYCLE_OWNER_MISMATCH");
+});
+
+test("24d. repeated invalidation is harmless and detached invalidation creates no resources", () => {
+  const harness = createHarness();
+  invalidateIntegratedPersistentAtlas(harness.integration, {
+    reasonCode: "MANUAL_INVALIDATION"
+  });
+  invalidateIntegratedPersistentAtlas(harness.integration, {
+    reasonCode: "MANUAL_INVALIDATION"
+  });
+
+  const status = getIntegratedPersistentAtlasStatus(harness.integration);
+  assert.equal(status.invalidated, true);
+  assert.equal(status.attached, false);
+  assert.equal(status.ownedCanvasCount, 0);
+  assert.equal(status.ownedPaneCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.referencesReleased, true);
+  assert.equal(harness.metrics.surfaceCalls, 0);
+  assert.equal(harness.metrics.lifecycleAcquireCalls, 0);
+  assert.equal(harness.metrics.snapshotCalls, 0);
+  assert.equal(harness.metrics.drawCalls, 0);
 });
 
 test("25. authorization failure fails closed", () => {

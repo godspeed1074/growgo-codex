@@ -806,6 +806,13 @@ export function createControlledPersistentAtlasContractIntegration({
       wrapperStatus.state === "ready" &&
       authStatus.redrawPermissionAllowed === true;
 
+    const invalidationReason =
+      authStatus.invalidationReasonCode ??
+      schedulerStatus.lastFailureReason ??
+      authStatus.lastFailureReason ??
+      state.lastFailureReason ??
+      "AUTHORIZATION_INVALIDATED";
+
     if (
       (schedulerStatus.failedClosed || schedulerStatus.invalidated) &&
       internal.attached &&
@@ -831,9 +838,25 @@ export function createControlledPersistentAtlasContractIntegration({
       });
       internal.attached = false;
       internal.detachInProgress = false;
+      internal.currentMap = null;
+      internal.currentIdentity = null;
+      internal.currentLifecycleOwner = null;
+      internal.currentLifecycleOwnerId = null;
+      internal.currentSurfaceSnapshot = null;
       internal.syncDepth -= 1;
       syncState();
       return;
+    }
+
+    if (state.invalidated && internal.attached && !internal.detachInProgress) {
+      performInvalidationCleanup(invalidationReason);
+      internal.syncDepth -= 1;
+      syncState();
+      return;
+    }
+
+    if (state.invalidated) {
+      state.lastFailureReason = invalidationReason;
     }
 
     if (state.failedClosed) {
@@ -881,7 +904,28 @@ export function createControlledPersistentAtlasContractIntegration({
       internal.attached = false;
       internal.detachInProgress = false;
     }
+    internal.currentMap = null;
+    internal.currentIdentity = null;
+    internal.currentLifecycleOwner = null;
+    internal.currentLifecycleOwnerId = null;
+    internal.currentSurfaceSnapshot = null;
     syncState();
+  }
+
+  function performInvalidationCleanup(reasonCode) {
+    state.lastFailureReason = reasonCode;
+    if (internal.attached || getPersistentSurfaceWrapperStatus(wrapper).retained) {
+      internal.detachInProgress = true;
+      state.cleanupAttemptCount += 1;
+      releasePersistentSurface(wrapper, { reasonCode });
+      internal.attached = false;
+      internal.detachInProgress = false;
+    }
+    internal.currentMap = null;
+    internal.currentIdentity = null;
+    internal.currentLifecycleOwner = null;
+    internal.currentLifecycleOwnerId = null;
+    internal.currentSurfaceSnapshot = null;
   }
 
   function authorizeIntegratedPersistentAtlas({ confirmation } = {}) {
@@ -1106,11 +1150,7 @@ export function createControlledPersistentAtlasContractIntegration({
 
   function revokeIntegratedPersistentAtlas() {
     const revoked = revokePersistentAtlasSession(authorization);
-    internal.attached = false;
-    internal.detachInProgress = true;
-    state.cleanupAttemptCount += 1;
-    releasePersistentSurface(wrapper, { reasonCode: "AUTHORIZATION_REVOKED" });
-    internal.detachInProgress = false;
+    performInvalidationCleanup("AUTHORIZATION_REVOKED");
     syncState();
     return buildResult(
       "revokeIntegratedPersistentAtlas",
@@ -1123,11 +1163,7 @@ export function createControlledPersistentAtlasContractIntegration({
   function invalidateIntegratedPersistentAtlas({ reasonCode } = {}) {
     const invalidated = invalidatePersistentAtlasSession(authorization, { reasonCode });
     invalidatePersistentSchedulerListenerContract(scheduler, { reasonCode });
-    internal.attached = false;
-    internal.detachInProgress = true;
-    state.cleanupAttemptCount += 1;
-    releasePersistentSurface(wrapper, { reasonCode: reasonCode ?? "AUTHORIZATION_INVALIDATED" });
-    internal.detachInProgress = false;
+    performInvalidationCleanup(reasonCode ?? "AUTHORIZATION_INVALIDATED");
     syncState();
     return buildResult(
       "invalidateIntegratedPersistentAtlas",
