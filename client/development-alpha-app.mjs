@@ -39,12 +39,27 @@ import {
   installDeveloperOnlyAtlasAssetPopulationPreview
 } from "./developer-only-atlas-asset-population-preview.mjs";
 import {
-  createDeveloperOnlyAtlasLiveFeatureInputAdapter
+  createDeveloperOnlyAtlasLiveFeatureInputAdapter,
+  extractDeveloperOnlyAtlasLiveViewportFeatures
 } from "./developer-only-atlas-live-feature-input-adapter.mjs";
+import {
+  createDeveloperOnlyAtlasWorldPopulationPlanner,
+  createDeveloperOnlyAtlasWorldPopulationPlan
+} from "./developer-only-atlas-world-population-planner.mjs";
 import {
   createDeveloperOnlyAtlasControlledViewportPopulationPreview,
   installDeveloperOnlyAtlasControlledViewportPopulationPreview
 } from "./developer-only-atlas-controlled-viewport-population-preview.mjs";
+import {
+  createAtlasAutomaticPopulationController
+} from "./developer-only-atlas-automatic-population-controller.mjs";
+import {
+  createAtlasAutomaticPopulationLiveEventAdapter
+} from "./developer-only-atlas-automatic-population-live-event-adapter.mjs";
+import {
+  createDeveloperOnlyControlledAutomaticAtlasPopulationToggle,
+  installDeveloperOnlyControlledAutomaticAtlasPopulationToggle
+} from "./developer-only-controlled-automatic-atlas-population-toggle.mjs";
 import {
   createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace,
   installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace
@@ -61,7 +76,8 @@ import {
   toOneFrameViewportSnapshotContract
 } from "./developer-only-persistent-atlas-frame-snapshot-provider.mjs";
 import {
-  createAtlasPopulationDrawIntegration
+  createAtlasPopulationDrawIntegration,
+  submitAtlasPopulationPlanForDraw
 } from "./developer-only-atlas-population-draw-integration.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
@@ -1330,6 +1346,164 @@ const atlasLiveFeatureInputAdapter =
       )
   });
 
+const atlasWorldPopulationPlanner =
+  createDeveloperOnlyAtlasWorldPopulationPlanner();
+
+const atlasAutomaticPopulationController =
+  createAtlasAutomaticPopulationController({
+    viewportIdentityProvider: () =>
+      Object.freeze({
+        viewportIdentity:
+          atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()?.viewportIdentity ??
+          "ATLAS_AUTO_VIEWPORT_UNAVAILABLE",
+        featureSourceGenerationId:
+          atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()
+            ?.viewportIdentity ?? null
+      }),
+    atlasIdentityProvider: () =>
+      readApprovedPersistentReadinessIdentity(
+        resolvePersistentAuthoritativeMapReference()
+      ),
+    readinessProvider: () => {
+      const status =
+        controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+        {};
+      if (status.attached !== true || status.redrawPermissionAllowed !== true) {
+        return {
+          approved: false,
+          reasonCode: "READINESS_BLOCKED"
+        };
+      }
+      readApprovedPersistentReadinessIdentity(resolvePersistentAuthoritativeMapReference());
+      return {
+        approved: true,
+        reasonCode: "READINESS_APPROVED"
+      };
+    },
+    liveFeatureAdapter: ({ budgets } = {}) =>
+      extractDeveloperOnlyAtlasLiveViewportFeatures(atlasLiveFeatureInputAdapter, {
+        budget: {
+          maxExtractedFeatures: Number(
+            budgets?.maxSourceFeaturesPerViewport ?? 64
+          ),
+          maxNormalizedFeatures: Number(
+            budgets?.maxNormalizedFeatures ?? 48
+          ),
+          maxPopulationCommands: Number(
+            budgets?.maxPopulationCommands ?? 24
+          )
+        }
+      }),
+    populationPlanner: ({ generation, featureResult, budgets } = {}) =>
+      createDeveloperOnlyAtlasWorldPopulationPlan(atlasWorldPopulationPlanner, {
+        regionId: generation?.regionId,
+        packageId: generation?.packageId,
+        recipeId: generation?.recipeId,
+        selectorSeed: generation?.selectorSeed,
+        viewportId: generation?.viewportIdentity,
+        features: featureResult?.normalizedFeatures ?? [],
+        performanceBudget: {
+          maximumCandidateFeatures: Number(
+            budgets?.maxSourceFeaturesPerViewport ?? 64
+          ),
+          maximumCommands: Number(
+            budgets?.maxPopulationCommands ?? 24
+          ),
+          maximumVegetationCommands: Number(
+            budgets?.maxVegetationInstances ?? 18
+          ),
+          maximumBuildingCommands: Number(
+            budgets?.maxBuildingInstances ?? 6
+          )
+        }
+      }),
+    populationDrawIntegration: ({ generation, plan } = {}) => {
+      const result = submitAtlasPopulationPlanForDraw(atlasPopulationDrawIntegration, {
+        plan,
+        redrawReason: "automatic_viewport_population"
+      });
+      return {
+        submission: {
+          batchId: result.batchId,
+          viewportGenerationId: generation?.viewportGenerationId ?? null
+        },
+        draw: {
+          batchId: result.batchId,
+          viewportGenerationId: generation?.viewportGenerationId ?? null,
+          drawCompleted: result.drawCompleted === true
+        }
+      };
+    },
+    populationReferenceReleaseProvider: () => ({ released: true })
+  });
+
+const atlasAutomaticPopulationLiveEventAdapter =
+  createAtlasAutomaticPopulationLiveEventAdapter({
+    mapProvider: () => resolvePersistentAuthoritativeMapReference(),
+    controller: atlasAutomaticPopulationController,
+    listenerRegistrar: (map, eventName, callback) => {
+      map.on(eventName, callback);
+      return {
+        eventName,
+        callbackIdentity: eventName
+      };
+    },
+    listenerRemover: (map, eventName, callback) => {
+      map.off(eventName, callback);
+    },
+    viewportIdentityProvider: ({ eventName } = {}) =>
+      Object.freeze({
+        viewportIdentity:
+          atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()?.viewportIdentity ??
+          `ATLAS_AUTO_VIEWPORT_${eventName ?? "UNKNOWN"}`,
+        featureSourceGenerationId:
+          atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()
+            ?.viewportIdentity ?? null
+      }),
+    readinessProvider: () => {
+      const status =
+        controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+        {};
+      if (status.attached !== true || status.redrawPermissionAllowed !== true) {
+        return {
+          approved: false,
+          reasonCode: "READINESS_BLOCKED"
+        };
+      }
+      readApprovedPersistentReadinessIdentity(resolvePersistentAuthoritativeMapReference());
+      return {
+        approved: true,
+        reasonCode: "READINESS_APPROVED"
+      };
+    },
+    atlasIdentityProvider: () =>
+      Object.freeze({
+        ...readApprovedPersistentReadinessIdentity(
+          resolvePersistentAuthoritativeMapReference()
+        ),
+        sessionId:
+          controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.()
+            ?.sessionId ?? null
+      })
+  });
+
+const controlledAutomaticAtlasPopulationToggle =
+  createDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    persistentStatusProvider: () =>
+      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+      null,
+    readinessValidationProvider: () => {
+      readApprovedPersistentReadinessIdentity(resolvePersistentAuthoritativeMapReference());
+      return {
+        approved: true,
+        reasonCode: "READINESS_APPROVED"
+      };
+    },
+    controller: atlasAutomaticPopulationController,
+    liveEventAdapter: atlasAutomaticPopulationLiveEventAdapter
+  });
+
 const atlasControlledViewportPopulationPreview =
   createDeveloperOnlyAtlasControlledViewportPopulationPreview({
     hostnameProvider: () => globalThis?.location?.hostname ?? "",
@@ -1360,6 +1534,11 @@ const controlledPersistentAtlasManualCommand =
 installDeveloperOnlyControlledPersistentAtlasManualCommand({
   globalObject: globalThis,
   command: controlledPersistentAtlasManualCommand
+});
+
+installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
+  globalObject: globalThis,
+  toggle: controlledAutomaticAtlasPopulationToggle
 });
 
 installDeveloperOnlyAtlasAssetPopulationPreview({
