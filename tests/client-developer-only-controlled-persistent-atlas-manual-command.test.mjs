@@ -222,6 +222,40 @@ function createHarness({
   };
 }
 
+function createSnapshotDiagnosticsHarness(overrides = {}) {
+  return createDeveloperOnlyControlledPersistentAtlasManualCommand({
+    hostnameProvider: () => "127.0.0.1",
+    integrationProvider: () => ({
+      getIntegratedPersistentAtlasStatus() {
+        return {
+          schemaId:
+            "GROWGO_CONTROLLED_PERSISTENT_ATLAS_CONTRACT_INTEGRATION_STATUS_001",
+          integrationState: "failed_closed",
+          failedClosed: true,
+          lastFailureReason: "RAW_REFERENCE_DETECTED",
+          snapshotCompletedCount: 0
+        };
+      }
+    }),
+    compositionStatusProvider: () => ({
+      schemaId: "TEST_PERSISTENT_COMPOSITION_STATUS_001",
+      state: "ready",
+      snapshotStatus: {
+        lastFailureReason: "RAW_REFERENCE_DETECTED",
+        rawReferenceDetected: true,
+        rawReferenceFieldPath: "rawSnapshot.contains",
+        rawReferenceType: "function",
+        rawReferenceConstructorName: "contains",
+        snapshotCreateAttemptCount: 1,
+        snapshotCreateCompletedCount: 0,
+        snapshotValidationAttemptCount: 0,
+        snapshotValidationCompletedCount: 0,
+        ...overrides
+      }
+    })
+  });
+}
+
 test("1. install refuses to expose the namespace outside approved local hosts", () => {
   const harness = createHarness({ hostname: "growgo.example.com" });
   const installed = installDeveloperOnlyControlledPersistentAtlasManualCommand({
@@ -512,6 +546,47 @@ test("14. results and status stay immutable, serializable, and expose no raw ref
   assert.equal("listener" in status.integrationStatus, false);
 });
 
+test("14a. snapshot status exposes raw-reference metadata without exposing raw objects", () => {
+  const command = createSnapshotDiagnosticsHarness();
+  const status = command.getControlledPersistentAtlasStatus();
+  const snapshotStatus = command.getControlledPersistentAtlasSnapshotStatus();
+
+  assert.equal(status.snapshotStatus.lastFailureReason, "RAW_REFERENCE_DETECTED");
+  assert.equal(status.snapshotStatus.rawReferenceDetected, true);
+  assert.equal(status.snapshotStatus.rawReferenceFieldPath, "rawSnapshot.contains");
+  assert.equal(status.snapshotStatus.rawReferenceType, "function");
+  assert.equal(status.snapshotStatus.rawReferenceConstructorName, "contains");
+  assert.equal(status.snapshotStatus.snapshotCreateAttemptCount, 1);
+  assert.equal(status.snapshotStatus.snapshotCreateCompletedCount, 0);
+  assert.equal(status.snapshotStatus.snapshotValidationAttemptCount, 0);
+  assert.equal(status.snapshotStatus.snapshotValidationCompletedCount, 0);
+  assert.deepEqual(snapshotStatus, status.snapshotStatus);
+  assert.equal("rawReference" in status.snapshotStatus, false);
+  assert.equal(Object.isFrozen(status.snapshotStatus), true);
+  assert.doesNotThrow(() => JSON.stringify(status.snapshotStatus));
+});
+
+test("14b. successful snapshot diagnostics clear stale raw-reference metadata", () => {
+  const command = createSnapshotDiagnosticsHarness({
+    lastFailureReason: null,
+    rawReferenceDetected: false,
+    rawReferenceFieldPath: null,
+    rawReferenceType: null,
+    rawReferenceConstructorName: null,
+    snapshotCreateAttemptCount: 2,
+    snapshotCreateCompletedCount: 1
+  });
+
+  const snapshotStatus = command.getControlledPersistentAtlasSnapshotStatus();
+  assert.equal(snapshotStatus.lastFailureReason, "RAW_REFERENCE_DETECTED");
+  assert.equal(snapshotStatus.rawReferenceDetected, false);
+  assert.equal(snapshotStatus.rawReferenceFieldPath, null);
+  assert.equal(snapshotStatus.rawReferenceType, null);
+  assert.equal(snapshotStatus.rawReferenceConstructorName, null);
+  assert.equal(snapshotStatus.snapshotCreateAttemptCount, 2);
+  assert.equal(snapshotStatus.snapshotCreateCompletedCount, 1);
+});
+
 test("15. command source and app wiring include the developer-only persistent diagnostics surface with no polling", () => {
   const moduleSource = fs.readFileSync(modulePath, "utf8");
   const appSource = fs.readFileSync(appPath, "utf8");
@@ -521,11 +596,22 @@ test("15. command source and app wiring include the developer-only persistent di
     "attachControlledPersistentAtlas",
     "requestControlledPersistentAtlasRedraw",
     "getControlledPersistentAtlasStatus",
+    "getControlledPersistentAtlasSnapshotStatus",
     "detachControlledPersistentAtlas",
     "revokeControlledPersistentAtlas",
     "invalidateControlledPersistentAtlas",
     "installDeveloperOnlyControlledPersistentAtlasManualCommand",
     "createControlledPersistentAtlasContractIntegration"
+  ]) {
+    assert.match(moduleSource + appSource, new RegExp(phrase));
+  }
+
+  for (const phrase of [
+    "rawReferenceFieldPath",
+    "rawReferenceType",
+    "rawReferenceConstructorName",
+    "snapshotCreateAttemptCount",
+    "snapshotValidationCompletedCount"
   ]) {
     assert.match(moduleSource + appSource, new RegExp(phrase));
   }

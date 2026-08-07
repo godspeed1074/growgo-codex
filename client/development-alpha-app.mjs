@@ -148,6 +148,17 @@ let persistentMapIdentityCounter = 0;
 let persistentSessionCandidateCounter = 0;
 let persistentSessionCandidateId = null;
 let persistentSnapshotCounter = 0;
+const persistentSnapshotDiagnosticsState = {
+  lastFailureReason: null,
+  rawReferenceDetected: false,
+  rawReferenceFieldPath: null,
+  rawReferenceType: null,
+  rawReferenceConstructorName: null,
+  snapshotCreateAttemptCount: 0,
+  snapshotCreateCompletedCount: 0,
+  snapshotValidationAttemptCount: 0,
+  snapshotValidationCompletedCount: 0
+};
 let persistentPreparedSurface = null;
 let persistentLifecycleOwner = null;
 let persistentLifecycleOwnerId = null;
@@ -236,6 +247,27 @@ function createPersistentSnapshotIdentifiers() {
     snapshotGenerationId: `PERSISTENT_ATLAS_SNAPSHOT_GENERATION_${sequence}`,
     snapshotCreatedAt: "2026-08-06T00:00:00.000Z"
   };
+}
+
+function readPersistentSnapshotDiagnosticsStatus() {
+  return Object.freeze({
+    lastFailureReason: persistentSnapshotDiagnosticsState.lastFailureReason,
+    rawReferenceDetected:
+      persistentSnapshotDiagnosticsState.rawReferenceDetected === true,
+    rawReferenceFieldPath:
+      persistentSnapshotDiagnosticsState.rawReferenceFieldPath,
+    rawReferenceType: persistentSnapshotDiagnosticsState.rawReferenceType,
+    rawReferenceConstructorName:
+      persistentSnapshotDiagnosticsState.rawReferenceConstructorName,
+    snapshotCreateAttemptCount:
+      persistentSnapshotDiagnosticsState.snapshotCreateAttemptCount,
+    snapshotCreateCompletedCount:
+      persistentSnapshotDiagnosticsState.snapshotCreateCompletedCount,
+    snapshotValidationAttemptCount:
+      persistentSnapshotDiagnosticsState.snapshotValidationAttemptCount,
+    snapshotValidationCompletedCount:
+      persistentSnapshotDiagnosticsState.snapshotValidationCompletedCount
+  });
 }
 
 function readApprovedPersistentReadinessIdentity(map) {
@@ -524,43 +556,83 @@ const controlledPersistentAtlasIntegration =
     },
     frameSnapshotProvider: {
       createPersistentSnapshot({ map, identity, reason } = {}) {
+        persistentSnapshotDiagnosticsState.snapshotCreateAttemptCount += 1;
+
         if (!persistentPreparedSurface?.canvas) {
+          persistentSnapshotDiagnosticsState.lastFailureReason =
+            "PERSISTENT_SURFACE_CANVAS_UNAVAILABLE";
           throw Object.assign(new Error("PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"), {
             reasonCode: "PERSISTENT_SURFACE_CANVAS_UNAVAILABLE"
           });
         }
 
-        const snapshotResult =
-          createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics?.({
+        try {
+          const snapshotResult =
+            createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics?.({
+              map,
+              canvas: persistentPreparedSurface.canvas
+            }) ?? null;
+
+          if (
+            !snapshotResult ||
+            typeof snapshotResult !== "object" ||
+            snapshotResult.outcome === "blocked" ||
+            !snapshotResult.frameViewportSnapshot
+          ) {
+            persistentSnapshotDiagnosticsState.lastFailureReason =
+              snapshotResult?.reasonCode ?? "SNAPSHOT_PROVIDER_FAILED";
+            throw Object.assign(new Error("SNAPSHOT_PROVIDER_FAILED"), {
+              reasonCode: snapshotResult?.reasonCode ?? "SNAPSHOT_PROVIDER_FAILED"
+            });
+          }
+
+          const identifiers = createPersistentSnapshotIdentifiers();
+          const snapshot = normalizePersistentAtlasFrameSnapshotForContract({
+            rawSnapshot: snapshotResult.frameViewportSnapshot,
             map,
-            canvas: persistentPreparedSurface.canvas
-          }) ?? null;
-
-        if (
-          !snapshotResult ||
-          typeof snapshotResult !== "object" ||
-          snapshotResult.outcome === "blocked" ||
-          !snapshotResult.frameViewportSnapshot
-        ) {
-          throw Object.assign(new Error("SNAPSHOT_PROVIDER_FAILED"), {
-            reasonCode: snapshotResult?.reasonCode ?? "SNAPSHOT_PROVIDER_FAILED"
+            identity,
+            lifecycleIdentity: {
+              lifecycleOwnerId: persistentLifecycleOwnerId,
+              lifecycleGenerationId: persistentLifecycleGenerationId,
+              surfaceOwnerId: persistentSurfaceOwnerId
+            },
+            redrawReason: reason,
+            ...identifiers
           });
+
+          persistentSnapshotDiagnosticsState.lastFailureReason = null;
+          persistentSnapshotDiagnosticsState.rawReferenceDetected = false;
+          persistentSnapshotDiagnosticsState.rawReferenceFieldPath = null;
+          persistentSnapshotDiagnosticsState.rawReferenceType = null;
+          persistentSnapshotDiagnosticsState.rawReferenceConstructorName = null;
+          persistentSnapshotDiagnosticsState.snapshotCreateCompletedCount += 1;
+
+          return snapshot;
+        } catch (error) {
+          const reasonCode =
+            typeof error?.reasonCode === "string"
+              ? error.reasonCode
+              : "SNAPSHOT_PROVIDER_FAILED";
+          persistentSnapshotDiagnosticsState.lastFailureReason = reasonCode;
+          persistentSnapshotDiagnosticsState.rawReferenceDetected =
+            reasonCode === "RAW_REFERENCE_DETECTED";
+          persistentSnapshotDiagnosticsState.rawReferenceFieldPath =
+            reasonCode === "RAW_REFERENCE_DETECTED" &&
+            typeof error?.rawReferenceFieldPath === "string"
+              ? error.rawReferenceFieldPath
+              : null;
+          persistentSnapshotDiagnosticsState.rawReferenceType =
+            reasonCode === "RAW_REFERENCE_DETECTED" &&
+            typeof error?.rawReferenceType === "string"
+              ? error.rawReferenceType
+              : null;
+          persistentSnapshotDiagnosticsState.rawReferenceConstructorName =
+            reasonCode === "RAW_REFERENCE_DETECTED" &&
+            typeof error?.rawReferenceConstructorName === "string"
+              ? error.rawReferenceConstructorName
+              : null;
+          throw error;
         }
-
-        const identifiers = createPersistentSnapshotIdentifiers();
-
-        return normalizePersistentAtlasFrameSnapshotForContract({
-          rawSnapshot: snapshotResult.frameViewportSnapshot,
-          map,
-          identity,
-          lifecycleIdentity: {
-            lifecycleOwnerId: persistentLifecycleOwnerId,
-            lifecycleGenerationId: persistentLifecycleGenerationId,
-            surfaceOwnerId: persistentSurfaceOwnerId
-          },
-          redrawReason: reason,
-          ...identifiers
-        });
       }
     },
     frameDrawProvider: {
@@ -665,7 +737,8 @@ const controlledPersistentAtlasManualCommand =
         bridgeSource:
           "captured_one_frame_bridge_and_renderer_handoff_readiness",
         rootSeamsMapped: true,
-        startupInvocationPrevented: true
+        startupInvocationPrevented: true,
+        snapshotStatus: readPersistentSnapshotDiagnosticsStatus()
       })
   });
 

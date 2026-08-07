@@ -172,6 +172,33 @@ function sanitizeIntegrationStatus(status) {
   });
 }
 
+function sanitizeSnapshotDiagnosticsStatus(status) {
+  const safe = sanitizePlainObject(status) ?? {};
+  return deepFreeze({
+    lastFailureReason:
+      typeof safe.lastFailureReason === "string" ? safe.lastFailureReason : null,
+    rawReferenceDetected: safe.rawReferenceDetected === true,
+    rawReferenceFieldPath:
+      typeof safe.rawReferenceFieldPath === "string"
+        ? safe.rawReferenceFieldPath
+        : null,
+    rawReferenceType:
+      typeof safe.rawReferenceType === "string" ? safe.rawReferenceType : null,
+    rawReferenceConstructorName:
+      typeof safe.rawReferenceConstructorName === "string"
+        ? safe.rawReferenceConstructorName
+        : null,
+    snapshotCreateAttemptCount: Number(safe.snapshotCreateAttemptCount ?? 0),
+    snapshotCreateCompletedCount: Number(safe.snapshotCreateCompletedCount ?? 0),
+    snapshotValidationAttemptCount: Number(
+      safe.snapshotValidationAttemptCount ?? 0
+    ),
+    snapshotValidationCompletedCount: Number(
+      safe.snapshotValidationCompletedCount ?? 0
+    )
+  });
+}
+
 function toResult(command, outcome, reasonCode, status, extra = {}) {
   const integration = sanitizeIntegrationStatus(status?.integrationStatus);
 
@@ -255,11 +282,36 @@ export function createDeveloperOnlyControlledPersistentAtlasManualCommand({
     );
   }
 
+  function readSnapshotStatus() {
+    const integrationStatus = readIntegrationStatus();
+    const compositionStatus = readCompositionStatus();
+    const snapshotStatus = sanitizeSnapshotDiagnosticsStatus(
+      compositionStatus?.snapshotStatus
+    );
+
+    return deepFreeze({
+      lastFailureReason:
+        snapshotStatus.lastFailureReason ?? integrationStatus.lastFailureReason,
+      rawReferenceDetected: snapshotStatus.rawReferenceDetected,
+      rawReferenceFieldPath: snapshotStatus.rawReferenceFieldPath,
+      rawReferenceType: snapshotStatus.rawReferenceType,
+      rawReferenceConstructorName: snapshotStatus.rawReferenceConstructorName,
+      snapshotCreateAttemptCount: snapshotStatus.snapshotCreateAttemptCount,
+      snapshotCreateCompletedCount: snapshotStatus.snapshotCreateCompletedCount,
+      snapshotValidationAttemptCount:
+        snapshotStatus.snapshotValidationAttemptCount,
+      snapshotValidationCompletedCount:
+        snapshotStatus.snapshotValidationCompletedCount,
+      snapshotCompletedCount: integrationStatus.snapshotCompletedCount
+    });
+  }
+
   function readStatus() {
     const hostname = String(hostnameProvider?.() ?? "").trim();
     const localDevelopmentEligible = isLocalDevelopmentHost(hostname);
     const integrationStatus = readIntegrationStatus();
     const compositionStatus = readCompositionStatus();
+    const snapshotStatus = readSnapshotStatus();
 
     return deepFreeze({
       schemaId: STATUS_SCHEMA_ID,
@@ -302,9 +354,7 @@ export function createDeveloperOnlyControlledPersistentAtlasManualCommand({
         lifecycleOwnerId: integrationStatus.lifecycleOwnerId,
         attached: integrationStatus.attached
       }),
-      snapshotStatus: deepFreeze({
-        snapshotCompletedCount: integrationStatus.snapshotCompletedCount
-      }),
+      snapshotStatus,
       drawStatus: deepFreeze({
         drawCompletedCount: integrationStatus.drawCompletedCount,
         drawing: integrationStatus.drawing,
@@ -480,6 +530,7 @@ export function createDeveloperOnlyControlledPersistentAtlasManualCommand({
       return isLocalDevelopmentHost(hostnameProvider?.());
     },
     getControlledPersistentAtlasStatus: readStatus,
+    getControlledPersistentAtlasSnapshotStatus: readSnapshotStatus,
     authorizeControlledPersistentAtlas,
     attachControlledPersistentAtlas,
     requestControlledPersistentAtlasRedraw,
@@ -526,6 +577,8 @@ export function installDeveloperOnlyControlledPersistentAtlasManualCommand({
     command.requestControlledPersistentAtlasRedraw(input);
   namespace.getControlledPersistentAtlasStatus = () =>
     command.getControlledPersistentAtlasStatus();
+  namespace.getControlledPersistentAtlasSnapshotStatus = () =>
+    command.getControlledPersistentAtlasSnapshotStatus?.() ?? null;
   namespace.getControlledPersistentAtlasFirstDrawTrace = () =>
     command.getControlledPersistentAtlasFirstDrawTrace?.() ?? null;
   namespace.detachControlledPersistentAtlas = (input) =>
