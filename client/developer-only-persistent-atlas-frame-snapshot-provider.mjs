@@ -48,6 +48,12 @@ const IDENTITY_KEYS = [
   "selectorSeed"
 ];
 
+const EXCLUDED_ONE_FRAME_HELPER_KEYS = new Set([
+  "contains",
+  "getNorthWest",
+  "getCenter"
+]);
+
 function deepFreeze(value, seen = new WeakSet()) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {
     return value;
@@ -234,7 +240,10 @@ function validateRawSnapshotEnvelope(rawSnapshot) {
     }
 
     const valueType = typeof value;
-    if ((valueType === "function" || valueType === "symbol") && key !== "contains") {
+    if (
+      (valueType === "function" || valueType === "symbol") &&
+      !EXCLUDED_ONE_FRAME_HELPER_KEYS.has(key)
+    ) {
       throw createRawReferenceError(`rawSnapshot.${key}`, value);
     }
   }

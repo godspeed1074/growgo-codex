@@ -155,9 +155,16 @@ function createHarness({
         center: args.map.getCenter(),
         pixelOrigin: args.map.getPixelOrigin(),
         projectedViewportBounds: args.map.getBounds(),
+        northWestCoordinate: { latitude: -38.2, longitude: 144.5 },
         canvasLayerPosition: new FakePoint(12, 18),
         contains() {
           return true;
+        },
+        getNorthWest() {
+          return { lat: -38.2, lng: 144.5 };
+        },
+        getCenter() {
+          return { lat: -38.15, lng: 144.6 };
         },
         scalarPayload: {
           viewportLabel: "atlas-main"
@@ -383,6 +390,45 @@ test("11a. exact raw-reference field path is reported for unsupported scalar pay
   assert.equal(
     status.rawReferenceConstructorName,
     "UnsupportedRawReference"
+  );
+});
+
+test("11b. unsupported top-level snapshot helper still fails closed with exact field path", () => {
+  const { provider } = createHarness({
+    snapshotFactory: (state, args) => ({
+      viewportSize: args.map.getSize(),
+      pixelRatio: 2,
+      zoom: args.map.getZoom(),
+      projectedViewportBounds: args.map.getBounds(),
+      northWestCoordinate: { latitude: -38.2, longitude: 144.5 },
+      canvasLayerPosition: new FakePoint(12, 18),
+      contains() {
+        return true;
+      },
+      getNorthWest() {
+        return { lat: -38.2, lng: 144.5 };
+      },
+      getCenter() {
+        return { lat: -38.15, lng: 144.6 };
+      },
+      clone() {
+        return {};
+      }
+    })
+  });
+
+  assert.throws(
+    () =>
+      createPersistentAtlasFrameSnapshot(provider, {
+        redrawReason: "initial_attach"
+      }),
+    (error) => {
+      assert.equal(error.reasonCode, "RAW_REFERENCE_DETECTED");
+      assert.equal(error.rawReferenceFieldPath, "rawSnapshot.clone");
+      assert.equal(error.rawReferenceType, "function");
+      assert.equal(error.rawReferenceConstructorName, "clone");
+      return true;
+    }
   );
 });
 
@@ -747,6 +793,12 @@ test("39a. real one-frame helper methods do not survive persistent normalization
       zoom: 14,
       contains() {
         return true;
+      },
+      getNorthWest() {
+        return { lat: -38.1, lng: 144.5 };
+      },
+      getCenter() {
+        return { lat: -38.15, lng: 144.6 };
       }
     },
     map: createFakeMap(),
@@ -761,7 +813,41 @@ test("39a. real one-frame helper methods do not survive persistent normalization
   assert.equal(normalized.snapshotId, "SNAP_002");
   assert.equal(normalized.snapshotGenerationId, "SNAP_GEN_002");
   assert.equal("contains" in normalized, false);
+  assert.equal("getNorthWest" in normalized, false);
+  assert.equal("getCenter" in normalized, false);
+  assert.equal(normalized.projectedViewportBounds.northWestLatitude, -38.1);
+  assert.equal(normalized.projectedViewportBounds.northWestLongitude, 144.5);
   assert.equal(typeof JSON.stringify(normalized), "string");
+});
+
+test("39b. successful persistent snapshot contains no functions or custom class instances", () => {
+  const { provider } = createHarness();
+  const snapshot = createPersistentAtlasFrameSnapshot(provider, {
+    redrawReason: "initial_attach"
+  });
+
+  const seen = new WeakSet();
+  function walk(value) {
+    if (!value || typeof value !== "object") {
+      assert.notEqual(typeof value, "function");
+      return;
+    }
+    if (seen.has(value)) {
+      return;
+    }
+    seen.add(value);
+    const proto = Object.getPrototypeOf(value);
+    assert.ok(
+      proto === Object.prototype || proto === null,
+      `unexpected prototype: ${proto?.constructor?.name ?? "null"}`
+    );
+    for (const nested of Object.values(value)) {
+      assert.notEqual(typeof nested, "function");
+      walk(nested);
+    }
+  }
+
+  walk(snapshot);
 });
 
 test("40. persistent normalized snapshot converts back to one-frame draw contract", () => {
