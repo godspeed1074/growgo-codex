@@ -189,6 +189,10 @@ function assertCanonicalFlags(flags) {
   });
 }
 
+function flushAutomaticExecution() {
+  return new Promise((resolve) => queueMicrotask(resolve));
+}
+
 test("starts disabled", () => {
   const { adapter } = createAdapterHarness();
   const status = getAtlasAutomaticPopulationLiveEventAdapterStatus(adapter);
@@ -267,15 +271,18 @@ test("unknown event rejected", () => {
   assert.doesNotMatch(source, /customEvent|unknownEvent/);
 });
 
-test("burst forwarding relies on controller coalescing", () => {
+test("burst forwarding relies on controller coalescing", async () => {
   const { adapter, controller, trigger } = createAdapterHarness();
   enableAtlasAutomaticPopulationLiveEventAdapter(adapter);
   trigger("moveend");
   trigger("zoomend");
   trigger("resize");
+  await flushAutomaticExecution();
   const status = getAutomaticViewportPopulationControllerStatus(controller);
   assert.equal(status.refreshRequestedCount, 3);
-  assert.equal(status.queuedViewportGenerationId != null, true);
+  assert.equal(status.refreshCompletedCount, 1);
+  assert.equal(status.refreshCoalescedCount, 2);
+  assert.equal(status.queuedViewportGenerationId, null);
   assert.equal(status.followUpViewportGenerationId, null);
 });
 

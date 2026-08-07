@@ -1,5 +1,6 @@
 import {
   requestAutomaticViewportPopulationRefresh,
+  runQueuedAutomaticViewportPopulationRefresh,
   invalidateAutomaticViewportPopulationController,
   getAutomaticViewportPopulationControllerStatus
 } from "./developer-only-atlas-automatic-population-controller.mjs";
@@ -124,6 +125,10 @@ function freezeStatus(state) {
     eventReceivedCount: state.eventReceivedCount,
     eventForwardedCount: state.eventForwardedCount,
     eventRejectedCount: state.eventRejectedCount,
+    refreshExecutionRequestedCount: state.refreshExecutionRequestedCount,
+    refreshExecutionStartedCount: state.refreshExecutionStartedCount,
+    refreshExecutionCompletedCount: state.refreshExecutionCompletedCount,
+    executionBlockedCount: state.executionBlockedCount,
     moveendReceivedCount: state.moveendReceivedCount,
     zoomendReceivedCount: state.zoomendReceivedCount,
     resizeReceivedCount: state.resizeReceivedCount,
@@ -131,6 +136,7 @@ function freezeStatus(state) {
     readinessBlockedDetected: state.readinessBlockedDetected,
     identityMismatchDetected: state.identityMismatchDetected,
     lastEventReason: state.lastEventReason,
+    lastExecutionReason: state.lastExecutionReason,
     lastFailureReason: state.lastFailureReason,
     referencesReleased: state.referencesReleased,
     canonicalSafetyFlags: canonicalSafetyFlags()
@@ -254,6 +260,90 @@ function maybeInvalidateController(adapter, reasonCode) {
   }
 }
 
+function scheduleQueuedRefreshExecution(adapter, eventName) {
+  const internal = adapter.__internal;
+  const state = adapter.__state;
+
+  if (internal.executionMicrotaskScheduled === true) {
+    state.lastExecutionReason = `coalesced_${eventName}`;
+    return freezeStatus(state);
+  }
+
+  internal.executionMicrotaskScheduled = true;
+  state.refreshExecutionRequestedCount += 1;
+  state.lastExecutionReason = `scheduled_${eventName}`;
+
+  queueMicrotask(() => {
+    internal.executionMicrotaskScheduled = false;
+    maybeRunQueuedRefreshExecution(adapter, eventName);
+  });
+
+  return freezeStatus(state);
+}
+
+function maybeRunQueuedRefreshExecution(adapter, eventName) {
+  const state = adapter.__state;
+  const controllerStatus = getAutomaticViewportPopulationControllerStatus(
+    adapter.__deps.controller
+  );
+
+  if (
+    controllerStatus.automaticPopulationEnabled !== true ||
+    state.enabled !== true ||
+    state.state !== "enabled"
+  ) {
+    state.executionBlockedCount += 1;
+    state.lastExecutionReason = "AUTOMATIC_POPULATION_DISABLED";
+    return freezeStatus(state);
+  }
+
+  if (controllerStatus.state === "invalidated") {
+    state.executionBlockedCount += 1;
+    state.lastExecutionReason =
+      controllerStatus.invalidationReason ?? "AUTOMATIC_POPULATION_INVALIDATED";
+    return freezeStatus(state);
+  }
+
+  if (!controllerStatus.queuedViewportGenerationId) {
+    state.executionBlockedCount += 1;
+    state.lastExecutionReason = "NO_QUEUED_REFRESH";
+    return freezeStatus(state);
+  }
+
+  if (controllerStatus.activeViewportGenerationId) {
+    state.executionBlockedCount += 1;
+    state.lastExecutionReason = "ACTIVE_REFRESH_IN_PROGRESS";
+    return freezeStatus(state);
+  }
+
+  state.refreshExecutionStartedCount += 1;
+  state.lastExecutionReason = `execute_${eventName}`;
+  const result = runQueuedAutomaticViewportPopulationRefresh(adapter.__deps.controller);
+  if (result?.outcome === "completed") {
+    state.refreshExecutionCompletedCount += 1;
+    state.lastExecutionReason = result.reasonCode ?? "AUTOMATIC_POPULATION_REFRESH_COMPLETED";
+    return freezeStatus(state);
+  }
+
+  if (
+    result?.outcome === "discarded" ||
+    result?.outcome === "failed_closed" ||
+    result?.outcome === "blocked" ||
+    result?.outcome === "coalesced" ||
+    result?.outcome === "skipped"
+  ) {
+    if (result?.outcome !== "blocked" || result?.reasonCode !== "NO_QUEUED_REFRESH") {
+      state.refreshExecutionStartedCount += 1;
+    }
+    state.executionBlockedCount += 1;
+    state.lastExecutionReason =
+      sanitizeString(result?.reasonCode) ??
+      "AUTOMATIC_POPULATION_REFRESH_EXECUTION_BLOCKED";
+  }
+
+  return freezeStatus(state);
+}
+
 function handleApprovedEvent(adapter, eventName, eventObject) {
   const state = adapter.__state;
   const internal = adapter.__internal;
@@ -347,7 +437,9 @@ function handleApprovedEvent(adapter, eventName, eventObject) {
       return freezeStatus(state);
     }
 
-    requestAutomaticViewportPopulationRefresh(adapter.__deps.controller, {
+    const requestResult = requestAutomaticViewportPopulationRefresh(
+      adapter.__deps.controller,
+      {
       eventName,
       viewportIdentity: viewportIdentity.viewportIdentity,
       featureSourceGenerationId: viewportIdentity.featureSourceGenerationId,
@@ -356,9 +448,18 @@ function handleApprovedEvent(adapter, eventName, eventObject) {
       packageId: identity.packageId,
       recipeId: identity.recipeId,
       selectorSeed: identity.selectorSeed
-    });
+      }
+    );
     state.eventForwardedCount += 1;
     state.lastFailureReason = null;
+
+  if (
+      requestResult?.outcome === "queued" ||
+      requestResult?.reasonCode === "QUEUED_REFRESH_REPLACED"
+    ) {
+      return scheduleQueuedRefreshExecution(adapter, eventName);
+    }
+
     return freezeStatus(state);
   } catch (error) {
     state.eventRejectedCount += 1;
@@ -411,6 +512,10 @@ export function createAtlasAutomaticPopulationLiveEventAdapter({
     eventReceivedCount: 0,
     eventForwardedCount: 0,
     eventRejectedCount: 0,
+    refreshExecutionRequestedCount: 0,
+    refreshExecutionStartedCount: 0,
+    refreshExecutionCompletedCount: 0,
+    executionBlockedCount: 0,
     moveendReceivedCount: 0,
     zoomendReceivedCount: 0,
     resizeReceivedCount: 0,
@@ -418,6 +523,7 @@ export function createAtlasAutomaticPopulationLiveEventAdapter({
     readinessBlockedDetected: false,
     identityMismatchDetected: false,
     lastEventReason: null,
+    lastExecutionReason: null,
     lastFailureReason: null,
     referencesReleased: true
   };
@@ -427,6 +533,8 @@ export function createAtlasAutomaticPopulationLiveEventAdapter({
     boundAtlasIdentity: null,
     registrations: { moveend: null, zoomend: null, resize: null },
     callbacks: { moveend: null, zoomend: null, resize: null }
+    ,
+    executionMicrotaskScheduled: false
   };
 
   return Object.freeze({
@@ -599,6 +707,10 @@ export function getAtlasAutomaticPopulationLiveEventAdapterStatus(adapter) {
       eventReceivedCount: 0,
       eventForwardedCount: 0,
       eventRejectedCount: 0,
+      refreshExecutionRequestedCount: 0,
+      refreshExecutionStartedCount: 0,
+      refreshExecutionCompletedCount: 0,
+      executionBlockedCount: 0,
       moveendReceivedCount: 0,
       zoomendReceivedCount: 0,
       resizeReceivedCount: 0,
@@ -606,6 +718,7 @@ export function getAtlasAutomaticPopulationLiveEventAdapterStatus(adapter) {
       readinessBlockedDetected: false,
       identityMismatchDetected: false,
       lastEventReason: null,
+      lastExecutionReason: null,
       lastFailureReason: "AUTOMATIC_POPULATION_LIVE_EVENT_ADAPTER_UNAVAILABLE",
       referencesReleased: true,
       canonicalSafetyFlags: canonicalSafetyFlags()

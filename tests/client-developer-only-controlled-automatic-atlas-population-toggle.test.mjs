@@ -96,6 +96,10 @@ function assertCanonicalFlags(flags) {
   });
 }
 
+function flushAutomaticExecution() {
+  return new Promise((resolve) => queueMicrotask(resolve));
+}
+
 function createHarness() {
   const metrics = {
     mapOnCalls: [],
@@ -463,7 +467,7 @@ for (const eventName of ["moveend", "zoomend", "resize"]) {
   });
 }
 
-test("controller owns coalescing", () => {
+test("controller owns coalescing", async () => {
   const harness = createHarness();
   harness.toggle.enableControlledAutomaticAtlasPopulation({
     confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
@@ -471,12 +475,14 @@ test("controller owns coalescing", () => {
   harness.trigger("moveend");
   harness.trigger("zoomend");
   harness.trigger("resize");
+  await flushAutomaticExecution();
   const status = getAutomaticViewportPopulationControllerStatus(harness.controller);
   assert.equal(status.refreshRequestedCount, 3);
   assert.equal(status.refreshCoalescedCount, 2);
+  assert.equal(status.refreshCompletedCount, 1);
 });
 
-test("stale generation discarded", () => {
+test("stale generation discarded", async () => {
   const harness = createHarness();
   harness.toggle.enableControlledAutomaticAtlasPopulation({
     confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
@@ -486,22 +492,26 @@ test("stale generation discarded", () => {
   harness.setFeature(queued.queuedViewportGenerationId, {
     viewportGenerationId: "STALE_AFTER_FEATURE_READ"
   });
-  const run = runQueuedAutomaticViewportPopulationRefresh(harness.controller);
-  assert.equal(run.outcome, "discarded");
+  await flushAutomaticExecution();
+  const run = getAutomaticViewportPopulationControllerStatus(harness.controller);
+  assert.equal(run.refreshCompletedCount, 0);
+  assert.equal(run.staleRefreshDiscardedCount, 1);
+  assert.equal(run.state, "attached_idle");
 });
 
-test("successful automatic population replaces batch", () => {
+test("successful automatic population replaces batch", async () => {
   const harness = createHarness();
   harness.toggle.enableControlledAutomaticAtlasPopulation({
     confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
   });
   harness.trigger("moveend");
-  const run = runQueuedAutomaticViewportPopulationRefresh(harness.controller);
-  assert.equal(run.outcome, "completed");
-  assert.equal(run.status.currentBatchId != null, true);
+  await flushAutomaticExecution();
+  const run = getAutomaticViewportPopulationControllerStatus(harness.controller);
+  assert.equal(run.refreshCompletedCount, 1);
+  assert.equal(run.currentBatchId != null, true);
 });
 
-test("duplicate instances do not accumulate", () => {
+test("duplicate instances do not accumulate", async () => {
   const harness = createHarness();
   harness.toggle.enableControlledAutomaticAtlasPopulation({
     confirmation: ENABLE_CONTROLLED_AUTOMATIC_ATLAS_POPULATION
@@ -518,8 +528,10 @@ test("duplicate instances do not accumulate", () => {
       ]
     }
   });
-  const run = runQueuedAutomaticViewportPopulationRefresh(harness.controller);
-  assert.equal(run.reasonCode, "DUPLICATE_INSTANCE_ID");
+  await flushAutomaticExecution();
+  const run = getAutomaticViewportPopulationControllerStatus(harness.controller);
+  assert.equal(run.lastFailureReason, "DUPLICATE_INSTANCE_ID");
+  assert.equal(run.state, "failed_closed");
 });
 
 test("disable confirmation required", () => {
