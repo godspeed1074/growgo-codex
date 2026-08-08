@@ -13,6 +13,11 @@ import {
   getDeveloperOnlyAtlasPopulationRecipeRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationRecipeForFeature
 } from "./developer-only-atlas-population-recipe-registry.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationSpatialDistributionRuleRegistry,
+  getDeveloperOnlyAtlasPopulationSpatialDistributionRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationSpatialDistribution
+} from "./developer-only-atlas-population-spatial-distribution-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -184,14 +189,20 @@ function freezeStatus(state) {
     schemaId: STATUS_SCHEMA_ID,
     spatialRuleRegistryVersion: state.spatialRuleRegistryVersion,
     registeredRuleCount: state.registeredRuleCount,
+    distributionRuleVersion: state.distributionRuleVersion,
+    registeredDistributionRuleCount: state.registeredDistributionRuleCount,
+    distributionRuleId: state.distributionRuleId,
+    densityTier: state.densityTier,
     matchedRecipeId: state.matchedRecipeId,
     matchedFeatureClass: state.matchedFeatureClass,
     generatedCommandCount: state.generatedCommandCount,
+    generatedPlacementCount: state.generatedPlacementCount,
     rejectedRecipeCount: state.rejectedRecipeCount,
     populationPlanId: state.populationPlanId,
     candidateFeatureCount: state.candidateFeatureCount,
     acceptedPlacementCount: state.acceptedPlacementCount,
     rejectedPlacementCount: state.rejectedPlacementCount,
+    rejectionReasons: deepFreeze([...state.rejectionReasons]),
     vegetationPlacementCount: state.vegetationPlacementCount,
     buildingPlacementCount: state.buildingPlacementCount,
     budgetLimit: deepFreeze({ ...state.budgetLimit }),
@@ -266,50 +277,6 @@ function featureEligibleForRule(feature, rule, context) {
   return null;
 }
 
-function determineCandidateCount(rule, feature) {
-  if (rule.assetCategory === "building") {
-    return 1;
-  }
-
-  if (rule.assetId === "SHRUB_COASTAL_LOW_001") {
-    const area = Number(feature.area ?? 0);
-    if (area >= 200) {
-      return Math.min(rule.maximumDensity, 3);
-    }
-    if (area >= 100) {
-      return Math.min(rule.maximumDensity, 2);
-    }
-    return 1;
-  }
-
-  return 1;
-}
-
-function determineFeatureAssets(feature) {
-  switch (feature.featureClass) {
-    case "vegetation_area":
-      return ["TREE_EUCALYPTUS_001", "SHRUB_COASTAL_LOW_001"];
-    case "park":
-      return ["TREE_EUCALYPTUS_001", "TREE_BOTTLEBRUSH_001"];
-    case "reserve":
-      return [
-        "TREE_EUCALYPTUS_001",
-        "TREE_BOTTLEBRUSH_001",
-        "SHRUB_COASTAL_LOW_001"
-      ];
-    case "coastal_green":
-      return ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"];
-    case "roadside_green":
-      return ["TREE_EUCALYPTUS_001", "TREE_BOTTLEBRUSH_001"];
-    case "civic_site":
-    case "sports_ground":
-    case "building_footprint":
-      return ["BUILDING_CIVIC_SPORTS_PAVILION_001"];
-    default:
-      return [];
-  }
-}
-
 function sortCandidates(left, right) {
   const byFeature = left.feature.featureId.localeCompare(right.feature.featureId);
   if (byFeature !== 0) {
@@ -320,17 +287,6 @@ function sortCandidates(left, right) {
     return byAsset;
   }
   return left.candidateIndex - right.candidateIndex;
-}
-
-function adjustCoordinate(feature, candidateIndex, rule) {
-  if (rule.assetId !== "SHRUB_COASTAL_LOW_001" || candidateIndex === 0) {
-    return feature.coordinate;
-  }
-  const shift = 0.00003 * candidateIndex;
-  return deepFreeze({
-    latitude: Number((feature.coordinate.latitude + shift).toFixed(6)),
-    longitude: Number((feature.coordinate.longitude + shift).toFixed(6))
-  });
 }
 
 function enforceSpacing(candidate, accepted, rule) {
@@ -389,25 +345,39 @@ function enforceExclusion(candidate, features, rule) {
 export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   spatialRuleRegistry = createDeveloperOnlyAtlasSpatialRuleRegistry(),
   placementProvider = createDeveloperOnlyAtlasMultiAssetPlacementProvider(),
-  populationRecipeRegistry = createDeveloperOnlyAtlasPopulationRecipeRegistry()
+  populationRecipeRegistry = createDeveloperOnlyAtlasPopulationRecipeRegistry(),
+  populationSpatialDistributionRuleRegistry =
+    createDeveloperOnlyAtlasPopulationSpatialDistributionRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
   );
   const populationRecipeRegistryStatus =
     getDeveloperOnlyAtlasPopulationRecipeRegistryStatus(populationRecipeRegistry);
+  const distributionRegistryStatus =
+    getDeveloperOnlyAtlasPopulationSpatialDistributionRuleRegistryStatus(
+      populationSpatialDistributionRuleRegistry
+    );
 
   const state = {
     spatialRuleRegistryVersion: registryStatus.spatialRuleRegistryVersion,
     registeredRuleCount: registryStatus.registeredRuleCount,
+    distributionRuleVersion: distributionRegistryStatus.distributionVersion,
+    registeredDistributionRuleCount:
+      distributionRegistryStatus.registeredDistributionRuleCount,
+    distributionRuleId: distributionRegistryStatus.distributionRuleId,
+    densityTier: distributionRegistryStatus.densityTier,
     matchedRecipeId: populationRecipeRegistryStatus.matchedRecipeId,
     matchedFeatureClass: populationRecipeRegistryStatus.matchedFeatureClass,
     generatedCommandCount: populationRecipeRegistryStatus.generatedCommandCount,
+    generatedPlacementCount:
+      distributionRegistryStatus.generatedPlacementCount,
     rejectedRecipeCount: populationRecipeRegistryStatus.rejectedRecipeCount,
     populationPlanId: null,
     candidateFeatureCount: 0,
     acceptedPlacementCount: 0,
     rejectedPlacementCount: 0,
+    rejectionReasons: [],
     vegetationPlacementCount: 0,
     buildingPlacementCount: 0,
     budgetLimit: DEFAULT_FEATURE_BUDGET,
@@ -422,6 +392,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     __internal: {
       spatialRuleRegistry,
       populationRecipeRegistry,
+      populationSpatialDistributionRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -489,15 +460,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.acceptedPlacementCount = 0;
   state.rejectedPlacementCount = 0;
   state.generatedCommandCount = 0;
+  state.generatedPlacementCount = 0;
   state.rejectedRecipeCount = 0;
   state.matchedRecipeId = null;
   state.matchedFeatureClass = null;
+  state.distributionRuleId = null;
+  state.densityTier = null;
   state.vegetationPlacementCount = 0;
   state.buildingPlacementCount = 0;
   state.budgetLimit = budget;
   state.budgetTruncated = features.length > budget.maximumCandidateFeatures;
   state.lastRejectedReason = null;
   state.lastFailureReason = null;
+  state.rejectionReasons = [];
 
   const truncatedFeatures = [...features]
     .sort((left, right) => left.featureId.localeCompare(right.featureId))
@@ -534,12 +509,34 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.matchedRecipeId = recipeResolution.matchedRecipeId;
     state.matchedFeatureClass = recipeResolution.matchedFeatureClass;
 
+    const distributionResolution =
+      resolveDeveloperOnlyAtlasPopulationSpatialDistribution(
+        internal.populationSpatialDistributionRuleRegistry,
+        {
+          matchedRecipeId: recipeResolution.matchedRecipeId,
+          feature,
+          selectorSeed,
+          assetCommands: recipeResolution.assetCommands
+        }
+      );
+
+    state.distributionRuleId = distributionResolution.distributionRuleId;
+    state.densityTier = distributionResolution.densityTier;
+    state.generatedPlacementCount += distributionResolution.generatedPlacementCount;
+
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
         deepFreeze({
           featureId: feature.featureId,
           matchedFeatureClass: recipeResolution.matchedFeatureClass,
           matchedRecipeId: recipeResolution.matchedRecipeId,
+          distributionRuleId: distributionResolution.distributionRuleId,
+          densityTier: distributionResolution.densityTier,
+          generatedPlacementCount: distributionResolution.generatedPlacementCount,
+          rejectedPlacementCount: distributionResolution.rejectedPlacementCount,
+          rejectionReasons: deepFreeze([
+            ...distributionResolution.rejectionReasons
+          ]),
           generatedCommandCount: 0
         })
       );
@@ -547,16 +544,37 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     }
 
     resolvedFeatureRecipes.push(
-      deepFreeze({
-        featureId: feature.featureId,
-        matchedFeatureClass: recipeResolution.matchedFeatureClass,
-        matchedRecipeId: recipeResolution.matchedRecipeId,
-        generatedCommandCount: recipeResolution.generatedCommandCount
-      })
-    );
+        deepFreeze({
+          featureId: feature.featureId,
+          matchedFeatureClass: recipeResolution.matchedFeatureClass,
+          matchedRecipeId: recipeResolution.matchedRecipeId,
+          distributionRuleId: distributionResolution.distributionRuleId,
+          densityTier: distributionResolution.densityTier,
+          generatedPlacementCount: distributionResolution.generatedPlacementCount,
+          rejectedPlacementCount: distributionResolution.rejectedPlacementCount,
+          rejectionReasons: deepFreeze([
+            ...distributionResolution.rejectionReasons
+          ]),
+          generatedCommandCount: recipeResolution.generatedCommandCount
+        })
+      );
 
-    for (const assetCommand of recipeResolution.assetCommands) {
-      const assetId = assetCommand.assetId;
+    for (const placement of distributionResolution.placements) {
+      const assetId = placement.assetId;
+      const assetCommand = recipeResolution.assetCommands.find(
+        (entry) => entry.assetId === assetId
+      );
+      if (!assetCommand) {
+        rejectedCandidates.push(
+          createRejectedCandidate({
+            assetId,
+            featureId: feature.featureId,
+            featureClass: feature.featureClass,
+            reasonCode: "DISTRIBUTION_ASSET_COMMAND_MISMATCH"
+          })
+        );
+        continue;
+      }
       const rule = resolveDeveloperOnlyAtlasSpatialRuleByAssetId(
         internal.spatialRuleRegistry,
         assetId
@@ -578,18 +596,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         continue;
       }
 
-      const candidateCount = determineCandidateCount(rule, feature);
-      for (let candidateIndex = 0; candidateIndex < candidateCount; candidateIndex += 1) {
-        candidateEntries.push({
-          assetId,
-          assetCommand,
-          rule,
-          feature,
-          matchedRecipeId: recipeResolution.matchedRecipeId,
-          candidateIndex,
-          coordinate: adjustCoordinate(feature, candidateIndex, rule)
-        });
-      }
+      candidateEntries.push({
+        assetId,
+        assetCommand,
+        rule,
+        feature,
+        matchedRecipeId: recipeResolution.matchedRecipeId,
+        distributionRuleId: distributionResolution.distributionRuleId,
+        densityTier: distributionResolution.densityTier,
+        candidateIndex: placement.candidateIndex,
+        coordinate: placement.coordinate,
+        orientationHintOverride: placement.orientationHintOverride ?? null
+      });
     }
   }
 
@@ -700,7 +718,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         featureId: candidate.feature.featureId,
         featureClass: candidate.feature.featureClass,
         coordinate: candidate.coordinate,
-        matchedRecipeId: candidate.matchedRecipeId
+        matchedRecipeId: candidate.matchedRecipeId,
+        distributionRuleId: candidate.distributionRuleId,
+        densityTier: candidate.densityTier
       })
     );
 
@@ -741,6 +761,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.acceptedPlacementCount = acceptedPlacements.length;
   state.generatedCommandCount = acceptedPlacements.length;
   state.rejectedPlacementCount = rejectedCandidates.length;
+  state.rejectionReasons = deepFreeze(
+    Array.from(new Set(rejectedCandidates.map((candidate) => candidate.reasonCode)))
+  );
   state.vegetationPlacementCount = vegetationCount;
   state.buildingPlacementCount = buildingCount;
   state.lastRejectedReason =
@@ -774,11 +797,17 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       matchedRecipeId: null,
       matchedFeatureClass: null,
       generatedCommandCount: 0,
+      generatedPlacementCount: 0,
       rejectedRecipeCount: 0,
+      distributionRuleVersion: null,
+      registeredDistributionRuleCount: 0,
+      distributionRuleId: null,
+      densityTier: null,
       populationPlanId: null,
       candidateFeatureCount: 0,
       acceptedPlacementCount: 0,
       rejectedPlacementCount: 0,
+      rejectionReasons: [],
       vegetationPlacementCount: 0,
       buildingPlacementCount: 0,
       budgetLimit: DEFAULT_FEATURE_BUDGET,

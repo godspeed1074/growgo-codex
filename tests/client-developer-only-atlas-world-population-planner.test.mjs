@@ -144,12 +144,18 @@ test("2. vegetation spatial planning produces deterministic lightweight commands
   const second = createDeveloperOnlyAtlasWorldPopulationPlan(harness.planner, input);
 
   assert.deepEqual(first, second);
-  assert.equal(first.commands.length, 2);
+  assert.equal(first.commands.length, 3);
   assert.deepEqual(
     first.commands.map((command) => command.assetId),
-    ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"]
+    [
+      "SHRUB_COASTAL_LOW_001",
+      "TREE_BOTTLEBRUSH_001",
+      "SHRUB_COASTAL_LOW_001"
+    ]
   );
   assert.equal(first.resolvedFeatureRecipes[0].matchedRecipeId, "COASTAL_GREEN_RECIPE_001");
+  assert.equal(first.resolvedFeatureRecipes[0].densityTier, "medium");
+  assert.equal(first.resolvedFeatureRecipes[0].generatedPlacementCount, 3);
   assert.equal(
     first.commands.every(
       (command) =>
@@ -342,8 +348,21 @@ test("8. shrub density expands deterministically on larger eligible vegetation f
     (command) => command.assetId === "SHRUB_COASTAL_LOW_001"
   );
 
-  assert.equal(shrubCommands.length, 3);
-  assert.equal(new Set(shrubCommands.map((command) => command.instanceId)).size, 3);
+  assert.equal(shrubCommands.length, 1);
+  assert.equal(
+    plan.commands.some((command) => command.assetId === "TREE_BOTTLEBRUSH_001"),
+    true
+  );
+  assert.equal(new Set(shrubCommands.map((command) => command.instanceId)).size, 1);
+  assert.equal(plan.resolvedFeatureRecipes[0].densityTier, "large");
+  assert.equal(
+    plan.rejectedCandidates.some(
+      (candidate) =>
+        candidate.assetId === "SHRUB_COASTAL_LOW_001" &&
+        candidate.reasonCode === "MINIMUM_SPACING_BLOCKED"
+    ),
+    true
+  );
 });
 
 test("9. tree spacing blocks overly dense roadside vegetation candidates", () => {
@@ -369,19 +388,27 @@ test("9. tree spacing blocks overly dense roadside vegetation candidates", () =>
     })
   );
 
-  assert.equal(plan.commands.length, 3);
+  assert.equal(plan.commands.length, 4);
   assert.equal(
     plan.commands.some((command) => command.assetId === "TREE_BOTTLEBRUSH_001"),
     true
   );
   assert.equal(
     plan.commands.filter((command) => command.assetId === "SHRUB_COASTAL_LOW_001").length,
-    2
+    3
   );
   assert.equal(
     plan.rejectedCandidates.some(
       (candidate) =>
         candidate.assetId === "TREE_BOTTLEBRUSH_001" &&
+        candidate.reasonCode === "MINIMUM_SPACING_BLOCKED"
+    ),
+    true
+  );
+  assert.equal(
+    plan.rejectedCandidates.some(
+      (candidate) =>
+        candidate.assetId === "SHRUB_COASTAL_LOW_001" &&
         candidate.reasonCode === "MINIMUM_SPACING_BLOCKED"
     ),
     true
@@ -429,7 +456,11 @@ test("10. exclusion radii block vegetation placements near building footprints",
         candidate.assetId === "SHRUB_COASTAL_LOW_001" &&
         candidate.reasonCode === "EXCLUSION_RADIUS_BLOCKED"
     ),
-    true
+    false
+  );
+  assert.equal(
+    plan.commands.filter((command) => command.assetId === "SHRUB_COASTAL_LOW_001").length,
+    1
   );
 });
 
