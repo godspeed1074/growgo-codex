@@ -218,6 +218,11 @@ import {
   getDeveloperOnlyAtlasModularBibleStyleBridgeStatus,
   resolveDeveloperOnlyAtlasModularBibleStyleBridge
 } from "./developer-only-atlas-modular-bible-style-bridge.mjs";
+import {
+  createDeveloperOnlyAtlasComponentAssemblyRuleProfiles,
+  getDeveloperOnlyAtlasComponentAssemblyRuleProfilesStatus,
+  resolveDeveloperOnlyAtlasComponentAssemblyRuleProfile
+} from "./developer-only-atlas-component-assembly-rule-profiles.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -719,6 +724,11 @@ function freezeStatus(state) {
     assetAssemblyProfileId: state.assetAssemblyProfileId,
     styleBridgeStatus: state.styleBridgeStatus,
     bridgeReason: state.bridgeReason,
+    componentCompatibilityStatus: state.componentCompatibilityStatus,
+    assemblyRuleProfileId: state.assemblyRuleProfileId,
+    requiredComponentCount: state.requiredComponentCount,
+    validatedComponentCount: state.validatedComponentCount,
+    assemblyReason: state.assemblyReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -959,7 +969,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasThemeSubprofileRules =
     createDeveloperOnlyAtlasThemeSubprofileRules(),
   atlasModularBibleStyleBridge =
-    createDeveloperOnlyAtlasModularBibleStyleBridge()
+    createDeveloperOnlyAtlasModularBibleStyleBridge(),
+  atlasComponentAssemblyRuleProfiles =
+    createDeveloperOnlyAtlasComponentAssemblyRuleProfiles()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1129,6 +1141,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasModularBibleStyleBridgeStatus =
     getDeveloperOnlyAtlasModularBibleStyleBridgeStatus(
       atlasModularBibleStyleBridge
+    );
+  const atlasComponentAssemblyRuleProfilesStatus =
+    getDeveloperOnlyAtlasComponentAssemblyRuleProfilesStatus(
+      atlasComponentAssemblyRuleProfiles
     );
 
   const state = {
@@ -1588,6 +1604,21 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasModularBibleStyleBridgeStatus.assetAssemblyProfileId,
     styleBridgeStatus: atlasModularBibleStyleBridgeStatus.styleBridgeStatus,
     bridgeReason: atlasModularBibleStyleBridgeStatus.bridgeReason,
+    atlasComponentAssemblyRuleProfilesVersion:
+      atlasComponentAssemblyRuleProfilesStatus
+        .atlasComponentAssemblyRuleProfilesVersion,
+    registeredComponentAssemblyRuleCount:
+      atlasComponentAssemblyRuleProfilesStatus
+        .registeredComponentAssemblyRuleCount,
+    componentCompatibilityStatus:
+      atlasComponentAssemblyRuleProfilesStatus.componentCompatibilityStatus,
+    assemblyRuleProfileId:
+      atlasComponentAssemblyRuleProfilesStatus.assemblyRuleProfileId,
+    requiredComponentCount:
+      atlasComponentAssemblyRuleProfilesStatus.requiredComponentCount,
+    validatedComponentCount:
+      atlasComponentAssemblyRuleProfilesStatus.validatedComponentCount,
+    assemblyReason: atlasComponentAssemblyRuleProfilesStatus.assemblyReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1660,6 +1691,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasWorldThemeStyleBundles,
       atlasThemeSubprofileRules,
       atlasModularBibleStyleBridge,
+      atlasComponentAssemblyRuleProfiles,
       placementProvider,
       lastPlan: null
     }
@@ -1927,6 +1959,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.assetAssemblyProfileId = null;
   state.styleBridgeStatus = null;
   state.bridgeReason = null;
+  state.componentCompatibilityStatus = null;
+  state.assemblyRuleProfileId = null;
+  state.requiredComponentCount = 0;
+  state.validatedComponentCount = 0;
+  state.assemblyReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1967,6 +2004,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const worldThemeBundleDecisions = [];
   const themeSubprofileDecisions = [];
   const modularBibleStyleBridgeDecisions = [];
+  const componentAssemblyRuleDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2631,6 +2669,31 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             styleBridgeStatus: "blocked",
             bridgeReason: "MODULAR_BIBLE_STYLE_BRIDGE_UNAVAILABLE"
           });
+    const componentAssemblyRuleResolution =
+      modularBibleStyleBridgeResolution.modularBibleFamilyId &&
+      modularBibleStyleBridgeResolution.componentRecipeId &&
+      modularBibleStyleBridgeResolution.assetAssemblyProfileId &&
+      biomeLocalCharacterResolution.biomeProfileId
+        ? resolveDeveloperOnlyAtlasComponentAssemblyRuleProfile(
+            internal.atlasComponentAssemblyRuleProfiles,
+            {
+              modularBibleFamilyId:
+                modularBibleStyleBridgeResolution.modularBibleFamilyId,
+              componentRecipeId:
+                modularBibleStyleBridgeResolution.componentRecipeId,
+              assetAssemblyProfileId:
+                modularBibleStyleBridgeResolution.assetAssemblyProfileId,
+              featureClass: feature.featureClass,
+              biomeProfileId: biomeLocalCharacterResolution.biomeProfileId
+            }
+          )
+        : deepFreeze({
+            componentCompatibilityStatus: "blocked",
+            assemblyRuleProfileId: null,
+            requiredComponentCount: 0,
+            validatedComponentCount: 0,
+            assemblyReason: "COMPONENT_ASSEMBLY_RULE_UNAVAILABLE"
+          });
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2911,6 +2974,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.styleBridgeStatus =
       modularBibleStyleBridgeResolution.styleBridgeStatus;
     state.bridgeReason = modularBibleStyleBridgeResolution.bridgeReason;
+    state.componentCompatibilityStatus =
+      componentAssemblyRuleResolution.componentCompatibilityStatus;
+    state.assemblyRuleProfileId =
+      componentAssemblyRuleResolution.assemblyRuleProfileId;
+    state.requiredComponentCount =
+      componentAssemblyRuleResolution.requiredComponentCount;
+    state.validatedComponentCount =
+      componentAssemblyRuleResolution.validatedComponentCount;
+    state.assemblyReason = componentAssemblyRuleResolution.assemblyReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -3160,6 +3232,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         styleBridgeStatus:
           modularBibleStyleBridgeResolution.styleBridgeStatus,
         bridgeReason: modularBibleStyleBridgeResolution.bridgeReason
+      })
+    );
+    componentAssemblyRuleDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        componentCompatibilityStatus:
+          componentAssemblyRuleResolution.componentCompatibilityStatus,
+        assemblyRuleProfileId:
+          componentAssemblyRuleResolution.assemblyRuleProfileId,
+        requiredComponentCount:
+          componentAssemblyRuleResolution.requiredComponentCount,
+        validatedComponentCount:
+          componentAssemblyRuleResolution.validatedComponentCount,
+        assemblyReason: componentAssemblyRuleResolution.assemblyReason
       })
     );
     microClusterAdjacencyDecisions.push(
@@ -3551,6 +3637,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           styleBridgeStatus:
             modularBibleStyleBridgeResolution.styleBridgeStatus,
           bridgeReason: modularBibleStyleBridgeResolution.bridgeReason,
+          componentCompatibilityStatus:
+            componentAssemblyRuleResolution.componentCompatibilityStatus,
+          assemblyRuleProfileId:
+            componentAssemblyRuleResolution.assemblyRuleProfileId,
+          requiredComponentCount:
+            componentAssemblyRuleResolution.requiredComponentCount,
+          validatedComponentCount:
+            componentAssemblyRuleResolution.validatedComponentCount,
+          assemblyReason: componentAssemblyRuleResolution.assemblyReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3859,6 +3954,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           styleBridgeStatus:
             modularBibleStyleBridgeResolution.styleBridgeStatus,
           bridgeReason: modularBibleStyleBridgeResolution.bridgeReason,
+          componentCompatibilityStatus:
+            componentAssemblyRuleResolution.componentCompatibilityStatus,
+          assemblyRuleProfileId:
+            componentAssemblyRuleResolution.assemblyRuleProfileId,
+          requiredComponentCount:
+            componentAssemblyRuleResolution.requiredComponentCount,
+          validatedComponentCount:
+            componentAssemblyRuleResolution.validatedComponentCount,
+          assemblyReason: componentAssemblyRuleResolution.assemblyReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -4164,6 +4268,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         assetAssemblyProfileId: null,
         styleBridgeStatus: "blocked",
         bridgeReason: "PENDING_MODULAR_BIBLE_STYLE_BRIDGE",
+        componentCompatibilityStatus: "blocked",
+        assemblyRuleProfileId: null,
+        requiredComponentCount: 0,
+        validatedComponentCount: 0,
+        assemblyReason: "PENDING_COMPONENT_ASSEMBLY_RULE",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4752,6 +4861,31 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             styleBridgeStatus: "blocked",
             bridgeReason: "MODULAR_BIBLE_STYLE_BRIDGE_UNAVAILABLE"
           });
+    const componentAssemblyRuleCandidateResolution =
+      modularBibleStyleBridgeCandidateResolution.modularBibleFamilyId &&
+      modularBibleStyleBridgeCandidateResolution.componentRecipeId &&
+      modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId &&
+      candidate.biomeProfileId
+        ? resolveDeveloperOnlyAtlasComponentAssemblyRuleProfile(
+            internal.atlasComponentAssemblyRuleProfiles,
+            {
+              modularBibleFamilyId:
+                modularBibleStyleBridgeCandidateResolution.modularBibleFamilyId,
+              componentRecipeId:
+                modularBibleStyleBridgeCandidateResolution.componentRecipeId,
+              assetAssemblyProfileId:
+                modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId,
+              featureClass: candidate.featureClass,
+              biomeProfileId: candidate.biomeProfileId
+            }
+          )
+        : deepFreeze({
+            componentCompatibilityStatus: "blocked",
+            assemblyRuleProfileId: null,
+            requiredComponentCount: 0,
+            validatedComponentCount: 0,
+            assemblyReason: "COMPONENT_ASSEMBLY_RULE_UNAVAILABLE"
+          });
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -5010,6 +5144,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         modularBibleStyleBridgeCandidateResolution.styleBridgeStatus;
       state.bridgeReason =
         modularBibleStyleBridgeCandidateResolution.bridgeReason;
+      state.componentCompatibilityStatus =
+        componentAssemblyRuleCandidateResolution.componentCompatibilityStatus;
+      state.assemblyRuleProfileId =
+        componentAssemblyRuleCandidateResolution.assemblyRuleProfileId;
+      state.requiredComponentCount =
+        componentAssemblyRuleCandidateResolution.requiredComponentCount;
+      state.validatedComponentCount =
+        componentAssemblyRuleCandidateResolution.validatedComponentCount;
+      state.assemblyReason =
+        componentAssemblyRuleCandidateResolution.assemblyReason;
     }
 
     acceptedPlacements.push(
@@ -5137,6 +5281,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         styleBridgeStatus:
           modularBibleStyleBridgeCandidateResolution.styleBridgeStatus,
         bridgeReason: modularBibleStyleBridgeCandidateResolution.bridgeReason,
+        componentCompatibilityStatus:
+          componentAssemblyRuleCandidateResolution.componentCompatibilityStatus,
+        assemblyRuleProfileId:
+          componentAssemblyRuleCandidateResolution.assemblyRuleProfileId,
+        requiredComponentCount:
+          componentAssemblyRuleCandidateResolution.requiredComponentCount,
+        validatedComponentCount:
+          componentAssemblyRuleCandidateResolution.validatedComponentCount,
+        assemblyReason: componentAssemblyRuleCandidateResolution.assemblyReason,
         microClusterId: microClusterCandidateResolution.microClusterId,
         clusterType: microClusterCandidateResolution.clusterType,
         childAssetCount: microClusterCandidateResolution.childAssetCount,
@@ -5421,6 +5574,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     modularBibleStyleBridgeDecisions: deepFreeze(
       modularBibleStyleBridgeDecisions
     ),
+    componentAssemblyRuleDecisions: deepFreeze(componentAssemblyRuleDecisions),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
@@ -5606,6 +5760,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       assetAssemblyProfileId: null,
       styleBridgeStatus: null,
       bridgeReason: null,
+      atlasComponentAssemblyRuleProfilesVersion: null,
+      registeredComponentAssemblyRuleCount: 0,
+      componentCompatibilityStatus: null,
+      assemblyRuleProfileId: null,
+      requiredComponentCount: 0,
+      validatedComponentCount: 0,
+      assemblyReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
