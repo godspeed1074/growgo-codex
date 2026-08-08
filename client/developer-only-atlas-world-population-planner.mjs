@@ -258,6 +258,11 @@ import {
   getDeveloperOnlyAtlasExportContractNamingProfilesStatus,
   resolveDeveloperOnlyAtlasExportContractNamingProfile
 } from "./developer-only-atlas-export-contract-naming-profiles.mjs";
+import {
+  createDeveloperOnlyAtlasAssetFactoryPackageManifests,
+  getDeveloperOnlyAtlasAssetFactoryPackageManifestsStatus,
+  resolveDeveloperOnlyAtlasAssetFactoryPackageManifest
+} from "./developer-only-atlas-asset-factory-package-manifests.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -808,6 +813,15 @@ function freezeStatus(state) {
     glbExportProfileId: state.glbExportProfileId,
     assetVersionPolicy: state.assetVersionPolicy,
     exportContractReason: state.exportContractReason,
+    atlasAssetFactoryPackageManifestsVersion:
+      state.atlasAssetFactoryPackageManifestsVersion,
+    registeredAssetFactoryManifestRuleCount:
+      state.registeredAssetFactoryManifestRuleCount,
+    assetPackageManifestId: state.assetPackageManifestId,
+    exportValidationProfileId: state.exportValidationProfileId,
+    manifestComponentCount: state.manifestComponentCount,
+    manifestValidationStatus: state.manifestValidationStatus,
+    manifestReason: state.manifestReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -1064,7 +1078,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasAttachmentMetadataGlbPreparation =
     createDeveloperOnlyAtlasAttachmentMetadataGlbPreparation(),
   atlasExportContractNamingProfiles =
-    createDeveloperOnlyAtlasExportContractNamingProfiles()
+    createDeveloperOnlyAtlasExportContractNamingProfiles(),
+  atlasAssetFactoryPackageManifests =
+    createDeveloperOnlyAtlasAssetFactoryPackageManifests()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1266,6 +1282,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasExportContractNamingProfilesStatus =
     getDeveloperOnlyAtlasExportContractNamingProfilesStatus(
       atlasExportContractNamingProfiles
+    );
+  const atlasAssetFactoryPackageManifestsStatus =
+    getDeveloperOnlyAtlasAssetFactoryPackageManifestsStatus(
+      atlasAssetFactoryPackageManifests
     );
 
   const state = {
@@ -1843,6 +1863,21 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasExportContractNamingProfilesStatus.assetVersionPolicy,
     exportContractReason:
       atlasExportContractNamingProfilesStatus.exportContractReason,
+    atlasAssetFactoryPackageManifestsVersion:
+      atlasAssetFactoryPackageManifestsStatus
+        .atlasAssetFactoryPackageManifestsVersion,
+    registeredAssetFactoryManifestRuleCount:
+      atlasAssetFactoryPackageManifestsStatus
+        .registeredAssetFactoryManifestRuleCount,
+    assetPackageManifestId:
+      atlasAssetFactoryPackageManifestsStatus.assetPackageManifestId,
+    exportValidationProfileId:
+      atlasAssetFactoryPackageManifestsStatus.exportValidationProfileId,
+    manifestComponentCount:
+      atlasAssetFactoryPackageManifestsStatus.manifestComponentCount,
+    manifestValidationStatus:
+      atlasAssetFactoryPackageManifestsStatus.manifestValidationStatus,
+    manifestReason: atlasAssetFactoryPackageManifestsStatus.manifestReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1923,6 +1958,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasComponentSurfaceMapping,
       atlasAttachmentMetadataGlbPreparation,
       atlasExportContractNamingProfiles,
+      atlasAssetFactoryPackageManifests,
       placementProvider,
       lastPlan: null
     }
@@ -2230,6 +2266,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.glbExportProfileId = null;
   state.assetVersionPolicy = null;
   state.exportContractReason = null;
+  state.assetPackageManifestId = null;
+  state.exportValidationProfileId = null;
+  state.manifestComponentCount = 0;
+  state.manifestValidationStatus = null;
+  state.manifestReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2278,6 +2319,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const componentSurfaceMappingDecisions = [];
   const attachmentMetadataDecisions = [];
   const exportContractDecisions = [];
+  const assetFactoryManifestDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -3154,6 +3196,33 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             exportContractReason:
               "EXPORT_CONTRACT_NAMING_PROFILE_UNAVAILABLE"
           };
+    const assetFactoryManifestResolution =
+      exportContractResolution.exportContractId &&
+      modularAssetBindingResolution.selectedAssetId &&
+      modularBibleStyleBridgeResolution.componentRecipeId &&
+      materialSlotResolution.materialSlotSetId &&
+      attachmentMetadataResolution.attachmentMetadataProfileId
+        ? resolveDeveloperOnlyAtlasAssetFactoryPackageManifest(
+            internal.atlasAssetFactoryPackageManifests,
+            {
+              exportContractId: exportContractResolution.exportContractId,
+              selectedAssetId: modularAssetBindingResolution.selectedAssetId,
+              componentRecipeId:
+                modularBibleStyleBridgeResolution.componentRecipeId,
+              materialSlotSetId: materialSlotResolution.materialSlotSetId,
+              attachmentMetadataProfileId:
+                attachmentMetadataResolution.attachmentMetadataProfileId
+            }
+          )
+        : {
+            matched: false,
+            assetPackageManifestId: null,
+            exportValidationProfileId: null,
+            manifestComponentCount: 0,
+            manifestValidationStatus: "blocked",
+            manifestReason:
+              "ASSET_FACTORY_PACKAGE_MANIFEST_UNAVAILABLE"
+          };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -3298,6 +3367,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.glbExportProfileId = exportContractResolution.glbExportProfileId;
     state.assetVersionPolicy = exportContractResolution.assetVersionPolicy;
     state.exportContractReason = exportContractResolution.exportContractReason;
+    state.assetPackageManifestId =
+      assetFactoryManifestResolution.assetPackageManifestId;
+    state.exportValidationProfileId =
+      assetFactoryManifestResolution.exportValidationProfileId;
+    state.manifestComponentCount =
+      assetFactoryManifestResolution.manifestComponentCount;
+    state.manifestValidationStatus =
+      assetFactoryManifestResolution.manifestValidationStatus;
+    state.manifestReason = assetFactoryManifestResolution.manifestReason;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3857,6 +3935,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         exportContractReason: exportContractResolution.exportContractReason
       })
     );
+    assetFactoryManifestDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        assetPackageManifestId:
+          assetFactoryManifestResolution.assetPackageManifestId,
+        exportValidationProfileId:
+          assetFactoryManifestResolution.exportValidationProfileId,
+        manifestComponentCount:
+          assetFactoryManifestResolution.manifestComponentCount,
+        manifestValidationStatus:
+          assetFactoryManifestResolution.manifestValidationStatus,
+        manifestReason: assetFactoryManifestResolution.manifestReason
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -4249,6 +4341,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           glbExportProfileId: exportContractResolution.glbExportProfileId,
           assetVersionPolicy: exportContractResolution.assetVersionPolicy,
           exportContractReason: exportContractResolution.exportContractReason,
+          assetPackageManifestId:
+            assetFactoryManifestResolution.assetPackageManifestId,
+          exportValidationProfileId:
+            assetFactoryManifestResolution.exportValidationProfileId,
+          manifestComponentCount:
+            assetFactoryManifestResolution.manifestComponentCount,
+          manifestValidationStatus:
+            assetFactoryManifestResolution.manifestValidationStatus,
+          manifestReason: assetFactoryManifestResolution.manifestReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4625,6 +4726,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           glbExportProfileId: exportContractResolution.glbExportProfileId,
           assetVersionPolicy: exportContractResolution.assetVersionPolicy,
           exportContractReason: exportContractResolution.exportContractReason,
+          assetPackageManifestId:
+            assetFactoryManifestResolution.assetPackageManifestId,
+          exportValidationProfileId:
+            assetFactoryManifestResolution.exportValidationProfileId,
+          manifestComponentCount:
+            assetFactoryManifestResolution.manifestComponentCount,
+          manifestValidationStatus:
+            assetFactoryManifestResolution.manifestValidationStatus,
+          manifestReason: assetFactoryManifestResolution.manifestReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -5037,6 +5147,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         glbExportProfileId: null,
         assetVersionPolicy: null,
         exportContractReason: "PENDING_EXPORT_CONTRACT_NAMING_PROFILE",
+        assetPackageManifestId: null,
+        exportValidationProfileId: null,
+        manifestComponentCount: 0,
+        manifestValidationStatus: "blocked",
+        manifestReason: "PENDING_ASSET_FACTORY_PACKAGE_MANIFEST",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -5833,6 +5948,36 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             exportContractReason:
               "EXPORT_CONTRACT_NAMING_PROFILE_UNAVAILABLE"
           };
+    const assetFactoryManifestCandidateResolution =
+      exportContractCandidateResolution.exportContractId &&
+      modularCandidateBindingResolution.selectedAssetId &&
+      modularBibleStyleBridgeCandidateResolution.componentRecipeId &&
+      materialSlotCandidateResolution.materialSlotSetId &&
+      attachmentMetadataCandidateResolution.attachmentMetadataProfileId
+        ? resolveDeveloperOnlyAtlasAssetFactoryPackageManifest(
+            internal.atlasAssetFactoryPackageManifests,
+            {
+              exportContractId:
+                exportContractCandidateResolution.exportContractId,
+              selectedAssetId:
+                modularCandidateBindingResolution.selectedAssetId,
+              componentRecipeId:
+                modularBibleStyleBridgeCandidateResolution.componentRecipeId,
+              materialSlotSetId:
+                materialSlotCandidateResolution.materialSlotSetId,
+              attachmentMetadataProfileId:
+                attachmentMetadataCandidateResolution.attachmentMetadataProfileId
+            }
+          )
+        : {
+            matched: false,
+            assetPackageManifestId: null,
+            exportValidationProfileId: null,
+            manifestComponentCount: 0,
+            manifestValidationStatus: "blocked",
+            manifestReason:
+              "ASSET_FACTORY_PACKAGE_MANIFEST_UNAVAILABLE"
+          };
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -6171,6 +6316,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         exportContractCandidateResolution.assetVersionPolicy;
       state.exportContractReason =
         exportContractCandidateResolution.exportContractReason;
+      state.assetPackageManifestId =
+        assetFactoryManifestCandidateResolution.assetPackageManifestId;
+      state.exportValidationProfileId =
+        assetFactoryManifestCandidateResolution.exportValidationProfileId;
+      state.manifestComponentCount =
+        assetFactoryManifestCandidateResolution.manifestComponentCount;
+      state.manifestValidationStatus =
+        assetFactoryManifestCandidateResolution.manifestValidationStatus;
+      state.manifestReason =
+        assetFactoryManifestCandidateResolution.manifestReason;
     }
 
     acceptedPlacements.push(
@@ -6306,6 +6461,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           exportContractCandidateResolution.assetVersionPolicy,
         exportContractReason:
           exportContractCandidateResolution.exportContractReason,
+        assetPackageManifestId:
+          assetFactoryManifestCandidateResolution.assetPackageManifestId,
+        exportValidationProfileId:
+          assetFactoryManifestCandidateResolution.exportValidationProfileId,
+        manifestComponentCount:
+          assetFactoryManifestCandidateResolution.manifestComponentCount,
+        manifestValidationStatus:
+          assetFactoryManifestCandidateResolution.manifestValidationStatus,
+        manifestReason:
+          assetFactoryManifestCandidateResolution.manifestReason,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -6704,6 +6869,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     componentSurfaceMappingDecisions: deepFreeze(componentSurfaceMappingDecisions),
     attachmentMetadataDecisions: deepFreeze(attachmentMetadataDecisions),
     exportContractDecisions: deepFreeze(exportContractDecisions),
+    assetFactoryManifestDecisions: deepFreeze(assetFactoryManifestDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -6912,6 +7078,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       glbExportProfileId: null,
       assetVersionPolicy: null,
       exportContractReason: null,
+      atlasAssetFactoryPackageManifestsVersion: null,
+      registeredAssetFactoryManifestRuleCount: 0,
+      assetPackageManifestId: null,
+      exportValidationProfileId: null,
+      manifestComponentCount: 0,
+      manifestValidationStatus: null,
+      manifestReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
