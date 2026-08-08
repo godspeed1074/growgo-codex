@@ -33,6 +33,11 @@ import {
   getDeveloperOnlyAtlasPopulationNeighborhoodPatternRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationNeighborhoodPattern
 } from "./developer-only-atlas-population-neighborhood-pattern-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistry,
+  getDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationDistrictComposition
+} from "./developer-only-atlas-population-district-composition-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -225,6 +230,13 @@ function freezeStatus(state) {
     patternSeed: state.patternSeed,
     generatedContextCount: state.generatedContextCount,
     patternDecisionReason: state.patternDecisionReason,
+    districtCompositionVersion: state.districtCompositionVersion,
+    registeredDistrictRuleCount: state.registeredDistrictRuleCount,
+    districtId: state.districtId,
+    districtType: state.districtType,
+    settlementPatternId: state.settlementPatternId,
+    districtTransitionReason: state.districtTransitionReason,
+    compositionSeed: state.compositionSeed,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -391,7 +403,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationContextualWorldFillRuleRegistry =
     createDeveloperOnlyAtlasPopulationContextualWorldFillRuleRegistry(),
   populationNeighborhoodPatternRuleRegistry =
-    createDeveloperOnlyAtlasPopulationNeighborhoodPatternRuleRegistry()
+    createDeveloperOnlyAtlasPopulationNeighborhoodPatternRuleRegistry(),
+  populationDistrictCompositionRuleRegistry =
+    createDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -413,6 +427,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const neighborhoodPatternRegistryStatus =
     getDeveloperOnlyAtlasPopulationNeighborhoodPatternRuleRegistryStatus(
       populationNeighborhoodPatternRuleRegistry
+    );
+  const districtCompositionRegistryStatus =
+    getDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistryStatus(
+      populationDistrictCompositionRuleRegistry
     );
 
   const state = {
@@ -449,6 +467,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       neighborhoodPatternRegistryStatus.generatedContextCount,
     patternDecisionReason:
       neighborhoodPatternRegistryStatus.patternDecisionReason,
+    districtCompositionVersion:
+      districtCompositionRegistryStatus.districtCompositionVersion,
+    registeredDistrictRuleCount:
+      districtCompositionRegistryStatus.registeredDistrictRuleCount,
+    districtId: districtCompositionRegistryStatus.districtId,
+    districtType: districtCompositionRegistryStatus.districtType,
+    settlementPatternId:
+      districtCompositionRegistryStatus.settlementPatternId,
+    districtTransitionReason:
+      districtCompositionRegistryStatus.districtTransitionReason,
+    compositionSeed: districtCompositionRegistryStatus.compositionSeed,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -484,6 +513,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationRelationshipRuleRegistry,
       populationContextualWorldFillRuleRegistry,
       populationNeighborhoodPatternRuleRegistry,
+      populationDistrictCompositionRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -567,6 +597,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.patternSeed = null;
   state.generatedContextCount = 0;
   state.patternDecisionReason = null;
+  state.districtId = null;
+  state.districtType = null;
+  state.settlementPatternId = null;
+  state.districtTransitionReason = null;
+  state.compositionSeed = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -591,6 +626,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const relationshipDecisions = [];
   const contextualWorldFillDecisions = [];
   const neighborhoodPatternDecisions = [];
+  const districtCompositionDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -668,6 +704,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           contextualWorldFillResolution
         }
       );
+    const districtCompositionResolution =
+      resolveDeveloperOnlyAtlasPopulationDistrictComposition(
+        internal.populationDistrictCompositionRuleRegistry,
+        {
+          feature,
+          selectorSeed,
+          worldFillCategory: contextualWorldFillResolution.worldFillCategory,
+          neighborhoodPatternId:
+            neighborhoodPatternResolution.neighborhoodPatternId,
+          patternCategory: neighborhoodPatternResolution.patternCategory
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -686,6 +734,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       neighborhoodPatternResolution.generatedContextCount;
     state.patternDecisionReason =
       neighborhoodPatternResolution.patternDecisionReason;
+    state.districtId = districtCompositionResolution.districtId;
+    state.districtType = districtCompositionResolution.districtType;
+    state.settlementPatternId =
+      districtCompositionResolution.settlementPatternId;
+    state.districtTransitionReason =
+      districtCompositionResolution.districtTransitionReason;
+    state.compositionSeed = districtCompositionResolution.compositionSeed;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -738,6 +793,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           neighborhoodPatternResolution.patternDecisionReason
       })
     );
+    districtCompositionDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        districtId: districtCompositionResolution.districtId,
+        districtType: districtCompositionResolution.districtType,
+        settlementPatternId:
+          districtCompositionResolution.settlementPatternId,
+        districtTransitionReason:
+          districtCompositionResolution.districtTransitionReason,
+        compositionSeed: districtCompositionResolution.compositionSeed
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -762,6 +829,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             neighborhoodPatternResolution.generatedContextCount,
           patternDecisionReason:
             neighborhoodPatternResolution.patternDecisionReason,
+          districtId: districtCompositionResolution.districtId,
+          districtType: districtCompositionResolution.districtType,
+          settlementPatternId:
+            districtCompositionResolution.settlementPatternId,
+          districtTransitionReason:
+            districtCompositionResolution.districtTransitionReason,
+          compositionSeed: districtCompositionResolution.compositionSeed,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -805,6 +879,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             neighborhoodPatternResolution.generatedContextCount,
           patternDecisionReason:
             neighborhoodPatternResolution.patternDecisionReason,
+          districtId: districtCompositionResolution.districtId,
+          districtType: districtCompositionResolution.districtType,
+          settlementPatternId:
+            districtCompositionResolution.settlementPatternId,
+          districtTransitionReason:
+            districtCompositionResolution.districtTransitionReason,
+          compositionSeed: districtCompositionResolution.compositionSeed,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -895,6 +976,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         patternSeed: neighborhoodPatternResolution.patternSeed,
         patternDecisionReason:
           neighborhoodPatternResolution.patternDecisionReason,
+        districtId: districtCompositionResolution.districtId,
+        districtType: districtCompositionResolution.districtType,
+        settlementPatternId:
+          districtCompositionResolution.settlementPatternId,
+        districtTransitionReason:
+          districtCompositionResolution.districtTransitionReason,
+        compositionSeed: districtCompositionResolution.compositionSeed,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -1022,6 +1110,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         patternCategory: candidate.patternCategory,
         patternSeed: candidate.patternSeed,
         patternDecisionReason: candidate.patternDecisionReason,
+        districtId: candidate.districtId,
+        districtType: candidate.districtType,
+        settlementPatternId: candidate.settlementPatternId,
+        districtTransitionReason: candidate.districtTransitionReason,
+        compositionSeed: candidate.compositionSeed,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -1094,6 +1187,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     relationshipDecisions: deepFreeze(relationshipDecisions),
     contextualWorldFillDecisions: deepFreeze(contextualWorldFillDecisions),
     neighborhoodPatternDecisions: deepFreeze(neighborhoodPatternDecisions),
+    districtCompositionDecisions: deepFreeze(districtCompositionDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -1134,6 +1228,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       patternSeed: null,
       generatedContextCount: 0,
       patternDecisionReason: null,
+      districtCompositionVersion: null,
+      registeredDistrictRuleCount: 0,
+      districtId: null,
+      districtType: null,
+      settlementPatternId: null,
+      districtTransitionReason: null,
+      compositionSeed: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
