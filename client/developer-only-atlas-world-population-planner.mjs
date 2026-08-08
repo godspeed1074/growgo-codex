@@ -113,6 +113,11 @@ import {
   getDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooks
 } from "./developer-only-atlas-population-place-memory-narrative-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooks
+} from "./developer-only-atlas-population-seasonal-story-memory-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -422,6 +427,14 @@ function freezeStatus(state) {
     localNarrativeProfileId: state.localNarrativeProfileId,
     discoveryImportance: state.discoveryImportance,
     storyReason: state.storyReason,
+    seasonalStoryMemoryVersion: state.seasonalStoryMemoryVersion,
+    registeredSeasonalStoryMemoryRuleCount:
+      state.registeredSeasonalStoryMemoryRuleCount,
+    memoryStateId: state.memoryStateId,
+    seasonalStoryProfileId: state.seasonalStoryProfileId,
+    eventHookProfileId: state.eventHookProfileId,
+    returnVisitCategory: state.returnVisitCategory,
+    storyEvolutionReason: state.storyEvolutionReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -620,7 +633,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationRouteMemoryWayfindingGuidanceRuleRegistry =
     createDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistry(),
   populationPlaceMemoryNarrativeHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistry(),
+  populationSeasonalStoryMemoryHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -706,6 +721,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const placeMemoryRegistryStatus =
     getDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistryStatus(
       populationPlaceMemoryNarrativeHooksRuleRegistry
+    );
+  const seasonalStoryMemoryRegistryStatus =
+    getDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooksRuleRegistryStatus(
+      populationSeasonalStoryMemoryHooksRuleRegistry
     );
 
   const state = {
@@ -910,6 +929,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       placeMemoryRegistryStatus.localNarrativeProfileId,
     discoveryImportance: placeMemoryRegistryStatus.discoveryImportance,
     storyReason: placeMemoryRegistryStatus.storyReason,
+    seasonalStoryMemoryVersion:
+      seasonalStoryMemoryRegistryStatus.seasonalStoryMemoryVersion,
+    registeredSeasonalStoryMemoryRuleCount:
+      seasonalStoryMemoryRegistryStatus
+        .registeredSeasonalStoryMemoryRuleCount,
+    memoryStateId: seasonalStoryMemoryRegistryStatus.memoryStateId,
+    seasonalStoryProfileId:
+      seasonalStoryMemoryRegistryStatus.seasonalStoryProfileId,
+    eventHookProfileId:
+      seasonalStoryMemoryRegistryStatus.eventHookProfileId,
+    returnVisitCategory:
+      seasonalStoryMemoryRegistryStatus.returnVisitCategory,
+    storyEvolutionReason:
+      seasonalStoryMemoryRegistryStatus.storyEvolutionReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -961,6 +994,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationViewCorridorDestinationFramingRuleRegistry,
       populationRouteMemoryWayfindingGuidanceRuleRegistry,
       populationPlaceMemoryNarrativeHooksRuleRegistry,
+      populationSeasonalStoryMemoryHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1123,6 +1157,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.localNarrativeProfileId = null;
   state.discoveryImportance = null;
   state.storyReason = null;
+  state.memoryStateId = null;
+  state.seasonalStoryProfileId = null;
+  state.eventHookProfileId = null;
+  state.returnVisitCategory = null;
+  state.storyEvolutionReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1163,6 +1202,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const destinationFramingDecisions = [];
   const routeGuidanceDecisions = [];
   const placeMemoryDecisions = [];
+  const seasonalStoryMemoryDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1471,6 +1511,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             settlementIdentityStyleCohesionResolution.settlementIdentityId
         }
       );
+    const seasonalStoryMemoryResolution =
+      resolveDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooks(
+        internal.populationSeasonalStoryMemoryHooksRuleRegistry,
+        {
+          seasonProfileId: seasonalEnvironmentResolution.seasonProfileId,
+          biomeProfileId: biomeLocalCharacterResolution.biomeProfileId,
+          storyCategory: placeMemoryResolution.storyCategory
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1594,6 +1643,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       placeMemoryResolution.localNarrativeProfileId;
     state.discoveryImportance = placeMemoryResolution.discoveryImportance;
     state.storyReason = placeMemoryResolution.storyReason;
+    state.memoryStateId = seasonalStoryMemoryResolution.memoryStateId;
+    state.seasonalStoryProfileId =
+      seasonalStoryMemoryResolution.seasonalStoryProfileId;
+    state.eventHookProfileId = seasonalStoryMemoryResolution.eventHookProfileId;
+    state.returnVisitCategory =
+      seasonalStoryMemoryResolution.returnVisitCategory;
+    state.storyEvolutionReason =
+      seasonalStoryMemoryResolution.storyEvolutionReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1832,6 +1889,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         storyReason: placeMemoryResolution.storyReason
       })
     );
+    seasonalStoryMemoryDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        memoryStateId: seasonalStoryMemoryResolution.memoryStateId,
+        seasonalStoryProfileId:
+          seasonalStoryMemoryResolution.seasonalStoryProfileId,
+        eventHookProfileId: seasonalStoryMemoryResolution.eventHookProfileId,
+        returnVisitCategory:
+          seasonalStoryMemoryResolution.returnVisitCategory,
+        storyEvolutionReason:
+          seasonalStoryMemoryResolution.storyEvolutionReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1961,6 +2031,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             placeMemoryResolution.localNarrativeProfileId,
           discoveryImportance: placeMemoryResolution.discoveryImportance,
           storyReason: placeMemoryResolution.storyReason,
+          memoryStateId: seasonalStoryMemoryResolution.memoryStateId,
+          seasonalStoryProfileId:
+            seasonalStoryMemoryResolution.seasonalStoryProfileId,
+          eventHookProfileId:
+            seasonalStoryMemoryResolution.eventHookProfileId,
+          returnVisitCategory:
+            seasonalStoryMemoryResolution.returnVisitCategory,
+          storyEvolutionReason:
+            seasonalStoryMemoryResolution.storyEvolutionReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2109,6 +2188,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             placeMemoryResolution.localNarrativeProfileId,
           discoveryImportance: placeMemoryResolution.discoveryImportance,
           storyReason: placeMemoryResolution.storyReason,
+          memoryStateId: seasonalStoryMemoryResolution.memoryStateId,
+          seasonalStoryProfileId:
+            seasonalStoryMemoryResolution.seasonalStoryProfileId,
+          eventHookProfileId:
+            seasonalStoryMemoryResolution.eventHookProfileId,
+          returnVisitCategory:
+            seasonalStoryMemoryResolution.returnVisitCategory,
+          storyEvolutionReason:
+            seasonalStoryMemoryResolution.storyEvolutionReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2512,6 +2600,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           settlementIdentityId: candidate.settlementIdentityId
         }
       );
+    const seasonalStoryMemoryCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationSeasonalStoryMemoryHooks(
+        internal.populationSeasonalStoryMemoryHooksRuleRegistry,
+        {
+          seasonProfileId: candidate.seasonProfileId,
+          biomeProfileId: candidate.biomeProfileId,
+          storyCategory: placeMemoryCandidateResolution.storyCategory
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2565,6 +2662,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       state.discoveryImportance =
         placeMemoryCandidateResolution.discoveryImportance;
       state.storyReason = placeMemoryCandidateResolution.storyReason;
+      state.memoryStateId = seasonalStoryMemoryCandidateResolution.memoryStateId;
+      state.seasonalStoryProfileId =
+        seasonalStoryMemoryCandidateResolution.seasonalStoryProfileId;
+      state.eventHookProfileId =
+        seasonalStoryMemoryCandidateResolution.eventHookProfileId;
+      state.returnVisitCategory =
+        seasonalStoryMemoryCandidateResolution.returnVisitCategory;
+      state.storyEvolutionReason =
+        seasonalStoryMemoryCandidateResolution.storyEvolutionReason;
     }
 
     acceptedPlacements.push(
@@ -2678,6 +2784,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         discoveryImportance:
           placeMemoryCandidateResolution.discoveryImportance,
         storyReason: placeMemoryCandidateResolution.storyReason,
+        memoryStateId: seasonalStoryMemoryCandidateResolution.memoryStateId,
+        seasonalStoryProfileId:
+          seasonalStoryMemoryCandidateResolution.seasonalStoryProfileId,
+        eventHookProfileId:
+          seasonalStoryMemoryCandidateResolution.eventHookProfileId,
+        returnVisitCategory:
+          seasonalStoryMemoryCandidateResolution.returnVisitCategory,
+        storyEvolutionReason:
+          seasonalStoryMemoryCandidateResolution.storyEvolutionReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -2772,6 +2887,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     destinationFramingDecisions: deepFreeze(destinationFramingDecisions),
     routeGuidanceDecisions: deepFreeze(routeGuidanceDecisions),
     placeMemoryDecisions: deepFreeze(placeMemoryDecisions),
+    seasonalStoryMemoryDecisions: deepFreeze(seasonalStoryMemoryDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2923,6 +3039,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       localNarrativeProfileId: null,
       discoveryImportance: null,
       storyReason: null,
+      seasonalStoryMemoryVersion: null,
+      registeredSeasonalStoryMemoryRuleCount: 0,
+      memoryStateId: null,
+      seasonalStoryProfileId: null,
+      eventHookProfileId: null,
+      returnVisitCategory: null,
+      storyEvolutionReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
