@@ -213,6 +213,11 @@ import {
   getDeveloperOnlyAtlasThemeSubprofileRulesStatus,
   resolveDeveloperOnlyAtlasThemeSubprofile
 } from "./developer-only-atlas-theme-subprofile-rules.mjs";
+import {
+  createDeveloperOnlyAtlasModularBibleStyleBridge,
+  getDeveloperOnlyAtlasModularBibleStyleBridgeStatus,
+  resolveDeveloperOnlyAtlasModularBibleStyleBridge
+} from "./developer-only-atlas-modular-bible-style-bridge.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -706,6 +711,14 @@ function freezeStatus(state) {
     streetscapeStyleProfileId: state.streetscapeStyleProfileId,
     themeSubprofileCompatibility: state.themeSubprofileCompatibility,
     styleSubprofileReason: state.styleSubprofileReason,
+    atlasModularBibleStyleBridgeVersion:
+      state.atlasModularBibleStyleBridgeVersion,
+    registeredStyleBridgeRuleCount: state.registeredStyleBridgeRuleCount,
+    modularBibleFamilyId: state.modularBibleFamilyId,
+    componentRecipeId: state.componentRecipeId,
+    assetAssemblyProfileId: state.assetAssemblyProfileId,
+    styleBridgeStatus: state.styleBridgeStatus,
+    bridgeReason: state.bridgeReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -944,7 +957,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasWorldThemeStyleBundles =
     createDeveloperOnlyAtlasWorldThemeStyleBundles(),
   atlasThemeSubprofileRules =
-    createDeveloperOnlyAtlasThemeSubprofileRules()
+    createDeveloperOnlyAtlasThemeSubprofileRules(),
+  atlasModularBibleStyleBridge =
+    createDeveloperOnlyAtlasModularBibleStyleBridge()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1110,6 +1125,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasThemeSubprofileRulesStatus =
     getDeveloperOnlyAtlasThemeSubprofileRulesStatus(
       atlasThemeSubprofileRules
+    );
+  const atlasModularBibleStyleBridgeStatus =
+    getDeveloperOnlyAtlasModularBibleStyleBridgeStatus(
+      atlasModularBibleStyleBridge
     );
 
   const state = {
@@ -1558,6 +1577,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasThemeSubprofileRulesStatus.themeSubprofileCompatibility,
     styleSubprofileReason:
       atlasThemeSubprofileRulesStatus.styleSubprofileReason,
+    atlasModularBibleStyleBridgeVersion:
+      atlasModularBibleStyleBridgeStatus.atlasModularBibleStyleBridgeVersion,
+    registeredStyleBridgeRuleCount:
+      atlasModularBibleStyleBridgeStatus.registeredStyleBridgeRuleCount,
+    modularBibleFamilyId:
+      atlasModularBibleStyleBridgeStatus.modularBibleFamilyId,
+    componentRecipeId: atlasModularBibleStyleBridgeStatus.componentRecipeId,
+    assetAssemblyProfileId:
+      atlasModularBibleStyleBridgeStatus.assetAssemblyProfileId,
+    styleBridgeStatus: atlasModularBibleStyleBridgeStatus.styleBridgeStatus,
+    bridgeReason: atlasModularBibleStyleBridgeStatus.bridgeReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1629,6 +1659,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasAssetBiomeSettlementPackageProfiles,
       atlasWorldThemeStyleBundles,
       atlasThemeSubprofileRules,
+      atlasModularBibleStyleBridge,
       placementProvider,
       lastPlan: null
     }
@@ -1891,6 +1922,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.streetscapeStyleProfileId = null;
   state.themeSubprofileCompatibility = null;
   state.styleSubprofileReason = null;
+  state.modularBibleFamilyId = null;
+  state.componentRecipeId = null;
+  state.assetAssemblyProfileId = null;
+  state.styleBridgeStatus = null;
+  state.bridgeReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1930,6 +1966,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const packageProfileDecisions = [];
   const worldThemeBundleDecisions = [];
   const themeSubprofileDecisions = [];
+  const modularBibleStyleBridgeDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2565,6 +2602,35 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             themeSubprofileCompatibility: "blocked",
             styleSubprofileReason: "THEME_SUBPROFILE_UNAVAILABLE"
           });
+    const modularBibleStyleBridgeResolution =
+      themeSubprofileResolution.architectureStyleProfileId &&
+      assetFamilyMaterialCohesionResolution.assetFamilyId &&
+      assetFamilyMaterialCohesionResolution.materialFamilyId &&
+      assetFamilyMaterialCohesionResolution.paletteProfileId
+        ? resolveDeveloperOnlyAtlasModularBibleStyleBridge(
+            internal.atlasModularBibleStyleBridge,
+            {
+              worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+              assetFamilyId: assetFamilyMaterialCohesionResolution.assetFamilyId,
+              architectureStyleProfileId:
+                themeSubprofileResolution.architectureStyleProfileId,
+              vegetationStyleProfileId:
+                themeSubprofileResolution.vegetationStyleProfileId,
+              streetscapeStyleProfileId:
+                themeSubprofileResolution.streetscapeStyleProfileId,
+              materialFamilyId:
+                assetFamilyMaterialCohesionResolution.materialFamilyId,
+              paletteProfileId:
+                assetFamilyMaterialCohesionResolution.paletteProfileId
+            }
+          )
+        : deepFreeze({
+            modularBibleFamilyId: null,
+            componentRecipeId: null,
+            assetAssemblyProfileId: null,
+            styleBridgeStatus: "blocked",
+            bridgeReason: "MODULAR_BIBLE_STYLE_BRIDGE_UNAVAILABLE"
+          });
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2836,6 +2902,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       themeSubprofileResolution.themeSubprofileCompatibility;
     state.styleSubprofileReason =
       themeSubprofileResolution.styleSubprofileReason;
+    state.modularBibleFamilyId =
+      modularBibleStyleBridgeResolution.modularBibleFamilyId;
+    state.componentRecipeId =
+      modularBibleStyleBridgeResolution.componentRecipeId;
+    state.assetAssemblyProfileId =
+      modularBibleStyleBridgeResolution.assetAssemblyProfileId;
+    state.styleBridgeStatus =
+      modularBibleStyleBridgeResolution.styleBridgeStatus;
+    state.bridgeReason = modularBibleStyleBridgeResolution.bridgeReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -3072,6 +3147,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           themeSubprofileResolution.themeSubprofileCompatibility,
         styleSubprofileReason:
           themeSubprofileResolution.styleSubprofileReason
+      })
+    );
+    modularBibleStyleBridgeDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        modularBibleFamilyId:
+          modularBibleStyleBridgeResolution.modularBibleFamilyId,
+        componentRecipeId: modularBibleStyleBridgeResolution.componentRecipeId,
+        assetAssemblyProfileId:
+          modularBibleStyleBridgeResolution.assetAssemblyProfileId,
+        styleBridgeStatus:
+          modularBibleStyleBridgeResolution.styleBridgeStatus,
+        bridgeReason: modularBibleStyleBridgeResolution.bridgeReason
       })
     );
     microClusterAdjacencyDecisions.push(
@@ -3454,6 +3542,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             themeSubprofileResolution.themeSubprofileCompatibility,
           styleSubprofileReason:
             themeSubprofileResolution.styleSubprofileReason,
+          modularBibleFamilyId:
+            modularBibleStyleBridgeResolution.modularBibleFamilyId,
+          componentRecipeId:
+            modularBibleStyleBridgeResolution.componentRecipeId,
+          assetAssemblyProfileId:
+            modularBibleStyleBridgeResolution.assetAssemblyProfileId,
+          styleBridgeStatus:
+            modularBibleStyleBridgeResolution.styleBridgeStatus,
+          bridgeReason: modularBibleStyleBridgeResolution.bridgeReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3753,6 +3850,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             themeSubprofileResolution.themeSubprofileCompatibility,
           styleSubprofileReason:
             themeSubprofileResolution.styleSubprofileReason,
+          modularBibleFamilyId:
+            modularBibleStyleBridgeResolution.modularBibleFamilyId,
+          componentRecipeId:
+            modularBibleStyleBridgeResolution.componentRecipeId,
+          assetAssemblyProfileId:
+            modularBibleStyleBridgeResolution.assetAssemblyProfileId,
+          styleBridgeStatus:
+            modularBibleStyleBridgeResolution.styleBridgeStatus,
+          bridgeReason: modularBibleStyleBridgeResolution.bridgeReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -4053,6 +4159,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         streetscapeStyleProfileId: null,
         themeSubprofileCompatibility: "blocked",
         styleSubprofileReason: "PENDING_THEME_SUBPROFILE_SELECTION",
+        modularBibleFamilyId: null,
+        componentRecipeId: null,
+        assetAssemblyProfileId: null,
+        styleBridgeStatus: "blocked",
+        bridgeReason: "PENDING_MODULAR_BIBLE_STYLE_BRIDGE",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4613,6 +4724,34 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             themeSubprofileCompatibility: "blocked",
             styleSubprofileReason: "THEME_SUBPROFILE_UNAVAILABLE"
           });
+    const modularBibleStyleBridgeCandidateResolution =
+      themeSubprofileCandidateResolution.architectureStyleProfileId &&
+      candidate.assetFamilyId &&
+      candidate.materialFamilyId &&
+      candidate.paletteProfileId
+        ? resolveDeveloperOnlyAtlasModularBibleStyleBridge(
+            internal.atlasModularBibleStyleBridge,
+            {
+              worldThemeProfileId:
+                themeBundleCandidateResolution.worldThemeProfileId,
+              assetFamilyId: candidate.assetFamilyId,
+              architectureStyleProfileId:
+                themeSubprofileCandidateResolution.architectureStyleProfileId,
+              vegetationStyleProfileId:
+                themeSubprofileCandidateResolution.vegetationStyleProfileId,
+              streetscapeStyleProfileId:
+                themeSubprofileCandidateResolution.streetscapeStyleProfileId,
+              materialFamilyId: candidate.materialFamilyId,
+              paletteProfileId: candidate.paletteProfileId
+            }
+          )
+        : deepFreeze({
+            modularBibleFamilyId: null,
+            componentRecipeId: null,
+            assetAssemblyProfileId: null,
+            styleBridgeStatus: "blocked",
+            bridgeReason: "MODULAR_BIBLE_STYLE_BRIDGE_UNAVAILABLE"
+          });
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -4861,6 +5000,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         themeSubprofileCandidateResolution.themeSubprofileCompatibility;
       state.styleSubprofileReason =
         themeSubprofileCandidateResolution.styleSubprofileReason;
+      state.modularBibleFamilyId =
+        modularBibleStyleBridgeCandidateResolution.modularBibleFamilyId;
+      state.componentRecipeId =
+        modularBibleStyleBridgeCandidateResolution.componentRecipeId;
+      state.assetAssemblyProfileId =
+        modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId;
+      state.styleBridgeStatus =
+        modularBibleStyleBridgeCandidateResolution.styleBridgeStatus;
+      state.bridgeReason =
+        modularBibleStyleBridgeCandidateResolution.bridgeReason;
     }
 
     acceptedPlacements.push(
@@ -4979,6 +5128,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           themeSubprofileCandidateResolution.themeSubprofileCompatibility,
         styleSubprofileReason:
           themeSubprofileCandidateResolution.styleSubprofileReason,
+        modularBibleFamilyId:
+          modularBibleStyleBridgeCandidateResolution.modularBibleFamilyId,
+        componentRecipeId:
+          modularBibleStyleBridgeCandidateResolution.componentRecipeId,
+        assetAssemblyProfileId:
+          modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId,
+        styleBridgeStatus:
+          modularBibleStyleBridgeCandidateResolution.styleBridgeStatus,
+        bridgeReason: modularBibleStyleBridgeCandidateResolution.bridgeReason,
         microClusterId: microClusterCandidateResolution.microClusterId,
         clusterType: microClusterCandidateResolution.clusterType,
         childAssetCount: microClusterCandidateResolution.childAssetCount,
@@ -5260,6 +5418,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     packageProfileDecisions: deepFreeze(packageProfileDecisions),
     worldThemeBundleDecisions: deepFreeze(worldThemeBundleDecisions),
     themeSubprofileDecisions: deepFreeze(themeSubprofileDecisions),
+    modularBibleStyleBridgeDecisions: deepFreeze(
+      modularBibleStyleBridgeDecisions
+    ),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
@@ -5438,6 +5599,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       streetscapeStyleProfileId: null,
       themeSubprofileCompatibility: null,
       styleSubprofileReason: null,
+      atlasModularBibleStyleBridgeVersion: null,
+      registeredStyleBridgeRuleCount: 0,
+      modularBibleFamilyId: null,
+      componentRecipeId: null,
+      assetAssemblyProfileId: null,
+      styleBridgeStatus: null,
+      bridgeReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
