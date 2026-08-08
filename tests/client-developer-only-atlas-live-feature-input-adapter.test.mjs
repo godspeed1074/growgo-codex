@@ -6,7 +6,8 @@ import path from "node:path";
 import {
   createDeveloperOnlyAtlasLiveFeatureInputAdapter,
   extractDeveloperOnlyAtlasLiveViewportFeatures,
-  getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus
+  getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus,
+  refreshDeveloperOnlyAtlasLiveFeatureInputAdapter
 } from "../client/developer-only-atlas-live-feature-input-adapter.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -436,6 +437,33 @@ test("status is frozen and serializable with no raw refs", () => {
   assertCanonicalFlags(status.canonicalSafetyFlags);
 });
 
+test("refresh helper loads current feature source into status without exposing raw refs", () => {
+  const adapter = createAdapter();
+  const refreshed = refreshDeveloperOnlyAtlasLiveFeatureInputAdapter(adapter);
+  const status = getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus(adapter);
+
+  assert.equal(refreshed?.sourceFeatureCount > 0, true);
+  assert.equal(status.sourceFeatureCount > 0, true);
+  assert.equal(status.normalizedFeatureCount > 0, true);
+  assert.equal(status.lastFailureReason, null);
+});
+
+test("refresh helper fails closed for unavailable source and records reason", () => {
+  const adapter = createDeveloperOnlyAtlasLiveFeatureInputAdapter({
+    featureSourceProvider: () => null,
+    viewportProvider: () => createViewport(),
+    identityProvider: () => createIdentity()
+  });
+
+  const refreshed = refreshDeveloperOnlyAtlasLiveFeatureInputAdapter(adapter);
+  const status = getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus(adapter);
+
+  assert.equal(refreshed, null);
+  assert.equal(status.sourceFeatureCount, 0);
+  assert.equal(status.normalizedFeatureCount, 0);
+  assert.equal(status.lastFailureReason, "FEATURE_SOURCE_UNAVAILABLE");
+});
+
 test("module and live seam wiring stay local, manual, and overpass-free", () => {
   const moduleSource = fs.readFileSync(modulePath, "utf8");
   const appSource = fs.readFileSync(appPath, "utf8");
@@ -448,7 +476,7 @@ test("module and live seam wiring stay local, manual, and overpass-free", () => 
   assert.match(appSource, /createDeveloperOnlyAtlasLiveFeatureInputAdapter/);
   assert.match(
     appSource,
-    /getCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics/
+    /readCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics/
   );
   assert.match(
     appSource,

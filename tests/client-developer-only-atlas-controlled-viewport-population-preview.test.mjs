@@ -532,6 +532,17 @@ test("status and diagnostics are frozen, serializable, and install into the loca
   );
 });
 
+test("live feature adapter status refreshes from the current viewport feature source before preview draw", () => {
+  const harness = createHarness();
+  const adapterStatus = harness.preview.getAtlasLiveFeatureInputAdapterStatus();
+
+  assert.equal(adapterStatus.sourceFeatureCount > 0, true);
+  assert.equal(adapterStatus.normalizedFeatureCount > 0, true);
+  assert.equal(adapterStatus.rejectedFeatureCount >= 0, true);
+  assert.equal(adapterStatus.lastFailureReason, null);
+  assertCanonicalFlags(adapterStatus.canonicalSafetyFlags);
+});
+
 test("module wiring, docs, and safety posture remain planning-safe and manual-only", () => {
   const moduleSource = fs.readFileSync(modulePath, "utf8");
   const appSource = fs.readFileSync(appPath, "utf8");

@@ -156,6 +156,15 @@ const rawLeafletMapReferenceFromBridge = capturedOneFrameBridgeFromScriptDiagnos
 const rawLeafletMapProviderFromScriptDiagnostics =
   createCapturedRawLeafletMapProvider(getGrowGoMapFromScriptDiagnostics);
 
+function readCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics() {
+  const dynamicGetter =
+    captureDiagnosticsFunction("getCustom25DCurrentViewportFeatureSource");
+  if (typeof dynamicGetter === "function") {
+    return dynamicGetter() ?? null;
+  }
+  return getCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics?.() ?? null;
+}
+
 function toReasonCode(error, fallback) {
   if (!error) {
     return fallback;
@@ -1403,7 +1412,7 @@ const atlasAssetPopulationPreview =
 const atlasLiveFeatureInputAdapter =
   createDeveloperOnlyAtlasLiveFeatureInputAdapter({
     featureSourceProvider: () =>
-      getCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics?.() ?? null,
+      readCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics(),
     viewportProvider: () => {
       const map = resolvePersistentAuthoritativeMapReference();
       const identity = readApprovedPersistentReadinessIdentity(map);

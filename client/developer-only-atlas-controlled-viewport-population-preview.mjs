@@ -11,6 +11,7 @@ import {
   createDeveloperOnlyAtlasLiveFeatureInputAdapter,
   extractDeveloperOnlyAtlasLiveViewportFeatures,
   getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus,
+  refreshDeveloperOnlyAtlasLiveFeatureInputAdapter,
   updateDeveloperOnlyAtlasLiveFeatureInputAdapterSubmissionState
 } from "./developer-only-atlas-live-feature-input-adapter.mjs";
 
@@ -279,6 +280,7 @@ export function createDeveloperOnlyAtlasControlledViewportPopulationPreview({
   }
 
   function getAtlasLiveFeatureInputAdapterStatusForPreview() {
+    refreshDeveloperOnlyAtlasLiveFeatureInputAdapter(liveFeatureInputAdapter);
     return getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus(
       liveFeatureInputAdapter
     );

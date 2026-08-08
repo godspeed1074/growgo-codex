@@ -76,6 +76,22 @@ function sanitizeString(value) {
   return value == null ? null : String(value);
 }
 
+function toReasonCode(error, fallback) {
+  if (!error) {
+    return fallback;
+  }
+  if (typeof error.reasonCode === "string" && error.reasonCode.trim()) {
+    return error.reasonCode;
+  }
+  if (typeof error.code === "string" && error.code.trim()) {
+    return error.code;
+  }
+  if (typeof error.message === "string" && error.message.trim()) {
+    return error.message.trim().replace(/\s+/g, "_").toUpperCase();
+  }
+  return fallback;
+}
+
 function isPlainObject(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
@@ -920,6 +936,33 @@ export function getDeveloperOnlyAtlasLiveFeatureInputAdapterStatus(adapter) {
   }
 
   return freezeStatus(adapter.__state);
+}
+
+export function refreshDeveloperOnlyAtlasLiveFeatureInputAdapter(
+  adapter,
+  { budget } = {}
+) {
+  requireAdapter(adapter);
+  try {
+    return extractDeveloperOnlyAtlasLiveViewportFeatures(adapter, { budget });
+  } catch (error) {
+    const state = adapter.__state;
+    state.featureSourceAvailable = false;
+    state.sourceFeatureCount = 0;
+    state.normalizedFeatureCount = 0;
+    state.rejectedFeatureCount = 0;
+    state.unsupportedFeatureCount = 0;
+    state.truncatedFeatureCount = 0;
+    state.classificationCounts = createClassificationCounts();
+    state.populationPlanId = null;
+    state.batchId = null;
+    state.submittedCommandCount = 0;
+    state.lastFailureReason = toReasonCode(
+      error,
+      "ATLAS_LIVE_FEATURE_INPUT_REFRESH_FAILED"
+    );
+    return null;
+  }
 }
 
 export function updateDeveloperOnlyAtlasLiveFeatureInputAdapterSubmissionState(
