@@ -223,6 +223,11 @@ import {
   getDeveloperOnlyAtlasComponentAssemblyRuleProfilesStatus,
   resolveDeveloperOnlyAtlasComponentAssemblyRuleProfile
 } from "./developer-only-atlas-component-assembly-rule-profiles.mjs";
+import {
+  createDeveloperOnlyAtlasVariantStructuralCompatibilityProfiles,
+  getDeveloperOnlyAtlasVariantStructuralCompatibilityProfilesStatus,
+  resolveDeveloperOnlyAtlasVariantStructuralCompatibilityProfile
+} from "./developer-only-atlas-variant-structural-compatibility-profiles.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -729,6 +734,11 @@ function freezeStatus(state) {
     requiredComponentCount: state.requiredComponentCount,
     validatedComponentCount: state.validatedComponentCount,
     assemblyReason: state.assemblyReason,
+    assetVariantEnvelopeId: state.assetVariantEnvelopeId,
+    structuralCompatibilityStatus: state.structuralCompatibilityStatus,
+    selectedVariantProfileId: state.selectedVariantProfileId,
+    variantConstraintReason: state.variantConstraintReason,
+    variantSelectionSeed: state.variantSelectionSeed,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -971,7 +981,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasModularBibleStyleBridge =
     createDeveloperOnlyAtlasModularBibleStyleBridge(),
   atlasComponentAssemblyRuleProfiles =
-    createDeveloperOnlyAtlasComponentAssemblyRuleProfiles()
+    createDeveloperOnlyAtlasComponentAssemblyRuleProfiles(),
+  atlasVariantStructuralCompatibilityProfiles =
+    createDeveloperOnlyAtlasVariantStructuralCompatibilityProfiles()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1145,6 +1157,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasComponentAssemblyRuleProfilesStatus =
     getDeveloperOnlyAtlasComponentAssemblyRuleProfilesStatus(
       atlasComponentAssemblyRuleProfiles
+    );
+  const atlasVariantStructuralCompatibilityProfilesStatus =
+    getDeveloperOnlyAtlasVariantStructuralCompatibilityProfilesStatus(
+      atlasVariantStructuralCompatibilityProfiles
     );
 
   const state = {
@@ -1619,6 +1635,24 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     validatedComponentCount:
       atlasComponentAssemblyRuleProfilesStatus.validatedComponentCount,
     assemblyReason: atlasComponentAssemblyRuleProfilesStatus.assemblyReason,
+    atlasVariantStructuralCompatibilityProfilesVersion:
+      atlasVariantStructuralCompatibilityProfilesStatus
+        .atlasVariantStructuralCompatibilityProfilesVersion,
+    registeredVariantCompatibilityRuleCount:
+      atlasVariantStructuralCompatibilityProfilesStatus
+        .registeredVariantCompatibilityRuleCount,
+    assetVariantEnvelopeId:
+      atlasVariantStructuralCompatibilityProfilesStatus.assetVariantEnvelopeId,
+    structuralCompatibilityStatus:
+      atlasVariantStructuralCompatibilityProfilesStatus
+        .structuralCompatibilityStatus,
+    selectedVariantProfileId:
+      atlasVariantStructuralCompatibilityProfilesStatus
+        .selectedVariantProfileId,
+    variantConstraintReason:
+      atlasVariantStructuralCompatibilityProfilesStatus.variantConstraintReason,
+    variantSelectionSeed:
+      atlasVariantStructuralCompatibilityProfilesStatus.variantSelectionSeed,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1692,6 +1726,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasThemeSubprofileRules,
       atlasModularBibleStyleBridge,
       atlasComponentAssemblyRuleProfiles,
+      atlasVariantStructuralCompatibilityProfiles,
       placementProvider,
       lastPlan: null
     }
@@ -1964,6 +1999,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.requiredComponentCount = 0;
   state.validatedComponentCount = 0;
   state.assemblyReason = null;
+  state.assetVariantEnvelopeId = null;
+  state.structuralCompatibilityStatus = null;
+  state.selectedVariantProfileId = null;
+  state.variantConstraintReason = null;
+  state.variantSelectionSeed = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2005,6 +2045,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const themeSubprofileDecisions = [];
   const modularBibleStyleBridgeDecisions = [];
   const componentAssemblyRuleDecisions = [];
+  const variantStructuralCompatibilityDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2248,6 +2289,29 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialAssignmentId: null,
           lodProfileId: null
         };
+    const variantStructuralCompatibilityResolution =
+      modularAssetBindingResolution.assetVariantId
+        ? resolveDeveloperOnlyAtlasVariantStructuralCompatibilityProfile(
+            internal.atlasVariantStructuralCompatibilityProfiles,
+            {
+              assetVariantId: modularAssetBindingResolution.assetVariantId,
+              lotType: parcelFrontageLotResolution.lotType,
+              districtType: districtCompositionResolution.districtType,
+              streetscapeProfileId: streetscapeResolution.streetscapeProfileId,
+              settlementIdentityId:
+                settlementIdentityStyleCohesionResolution.settlementIdentityId,
+              densityTier: distributionResolution.densityTier
+            }
+          )
+        : {
+            matched: false,
+            assetVariantEnvelopeId: null,
+            structuralCompatibilityStatus: "blocked",
+            selectedVariantProfileId: null,
+            variantConstraintReason:
+              "VARIANT_STRUCTURAL_COMPATIBILITY_UNAVAILABLE",
+            variantSelectionSeed: null
+          };
     const microClusterAdjacencyResolution =
       modularAssetBindingResolution.matched
         ? resolveDeveloperOnlyAtlasPopulationMicroClusterAdjacency(
@@ -2778,6 +2842,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.assetVariantId = modularAssetBindingResolution.assetVariantId;
     state.variantSelectionReason =
       modularAssetBindingResolution.variantSelectionReason;
+    state.assetVariantEnvelopeId =
+      variantStructuralCompatibilityResolution.assetVariantEnvelopeId;
+    state.structuralCompatibilityStatus =
+      variantStructuralCompatibilityResolution.structuralCompatibilityStatus;
+    state.selectedVariantProfileId =
+      variantStructuralCompatibilityResolution.selectedVariantProfileId;
+    state.variantConstraintReason =
+      variantStructuralCompatibilityResolution.variantConstraintReason;
+    state.variantSelectionSeed =
+      variantStructuralCompatibilityResolution.variantSelectionSeed;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3153,6 +3227,21 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         materialAssignmentId:
           modularAssetBindingResolution.materialAssignmentId,
         lodProfileId: modularAssetBindingResolution.lodProfileId
+      })
+    );
+    variantStructuralCompatibilityDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        assetVariantEnvelopeId:
+          variantStructuralCompatibilityResolution.assetVariantEnvelopeId,
+        structuralCompatibilityStatus:
+          variantStructuralCompatibilityResolution.structuralCompatibilityStatus,
+        selectedVariantProfileId:
+          variantStructuralCompatibilityResolution.selectedVariantProfileId,
+        variantConstraintReason:
+          variantStructuralCompatibilityResolution.variantConstraintReason,
+        variantSelectionSeed:
+          variantStructuralCompatibilityResolution.variantSelectionSeed
       })
     );
     assetWorldValidationDecisions.push(
@@ -3581,6 +3670,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assetVariantId: modularAssetBindingResolution.assetVariantId,
           variantSelectionReason:
             modularAssetBindingResolution.variantSelectionReason,
+          assetVariantEnvelopeId:
+            variantStructuralCompatibilityResolution.assetVariantEnvelopeId,
+          structuralCompatibilityStatus:
+            variantStructuralCompatibilityResolution.structuralCompatibilityStatus,
+          selectedVariantProfileId:
+            variantStructuralCompatibilityResolution.selectedVariantProfileId,
+          variantConstraintReason:
+            variantStructuralCompatibilityResolution.variantConstraintReason,
+          variantSelectionSeed:
+            variantStructuralCompatibilityResolution.variantSelectionSeed,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -3898,6 +3997,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assetVariantId: modularAssetBindingResolution.assetVariantId,
           variantSelectionReason:
             modularAssetBindingResolution.variantSelectionReason,
+          assetVariantEnvelopeId:
+            variantStructuralCompatibilityResolution.assetVariantEnvelopeId,
+          structuralCompatibilityStatus:
+            variantStructuralCompatibilityResolution.structuralCompatibilityStatus,
+          selectedVariantProfileId:
+            variantStructuralCompatibilityResolution.selectedVariantProfileId,
+          variantConstraintReason:
+            variantStructuralCompatibilityResolution.variantConstraintReason,
+          variantSelectionSeed:
+            variantStructuralCompatibilityResolution.variantSelectionSeed,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4273,6 +4382,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         requiredComponentCount: 0,
         validatedComponentCount: 0,
         assemblyReason: "PENDING_COMPONENT_ASSEMBLY_RULE",
+        assetVariantEnvelopeId: null,
+        structuralCompatibilityStatus: "blocked",
+        selectedVariantProfileId: null,
+        variantConstraintReason:
+          "PENDING_VARIANT_STRUCTURAL_COMPATIBILITY",
+        variantSelectionSeed: null,
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4431,6 +4546,28 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             variantSelectionReason: null,
             materialAssignmentId: null,
             lodProfileId: null
+          };
+    const variantStructuralCompatibilityCandidateResolution =
+      modularCandidateBindingResolution.assetVariantId
+        ? resolveDeveloperOnlyAtlasVariantStructuralCompatibilityProfile(
+            internal.atlasVariantStructuralCompatibilityProfiles,
+            {
+              assetVariantId: modularCandidateBindingResolution.assetVariantId,
+              lotType: candidate.lotType,
+              districtType: candidate.districtType,
+              streetscapeProfileId: candidate.streetscapeProfileId,
+              settlementIdentityId: candidate.settlementIdentityId,
+              densityTier: candidate.densityTier
+            }
+          )
+        : {
+            matched: false,
+            assetVariantEnvelopeId: null,
+            structuralCompatibilityStatus: "blocked",
+            selectedVariantProfileId: null,
+            variantConstraintReason:
+              "VARIANT_STRUCTURAL_COMPATIBILITY_UNAVAILABLE",
+            variantSelectionSeed: null
           };
     const microClusterCandidateResolution =
       modularCandidateBindingResolution.matched
@@ -4892,6 +5029,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       state.assetVariantId = modularCandidateBindingResolution.assetVariantId;
       state.variantSelectionReason =
         modularCandidateBindingResolution.variantSelectionReason;
+      state.assetVariantEnvelopeId =
+        variantStructuralCompatibilityCandidateResolution.assetVariantEnvelopeId;
+      state.structuralCompatibilityStatus =
+        variantStructuralCompatibilityCandidateResolution.structuralCompatibilityStatus;
+      state.selectedVariantProfileId =
+        variantStructuralCompatibilityCandidateResolution.selectedVariantProfileId;
+      state.variantConstraintReason =
+        variantStructuralCompatibilityCandidateResolution.variantConstraintReason;
+      state.variantSelectionSeed =
+        variantStructuralCompatibilityCandidateResolution.variantSelectionSeed;
       state.materialAssignmentId =
         modularCandidateBindingResolution.materialAssignmentId;
       state.lodProfileId = modularCandidateBindingResolution.lodProfileId;
@@ -5221,6 +5368,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         assetVariantId: modularCandidateBindingResolution.assetVariantId,
         variantSelectionReason:
           modularCandidateBindingResolution.variantSelectionReason,
+        assetVariantEnvelopeId:
+          variantStructuralCompatibilityCandidateResolution.assetVariantEnvelopeId,
+        structuralCompatibilityStatus:
+          variantStructuralCompatibilityCandidateResolution.structuralCompatibilityStatus,
+        selectedVariantProfileId:
+          variantStructuralCompatibilityCandidateResolution.selectedVariantProfileId,
+        variantConstraintReason:
+          variantStructuralCompatibilityCandidateResolution.variantConstraintReason,
+        variantSelectionSeed:
+          variantStructuralCompatibilityCandidateResolution.variantSelectionSeed,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -5575,6 +5732,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       modularBibleStyleBridgeDecisions
     ),
     componentAssemblyRuleDecisions: deepFreeze(componentAssemblyRuleDecisions),
+    variantStructuralCompatibilityDecisions: deepFreeze(
+      variantStructuralCompatibilityDecisions
+    ),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
@@ -5767,6 +5927,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       requiredComponentCount: 0,
       validatedComponentCount: 0,
       assemblyReason: null,
+      atlasVariantStructuralCompatibilityProfilesVersion: null,
+      registeredVariantCompatibilityRuleCount: 0,
+      assetVariantEnvelopeId: null,
+      structuralCompatibilityStatus: null,
+      selectedVariantProfileId: null,
+      variantConstraintReason: null,
+      variantSelectionSeed: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
