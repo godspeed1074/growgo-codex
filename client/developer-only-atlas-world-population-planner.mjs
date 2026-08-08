@@ -183,6 +183,11 @@ import {
   getDeveloperOnlyAtlasPopulationWorldWonderDiscoveryMemoryHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationWorldWonderDiscoveryMemoryHooks
 } from "./developer-only-atlas-population-world-wonder-discovery-memory-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooks
+} from "./developer-only-atlas-population-world-legacy-discovery-cohesion-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -596,6 +601,14 @@ function freezeStatus(state) {
     discoveryMemoryTier: state.discoveryMemoryTier,
     generationMemoryProfileId: state.generationMemoryProfileId,
     wonderReason: state.wonderReason,
+    worldLegacyDiscoveryCohesionVersion:
+      state.worldLegacyDiscoveryCohesionVersion,
+    registeredWorldLegacyRuleCount: state.registeredWorldLegacyRuleCount,
+    worldLegacyProfileId: state.worldLegacyProfileId,
+    discoveryCohesionId: state.discoveryCohesionId,
+    legacyTier: state.legacyTier,
+    memoryCategory: state.memoryCategory,
+    legacyReason: state.legacyReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -822,7 +835,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationSignatureRouteLegacyHooksRuleRegistry =
     createDeveloperOnlyAtlasPopulationSignatureRouteLegacyHooksRuleRegistry(),
   populationWorldWonderDiscoveryMemoryHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationWorldWonderDiscoveryMemoryHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationWorldWonderDiscoveryMemoryHooksRuleRegistry(),
+  populationWorldLegacyDiscoveryCohesionHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -964,6 +979,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const worldWonderDiscoveryMemoryRegistryStatus =
     getDeveloperOnlyAtlasPopulationWorldWonderDiscoveryMemoryHooksRuleRegistryStatus(
       populationWorldWonderDiscoveryMemoryHooksRuleRegistry
+    );
+  const worldLegacyDiscoveryCohesionRegistryStatus =
+    getDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooksRuleRegistryStatus(
+      populationWorldLegacyDiscoveryCohesionHooksRuleRegistry
     );
 
   const state = {
@@ -1329,6 +1348,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     generationMemoryProfileId:
       worldWonderDiscoveryMemoryRegistryStatus.generationMemoryProfileId,
     wonderReason: worldWonderDiscoveryMemoryRegistryStatus.wonderReason,
+    worldLegacyDiscoveryCohesionVersion:
+      worldLegacyDiscoveryCohesionRegistryStatus
+        .worldLegacyDiscoveryCohesionVersion,
+    registeredWorldLegacyRuleCount:
+      worldLegacyDiscoveryCohesionRegistryStatus.registeredWorldLegacyRuleCount,
+    worldLegacyProfileId:
+      worldLegacyDiscoveryCohesionRegistryStatus.worldLegacyProfileId,
+    discoveryCohesionId:
+      worldLegacyDiscoveryCohesionRegistryStatus.discoveryCohesionId,
+    legacyTier: worldLegacyDiscoveryCohesionRegistryStatus.legacyTier,
+    memoryCategory: worldLegacyDiscoveryCohesionRegistryStatus.memoryCategory,
+    legacyReason: worldLegacyDiscoveryCohesionRegistryStatus.legacyReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1394,6 +1425,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationWorldExplorationCohesionHooksRuleRegistry,
       populationSignatureRouteLegacyHooksRuleRegistry,
       populationWorldWonderDiscoveryMemoryHooksRuleRegistry,
+      populationWorldLegacyDiscoveryCohesionHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1626,6 +1658,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.discoveryMemoryTier = null;
   state.generationMemoryProfileId = null;
   state.wonderReason = null;
+  state.worldLegacyProfileId = null;
+  state.discoveryCohesionId = null;
+  state.legacyTier = null;
+  state.memoryCategory = null;
+  state.legacyReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1680,6 +1717,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const worldExplorationCohesionDecisions = [];
   const signatureRouteLegacyDecisions = [];
   const worldWonderDiscoveryMemoryDecisions = [];
+  const worldLegacyDiscoveryCohesionDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -2152,6 +2190,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           placeMemoryId: placeMemoryResolution.placeMemoryId
         }
       );
+    const worldLegacyDiscoveryCohesionResolution =
+      resolveDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooks(
+        internal.populationWorldLegacyDiscoveryCohesionHooksRuleRegistry,
+        {
+          worldWonderProfileId:
+            worldWonderDiscoveryMemoryResolution.worldWonderProfileId,
+          signatureRouteProfileId:
+            signatureRouteLegacyResolution.signatureRouteProfileId,
+          metaCollectionId: worldExplorationCohesionResolution.metaCollectionId,
+          generationMemoryProfileId:
+            worldWonderDiscoveryMemoryResolution.generationMemoryProfileId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2374,6 +2425,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.generationMemoryProfileId =
       worldWonderDiscoveryMemoryResolution.generationMemoryProfileId;
     state.wonderReason = worldWonderDiscoveryMemoryResolution.wonderReason;
+    state.worldLegacyProfileId =
+      worldLegacyDiscoveryCohesionResolution.worldLegacyProfileId;
+    state.discoveryCohesionId =
+      worldLegacyDiscoveryCohesionResolution.discoveryCohesionId;
+    state.legacyTier = worldLegacyDiscoveryCohesionResolution.legacyTier;
+    state.memoryCategory =
+      worldLegacyDiscoveryCohesionResolution.memoryCategory;
+    state.legacyReason = worldLegacyDiscoveryCohesionResolution.legacyReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2776,6 +2835,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         wonderReason: worldWonderDiscoveryMemoryResolution.wonderReason
       })
     );
+    worldLegacyDiscoveryCohesionDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        worldLegacyProfileId:
+          worldLegacyDiscoveryCohesionResolution.worldLegacyProfileId,
+        discoveryCohesionId:
+          worldLegacyDiscoveryCohesionResolution.discoveryCohesionId,
+        legacyTier: worldLegacyDiscoveryCohesionResolution.legacyTier,
+        memoryCategory: worldLegacyDiscoveryCohesionResolution.memoryCategory,
+        legacyReason: worldLegacyDiscoveryCohesionResolution.legacyReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -3004,6 +3075,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           generationMemoryProfileId:
             worldWonderDiscoveryMemoryResolution.generationMemoryProfileId,
           wonderReason: worldWonderDiscoveryMemoryResolution.wonderReason,
+          worldLegacyProfileId:
+            worldLegacyDiscoveryCohesionResolution.worldLegacyProfileId,
+          discoveryCohesionId:
+            worldLegacyDiscoveryCohesionResolution.discoveryCohesionId,
+          legacyTier: worldLegacyDiscoveryCohesionResolution.legacyTier,
+          memoryCategory:
+            worldLegacyDiscoveryCohesionResolution.memoryCategory,
+          legacyReason: worldLegacyDiscoveryCohesionResolution.legacyReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -3817,6 +3896,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           placeMemoryId: placeMemoryCandidateResolution.placeMemoryId
         }
       );
+    const worldLegacyDiscoveryCohesionCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationWorldLegacyDiscoveryCohesionHooks(
+        internal.populationWorldLegacyDiscoveryCohesionHooksRuleRegistry,
+        {
+          worldWonderProfileId:
+            worldWonderDiscoveryMemoryCandidateResolution.worldWonderProfileId,
+          signatureRouteProfileId:
+            signatureRouteLegacyCandidateResolution.signatureRouteProfileId,
+          metaCollectionId:
+            worldExplorationCohesionCandidateResolution.metaCollectionId,
+          generationMemoryProfileId:
+            worldWonderDiscoveryMemoryCandidateResolution.generationMemoryProfileId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -4005,6 +4098,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         worldWonderDiscoveryMemoryCandidateResolution.generationMemoryProfileId;
       state.wonderReason =
         worldWonderDiscoveryMemoryCandidateResolution.wonderReason;
+      state.worldLegacyProfileId =
+        worldLegacyDiscoveryCohesionCandidateResolution.worldLegacyProfileId;
+      state.discoveryCohesionId =
+        worldLegacyDiscoveryCohesionCandidateResolution.discoveryCohesionId;
+      state.legacyTier =
+        worldLegacyDiscoveryCohesionCandidateResolution.legacyTier;
+      state.memoryCategory =
+        worldLegacyDiscoveryCohesionCandidateResolution.memoryCategory;
+      state.legacyReason =
+        worldLegacyDiscoveryCohesionCandidateResolution.legacyReason;
     }
 
     acceptedPlacements.push(
@@ -4251,6 +4354,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         generationMemoryProfileId:
           worldWonderDiscoveryMemoryCandidateResolution.generationMemoryProfileId,
         wonderReason: worldWonderDiscoveryMemoryCandidateResolution.wonderReason,
+        worldLegacyProfileId:
+          worldLegacyDiscoveryCohesionCandidateResolution.worldLegacyProfileId,
+        discoveryCohesionId:
+          worldLegacyDiscoveryCohesionCandidateResolution.discoveryCohesionId,
+        legacyTier:
+          worldLegacyDiscoveryCohesionCandidateResolution.legacyTier,
+        memoryCategory:
+          worldLegacyDiscoveryCohesionCandidateResolution.memoryCategory,
+        legacyReason:
+          worldLegacyDiscoveryCohesionCandidateResolution.legacyReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -4368,6 +4481,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     signatureRouteLegacyDecisions: deepFreeze(signatureRouteLegacyDecisions),
     worldWonderDiscoveryMemoryDecisions: deepFreeze(
       worldWonderDiscoveryMemoryDecisions
+    ),
+    worldLegacyDiscoveryCohesionDecisions: deepFreeze(
+      worldLegacyDiscoveryCohesionDecisions
     ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
@@ -4618,6 +4734,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       discoveryMemoryTier: null,
       generationMemoryProfileId: null,
       wonderReason: null,
+      worldLegacyDiscoveryCohesionVersion: null,
+      registeredWorldLegacyRuleCount: 0,
+      worldLegacyProfileId: null,
+      discoveryCohesionId: null,
+      legacyTier: null,
+      memoryCategory: null,
+      legacyReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
