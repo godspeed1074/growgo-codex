@@ -24,7 +24,8 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     approvedPackages: DEFAULT_APPROVED_PACKAGES,
     approvedRecipeIds: Object.freeze([
       "TREE_EUCALYPTUS_RECIPE_001",
-      "COASTAL_LOCATION_RECIPE_001"
+      "COASTAL_LOCATION_RECIPE_001",
+      "PARK_PUBLIC_GREEN_RECIPE_001"
     ]),
     placementRules: Object.freeze({
       placementClass: "vegetation",
@@ -63,7 +64,8 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     approvedPackages: DEFAULT_APPROVED_PACKAGES,
     approvedRecipeIds: Object.freeze([
       "TREE_BOTTLEBRUSH_RECIPE_001",
-      "COASTAL_LOCATION_RECIPE_001"
+      "COASTAL_LOCATION_RECIPE_001",
+      "COASTAL_GREEN_RECIPE_001"
     ]),
     placementRules: Object.freeze({
       placementClass: "vegetation",
@@ -102,7 +104,9 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
     approvedPackages: DEFAULT_APPROVED_PACKAGES,
     approvedRecipeIds: Object.freeze([
       "SHRUB_COASTAL_LOW_RECIPE_001",
-      "COASTAL_LOCATION_RECIPE_001"
+      "COASTAL_LOCATION_RECIPE_001",
+      "PARK_PUBLIC_GREEN_RECIPE_001",
+      "COASTAL_GREEN_RECIPE_001"
     ]),
     placementRules: Object.freeze({
       placementClass: "vegetation",
@@ -143,7 +147,8 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_ASSET_REGISTRY_ENTRIES = Object.freeze
       "BUILDING_CIVIC_SPORTS_PAVILION_001",
       "SPORTS_OVAL_RECIPE_001",
       "RECREATION_AREA_RECIPE_001",
-      "COASTAL_LOCATION_RECIPE_001"
+      "COASTAL_LOCATION_RECIPE_001",
+      "BUILDING_CIVIC_RECIPE_001"
     ]),
     placementRules: Object.freeze({
       placementClass: "building",

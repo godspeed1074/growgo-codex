@@ -68,6 +68,7 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_SPATIAL_RULES = Object.freeze([
     assetCategory: "vegetation",
     supportedAssetFamilies: Object.freeze(["COASTAL_NATURE_FAMILY_001"]),
     allowedFeatureClasses: Object.freeze([
+      "vegetation_area",
       "park",
       "reserve",
       "coastal_green",
@@ -106,9 +107,11 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_SPATIAL_RULES = Object.freeze([
     assetCategory: "vegetation",
     supportedAssetFamilies: Object.freeze(["COASTAL_SHRUB_FAMILY_001"]),
     allowedFeatureClasses: Object.freeze([
+      "park",
       "coastal_green",
       "reserve",
-      "vegetation_area"
+      "vegetation_area",
+      "roadside_green"
     ]),
     prohibitedFeatureClasses: Object.freeze([
       "building_footprint",

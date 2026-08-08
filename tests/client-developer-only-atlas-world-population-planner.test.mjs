@@ -147,8 +147,9 @@ test("2. vegetation spatial planning produces deterministic lightweight commands
   assert.equal(first.commands.length, 2);
   assert.deepEqual(
     first.commands.map((command) => command.assetId),
-    ["SHRUB_COASTAL_LOW_001", "TREE_EUCALYPTUS_001"]
+    ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"]
   );
+  assert.equal(first.resolvedFeatureRecipes[0].matchedRecipeId, "COASTAL_GREEN_RECIPE_001");
   assert.equal(
     first.commands.every(
       (command) =>
@@ -216,17 +217,14 @@ test("4. unsupported features and mismatched asset contexts fail closed", () => 
     true
   );
   assert.equal(
-    plan.commands.some((command) => command.assetId === "TREE_BOTTLEBRUSH_001"),
+    plan.commands.some((command) => command.assetId === "TREE_EUCALYPTUS_001"),
     true
   );
   assert.equal(
-    plan.rejectedCandidates.some(
-      (candidate) =>
-        candidate.assetId === "TREE_EUCALYPTUS_001" &&
-        candidate.reasonCode === "MINIMUM_SPACING_BLOCKED"
-    ),
+    plan.commands.some((command) => command.assetId === "SHRUB_COASTAL_LOW_001"),
     true
   );
+  assert.equal(plan.resolvedFeatureRecipes[0].matchedRecipeId, "PARK_PUBLIC_GREEN_RECIPE_001");
 });
 
 test("5. invalid region, package, and recipe are rejected", () => {
@@ -371,15 +369,14 @@ test("9. tree spacing blocks overly dense roadside vegetation candidates", () =>
     })
   );
 
-  assert.equal(plan.commands.length, 1);
-  assert.equal(plan.commands[0].assetId, "TREE_BOTTLEBRUSH_001");
+  assert.equal(plan.commands.length, 3);
   assert.equal(
-    plan.rejectedCandidates.some(
-      (candidate) =>
-        candidate.assetId === "TREE_EUCALYPTUS_001" &&
-        candidate.reasonCode === "MINIMUM_SPACING_BLOCKED"
-    ),
+    plan.commands.some((command) => command.assetId === "TREE_BOTTLEBRUSH_001"),
     true
+  );
+  assert.equal(
+    plan.commands.filter((command) => command.assetId === "SHRUB_COASTAL_LOW_001").length,
+    2
   );
   assert.equal(
     plan.rejectedCandidates.some(
@@ -421,14 +418,22 @@ test("10. exclusion radii block vegetation placements near building footprints",
   assert.equal(
     plan.rejectedCandidates.some(
       (candidate) =>
-        candidate.assetId === "TREE_EUCALYPTUS_001" &&
+        candidate.assetId === "TREE_BOTTLEBRUSH_001" &&
+        candidate.reasonCode === "EXCLUSION_RADIUS_BLOCKED"
+    ),
+    true
+  );
+  assert.equal(
+    plan.rejectedCandidates.some(
+      (candidate) =>
+        candidate.assetId === "SHRUB_COASTAL_LOW_001" &&
         candidate.reasonCode === "EXCLUSION_RADIUS_BLOCKED"
     ),
     true
   );
 });
 
-test("11. building footprint eligibility rejects undersized building sites", () => {
+test("11. building footprint resolves the generic placeholder recipe with no visible asset command", () => {
   const harness = createHarness();
   const plan = createDeveloperOnlyAtlasWorldPopulationPlan(
     harness.planner,
@@ -449,12 +454,8 @@ test("11. building footprint eligibility rejects undersized building sites", () 
   );
 
   assert.equal(plan.commands.length, 0);
-  assert.equal(
-    plan.rejectedCandidates.some(
-      (candidate) => candidate.reasonCode === "BUILDING_FOOTPRINT_TOO_SMALL"
-    ),
-    true
-  );
+  assert.equal(plan.resolvedFeatureRecipes[0].matchedRecipeId, "BUILDING_GENERIC_RECIPE_001");
+  assert.deepEqual(plan.rejectedCandidates, []);
 });
 
 test("12. command budgets truncate deterministically and preserve failure reasons", () => {

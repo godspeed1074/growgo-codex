@@ -8,6 +8,11 @@ import {
   getDeveloperOnlyAtlasSpatialRuleRegistryStatus,
   resolveDeveloperOnlyAtlasSpatialRuleByAssetId
 } from "./developer-only-atlas-spatial-rule-registry.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationRecipeRegistry,
+  getDeveloperOnlyAtlasPopulationRecipeRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationRecipeForFeature
+} from "./developer-only-atlas-population-recipe-registry.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -35,7 +40,11 @@ const APPROVED_PLAN_RECIPES = new Set([
   "SPORTS_OVAL_RECIPE_001",
   "RECREATION_AREA_RECIPE_001",
   "BUILDING_CIVIC_SPORTS_PAVILION_001",
-  "COASTAL_LOCATION_RECIPE_001"
+  "COASTAL_LOCATION_RECIPE_001",
+  "PARK_PUBLIC_GREEN_RECIPE_001",
+  "COASTAL_GREEN_RECIPE_001",
+  "BUILDING_CIVIC_RECIPE_001",
+  "BUILDING_GENERIC_RECIPE_001"
 ]);
 
 function deepFreeze(value, seen = new WeakSet()) {
@@ -175,6 +184,10 @@ function freezeStatus(state) {
     schemaId: STATUS_SCHEMA_ID,
     spatialRuleRegistryVersion: state.spatialRuleRegistryVersion,
     registeredRuleCount: state.registeredRuleCount,
+    matchedRecipeId: state.matchedRecipeId,
+    matchedFeatureClass: state.matchedFeatureClass,
+    generatedCommandCount: state.generatedCommandCount,
+    rejectedRecipeCount: state.rejectedRecipeCount,
     populationPlanId: state.populationPlanId,
     candidateFeatureCount: state.candidateFeatureCount,
     acceptedPlacementCount: state.acceptedPlacementCount,
@@ -375,15 +388,22 @@ function enforceExclusion(candidate, features, rule) {
 
 export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   spatialRuleRegistry = createDeveloperOnlyAtlasSpatialRuleRegistry(),
-  placementProvider = createDeveloperOnlyAtlasMultiAssetPlacementProvider()
+  placementProvider = createDeveloperOnlyAtlasMultiAssetPlacementProvider(),
+  populationRecipeRegistry = createDeveloperOnlyAtlasPopulationRecipeRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
   );
+  const populationRecipeRegistryStatus =
+    getDeveloperOnlyAtlasPopulationRecipeRegistryStatus(populationRecipeRegistry);
 
   const state = {
     spatialRuleRegistryVersion: registryStatus.spatialRuleRegistryVersion,
     registeredRuleCount: registryStatus.registeredRuleCount,
+    matchedRecipeId: populationRecipeRegistryStatus.matchedRecipeId,
+    matchedFeatureClass: populationRecipeRegistryStatus.matchedFeatureClass,
+    generatedCommandCount: populationRecipeRegistryStatus.generatedCommandCount,
+    rejectedRecipeCount: populationRecipeRegistryStatus.rejectedRecipeCount,
     populationPlanId: null,
     candidateFeatureCount: 0,
     acceptedPlacementCount: 0,
@@ -401,6 +421,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     __state: state,
     __internal: {
       spatialRuleRegistry,
+      populationRecipeRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -467,6 +488,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   );
   state.acceptedPlacementCount = 0;
   state.rejectedPlacementCount = 0;
+  state.generatedCommandCount = 0;
+  state.rejectedRecipeCount = 0;
+  state.matchedRecipeId = null;
+  state.matchedFeatureClass = null;
   state.vegetationPlacementCount = 0;
   state.buildingPlacementCount = 0;
   state.budgetLimit = budget;
@@ -480,22 +505,58 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
 
   const candidateEntries = [];
   const rejectedCandidates = [];
+  const resolvedFeatureRecipes = [];
 
   for (const feature of truncatedFeatures) {
-    const assetIds = determineFeatureAssets(feature);
-    if (assetIds.length === 0) {
+    const recipeResolution = resolveDeveloperOnlyAtlasPopulationRecipeForFeature(
+      internal.populationRecipeRegistry,
+      {
+        featureClass: feature.featureClass,
+        regionId,
+        packageId,
+        contextRecipeId: recipeId
+      }
+    );
+
+    if (!recipeResolution.matched) {
+      state.rejectedRecipeCount += 1;
       rejectedCandidates.push(
         createRejectedCandidate({
           assetId: null,
           featureId: feature.featureId,
           featureClass: feature.featureClass,
-          reasonCode: "UNSUPPORTED_FEATURE_CLASS"
+          reasonCode: recipeResolution.reasonCode
         })
       );
       continue;
     }
 
-    for (const assetId of assetIds) {
+    state.matchedRecipeId = recipeResolution.matchedRecipeId;
+    state.matchedFeatureClass = recipeResolution.matchedFeatureClass;
+
+    if (recipeResolution.generatedCommandCount === 0) {
+      resolvedFeatureRecipes.push(
+        deepFreeze({
+          featureId: feature.featureId,
+          matchedFeatureClass: recipeResolution.matchedFeatureClass,
+          matchedRecipeId: recipeResolution.matchedRecipeId,
+          generatedCommandCount: 0
+        })
+      );
+      continue;
+    }
+
+    resolvedFeatureRecipes.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        matchedFeatureClass: recipeResolution.matchedFeatureClass,
+        matchedRecipeId: recipeResolution.matchedRecipeId,
+        generatedCommandCount: recipeResolution.generatedCommandCount
+      })
+    );
+
+    for (const assetCommand of recipeResolution.assetCommands) {
+      const assetId = assetCommand.assetId;
       const rule = resolveDeveloperOnlyAtlasSpatialRuleByAssetId(
         internal.spatialRuleRegistry,
         assetId
@@ -521,8 +582,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       for (let candidateIndex = 0; candidateIndex < candidateCount; candidateIndex += 1) {
         candidateEntries.push({
           assetId,
+          assetCommand,
           rule,
           feature,
+          matchedRecipeId: recipeResolution.matchedRecipeId,
           candidateIndex,
           coordinate: adjustCoordinate(feature, candidateIndex, rule)
         });
@@ -616,25 +679,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       continue;
     }
 
-    const placementInput = {
-      assetId: candidate.assetId,
-      version:
-        candidate.assetId === "TREE_EUCALYPTUS_001"
-          ? "v001"
-          : candidate.assetId === "TREE_BOTTLEBRUSH_001"
-            ? "v002"
-            : candidate.assetId === "SHRUB_COASTAL_LOW_001"
-              ? "v002"
-              : "1.0.0",
-      coordinate: candidate.coordinate,
-      regionId,
-      packageId,
-      recipeId:
-        candidate.assetId === "BUILDING_CIVIC_SPORTS_PAVILION_001"
-          ? featureToBuildingRecipe(candidate.feature.featureClass)
-          : featureToVegetationRecipe(candidate.assetId),
-      selectorSeed: `${selectorSeed}:${candidate.feature.deterministicFeatureIdentity}:${candidate.assetId}:${candidate.candidateIndex}`
-    };
+      const placementInput = {
+        assetId: candidate.assetId,
+        version: candidate.assetCommand.assetVersion,
+        coordinate: candidate.coordinate,
+        regionId,
+        packageId,
+        recipeId: candidate.matchedRecipeId,
+        selectorSeed: `${selectorSeed}:${candidate.feature.deterministicFeatureIdentity}:${candidate.assetId}:${candidate.candidateIndex}`
+      };
 
     const resolved = resolveDeveloperOnlyAtlasMultiAssetPlacement(
       internal.placementProvider,
@@ -646,7 +699,8 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         ...resolved,
         featureId: candidate.feature.featureId,
         featureClass: candidate.feature.featureClass,
-        coordinate: candidate.coordinate
+        coordinate: candidate.coordinate,
+        matchedRecipeId: candidate.matchedRecipeId
       })
     );
 
@@ -685,6 +739,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
 
   state.populationPlanId = populationPlanId;
   state.acceptedPlacementCount = acceptedPlacements.length;
+  state.generatedCommandCount = acceptedPlacements.length;
   state.rejectedPlacementCount = rejectedCandidates.length;
   state.vegetationPlacementCount = vegetationCount;
   state.buildingPlacementCount = buildingCount;
@@ -700,31 +755,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     selectorSeed,
     viewportOrTileId,
     commands: batch.commands,
+    resolvedFeatureRecipes: deepFreeze(resolvedFeatureRecipes),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
   internal.lastPlan = plan;
   return plan;
-}
-
-function featureToVegetationRecipe(assetId) {
-  switch (assetId) {
-    case "TREE_EUCALYPTUS_001":
-      return "TREE_EUCALYPTUS_RECIPE_001";
-    case "TREE_BOTTLEBRUSH_001":
-      return "TREE_BOTTLEBRUSH_RECIPE_001";
-    case "SHRUB_COASTAL_LOW_001":
-      return "SHRUB_COASTAL_LOW_RECIPE_001";
-    default:
-      return "TREE_EUCALYPTUS_RECIPE_001";
-  }
-}
-
-function featureToBuildingRecipe(featureClass) {
-  if (featureClass === "civic_site") {
-    return "RECREATION_AREA_RECIPE_001";
-  }
-  return "SPORTS_OVAL_RECIPE_001";
 }
 
 export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
@@ -735,6 +771,10 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
     return freezeStatus({
       spatialRuleRegistryVersion: null,
       registeredRuleCount: 0,
+      matchedRecipeId: null,
+      matchedFeatureClass: null,
+      generatedCommandCount: 0,
+      rejectedRecipeCount: 0,
       populationPlanId: null,
       candidateFeatureCount: 0,
       acceptedPlacementCount: 0,
