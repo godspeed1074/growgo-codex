@@ -228,6 +228,11 @@ import {
   getDeveloperOnlyAtlasVariantStructuralCompatibilityProfilesStatus,
   resolveDeveloperOnlyAtlasVariantStructuralCompatibilityProfile
 } from "./developer-only-atlas-variant-structural-compatibility-profiles.mjs";
+import {
+  createDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfiles,
+  getDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfilesStatus,
+  resolveDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfile
+} from "./developer-only-atlas-material-palette-finish-compatibility-profiles.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -739,6 +744,11 @@ function freezeStatus(state) {
     selectedVariantProfileId: state.selectedVariantProfileId,
     variantConstraintReason: state.variantConstraintReason,
     variantSelectionSeed: state.variantSelectionSeed,
+    materialCompatibilityStatus: state.materialCompatibilityStatus,
+    paletteCompatibilityStatus: state.paletteCompatibilityStatus,
+    finishProfileId: state.finishProfileId,
+    resolvedMaterialProfileId: state.resolvedMaterialProfileId,
+    materialReason: state.materialReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -983,7 +993,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasComponentAssemblyRuleProfiles =
     createDeveloperOnlyAtlasComponentAssemblyRuleProfiles(),
   atlasVariantStructuralCompatibilityProfiles =
-    createDeveloperOnlyAtlasVariantStructuralCompatibilityProfiles()
+    createDeveloperOnlyAtlasVariantStructuralCompatibilityProfiles(),
+  atlasMaterialPaletteFinishCompatibilityProfiles =
+    createDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfiles()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1161,6 +1173,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasVariantStructuralCompatibilityProfilesStatus =
     getDeveloperOnlyAtlasVariantStructuralCompatibilityProfilesStatus(
       atlasVariantStructuralCompatibilityProfiles
+    );
+  const atlasMaterialPaletteFinishCompatibilityProfilesStatus =
+    getDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfilesStatus(
+      atlasMaterialPaletteFinishCompatibilityProfiles
     );
 
   const state = {
@@ -1653,6 +1669,25 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasVariantStructuralCompatibilityProfilesStatus.variantConstraintReason,
     variantSelectionSeed:
       atlasVariantStructuralCompatibilityProfilesStatus.variantSelectionSeed,
+    atlasMaterialPaletteFinishCompatibilityProfilesVersion:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus
+        .atlasMaterialPaletteFinishCompatibilityProfilesVersion,
+    registeredMaterialCompatibilityRuleCount:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus
+        .registeredMaterialCompatibilityRuleCount,
+    materialCompatibilityStatus:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus
+        .materialCompatibilityStatus,
+    paletteCompatibilityStatus:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus
+        .paletteCompatibilityStatus,
+    finishProfileId:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus.finishProfileId,
+    resolvedMaterialProfileId:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus
+        .resolvedMaterialProfileId,
+    materialReason:
+      atlasMaterialPaletteFinishCompatibilityProfilesStatus.materialReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1727,6 +1762,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasModularBibleStyleBridge,
       atlasComponentAssemblyRuleProfiles,
       atlasVariantStructuralCompatibilityProfiles,
+      atlasMaterialPaletteFinishCompatibilityProfiles,
       placementProvider,
       lastPlan: null
     }
@@ -2004,6 +2040,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.selectedVariantProfileId = null;
   state.variantConstraintReason = null;
   state.variantSelectionSeed = null;
+  state.materialCompatibilityStatus = null;
+  state.paletteCompatibilityStatus = null;
+  state.finishProfileId = null;
+  state.resolvedMaterialProfileId = null;
+  state.materialReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2046,6 +2087,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const modularBibleStyleBridgeDecisions = [];
   const componentAssemblyRuleDecisions = [];
   const variantStructuralCompatibilityDecisions = [];
+  const materialPaletteFinishCompatibilityDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2733,6 +2775,33 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             styleBridgeStatus: "blocked",
             bridgeReason: "MODULAR_BIBLE_STYLE_BRIDGE_UNAVAILABLE"
           });
+    const materialPaletteFinishCompatibilityResolution =
+      modularAssetBindingResolution.assetVariantId &&
+      assetFamilyMaterialCohesionResolution.materialFamilyId &&
+      settlementIdentityStyleCohesionResolution.paletteProfileId &&
+      themeBundleResolution.worldThemeProfileId
+        ? resolveDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfile(
+            internal.atlasMaterialPaletteFinishCompatibilityProfiles,
+            {
+              assetVariantId: modularAssetBindingResolution.assetVariantId,
+              materialFamilyId:
+                assetFamilyMaterialCohesionResolution.materialFamilyId,
+              paletteProfileId:
+                settlementIdentityStyleCohesionResolution.paletteProfileId,
+              worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+              settlementIdentityId:
+                settlementIdentityStyleCohesionResolution.settlementIdentityId,
+              biomeProfileId: biomeLocalCharacterResolution.biomeProfileId
+            }
+          )
+        : {
+            matched: false,
+            materialCompatibilityStatus: "blocked",
+            paletteCompatibilityStatus: "blocked",
+            finishProfileId: null,
+            resolvedMaterialProfileId: null,
+            materialReason: "MATERIAL_PALETTE_FINISH_COMPATIBILITY_UNAVAILABLE"
+          };
     const componentAssemblyRuleResolution =
       modularBibleStyleBridgeResolution.modularBibleFamilyId &&
       modularBibleStyleBridgeResolution.componentRecipeId &&
@@ -2852,6 +2921,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       variantStructuralCompatibilityResolution.variantConstraintReason;
     state.variantSelectionSeed =
       variantStructuralCompatibilityResolution.variantSelectionSeed;
+    state.materialCompatibilityStatus =
+      materialPaletteFinishCompatibilityResolution.materialCompatibilityStatus;
+    state.paletteCompatibilityStatus =
+      materialPaletteFinishCompatibilityResolution.paletteCompatibilityStatus;
+    state.finishProfileId =
+      materialPaletteFinishCompatibilityResolution.finishProfileId;
+    state.resolvedMaterialProfileId =
+      materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId;
+    state.materialReason =
+      materialPaletteFinishCompatibilityResolution.materialReason;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3337,6 +3416,21 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         assemblyReason: componentAssemblyRuleResolution.assemblyReason
       })
     );
+    materialPaletteFinishCompatibilityDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        materialCompatibilityStatus:
+          materialPaletteFinishCompatibilityResolution.materialCompatibilityStatus,
+        paletteCompatibilityStatus:
+          materialPaletteFinishCompatibilityResolution.paletteCompatibilityStatus,
+        finishProfileId:
+          materialPaletteFinishCompatibilityResolution.finishProfileId,
+        resolvedMaterialProfileId:
+          materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId,
+        materialReason:
+          materialPaletteFinishCompatibilityResolution.materialReason
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -3680,6 +3774,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             variantStructuralCompatibilityResolution.variantConstraintReason,
           variantSelectionSeed:
             variantStructuralCompatibilityResolution.variantSelectionSeed,
+          materialCompatibilityStatus:
+            materialPaletteFinishCompatibilityResolution.materialCompatibilityStatus,
+          paletteCompatibilityStatus:
+            materialPaletteFinishCompatibilityResolution.paletteCompatibilityStatus,
+          finishProfileId:
+            materialPaletteFinishCompatibilityResolution.finishProfileId,
+          resolvedMaterialProfileId:
+            materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId,
+          materialReason:
+            materialPaletteFinishCompatibilityResolution.materialReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4007,6 +4111,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             variantStructuralCompatibilityResolution.variantConstraintReason,
           variantSelectionSeed:
             variantStructuralCompatibilityResolution.variantSelectionSeed,
+          materialCompatibilityStatus:
+            materialPaletteFinishCompatibilityResolution.materialCompatibilityStatus,
+          paletteCompatibilityStatus:
+            materialPaletteFinishCompatibilityResolution.paletteCompatibilityStatus,
+          finishProfileId:
+            materialPaletteFinishCompatibilityResolution.finishProfileId,
+          resolvedMaterialProfileId:
+            materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId,
+          materialReason:
+            materialPaletteFinishCompatibilityResolution.materialReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4388,6 +4502,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         variantConstraintReason:
           "PENDING_VARIANT_STRUCTURAL_COMPATIBILITY",
         variantSelectionSeed: null,
+        materialCompatibilityStatus: "blocked",
+        paletteCompatibilityStatus: "blocked",
+        finishProfileId: null,
+        resolvedMaterialProfileId: null,
+        materialReason: "PENDING_MATERIAL_PALETTE_FINISH_COMPATIBILITY",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4998,6 +5117,31 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             styleBridgeStatus: "blocked",
             bridgeReason: "MODULAR_BIBLE_STYLE_BRIDGE_UNAVAILABLE"
           });
+    const materialPaletteFinishCompatibilityCandidateResolution =
+      modularCandidateBindingResolution.assetVariantId &&
+      candidate.materialFamilyId &&
+      candidate.paletteProfileId &&
+      themeBundleCandidateResolution.worldThemeProfileId
+        ? resolveDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfile(
+            internal.atlasMaterialPaletteFinishCompatibilityProfiles,
+            {
+              assetVariantId: modularCandidateBindingResolution.assetVariantId,
+              materialFamilyId: candidate.materialFamilyId,
+              paletteProfileId: candidate.paletteProfileId,
+              worldThemeProfileId:
+                themeBundleCandidateResolution.worldThemeProfileId,
+              settlementIdentityId: candidate.settlementIdentityId,
+              biomeProfileId: candidate.biomeProfileId
+            }
+          )
+        : {
+            matched: false,
+            materialCompatibilityStatus: "blocked",
+            paletteCompatibilityStatus: "blocked",
+            finishProfileId: null,
+            resolvedMaterialProfileId: null,
+            materialReason: "MATERIAL_PALETTE_FINISH_COMPATIBILITY_UNAVAILABLE"
+          };
     const componentAssemblyRuleCandidateResolution =
       modularBibleStyleBridgeCandidateResolution.modularBibleFamilyId &&
       modularBibleStyleBridgeCandidateResolution.componentRecipeId &&
@@ -5301,6 +5445,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         componentAssemblyRuleCandidateResolution.validatedComponentCount;
       state.assemblyReason =
         componentAssemblyRuleCandidateResolution.assemblyReason;
+      state.materialCompatibilityStatus =
+        materialPaletteFinishCompatibilityCandidateResolution.materialCompatibilityStatus;
+      state.paletteCompatibilityStatus =
+        materialPaletteFinishCompatibilityCandidateResolution.paletteCompatibilityStatus;
+      state.finishProfileId =
+        materialPaletteFinishCompatibilityCandidateResolution.finishProfileId;
+      state.resolvedMaterialProfileId =
+        materialPaletteFinishCompatibilityCandidateResolution.resolvedMaterialProfileId;
+      state.materialReason =
+        materialPaletteFinishCompatibilityCandidateResolution.materialReason;
     }
 
     acceptedPlacements.push(
@@ -5378,6 +5532,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           variantStructuralCompatibilityCandidateResolution.variantConstraintReason,
         variantSelectionSeed:
           variantStructuralCompatibilityCandidateResolution.variantSelectionSeed,
+        materialCompatibilityStatus:
+          materialPaletteFinishCompatibilityCandidateResolution.materialCompatibilityStatus,
+        paletteCompatibilityStatus:
+          materialPaletteFinishCompatibilityCandidateResolution.paletteCompatibilityStatus,
+        finishProfileId:
+          materialPaletteFinishCompatibilityCandidateResolution.finishProfileId,
+        resolvedMaterialProfileId:
+          materialPaletteFinishCompatibilityCandidateResolution.resolvedMaterialProfileId,
+        materialReason:
+          materialPaletteFinishCompatibilityCandidateResolution.materialReason,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -5768,6 +5932,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     worldLegacyDiscoveryCohesionDecisions: deepFreeze(
       worldLegacyDiscoveryCohesionDecisions
     ),
+    materialPaletteFinishCompatibilityDecisions: deepFreeze(
+      materialPaletteFinishCompatibilityDecisions
+    ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -5934,6 +6101,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       selectedVariantProfileId: null,
       variantConstraintReason: null,
       variantSelectionSeed: null,
+      atlasMaterialPaletteFinishCompatibilityProfilesVersion: null,
+      registeredMaterialCompatibilityRuleCount: 0,
+      materialCompatibilityStatus: null,
+      paletteCompatibilityStatus: null,
+      finishProfileId: null,
+      resolvedMaterialProfileId: null,
+      materialReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
