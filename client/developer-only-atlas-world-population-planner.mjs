@@ -273,6 +273,11 @@ import {
   getDeveloperOnlyAtlasFactoryValidationGatesStatus,
   resolveDeveloperOnlyAtlasFactoryValidationGate
 } from "./developer-only-atlas-factory-validation-gates.mjs";
+import {
+  createDeveloperOnlyAtlasProductionBundlesJobTickets,
+  getDeveloperOnlyAtlasProductionBundlesJobTicketsStatus,
+  resolveDeveloperOnlyAtlasProductionBundleJobTicket
+} from "./developer-only-atlas-production-bundles-job-tickets.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -850,6 +855,15 @@ function freezeStatus(state) {
     validationGateCount: state.validationGateCount,
     passedGateCount: state.passedGateCount,
     productionReadinessReason: state.productionReadinessReason,
+    atlasProductionBundlesJobTicketsVersion:
+      state.atlasProductionBundlesJobTicketsVersion,
+    registeredProductionBundleRuleCount:
+      state.registeredProductionBundleRuleCount,
+    productionBundleId: state.productionBundleId,
+    assetJobTicketId: state.assetJobTicketId,
+    factoryQueuePriority: state.factoryQueuePriority,
+    jobDependencyCount: state.jobDependencyCount,
+    productionBundleReason: state.productionBundleReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -1112,7 +1126,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasAssetFactoryBuildRecipes =
     createDeveloperOnlyAtlasAssetFactoryBuildRecipes(),
   atlasFactoryValidationGates =
-    createDeveloperOnlyAtlasFactoryValidationGates()
+    createDeveloperOnlyAtlasFactoryValidationGates(),
+  atlasProductionBundlesJobTickets =
+    createDeveloperOnlyAtlasProductionBundlesJobTickets()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1326,6 +1342,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasFactoryValidationGatesStatus =
     getDeveloperOnlyAtlasFactoryValidationGatesStatus(
       atlasFactoryValidationGates
+    );
+  const atlasProductionBundlesJobTicketsStatus =
+    getDeveloperOnlyAtlasProductionBundlesJobTicketsStatus(
+      atlasProductionBundlesJobTickets
     );
 
   const state = {
@@ -1944,6 +1964,22 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     passedGateCount: atlasFactoryValidationGatesStatus.passedGateCount,
     productionReadinessReason:
       atlasFactoryValidationGatesStatus.productionReadinessReason,
+    atlasProductionBundlesJobTicketsVersion:
+      atlasProductionBundlesJobTicketsStatus
+        .atlasProductionBundlesJobTicketsVersion,
+    registeredProductionBundleRuleCount:
+      atlasProductionBundlesJobTicketsStatus
+        .registeredProductionBundleRuleCount,
+    productionBundleId:
+      atlasProductionBundlesJobTicketsStatus.productionBundleId,
+    assetJobTicketId:
+      atlasProductionBundlesJobTicketsStatus.assetJobTicketId,
+    factoryQueuePriority:
+      atlasProductionBundlesJobTicketsStatus.factoryQueuePriority,
+    jobDependencyCount:
+      atlasProductionBundlesJobTicketsStatus.jobDependencyCount,
+    productionBundleReason:
+      atlasProductionBundlesJobTicketsStatus.productionBundleReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -2027,6 +2063,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasAssetFactoryPackageManifests,
       atlasAssetFactoryBuildRecipes,
       atlasFactoryValidationGates,
+      atlasProductionBundlesJobTickets,
       placementProvider,
       lastPlan: null
     }
@@ -2349,6 +2386,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.validationGateCount = 0;
   state.passedGateCount = 0;
   state.productionReadinessReason = null;
+  state.productionBundleId = null;
+  state.assetJobTicketId = null;
+  state.factoryQueuePriority = 0;
+  state.jobDependencyCount = 0;
+  state.productionBundleReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2400,6 +2442,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const assetFactoryManifestDecisions = [];
   const assetFactoryBuildRecipeDecisions = [];
   const factoryValidationGateDecisions = [];
+  const productionBundleJobTicketDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -3354,6 +3397,32 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             productionReadinessReason:
               "FACTORY_VALIDATION_GATE_UNAVAILABLE"
           };
+    const productionBundleJobTicketResolution =
+      factoryValidationGateResolution.productionReadinessProfileId &&
+      assetFactoryBuildRecipeResolution.assetBuildRecipeId &&
+      assetFactoryBuildRecipeResolution.generationQueueProfileId
+        ? resolveDeveloperOnlyAtlasProductionBundleJobTicket(
+            internal.atlasProductionBundlesJobTickets,
+            {
+              productionReadinessProfileId:
+                factoryValidationGateResolution.productionReadinessProfileId,
+              assetBuildRecipeId:
+                assetFactoryBuildRecipeResolution.assetBuildRecipeId,
+              generationQueueProfileId:
+                assetFactoryBuildRecipeResolution.generationQueueProfileId,
+              factoryValidationStatus:
+                factoryValidationGateResolution.factoryValidationStatus
+            }
+          )
+        : {
+            matched: false,
+            productionBundleId: null,
+            assetJobTicketId: null,
+            factoryQueuePriority: 0,
+            jobDependencyCount: 0,
+            productionBundleReason:
+              "PRODUCTION_BUNDLE_JOB_TICKET_UNAVAILABLE"
+          };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -3524,6 +3593,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.passedGateCount = factoryValidationGateResolution.passedGateCount;
     state.productionReadinessReason =
       factoryValidationGateResolution.productionReadinessReason;
+    state.productionBundleId =
+      productionBundleJobTicketResolution.productionBundleId;
+    state.assetJobTicketId =
+      productionBundleJobTicketResolution.assetJobTicketId;
+    state.factoryQueuePriority =
+      productionBundleJobTicketResolution.factoryQueuePriority;
+    state.jobDependencyCount =
+      productionBundleJobTicketResolution.jobDependencyCount;
+    state.productionBundleReason =
+      productionBundleJobTicketResolution.productionBundleReason;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -4124,6 +4203,21 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           factoryValidationGateResolution.productionReadinessReason
       })
     );
+    productionBundleJobTicketDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        productionBundleId:
+          productionBundleJobTicketResolution.productionBundleId,
+        assetJobTicketId:
+          productionBundleJobTicketResolution.assetJobTicketId,
+        factoryQueuePriority:
+          productionBundleJobTicketResolution.factoryQueuePriority,
+        jobDependencyCount:
+          productionBundleJobTicketResolution.jobDependencyCount,
+        productionBundleReason:
+          productionBundleJobTicketResolution.productionBundleReason
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -4542,6 +4636,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           passedGateCount: factoryValidationGateResolution.passedGateCount,
           productionReadinessReason:
             factoryValidationGateResolution.productionReadinessReason,
+          productionBundleId:
+            productionBundleJobTicketResolution.productionBundleId,
+          assetJobTicketId:
+            productionBundleJobTicketResolution.assetJobTicketId,
+          factoryQueuePriority:
+            productionBundleJobTicketResolution.factoryQueuePriority,
+          jobDependencyCount:
+            productionBundleJobTicketResolution.jobDependencyCount,
+          productionBundleReason:
+            productionBundleJobTicketResolution.productionBundleReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4944,6 +5048,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           passedGateCount: factoryValidationGateResolution.passedGateCount,
           productionReadinessReason:
             factoryValidationGateResolution.productionReadinessReason,
+          productionBundleId:
+            productionBundleJobTicketResolution.productionBundleId,
+          assetJobTicketId:
+            productionBundleJobTicketResolution.assetJobTicketId,
+          factoryQueuePriority:
+            productionBundleJobTicketResolution.factoryQueuePriority,
+          jobDependencyCount:
+            productionBundleJobTicketResolution.jobDependencyCount,
+          productionBundleReason:
+            productionBundleJobTicketResolution.productionBundleReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -5371,6 +5485,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         validationGateCount: 0,
         passedGateCount: 0,
         productionReadinessReason: "PENDING_FACTORY_VALIDATION_GATE",
+        productionBundleId: null,
+        assetJobTicketId: null,
+        factoryQueuePriority: 0,
+        jobDependencyCount: 0,
+        productionBundleReason: "PENDING_PRODUCTION_BUNDLE_JOB_TICKET",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -6249,6 +6368,32 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             productionReadinessReason:
               "FACTORY_VALIDATION_GATE_UNAVAILABLE"
           };
+    const productionBundleJobTicketCandidateResolution =
+      factoryValidationGateCandidateResolution.productionReadinessProfileId &&
+      assetFactoryBuildRecipeCandidateResolution.assetBuildRecipeId &&
+      assetFactoryBuildRecipeCandidateResolution.generationQueueProfileId
+        ? resolveDeveloperOnlyAtlasProductionBundleJobTicket(
+            internal.atlasProductionBundlesJobTickets,
+            {
+              productionReadinessProfileId:
+                factoryValidationGateCandidateResolution.productionReadinessProfileId,
+              assetBuildRecipeId:
+                assetFactoryBuildRecipeCandidateResolution.assetBuildRecipeId,
+              generationQueueProfileId:
+                assetFactoryBuildRecipeCandidateResolution.generationQueueProfileId,
+              factoryValidationStatus:
+                factoryValidationGateCandidateResolution.factoryValidationStatus
+            }
+          )
+        : {
+            matched: false,
+            productionBundleId: null,
+            assetJobTicketId: null,
+            factoryQueuePriority: 0,
+            jobDependencyCount: 0,
+            productionBundleReason:
+              "PRODUCTION_BUNDLE_JOB_TICKET_UNAVAILABLE"
+          };
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -6617,6 +6762,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         factoryValidationGateCandidateResolution.passedGateCount;
       state.productionReadinessReason =
         factoryValidationGateCandidateResolution.productionReadinessReason;
+      state.productionBundleId =
+        productionBundleJobTicketCandidateResolution.productionBundleId;
+      state.assetJobTicketId =
+        productionBundleJobTicketCandidateResolution.assetJobTicketId;
+      state.factoryQueuePriority =
+        productionBundleJobTicketCandidateResolution.factoryQueuePriority;
+      state.jobDependencyCount =
+        productionBundleJobTicketCandidateResolution.jobDependencyCount;
+      state.productionBundleReason =
+        productionBundleJobTicketCandidateResolution.productionBundleReason;
     }
 
     acceptedPlacements.push(
@@ -6782,6 +6937,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           factoryValidationGateCandidateResolution.passedGateCount,
         productionReadinessReason:
           factoryValidationGateCandidateResolution.productionReadinessReason,
+        productionBundleId:
+          productionBundleJobTicketCandidateResolution.productionBundleId,
+        assetJobTicketId:
+          productionBundleJobTicketCandidateResolution.assetJobTicketId,
+        factoryQueuePriority:
+          productionBundleJobTicketCandidateResolution.factoryQueuePriority,
+        jobDependencyCount:
+          productionBundleJobTicketCandidateResolution.jobDependencyCount,
+        productionBundleReason:
+          productionBundleJobTicketCandidateResolution.productionBundleReason,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -7185,6 +7350,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       assetFactoryBuildRecipeDecisions
     ),
     factoryValidationGateDecisions: deepFreeze(factoryValidationGateDecisions),
+    productionBundleJobTicketDecisions: deepFreeze(
+      productionBundleJobTicketDecisions
+    ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -7414,6 +7582,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       validationGateCount: 0,
       passedGateCount: 0,
       productionReadinessReason: null,
+      atlasProductionBundlesJobTicketsVersion: null,
+      registeredProductionBundleRuleCount: 0,
+      productionBundleId: null,
+      assetJobTicketId: null,
+      factoryQueuePriority: 0,
+      jobDependencyCount: 0,
+      productionBundleReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
