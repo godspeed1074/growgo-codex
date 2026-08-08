@@ -198,6 +198,11 @@ import {
   getDeveloperOnlyAtlasAssetCompatibilityWorldPackagesStatus,
   resolveDeveloperOnlyAtlasAssetCompatibilityWorldPackage
 } from "./developer-only-atlas-asset-compatibility-world-packages.mjs";
+import {
+  createDeveloperOnlyAtlasAssetBiomeSettlementPackageProfiles,
+  getDeveloperOnlyAtlasAssetBiomeSettlementPackageProfilesStatus,
+  resolveDeveloperOnlyAtlasAssetBiomeSettlementPackageProfile
+} from "./developer-only-atlas-asset-biome-settlement-package-profiles.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -666,6 +671,15 @@ function freezeStatus(state) {
     compatibleAssetCount: state.compatibleAssetCount,
     blockedAssetCount: state.blockedAssetCount,
     packageReason: state.packageReason,
+    atlasAssetBiomeSettlementPackageProfilesVersion:
+      state.atlasAssetBiomeSettlementPackageProfilesVersion,
+    registeredPackageProfileRuleCount:
+      state.registeredPackageProfileRuleCount,
+    settlementPackageProfileId: state.settlementPackageProfileId,
+    biomePackageProfileId: state.biomePackageProfileId,
+    resolvedWorldPackageId: state.resolvedWorldPackageId,
+    profileCompatibilityStatus: state.profileCompatibilityStatus,
+    packageSelectionReason: state.packageSelectionReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -898,7 +912,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasAssetWorldValidationFoundation =
     createDeveloperOnlyAtlasAssetWorldValidationFoundation(),
   atlasAssetCompatibilityWorldPackages =
-    createDeveloperOnlyAtlasAssetCompatibilityWorldPackages()
+    createDeveloperOnlyAtlasAssetCompatibilityWorldPackages(),
+  atlasAssetBiomeSettlementPackageProfiles =
+    createDeveloperOnlyAtlasAssetBiomeSettlementPackageProfiles()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1052,6 +1068,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasAssetCompatibilityWorldPackagesStatus =
     getDeveloperOnlyAtlasAssetCompatibilityWorldPackagesStatus(
       atlasAssetCompatibilityWorldPackages
+    );
+  const atlasAssetBiomeSettlementPackageProfilesStatus =
+    getDeveloperOnlyAtlasAssetBiomeSettlementPackageProfilesStatus(
+      atlasAssetBiomeSettlementPackageProfiles
     );
 
   const state = {
@@ -1455,6 +1475,24 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     blockedAssetCount:
       atlasAssetCompatibilityWorldPackagesStatus.blockedAssetCount,
     packageReason: atlasAssetCompatibilityWorldPackagesStatus.packageReason,
+    atlasAssetBiomeSettlementPackageProfilesVersion:
+      atlasAssetBiomeSettlementPackageProfilesStatus
+        .atlasAssetBiomeSettlementPackageProfilesVersion,
+    registeredPackageProfileRuleCount:
+      atlasAssetBiomeSettlementPackageProfilesStatus
+        .registeredPackageProfileRuleCount,
+    settlementPackageProfileId:
+      atlasAssetBiomeSettlementPackageProfilesStatus
+        .settlementPackageProfileId,
+    biomePackageProfileId:
+      atlasAssetBiomeSettlementPackageProfilesStatus.biomePackageProfileId,
+    resolvedWorldPackageId:
+      atlasAssetBiomeSettlementPackageProfilesStatus.resolvedWorldPackageId,
+    profileCompatibilityStatus:
+      atlasAssetBiomeSettlementPackageProfilesStatus
+        .profileCompatibilityStatus,
+    packageSelectionReason:
+      atlasAssetBiomeSettlementPackageProfilesStatus.packageSelectionReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1523,6 +1561,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationWorldLegacyDiscoveryCohesionHooksRuleRegistry,
       atlasAssetWorldValidationFoundation,
       atlasAssetCompatibilityWorldPackages,
+      atlasAssetBiomeSettlementPackageProfiles,
       placementProvider,
       lastPlan: null
     }
@@ -1770,6 +1809,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.compatibleAssetCount = 0;
   state.blockedAssetCount = 0;
   state.packageReason = null;
+  state.settlementPackageProfileId = null;
+  state.biomePackageProfileId = null;
+  state.resolvedWorldPackageId = null;
+  state.profileCompatibilityStatus = null;
+  state.packageSelectionReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1806,6 +1850,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const modularAssetBindingDecisions = [];
   const assetWorldValidationDecisions = [];
   const worldPackageValidationDecisions = [];
+  const packageProfileDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2382,6 +2427,26 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
                 ? "WORLD_PACKAGE_CATEGORY_UNAVAILABLE"
                 : "ASSET_WORLD_VALIDATION_UNAVAILABLE"
           });
+    const packageProfileResolution =
+      worldPackageValidationResolution.worldPackageId &&
+      worldPackageCategory
+        ? resolveDeveloperOnlyAtlasAssetBiomeSettlementPackageProfile(
+            internal.atlasAssetBiomeSettlementPackageProfiles,
+            {
+              settlementIdentityId:
+                settlementIdentityStyleCohesionResolution.settlementIdentityId,
+              biomeProfileId: biomeLocalCharacterResolution.biomeProfileId,
+              worldPackageCategory,
+              worldPackageId: worldPackageValidationResolution.worldPackageId
+            }
+          )
+        : deepFreeze({
+            settlementPackageProfileId: null,
+            biomePackageProfileId: null,
+            resolvedWorldPackageId: null,
+            profileCompatibilityStatus: "blocked",
+            packageSelectionReason: "WORLD_PACKAGE_PROFILE_UNAVAILABLE"
+          });
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2630,6 +2695,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.blockedAssetCount =
       worldPackageValidationResolution.blockedAssetCount;
     state.packageReason = worldPackageValidationResolution.packageReason;
+    state.settlementPackageProfileId =
+      packageProfileResolution.settlementPackageProfileId;
+    state.biomePackageProfileId = packageProfileResolution.biomePackageProfileId;
+    state.resolvedWorldPackageId = packageProfileResolution.resolvedWorldPackageId;
+    state.profileCompatibilityStatus =
+      packageProfileResolution.profileCompatibilityStatus;
+    state.packageSelectionReason = packageProfileResolution.packageSelectionReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2827,6 +2899,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         blockedAssetCount:
           worldPackageValidationResolution.blockedAssetCount,
         packageReason: worldPackageValidationResolution.packageReason
+      })
+    );
+    packageProfileDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        settlementPackageProfileId:
+          packageProfileResolution.settlementPackageProfileId,
+        biomePackageProfileId: packageProfileResolution.biomePackageProfileId,
+        resolvedWorldPackageId: packageProfileResolution.resolvedWorldPackageId,
+        profileCompatibilityStatus:
+          packageProfileResolution.profileCompatibilityStatus,
+        packageSelectionReason:
+          packageProfileResolution.packageSelectionReason
       })
     );
     microClusterAdjacencyDecisions.push(
@@ -3183,6 +3268,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           blockedAssetCount:
             worldPackageValidationResolution.blockedAssetCount,
           packageReason: worldPackageValidationResolution.packageReason,
+          settlementPackageProfileId:
+            packageProfileResolution.settlementPackageProfileId,
+          biomePackageProfileId:
+            packageProfileResolution.biomePackageProfileId,
+          resolvedWorldPackageId:
+            packageProfileResolution.resolvedWorldPackageId,
+          profileCompatibilityStatus:
+            packageProfileResolution.profileCompatibilityStatus,
+          packageSelectionReason:
+            packageProfileResolution.packageSelectionReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3456,6 +3551,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           blockedAssetCount:
             worldPackageValidationResolution.blockedAssetCount,
           packageReason: worldPackageValidationResolution.packageReason,
+          settlementPackageProfileId:
+            packageProfileResolution.settlementPackageProfileId,
+          biomePackageProfileId:
+            packageProfileResolution.biomePackageProfileId,
+          resolvedWorldPackageId:
+            packageProfileResolution.resolvedWorldPackageId,
+          profileCompatibilityStatus:
+            packageProfileResolution.profileCompatibilityStatus,
+          packageSelectionReason:
+            packageProfileResolution.packageSelectionReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3741,6 +3846,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         compatibleAssetCount: 0,
         blockedAssetCount: 0,
         packageReason: "PENDING_WORLD_PACKAGE_VALIDATION",
+        settlementPackageProfileId: null,
+        biomePackageProfileId: null,
+        resolvedWorldPackageId: null,
+        profileCompatibilityStatus: "blocked",
+        packageSelectionReason: "PENDING_PACKAGE_PROFILE_SELECTION",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4242,6 +4352,25 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
                 ? "WORLD_PACKAGE_CATEGORY_UNAVAILABLE"
                 : "ASSET_WORLD_VALIDATION_UNAVAILABLE"
           });
+    const packageProfileCandidateResolution =
+      worldPackageValidationCandidateResolution.worldPackageId &&
+      candidateWorldPackageCategory
+        ? resolveDeveloperOnlyAtlasAssetBiomeSettlementPackageProfile(
+            internal.atlasAssetBiomeSettlementPackageProfiles,
+            {
+              settlementIdentityId: candidate.settlementIdentityId,
+              biomeProfileId: candidate.biomeProfileId,
+              worldPackageCategory: candidateWorldPackageCategory,
+              worldPackageId: worldPackageValidationCandidateResolution.worldPackageId
+            }
+          )
+        : deepFreeze({
+            settlementPackageProfileId: null,
+            biomePackageProfileId: null,
+            resolvedWorldPackageId: null,
+            profileCompatibilityStatus: "blocked",
+            packageSelectionReason: "WORLD_PACKAGE_PROFILE_UNAVAILABLE"
+          });
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -4460,6 +4589,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         worldPackageValidationCandidateResolution.blockedAssetCount;
       state.packageReason =
         worldPackageValidationCandidateResolution.packageReason;
+      state.settlementPackageProfileId =
+        packageProfileCandidateResolution.settlementPackageProfileId;
+      state.biomePackageProfileId =
+        packageProfileCandidateResolution.biomePackageProfileId;
+      state.resolvedWorldPackageId =
+        packageProfileCandidateResolution.resolvedWorldPackageId;
+      state.profileCompatibilityStatus =
+        packageProfileCandidateResolution.profileCompatibilityStatus;
+      state.packageSelectionReason =
+        packageProfileCandidateResolution.packageSelectionReason;
     }
 
     acceptedPlacements.push(
@@ -4548,6 +4687,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         blockedAssetCount:
           worldPackageValidationCandidateResolution.blockedAssetCount,
         packageReason: worldPackageValidationCandidateResolution.packageReason,
+        settlementPackageProfileId:
+          packageProfileCandidateResolution.settlementPackageProfileId,
+        biomePackageProfileId:
+          packageProfileCandidateResolution.biomePackageProfileId,
+        resolvedWorldPackageId:
+          packageProfileCandidateResolution.resolvedWorldPackageId,
+        profileCompatibilityStatus:
+          packageProfileCandidateResolution.profileCompatibilityStatus,
+        packageSelectionReason:
+          packageProfileCandidateResolution.packageSelectionReason,
         microClusterId: microClusterCandidateResolution.microClusterId,
         clusterType: microClusterCandidateResolution.clusterType,
         childAssetCount: microClusterCandidateResolution.childAssetCount,
@@ -4826,6 +4975,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     worldPackageValidationDecisions: deepFreeze(
       worldPackageValidationDecisions
     ),
+    packageProfileDecisions: deepFreeze(packageProfileDecisions),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
@@ -4983,6 +5133,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       compatibleAssetCount: 0,
       blockedAssetCount: 0,
       packageReason: null,
+      atlasAssetBiomeSettlementPackageProfilesVersion: null,
+      registeredPackageProfileRuleCount: 0,
+      settlementPackageProfileId: null,
+      biomePackageProfileId: null,
+      resolvedWorldPackageId: null,
+      profileCompatibilityStatus: null,
+      packageSelectionReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
