@@ -905,6 +905,9 @@ export function extractDeveloperOnlyAtlasLiveViewportFeatures(
     budget: normalizedBudget,
     normalizedFeatures: deepFreeze(truncatedNormalized),
     plannerFeatures: deepFreeze(plannerFeatures),
+    relationshipContext: deepFreeze({
+      roadWays: featureSource.roadWays
+    }),
     lastFailureReason: null,
     canonicalSafetyFlags: canonicalSafetyFlags(),
     deterministicSignature: hashString(

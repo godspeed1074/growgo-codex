@@ -1519,6 +1519,7 @@ const atlasAutomaticPopulationController =
         selectorSeed: generation?.selectorSeed,
         viewportId: generation?.viewportIdentity,
         features: featureResult?.normalizedFeatures ?? [],
+        relationshipContext: featureResult?.relationshipContext,
         performanceBudget: {
           maximumCandidateFeatures: Number(
             budgets?.maxSourceFeaturesPerViewport ?? 64

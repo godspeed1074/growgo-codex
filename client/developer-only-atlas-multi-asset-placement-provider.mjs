@@ -173,7 +173,11 @@ function normalizeInput(input = {}) {
     regionId: sanitizeString(input.regionId),
     packageId: sanitizeString(input.packageId),
     recipeId: sanitizeString(input.recipeId),
-    selectorSeed: sanitizeString(input.selectorSeed)
+    selectorSeed: sanitizeString(input.selectorSeed),
+    rotationOverride:
+      input.rotationOverride == null || !Number.isFinite(Number(input.rotationOverride))
+        ? null
+        : Number(input.rotationOverride)
   });
 }
 
@@ -210,7 +214,10 @@ function computeScale(instanceId, scaleRules) {
   });
 }
 
-function computeRotation(instanceId, rotationRules) {
+function computeRotation(instanceId, rotationRules, rotationOverride = null) {
+  if (Number.isFinite(Number(rotationOverride))) {
+    return Number(rotationOverride);
+  }
   if (rotationRules.mode === "seeded_degrees") {
     const fraction = hashFraction(`${instanceId}:rotation`);
     const min = Number(rotationRules.min);
@@ -415,7 +422,11 @@ export function resolveDeveloperOnlyAtlasMultiAssetPlacement(provider, input = {
       recipeId: normalizedInput.recipeId
     });
     const scale = computeScale(instanceId, registryEntry.scaleRules);
-    const rotation = computeRotation(instanceId, registryEntry.rotationRules);
+    const rotation = computeRotation(
+      instanceId,
+      registryEntry.rotationRules,
+      normalizedInput.rotationOverride
+    );
     const lod = computeLod(instanceId, registryEntry.lodRules);
 
     const renderCommand = deepFreeze({

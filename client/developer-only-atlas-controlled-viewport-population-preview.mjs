@@ -340,7 +340,8 @@ export function createDeveloperOnlyAtlasControlledViewportPopulationPreview({
         selectorSeed: persistentStatus.selectorSeed,
         viewportId: extraction.viewportIdentity,
         performanceBudget,
-        features: extraction.plannerFeatures
+        features: extraction.plannerFeatures,
+        relationshipContext: extraction.relationshipContext
       });
 
       const batch = validateAtlasPopulationPlanForDraw(
