@@ -83,6 +83,11 @@ import {
   getDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationModularAssetBinding
 } from "./developer-only-atlas-population-modular-asset-binding-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationMicroClusterAdjacencyRuleRegistry,
+  getDeveloperOnlyAtlasPopulationMicroClusterAdjacencyRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationMicroClusterAdjacency
+} from "./developer-only-atlas-population-micro-cluster-adjacency-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -348,6 +353,13 @@ function freezeStatus(state) {
     variantSelectionReason: state.variantSelectionReason,
     materialAssignmentId: state.materialAssignmentId,
     lodProfileId: state.lodProfileId,
+    microClusterAdjacencyVersion: state.microClusterAdjacencyVersion,
+    registeredMicroClusterRuleCount: state.registeredMicroClusterRuleCount,
+    microClusterId: state.microClusterId,
+    clusterType: state.clusterType,
+    childAssetCount: state.childAssetCount,
+    adjacencyReason: state.adjacencyReason,
+    variationSeed: state.variationSeed,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -534,7 +546,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationAssetFamilyMaterialCohesionRuleRegistry =
     createDeveloperOnlyAtlasPopulationAssetFamilyMaterialCohesionRuleRegistry(),
   populationModularAssetBindingRuleRegistry =
-    createDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistry()
+    createDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistry(),
+  populationMicroClusterAdjacencyRuleRegistry =
+    createDeveloperOnlyAtlasPopulationMicroClusterAdjacencyRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -596,6 +610,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const modularAssetBindingRegistryStatus =
     getDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistryStatus(
       populationModularAssetBindingRuleRegistry
+    );
+  const microClusterAdjacencyRegistryStatus =
+    getDeveloperOnlyAtlasPopulationMicroClusterAdjacencyRuleRegistryStatus(
+      populationMicroClusterAdjacencyRuleRegistry
     );
 
   const state = {
@@ -741,6 +759,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     materialAssignmentId:
       modularAssetBindingRegistryStatus.materialAssignmentId,
     lodProfileId: modularAssetBindingRegistryStatus.lodProfileId,
+    microClusterAdjacencyVersion:
+      microClusterAdjacencyRegistryStatus.microClusterAdjacencyVersion,
+    registeredMicroClusterRuleCount:
+      microClusterAdjacencyRegistryStatus.registeredMicroClusterRuleCount,
+    microClusterId: microClusterAdjacencyRegistryStatus.microClusterId,
+    clusterType: microClusterAdjacencyRegistryStatus.clusterType,
+    childAssetCount: microClusterAdjacencyRegistryStatus.childAssetCount,
+    adjacencyReason: microClusterAdjacencyRegistryStatus.adjacencyReason,
+    variationSeed: microClusterAdjacencyRegistryStatus.variationSeed,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -786,6 +813,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationSettlementIdentityStyleCohesionRuleRegistry,
       populationAssetFamilyMaterialCohesionRuleRegistry,
       populationModularAssetBindingRuleRegistry,
+      populationMicroClusterAdjacencyRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -919,6 +947,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.variantSelectionReason = null;
   state.materialAssignmentId = null;
   state.lodProfileId = null;
+  state.microClusterId = null;
+  state.clusterType = null;
+  state.childAssetCount = 0;
+  state.adjacencyReason = null;
+  state.variationSeed = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -953,6 +986,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const settlementIdentityStyleCohesionDecisions = [];
   const assetFamilyMaterialCohesionDecisions = [];
   const modularAssetBindingDecisions = [];
+  const microClusterAdjacencyDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1175,6 +1209,33 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialAssignmentId: null,
           lodProfileId: null
         };
+    const microClusterAdjacencyResolution =
+      modularAssetBindingResolution.matched
+        ? resolveDeveloperOnlyAtlasPopulationMicroClusterAdjacency(
+            internal.populationMicroClusterAdjacencyRuleRegistry,
+            {
+              featureClass: feature.featureClass,
+              districtType: districtCompositionResolution.districtType,
+              assetFamilyId: assetFamilyMaterialCohesionResolution.assetFamilyId,
+              selectedAssetId: modularAssetBindingResolution.selectedAssetId,
+              selectorSeed,
+              deterministicFeatureIdentity:
+                feature.deterministicFeatureIdentity,
+              coordinate: feature.coordinate,
+              candidateIndex: 0,
+              budgetRemaining:
+                budget.maximumCommands - state.acceptedPlacementCount
+            }
+          )
+        : {
+            matched: false,
+            microClusterId: null,
+            clusterType: null,
+            childAssetCount: 0,
+            adjacencyReason: null,
+            variationSeed: null,
+            childAssetIds: deepFreeze([])
+          };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1262,6 +1323,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
+    state.microClusterId = microClusterAdjacencyResolution.microClusterId;
+    state.clusterType = microClusterAdjacencyResolution.clusterType;
+    state.childAssetCount = microClusterAdjacencyResolution.childAssetCount;
+    state.adjacencyReason = microClusterAdjacencyResolution.adjacencyReason;
+    state.variationSeed = microClusterAdjacencyResolution.variationSeed;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1434,6 +1500,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         lodProfileId: modularAssetBindingResolution.lodProfileId
       })
     );
+    microClusterAdjacencyDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        microClusterId: microClusterAdjacencyResolution.microClusterId,
+        clusterType: microClusterAdjacencyResolution.clusterType,
+        childAssetCount: microClusterAdjacencyResolution.childAssetCount,
+        adjacencyReason: microClusterAdjacencyResolution.adjacencyReason,
+        variationSeed: microClusterAdjacencyResolution.variationSeed
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1528,6 +1604,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
+          microClusterId: microClusterAdjacencyResolution.microClusterId,
+          clusterType: microClusterAdjacencyResolution.clusterType,
+          childAssetCount: microClusterAdjacencyResolution.childAssetCount,
+          adjacencyReason: microClusterAdjacencyResolution.adjacencyReason,
+          variationSeed: microClusterAdjacencyResolution.variationSeed,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1641,6 +1722,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
+          microClusterId: microClusterAdjacencyResolution.microClusterId,
+          clusterType: microClusterAdjacencyResolution.clusterType,
+          childAssetCount: microClusterAdjacencyResolution.childAssetCount,
+          adjacencyReason: microClusterAdjacencyResolution.adjacencyReason,
+          variationSeed: microClusterAdjacencyResolution.variationSeed,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1799,6 +1885,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         variantSelectionReason: null,
         materialAssignmentId: null,
         lodProfileId: null,
+        microClusterId: null,
+        clusterType: null,
+        childAssetCount: 0,
+        adjacencyReason: null,
+        variationSeed: null,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -1939,6 +2030,33 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             materialAssignmentId: null,
             lodProfileId: null
           };
+    const microClusterCandidateResolution =
+      modularCandidateBindingResolution.matched
+        ? resolveDeveloperOnlyAtlasPopulationMicroClusterAdjacency(
+            internal.populationMicroClusterAdjacencyRuleRegistry,
+            {
+              featureClass: candidate.feature.featureClass,
+              districtType: candidate.districtType,
+              assetFamilyId: candidate.assetFamilyId,
+              selectedAssetId: modularCandidateBindingResolution.selectedAssetId,
+              selectorSeed,
+              deterministicFeatureIdentity:
+                candidate.feature.deterministicFeatureIdentity,
+              coordinate: candidate.coordinate,
+              candidateIndex: candidate.candidateIndex,
+              budgetRemaining:
+                budget.maximumCommands - acceptedPlacements.length
+            }
+          )
+        : {
+            matched: false,
+            microClusterId: null,
+            clusterType: null,
+            childAssetCount: 0,
+            adjacencyReason: null,
+            variationSeed: null,
+            childAssetIds: deepFreeze([])
+          };
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -1948,6 +2066,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       state.materialAssignmentId =
         modularCandidateBindingResolution.materialAssignmentId;
       state.lodProfileId = modularCandidateBindingResolution.lodProfileId;
+      state.microClusterId = microClusterCandidateResolution.microClusterId;
+      state.clusterType = microClusterCandidateResolution.clusterType;
+      state.childAssetCount = microClusterCandidateResolution.childAssetCount;
+      state.adjacencyReason = microClusterCandidateResolution.adjacencyReason;
+      state.variationSeed = microClusterCandidateResolution.variationSeed;
     }
 
     acceptedPlacements.push(
@@ -2018,6 +2141,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
+        microClusterId: microClusterCandidateResolution.microClusterId,
+        clusterType: microClusterCandidateResolution.clusterType,
+        childAssetCount: microClusterCandidateResolution.childAssetCount,
+        adjacencyReason: microClusterCandidateResolution.adjacencyReason,
+        variationSeed: microClusterCandidateResolution.variationSeed,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -2106,6 +2234,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       assetFamilyMaterialCohesionDecisions
     ),
     modularAssetBindingDecisions: deepFreeze(modularAssetBindingDecisions),
+    microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2216,6 +2345,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       variantSelectionReason: null,
       materialAssignmentId: null,
       lodProfileId: null,
+      microClusterAdjacencyVersion: null,
+      registeredMicroClusterRuleCount: 0,
+      microClusterId: null,
+      clusterType: null,
+      childAssetCount: 0,
+      adjacencyReason: null,
+      variationSeed: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
