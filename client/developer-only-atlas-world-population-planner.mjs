@@ -78,6 +78,11 @@ import {
   getDeveloperOnlyAtlasPopulationAssetFamilyMaterialCohesionRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationAssetFamilyMaterialCohesion
 } from "./developer-only-atlas-population-asset-family-material-cohesion-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistry,
+  getDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationModularAssetBinding
+} from "./developer-only-atlas-population-modular-asset-binding-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -336,6 +341,13 @@ function freezeStatus(state) {
     materialFamilyId: state.materialFamilyId,
     styleCompatibilityReason: state.styleCompatibilityReason,
     assetSelectionSeed: state.assetSelectionSeed,
+    modularAssetBindingVersion: state.modularAssetBindingVersion,
+    registeredModularBindingRuleCount: state.registeredModularBindingRuleCount,
+    selectedAssetId: state.selectedAssetId,
+    assetVariantId: state.assetVariantId,
+    variantSelectionReason: state.variantSelectionReason,
+    materialAssignmentId: state.materialAssignmentId,
+    lodProfileId: state.lodProfileId,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -520,7 +532,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationSettlementIdentityStyleCohesionRuleRegistry =
     createDeveloperOnlyAtlasPopulationSettlementIdentityStyleCohesionRuleRegistry(),
   populationAssetFamilyMaterialCohesionRuleRegistry =
-    createDeveloperOnlyAtlasPopulationAssetFamilyMaterialCohesionRuleRegistry()
+    createDeveloperOnlyAtlasPopulationAssetFamilyMaterialCohesionRuleRegistry(),
+  populationModularAssetBindingRuleRegistry =
+    createDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -578,6 +592,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const assetFamilyMaterialCohesionRegistryStatus =
     getDeveloperOnlyAtlasPopulationAssetFamilyMaterialCohesionRuleRegistryStatus(
       populationAssetFamilyMaterialCohesionRuleRegistry
+    );
+  const modularAssetBindingRegistryStatus =
+    getDeveloperOnlyAtlasPopulationModularAssetBindingRuleRegistryStatus(
+      populationModularAssetBindingRuleRegistry
     );
 
   const state = {
@@ -712,6 +730,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       assetFamilyMaterialCohesionRegistryStatus.styleCompatibilityReason,
     assetSelectionSeed:
       assetFamilyMaterialCohesionRegistryStatus.assetSelectionSeed,
+    modularAssetBindingVersion:
+      modularAssetBindingRegistryStatus.modularAssetBindingVersion,
+    registeredModularBindingRuleCount:
+      modularAssetBindingRegistryStatus.registeredModularBindingRuleCount,
+    selectedAssetId: modularAssetBindingRegistryStatus.selectedAssetId,
+    assetVariantId: modularAssetBindingRegistryStatus.assetVariantId,
+    variantSelectionReason:
+      modularAssetBindingRegistryStatus.variantSelectionReason,
+    materialAssignmentId:
+      modularAssetBindingRegistryStatus.materialAssignmentId,
+    lodProfileId: modularAssetBindingRegistryStatus.lodProfileId,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -756,6 +785,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationSeasonalEnvironmentRuleRegistry,
       populationSettlementIdentityStyleCohesionRuleRegistry,
       populationAssetFamilyMaterialCohesionRuleRegistry,
+      populationModularAssetBindingRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -884,6 +914,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.materialFamilyId = null;
   state.styleCompatibilityReason = null;
   state.assetSelectionSeed = null;
+  state.selectedAssetId = null;
+  state.assetVariantId = null;
+  state.variantSelectionReason = null;
+  state.materialAssignmentId = null;
+  state.lodProfileId = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -917,6 +952,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const seasonalEnvironmentDecisions = [];
   const settlementIdentityStyleCohesionDecisions = [];
   const assetFamilyMaterialCohesionDecisions = [];
+  const modularAssetBindingDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1106,6 +1142,39 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             settlementIdentityStyleCohesionResolution.paletteProfileId
         }
       );
+    const primaryModularAssetId =
+      contextualWorldFillResolution.placements[0]?.assetId ??
+      recipeResolution.assetCommands[0]?.assetId ??
+      null;
+    const modularAssetBindingResolution =
+      assetFamilyMaterialCohesionResolution.matched && primaryModularAssetId
+      ? resolveDeveloperOnlyAtlasPopulationModularAssetBinding(
+          internal.populationModularAssetBindingRuleRegistry,
+          {
+            assetFamilyId: assetFamilyMaterialCohesionResolution.assetFamilyId,
+            selectedAssetId: primaryModularAssetId,
+            featureClass: feature.featureClass,
+            materialFamilyId:
+              assetFamilyMaterialCohesionResolution.materialFamilyId,
+            paletteProfileId:
+              settlementIdentityStyleCohesionResolution.paletteProfileId,
+            selectorSeed,
+            deterministicFeatureIdentity: feature.deterministicFeatureIdentity,
+            coordinate: feature.coordinate,
+            candidateIndex: 0,
+            densityTier: distributionResolution.densityTier,
+            districtType: districtCompositionResolution.districtType,
+            lotType: parcelFrontageLotResolution.lotType
+          }
+        )
+      : {
+          matched: false,
+          selectedAssetId: null,
+          assetVariantId: null,
+          variantSelectionReason: null,
+          materialAssignmentId: null,
+          lodProfileId: null
+        };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1186,6 +1255,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       assetFamilyMaterialCohesionResolution.styleCompatibilityReason;
     state.assetSelectionSeed =
       assetFamilyMaterialCohesionResolution.assetSelectionSeed;
+    state.selectedAssetId = modularAssetBindingResolution.selectedAssetId;
+    state.assetVariantId = modularAssetBindingResolution.assetVariantId;
+    state.variantSelectionReason =
+      modularAssetBindingResolution.variantSelectionReason;
+    state.materialAssignmentId =
+      modularAssetBindingResolution.materialAssignmentId;
+    state.lodProfileId = modularAssetBindingResolution.lodProfileId;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1346,6 +1422,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assetFamilyMaterialCohesionResolution.assetSelectionSeed
       })
     );
+    modularAssetBindingDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        selectedAssetId: modularAssetBindingResolution.selectedAssetId,
+        assetVariantId: modularAssetBindingResolution.assetVariantId,
+        variantSelectionReason:
+          modularAssetBindingResolution.variantSelectionReason,
+        materialAssignmentId:
+          modularAssetBindingResolution.materialAssignmentId,
+        lodProfileId: modularAssetBindingResolution.lodProfileId
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1433,6 +1521,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             assetFamilyMaterialCohesionResolution.styleCompatibilityReason,
           assetSelectionSeed:
             assetFamilyMaterialCohesionResolution.assetSelectionSeed,
+          selectedAssetId: modularAssetBindingResolution.selectedAssetId,
+          assetVariantId: modularAssetBindingResolution.assetVariantId,
+          variantSelectionReason:
+            modularAssetBindingResolution.variantSelectionReason,
+          materialAssignmentId:
+            modularAssetBindingResolution.materialAssignmentId,
+          lodProfileId: modularAssetBindingResolution.lodProfileId,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1539,6 +1634,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             assetFamilyMaterialCohesionResolution.styleCompatibilityReason,
           assetSelectionSeed:
             assetFamilyMaterialCohesionResolution.assetSelectionSeed,
+          selectedAssetId: modularAssetBindingResolution.selectedAssetId,
+          assetVariantId: modularAssetBindingResolution.assetVariantId,
+          variantSelectionReason:
+            modularAssetBindingResolution.variantSelectionReason,
+          materialAssignmentId:
+            modularAssetBindingResolution.materialAssignmentId,
+          lodProfileId: modularAssetBindingResolution.lodProfileId,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1692,6 +1794,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assetFamilyMaterialCohesionResolution.styleCompatibilityReason,
         assetSelectionSeed:
           assetFamilyMaterialCohesionResolution.assetSelectionSeed,
+        selectedAssetId: null,
+        assetVariantId: null,
+        variantSelectionReason: null,
+        materialAssignmentId: null,
+        lodProfileId: null,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -1802,6 +1909,46 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       internal.placementProvider,
       placementInput
     );
+    const modularCandidateBindingResolution =
+      candidate.assetFamilyId &&
+      candidate.materialFamilyId &&
+      candidate.assetId
+        ? resolveDeveloperOnlyAtlasPopulationModularAssetBinding(
+            internal.populationModularAssetBindingRuleRegistry,
+            {
+              assetFamilyId: candidate.assetFamilyId,
+              selectedAssetId: candidate.assetId,
+              featureClass: candidate.feature.featureClass,
+              materialFamilyId: candidate.materialFamilyId,
+              paletteProfileId: candidate.paletteProfileId,
+              selectorSeed,
+              deterministicFeatureIdentity:
+                candidate.feature.deterministicFeatureIdentity,
+              coordinate: candidate.coordinate,
+              candidateIndex: candidate.candidateIndex,
+              densityTier: candidate.densityTier,
+              districtType: candidate.districtType,
+              lotType: candidate.lotType
+            }
+          )
+        : {
+            matched: false,
+            selectedAssetId: null,
+            assetVariantId: null,
+            variantSelectionReason: null,
+            materialAssignmentId: null,
+            lodProfileId: null
+          };
+
+    if (modularCandidateBindingResolution.matched) {
+      state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
+      state.assetVariantId = modularCandidateBindingResolution.assetVariantId;
+      state.variantSelectionReason =
+        modularCandidateBindingResolution.variantSelectionReason;
+      state.materialAssignmentId =
+        modularCandidateBindingResolution.materialAssignmentId;
+      state.lodProfileId = modularCandidateBindingResolution.lodProfileId;
+    }
 
     acceptedPlacements.push(
       deepFreeze({
@@ -1864,6 +2011,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         materialFamilyId: candidate.materialFamilyId,
         styleCompatibilityReason: candidate.styleCompatibilityReason,
         assetSelectionSeed: candidate.assetSelectionSeed,
+        selectedAssetId: modularCandidateBindingResolution.selectedAssetId,
+        assetVariantId: modularCandidateBindingResolution.assetVariantId,
+        variantSelectionReason:
+          modularCandidateBindingResolution.variantSelectionReason,
+        materialAssignmentId:
+          modularCandidateBindingResolution.materialAssignmentId,
+        lodProfileId: modularCandidateBindingResolution.lodProfileId,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -1951,6 +2105,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     assetFamilyMaterialCohesionDecisions: deepFreeze(
       assetFamilyMaterialCohesionDecisions
     ),
+    modularAssetBindingDecisions: deepFreeze(modularAssetBindingDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2054,6 +2209,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       materialFamilyId: null,
       styleCompatibilityReason: null,
       assetSelectionSeed: null,
+      modularAssetBindingVersion: null,
+      registeredModularBindingRuleCount: 0,
+      selectedAssetId: null,
+      assetVariantId: null,
+      variantSelectionReason: null,
+      materialAssignmentId: null,
+      lodProfileId: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
