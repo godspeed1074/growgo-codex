@@ -263,6 +263,11 @@ import {
   getDeveloperOnlyAtlasAssetFactoryPackageManifestsStatus,
   resolveDeveloperOnlyAtlasAssetFactoryPackageManifest
 } from "./developer-only-atlas-asset-factory-package-manifests.mjs";
+import {
+  createDeveloperOnlyAtlasAssetFactoryBuildRecipes,
+  getDeveloperOnlyAtlasAssetFactoryBuildRecipesStatus,
+  resolveDeveloperOnlyAtlasAssetFactoryBuildRecipe
+} from "./developer-only-atlas-asset-factory-build-recipes.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -822,6 +827,15 @@ function freezeStatus(state) {
     manifestComponentCount: state.manifestComponentCount,
     manifestValidationStatus: state.manifestValidationStatus,
     manifestReason: state.manifestReason,
+    atlasAssetFactoryBuildRecipesVersion:
+      state.atlasAssetFactoryBuildRecipesVersion,
+    registeredAssetFactoryBuildRecipeRuleCount:
+      state.registeredAssetFactoryBuildRecipeRuleCount,
+    assetBuildRecipeId: state.assetBuildRecipeId,
+    generationQueueProfileId: state.generationQueueProfileId,
+    buildStepCount: state.buildStepCount,
+    dependencyCount: state.dependencyCount,
+    factoryReadinessStatus: state.factoryReadinessStatus,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -1080,7 +1094,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasExportContractNamingProfiles =
     createDeveloperOnlyAtlasExportContractNamingProfiles(),
   atlasAssetFactoryPackageManifests =
-    createDeveloperOnlyAtlasAssetFactoryPackageManifests()
+    createDeveloperOnlyAtlasAssetFactoryPackageManifests(),
+  atlasAssetFactoryBuildRecipes =
+    createDeveloperOnlyAtlasAssetFactoryBuildRecipes()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1286,6 +1302,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasAssetFactoryPackageManifestsStatus =
     getDeveloperOnlyAtlasAssetFactoryPackageManifestsStatus(
       atlasAssetFactoryPackageManifests
+    );
+  const atlasAssetFactoryBuildRecipesStatus =
+    getDeveloperOnlyAtlasAssetFactoryBuildRecipesStatus(
+      atlasAssetFactoryBuildRecipes
     );
 
   const state = {
@@ -1878,6 +1898,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     manifestValidationStatus:
       atlasAssetFactoryPackageManifestsStatus.manifestValidationStatus,
     manifestReason: atlasAssetFactoryPackageManifestsStatus.manifestReason,
+    atlasAssetFactoryBuildRecipesVersion:
+      atlasAssetFactoryBuildRecipesStatus
+        .atlasAssetFactoryBuildRecipesVersion,
+    registeredAssetFactoryBuildRecipeRuleCount:
+      atlasAssetFactoryBuildRecipesStatus
+        .registeredAssetFactoryBuildRecipeRuleCount,
+    assetBuildRecipeId: atlasAssetFactoryBuildRecipesStatus.assetBuildRecipeId,
+    generationQueueProfileId:
+      atlasAssetFactoryBuildRecipesStatus.generationQueueProfileId,
+    buildStepCount: atlasAssetFactoryBuildRecipesStatus.buildStepCount,
+    dependencyCount: atlasAssetFactoryBuildRecipesStatus.dependencyCount,
+    factoryReadinessStatus:
+      atlasAssetFactoryBuildRecipesStatus.factoryReadinessStatus,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1959,6 +1992,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasAttachmentMetadataGlbPreparation,
       atlasExportContractNamingProfiles,
       atlasAssetFactoryPackageManifests,
+      atlasAssetFactoryBuildRecipes,
       placementProvider,
       lastPlan: null
     }
@@ -2271,6 +2305,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.manifestComponentCount = 0;
   state.manifestValidationStatus = null;
   state.manifestReason = null;
+  state.assetBuildRecipeId = null;
+  state.generationQueueProfileId = null;
+  state.buildStepCount = 0;
+  state.dependencyCount = 0;
+  state.factoryReadinessStatus = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2320,6 +2359,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const attachmentMetadataDecisions = [];
   const exportContractDecisions = [];
   const assetFactoryManifestDecisions = [];
+  const assetFactoryBuildRecipeDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -3223,6 +3263,30 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             manifestReason:
               "ASSET_FACTORY_PACKAGE_MANIFEST_UNAVAILABLE"
           };
+    const assetFactoryBuildRecipeResolution =
+      assetFactoryManifestResolution.assetPackageManifestId &&
+      assetFactoryManifestResolution.exportValidationProfileId &&
+      exportContractResolution.exportContractId
+        ? resolveDeveloperOnlyAtlasAssetFactoryBuildRecipe(
+            internal.atlasAssetFactoryBuildRecipes,
+            {
+              assetPackageManifestId:
+                assetFactoryManifestResolution.assetPackageManifestId,
+              exportValidationProfileId:
+                assetFactoryManifestResolution.exportValidationProfileId,
+              exportContractId: exportContractResolution.exportContractId
+            }
+          )
+        : {
+            matched: false,
+            assetBuildRecipeId: null,
+            generationQueueProfileId: null,
+            buildStepCount: 0,
+            dependencyCount: 0,
+            factoryReadinessStatus: "blocked",
+            factoryReadinessReason:
+              "ASSET_FACTORY_BUILD_RECIPE_UNAVAILABLE"
+          };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -3376,6 +3440,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.manifestValidationStatus =
       assetFactoryManifestResolution.manifestValidationStatus;
     state.manifestReason = assetFactoryManifestResolution.manifestReason;
+    state.assetBuildRecipeId =
+      assetFactoryBuildRecipeResolution.assetBuildRecipeId;
+    state.generationQueueProfileId =
+      assetFactoryBuildRecipeResolution.generationQueueProfileId;
+    state.buildStepCount = assetFactoryBuildRecipeResolution.buildStepCount;
+    state.dependencyCount = assetFactoryBuildRecipeResolution.dependencyCount;
+    state.factoryReadinessStatus =
+      assetFactoryBuildRecipeResolution.factoryReadinessStatus;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3949,6 +4021,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         manifestReason: assetFactoryManifestResolution.manifestReason
       })
     );
+    assetFactoryBuildRecipeDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        assetBuildRecipeId:
+          assetFactoryBuildRecipeResolution.assetBuildRecipeId,
+        generationQueueProfileId:
+          assetFactoryBuildRecipeResolution.generationQueueProfileId,
+        buildStepCount: assetFactoryBuildRecipeResolution.buildStepCount,
+        dependencyCount: assetFactoryBuildRecipeResolution.dependencyCount,
+        factoryReadinessStatus:
+          assetFactoryBuildRecipeResolution.factoryReadinessStatus
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -4350,6 +4435,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           manifestValidationStatus:
             assetFactoryManifestResolution.manifestValidationStatus,
           manifestReason: assetFactoryManifestResolution.manifestReason,
+          assetBuildRecipeId:
+            assetFactoryBuildRecipeResolution.assetBuildRecipeId,
+          generationQueueProfileId:
+            assetFactoryBuildRecipeResolution.generationQueueProfileId,
+          buildStepCount: assetFactoryBuildRecipeResolution.buildStepCount,
+          dependencyCount: assetFactoryBuildRecipeResolution.dependencyCount,
+          factoryReadinessStatus:
+            assetFactoryBuildRecipeResolution.factoryReadinessStatus,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4735,6 +4828,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           manifestValidationStatus:
             assetFactoryManifestResolution.manifestValidationStatus,
           manifestReason: assetFactoryManifestResolution.manifestReason,
+          assetBuildRecipeId:
+            assetFactoryBuildRecipeResolution.assetBuildRecipeId,
+          generationQueueProfileId:
+            assetFactoryBuildRecipeResolution.generationQueueProfileId,
+          buildStepCount: assetFactoryBuildRecipeResolution.buildStepCount,
+          dependencyCount: assetFactoryBuildRecipeResolution.dependencyCount,
+          factoryReadinessStatus:
+            assetFactoryBuildRecipeResolution.factoryReadinessStatus,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -5152,6 +5253,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         manifestComponentCount: 0,
         manifestValidationStatus: "blocked",
         manifestReason: "PENDING_ASSET_FACTORY_PACKAGE_MANIFEST",
+        assetBuildRecipeId: null,
+        generationQueueProfileId: null,
+        buildStepCount: 0,
+        dependencyCount: 0,
+        factoryReadinessStatus: "blocked",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -5978,6 +6084,31 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             manifestReason:
               "ASSET_FACTORY_PACKAGE_MANIFEST_UNAVAILABLE"
           };
+    const assetFactoryBuildRecipeCandidateResolution =
+      assetFactoryManifestCandidateResolution.assetPackageManifestId &&
+      assetFactoryManifestCandidateResolution.exportValidationProfileId &&
+      exportContractCandidateResolution.exportContractId
+        ? resolveDeveloperOnlyAtlasAssetFactoryBuildRecipe(
+            internal.atlasAssetFactoryBuildRecipes,
+            {
+              assetPackageManifestId:
+                assetFactoryManifestCandidateResolution.assetPackageManifestId,
+              exportValidationProfileId:
+                assetFactoryManifestCandidateResolution.exportValidationProfileId,
+              exportContractId:
+                exportContractCandidateResolution.exportContractId
+            }
+          )
+        : {
+            matched: false,
+            assetBuildRecipeId: null,
+            generationQueueProfileId: null,
+            buildStepCount: 0,
+            dependencyCount: 0,
+            factoryReadinessStatus: "blocked",
+            factoryReadinessReason:
+              "ASSET_FACTORY_BUILD_RECIPE_UNAVAILABLE"
+          };
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -6326,6 +6457,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         assetFactoryManifestCandidateResolution.manifestValidationStatus;
       state.manifestReason =
         assetFactoryManifestCandidateResolution.manifestReason;
+      state.assetBuildRecipeId =
+        assetFactoryBuildRecipeCandidateResolution.assetBuildRecipeId;
+      state.generationQueueProfileId =
+        assetFactoryBuildRecipeCandidateResolution.generationQueueProfileId;
+      state.buildStepCount =
+        assetFactoryBuildRecipeCandidateResolution.buildStepCount;
+      state.dependencyCount =
+        assetFactoryBuildRecipeCandidateResolution.dependencyCount;
+      state.factoryReadinessStatus =
+        assetFactoryBuildRecipeCandidateResolution.factoryReadinessStatus;
     }
 
     acceptedPlacements.push(
@@ -6471,6 +6612,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assetFactoryManifestCandidateResolution.manifestValidationStatus,
         manifestReason:
           assetFactoryManifestCandidateResolution.manifestReason,
+        assetBuildRecipeId:
+          assetFactoryBuildRecipeCandidateResolution.assetBuildRecipeId,
+        generationQueueProfileId:
+          assetFactoryBuildRecipeCandidateResolution.generationQueueProfileId,
+        buildStepCount:
+          assetFactoryBuildRecipeCandidateResolution.buildStepCount,
+        dependencyCount:
+          assetFactoryBuildRecipeCandidateResolution.dependencyCount,
+        factoryReadinessStatus:
+          assetFactoryBuildRecipeCandidateResolution.factoryReadinessStatus,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -6870,6 +7021,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     attachmentMetadataDecisions: deepFreeze(attachmentMetadataDecisions),
     exportContractDecisions: deepFreeze(exportContractDecisions),
     assetFactoryManifestDecisions: deepFreeze(assetFactoryManifestDecisions),
+    assetFactoryBuildRecipeDecisions: deepFreeze(
+      assetFactoryBuildRecipeDecisions
+    ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -7085,6 +7239,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       manifestComponentCount: 0,
       manifestValidationStatus: null,
       manifestReason: null,
+      atlasAssetFactoryBuildRecipesVersion: null,
+      registeredAssetFactoryBuildRecipeRuleCount: 0,
+      assetBuildRecipeId: null,
+      generationQueueProfileId: null,
+      buildStepCount: 0,
+      dependencyCount: 0,
+      factoryReadinessStatus: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
