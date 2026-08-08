@@ -143,6 +143,11 @@ import {
   getDeveloperOnlyAtlasPopulationPlaceLivenessHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationPlaceLivenessHooks
 } from "./developer-only-atlas-population-place-liveness-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooks
+} from "./developer-only-atlas-population-weekly-routine-recurrence-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -498,6 +503,13 @@ function freezeStatus(state) {
     livenessCategory: state.livenessCategory,
     peakActivityWindow: state.peakActivityWindow,
     presenceReason: state.presenceReason,
+    weeklyRoutineRecurrenceVersion: state.weeklyRoutineRecurrenceVersion,
+    registeredWeeklyRoutineRuleCount: state.registeredWeeklyRoutineRuleCount,
+    weeklyRoutineProfileId: state.weeklyRoutineProfileId,
+    recurrencePatternId: state.recurrencePatternId,
+    communityCadenceId: state.communityCadenceId,
+    eventFrequency: state.eventFrequency,
+    recurrenceReason: state.recurrenceReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -708,7 +720,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationLocalMobilityAccessHooksRuleRegistry =
     createDeveloperOnlyAtlasPopulationLocalMobilityAccessHooksRuleRegistry(),
   populationPlaceLivenessHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationPlaceLivenessHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationPlaceLivenessHooksRuleRegistry(),
+  populationWeeklyRoutineRecurrenceHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -818,6 +832,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const placeLivenessRegistryStatus =
     getDeveloperOnlyAtlasPopulationPlaceLivenessHooksRuleRegistryStatus(
       populationPlaceLivenessHooksRuleRegistry
+    );
+  const weeklyRoutineRecurrenceRegistryStatus =
+    getDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooksRuleRegistryStatus(
+      populationWeeklyRoutineRecurrenceHooksRuleRegistry
     );
 
   const state = {
@@ -1089,6 +1107,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     livenessCategory: placeLivenessRegistryStatus.livenessCategory,
     peakActivityWindow: placeLivenessRegistryStatus.peakActivityWindow,
     presenceReason: placeLivenessRegistryStatus.presenceReason,
+    weeklyRoutineRecurrenceVersion:
+      weeklyRoutineRecurrenceRegistryStatus.weeklyRoutineRecurrenceVersion,
+    registeredWeeklyRoutineRuleCount:
+      weeklyRoutineRecurrenceRegistryStatus.registeredWeeklyRoutineRuleCount,
+    weeklyRoutineProfileId:
+      weeklyRoutineRecurrenceRegistryStatus.weeklyRoutineProfileId,
+    recurrencePatternId:
+      weeklyRoutineRecurrenceRegistryStatus.recurrencePatternId,
+    communityCadenceId:
+      weeklyRoutineRecurrenceRegistryStatus.communityCadenceId,
+    eventFrequency: weeklyRoutineRecurrenceRegistryStatus.eventFrequency,
+    recurrenceReason: weeklyRoutineRecurrenceRegistryStatus.recurrenceReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1146,6 +1176,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationLocalEconomyServiceHooksRuleRegistry,
       populationLocalMobilityAccessHooksRuleRegistry,
       populationPlaceLivenessHooksRuleRegistry,
+      populationWeeklyRoutineRecurrenceHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1338,6 +1369,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.livenessCategory = null;
   state.peakActivityWindow = null;
   state.presenceReason = null;
+  state.weeklyRoutineProfileId = null;
+  state.recurrencePatternId = null;
+  state.communityCadenceId = null;
+  state.eventFrequency = null;
+  state.recurrenceReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1384,6 +1420,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const localEconomyServiceDecisions = [];
   const localMobilityAccessDecisions = [];
   const placeLivenessDecisions = [];
+  const weeklyRoutineRecurrenceDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1760,6 +1797,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           communityRole: civicRoutineGatheringResolution.communityRole
         }
       );
+    const weeklyRoutineRecurrenceResolution =
+      resolveDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooks(
+        internal.populationWeeklyRoutineRecurrenceHooksRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          livenessCategory: placeLivenessResolution.livenessCategory,
+          occupancyProfileId: placeLivenessResolution.occupancyProfileId,
+          serviceRoleId: localEconomyServiceResolution.serviceRoleId,
+          communityRole: civicRoutineGatheringResolution.communityRole
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1922,6 +1970,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.livenessCategory = placeLivenessResolution.livenessCategory;
     state.peakActivityWindow = placeLivenessResolution.peakActivityWindow;
     state.presenceReason = placeLivenessResolution.presenceReason;
+    state.weeklyRoutineProfileId =
+      weeklyRoutineRecurrenceResolution.weeklyRoutineProfileId;
+    state.recurrencePatternId =
+      weeklyRoutineRecurrenceResolution.recurrencePatternId;
+    state.communityCadenceId =
+      weeklyRoutineRecurrenceResolution.communityCadenceId;
+    state.eventFrequency = weeklyRoutineRecurrenceResolution.eventFrequency;
+    state.recurrenceReason = weeklyRoutineRecurrenceResolution.recurrenceReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2227,6 +2283,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         presenceReason: placeLivenessResolution.presenceReason
       })
     );
+    weeklyRoutineRecurrenceDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        weeklyRoutineProfileId:
+          weeklyRoutineRecurrenceResolution.weeklyRoutineProfileId,
+        recurrencePatternId:
+          weeklyRoutineRecurrenceResolution.recurrencePatternId,
+        communityCadenceId:
+          weeklyRoutineRecurrenceResolution.communityCadenceId,
+        eventFrequency: weeklyRoutineRecurrenceResolution.eventFrequency,
+        recurrenceReason: weeklyRoutineRecurrenceResolution.recurrenceReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -2395,6 +2464,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           livenessCategory: placeLivenessResolution.livenessCategory,
           peakActivityWindow: placeLivenessResolution.peakActivityWindow,
           presenceReason: placeLivenessResolution.presenceReason,
+          weeklyRoutineProfileId:
+            weeklyRoutineRecurrenceResolution.weeklyRoutineProfileId,
+          recurrencePatternId:
+            weeklyRoutineRecurrenceResolution.recurrencePatternId,
+          communityCadenceId:
+            weeklyRoutineRecurrenceResolution.communityCadenceId,
+          eventFrequency: weeklyRoutineRecurrenceResolution.eventFrequency,
+          recurrenceReason: weeklyRoutineRecurrenceResolution.recurrenceReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2582,6 +2659,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           livenessCategory: placeLivenessResolution.livenessCategory,
           peakActivityWindow: placeLivenessResolution.peakActivityWindow,
           presenceReason: placeLivenessResolution.presenceReason,
+          weeklyRoutineProfileId:
+            weeklyRoutineRecurrenceResolution.weeklyRoutineProfileId,
+          recurrencePatternId:
+            weeklyRoutineRecurrenceResolution.recurrencePatternId,
+          communityCadenceId:
+            weeklyRoutineRecurrenceResolution.communityCadenceId,
+          eventFrequency: weeklyRoutineRecurrenceResolution.eventFrequency,
+          recurrenceReason: weeklyRoutineRecurrenceResolution.recurrenceReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -3059,6 +3144,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             civicRoutineGatheringCandidateResolution.communityRole
         }
       );
+    const weeklyRoutineRecurrenceCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooks(
+        internal.populationWeeklyRoutineRecurrenceHooksRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          livenessCategory: placeLivenessCandidateResolution.livenessCategory,
+          occupancyProfileId:
+            placeLivenessCandidateResolution.occupancyProfileId,
+          serviceRoleId: localEconomyServiceCandidateResolution.serviceRoleId,
+          communityRole:
+            civicRoutineGatheringCandidateResolution.communityRole
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -3168,6 +3266,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       state.peakActivityWindow =
         placeLivenessCandidateResolution.peakActivityWindow;
       state.presenceReason = placeLivenessCandidateResolution.presenceReason;
+      state.weeklyRoutineProfileId =
+        weeklyRoutineRecurrenceCandidateResolution.weeklyRoutineProfileId;
+      state.recurrencePatternId =
+        weeklyRoutineRecurrenceCandidateResolution.recurrencePatternId;
+      state.communityCadenceId =
+        weeklyRoutineRecurrenceCandidateResolution.communityCadenceId;
+      state.eventFrequency =
+        weeklyRoutineRecurrenceCandidateResolution.eventFrequency;
+      state.recurrenceReason =
+        weeklyRoutineRecurrenceCandidateResolution.recurrenceReason;
     }
 
     acceptedPlacements.push(
@@ -3336,6 +3444,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         peakActivityWindow:
           placeLivenessCandidateResolution.peakActivityWindow,
         presenceReason: placeLivenessCandidateResolution.presenceReason,
+        weeklyRoutineProfileId:
+          weeklyRoutineRecurrenceCandidateResolution.weeklyRoutineProfileId,
+        recurrencePatternId:
+          weeklyRoutineRecurrenceCandidateResolution.recurrencePatternId,
+        communityCadenceId:
+          weeklyRoutineRecurrenceCandidateResolution.communityCadenceId,
+        eventFrequency:
+          weeklyRoutineRecurrenceCandidateResolution.eventFrequency,
+        recurrenceReason:
+          weeklyRoutineRecurrenceCandidateResolution.recurrenceReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -3436,6 +3554,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     localEconomyServiceDecisions: deepFreeze(localEconomyServiceDecisions),
     localMobilityAccessDecisions: deepFreeze(localMobilityAccessDecisions),
     placeLivenessDecisions: deepFreeze(placeLivenessDecisions),
+    weeklyRoutineRecurrenceDecisions: deepFreeze(
+      weeklyRoutineRecurrenceDecisions
+    ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -3629,6 +3750,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       livenessCategory: null,
       peakActivityWindow: null,
       presenceReason: null,
+      weeklyRoutineRecurrenceVersion: null,
+      registeredWeeklyRoutineRuleCount: 0,
+      weeklyRoutineProfileId: null,
+      recurrencePatternId: null,
+      communityCadenceId: null,
+      eventFrequency: null,
+      recurrenceReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
