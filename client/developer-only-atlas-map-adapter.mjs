@@ -18,6 +18,32 @@ const FOREST_SELECTOR_METADATA_PATH =
   "asset-factory-workspace/recipe-selector/LOCATION_RECIPE_SELECTOR_001/metadata/forest-location-recipe-001-selector-metadata.json";
 
 const DEFAULT_CWD = path.resolve(import.meta.dirname, "..");
+const DEFAULT_BELLARINE_DEVELOPER_SCOPE_ID =
+  "DEVELOPER_SCOPE_BELLARINE_COASTAL_EXPLORATION";
+const POPULATED_VERIFICATION_SCOPE = Object.freeze({
+  scopeId: "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA",
+  regionId: "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION",
+  packageId: "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001",
+  recipeId: "COASTAL_LOCATION_RECIPE_001",
+  internalDeveloperOnly: true
+});
+const POPULATED_VERIFICATION_REPRESENTATIVE_PACKAGE = Object.freeze({
+  sourceDatasetId: "SOURCE_DATASET_BELLARINE_POPULATED_TEST_001",
+  sourceRevision: "2026-08-08:R001",
+  regionSlug: "BELLARINE_POPULATED_TEST",
+  latBucket: -38.14,
+  lngBucket: 144.35,
+  environmentProfile: "COASTAL_EXPLORATION",
+  primaryBiomeHint: "COASTAL_RESERVE_TRAIL",
+  archetypeHint: "RESERVE_LOOP",
+  expectedRecipeId: "COASTAL_LOCATION_RECIPE_001",
+  mobileProfile: "MOBILE_STANDARD_001",
+  regionId: "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION",
+  packageId: "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001",
+  packageVersion: "v001",
+  selectorSeed: "6c07ce2b7f1cf4f5dc973e1b4fc3854e7df97341f0969c1c9d4bf66e7ec5b8cf",
+  packageFingerprint: "3de8cbf25b1f9f633c062e0c6511d161b3dbe6f3c30140da8a744d66bf127834"
+});
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {
@@ -45,6 +71,7 @@ function loadApprovedScopeBundle(cwd) {
     decisionValidation: operatorDecisionValidation,
     controlledRuntimeValidation,
     approvedScope: {
+      scopeId: DEFAULT_BELLARINE_DEVELOPER_SCOPE_ID,
       regionId: operatorDecisionRecord.scopeConfirmation.regionId,
       packageId: operatorDecisionRecord.scopeConfirmation.packageId,
       recipeId: operatorDecisionRecord.scopeConfirmation.recipeId,
@@ -87,11 +114,24 @@ export function createDeveloperOnlyAtlasMapAdapter(options = {}) {
   const approvedRepresentativePackage =
     options.approvedRepresentativePackageOverride ??
     loadRepresentativePackage(cwd, approvedScope.packageId);
+  const approvedScopeEntries =
+    options.approvedScopeEntriesOverride ??
+    [
+      {
+        scope: approvedScope,
+        representativePackage: approvedRepresentativePackage
+      },
+      {
+        scope: POPULATED_VERIFICATION_SCOPE,
+        representativePackage: POPULATED_VERIFICATION_REPRESENTATIVE_PACKAGE
+      }
+    ];
   const selectorFoundation =
     options.selectorFoundationOverride ?? loadSelectorFoundation(cwd);
 
   return createDeveloperOnlyAtlasMapAdapterCore({
     approvedScope,
+    approvedScopeEntries,
     safetyFlags: {
       ...scopeBundle.safetyFlags,
       ...(options.safetyFlagsOverride ?? {})

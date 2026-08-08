@@ -50,6 +50,15 @@ function normalizeBucket(value) {
   return Number(Number(value).toFixed(2));
 }
 
+function buildScopeId(scope, representativePackage) {
+  return (
+    normalizeToken(scope.scopeId) ||
+    normalizeToken(representativePackage?.packageId) ||
+    normalizeToken(scope.regionId) ||
+    "ATLAS_DEVELOPER_SCOPE_UNKNOWN"
+  );
+}
+
 function validateLatitude(latitude) {
   return Number.isFinite(latitude) && latitude >= -90 && latitude <= 90;
 }
@@ -239,7 +248,11 @@ function buildBlockedDiagnostic({
   scope,
   safetyFlags,
   bridgeState,
-  scopeSource = DEFAULT_SCOPE_SOURCE
+  scopeSource = DEFAULT_SCOPE_SOURCE,
+  activeDeveloperScopeId = null,
+  matchedScopeReason = null,
+  approvedScopeList = [],
+  coordinateMatchResult = null
 }) {
   return deepFreeze({
     schemaId: "ATLAS_MAP_DIAGNOSTIC_RESULT_001",
@@ -255,6 +268,13 @@ function buildBlockedDiagnostic({
       ...scope,
       scopeSource
     },
+    activeDeveloperScopeId,
+    matchedScopeReason,
+    approvedScopeList: deepFreeze([...(approvedScopeList ?? [])]),
+    coordinateMatchResult:
+      coordinateMatchResult && typeof coordinateMatchResult === "object"
+        ? deepFreeze({ ...coordinateMatchResult })
+        : null,
     resolvedRegion: null,
     resolvedPackage: null,
     resolvedRecipe: null,
@@ -283,7 +303,11 @@ function buildResolvedDiagnostic({
   scope,
   safetyFlags,
   bridgeState,
-  scopeSource = DEFAULT_SCOPE_SOURCE
+  scopeSource = DEFAULT_SCOPE_SOURCE,
+  activeDeveloperScopeId,
+  matchedScopeReason,
+  approvedScopeList = [],
+  coordinateMatchResult = null
 }) {
   const latBucket = normalizeBucket(latitude);
   const lngBucket = normalizeBucket(longitude);
@@ -302,6 +326,13 @@ function buildResolvedDiagnostic({
       ...scope,
       scopeSource
     },
+    activeDeveloperScopeId,
+    matchedScopeReason,
+    approvedScopeList: deepFreeze([...(approvedScopeList ?? [])]),
+    coordinateMatchResult:
+      coordinateMatchResult && typeof coordinateMatchResult === "object"
+        ? deepFreeze({ ...coordinateMatchResult })
+        : null,
     resolvedRegion: {
       regionId: pkg.regionId,
       environmentProfile: pkg.environmentProfile
@@ -344,6 +375,21 @@ export function createDeveloperOnlyAtlasMapAdapterCore(options = {}) {
   });
   const approvedRepresentativePackage =
     options.approvedRepresentativePackage ?? null;
+  const approvedScopeEntries = deepFreeze(
+    Array.isArray(options.approvedScopeEntries) && options.approvedScopeEntries.length
+      ? options.approvedScopeEntries.map((entry) =>
+          deepFreeze({
+            scope: deepFreeze({ ...(entry?.scope ?? {}) }),
+            representativePackage: deepFreeze(entry?.representativePackage ?? null)
+          })
+        )
+      : [
+          deepFreeze({
+            scope: deepFreeze({ ...(scope ?? {}) }),
+            representativePackage: deepFreeze(approvedRepresentativePackage)
+          })
+        ]
+  );
   const selectorFoundation = options.selectorFoundation;
   const scopeSource = options.scopeSource ?? DEFAULT_SCOPE_SOURCE;
   const bridgeState = deepFreeze({
@@ -353,8 +399,13 @@ export function createDeveloperOnlyAtlasMapAdapterCore(options = {}) {
     mapMutated: false,
     rendererAttached: false,
     domMutated: false,
-    ...(options.bridgeStateOverride ?? {})
+      ...(options.bridgeStateOverride ?? {})
   });
+  const approvedScopeList = deepFreeze(
+    approvedScopeEntries.map((entry) =>
+      buildScopeId(entry.scope, entry.representativePackage)
+    )
+  );
 
   function getAtlasMapDiagnostic({ latitude, longitude }) {
     const latBucket = Number.isFinite(latitude) ? normalizeBucket(latitude) : null;
@@ -408,23 +459,48 @@ export function createDeveloperOnlyAtlasMapAdapterCore(options = {}) {
     }
 
     if (!approvedRepresentativePackage) {
+      const hasAnyRepresentativePackage = approvedScopeEntries.some(
+        (entry) => !!entry.representativePackage
+      );
       return buildBlockedDiagnostic({
         latitude,
         longitude,
         latBucket,
         lngBucket,
-        reasonCode: "UNSUPPORTED_PACKAGE",
+        reasonCode: hasAnyRepresentativePackage
+          ? "REGION_OUT_OF_SCOPE"
+          : "UNSUPPORTED_PACKAGE",
         scope,
         safetyFlags,
         bridgeState,
-        scopeSource
+        scopeSource,
+        activeDeveloperScopeId: null,
+        matchedScopeReason: hasAnyRepresentativePackage
+          ? "NO_APPROVED_SCOPE_BUCKET_MATCH"
+          : "NO_REPRESENTATIVE_PACKAGE_AVAILABLE",
+        approvedScopeList,
+        coordinateMatchResult: {
+          matched: false,
+          latitude,
+          longitude,
+          latBucket,
+          lngBucket,
+          matchedScopeId: null
+        }
       });
     }
 
-    if (
-      latBucket !== normalizeBucket(approvedRepresentativePackage.latBucket) ||
-      lngBucket !== normalizeBucket(approvedRepresentativePackage.lngBucket)
-    ) {
+    const matchedScopeEntry =
+      approvedScopeEntries.find((entry) => {
+        const pkg = entry.representativePackage;
+        return (
+          pkg &&
+          latBucket === normalizeBucket(pkg.latBucket) &&
+          lngBucket === normalizeBucket(pkg.lngBucket)
+        );
+      }) ?? null;
+
+    if (!matchedScopeEntry) {
       return buildBlockedDiagnostic({
         latitude,
         longitude,
@@ -434,26 +510,52 @@ export function createDeveloperOnlyAtlasMapAdapterCore(options = {}) {
         scope,
         safetyFlags,
         bridgeState,
-        scopeSource
+        scopeSource,
+        activeDeveloperScopeId: null,
+        matchedScopeReason: "NO_APPROVED_SCOPE_BUCKET_MATCH",
+        approvedScopeList,
+        coordinateMatchResult: {
+          matched: false,
+          latitude,
+          longitude,
+          latBucket,
+          lngBucket,
+          matchedScopeId: null
+        }
       });
     }
 
-    if (approvedRepresentativePackage.expectedRecipeId !== scope.recipeId) {
+    const matchedScope = matchedScopeEntry.scope;
+    const matchedPackage = matchedScopeEntry.representativePackage;
+    const matchedScopeId = buildScopeId(matchedScope, matchedPackage);
+
+    if (matchedPackage.expectedRecipeId !== matchedScope.recipeId) {
       return buildBlockedDiagnostic({
         latitude,
         longitude,
         latBucket,
         lngBucket,
         reasonCode: "UNSUPPORTED_RECIPE",
-        scope,
+        scope: matchedScope,
         safetyFlags,
         bridgeState,
-        scopeSource
+        scopeSource,
+        activeDeveloperScopeId: matchedScopeId,
+        matchedScopeReason: "SCOPE_BUCKET_MATCH_RECIPE_MISMATCH",
+        approvedScopeList,
+        coordinateMatchResult: {
+          matched: true,
+          latitude,
+          longitude,
+          latBucket,
+          lngBucket,
+          matchedScopeId
+        }
       });
     }
 
     const selectorContext = buildSelectorContext(
-      approvedRepresentativePackage,
+      matchedPackage,
       latitude,
       longitude,
       selectorFoundation.specification.selectorId
@@ -466,7 +568,7 @@ export function createDeveloperOnlyAtlasMapAdapterCore(options = {}) {
 
     if (
       recipeSelection.blocked ||
-      recipeSelection.selectedRecipeId !== scope.recipeId
+      recipeSelection.selectedRecipeId !== matchedScope.recipeId
     ) {
       return buildBlockedDiagnostic({
         latitude,
@@ -474,29 +576,54 @@ export function createDeveloperOnlyAtlasMapAdapterCore(options = {}) {
         latBucket,
         lngBucket,
         reasonCode: "UNSUPPORTED_RECIPE",
-        scope,
+        scope: matchedScope,
         safetyFlags,
         bridgeState,
-        scopeSource
+        scopeSource,
+        activeDeveloperScopeId: matchedScopeId,
+        matchedScopeReason: "SCOPE_BUCKET_MATCH_SELECTOR_BLOCKED",
+        approvedScopeList,
+        coordinateMatchResult: {
+          matched: true,
+          latitude,
+          longitude,
+          latBucket,
+          lngBucket,
+          matchedScopeId
+        }
       });
     }
 
     return buildResolvedDiagnostic({
       latitude,
       longitude,
-      pkg: approvedRepresentativePackage,
+      pkg: matchedPackage,
       recipeSelection,
-      scope,
+      scope: matchedScope,
       safetyFlags,
       bridgeState,
-      scopeSource
+      scopeSource,
+      activeDeveloperScopeId: matchedScopeId,
+      matchedScopeReason: "SCOPE_BUCKET_MATCH_RESOLVED",
+      approvedScopeList,
+      coordinateMatchResult: {
+        matched: true,
+        latitude,
+        longitude,
+        latBucket,
+        lngBucket,
+        matchedScopeId
+      }
     });
   }
 
   return deepFreeze({
     getAtlasMapDiagnostic,
     getApprovedScope() {
-      return deepFreeze({ ...scope });
+      return deepFreeze({ ...(approvedScopeEntries[0]?.scope ?? scope) });
+    },
+    getApprovedScopeList() {
+      return approvedScopeList;
     },
     getSafetyFlags() {
       return safetyFlags;

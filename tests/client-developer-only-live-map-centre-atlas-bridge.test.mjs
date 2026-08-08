@@ -82,6 +82,38 @@ test("approved live-map centre resolves expected canonical region package and re
     "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001"
   );
   assert.equal(result.resolvedRecipe.recipeId, "COASTAL_LOCATION_RECIPE_001");
+  assert.equal(
+    result.activeDeveloperScopeId,
+    "DEVELOPER_SCOPE_BELLARINE_COASTAL_EXPLORATION"
+  );
+  assert.equal(result.matchedScopeReason, "SCOPE_BUCKET_MATCH_RESOLVED");
+  assert.equal(result.coordinateMatchResult?.matched, true);
+});
+
+test("populated verification centre resolves the additional developer-only scope", () => {
+  const mapStub = buildMapStub({
+    centre: { lat: -38.13565, lng: 144.34905 }
+  });
+  const bridge = bridgeModule.createDeveloperOnlyLiveMapCentreAtlasBridge({
+    getGrowGoMap: () => mapStub
+  });
+
+  const result = bridge.getAtlasDiagnosticForCurrentMapCentre();
+  assert.equal(result.diagnosticStatus, "resolved");
+  assert.equal(
+    result.resolvedRegion.regionId,
+    "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    result.resolvedPackage.packageId,
+    "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001"
+  );
+  assert.equal(
+    result.activeDeveloperScopeId,
+    "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA"
+  );
+  assert.equal(result.matchedScopeReason, "SCOPE_BUCKET_MATCH_RESOLVED");
+  assert.equal(result.coordinateMatchResult?.matched, true);
 });
 
 test("repeated calls at the same centre return identical diagnostic results", () => {

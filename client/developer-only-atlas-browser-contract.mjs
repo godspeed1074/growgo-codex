@@ -1,8 +1,17 @@
 import { createDeveloperOnlyAtlasMapAdapterCore } from "./developer-only-atlas-map-adapter-core.mjs";
 
 const approvedScope = Object.freeze({
+  scopeId: "DEVELOPER_SCOPE_BELLARINE_COASTAL_EXPLORATION",
   regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
   packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
+  recipeId: "COASTAL_LOCATION_RECIPE_001",
+  internalDeveloperOnly: true
+});
+
+const populatedVerificationScope = Object.freeze({
+  scopeId: "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA",
+  regionId: "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION",
+  packageId: "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001",
   recipeId: "COASTAL_LOCATION_RECIPE_001",
   internalDeveloperOnly: true
 });
@@ -31,6 +40,35 @@ const approvedRepresentativePackage = Object.freeze({
   selectorSeed: "baf38e127eee1e320570e2f02fc889cd1aaec4b9dfd7bee85bba4f10f30b6da0",
   packageFingerprint: "94c447ae7b3c888b3df618ad2f1f45cf3ea9e7d0282cd49c2d56ed94fff06aed"
 });
+
+const populatedVerificationRepresentativePackage = Object.freeze({
+  sourceDatasetId: "SOURCE_DATASET_BELLARINE_POPULATED_TEST_001",
+  sourceRevision: "2026-08-08:R001",
+  regionSlug: "BELLARINE_POPULATED_TEST",
+  latBucket: -38.14,
+  lngBucket: 144.35,
+  environmentProfile: "COASTAL_EXPLORATION",
+  primaryBiomeHint: "COASTAL_RESERVE_TRAIL",
+  archetypeHint: "RESERVE_LOOP",
+  expectedRecipeId: "COASTAL_LOCATION_RECIPE_001",
+  mobileProfile: "MOBILE_STANDARD_001",
+  regionId: "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION",
+  packageId: "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001",
+  packageVersion: "v001",
+  selectorSeed: "6c07ce2b7f1cf4f5dc973e1b4fc3854e7df97341f0969c1c9d4bf66e7ec5b8cf",
+  packageFingerprint: "3de8cbf25b1f9f633c062e0c6511d161b3dbe6f3c30140da8a744d66bf127834"
+});
+
+const approvedScopeEntries = Object.freeze([
+  Object.freeze({
+    scope: approvedScope,
+    representativePackage: approvedRepresentativePackage
+  }),
+  Object.freeze({
+    scope: populatedVerificationScope,
+    representativePackage: populatedVerificationRepresentativePackage
+  })
+]);
 
 const selectorFoundation = Object.freeze({
   specification: {
@@ -137,6 +175,7 @@ const selectorFoundation = Object.freeze({
 export function createBrowserReadyDeveloperOnlyAtlasMapAdapter(options = {}) {
   return createDeveloperOnlyAtlasMapAdapterCore({
     approvedScope: options.approvedScopeOverride ?? approvedScope,
+    approvedScopeEntries: options.approvedScopeEntriesOverride ?? approvedScopeEntries,
     safetyFlags: options.safetyFlagsOverride ?? safetyFlags,
     approvedRepresentativePackage:
       options.approvedRepresentativePackageOverride ?? approvedRepresentativePackage,
