@@ -168,6 +168,11 @@ import {
   getDeveloperOnlyAtlasPopulationRegionalExpeditionHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationRegionalExpeditionHooks
 } from "./developer-only-atlas-population-regional-expedition-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooks
+} from "./developer-only-atlas-population-world-exploration-cohesion-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -558,6 +563,14 @@ function freezeStatus(state) {
     completionArcId: state.completionArcId,
     regionalIdentityId: state.regionalIdentityId,
     expeditionReason: state.expeditionReason,
+    worldExplorationCohesionVersion: state.worldExplorationCohesionVersion,
+    registeredWorldExplorationRuleCount:
+      state.registeredWorldExplorationRuleCount,
+    worldJourneyProfileId: state.worldJourneyProfileId,
+    metaCollectionId: state.metaCollectionId,
+    crossRegionCampaignId: state.crossRegionCampaignId,
+    explorationTier: state.explorationTier,
+    worldCohesionReason: state.worldCohesionReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -778,7 +791,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationExplorationProgressionHooksRuleRegistry =
     createDeveloperOnlyAtlasPopulationExplorationProgressionHooksRuleRegistry(),
   populationRegionalExpeditionHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationRegionalExpeditionHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationRegionalExpeditionHooksRuleRegistry(),
+  populationWorldExplorationCohesionHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -908,6 +923,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const regionalExpeditionRegistryStatus =
     getDeveloperOnlyAtlasPopulationRegionalExpeditionHooksRuleRegistryStatus(
       populationRegionalExpeditionHooksRuleRegistry
+    );
+  const worldExplorationCohesionRegistryStatus =
+    getDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooksRuleRegistryStatus(
+      populationWorldExplorationCohesionHooksRuleRegistry
     );
 
   const state = {
@@ -1235,6 +1254,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     completionArcId: regionalExpeditionRegistryStatus.completionArcId,
     regionalIdentityId: regionalExpeditionRegistryStatus.regionalIdentityId,
     expeditionReason: regionalExpeditionRegistryStatus.expeditionReason,
+    worldExplorationCohesionVersion:
+      worldExplorationCohesionRegistryStatus.worldExplorationCohesionVersion,
+    registeredWorldExplorationRuleCount:
+      worldExplorationCohesionRegistryStatus.registeredWorldExplorationRuleCount,
+    worldJourneyProfileId:
+      worldExplorationCohesionRegistryStatus.worldJourneyProfileId,
+    metaCollectionId: worldExplorationCohesionRegistryStatus.metaCollectionId,
+    crossRegionCampaignId:
+      worldExplorationCohesionRegistryStatus.crossRegionCampaignId,
+    explorationTier: worldExplorationCohesionRegistryStatus.explorationTier,
+    worldCohesionReason:
+      worldExplorationCohesionRegistryStatus.worldCohesionReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1297,6 +1328,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationFestivalQuestNarrativeHooksRuleRegistry,
       populationExplorationProgressionHooksRuleRegistry,
       populationRegionalExpeditionHooksRuleRegistry,
+      populationWorldExplorationCohesionHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1514,6 +1546,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.completionArcId = null;
   state.regionalIdentityId = null;
   state.expeditionReason = null;
+  state.worldJourneyProfileId = null;
+  state.metaCollectionId = null;
+  state.crossRegionCampaignId = null;
+  state.explorationTier = null;
+  state.worldCohesionReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1565,6 +1602,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const festivalQuestNarrativeDecisions = [];
   const explorationProgressionDecisions = [];
   const regionalExpeditionDecisions = [];
+  const worldExplorationCohesionDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -2003,6 +2041,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           regionId
         }
       );
+    const worldExplorationCohesionResolution =
+      resolveDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooks(
+        internal.populationWorldExplorationCohesionHooksRuleRegistry,
+        {
+          expeditionProfileId: regionalExpeditionResolution.expeditionProfileId,
+          campaignNetworkId: regionalExpeditionResolution.campaignNetworkId,
+          progressionTier: explorationProgressionResolution.progressionTier,
+          regionalIdentityId: regionalExpeditionResolution.regionalIdentityId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2201,6 +2249,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.completionArcId = regionalExpeditionResolution.completionArcId;
     state.regionalIdentityId = regionalExpeditionResolution.regionalIdentityId;
     state.expeditionReason = regionalExpeditionResolution.expeditionReason;
+    state.worldJourneyProfileId =
+      worldExplorationCohesionResolution.worldJourneyProfileId;
+    state.metaCollectionId = worldExplorationCohesionResolution.metaCollectionId;
+    state.crossRegionCampaignId =
+      worldExplorationCohesionResolution.crossRegionCampaignId;
+    state.explorationTier = worldExplorationCohesionResolution.explorationTier;
+    state.worldCohesionReason =
+      worldExplorationCohesionResolution.worldCohesionReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2564,6 +2620,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         expeditionReason: regionalExpeditionResolution.expeditionReason
       })
     );
+    worldExplorationCohesionDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        worldJourneyProfileId:
+          worldExplorationCohesionResolution.worldJourneyProfileId,
+        metaCollectionId: worldExplorationCohesionResolution.metaCollectionId,
+        crossRegionCampaignId:
+          worldExplorationCohesionResolution.crossRegionCampaignId,
+        explorationTier: worldExplorationCohesionResolution.explorationTier,
+        worldCohesionReason:
+          worldExplorationCohesionResolution.worldCohesionReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -2767,6 +2836,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           completionArcId: regionalExpeditionResolution.completionArcId,
           regionalIdentityId: regionalExpeditionResolution.regionalIdentityId,
           expeditionReason: regionalExpeditionResolution.expeditionReason,
+          worldJourneyProfileId:
+            worldExplorationCohesionResolution.worldJourneyProfileId,
+          metaCollectionId: worldExplorationCohesionResolution.metaCollectionId,
+          crossRegionCampaignId:
+            worldExplorationCohesionResolution.crossRegionCampaignId,
+          explorationTier: worldExplorationCohesionResolution.explorationTier,
+          worldCohesionReason:
+            worldExplorationCohesionResolution.worldCohesionReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2989,6 +3066,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           completionArcId: regionalExpeditionResolution.completionArcId,
           regionalIdentityId: regionalExpeditionResolution.regionalIdentityId,
           expeditionReason: regionalExpeditionResolution.expeditionReason,
+          worldJourneyProfileId:
+            worldExplorationCohesionResolution.worldJourneyProfileId,
+          metaCollectionId: worldExplorationCohesionResolution.metaCollectionId,
+          crossRegionCampaignId:
+            worldExplorationCohesionResolution.crossRegionCampaignId,
+          explorationTier: worldExplorationCohesionResolution.explorationTier,
+          worldCohesionReason:
+            worldExplorationCohesionResolution.worldCohesionReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -3533,6 +3618,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           regionId
         }
       );
+    const worldExplorationCohesionCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationWorldExplorationCohesionHooks(
+        internal.populationWorldExplorationCohesionHooksRuleRegistry,
+        {
+          expeditionProfileId:
+            regionalExpeditionCandidateResolution.expeditionProfileId,
+          campaignNetworkId:
+            regionalExpeditionCandidateResolution.campaignNetworkId,
+          progressionTier:
+            explorationProgressionCandidateResolution.progressionTier,
+          regionalIdentityId:
+            regionalExpeditionCandidateResolution.regionalIdentityId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -3692,6 +3791,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         regionalExpeditionCandidateResolution.regionalIdentityId;
       state.expeditionReason =
         regionalExpeditionCandidateResolution.expeditionReason;
+      state.worldJourneyProfileId =
+        worldExplorationCohesionCandidateResolution.worldJourneyProfileId;
+      state.metaCollectionId =
+        worldExplorationCohesionCandidateResolution.metaCollectionId;
+      state.crossRegionCampaignId =
+        worldExplorationCohesionCandidateResolution.crossRegionCampaignId;
+      state.explorationTier =
+        worldExplorationCohesionCandidateResolution.explorationTier;
+      state.worldCohesionReason =
+        worldExplorationCohesionCandidateResolution.worldCohesionReason;
     }
 
     acceptedPlacements.push(
@@ -3910,6 +4019,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           regionalExpeditionCandidateResolution.regionalIdentityId,
         expeditionReason:
           regionalExpeditionCandidateResolution.expeditionReason,
+        worldJourneyProfileId:
+          worldExplorationCohesionCandidateResolution.worldJourneyProfileId,
+        metaCollectionId:
+          worldExplorationCohesionCandidateResolution.metaCollectionId,
+        crossRegionCampaignId:
+          worldExplorationCohesionCandidateResolution.crossRegionCampaignId,
+        explorationTier:
+          worldExplorationCohesionCandidateResolution.explorationTier,
+        worldCohesionReason:
+          worldExplorationCohesionCandidateResolution.worldCohesionReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -4021,6 +4140,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       explorationProgressionDecisions
     ),
     regionalExpeditionDecisions: deepFreeze(regionalExpeditionDecisions),
+    worldExplorationCohesionDecisions: deepFreeze(
+      worldExplorationCohesionDecisions
+    ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -4249,6 +4371,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       completionArcId: null,
       regionalIdentityId: null,
       expeditionReason: null,
+      worldExplorationCohesionVersion: null,
+      registeredWorldExplorationRuleCount: 0,
+      worldJourneyProfileId: null,
+      metaCollectionId: null,
+      crossRegionCampaignId: null,
+      explorationTier: null,
+      worldCohesionReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
