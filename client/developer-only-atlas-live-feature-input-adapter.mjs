@@ -743,7 +743,8 @@ function toPlannerFeature(feature) {
             height: feature.footprintHeight
           }),
     orientationHint: feature.orientationHint,
-    deterministicFeatureIdentity: feature.deterministicFeatureIdentity
+    deterministicFeatureIdentity: feature.deterministicFeatureIdentity,
+    sourceClassification: feature.sourceClassification
   });
 }
 

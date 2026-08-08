@@ -460,7 +460,7 @@ test("10. exclusion radii block vegetation placements near building footprints",
   );
   assert.equal(
     plan.commands.filter((command) => command.assetId === "SHRUB_COASTAL_LOW_001").length,
-    1
+    2
   );
 });
 

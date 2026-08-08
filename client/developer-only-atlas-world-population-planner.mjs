@@ -23,6 +23,11 @@ import {
   getDeveloperOnlyAtlasPopulationRelationshipRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationRelationshipPlacements
 } from "./developer-only-atlas-population-relationship-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationContextualWorldFillRuleRegistry,
+  getDeveloperOnlyAtlasPopulationContextualWorldFillRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationContextualWorldFill
+} from "./developer-only-atlas-population-contextual-world-fill-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -185,7 +190,8 @@ function validateFeature(feature = {}) {
               : Number(feature.footprintScalars.height)
         })
       : null,
-    deterministicFeatureIdentity
+    deterministicFeatureIdentity,
+    sourceClassification: sanitizeString(feature.sourceClassification)
   });
 }
 
@@ -200,6 +206,13 @@ function freezeStatus(state) {
     relationshipRuleVersion: state.relationshipRuleVersion,
     registeredRelationshipRuleCount: state.registeredRelationshipRuleCount,
     relationshipRuleId: state.relationshipRuleId,
+    contextualWorldFillVersion: state.contextualWorldFillVersion,
+    registeredContextRuleCount: state.registeredContextRuleCount,
+    contextRuleId: state.contextRuleId,
+    worldFillCategory: state.worldFillCategory,
+    generatedSubRecipeCount: state.generatedSubRecipeCount,
+    childPlacementCount: state.childPlacementCount,
+    contextReason: state.contextReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -362,7 +375,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationSpatialDistributionRuleRegistry =
     createDeveloperOnlyAtlasPopulationSpatialDistributionRuleRegistry(),
   populationRelationshipRuleRegistry =
-    createDeveloperOnlyAtlasPopulationRelationshipRuleRegistry()
+    createDeveloperOnlyAtlasPopulationRelationshipRuleRegistry(),
+  populationContextualWorldFillRuleRegistry =
+    createDeveloperOnlyAtlasPopulationContextualWorldFillRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -377,6 +392,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     getDeveloperOnlyAtlasPopulationRelationshipRuleRegistryStatus(
       populationRelationshipRuleRegistry
     );
+  const contextualWorldFillRegistryStatus =
+    getDeveloperOnlyAtlasPopulationContextualWorldFillRuleRegistryStatus(
+      populationContextualWorldFillRuleRegistry
+    );
 
   const state = {
     spatialRuleRegistryVersion: registryStatus.spatialRuleRegistryVersion,
@@ -389,6 +408,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     registeredRelationshipRuleCount:
       relationshipRegistryStatus.registeredRelationshipRuleCount,
     relationshipRuleId: relationshipRegistryStatus.relationshipRuleId,
+    contextualWorldFillVersion:
+      contextualWorldFillRegistryStatus.contextualWorldFillVersion,
+    registeredContextRuleCount:
+      contextualWorldFillRegistryStatus.registeredContextRuleCount,
+    contextRuleId: contextualWorldFillRegistryStatus.contextRuleId,
+    worldFillCategory: contextualWorldFillRegistryStatus.worldFillCategory,
+    generatedSubRecipeCount:
+      contextualWorldFillRegistryStatus.generatedSubRecipeCount,
+    childPlacementCount:
+      contextualWorldFillRegistryStatus.childPlacementCount,
+    contextReason: contextualWorldFillRegistryStatus.contextReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -422,6 +452,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationRecipeRegistry,
       populationSpatialDistributionRuleRegistry,
       populationRelationshipRuleRegistry,
+      populationContextualWorldFillRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -495,6 +526,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.matchedFeatureClass = null;
   state.distributionRuleId = null;
   state.relationshipRuleId = null;
+  state.contextRuleId = null;
+  state.worldFillCategory = null;
+  state.generatedSubRecipeCount = 0;
+  state.childPlacementCount = 0;
+  state.contextReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -517,6 +553,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const rejectedCandidates = [];
   const resolvedFeatureRecipes = [];
   const relationshipDecisions = [];
+  const contextualWorldFillDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -575,8 +612,25 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         }
       );
 
+    const contextualWorldFillResolution =
+      resolveDeveloperOnlyAtlasPopulationContextualWorldFill(
+        internal.populationContextualWorldFillRuleRegistry,
+        {
+          feature,
+          selectorSeed,
+          placements: relationshipResolution.placements
+        }
+      );
+
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
+    state.contextRuleId = contextualWorldFillResolution.contextRuleId;
+    state.worldFillCategory = contextualWorldFillResolution.worldFillCategory;
+    state.generatedSubRecipeCount +=
+      contextualWorldFillResolution.generatedSubRecipeCount;
+    state.childPlacementCount +=
+      contextualWorldFillResolution.childPlacementCount;
+    state.contextReason = contextualWorldFillResolution.contextReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -605,6 +659,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           relationshipResolution.featureDiagnostics.placementReason
       })
     );
+    contextualWorldFillDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        contextRuleId: contextualWorldFillResolution.contextRuleId,
+        worldFillCategory: contextualWorldFillResolution.worldFillCategory,
+        generatedSubRecipeCount:
+          contextualWorldFillResolution.generatedSubRecipeCount,
+        childPlacementCount: contextualWorldFillResolution.childPlacementCount,
+        contextReason: contextualWorldFillResolution.contextReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -614,6 +679,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           matchedRecipeId: recipeResolution.matchedRecipeId,
           distributionRuleId: distributionResolution.distributionRuleId,
           relationshipRuleId: relationshipResolution.relationshipRuleId,
+          contextRuleId: contextualWorldFillResolution.contextRuleId,
+          worldFillCategory: contextualWorldFillResolution.worldFillCategory,
+          generatedSubRecipeCount:
+            contextualWorldFillResolution.generatedSubRecipeCount,
+          childPlacementCount:
+            contextualWorldFillResolution.childPlacementCount,
+          contextReason: contextualWorldFillResolution.contextReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -642,6 +714,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           matchedRecipeId: recipeResolution.matchedRecipeId,
           distributionRuleId: distributionResolution.distributionRuleId,
           relationshipRuleId: relationshipResolution.relationshipRuleId,
+          contextRuleId: contextualWorldFillResolution.contextRuleId,
+          worldFillCategory: contextualWorldFillResolution.worldFillCategory,
+          generatedSubRecipeCount:
+            contextualWorldFillResolution.generatedSubRecipeCount,
+          childPlacementCount:
+            contextualWorldFillResolution.childPlacementCount,
+          contextReason: contextualWorldFillResolution.contextReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -672,11 +751,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       );
     }
 
-    for (const placement of relationshipResolution.placements) {
+    for (const placement of contextualWorldFillResolution.placements) {
       const assetId = placement.assetId;
       const assetCommand = recipeResolution.assetCommands.find(
         (entry) => entry.assetId === assetId
-      );
+      ) ??
+      (assetId === "SHRUB_COASTAL_LOW_001"
+        ? {
+            assetId: "SHRUB_COASTAL_LOW_001",
+            assetVersion: "v002"
+          }
+        : null);
       if (!assetCommand) {
         rejectedCandidates.push(
           createRejectedCandidate({
@@ -717,6 +802,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         matchedRecipeId: recipeResolution.matchedRecipeId,
         distributionRuleId: distributionResolution.distributionRuleId,
         relationshipRuleId: relationshipResolution.relationshipRuleId,
+        contextRuleId: contextualWorldFillResolution.contextRuleId,
+        worldFillCategory: contextualWorldFillResolution.worldFillCategory,
+        contextReason: contextualWorldFillResolution.contextReason,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -837,6 +925,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         matchedRecipeId: candidate.matchedRecipeId,
         distributionRuleId: candidate.distributionRuleId,
         relationshipRuleId: candidate.relationshipRuleId,
+        contextRuleId: candidate.contextRuleId,
+        worldFillCategory: candidate.worldFillCategory,
+        contextReason: candidate.contextReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -907,6 +998,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     commands: batch.commands,
     resolvedFeatureRecipes: deepFreeze(resolvedFeatureRecipes),
     relationshipDecisions: deepFreeze(relationshipDecisions),
+    contextualWorldFillDecisions: deepFreeze(contextualWorldFillDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -933,6 +1025,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       relationshipRuleVersion: null,
       registeredRelationshipRuleCount: 0,
       relationshipRuleId: null,
+      contextualWorldFillVersion: null,
+      registeredContextRuleCount: 0,
+      contextRuleId: null,
+      worldFillCategory: null,
+      generatedSubRecipeCount: 0,
+      childPlacementCount: 0,
+      contextReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
