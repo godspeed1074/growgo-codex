@@ -59,6 +59,49 @@ function createApprovedDiagnostic() {
   });
 }
 
+function createPopulatedApprovedDiagnostic() {
+  return Object.freeze({
+    schemaId: "ATLAS_LIVE_MAP_CENTRE_DIAGNOSTIC_RESULT_001",
+    diagnosticStatus: "resolved",
+    reasonCode: "RESOLVED",
+    coordinate: Object.freeze({
+      latitude: -38.13565,
+      longitude: 144.34905,
+      latBucket: -38.14,
+      lngBucket: 144.35
+    }),
+    approvedScope: Object.freeze({
+      scopeId: "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA",
+      regionId: "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION",
+      packageId: "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001",
+      recipeId: "COASTAL_LOCATION_RECIPE_001",
+      internalDeveloperOnly: true
+    }),
+    resolvedRegion: Object.freeze({
+      regionId: "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION",
+      environmentProfile: "COASTAL_EXPLORATION"
+    }),
+    resolvedPackage: Object.freeze({
+      packageId: "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001",
+      packageVersion: "v001",
+      packageFingerprint: "3de8cbf25b1f9f633c062e0c6511d161b3dbe6f3c30140da8a744d66bf127834"
+    }),
+    resolvedRecipe: Object.freeze({
+      recipeId: "COASTAL_LOCATION_RECIPE_001",
+      selectedVersion: "v001",
+      confidenceScore: 100,
+      fallbackApplied: false
+    }),
+    selectorSeed: "6c07ce2b7f1cf4f5dc973e1b4fc3854e7df97341f0969c1c9d4bf66e7ec5b8cf",
+    safetyFlags: Object.freeze({
+      runtimeExecutionEnabled: false,
+      mapAttachmentAllowed: false,
+      automaticRendererExecutionAllowed: false,
+      lifecycleExecutionEnabled: false
+    })
+  });
+}
+
 function createBlockedOutOfScopeDiagnostic() {
   return Object.freeze({
     schemaId: "ATLAS_LIVE_MAP_CENTRE_DIAGNOSTIC_RESULT_001",
@@ -128,12 +171,56 @@ test("approved resolved diagnostic creates one valid immutable zero-draw handoff
   assert.equal(result.overlayCreated, false);
   assert.equal(result.networkRequested, false);
   assert.equal(result.assetDownloadRequested, false);
+  assert.equal(
+    result.matchedIdentitySource,
+    "DEVELOPER_SCOPE_BELLARINE_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    result.identityRegistrySource,
+    "developer-only-atlas-browser-contract.approvedDeveloperOnlyIdentityRegistry"
+  );
+  assert.equal(result.identityMatchResult?.matched, true);
+  assert.equal(result.identityMatchResult?.mismatchField, null);
   assert.equal(result.safetyFlagSnapshot.runtimeExecutionEnabled, false);
   assert.equal(result.safetyFlagSnapshot.mapAttachmentAllowed, false);
   assert.equal(result.safetyFlagSnapshot.automaticRendererExecutionAllowed, false);
   assert.equal(result.safetyFlagSnapshot.lifecycleExecutionEnabled, false);
   assert.equal(Object.isFrozen(result), true);
   assert.equal(Object.isFrozen(result.rendererConsumerDescriptor), true);
+});
+
+test("populated developer-only scope resolves as a valid renderer handoff identity", () => {
+  const result = moduleUnderTest.validateAtlasRendererZeroDrawHandoff({
+    atlasDiagnostic: createPopulatedApprovedDiagnostic(),
+    rendererConsumerDescriptor: createRendererConsumerDescriptor()
+  });
+
+  assert.equal(result.handoffStatus, "ready_for_future_renderer_attachment");
+  assert.equal(result.reasonCode, "HANDOFF_READY");
+  assert.equal(
+    result.regionId,
+    "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    result.packageId,
+    "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001"
+  );
+  assert.equal(result.packageVersion, "v001");
+  assert.equal(
+    result.packageFingerprint,
+    "3de8cbf25b1f9f633c062e0c6511d161b3dbe6f3c30140da8a744d66bf127834"
+  );
+  assert.equal(result.recipeId, "COASTAL_LOCATION_RECIPE_001");
+  assert.equal(
+    result.selectorSeed,
+    "6c07ce2b7f1cf4f5dc973e1b4fc3854e7df97341f0969c1c9d4bf66e7ec5b8cf"
+  );
+  assert.equal(
+    result.matchedIdentitySource,
+    "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA"
+  );
+  assert.equal(result.identityMatchResult?.matched, true);
+  assert.equal(result.identityMatchResult?.mismatchField, null);
 });
 
 test("out-of-scope diagnostic remains blocked and creates no renderer handoff", () => {
@@ -147,6 +234,10 @@ test("out-of-scope diagnostic remains blocked and creates no renderer handoff", 
   assert.equal(result.rendererIdentityValidated, false);
   assert.equal(result.rendererInitializationRequested, false);
   assert.equal(result.drawRequested, false);
+  assert.equal(
+    result.identityRegistrySource,
+    "developer-only-atlas-browser-contract.approvedDeveloperOnlyIdentityRegistry"
+  );
 });
 
 test("incomplete diagnostic fails closed with exact missing field", () => {
@@ -189,6 +280,23 @@ test("package recipe and renderer identity mismatches all fail closed precisely"
     },
     rendererConsumerDescriptor: createRendererConsumerDescriptor()
   });
+  const regionMismatch = moduleUnderTest.validateAtlasRendererZeroDrawHandoff({
+    atlasDiagnostic: {
+      ...createPopulatedApprovedDiagnostic(),
+      resolvedRegion: {
+        regionId: "REGION_UNKNOWN_001",
+        environmentProfile: "COASTAL_EXPLORATION"
+      }
+    },
+    rendererConsumerDescriptor: createRendererConsumerDescriptor()
+  });
+  const selectorMismatch = moduleUnderTest.validateAtlasRendererZeroDrawHandoff({
+    atlasDiagnostic: {
+      ...createPopulatedApprovedDiagnostic(),
+      selectorSeed: "SELECTOR_SEED_MISMATCH"
+    },
+    rendererConsumerDescriptor: createRendererConsumerDescriptor()
+  });
   const rendererMismatch = moduleUnderTest.validateAtlasRendererZeroDrawHandoff({
     atlasDiagnostic: diagnostic,
     rendererConsumerDescriptor: createRendererConsumerDescriptor({
@@ -196,9 +304,32 @@ test("package recipe and renderer identity mismatches all fail closed precisely"
     })
   });
 
+  assert.equal(regionMismatch.reasonCode, "REGION_IDENTITY_MISMATCH");
+  assert.equal(regionMismatch.identityMatchResult?.mismatchField, "regionId");
   assert.equal(packageMismatch.reasonCode, "PACKAGE_IDENTITY_MISMATCH");
+  assert.equal(packageMismatch.identityMatchResult?.mismatchField, "packageId");
   assert.equal(recipeMismatch.reasonCode, "RECIPE_IDENTITY_MISMATCH");
+  assert.equal(recipeMismatch.identityMatchResult?.mismatchField, "recipeId");
+  assert.equal(selectorMismatch.reasonCode, "SELECTOR_SEED_MISMATCH");
+  assert.equal(selectorMismatch.identityMatchResult?.mismatchField, "selectorSeed");
   assert.equal(rendererMismatch.reasonCode, "RENDERER_IDENTITY_MISMATCH");
+});
+
+test("fingerprint mismatch fails closed with exact mismatch field", () => {
+  const result = moduleUnderTest.validateAtlasRendererZeroDrawHandoff({
+    atlasDiagnostic: {
+      ...createPopulatedApprovedDiagnostic(),
+      resolvedPackage: {
+        ...createPopulatedApprovedDiagnostic().resolvedPackage,
+        packageFingerprint: "PACKAGE_FINGERPRINT_MISMATCH"
+      }
+    },
+    rendererConsumerDescriptor: createRendererConsumerDescriptor()
+  });
+
+  assert.equal(result.handoffStatus, "blocked");
+  assert.equal(result.reasonCode, "PACKAGE_IDENTITY_MISMATCH");
+  assert.equal(result.identityMatchResult?.mismatchField, "packageFingerprint");
 });
 
 test("missing renderer consumer fails closed", () => {

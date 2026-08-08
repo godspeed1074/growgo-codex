@@ -163,6 +163,16 @@ test("approved Bellarine centre resolves successfully with preserved identities 
     result.rendererHandoffStatus,
     "ready_for_future_renderer_attachment"
   );
+  assert.equal(
+    result.matchedIdentitySource,
+    "DEVELOPER_SCOPE_BELLARINE_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    result.identityRegistrySource,
+    "developer-only-atlas-browser-contract.approvedDeveloperOnlyIdentityRegistry"
+  );
+  assert.equal(result.identityMatchResult?.matched, true);
+  assert.equal(result.identityMatchResult?.mismatchField, null);
   assert.equal(result.rendererConsumerAvailable, true);
   assert.equal(result.rendererIdentityValidated, true);
   assert.equal(result.rendererInitializationRequested, false);
@@ -179,6 +189,52 @@ test("approved Bellarine centre resolves successfully with preserved identities 
   assert.equal(result.safetyFlagSnapshot.mapAttachmentAllowed, false);
   assert.equal(result.safetyFlagSnapshot.automaticRendererExecutionAllowed, false);
   assert.equal(result.safetyFlagSnapshot.lifecycleExecutionEnabled, false);
+});
+
+test("approved populated test centre resolves successfully with registered renderer handoff identity", () => {
+  const { diagnostics } = buildIntegratedNamespace({
+    centre: { lat: -38.13565, lng: 144.34905 }
+  });
+
+  const result = diagnostics.getAtlasRendererHandoffReadiness();
+
+  assert.equal(result.diagnosticStatus, "resolved");
+  assert.equal(result.reasonCode, "RESOLVED");
+  assert.equal(
+    result.activeDeveloperScopeId,
+    "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA"
+  );
+  assert.equal(
+    result.resolvedRegion.regionId,
+    "REGION_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_COASTAL_EXPLORATION"
+  );
+  assert.equal(
+    result.resolvedPackage.packageId,
+    "ATLAS_REGION_PACKAGE_BELLARINE_POPULATED_TEST_NEG_38_14_144_35_v001"
+  );
+  assert.equal(result.resolvedPackage.packageVersion, "v001");
+  assert.equal(
+    result.resolvedPackage.packageFingerprint,
+    "3de8cbf25b1f9f633c062e0c6511d161b3dbe6f3c30140da8a744d66bf127834"
+  );
+  assert.equal(
+    result.selectorSeed,
+    "6c07ce2b7f1cf4f5dc973e1b4fc3854e7df97341f0969c1c9d4bf66e7ec5b8cf"
+  );
+  assert.equal(
+    result.rendererHandoffStatus,
+    "ready_for_future_renderer_attachment"
+  );
+  assert.equal(
+    result.matchedIdentitySource,
+    "DEVELOPER_SCOPE_BELLARINE_POPULATED_TEST_AREA"
+  );
+  assert.equal(
+    result.identityRegistrySource,
+    "developer-only-atlas-browser-contract.approvedDeveloperOnlyIdentityRegistry"
+  );
+  assert.equal(result.identityMatchResult?.matched, true);
+  assert.equal(result.identityMatchResult?.mismatchField, null);
 });
 
 test("blocked cases fail closed precisely", () => {

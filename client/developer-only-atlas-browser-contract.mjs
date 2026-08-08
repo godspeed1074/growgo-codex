@@ -70,6 +70,20 @@ const approvedScopeEntries = Object.freeze([
   })
 ]);
 
+const approvedDeveloperOnlyIdentityRegistry = Object.freeze(
+  approvedScopeEntries.map((entry) =>
+    Object.freeze({
+      identitySourceId: entry.scope.scopeId,
+      regionId: entry.representativePackage.regionId,
+      packageId: entry.representativePackage.packageId,
+      packageVersion: entry.representativePackage.packageVersion,
+      packageFingerprint: entry.representativePackage.packageFingerprint,
+      recipeId: entry.scope.recipeId,
+      selectorSeed: entry.representativePackage.selectorSeed
+    })
+  )
+);
+
 const selectorFoundation = Object.freeze({
   specification: {
     selectorId: "LOCATION_RECIPE_SELECTOR_001",
@@ -182,4 +196,12 @@ export function createBrowserReadyDeveloperOnlyAtlasMapAdapter(options = {}) {
     selectorFoundation: options.selectorFoundationOverride ?? selectorFoundation,
     bridgeStateOverride: options.bridgeStateOverride
   });
+}
+
+export function getApprovedDeveloperOnlyAtlasScopeEntries() {
+  return approvedScopeEntries;
+}
+
+export function getApprovedDeveloperOnlyAtlasIdentityRegistry() {
+  return approvedDeveloperOnlyIdentityRegistry;
 }

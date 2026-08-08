@@ -1,3 +1,5 @@
+import { getApprovedDeveloperOnlyAtlasIdentityRegistry } from "./developer-only-atlas-browser-contract.mjs";
+
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {
     return value;
@@ -15,11 +17,8 @@ function deepFreeze(value) {
 const HANDOFF_SCHEMA_ID = "ATLAS_RENDERER_HANDOFF_READINESS_001";
 const EXPECTED_RENDERER_SCHEMA_ID = "GROWGO_CUSTOM_25D_RENDERER_CONSUMER_DESCRIPTOR_001";
 const READY_STATUS = "ready_for_future_renderer_attachment";
-const EXPECTED_SCOPE = Object.freeze({
-  regionId: "REGION_BELLARINE_COAST_NEG_38_12_144_61_COASTAL_EXPLORATION",
-  packageId: "ATLAS_REGION_PACKAGE_BELLARINE_COAST_NEG_38_12_144_61_v001",
-  recipeId: "COASTAL_LOCATION_RECIPE_001"
-});
+const IDENTITY_REGISTRY_SOURCE =
+  "developer-only-atlas-browser-contract.approvedDeveloperOnlyIdentityRegistry";
 
 export function createDiscoveredGrowGoCustom25DRendererConsumerDescriptor() {
   return deepFreeze({
@@ -72,7 +71,10 @@ function buildBlockedResult({
   reasonCode,
   diagnostic = null,
   rendererConsumerDescriptor = null,
-  missingField = null
+  missingField = null,
+  matchedIdentitySource = null,
+  identityRegistrySource = IDENTITY_REGISTRY_SOURCE,
+  identityMatchResult = null
 }) {
   const approvedScope = extractApprovedScope(diagnostic);
   const coordinate = extractCoordinate(diagnostic);
@@ -91,6 +93,12 @@ function buildBlockedResult({
     recipeVersion: extractResolvedRecipe(diagnostic)?.selectedVersion ?? null,
     environmentProfile: extractResolvedRegion(diagnostic)?.environmentProfile ?? null,
     selectorSeed: extractSelectorSeed(diagnostic),
+    matchedIdentitySource,
+    identityRegistrySource,
+    identityMatchResult:
+      identityMatchResult && typeof identityMatchResult === "object"
+        ? deepFreeze({ ...identityMatchResult })
+        : null,
     coordinate,
     rendererConsumerAvailable: !!rendererConsumerDescriptor,
     rendererIdentityValidated: false,
@@ -151,7 +159,10 @@ function validateRendererIdentity(rendererConsumerDescriptor) {
 
 function buildReadyResult({
   diagnostic,
-  rendererConsumerDescriptor
+  rendererConsumerDescriptor,
+  matchedIdentitySource,
+  identityRegistrySource = IDENTITY_REGISTRY_SOURCE,
+  identityMatchResult = null
 }) {
   const resolvedRegion = extractResolvedRegion(diagnostic);
   const resolvedPackage = extractResolvedPackage(diagnostic);
@@ -172,6 +183,12 @@ function buildReadyResult({
     recipeVersion: resolvedRecipe.selectedVersion,
     environmentProfile: resolvedRegion.environmentProfile,
     selectorSeed: extractSelectorSeed(diagnostic),
+    matchedIdentitySource,
+    identityRegistrySource,
+    identityMatchResult:
+      identityMatchResult && typeof identityMatchResult === "object"
+        ? deepFreeze({ ...identityMatchResult })
+        : null,
     coordinate,
     rendererConsumerAvailable: true,
     rendererIdentityValidated: true,
@@ -189,10 +206,42 @@ function buildReadyResult({
   });
 }
 
+function normalizeExpectedIdentities(expectedScope) {
+  if (Array.isArray(expectedScope)) {
+    return expectedScope.filter(Boolean);
+  }
+
+  if (expectedScope && typeof expectedScope === "object") {
+    return [expectedScope];
+  }
+
+  return getApprovedDeveloperOnlyAtlasIdentityRegistry();
+}
+
+function findMatchingApprovedIdentity({
+  expectedIdentities,
+  resolvedRegion,
+  resolvedPackage,
+  resolvedRecipe,
+  selectorSeed
+}) {
+  return (
+    expectedIdentities.find(
+      (candidate) =>
+        candidate?.regionId === resolvedRegion.regionId &&
+        candidate?.packageId === resolvedPackage.packageId &&
+        candidate?.packageVersion === resolvedPackage.packageVersion &&
+        candidate?.packageFingerprint === resolvedPackage.packageFingerprint &&
+        candidate?.recipeId === resolvedRecipe.recipeId &&
+        candidate?.selectorSeed === selectorSeed
+    ) ?? null
+  );
+}
+
 export function validateAtlasRendererZeroDrawHandoff({
   atlasDiagnostic,
   rendererConsumerDescriptor,
-  expectedScope = EXPECTED_SCOPE
+  expectedScope = null
 }) {
   if (!atlasDiagnostic || typeof atlasDiagnostic !== "object") {
     return buildBlockedResult({
@@ -224,6 +273,7 @@ export function validateAtlasRendererZeroDrawHandoff({
   const coordinate = extractCoordinate(atlasDiagnostic);
   const safetyFlagSnapshot = extractSafetyFlags(atlasDiagnostic);
   const selectorSeed = extractSelectorSeed(atlasDiagnostic);
+  const expectedIdentities = normalizeExpectedIdentities(expectedScope);
 
   if (!resolvedRegion?.regionId) {
     return buildBlockedResult({
@@ -278,27 +328,124 @@ export function validateAtlasRendererZeroDrawHandoff({
     });
   }
 
-  if (resolvedRegion.regionId !== expectedScope.regionId) {
-    return buildBlockedResult({
-      reasonCode: "REGION_IDENTITY_MISMATCH",
-      diagnostic: atlasDiagnostic,
-      rendererConsumerDescriptor
-    });
-  }
+  const matchedApprovedIdentity = findMatchingApprovedIdentity({
+    expectedIdentities,
+    resolvedRegion,
+    resolvedPackage,
+    resolvedRecipe,
+    selectorSeed
+  });
+  const identityMatchBase = {
+    matched: matchedApprovedIdentity != null,
+    regionId: resolvedRegion.regionId,
+    packageId: resolvedPackage.packageId,
+    packageVersion: resolvedPackage.packageVersion,
+    packageFingerprint: resolvedPackage.packageFingerprint,
+    recipeId: resolvedRecipe.recipeId,
+    selectorSeed,
+    matchedIdentitySource: matchedApprovedIdentity?.identitySourceId ?? null
+  };
 
-  if (resolvedPackage.packageId !== expectedScope.packageId) {
+  if (!matchedApprovedIdentity) {
+    const regionKnown = expectedIdentities.some(
+      (candidate) => candidate?.regionId === resolvedRegion.regionId
+    );
+    const packageKnown = expectedIdentities.some(
+      (candidate) => candidate?.packageId === resolvedPackage.packageId
+    );
+    const recipeKnown = expectedIdentities.some(
+      (candidate) => candidate?.recipeId === resolvedRecipe.recipeId
+    );
+    const selectorKnown = expectedIdentities.some(
+      (candidate) => candidate?.selectorSeed === selectorSeed
+    );
+
+    if (!regionKnown) {
+      return buildBlockedResult({
+        reasonCode: "REGION_IDENTITY_MISMATCH",
+        diagnostic: atlasDiagnostic,
+        rendererConsumerDescriptor,
+        identityMatchResult: {
+          ...identityMatchBase,
+          mismatchField: "regionId"
+        }
+      });
+    }
+
+    if (!packageKnown) {
+      return buildBlockedResult({
+        reasonCode: "PACKAGE_IDENTITY_MISMATCH",
+        diagnostic: atlasDiagnostic,
+        rendererConsumerDescriptor,
+        identityMatchResult: {
+          ...identityMatchBase,
+          mismatchField: "packageId"
+        }
+      });
+    }
+
+    const packageVersionKnown = expectedIdentities.some(
+      (candidate) => candidate?.packageVersion === resolvedPackage.packageVersion
+    );
+    if (!packageVersionKnown) {
+      return buildBlockedResult({
+        reasonCode: "PACKAGE_IDENTITY_MISMATCH",
+        diagnostic: atlasDiagnostic,
+        rendererConsumerDescriptor,
+        identityMatchResult: {
+          ...identityMatchBase,
+          mismatchField: "packageVersion"
+        }
+      });
+    }
+
+    const packageFingerprintKnown = expectedIdentities.some(
+      (candidate) => candidate?.packageFingerprint === resolvedPackage.packageFingerprint
+    );
+    if (!packageFingerprintKnown) {
+      return buildBlockedResult({
+        reasonCode: "PACKAGE_IDENTITY_MISMATCH",
+        diagnostic: atlasDiagnostic,
+        rendererConsumerDescriptor,
+        identityMatchResult: {
+          ...identityMatchBase,
+          mismatchField: "packageFingerprint"
+        }
+      });
+    }
+
+    if (!recipeKnown) {
+      return buildBlockedResult({
+        reasonCode: "RECIPE_IDENTITY_MISMATCH",
+        diagnostic: atlasDiagnostic,
+        rendererConsumerDescriptor,
+        identityMatchResult: {
+          ...identityMatchBase,
+          mismatchField: "recipeId"
+        }
+      });
+    }
+
+    if (!selectorKnown) {
+      return buildBlockedResult({
+        reasonCode: "SELECTOR_SEED_MISMATCH",
+        diagnostic: atlasDiagnostic,
+        rendererConsumerDescriptor,
+        identityMatchResult: {
+          ...identityMatchBase,
+          mismatchField: "selectorSeed"
+        }
+      });
+    }
+
     return buildBlockedResult({
       reasonCode: "PACKAGE_IDENTITY_MISMATCH",
       diagnostic: atlasDiagnostic,
-      rendererConsumerDescriptor
-    });
-  }
-
-  if (resolvedRecipe.recipeId !== expectedScope.recipeId) {
-    return buildBlockedResult({
-      reasonCode: "RECIPE_IDENTITY_MISMATCH",
-      diagnostic: atlasDiagnostic,
-      rendererConsumerDescriptor
+      rendererConsumerDescriptor,
+      identityMatchResult: {
+        ...identityMatchBase,
+        mismatchField: "identityRegistryEntry"
+      }
     });
   }
 
@@ -313,7 +460,12 @@ export function validateAtlasRendererZeroDrawHandoff({
 
   return buildReadyResult({
     diagnostic: atlasDiagnostic,
-    rendererConsumerDescriptor
+    rendererConsumerDescriptor,
+    matchedIdentitySource: matchedApprovedIdentity.identitySourceId ?? null,
+    identityMatchResult: {
+      ...identityMatchBase,
+      mismatchField: null
+    }
   });
 }
 
@@ -322,7 +474,7 @@ export function createDeveloperOnlyAtlasRendererZeroDrawHandoff(options = {}) {
     options.getAtlasDiagnostic ?? options.getAtlasDiagnosticForCurrentMapCentre ?? (() => null);
   const getRendererConsumerDescriptor =
     options.getRendererConsumerDescriptor ?? (() => null);
-  const expectedScope = options.expectedScope ?? EXPECTED_SCOPE;
+  const expectedScope = options.expectedScope ?? null;
 
   function getAtlasRendererHandoffReadiness() {
     return validateAtlasRendererZeroDrawHandoff({
