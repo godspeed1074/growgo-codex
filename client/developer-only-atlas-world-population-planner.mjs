@@ -133,6 +133,11 @@ import {
   getDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationLocalEconomyServiceHooks
 } from "./developer-only-atlas-population-local-economy-service-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationLocalMobilityAccessHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationLocalMobilityAccessHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationLocalMobilityAccessHooks
+} from "./developer-only-atlas-population-local-mobility-access-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -473,6 +478,14 @@ function freezeStatus(state) {
     marketCycleProfileId: state.marketCycleProfileId,
     serviceImportance: state.serviceImportance,
     economyReason: state.economyReason,
+    localMobilityAccessVersion: state.localMobilityAccessVersion,
+    registeredLocalMobilityAccessRuleCount:
+      state.registeredLocalMobilityAccessRuleCount,
+    mobilityProfileId: state.mobilityProfileId,
+    accessPatternId: state.accessPatternId,
+    flowPriority: state.flowPriority,
+    movementReason: state.movementReason,
+    accessibilityProfile: state.accessibilityProfile,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -679,7 +692,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationCivicRoutineGatheringHooksRuleRegistry =
     createDeveloperOnlyAtlasPopulationCivicRoutineGatheringHooksRuleRegistry(),
   populationLocalEconomyServiceHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistry(),
+  populationLocalMobilityAccessHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationLocalMobilityAccessHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -781,6 +796,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const localEconomyServiceRegistryStatus =
     getDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistryStatus(
       populationLocalEconomyServiceHooksRuleRegistry
+    );
+  const localMobilityAccessRegistryStatus =
+    getDeveloperOnlyAtlasPopulationLocalMobilityAccessHooksRuleRegistryStatus(
+      populationLocalMobilityAccessHooksRuleRegistry
     );
 
   const state = {
@@ -1033,6 +1052,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       localEconomyServiceRegistryStatus.marketCycleProfileId,
     serviceImportance: localEconomyServiceRegistryStatus.serviceImportance,
     economyReason: localEconomyServiceRegistryStatus.economyReason,
+    localMobilityAccessVersion:
+      localMobilityAccessRegistryStatus.localMobilityAccessVersion,
+    registeredLocalMobilityAccessRuleCount:
+      localMobilityAccessRegistryStatus
+        .registeredLocalMobilityAccessRuleCount,
+    mobilityProfileId: localMobilityAccessRegistryStatus.mobilityProfileId,
+    accessPatternId: localMobilityAccessRegistryStatus.accessPatternId,
+    flowPriority: localMobilityAccessRegistryStatus.flowPriority,
+    movementReason: localMobilityAccessRegistryStatus.movementReason,
+    accessibilityProfile:
+      localMobilityAccessRegistryStatus.accessibilityProfile,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1088,6 +1118,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationActivitySocialRhythmHooksRuleRegistry,
       populationCivicRoutineGatheringHooksRuleRegistry,
       populationLocalEconomyServiceHooksRuleRegistry,
+      populationLocalMobilityAccessHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1270,6 +1301,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.marketCycleProfileId = null;
   state.serviceImportance = null;
   state.economyReason = null;
+  state.mobilityProfileId = null;
+  state.accessPatternId = null;
+  state.flowPriority = null;
+  state.movementReason = null;
+  state.accessibilityProfile = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1314,6 +1350,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const activitySocialRhythmDecisions = [];
   const civicRoutineGatheringDecisions = [];
   const localEconomyServiceDecisions = [];
+  const localMobilityAccessDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1668,6 +1705,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             settlementIdentityStyleCohesionResolution.settlementIdentityId
         }
       );
+    const localMobilityAccessResolution =
+      resolveDeveloperOnlyAtlasPopulationLocalMobilityAccessHooks(
+        internal.populationLocalMobilityAccessHooksRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          serviceRoleId: localEconomyServiceResolution.serviceRoleId,
+          communityRole: civicRoutineGatheringResolution.communityRole,
+          civicRoutineProfileId:
+            civicRoutineGatheringResolution.civicRoutineProfileId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1819,6 +1867,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       localEconomyServiceResolution.marketCycleProfileId;
     state.serviceImportance = localEconomyServiceResolution.serviceImportance;
     state.economyReason = localEconomyServiceResolution.economyReason;
+    state.mobilityProfileId = localMobilityAccessResolution.mobilityProfileId;
+    state.accessPatternId = localMobilityAccessResolution.accessPatternId;
+    state.flowPriority = localMobilityAccessResolution.flowPriority;
+    state.movementReason = localMobilityAccessResolution.movementReason;
+    state.accessibilityProfile =
+      localMobilityAccessResolution.accessibilityProfile;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2103,6 +2157,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         economyReason: localEconomyServiceResolution.economyReason
       })
     );
+    localMobilityAccessDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        mobilityProfileId: localMobilityAccessResolution.mobilityProfileId,
+        accessPatternId: localMobilityAccessResolution.accessPatternId,
+        flowPriority: localMobilityAccessResolution.flowPriority,
+        movementReason: localMobilityAccessResolution.movementReason,
+        accessibilityProfile:
+          localMobilityAccessResolution.accessibilityProfile
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -2260,6 +2325,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             localEconomyServiceResolution.marketCycleProfileId,
           serviceImportance: localEconomyServiceResolution.serviceImportance,
           economyReason: localEconomyServiceResolution.economyReason,
+          mobilityProfileId: localMobilityAccessResolution.mobilityProfileId,
+          accessPatternId: localMobilityAccessResolution.accessPatternId,
+          flowPriority: localMobilityAccessResolution.flowPriority,
+          movementReason: localMobilityAccessResolution.movementReason,
+          accessibilityProfile:
+            localMobilityAccessResolution.accessibilityProfile,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2436,6 +2507,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             localEconomyServiceResolution.marketCycleProfileId,
           serviceImportance: localEconomyServiceResolution.serviceImportance,
           economyReason: localEconomyServiceResolution.economyReason,
+          mobilityProfileId: localMobilityAccessResolution.mobilityProfileId,
+          accessPatternId: localMobilityAccessResolution.accessPatternId,
+          flowPriority: localMobilityAccessResolution.flowPriority,
+          movementReason: localMobilityAccessResolution.movementReason,
+          accessibilityProfile:
+            localMobilityAccessResolution.accessibilityProfile,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2887,6 +2964,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           settlementIdentityId: candidate.settlementIdentityId
         }
       );
+    const localMobilityAccessCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationLocalMobilityAccessHooks(
+        internal.populationLocalMobilityAccessHooksRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          serviceRoleId: localEconomyServiceCandidateResolution.serviceRoleId,
+          communityRole:
+            civicRoutineGatheringCandidateResolution.communityRole,
+          civicRoutineProfileId:
+            civicRoutineGatheringCandidateResolution.civicRoutineProfileId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2977,6 +3066,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         localEconomyServiceCandidateResolution.serviceImportance;
       state.economyReason =
         localEconomyServiceCandidateResolution.economyReason;
+      state.mobilityProfileId =
+        localMobilityAccessCandidateResolution.mobilityProfileId;
+      state.accessPatternId =
+        localMobilityAccessCandidateResolution.accessPatternId;
+      state.flowPriority =
+        localMobilityAccessCandidateResolution.flowPriority;
+      state.movementReason =
+        localMobilityAccessCandidateResolution.movementReason;
+      state.accessibilityProfile =
+        localMobilityAccessCandidateResolution.accessibilityProfile;
     }
 
     acceptedPlacements.push(
@@ -3126,6 +3225,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         serviceImportance:
           localEconomyServiceCandidateResolution.serviceImportance,
         economyReason: localEconomyServiceCandidateResolution.economyReason,
+        mobilityProfileId:
+          localMobilityAccessCandidateResolution.mobilityProfileId,
+        accessPatternId:
+          localMobilityAccessCandidateResolution.accessPatternId,
+        flowPriority:
+          localMobilityAccessCandidateResolution.flowPriority,
+        movementReason:
+          localMobilityAccessCandidateResolution.movementReason,
+        accessibilityProfile:
+          localMobilityAccessCandidateResolution.accessibilityProfile,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -3224,6 +3333,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     activitySocialRhythmDecisions: deepFreeze(activitySocialRhythmDecisions),
     civicRoutineGatheringDecisions: deepFreeze(civicRoutineGatheringDecisions),
     localEconomyServiceDecisions: deepFreeze(localEconomyServiceDecisions),
+    localMobilityAccessDecisions: deepFreeze(localMobilityAccessDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -3403,6 +3513,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       marketCycleProfileId: null,
       serviceImportance: null,
       economyReason: null,
+      localMobilityAccessVersion: null,
+      registeredLocalMobilityAccessRuleCount: 0,
+      mobilityProfileId: null,
+      accessPatternId: null,
+      flowPriority: null,
+      movementReason: null,
+      accessibilityProfile: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
