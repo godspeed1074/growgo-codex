@@ -243,6 +243,11 @@ import {
   getDeveloperOnlyAtlasMaterialSlotResolutionStatus,
   resolveDeveloperOnlyAtlasMaterialSlotSet
 } from "./developer-only-atlas-material-slot-resolution.mjs";
+import {
+  createDeveloperOnlyAtlasComponentSurfaceMapping,
+  getDeveloperOnlyAtlasComponentSurfaceMappingStatus,
+  resolveDeveloperOnlyAtlasComponentSurfaceMapping
+} from "./developer-only-atlas-component-surface-mapping.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -770,6 +775,11 @@ function freezeStatus(state) {
     assignedMaterialCount: state.assignedMaterialCount,
     slotCompatibilityStatus: state.slotCompatibilityStatus,
     slotResolutionReason: state.slotResolutionReason,
+    surfaceMappingProfileId: state.surfaceMappingProfileId,
+    componentAnchorSetId: state.componentAnchorSetId,
+    resolvedAnchorCount: state.resolvedAnchorCount,
+    mappedComponentCount: state.mappedComponentCount,
+    surfaceMappingReason: state.surfaceMappingReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -1020,7 +1030,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasMaterialThemeBundles =
     createDeveloperOnlyAtlasMaterialThemeBundles(),
   atlasMaterialSlotResolution =
-    createDeveloperOnlyAtlasMaterialSlotResolution()
+    createDeveloperOnlyAtlasMaterialSlotResolution(),
+  atlasComponentSurfaceMapping =
+    createDeveloperOnlyAtlasComponentSurfaceMapping()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1210,6 +1222,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasMaterialSlotResolutionStatus =
     getDeveloperOnlyAtlasMaterialSlotResolutionStatus(
       atlasMaterialSlotResolution
+    );
+  const atlasComponentSurfaceMappingStatus =
+    getDeveloperOnlyAtlasComponentSurfaceMappingStatus(
+      atlasComponentSurfaceMapping
     );
 
   const state = {
@@ -1742,6 +1758,18 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     slotCompatibilityStatus:
       atlasMaterialSlotResolutionStatus.slotCompatibilityStatus,
     slotResolutionReason: atlasMaterialSlotResolutionStatus.slotResolutionReason,
+    atlasComponentSurfaceMappingVersion:
+      atlasComponentSurfaceMappingStatus.atlasComponentSurfaceMappingVersion,
+    registeredComponentSurfaceMappingRuleCount:
+      atlasComponentSurfaceMappingStatus
+        .registeredComponentSurfaceMappingRuleCount,
+    surfaceMappingProfileId:
+      atlasComponentSurfaceMappingStatus.surfaceMappingProfileId,
+    componentAnchorSetId:
+      atlasComponentSurfaceMappingStatus.componentAnchorSetId,
+    resolvedAnchorCount: atlasComponentSurfaceMappingStatus.resolvedAnchorCount,
+    mappedComponentCount: atlasComponentSurfaceMappingStatus.mappedComponentCount,
+    surfaceMappingReason: atlasComponentSurfaceMappingStatus.surfaceMappingReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1819,6 +1847,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasMaterialPaletteFinishCompatibilityProfiles,
       atlasMaterialThemeBundles,
       atlasMaterialSlotResolution,
+      atlasComponentSurfaceMapping,
       placementProvider,
       lastPlan: null
     }
@@ -2111,6 +2140,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.assignedMaterialCount = 0;
   state.slotCompatibilityStatus = null;
   state.slotResolutionReason = null;
+  state.surfaceMappingProfileId = null;
+  state.componentAnchorSetId = null;
+  state.resolvedAnchorCount = 0;
+  state.mappedComponentCount = 0;
+  state.surfaceMappingReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2156,6 +2190,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const materialPaletteFinishCompatibilityDecisions = [];
   const materialThemeBundleDecisions = [];
   const materialSlotResolutionDecisions = [];
+  const componentSurfaceMappingDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2953,6 +2988,31 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             validatedComponentCount: 0,
             assemblyReason: "COMPONENT_ASSEMBLY_RULE_UNAVAILABLE"
           });
+    const componentSurfaceMappingResolution =
+      modularBibleStyleBridgeResolution.componentRecipeId &&
+      modularBibleStyleBridgeResolution.assetAssemblyProfileId &&
+      materialSlotResolution.materialSlotSetId &&
+      componentAssemblyRuleResolution.componentCompatibilityStatus
+        ? resolveDeveloperOnlyAtlasComponentSurfaceMapping(
+            internal.atlasComponentSurfaceMapping,
+            {
+              componentRecipeId:
+                modularBibleStyleBridgeResolution.componentRecipeId,
+              assetAssemblyProfileId:
+                modularBibleStyleBridgeResolution.assetAssemblyProfileId,
+              materialSlotSetId: materialSlotResolution.materialSlotSetId,
+              slotCompatibilityStatus:
+                materialSlotResolution.slotCompatibilityStatus
+            }
+          )
+        : {
+            matched: false,
+            surfaceMappingProfileId: null,
+            componentAnchorSetId: null,
+            resolvedAnchorCount: 0,
+            mappedComponentCount: 0,
+            surfaceMappingReason: "COMPONENT_SURFACE_MAPPING_UNAVAILABLE"
+          };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -3073,6 +3133,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.slotCompatibilityStatus =
       materialSlotResolution.slotCompatibilityStatus;
     state.slotResolutionReason = materialSlotResolution.slotResolutionReason;
+    state.surfaceMappingProfileId =
+      componentSurfaceMappingResolution.surfaceMappingProfileId;
+    state.componentAnchorSetId =
+      componentSurfaceMappingResolution.componentAnchorSetId;
+    state.resolvedAnchorCount =
+      componentSurfaceMappingResolution.resolvedAnchorCount;
+    state.mappedComponentCount =
+      componentSurfaceMappingResolution.mappedComponentCount;
+    state.surfaceMappingReason =
+      componentSurfaceMappingResolution.surfaceMappingReason;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3594,6 +3664,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         slotResolutionReason: materialSlotResolution.slotResolutionReason
       })
     );
+    componentSurfaceMappingDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        surfaceMappingProfileId:
+          componentSurfaceMappingResolution.surfaceMappingProfileId,
+        componentAnchorSetId:
+          componentSurfaceMappingResolution.componentAnchorSetId,
+        resolvedAnchorCount:
+          componentSurfaceMappingResolution.resolvedAnchorCount,
+        mappedComponentCount:
+          componentSurfaceMappingResolution.mappedComponentCount,
+        surfaceMappingReason: componentSurfaceMappingResolution.surfaceMappingReason
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -3962,6 +4046,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assignedMaterialCount: materialSlotResolution.assignedMaterialCount,
           slotCompatibilityStatus: materialSlotResolution.slotCompatibilityStatus,
           slotResolutionReason: materialSlotResolution.slotResolutionReason,
+          surfaceMappingProfileId:
+            componentSurfaceMappingResolution.surfaceMappingProfileId,
+          componentAnchorSetId:
+            componentSurfaceMappingResolution.componentAnchorSetId,
+          resolvedAnchorCount:
+            componentSurfaceMappingResolution.resolvedAnchorCount,
+          mappedComponentCount:
+            componentSurfaceMappingResolution.mappedComponentCount,
+          surfaceMappingReason:
+            componentSurfaceMappingResolution.surfaceMappingReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4314,6 +4408,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           assignedMaterialCount: materialSlotResolution.assignedMaterialCount,
           slotCompatibilityStatus: materialSlotResolution.slotCompatibilityStatus,
           slotResolutionReason: materialSlotResolution.slotResolutionReason,
+          surfaceMappingProfileId:
+            componentSurfaceMappingResolution.surfaceMappingProfileId,
+          componentAnchorSetId:
+            componentSurfaceMappingResolution.componentAnchorSetId,
+          resolvedAnchorCount:
+            componentSurfaceMappingResolution.resolvedAnchorCount,
+          mappedComponentCount:
+            componentSurfaceMappingResolution.mappedComponentCount,
+          surfaceMappingReason:
+            componentSurfaceMappingResolution.surfaceMappingReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4710,6 +4814,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         assignedMaterialCount: 0,
         slotCompatibilityStatus: "blocked",
         slotResolutionReason: "PENDING_MATERIAL_SLOT_RESOLUTION",
+        surfaceMappingProfileId: null,
+        componentAnchorSetId: null,
+        resolvedAnchorCount: 0,
+        mappedComponentCount: 0,
+        surfaceMappingReason: "PENDING_COMPONENT_SURFACE_MAPPING",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -5426,6 +5535,32 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             validatedComponentCount: 0,
             assemblyReason: "COMPONENT_ASSEMBLY_RULE_UNAVAILABLE"
           });
+    const componentSurfaceMappingCandidateResolution =
+      modularBibleStyleBridgeCandidateResolution.componentRecipeId &&
+      modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId &&
+      materialSlotCandidateResolution.materialSlotSetId &&
+      componentAssemblyRuleCandidateResolution.componentCompatibilityStatus
+        ? resolveDeveloperOnlyAtlasComponentSurfaceMapping(
+            internal.atlasComponentSurfaceMapping,
+            {
+              componentRecipeId:
+                modularBibleStyleBridgeCandidateResolution.componentRecipeId,
+              assetAssemblyProfileId:
+                modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId,
+              materialSlotSetId:
+                materialSlotCandidateResolution.materialSlotSetId,
+              slotCompatibilityStatus:
+                materialSlotCandidateResolution.slotCompatibilityStatus
+            }
+          )
+        : {
+            matched: false,
+            surfaceMappingProfileId: null,
+            componentAnchorSetId: null,
+            resolvedAnchorCount: 0,
+            mappedComponentCount: 0,
+            surfaceMappingReason: "COMPONENT_SURFACE_MAPPING_UNAVAILABLE"
+          };
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -5734,6 +5869,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         materialSlotCandidateResolution.slotCompatibilityStatus;
       state.slotResolutionReason =
         materialSlotCandidateResolution.slotResolutionReason;
+      state.surfaceMappingProfileId =
+        componentSurfaceMappingCandidateResolution.surfaceMappingProfileId;
+      state.componentAnchorSetId =
+        componentSurfaceMappingCandidateResolution.componentAnchorSetId;
+      state.resolvedAnchorCount =
+        componentSurfaceMappingCandidateResolution.resolvedAnchorCount;
+      state.mappedComponentCount =
+        componentSurfaceMappingCandidateResolution.mappedComponentCount;
+      state.surfaceMappingReason =
+        componentSurfaceMappingCandidateResolution.surfaceMappingReason;
     }
 
     acceptedPlacements.push(
@@ -5839,6 +5984,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialSlotCandidateResolution.slotCompatibilityStatus,
         slotResolutionReason:
           materialSlotCandidateResolution.slotResolutionReason,
+        surfaceMappingProfileId:
+          componentSurfaceMappingCandidateResolution.surfaceMappingProfileId,
+        componentAnchorSetId:
+          componentSurfaceMappingCandidateResolution.componentAnchorSetId,
+        resolvedAnchorCount:
+          componentSurfaceMappingCandidateResolution.resolvedAnchorCount,
+        mappedComponentCount:
+          componentSurfaceMappingCandidateResolution.mappedComponentCount,
+        surfaceMappingReason:
+          componentSurfaceMappingCandidateResolution.surfaceMappingReason,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -6234,6 +6389,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     ),
     materialThemeBundleDecisions: deepFreeze(materialThemeBundleDecisions),
     materialSlotResolutionDecisions: deepFreeze(materialSlotResolutionDecisions),
+    componentSurfaceMappingDecisions: deepFreeze(componentSurfaceMappingDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -6421,6 +6577,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       assignedMaterialCount: 0,
       slotCompatibilityStatus: null,
       slotResolutionReason: null,
+      atlasComponentSurfaceMappingVersion: null,
+      registeredComponentSurfaceMappingRuleCount: 0,
+      surfaceMappingProfileId: null,
+      componentAnchorSetId: null,
+      resolvedAnchorCount: 0,
+      mappedComponentCount: 0,
+      surfaceMappingReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,

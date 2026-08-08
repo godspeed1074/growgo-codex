@@ -25,6 +25,23 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_MATERIAL_THEME_BUNDLE_RULES =
       status: "approved"
     }),
     Object.freeze({
+      materialThemeBundleId: "MATERIAL_THEME_BUNDLE_COASTAL_COMPACT_001",
+      worldThemeProfileId: "WORLD_THEME_PROFILE_AUSTRALIAN_COASTAL_001",
+      settlementIdentityId: "SETTLEMENT_IDENTITY_COASTAL_VILLAGE_001",
+      biomeProfileId: "BIOME_PROFILE_COASTAL_001",
+      materialFamilyId: "MATERIAL_FAMILY_VEGETATION_PALETTE_COASTAL_001",
+      paletteProfileId: "PALETTE_PROFILE_COASTAL_SOFT_NEUTRALS_001",
+      finishProfileId: "FINISH_PROFILE_NATURAL_001",
+      resolvedMaterialProfileId:
+        "RESOLVED_MATERIAL_PROFILE_COASTAL_NATIVE_COMPACT_001",
+      resolvedFinishSetId: "RESOLVED_FINISH_SET_COASTAL_NATURAL_001",
+      resolvedPaletteSetId: "RESOLVED_PALETTE_SET_COASTAL_SOFT_001",
+      materialBundleCompatibilityStatus: "valid",
+      materialBundleReason:
+        "compact_coastal_bundle_aligns native green materials palette and finish set",
+      status: "approved"
+    }),
+    Object.freeze({
       materialThemeBundleId: "MATERIAL_THEME_BUNDLE_HERITAGE_001",
       worldThemeProfileId: "WORLD_THEME_PROFILE_VICTORIAN_HERITAGE_001",
       settlementIdentityId: "SETTLEMENT_IDENTITY_HERITAGE_TOWN_001",
@@ -39,6 +56,23 @@ export const DEFAULT_DEVELOPER_ONLY_ATLAS_MATERIAL_THEME_BUNDLE_RULES =
       materialBundleCompatibilityStatus: "valid",
       materialBundleReason:
         "heritage_bundle_aligns masonry trims windows and aged finish set",
+      status: "approved"
+    }),
+    Object.freeze({
+      materialThemeBundleId: "MATERIAL_THEME_BUNDLE_HERITAGE_COMPACT_001",
+      worldThemeProfileId: "WORLD_THEME_PROFILE_VICTORIAN_HERITAGE_001",
+      settlementIdentityId: "SETTLEMENT_IDENTITY_HERITAGE_TOWN_001",
+      biomeProfileId: "BIOME_PROFILE_URBAN_001",
+      materialFamilyId: "MATERIAL_FAMILY_WALL_HERITAGE_001",
+      paletteProfileId: "PALETTE_PROFILE_HERITAGE_WARM_MASONRY_001",
+      finishProfileId: "FINISH_PROFILE_HERITAGE_AGED_001",
+      resolvedMaterialProfileId:
+        "RESOLVED_MATERIAL_PROFILE_HERITAGE_MASONRY_COMPACT_001",
+      resolvedFinishSetId: "RESOLVED_FINISH_SET_HERITAGE_AGED_001",
+      resolvedPaletteSetId: "RESOLVED_PALETTE_SET_HERITAGE_WARM_001",
+      materialBundleCompatibilityStatus: "valid",
+      materialBundleReason:
+        "compact_heritage_bundle_aligns masonry trims windows and aged finish set",
       status: "approved"
     }),
     Object.freeze({
@@ -269,28 +303,46 @@ export function resolveDeveloperOnlyAtlasMaterialThemeBundle(
   const finishProfileId = sanitizeString(input.finishProfileId);
   const resolvedMaterialProfileId = sanitizeString(input.resolvedMaterialProfileId);
 
-  const rule = registry.__rules.find(
+  const worldThemeMatches = registry.__rules.filter(
     (candidate) => candidate.worldThemeProfileId === worldThemeProfileId
   );
-  if (!rule) {
+  if (worldThemeMatches.length === 0) {
     return fail(registry, "MATERIAL_THEME_BUNDLE_NOT_FOUND");
   }
-  if (rule.settlementIdentityId !== settlementIdentityId) {
+  const settlementMatches = worldThemeMatches.filter(
+    (candidate) => candidate.settlementIdentityId === settlementIdentityId
+  );
+  if (settlementMatches.length === 0) {
     return fail(registry, "MATERIAL_THEME_BUNDLE_SETTLEMENT_INCOMPATIBLE");
   }
-  if (rule.biomeProfileId !== biomeProfileId) {
+  const biomeMatches = settlementMatches.filter(
+    (candidate) => candidate.biomeProfileId === biomeProfileId
+  );
+  if (biomeMatches.length === 0) {
     return fail(registry, "MATERIAL_THEME_BUNDLE_BIOME_INCOMPATIBLE");
   }
-  if (rule.materialFamilyId !== materialFamilyId) {
+  const materialFamilyMatches = biomeMatches.filter(
+    (candidate) => candidate.materialFamilyId === materialFamilyId
+  );
+  if (materialFamilyMatches.length === 0) {
     return fail(registry, "MATERIAL_THEME_BUNDLE_MATERIAL_INCOMPATIBLE");
   }
-  if (rule.paletteProfileId !== paletteProfileId) {
+  const paletteMatches = materialFamilyMatches.filter(
+    (candidate) => candidate.paletteProfileId === paletteProfileId
+  );
+  if (paletteMatches.length === 0) {
     return fail(registry, "MATERIAL_THEME_BUNDLE_PALETTE_INCOMPATIBLE");
   }
-  if (rule.finishProfileId !== finishProfileId) {
+  const finishMatches = paletteMatches.filter(
+    (candidate) => candidate.finishProfileId === finishProfileId
+  );
+  if (finishMatches.length === 0) {
     return fail(registry, "MATERIAL_THEME_BUNDLE_FINISH_INCOMPATIBLE");
   }
-  if (rule.resolvedMaterialProfileId !== resolvedMaterialProfileId) {
+  const rule = finishMatches.find(
+    (candidate) => candidate.resolvedMaterialProfileId === resolvedMaterialProfileId
+  );
+  if (!rule) {
     return fail(
       registry,
       "MATERIAL_THEME_BUNDLE_RESOLVED_MATERIAL_INCOMPATIBLE"
