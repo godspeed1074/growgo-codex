@@ -38,6 +38,16 @@ import {
   getDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationDistrictComposition
 } from "./developer-only-atlas-population-district-composition-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationCorridorConnectivityRuleRegistry,
+  getDeveloperOnlyAtlasPopulationCorridorConnectivityRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationCorridorConnectivity
+} from "./developer-only-atlas-population-corridor-connectivity-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistry,
+  getDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationParcelFrontageLot
+} from "./developer-only-atlas-population-parcel-frontage-lot-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -237,6 +247,21 @@ function freezeStatus(state) {
     settlementPatternId: state.settlementPatternId,
     districtTransitionReason: state.districtTransitionReason,
     compositionSeed: state.compositionSeed,
+    corridorConnectivityVersion: state.corridorConnectivityVersion,
+    registeredCorridorRuleCount: state.registeredCorridorRuleCount,
+    corridorId: state.corridorId,
+    corridorType: state.corridorType,
+    connectedDistrictIds: deepFreeze([...(state.connectedDistrictIds ?? [])]),
+    connectivityReason: state.connectivityReason,
+    movementPriority: state.movementPriority,
+    parcelFrontageLotVersion: state.parcelFrontageLotVersion,
+    registeredParcelRuleCount: state.registeredParcelRuleCount,
+    parcelPatternId: state.parcelPatternId,
+    lotType: state.lotType,
+    frontageDirection: state.frontageDirection,
+    frontageRoadId: state.frontageRoadId,
+    setbackDistance: state.setbackDistance,
+    boundaryPattern: state.boundaryPattern,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -405,7 +430,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationNeighborhoodPatternRuleRegistry =
     createDeveloperOnlyAtlasPopulationNeighborhoodPatternRuleRegistry(),
   populationDistrictCompositionRuleRegistry =
-    createDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistry()
+    createDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistry(),
+  populationCorridorConnectivityRuleRegistry =
+    createDeveloperOnlyAtlasPopulationCorridorConnectivityRuleRegistry(),
+  populationParcelFrontageLotRuleRegistry =
+    createDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -431,6 +460,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const districtCompositionRegistryStatus =
     getDeveloperOnlyAtlasPopulationDistrictCompositionRuleRegistryStatus(
       populationDistrictCompositionRuleRegistry
+    );
+  const corridorConnectivityRegistryStatus =
+    getDeveloperOnlyAtlasPopulationCorridorConnectivityRuleRegistryStatus(
+      populationCorridorConnectivityRuleRegistry
+    );
+  const parcelFrontageLotRegistryStatus =
+    getDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistryStatus(
+      populationParcelFrontageLotRuleRegistry
     );
 
   const state = {
@@ -478,6 +515,27 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     districtTransitionReason:
       districtCompositionRegistryStatus.districtTransitionReason,
     compositionSeed: districtCompositionRegistryStatus.compositionSeed,
+    corridorConnectivityVersion:
+      corridorConnectivityRegistryStatus.corridorConnectivityVersion,
+    registeredCorridorRuleCount:
+      corridorConnectivityRegistryStatus.registeredCorridorRuleCount,
+    corridorId: corridorConnectivityRegistryStatus.corridorId,
+    corridorType: corridorConnectivityRegistryStatus.corridorType,
+    connectedDistrictIds:
+      corridorConnectivityRegistryStatus.connectedDistrictIds,
+    connectivityReason:
+      corridorConnectivityRegistryStatus.connectivityReason,
+    movementPriority: corridorConnectivityRegistryStatus.movementPriority,
+    parcelFrontageLotVersion:
+      parcelFrontageLotRegistryStatus.parcelFrontageLotVersion,
+    registeredParcelRuleCount:
+      parcelFrontageLotRegistryStatus.registeredParcelRuleCount,
+    parcelPatternId: parcelFrontageLotRegistryStatus.parcelPatternId,
+    lotType: parcelFrontageLotRegistryStatus.lotType,
+    frontageDirection: parcelFrontageLotRegistryStatus.frontageDirection,
+    frontageRoadId: parcelFrontageLotRegistryStatus.frontageRoadId,
+    setbackDistance: parcelFrontageLotRegistryStatus.setbackDistance,
+    boundaryPattern: parcelFrontageLotRegistryStatus.boundaryPattern,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -514,6 +572,8 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationContextualWorldFillRuleRegistry,
       populationNeighborhoodPatternRuleRegistry,
       populationDistrictCompositionRuleRegistry,
+      populationCorridorConnectivityRuleRegistry,
+      populationParcelFrontageLotRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -602,6 +662,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.settlementPatternId = null;
   state.districtTransitionReason = null;
   state.compositionSeed = null;
+  state.corridorId = null;
+  state.corridorType = null;
+  state.connectedDistrictIds = [];
+  state.connectivityReason = null;
+  state.movementPriority = null;
+  state.parcelPatternId = null;
+  state.lotType = null;
+  state.frontageDirection = null;
+  state.frontageRoadId = null;
+  state.setbackDistance = null;
+  state.boundaryPattern = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -627,6 +698,8 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const contextualWorldFillDecisions = [];
   const neighborhoodPatternDecisions = [];
   const districtCompositionDecisions = [];
+  const corridorConnectivityDecisions = [];
+  const parcelFrontageLotDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -716,6 +789,37 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           patternCategory: neighborhoodPatternResolution.patternCategory
         }
       );
+    const corridorConnectivityResolution =
+      resolveDeveloperOnlyAtlasPopulationCorridorConnectivity(
+        internal.populationCorridorConnectivityRuleRegistry,
+        {
+          feature,
+          selectorSeed,
+          districtId: districtCompositionResolution.districtId,
+          districtType: districtCompositionResolution.districtType,
+          districtTransitionReason:
+            districtCompositionResolution.districtTransitionReason,
+          worldFillCategory: contextualWorldFillResolution.worldFillCategory,
+          relationshipContext
+        }
+      );
+    const parcelFrontageLotResolution =
+      resolveDeveloperOnlyAtlasPopulationParcelFrontageLot(
+        internal.populationParcelFrontageLotRuleRegistry,
+        {
+          feature,
+          districtType: districtCompositionResolution.districtType,
+          neighborhoodPatternId:
+            neighborhoodPatternResolution.neighborhoodPatternId,
+          corridorType: corridorConnectivityResolution.corridorType,
+          relationshipDiagnostics: {
+            ...relationshipResolution.featureDiagnostics,
+            connectedDistrictIds:
+              corridorConnectivityResolution.connectedDistrictIds
+          },
+          orientationHint: feature.orientationHint
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -741,6 +845,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.districtTransitionReason =
       districtCompositionResolution.districtTransitionReason;
     state.compositionSeed = districtCompositionResolution.compositionSeed;
+    state.corridorId = corridorConnectivityResolution.corridorId;
+    state.corridorType = corridorConnectivityResolution.corridorType;
+    state.connectedDistrictIds =
+      corridorConnectivityResolution.connectedDistrictIds;
+    state.connectivityReason =
+      corridorConnectivityResolution.connectivityReason;
+    state.movementPriority = corridorConnectivityResolution.movementPriority;
+    state.parcelPatternId = parcelFrontageLotResolution.parcelPatternId;
+    state.lotType = parcelFrontageLotResolution.lotType;
+    state.frontageDirection = parcelFrontageLotResolution.frontageDirection;
+    state.frontageRoadId = parcelFrontageLotResolution.frontageRoadId;
+    state.setbackDistance = parcelFrontageLotResolution.setbackDistance;
+    state.boundaryPattern = parcelFrontageLotResolution.boundaryPattern;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -805,6 +922,29 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         compositionSeed: districtCompositionResolution.compositionSeed
       })
     );
+    corridorConnectivityDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        corridorId: corridorConnectivityResolution.corridorId,
+        corridorType: corridorConnectivityResolution.corridorType,
+        connectedDistrictIds:
+          corridorConnectivityResolution.connectedDistrictIds,
+        connectivityReason:
+          corridorConnectivityResolution.connectivityReason,
+        movementPriority: corridorConnectivityResolution.movementPriority
+      })
+    );
+    parcelFrontageLotDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        parcelPatternId: parcelFrontageLotResolution.parcelPatternId,
+        lotType: parcelFrontageLotResolution.lotType,
+        frontageDirection: parcelFrontageLotResolution.frontageDirection,
+        frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
+        setbackDistance: parcelFrontageLotResolution.setbackDistance,
+        boundaryPattern: parcelFrontageLotResolution.boundaryPattern
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -836,6 +976,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           districtTransitionReason:
             districtCompositionResolution.districtTransitionReason,
           compositionSeed: districtCompositionResolution.compositionSeed,
+          corridorId: corridorConnectivityResolution.corridorId,
+          corridorType: corridorConnectivityResolution.corridorType,
+          connectedDistrictIds:
+            corridorConnectivityResolution.connectedDistrictIds,
+          connectivityReason:
+            corridorConnectivityResolution.connectivityReason,
+          movementPriority:
+            corridorConnectivityResolution.movementPriority,
+          parcelPatternId: parcelFrontageLotResolution.parcelPatternId,
+          lotType: parcelFrontageLotResolution.lotType,
+          frontageDirection: parcelFrontageLotResolution.frontageDirection,
+          frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
+          setbackDistance: parcelFrontageLotResolution.setbackDistance,
+          boundaryPattern: parcelFrontageLotResolution.boundaryPattern,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -886,6 +1040,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           districtTransitionReason:
             districtCompositionResolution.districtTransitionReason,
           compositionSeed: districtCompositionResolution.compositionSeed,
+          corridorId: corridorConnectivityResolution.corridorId,
+          corridorType: corridorConnectivityResolution.corridorType,
+          connectedDistrictIds:
+            corridorConnectivityResolution.connectedDistrictIds,
+          connectivityReason:
+            corridorConnectivityResolution.connectivityReason,
+          movementPriority:
+            corridorConnectivityResolution.movementPriority,
+          parcelPatternId: parcelFrontageLotResolution.parcelPatternId,
+          lotType: parcelFrontageLotResolution.lotType,
+          frontageDirection: parcelFrontageLotResolution.frontageDirection,
+          frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
+          setbackDistance: parcelFrontageLotResolution.setbackDistance,
+          boundaryPattern: parcelFrontageLotResolution.boundaryPattern,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -983,6 +1151,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         districtTransitionReason:
           districtCompositionResolution.districtTransitionReason,
         compositionSeed: districtCompositionResolution.compositionSeed,
+        corridorId: corridorConnectivityResolution.corridorId,
+        corridorType: corridorConnectivityResolution.corridorType,
+        connectedDistrictIds:
+          corridorConnectivityResolution.connectedDistrictIds,
+        connectivityReason:
+          corridorConnectivityResolution.connectivityReason,
+        movementPriority:
+          corridorConnectivityResolution.movementPriority,
+        parcelPatternId: parcelFrontageLotResolution.parcelPatternId,
+        lotType: parcelFrontageLotResolution.lotType,
+        frontageDirection: parcelFrontageLotResolution.frontageDirection,
+        frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
+        setbackDistance: parcelFrontageLotResolution.setbackDistance,
+        boundaryPattern: parcelFrontageLotResolution.boundaryPattern,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -1115,6 +1297,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         settlementPatternId: candidate.settlementPatternId,
         districtTransitionReason: candidate.districtTransitionReason,
         compositionSeed: candidate.compositionSeed,
+        corridorId: candidate.corridorId,
+        corridorType: candidate.corridorType,
+        connectedDistrictIds: candidate.connectedDistrictIds,
+        connectivityReason: candidate.connectivityReason,
+        movementPriority: candidate.movementPriority,
+        parcelPatternId: candidate.parcelPatternId,
+        lotType: candidate.lotType,
+        frontageDirection: candidate.frontageDirection,
+        frontageRoadId: candidate.frontageRoadId,
+        setbackDistance: candidate.setbackDistance,
+        boundaryPattern: candidate.boundaryPattern,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -1188,6 +1381,8 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     contextualWorldFillDecisions: deepFreeze(contextualWorldFillDecisions),
     neighborhoodPatternDecisions: deepFreeze(neighborhoodPatternDecisions),
     districtCompositionDecisions: deepFreeze(districtCompositionDecisions),
+    corridorConnectivityDecisions: deepFreeze(corridorConnectivityDecisions),
+    parcelFrontageLotDecisions: deepFreeze(parcelFrontageLotDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -1235,6 +1430,21 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       settlementPatternId: null,
       districtTransitionReason: null,
       compositionSeed: null,
+      corridorConnectivityVersion: null,
+      registeredCorridorRuleCount: 0,
+      corridorId: null,
+      corridorType: null,
+      connectedDistrictIds: [],
+      connectivityReason: null,
+      movementPriority: null,
+      parcelFrontageLotVersion: null,
+      registeredParcelRuleCount: 0,
+      parcelPatternId: null,
+      lotType: null,
+      frontageDirection: null,
+      frontageRoadId: null,
+      setbackDistance: null,
+      boundaryPattern: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
