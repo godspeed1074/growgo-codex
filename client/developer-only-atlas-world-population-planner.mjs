@@ -93,6 +93,11 @@ import {
   getDeveloperOnlyAtlasPopulationSupportingCompositionRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationSupportingComposition
 } from "./developer-only-atlas-population-supporting-composition-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistry,
+  getDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationSpecialSiteAccent
+} from "./developer-only-atlas-population-special-site-accent-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -373,6 +378,14 @@ function freezeStatus(state) {
     entryCompositionId: state.entryCompositionId,
     propDensityTier: state.propDensityTier,
     compositionReason: state.compositionReason,
+    specialSiteAccentVersion: state.specialSiteAccentVersion,
+    registeredSpecialSiteAccentRuleCount:
+      state.registeredSpecialSiteAccentRuleCount,
+    specialSiteType: state.specialSiteType,
+    landmarkAccentProfileId: state.landmarkAccentProfileId,
+    cornerLotAccentId: state.cornerLotAccentId,
+    visibilityPriority: state.visibilityPriority,
+    specialSiteReason: state.specialSiteReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -563,7 +576,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationMicroClusterAdjacencyRuleRegistry =
     createDeveloperOnlyAtlasPopulationMicroClusterAdjacencyRuleRegistry(),
   populationSupportingCompositionRuleRegistry =
-    createDeveloperOnlyAtlasPopulationSupportingCompositionRuleRegistry()
+    createDeveloperOnlyAtlasPopulationSupportingCompositionRuleRegistry(),
+  populationSpecialSiteAccentRuleRegistry =
+    createDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -633,6 +648,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const supportingCompositionRegistryStatus =
     getDeveloperOnlyAtlasPopulationSupportingCompositionRuleRegistryStatus(
       populationSupportingCompositionRuleRegistry
+    );
+  const specialSiteAccentRegistryStatus =
+    getDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistryStatus(
+      populationSpecialSiteAccentRuleRegistry
     );
 
   const state = {
@@ -800,6 +819,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       supportingCompositionRegistryStatus.entryCompositionId,
     propDensityTier: supportingCompositionRegistryStatus.propDensityTier,
     compositionReason: supportingCompositionRegistryStatus.compositionReason,
+    specialSiteAccentVersion:
+      specialSiteAccentRegistryStatus.specialSiteAccentVersion,
+    registeredSpecialSiteAccentRuleCount:
+      specialSiteAccentRegistryStatus.registeredSpecialSiteAccentRuleCount,
+    specialSiteType: specialSiteAccentRegistryStatus.specialSiteType,
+    landmarkAccentProfileId:
+      specialSiteAccentRegistryStatus.landmarkAccentProfileId,
+    cornerLotAccentId: specialSiteAccentRegistryStatus.cornerLotAccentId,
+    visibilityPriority: specialSiteAccentRegistryStatus.visibilityPriority,
+    specialSiteReason: specialSiteAccentRegistryStatus.specialSiteReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -847,6 +876,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationModularAssetBindingRuleRegistry,
       populationMicroClusterAdjacencyRuleRegistry,
       populationSupportingCompositionRuleRegistry,
+      populationSpecialSiteAccentRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -990,6 +1020,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.entryCompositionId = null;
   state.propDensityTier = null;
   state.compositionReason = null;
+  state.specialSiteType = null;
+  state.landmarkAccentProfileId = null;
+  state.cornerLotAccentId = null;
+  state.visibilityPriority = null;
+  state.specialSiteReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1026,6 +1061,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const modularAssetBindingDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
+  const specialSiteAccentDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1293,6 +1329,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             propDensityTier: null,
             compositionReason: null
           };
+    const specialSiteAccentResolution =
+      resolveDeveloperOnlyAtlasPopulationSpecialSiteAccent(
+        internal.populationSpecialSiteAccentRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          districtType: districtCompositionResolution.districtType,
+          lotType: parcelFrontageLotResolution.lotType,
+          sourceClassification: feature.sourceClassification
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1393,6 +1439,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       supportingCompositionResolution.entryCompositionId;
     state.propDensityTier = supportingCompositionResolution.propDensityTier;
     state.compositionReason = supportingCompositionResolution.compositionReason;
+    state.specialSiteType = specialSiteAccentResolution.specialSiteType;
+    state.landmarkAccentProfileId =
+      specialSiteAccentResolution.landmarkAccentProfileId;
+    state.cornerLotAccentId = specialSiteAccentResolution.cornerLotAccentId;
+    state.visibilityPriority = specialSiteAccentResolution.visibilityPriority;
+    state.specialSiteReason = specialSiteAccentResolution.specialSiteReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1588,6 +1640,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         compositionReason: supportingCompositionResolution.compositionReason
       })
     );
+    specialSiteAccentDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        specialSiteType: specialSiteAccentResolution.specialSiteType,
+        landmarkAccentProfileId:
+          specialSiteAccentResolution.landmarkAccentProfileId,
+        cornerLotAccentId: specialSiteAccentResolution.cornerLotAccentId,
+        visibilityPriority: specialSiteAccentResolution.visibilityPriority,
+        specialSiteReason: specialSiteAccentResolution.specialSiteReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1695,6 +1758,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             supportingCompositionResolution.entryCompositionId,
           propDensityTier: supportingCompositionResolution.propDensityTier,
           compositionReason: supportingCompositionResolution.compositionReason,
+          specialSiteType: specialSiteAccentResolution.specialSiteType,
+          landmarkAccentProfileId:
+            specialSiteAccentResolution.landmarkAccentProfileId,
+          cornerLotAccentId: specialSiteAccentResolution.cornerLotAccentId,
+          visibilityPriority: specialSiteAccentResolution.visibilityPriority,
+          specialSiteReason: specialSiteAccentResolution.specialSiteReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1821,6 +1890,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             supportingCompositionResolution.entryCompositionId,
           propDensityTier: supportingCompositionResolution.propDensityTier,
           compositionReason: supportingCompositionResolution.compositionReason,
+          specialSiteType: specialSiteAccentResolution.specialSiteType,
+          landmarkAccentProfileId:
+            specialSiteAccentResolution.landmarkAccentProfileId,
+          cornerLotAccentId: specialSiteAccentResolution.cornerLotAccentId,
+          visibilityPriority: specialSiteAccentResolution.visibilityPriority,
+          specialSiteReason: specialSiteAccentResolution.specialSiteReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1989,6 +2064,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         entryCompositionId: null,
         propDensityTier: null,
         compositionReason: null,
+        specialSiteType: null,
+        landmarkAccentProfileId: null,
+        cornerLotAccentId: null,
+        visibilityPriority: null,
+        specialSiteReason: null,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -2174,6 +2254,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             propDensityTier: null,
             compositionReason: null
           };
+    const specialSiteAccentCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationSpecialSiteAccent(
+        internal.populationSpecialSiteAccentRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          districtType: candidate.districtType,
+          lotType: candidate.lotType,
+          sourceClassification: candidate.feature.sourceClassification
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2198,6 +2288,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         supportingCompositionCandidateResolution.propDensityTier;
       state.compositionReason =
         supportingCompositionCandidateResolution.compositionReason;
+      state.specialSiteType = specialSiteAccentCandidateResolution.specialSiteType;
+      state.landmarkAccentProfileId =
+        specialSiteAccentCandidateResolution.landmarkAccentProfileId;
+      state.cornerLotAccentId =
+        specialSiteAccentCandidateResolution.cornerLotAccentId;
+      state.visibilityPriority =
+        specialSiteAccentCandidateResolution.visibilityPriority;
+      state.specialSiteReason =
+        specialSiteAccentCandidateResolution.specialSiteReason;
     }
 
     acceptedPlacements.push(
@@ -2282,6 +2381,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         propDensityTier: supportingCompositionCandidateResolution.propDensityTier,
         compositionReason:
           supportingCompositionCandidateResolution.compositionReason,
+        specialSiteType: specialSiteAccentCandidateResolution.specialSiteType,
+        landmarkAccentProfileId:
+          specialSiteAccentCandidateResolution.landmarkAccentProfileId,
+        cornerLotAccentId:
+          specialSiteAccentCandidateResolution.cornerLotAccentId,
+        visibilityPriority:
+          specialSiteAccentCandidateResolution.visibilityPriority,
+        specialSiteReason:
+          specialSiteAccentCandidateResolution.specialSiteReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -2372,6 +2480,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     modularAssetBindingDecisions: deepFreeze(modularAssetBindingDecisions),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
+    specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2496,6 +2605,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       entryCompositionId: null,
       propDensityTier: null,
       compositionReason: null,
+      specialSiteAccentVersion: null,
+      registeredSpecialSiteAccentRuleCount: 0,
+      specialSiteType: null,
+      landmarkAccentProfileId: null,
+      cornerLotAccentId: null,
+      visibilityPriority: null,
+      specialSiteReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
