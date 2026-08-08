@@ -153,6 +153,11 @@ import {
   getDeveloperOnlyAtlasPopulationTraditionEventCycleHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationTraditionEventCycleHooks
 } from "./developer-only-atlas-population-tradition-event-cycle-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooks
+} from "./developer-only-atlas-population-festival-quest-narrative-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -522,6 +527,13 @@ function freezeStatus(state) {
     communityTraditionId: state.communityTraditionId,
     eventImportance: state.eventImportance,
     traditionReason: state.traditionReason,
+    festivalQuestNarrativeVersion: state.festivalQuestNarrativeVersion,
+    registeredNarrativeRuleCount: state.registeredNarrativeRuleCount,
+    festivalProfileId: state.festivalProfileId,
+    questNarrativeProfileId: state.questNarrativeProfileId,
+    seasonalDestinationProfileId: state.seasonalDestinationProfileId,
+    achievementHookProfileId: state.achievementHookProfileId,
+    narrativeReason: state.narrativeReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -736,7 +748,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationWeeklyRoutineRecurrenceHooksRuleRegistry =
     createDeveloperOnlyAtlasPopulationWeeklyRoutineRecurrenceHooksRuleRegistry(),
   populationTraditionEventCycleHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationTraditionEventCycleHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationTraditionEventCycleHooksRuleRegistry(),
+  populationFestivalQuestNarrativeHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -854,6 +868,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const traditionEventCycleRegistryStatus =
     getDeveloperOnlyAtlasPopulationTraditionEventCycleHooksRuleRegistryStatus(
       populationTraditionEventCycleHooksRuleRegistry
+    );
+  const festivalQuestNarrativeRegistryStatus =
+    getDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooksRuleRegistryStatus(
+      populationFestivalQuestNarrativeHooksRuleRegistry
     );
 
   const state = {
@@ -1148,6 +1166,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       traditionEventCycleRegistryStatus.communityTraditionId,
     eventImportance: traditionEventCycleRegistryStatus.eventImportance,
     traditionReason: traditionEventCycleRegistryStatus.traditionReason,
+    festivalQuestNarrativeVersion:
+      festivalQuestNarrativeRegistryStatus.festivalQuestNarrativeVersion,
+    registeredNarrativeRuleCount:
+      festivalQuestNarrativeRegistryStatus.registeredNarrativeRuleCount,
+    festivalProfileId:
+      festivalQuestNarrativeRegistryStatus.festivalProfileId,
+    questNarrativeProfileId:
+      festivalQuestNarrativeRegistryStatus.questNarrativeProfileId,
+    seasonalDestinationProfileId:
+      festivalQuestNarrativeRegistryStatus.seasonalDestinationProfileId,
+    achievementHookProfileId:
+      festivalQuestNarrativeRegistryStatus.achievementHookProfileId,
+    narrativeReason: festivalQuestNarrativeRegistryStatus.narrativeReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1207,6 +1238,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationPlaceLivenessHooksRuleRegistry,
       populationWeeklyRoutineRecurrenceHooksRuleRegistry,
       populationTraditionEventCycleHooksRuleRegistry,
+      populationFestivalQuestNarrativeHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1409,6 +1441,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.communityTraditionId = null;
   state.eventImportance = null;
   state.traditionReason = null;
+  state.festivalProfileId = null;
+  state.questNarrativeProfileId = null;
+  state.seasonalDestinationProfileId = null;
+  state.achievementHookProfileId = null;
+  state.narrativeReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1457,6 +1494,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const placeLivenessDecisions = [];
   const weeklyRoutineRecurrenceDecisions = [];
   const traditionEventCycleDecisions = [];
+  const festivalQuestNarrativeDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1858,6 +1896,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           seasonProfileId: seasonalEnvironmentResolution.seasonProfileId
         }
       );
+    const festivalQuestNarrativeResolution =
+      resolveDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooks(
+        internal.populationFestivalQuestNarrativeHooksRuleRegistry,
+        {
+          destinationFrameProfileId:
+            destinationFramingResolution.destinationFrameProfileId,
+          routeMemoryId: routeGuidanceResolution.routeMemoryId,
+          placeMemoryId: placeMemoryResolution.placeMemoryId,
+          recurrencePatternId:
+            weeklyRoutineRecurrenceResolution.recurrencePatternId,
+          traditionProfileId: traditionEventCycleResolution.traditionProfileId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2035,6 +2086,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       traditionEventCycleResolution.communityTraditionId;
     state.eventImportance = traditionEventCycleResolution.eventImportance;
     state.traditionReason = traditionEventCycleResolution.traditionReason;
+    state.festivalProfileId = festivalQuestNarrativeResolution.festivalProfileId;
+    state.questNarrativeProfileId =
+      festivalQuestNarrativeResolution.questNarrativeProfileId;
+    state.seasonalDestinationProfileId =
+      festivalQuestNarrativeResolution.seasonalDestinationProfileId;
+    state.achievementHookProfileId =
+      festivalQuestNarrativeResolution.achievementHookProfileId;
+    state.narrativeReason = festivalQuestNarrativeResolution.narrativeReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2365,6 +2424,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         traditionReason: traditionEventCycleResolution.traditionReason
       })
     );
+    festivalQuestNarrativeDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        festivalProfileId: festivalQuestNarrativeResolution.festivalProfileId,
+        questNarrativeProfileId:
+          festivalQuestNarrativeResolution.questNarrativeProfileId,
+        seasonalDestinationProfileId:
+          festivalQuestNarrativeResolution.seasonalDestinationProfileId,
+        achievementHookProfileId:
+          festivalQuestNarrativeResolution.achievementHookProfileId,
+        narrativeReason: festivalQuestNarrativeResolution.narrativeReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -2548,6 +2620,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             traditionEventCycleResolution.communityTraditionId,
           eventImportance: traditionEventCycleResolution.eventImportance,
           traditionReason: traditionEventCycleResolution.traditionReason,
+          festivalProfileId: festivalQuestNarrativeResolution.festivalProfileId,
+          questNarrativeProfileId:
+            festivalQuestNarrativeResolution.questNarrativeProfileId,
+          seasonalDestinationProfileId:
+            festivalQuestNarrativeResolution.seasonalDestinationProfileId,
+          achievementHookProfileId:
+            festivalQuestNarrativeResolution.achievementHookProfileId,
+          narrativeReason: festivalQuestNarrativeResolution.narrativeReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2750,6 +2830,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             traditionEventCycleResolution.communityTraditionId,
           eventImportance: traditionEventCycleResolution.eventImportance,
           traditionReason: traditionEventCycleResolution.traditionReason,
+          festivalProfileId: festivalQuestNarrativeResolution.festivalProfileId,
+          questNarrativeProfileId:
+            festivalQuestNarrativeResolution.questNarrativeProfileId,
+          seasonalDestinationProfileId:
+            festivalQuestNarrativeResolution.seasonalDestinationProfileId,
+          achievementHookProfileId:
+            festivalQuestNarrativeResolution.achievementHookProfileId,
+          narrativeReason: festivalQuestNarrativeResolution.narrativeReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -3253,6 +3341,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           seasonProfileId: candidate.seasonProfileId
         }
       );
+    const festivalQuestNarrativeCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationFestivalQuestNarrativeHooks(
+        internal.populationFestivalQuestNarrativeHooksRuleRegistry,
+        {
+          destinationFrameProfileId:
+            destinationFramingCandidateResolution.destinationFrameProfileId,
+          routeMemoryId: routeGuidanceCandidateResolution.routeMemoryId,
+          placeMemoryId: placeMemoryCandidateResolution.placeMemoryId,
+          recurrencePatternId:
+            weeklyRoutineRecurrenceCandidateResolution.recurrencePatternId,
+          traditionProfileId:
+            traditionEventCycleCandidateResolution.traditionProfileId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -3382,6 +3484,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         traditionEventCycleCandidateResolution.eventImportance;
       state.traditionReason =
         traditionEventCycleCandidateResolution.traditionReason;
+      state.festivalProfileId =
+        festivalQuestNarrativeCandidateResolution.festivalProfileId;
+      state.questNarrativeProfileId =
+        festivalQuestNarrativeCandidateResolution.questNarrativeProfileId;
+      state.seasonalDestinationProfileId =
+        festivalQuestNarrativeCandidateResolution.seasonalDestinationProfileId;
+      state.achievementHookProfileId =
+        festivalQuestNarrativeCandidateResolution.achievementHookProfileId;
+      state.narrativeReason =
+        festivalQuestNarrativeCandidateResolution.narrativeReason;
     }
 
     acceptedPlacements.push(
@@ -3570,6 +3682,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           traditionEventCycleCandidateResolution.eventImportance,
         traditionReason:
           traditionEventCycleCandidateResolution.traditionReason,
+        festivalProfileId:
+          festivalQuestNarrativeCandidateResolution.festivalProfileId,
+        questNarrativeProfileId:
+          festivalQuestNarrativeCandidateResolution.questNarrativeProfileId,
+        seasonalDestinationProfileId:
+          festivalQuestNarrativeCandidateResolution.seasonalDestinationProfileId,
+        achievementHookProfileId:
+          festivalQuestNarrativeCandidateResolution.achievementHookProfileId,
+        narrativeReason:
+          festivalQuestNarrativeCandidateResolution.narrativeReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -3674,6 +3796,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       weeklyRoutineRecurrenceDecisions
     ),
     traditionEventCycleDecisions: deepFreeze(traditionEventCycleDecisions),
+    festivalQuestNarrativeDecisions: deepFreeze(
+      festivalQuestNarrativeDecisions
+    ),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -3881,6 +4006,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       communityTraditionId: null,
       eventImportance: null,
       traditionReason: null,
+      festivalQuestNarrativeVersion: null,
+      registeredNarrativeRuleCount: 0,
+      festivalProfileId: null,
+      questNarrativeProfileId: null,
+      seasonalDestinationProfileId: null,
+      achievementHookProfileId: null,
+      narrativeReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
