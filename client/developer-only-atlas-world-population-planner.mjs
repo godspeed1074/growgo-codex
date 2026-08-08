@@ -98,6 +98,11 @@ import {
   getDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationSpecialSiteAccent
 } from "./developer-only-atlas-population-special-site-accent-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistry,
+  getDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationViewCorridorDestinationFraming
+} from "./developer-only-atlas-population-view-corridor-destination-framing-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -386,6 +391,13 @@ function freezeStatus(state) {
     cornerLotAccentId: state.cornerLotAccentId,
     visibilityPriority: state.visibilityPriority,
     specialSiteReason: state.specialSiteReason,
+    destinationFramingVersion: state.destinationFramingVersion,
+    registeredDestinationFramingRuleCount:
+      state.registeredDestinationFramingRuleCount,
+    viewCorridorId: state.viewCorridorId,
+    approachSequenceId: state.approachSequenceId,
+    destinationFrameProfileId: state.destinationFrameProfileId,
+    arrivalReason: state.arrivalReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -578,7 +590,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationSupportingCompositionRuleRegistry =
     createDeveloperOnlyAtlasPopulationSupportingCompositionRuleRegistry(),
   populationSpecialSiteAccentRuleRegistry =
-    createDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistry()
+    createDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistry(),
+  populationViewCorridorDestinationFramingRuleRegistry =
+    createDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -652,6 +666,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const specialSiteAccentRegistryStatus =
     getDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistryStatus(
       populationSpecialSiteAccentRuleRegistry
+    );
+  const destinationFramingRegistryStatus =
+    getDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistryStatus(
+      populationViewCorridorDestinationFramingRuleRegistry
     );
 
   const state = {
@@ -829,6 +847,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     cornerLotAccentId: specialSiteAccentRegistryStatus.cornerLotAccentId,
     visibilityPriority: specialSiteAccentRegistryStatus.visibilityPriority,
     specialSiteReason: specialSiteAccentRegistryStatus.specialSiteReason,
+    destinationFramingVersion:
+      destinationFramingRegistryStatus.destinationFramingVersion,
+    registeredDestinationFramingRuleCount:
+      destinationFramingRegistryStatus.registeredDestinationFramingRuleCount,
+    viewCorridorId: destinationFramingRegistryStatus.viewCorridorId,
+    approachSequenceId: destinationFramingRegistryStatus.approachSequenceId,
+    destinationFrameProfileId:
+      destinationFramingRegistryStatus.destinationFrameProfileId,
+    arrivalReason: destinationFramingRegistryStatus.arrivalReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -877,6 +904,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationMicroClusterAdjacencyRuleRegistry,
       populationSupportingCompositionRuleRegistry,
       populationSpecialSiteAccentRuleRegistry,
+      populationViewCorridorDestinationFramingRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1025,6 +1053,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.cornerLotAccentId = null;
   state.visibilityPriority = null;
   state.specialSiteReason = null;
+  state.viewCorridorId = null;
+  state.approachSequenceId = null;
+  state.destinationFrameProfileId = null;
+  state.arrivalReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1062,6 +1094,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
+  const destinationFramingDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1339,6 +1372,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           sourceClassification: feature.sourceClassification
         }
       );
+    const destinationFramingResolution =
+      resolveDeveloperOnlyAtlasPopulationViewCorridorDestinationFraming(
+        internal.populationViewCorridorDestinationFramingRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          districtType: districtCompositionResolution.districtType,
+          sourceClassification: feature.sourceClassification,
+          specialSiteType: specialSiteAccentResolution.specialSiteType
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1445,6 +1488,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.cornerLotAccentId = specialSiteAccentResolution.cornerLotAccentId;
     state.visibilityPriority = specialSiteAccentResolution.visibilityPriority;
     state.specialSiteReason = specialSiteAccentResolution.specialSiteReason;
+    state.viewCorridorId = destinationFramingResolution.viewCorridorId;
+    state.approachSequenceId = destinationFramingResolution.approachSequenceId;
+    state.destinationFrameProfileId =
+      destinationFramingResolution.destinationFrameProfileId;
+    state.arrivalReason = destinationFramingResolution.arrivalReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1651,6 +1699,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         specialSiteReason: specialSiteAccentResolution.specialSiteReason
       })
     );
+    destinationFramingDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        viewCorridorId: destinationFramingResolution.viewCorridorId,
+        approachSequenceId: destinationFramingResolution.approachSequenceId,
+        destinationFrameProfileId:
+          destinationFramingResolution.destinationFrameProfileId,
+        arrivalReason: destinationFramingResolution.arrivalReason,
+        visibilityPriority: destinationFramingResolution.visibilityPriority
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1764,6 +1823,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           cornerLotAccentId: specialSiteAccentResolution.cornerLotAccentId,
           visibilityPriority: specialSiteAccentResolution.visibilityPriority,
           specialSiteReason: specialSiteAccentResolution.specialSiteReason,
+          viewCorridorId: destinationFramingResolution.viewCorridorId,
+          approachSequenceId: destinationFramingResolution.approachSequenceId,
+          destinationFrameProfileId:
+            destinationFramingResolution.destinationFrameProfileId,
+          arrivalReason: destinationFramingResolution.arrivalReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1896,6 +1960,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           cornerLotAccentId: specialSiteAccentResolution.cornerLotAccentId,
           visibilityPriority: specialSiteAccentResolution.visibilityPriority,
           specialSiteReason: specialSiteAccentResolution.specialSiteReason,
+          viewCorridorId: destinationFramingResolution.viewCorridorId,
+          approachSequenceId: destinationFramingResolution.approachSequenceId,
+          destinationFrameProfileId:
+            destinationFramingResolution.destinationFrameProfileId,
+          arrivalReason: destinationFramingResolution.arrivalReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2069,6 +2138,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         cornerLotAccentId: null,
         visibilityPriority: null,
         specialSiteReason: null,
+        viewCorridorId: null,
+        approachSequenceId: null,
+        destinationFrameProfileId: null,
+        arrivalReason: null,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -2264,6 +2337,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           sourceClassification: candidate.feature.sourceClassification
         }
       );
+    const destinationFramingCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationViewCorridorDestinationFraming(
+        internal.populationViewCorridorDestinationFramingRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          districtType: candidate.districtType,
+          sourceClassification: candidate.feature.sourceClassification,
+          specialSiteType: specialSiteAccentCandidateResolution.specialSiteType
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2297,6 +2380,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         specialSiteAccentCandidateResolution.visibilityPriority;
       state.specialSiteReason =
         specialSiteAccentCandidateResolution.specialSiteReason;
+      state.viewCorridorId = destinationFramingCandidateResolution.viewCorridorId;
+      state.approachSequenceId =
+        destinationFramingCandidateResolution.approachSequenceId;
+      state.destinationFrameProfileId =
+        destinationFramingCandidateResolution.destinationFrameProfileId;
+      state.arrivalReason = destinationFramingCandidateResolution.arrivalReason;
     }
 
     acceptedPlacements.push(
@@ -2390,6 +2479,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           specialSiteAccentCandidateResolution.visibilityPriority,
         specialSiteReason:
           specialSiteAccentCandidateResolution.specialSiteReason,
+        viewCorridorId: destinationFramingCandidateResolution.viewCorridorId,
+        approachSequenceId:
+          destinationFramingCandidateResolution.approachSequenceId,
+        destinationFrameProfileId:
+          destinationFramingCandidateResolution.destinationFrameProfileId,
+        arrivalReason: destinationFramingCandidateResolution.arrivalReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -2481,6 +2576,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
+    destinationFramingDecisions: deepFreeze(destinationFramingDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2612,6 +2708,12 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       cornerLotAccentId: null,
       visibilityPriority: null,
       specialSiteReason: null,
+      destinationFramingVersion: null,
+      registeredDestinationFramingRuleCount: 0,
+      viewCorridorId: null,
+      approachSequenceId: null,
+      destinationFrameProfileId: null,
+      arrivalReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
