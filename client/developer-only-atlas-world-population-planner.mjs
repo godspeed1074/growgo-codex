@@ -63,6 +63,11 @@ import {
   getDeveloperOnlyAtlasPopulationBiomeLocalCharacterRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationBiomeLocalCharacter
 } from "./developer-only-atlas-population-biome-local-character-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationSeasonalEnvironmentRuleRegistry,
+  getDeveloperOnlyAtlasPopulationSeasonalEnvironmentRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationSeasonalEnvironment
+} from "./developer-only-atlas-population-seasonal-environment-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -298,6 +303,13 @@ function freezeStatus(state) {
     blendWeights: deepFreeze({ ...(state.blendWeights ?? {}) }),
     characterReason: state.characterReason,
     regionalStyleSeed: state.regionalStyleSeed,
+    seasonalEnvironmentVersion: state.seasonalEnvironmentVersion,
+    registeredSeasonRuleCount: state.registeredSeasonRuleCount,
+    seasonProfileId: state.seasonProfileId,
+    environmentStateId: state.environmentStateId,
+    seasonalBlendWeights: deepFreeze({ ...(state.seasonalBlendWeights ?? {}) }),
+    environmentReason: state.environmentReason,
+    seasonSeed: state.seasonSeed,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -476,7 +488,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationOpenSpaceLandmarkFramingRuleRegistry =
     createDeveloperOnlyAtlasPopulationOpenSpaceLandmarkFramingRuleRegistry(),
   populationBiomeLocalCharacterRuleRegistry =
-    createDeveloperOnlyAtlasPopulationBiomeLocalCharacterRuleRegistry()
+    createDeveloperOnlyAtlasPopulationBiomeLocalCharacterRuleRegistry(),
+  populationSeasonalEnvironmentRuleRegistry =
+    createDeveloperOnlyAtlasPopulationSeasonalEnvironmentRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -522,6 +536,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const biomeLocalCharacterRegistryStatus =
     getDeveloperOnlyAtlasPopulationBiomeLocalCharacterRuleRegistryStatus(
       populationBiomeLocalCharacterRuleRegistry
+    );
+  const seasonalEnvironmentRegistryStatus =
+    getDeveloperOnlyAtlasPopulationSeasonalEnvironmentRuleRegistryStatus(
+      populationSeasonalEnvironmentRuleRegistry
     );
 
   const state = {
@@ -618,6 +636,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     blendWeights: biomeLocalCharacterRegistryStatus.blendWeights,
     characterReason: biomeLocalCharacterRegistryStatus.characterReason,
     regionalStyleSeed: biomeLocalCharacterRegistryStatus.regionalStyleSeed,
+    seasonalEnvironmentVersion:
+      seasonalEnvironmentRegistryStatus.seasonalEnvironmentVersion,
+    registeredSeasonRuleCount:
+      seasonalEnvironmentRegistryStatus.registeredSeasonRuleCount,
+    seasonProfileId: seasonalEnvironmentRegistryStatus.seasonProfileId,
+    environmentStateId: seasonalEnvironmentRegistryStatus.environmentStateId,
+    seasonalBlendWeights:
+      seasonalEnvironmentRegistryStatus.seasonalBlendWeights,
+    environmentReason: seasonalEnvironmentRegistryStatus.environmentReason,
+    seasonSeed: seasonalEnvironmentRegistryStatus.seasonSeed,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -659,6 +687,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationStreetscapeVergeEdgeRuleRegistry,
       populationOpenSpaceLandmarkFramingRuleRegistry,
       populationBiomeLocalCharacterRuleRegistry,
+      populationSeasonalEnvironmentRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -773,6 +802,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.blendWeights = null;
   state.characterReason = null;
   state.regionalStyleSeed = null;
+  state.seasonProfileId = null;
+  state.environmentStateId = null;
+  state.seasonalBlendWeights = null;
+  state.environmentReason = null;
+  state.seasonSeed = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -803,6 +837,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const streetscapeDecisions = [];
   const openSpaceLandmarkFramingDecisions = [];
   const biomeLocalCharacterDecisions = [];
+  const seasonalEnvironmentDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -955,6 +990,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           deterministicFeatureIdentity: feature.deterministicFeatureIdentity
         }
       );
+    const seasonalEnvironmentResolution =
+      resolveDeveloperOnlyAtlasPopulationSeasonalEnvironment(
+        internal.populationSeasonalEnvironmentRuleRegistry,
+        {
+          seasonKey: input.seasonKey,
+          biomeProfileId: biomeLocalCharacterResolution.biomeProfileId,
+          blendWeights: biomeLocalCharacterResolution.blendWeights,
+          districtType: districtCompositionResolution.districtType,
+          featureClass: feature.featureClass,
+          selectorSeed,
+          deterministicFeatureIdentity: feature.deterministicFeatureIdentity
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1012,6 +1060,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.blendWeights = biomeLocalCharacterResolution.blendWeights;
     state.characterReason = biomeLocalCharacterResolution.characterReason;
     state.regionalStyleSeed = biomeLocalCharacterResolution.regionalStyleSeed;
+    state.seasonProfileId = seasonalEnvironmentResolution.seasonProfileId;
+    state.environmentStateId = seasonalEnvironmentResolution.environmentStateId;
+    state.seasonalBlendWeights =
+      seasonalEnvironmentResolution.seasonalBlendWeights;
+    state.environmentReason = seasonalEnvironmentResolution.environmentReason;
+    state.seasonSeed = seasonalEnvironmentResolution.seasonSeed;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1132,6 +1186,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         regionalStyleSeed: biomeLocalCharacterResolution.regionalStyleSeed
       })
     );
+    seasonalEnvironmentDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        seasonProfileId: seasonalEnvironmentResolution.seasonProfileId,
+        environmentStateId: seasonalEnvironmentResolution.environmentStateId,
+        seasonalBlendWeights:
+          seasonalEnvironmentResolution.seasonalBlendWeights,
+        environmentReason: seasonalEnvironmentResolution.environmentReason,
+        seasonSeed: seasonalEnvironmentResolution.seasonSeed
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1196,6 +1261,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           blendWeights: biomeLocalCharacterResolution.blendWeights,
           characterReason: biomeLocalCharacterResolution.characterReason,
           regionalStyleSeed: biomeLocalCharacterResolution.regionalStyleSeed,
+          seasonProfileId: seasonalEnvironmentResolution.seasonProfileId,
+          environmentStateId: seasonalEnvironmentResolution.environmentStateId,
+          seasonalBlendWeights:
+            seasonalEnvironmentResolution.seasonalBlendWeights,
+          environmentReason: seasonalEnvironmentResolution.environmentReason,
+          seasonSeed: seasonalEnvironmentResolution.seasonSeed,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1279,6 +1350,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           blendWeights: biomeLocalCharacterResolution.blendWeights,
           characterReason: biomeLocalCharacterResolution.characterReason,
           regionalStyleSeed: biomeLocalCharacterResolution.regionalStyleSeed,
+          seasonProfileId: seasonalEnvironmentResolution.seasonProfileId,
+          environmentStateId: seasonalEnvironmentResolution.environmentStateId,
+          seasonalBlendWeights:
+            seasonalEnvironmentResolution.seasonalBlendWeights,
+          environmentReason: seasonalEnvironmentResolution.environmentReason,
+          seasonSeed: seasonalEnvironmentResolution.seasonSeed,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1409,6 +1486,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         blendWeights: biomeLocalCharacterResolution.blendWeights,
         characterReason: biomeLocalCharacterResolution.characterReason,
         regionalStyleSeed: biomeLocalCharacterResolution.regionalStyleSeed,
+        seasonProfileId: seasonalEnvironmentResolution.seasonProfileId,
+        environmentStateId: seasonalEnvironmentResolution.environmentStateId,
+        seasonalBlendWeights:
+          seasonalEnvironmentResolution.seasonalBlendWeights,
+        environmentReason: seasonalEnvironmentResolution.environmentReason,
+        seasonSeed: seasonalEnvironmentResolution.seasonSeed,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -1567,6 +1650,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         blendWeights: candidate.blendWeights,
         characterReason: candidate.characterReason,
         regionalStyleSeed: candidate.regionalStyleSeed,
+        seasonProfileId: candidate.seasonProfileId,
+        environmentStateId: candidate.environmentStateId,
+        seasonalBlendWeights: candidate.seasonalBlendWeights,
+        environmentReason: candidate.environmentReason,
+        seasonSeed: candidate.seasonSeed,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -1647,6 +1735,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       openSpaceLandmarkFramingDecisions
     ),
     biomeLocalCharacterDecisions: deepFreeze(biomeLocalCharacterDecisions),
+    seasonalEnvironmentDecisions: deepFreeze(seasonalEnvironmentDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -1730,6 +1819,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       blendWeights: {},
       characterReason: null,
       regionalStyleSeed: null,
+      seasonalEnvironmentVersion: null,
+      registeredSeasonRuleCount: 0,
+      seasonProfileId: null,
+      environmentStateId: null,
+      seasonalBlendWeights: {},
+      environmentReason: null,
+      seasonSeed: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
