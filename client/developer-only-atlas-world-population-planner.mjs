@@ -48,6 +48,11 @@ import {
   getDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationParcelFrontageLot
 } from "./developer-only-atlas-population-parcel-frontage-lot-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationStreetscapeVergeEdgeRuleRegistry,
+  getDeveloperOnlyAtlasPopulationStreetscapeVergeEdgeRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationStreetscapeVergeEdge
+} from "./developer-only-atlas-population-streetscape-verge-edge-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -262,6 +267,13 @@ function freezeStatus(state) {
     frontageRoadId: state.frontageRoadId,
     setbackDistance: state.setbackDistance,
     boundaryPattern: state.boundaryPattern,
+    streetscapeVersion: state.streetscapeVersion,
+    registeredStreetscapeRuleCount: state.registeredStreetscapeRuleCount,
+    streetscapeProfileId: state.streetscapeProfileId,
+    vergeType: state.vergeType,
+    edgeConditionType: state.edgeConditionType,
+    streetFurnitureProfile: state.streetFurnitureProfile,
+    streetscapeReason: state.streetscapeReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -434,7 +446,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationCorridorConnectivityRuleRegistry =
     createDeveloperOnlyAtlasPopulationCorridorConnectivityRuleRegistry(),
   populationParcelFrontageLotRuleRegistry =
-    createDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistry()
+    createDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistry(),
+  populationStreetscapeVergeEdgeRuleRegistry =
+    createDeveloperOnlyAtlasPopulationStreetscapeVergeEdgeRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -468,6 +482,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const parcelFrontageLotRegistryStatus =
     getDeveloperOnlyAtlasPopulationParcelFrontageLotRuleRegistryStatus(
       populationParcelFrontageLotRuleRegistry
+    );
+  const streetscapeRegistryStatus =
+    getDeveloperOnlyAtlasPopulationStreetscapeVergeEdgeRuleRegistryStatus(
+      populationStreetscapeVergeEdgeRuleRegistry
     );
 
   const state = {
@@ -536,6 +554,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     frontageRoadId: parcelFrontageLotRegistryStatus.frontageRoadId,
     setbackDistance: parcelFrontageLotRegistryStatus.setbackDistance,
     boundaryPattern: parcelFrontageLotRegistryStatus.boundaryPattern,
+    streetscapeVersion: streetscapeRegistryStatus.streetscapeVersion,
+    registeredStreetscapeRuleCount:
+      streetscapeRegistryStatus.registeredStreetscapeRuleCount,
+    streetscapeProfileId: streetscapeRegistryStatus.streetscapeProfileId,
+    vergeType: streetscapeRegistryStatus.vergeType,
+    edgeConditionType: streetscapeRegistryStatus.edgeConditionType,
+    streetFurnitureProfile: streetscapeRegistryStatus.streetFurnitureProfile,
+    streetscapeReason: streetscapeRegistryStatus.streetscapeReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -574,6 +600,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationDistrictCompositionRuleRegistry,
       populationCorridorConnectivityRuleRegistry,
       populationParcelFrontageLotRuleRegistry,
+      populationStreetscapeVergeEdgeRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -673,6 +700,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.frontageRoadId = null;
   state.setbackDistance = null;
   state.boundaryPattern = null;
+  state.streetscapeProfileId = null;
+  state.vergeType = null;
+  state.edgeConditionType = null;
+  state.streetFurnitureProfile = null;
+  state.streetscapeReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -700,6 +732,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const districtCompositionDecisions = [];
   const corridorConnectivityDecisions = [];
   const parcelFrontageLotDecisions = [];
+  const streetscapeDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -820,6 +853,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           orientationHint: feature.orientationHint
         }
       );
+    const streetscapeResolution =
+      resolveDeveloperOnlyAtlasPopulationStreetscapeVergeEdge(
+        internal.populationStreetscapeVergeEdgeRuleRegistry,
+        {
+          districtType: districtCompositionResolution.districtType,
+          corridorType: corridorConnectivityResolution.corridorType,
+          parcelPatternId: parcelFrontageLotResolution.parcelPatternId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -858,6 +900,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.frontageRoadId = parcelFrontageLotResolution.frontageRoadId;
     state.setbackDistance = parcelFrontageLotResolution.setbackDistance;
     state.boundaryPattern = parcelFrontageLotResolution.boundaryPattern;
+    state.streetscapeProfileId = streetscapeResolution.streetscapeProfileId;
+    state.vergeType = streetscapeResolution.vergeType;
+    state.edgeConditionType = streetscapeResolution.edgeConditionType;
+    state.streetFurnitureProfile =
+      streetscapeResolution.streetFurnitureProfile;
+    state.streetscapeReason = streetscapeResolution.streetscapeReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -945,6 +993,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         boundaryPattern: parcelFrontageLotResolution.boundaryPattern
       })
     );
+    streetscapeDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        streetscapeProfileId: streetscapeResolution.streetscapeProfileId,
+        vergeType: streetscapeResolution.vergeType,
+        edgeConditionType: streetscapeResolution.edgeConditionType,
+        streetFurnitureProfile:
+          streetscapeResolution.streetFurnitureProfile,
+        streetscapeReason: streetscapeResolution.streetscapeReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -990,6 +1049,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
           setbackDistance: parcelFrontageLotResolution.setbackDistance,
           boundaryPattern: parcelFrontageLotResolution.boundaryPattern,
+          streetscapeProfileId: streetscapeResolution.streetscapeProfileId,
+          vergeType: streetscapeResolution.vergeType,
+          edgeConditionType: streetscapeResolution.edgeConditionType,
+          streetFurnitureProfile:
+            streetscapeResolution.streetFurnitureProfile,
+          streetscapeReason: streetscapeResolution.streetscapeReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1054,6 +1119,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
           setbackDistance: parcelFrontageLotResolution.setbackDistance,
           boundaryPattern: parcelFrontageLotResolution.boundaryPattern,
+          streetscapeProfileId: streetscapeResolution.streetscapeProfileId,
+          vergeType: streetscapeResolution.vergeType,
+          edgeConditionType: streetscapeResolution.edgeConditionType,
+          streetFurnitureProfile:
+            streetscapeResolution.streetFurnitureProfile,
+          streetscapeReason: streetscapeResolution.streetscapeReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1165,6 +1236,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         frontageRoadId: parcelFrontageLotResolution.frontageRoadId,
         setbackDistance: parcelFrontageLotResolution.setbackDistance,
         boundaryPattern: parcelFrontageLotResolution.boundaryPattern,
+        streetscapeProfileId: streetscapeResolution.streetscapeProfileId,
+        vergeType: streetscapeResolution.vergeType,
+        edgeConditionType: streetscapeResolution.edgeConditionType,
+        streetFurnitureProfile:
+          streetscapeResolution.streetFurnitureProfile,
+        streetscapeReason: streetscapeResolution.streetscapeReason,
         densityTier: distributionResolution.densityTier,
         candidateIndex: placement.candidateIndex,
         coordinate: placement.coordinate,
@@ -1308,6 +1385,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         frontageRoadId: candidate.frontageRoadId,
         setbackDistance: candidate.setbackDistance,
         boundaryPattern: candidate.boundaryPattern,
+        streetscapeProfileId: candidate.streetscapeProfileId,
+        vergeType: candidate.vergeType,
+        edgeConditionType: candidate.edgeConditionType,
+        streetFurnitureProfile: candidate.streetFurnitureProfile,
+        streetscapeReason: candidate.streetscapeReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -1383,6 +1465,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     districtCompositionDecisions: deepFreeze(districtCompositionDecisions),
     corridorConnectivityDecisions: deepFreeze(corridorConnectivityDecisions),
     parcelFrontageLotDecisions: deepFreeze(parcelFrontageLotDecisions),
+    streetscapeDecisions: deepFreeze(streetscapeDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -1445,6 +1528,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       frontageRoadId: null,
       setbackDistance: null,
       boundaryPattern: null,
+      streetscapeVersion: null,
+      registeredStreetscapeRuleCount: 0,
+      streetscapeProfileId: null,
+      vergeType: null,
+      edgeConditionType: null,
+      streetFurnitureProfile: null,
+      streetscapeReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
