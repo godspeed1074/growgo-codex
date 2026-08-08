@@ -208,6 +208,11 @@ import {
   getDeveloperOnlyAtlasWorldThemeStyleBundlesStatus,
   resolveDeveloperOnlyAtlasWorldThemeStyleBundle
 } from "./developer-only-atlas-world-theme-style-bundles.mjs";
+import {
+  createDeveloperOnlyAtlasThemeSubprofileRules,
+  getDeveloperOnlyAtlasThemeSubprofileRulesStatus,
+  resolveDeveloperOnlyAtlasThemeSubprofile
+} from "./developer-only-atlas-theme-subprofile-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -693,6 +698,14 @@ function freezeStatus(state) {
     visualCohesionScore: state.visualCohesionScore,
     themeCompatibilityStatus: state.themeCompatibilityStatus,
     themeSelectionReason: state.themeSelectionReason,
+    atlasThemeSubprofileRulesVersion: state.atlasThemeSubprofileRulesVersion,
+    registeredThemeSubprofileRuleCount:
+      state.registeredThemeSubprofileRuleCount,
+    architectureStyleProfileId: state.architectureStyleProfileId,
+    vegetationStyleProfileId: state.vegetationStyleProfileId,
+    streetscapeStyleProfileId: state.streetscapeStyleProfileId,
+    themeSubprofileCompatibility: state.themeSubprofileCompatibility,
+    styleSubprofileReason: state.styleSubprofileReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -929,7 +942,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasAssetBiomeSettlementPackageProfiles =
     createDeveloperOnlyAtlasAssetBiomeSettlementPackageProfiles(),
   atlasWorldThemeStyleBundles =
-    createDeveloperOnlyAtlasWorldThemeStyleBundles()
+    createDeveloperOnlyAtlasWorldThemeStyleBundles(),
+  atlasThemeSubprofileRules =
+    createDeveloperOnlyAtlasThemeSubprofileRules()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1091,6 +1106,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasWorldThemeStyleBundlesStatus =
     getDeveloperOnlyAtlasWorldThemeStyleBundlesStatus(
       atlasWorldThemeStyleBundles
+    );
+  const atlasThemeSubprofileRulesStatus =
+    getDeveloperOnlyAtlasThemeSubprofileRulesStatus(
+      atlasThemeSubprofileRules
     );
 
   const state = {
@@ -1525,6 +1544,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasWorldThemeStyleBundlesStatus.themeCompatibilityStatus,
     themeSelectionReason:
       atlasWorldThemeStyleBundlesStatus.themeSelectionReason,
+    atlasThemeSubprofileRulesVersion:
+      atlasThemeSubprofileRulesStatus.atlasThemeSubprofileRulesVersion,
+    registeredThemeSubprofileRuleCount:
+      atlasThemeSubprofileRulesStatus.registeredThemeSubprofileRuleCount,
+    architectureStyleProfileId:
+      atlasThemeSubprofileRulesStatus.architectureStyleProfileId,
+    vegetationStyleProfileId:
+      atlasThemeSubprofileRulesStatus.vegetationStyleProfileId,
+    streetscapeStyleProfileId:
+      atlasThemeSubprofileRulesStatus.streetscapeStyleProfileId,
+    themeSubprofileCompatibility:
+      atlasThemeSubprofileRulesStatus.themeSubprofileCompatibility,
+    styleSubprofileReason:
+      atlasThemeSubprofileRulesStatus.styleSubprofileReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1595,6 +1628,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasAssetCompatibilityWorldPackages,
       atlasAssetBiomeSettlementPackageProfiles,
       atlasWorldThemeStyleBundles,
+      atlasThemeSubprofileRules,
       placementProvider,
       lastPlan: null
     }
@@ -1852,6 +1886,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.visualCohesionScore = null;
   state.themeCompatibilityStatus = null;
   state.themeSelectionReason = null;
+  state.architectureStyleProfileId = null;
+  state.vegetationStyleProfileId = null;
+  state.streetscapeStyleProfileId = null;
+  state.themeSubprofileCompatibility = null;
+  state.styleSubprofileReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1890,6 +1929,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const worldPackageValidationDecisions = [];
   const packageProfileDecisions = [];
   const worldThemeBundleDecisions = [];
+  const themeSubprofileDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2508,6 +2548,23 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             themeCompatibilityStatus: "blocked",
             themeSelectionReason: "THEME_BUNDLE_UNAVAILABLE"
           });
+    const themeSubprofileResolution =
+      themeBundleResolution.worldThemeProfileId &&
+      assetFamilyMaterialCohesionResolution.assetFamilyId
+        ? resolveDeveloperOnlyAtlasThemeSubprofile(
+            internal.atlasThemeSubprofileRules,
+            {
+              worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+              assetFamilyId: assetFamilyMaterialCohesionResolution.assetFamilyId
+            }
+          )
+        : deepFreeze({
+            architectureStyleProfileId: null,
+            vegetationStyleProfileId: null,
+            streetscapeStyleProfileId: null,
+            themeSubprofileCompatibility: "blocked",
+            styleSubprofileReason: "THEME_SUBPROFILE_UNAVAILABLE"
+          });
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2769,6 +2826,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.themeCompatibilityStatus =
       themeBundleResolution.themeCompatibilityStatus;
     state.themeSelectionReason = themeBundleResolution.themeSelectionReason;
+    state.architectureStyleProfileId =
+      themeSubprofileResolution.architectureStyleProfileId;
+    state.vegetationStyleProfileId =
+      themeSubprofileResolution.vegetationStyleProfileId;
+    state.streetscapeStyleProfileId =
+      themeSubprofileResolution.streetscapeStyleProfileId;
+    state.themeSubprofileCompatibility =
+      themeSubprofileResolution.themeSubprofileCompatibility;
+    state.styleSubprofileReason =
+      themeSubprofileResolution.styleSubprofileReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2990,6 +3057,21 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         themeCompatibilityStatus:
           themeBundleResolution.themeCompatibilityStatus,
         themeSelectionReason: themeBundleResolution.themeSelectionReason
+      })
+    );
+    themeSubprofileDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        architectureStyleProfileId:
+          themeSubprofileResolution.architectureStyleProfileId,
+        vegetationStyleProfileId:
+          themeSubprofileResolution.vegetationStyleProfileId,
+        streetscapeStyleProfileId:
+          themeSubprofileResolution.streetscapeStyleProfileId,
+        themeSubprofileCompatibility:
+          themeSubprofileResolution.themeSubprofileCompatibility,
+        styleSubprofileReason:
+          themeSubprofileResolution.styleSubprofileReason
       })
     );
     microClusterAdjacencyDecisions.push(
@@ -3362,6 +3444,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           themeCompatibilityStatus:
             themeBundleResolution.themeCompatibilityStatus,
           themeSelectionReason: themeBundleResolution.themeSelectionReason,
+          architectureStyleProfileId:
+            themeSubprofileResolution.architectureStyleProfileId,
+          vegetationStyleProfileId:
+            themeSubprofileResolution.vegetationStyleProfileId,
+          streetscapeStyleProfileId:
+            themeSubprofileResolution.streetscapeStyleProfileId,
+          themeSubprofileCompatibility:
+            themeSubprofileResolution.themeSubprofileCompatibility,
+          styleSubprofileReason:
+            themeSubprofileResolution.styleSubprofileReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3651,6 +3743,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           themeCompatibilityStatus:
             themeBundleResolution.themeCompatibilityStatus,
           themeSelectionReason: themeBundleResolution.themeSelectionReason,
+          architectureStyleProfileId:
+            themeSubprofileResolution.architectureStyleProfileId,
+          vegetationStyleProfileId:
+            themeSubprofileResolution.vegetationStyleProfileId,
+          streetscapeStyleProfileId:
+            themeSubprofileResolution.streetscapeStyleProfileId,
+          themeSubprofileCompatibility:
+            themeSubprofileResolution.themeSubprofileCompatibility,
+          styleSubprofileReason:
+            themeSubprofileResolution.styleSubprofileReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3946,6 +4048,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         visualCohesionScore: null,
         themeCompatibilityStatus: "blocked",
         themeSelectionReason: "PENDING_THEME_BUNDLE_SELECTION",
+        architectureStyleProfileId: null,
+        vegetationStyleProfileId: null,
+        streetscapeStyleProfileId: null,
+        themeSubprofileCompatibility: "blocked",
+        styleSubprofileReason: "PENDING_THEME_SUBPROFILE_SELECTION",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4488,6 +4595,24 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             themeCompatibilityStatus: "blocked",
             themeSelectionReason: "THEME_BUNDLE_UNAVAILABLE"
           });
+    const themeSubprofileCandidateResolution =
+      themeBundleCandidateResolution.worldThemeProfileId &&
+      candidate.assetFamilyId
+        ? resolveDeveloperOnlyAtlasThemeSubprofile(
+            internal.atlasThemeSubprofileRules,
+            {
+              worldThemeProfileId:
+                themeBundleCandidateResolution.worldThemeProfileId,
+              assetFamilyId: candidate.assetFamilyId
+            }
+          )
+        : deepFreeze({
+            architectureStyleProfileId: null,
+            vegetationStyleProfileId: null,
+            streetscapeStyleProfileId: null,
+            themeSubprofileCompatibility: "blocked",
+            styleSubprofileReason: "THEME_SUBPROFILE_UNAVAILABLE"
+          });
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -4726,6 +4851,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         themeBundleCandidateResolution.themeCompatibilityStatus;
       state.themeSelectionReason =
         themeBundleCandidateResolution.themeSelectionReason;
+      state.architectureStyleProfileId =
+        themeSubprofileCandidateResolution.architectureStyleProfileId;
+      state.vegetationStyleProfileId =
+        themeSubprofileCandidateResolution.vegetationStyleProfileId;
+      state.streetscapeStyleProfileId =
+        themeSubprofileCandidateResolution.streetscapeStyleProfileId;
+      state.themeSubprofileCompatibility =
+        themeSubprofileCandidateResolution.themeSubprofileCompatibility;
+      state.styleSubprofileReason =
+        themeSubprofileCandidateResolution.styleSubprofileReason;
     }
 
     acceptedPlacements.push(
@@ -4834,6 +4969,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           themeBundleCandidateResolution.themeCompatibilityStatus,
         themeSelectionReason:
           themeBundleCandidateResolution.themeSelectionReason,
+        architectureStyleProfileId:
+          themeSubprofileCandidateResolution.architectureStyleProfileId,
+        vegetationStyleProfileId:
+          themeSubprofileCandidateResolution.vegetationStyleProfileId,
+        streetscapeStyleProfileId:
+          themeSubprofileCandidateResolution.streetscapeStyleProfileId,
+        themeSubprofileCompatibility:
+          themeSubprofileCandidateResolution.themeSubprofileCompatibility,
+        styleSubprofileReason:
+          themeSubprofileCandidateResolution.styleSubprofileReason,
         microClusterId: microClusterCandidateResolution.microClusterId,
         clusterType: microClusterCandidateResolution.clusterType,
         childAssetCount: microClusterCandidateResolution.childAssetCount,
@@ -5114,6 +5259,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     ),
     packageProfileDecisions: deepFreeze(packageProfileDecisions),
     worldThemeBundleDecisions: deepFreeze(worldThemeBundleDecisions),
+    themeSubprofileDecisions: deepFreeze(themeSubprofileDecisions),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
@@ -5285,6 +5431,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       visualCohesionScore: null,
       themeCompatibilityStatus: null,
       themeSelectionReason: null,
+      atlasThemeSubprofileRulesVersion: null,
+      registeredThemeSubprofileRuleCount: 0,
+      architectureStyleProfileId: null,
+      vegetationStyleProfileId: null,
+      streetscapeStyleProfileId: null,
+      themeSubprofileCompatibility: null,
+      styleSubprofileReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
