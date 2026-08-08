@@ -233,6 +233,11 @@ import {
   getDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfilesStatus,
   resolveDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfile
 } from "./developer-only-atlas-material-palette-finish-compatibility-profiles.mjs";
+import {
+  createDeveloperOnlyAtlasMaterialThemeBundles,
+  getDeveloperOnlyAtlasMaterialThemeBundlesStatus,
+  resolveDeveloperOnlyAtlasMaterialThemeBundle
+} from "./developer-only-atlas-material-theme-bundles.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -749,6 +754,12 @@ function freezeStatus(state) {
     finishProfileId: state.finishProfileId,
     resolvedMaterialProfileId: state.resolvedMaterialProfileId,
     materialReason: state.materialReason,
+    materialThemeBundleId: state.materialThemeBundleId,
+    resolvedFinishSetId: state.resolvedFinishSetId,
+    resolvedPaletteSetId: state.resolvedPaletteSetId,
+    materialBundleCompatibilityStatus:
+      state.materialBundleCompatibilityStatus,
+    materialBundleReason: state.materialBundleReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -995,7 +1006,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasVariantStructuralCompatibilityProfiles =
     createDeveloperOnlyAtlasVariantStructuralCompatibilityProfiles(),
   atlasMaterialPaletteFinishCompatibilityProfiles =
-    createDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfiles()
+    createDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfiles(),
+  atlasMaterialThemeBundles =
+    createDeveloperOnlyAtlasMaterialThemeBundles()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1177,6 +1190,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasMaterialPaletteFinishCompatibilityProfilesStatus =
     getDeveloperOnlyAtlasMaterialPaletteFinishCompatibilityProfilesStatus(
       atlasMaterialPaletteFinishCompatibilityProfiles
+    );
+  const atlasMaterialThemeBundlesStatus =
+    getDeveloperOnlyAtlasMaterialThemeBundlesStatus(
+      atlasMaterialThemeBundles
     );
 
   const state = {
@@ -1688,6 +1705,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
         .resolvedMaterialProfileId,
     materialReason:
       atlasMaterialPaletteFinishCompatibilityProfilesStatus.materialReason,
+    atlasMaterialThemeBundlesVersion:
+      atlasMaterialThemeBundlesStatus.atlasMaterialThemeBundlesVersion,
+    registeredMaterialThemeBundleRuleCount:
+      atlasMaterialThemeBundlesStatus.registeredMaterialThemeBundleRuleCount,
+    materialThemeBundleId: atlasMaterialThemeBundlesStatus.materialThemeBundleId,
+    resolvedFinishSetId: atlasMaterialThemeBundlesStatus.resolvedFinishSetId,
+    resolvedPaletteSetId: atlasMaterialThemeBundlesStatus.resolvedPaletteSetId,
+    materialBundleCompatibilityStatus:
+      atlasMaterialThemeBundlesStatus.materialBundleCompatibilityStatus,
+    materialBundleReason: atlasMaterialThemeBundlesStatus.materialBundleReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1763,6 +1790,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasComponentAssemblyRuleProfiles,
       atlasVariantStructuralCompatibilityProfiles,
       atlasMaterialPaletteFinishCompatibilityProfiles,
+      atlasMaterialThemeBundles,
       placementProvider,
       lastPlan: null
     }
@@ -2045,6 +2073,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.finishProfileId = null;
   state.resolvedMaterialProfileId = null;
   state.materialReason = null;
+  state.materialThemeBundleId = null;
+  state.resolvedFinishSetId = null;
+  state.resolvedPaletteSetId = null;
+  state.materialBundleCompatibilityStatus = null;
+  state.materialBundleReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2088,6 +2121,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const componentAssemblyRuleDecisions = [];
   const variantStructuralCompatibilityDecisions = [];
   const materialPaletteFinishCompatibilityDecisions = [];
+  const materialThemeBundleDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2802,6 +2836,39 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             resolvedMaterialProfileId: null,
             materialReason: "MATERIAL_PALETTE_FINISH_COMPATIBILITY_UNAVAILABLE"
           };
+    const materialThemeBundleResolution =
+      themeBundleResolution.worldThemeProfileId &&
+      settlementIdentityStyleCohesionResolution.settlementIdentityId &&
+      biomeLocalCharacterResolution.biomeProfileId &&
+      assetFamilyMaterialCohesionResolution.materialFamilyId &&
+      settlementIdentityStyleCohesionResolution.paletteProfileId &&
+      materialPaletteFinishCompatibilityResolution.finishProfileId &&
+      materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId
+        ? resolveDeveloperOnlyAtlasMaterialThemeBundle(
+            internal.atlasMaterialThemeBundles,
+            {
+              worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+              settlementIdentityId:
+                settlementIdentityStyleCohesionResolution.settlementIdentityId,
+              biomeProfileId: biomeLocalCharacterResolution.biomeProfileId,
+              materialFamilyId:
+                assetFamilyMaterialCohesionResolution.materialFamilyId,
+              paletteProfileId:
+                settlementIdentityStyleCohesionResolution.paletteProfileId,
+              finishProfileId:
+                materialPaletteFinishCompatibilityResolution.finishProfileId,
+              resolvedMaterialProfileId:
+                materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId
+            }
+          )
+        : {
+            matched: false,
+            materialThemeBundleId: null,
+            resolvedFinishSetId: null,
+            resolvedPaletteSetId: null,
+            materialBundleCompatibilityStatus: "blocked",
+            materialBundleReason: "MATERIAL_THEME_BUNDLE_UNAVAILABLE"
+          };
     const componentAssemblyRuleResolution =
       modularBibleStyleBridgeResolution.modularBibleFamilyId &&
       modularBibleStyleBridgeResolution.componentRecipeId &&
@@ -2931,6 +2998,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId;
     state.materialReason =
       materialPaletteFinishCompatibilityResolution.materialReason;
+    state.materialThemeBundleId =
+      materialThemeBundleResolution.materialThemeBundleId;
+    state.resolvedFinishSetId =
+      materialThemeBundleResolution.resolvedFinishSetId;
+    state.resolvedPaletteSetId =
+      materialThemeBundleResolution.resolvedPaletteSetId;
+    state.materialBundleCompatibilityStatus =
+      materialThemeBundleResolution.materialBundleCompatibilityStatus;
+    state.materialBundleReason =
+      materialThemeBundleResolution.materialBundleReason;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3431,6 +3508,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialPaletteFinishCompatibilityResolution.materialReason
       })
     );
+    materialThemeBundleDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        materialThemeBundleId: materialThemeBundleResolution.materialThemeBundleId,
+        resolvedFinishSetId: materialThemeBundleResolution.resolvedFinishSetId,
+        resolvedPaletteSetId: materialThemeBundleResolution.resolvedPaletteSetId,
+        materialBundleCompatibilityStatus:
+          materialThemeBundleResolution.materialBundleCompatibilityStatus,
+        materialBundleReason: materialThemeBundleResolution.materialBundleReason
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -3784,6 +3872,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId,
           materialReason:
             materialPaletteFinishCompatibilityResolution.materialReason,
+          materialThemeBundleId:
+            materialThemeBundleResolution.materialThemeBundleId,
+          resolvedFinishSetId:
+            materialThemeBundleResolution.resolvedFinishSetId,
+          resolvedPaletteSetId:
+            materialThemeBundleResolution.resolvedPaletteSetId,
+          materialBundleCompatibilityStatus:
+            materialThemeBundleResolution.materialBundleCompatibilityStatus,
+          materialBundleReason:
+            materialThemeBundleResolution.materialBundleReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4121,6 +4219,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             materialPaletteFinishCompatibilityResolution.resolvedMaterialProfileId,
           materialReason:
             materialPaletteFinishCompatibilityResolution.materialReason,
+          materialThemeBundleId:
+            materialThemeBundleResolution.materialThemeBundleId,
+          resolvedFinishSetId:
+            materialThemeBundleResolution.resolvedFinishSetId,
+          resolvedPaletteSetId:
+            materialThemeBundleResolution.resolvedPaletteSetId,
+          materialBundleCompatibilityStatus:
+            materialThemeBundleResolution.materialBundleCompatibilityStatus,
+          materialBundleReason:
+            materialThemeBundleResolution.materialBundleReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4507,6 +4615,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         finishProfileId: null,
         resolvedMaterialProfileId: null,
         materialReason: "PENDING_MATERIAL_PALETTE_FINISH_COMPATIBILITY",
+        materialThemeBundleId: null,
+        resolvedFinishSetId: null,
+        resolvedPaletteSetId: null,
+        materialBundleCompatibilityStatus: "blocked",
+        materialBundleReason: "PENDING_MATERIAL_THEME_BUNDLE",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -5142,6 +5255,37 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             resolvedMaterialProfileId: null,
             materialReason: "MATERIAL_PALETTE_FINISH_COMPATIBILITY_UNAVAILABLE"
           };
+    const materialThemeBundleCandidateResolution =
+      themeBundleCandidateResolution.worldThemeProfileId &&
+      candidate.settlementIdentityId &&
+      candidate.biomeProfileId &&
+      candidate.materialFamilyId &&
+      candidate.paletteProfileId &&
+      materialPaletteFinishCompatibilityCandidateResolution.finishProfileId &&
+      materialPaletteFinishCompatibilityCandidateResolution.resolvedMaterialProfileId
+        ? resolveDeveloperOnlyAtlasMaterialThemeBundle(
+            internal.atlasMaterialThemeBundles,
+            {
+              worldThemeProfileId:
+                themeBundleCandidateResolution.worldThemeProfileId,
+              settlementIdentityId: candidate.settlementIdentityId,
+              biomeProfileId: candidate.biomeProfileId,
+              materialFamilyId: candidate.materialFamilyId,
+              paletteProfileId: candidate.paletteProfileId,
+              finishProfileId:
+                materialPaletteFinishCompatibilityCandidateResolution.finishProfileId,
+              resolvedMaterialProfileId:
+                materialPaletteFinishCompatibilityCandidateResolution.resolvedMaterialProfileId
+            }
+          )
+        : {
+            matched: false,
+            materialThemeBundleId: null,
+            resolvedFinishSetId: null,
+            resolvedPaletteSetId: null,
+            materialBundleCompatibilityStatus: "blocked",
+            materialBundleReason: "MATERIAL_THEME_BUNDLE_UNAVAILABLE"
+          };
     const componentAssemblyRuleCandidateResolution =
       modularBibleStyleBridgeCandidateResolution.modularBibleFamilyId &&
       modularBibleStyleBridgeCandidateResolution.componentRecipeId &&
@@ -5455,6 +5599,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         materialPaletteFinishCompatibilityCandidateResolution.resolvedMaterialProfileId;
       state.materialReason =
         materialPaletteFinishCompatibilityCandidateResolution.materialReason;
+      state.materialThemeBundleId =
+        materialThemeBundleCandidateResolution.materialThemeBundleId;
+      state.resolvedFinishSetId =
+        materialThemeBundleCandidateResolution.resolvedFinishSetId;
+      state.resolvedPaletteSetId =
+        materialThemeBundleCandidateResolution.resolvedPaletteSetId;
+      state.materialBundleCompatibilityStatus =
+        materialThemeBundleCandidateResolution.materialBundleCompatibilityStatus;
+      state.materialBundleReason =
+        materialThemeBundleCandidateResolution.materialBundleReason;
     }
 
     acceptedPlacements.push(
@@ -5542,6 +5696,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           materialPaletteFinishCompatibilityCandidateResolution.resolvedMaterialProfileId,
         materialReason:
           materialPaletteFinishCompatibilityCandidateResolution.materialReason,
+        materialThemeBundleId:
+          materialThemeBundleCandidateResolution.materialThemeBundleId,
+        resolvedFinishSetId:
+          materialThemeBundleCandidateResolution.resolvedFinishSetId,
+        resolvedPaletteSetId:
+          materialThemeBundleCandidateResolution.resolvedPaletteSetId,
+        materialBundleCompatibilityStatus:
+          materialThemeBundleCandidateResolution.materialBundleCompatibilityStatus,
+        materialBundleReason:
+          materialThemeBundleCandidateResolution.materialBundleReason,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -5935,6 +6099,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     materialPaletteFinishCompatibilityDecisions: deepFreeze(
       materialPaletteFinishCompatibilityDecisions
     ),
+    materialThemeBundleDecisions: deepFreeze(materialThemeBundleDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -6108,6 +6273,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       finishProfileId: null,
       resolvedMaterialProfileId: null,
       materialReason: null,
+      atlasMaterialThemeBundlesVersion: null,
+      registeredMaterialThemeBundleRuleCount: 0,
+      materialThemeBundleId: null,
+      resolvedFinishSetId: null,
+      resolvedPaletteSetId: null,
+      materialBundleCompatibilityStatus: null,
+      materialBundleReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
