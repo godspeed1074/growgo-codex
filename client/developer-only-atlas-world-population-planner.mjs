@@ -128,6 +128,11 @@ import {
   getDeveloperOnlyAtlasPopulationCivicRoutineGatheringHooksRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationCivicRoutineGatheringHooks
 } from "./developer-only-atlas-population-civic-routine-gathering-hooks-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationLocalEconomyServiceHooks
+} from "./developer-only-atlas-population-local-economy-service-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -460,6 +465,14 @@ function freezeStatus(state) {
     temporalUseProfile: state.temporalUseProfile,
     communityRole: state.communityRole,
     routineReason: state.routineReason,
+    localEconomyServiceVersion: state.localEconomyServiceVersion,
+    registeredLocalEconomyServiceRuleCount:
+      state.registeredLocalEconomyServiceRuleCount,
+    serviceRoleId: state.serviceRoleId,
+    economyProfileId: state.economyProfileId,
+    marketCycleProfileId: state.marketCycleProfileId,
+    serviceImportance: state.serviceImportance,
+    economyReason: state.economyReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -664,7 +677,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationActivitySocialRhythmHooksRuleRegistry =
     createDeveloperOnlyAtlasPopulationActivitySocialRhythmHooksRuleRegistry(),
   populationCivicRoutineGatheringHooksRuleRegistry =
-    createDeveloperOnlyAtlasPopulationCivicRoutineGatheringHooksRuleRegistry()
+    createDeveloperOnlyAtlasPopulationCivicRoutineGatheringHooksRuleRegistry(),
+  populationLocalEconomyServiceHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -762,6 +777,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const civicRoutineGatheringRegistryStatus =
     getDeveloperOnlyAtlasPopulationCivicRoutineGatheringHooksRuleRegistryStatus(
       populationCivicRoutineGatheringHooksRuleRegistry
+    );
+  const localEconomyServiceRegistryStatus =
+    getDeveloperOnlyAtlasPopulationLocalEconomyServiceHooksRuleRegistryStatus(
+      populationLocalEconomyServiceHooksRuleRegistry
     );
 
   const state = {
@@ -1004,6 +1023,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       civicRoutineGatheringRegistryStatus.temporalUseProfile,
     communityRole: civicRoutineGatheringRegistryStatus.communityRole,
     routineReason: civicRoutineGatheringRegistryStatus.routineReason,
+    localEconomyServiceVersion:
+      localEconomyServiceRegistryStatus.localEconomyServiceVersion,
+    registeredLocalEconomyServiceRuleCount:
+      localEconomyServiceRegistryStatus.registeredLocalEconomyServiceRuleCount,
+    serviceRoleId: localEconomyServiceRegistryStatus.serviceRoleId,
+    economyProfileId: localEconomyServiceRegistryStatus.economyProfileId,
+    marketCycleProfileId:
+      localEconomyServiceRegistryStatus.marketCycleProfileId,
+    serviceImportance: localEconomyServiceRegistryStatus.serviceImportance,
+    economyReason: localEconomyServiceRegistryStatus.economyReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1058,6 +1087,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationSeasonalStoryMemoryHooksRuleRegistry,
       populationActivitySocialRhythmHooksRuleRegistry,
       populationCivicRoutineGatheringHooksRuleRegistry,
+      populationLocalEconomyServiceHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1235,6 +1265,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.temporalUseProfile = null;
   state.communityRole = null;
   state.routineReason = null;
+  state.serviceRoleId = null;
+  state.economyProfileId = null;
+  state.marketCycleProfileId = null;
+  state.serviceImportance = null;
+  state.economyReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1278,6 +1313,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const seasonalStoryMemoryDecisions = [];
   const activitySocialRhythmDecisions = [];
   const civicRoutineGatheringDecisions = [];
+  const localEconomyServiceDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1619,6 +1655,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           seasonProfileId: seasonalEnvironmentResolution.seasonProfileId
         }
       );
+    const localEconomyServiceResolution =
+      resolveDeveloperOnlyAtlasPopulationLocalEconomyServiceHooks(
+        internal.populationLocalEconomyServiceHooksRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          communityRole: civicRoutineGatheringResolution.communityRole,
+          civicRoutineProfileId:
+            civicRoutineGatheringResolution.civicRoutineProfileId,
+          activityProfileId: activitySocialRhythmResolution.activityProfileId,
+          settlementIdentityId:
+            settlementIdentityStyleCohesionResolution.settlementIdentityId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1764,6 +1813,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       civicRoutineGatheringResolution.temporalUseProfile;
     state.communityRole = civicRoutineGatheringResolution.communityRole;
     state.routineReason = civicRoutineGatheringResolution.routineReason;
+    state.serviceRoleId = localEconomyServiceResolution.serviceRoleId;
+    state.economyProfileId = localEconomyServiceResolution.economyProfileId;
+    state.marketCycleProfileId =
+      localEconomyServiceResolution.marketCycleProfileId;
+    state.serviceImportance = localEconomyServiceResolution.serviceImportance;
+    state.economyReason = localEconomyServiceResolution.economyReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2037,6 +2092,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         routineReason: civicRoutineGatheringResolution.routineReason
       })
     );
+    localEconomyServiceDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        serviceRoleId: localEconomyServiceResolution.serviceRoleId,
+        economyProfileId: localEconomyServiceResolution.economyProfileId,
+        marketCycleProfileId:
+          localEconomyServiceResolution.marketCycleProfileId,
+        serviceImportance: localEconomyServiceResolution.serviceImportance,
+        economyReason: localEconomyServiceResolution.economyReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -2188,6 +2254,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             civicRoutineGatheringResolution.temporalUseProfile,
           communityRole: civicRoutineGatheringResolution.communityRole,
           routineReason: civicRoutineGatheringResolution.routineReason,
+          serviceRoleId: localEconomyServiceResolution.serviceRoleId,
+          economyProfileId: localEconomyServiceResolution.economyProfileId,
+          marketCycleProfileId:
+            localEconomyServiceResolution.marketCycleProfileId,
+          serviceImportance: localEconomyServiceResolution.serviceImportance,
+          economyReason: localEconomyServiceResolution.economyReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2358,6 +2430,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             civicRoutineGatheringResolution.temporalUseProfile,
           communityRole: civicRoutineGatheringResolution.communityRole,
           routineReason: civicRoutineGatheringResolution.routineReason,
+          serviceRoleId: localEconomyServiceResolution.serviceRoleId,
+          economyProfileId: localEconomyServiceResolution.economyProfileId,
+          marketCycleProfileId:
+            localEconomyServiceResolution.marketCycleProfileId,
+          serviceImportance: localEconomyServiceResolution.serviceImportance,
+          economyReason: localEconomyServiceResolution.economyReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2795,6 +2873,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           seasonProfileId: candidate.seasonProfileId
         }
       );
+    const localEconomyServiceCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationLocalEconomyServiceHooks(
+        internal.populationLocalEconomyServiceHooksRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          communityRole:
+            civicRoutineGatheringCandidateResolution.communityRole,
+          civicRoutineProfileId:
+            civicRoutineGatheringCandidateResolution.civicRoutineProfileId,
+          activityProfileId:
+            activitySocialRhythmCandidateResolution.activityProfileId,
+          settlementIdentityId: candidate.settlementIdentityId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2876,6 +2968,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       state.communityRole =
         civicRoutineGatheringCandidateResolution.communityRole;
       state.routineReason = civicRoutineGatheringCandidateResolution.routineReason;
+      state.serviceRoleId = localEconomyServiceCandidateResolution.serviceRoleId;
+      state.economyProfileId =
+        localEconomyServiceCandidateResolution.economyProfileId;
+      state.marketCycleProfileId =
+        localEconomyServiceCandidateResolution.marketCycleProfileId;
+      state.serviceImportance =
+        localEconomyServiceCandidateResolution.serviceImportance;
+      state.economyReason =
+        localEconomyServiceCandidateResolution.economyReason;
     }
 
     acceptedPlacements.push(
@@ -3017,6 +3118,14 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         communityRole:
           civicRoutineGatheringCandidateResolution.communityRole,
         routineReason: civicRoutineGatheringCandidateResolution.routineReason,
+        serviceRoleId: localEconomyServiceCandidateResolution.serviceRoleId,
+        economyProfileId:
+          localEconomyServiceCandidateResolution.economyProfileId,
+        marketCycleProfileId:
+          localEconomyServiceCandidateResolution.marketCycleProfileId,
+        serviceImportance:
+          localEconomyServiceCandidateResolution.serviceImportance,
+        economyReason: localEconomyServiceCandidateResolution.economyReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -3114,6 +3223,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     seasonalStoryMemoryDecisions: deepFreeze(seasonalStoryMemoryDecisions),
     activitySocialRhythmDecisions: deepFreeze(activitySocialRhythmDecisions),
     civicRoutineGatheringDecisions: deepFreeze(civicRoutineGatheringDecisions),
+    localEconomyServiceDecisions: deepFreeze(localEconomyServiceDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -3286,6 +3396,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       temporalUseProfile: null,
       communityRole: null,
       routineReason: null,
+      localEconomyServiceVersion: null,
+      registeredLocalEconomyServiceRuleCount: 0,
+      serviceRoleId: null,
+      economyProfileId: null,
+      marketCycleProfileId: null,
+      serviceImportance: null,
+      economyReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
