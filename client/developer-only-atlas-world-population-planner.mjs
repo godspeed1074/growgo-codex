@@ -203,6 +203,11 @@ import {
   getDeveloperOnlyAtlasAssetBiomeSettlementPackageProfilesStatus,
   resolveDeveloperOnlyAtlasAssetBiomeSettlementPackageProfile
 } from "./developer-only-atlas-asset-biome-settlement-package-profiles.mjs";
+import {
+  createDeveloperOnlyAtlasWorldThemeStyleBundles,
+  getDeveloperOnlyAtlasWorldThemeStyleBundlesStatus,
+  resolveDeveloperOnlyAtlasWorldThemeStyleBundle
+} from "./developer-only-atlas-world-theme-style-bundles.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -680,6 +685,14 @@ function freezeStatus(state) {
     resolvedWorldPackageId: state.resolvedWorldPackageId,
     profileCompatibilityStatus: state.profileCompatibilityStatus,
     packageSelectionReason: state.packageSelectionReason,
+    atlasWorldThemeStyleBundlesVersion:
+      state.atlasWorldThemeStyleBundlesVersion,
+    registeredThemeBundleRuleCount: state.registeredThemeBundleRuleCount,
+    worldThemeProfileId: state.worldThemeProfileId,
+    regionalStyleBundleId: state.regionalStyleBundleId,
+    visualCohesionScore: state.visualCohesionScore,
+    themeCompatibilityStatus: state.themeCompatibilityStatus,
+    themeSelectionReason: state.themeSelectionReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -914,7 +927,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasAssetCompatibilityWorldPackages =
     createDeveloperOnlyAtlasAssetCompatibilityWorldPackages(),
   atlasAssetBiomeSettlementPackageProfiles =
-    createDeveloperOnlyAtlasAssetBiomeSettlementPackageProfiles()
+    createDeveloperOnlyAtlasAssetBiomeSettlementPackageProfiles(),
+  atlasWorldThemeStyleBundles =
+    createDeveloperOnlyAtlasWorldThemeStyleBundles()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1072,6 +1087,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasAssetBiomeSettlementPackageProfilesStatus =
     getDeveloperOnlyAtlasAssetBiomeSettlementPackageProfilesStatus(
       atlasAssetBiomeSettlementPackageProfiles
+    );
+  const atlasWorldThemeStyleBundlesStatus =
+    getDeveloperOnlyAtlasWorldThemeStyleBundlesStatus(
+      atlasWorldThemeStyleBundles
     );
 
   const state = {
@@ -1493,6 +1512,19 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
         .profileCompatibilityStatus,
     packageSelectionReason:
       atlasAssetBiomeSettlementPackageProfilesStatus.packageSelectionReason,
+    atlasWorldThemeStyleBundlesVersion:
+      atlasWorldThemeStyleBundlesStatus.atlasWorldThemeStyleBundlesVersion,
+    registeredThemeBundleRuleCount:
+      atlasWorldThemeStyleBundlesStatus.registeredThemeBundleRuleCount,
+    worldThemeProfileId: atlasWorldThemeStyleBundlesStatus.worldThemeProfileId,
+    regionalStyleBundleId:
+      atlasWorldThemeStyleBundlesStatus.regionalStyleBundleId,
+    visualCohesionScore:
+      atlasWorldThemeStyleBundlesStatus.visualCohesionScore,
+    themeCompatibilityStatus:
+      atlasWorldThemeStyleBundlesStatus.themeCompatibilityStatus,
+    themeSelectionReason:
+      atlasWorldThemeStyleBundlesStatus.themeSelectionReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1562,6 +1594,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasAssetWorldValidationFoundation,
       atlasAssetCompatibilityWorldPackages,
       atlasAssetBiomeSettlementPackageProfiles,
+      atlasWorldThemeStyleBundles,
       placementProvider,
       lastPlan: null
     }
@@ -1814,6 +1847,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.resolvedWorldPackageId = null;
   state.profileCompatibilityStatus = null;
   state.packageSelectionReason = null;
+  state.worldThemeProfileId = null;
+  state.regionalStyleBundleId = null;
+  state.visualCohesionScore = null;
+  state.themeCompatibilityStatus = null;
+  state.themeSelectionReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1851,6 +1889,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const assetWorldValidationDecisions = [];
   const worldPackageValidationDecisions = [];
   const packageProfileDecisions = [];
+  const worldThemeBundleDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -2447,6 +2486,28 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             profileCompatibilityStatus: "blocked",
             packageSelectionReason: "WORLD_PACKAGE_PROFILE_UNAVAILABLE"
           });
+    const themeBundleResolution =
+      packageProfileResolution.resolvedWorldPackageId &&
+      worldPackageCategory
+        ? resolveDeveloperOnlyAtlasWorldThemeStyleBundle(
+            internal.atlasWorldThemeStyleBundles,
+            {
+              settlementPackageProfileId:
+                packageProfileResolution.settlementPackageProfileId,
+              biomePackageProfileId:
+                packageProfileResolution.biomePackageProfileId,
+              worldPackageCategory,
+              resolvedWorldPackageId:
+                packageProfileResolution.resolvedWorldPackageId
+            }
+          )
+        : deepFreeze({
+            worldThemeProfileId: null,
+            regionalStyleBundleId: null,
+            visualCohesionScore: null,
+            themeCompatibilityStatus: "blocked",
+            themeSelectionReason: "THEME_BUNDLE_UNAVAILABLE"
+          });
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -2702,6 +2763,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.profileCompatibilityStatus =
       packageProfileResolution.profileCompatibilityStatus;
     state.packageSelectionReason = packageProfileResolution.packageSelectionReason;
+    state.worldThemeProfileId = themeBundleResolution.worldThemeProfileId;
+    state.regionalStyleBundleId = themeBundleResolution.regionalStyleBundleId;
+    state.visualCohesionScore = themeBundleResolution.visualCohesionScore;
+    state.themeCompatibilityStatus =
+      themeBundleResolution.themeCompatibilityStatus;
+    state.themeSelectionReason = themeBundleResolution.themeSelectionReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -2912,6 +2979,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           packageProfileResolution.profileCompatibilityStatus,
         packageSelectionReason:
           packageProfileResolution.packageSelectionReason
+      })
+    );
+    worldThemeBundleDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+        regionalStyleBundleId: themeBundleResolution.regionalStyleBundleId,
+        visualCohesionScore: themeBundleResolution.visualCohesionScore,
+        themeCompatibilityStatus:
+          themeBundleResolution.themeCompatibilityStatus,
+        themeSelectionReason: themeBundleResolution.themeSelectionReason
       })
     );
     microClusterAdjacencyDecisions.push(
@@ -3278,6 +3356,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             packageProfileResolution.profileCompatibilityStatus,
           packageSelectionReason:
             packageProfileResolution.packageSelectionReason,
+          worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+          regionalStyleBundleId: themeBundleResolution.regionalStyleBundleId,
+          visualCohesionScore: themeBundleResolution.visualCohesionScore,
+          themeCompatibilityStatus:
+            themeBundleResolution.themeCompatibilityStatus,
+          themeSelectionReason: themeBundleResolution.themeSelectionReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3561,6 +3645,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             packageProfileResolution.profileCompatibilityStatus,
           packageSelectionReason:
             packageProfileResolution.packageSelectionReason,
+          worldThemeProfileId: themeBundleResolution.worldThemeProfileId,
+          regionalStyleBundleId: themeBundleResolution.regionalStyleBundleId,
+          visualCohesionScore: themeBundleResolution.visualCohesionScore,
+          themeCompatibilityStatus:
+            themeBundleResolution.themeCompatibilityStatus,
+          themeSelectionReason: themeBundleResolution.themeSelectionReason,
           microClusterId: microClusterAdjacencyResolution.microClusterId,
           clusterType: microClusterAdjacencyResolution.clusterType,
           childAssetCount: microClusterAdjacencyResolution.childAssetCount,
@@ -3851,6 +3941,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         resolvedWorldPackageId: null,
         profileCompatibilityStatus: "blocked",
         packageSelectionReason: "PENDING_PACKAGE_PROFILE_SELECTION",
+        worldThemeProfileId: null,
+        regionalStyleBundleId: null,
+        visualCohesionScore: null,
+        themeCompatibilityStatus: "blocked",
+        themeSelectionReason: "PENDING_THEME_BUNDLE_SELECTION",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -4371,6 +4466,28 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             profileCompatibilityStatus: "blocked",
             packageSelectionReason: "WORLD_PACKAGE_PROFILE_UNAVAILABLE"
           });
+    const themeBundleCandidateResolution =
+      packageProfileCandidateResolution.resolvedWorldPackageId &&
+      candidateWorldPackageCategory
+        ? resolveDeveloperOnlyAtlasWorldThemeStyleBundle(
+            internal.atlasWorldThemeStyleBundles,
+            {
+              settlementPackageProfileId:
+                packageProfileCandidateResolution.settlementPackageProfileId,
+              biomePackageProfileId:
+                packageProfileCandidateResolution.biomePackageProfileId,
+              worldPackageCategory: candidateWorldPackageCategory,
+              resolvedWorldPackageId:
+                packageProfileCandidateResolution.resolvedWorldPackageId
+            }
+          )
+        : deepFreeze({
+            worldThemeProfileId: null,
+            regionalStyleBundleId: null,
+            visualCohesionScore: null,
+            themeCompatibilityStatus: "blocked",
+            themeSelectionReason: "THEME_BUNDLE_UNAVAILABLE"
+          });
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -4599,6 +4716,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         packageProfileCandidateResolution.profileCompatibilityStatus;
       state.packageSelectionReason =
         packageProfileCandidateResolution.packageSelectionReason;
+      state.worldThemeProfileId =
+        themeBundleCandidateResolution.worldThemeProfileId;
+      state.regionalStyleBundleId =
+        themeBundleCandidateResolution.regionalStyleBundleId;
+      state.visualCohesionScore =
+        themeBundleCandidateResolution.visualCohesionScore;
+      state.themeCompatibilityStatus =
+        themeBundleCandidateResolution.themeCompatibilityStatus;
+      state.themeSelectionReason =
+        themeBundleCandidateResolution.themeSelectionReason;
     }
 
     acceptedPlacements.push(
@@ -4697,6 +4824,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           packageProfileCandidateResolution.profileCompatibilityStatus,
         packageSelectionReason:
           packageProfileCandidateResolution.packageSelectionReason,
+        worldThemeProfileId:
+          themeBundleCandidateResolution.worldThemeProfileId,
+        regionalStyleBundleId:
+          themeBundleCandidateResolution.regionalStyleBundleId,
+        visualCohesionScore:
+          themeBundleCandidateResolution.visualCohesionScore,
+        themeCompatibilityStatus:
+          themeBundleCandidateResolution.themeCompatibilityStatus,
+        themeSelectionReason:
+          themeBundleCandidateResolution.themeSelectionReason,
         microClusterId: microClusterCandidateResolution.microClusterId,
         clusterType: microClusterCandidateResolution.clusterType,
         childAssetCount: microClusterCandidateResolution.childAssetCount,
@@ -4976,6 +5113,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       worldPackageValidationDecisions
     ),
     packageProfileDecisions: deepFreeze(packageProfileDecisions),
+    worldThemeBundleDecisions: deepFreeze(worldThemeBundleDecisions),
     microClusterAdjacencyDecisions: deepFreeze(microClusterAdjacencyDecisions),
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
@@ -5140,6 +5278,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       resolvedWorldPackageId: null,
       profileCompatibilityStatus: null,
       packageSelectionReason: null,
+      atlasWorldThemeStyleBundlesVersion: null,
+      registeredThemeBundleRuleCount: 0,
+      worldThemeProfileId: null,
+      regionalStyleBundleId: null,
+      visualCohesionScore: null,
+      themeCompatibilityStatus: null,
+      themeSelectionReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
