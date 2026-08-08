@@ -103,6 +103,11 @@ import {
   getDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationViewCorridorDestinationFraming
 } from "./developer-only-atlas-population-view-corridor-destination-framing-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistry,
+  getDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidance
+} from "./developer-only-atlas-population-route-memory-wayfinding-guidance-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -398,6 +403,13 @@ function freezeStatus(state) {
     approachSequenceId: state.approachSequenceId,
     destinationFrameProfileId: state.destinationFrameProfileId,
     arrivalReason: state.arrivalReason,
+    routeGuidanceVersion: state.routeGuidanceVersion,
+    registeredRouteGuidanceRuleCount: state.registeredRouteGuidanceRuleCount,
+    routeMemoryId: state.routeMemoryId,
+    wayfindingProfileId: state.wayfindingProfileId,
+    explorationRouteType: state.explorationRouteType,
+    guidanceReason: state.guidanceReason,
+    routePriority: state.routePriority,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -592,7 +604,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationSpecialSiteAccentRuleRegistry =
     createDeveloperOnlyAtlasPopulationSpecialSiteAccentRuleRegistry(),
   populationViewCorridorDestinationFramingRuleRegistry =
-    createDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistry()
+    createDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistry(),
+  populationRouteMemoryWayfindingGuidanceRuleRegistry =
+    createDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -670,6 +684,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const destinationFramingRegistryStatus =
     getDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistryStatus(
       populationViewCorridorDestinationFramingRuleRegistry
+    );
+  const routeGuidanceRegistryStatus =
+    getDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistryStatus(
+      populationRouteMemoryWayfindingGuidanceRuleRegistry
     );
 
   const state = {
@@ -856,6 +874,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     destinationFrameProfileId:
       destinationFramingRegistryStatus.destinationFrameProfileId,
     arrivalReason: destinationFramingRegistryStatus.arrivalReason,
+    routeGuidanceVersion: routeGuidanceRegistryStatus.routeGuidanceVersion,
+    registeredRouteGuidanceRuleCount:
+      routeGuidanceRegistryStatus.registeredRouteGuidanceRuleCount,
+    routeMemoryId: routeGuidanceRegistryStatus.routeMemoryId,
+    wayfindingProfileId: routeGuidanceRegistryStatus.wayfindingProfileId,
+    explorationRouteType:
+      routeGuidanceRegistryStatus.explorationRouteType,
+    guidanceReason: routeGuidanceRegistryStatus.guidanceReason,
+    routePriority: routeGuidanceRegistryStatus.routePriority,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -905,6 +932,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationSupportingCompositionRuleRegistry,
       populationSpecialSiteAccentRuleRegistry,
       populationViewCorridorDestinationFramingRuleRegistry,
+      populationRouteMemoryWayfindingGuidanceRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1057,6 +1085,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.approachSequenceId = null;
   state.destinationFrameProfileId = null;
   state.arrivalReason = null;
+  state.routeMemoryId = null;
+  state.wayfindingProfileId = null;
+  state.explorationRouteType = null;
+  state.guidanceReason = null;
+  state.routePriority = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1095,6 +1128,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
   const destinationFramingDecisions = [];
+  const routeGuidanceDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1382,6 +1416,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           specialSiteType: specialSiteAccentResolution.specialSiteType
         }
       );
+    const routeGuidanceResolution =
+      resolveDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidance(
+        internal.populationRouteMemoryWayfindingGuidanceRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          districtType: districtCompositionResolution.districtType,
+          biomeProfileId: biomeLocalCharacterResolution.biomeProfileId,
+          destinationFrameProfileId:
+            destinationFramingResolution.destinationFrameProfileId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1493,6 +1538,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     state.destinationFrameProfileId =
       destinationFramingResolution.destinationFrameProfileId;
     state.arrivalReason = destinationFramingResolution.arrivalReason;
+    state.routeMemoryId = routeGuidanceResolution.routeMemoryId;
+    state.wayfindingProfileId = routeGuidanceResolution.wayfindingProfileId;
+    state.explorationRouteType =
+      routeGuidanceResolution.explorationRouteType;
+    state.guidanceReason = routeGuidanceResolution.guidanceReason;
+    state.routePriority = routeGuidanceResolution.routePriority;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1710,6 +1761,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         visibilityPriority: destinationFramingResolution.visibilityPriority
       })
     );
+    routeGuidanceDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        routeMemoryId: routeGuidanceResolution.routeMemoryId,
+        wayfindingProfileId: routeGuidanceResolution.wayfindingProfileId,
+        explorationRouteType: routeGuidanceResolution.explorationRouteType,
+        guidanceReason: routeGuidanceResolution.guidanceReason,
+        routePriority: routeGuidanceResolution.routePriority
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1828,6 +1889,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           destinationFrameProfileId:
             destinationFramingResolution.destinationFrameProfileId,
           arrivalReason: destinationFramingResolution.arrivalReason,
+          routeMemoryId: routeGuidanceResolution.routeMemoryId,
+          wayfindingProfileId: routeGuidanceResolution.wayfindingProfileId,
+          explorationRouteType: routeGuidanceResolution.explorationRouteType,
+          guidanceReason: routeGuidanceResolution.guidanceReason,
+          routePriority: routeGuidanceResolution.routePriority,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -1965,6 +2031,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           destinationFrameProfileId:
             destinationFramingResolution.destinationFrameProfileId,
           arrivalReason: destinationFramingResolution.arrivalReason,
+          routeMemoryId: routeGuidanceResolution.routeMemoryId,
+          wayfindingProfileId: routeGuidanceResolution.wayfindingProfileId,
+          explorationRouteType: routeGuidanceResolution.explorationRouteType,
+          guidanceReason: routeGuidanceResolution.guidanceReason,
+          routePriority: routeGuidanceResolution.routePriority,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2347,6 +2418,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           specialSiteType: specialSiteAccentCandidateResolution.specialSiteType
         }
       );
+    const routeGuidanceCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidance(
+        internal.populationRouteMemoryWayfindingGuidanceRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          districtType: candidate.districtType,
+          biomeProfileId: candidate.biomeProfileId,
+          destinationFrameProfileId:
+            destinationFramingCandidateResolution.destinationFrameProfileId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2386,6 +2468,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       state.destinationFrameProfileId =
         destinationFramingCandidateResolution.destinationFrameProfileId;
       state.arrivalReason = destinationFramingCandidateResolution.arrivalReason;
+      state.routeMemoryId = routeGuidanceCandidateResolution.routeMemoryId;
+      state.wayfindingProfileId =
+        routeGuidanceCandidateResolution.wayfindingProfileId;
+      state.explorationRouteType =
+        routeGuidanceCandidateResolution.explorationRouteType;
+      state.guidanceReason = routeGuidanceCandidateResolution.guidanceReason;
+      state.routePriority = routeGuidanceCandidateResolution.routePriority;
     }
 
     acceptedPlacements.push(
@@ -2485,6 +2574,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         destinationFrameProfileId:
           destinationFramingCandidateResolution.destinationFrameProfileId,
         arrivalReason: destinationFramingCandidateResolution.arrivalReason,
+        routeMemoryId: routeGuidanceCandidateResolution.routeMemoryId,
+        wayfindingProfileId:
+          routeGuidanceCandidateResolution.wayfindingProfileId,
+        explorationRouteType:
+          routeGuidanceCandidateResolution.explorationRouteType,
+        guidanceReason: routeGuidanceCandidateResolution.guidanceReason,
+        routePriority: routeGuidanceCandidateResolution.routePriority,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -2577,6 +2673,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     supportingCompositionDecisions: deepFreeze(supportingCompositionDecisions),
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
     destinationFramingDecisions: deepFreeze(destinationFramingDecisions),
+    routeGuidanceDecisions: deepFreeze(routeGuidanceDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2714,6 +2811,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       approachSequenceId: null,
       destinationFrameProfileId: null,
       arrivalReason: null,
+      routeGuidanceVersion: null,
+      registeredRouteGuidanceRuleCount: 0,
+      routeMemoryId: null,
+      wayfindingProfileId: null,
+      explorationRouteType: null,
+      guidanceReason: null,
+      routePriority: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
