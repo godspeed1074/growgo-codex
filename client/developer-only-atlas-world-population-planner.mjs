@@ -248,6 +248,11 @@ import {
   getDeveloperOnlyAtlasComponentSurfaceMappingStatus,
   resolveDeveloperOnlyAtlasComponentSurfaceMapping
 } from "./developer-only-atlas-component-surface-mapping.mjs";
+import {
+  createDeveloperOnlyAtlasAttachmentMetadataGlbPreparation,
+  getDeveloperOnlyAtlasAttachmentMetadataGlbPreparationStatus,
+  resolveDeveloperOnlyAtlasAttachmentMetadataGlbPreparation
+} from "./developer-only-atlas-attachment-metadata-glb-preparation.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -780,6 +785,15 @@ function freezeStatus(state) {
     resolvedAnchorCount: state.resolvedAnchorCount,
     mappedComponentCount: state.mappedComponentCount,
     surfaceMappingReason: state.surfaceMappingReason,
+    atlasAttachmentMetadataGlbPreparationVersion:
+      state.atlasAttachmentMetadataGlbPreparationVersion,
+    registeredAttachmentMetadataRuleCount:
+      state.registeredAttachmentMetadataRuleCount,
+    attachmentMetadataProfileId: state.attachmentMetadataProfileId,
+    glbPreparationProfileId: state.glbPreparationProfileId,
+    socketMetadataCount: state.socketMetadataCount,
+    componentMetadataCount: state.componentMetadataCount,
+    attachmentMetadataReason: state.attachmentMetadataReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -1032,7 +1046,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   atlasMaterialSlotResolution =
     createDeveloperOnlyAtlasMaterialSlotResolution(),
   atlasComponentSurfaceMapping =
-    createDeveloperOnlyAtlasComponentSurfaceMapping()
+    createDeveloperOnlyAtlasComponentSurfaceMapping(),
+  atlasAttachmentMetadataGlbPreparation =
+    createDeveloperOnlyAtlasAttachmentMetadataGlbPreparation()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -1226,6 +1242,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const atlasComponentSurfaceMappingStatus =
     getDeveloperOnlyAtlasComponentSurfaceMappingStatus(
       atlasComponentSurfaceMapping
+    );
+  const atlasAttachmentMetadataGlbPreparationStatus =
+    getDeveloperOnlyAtlasAttachmentMetadataGlbPreparationStatus(
+      atlasAttachmentMetadataGlbPreparation
     );
 
   const state = {
@@ -1770,6 +1790,23 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
     resolvedAnchorCount: atlasComponentSurfaceMappingStatus.resolvedAnchorCount,
     mappedComponentCount: atlasComponentSurfaceMappingStatus.mappedComponentCount,
     surfaceMappingReason: atlasComponentSurfaceMappingStatus.surfaceMappingReason,
+    atlasAttachmentMetadataGlbPreparationVersion:
+      atlasAttachmentMetadataGlbPreparationStatus
+        .atlasAttachmentMetadataGlbPreparationVersion,
+    registeredAttachmentMetadataRuleCount:
+      atlasAttachmentMetadataGlbPreparationStatus
+        .registeredAttachmentMetadataRuleCount,
+    attachmentMetadataProfileId:
+      atlasAttachmentMetadataGlbPreparationStatus
+        .attachmentMetadataProfileId,
+    glbPreparationProfileId:
+      atlasAttachmentMetadataGlbPreparationStatus.glbPreparationProfileId,
+    socketMetadataCount:
+      atlasAttachmentMetadataGlbPreparationStatus.socketMetadataCount,
+    componentMetadataCount:
+      atlasAttachmentMetadataGlbPreparationStatus.componentMetadataCount,
+    attachmentMetadataReason:
+      atlasAttachmentMetadataGlbPreparationStatus.attachmentMetadataReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -1848,6 +1885,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       atlasMaterialThemeBundles,
       atlasMaterialSlotResolution,
       atlasComponentSurfaceMapping,
+      atlasAttachmentMetadataGlbPreparation,
       placementProvider,
       lastPlan: null
     }
@@ -2145,6 +2183,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.resolvedAnchorCount = 0;
   state.mappedComponentCount = 0;
   state.surfaceMappingReason = null;
+  state.attachmentMetadataProfileId = null;
+  state.glbPreparationProfileId = null;
+  state.socketMetadataCount = 0;
+  state.componentMetadataCount = 0;
+  state.attachmentMetadataReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -2191,6 +2234,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const materialThemeBundleDecisions = [];
   const materialSlotResolutionDecisions = [];
   const componentSurfaceMappingDecisions = [];
+  const attachmentMetadataDecisions = [];
   const microClusterAdjacencyDecisions = [];
   const supportingCompositionDecisions = [];
   const specialSiteAccentDecisions = [];
@@ -3013,6 +3057,33 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             mappedComponentCount: 0,
             surfaceMappingReason: "COMPONENT_SURFACE_MAPPING_UNAVAILABLE"
           };
+    const attachmentMetadataResolution =
+      componentSurfaceMappingResolution.surfaceMappingProfileId &&
+      componentSurfaceMappingResolution.componentAnchorSetId &&
+      modularBibleStyleBridgeResolution.componentRecipeId &&
+      modularBibleStyleBridgeResolution.assetAssemblyProfileId
+        ? resolveDeveloperOnlyAtlasAttachmentMetadataGlbPreparation(
+            internal.atlasAttachmentMetadataGlbPreparation,
+            {
+              surfaceMappingProfileId:
+                componentSurfaceMappingResolution.surfaceMappingProfileId,
+              componentAnchorSetId:
+                componentSurfaceMappingResolution.componentAnchorSetId,
+              componentRecipeId:
+                modularBibleStyleBridgeResolution.componentRecipeId,
+              assetAssemblyProfileId:
+                modularBibleStyleBridgeResolution.assetAssemblyProfileId
+            }
+          )
+        : {
+            matched: false,
+            attachmentMetadataProfileId: null,
+            glbPreparationProfileId: null,
+            socketMetadataCount: 0,
+            componentMetadataCount: 0,
+            attachmentMetadataReason:
+              "ATTACHMENT_METADATA_GLB_PREPARATION_UNAVAILABLE"
+          };
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -3143,6 +3214,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       componentSurfaceMappingResolution.mappedComponentCount;
     state.surfaceMappingReason =
       componentSurfaceMappingResolution.surfaceMappingReason;
+    state.attachmentMetadataProfileId =
+      attachmentMetadataResolution.attachmentMetadataProfileId;
+    state.glbPreparationProfileId =
+      attachmentMetadataResolution.glbPreparationProfileId;
+    state.socketMetadataCount = attachmentMetadataResolution.socketMetadataCount;
+    state.componentMetadataCount =
+      attachmentMetadataResolution.componentMetadataCount;
+    state.attachmentMetadataReason =
+      attachmentMetadataResolution.attachmentMetadataReason;
     state.materialAssignmentId =
       modularAssetBindingResolution.materialAssignmentId;
     state.lodProfileId = modularAssetBindingResolution.lodProfileId;
@@ -3678,6 +3758,20 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         surfaceMappingReason: componentSurfaceMappingResolution.surfaceMappingReason
       })
     );
+    attachmentMetadataDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        attachmentMetadataProfileId:
+          attachmentMetadataResolution.attachmentMetadataProfileId,
+        glbPreparationProfileId:
+          attachmentMetadataResolution.glbPreparationProfileId,
+        socketMetadataCount: attachmentMetadataResolution.socketMetadataCount,
+        componentMetadataCount:
+          attachmentMetadataResolution.componentMetadataCount,
+        attachmentMetadataReason:
+          attachmentMetadataResolution.attachmentMetadataReason
+      })
+    );
     microClusterAdjacencyDecisions.push(
       deepFreeze({
         featureId: feature.featureId,
@@ -4056,6 +4150,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             componentSurfaceMappingResolution.mappedComponentCount,
           surfaceMappingReason:
             componentSurfaceMappingResolution.surfaceMappingReason,
+          attachmentMetadataProfileId:
+            attachmentMetadataResolution.attachmentMetadataProfileId,
+          glbPreparationProfileId:
+            attachmentMetadataResolution.glbPreparationProfileId,
+          socketMetadataCount: attachmentMetadataResolution.socketMetadataCount,
+          componentMetadataCount:
+            attachmentMetadataResolution.componentMetadataCount,
+          attachmentMetadataReason:
+            attachmentMetadataResolution.attachmentMetadataReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4418,6 +4521,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             componentSurfaceMappingResolution.mappedComponentCount,
           surfaceMappingReason:
             componentSurfaceMappingResolution.surfaceMappingReason,
+          attachmentMetadataProfileId:
+            attachmentMetadataResolution.attachmentMetadataProfileId,
+          glbPreparationProfileId:
+            attachmentMetadataResolution.glbPreparationProfileId,
+          socketMetadataCount: attachmentMetadataResolution.socketMetadataCount,
+          componentMetadataCount:
+            attachmentMetadataResolution.componentMetadataCount,
+          attachmentMetadataReason:
+            attachmentMetadataResolution.attachmentMetadataReason,
           materialAssignmentId:
             modularAssetBindingResolution.materialAssignmentId,
           lodProfileId: modularAssetBindingResolution.lodProfileId,
@@ -4819,6 +4931,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         resolvedAnchorCount: 0,
         mappedComponentCount: 0,
         surfaceMappingReason: "PENDING_COMPONENT_SURFACE_MAPPING",
+        attachmentMetadataProfileId: null,
+        glbPreparationProfileId: null,
+        socketMetadataCount: 0,
+        componentMetadataCount: 0,
+        attachmentMetadataReason:
+          "PENDING_ATTACHMENT_METADATA_GLB_PREPARATION",
         microClusterId: null,
         clusterType: null,
         childAssetCount: 0,
@@ -5561,6 +5679,33 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             mappedComponentCount: 0,
             surfaceMappingReason: "COMPONENT_SURFACE_MAPPING_UNAVAILABLE"
           };
+    const attachmentMetadataCandidateResolution =
+      componentSurfaceMappingCandidateResolution.surfaceMappingProfileId &&
+      componentSurfaceMappingCandidateResolution.componentAnchorSetId &&
+      modularBibleStyleBridgeCandidateResolution.componentRecipeId &&
+      modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId
+        ? resolveDeveloperOnlyAtlasAttachmentMetadataGlbPreparation(
+            internal.atlasAttachmentMetadataGlbPreparation,
+            {
+              surfaceMappingProfileId:
+                componentSurfaceMappingCandidateResolution.surfaceMappingProfileId,
+              componentAnchorSetId:
+                componentSurfaceMappingCandidateResolution.componentAnchorSetId,
+              componentRecipeId:
+                modularBibleStyleBridgeCandidateResolution.componentRecipeId,
+              assetAssemblyProfileId:
+                modularBibleStyleBridgeCandidateResolution.assetAssemblyProfileId
+            }
+          )
+        : {
+            matched: false,
+            attachmentMetadataProfileId: null,
+            glbPreparationProfileId: null,
+            socketMetadataCount: 0,
+            componentMetadataCount: 0,
+            attachmentMetadataReason:
+              "ATTACHMENT_METADATA_GLB_PREPARATION_UNAVAILABLE"
+          };
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -5879,6 +6024,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         componentSurfaceMappingCandidateResolution.mappedComponentCount;
       state.surfaceMappingReason =
         componentSurfaceMappingCandidateResolution.surfaceMappingReason;
+      state.attachmentMetadataProfileId =
+        attachmentMetadataCandidateResolution.attachmentMetadataProfileId;
+      state.glbPreparationProfileId =
+        attachmentMetadataCandidateResolution.glbPreparationProfileId;
+      state.socketMetadataCount =
+        attachmentMetadataCandidateResolution.socketMetadataCount;
+      state.componentMetadataCount =
+        attachmentMetadataCandidateResolution.componentMetadataCount;
+      state.attachmentMetadataReason =
+        attachmentMetadataCandidateResolution.attachmentMetadataReason;
     }
 
     acceptedPlacements.push(
@@ -5994,6 +6149,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           componentSurfaceMappingCandidateResolution.mappedComponentCount,
         surfaceMappingReason:
           componentSurfaceMappingCandidateResolution.surfaceMappingReason,
+        attachmentMetadataProfileId:
+          attachmentMetadataCandidateResolution.attachmentMetadataProfileId,
+        glbPreparationProfileId:
+          attachmentMetadataCandidateResolution.glbPreparationProfileId,
+        socketMetadataCount:
+          attachmentMetadataCandidateResolution.socketMetadataCount,
+        componentMetadataCount:
+          attachmentMetadataCandidateResolution.componentMetadataCount,
+        attachmentMetadataReason:
+          attachmentMetadataCandidateResolution.attachmentMetadataReason,
         materialAssignmentId:
           modularCandidateBindingResolution.materialAssignmentId,
         lodProfileId: modularCandidateBindingResolution.lodProfileId,
@@ -6390,6 +6555,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     materialThemeBundleDecisions: deepFreeze(materialThemeBundleDecisions),
     materialSlotResolutionDecisions: deepFreeze(materialSlotResolutionDecisions),
     componentSurfaceMappingDecisions: deepFreeze(componentSurfaceMappingDecisions),
+    attachmentMetadataDecisions: deepFreeze(attachmentMetadataDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -6584,6 +6750,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       resolvedAnchorCount: 0,
       mappedComponentCount: 0,
       surfaceMappingReason: null,
+      atlasAttachmentMetadataGlbPreparationVersion: null,
+      registeredAttachmentMetadataRuleCount: 0,
+      attachmentMetadataProfileId: null,
+      glbPreparationProfileId: null,
+      socketMetadataCount: 0,
+      componentMetadataCount: 0,
+      attachmentMetadataReason: null,
       microClusterAdjacencyVersion: null,
       registeredMicroClusterRuleCount: 0,
       microClusterId: null,
