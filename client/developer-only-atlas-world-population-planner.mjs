@@ -108,6 +108,11 @@ import {
   getDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistryStatus,
   resolveDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidance
 } from "./developer-only-atlas-population-route-memory-wayfinding-guidance-rules.mjs";
+import {
+  createDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistry,
+  getDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistryStatus,
+  resolveDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooks
+} from "./developer-only-atlas-population-place-memory-narrative-hooks-rules.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_WORLD_POPULATION_PLANNER_STATUS_001";
@@ -410,6 +415,13 @@ function freezeStatus(state) {
     explorationRouteType: state.explorationRouteType,
     guidanceReason: state.guidanceReason,
     routePriority: state.routePriority,
+    placeMemoryVersion: state.placeMemoryVersion,
+    registeredPlaceMemoryRuleCount: state.registeredPlaceMemoryRuleCount,
+    placeMemoryId: state.placeMemoryId,
+    storyCategory: state.storyCategory,
+    localNarrativeProfileId: state.localNarrativeProfileId,
+    discoveryImportance: state.discoveryImportance,
+    storyReason: state.storyReason,
     nearestFeatureId: state.nearestFeatureId,
     nearestRoadId: state.nearestRoadId,
     boundaryDistance: state.boundaryDistance,
@@ -606,7 +618,9 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   populationViewCorridorDestinationFramingRuleRegistry =
     createDeveloperOnlyAtlasPopulationViewCorridorDestinationFramingRuleRegistry(),
   populationRouteMemoryWayfindingGuidanceRuleRegistry =
-    createDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistry()
+    createDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistry(),
+  populationPlaceMemoryNarrativeHooksRuleRegistry =
+    createDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistry()
 } = {}) {
   const registryStatus = getDeveloperOnlyAtlasSpatialRuleRegistryStatus(
     spatialRuleRegistry
@@ -688,6 +702,10 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
   const routeGuidanceRegistryStatus =
     getDeveloperOnlyAtlasPopulationRouteMemoryWayfindingGuidanceRuleRegistryStatus(
       populationRouteMemoryWayfindingGuidanceRuleRegistry
+    );
+  const placeMemoryRegistryStatus =
+    getDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooksRuleRegistryStatus(
+      populationPlaceMemoryNarrativeHooksRuleRegistry
     );
 
   const state = {
@@ -883,6 +901,15 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       routeGuidanceRegistryStatus.explorationRouteType,
     guidanceReason: routeGuidanceRegistryStatus.guidanceReason,
     routePriority: routeGuidanceRegistryStatus.routePriority,
+    placeMemoryVersion: placeMemoryRegistryStatus.placeMemoryVersion,
+    registeredPlaceMemoryRuleCount:
+      placeMemoryRegistryStatus.registeredPlaceMemoryRuleCount,
+    placeMemoryId: placeMemoryRegistryStatus.placeMemoryId,
+    storyCategory: placeMemoryRegistryStatus.storyCategory,
+    localNarrativeProfileId:
+      placeMemoryRegistryStatus.localNarrativeProfileId,
+    discoveryImportance: placeMemoryRegistryStatus.discoveryImportance,
+    storyReason: placeMemoryRegistryStatus.storyReason,
     nearestFeatureId: relationshipRegistryStatus.nearestFeatureId,
     nearestRoadId: relationshipRegistryStatus.nearestRoadId,
     boundaryDistance: relationshipRegistryStatus.boundaryDistance,
@@ -933,6 +960,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlanner({
       populationSpecialSiteAccentRuleRegistry,
       populationViewCorridorDestinationFramingRuleRegistry,
       populationRouteMemoryWayfindingGuidanceRuleRegistry,
+      populationPlaceMemoryNarrativeHooksRuleRegistry,
       placementProvider,
       lastPlan: null
     }
@@ -1090,6 +1118,11 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   state.explorationRouteType = null;
   state.guidanceReason = null;
   state.routePriority = null;
+  state.placeMemoryId = null;
+  state.storyCategory = null;
+  state.localNarrativeProfileId = null;
+  state.discoveryImportance = null;
+  state.storyReason = null;
   state.nearestFeatureId = null;
   state.nearestRoadId = null;
   state.boundaryDistance = null;
@@ -1129,6 +1162,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
   const specialSiteAccentDecisions = [];
   const destinationFramingDecisions = [];
   const routeGuidanceDecisions = [];
+  const placeMemoryDecisions = [];
   const relationshipContext =
     input.relationshipContext && typeof input.relationshipContext === "object"
       ? input.relationshipContext
@@ -1427,6 +1461,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             destinationFramingResolution.destinationFrameProfileId
         }
       );
+    const placeMemoryResolution =
+      resolveDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooks(
+        internal.populationPlaceMemoryNarrativeHooksRuleRegistry,
+        {
+          featureClass: feature.featureClass,
+          explorationRouteType: routeGuidanceResolution.explorationRouteType,
+          settlementIdentityId:
+            settlementIdentityStyleCohesionResolution.settlementIdentityId
+        }
+      );
 
     state.distributionRuleId = distributionResolution.distributionRuleId;
     state.relationshipRuleId = relationshipResolution.relationshipRuleId;
@@ -1544,6 +1588,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
       routeGuidanceResolution.explorationRouteType;
     state.guidanceReason = routeGuidanceResolution.guidanceReason;
     state.routePriority = routeGuidanceResolution.routePriority;
+    state.placeMemoryId = placeMemoryResolution.placeMemoryId;
+    state.storyCategory = placeMemoryResolution.storyCategory;
+    state.localNarrativeProfileId =
+      placeMemoryResolution.localNarrativeProfileId;
+    state.discoveryImportance = placeMemoryResolution.discoveryImportance;
+    state.storyReason = placeMemoryResolution.storyReason;
     state.nearestFeatureId =
       relationshipResolution.featureDiagnostics.nearestFeatureId;
     state.nearestRoadId = relationshipResolution.featureDiagnostics.nearestRoadId;
@@ -1771,6 +1821,17 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         routePriority: routeGuidanceResolution.routePriority
       })
     );
+    placeMemoryDecisions.push(
+      deepFreeze({
+        featureId: feature.featureId,
+        placeMemoryId: placeMemoryResolution.placeMemoryId,
+        storyCategory: placeMemoryResolution.storyCategory,
+        localNarrativeProfileId:
+          placeMemoryResolution.localNarrativeProfileId,
+        discoveryImportance: placeMemoryResolution.discoveryImportance,
+        storyReason: placeMemoryResolution.storyReason
+      })
+    );
 
     if (recipeResolution.generatedCommandCount === 0) {
       resolvedFeatureRecipes.push(
@@ -1894,6 +1955,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           explorationRouteType: routeGuidanceResolution.explorationRouteType,
           guidanceReason: routeGuidanceResolution.guidanceReason,
           routePriority: routeGuidanceResolution.routePriority,
+          placeMemoryId: placeMemoryResolution.placeMemoryId,
+          storyCategory: placeMemoryResolution.storyCategory,
+          localNarrativeProfileId:
+            placeMemoryResolution.localNarrativeProfileId,
+          discoveryImportance: placeMemoryResolution.discoveryImportance,
+          storyReason: placeMemoryResolution.storyReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2036,6 +2103,12 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           explorationRouteType: routeGuidanceResolution.explorationRouteType,
           guidanceReason: routeGuidanceResolution.guidanceReason,
           routePriority: routeGuidanceResolution.routePriority,
+          placeMemoryId: placeMemoryResolution.placeMemoryId,
+          storyCategory: placeMemoryResolution.storyCategory,
+          localNarrativeProfileId:
+            placeMemoryResolution.localNarrativeProfileId,
+          discoveryImportance: placeMemoryResolution.discoveryImportance,
+          storyReason: placeMemoryResolution.storyReason,
           nearestFeatureId:
             relationshipResolution.featureDiagnostics.nearestFeatureId,
           nearestRoadId: relationshipResolution.featureDiagnostics.nearestRoadId,
@@ -2429,6 +2502,16 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
             destinationFramingCandidateResolution.destinationFrameProfileId
         }
       );
+    const placeMemoryCandidateResolution =
+      resolveDeveloperOnlyAtlasPopulationPlaceMemoryNarrativeHooks(
+        internal.populationPlaceMemoryNarrativeHooksRuleRegistry,
+        {
+          featureClass: candidate.feature.featureClass,
+          explorationRouteType:
+            routeGuidanceCandidateResolution.explorationRouteType,
+          settlementIdentityId: candidate.settlementIdentityId
+        }
+      );
 
     if (modularCandidateBindingResolution.matched) {
       state.selectedAssetId = modularCandidateBindingResolution.selectedAssetId;
@@ -2475,6 +2558,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
         routeGuidanceCandidateResolution.explorationRouteType;
       state.guidanceReason = routeGuidanceCandidateResolution.guidanceReason;
       state.routePriority = routeGuidanceCandidateResolution.routePriority;
+      state.placeMemoryId = placeMemoryCandidateResolution.placeMemoryId;
+      state.storyCategory = placeMemoryCandidateResolution.storyCategory;
+      state.localNarrativeProfileId =
+        placeMemoryCandidateResolution.localNarrativeProfileId;
+      state.discoveryImportance =
+        placeMemoryCandidateResolution.discoveryImportance;
+      state.storyReason = placeMemoryCandidateResolution.storyReason;
     }
 
     acceptedPlacements.push(
@@ -2581,6 +2671,13 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
           routeGuidanceCandidateResolution.explorationRouteType,
         guidanceReason: routeGuidanceCandidateResolution.guidanceReason,
         routePriority: routeGuidanceCandidateResolution.routePriority,
+        placeMemoryId: placeMemoryCandidateResolution.placeMemoryId,
+        storyCategory: placeMemoryCandidateResolution.storyCategory,
+        localNarrativeProfileId:
+          placeMemoryCandidateResolution.localNarrativeProfileId,
+        discoveryImportance:
+          placeMemoryCandidateResolution.discoveryImportance,
+        storyReason: placeMemoryCandidateResolution.storyReason,
         nearestFeatureId:
           candidate.relationshipDiagnostics?.nearestFeatureId ?? null,
         nearestRoadId: candidate.relationshipDiagnostics?.nearestRoadId ?? null,
@@ -2674,6 +2771,7 @@ export function createDeveloperOnlyAtlasWorldPopulationPlan(planner, input = {})
     specialSiteAccentDecisions: deepFreeze(specialSiteAccentDecisions),
     destinationFramingDecisions: deepFreeze(destinationFramingDecisions),
     routeGuidanceDecisions: deepFreeze(routeGuidanceDecisions),
+    placeMemoryDecisions: deepFreeze(placeMemoryDecisions),
     rejectedCandidates: deepFreeze(rejectedCandidates)
   });
 
@@ -2818,6 +2916,13 @@ export function getDeveloperOnlyAtlasWorldPopulationPlannerStatus(planner) {
       explorationRouteType: null,
       guidanceReason: null,
       routePriority: null,
+      placeMemoryVersion: null,
+      registeredPlaceMemoryRuleCount: 0,
+      placeMemoryId: null,
+      storyCategory: null,
+      localNarrativeProfileId: null,
+      discoveryImportance: null,
+      storyReason: null,
       nearestFeatureId: null,
       nearestRoadId: null,
       boundaryDistance: null,
