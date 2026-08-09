@@ -138,8 +138,18 @@ const getCustom25DOneFrameBridgeFromScriptDiagnostics = captureDiagnosticsFuncti
 );
 const capturedOneFrameBridgeProviderFromScriptDiagnostics =
   createCapturedOneFrameBridgeProvider(getCustom25DOneFrameBridgeFromScriptDiagnostics);
-const capturedOneFrameBridgeFromScriptDiagnostics =
-  capturedOneFrameBridgeProviderFromScriptDiagnostics();
+let capturedOneFrameBridgeFromScriptDiagnostics = null;
+let capturedOneFrameBridgeLookupFailureReason = null;
+try {
+  capturedOneFrameBridgeFromScriptDiagnostics =
+    capturedOneFrameBridgeProviderFromScriptDiagnostics();
+} catch (error) {
+  capturedOneFrameBridgeFromScriptDiagnostics = null;
+  capturedOneFrameBridgeLookupFailureReason = toReasonCode(
+    error,
+    "CUSTOM25D_ONE_FRAME_BRIDGE_LOOKUP_FAILED"
+  );
+}
 const createCustom25DFrameViewportSnapshotForOneFrameFromScriptDiagnostics =
   typeof capturedOneFrameBridgeFromScriptDiagnostics
     ?.createCustom25DFrameViewportSnapshotForOneFrame === "function"
@@ -159,6 +169,19 @@ const rawLeafletMapReferenceFromBridge = capturedOneFrameBridgeFromScriptDiagnos
 
 const rawLeafletMapProviderFromScriptDiagnostics =
   createCapturedRawLeafletMapProvider(getGrowGoMapFromScriptDiagnostics);
+
+const diagnosticsNamespaceForEarlyBridgeLookup =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : null;
+
+if (diagnosticsNamespaceForEarlyBridgeLookup) {
+  diagnosticsNamespaceForEarlyBridgeLookup.custom25DOneFrameBridgeLookupStatus =
+    capturedOneFrameBridgeFromScriptDiagnostics ? "resolved" : "failed_closed";
+  diagnosticsNamespaceForEarlyBridgeLookup.custom25DOneFrameBridgeLookupFailureReason =
+    capturedOneFrameBridgeLookupFailureReason;
+}
 
 function readCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics() {
   const dynamicGetter =
