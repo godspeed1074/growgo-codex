@@ -325,4 +325,8 @@ test("9. session doc and app wiring record developer-only diagnostics exposure",
   assert.match(docSource, /fail closed/i);
   assert.match(appSource, /createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring/);
   assert.match(appSource, /installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring/);
+  assert.match(appSource, /controlledOneAssetInstallerAttempted/);
+  assert.match(appSource, /controlledOneAssetInstallerReturnedNamespace/);
+  assert.match(appSource, /controlledOneAssetInstallerReturnStatus/);
+  assert.match(appSource, /controlledOneAssetCommandAvailableAfterInstall/);
 });

@@ -1692,11 +1692,34 @@ installDeveloperOnlyControlledPersistentAtlasManualCommand({
   command: controlledPersistentAtlasManualCommand
 });
 
-installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
+const controlledOneAssetInstallerReturnedNamespace =
+  installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
   globalObject: globalThis,
   wiring: controlledOneAssetLiveDrawBrowserWiring,
   hostnameProvider: () => globalThis?.location?.hostname ?? ""
 });
+
+const controlledOneAssetInstallerNamespaceAfterInstall =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : null;
+
+if (controlledOneAssetInstallerNamespaceAfterInstall) {
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerAttempted =
+    true;
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerReturnedNamespace =
+    controlledOneAssetInstallerReturnedNamespace ===
+    controlledOneAssetInstallerNamespaceAfterInstall;
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerReturnStatus =
+    controlledOneAssetInstallerReturnedNamespace &&
+    typeof controlledOneAssetInstallerReturnedNamespace === "object"
+      ? "namespace_returned"
+      : "namespace_unavailable";
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetCommandAvailableAfterInstall =
+    typeof controlledOneAssetInstallerNamespaceAfterInstall
+      .drawControlledOneAssetLive === "function";
+}
 
 installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
   globalObject: globalThis,
