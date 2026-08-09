@@ -181,6 +181,10 @@ if (diagnosticsNamespaceForEarlyBridgeLookup) {
     capturedOneFrameBridgeFromScriptDiagnostics ? "resolved" : "failed_closed";
   diagnosticsNamespaceForEarlyBridgeLookup.custom25DOneFrameBridgeLookupFailureReason =
     capturedOneFrameBridgeLookupFailureReason;
+  diagnosticsNamespaceForEarlyBridgeLookup.atlasStartupCheckpointAfterEarlyBridge =
+    true;
+  diagnosticsNamespaceForEarlyBridgeLookup.atlasStartupLastReachedCheckpoint =
+    "after_early_bridge";
 }
 
 function readCustom25DCurrentViewportFeatureSourceFromScriptDiagnostics() {
@@ -1102,6 +1106,19 @@ const controlledPersistentAtlasIntegration =
     }
   });
 
+const diagnosticsNamespaceAfterPersistentAtlasIntegration =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : null;
+
+if (diagnosticsNamespaceAfterPersistentAtlasIntegration) {
+  diagnosticsNamespaceAfterPersistentAtlasIntegration.atlasStartupCheckpointAfterPersistentAtlasIntegration =
+    true;
+  diagnosticsNamespaceAfterPersistentAtlasIntegration.atlasStartupLastReachedCheckpoint =
+    "after_persistent_atlas_integration";
+}
+
 const atlasPopulationPreviewSnapshotProvider =
   createPersistentAtlasFrameSnapshotProvider({
     oneFrameSnapshotProvider({
@@ -1685,6 +1702,19 @@ const atlasControlledViewportPopulationPreview =
     populationDrawIntegration: atlasPopulationDrawIntegration
   });
 
+const diagnosticsNamespaceAfterViewportPreview =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : null;
+
+if (diagnosticsNamespaceAfterViewportPreview) {
+  diagnosticsNamespaceAfterViewportPreview.atlasStartupCheckpointAfterViewportPreview =
+    true;
+  diagnosticsNamespaceAfterViewportPreview.atlasStartupLastReachedCheckpoint =
+    "after_viewport_preview";
+}
+
 const controlledPersistentAtlasManualCommand =
   createDeveloperOnlyControlledPersistentAtlasManualCommand({
     hostnameProvider: () => globalThis?.location?.hostname ?? "",
@@ -1715,6 +1745,19 @@ installDeveloperOnlyControlledPersistentAtlasManualCommand({
   command: controlledPersistentAtlasManualCommand
 });
 
+const diagnosticsNamespaceBeforeOneAssetInstallerCall =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : null;
+
+if (diagnosticsNamespaceBeforeOneAssetInstallerCall) {
+  diagnosticsNamespaceBeforeOneAssetInstallerCall.atlasStartupCheckpointBeforeOneAssetInstallerCall =
+    true;
+  diagnosticsNamespaceBeforeOneAssetInstallerCall.atlasStartupLastReachedCheckpoint =
+    "before_one_asset_installer_call";
+}
+
 const controlledOneAssetInstallerReturnedNamespace =
   installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
   globalObject: globalThis,
@@ -1729,6 +1772,10 @@ const controlledOneAssetInstallerNamespaceAfterInstall =
     : null;
 
 if (controlledOneAssetInstallerNamespaceAfterInstall) {
+  controlledOneAssetInstallerNamespaceAfterInstall.atlasStartupCheckpointAfterOneAssetInstallerCall =
+    true;
+  controlledOneAssetInstallerNamespaceAfterInstall.atlasStartupLastReachedCheckpoint =
+    "after_one_asset_installer_call";
   controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerAttempted =
     true;
   controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerResultIsNull =

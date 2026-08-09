@@ -335,5 +335,11 @@ test("9. session doc and app wiring record developer-only diagnostics exposure",
   assert.match(appSource, /controlledOneAssetCommandKeysAfterInstall/);
   assert.match(appSource, /custom25DOneFrameBridgeLookupStatus/);
   assert.match(appSource, /custom25DOneFrameBridgeLookupFailureReason/);
+  assert.match(appSource, /atlasStartupCheckpointAfterEarlyBridge/);
+  assert.match(appSource, /atlasStartupCheckpointAfterPersistentAtlasIntegration/);
+  assert.match(appSource, /atlasStartupCheckpointAfterViewportPreview/);
+  assert.match(appSource, /atlasStartupCheckpointBeforeOneAssetInstallerCall/);
+  assert.match(appSource, /atlasStartupCheckpointAfterOneAssetInstallerCall/);
+  assert.match(appSource, /atlasStartupLastReachedCheckpoint/);
   assert.match(appSource, /try \{/);
 });
