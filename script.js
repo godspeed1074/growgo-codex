@@ -259,25 +259,38 @@ function bootstrapGrowGoDeveloperDiagnosticsForLocalDev(options = {}) {
 
   const namespaceKey = "GrowGoDeveloperDiagnostics";
   const existingNamespace =
-    typeof window[namespaceKey] === "object" && window[namespaceKey] ? window[namespaceKey] : {};
+    typeof window[namespaceKey] === "object" && window[namespaceKey]
+      ? window[namespaceKey]
+      : {};
+  const diagnosticsNamespace = existingNamespace;
 
-  window[namespaceKey] = {
-    ...existingNamespace,
-    available: true,
-    source: "phase-211.2-growgo-map-getter",
-    localDev: true,
-    getGrowGoMap,
-    getCustom25DCurrentViewportFeatureSource,
-    getCustom25DDrawSeamRuntimeIdentity,
-    getCustom25DDrawMutationTrace,
-    resetCustom25DDrawMutationTrace,
-    getCustom25DOneFrameBridge,
-    getCustom25DOneFrameBridgeDebug,
-    getCustom25DOneFrameSnapshotHandoffTrace,
-    resetCustom25DOneFrameSnapshotHandoffTrace,
-    getCustom25DOneFrameSnapshotBoundaryTrace,
-    resetCustom25DOneFrameSnapshotBoundaryTrace
-  };
+  diagnosticsNamespace.available = true;
+  diagnosticsNamespace.source = "phase-211.2-growgo-map-getter";
+  diagnosticsNamespace.localDev = true;
+  diagnosticsNamespace.getGrowGoMap = getGrowGoMap;
+  diagnosticsNamespace.getCustom25DCurrentViewportFeatureSource =
+    getCustom25DCurrentViewportFeatureSource;
+  diagnosticsNamespace.getCustom25DDrawSeamRuntimeIdentity =
+    getCustom25DDrawSeamRuntimeIdentity;
+  diagnosticsNamespace.getCustom25DDrawMutationTrace =
+    getCustom25DDrawMutationTrace;
+  diagnosticsNamespace.resetCustom25DDrawMutationTrace =
+    resetCustom25DDrawMutationTrace;
+  diagnosticsNamespace.getCustom25DOneFrameBridge = getCustom25DOneFrameBridge;
+  diagnosticsNamespace.getCustom25DOneFrameBridgeDebug =
+    getCustom25DOneFrameBridgeDebug;
+  diagnosticsNamespace.getCustom25DOneFrameSnapshotHandoffTrace =
+    getCustom25DOneFrameSnapshotHandoffTrace;
+  diagnosticsNamespace.resetCustom25DOneFrameSnapshotHandoffTrace =
+    resetCustom25DOneFrameSnapshotHandoffTrace;
+  diagnosticsNamespace.getCustom25DOneFrameSnapshotBoundaryTrace =
+    getCustom25DOneFrameSnapshotBoundaryTrace;
+  diagnosticsNamespace.resetCustom25DOneFrameSnapshotBoundaryTrace =
+    resetCustom25DOneFrameSnapshotBoundaryTrace;
+
+  if (window[namespaceKey] !== diagnosticsNamespace) {
+    window[namespaceKey] = diagnosticsNamespace;
+  }
 
   return {
     phase: 211.2,

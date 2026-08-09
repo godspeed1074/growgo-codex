@@ -25,7 +25,8 @@ async function loadAtlasAdapter() {
 function loadGrowGoMapGetterHarness({
   mapValue = null,
   hostname = "localhost",
-  includeWindow = true
+  includeWindow = true,
+  existingDiagnosticsNamespace = undefined
 } = {}) {
   assert.ok(getterBlockMatch, "growgo map getter block should exist in script.js");
   assert.ok(
@@ -42,7 +43,13 @@ function loadGrowGoMapGetterHarness({
         location: {
           hostname,
           href: `http://${hostname}/`
-        }
+        },
+        ...(typeof existingDiagnosticsNamespace === "object" &&
+        existingDiagnosticsNamespace
+          ? {
+              GrowGoDeveloperDiagnostics: existingDiagnosticsNamespace
+            }
+          : {})
       }
     : undefined;
 
@@ -67,6 +74,9 @@ const CUSTOM_25D_DRAW_SEAM_VERSION_TAG = "atlas21150an";
 const CUSTOM_25D_DRAW_SEAM_SOURCE_TAG = "script.js?v=atlas21150an";
 const CUSTOM_25D_DRAW_SEAM_SCRIPT_LOAD_TIMESTAMP = new Date().toISOString();
 function getCustom25DOneFrameBridge() {
+  return null;
+}
+function getCustom25DCurrentViewportFeatureSource() {
   return null;
 }
 function getCustom25DOneFrameBridgeDebug() {
@@ -198,6 +208,52 @@ test("getter bootstrap exposes a developer-only namespace on local dev hosts", (
     "function"
   );
   assert.equal(namespace.getGrowGoMap(), ownedMap);
+});
+
+test("getter bootstrap reuses the existing diagnostics namespace object", () => {
+  const preservedCommand = () => "preserved";
+  const existingNamespace = {
+    existingAtlasCommand: preservedCommand,
+    existingValue: "keep-me"
+  };
+  const { helpers } = loadGrowGoMapGetterHarness({
+    mapValue: { id: "leaflet-map-instance" },
+    hostname: "localhost",
+    existingDiagnosticsNamespace: existingNamespace
+  });
+
+  const namespace = helpers.getWindowNamespace();
+
+  assert.equal(namespace, existingNamespace);
+  assert.equal(namespace.existingAtlasCommand, preservedCommand);
+  assert.equal(namespace.existingValue, "keep-me");
+  assert.equal(typeof namespace.getGrowGoMap, "function");
+});
+
+test("getter bootstrap lets later atlas diagnostics coexist without overwrite", () => {
+  const laterAtlasCommand = () => "atlas-later";
+  const existingNamespace = {
+    getControlledOneAssetLiveDrawStatus: laterAtlasCommand,
+    getControlledPersistentAtlasStatus: () => "persistent-status"
+  };
+  const { helpers } = loadGrowGoMapGetterHarness({
+    mapValue: { id: "leaflet-map-instance" },
+    hostname: "localhost",
+    existingDiagnosticsNamespace: existingNamespace
+  });
+
+  const namespace = helpers.getWindowNamespace();
+
+  assert.equal(namespace.getControlledOneAssetLiveDrawStatus, laterAtlasCommand);
+  assert.equal(
+    namespace.getControlledPersistentAtlasStatus(),
+    "persistent-status"
+  );
+  assert.equal(typeof namespace.getGrowGoMap, "function");
+  assert.equal(
+    typeof namespace.getCustom25DOneFrameSnapshotBoundaryTrace,
+    "function"
+  );
 });
 
 test("draw seam runtime identity reports atlas21150an delivery through the developer diagnostics namespace", () => {
