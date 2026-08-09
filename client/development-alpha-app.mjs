@@ -1708,6 +1708,21 @@ const controlledOneAssetInstallerNamespaceAfterInstall =
 if (controlledOneAssetInstallerNamespaceAfterInstall) {
   controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerAttempted =
     true;
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerResultIsNull =
+    controlledOneAssetInstallerReturnedNamespace == null;
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerResultType =
+    controlledOneAssetInstallerReturnedNamespace == null
+      ? "null"
+      : typeof controlledOneAssetInstallerReturnedNamespace;
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerNamespaceKeys =
+    controlledOneAssetInstallerReturnedNamespace &&
+    typeof controlledOneAssetInstallerReturnedNamespace === "object"
+      ? Object.freeze(
+          Object.keys(controlledOneAssetInstallerReturnedNamespace)
+            .filter((key) => typeof key === "string")
+            .sort()
+        )
+      : Object.freeze([]);
   controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetInstallerReturnedNamespace =
     controlledOneAssetInstallerReturnedNamespace ===
     controlledOneAssetInstallerNamespaceAfterInstall;
@@ -1719,6 +1734,12 @@ if (controlledOneAssetInstallerNamespaceAfterInstall) {
   controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetCommandAvailableAfterInstall =
     typeof controlledOneAssetInstallerNamespaceAfterInstall
       .drawControlledOneAssetLive === "function";
+  controlledOneAssetInstallerNamespaceAfterInstall.controlledOneAssetCommandKeysAfterInstall =
+    Object.freeze(
+      Object.keys(controlledOneAssetInstallerNamespaceAfterInstall)
+        .filter((key) => typeof key === "string" && key.startsWith("controlledOneAsset"))
+        .sort()
+    );
 }
 
 installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
