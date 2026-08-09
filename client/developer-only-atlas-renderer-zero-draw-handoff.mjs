@@ -1,4 +1,4 @@
-import { getApprovedDeveloperOnlyAtlasIdentityRegistry } from "./developer-only-atlas-browser-contract.mjs?v=atlas21213k";
+import { getApprovedDeveloperOnlyAtlasIdentityRegistry } from "./developer-only-atlas-browser-contract.mjs?v=atlas21274a";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {

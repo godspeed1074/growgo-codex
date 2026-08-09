@@ -17,7 +17,7 @@ const adapterSource = fs.readFileSync(
 test("phase 211.50am cache bust wires the development alpha module entry through a versioned URL", () => {
   assert.match(
     indexSource,
-    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21213k"><\/script>/
+    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21274a"><\/script>/
   );
   assert.doesNotMatch(
     indexSource,

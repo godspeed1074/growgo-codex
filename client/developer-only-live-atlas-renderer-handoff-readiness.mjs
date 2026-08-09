@@ -1,7 +1,7 @@
 import {
   createDiscoveredGrowGoCustom25DRendererConsumerDescriptor,
   validateAtlasRendererZeroDrawHandoff
-} from "./developer-only-atlas-renderer-zero-draw-handoff.mjs?v=atlas21213k";
+} from "./developer-only-atlas-renderer-zero-draw-handoff.mjs?v=atlas21274a";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {

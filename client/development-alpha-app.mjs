@@ -19,7 +19,7 @@ import {
 import {
   createDeveloperOnlyLiveAtlasRendererHandoffReadiness,
   installDeveloperOnlyLiveAtlasRendererHandoffReadiness
-} from "./developer-only-live-atlas-renderer-handoff-readiness.mjs?v=atlas21213k";
+} from "./developer-only-live-atlas-renderer-handoff-readiness.mjs?v=atlas21274a";
 import {
   createDeveloperOnlyGrowGoCustom25DLiveOneFrameAdapter
 } from "./developer-only-growgo-custom25d-live-one-frame-adapter.mjs?v=atlas21150am";
@@ -70,7 +70,7 @@ import {
 } from "./developer-only-atlas-custom25d-one-frame-execution-trace.mjs";
 import {
   createDiscoveredGrowGoCustom25DRendererConsumerDescriptor
-} from "./developer-only-atlas-renderer-zero-draw-handoff.mjs?v=atlas21213k";
+} from "./developer-only-atlas-renderer-zero-draw-handoff.mjs?v=atlas21274a";
 import {
   createGrowGoCustom25DLiveOneFrameSurfaceOperations
 } from "./growgo-custom25d-live-one-frame-surface-operations.mjs";

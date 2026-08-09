@@ -20,7 +20,7 @@ const adapterModule = await import(
 test("phase 211.50am keeps the page and module graph pointed at atlas21150am and atlas21150al", () => {
   assert.match(
     indexSource,
-    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21213k"><\/script>/
+    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21274a"><\/script>/
   );
   assert.match(
     developmentAlphaAppSource,

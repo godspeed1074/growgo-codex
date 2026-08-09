@@ -1167,7 +1167,7 @@ test("11. runtime identity, status immutability, no raw references, and no start
   assert.match(indexSource, /<script src="script\.js\?v=atlas21150an"><\/script>/);
   assert.match(
     indexSource,
-    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21213k"><\/script>/
+    /<script type="module" src="client\/development-alpha-app\.mjs\?v=atlas21274a"><\/script>/
   );
   assert.match(
     appSource,
