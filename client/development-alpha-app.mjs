@@ -1,5 +1,4 @@
 import { createDevelopmentAlphaController } from "./development-alpha-controller.mjs";
-import { createDevelopmentAlphaFirebaseRuntime } from "./development-alpha-runtime.mjs";
 import {
   createControlledOneSessionDeveloperMapAttachmentAuthorization,
   installControlledOneSessionDeveloperMapAttachmentAuthorization
@@ -85,6 +84,8 @@ import {
 } from "./developer-only-atlas-population-draw-integration.mjs";
 
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
+const DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE =
+  "DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE";
 const atlasCustom25DOneFrameExecutionTrace =
   createDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace();
 
@@ -128,6 +129,33 @@ function createCapturedOneFrameBridgeProvider(bridgeGetter) {
       return cachedBridge;
     }
   );
+}
+
+async function loadDevelopmentAlphaFirebaseRuntime(runtimeContract) {
+  try {
+    const runtimeModule = await import("./development-alpha-runtime.mjs");
+    const createRuntime = runtimeModule?.createDevelopmentAlphaFirebaseRuntime;
+
+    if (typeof createRuntime !== "function") {
+      const missingExportError = new Error(
+        DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE
+      );
+      missingExportError.code = DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE;
+      missingExportError.reasonCode = DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE;
+      throw missingExportError;
+    }
+
+    return createRuntime(runtimeContract);
+  } catch (error) {
+    const runtimeUnavailableError = new Error(
+      DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE
+    );
+    runtimeUnavailableError.code = DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE;
+    runtimeUnavailableError.reasonCode =
+      DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE;
+    runtimeUnavailableError.cause = error;
+    throw runtimeUnavailableError;
+  }
 }
 
 const getGrowGoMapFromScriptDiagnostics = captureDiagnosticsFunction("getGrowGoMap");
@@ -1853,7 +1881,7 @@ const controller = createDevelopmentAlphaController({
     return globalThis[CLIENT_CONFIG_GLOBAL] ?? null;
   },
   async createRuntime(runtimeContract) {
-    return createDevelopmentAlphaFirebaseRuntime(runtimeContract);
+    return loadDevelopmentAlphaFirebaseRuntime(runtimeContract);
   },
   render(state) {
     renderPanel(elements, state);

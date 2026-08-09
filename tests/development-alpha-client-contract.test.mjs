@@ -173,14 +173,29 @@ test("runtime uses browser-local auth persistence for cross-session restoration"
   assert.match(runtimeSource, /setPersistence\(auth,\s*browserLocalPersistence\)/);
 });
 
+test("development alpha app lazy-loads firebase runtime so diagnostics startup is not blocked", () => {
+  const appSource = fs.readFileSync(
+    path.join(repoRoot, "client", "development-alpha-app.mjs"),
+    "utf8"
+  );
+
+  assert.doesNotMatch(
+    appSource,
+    /import\s*\{\s*createDevelopmentAlphaFirebaseRuntime\s*\}\s*from\s*"[^"]*development-alpha-runtime\.mjs"/
+  );
+  assert.match(appSource, /await import\("\.\/development-alpha-runtime\.mjs"\)/);
+  assert.match(appSource, /DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE/);
+});
+
 test("index loads the alpha client config before the alpha app and the scaffold publishes the expected global", () => {
   const indexSource = fs.readFileSync(path.join(repoRoot, "index.html"), "utf8");
   const configTag = '<script src="development-alpha-client-config.js"></script>';
-  const appTag = '<script type="module" src="client/development-alpha-app.mjs"></script>';
+  const appTagPattern =
+    /<script type="module" src="client\/development-alpha-app\.mjs(?:\?v=[^"]+)?"><\/script>/;
 
   assert.notEqual(indexSource.includes(configTag), false);
-  assert.notEqual(indexSource.includes(appTag), false);
-  assert.ok(indexSource.indexOf(configTag) < indexSource.indexOf(appTag));
+  assert.match(indexSource, appTagPattern);
+  assert.ok(indexSource.indexOf(configTag) < indexSource.search(appTagPattern));
 
   const configSource = fs.readFileSync(
     path.join(repoRoot, "development-alpha-client-config.js"),

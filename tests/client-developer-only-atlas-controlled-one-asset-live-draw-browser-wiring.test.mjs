@@ -287,6 +287,8 @@ test("7. no startup draw occurs in browser wiring or app source", () => {
   const appSource = fs.readFileSync(appPath, "utf8");
 
   assert.match(appSource, /installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring/);
+  assert.doesNotMatch(appSource, /import\s*\{\s*createDevelopmentAlphaFirebaseRuntime\s*\}/);
+  assert.match(appSource, /await import\("\.\/development-alpha-runtime\.mjs"\)/);
   assert.doesNotMatch(appSource, /\.\s*authorizeControlledOneAssetLiveDraw\s*\(/);
   assert.doesNotMatch(appSource, /\.\s*drawControlledOneAssetLive\s*\(/);
   assert.doesNotMatch(appSource, /\bsetTimeout\b|\bsetInterval\b/);
