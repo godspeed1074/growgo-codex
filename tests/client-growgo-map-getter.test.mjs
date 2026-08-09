@@ -14,6 +14,12 @@ const getterBlockMatch = scriptSource.match(
 const bootstrapBlockMatch = scriptSource.match(
   /function bootstrapGrowGoDeveloperDiagnosticsForLocalDev\(options = \{\}\) \{[\s\S]*?\n\}\n\nbootstrapGrowGoDeveloperDiagnosticsForLocalDev\(\{\n  localDevBootstrap: true\n\}\);/
 );
+const phase248BootstrapBlockMatch = scriptSource.match(
+  /function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev\(options = \{\}\) \{[\s\S]*?\n\}\n\nbootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev\(\{\n  localDevBootstrap: true\n\}\);/
+);
+const phase240HelperExposureBlockMatch = scriptSource.match(
+  /function exposeCustom25DVisualManualTestHelpersForLocalDevConsole\(options = \{\}\) \{[\s\S]*?\n\}/
+);
 const drawSeamIdentityBody = scriptSource.match(
   /function getCustom25DDrawSeamRuntimeIdentity\(\) \{[\s\S]*?\n\}/
 );
@@ -253,6 +259,57 @@ test("getter bootstrap lets later atlas diagnostics coexist without overwrite", 
   assert.equal(
     typeof namespace.getCustom25DOneFrameSnapshotBoundaryTrace,
     "function"
+  );
+});
+
+test("phase-248 bootstrap mutates the shared diagnostics namespace instead of replacing it", () => {
+  assert.ok(
+    phase248BootstrapBlockMatch,
+    "phase-248 bootstrap block should exist in script.js"
+  );
+
+  const phase248Source = phase248BootstrapBlockMatch[0];
+
+  assert.match(
+    phase248Source,
+    /const existingNamespace\s*=\s*typeof window\[namespaceKey\] === "object"/
+  );
+  assert.match(phase248Source, /const namespace = existingNamespace;/);
+  assert.match(
+    phase248Source,
+    /if \(window\[namespaceKey\] !== namespace\) \{\s*window\[namespaceKey\] = namespace;\s*\}/
+  );
+  assert.doesNotMatch(
+    phase248Source,
+    /const namespace = \{[\s\S]*window\[namespaceKey\] = namespace;/
+  );
+});
+
+test("phase-240 helper exposure reuses the shared diagnostics namespace across window and globalThis", () => {
+  assert.ok(
+    phase240HelperExposureBlockMatch,
+    "phase-240 helper exposure block should exist in script.js"
+  );
+
+  const phase240Source = phase240HelperExposureBlockMatch[0];
+
+  assert.match(
+    phase240Source,
+    /const existingNamespace\s*=\s*typeof globalThis\[namespaceKey\] === "object"/
+  );
+  assert.match(phase240Source, /const namespace = existingNamespace;/);
+  assert.match(phase240Source, /Object\.assign\(namespace,\s*\{/);
+  assert.match(
+    phase240Source,
+    /if \(window\[namespaceKey\] !== namespace\) \{\s*window\[namespaceKey\] = namespace;\s*\}/
+  );
+  assert.match(
+    phase240Source,
+    /if \(globalThis\[namespaceKey\] !== namespace\) \{\s*globalThis\[namespaceKey\] = namespace;\s*\}/
+  );
+  assert.doesNotMatch(
+    phase240Source,
+    /const namespace = \{[\s\S]*globalThis\[namespaceKey\] = namespace;/
   );
 });
 

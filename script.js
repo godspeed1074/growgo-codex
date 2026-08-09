@@ -373,63 +373,65 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
   };
 
   const existingNamespace =
-    typeof window[namespaceKey] === "object" && window[namespaceKey] ? window[namespaceKey] : {};
-  const namespace = {
-    ...existingNamespace,
-    available: true,
-    source: "phase-248-bootstrap",
-    localDev: true,
-    bootstrappedAt: "phase-248",
-    getCustom25DVisualFirstShapeTestContract: createNamespaceWrapper(
+    typeof window[namespaceKey] === "object" && window[namespaceKey]
+      ? window[namespaceKey]
+      : {};
+  const namespace = existingNamespace;
+
+  namespace.available = true;
+  namespace.source = "phase-248-bootstrap";
+  namespace.localDev = true;
+  namespace.bootstrappedAt = "phase-248";
+  namespace.getCustom25DVisualFirstShapeTestContract = createNamespaceWrapper(
       "getCustom25DVisualFirstShapeTestContract",
       () =>
         typeof getCustom25DVisualFirstShapeTestContract === "function"
           ? getCustom25DVisualFirstShapeTestContract
           : null
-    ),
-    createCustom25DVisualFirstShapeManualTestLayer: createNamespaceWrapper(
+    );
+  namespace.createCustom25DVisualFirstShapeManualTestLayer = createNamespaceWrapper(
       "createCustom25DVisualFirstShapeManualTestLayer",
       () =>
         typeof createCustom25DVisualFirstShapeManualTestLayer === "function"
           ? createCustom25DVisualFirstShapeManualTestLayer
           : null
-    ),
-    clearCustom25DVisualFirstShapeManualTestLayer: createNamespaceWrapper(
+    );
+  namespace.clearCustom25DVisualFirstShapeManualTestLayer = createNamespaceWrapper(
       "clearCustom25DVisualFirstShapeManualTestLayer",
       () =>
         typeof clearCustom25DVisualFirstShapeManualTestLayer === "function"
           ? clearCustom25DVisualFirstShapeManualTestLayer
           : null
-    ),
-    runCustom25DVisualFirstShapeManualTest: createNamespaceWrapper(
+    );
+  namespace.runCustom25DVisualFirstShapeManualTest = createNamespaceWrapper(
       "runCustom25DVisualFirstShapeManualTest",
       () =>
         typeof runCustom25DVisualFirstShapeManualTest === "function"
           ? runCustom25DVisualFirstShapeManualTest
           : null
-    ),
-    getCustom25DVisualFirstShapeManualTestVerificationReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualFirstShapeManualTestVerificationReport = createNamespaceWrapper(
       "getCustom25DVisualFirstShapeManualTestVerificationReport",
       () =>
         typeof getCustom25DVisualFirstShapeManualTestVerificationReport === "function"
           ? getCustom25DVisualFirstShapeManualTestVerificationReport
           : null
-    ),
-    getCustom25DVisualFirstShapeManualTestCloseoutReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualFirstShapeManualTestCloseoutReport = createNamespaceWrapper(
       "getCustom25DVisualFirstShapeManualTestCloseoutReport",
       () =>
         typeof getCustom25DVisualFirstShapeManualTestCloseoutReport === "function"
           ? getCustom25DVisualFirstShapeManualTestCloseoutReport
           : null
-    ),
-    getCustom25DVisualInertRendererShellCloseoutReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualInertRendererShellCloseoutReport = createNamespaceWrapper(
       "getCustom25DVisualInertRendererShellCloseoutReport",
       () =>
         typeof getCustom25DVisualInertRendererShellCloseoutReport === "function"
           ? getCustom25DVisualInertRendererShellCloseoutReport
           : null
-    ),
-    getCustom25DVisualRendererLifecyclePlanReport: createNamespaceWrapper(
+      );
+  namespace.getCustom25DVisualRendererLifecyclePlanReport = createNamespaceWrapper(
       "getCustom25DVisualRendererLifecyclePlanReport",
       () =>
         typeof getCustom25DVisualRendererLifecyclePlanReport === "function"
@@ -11751,18 +11753,19 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport
             : null
-      ),
-    createCustom25DVisualManualRendererSharedStateContainerShell:
+      );
+  namespace.createCustom25DVisualManualRendererSharedStateContainerShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererSharedStateContainerShell",
         () =>
           typeof createCustom25DVisualManualRendererSharedStateContainerShell === "function"
             ? createCustom25DVisualManualRendererSharedStateContainerShell
             : null
-      )
-  };
+      );
 
-  window[namespaceKey] = namespace;
+  if (window[namespaceKey] !== namespace) {
+    window[namespaceKey] = namespace;
+  }
   return {
     phase: 248,
     name: "custom-25d-visual-manual-test-console-namespace-bootstrap",
@@ -263967,7 +263970,15 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
     return helper(...args);
   };
 
-  const namespace = {
+  const existingNamespace =
+    typeof globalThis[namespaceKey] === "object" && globalThis[namespaceKey]
+      ? globalThis[namespaceKey]
+      : typeof window[namespaceKey] === "object" && window[namespaceKey]
+        ? window[namespaceKey]
+        : {};
+  const namespace = existingNamespace;
+
+  Object.assign(namespace, {
     getCustom25DVisualFirstShapeTestContract: createNamespaceWrapper(
       "getCustom25DVisualFirstShapeTestContract",
       () =>
@@ -271119,10 +271130,14 @@ function exposeCustom25DVisualManualTestHelpersForLocalDevConsole(options = {}) 
             ? createCustom25DVisualManualRendererSharedStateContainerShell
             : null
       )
-  };
+  });
 
-  window[namespaceKey] = namespace;
-  globalThis[namespaceKey] = namespace;
+  if (window[namespaceKey] !== namespace) {
+    window[namespaceKey] = namespace;
+  }
+  if (globalThis[namespaceKey] !== namespace) {
+    globalThis[namespaceKey] = namespace;
+  }
 
   return {
     phase: 240,
