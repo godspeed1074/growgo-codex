@@ -2,6 +2,9 @@ import {
   createDeveloperOnlyAtlasControlledOneAssetLiveDraw,
   installDeveloperOnlyAtlasControlledOneAssetLiveDraw
 } from "./developer-only-atlas-controlled-one-asset-live-draw.mjs";
+import {
+  createDeveloperOnlyAtlasControlledOneAssetLoadDependencyBridge
+} from "./developer-only-atlas-controlled-one-asset-load-dependency-bridge.mjs";
 
 const BROWSER_WIRING_STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_CONTROLLED_ONE_ASSET_LIVE_DRAW_BROWSER_WIRING_STATUS_001";
@@ -89,9 +92,14 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
   hostnameProvider = () => "",
   persistentAtlasStatusProvider = () => null,
   assetResolverProvider = createDefaultAssetResolverProvider(),
-  assetLoadProvider = unavailable(
-    "ONE_ASSET_LIVE_DRAW_ASSET_LOAD_DEPENDENCY_UNAVAILABLE"
-  ),
+  assetLoadDependencyBridge =
+    createDeveloperOnlyAtlasControlledOneAssetLoadDependencyBridge(),
+  assetLoadProvider = ({ rendererHandoff, approvedAssetRecord, resolvedAsset }) =>
+    assetLoadDependencyBridge.loadControlledOneAssetLiveDrawAssetDependency({
+      rendererHandoff,
+      approvedAssetRecord,
+      resolvedAsset
+    }),
   rendererSubmitProvider = unavailable(
     "ONE_ASSET_LIVE_DRAW_RENDERER_SUBMIT_DEPENDENCY_UNAVAILABLE"
   ),
@@ -112,6 +120,11 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
 
   function getControlledOneAssetLiveDrawBrowserWiringStatus() {
     const dependencyFailures = [];
+    const assetLoadDependencyStatus =
+      typeof assetLoadDependencyBridge
+        ?.getControlledOneAssetLiveDrawAssetLoadDependencyStatus === "function"
+        ? assetLoadDependencyBridge.getControlledOneAssetLiveDrawAssetLoadDependencyStatus()
+        : null;
 
     if (!isAvailableFunction(assetResolverProvider)) {
       dependencyFailures.push(
@@ -151,6 +164,18 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
       oneAssetLiveDrawDependenciesAvailable: dependenciesAvailable,
       oneAssetLiveDrawBrowserWiringStatus: browserWiringStatus,
       oneAssetLiveDrawBrowserWiringReason: browserWiringReason,
+      oneAssetLiveDrawAssetLoadDependencyStatus:
+        sanitizeString(
+          assetLoadDependencyStatus?.oneAssetLiveDrawAssetLoadDependencyStatus
+        ) ?? null,
+      selectedAssetLoaderId:
+        sanitizeString(assetLoadDependencyStatus?.selectedAssetLoaderId) ?? null,
+      selectedExistingAssetId:
+        sanitizeString(assetLoadDependencyStatus?.selectedExistingAssetId) ?? null,
+      resolvedGlbIdentity:
+        sanitizeString(assetLoadDependencyStatus?.resolvedGlbIdentity) ?? null,
+      assetLoadDependencyReason:
+        sanitizeString(assetLoadDependencyStatus?.assetLoadDependencyReason) ?? null,
       canonicalSafetyFlags: canonicalSafetyFlags()
     });
   }
@@ -174,6 +199,11 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
           browserStatus.oneAssetLiveDrawBrowserWiringStatus,
         oneAssetLiveDrawBrowserWiringReason:
           browserStatus.oneAssetLiveDrawBrowserWiringReason,
+        oneAssetLiveDrawAssetLoadDependencyStatus:
+          browserStatus.oneAssetLiveDrawAssetLoadDependencyStatus,
+        selectedAssetLoaderId: browserStatus.selectedAssetLoaderId,
+        assetLoadDependencyReason:
+          browserStatus.assetLoadDependencyReason,
         canonicalSafetyFlags: canonicalSafetyFlags()
       });
     },

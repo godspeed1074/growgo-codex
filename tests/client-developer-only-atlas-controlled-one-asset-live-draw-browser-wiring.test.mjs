@@ -221,7 +221,7 @@ test("3. missing live dependency fails closed", () => {
   });
 
   assert.equal(result.outcome, "failed_closed");
-  assert.equal(result.reasonCode, "ASSET_LOAD_PROVIDER_UNAVAILABLE");
+  assert.equal(result.reasonCode, "RENDERER_SUBMIT_PROVIDER_UNAVAILABLE");
 });
 
 test("4. existing 212.73 module remains source of truth", () => {
@@ -264,6 +264,7 @@ test("5. status is frozen and serializable", () => {
   assert.equal(status.oneAssetLiveDrawCommandAvailable, true);
   assert.equal(status.oneAssetLiveDrawDependenciesAvailable, false);
   assert.equal(status.oneAssetLiveDrawBrowserWiringStatus, "blocked");
+  assert.equal(status.oneAssetLiveDrawAssetLoadDependencyStatus, "idle");
 });
 
 test("6. no raw browser objects leak through diagnostics", () => {
@@ -300,7 +301,11 @@ test("8. browser status surfaces dependency availability explicitly", () => {
   assert.equal(status.oneAssetLiveDrawBrowserWiringReason, browserStatus.oneAssetLiveDrawBrowserWiringReason);
   assert.equal(
     browserStatus.oneAssetLiveDrawBrowserWiringReason,
-    "ONE_ASSET_LIVE_DRAW_ASSET_LOAD_DEPENDENCY_UNAVAILABLE"
+    "ONE_ASSET_LIVE_DRAW_RENDERER_SUBMIT_DEPENDENCY_UNAVAILABLE"
+  );
+  assert.equal(
+    browserStatus.oneAssetLiveDrawAssetLoadDependencyStatus,
+    "idle"
   );
 });
 
