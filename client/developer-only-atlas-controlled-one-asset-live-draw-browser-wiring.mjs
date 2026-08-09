@@ -5,6 +5,9 @@ import {
 import {
   createDeveloperOnlyAtlasControlledOneAssetLoadDependencyBridge
 } from "./developer-only-atlas-controlled-one-asset-load-dependency-bridge.mjs";
+import {
+  createDeveloperOnlyAtlasControlledOneAssetRendererSubmitDependencyBridge
+} from "./developer-only-atlas-controlled-one-asset-renderer-submit-dependency-bridge.mjs";
 
 const BROWSER_WIRING_STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_CONTROLLED_ONE_ASSET_LIVE_DRAW_BROWSER_WIRING_STATUS_001";
@@ -94,15 +97,24 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
   assetResolverProvider = createDefaultAssetResolverProvider(),
   assetLoadDependencyBridge =
     createDeveloperOnlyAtlasControlledOneAssetLoadDependencyBridge(),
+  rendererSubmitDependencyBridge =
+    createDeveloperOnlyAtlasControlledOneAssetRendererSubmitDependencyBridge(),
   assetLoadProvider = ({ rendererHandoff, approvedAssetRecord, resolvedAsset }) =>
     assetLoadDependencyBridge.loadControlledOneAssetLiveDrawAssetDependency({
       rendererHandoff,
       approvedAssetRecord,
       resolvedAsset
     }),
-  rendererSubmitProvider = unavailable(
-    "ONE_ASSET_LIVE_DRAW_RENDERER_SUBMIT_DEPENDENCY_UNAVAILABLE"
-  ),
+  rendererSubmitProvider = ({
+    rendererHandoff,
+    loadedAsset,
+    approvedAssetRecord
+  }) =>
+    rendererSubmitDependencyBridge.submitControlledOneAssetLiveDraw({
+      rendererHandoff,
+      loadedAsset,
+      approvedAssetRecord
+    }),
   cleanupProvider = () =>
     deepFreeze({
       cleanupStatus: "already_clear",
@@ -124,6 +136,11 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
       typeof assetLoadDependencyBridge
         ?.getControlledOneAssetLiveDrawAssetLoadDependencyStatus === "function"
         ? assetLoadDependencyBridge.getControlledOneAssetLiveDrawAssetLoadDependencyStatus()
+        : null;
+    const rendererSubmitDependencyStatus =
+      typeof rendererSubmitDependencyBridge
+        ?.getControlledOneAssetLiveDrawRendererSubmitDependencyStatus === "function"
+        ? rendererSubmitDependencyBridge.getControlledOneAssetLiveDrawRendererSubmitDependencyStatus()
         : null;
 
     if (!isAvailableFunction(assetResolverProvider)) {
@@ -176,6 +193,21 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
         sanitizeString(assetLoadDependencyStatus?.resolvedGlbIdentity) ?? null,
       assetLoadDependencyReason:
         sanitizeString(assetLoadDependencyStatus?.assetLoadDependencyReason) ?? null,
+      oneAssetLiveDrawRendererSubmitDependencyStatus:
+        sanitizeString(
+          rendererSubmitDependencyStatus
+            ?.oneAssetLiveDrawRendererSubmitDependencyStatus
+        ) ?? null,
+      rendererSubmitDependencyId:
+        sanitizeString(
+          rendererSubmitDependencyStatus?.rendererSubmitDependencyId
+        ) ?? null,
+      rendererSubmitAvailabilityStatus:
+        sanitizeString(
+          rendererSubmitDependencyStatus?.rendererSubmitAvailabilityStatus
+        ) ?? null,
+      rendererSubmitReason:
+        sanitizeString(rendererSubmitDependencyStatus?.rendererSubmitReason) ?? null,
       canonicalSafetyFlags: canonicalSafetyFlags()
     });
   }
@@ -204,6 +236,14 @@ export function createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring(
         selectedAssetLoaderId: browserStatus.selectedAssetLoaderId,
         assetLoadDependencyReason:
           browserStatus.assetLoadDependencyReason,
+        oneAssetLiveDrawRendererSubmitDependencyStatus:
+          browserStatus.oneAssetLiveDrawRendererSubmitDependencyStatus,
+        rendererSubmitDependencyId:
+          browserStatus.rendererSubmitDependencyId,
+        rendererSubmitAvailabilityStatus:
+          browserStatus.rendererSubmitAvailabilityStatus,
+        rendererSubmitReason:
+          browserStatus.rendererSubmitReason,
         canonicalSafetyFlags: canonicalSafetyFlags()
       });
     },

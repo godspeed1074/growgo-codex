@@ -205,7 +205,7 @@ test("2. wrong confirmation fails closed", () => {
   assert.equal(result.reasonCode, "INVALID_CONFIRMATION");
 });
 
-test("3. missing live dependency fails closed", () => {
+test("3. valid live dependency path submits one controlled eucalyptus draw", () => {
   const wiring = createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
     hostnameProvider: () => "localhost",
     persistentAtlasStatusProvider: () => getValidPersistentStatus()
@@ -220,8 +220,10 @@ test("3. missing live dependency fails closed", () => {
     rendererHandoff: handoff
   });
 
-  assert.equal(result.outcome, "failed_closed");
-  assert.equal(result.reasonCode, "RENDERER_SUBMIT_PROVIDER_UNAVAILABLE");
+  assert.equal(result.outcome, "drawn");
+  assert.equal(result.reasonCode, "CONTROLLED_ONE_ASSET_LIVE_DRAW_COMPLETED");
+  assert.equal(result.rendererSubmitStatus, "submitted");
+  assert.equal(result.renderedAssetCount, 1);
 });
 
 test("4. existing 212.73 module remains source of truth", () => {
@@ -262,9 +264,10 @@ test("5. status is frozen and serializable", () => {
   assert.equal(Object.isFrozen(status), true);
   assert.doesNotThrow(() => JSON.stringify(status));
   assert.equal(status.oneAssetLiveDrawCommandAvailable, true);
-  assert.equal(status.oneAssetLiveDrawDependenciesAvailable, false);
-  assert.equal(status.oneAssetLiveDrawBrowserWiringStatus, "blocked");
+  assert.equal(status.oneAssetLiveDrawDependenciesAvailable, true);
+  assert.equal(status.oneAssetLiveDrawBrowserWiringStatus, "ready");
   assert.equal(status.oneAssetLiveDrawAssetLoadDependencyStatus, "idle");
+  assert.equal(status.oneAssetLiveDrawRendererSubmitDependencyStatus, "idle");
 });
 
 test("6. no raw browser objects leak through diagnostics", () => {
@@ -301,10 +304,14 @@ test("8. browser status surfaces dependency availability explicitly", () => {
   assert.equal(status.oneAssetLiveDrawBrowserWiringReason, browserStatus.oneAssetLiveDrawBrowserWiringReason);
   assert.equal(
     browserStatus.oneAssetLiveDrawBrowserWiringReason,
-    "ONE_ASSET_LIVE_DRAW_RENDERER_SUBMIT_DEPENDENCY_UNAVAILABLE"
+    "ONE_ASSET_LIVE_DRAW_BROWSER_WIRING_READY"
   );
   assert.equal(
     browserStatus.oneAssetLiveDrawAssetLoadDependencyStatus,
+    "idle"
+  );
+  assert.equal(
+    browserStatus.oneAssetLiveDrawRendererSubmitDependencyStatus,
     "idle"
   );
 });
