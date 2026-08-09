@@ -83,6 +83,17 @@ import {
   submitAtlasPopulationPlanForDraw
 } from "./developer-only-atlas-population-draw-integration.mjs";
 
+const developmentAlphaStartupDiagnosticsNamespace =
+  globalThis?.GrowGoDeveloperDiagnostics &&
+  typeof globalThis.GrowGoDeveloperDiagnostics === "object"
+    ? globalThis.GrowGoDeveloperDiagnostics
+    : (globalThis.GrowGoDeveloperDiagnostics = {});
+
+developmentAlphaStartupDiagnosticsNamespace.developmentAlphaModuleExecutionStarted =
+  true;
+developmentAlphaStartupDiagnosticsNamespace.developmentAlphaModuleExecutionTimestamp =
+  Date.now();
+
 const CLIENT_CONFIG_GLOBAL = "__GROWGO_DEVELOPMENT_ALPHA_CLIENT_CONFIG__";
 const DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE =
   "DEVELOPMENT_ALPHA_FIREBASE_RUNTIME_UNAVAILABLE";
