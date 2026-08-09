@@ -437,79 +437,79 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
         typeof getCustom25DVisualRendererLifecyclePlanReport === "function"
           ? getCustom25DVisualRendererLifecyclePlanReport
           : null
-    ),
-    getCustom25DVisualRendererLifecycleContractReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualRendererLifecycleContractReport = createNamespaceWrapper(
       "getCustom25DVisualRendererLifecycleContractReport",
       () =>
         typeof getCustom25DVisualRendererLifecycleContractReport === "function"
           ? getCustom25DVisualRendererLifecycleContractReport
           : null
-    ),
-    getCustom25DVisualManualInitializationGuardPlanReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationGuardPlanReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationGuardPlanReport",
       () =>
         typeof getCustom25DVisualManualInitializationGuardPlanReport === "function"
           ? getCustom25DVisualManualInitializationGuardPlanReport
           : null
-    ),
-    getCustom25DVisualManualInitializationGuardContractReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationGuardContractReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationGuardContractReport",
       () =>
         typeof getCustom25DVisualManualInitializationGuardContractReport === "function"
           ? getCustom25DVisualManualInitializationGuardContractReport
           : null
-    ),
-    canInitializeCustom25DVisualRendererManually: createNamespaceWrapper(
+    );
+  namespace.canInitializeCustom25DVisualRendererManually = createNamespaceWrapper(
       "canInitializeCustom25DVisualRendererManually",
       () =>
         typeof canInitializeCustom25DVisualRendererManually === "function"
           ? canInitializeCustom25DVisualRendererManually
           : null
-    ),
-    getCustom25DVisualManualInitializationGuardShellCloseoutReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationGuardShellCloseoutReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationGuardShellCloseoutReport",
       () =>
         typeof getCustom25DVisualManualInitializationGuardShellCloseoutReport === "function"
           ? getCustom25DVisualManualInitializationGuardShellCloseoutReport
           : null
-    ),
-    getCustom25DVisualManualInitializationApprovalSignalPlanReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationApprovalSignalPlanReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationApprovalSignalPlanReport",
       () =>
         typeof getCustom25DVisualManualInitializationApprovalSignalPlanReport === "function"
           ? getCustom25DVisualManualInitializationApprovalSignalPlanReport
           : null
-    ),
-    getCustom25DVisualManualInitializationApprovalSignalContractReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationApprovalSignalContractReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationApprovalSignalContractReport",
       () =>
         typeof getCustom25DVisualManualInitializationApprovalSignalContractReport === "function"
           ? getCustom25DVisualManualInitializationApprovalSignalContractReport
           : null
-    ),
-    evaluateCustom25DVisualManualInitializationSignals: createNamespaceWrapper(
+    );
+  namespace.evaluateCustom25DVisualManualInitializationSignals = createNamespaceWrapper(
       "evaluateCustom25DVisualManualInitializationSignals",
       () =>
         typeof evaluateCustom25DVisualManualInitializationSignals === "function"
           ? evaluateCustom25DVisualManualInitializationSignals
           : null
-    ),
-    getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport",
       () =>
         typeof getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport === "function"
           ? getCustom25DVisualManualInitializationSignalEvaluatorCloseoutReport
           : null
-    ),
-    getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport: createNamespaceWrapper(
+    );
+  namespace.getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport = createNamespaceWrapper(
       "getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport",
       () =>
         typeof getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport ===
         "function"
           ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationPlanReport
           : null
-    ),
-    getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport:
+    );
+  namespace.getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport",
         () =>
@@ -517,8 +517,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualInitializationGuardEvaluatorIntegrationContractReport
             : null
-      ),
-    canUseCustom25DVisualManualRendererInitializationIntegratedGuard:
+      );
+  namespace.canUseCustom25DVisualManualRendererInitializationIntegratedGuard =
       createNamespaceWrapper(
         "canUseCustom25DVisualManualRendererInitializationIntegratedGuard",
         () =>
@@ -526,8 +526,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? canUseCustom25DVisualManualRendererInitializationIntegratedGuard
             : null
-      ),
-    getCustom25DVisualManualInitializationIntegratedGuardCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualInitializationIntegratedGuardCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualInitializationIntegratedGuardCloseoutReport",
         () =>
@@ -535,8 +535,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualInitializationIntegratedGuardCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationShellPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationShellPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationShellPlanReport",
         () =>
@@ -544,8 +544,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationShellPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationShellContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationShellContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationShellContractReport",
         () =>
@@ -553,16 +553,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationShellContractReport
             : null
-      ),
-    initializeCustom25DVisualRendererManually:
+      );
+  namespace.initializeCustom25DVisualRendererManually =
       createNamespaceWrapper(
         "initializeCustom25DVisualRendererManually",
         () =>
           typeof initializeCustom25DVisualRendererManually === "function"
             ? initializeCustom25DVisualRendererManually
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationShellCloseoutReport",
         () =>
@@ -570,8 +570,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateContainerPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateContainerPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerPlanReport",
         () =>
@@ -579,8 +579,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateContainerPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateContainerContractReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateContainerContractReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerContractReadinessReport",
         () =>
@@ -588,16 +588,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateContainerContractReadinessReport
             : null
-      ),
-    createCustom25DVisualManualRendererStateContainerShell:
+      );
+  namespace.createCustom25DVisualManualRendererStateContainerShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererStateContainerShell",
         () =>
           typeof createCustom25DVisualManualRendererStateContainerShell === "function"
             ? createCustom25DVisualManualRendererStateContainerShell
             : null
-      ),
-    getCustom25DVisualManualRendererStateContainerShellVerificationReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateContainerShellVerificationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
         () =>
@@ -605,8 +605,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateContainerShellVerificationReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateMutationReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateMutationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateMutationReadinessReport",
         () =>
@@ -614,8 +614,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateMutationReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateMutationReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateMutationReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateMutationReadinessCloseoutReport",
         () =>
@@ -623,15 +623,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateMutationReadinessCloseoutReport
             : null
-      ),
-    applyCustom25DVisualManualRendererStateMutationShell: createNamespaceWrapper(
+      );
+  namespace.applyCustom25DVisualManualRendererStateMutationShell = createNamespaceWrapper(
       "applyCustom25DVisualManualRendererStateMutationShell",
       () =>
         typeof applyCustom25DVisualManualRendererStateMutationShell === "function"
           ? applyCustom25DVisualManualRendererStateMutationShell
           : null
-    ),
-    getCustom25DVisualManualRendererStateMutationShellCloseoutReport:
+    );
+  namespace.getCustom25DVisualManualRendererStateMutationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateMutationShellCloseoutReport",
         () =>
@@ -639,8 +639,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateMutationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateMutationShellSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateMutationShellSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateMutationShellSelfReviewReport",
         () =>
@@ -648,8 +648,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateMutationShellSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererNextStateMutationReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererNextStateMutationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNextStateMutationReadinessReport",
         () =>
@@ -657,8 +657,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNextStateMutationReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport",
         () =>
@@ -666,15 +666,15 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNextStateMutationReadinessCloseoutReport
             : null
-      ),
-    applyCustom25DVisualManualRendererSecondStateMutationShell: createNamespaceWrapper(
+      );
+  namespace.applyCustom25DVisualManualRendererSecondStateMutationShell = createNamespaceWrapper(
       "applyCustom25DVisualManualRendererSecondStateMutationShell",
       () =>
         typeof applyCustom25DVisualManualRendererSecondStateMutationShell === "function"
           ? applyCustom25DVisualManualRendererSecondStateMutationShell
           : null
-    ),
-    getCustom25DVisualManualRendererSecondStateMutationCloseoutReport:
+    );
+  namespace.getCustom25DVisualManualRendererSecondStateMutationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSecondStateMutationCloseoutReport",
         () =>
@@ -682,8 +682,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSecondStateMutationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSecondStateMutationSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererSecondStateMutationSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSecondStateMutationSelfReviewReport",
         () =>
@@ -691,8 +691,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSecondStateMutationSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateFieldContractReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateFieldContractReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateFieldContractReadinessReport",
         () =>
@@ -700,8 +700,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateFieldContractReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateFieldContractReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateFieldContractReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateFieldContractReadinessCloseoutReport",
         () =>
@@ -709,8 +709,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateFieldContractReadinessCloseoutReport
             : null
-      ),
-    applyCustom25DVisualManualRendererStateFieldContractShell:
+      );
+  namespace.applyCustom25DVisualManualRendererStateFieldContractShell =
       createNamespaceWrapper(
         "applyCustom25DVisualManualRendererStateFieldContractShell",
         () =>
@@ -718,8 +718,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? applyCustom25DVisualManualRendererStateFieldContractShell
             : null
-      ),
-    getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport",
         () =>
@@ -727,8 +727,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateFieldContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateFieldContractNextReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateFieldContractNextReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateFieldContractNextReadinessReport",
         () =>
@@ -736,8 +736,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateFieldContractNextReadinessReport
             : null
-      ),
-    applyCustom25DVisualManualRendererStateFieldContractValidationShell:
+      );
+  namespace.applyCustom25DVisualManualRendererStateFieldContractValidationShell =
       createNamespaceWrapper(
         "applyCustom25DVisualManualRendererStateFieldContractValidationShell",
         () =>
@@ -745,8 +745,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? applyCustom25DVisualManualRendererStateFieldContractValidationShell
             : null
-      ),
-    getCustom25DVisualManualRendererStateFieldContractValidationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateFieldContractValidationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateFieldContractValidationCloseoutReport",
         () =>
@@ -754,8 +754,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateFieldContractValidationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPostFieldContractReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererPostFieldContractReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPostFieldContractReadinessReport",
         () =>
@@ -763,8 +763,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPostFieldContractReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPostFieldContractTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererPostFieldContractTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPostFieldContractTransitionPlanReport",
         () =>
@@ -772,8 +772,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPostFieldContractTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererInstanceShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererInstanceShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInstanceShellReadinessReport",
         () =>
@@ -781,8 +781,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInstanceShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport",
         () =>
@@ -790,16 +790,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInstanceShellRiskBoundaryReport
             : null
-      ),
-    createCustom25DVisualManualRendererInstanceShell:
+      );
+  namespace.createCustom25DVisualManualRendererInstanceShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererInstanceShell",
         () =>
           typeof createCustom25DVisualManualRendererInstanceShell === "function"
             ? createCustom25DVisualManualRendererInstanceShell
             : null
-      ),
-    getCustom25DVisualManualRendererInstanceShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInstanceShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInstanceShellCloseoutReport",
         () =>
@@ -807,8 +807,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInstanceShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPostInstanceShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererPostInstanceShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPostInstanceShellReadinessReport",
         () =>
@@ -816,8 +816,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPostInstanceShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport",
         () =>
@@ -825,8 +825,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPostInstanceShellTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport",
         () =>
@@ -834,8 +834,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleMethodShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport",
         () =>
@@ -843,8 +843,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleMethodShellRiskBoundaryReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport",
         () =>
@@ -852,8 +852,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleMethodShellTransitionPlanReport
             : null
-      ),
-    createCustom25DVisualManualRendererLifecycleMethodShell:
+      );
+  namespace.createCustom25DVisualManualRendererLifecycleMethodShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererLifecycleMethodShell",
         () =>
@@ -861,8 +861,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererLifecycleMethodShell
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleMethodShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleMethodShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleMethodShellCloseoutReport",
         () =>
@@ -870,8 +870,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleMethodShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPostLifecycleMethodShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererPostLifecycleMethodShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPostLifecycleMethodShellReadinessReport",
         () =>
@@ -879,8 +879,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPostLifecycleMethodShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPostLifecycleMethodShellTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererPostLifecycleMethodShellTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPostLifecycleMethodShellTransitionPlanReport",
         () =>
@@ -888,8 +888,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPostLifecycleMethodShellTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleMethodReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleMethodReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleMethodReadinessReport",
         () =>
@@ -897,8 +897,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleMethodReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleMethodRiskBoundaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleMethodRiskBoundaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleMethodRiskBoundaryReport",
         () =>
@@ -906,8 +906,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleMethodRiskBoundaryReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleMethodTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleMethodTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleMethodTransitionPlanReport",
         () =>
@@ -915,8 +915,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleMethodTransitionPlanReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleMethodPlaceholderFoundation:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleMethodPlaceholderFoundation =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleMethodPlaceholderFoundation",
         () =>
@@ -924,8 +924,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleMethodPlaceholderFoundation
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport",
         () =>
@@ -933,8 +933,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecyclePlaceholderCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport",
         () =>
@@ -942,8 +942,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecyclePlaceholderReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlPlanReport",
         () =>
@@ -951,8 +951,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlReadinessReport",
         () =>
@@ -960,8 +960,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport",
         () =>
@@ -969,8 +969,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport",
         () =>
@@ -978,8 +978,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlShellReadinessReport",
         () =>
@@ -987,8 +987,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlShellCreationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellCreationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlShellCreationCloseoutReport",
         () =>
@@ -996,8 +996,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellCreationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlShellPostCreationReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlShellPostCreationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlShellPostCreationReadinessReport",
         () =>
@@ -1005,8 +1005,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlShellPostCreationReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellCloseoutReport",
         () =>
@@ -1014,8 +1014,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellReadinessReport",
         () =>
@@ -1023,8 +1023,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualInitializeControlShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellCloseoutReport",
         () =>
@@ -1032,8 +1032,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellReadinessReport",
         () =>
@@ -1041,8 +1041,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualStartControlShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellCloseoutReport",
         () =>
@@ -1050,8 +1050,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessReport",
         () =>
@@ -1059,8 +1059,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessCloseoutReport",
         () =>
@@ -1068,8 +1068,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualStopControlShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellCloseoutReport",
         () =>
@@ -1077,8 +1077,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessReport",
         () =>
@@ -1086,8 +1086,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessCloseoutReport",
         () =>
@@ -1095,8 +1095,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAttachMapControlShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellCloseoutReport",
         () =>
@@ -1104,8 +1104,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessReport",
         () =>
@@ -1113,8 +1113,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessCloseoutReport",
         () =>
@@ -1122,8 +1122,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualDrawFrameControlShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport",
         () =>
@@ -1131,8 +1131,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport",
         () =>
@@ -1140,8 +1140,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualControlsCompleteCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanReport",
         () =>
@@ -1149,8 +1149,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanCloseoutReport",
         () =>
@@ -1158,8 +1158,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgePlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellCloseoutReport",
         () =>
@@ -1167,8 +1167,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessReport",
         () =>
@@ -1176,8 +1176,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport",
         () =>
@@ -1185,8 +1185,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionBridgeShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport",
         () =>
@@ -1194,8 +1194,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanCloseoutReport",
         () =>
@@ -1203,8 +1203,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellCloseoutReport",
         () =>
@@ -1212,8 +1212,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessReport",
         () =>
@@ -1221,8 +1221,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessCloseoutReport",
         () =>
@@ -1230,8 +1230,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanReport",
         () =>
@@ -1239,8 +1239,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport",
         () =>
@@ -1248,8 +1248,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport",
         () =>
@@ -1257,8 +1257,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessReport",
         () =>
@@ -1266,8 +1266,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessCloseoutReport",
         () =>
@@ -1275,8 +1275,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateContractShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanReport",
         () =>
@@ -1284,8 +1284,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanCloseoutReport",
         () =>
@@ -1293,8 +1293,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellCloseoutReport",
         () =>
@@ -1302,8 +1302,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessReport",
         () =>
@@ -1311,8 +1311,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessCloseoutReport",
         () =>
@@ -1320,8 +1320,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanReport",
         () =>
@@ -1329,8 +1329,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanCloseoutReport",
         () =>
@@ -1338,8 +1338,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellCloseoutReport",
         () =>
@@ -1347,8 +1347,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessReport",
         () =>
@@ -1356,8 +1356,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessCloseoutReport",
         () =>
@@ -1365,8 +1365,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluationContractShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanReport",
         () =>
@@ -1374,8 +1374,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport",
         () =>
@@ -1383,8 +1383,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport",
         () =>
@@ -1392,8 +1392,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessReport",
         () =>
@@ -1401,8 +1401,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessCloseoutReport",
         () =>
@@ -1410,8 +1410,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanReport",
         () =>
@@ -1419,8 +1419,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanCloseoutReport",
         () =>
@@ -1428,8 +1428,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellCloseoutReport",
         () =>
@@ -1437,8 +1437,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessReport",
         () =>
@@ -1446,8 +1446,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessCloseoutReport",
         () =>
@@ -1455,8 +1455,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanReport",
         () =>
@@ -1464,8 +1464,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanCloseoutReport",
         () =>
@@ -1473,8 +1473,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellCloseoutReport",
         () =>
@@ -1482,8 +1482,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessReport",
         () =>
@@ -1491,8 +1491,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessCloseoutReport",
         () =>
@@ -1500,8 +1500,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentContractShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanReport",
         () =>
@@ -1509,8 +1509,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanCloseoutReport",
         () =>
@@ -1518,8 +1518,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellCloseoutReport",
         () =>
@@ -1527,8 +1527,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessReport",
         () =>
@@ -1536,8 +1536,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessCloseoutReport",
         () =>
@@ -1545,8 +1545,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentEvaluationShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentSectionCloseoutReport",
         () =>
@@ -1554,8 +1554,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorContractAlignmentSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanReport",
         () =>
@@ -1563,8 +1563,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanCloseoutReport",
         () =>
@@ -1572,8 +1572,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellCloseoutReport",
         () =>
@@ -1581,8 +1581,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessReport",
         () =>
@@ -1590,8 +1590,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessCloseoutReport",
         () =>
@@ -1599,8 +1599,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanReport",
         () =>
@@ -1608,8 +1608,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanCloseoutReport",
         () =>
@@ -1617,8 +1617,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellCloseoutReport",
         () =>
@@ -1626,8 +1626,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessReport",
         () =>
@@ -1635,8 +1635,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessCloseoutReport",
         () =>
@@ -1644,8 +1644,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationContractShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationSectionCloseoutReport",
         () =>
@@ -1653,8 +1653,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationFinalReviewReport",
         () =>
@@ -1662,8 +1662,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGatePermissionEvaluatorIntegrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanReport",
         () =>
@@ -1671,8 +1671,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanCloseoutReport",
         () =>
@@ -1680,8 +1680,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateHandoffPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellReport",
         () =>
@@ -1689,8 +1689,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellCloseoutReport",
         () =>
@@ -1698,8 +1698,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessReport",
         () =>
@@ -1707,8 +1707,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessCloseoutReport",
         () =>
@@ -1716,8 +1716,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReport",
         () =>
@@ -1725,8 +1725,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessReport",
         () =>
@@ -1734,8 +1734,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessCloseoutReport",
         () =>
@@ -1743,8 +1743,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewContractShellReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewSectionCloseoutReport",
         () =>
@@ -1752,8 +1752,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewFinalReviewReport",
         () =>
@@ -1761,8 +1761,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualExecutionGateReviewFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanReport",
         () =>
@@ -1770,8 +1770,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanCloseoutReport",
         () =>
@@ -1779,8 +1779,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsReport",
         () =>
@@ -1788,8 +1788,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsCloseoutReport",
         () =>
@@ -1797,8 +1797,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationRequirementsCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractReport",
         () =>
@@ -1806,8 +1806,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractCloseoutReport",
         () =>
@@ -1815,8 +1815,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInputContractCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractReport",
         () =>
@@ -1824,8 +1824,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractCloseoutReport",
         () =>
@@ -1833,8 +1833,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationResultContractCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsReport",
         () =>
@@ -1842,8 +1842,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsCloseoutReport",
         () =>
@@ -1851,8 +1851,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDenialReasonsCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeReport",
         () =>
@@ -1860,8 +1860,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeCloseoutReport",
         () =>
@@ -1869,8 +1869,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationActionScopeCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowReport",
         () =>
@@ -1878,8 +1878,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowCloseoutReport",
         () =>
@@ -1887,8 +1887,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationDecisionFlowCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantReport",
         () =>
@@ -1896,8 +1896,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantCloseoutReport",
         () =>
@@ -1905,8 +1905,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSafetyInvariantCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailReport",
         () =>
@@ -1914,8 +1914,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailCloseoutReport",
         () =>
@@ -1923,8 +1923,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationAuditTrailCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewReport",
         () =>
@@ -1932,8 +1932,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewCloseoutReport",
         () =>
@@ -1941,8 +1941,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSectionCloseoutReport",
         () =>
@@ -1950,8 +1950,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationFinalReviewReport",
         () =>
@@ -1959,8 +1959,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanReport",
         () =>
@@ -1968,8 +1968,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanCloseoutReport",
         () =>
@@ -1977,8 +1977,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewReport",
         () =>
@@ -1986,8 +1986,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewCloseoutReport",
         () =>
@@ -1995,8 +1995,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellSectionCloseoutReport",
         () =>
@@ -2004,8 +2004,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellFinalReviewReport",
         () =>
@@ -2013,8 +2013,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanReport",
         () =>
@@ -2022,8 +2022,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanCloseoutReport",
         () =>
@@ -2031,8 +2031,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewReport",
         () =>
@@ -2040,8 +2040,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewCloseoutReport",
         () =>
@@ -2049,8 +2049,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractSectionCloseoutReport",
         () =>
@@ -2058,8 +2058,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractFinalReviewReport",
         () =>
@@ -2067,8 +2067,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanReport",
         () =>
@@ -2076,8 +2076,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanCloseoutReport",
         () =>
@@ -2085,8 +2085,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewReport",
         () =>
@@ -2094,8 +2094,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewCloseoutReport",
         () =>
@@ -2103,8 +2103,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentSectionCloseoutReport",
         () =>
@@ -2112,8 +2112,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentFinalReviewReport",
         () =>
@@ -2121,8 +2121,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellContractAlignmentFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanReport",
         () =>
@@ -2130,8 +2130,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanCloseoutReport",
         () =>
@@ -2139,8 +2139,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewReport",
         () =>
@@ -2148,8 +2148,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewCloseoutReport",
         () =>
@@ -2157,8 +2157,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardSectionCloseoutReport",
         () =>
@@ -2166,8 +2166,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardFinalReviewReport",
         () =>
@@ -2175,8 +2175,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationGuardFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanReport",
         () =>
@@ -2184,8 +2184,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanCloseoutReport",
         () =>
@@ -2193,8 +2193,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewReport",
         () =>
@@ -2202,8 +2202,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewCloseoutReport",
         () =>
@@ -2211,8 +2211,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessSectionCloseoutReport",
         () =>
@@ -2220,8 +2220,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessFinalReviewReport",
         () =>
@@ -2229,8 +2229,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellImplementationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanReport",
         () =>
@@ -2238,8 +2238,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanCloseoutReport",
         () =>
@@ -2247,8 +2247,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewReport",
         () =>
@@ -2256,8 +2256,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewCloseoutReport",
         () =>
@@ -2265,8 +2265,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundarySectionCloseoutReport",
         () =>
@@ -2274,8 +2274,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryFinalReviewReport",
         () =>
@@ -2283,8 +2283,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationShellCreationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanReport",
         () =>
@@ -2292,8 +2292,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanCloseoutReport",
         () =>
@@ -2301,8 +2301,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapePlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewReport",
         () =>
@@ -2310,8 +2310,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewCloseoutReport",
         () =>
@@ -2319,8 +2319,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeSectionCloseoutReport",
         () =>
@@ -2328,8 +2328,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeFinalReviewReport",
         () =>
@@ -2337,8 +2337,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellShapeFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanReport",
         () =>
@@ -2346,8 +2346,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanCloseoutReport",
         () =>
@@ -2355,8 +2355,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewReport",
         () =>
@@ -2364,8 +2364,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewCloseoutReport",
         () =>
@@ -2373,8 +2373,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessSectionCloseoutReport",
         () =>
@@ -2382,8 +2382,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessFinalReviewReport",
         () =>
@@ -2391,8 +2391,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationInertShellCreationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanReport",
         () =>
@@ -2400,8 +2400,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanCloseoutReport",
         () =>
@@ -2409,8 +2409,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewReport",
         () =>
@@ -2418,8 +2418,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewCloseoutReport",
         () =>
@@ -2427,8 +2427,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldSectionCloseoutReport",
         () =>
@@ -2436,8 +2436,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldFinalReviewReport",
         () =>
@@ -2445,8 +2445,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanReport",
         () =>
@@ -2454,8 +2454,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanCloseoutReport",
         () =>
@@ -2463,8 +2463,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewReport",
         () =>
@@ -2472,8 +2472,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewCloseoutReport",
         () =>
@@ -2481,8 +2481,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationSectionCloseoutReport",
         () =>
@@ -2490,8 +2490,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationFinalReviewReport",
         () =>
@@ -2499,8 +2499,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldCreationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanReport",
         () =>
@@ -2508,8 +2508,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanCloseoutReport",
         () =>
@@ -2517,8 +2517,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewReport",
         () =>
@@ -2526,8 +2526,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewCloseoutReport",
         () =>
@@ -2535,8 +2535,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightSectionCloseoutReport",
         () =>
@@ -2544,8 +2544,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightFinalReviewReport",
         () =>
@@ -2553,8 +2553,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertShellScaffoldPreflightFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanReport",
         () =>
@@ -2562,8 +2562,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanCloseoutReport",
         () =>
@@ -2571,8 +2571,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewReport",
         () =>
@@ -2580,8 +2580,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewCloseoutReport",
         () =>
@@ -2589,8 +2589,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightSectionCloseoutReport",
         () =>
@@ -2598,8 +2598,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightFinalReviewReport",
         () =>
@@ -2607,8 +2607,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistencePreflightFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanReport",
         () =>
@@ -2616,8 +2616,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanCloseoutReport",
         () =>
@@ -2625,8 +2625,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewReport",
         () =>
@@ -2634,8 +2634,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewCloseoutReport",
         () =>
@@ -2643,8 +2643,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractSectionCloseoutReport",
         () =>
@@ -2652,8 +2652,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractFinalReviewReport",
         () =>
@@ -2661,8 +2661,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanReport",
         () =>
@@ -2670,8 +2670,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanCloseoutReport",
         () =>
@@ -2679,8 +2679,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewReport",
         () =>
@@ -2688,8 +2688,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewCloseoutReport",
         () =>
@@ -2697,8 +2697,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceAlignmentReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateReport",
         () =>
@@ -2706,8 +2706,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateCloseoutReport",
         () =>
@@ -2715,8 +2715,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceReadinessGateCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReport",
         () =>
@@ -2724,8 +2724,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorCloseoutReport",
         () =>
@@ -2733,8 +2733,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewReport",
         () =>
@@ -2742,8 +2742,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewCloseoutReport",
         () =>
@@ -2751,8 +2751,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorSectionCloseoutReport",
         () =>
@@ -2760,8 +2760,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorFinalReviewReport",
         () =>
@@ -2769,8 +2769,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldExistenceDescriptorFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanReport",
         () =>
@@ -2778,8 +2778,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanCloseoutReport",
         () =>
@@ -2787,8 +2787,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapePlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewReport",
         () =>
@@ -2796,8 +2796,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewCloseoutReport",
         () =>
@@ -2805,8 +2805,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateReport",
         () =>
@@ -2814,8 +2814,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateCloseoutReport",
         () =>
@@ -2823,8 +2823,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeReadinessGateCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReport",
         () =>
@@ -2832,8 +2832,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorCloseoutReport",
         () =>
@@ -2841,8 +2841,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewReport",
         () =>
@@ -2850,8 +2850,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewCloseoutReport",
         () =>
@@ -2859,8 +2859,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeDescriptorReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeSectionCloseoutReport",
         () =>
@@ -2868,8 +2868,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeFinalReviewReport",
         () =>
@@ -2877,8 +2877,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldShapeFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanReport",
         () =>
@@ -2886,8 +2886,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanCloseoutReport",
         () =>
@@ -2895,8 +2895,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewReport",
         () =>
@@ -2904,8 +2904,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewCloseoutReport",
         () =>
@@ -2913,8 +2913,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateReport",
         () =>
@@ -2922,8 +2922,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateCloseoutReport",
         () =>
@@ -2931,8 +2931,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryReadinessGateCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReport",
         () =>
@@ -2940,8 +2940,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorCloseoutReport",
         () =>
@@ -2949,8 +2949,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewReport",
         () =>
@@ -2958,8 +2958,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewCloseoutReport",
         () =>
@@ -2967,8 +2967,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryDescriptorReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundarySectionCloseoutReport",
         () =>
@@ -2976,8 +2976,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryFinalReviewReport",
         () =>
@@ -2985,8 +2985,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanReport",
         () =>
@@ -2994,8 +2994,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanCloseoutReport",
         () =>
@@ -3003,8 +3003,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewReport",
         () =>
@@ -3012,8 +3012,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewCloseoutReport",
         () =>
@@ -3021,8 +3021,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateReport",
         () =>
@@ -3030,8 +3030,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateCloseoutReport",
         () =>
@@ -3039,8 +3039,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationReadinessGateCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReport",
         () =>
@@ -3048,8 +3048,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorCloseoutReport",
         () =>
@@ -3057,8 +3057,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewReport",
         () =>
@@ -3066,8 +3066,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewCloseoutReport",
         () =>
@@ -3075,8 +3075,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationDescriptorReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationSectionCloseoutReport",
         () =>
@@ -3084,8 +3084,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationFinalReviewReport",
         () =>
@@ -3093,8 +3093,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectCreationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceReport",
         () =>
@@ -3102,8 +3102,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceCloseoutReport",
         () =>
@@ -3111,8 +3111,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceFinalReviewReport",
         () =>
@@ -3120,8 +3120,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectExistenceFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanReport",
         () =>
@@ -3129,8 +3129,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanCloseoutReport",
         () =>
@@ -3138,8 +3138,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryFinalReviewReport",
         () =>
@@ -3147,8 +3147,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanReport",
         () =>
@@ -3156,8 +3156,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanCloseoutReport",
         () =>
@@ -3165,8 +3165,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionFinalReviewReport",
         () =>
@@ -3174,8 +3174,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectDefinitionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanReport",
         () =>
@@ -3183,8 +3183,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanCloseoutReport",
         () =>
@@ -3192,8 +3192,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryFinalReviewReport",
         () =>
@@ -3201,8 +3201,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyInventoryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanReport",
         () =>
@@ -3210,8 +3210,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanCloseoutReport",
         () =>
@@ -3219,8 +3219,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsFinalReviewReport",
         () =>
@@ -3228,8 +3228,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectPropertyValueConstraintsFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanReport",
         () =>
@@ -3237,8 +3237,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanCloseoutReport",
         () =>
@@ -3246,8 +3246,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessFinalReviewReport",
         () =>
@@ -3255,8 +3255,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectJsonSerializationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanReport",
         () =>
@@ -3264,8 +3264,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanCloseoutReport",
         () =>
@@ -3273,8 +3273,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyFinalReviewReport",
         () =>
@@ -3282,8 +3282,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSnapshotConsistencyFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanReport",
         () =>
@@ -3291,8 +3291,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanCloseoutReport",
         () =>
@@ -3300,8 +3300,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityFinalReviewReport",
         () =>
@@ -3309,8 +3309,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportImmutabilityFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanReport",
         () =>
@@ -3318,8 +3318,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanCloseoutReport",
         () =>
@@ -3327,8 +3327,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityFinalReviewReport",
         () =>
@@ -3336,8 +3336,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportIdentityStabilityFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanReport",
         () =>
@@ -3345,8 +3345,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanCloseoutReport",
         () =>
@@ -3354,8 +3354,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryFinalReviewReport",
         () =>
@@ -3363,8 +3363,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSchemaBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport",
         () =>
@@ -3372,8 +3372,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport",
         () =>
@@ -3381,8 +3381,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport",
         () =>
@@ -3390,8 +3390,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport",
         () =>
@@ -3399,8 +3399,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport",
         () =>
@@ -3408,8 +3408,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport",
         () =>
@@ -3417,8 +3417,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport",
         () =>
@@ -3426,8 +3426,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport",
         () =>
@@ -3435,8 +3435,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport",
         () =>
@@ -3444,8 +3444,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport",
         () =>
@@ -3453,8 +3453,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport",
         () =>
@@ -3462,8 +3462,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport",
         () =>
@@ -3471,8 +3471,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport",
         () =>
@@ -3480,8 +3480,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport",
         () =>
@@ -3489,8 +3489,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport",
         () =>
@@ -3498,8 +3498,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport",
         () =>
@@ -3507,8 +3507,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport",
         () =>
@@ -3516,8 +3516,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport",
         () =>
@@ -3525,8 +3525,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport",
         () =>
@@ -3534,8 +3534,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport",
         () =>
@@ -3543,8 +3543,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport",
         () =>
@@ -3552,8 +3552,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport",
         () =>
@@ -3561,8 +3561,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport",
         () =>
@@ -3570,8 +3570,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport",
         () =>
@@ -3579,8 +3579,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport",
         () =>
@@ -3588,8 +3588,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport",
         () =>
@@ -3597,8 +3597,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport",
         () =>
@@ -3606,8 +3606,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport",
         () =>
@@ -3615,8 +3615,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport",
         () =>
@@ -3624,8 +3624,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport",
         () =>
@@ -3633,8 +3633,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport",
         () =>
@@ -3642,8 +3642,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport",
         () =>
@@ -3651,8 +3651,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport",
         () =>
@@ -3660,8 +3660,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport",
         () =>
@@ -3669,8 +3669,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport",
         () =>
@@ -3678,8 +3678,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport",
         () =>
@@ -3687,8 +3687,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject",
         () =>
@@ -3696,8 +3696,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport",
         () =>
@@ -3705,8 +3705,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport",
         () =>
@@ -3714,8 +3714,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport",
         () =>
@@ -3723,8 +3723,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport",
         () =>
@@ -3732,8 +3732,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport",
         () =>
@@ -3741,8 +3741,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport",
         () =>
@@ -3750,8 +3750,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport",
         () =>
@@ -3759,8 +3759,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport",
         () =>
@@ -3768,8 +3768,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport",
         () =>
@@ -3777,8 +3777,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport",
         () =>
@@ -3786,8 +3786,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport",
         () =>
@@ -3795,8 +3795,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport",
         () =>
@@ -3804,8 +3804,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport",
         () =>
@@ -3813,8 +3813,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport",
         () =>
@@ -3822,8 +3822,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport",
         () =>
@@ -3831,8 +3831,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport",
         () =>
@@ -3840,8 +3840,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport",
         () =>
@@ -3849,8 +3849,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport",
         () =>
@@ -3858,8 +3858,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport",
         () =>
@@ -3867,8 +3867,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport",
         () =>
@@ -3876,8 +3876,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport",
         () =>
@@ -3885,8 +3885,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport",
         () =>
@@ -3894,8 +3894,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport",
         () =>
@@ -3903,8 +3903,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport",
         () =>
@@ -3912,8 +3912,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport",
         () =>
@@ -3921,8 +3921,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport",
         () =>
@@ -3930,8 +3930,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport",
         () =>
@@ -3939,8 +3939,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport",
         () =>
@@ -3948,8 +3948,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport",
         () =>
@@ -3957,8 +3957,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport",
         () =>
@@ -3966,8 +3966,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport",
         () =>
@@ -3975,8 +3975,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport",
         () =>
@@ -3984,8 +3984,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport",
         () =>
@@ -3993,8 +3993,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport",
         () =>
@@ -4002,8 +4002,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport",
         () =>
@@ -4011,8 +4011,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport",
         () =>
@@ -4020,8 +4020,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport",
         () =>
@@ -4029,8 +4029,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate",
         () =>
@@ -4038,8 +4038,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport",
         () =>
@@ -4047,8 +4047,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport",
         () =>
@@ -4056,8 +4056,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport",
         () =>
@@ -4065,8 +4065,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport",
         () =>
@@ -4074,8 +4074,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport",
         () =>
@@ -4083,8 +4083,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport
             : null
-      ),
-    assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner:
+      );
+  namespace.assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner =
       createNamespaceWrapper(
         "assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner",
         () =>
@@ -4092,8 +4092,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport",
         () =>
@@ -4101,8 +4101,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport",
         () =>
@@ -4110,8 +4110,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport",
         () =>
@@ -4119,8 +4119,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport",
         () =>
@@ -4128,8 +4128,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport",
         () =>
@@ -4137,8 +4137,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport",
         () =>
@@ -4146,8 +4146,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport",
         () =>
@@ -4155,8 +4155,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport",
         () =>
@@ -4164,8 +4164,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport",
         () =>
@@ -4173,8 +4173,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport",
         () =>
@@ -4182,8 +4182,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -4191,8 +4191,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport",
         () =>
@@ -4200,8 +4200,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport",
         () =>
@@ -4209,8 +4209,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport
             : null
-      ),
-    storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult:
+      );
+  namespace.storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult =
       createNamespaceWrapper(
         "storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult",
         () =>
@@ -4218,8 +4218,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport",
         () =>
@@ -4227,8 +4227,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport",
         () =>
@@ -4236,8 +4236,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport",
         () =>
@@ -4245,8 +4245,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport",
         () =>
@@ -4254,8 +4254,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport",
         () =>
@@ -4263,8 +4263,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport
             : null
-      ),
-    registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord:
+      );
+  namespace.registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord =
       createNamespaceWrapper(
         "registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord",
         () =>
@@ -4272,8 +4272,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport",
         () =>
@@ -4281,8 +4281,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport",
         () =>
@@ -4290,8 +4290,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport",
         () =>
@@ -4299,8 +4299,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport",
         () =>
@@ -4308,8 +4308,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport",
         () =>
@@ -4317,8 +4317,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport",
         () =>
@@ -4326,8 +4326,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport",
         () =>
@@ -4335,8 +4335,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport",
         () =>
@@ -4344,8 +4344,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport",
         () =>
@@ -4353,8 +4353,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport",
         () =>
@@ -4362,8 +4362,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -4371,8 +4371,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport",
         () =>
@@ -4380,8 +4380,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport",
         () =>
@@ -4389,8 +4389,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport",
         () =>
@@ -4398,8 +4398,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -4407,8 +4407,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport",
         () =>
@@ -4416,8 +4416,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport",
         () =>
@@ -4425,8 +4425,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport",
         () =>
@@ -4434,8 +4434,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCallerLocalConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -4443,8 +4443,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport",
         () =>
@@ -4452,8 +4452,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport",
         () =>
@@ -4461,8 +4461,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport",
         () =>
@@ -4470,8 +4470,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport",
         () =>
@@ -4479,8 +4479,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport",
         () =>
@@ -4488,8 +4488,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport",
         () =>
@@ -4497,8 +4497,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport",
         () =>
@@ -4506,8 +4506,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport",
         () =>
@@ -4515,8 +4515,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport",
         () =>
@@ -4524,8 +4524,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport",
         () =>
@@ -4533,8 +4533,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport",
         () =>
@@ -4542,8 +4542,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport",
         () =>
@@ -4551,8 +4551,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport",
         () =>
@@ -4560,8 +4560,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport",
         () =>
@@ -4569,8 +4569,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport",
         () =>
@@ -4578,8 +4578,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport",
         () =>
@@ -4587,8 +4587,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport",
         () =>
@@ -4596,8 +4596,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport",
         () =>
@@ -4605,8 +4605,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport",
         () =>
@@ -4614,8 +4614,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport",
         () =>
@@ -4623,8 +4623,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport",
         () =>
@@ -4632,8 +4632,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState",
         () =>
@@ -4641,8 +4641,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport",
         () =>
@@ -4650,8 +4650,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport",
         () =>
@@ -4659,8 +4659,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport",
         () =>
@@ -4668,8 +4668,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport",
         () =>
@@ -4677,8 +4677,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport",
         () =>
@@ -4686,8 +4686,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport",
         () =>
@@ -4695,8 +4695,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport",
         () =>
@@ -4704,8 +4704,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport",
         () =>
@@ -4713,8 +4713,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -4722,8 +4722,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport",
         () =>
@@ -4731,8 +4731,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport",
         () =>
@@ -4740,8 +4740,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport",
         () =>
@@ -4749,8 +4749,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport",
         () =>
@@ -4758,8 +4758,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport",
         () =>
@@ -4767,8 +4767,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport",
         () =>
@@ -4776,8 +4776,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport",
         () =>
@@ -4785,8 +4785,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport",
         () =>
@@ -4794,8 +4794,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport",
         () =>
@@ -4803,8 +4803,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport",
         () =>
@@ -4812,8 +4812,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport",
         () =>
@@ -4821,8 +4821,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport",
         () =>
@@ -4830,8 +4830,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot",
         () =>
@@ -4839,8 +4839,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport",
         () =>
@@ -4848,8 +4848,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport",
         () =>
@@ -4857,8 +4857,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport",
         () =>
@@ -4866,8 +4866,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport",
         () =>
@@ -4875,8 +4875,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport",
         () =>
@@ -4884,8 +4884,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport",
         () =>
@@ -4893,8 +4893,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport",
         () =>
@@ -4902,8 +4902,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport",
         () =>
@@ -4911,8 +4911,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport",
         () =>
@@ -4920,8 +4920,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport",
         () =>
@@ -4929,8 +4929,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport",
         () =>
@@ -4938,8 +4938,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport",
         () =>
@@ -4947,8 +4947,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport",
         () =>
@@ -4956,8 +4956,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport",
         () =>
@@ -4965,8 +4965,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport",
         () =>
@@ -4974,8 +4974,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport",
         () =>
@@ -4983,8 +4983,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport",
         () =>
@@ -4992,8 +4992,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport",
         () =>
@@ -5001,8 +5001,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport",
         () =>
@@ -5010,8 +5010,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport",
         () =>
@@ -5019,8 +5019,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport",
         () =>
@@ -5028,8 +5028,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport",
         () =>
@@ -5037,8 +5037,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport",
         () =>
@@ -5046,8 +5046,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport",
         () =>
@@ -5055,8 +5055,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport",
         () =>
@@ -5064,8 +5064,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport",
         () =>
@@ -5073,8 +5073,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport",
         () =>
@@ -5082,8 +5082,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer",
         () =>
@@ -5091,8 +5091,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport",
         () =>
@@ -5100,8 +5100,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport",
         () =>
@@ -5109,8 +5109,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport",
         () =>
@@ -5118,8 +5118,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport",
         () =>
@@ -5127,8 +5127,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport",
         () =>
@@ -5136,8 +5136,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport",
         () =>
@@ -5145,8 +5145,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport",
         () =>
@@ -5154,8 +5154,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport",
         () =>
@@ -5163,8 +5163,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport",
         () =>
@@ -5172,8 +5172,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport",
         () =>
@@ -5181,8 +5181,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport",
         () =>
@@ -5190,8 +5190,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport
             : null
-      ),
-    invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot:
+      );
+  namespace.invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot =
       createNamespaceWrapper(
         "invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot",
         () =>
@@ -5199,8 +5199,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport",
         () =>
@@ -5208,8 +5208,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport",
         () =>
@@ -5217,8 +5217,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport",
         () =>
@@ -5226,8 +5226,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport",
         () =>
@@ -5235,8 +5235,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport",
         () =>
@@ -5244,8 +5244,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport",
         () =>
@@ -5253,8 +5253,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport",
         () =>
@@ -5262,8 +5262,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport",
         () =>
@@ -5271,8 +5271,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport",
         () =>
@@ -5280,8 +5280,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport",
         () =>
@@ -5289,8 +5289,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport",
         () =>
@@ -5298,8 +5298,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention",
         () =>
@@ -5307,8 +5307,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention
             : null
-      ),
-    releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder:
+      );
+  namespace.releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder =
       createNamespaceWrapper(
         "releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder",
         () =>
@@ -5316,8 +5316,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport",
         () =>
@@ -5325,8 +5325,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport",
         () =>
@@ -5334,8 +5334,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport",
         () =>
@@ -5343,8 +5343,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport",
         () =>
@@ -5352,8 +5352,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport",
         () =>
@@ -5361,8 +5361,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport",
         () =>
@@ -5370,8 +5370,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport",
         () =>
@@ -5379,8 +5379,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport",
         () =>
@@ -5388,8 +5388,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport",
         () =>
@@ -5397,8 +5397,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport",
         () =>
@@ -5406,8 +5406,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport",
         () =>
@@ -5415,8 +5415,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport
             : null
-      ),
-    invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease:
+      );
+  namespace.invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease =
       createNamespaceWrapper(
         "invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease",
         () =>
@@ -5424,8 +5424,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport",
         () =>
@@ -5433,8 +5433,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport",
         () =>
@@ -5442,8 +5442,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport",
         () =>
@@ -5451,8 +5451,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport",
         () =>
@@ -5460,8 +5460,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport",
         () =>
@@ -5469,8 +5469,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport",
         () =>
@@ -5478,8 +5478,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport",
         () =>
@@ -5487,8 +5487,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneContractPlanReport",
         () =>
@@ -5496,8 +5496,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5505,8 +5505,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport",
         () =>
@@ -5514,8 +5514,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5523,8 +5523,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport",
         () =>
@@ -5532,8 +5532,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5541,16 +5541,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticTestScene:
+      );
+  namespace.createCustom25DVisualSyntheticTestScene =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticTestScene",
         () =>
           typeof createCustom25DVisualSyntheticTestScene === "function"
             ? createCustom25DVisualSyntheticTestScene
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5558,8 +5558,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport",
         () =>
@@ -5567,8 +5567,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5576,8 +5576,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport",
         () =>
@@ -5585,8 +5585,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5594,8 +5594,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport",
         () =>
@@ -5603,8 +5603,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5612,16 +5612,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    consumeCustom25DVisualSyntheticTestScene:
+      );
+  namespace.consumeCustom25DVisualSyntheticTestScene =
       createNamespaceWrapper(
         "consumeCustom25DVisualSyntheticTestScene",
         () =>
           typeof consumeCustom25DVisualSyntheticTestScene === "function"
             ? consumeCustom25DVisualSyntheticTestScene
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5629,8 +5629,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport",
         () =>
@@ -5638,8 +5638,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5647,8 +5647,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport",
         () =>
@@ -5656,8 +5656,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5665,16 +5665,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticTestSceneGeometry:
+      );
+  namespace.createCustom25DVisualSyntheticTestSceneGeometry =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticTestSceneGeometry",
         () =>
           typeof createCustom25DVisualSyntheticTestSceneGeometry === "function"
             ? createCustom25DVisualSyntheticTestSceneGeometry
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5682,8 +5682,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport",
         () =>
@@ -5691,8 +5691,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5700,8 +5700,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport",
         () =>
@@ -5709,8 +5709,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5718,16 +5718,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticRenderingSurface:
+      );
+  namespace.createCustom25DVisualSyntheticRenderingSurface =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticRenderingSurface",
         () =>
           typeof createCustom25DVisualSyntheticRenderingSurface === "function"
             ? createCustom25DVisualSyntheticRenderingSurface
             : null
-      ),
-    getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5735,16 +5735,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticCanvas2DContext:
+      );
+  namespace.createCustom25DVisualSyntheticCanvas2DContext =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticCanvas2DContext",
         () =>
           typeof createCustom25DVisualSyntheticCanvas2DContext === "function"
             ? createCustom25DVisualSyntheticCanvas2DContext
             : null
-      ),
-    getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5752,16 +5752,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticDrawingContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticDrawingContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticDrawingContractPlanReport",
         () =>
           typeof getCustom25DVisualSyntheticDrawingContractPlanReport === "function"
             ? getCustom25DVisualSyntheticDrawingContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5769,16 +5769,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    drawCustom25DVisualSyntheticTestSceneGeometry:
+      );
+  namespace.drawCustom25DVisualSyntheticTestSceneGeometry =
       createNamespaceWrapper(
         "drawCustom25DVisualSyntheticTestSceneGeometry",
         () =>
           typeof drawCustom25DVisualSyntheticTestSceneGeometry === "function"
             ? drawCustom25DVisualSyntheticTestSceneGeometry
             : null
-      ),
-    getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5786,8 +5786,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport",
         () =>
@@ -5795,8 +5795,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5804,8 +5804,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5813,8 +5813,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticPresentationContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticPresentationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticPresentationContractPlanReport",
         () =>
@@ -5822,8 +5822,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticPresentationContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5831,16 +5831,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    presentCustom25DVisualSyntheticRenderingSurface:
+      );
+  namespace.presentCustom25DVisualSyntheticRenderingSurface =
       createNamespaceWrapper(
         "presentCustom25DVisualSyntheticRenderingSurface",
         () =>
           typeof presentCustom25DVisualSyntheticRenderingSurface === "function"
             ? presentCustom25DVisualSyntheticRenderingSurface
             : null
-      ),
-    getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5848,8 +5848,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationContractPlanReport",
         () =>
@@ -5857,8 +5857,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5866,16 +5866,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    runCustom25DVisualSyntheticVisibleVerification:
+      );
+  namespace.runCustom25DVisualSyntheticVisibleVerification =
       createNamespaceWrapper(
         "runCustom25DVisualSyntheticVisibleVerification",
         () =>
           typeof runCustom25DVisualSyntheticVisibleVerification === "function"
             ? runCustom25DVisualSyntheticVisibleVerification
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5883,8 +5883,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport",
         () =>
@@ -5892,8 +5892,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -5901,8 +5901,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport",
         () =>
@@ -5910,8 +5910,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport",
         () =>
@@ -5919,8 +5919,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport",
         () =>
@@ -5928,8 +5928,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport",
         () =>
@@ -5937,8 +5937,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport",
         () =>
@@ -5946,8 +5946,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport",
         () =>
@@ -5955,8 +5955,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport",
         () =>
@@ -5964,8 +5964,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport",
         () =>
@@ -5973,8 +5973,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentContractPlanReport",
         () =>
@@ -5982,8 +5982,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport",
         () =>
@@ -5991,8 +5991,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport",
         () =>
@@ -6000,8 +6000,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractResolutionReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractResolutionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractResolutionReport",
         () =>
@@ -6009,8 +6009,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractResolutionReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport",
         () =>
@@ -6018,8 +6018,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport",
         () =>
@@ -6027,8 +6027,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport",
         () =>
@@ -6036,8 +6036,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport",
         () =>
@@ -6045,8 +6045,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport",
         () =>
@@ -6054,8 +6054,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport",
         () =>
@@ -6063,8 +6063,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport",
         () =>
@@ -6072,8 +6072,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport",
         () =>
@@ -6081,8 +6081,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport",
         () =>
@@ -6090,8 +6090,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport",
         () =>
@@ -6099,8 +6099,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport",
         () =>
@@ -6108,8 +6108,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport",
         () =>
@@ -6117,8 +6117,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport",
         () =>
@@ -6126,8 +6126,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport
             : null
-      ),
-    getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport",
         () =>
@@ -6135,8 +6135,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport",
         () =>
@@ -6144,8 +6144,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport",
         () =>
@@ -6153,8 +6153,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport",
         () =>
@@ -6162,8 +6162,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport",
         () =>
@@ -6171,8 +6171,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport",
         () =>
@@ -6180,8 +6180,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport",
         () =>
@@ -6189,8 +6189,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport",
         () =>
@@ -6198,8 +6198,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport",
         () =>
@@ -6207,8 +6207,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport",
         () =>
@@ -6216,8 +6216,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport",
         () =>
@@ -6225,8 +6225,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport",
         () =>
@@ -6234,8 +6234,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport",
         () =>
@@ -6243,8 +6243,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport",
         () =>
@@ -6252,8 +6252,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport",
         () =>
@@ -6261,8 +6261,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport",
         () =>
@@ -6270,8 +6270,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport",
         () =>
@@ -6279,8 +6279,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport",
         () =>
@@ -6288,8 +6288,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport",
         () =>
@@ -6297,8 +6297,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport",
         () =>
@@ -6306,8 +6306,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport:
+      );
+  namespace.getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport",
         () =>
@@ -6315,16 +6315,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport
             : null
-      ),
-    renderCustom25DVisualSyntheticTestScene:
+      );
+  namespace.renderCustom25DVisualSyntheticTestScene =
       createNamespaceWrapper(
         "renderCustom25DVisualSyntheticTestScene",
         () =>
           typeof renderCustom25DVisualSyntheticTestScene === "function"
             ? renderCustom25DVisualSyntheticTestScene
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport",
         () =>
@@ -6332,8 +6332,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport",
         () =>
@@ -6341,8 +6341,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport",
         () =>
@@ -6350,8 +6350,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport",
         () =>
@@ -6359,8 +6359,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport",
         () =>
@@ -6368,8 +6368,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport",
         () =>
@@ -6377,8 +6377,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport",
         () =>
@@ -6386,8 +6386,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport",
         () =>
@@ -6395,8 +6395,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport",
         () =>
@@ -6404,8 +6404,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport",
         () =>
@@ -6413,8 +6413,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport",
         () =>
@@ -6422,8 +6422,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport",
         () =>
@@ -6431,8 +6431,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport",
         () =>
@@ -6440,8 +6440,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport",
         () =>
@@ -6449,8 +6449,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport",
         () =>
@@ -6458,8 +6458,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionAlignmentFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport",
         () =>
@@ -6467,8 +6467,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport",
         () =>
@@ -6476,8 +6476,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport",
         () =>
@@ -6485,8 +6485,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCompletenessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport",
         () =>
@@ -6494,8 +6494,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport",
         () =>
@@ -6503,8 +6503,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport",
         () =>
@@ -6512,8 +6512,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportCloseoutReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport",
         () =>
@@ -6521,8 +6521,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport",
         () =>
@@ -6530,8 +6530,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectReportSectionCompletenessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport",
         () =>
@@ -6539,8 +6539,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport",
         () =>
@@ -6548,8 +6548,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionOpeningReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport",
         () =>
@@ -6557,8 +6557,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaIdentityLifecycleMetadataPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport",
         () =>
@@ -6566,8 +6566,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAuthorizationOwnershipMetadataPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport",
         () =>
@@ -6575,8 +6575,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaAttachmentDrawingDisposalMetadataPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport",
         () =>
@@ -6584,8 +6584,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaRequiredOptionalKeysPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport",
         () =>
@@ -6593,8 +6593,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSafeDefaultsForbiddenValuesPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport",
         () =>
@@ -6602,8 +6602,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaFieldTypesValueShapesPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport",
         () =>
@@ -6611,8 +6611,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaMissingUnknownConflictingKeysPolicyPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport",
         () =>
@@ -6620,8 +6620,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport",
         () =>
@@ -6629,8 +6629,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport",
         () =>
@@ -6638,8 +6638,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport",
         () =>
@@ -6647,8 +6647,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldSchemaSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport",
         () =>
@@ -6656,8 +6656,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport",
         () =>
@@ -6665,8 +6665,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport",
         () =>
@@ -6674,8 +6674,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanSchemaConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport",
         () =>
@@ -6683,8 +6683,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationPlanCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport",
         () =>
@@ -6692,8 +6692,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport",
         () =>
@@ -6701,8 +6701,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport",
         () =>
@@ -6710,8 +6710,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRepresentationSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport",
         () =>
@@ -6719,8 +6719,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport",
         () =>
@@ -6728,8 +6728,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport",
         () =>
@@ -6737,8 +6737,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanRepresentationConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport",
         () =>
@@ -6746,8 +6746,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessPlanFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport",
         () =>
@@ -6755,8 +6755,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldCreationReadinessSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject",
         () =>
@@ -6764,8 +6764,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObject
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport",
         () =>
@@ -6773,8 +6773,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSchemaRepresentationConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport",
         () =>
@@ -6782,8 +6782,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectIsolationImmutabilityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport",
         () =>
@@ -6791,8 +6791,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport",
         () =>
@@ -6800,8 +6800,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport",
         () =>
@@ -6809,8 +6809,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldObjectSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport",
         () =>
@@ -6818,8 +6818,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport",
         () =>
@@ -6827,8 +6827,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipModelProhibitionsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport",
         () =>
@@ -6836,8 +6836,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAuthorizationStopConditionsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport",
         () =>
@@ -6845,8 +6845,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport",
         () =>
@@ -6854,8 +6854,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipObjectCreationConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport",
         () =>
@@ -6863,8 +6863,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport",
         () =>
@@ -6872,8 +6872,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport",
         () =>
@@ -6881,8 +6881,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipPlanningSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport",
         () =>
@@ -6890,8 +6890,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport",
         () =>
@@ -6899,8 +6899,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCandidateEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport",
         () =>
@@ -6908,8 +6908,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport",
         () =>
@@ -6917,8 +6917,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport",
         () =>
@@ -6926,8 +6926,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentOwnershipPlanningConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport",
         () =>
@@ -6935,8 +6935,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport",
         () =>
@@ -6944,8 +6944,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport",
         () =>
@@ -6953,8 +6953,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport",
         () =>
@@ -6962,8 +6962,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport",
         () =>
@@ -6971,8 +6971,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCategoryEligibilityProhibitionsPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport",
         () =>
@@ -6980,8 +6980,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldStableOwnerIdentityUniquenessContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport",
         () =>
@@ -6989,8 +6989,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport",
         () =>
@@ -6998,8 +6998,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityOwnershipReadinessConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport",
         () =>
@@ -7007,8 +7007,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport",
         () =>
@@ -7016,8 +7016,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport",
         () =>
@@ -7025,8 +7025,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerIdentityContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport",
         () =>
@@ -7034,8 +7034,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport",
         () =>
@@ -7043,8 +7043,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCandidateEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport",
         () =>
@@ -7052,8 +7052,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport",
         () =>
@@ -7061,8 +7061,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport",
         () =>
@@ -7070,8 +7070,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionIdentityContractConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport",
         () =>
@@ -7079,8 +7079,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport",
         () =>
@@ -7088,8 +7088,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport",
         () =>
@@ -7097,8 +7097,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerSelectionReadinessSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate",
         () =>
@@ -7106,8 +7106,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidate
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport",
         () =>
@@ -7115,8 +7115,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport",
         () =>
@@ -7124,8 +7124,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateIsolationImmutabilityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport",
         () =>
@@ -7133,8 +7133,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport",
         () =>
@@ -7142,8 +7142,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport",
         () =>
@@ -7151,8 +7151,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnerCandidateSectionCloseoutReport
             : null
-      ),
-    assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner:
+      );
+  namespace.assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner =
       createNamespaceWrapper(
         "assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner",
         () =>
@@ -7160,8 +7160,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? assignCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwner
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport",
         () =>
@@ -7169,8 +7169,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport",
         () =>
@@ -7178,8 +7178,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentIsolationImmutabilityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport",
         () =>
@@ -7187,8 +7187,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport",
         () =>
@@ -7196,8 +7196,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport",
         () =>
@@ -7205,8 +7205,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipAssignmentSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport",
         () =>
@@ -7214,8 +7214,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport",
         () =>
@@ -7223,8 +7223,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport",
         () =>
@@ -7232,8 +7232,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationProcedureStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport",
         () =>
@@ -7241,8 +7241,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport",
         () =>
@@ -7250,8 +7250,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationAssignmentConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -7259,8 +7259,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport",
         () =>
@@ -7268,8 +7268,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport",
         () =>
@@ -7277,8 +7277,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageRegistrationReadinessSectionCloseoutReport
             : null
-      ),
-    storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult:
+      );
+  namespace.storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult =
       createNamespaceWrapper(
         "storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult",
         () =>
@@ -7286,8 +7286,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? storeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipResult
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport",
         () =>
@@ -7295,8 +7295,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport",
         () =>
@@ -7304,8 +7304,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageIsolationMutationBoundaryReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport",
         () =>
@@ -7313,8 +7313,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport",
         () =>
@@ -7322,8 +7322,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport",
         () =>
@@ -7331,8 +7331,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipStorageSectionCloseoutReport
             : null
-      ),
-    registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord:
+      );
+  namespace.registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord =
       createNamespaceWrapper(
         "registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord",
         () =>
@@ -7340,8 +7340,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? registerCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRecord
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport",
         () =>
@@ -7349,8 +7349,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationContractConformanceReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport",
         () =>
@@ -7358,8 +7358,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationIsolationMutationBoundaryReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport",
         () =>
@@ -7367,8 +7367,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationBlockedPathReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport",
         () =>
@@ -7376,8 +7376,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport",
         () =>
@@ -7385,8 +7385,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldOwnershipRegistrationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport",
         () =>
@@ -7394,8 +7394,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport",
         () =>
@@ -7403,8 +7403,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationEvidenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport",
         () =>
@@ -7412,8 +7412,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport",
         () =>
@@ -7421,8 +7421,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport",
         () =>
@@ -7430,8 +7430,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipIntegrationPlanningFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport",
         () =>
@@ -7439,8 +7439,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport",
         () =>
@@ -7448,8 +7448,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport",
         () =>
@@ -7457,8 +7457,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationGateProcedureStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport",
         () =>
@@ -7466,8 +7466,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport",
         () =>
@@ -7475,8 +7475,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessPlanningConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport",
         () =>
@@ -7484,8 +7484,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport",
         () =>
@@ -7493,8 +7493,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport",
         () =>
@@ -7502,8 +7502,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport",
         () =>
@@ -7511,8 +7511,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationReadinessSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport",
         () =>
@@ -7520,8 +7520,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport",
         () =>
@@ -7529,8 +7529,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationInputOutputContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport",
         () =>
@@ -7538,8 +7538,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationAtomicityRollbackPostconditionStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport",
         () =>
@@ -7547,8 +7547,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport",
         () =>
@@ -7556,8 +7556,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryReadinessConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport",
         () =>
@@ -7565,8 +7565,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport",
         () =>
@@ -7574,8 +7574,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport",
         () =>
@@ -7583,8 +7583,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport",
         () =>
@@ -7592,8 +7592,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreationBoundarySectionFinalReviewReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState",
         () =>
@@ -7601,8 +7601,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipState
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport",
         () =>
@@ -7610,8 +7610,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorContractAtomicityReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport",
         () =>
@@ -7619,8 +7619,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorIsolationImmutabilityCallSiteReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport",
         () =>
@@ -7628,8 +7628,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipCreatorImplementationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport",
         () =>
@@ -7637,8 +7637,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationTransitionPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport",
         () =>
@@ -7646,8 +7646,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationEvidenceInspectionContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport",
         () =>
@@ -7655,8 +7655,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationProcedureVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport",
         () =>
@@ -7664,8 +7664,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport",
         () =>
@@ -7673,8 +7673,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCreatorConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport",
         () =>
@@ -7682,8 +7682,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport",
         () =>
@@ -7691,8 +7691,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport",
         () =>
@@ -7700,8 +7700,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport",
         () =>
@@ -7709,8 +7709,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateIntegrationReadinessSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport",
         () =>
@@ -7718,8 +7718,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport",
         () =>
@@ -7727,8 +7727,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessSnapshotResultContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport",
         () =>
@@ -7736,8 +7736,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessAuthorizationVerificationStopPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport",
         () =>
@@ -7745,8 +7745,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryCompletenessReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport",
         () =>
@@ -7754,8 +7754,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCreatorIntegrationConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport",
         () =>
@@ -7763,8 +7763,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessCrossCategoryConsistencyReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport",
         () =>
@@ -7772,8 +7772,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport",
         () =>
@@ -7781,8 +7781,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport",
         () =>
@@ -7790,8 +7790,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateAccessBoundarySectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot",
         () =>
@@ -7799,8 +7799,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshot
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport",
         () =>
@@ -7808,8 +7808,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotContractZeroWriteReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport",
         () =>
@@ -7817,8 +7817,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotIsolationDetachmentAuthorizationCallSiteReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport",
         () =>
@@ -7826,8 +7826,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipStateSnapshotImplementationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport",
         () =>
@@ -7835,8 +7835,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport",
         () =>
@@ -7844,8 +7844,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport",
         () =>
@@ -7853,8 +7853,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport",
         () =>
@@ -7862,8 +7862,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotIntegrationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport",
         () =>
@@ -7871,8 +7871,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport",
         () =>
@@ -7880,8 +7880,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport",
         () =>
@@ -7889,8 +7889,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport",
         () =>
@@ -7898,8 +7898,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport",
         () =>
@@ -7907,8 +7907,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport",
         () =>
@@ -7916,8 +7916,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport",
         () =>
@@ -7925,8 +7925,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport",
         () =>
@@ -7934,8 +7934,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport",
         () =>
@@ -7943,8 +7943,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport",
         () =>
@@ -7952,8 +7952,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport",
         () =>
@@ -7961,8 +7961,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport",
         () =>
@@ -7970,8 +7970,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerCreationReadinessSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport",
         () =>
@@ -7979,8 +7979,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport",
         () =>
@@ -7988,8 +7988,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport",
         () =>
@@ -7997,8 +7997,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport",
         () =>
@@ -8006,8 +8006,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationAuthorizationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport",
         () =>
@@ -8015,8 +8015,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport",
         () =>
@@ -8024,8 +8024,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessGateCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport",
         () =>
@@ -8033,8 +8033,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport",
         () =>
@@ -8042,8 +8042,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReadinessSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer",
         () =>
@@ -8051,8 +8051,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumer
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport",
         () =>
@@ -8060,8 +8060,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport",
         () =>
@@ -8069,8 +8069,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport",
         () =>
@@ -8078,8 +8078,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerImplementationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport",
         () =>
@@ -8087,8 +8087,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport",
         () =>
@@ -8096,8 +8096,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport",
         () =>
@@ -8105,8 +8105,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport",
         () =>
@@ -8114,8 +8114,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualInvocationContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport",
         () =>
@@ -8123,8 +8123,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport",
         () =>
@@ -8132,8 +8132,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport",
         () =>
@@ -8141,8 +8141,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundaryFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport",
         () =>
@@ -8150,8 +8150,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationBoundarySectionCloseoutReport
             : null
-      ),
-    invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot:
+      );
+  namespace.invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot =
       createNamespaceWrapper(
         "invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot",
         () =>
@@ -8159,8 +8159,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShot
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport",
         () =>
@@ -8168,8 +8168,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationImplementationReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport",
         () =>
@@ -8177,8 +8177,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport",
         () =>
@@ -8186,8 +8186,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerOneShotInvocationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport",
         () =>
@@ -8195,8 +8195,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport",
         () =>
@@ -8204,8 +8204,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport",
         () =>
@@ -8213,8 +8213,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport",
         () =>
@@ -8222,8 +8222,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRetentionContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport",
         () =>
@@ -8231,8 +8231,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport",
         () =>
@@ -8240,8 +8240,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport",
         () =>
@@ -8249,8 +8249,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport",
         () =>
@@ -8258,8 +8258,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationBoundarySectionFinalReviewReport
             : null
-      ),
-    createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention:
+      );
+  namespace.createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention",
         () =>
@@ -8267,8 +8267,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetention
             : null
-      ),
-    releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder:
+      );
+  namespace.releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder =
       createNamespaceWrapper(
         "releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder",
         () =>
@@ -8276,8 +8276,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? releaseCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolder
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport",
         () =>
@@ -8285,8 +8285,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport",
         () =>
@@ -8294,8 +8294,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport",
         () =>
@@ -8303,8 +8303,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderManualReleaseSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport",
         () =>
@@ -8312,8 +8312,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport",
         () =>
@@ -8321,8 +8321,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport",
         () =>
@@ -8330,8 +8330,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport",
         () =>
@@ -8339,8 +8339,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport",
         () =>
@@ -8348,8 +8348,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport",
         () =>
@@ -8357,8 +8357,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationAuthorizationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport",
         () =>
@@ -8366,8 +8366,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport",
         () =>
@@ -8375,8 +8375,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationImplementationReadinessGateCloseoutReport
             : null
-      ),
-    invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease:
+      );
+  namespace.invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease =
       createNamespaceWrapper(
         "invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease",
         () =>
@@ -8384,8 +8384,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? invokeCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualRelease
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport",
         () =>
@@ -8393,8 +8393,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperImplementationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport",
         () =>
@@ -8402,8 +8402,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport",
         () =>
@@ -8411,8 +8411,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerManualReleaseInvocationWrapperSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport",
         () =>
@@ -8420,8 +8420,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport",
         () =>
@@ -8429,8 +8429,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseFinalAuditCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport",
         () =>
@@ -8438,8 +8438,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport",
         () =>
@@ -8447,8 +8447,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReleaseSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneContractPlanReport",
         () =>
@@ -8456,8 +8456,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8465,8 +8465,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport",
         () =>
@@ -8474,8 +8474,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8483,8 +8483,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationAuthorizationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport",
         () =>
@@ -8492,8 +8492,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8501,16 +8501,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneImplementationReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticTestScene:
+      );
+  namespace.createCustom25DVisualSyntheticTestScene =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticTestScene",
         () =>
           typeof createCustom25DVisualSyntheticTestScene === "function"
             ? createCustom25DVisualSyntheticTestScene
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8518,8 +8518,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport",
         () =>
@@ -8527,8 +8527,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8536,8 +8536,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport",
         () =>
@@ -8545,8 +8545,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8554,8 +8554,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationAuthorizationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport",
         () =>
@@ -8563,8 +8563,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8572,16 +8572,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerImplementationReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    consumeCustom25DVisualSyntheticTestScene:
+      );
+  namespace.consumeCustom25DVisualSyntheticTestScene =
       createNamespaceWrapper(
         "consumeCustom25DVisualSyntheticTestScene",
         () =>
           typeof consumeCustom25DVisualSyntheticTestScene === "function"
             ? consumeCustom25DVisualSyntheticTestScene
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8589,8 +8589,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneConsumerFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport",
         () =>
@@ -8598,8 +8598,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8607,8 +8607,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport",
         () =>
@@ -8616,8 +8616,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8625,16 +8625,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticTestSceneGeometry:
+      );
+  namespace.createCustom25DVisualSyntheticTestSceneGeometry =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticTestSceneGeometry",
         () =>
           typeof createCustom25DVisualSyntheticTestSceneGeometry === "function"
             ? createCustom25DVisualSyntheticTestSceneGeometry
             : null
-      ),
-    getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8642,8 +8642,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticTestSceneGeometryCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport",
         () =>
@@ -8651,8 +8651,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderingSurfaceContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8660,8 +8660,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderingSurfaceContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport",
         () =>
@@ -8669,8 +8669,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8678,16 +8678,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticCanvasSurfaceImplementationAuthorizationAndReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticRenderingSurface:
+      );
+  namespace.createCustom25DVisualSyntheticRenderingSurface =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticRenderingSurface",
         () =>
           typeof createCustom25DVisualSyntheticRenderingSurface === "function"
             ? createCustom25DVisualSyntheticRenderingSurface
             : null
-      ),
-    getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8695,16 +8695,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderingSurfaceCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    createCustom25DVisualSyntheticCanvas2DContext:
+      );
+  namespace.createCustom25DVisualSyntheticCanvas2DContext =
       createNamespaceWrapper(
         "createCustom25DVisualSyntheticCanvas2DContext",
         () =>
           typeof createCustom25DVisualSyntheticCanvas2DContext === "function"
             ? createCustom25DVisualSyntheticCanvas2DContext
             : null
-      ),
-    getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8712,16 +8712,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticCanvas2DContextCreatorFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticDrawingContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticDrawingContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticDrawingContractPlanReport",
         () =>
           typeof getCustom25DVisualSyntheticDrawingContractPlanReport === "function"
             ? getCustom25DVisualSyntheticDrawingContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8729,16 +8729,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticDrawingContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    drawCustom25DVisualSyntheticTestSceneGeometry:
+      );
+  namespace.drawCustom25DVisualSyntheticTestSceneGeometry =
       createNamespaceWrapper(
         "drawCustom25DVisualSyntheticTestSceneGeometry",
         () =>
           typeof drawCustom25DVisualSyntheticTestSceneGeometry === "function"
             ? drawCustom25DVisualSyntheticTestSceneGeometry
             : null
-      ),
-    getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8746,8 +8746,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticDrawingImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport",
         () =>
@@ -8755,8 +8755,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderOrchestrationContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8764,8 +8764,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderOrchestrationContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8773,8 +8773,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticRenderOrchestrationImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticPresentationContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticPresentationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticPresentationContractPlanReport",
         () =>
@@ -8782,8 +8782,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticPresentationContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8791,16 +8791,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticPresentationContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    presentCustom25DVisualSyntheticRenderingSurface:
+      );
+  namespace.presentCustom25DVisualSyntheticRenderingSurface =
       createNamespaceWrapper(
         "presentCustom25DVisualSyntheticRenderingSurface",
         () =>
           typeof presentCustom25DVisualSyntheticRenderingSurface === "function"
             ? presentCustom25DVisualSyntheticRenderingSurface
             : null
-      ),
-    getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8808,8 +8808,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticPresentationImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationContractPlanReport",
         () =>
@@ -8817,8 +8817,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8826,16 +8826,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationContractFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    runCustom25DVisualSyntheticVisibleVerification:
+      );
+  namespace.runCustom25DVisualSyntheticVisibleVerification =
       createNamespaceWrapper(
         "runCustom25DVisualSyntheticVisibleVerification",
         () =>
           typeof runCustom25DVisualSyntheticVisibleVerification === "function"
             ? runCustom25DVisualSyntheticVisibleVerification
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8843,8 +8843,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationImplementationFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport",
         () =>
@@ -8852,8 +8852,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport",
         () =>
@@ -8861,8 +8861,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationExecutionReadinessFinalReviewAndSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport",
         () =>
@@ -8870,8 +8870,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationManualExecutionProcedureReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport",
         () =>
@@ -8879,8 +8879,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationSuccessCloseoutPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport",
         () =>
@@ -8888,8 +8888,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport",
         () =>
@@ -8897,8 +8897,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationProcedureSceneContractCorrectionSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport",
         () =>
@@ -8906,8 +8906,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalCompletionReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport",
         () =>
@@ -8915,8 +8915,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleVerificationMilestoneFinalSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport",
         () =>
@@ -8924,8 +8924,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticVisibleMilestoneToMapAttachmentReadinessHandoffPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport",
         () =>
@@ -8933,8 +8933,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentReadinessHandoffFinalReviewAndCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentContractPlanReport",
         () =>
@@ -8942,8 +8942,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport",
         () =>
@@ -8951,8 +8951,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentContractFinalReviewAndCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport",
         () =>
@@ -8960,8 +8960,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapAttachmentContractResolutionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractResolutionReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractResolutionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractResolutionReport",
         () =>
@@ -8969,8 +8969,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractResolutionReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport",
         () =>
@@ -8978,8 +8978,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractResolutionFinalReviewAndCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport",
         () =>
@@ -8987,8 +8987,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDefinitionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport",
         () =>
@@ -8996,8 +8996,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDefinitionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport",
         () =>
@@ -9005,8 +9005,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDefinitionSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport",
         () =>
@@ -9014,8 +9014,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityContractDecisionResolutionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport",
         () =>
@@ -9023,8 +9023,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityValidationStrategyDecisionReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport",
         () =>
@@ -9032,8 +9032,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapIdentityValidationStrategyFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport",
         () =>
@@ -9041,8 +9041,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractDefinitionReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport",
         () =>
@@ -9050,8 +9050,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractFinalReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport",
         () =>
@@ -9059,8 +9059,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactAcceptedMapTypeAndHybridValidationContractSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport",
         () =>
@@ -9068,8 +9068,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceDecisionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport:
+      );
+  namespace.getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport",
         () =>
@@ -9077,8 +9077,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticExactMapKindAndGrowGoMapReferenceSourceEvidenceResolutionReport
             : null
-      ),
-    getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport:
+      );
+  namespace.getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport",
         () =>
@@ -9086,8 +9086,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticMapKindAndGrowGoMapReferenceSourceDiscoveryRefinementReport
             : null
-      ),
-    getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport",
         () =>
@@ -9095,8 +9095,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport",
         () =>
@@ -9104,8 +9104,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureContractEvidenceReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport",
         () =>
@@ -9113,8 +9113,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticAuthoritativeGrowGoMapReferenceSourceArchitectureEvidenceFinalReviewAndDecisionReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport",
         () =>
@@ -9122,8 +9122,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureDecisionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport",
         () =>
@@ -9131,8 +9131,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport",
         () =>
@@ -9140,8 +9140,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureEvidenceFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport",
         () =>
@@ -9149,8 +9149,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidencePlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport",
         () =>
@@ -9158,8 +9158,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport",
         () =>
@@ -9167,8 +9167,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthorityLifetimeAndStateDiscriminationEvidenceFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport",
         () =>
@@ -9176,8 +9176,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport",
         () =>
@@ -9185,8 +9185,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport",
         () =>
@@ -9194,8 +9194,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractFinalReviewAndSelectionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport",
         () =>
@@ -9203,8 +9203,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureLifetimeReplacementTeardownAndStaleReferenceContractSelectionReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport",
         () =>
@@ -9212,8 +9212,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport",
         () =>
@@ -9221,8 +9221,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport",
         () =>
@@ -9230,8 +9230,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport",
         () =>
@@ -9239,8 +9239,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureAuthoritativeSourceAndBorrowedReferenceSafetyDecisionReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport",
         () =>
@@ -9248,8 +9248,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionPlanReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport",
         () =>
@@ -9257,8 +9257,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionReviewReport
             : null
-      ),
-    getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport:
+      );
+  namespace.getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport",
         () =>
@@ -9266,8 +9266,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSyntheticOwnerAdjacentReadOnlyGrowGoMapGetterArchitectureSelectionFinalReviewAndDecisionReadinessReport
             : null
-      ),
-    getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport:
+      );
+  namespace.getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport",
         () =>
@@ -9275,16 +9275,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualLocalDevelopmentManualTestRuntimeExposureContractPlanReport
             : null
-      ),
-    renderCustom25DVisualSyntheticTestScene:
+      );
+  namespace.renderCustom25DVisualSyntheticTestScene =
       createNamespaceWrapper(
         "renderCustom25DVisualSyntheticTestScene",
         () =>
           typeof renderCustom25DVisualSyntheticTestScene === "function"
             ? renderCustom25DVisualSyntheticTestScene
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport",
         () =>
@@ -9292,8 +9292,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport",
         () =>
@@ -9301,8 +9301,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport",
         () =>
@@ -9310,8 +9310,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionCreationSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport",
         () =>
@@ -9319,8 +9319,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport",
         () =>
@@ -9328,8 +9328,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionFinalReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport",
         () =>
@@ -9337,8 +9337,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionSectionCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport",
         () =>
@@ -9346,8 +9346,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport",
         () =>
@@ -9355,8 +9355,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseBoundaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport",
         () =>
@@ -9364,8 +9364,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport",
         () =>
@@ -9373,8 +9373,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerReleaseReadinessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport",
         () =>
@@ -9382,8 +9382,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport",
         () =>
@@ -9391,8 +9391,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererCallableLifecycleManualAuthorizationBlockedInertScaffoldRetainedSharedOwnershipSnapshotConsumerRetentionHolderIntegrationCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateContainerShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateContainerShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellCloseoutReport",
         () =>
@@ -9400,8 +9400,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateContainerShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport",
         () =>
@@ -9409,8 +9409,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateContainerCreationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateContainerPreflightReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateContainerPreflightReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateContainerPreflightReport",
         () =>
@@ -9418,8 +9418,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateContainerPreflightReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateContainerShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateContainerShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateContainerShellCloseoutReport",
         () =>
@@ -9427,8 +9427,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateContainerShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSchemaReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSchemaReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSchemaReviewReport",
         () =>
@@ -9436,8 +9436,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSchemaReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateReadAccessPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateReadAccessPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateReadAccessPlanReport",
         () =>
@@ -9445,8 +9445,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateReadAccessPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport",
         () =>
@@ -9454,8 +9454,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateReadAccessPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport",
         () =>
@@ -9463,8 +9463,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateReadResultContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport",
         () =>
@@ -9472,8 +9472,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateReadResultContractCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport",
         () =>
@@ -9481,8 +9481,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanCloseoutReport",
         () =>
@@ -9490,8 +9490,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotReaderPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotReaderReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotReaderReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotReaderReadinessReport",
         () =>
@@ -9499,16 +9499,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotReaderReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshot:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshot =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshot",
         () =>
           typeof getCustom25DVisualManualRendererSharedStateSnapshot === "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshot
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport",
         () =>
@@ -9516,8 +9516,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport",
         () =>
@@ -9525,8 +9525,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport",
         () =>
@@ -9534,8 +9534,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport",
         () =>
@@ -9543,8 +9543,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport",
         () =>
@@ -9552,8 +9552,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport",
         () =>
@@ -9561,8 +9561,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerReport
             : null
-      ),
-    getCustom25DVisualManualRendererSharedStateSnapshotConsumerCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSharedStateSnapshotConsumerCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSharedStateSnapshotConsumerCloseoutReport",
         () =>
@@ -9570,8 +9570,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSharedStateSnapshotConsumerCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport",
         () =>
@@ -9579,8 +9579,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport",
         () =>
@@ -9588,8 +9588,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport",
         () =>
@@ -9597,8 +9597,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererSnapshotConsumerIntegrationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellPlanReport",
         () =>
@@ -9606,8 +9606,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellContractReport",
         () =>
@@ -9615,8 +9615,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport",
         () =>
@@ -9624,16 +9624,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellPlanCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererIntegrationShell:
+      );
+  namespace.createCustom25DVisualManualRendererIntegrationShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererIntegrationShell",
         () =>
           typeof createCustom25DVisualManualRendererIntegrationShell === "function"
             ? createCustom25DVisualManualRendererIntegrationShell
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellCloseoutReport",
         () =>
@@ -9641,8 +9641,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellReadinessReport",
         () =>
@@ -9650,8 +9650,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport",
         () =>
@@ -9659,8 +9659,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellStatusReaderPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport",
         () =>
@@ -9668,16 +9668,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellStatusReaderContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellStatus:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellStatus =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellStatus",
         () =>
           typeof getCustom25DVisualManualRendererIntegrationShellStatus === "function"
             ? getCustom25DVisualManualRendererIntegrationShellStatus
             : null
-      ),
-    getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport",
         () =>
@@ -9685,24 +9685,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererIntegrationShellStatusCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecyclePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecyclePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecyclePlanReport",
         () =>
           typeof getCustom25DVisualManualRendererLifecyclePlanReport === "function"
             ? getCustom25DVisualManualRendererLifecyclePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleContractReport",
         () =>
           typeof getCustom25DVisualManualRendererLifecycleContractReport === "function"
             ? getCustom25DVisualManualRendererLifecycleContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecyclePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecyclePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecyclePlanCloseoutReport",
         () =>
@@ -9710,16 +9710,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecyclePlanCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererLifecycleShell:
+      );
+  namespace.createCustom25DVisualManualRendererLifecycleShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererLifecycleShell",
         () =>
           typeof createCustom25DVisualManualRendererLifecycleShell === "function"
             ? createCustom25DVisualManualRendererLifecycleShell
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleShellCloseoutReport",
         () =>
@@ -9727,8 +9727,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleShellStatusReport",
         () =>
@@ -9736,8 +9736,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleShellReadinessReport",
         () =>
@@ -9745,8 +9745,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleShellStatusCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleShellStatusCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleShellStatusCloseoutReport",
         () =>
@@ -9754,24 +9754,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleShellStatusCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectPlanReport",
         () =>
           typeof getCustom25DVisualManualRendererObjectPlanReport === "function"
             ? getCustom25DVisualManualRendererObjectPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectContractReport",
         () =>
           typeof getCustom25DVisualManualRendererObjectContractReport === "function"
             ? getCustom25DVisualManualRendererObjectContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectPlanCloseoutReport",
         () =>
@@ -9779,16 +9779,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectPlanCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererObjectShell:
+      );
+  namespace.createCustom25DVisualManualRendererObjectShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererObjectShell",
         () =>
           typeof createCustom25DVisualManualRendererObjectShell === "function"
             ? createCustom25DVisualManualRendererObjectShell
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShellCloseoutReport",
         () =>
@@ -9796,8 +9796,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShellStatusReport",
         () =>
@@ -9805,8 +9805,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShellReadinessReport",
         () =>
@@ -9814,8 +9814,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShellStatusCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShellStatusCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShellStatusCloseoutReport",
         () =>
@@ -9823,8 +9823,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShellStatusCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShapePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShapePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShapePlanReport",
         () =>
@@ -9832,8 +9832,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShapePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShapeContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShapeContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShapeContractReport",
         () =>
@@ -9841,8 +9841,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShapeContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShapePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShapePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShapePlanCloseoutReport",
         () =>
@@ -9850,16 +9850,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShapePlanCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererObjectShapeShell:
+      );
+  namespace.createCustom25DVisualManualRendererObjectShapeShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererObjectShapeShell",
         () =>
           typeof createCustom25DVisualManualRendererObjectShapeShell === "function"
             ? createCustom25DVisualManualRendererObjectShapeShell
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShapeShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShapeShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShapeShellCloseoutReport",
         () =>
@@ -9867,8 +9867,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShapeShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShapeShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShapeShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShapeShellStatusReport",
         () =>
@@ -9876,8 +9876,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShapeShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererObjectShapeShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererObjectShapeShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererObjectShapeShellReadinessReport",
         () =>
@@ -9885,24 +9885,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererObjectShapeShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataPlanReport",
         () =>
           typeof getCustom25DVisualManualRendererMetadataPlanReport === "function"
             ? getCustom25DVisualManualRendererMetadataPlanReport
             : null
-      ),
-    createCustom25DVisualManualRendererMetadataShell:
+      );
+  namespace.createCustom25DVisualManualRendererMetadataShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererMetadataShell",
         () =>
           typeof createCustom25DVisualManualRendererMetadataShell === "function"
             ? createCustom25DVisualManualRendererMetadataShell
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataShellCloseoutReport",
         () =>
@@ -9910,8 +9910,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataShellStatusReport",
         () =>
@@ -9919,8 +9919,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataShellReadinessReport",
         () =>
@@ -9928,8 +9928,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataContractPlanReport",
         () =>
@@ -9937,8 +9937,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataContractPlanReport
             : null
-      ),
-    createCustom25DVisualManualRendererMetadataContractShell:
+      );
+  namespace.createCustom25DVisualManualRendererMetadataContractShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererMetadataContractShell",
         () =>
@@ -9946,8 +9946,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererMetadataContractShell
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataContractShellCloseoutReport",
         () =>
@@ -9955,8 +9955,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationPlanReport",
         () =>
@@ -9964,8 +9964,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationContractReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationContractReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationContractReport",
         () =>
@@ -9973,8 +9973,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationContractReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationPlanCloseoutReport",
         () =>
@@ -9982,8 +9982,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationPlanCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererMetadataValidationShell:
+      );
+  namespace.createCustom25DVisualManualRendererMetadataValidationShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererMetadataValidationShell",
         () =>
@@ -9991,8 +9991,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererMetadataValidationShell
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationShellCloseoutReport",
         () =>
@@ -10000,8 +10000,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationShellStatusReport",
         () =>
@@ -10009,8 +10009,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationShellReadinessReport",
         () =>
@@ -10018,8 +10018,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultPlanReport",
         () =>
@@ -10027,8 +10027,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport",
         () =>
@@ -10036,8 +10036,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport",
         () =>
@@ -10045,8 +10045,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationStatusResultPlanSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultContractPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultContractPlanReport",
         () =>
@@ -10054,8 +10054,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultContractPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultContractReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultContractReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultContractReadinessReport",
         () =>
@@ -10063,8 +10063,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultContractReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultContractPlanCloseoutReport",
         () =>
@@ -10072,8 +10072,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultContractPlanCloseoutReport
             : null
-      ),
-    createCustom25DVisualManualRendererMetadataValidationResultContractShell:
+      );
+  namespace.createCustom25DVisualManualRendererMetadataValidationResultContractShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererMetadataValidationResultContractShell",
         () =>
@@ -10081,8 +10081,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererMetadataValidationResultContractShell
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultContractShellCloseoutReport",
         () =>
@@ -10090,8 +10090,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultContractShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultContractShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultContractShellStatusReport",
         () =>
@@ -10099,8 +10099,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultContractShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultContractShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultContractShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultContractShellReadinessReport",
         () =>
@@ -10108,8 +10108,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultContractShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellPlanReport",
         () =>
@@ -10117,8 +10117,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellPlanCloseoutReport",
         () =>
@@ -10126,8 +10126,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellPlanSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellPlanSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellPlanSelfReviewReport",
         () =>
@@ -10135,8 +10135,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellPlanSelfReviewReport
             : null
-      ),
-    createCustom25DVisualManualRendererMetadataValidationResultShell:
+      );
+  namespace.createCustom25DVisualManualRendererMetadataValidationResultShell =
       createNamespaceWrapper(
         "createCustom25DVisualManualRendererMetadataValidationResultShell",
         () =>
@@ -10144,8 +10144,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? createCustom25DVisualManualRendererMetadataValidationResultShell
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellCloseoutReport",
         () =>
@@ -10153,8 +10153,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellStatusReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellStatusReport",
         () =>
@@ -10162,8 +10162,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellStatusReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellReadinessReport",
         () =>
@@ -10171,8 +10171,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultReviewPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultReviewPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultReviewPlanReport",
         () =>
@@ -10180,8 +10180,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultReviewPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultReviewPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultReviewPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultReviewPlanCloseoutReport",
         () =>
@@ -10189,8 +10189,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultReviewPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultReviewPlanSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultReviewPlanSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultReviewPlanSelfReviewReport",
         () =>
@@ -10198,8 +10198,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultReviewPlanSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellReviewReport",
         () =>
@@ -10207,8 +10207,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellReviewCloseoutReport",
         () =>
@@ -10216,8 +10216,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceCloseoutReport",
         () =>
@@ -10225,8 +10225,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceSelfReviewReport",
         () =>
@@ -10234,8 +10234,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererMetadataValidationResultShellReviewSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererNonRuntimeValidationPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererNonRuntimeValidationPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNonRuntimeValidationPlanReport",
         () =>
@@ -10243,8 +10243,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNonRuntimeValidationPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererNonRuntimeValidationReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererNonRuntimeValidationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNonRuntimeValidationReadinessReport",
         () =>
@@ -10252,8 +10252,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNonRuntimeValidationReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererNonRuntimeValidationPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererNonRuntimeValidationPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNonRuntimeValidationPlanCloseoutReport",
         () =>
@@ -10261,8 +10261,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNonRuntimeValidationPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceCloseoutReport",
         () =>
@@ -10270,8 +10270,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceSelfReviewReport",
         () =>
@@ -10279,8 +10279,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererNonRuntimeValidationPlanSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport",
         () =>
@@ -10288,8 +10288,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewCloseoutReport",
         () =>
@@ -10297,8 +10297,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceCloseoutReport",
         () =>
@@ -10306,8 +10306,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceSelfReviewReport",
         () =>
@@ -10315,8 +10315,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveNonRuntimeValidationReviewSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistPlanReport",
         () =>
@@ -10324,8 +10324,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistReadinessReport",
         () =>
@@ -10333,8 +10333,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistPlanCloseoutReport",
         () =>
@@ -10342,8 +10342,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceCloseoutReport",
         () =>
@@ -10351,8 +10351,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport",
         () =>
@@ -10360,8 +10360,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistPlanSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistReport",
         () =>
@@ -10369,8 +10369,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport",
         () =>
@@ -10378,8 +10378,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistSequenceCloseoutReport",
         () =>
@@ -10387,8 +10387,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationChecklistSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationChecklistSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationChecklistSequenceSelfReviewReport",
         () =>
@@ -10396,8 +10396,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationChecklistSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryPlanReport",
         () =>
@@ -10405,8 +10405,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryReadinessReport",
         () =>
@@ -10414,8 +10414,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryPlanCloseoutReport",
         () =>
@@ -10423,8 +10423,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceCloseoutReport",
         () =>
@@ -10432,8 +10432,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceSelfReviewReport",
         () =>
@@ -10441,8 +10441,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryPlanSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryReport",
         () =>
@@ -10450,8 +10450,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummaryCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummaryCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummaryCloseoutReport",
         () =>
@@ -10459,8 +10459,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummaryCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummarySequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummarySequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummarySequenceCloseoutReport",
         () =>
@@ -10468,8 +10468,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummarySequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationSummarySequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationSummarySequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationSummarySequenceSelfReviewReport",
         () =>
@@ -10477,8 +10477,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationSummarySequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestonePlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestonePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestonePlanReport",
         () =>
@@ -10486,8 +10486,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestonePlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestoneReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestoneReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestoneReadinessReport",
         () =>
@@ -10495,8 +10495,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestoneReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestonePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestonePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestonePlanCloseoutReport",
         () =>
@@ -10504,8 +10504,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestonePlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceCloseoutReport",
         () =>
@@ -10513,8 +10513,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceSelfReviewReport",
         () =>
@@ -10522,8 +10522,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestonePlanSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestoneReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestoneReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestoneReport",
         () =>
@@ -10531,8 +10531,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestoneReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestoneCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestoneCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestoneCloseoutReport",
         () =>
@@ -10540,8 +10540,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestoneCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceCloseoutReport",
         () =>
@@ -10549,8 +10549,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceSelfReviewReport",
         () =>
@@ -10558,8 +10558,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPassiveValidationMilestoneSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualHelperDensityMaintenanceStatusReport:
+      );
+  namespace.getCustom25DVisualHelperDensityMaintenanceStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualHelperDensityMaintenanceStatusReport",
         () =>
@@ -10567,8 +10567,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualHelperDensityMaintenanceStatusReport
             : null
-      ),
-    getCustom25DVisualFutureSafeExtractionCandidateReport:
+      );
+  namespace.getCustom25DVisualFutureSafeExtractionCandidateReport =
       createNamespaceWrapper(
         "getCustom25DVisualFutureSafeExtractionCandidateReport",
         () =>
@@ -10576,8 +10576,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualFutureSafeExtractionCandidateReport
             : null
-      ),
-    getCustom25DVisualHelperDensityMaintenanceReadinessReport:
+      );
+  namespace.getCustom25DVisualHelperDensityMaintenanceReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualHelperDensityMaintenanceReadinessReport",
         () =>
@@ -10585,8 +10585,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualHelperDensityMaintenanceReadinessReport
             : null
-      ),
-    getCustom25DVisualHelperDensityMaintenanceReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualHelperDensityMaintenanceReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualHelperDensityMaintenanceReadinessCloseoutReport",
         () =>
@@ -10594,8 +10594,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualHelperDensityMaintenanceReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport:
+      );
+  namespace.getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport",
         () =>
@@ -10603,8 +10603,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualHelperDensityMaintenanceReadinessSelfReviewReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionManifestPlanReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionManifestPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionManifestPlanReport",
         () =>
@@ -10612,8 +10612,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionManifestPlanReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionManifestReadinessReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionManifestReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionManifestReadinessReport",
         () =>
@@ -10621,8 +10621,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionManifestReadinessReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport",
         () =>
@@ -10630,8 +10630,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionManifestPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionManifestPlanSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionManifestPlanSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionManifestPlanSequenceCloseoutReport",
         () =>
@@ -10639,8 +10639,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionManifestPlanSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionManifestPlanSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionManifestPlanSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionManifestPlanSequenceSelfReviewReport",
         () =>
@@ -10648,8 +10648,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionManifestPlanSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightPlanReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightPlanReport",
         () =>
@@ -10657,8 +10657,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightPlanReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightReadinessReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightReadinessReport",
         () =>
@@ -10666,8 +10666,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightReadinessReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightPlanCloseoutReport",
         () =>
@@ -10675,8 +10675,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightPlanSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightPlanSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightPlanSequenceCloseoutReport",
         () =>
@@ -10684,8 +10684,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightPlanSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightPlanSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightPlanSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightPlanSequenceSelfReviewReport",
         () =>
@@ -10693,8 +10693,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightPlanSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightReport",
         () =>
@@ -10702,8 +10702,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightCloseoutReport",
         () =>
@@ -10711,8 +10711,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightSequenceCloseoutReport",
         () =>
@@ -10720,8 +10720,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionPreflightSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionPreflightSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionPreflightSequenceSelfReviewReport",
         () =>
@@ -10729,8 +10729,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionPreflightSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveExtractionCandidatePlanReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveExtractionCandidatePlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveExtractionCandidatePlanReport",
         () =>
@@ -10739,8 +10739,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualFirstPassiveExtractionCandidatePlanReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport",
         () =>
@@ -10749,8 +10749,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualFirstPassiveExtractionCandidateReadinessReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport",
         () =>
@@ -10759,8 +10759,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualFirstPassiveExtractionCandidatePlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveHelperMoveCloseoutReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveHelperMoveCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveHelperMoveCloseoutReport",
         () =>
@@ -10768,8 +10768,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualFirstPassiveHelperMoveCloseoutReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveHelperMoveSelfReviewReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveHelperMoveSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveHelperMoveSelfReviewReport",
         () =>
@@ -10777,8 +10777,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualFirstPassiveHelperMoveSelfReviewReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport",
         () =>
@@ -10787,8 +10787,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualFirstPassiveHelperMoveSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport",
         () =>
@@ -10797,8 +10797,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualFirstPassiveHelperMoveSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualSecondPassiveHelperMoveCloseoutReport:
+      );
+  namespace.getCustom25DVisualSecondPassiveHelperMoveCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSecondPassiveHelperMoveCloseoutReport",
         () =>
@@ -10806,8 +10806,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSecondPassiveHelperMoveCloseoutReport
             : null
-      ),
-    getCustom25DVisualSecondPassiveHelperMoveSelfReviewReport:
+      );
+  namespace.getCustom25DVisualSecondPassiveHelperMoveSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSecondPassiveHelperMoveSelfReviewReport",
         () =>
@@ -10815,8 +10815,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualSecondPassiveHelperMoveSelfReviewReport
             : null
-      ),
-    getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport",
         () =>
@@ -10825,8 +10825,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualSecondPassiveHelperMoveSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport",
         () =>
@@ -10835,8 +10835,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualSecondPassiveHelperMoveSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualExtractedPassiveReportsFileHealthReport:
+      );
+  namespace.getCustom25DVisualExtractedPassiveReportsFileHealthReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedPassiveReportsFileHealthReport",
         () =>
@@ -10845,8 +10845,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualExtractedPassiveReportsFileHealthReport
             : null
-      ),
-    getCustom25DVisualExtractedPassiveReportsFileReadinessReport:
+      );
+  namespace.getCustom25DVisualExtractedPassiveReportsFileReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedPassiveReportsFileReadinessReport",
         () =>
@@ -10855,8 +10855,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualExtractedPassiveReportsFileReadinessReport
             : null
-      ),
-    getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport:
+      );
+  namespace.getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport",
         () =>
@@ -10865,8 +10865,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualExtractedPassiveReportsFileHealthCloseoutReport
             : null
-      ),
-    getCustom25DVisualPostReconciliationBundledPassiveHelperMoveCloseoutReport:
+      );
+  namespace.getCustom25DVisualPostReconciliationBundledPassiveHelperMoveCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPostReconciliationBundledPassiveHelperMoveCloseoutReport",
         () =>
@@ -10874,8 +10874,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPostReconciliationBundledPassiveHelperMoveCloseoutReport
             : null
-      ),
-    getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport:
+      );
+  namespace.getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport",
         () =>
@@ -10883,16 +10883,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPostReconciliationBundledPassiveHelperMoveSelfReviewReport
             : null
-      ),
-    getCustom25DVisualPostReconciliationMoveHealthReport:
+      );
+  namespace.getCustom25DVisualPostReconciliationMoveHealthReport =
       createNamespaceWrapper(
         "getCustom25DVisualPostReconciliationMoveHealthReport",
         () =>
           typeof getCustom25DVisualPostReconciliationMoveHealthReport === "function"
             ? getCustom25DVisualPostReconciliationMoveHealthReport
             : null
-      ),
-    getCustom25DVisualPostReconciliationMoveReadinessReport:
+      );
+  namespace.getCustom25DVisualPostReconciliationMoveReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualPostReconciliationMoveReadinessReport",
         () =>
@@ -10900,8 +10900,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPostReconciliationMoveReadinessReport
             : null
-      ),
-    getCustom25DVisualPostReconciliationMoveHealthCloseoutReport:
+      );
+  namespace.getCustom25DVisualPostReconciliationMoveHealthCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPostReconciliationMoveHealthCloseoutReport",
         () =>
@@ -10909,8 +10909,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPostReconciliationMoveHealthCloseoutReport
             : null
-      ),
-    getCustom25DVisualBundledPassiveHelperMoveCloseoutReport:
+      );
+  namespace.getCustom25DVisualBundledPassiveHelperMoveCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualBundledPassiveHelperMoveCloseoutReport",
         () =>
@@ -10918,8 +10918,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualBundledPassiveHelperMoveCloseoutReport
             : null
-      ),
-    getCustom25DVisualBundledPassiveHelperMoveSelfReviewReport:
+      );
+  namespace.getCustom25DVisualBundledPassiveHelperMoveSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualBundledPassiveHelperMoveSelfReviewReport",
         () =>
@@ -10927,8 +10927,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualBundledPassiveHelperMoveSelfReviewReport
             : null
-      ),
-    getCustom25DVisualBundledPassiveMoveHealthReport:
+      );
+  namespace.getCustom25DVisualBundledPassiveMoveHealthReport =
       createNamespaceWrapper(
         "getCustom25DVisualBundledPassiveMoveHealthReport",
         () =>
@@ -10937,8 +10937,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualBundledPassiveMoveHealthReport
             : null
-      ),
-    getCustom25DVisualBundledPassiveMoveReadinessReport:
+      );
+  namespace.getCustom25DVisualBundledPassiveMoveReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualBundledPassiveMoveReadinessReport",
         () =>
@@ -10947,8 +10947,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualBundledPassiveMoveReadinessReport
             : null
-      ),
-    getCustom25DVisualBundledPassiveMoveHealthCloseoutReport:
+      );
+  namespace.getCustom25DVisualBundledPassiveMoveHealthCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualBundledPassiveMoveHealthCloseoutReport",
         () =>
@@ -10957,8 +10957,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
             "function"
             ? globalThis.getCustom25DVisualBundledPassiveMoveHealthCloseoutReport
             : null
-      ),
-    getCustom25DVisualFinalBundledPassiveHelperMoveCloseoutReport:
+      );
+  namespace.getCustom25DVisualFinalBundledPassiveHelperMoveCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualFinalBundledPassiveHelperMoveCloseoutReport",
         () =>
@@ -10966,8 +10966,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualFinalBundledPassiveHelperMoveCloseoutReport
             : null
-      ),
-    getCustom25DVisualFinalBundledPassiveHelperMoveSelfReviewReport:
+      );
+  namespace.getCustom25DVisualFinalBundledPassiveHelperMoveSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualFinalBundledPassiveHelperMoveSelfReviewReport",
         () =>
@@ -10975,16 +10975,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualFinalBundledPassiveHelperMoveSelfReviewReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionReassessmentReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionReassessmentReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionReassessmentReport",
         () =>
           typeof getCustom25DVisualPassiveExtractionReassessmentReport === "function"
             ? getCustom25DVisualPassiveExtractionReassessmentReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionReassessmentReadinessReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionReassessmentReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionReassessmentReadinessReport",
         () =>
@@ -10992,8 +10992,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionReassessmentReadinessReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionReassessmentCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionReassessmentCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionReassessmentCloseoutReport",
         () =>
@@ -11001,8 +11001,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionReassessmentCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionSequenceCloseoutReport",
         () =>
@@ -11010,8 +11010,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionSequenceSelfReviewReport",
         () =>
@@ -11019,8 +11019,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualPassiveExtractionSequencePauseRecommendationReport:
+      );
+  namespace.getCustom25DVisualPassiveExtractionSequencePauseRecommendationReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveExtractionSequencePauseRecommendationReport",
         () =>
@@ -11028,48 +11028,48 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveExtractionSequencePauseRecommendationReport
             : null
-      ),
-    getCustom25DVisualRendererPathResumeReadinessReport:
+      );
+  namespace.getCustom25DVisualRendererPathResumeReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererPathResumeReadinessReport",
         () =>
           typeof getCustom25DVisualRendererPathResumeReadinessReport === "function"
             ? getCustom25DVisualRendererPathResumeReadinessReport
             : null
-      ),
-    getCustom25DVisualRendererPathResumeNextStepReport:
+      );
+  namespace.getCustom25DVisualRendererPathResumeNextStepReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererPathResumeNextStepReport",
         () =>
           typeof getCustom25DVisualRendererPathResumeNextStepReport === "function"
             ? getCustom25DVisualRendererPathResumeNextStepReport
             : null
-      ),
-    getCustom25DVisualRendererPathResumeCloseoutReport:
+      );
+  namespace.getCustom25DVisualRendererPathResumeCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererPathResumeCloseoutReport",
         () =>
           typeof getCustom25DVisualRendererPathResumeCloseoutReport === "function"
             ? getCustom25DVisualRendererPathResumeCloseoutReport
             : null
-      ),
-    getCustom25DVisualRendererStateContainerReadinessReport:
+      );
+  namespace.getCustom25DVisualRendererStateContainerReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererStateContainerReadinessReport",
         () =>
           typeof getCustom25DVisualRendererStateContainerReadinessReport === "function"
             ? getCustom25DVisualRendererStateContainerReadinessReport
             : null
-      ),
-    getCustom25DVisualRendererStateContainerNextStepReport:
+      );
+  namespace.getCustom25DVisualRendererStateContainerNextStepReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererStateContainerNextStepReport",
         () =>
           typeof getCustom25DVisualRendererStateContainerNextStepReport === "function"
             ? getCustom25DVisualRendererStateContainerNextStepReport
             : null
-      ),
-    getCustom25DVisualRendererStateContainerReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualRendererStateContainerReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererStateContainerReadinessCloseoutReport",
         () =>
@@ -11077,8 +11077,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualRendererStateContainerReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualRendererStateContainerPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualRendererStateContainerPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererStateContainerPlanCloseoutReport",
         () =>
@@ -11086,8 +11086,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualRendererStateContainerPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualRendererStateContainerPlanSelfReviewReport:
+      );
+  namespace.getCustom25DVisualRendererStateContainerPlanSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererStateContainerPlanSelfReviewReport",
         () =>
@@ -11095,8 +11095,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualRendererStateContainerPlanSelfReviewReport
             : null
-      ),
-    getCustom25DVisualRendererStateContainerPlanNextStepReport:
+      );
+  namespace.getCustom25DVisualRendererStateContainerPlanNextStepReport =
       createNamespaceWrapper(
         "getCustom25DVisualRendererStateContainerPlanNextStepReport",
         () =>
@@ -11104,8 +11104,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualRendererStateContainerPlanNextStepReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerContractPlanReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerContractPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerContractPlanReport",
         () =>
@@ -11113,8 +11113,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerContractPlanReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerContractReadinessReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerContractReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerContractReadinessReport",
         () =>
@@ -11122,8 +11122,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerContractReadinessReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerContractPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerContractPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerContractPlanCloseoutReport",
         () =>
@@ -11131,8 +11131,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerContractPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateSchemaReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateSchemaReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateSchemaReadinessReport",
         () =>
@@ -11140,8 +11140,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateSchemaReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateSchemaNextStepReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateSchemaNextStepReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateSchemaNextStepReport",
         () =>
@@ -11149,8 +11149,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateSchemaNextStepReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateSchemaReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateSchemaReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateSchemaReadinessCloseoutReport",
         () =>
@@ -11158,8 +11158,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateSchemaReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateSchemaCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateSchemaCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateSchemaCloseoutReport",
         () =>
@@ -11167,8 +11167,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateSchemaCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateSchemaSelfReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateSchemaSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateSchemaSelfReviewReport",
         () =>
@@ -11176,8 +11176,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateSchemaSelfReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateSchemaCloseoutNextStepReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateSchemaCloseoutNextStepReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateSchemaCloseoutNextStepReport",
         () =>
@@ -11185,8 +11185,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateSchemaCloseoutNextStepReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationReadinessReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationReadinessReport",
         () =>
@@ -11194,8 +11194,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationReadinessReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationGateReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationGateReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationGateReport",
         () =>
@@ -11203,8 +11203,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationGateReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationReadinessCloseoutReport",
         () =>
@@ -11212,24 +11212,24 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationReadinessCloseoutReport
             : null
-      ),
-    createCustom25DVisualInertManualRendererStateContainer:
+      );
+  namespace.createCustom25DVisualInertManualRendererStateContainer =
       createNamespaceWrapper(
         "createCustom25DVisualInertManualRendererStateContainer",
         () =>
           typeof createCustom25DVisualInertManualRendererStateContainer === "function"
             ? createCustom25DVisualInertManualRendererStateContainer
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationReport",
         () =>
           typeof getCustom25DVisualInertStateContainerCreationReport === "function"
             ? getCustom25DVisualInertStateContainerCreationReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationCloseoutReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationCloseoutReport",
         () =>
@@ -11237,8 +11237,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationCloseoutReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationSequenceCloseoutReport",
         () =>
@@ -11246,8 +11246,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationSequenceSelfReviewReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationSequenceSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationSequenceSelfReviewReport",
         () =>
@@ -11255,8 +11255,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationSequenceSelfReviewReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerManualTestReadinessReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerManualTestReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerManualTestReadinessReport",
         () =>
@@ -11264,8 +11264,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerManualTestReadinessReport
             : null
-      ),
-    runCustom25DVisualInertStateContainerManualConsoleTest:
+      );
+  namespace.runCustom25DVisualInertStateContainerManualConsoleTest =
       createNamespaceWrapper(
         "runCustom25DVisualInertStateContainerManualConsoleTest",
         () =>
@@ -11273,8 +11273,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? runCustom25DVisualInertStateContainerManualConsoleTest
             : null
-      ),
-    getCustom25DVisualInertStateContainerManualConsoleTestReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerManualConsoleTestReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerManualConsoleTestReport",
         () =>
@@ -11282,8 +11282,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerManualConsoleTestReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport",
         () =>
@@ -11291,8 +11291,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerManualConsoleTestCloseoutReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport",
         () =>
@@ -11300,8 +11300,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationPreflightDiagnosticReport
             : null
-      ),
-    getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport:
+      );
+  namespace.getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport",
         () =>
@@ -11309,8 +11309,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualInertStateContainerCreationSafariSafeCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateFieldsReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateFieldsReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateFieldsReadinessReport",
         () =>
@@ -11318,8 +11318,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateFieldsReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererInertStateFieldsReport:
+      );
+  namespace.getCustom25DVisualManualRendererInertStateFieldsReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInertStateFieldsReport",
         () =>
@@ -11327,8 +11327,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInertStateFieldsReport
             : null
-      ),
-    getCustom25DVisualManualRendererInertStateFieldsCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInertStateFieldsCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInertStateFieldsCloseoutReport",
         () =>
@@ -11336,8 +11336,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInertStateFieldsCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleReadinessReport",
         () =>
@@ -11345,8 +11345,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport",
         () =>
@@ -11354,8 +11354,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererLifecycleStateFieldsReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererInertLifecycleStateFieldsReport:
+      );
+  namespace.getCustom25DVisualManualRendererInertLifecycleStateFieldsReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInertLifecycleStateFieldsReport",
         () =>
@@ -11363,8 +11363,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInertLifecycleStateFieldsReport
             : null
-      ),
-    getCustom25DVisualManualRendererInertLifecycleStateFieldsCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInertLifecycleStateFieldsCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInertLifecycleStateFieldsCloseoutReport",
         () =>
@@ -11372,8 +11372,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInertLifecycleStateFieldsCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationReadinessReport",
         () =>
@@ -11381,16 +11381,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationReadinessReport
             : null
-      ),
-    initializeCustom25DVisualManualRendererShell:
+      );
+  namespace.initializeCustom25DVisualManualRendererShell =
       createNamespaceWrapper(
         "initializeCustom25DVisualManualRendererShell",
         () =>
           typeof initializeCustom25DVisualManualRendererShell === "function"
             ? initializeCustom25DVisualManualRendererShell
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationShellReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationShellReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationShellReport",
         () =>
@@ -11398,8 +11398,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationShellReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationShellCloseoutReport",
         () =>
@@ -11407,8 +11407,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationContractReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationContractReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationContractReadinessReport",
         () =>
@@ -11416,8 +11416,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationContractReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationContractShell:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationContractShell =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationContractShell",
         () =>
@@ -11425,8 +11425,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationContractShell
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationContractShellReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationContractShellReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationContractShellReport",
         () =>
@@ -11434,8 +11434,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationContractShellReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationContractShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationContractShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationContractShellCloseoutReport",
         () =>
@@ -11443,8 +11443,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationContractShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationGuardReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationGuardReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationGuardReadinessReport",
         () =>
@@ -11452,16 +11452,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationGuardReadinessReport
             : null
-      ),
-    canInitializeCustom25DVisualManualRenderer:
+      );
+  namespace.canInitializeCustom25DVisualManualRenderer =
       createNamespaceWrapper(
         "canInitializeCustom25DVisualManualRenderer",
         () =>
           typeof canInitializeCustom25DVisualManualRenderer === "function"
             ? canInitializeCustom25DVisualManualRenderer
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationGuardShellReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationGuardShellReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationGuardShellReport",
         () =>
@@ -11469,8 +11469,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationGuardShellReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationGuardShellCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationGuardShellCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationGuardShellCloseoutReport",
         () =>
@@ -11478,8 +11478,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationGuardShellCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationPreflightReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationPreflightReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationPreflightReadinessReport",
         () =>
@@ -11487,8 +11487,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationPreflightReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationPreflightReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationPreflightReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationPreflightReport",
         () =>
@@ -11496,8 +11496,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationPreflightReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationPreflightShellReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationPreflightShellReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationPreflightShellReport",
         () =>
@@ -11505,8 +11505,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationPreflightShellReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationPreflightCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationPreflightCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationPreflightCloseoutReport",
         () =>
@@ -11514,8 +11514,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationPreflightCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationGateReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationGateReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationGateReviewReport",
         () =>
@@ -11523,8 +11523,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationGateReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationAuthorizationChecklistReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationAuthorizationChecklistReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationAuthorizationChecklistReport",
         () =>
@@ -11532,8 +11532,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationAuthorizationChecklistReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationLockReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationLockReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationLockReport",
         () =>
@@ -11541,8 +11541,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationLockReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationSequenceSummaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationSequenceSummaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationSequenceSummaryReport",
         () =>
@@ -11550,8 +11550,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationSequenceSummaryReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationSequenceCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationSequenceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationSequenceCloseoutReport",
         () =>
@@ -11559,8 +11559,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationSequenceCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationHandoffPlanReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationHandoffPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationHandoffPlanReport",
         () =>
@@ -11568,8 +11568,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationHandoffPlanReport
             : null
-      ),
-    getCustom25DVisualManualRendererInitializationNextStepReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererInitializationNextStepReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererInitializationNextStepReadinessReport",
         () =>
@@ -11577,8 +11577,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererInitializationNextStepReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererPlanningBoundaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererPlanningBoundaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPlanningBoundaryReport",
         () =>
@@ -11586,8 +11586,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPlanningBoundaryReport
             : null
-      ),
-    getCustom25DVisualManualRendererPlanningRiskReviewReport:
+      );
+  namespace.getCustom25DVisualManualRendererPlanningRiskReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPlanningRiskReviewReport",
         () =>
@@ -11595,8 +11595,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPlanningRiskReviewReport
             : null
-      ),
-    getCustom25DVisualManualRendererPlanningRiskCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererPlanningRiskCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPlanningRiskCloseoutReport",
         () =>
@@ -11604,8 +11604,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPlanningRiskCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererPlanningHandoffSummaryReport:
+      );
+  namespace.getCustom25DVisualManualRendererPlanningHandoffSummaryReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererPlanningHandoffSummaryReport",
         () =>
@@ -11613,8 +11613,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererPlanningHandoffSummaryReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateCreationReadinessReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateCreationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateCreationReadinessReport",
         () =>
@@ -11622,8 +11622,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateCreationReadinessReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport",
         () =>
@@ -11631,8 +11631,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateCreationReadinessCloseoutReport
             : null
-      ),
-    getCustom25DVisualManualRendererStateContainerShellVerificationReport:
+      );
+  namespace.getCustom25DVisualManualRendererStateContainerShellVerificationReport =
       createNamespaceWrapper(
         "getCustom25DVisualManualRendererStateContainerShellVerificationReport",
         () =>
@@ -11640,8 +11640,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualManualRendererStateContainerShellVerificationReport
             : null
-      ),
-    getCustom25DVisualExtractedHelperReconciliationReport:
+      );
+  namespace.getCustom25DVisualExtractedHelperReconciliationReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReport",
         () =>
@@ -11649,8 +11649,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualExtractedHelperReconciliationReport
             : null
-      ),
-    getCustom25DVisualExtractedHelperReconciliationReadinessReport:
+      );
+  namespace.getCustom25DVisualExtractedHelperReconciliationReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationReadinessReport",
         () =>
@@ -11658,8 +11658,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualExtractedHelperReconciliationReadinessReport
             : null
-      ),
-    getCustom25DVisualExtractedHelperReconciliationCloseoutReport:
+      );
+  namespace.getCustom25DVisualExtractedHelperReconciliationCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationCloseoutReport",
         () =>
@@ -11667,8 +11667,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualExtractedHelperReconciliationCloseoutReport
             : null
-      ),
-    getCustom25DVisualExtractedHelperReconciliationAcceptanceReport:
+      );
+  namespace.getCustom25DVisualExtractedHelperReconciliationAcceptanceReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationAcceptanceReport",
         () =>
@@ -11676,8 +11676,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReport
             : null
-      ),
-    getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport:
+      );
+  namespace.getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport",
         () =>
@@ -11685,8 +11685,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualExtractedHelperReconciliationAcceptanceReadinessReport
             : null
-      ),
-    getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport:
+      );
+  namespace.getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport",
         () =>
@@ -11694,16 +11694,16 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualExtractedHelperReconciliationAcceptanceCloseoutReport
             : null
-      ),
-    getCustom25DVisualPassiveHelperLoadPathReport:
+      );
+  namespace.getCustom25DVisualPassiveHelperLoadPathReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveHelperLoadPathReport",
         () =>
           typeof getCustom25DVisualPassiveHelperLoadPathReport === "function"
             ? getCustom25DVisualPassiveHelperLoadPathReport
             : null
-      ),
-    getCustom25DVisualPassiveHelperLoadPathCloseoutReport:
+      );
+  namespace.getCustom25DVisualPassiveHelperLoadPathCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualPassiveHelperLoadPathCloseoutReport",
         () =>
@@ -11711,32 +11711,32 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualPassiveHelperLoadPathCloseoutReport
             : null
-      ),
-    getCustom25DVisualScriptSizeStatusReport:
+      );
+  namespace.getCustom25DVisualScriptSizeStatusReport =
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeStatusReport",
         () =>
           typeof getCustom25DVisualScriptSizeStatusReport === "function"
             ? getCustom25DVisualScriptSizeStatusReport
             : null
-      ),
-    getCustom25DVisualFutureModuleSplitPlanReport:
+      );
+  namespace.getCustom25DVisualFutureModuleSplitPlanReport =
       createNamespaceWrapper(
         "getCustom25DVisualFutureModuleSplitPlanReport",
         () =>
           typeof getCustom25DVisualFutureModuleSplitPlanReport === "function"
             ? getCustom25DVisualFutureModuleSplitPlanReport
             : null
-      ),
-    getCustom25DVisualFutureModuleSplitReadinessReport:
+      );
+  namespace.getCustom25DVisualFutureModuleSplitReadinessReport =
       createNamespaceWrapper(
         "getCustom25DVisualFutureModuleSplitReadinessReport",
         () =>
           typeof getCustom25DVisualFutureModuleSplitReadinessReport === "function"
             ? getCustom25DVisualFutureModuleSplitReadinessReport
             : null
-      ),
-    getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport:
+      );
+  namespace.getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport =
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport",
         () =>
@@ -11744,8 +11744,8 @@ function bootstrapCustom25DVisualManualTestConsoleNamespaceForLocalDev(options =
           "function"
             ? getCustom25DVisualScriptSizeModuleSplitPlanCloseoutReport
             : null
-      ),
-    getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport:
+      );
+  namespace.getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport =
       createNamespaceWrapper(
         "getCustom25DVisualScriptSizeModuleSplitPlanSelfReviewReport",
         () =>
