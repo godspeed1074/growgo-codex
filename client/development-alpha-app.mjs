@@ -35,6 +35,10 @@ import {
   installDeveloperOnlyControlledPersistentAtlasManualCommand
 } from "./developer-only-controlled-persistent-atlas-manual-command.mjs";
 import {
+  createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring,
+  installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring
+} from "./developer-only-atlas-controlled-one-asset-live-draw-browser-wiring.mjs";
+import {
   createDeveloperOnlyAtlasAssetPopulationPreview,
   installDeveloperOnlyAtlasAssetPopulationPreview
 } from "./developer-only-atlas-asset-population-preview.mjs";
@@ -1675,9 +1679,23 @@ const controlledPersistentAtlasManualCommand =
       })
   });
 
+const controlledOneAssetLiveDrawBrowserWiring =
+  createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
+    hostnameProvider: () => globalThis?.location?.hostname ?? "",
+    persistentAtlasStatusProvider: () =>
+      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+      null
+  });
+
 installDeveloperOnlyControlledPersistentAtlasManualCommand({
   globalObject: globalThis,
   command: controlledPersistentAtlasManualCommand
+});
+
+installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
+  globalObject: globalThis,
+  wiring: controlledOneAssetLiveDrawBrowserWiring,
+  hostnameProvider: () => globalThis?.location?.hostname ?? ""
 });
 
 installDeveloperOnlyControlledAutomaticAtlasPopulationToggle({
