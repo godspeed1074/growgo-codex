@@ -71,8 +71,11 @@ function createFetchProvider(responses) {
 
 function createFakeWebGLContext() {
   const stats = {
-    drawArraysCount: 0
+    drawArraysCount: 0,
+    anchorHistory: []
   };
+
+  let currentAnchor = null;
 
   const gl = {
     VERTEX_SHADER: 0x8b31,
@@ -133,7 +136,10 @@ function createFakeWebGLContext() {
     clear() {},
     useProgram() {},
     uniformMatrix4fv() {},
-    uniform2fv() {},
+    uniform2fv(_location, value) {
+      currentAnchor = Array.from(value);
+      stats.anchorHistory.push(currentAnchor);
+    },
     enableVertexAttribArray() {},
     vertexAttribPointer() {},
     uniform4fv() {},
@@ -190,6 +196,8 @@ function createMapStub(documentStub, stats) {
   const listeners = new Map();
   const center = { lat: -38.12, lng: 144.61 };
   let zoom = 18;
+  let paneShiftX = 0;
+  let paneShiftY = 0;
 
   return {
     getPanes() {
@@ -211,10 +219,29 @@ function createMapStub(documentStub, stats) {
     getCenter() {
       return center;
     },
-    latLngToContainerPoint([lat, lng]) {
+    getPixelOrigin() {
+      return {
+        x: paneShiftX,
+        y: paneShiftY
+      };
+    },
+    latLngToLayerPoint([lat, lng]) {
       return {
         x: 320 + (lng - center.lng) * 20000,
         y: 240 - (lat - center.lat) * 20000
+      };
+    },
+    latLngToContainerPoint([lat, lng]) {
+      const layerPoint = this.latLngToLayerPoint([lat, lng]);
+      return {
+        x: layerPoint.x + paneShiftX,
+        y: layerPoint.y + paneShiftY
+      };
+    },
+    containerPointToLayerPoint(point) {
+      return {
+        x: Number(point?.x ?? 0) - paneShiftX,
+        y: Number(point?.y ?? 0) - paneShiftY
       };
     },
     on(eventName, listener) {
@@ -231,7 +258,9 @@ function createMapStub(documentStub, stats) {
         listener();
       }
     },
-    panBy() {
+    panBy([dx = 0, dy = 0] = []) {
+      paneShiftX += Number(dx);
+      paneShiftY += Number(dy);
       this.fire("moveend");
     },
     listenerCount() {
@@ -243,6 +272,12 @@ function createMapStub(documentStub, stats) {
     },
     drawCount() {
       return stats.drawArraysCount;
+    },
+    lastAnchor() {
+      return stats.anchorHistory.at(-1) ?? null;
+    },
+    clearAnchorHistory() {
+      stats.anchorHistory.length = 0;
     }
   };
 }
@@ -355,6 +390,41 @@ test("shared approved asset controller keeps one canvas and one listener set acr
   assert.equal(status.sharedSceneCount, 1);
   assert.equal(status.ownedListenerCount, 3);
   assert.equal(status.modelInstanceCount, 2);
+});
+
+test("shared approved asset controller keeps model anchor locked through pane movement by using layer projection", async () => {
+  const { controller, map } = await createControllerHarness();
+
+  await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+
+  const statusBeforePan = controller.getSharedApprovedLiveAssetStatus();
+  const anchorBeforePan = map.lastAnchor();
+  map.clearAnchorHistory();
+  map.panBy([160, 80]);
+  const statusAfterPan = controller.getSharedApprovedLiveAssetStatus();
+  const anchorAfterPan = map.lastAnchor();
+  map.clearAnchorHistory();
+  map.panBy([-160, -80]);
+  const statusAfterPanBack = controller.getSharedApprovedLiveAssetStatus();
+  const anchorAfterPanBack = map.lastAnchor();
+
+  assert.deepEqual(anchorAfterPan, anchorBeforePan);
+  assert.deepEqual(anchorAfterPanBack, anchorBeforePan);
+  assert.equal(
+    statusBeforePan.mapProjectionState?.projectionSource,
+    "layer_point"
+  );
+  assert.equal(
+    statusAfterPan.mapProjectionState?.projectionSource,
+    "layer_point"
+  );
+  assert.equal(statusAfterPan.latitude, -38.12);
+  assert.equal(statusAfterPan.longitude, 144.61);
+  assert.equal(statusAfterPanBack.latitude, -38.12);
+  assert.equal(statusAfterPanBack.longitude, 144.61);
 });
 
 test("shared approved asset controller updates one asset without moving the other", async () => {

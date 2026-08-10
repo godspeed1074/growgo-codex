@@ -1,0 +1,16 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "familyId": "COASTAL_NATURE_FAMILY_001",
+  "version": "v002",
+  "previousRegisteredVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "expectedBlendFilename": "TREE_EUCALYPTUS_001_v002.blend",
+  "expectedFinalOutputs": [
+    "TREE_EUCALYPTUS_001_v002_LOD_CLOSE.glb",
+    "TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb",
+    "TREE_EUCALYPTUS_001_v002_LOD_MAP.glb"
+  ],
+  "manualBlenderExecutionRequired": true,
+  "finalGlbsGenerated": false
+}

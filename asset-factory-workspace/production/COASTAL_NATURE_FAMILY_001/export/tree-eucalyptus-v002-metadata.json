@@ -1,0 +1,52 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousRegisteredVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "identityContractV2": {
+    "assetId": "TREE_EUCALYPTUS_001",
+    "category": "nature",
+    "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+    "version": "v002",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_NATIVE_GREEN_001",
+    "lodProfile": "NATURE_STANDARD_001",
+    "source": {
+      "generator": "Asset Factory",
+      "authoringTool": "Blender"
+    },
+    "dependencies": [
+      {
+        "dependencyId": "MOD_TREE_LEAF_CLUSTER_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      }
+    ],
+    "identityPolicy": "ASSET_ROOT_AND_COMPONENTS_WITH_SHARED_DEPENDENCIES",
+    "identityAnchor": {
+      "componentRole": "IDENTITY_ANCHOR",
+      "required": true
+    },
+    "anchorRequired": true,
+    "anchorValidation": "REQUIRE_PER_LOD_EXPORTED_ANCHOR",
+    "exportedIdentitySource": "identity_anchor"
+  },
+  "approvedPalette": {
+    "paletteId": "AU_NATIVE_GREEN_001",
+    "slots": [
+      "trunk",
+      "bark shadow",
+      "leaf light",
+      "leaf mid",
+      "leaf dark"
+    ]
+  },
+  "visualRevisionIntent": [
+    "stronger vertical trunk presence",
+    "deeper side-profile canopy massing",
+    "cleaner eucalyptus silhouette for north-up oblique camera",
+    "preserve mobile-lightweight geometry"
+  ],
+  "manualBlenderExecutionRequired": true
+}

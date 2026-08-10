@@ -1,0 +1,50 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V002_VALIDATION_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "previousRegisteredVersion": "v001",
+  "targetRevisionVersion": "v002",
+  "finalBlendExists": true,
+  "finalGlbsGenerated": true,
+  "geometryVersionChangeDetected": true,
+  "identityUnchanged": true,
+  "versionChangeRecordedCorrectly": true,
+  "lodComplexityVerified": true,
+  "materialAssignmentsVerified": true,
+  "readyForOperatorReview": true,
+  "runtimeActivated": false,
+  "publishingPerformed": false,
+  "files": [
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002.blend",
+      "sizeBytes": 1426456,
+      "sha256": "f2b3acce9ed1109e1c7e3d135350378030d23e0492b7cff5a7bc0baecf42ba82"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002_LOD_CLOSE.glb",
+      "sizeBytes": 41288,
+      "sha256": "f2e4cbe9cc14e8ffe83e0649014aa22ef97001fe1790185869983d5d6d923458",
+      "meshCount": 16,
+      "primitiveCount": 16,
+      "triangleCount": 336,
+      "materialCount": 5
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb",
+      "sizeBytes": 29736,
+      "sha256": "ce81d0a86dc241f51f3d9564a203aec2be84f0426a59cd72ab314dbdfdea038b",
+      "meshCount": 11,
+      "primitiveCount": 11,
+      "triangleCount": 236,
+      "materialCount": 5
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002_LOD_MAP.glb",
+      "sizeBytes": 16968,
+      "sha256": "272a1615e36eea577a59ce640c3ed1f80d4e9707f33df86b8a262c645aecbba8",
+      "meshCount": 6,
+      "primitiveCount": 6,
+      "triangleCount": 140,
+      "materialCount": 3
+    }
+  ]
+}

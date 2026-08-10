@@ -1,0 +1,34 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V002_GOLD_STANDARD_APPROVAL_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "approvedGoldStandardVersion": "v002",
+  "historicalApprovedVersionPreserved": "v001",
+  "gameplayGlb": "TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb",
+  "gameplayGlbRelativePath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb",
+  "approvalStatus": "APPROVED_GOLD_STANDARD",
+  "operatorReviewSurface": "REAL_GROWGO_MAP",
+  "atlasCameraMode": "NORTH_UP_OBLIQUE_ATLAS_CAMERA",
+  "atlasSharedRendererRequired": true,
+  "approvalScaleMultiplier": 1,
+  "geographicAnchoringVerified": true,
+  "panAnchoringVerified": true,
+  "zoomAnchoringVerified": true,
+  "panAwayPanBackExactReturnVerified": true,
+  "cumulativeDriftObserved": false,
+  "liveReviewEvidence": {
+    "reviewDate": "2026-08-10",
+    "browserAppUrl": "http://127.0.0.1:8000/",
+    "projectionSource": "layer_point",
+    "proofSummary": [
+      "operator visually approved TREE_EUCALYPTUS_001@v002 on the real GrowGo map",
+      "fixed lat/lng anchors remained unchanged during pan and zoom checks",
+      "Leaflet layer-coordinate projection fix preserved exact return after pan-away / pan-back",
+      "shared Atlas renderer remained in developer-only mode throughout approval"
+    ]
+  },
+  "preservedEvidence": {
+    "sourceMetadata": "tree-eucalyptus-v002-metadata.json",
+    "validationRecord": "tree-eucalyptus-v002-validation.json",
+    "verificationRecord": "tree-eucalyptus-v002-verification.json"
+  }
+}

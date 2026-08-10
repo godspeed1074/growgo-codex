@@ -1,0 +1,38 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V002_PRODUCTION_VERIFICATION_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "previousVersion": "v001",
+  "targetVersion": "v002",
+  "comparisons": [
+    {
+      "name": "blend_geometry_hash_changed",
+      "ok": true
+    },
+    {
+      "name": "gameplay_geometry_hash_changed",
+      "ok": true
+    },
+    {
+      "name": "asset_identity_unchanged",
+      "ok": true
+    },
+    {
+      "name": "recipe_identity_unchanged",
+      "ok": true
+    },
+    {
+      "name": "version_change_recorded",
+      "ok": true
+    },
+    {
+      "name": "lod_complexity_order_valid",
+      "ok": true
+    },
+    {
+      "name": "material_assignment_valid",
+      "ok": true
+    }
+  ],
+  "readyForOperatorReview": true,
+  "deterministicFingerprint": "b35af69d79fad35db2d97cac01e171905bab37768498868e857708525585f8b4"
+}

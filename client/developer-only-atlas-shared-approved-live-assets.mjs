@@ -77,6 +77,21 @@ const SUPPORTED_ASSET_RUNTIME_PROFILES = Object.freeze({
   })
 });
 
+const VERSIONED_REVIEW_OVERRIDE_PROFILES = Object.freeze({
+  "TREE_EUCALYPTUS_001@v001": Object.freeze({
+    assetVersion: "v001",
+    assetReferenceId: "TREE_EUCALYPTUS_001@v001",
+    resolvedGlbIdentity:
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb"
+  }),
+  "TREE_EUCALYPTUS_001@v002": Object.freeze({
+    assetVersion: "v002",
+    assetReferenceId: "TREE_EUCALYPTUS_001@v002",
+    resolvedGlbIdentity:
+      "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb"
+  })
+});
+
 function deepFreeze(value, seen = new WeakSet()) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {
     return value;
@@ -186,6 +201,7 @@ function createState() {
     rendererTechnologyPath: SHARED_RENDERER_TECHNOLOGY_PATH,
     sharedCameraPath: SHARED_CAMERA_PATH,
     cameraState: null,
+    mapProjectionState: null,
     lastOperation: null,
     lastReasonCode: null
   };
@@ -298,6 +314,7 @@ function buildStatus(state) {
     rendererTechnologyPath: state.rendererTechnologyPath,
     sharedCameraPath: state.sharedCameraPath,
     cameraState: state.cameraState,
+    mapProjectionState: state.mapProjectionState,
     sharedAssetInstances: deepFreeze(liveInstances),
     lastOperation: state.lastOperation,
     lastReasonCode: state.lastReasonCode,
@@ -559,6 +576,40 @@ function createCanvas(documentObject) {
   return canvas;
 }
 
+function projectLatLngForRenderer(map, latitude, longitude) {
+  const latLngTuple = [latitude, longitude];
+  if (typeof map?.latLngToLayerPoint === "function") {
+    const point = map.latLngToLayerPoint(latLngTuple);
+    return {
+      point,
+      projectionSource: "layer_point"
+    };
+  }
+
+  if (
+    typeof map?.latLngToContainerPoint === "function" &&
+    typeof map?.containerPointToLayerPoint === "function"
+  ) {
+    const containerPoint = map.latLngToContainerPoint(latLngTuple);
+    return {
+      point: map.containerPointToLayerPoint(containerPoint),
+      projectionSource: "container_to_layer_point"
+    };
+  }
+
+  if (typeof map?.latLngToContainerPoint === "function") {
+    return {
+      point: map.latLngToContainerPoint(latLngTuple),
+      projectionSource: "container_point_fallback"
+    };
+  }
+
+  return {
+    point: null,
+    projectionSource: "projection_unavailable"
+  };
+}
+
 function createTrue3DRendererBackend({
   documentObject,
   map
@@ -693,16 +744,21 @@ function createTrue3DRendererBackend({
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(...CLEAR_COLOR);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-      return null;
+      return {
+        cameraState: null,
+        mapProjectionState: null
+      };
     }
 
     syncCanvasSize();
     const zoom = Number(map?.getZoom?.() ?? 0);
     const instanceStates = instances.map((instance) => {
-      const point = map?.latLngToContainerPoint?.([
+      const projected = projectLatLngForRenderer(
+        map,
         instance.latitude,
         instance.longitude
-      ]);
+      );
+      const point = projected.point;
       if (!point || !Number.isFinite(point.x) || !Number.isFinite(point.y)) {
         throw Object.assign(
           new Error("ATLAS_TRUE_3D_MAP_PROJECTION_UNAVAILABLE"),
@@ -712,11 +768,31 @@ function createTrue3DRendererBackend({
       return {
         ...instance,
         point,
+        projectionSource: projected.projectionSource,
         renderState: buildPerInstanceRenderState(instance, zoom)
       };
     });
 
     const cameraState = buildSharedCameraState(instanceStates);
+    const mapCenter = map?.getCenter?.() ?? null;
+    const mapProjectionState = deepFreeze({
+      projectionSpace: "leaflet_layer_point",
+      projectionSource:
+        instanceStates[0]?.projectionSource ?? "projection_unavailable",
+      zoom,
+      mapCenterLatitude: sanitizeNumber(mapCenter?.lat ?? null),
+      mapCenterLongitude: sanitizeNumber(mapCenter?.lng ?? null),
+      pixelOriginX: sanitizeNumber(map?.getPixelOrigin?.()?.x ?? null),
+      pixelOriginY: sanitizeNumber(map?.getPixelOrigin?.()?.y ?? null),
+      firstProjectedPixelX: sanitizeNumber(instanceStates[0]?.point?.x ?? null),
+      firstProjectedPixelY: sanitizeNumber(instanceStates[0]?.point?.y ?? null),
+      secondProjectedPixelX: sanitizeNumber(instanceStates[1]?.point?.x ?? null),
+      secondProjectedPixelY: sanitizeNumber(instanceStates[1]?.point?.y ?? null),
+      thirdProjectedPixelX: sanitizeNumber(instanceStates[2]?.point?.x ?? null),
+      thirdProjectedPixelY: sanitizeNumber(instanceStates[2]?.point?.y ?? null),
+      fourthProjectedPixelX: sanitizeNumber(instanceStates[3]?.point?.x ?? null),
+      fourthProjectedPixelY: sanitizeNumber(instanceStates[3]?.point?.y ?? null)
+    });
     const aspect = canvas.width / canvas.height;
     const projection = perspectiveMatrix(
       (VIEW_FOV_DEGREES * Math.PI) / 180,
@@ -763,7 +839,10 @@ function createTrue3DRendererBackend({
     }
 
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    return cameraState;
+    return {
+      cameraState,
+      mapProjectionState
+    };
   }
 
   function registerListeners(renderCallback) {
@@ -809,7 +888,7 @@ function createTrue3DRendererBackend({
   };
 }
 
-function resolveApprovedAssetRecord(assetRegistry, assetId) {
+function resolveApprovedAssetRecord(assetRegistry, assetId, assetVersion = null, slotId = null) {
   const registryEntry = resolveDeveloperOnlyAtlasAssetRegistryEntry(
     assetRegistry,
     assetId
@@ -821,17 +900,31 @@ function resolveApprovedAssetRecord(assetRegistry, assetId) {
     });
   }
 
+  const requestedVersion = sanitizeString(assetVersion);
+  const versionOverride =
+    requestedVersion != null
+      ? VERSIONED_REVIEW_OVERRIDE_PROFILES[
+          `${registryEntry.assetId}@${requestedVersion}`
+        ] ?? null
+      : null;
+
   return deepFreeze({
     assetId: registryEntry.assetId,
-    assetVersion: registryEntry.assetVersion,
-    assetReferenceId: registryEntry.assetReferenceId,
+    assetVersion: versionOverride?.assetVersion ?? registryEntry.assetVersion,
+    assetReferenceId:
+      versionOverride?.assetReferenceId ?? registryEntry.assetReferenceId,
     approvedAssetStatus: registryEntry.status,
     assetSource:
       "developer-only-atlas-asset-registry.mjs + shared_true_webgl_renderer_surface",
     runtimePreviewBindingId: `${registryEntry.assetId}_ACTUAL_GLB_RUNTIME_BINDING`,
-    resolvedGlbIdentity: `asset-factory-workspace/production/${registryEntry.assetFamily}/export/${registryEntry.assetId}_LOD_GAMEPLAY.glb`,
+    resolvedGlbIdentity:
+      versionOverride?.resolvedGlbIdentity ??
+      `asset-factory-workspace/production/${registryEntry.assetFamily}/export/${registryEntry.assetId}_LOD_GAMEPLAY.glb`,
     representationMode: TRUE_3D_REPRESENTATION_MODE,
-    modelInstanceId: runtimeProfile.modelInstanceId
+    modelInstanceId:
+      slotId != null
+        ? `${runtimeProfile.modelInstanceId}_${String(slotId).toUpperCase()}`
+        : runtimeProfile.modelInstanceId
   });
 }
 
@@ -868,7 +961,10 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     };
   }
 
-  function syncRendererState(cameraState = state.cameraState) {
+  function syncRendererState(
+    cameraState = state.cameraState,
+    mapProjectionState = state.mapProjectionState
+  ) {
     const liveAssets = activeAssets();
     state.rendererSurfaceCount = rendererBackend && liveAssets.length > 0 ? 1 : 0;
     state.rendererCanvasCount = rendererBackend && liveAssets.length > 0 ? 1 : 0;
@@ -886,16 +982,17 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     state.glContextCreated = !!rendererBackend && liveAssets.length > 0;
     state.true3dRendererReady = !!rendererBackend && liveAssets.length > 0;
     state.cameraState = cameraState ?? null;
+    state.mapProjectionState = mapProjectionState ?? null;
   }
 
   function destroyRendererBackend() {
     if (!rendererBackend) {
-      syncRendererState(null);
+      syncRendererState(null, null);
       return;
     }
     rendererBackend.destroy();
     rendererBackend = null;
-    syncRendererState(null);
+    syncRendererState(null, null);
   }
 
   function ensureAttachedLiveMap() {
@@ -1008,9 +1105,12 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
       destroyRendererBackend();
       return null;
     }
-    const cameraState = rendererBackend.renderInstances(instances);
-    syncRendererState(cameraState);
-    return cameraState;
+    const renderOutcome = rendererBackend.renderInstances(instances);
+    syncRendererState(
+      renderOutcome?.cameraState ?? null,
+      renderOutcome?.mapProjectionState ?? null
+    );
+    return renderOutcome;
   }
 
   function initializeSharedApprovedLiveAssetRenderer() {
@@ -1026,7 +1126,7 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
 
     const liveAssets = activeAssets();
     if (rendererBackend && liveAssets.length > 0) {
-      syncRendererState(state.cameraState);
+      syncRendererState(state.cameraState, state.mapProjectionState);
       return buildResult(
         state,
         "ready",
@@ -1034,7 +1134,7 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
       );
     }
 
-    syncRendererState(state.cameraState);
+    syncRendererState(state.cameraState, state.mapProjectionState);
     return buildResult(
       state,
       "ready",
@@ -1045,7 +1145,10 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     );
   }
 
-  async function placeOrUpdateSlot(slotId, { assetId, latitude, longitude } = {}) {
+  async function placeOrUpdateSlot(
+    slotId,
+    { assetId, assetVersion, latitude, longitude } = {}
+  ) {
     requireSupportedSlotId(slotId);
     const slot = getSlot(slotId);
     state.lastOperation = `${slotId}_place_or_update`;
@@ -1065,7 +1168,9 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
       liveMap = ensureAttachedLiveMap();
       approvedAssetRecord = resolveApprovedAssetRecord(
         assetRegistry,
-        assetId ?? slot.selectedAssetId
+        assetId ?? slot.selectedAssetId,
+        assetVersion ?? slot.selectedAssetVersion,
+        slotId
       );
     } catch (error) {
       const reasonCode = error?.reasonCode ?? "APPROVED_ASSET_RESOLUTION_FAILED";
@@ -1118,12 +1223,15 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
       nextSlot.lastReasonCode = "ATLAS_TRUE_3D_RENDERED";
 
       const overrides = new Map([[slotId, nextSlot]]);
-      const cameraState = renderAll(overrides);
+      const renderOutcome = renderAll(overrides);
       Object.assign(slot, nextSlot);
       state.loaderStatus = "loaded_actual_glb";
       state.loaderReason = "ACTUAL_GLB_LOADED";
       state.lastReasonCode = "ATLAS_TRUE_3D_RENDERED";
-      syncRendererState(cameraState);
+      syncRendererState(
+        renderOutcome?.cameraState ?? null,
+        renderOutcome?.mapProjectionState ?? null
+      );
 
       return buildResult(
         state,
@@ -1205,11 +1313,13 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
   function createApprovedSharedAssetModelInstance({
     slotId,
     assetId,
+    assetVersion,
     latitude,
     longitude
   } = {}) {
     return placeOrUpdateSlot(slotId, {
       assetId,
+      assetVersion,
       latitude,
       longitude
     });
