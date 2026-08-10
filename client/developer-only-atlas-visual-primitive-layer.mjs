@@ -39,6 +39,27 @@ function sanitizeNumber(value) {
   return Number.isFinite(value) ? Number(value) : null;
 }
 
+function sanitizeMetadata(metadata) {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+    return null;
+  }
+
+  const normalized = {};
+
+  for (const [key, value] of Object.entries(metadata)) {
+    if (value == null) {
+      normalized[key] = null;
+      continue;
+    }
+
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+      normalized[key] = value;
+    }
+  }
+
+  return Object.keys(normalized).length > 0 ? deepFreeze(normalized) : null;
+}
+
 function createState() {
   return {
     primitives: new Map(),
@@ -56,24 +77,38 @@ function pointHtml(label) {
   `;
 }
 
-function spriteHtml(label) {
-  const sprite = encodeURIComponent(`
+function spriteHtml(label, spriteSvg = null, metadata = null) {
+  const sprite = encodeURIComponent(spriteSvg ?? `
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
       <rect x="1" y="1" width="18" height="18" rx="4" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
       <path d="M10 4 L14 10 L10 16 L6 10 Z" fill="#f0f9ff"/>
     </svg>
   `);
+  const dataAttributes = metadata
+    ? Object.entries(metadata)
+        .map(([key, value]) => {
+          const normalizedKey = String(key)
+            .replace(/[^A-Za-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "")
+            .toLowerCase();
+          const normalizedValue = String(value).replace(/"/g, "&quot;");
+          return ` data-${normalizedKey}="${normalizedValue}"`;
+        })
+        .join("")
+    : "";
   return `
-    <div class="${ROOT_CLASS_NAME}" data-atlas-primitive-type="sprite_image">
+    <div class="${ROOT_CLASS_NAME}" data-atlas-primitive-type="sprite_image"${dataAttributes}>
       <img class="${SPRITE_IMAGE_CLASS_NAME}" alt="${label}" src="data:image/svg+xml;utf8,${sprite}" width="20" height="20" />
       <span style="display:inline-block;margin-left:8px;padding:2px 6px;border-radius:999px;background:rgba(7,20,33,0.92);color:#f4f8ff;font:600 12px/1.2 sans-serif;white-space:nowrap;">${label}</span>
     </div>
   `;
 }
 
-function buildIcon(leaflet, primitiveType, label) {
+function buildIcon(leaflet, primitiveType, label, options = {}) {
   const html =
-    primitiveType === "sprite_image" ? spriteHtml(label) : pointHtml(label);
+    primitiveType === "sprite_image"
+      ? spriteHtml(label, options.spriteSvg, options.metadata)
+      : pointHtml(label);
   return leaflet.divIcon({
     className: `${ROOT_CLASS_NAME}-wrapper`,
     html,
@@ -89,7 +124,8 @@ function buildStatus(state) {
       primitiveType: entry.primitiveType,
       latitude: entry.latitude,
       longitude: entry.longitude,
-      label: entry.label
+      label: entry.label,
+      metadata: entry.metadata
     })
   );
 
@@ -172,7 +208,9 @@ export function createDeveloperOnlyAtlasVisualPrimitiveLayer({
     primitiveType = "point_anchor",
     latitude,
     longitude,
-    label
+    label,
+    spriteSvg = null,
+    metadata = null
   } = {}) {
     state.lastOperation = "upsert";
     const primitiveIdValue = sanitizeString(primitiveId);
@@ -201,21 +239,31 @@ export function createDeveloperOnlyAtlasVisualPrimitiveLayer({
 
     const { liveMap, leaflet } = resolved;
     const labelValue = resolveLabel(primitiveTypeValue, primitiveIdValue, label);
+    const metadataValue = sanitizeMetadata(metadata);
     const existing = state.primitives.get(primitiveIdValue) ?? null;
 
     if (existing) {
       existing.marker.setLatLng([latitudeValue, longitudeValue]);
-      existing.marker.setIcon(buildIcon(leaflet, primitiveTypeValue, labelValue));
+      existing.marker.setIcon(
+        buildIcon(leaflet, primitiveTypeValue, labelValue, {
+          spriteSvg,
+          metadata: metadataValue
+        })
+      );
       existing.primitiveType = primitiveTypeValue;
       existing.latitude = latitudeValue;
       existing.longitude = longitudeValue;
       existing.label = labelValue;
+      existing.metadata = metadataValue;
       state.lastReasonCode = "PRIMITIVE_UPDATED";
       return buildResult(state, "updated", "PRIMITIVE_UPDATED");
     }
 
     const marker = leaflet.marker([latitudeValue, longitudeValue], {
-      icon: buildIcon(leaflet, primitiveTypeValue, labelValue),
+      icon: buildIcon(leaflet, primitiveTypeValue, labelValue, {
+        spriteSvg,
+        metadata: metadataValue
+      }),
       keyboard: false,
       interactive: false
     });
@@ -227,6 +275,7 @@ export function createDeveloperOnlyAtlasVisualPrimitiveLayer({
       latitude: latitudeValue,
       longitude: longitudeValue,
       label: labelValue,
+      metadata: metadataValue,
       marker
     });
     state.lastReasonCode = "PRIMITIVE_CREATED";

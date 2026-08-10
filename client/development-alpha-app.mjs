@@ -2,7 +2,7 @@ import { createDevelopmentAlphaController } from "./development-alpha-controller
 import {
   createControlledOneSessionDeveloperMapAttachmentAuthorization,
   installControlledOneSessionDeveloperMapAttachmentAuthorization
-} from "./developer-only-atlas-map-attachment-authorization.mjs";
+} from "./developer-only-atlas-map-attachment-authorization.mjs?v=atlas21277a";
 import {
   createControlledOneSessionDeveloperRendererHandoffAuthorization,
   installControlledOneSessionDeveloperRendererHandoffAuthorization
@@ -10,7 +10,7 @@ import {
 import {
   createGatedDeveloperOnlyAtlasMapAttachmentController,
   installGatedDeveloperOnlyAtlasMapAttachmentController
-} from "./developer-only-atlas-map-attachment-controller.mjs";
+} from "./developer-only-atlas-map-attachment-controller.mjs?v=atlas21277a";
 import {
   createDeveloperOnlyLiveMapCentreAtlasBridge,
   installDeveloperOnlyLiveMapCentreAtlasDiagnosticBridge
@@ -80,10 +80,13 @@ import {
 } from "./developer-only-atlas-population-draw-integration.mjs";
 import {
   createDeveloperOnlyAtlasFirstHarmlessVisualController
-} from "./developer-only-atlas-first-harmless-visual.mjs";
+} from "./developer-only-atlas-first-harmless-visual.mjs?v=atlas21277a";
 import {
   createDeveloperOnlyAtlasVisualPrimitiveLayer
-} from "./developer-only-atlas-visual-primitive-layer.mjs";
+} from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277a";
+import {
+  createDeveloperOnlyAtlasFirstApprovedLiveAssetController
+} from "./developer-only-atlas-first-approved-live-asset.mjs?v=atlas21277a";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -126,7 +129,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   controller,
   getGrowGoMap,
   visualController = null,
-  primitiveLayer = null
+  primitiveLayer = null,
+  approvedAssetController = null
 } = {}) {
   const hostname = globalThis?.location?.hostname ?? "";
   if (
@@ -149,6 +153,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const zoomMapButtonId = "growgo-dev-atlas-zoom-map";
   const pointPrimitiveButtonId = "growgo-dev-atlas-point-primitive";
   const spritePrimitiveButtonId = "growgo-dev-atlas-sprite-primitive";
+  const approvedAssetButtonId = "growgo-dev-atlas-approved-asset";
+  const updateApprovedAssetButtonId = "growgo-dev-atlas-update-approved-asset";
   const updatePrimitiveButtonId = "growgo-dev-atlas-update-primitive";
   const clearPrimitivesButtonId = "growgo-dev-atlas-clear-primitives";
   const refreshButtonId = "growgo-dev-atlas-attachment-refresh";
@@ -185,6 +191,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
       <button id="${zoomMapButtonId}" type="button">zoom map</button>
       <button id="${pointPrimitiveButtonId}" type="button">point primitive</button>
       <button id="${spritePrimitiveButtonId}" type="button">sprite primitive</button>
+      <button id="${approvedAssetButtonId}" type="button">approved asset</button>
+      <button id="${updateApprovedAssetButtonId}" type="button">update approved asset</button>
       <button id="${updatePrimitiveButtonId}" type="button">update primitive</button>
       <button id="${clearPrimitivesButtonId}" type="button">clear primitives</button>
       <button id="${refreshButtonId}" type="button">refresh atlas status</button>
@@ -204,6 +212,10 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const spritePrimitiveButton = surface.querySelector(
     `#${spritePrimitiveButtonId}`
   );
+  const approvedAssetButton = surface.querySelector(`#${approvedAssetButtonId}`);
+  const updateApprovedAssetButton = surface.querySelector(
+    `#${updateApprovedAssetButtonId}`
+  );
   const updatePrimitiveButton = surface.querySelector(
     `#${updatePrimitiveButtonId}`
   );
@@ -222,6 +234,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
       visualController?.getAtlasFirstHarmlessVisualStatus?.() ?? null;
     const primitiveStatus =
       primitiveLayer?.getAtlasVisualPrimitiveLayerStatus?.() ?? null;
+    const approvedAssetStatus =
+      approvedAssetController?.getFirstApprovedLiveAssetStatus?.() ?? null;
     const currentOverlayCanvasCount = globalThis.document.querySelectorAll(
       overlayCanvasSelector
     ).length;
@@ -256,6 +270,25 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
       atlasPrimitiveCanvasCount: primitiveStatus?.atlasOwnedCanvasCount ?? 0,
       atlasPrimitiveListenerCount: primitiveStatus?.atlasOwnedListenerCount ?? 0,
       atlasPrimitiveObjectCount: primitiveStatus?.atlasOwnedObjectCount ?? 0,
+      atlasApprovedAssetPresent: approvedAssetStatus?.liveAssetPresent === true,
+      atlasApprovedAssetId: approvedAssetStatus?.selectedAssetId ?? null,
+      atlasApprovedAssetVersion:
+        approvedAssetStatus?.selectedAssetVersion ?? null,
+      atlasApprovedAssetStatus:
+        approvedAssetStatus?.approvedAssetStatus ?? null,
+      atlasApprovedAssetSource: approvedAssetStatus?.assetSource ?? null,
+      atlasApprovedAssetReferenceId:
+        approvedAssetStatus?.assetReferenceId ?? null,
+      atlasApprovedAssetPrimitiveObjectId:
+        approvedAssetStatus?.primitiveObjectId ?? null,
+      atlasApprovedAssetRepresentationMode:
+        approvedAssetStatus?.representationMode ?? null,
+      atlasApprovedAssetRuntimePreviewBindingId:
+        approvedAssetStatus?.runtimePreviewBindingId ?? null,
+      atlasApprovedAssetResolvedGlbIdentity:
+        approvedAssetStatus?.resolvedGlbIdentity ?? null,
+      atlasApprovedAssetLatitude: approvedAssetStatus?.latitude ?? null,
+      atlasApprovedAssetLongitude: approvedAssetStatus?.longitude ?? null,
       rendererActivity: controllerStatus.rendererActivity === true,
       overlayActivity: controllerStatus.overlayActivity === true,
       pollingOrTimerActivity:
@@ -358,6 +391,30 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     writeSurfaceStatus("sprite_primitive", result);
   });
 
+  approvedAssetButton?.addEventListener("click", () => {
+    const center = getGrowGoMap()?.getCenter?.() ?? null;
+    const result = approvedAssetController?.placeFirstApprovedLiveAsset?.({
+      latitude: center?.lat ?? null,
+      longitude: center?.lng ?? null
+    }) ?? {
+      outcome: "blocked",
+      reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+    };
+    writeSurfaceStatus("approved_asset", result);
+  });
+
+  updateApprovedAssetButton?.addEventListener("click", () => {
+    const center = getGrowGoMap()?.getCenter?.() ?? null;
+    const result = approvedAssetController?.updateFirstApprovedLiveAsset?.({
+      latitude: center?.lat != null ? center.lat + 0.01 : null,
+      longitude: center?.lng != null ? center.lng + 0.01 : null
+    }) ?? {
+      outcome: "blocked",
+      reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+    };
+    writeSurfaceStatus("update_approved_asset", result);
+  });
+
   updatePrimitiveButton?.addEventListener("click", () => {
     const center = getGrowGoMap()?.getCenter?.() ?? null;
     const result = primitiveLayer?.upsertAtlasVisualPrimitive?.({
@@ -433,6 +490,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     zoomMapButtonId,
     pointPrimitiveButtonId,
     spritePrimitiveButtonId,
+    approvedAssetButtonId,
+    updateApprovedAssetButtonId,
     updatePrimitiveButtonId,
     clearPrimitivesButtonId,
     refreshButtonId
@@ -1156,13 +1215,19 @@ const atlasVisualPrimitiveLayer = createDeveloperOnlyAtlasVisualPrimitiveLayer({
   leafletProvider: () => globalThis?.L ?? null
 });
 
+const atlasFirstApprovedLiveAssetController =
+  createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
+    primitiveLayer: atlasVisualPrimitiveLayer
+  });
+
 const atlasAttachmentBrowserSurface =
   installDeveloperOnlyAtlasAttachmentBrowserSurface({
     authorization: atlasMapAttachmentAuthorization,
     controller: atlasMapAttachmentController,
     getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics,
     visualController: atlasFirstHarmlessVisualController,
-    primitiveLayer: atlasVisualPrimitiveLayer
+    primitiveLayer: atlasVisualPrimitiveLayer,
+    approvedAssetController: atlasFirstApprovedLiveAssetController
   });
 
 atlasAttachmentBrowserSurface?.refresh();

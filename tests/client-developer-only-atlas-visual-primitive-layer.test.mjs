@@ -116,6 +116,47 @@ test("create sprite primitive on attached live map", () => {
   assert.deepEqual(result.status.atlasPrimitiveTypes, ["sprite_image"]);
 });
 
+test("sprite primitive preserves approved asset metadata without exposing browser objects", () => {
+  const map = createMapStub();
+  const layer = primitiveLayerModule.createDeveloperOnlyAtlasVisualPrimitiveLayer({
+    getGrowGoMap: () => map,
+    attachmentStatusProvider: () => createAttachedStatus(),
+    leafletProvider: () => createLeafletStub()
+  });
+
+  const result = layer.upsertAtlasVisualPrimitive({
+    primitiveId: "ATLAS_APPROVED_ASSET_001",
+    primitiveType: "sprite_image",
+    latitude: -38.12,
+    longitude: 144.61,
+    label: "TREE_EUCALYPTUS_001 v001",
+    spriteSvg:
+      '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"></svg>',
+    metadata: {
+      atlasApprovedAssetId: "TREE_EUCALYPTUS_001",
+      atlasApprovedAssetVersion: "v001",
+      atlasApprovedAssetStatus: "approved"
+    }
+  });
+
+  assert.equal(result.outcome, "created");
+  assert.equal(
+    result.status.atlasPrimitiveEntries[0].metadata.atlasApprovedAssetId,
+    "TREE_EUCALYPTUS_001"
+  );
+  assert.equal(
+    Object.isFrozen(result.status.atlasPrimitiveEntries[0].metadata),
+    true
+  );
+  assert.equal(
+    Object.prototype.hasOwnProperty.call(
+      result.status.atlasPrimitiveEntries[0].metadata,
+      "marker"
+    ),
+    false
+  );
+});
+
 test("update existing primitive repositions deterministically", () => {
   const map = createMapStub();
   const layer = primitiveLayerModule.createDeveloperOnlyAtlasVisualPrimitiveLayer({
