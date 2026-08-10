@@ -157,11 +157,12 @@ test("session A authorizes attaches runs one controlled event detaches and block
   assert.equal(authorizationResult.reasonCode, "AUTHORIZED_ONE_SESSION");
   assert.match(sessionAId, /^ATLAS_ONE_SESSION_001$/);
   assert.equal(attachResult.reasonCode, "ATTACHED");
-  assert.equal(attachResult.status.ownedListenerCount, 1);
-  assert.equal(attachedListenerCount, 1);
-  assert.equal(postEventStatus.diagnosticInvocationCount, 1);
-  assert.equal(postEventStatus.lastDiagnosticStatus, "resolved");
-  assert.equal(postEventStatus.lastReasonCode, "RESOLVED");
+  assert.equal(attachResult.status.attachmentMode, "passive_live_map_binding");
+  assert.equal(attachResult.status.ownedListenerCount, 0);
+  assert.equal(attachedListenerCount, 0);
+  assert.equal(postEventStatus.diagnosticInvocationCount, 0);
+  assert.equal(postEventStatus.lastDiagnosticStatus, null);
+  assert.equal(postEventStatus.lastReasonCode, null);
   assert.equal(detachResult.reasonCode, "DETACHED");
   assert.equal(map.listenerCount("moveend"), 0);
   assert.equal(postDetachAuthStatus.authorizationActive, false);
@@ -199,20 +200,20 @@ test("session B gets a distinct session identity with no leaked listener and rev
   assert.match(sessionBId, /^ATLAS_ONE_SESSION_002$/);
   assert.notEqual(sessionBId, "ATLAS_ONE_SESSION_001");
   assert.equal(attachResult.reasonCode, "ATTACHED");
-  assert.equal(attachResult.status.ownedListenerCount, 1);
-  assert.equal(attachedListenerCount, 2);
+  assert.equal(attachResult.status.ownedListenerCount, 0);
+  assert.equal(attachedListenerCount, 1);
   assert.equal(duplicateAttach.reasonCode, "ALREADY_ATTACHED");
-  assert.equal(duplicateAttach.status.ownedListenerCount, 1);
-  assert.equal(postEventStatus.diagnosticInvocationCount, 2);
-  assert.equal(postEventStatus.lastDiagnosticStatus, "resolved");
-  assert.equal(postEventStatus.lastReasonCode, "RESOLVED");
+  assert.equal(duplicateAttach.status.ownedListenerCount, 0);
+  assert.equal(postEventStatus.diagnosticInvocationCount, 0);
+  assert.equal(postEventStatus.lastDiagnosticStatus, null);
+  assert.equal(postEventStatus.lastReasonCode, null);
   assert.equal(revokeResult.reasonCode, "REVOKED");
   assert.equal(revokeResult.detachedActiveAttachment.reasonCode, "DETACHED");
   assert.equal(map.listenerCount("moveend"), 1);
   assert.equal(postRevokeAuthStatus.authorizationActive, false);
   assert.equal(postRevokeAttachStatus.attached, false);
   assert.equal(postRevokeAttachStatus.ownedListenerCount, 0);
-  assert.equal(postRevokeAttachStatus.diagnosticInvocationCount, 2);
+  assert.equal(postRevokeAttachStatus.diagnosticInvocationCount, 0);
   assert.equal(postRevokeAttachAttempt.reasonCode, "MAP_ATTACHMENT_NOT_AUTHORIZED");
   assert.equal(Object.isFrozen(revokeResult), true);
   assert.equal(Object.isFrozen(revokeResult.attachmentStatus), true);
@@ -231,8 +232,8 @@ test("fresh page instance resets authorization listener ownership and diagnostic
   const freshAuthStatus = freshPage.diagnostics.getAtlasMapAttachmentAuthorizationStatus();
   const freshAttachStatus = freshPage.diagnostics.getAtlasMapAttachmentStatus();
 
-  assert.equal(samePageStatusAfterDetach.diagnosticInvocationCount, 1);
-  assert.equal(samePageStatusAfterDetach.lastDiagnosticStatus, "resolved");
+  assert.equal(samePageStatusAfterDetach.diagnosticInvocationCount, 0);
+  assert.equal(samePageStatusAfterDetach.lastDiagnosticStatus, null);
   assert.equal(freshAuthStatus.authorizationActive, false);
   assert.equal(freshAuthStatus.sessionId, null);
   assert.equal(freshAuthStatus.successfulAttachmentConsumed, false);
@@ -268,12 +269,8 @@ test("no stale references duplicate exposure automatic behavior renderer overlay
     developmentAlphaAppSource,
     /installControlledOneSessionDeveloperMapAttachmentAuthorization/
   );
-  assert.doesNotMatch(
+  assert.match(
     developmentAlphaAppSource,
-    /authorizeAtlasMapAttachmentSession\(\)/
-  );
-  assert.doesNotMatch(
-    developmentAlphaAppSource,
-    /attachAtlasMapDiagnostic\(\)/
+    /installDeveloperOnlyAtlasAttachmentBrowserSurface/
   );
 });

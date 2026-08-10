@@ -217,12 +217,13 @@ test("authorized state gives effective permission true and installs exactly one 
   assert.equal(authStatus.authorizationSource, "developer-one-session-local");
   assert.equal(authStatus.canonicalMapAttachmentAllowed, false);
   assert.equal(authStatus.effectiveMapAttachmentAllowed, true);
-  assert.equal(attachResult.status.listenerEventName, "moveend");
-  assert.equal(attachResult.status.ownedListenerCount, 1);
-  assert.equal(map.listenerCount("moveend"), 1);
+  assert.equal(attachResult.status.attachmentMode, "passive_live_map_binding");
+  assert.equal(attachResult.status.listenerEventName, null);
+  assert.equal(attachResult.status.ownedListenerCount, 0);
+  assert.equal(map.listenerCount("moveend"), 0);
 });
 
-test("duplicate attach installs no second listener and moveend uses existing bridge", () => {
+test("duplicate attach stays passive and map events do not trigger diagnostics", () => {
   const { diagnostics, map } = buildIntegratedNamespace();
 
   diagnostics.authorizeAtlasMapAttachmentSession({
@@ -235,10 +236,10 @@ test("duplicate attach installs no second listener and moveend uses existing bri
 
   const attachStatus = diagnostics.getAtlasMapAttachmentStatus();
   assert.equal(duplicate.reasonCode, "ALREADY_ATTACHED");
-  assert.equal(attachStatus.ownedListenerCount, 1);
-  assert.equal(attachStatus.diagnosticInvocationCount, 2);
-  assert.equal(attachStatus.lastDiagnosticStatus, "resolved");
-  assert.equal(attachStatus.lastReasonCode, "RESOLVED");
+  assert.equal(attachStatus.ownedListenerCount, 0);
+  assert.equal(attachStatus.diagnosticInvocationCount, 0);
+  assert.equal(attachStatus.lastDiagnosticStatus, null);
+  assert.equal(attachStatus.lastReasonCode, null);
 });
 
 test("detach removes listener automatically revokes authorization and reattach is blocked", () => {
@@ -316,12 +317,8 @@ test("no startup authorization no startup attachment and no timers renderer over
     developmentAlphaAppSource,
     /installControlledOneSessionDeveloperMapAttachmentAuthorization/
   );
-  assert.doesNotMatch(
+  assert.match(
     developmentAlphaAppSource,
-    /authorizeAtlasMapAttachmentSession\(\)/
-  );
-  assert.doesNotMatch(
-    developmentAlphaAppSource,
-    /attachAtlasMapDiagnostic\(\)/
+    /installDeveloperOnlyAtlasAttachmentBrowserSurface/
   );
 });

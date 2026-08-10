@@ -22,6 +22,25 @@ function defaultDiagnosticUnavailableResult() {
   });
 }
 
+const MAP_IDENTITY_IDS = new WeakMap();
+let nextMapIdentitySequence = 1;
+
+function assignMapIdentityId(map) {
+  if (!map || typeof map !== "object") {
+    return null;
+  }
+
+  const existing = MAP_IDENTITY_IDS.get(map);
+  if (existing) {
+    return existing;
+  }
+
+  const identityId = `ATLAS_LIVE_MAP_${String(nextMapIdentitySequence).padStart(3, "0")}`;
+  nextMapIdentitySequence += 1;
+  MAP_IDENTITY_IDS.set(map, identityId);
+  return identityId;
+}
+
 function normalizeAuthorizationState(rawAuthorizationState, safetyFlags) {
   const source =
     typeof rawAuthorizationState?.source === "string" && rawAuthorizationState.source.trim()
@@ -52,16 +71,12 @@ export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {
   const atlasAdapter =
     options.atlasAdapter ?? createBrowserReadyDeveloperOnlyAtlasMapAdapter();
   const getGrowGoMap = options.getGrowGoMap ?? (() => null);
-  const runAtlasDiagnostic =
-    options.runAtlasDiagnostic ??
-    options.getAtlasDiagnosticForCurrentMapCentre ?? defaultDiagnosticUnavailableResult;
   const getAuthorizationState =
     options.getAuthorizationState ?? createDefaultAuthorizationReader(atlasAdapter);
-  const listenerEventName = "moveend";
 
   let attached = false;
   let ownedMap = null;
-  let ownedListener = null;
+  let ownedMapIdentityId = null;
   let diagnosticInvocationCount = 0;
   let lastDiagnosticStatus = null;
   let lastReasonCode = null;
@@ -79,12 +94,24 @@ export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {
   }
 
   function buildStatus() {
+    const currentLiveMap = getGrowGoMap();
+    const currentLiveMapIdentityId = assignMapIdentityId(currentLiveMap);
     return deepFreeze({
       schemaId: "ATLAS_MAP_ATTACHMENT_CONTROLLER_STATUS_001",
       attached,
+      attachmentMode: "passive_live_map_binding",
+      liveMapResolved: ownedMap !== null,
+      liveMapIdentityId: currentLiveMapIdentityId,
+      attachedMapIdentityId: ownedMapIdentityId,
+      exactLiveMapBound:
+        attached === true &&
+        currentLiveMapIdentityId != null &&
+        ownedMapIdentityId != null &&
+        currentLiveMapIdentityId === ownedMapIdentityId,
+      liveMapValidationStatus: ownedMap ? "validated" : "unbound",
       authorizationState: getNormalizedAuthorizationState(),
-      listenerEventName,
-      ownedListenerCount: attached && ownedListener ? 1 : 0,
+      listenerEventName: null,
+      ownedListenerCount: 0,
       diagnosticInvocationCount,
       lastDiagnosticStatus,
       lastReasonCode,
@@ -124,38 +151,34 @@ export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {
       return buildOperationResult("attach", "blocked", "MAP_LISTENER_API_UNAVAILABLE");
     }
 
+    if (typeof liveMap.getCenter !== "function") {
+      return buildOperationResult("attach", "blocked", "MAP_CENTER_UNAVAILABLE");
+    }
+
     const authorizationState = getNormalizedAuthorizationState();
 
     if (!authorizationState.attachAllowed) {
       return buildOperationResult("attach", "blocked", "MAP_ATTACHMENT_NOT_AUTHORIZED");
     }
 
+    ownedMapIdentityId = assignMapIdentityId(liveMap);
     ownedMap = liveMap;
-    ownedListener = () => {
-      const diagnosticResult = runAtlasDiagnostic();
-      diagnosticInvocationCount += 1;
-      lastDiagnosticStatus = diagnosticResult?.diagnosticStatus ?? null;
-      lastReasonCode = diagnosticResult?.reasonCode ?? null;
-    };
-
-    ownedMap.on(listenerEventName, ownedListener);
     attached = true;
 
     return buildOperationResult("attach", "attached", "ATTACHED");
   }
 
   function detachAtlasMapDiagnostic() {
-    if (!attached || !ownedMap || !ownedListener) {
+    if (!attached || !ownedMap) {
       attached = false;
       ownedMap = null;
-      ownedListener = null;
+      ownedMapIdentityId = null;
       return buildOperationResult("detach", "noop", "ALREADY_DETACHED");
     }
 
-    ownedMap.off(listenerEventName, ownedListener);
     attached = false;
     ownedMap = null;
-    ownedListener = null;
+    ownedMapIdentityId = null;
 
     return buildOperationResult("detach", "detached", "DETACHED");
   }

@@ -34,10 +34,6 @@ import {
   installDeveloperOnlyControlledPersistentAtlasManualCommand
 } from "./developer-only-controlled-persistent-atlas-manual-command.mjs";
 import {
-  createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring,
-  installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring
-} from "./developer-only-atlas-controlled-one-asset-live-draw-browser-wiring.mjs";
-import {
   createDeveloperOnlyAtlasAssetPopulationPreview,
   installDeveloperOnlyAtlasAssetPopulationPreview
 } from "./developer-only-atlas-asset-population-preview.mjs";
@@ -82,6 +78,9 @@ import {
   createAtlasPopulationDrawIntegration,
   submitAtlasPopulationPlanForDraw
 } from "./developer-only-atlas-population-draw-integration.mjs";
+import {
+  createDeveloperOnlyAtlasFirstHarmlessVisualController
+} from "./developer-only-atlas-first-harmless-visual.mjs";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -108,6 +107,270 @@ installDeveloperOnlyAtlasCustom25DOneFrameExecutionTrace({
 function readDiagnosticsNamespace() {
   const namespace = globalThis?.GrowGoDeveloperDiagnostics;
   return namespace && typeof namespace === "object" ? namespace : null;
+}
+
+function isLocalDevelopmentHost(hostname) {
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname === "::1"
+  );
+}
+
+function installDeveloperOnlyAtlasAttachmentBrowserSurface({
+  authorization,
+  controller,
+  getGrowGoMap,
+  visualController = null
+} = {}) {
+  const hostname = globalThis?.location?.hostname ?? "";
+  if (
+    !globalThis?.document ||
+    !isLocalDevelopmentHost(hostname) ||
+    !authorization ||
+    !controller ||
+    typeof getGrowGoMap !== "function"
+  ) {
+    return null;
+  }
+
+  const surfaceId = "growgo-dev-atlas-attachment-surface";
+  const authorizeButtonId = "growgo-dev-atlas-attachment-authorize";
+  const attachButtonId = "growgo-dev-atlas-attachment-attach";
+  const detachButtonId = "growgo-dev-atlas-attachment-detach";
+  const showVisualButtonId = "growgo-dev-atlas-show-visual";
+  const clearVisualButtonId = "growgo-dev-atlas-clear-visual";
+  const panMapButtonId = "growgo-dev-atlas-pan-map";
+  const zoomMapButtonId = "growgo-dev-atlas-zoom-map";
+  const refreshButtonId = "growgo-dev-atlas-attachment-refresh";
+  const statusId = "growgo-dev-atlas-attachment-status";
+  const overlayCanvasSelector = ".leaflet-overlay-pane canvas";
+  const baselineOverlayCanvasCount = globalThis.document.querySelectorAll(
+    overlayCanvasSelector
+  ).length;
+
+  let surface = globalThis.document.getElementById(surfaceId);
+  if (!surface) {
+    surface = globalThis.document.createElement("section");
+    surface.id = surfaceId;
+    surface.setAttribute("aria-label", "Atlas attachment developer controls");
+    surface.style.position = "fixed";
+    surface.style.top = "12px";
+    surface.style.right = "12px";
+    surface.style.zIndex = "6000";
+    surface.style.maxWidth = "320px";
+    surface.style.padding = "8px";
+    surface.style.background = "rgba(7, 20, 33, 0.92)";
+    surface.style.color = "#f4f8ff";
+    surface.style.fontSize = "12px";
+    surface.style.border = "1px solid rgba(255,255,255,0.18)";
+    surface.style.borderRadius = "8px";
+    surface.innerHTML = `
+      <strong>Atlas Attach Dev</strong>
+      <button id="${authorizeButtonId}" type="button">authorize atlas attachment</button>
+      <button id="${attachButtonId}" type="button">attach atlas</button>
+      <button id="${detachButtonId}" type="button">detach atlas</button>
+      <button id="${showVisualButtonId}" type="button">show atlas visual</button>
+      <button id="${clearVisualButtonId}" type="button">clear atlas visual</button>
+      <button id="${panMapButtonId}" type="button">pan map</button>
+      <button id="${zoomMapButtonId}" type="button">zoom map</button>
+      <button id="${refreshButtonId}" type="button">refresh atlas status</button>
+      <pre id="${statusId}"></pre>
+    `;
+    globalThis.document.body?.appendChild(surface);
+  }
+
+  const authorizeButton = surface.querySelector(`#${authorizeButtonId}`);
+  const attachButton = surface.querySelector(`#${attachButtonId}`);
+  const detachButton = surface.querySelector(`#${detachButtonId}`);
+  const showVisualButton = surface.querySelector(`#${showVisualButtonId}`);
+  const clearVisualButton = surface.querySelector(`#${clearVisualButtonId}`);
+  const panMapButton = surface.querySelector(`#${panMapButtonId}`);
+  const zoomMapButton = surface.querySelector(`#${zoomMapButtonId}`);
+  const refreshButton = surface.querySelector(`#${refreshButtonId}`);
+  const statusNode = surface.querySelector(`#${statusId}`);
+
+  function writeSurfaceStatus(lastAction = "status_read", lastResult = null) {
+    const liveMap = getGrowGoMap();
+    const controllerStatus = controller.getAtlasMapAttachmentStatus();
+    const authorizationStatus =
+      authorization.getAtlasMapAttachmentAuthorizationStatus();
+    const visualStatus =
+      visualController?.getAtlasFirstHarmlessVisualStatus?.() ?? null;
+    const currentOverlayCanvasCount = globalThis.document.querySelectorAll(
+      overlayCanvasSelector
+    ).length;
+    const surfaceStatus = Object.freeze({
+      schemaId: "GROWGO_DEV_ATLAS_ATTACHMENT_BROWSER_SURFACE_STATUS_001",
+      browserSurfaceAvailable: true,
+      localDevelopmentHost: hostname,
+      lastAction,
+      lastResult,
+      authoritativeLiveMapAccessible: !!liveMap,
+      liveMapIdentityId: controllerStatus.liveMapIdentityId ?? null,
+      attached: controllerStatus.attached === true,
+      attachedMapIdentityId: controllerStatus.attachedMapIdentityId ?? null,
+      exactLiveMapBound: controllerStatus.exactLiveMapBound === true,
+      attachAuthorizationState:
+        authorizationStatus.authorizationState ?? null,
+      attachPermissionGranted:
+        authorizationStatus.effectiveMapAttachmentAllowed === true,
+      ownedListenerCount: controllerStatus.ownedListenerCount ?? 0,
+      atlasVisualPresent: visualStatus?.visualPresent === true,
+      atlasVisualType: visualStatus?.visualType ?? null,
+      atlasVisualMapIdentityId: visualStatus?.attachedMapIdentityId ?? null,
+      atlasVisualLatitude: visualStatus?.visualLatitude ?? null,
+      atlasVisualLongitude: visualStatus?.visualLongitude ?? null,
+      atlasVisualLayerCount: visualStatus?.atlasOwnedLayerCount ?? 0,
+      atlasVisualCanvasCount: visualStatus?.atlasOwnedCanvasCount ?? 0,
+      atlasVisualListenerCount: visualStatus?.atlasOwnedListenerCount ?? 0,
+      rendererActivity: controllerStatus.rendererActivity === true,
+      overlayActivity: controllerStatus.overlayActivity === true,
+      pollingOrTimerActivity:
+        controllerStatus.pollingOrTimerActivity === true,
+      baselineOverlayCanvasCount,
+      currentOverlayCanvasCount,
+      overlayCanvasCountDelta:
+        currentOverlayCanvasCount - baselineOverlayCanvasCount,
+      safetyFlags: controllerStatus.safetyFlags ?? null
+    });
+
+    surface.dataset.statusJson = JSON.stringify(surfaceStatus);
+    surface.dataset.liveMapIdentityId = surfaceStatus.liveMapIdentityId ?? "";
+    surface.dataset.attachedMapIdentityId =
+      surfaceStatus.attachedMapIdentityId ?? "";
+    surface.dataset.exactLiveMapBound = String(surfaceStatus.exactLiveMapBound);
+    surface.dataset.attached = String(surfaceStatus.attached);
+    if (statusNode) {
+      statusNode.textContent = JSON.stringify(surfaceStatus);
+    }
+    return surfaceStatus;
+  }
+
+  authorizeButton?.addEventListener("click", () => {
+    const result = authorization.authorizeAtlasMapAttachmentSession({
+      confirmation: authorization.requiredConfirmation
+    });
+    writeSurfaceStatus("authorize", result);
+  });
+
+  attachButton?.addEventListener("click", () => {
+    const result = controller.attachAtlasMapDiagnostic();
+    if (result?.outcome === "attached") {
+      authorization.consumeSuccessfulAttachment();
+    }
+    writeSurfaceStatus("attach", result);
+  });
+
+  detachButton?.addEventListener("click", () => {
+    const clearedVisual = visualController?.clearAtlasFirstHarmlessVisual?.() ?? null;
+    const result = controller.detachAtlasMapDiagnostic();
+    authorization.revokeAtlasMapAttachmentSession();
+    writeSurfaceStatus(
+      "detach",
+      clearedVisual
+        ? {
+            clearedVisual,
+            detachResult: result
+          }
+        : result
+    );
+  });
+
+  showVisualButton?.addEventListener("click", () => {
+    const result = visualController?.showAtlasFirstHarmlessVisual?.() ?? {
+      outcome: "blocked",
+      reasonCode: "ATLAS_VISUAL_CONTROLLER_UNAVAILABLE"
+    };
+    writeSurfaceStatus("show_visual", result);
+  });
+
+  clearVisualButton?.addEventListener("click", () => {
+    const result = visualController?.clearAtlasFirstHarmlessVisual?.() ?? {
+      outcome: "blocked",
+      reasonCode: "ATLAS_VISUAL_CONTROLLER_UNAVAILABLE"
+    };
+    writeSurfaceStatus("clear_visual", result);
+  });
+
+  panMapButton?.addEventListener("click", () => {
+    const liveMap = getGrowGoMap();
+    let result = {
+      outcome: "blocked",
+      reasonCode: "MAP_PAN_UNAVAILABLE"
+    };
+
+    if (liveMap && typeof liveMap.panBy === "function") {
+      liveMap.panBy([160, 80], { animate: false });
+      result = {
+        outcome: "completed",
+        reasonCode: "MAP_PANNED"
+      };
+    }
+
+    writeSurfaceStatus("pan_map", result);
+  });
+
+  zoomMapButton?.addEventListener("click", () => {
+    const liveMap = getGrowGoMap();
+    let result = {
+      outcome: "blocked",
+      reasonCode: "MAP_ZOOM_UNAVAILABLE"
+    };
+
+    if (liveMap && typeof liveMap.zoomIn === "function") {
+      liveMap.zoomIn(1, { animate: false });
+      result = {
+        outcome: "completed",
+        reasonCode: "MAP_ZOOMED_IN"
+      };
+    }
+
+    writeSurfaceStatus("zoom_map", result);
+  });
+
+  refreshButton?.addEventListener("click", () => {
+    writeSurfaceStatus("refresh", null);
+  });
+
+  return Object.freeze({
+    refresh: () => writeSurfaceStatus("refresh", null),
+    elementId: surfaceId,
+    authorizeButtonId,
+    attachButtonId,
+    detachButtonId,
+    showVisualButtonId,
+    clearVisualButtonId,
+    panMapButtonId,
+    zoomMapButtonId,
+    refreshButtonId
+  });
+}
+
+async function loadControlledOneAssetLiveDrawBrowserWiringModule() {
+  try {
+    return await import(
+      "./developer-only-atlas-controlled-one-asset-live-draw-browser-wiring.mjs"
+    );
+  } catch (error) {
+    const namespace = readDiagnosticsNamespace();
+    if (namespace) {
+      namespace.controlledOneAssetInstallerAttempted = true;
+      namespace.controlledOneAssetInstallerResultIsNull = true;
+      namespace.controlledOneAssetInstallerResultType = "module_import_failed";
+      namespace.controlledOneAssetInstallerReturnedNamespace = false;
+      namespace.controlledOneAssetInstallerReturnStatus = "module_import_failed";
+      namespace.controlledOneAssetInstallerImportErrorName =
+        error?.name ?? "Error";
+      namespace.controlledOneAssetInstallerImportErrorMessage =
+        error?.message ?? String(error);
+      namespace.controlledOneAssetCommandAvailableAfterInstall = false;
+      namespace.controlledOneAssetCommandKeysAfterInstall = Object.freeze([]);
+      namespace.controlledOneAssetInstallerNamespaceKeys = Object.freeze([]);
+    }
+    return null;
+  }
 }
 
 function captureDiagnosticsFunction(functionName) {
@@ -786,6 +1049,33 @@ installControlledOneSessionDeveloperMapAttachmentAuthorization({
   authorization: atlasMapAttachmentAuthorization,
   controller: atlasMapAttachmentController
 });
+
+const atlasFirstHarmlessVisualController =
+  createDeveloperOnlyAtlasFirstHarmlessVisualController({
+    getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics,
+    attachmentStatusProvider: () =>
+      atlasMapAttachmentController.getAtlasMapAttachmentStatus(),
+    leafletProvider: () => globalThis?.L ?? null
+  });
+
+const atlasAttachmentBrowserSurface =
+  installDeveloperOnlyAtlasAttachmentBrowserSurface({
+    authorization: atlasMapAttachmentAuthorization,
+    controller: atlasMapAttachmentController,
+    getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics,
+    visualController: atlasFirstHarmlessVisualController
+  });
+
+atlasAttachmentBrowserSurface?.refresh();
+if (atlasAttachmentBrowserSurface && globalThis?.addEventListener) {
+  globalThis.addEventListener(
+    "load",
+    () => {
+      atlasAttachmentBrowserSurface.refresh();
+    },
+    { once: true }
+  );
+}
 
 const atlasRendererHandoffReadiness =
   createDeveloperOnlyLiveAtlasRendererHandoffReadiness({
@@ -1771,14 +2061,6 @@ const controlledPersistentAtlasManualCommand =
       })
   });
 
-const controlledOneAssetLiveDrawBrowserWiring =
-  createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
-    hostnameProvider: () => globalThis?.location?.hostname ?? "",
-    persistentAtlasStatusProvider: () =>
-      controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
-      null
-  });
-
 installDeveloperOnlyControlledPersistentAtlasManualCommand({
   globalObject: globalThis,
   command: controlledPersistentAtlasManualCommand
@@ -1797,12 +2079,23 @@ if (diagnosticsNamespaceBeforeOneAssetInstallerCall) {
     "before_one_asset_installer_call";
 }
 
+const controlledOneAssetLiveDrawBrowserWiringModule =
+  await loadControlledOneAssetLiveDrawBrowserWiringModule();
+const controlledOneAssetLiveDrawBrowserWiring =
+  controlledOneAssetLiveDrawBrowserWiringModule
+    ?.createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring?.({
+      hostnameProvider: () => globalThis?.location?.hostname ?? "",
+      persistentAtlasStatusProvider: () =>
+        controlledPersistentAtlasIntegration.getIntegratedPersistentAtlasStatus?.() ??
+        null
+    }) ?? null;
 const controlledOneAssetInstallerReturnedNamespace =
-  installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring({
-  globalObject: globalThis,
-  wiring: controlledOneAssetLiveDrawBrowserWiring,
-  hostnameProvider: () => globalThis?.location?.hostname ?? ""
-});
+  controlledOneAssetLiveDrawBrowserWiringModule
+    ?.installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring?.({
+      globalObject: globalThis,
+      wiring: controlledOneAssetLiveDrawBrowserWiring,
+      hostnameProvider: () => globalThis?.location?.hostname ?? ""
+    }) ?? null;
 
 const controlledOneAssetInstallerNamespaceAfterInstall =
   globalThis?.GrowGoDeveloperDiagnostics &&

@@ -20,6 +20,7 @@ const developmentAlphaAppSource = fs.readFileSync(
   path.join(repoRoot, "client", "development-alpha-app.mjs"),
   "utf8"
 );
+const scriptSource = fs.readFileSync(path.join(repoRoot, "script.js"), "utf8");
 
 function createMapStub(initialCentre = { lat: -38.12, lng: 144.61 }) {
   let centre = initialCentre;
@@ -72,12 +73,10 @@ function createMapStub(initialCentre = { lat: -38.12, lng: 144.61 }) {
 
 function createAuthorizedController({
   map,
-  diagnosticFunction,
   atlasAdapter
 }) {
   return controllerModule.createGatedDeveloperOnlyAtlasMapAttachmentController({
     getGrowGoMap: () => map,
-    getAtlasDiagnosticForCurrentMapCentre: diagnosticFunction,
     atlasAdapter,
     getAuthorizationState() {
       return {
@@ -127,102 +126,72 @@ test("missing map fails closed", () => {
   assert.equal(result.status.ownedListenerCount, 0);
 });
 
-test("isolated authorized seam installs exactly one moveend listener", () => {
-  const map = createMapStub();
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => ({ diagnosticStatus: "resolved", reasonCode: "RESOLVED" })
+test("invalid map shape fails closed", () => {
+  const controller = controllerModule.createGatedDeveloperOnlyAtlasMapAttachmentController({
+    getGrowGoMap: () => ({ on() {}, off() {} }),
+    getAuthorizationState() {
+      return {
+        source: "isolated-test-seam",
+        mapAttachmentAllowed: true
+      };
+    }
   });
 
   const result = controller.attachAtlasMapDiagnostic();
-  assert.equal(result.reasonCode, "ATTACHED");
-  assert.equal(result.status.listenerEventName, "moveend");
-  assert.equal(result.status.ownedListenerCount, 1);
-  assert.equal(map.listenerCount("moveend"), 1);
+  assert.equal(result.reasonCode, "MAP_CENTER_UNAVAILABLE");
+  assert.equal(result.status.attached, false);
+  assert.equal(result.status.ownedListenerCount, 0);
 });
 
-test("duplicate attach installs no second listener", () => {
+test("isolated authorized seam binds passively to the exact live map with zero owned listeners", () => {
   const map = createMapStub();
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => ({ diagnosticStatus: "resolved", reasonCode: "RESOLVED" })
-  });
+  const controller = createAuthorizedController({ map });
+
+  const result = controller.attachAtlasMapDiagnostic();
+  assert.equal(result.reasonCode, "ATTACHED");
+  assert.equal(result.status.attachmentMode, "passive_live_map_binding");
+  assert.equal(result.status.liveMapResolved, true);
+  assert.equal(result.status.liveMapValidationStatus, "validated");
+  assert.equal(result.status.liveMapIdentityId, result.status.attachedMapIdentityId);
+  assert.equal(result.status.exactLiveMapBound, true);
+  assert.equal(result.status.listenerEventName, null);
+  assert.equal(result.status.ownedListenerCount, 0);
+  assert.equal(map.totalListenerCount(), 0);
+});
+
+test("duplicate attach keeps the same passive attachment with zero listeners", () => {
+  const map = createMapStub();
+  const controller = createAuthorizedController({ map });
 
   controller.attachAtlasMapDiagnostic();
   const second = controller.attachAtlasMapDiagnostic();
 
   assert.equal(second.reasonCode, "ALREADY_ATTACHED");
-  assert.equal(second.status.ownedListenerCount, 1);
-  assert.equal(map.listenerCount("moveend"), 1);
+  assert.equal(second.status.ownedListenerCount, 0);
+  assert.equal(map.totalListenerCount(), 0);
 });
 
-test("one moveend event performs one diagnostic and repeated events increase invocation count only", () => {
+test("attachment remains visually passive and does not run diagnostics on map events", () => {
   const map = createMapStub();
-  let diagnosticInvocationCount = 0;
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => {
-      diagnosticInvocationCount += 1;
-      return { diagnosticStatus: "resolved", reasonCode: "RESOLVED" };
-    }
-  });
+  const controller = createAuthorizedController({ map });
 
   controller.attachAtlasMapDiagnostic();
   map.emit("moveend");
   let status = controller.getAtlasMapAttachmentStatus();
-  assert.equal(diagnosticInvocationCount, 1);
-  assert.equal(status.diagnosticInvocationCount, 1);
-  assert.equal(status.ownedListenerCount, 1);
+  assert.equal(status.diagnosticInvocationCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
 
   map.emit("moveend");
   status = controller.getAtlasMapAttachmentStatus();
-  assert.equal(diagnosticInvocationCount, 2);
-  assert.equal(status.diagnosticInvocationCount, 2);
-  assert.equal(status.ownedListenerCount, 1);
-});
-
-test("approved coordinates resolve correctly through the existing live-map-centre diagnostic bridge", () => {
-  const map = createMapStub({ lat: -38.12, lng: 144.61 });
-  const bridge = bridgeModule.createDeveloperOnlyLiveMapCentreAtlasBridge({
-    getGrowGoMap: () => map
-  });
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: bridge.getAtlasDiagnosticForCurrentMapCentre
-  });
-
-  controller.attachAtlasMapDiagnostic();
-  map.emit("moveend");
-
-  const status = controller.getAtlasMapAttachmentStatus();
-  assert.equal(status.lastDiagnosticStatus, "resolved");
-  assert.equal(status.lastReasonCode, "RESOLVED");
-});
-
-test("unsupported coordinates remain fail-closed through the existing live-map-centre diagnostic bridge", () => {
-  const map = createMapStub({ lat: -38.13, lng: 144.62 });
-  const bridge = bridgeModule.createDeveloperOnlyLiveMapCentreAtlasBridge({
-    getGrowGoMap: () => map
-  });
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: bridge.getAtlasDiagnosticForCurrentMapCentre
-  });
-
-  controller.attachAtlasMapDiagnostic();
-  map.emit("moveend");
-
-  const status = controller.getAtlasMapAttachmentStatus();
-  assert.equal(status.lastDiagnosticStatus, "blocked");
-  assert.equal(status.lastReasonCode, "REGION_OUT_OF_SCOPE");
+  assert.equal(status.diagnosticInvocationCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.lastDiagnosticStatus, null);
+  assert.equal(status.lastReasonCode, null);
 });
 
 test("detach removes the exact owned listener and repeated detach is safe", () => {
   const map = createMapStub();
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => ({ diagnosticStatus: "resolved", reasonCode: "RESOLVED" })
-  });
+  const controller = createAuthorizedController({ map });
 
   controller.attachAtlasMapDiagnostic();
   const detached = controller.detachAtlasMapDiagnostic();
@@ -230,19 +199,17 @@ test("detach removes the exact owned listener and repeated detach is safe", () =
 
   assert.equal(detached.reasonCode, "DETACHED");
   assert.equal(detached.status.ownedListenerCount, 0);
-  assert.equal(map.listenerCount("moveend"), 0);
+  assert.equal(detached.status.liveMapResolved, false);
+  assert.equal(map.totalListenerCount(), 0);
   assert.equal(repeated.reasonCode, "ALREADY_DETACHED");
 });
 
-test("unrelated listeners remain untouched", () => {
+test("unrelated listeners remain untouched because attachment owns none", () => {
   const map = createMapStub();
   const unrelatedListener = () => {};
   map.on("moveend", unrelatedListener);
 
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => ({ diagnosticStatus: "resolved", reasonCode: "RESOLVED" })
-  });
+  const controller = createAuthorizedController({ map });
 
   controller.attachAtlasMapDiagnostic();
   controller.detachAtlasMapDiagnostic();
@@ -252,17 +219,15 @@ test("unrelated listeners remain untouched", () => {
 
 test("status accurately reports current controller state and canonical safety flags remain false", () => {
   const map = createMapStub();
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => ({ diagnosticStatus: "resolved", reasonCode: "RESOLVED" })
-  });
+  const controller = createAuthorizedController({ map });
 
   controller.attachAtlasMapDiagnostic();
-  map.emit("moveend");
 
   const status = controller.getAtlasMapAttachmentStatus();
   assert.equal(status.schemaId, "ATLAS_MAP_ATTACHMENT_CONTROLLER_STATUS_001");
   assert.equal(status.attached, true);
+  assert.equal(status.attachmentMode, "passive_live_map_binding");
+  assert.equal(status.liveMapResolved, true);
   assert.equal(status.authorizationState.attachAllowed, true);
   assert.equal(status.authorizationState.canonicalMapAttachmentAllowed, false);
   assert.equal(status.safetyFlags.runtimeExecutionEnabled, false);
@@ -277,10 +242,7 @@ test("status accurately reports current controller state and canonical safety fl
 
 test("returned results are deeply immutable", () => {
   const map = createMapStub();
-  const controller = createAuthorizedController({
-    map,
-    diagnosticFunction: () => ({ diagnosticStatus: "resolved", reasonCode: "RESOLVED" })
-  });
+  const controller = createAuthorizedController({ map });
 
   const result = controller.attachAtlasMapDiagnostic();
   const status = controller.getAtlasMapAttachmentStatus();
@@ -312,19 +274,36 @@ test("controller installs developer-only interfaces without automatic startup at
     developmentAlphaAppSource,
     /installGatedDeveloperOnlyAtlasMapAttachmentController/
   );
-  assert.doesNotMatch(developmentAlphaAppSource, /attachAtlasMapDiagnostic\(\)/);
+  assert.match(
+    developmentAlphaAppSource,
+    /installDeveloperOnlyAtlasAttachmentBrowserSurface/
+  );
 });
 
-test("controller adds no polling interval timeout renderer overlay or non-moveend listeners", () => {
+test("app attachment path uses the authoritative live GrowGo map getter path", () => {
+  assert.match(scriptSource, /function getGrowGoMap\(\)\s*\{\s*return traceAtlasOneFrameCall\("getGrowGoMap", \(\) => map \?\? null\);/);
+  assert.match(
+    developmentAlphaAppSource,
+    /createGatedDeveloperOnlyAtlasMapAttachmentController\(\{\s*[\s\S]*getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics/
+  );
+  assert.match(
+    developmentAlphaAppSource,
+    /installDeveloperOnlyAtlasAttachmentBrowserSurface\(\{\s*[\s\S]*getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics/
+  );
+  assert.doesNotMatch(
+    developmentAlphaAppSource,
+    /import\s*\{\s*createDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring,\s*installDeveloperOnlyAtlasControlledOneAssetLiveDrawBrowserWiring\s*\}\s*from/
+  );
+});
+
+test("controller adds no polling interval timeout renderer overlay canvas drawing or automatic listeners", () => {
   assert.doesNotMatch(controllerSource, /setInterval\(/);
   assert.doesNotMatch(controllerSource, /setTimeout\(/);
   assert.doesNotMatch(controllerSource, /fetch\(/);
   assert.doesNotMatch(controllerSource, /XMLHttpRequest/);
-  assert.doesNotMatch(controllerSource, /resize/);
-  assert.doesNotMatch(controllerSource, /zoomend/);
-  assert.doesNotMatch(controllerSource, /tap/);
-  assert.doesNotMatch(controllerSource, /gps/i);
+  assert.doesNotMatch(controllerSource, /\.on\(/);
+  assert.doesNotMatch(controllerSource, /\.off\(/);
   assert.doesNotMatch(controllerSource, /document\.createElement/);
   assert.doesNotMatch(controllerSource, /appendChild/);
-  assert.match(controllerSource, /const listenerEventName = "moveend"/);
+  assert.doesNotMatch(controllerSource, /requestAnimationFrame/);
 });
