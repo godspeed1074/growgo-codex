@@ -1,0 +1,1069 @@
+import {
+  createDeveloperOnlyAtlasAssetRegistry,
+  resolveDeveloperOnlyAtlasAssetRegistryEntry
+} from "./developer-only-atlas-asset-registry.mjs";
+import {
+  parseTreeEucalyptusApprovedGameplayGlbSceneData
+} from "./developer-only-atlas-first-approved-live-asset.mjs";
+
+const STATUS_SCHEMA_ID =
+  "GROWGO_DEVELOPER_ONLY_ATLAS_SHARED_APPROVED_LIVE_ASSET_STATUS_001";
+const RESULT_SCHEMA_ID =
+  "GROWGO_DEVELOPER_ONLY_ATLAS_SHARED_APPROVED_LIVE_ASSET_RESULT_001";
+
+export const DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID = "TREE_EUCALYPTUS_001";
+export const DEFAULT_FIRST_APPROVED_LIVE_ASSET_VERSION = "v001";
+export const DEFAULT_FIRST_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID =
+  "ATLAS_APPROVED_ASSET_TREE_EUCALYPTUS_001_3D_001";
+export const DEFAULT_SECOND_APPROVED_LIVE_ASSET_ID = "TREE_BOTTLEBRUSH_001";
+export const DEFAULT_SECOND_APPROVED_LIVE_ASSET_VERSION = "v002";
+export const DEFAULT_SECOND_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID =
+  "ATLAS_APPROVED_ASSET_TREE_BOTTLEBRUSH_001_3D_001";
+export const DEFAULT_THIRD_APPROVED_LIVE_ASSET_ID =
+  "BUILDING_CIVIC_SPORTS_PAVILION_001";
+export const DEFAULT_THIRD_APPROVED_LIVE_ASSET_VERSION = "1.0.0";
+export const DEFAULT_THIRD_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID =
+  "ATLAS_APPROVED_ASSET_BUILDING_CIVIC_SPORTS_PAVILION_001_3D_001";
+
+const LOCAL_DEVELOPMENT_HOSTS = new Set([
+  "localhost",
+  "127.0.0.1",
+  "0.0.0.0",
+  "::1"
+]);
+
+const TRUE_3D_REPRESENTATION_MODE = "atlas_true_3d_glb_model";
+const RENDERER_SURFACE_CLASS_NAME = "atlas-approved-asset-true-3d-surface";
+const LISTENER_EVENT_NAMES = Object.freeze(["moveend", "zoomend", "resize"]);
+const VIEW_FOV_DEGREES = 32;
+const CLEAR_COLOR = Object.freeze([0, 0, 0, 0]);
+const DEFAULT_ROTATION_Y_RADIANS = 0.18;
+const SHARED_CAMERA_PATH = "shared_fixed_north_up_oblique";
+const SHARED_RENDERER_TECHNOLOGY_PATH = "webgl-shared-scene-fixed-camera";
+
+const SUPPORTED_ASSET_RUNTIME_PROFILES = Object.freeze({
+  TREE_EUCALYPTUS_001: Object.freeze({
+    defaultVersion: DEFAULT_FIRST_APPROVED_LIVE_ASSET_VERSION,
+    modelInstanceId: DEFAULT_FIRST_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID,
+    targetHeightMeters: 14,
+    rotationYRadians: 0.18
+  }),
+  TREE_BOTTLEBRUSH_001: Object.freeze({
+    defaultVersion: DEFAULT_SECOND_APPROVED_LIVE_ASSET_VERSION,
+    modelInstanceId: DEFAULT_SECOND_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID,
+    targetHeightMeters: 8.5,
+    rotationYRadians: 0.14
+  }),
+  BUILDING_CIVIC_SPORTS_PAVILION_001: Object.freeze({
+    defaultVersion: DEFAULT_THIRD_APPROVED_LIVE_ASSET_VERSION,
+    modelInstanceId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID,
+    targetHeightMeters: 3.6,
+    rotationYRadians: 0
+  })
+});
+
+function deepFreeze(value, seen = new WeakSet()) {
+  if (!value || typeof value !== "object" || Object.isFrozen(value)) {
+    return value;
+  }
+  if (ArrayBuffer.isView(value)) {
+    return value;
+  }
+  if (seen.has(value)) {
+    return value;
+  }
+  seen.add(value);
+  for (const nested of Object.values(value)) {
+    if (nested && typeof nested === "object") {
+      deepFreeze(nested, seen);
+    }
+  }
+  return Object.freeze(value);
+}
+
+function canonicalSafetyFlags() {
+  return deepFreeze({
+    runtimeExecutionEnabled: false,
+    mapAttachmentAllowed: false,
+    automaticRendererExecutionAllowed: false,
+    lifecycleExecutionEnabled: false
+  });
+}
+
+function sanitizeString(value) {
+  return value == null ? null : String(value);
+}
+
+function sanitizeNumber(value) {
+  return Number.isFinite(value) ? Number(value) : null;
+}
+
+function isLocalDevelopmentHost(hostname) {
+  return LOCAL_DEVELOPMENT_HOSTS.has(String(hostname ?? "").trim());
+}
+
+function createAssetSlot({
+  slotId,
+  defaultAssetId,
+  defaultAssetVersion,
+  defaultModelInstanceId
+}) {
+  return {
+    slotId,
+    selectedAssetId: defaultAssetId,
+    selectedAssetVersion: defaultAssetVersion,
+    approvedAssetStatus: null,
+    assetReferenceId: null,
+    assetSource: null,
+    runtimePreviewBindingId: null,
+    resolvedGlbIdentity: null,
+    modelInstanceId: defaultModelInstanceId,
+    liveAssetPresent: false,
+    latitude: null,
+    longitude: null,
+    representationMode: null,
+    actualGlbLoaded: false,
+    meshCount: 0,
+    materialCount: 0,
+    sceneObjectCount: 0,
+    lastReasonCode: null
+  };
+}
+
+function createState() {
+  return {
+    firstAsset: createAssetSlot({
+      slotId: "first",
+      defaultAssetId: DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID,
+      defaultAssetVersion: DEFAULT_FIRST_APPROVED_LIVE_ASSET_VERSION,
+      defaultModelInstanceId: DEFAULT_FIRST_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID
+    }),
+    secondAsset: createAssetSlot({
+      slotId: "second",
+      defaultAssetId: DEFAULT_SECOND_APPROVED_LIVE_ASSET_ID,
+      defaultAssetVersion: DEFAULT_SECOND_APPROVED_LIVE_ASSET_VERSION,
+      defaultModelInstanceId: DEFAULT_SECOND_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID
+    }),
+    thirdAsset: createAssetSlot({
+      slotId: "third",
+      defaultAssetId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_ID,
+      defaultAssetVersion: DEFAULT_THIRD_APPROVED_LIVE_ASSET_VERSION,
+      defaultModelInstanceId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID
+    }),
+    loaderStatus: "idle",
+    loaderReason: null,
+    rendererSurfaceCount: 0,
+    rendererCanvasCount: 0,
+    rendererInstanceCount: 0,
+    sharedSceneCount: 0,
+    sceneObjectCount: 0,
+    modelInstanceCount: 0,
+    ownedListenerCount: 0,
+    renderLoopCount: 0,
+    glContextCreated: false,
+    true3dRendererReady: false,
+    rendererTechnologyPath: SHARED_RENDERER_TECHNOLOGY_PATH,
+    sharedCameraPath: SHARED_CAMERA_PATH,
+    cameraState: null,
+    lastOperation: null,
+    lastReasonCode: null
+  };
+}
+
+function buildInstanceSummary(asset) {
+  return deepFreeze({
+    slotId: asset.slotId,
+    assetId: asset.selectedAssetId,
+    assetVersion: asset.selectedAssetVersion,
+    approvedAssetStatus: asset.approvedAssetStatus,
+    assetReferenceId: asset.assetReferenceId,
+    modelInstanceId: asset.modelInstanceId,
+    resolvedGlbIdentity: asset.resolvedGlbIdentity,
+    latitude: asset.latitude,
+    longitude: asset.longitude,
+    representationMode: asset.representationMode,
+    liveAssetPresent: asset.liveAssetPresent,
+    actualGlbLoaded: asset.actualGlbLoaded
+  });
+}
+
+function buildStatus(state) {
+  const first = state.firstAsset;
+  const second = state.secondAsset;
+  const third = state.thirdAsset;
+  const liveInstances = [first, second, third]
+    .filter((asset) => asset.liveAssetPresent)
+    .map((asset) => buildInstanceSummary(asset));
+
+  return deepFreeze({
+    schemaId: STATUS_SCHEMA_ID,
+    selectedAssetId: first.selectedAssetId,
+    selectedAssetVersion: first.selectedAssetVersion,
+    approvedAssetStatus: first.approvedAssetStatus,
+    assetReferenceId: first.assetReferenceId,
+    assetSource: first.assetSource,
+    runtimePreviewBindingId: first.runtimePreviewBindingId,
+    resolvedGlbIdentity: first.resolvedGlbIdentity,
+    modelInstanceId: first.modelInstanceId,
+    liveAssetPresent: first.liveAssetPresent,
+    latitude: first.latitude,
+    longitude: first.longitude,
+    representationMode: first.representationMode,
+    secondSelectedAssetId: second.selectedAssetId,
+    secondSelectedAssetVersion: second.selectedAssetVersion,
+    secondApprovedAssetStatus: second.approvedAssetStatus,
+    secondAssetReferenceId: second.assetReferenceId,
+    secondAssetSource: second.assetSource,
+    secondRuntimePreviewBindingId: second.runtimePreviewBindingId,
+    secondResolvedGlbIdentity: second.resolvedGlbIdentity,
+    secondModelInstanceId: second.modelInstanceId,
+    secondLiveAssetPresent: second.liveAssetPresent,
+    secondLatitude: second.latitude,
+    secondLongitude: second.longitude,
+    secondRepresentationMode: second.representationMode,
+    thirdSelectedAssetId: third.selectedAssetId,
+    thirdSelectedAssetVersion: third.selectedAssetVersion,
+    thirdApprovedAssetStatus: third.approvedAssetStatus,
+    thirdAssetReferenceId: third.assetReferenceId,
+    thirdAssetSource: third.assetSource,
+    thirdRuntimePreviewBindingId: third.runtimePreviewBindingId,
+    thirdResolvedGlbIdentity: third.resolvedGlbIdentity,
+    thirdModelInstanceId: third.modelInstanceId,
+    thirdLiveAssetPresent: third.liveAssetPresent,
+    thirdLatitude: third.latitude,
+    thirdLongitude: third.longitude,
+    thirdRepresentationMode: third.representationMode,
+    loaderStatus: state.loaderStatus,
+    loaderReason: state.loaderReason,
+    actualGlbLoaded: first.actualGlbLoaded,
+    secondActualGlbLoaded: second.actualGlbLoaded,
+    thirdActualGlbLoaded: third.actualGlbLoaded,
+    meshCount: first.meshCount,
+    secondMeshCount: second.meshCount,
+    thirdMeshCount: third.meshCount,
+    materialCount: first.materialCount,
+    secondMaterialCount: second.materialCount,
+    thirdMaterialCount: third.materialCount,
+    rendererSurfaceCount: state.rendererSurfaceCount,
+    rendererCanvasCount: state.rendererCanvasCount,
+    rendererInstanceCount: state.rendererInstanceCount,
+    sharedSceneCount: state.sharedSceneCount,
+    sceneObjectCount: state.sceneObjectCount,
+    firstSceneObjectCount: first.sceneObjectCount,
+    secondSceneObjectCount: second.sceneObjectCount,
+    thirdSceneObjectCount: third.sceneObjectCount,
+    modelInstanceCount: state.modelInstanceCount,
+    ownedListenerCount: state.ownedListenerCount,
+    renderLoopCount: state.renderLoopCount,
+    glContextCreated: state.glContextCreated,
+    true3dRendererReady: state.true3dRendererReady,
+    rendererTechnologyPath: state.rendererTechnologyPath,
+    sharedCameraPath: state.sharedCameraPath,
+    cameraState: state.cameraState,
+    sharedAssetInstances: deepFreeze(liveInstances),
+    lastOperation: state.lastOperation,
+    lastReasonCode: state.lastReasonCode,
+    canonicalSafetyFlags: canonicalSafetyFlags()
+  });
+}
+
+function buildResult(state, outcome, reasonCode, extra = {}) {
+  return deepFreeze({
+    schemaId: RESULT_SCHEMA_ID,
+    outcome,
+    reasonCode,
+    status: buildStatus(state),
+    ...extra
+  });
+}
+
+function createShader(gl, type, source) {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const info = gl.getShaderInfoLog(shader) ?? "unknown shader error";
+    gl.deleteShader(shader);
+    throw Object.assign(new Error("WEBGL_SHADER_COMPILE_FAILED"), {
+      reasonCode: "WEBGL_SHADER_COMPILE_FAILED",
+      detail: info
+    });
+  }
+  return shader;
+}
+
+function createProgram(gl) {
+  const vertexShader = createShader(
+    gl,
+    gl.VERTEX_SHADER,
+    `
+      attribute vec3 aPosition;
+      uniform mat4 uModel;
+      uniform mat4 uViewProjection;
+      uniform vec2 uAnchorNdc;
+      void main() {
+        vec4 clip = uViewProjection * uModel * vec4(aPosition, 1.0);
+        clip.xy += uAnchorNdc * clip.w;
+        gl_Position = clip;
+      }
+    `
+  );
+  const fragmentShader = createShader(
+    gl,
+    gl.FRAGMENT_SHADER,
+    `
+      precision mediump float;
+      uniform vec4 uColor;
+      void main() {
+        gl_FragColor = uColor;
+      }
+    `
+  );
+  const program = gl.createProgram();
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragmentShader);
+  gl.linkProgram(program);
+  gl.deleteShader(vertexShader);
+  gl.deleteShader(fragmentShader);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    const info = gl.getProgramInfoLog(program) ?? "unknown link error";
+    gl.deleteProgram(program);
+    throw Object.assign(new Error("WEBGL_PROGRAM_LINK_FAILED"), {
+      reasonCode: "WEBGL_PROGRAM_LINK_FAILED",
+      detail: info
+    });
+  }
+  return {
+    program,
+    positionLocation: gl.getAttribLocation(program, "aPosition"),
+    modelLocation: gl.getUniformLocation(program, "uModel"),
+    viewProjectionLocation: gl.getUniformLocation(program, "uViewProjection"),
+    anchorNdcLocation: gl.getUniformLocation(program, "uAnchorNdc"),
+    colorLocation: gl.getUniformLocation(program, "uColor")
+  };
+}
+
+function multiplyMat4(a, b) {
+  const out = new Float32Array(16);
+  for (let row = 0; row < 4; row += 1) {
+    for (let col = 0; col < 4; col += 1) {
+      out[col * 4 + row] =
+        a[0 * 4 + row] * b[col * 4 + 0] +
+        a[1 * 4 + row] * b[col * 4 + 1] +
+        a[2 * 4 + row] * b[col * 4 + 2] +
+        a[3 * 4 + row] * b[col * 4 + 3];
+    }
+  }
+  return out;
+}
+
+function perspectiveMatrix(fieldOfViewRadians, aspect, near, far) {
+  const f = 1 / Math.tan(fieldOfViewRadians / 2);
+  const rangeInverse = 1 / (near - far);
+  return new Float32Array([
+    f / aspect, 0, 0, 0,
+    0, f, 0, 0,
+    0, 0, (near + far) * rangeInverse, -1,
+    0, 0, near * far * rangeInverse * 2, 0
+  ]);
+}
+
+function normalizeVector(vector) {
+  const length = Math.hypot(vector[0], vector[1], vector[2]) || 1;
+  return [vector[0] / length, vector[1] / length, vector[2] / length];
+}
+
+function subtractVector(a, b) {
+  return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+}
+
+function crossVector(a, b) {
+  return [
+    a[1] * b[2] - a[2] * b[1],
+    a[2] * b[0] - a[0] * b[2],
+    a[0] * b[1] - a[1] * b[0]
+  ];
+}
+
+function dotVector(a, b) {
+  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+}
+
+function lookAtMatrix(cameraPosition, target, up) {
+  const zAxis = normalizeVector(subtractVector(cameraPosition, target));
+  const xAxis = normalizeVector(crossVector(up, zAxis));
+  const yAxis = crossVector(zAxis, xAxis);
+
+  return new Float32Array([
+    xAxis[0], yAxis[0], zAxis[0], 0,
+    xAxis[1], yAxis[1], zAxis[1], 0,
+    xAxis[2], yAxis[2], zAxis[2], 0,
+    -dotVector(xAxis, cameraPosition),
+    -dotVector(yAxis, cameraPosition),
+    -dotVector(zAxis, cameraPosition),
+    1
+  ]);
+}
+
+function scaleRotationYMatrix(scale, rotationYRadians = DEFAULT_ROTATION_Y_RADIANS) {
+  const c = Math.cos(rotationYRadians);
+  const s = Math.sin(rotationYRadians);
+  return new Float32Array([
+    c * scale, 0, -s * scale, 0,
+    0, scale, 0, 0,
+    s * scale, 0, c * scale, 0,
+    0, 0, 0, 1
+  ]);
+}
+
+function metersPerPixel(latitude, zoom) {
+  const safeLatitude = Math.max(-85, Math.min(85, Number(latitude) || 0));
+  return (
+    (40075016.686 * Math.cos((safeLatitude * Math.PI) / 180)) /
+    Math.pow(2, Number(zoom) + 8)
+  );
+}
+
+function createCanvas(documentObject) {
+  const canvas = documentObject.createElement("canvas");
+  canvas.className = RENDERER_SURFACE_CLASS_NAME;
+  canvas.style.position = "absolute";
+  canvas.style.left = "0";
+  canvas.style.top = "0";
+  canvas.style.width = "1px";
+  canvas.style.height = "1px";
+  canvas.style.pointerEvents = "none";
+  canvas.style.zIndex = "390";
+  canvas.width = 1;
+  canvas.height = 1;
+  return canvas;
+}
+
+function createTrue3DRendererBackend({
+  documentObject,
+  map
+}) {
+  const overlayPane =
+    map?.getPanes?.()?.overlayPane ?? map?.getContainer?.() ?? null;
+  if (!overlayPane || typeof overlayPane.appendChild !== "function") {
+    throw Object.assign(new Error("ATLAS_TRUE_3D_OVERLAY_PANE_UNAVAILABLE"), {
+      reasonCode: "ATLAS_TRUE_3D_OVERLAY_PANE_UNAVAILABLE"
+    });
+  }
+
+  const canvas = createCanvas(documentObject);
+  overlayPane.appendChild(canvas);
+  const gl =
+    canvas.getContext("webgl", {
+      alpha: true,
+      antialias: true,
+      depth: true,
+      premultipliedAlpha: true,
+      preserveDrawingBuffer: false
+    }) ??
+    canvas.getContext("experimental-webgl");
+  if (!gl) {
+    canvas.remove();
+    throw Object.assign(new Error("ATLAS_TRUE_3D_WEBGL_UNAVAILABLE"), {
+      reasonCode: "ATLAS_TRUE_3D_WEBGL_UNAVAILABLE"
+    });
+  }
+
+  const program = createProgram(gl);
+  gl.enable(gl.DEPTH_TEST);
+  gl.depthFunc(gl.LEQUAL);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+  const sceneResources = new Map();
+  const listeners = [];
+
+  function ensureSceneResource({ cacheKey, sceneData }) {
+    const existing = sceneResources.get(cacheKey);
+    if (existing) {
+      return existing;
+    }
+    const drawCalls = sceneData.drawCalls.map((drawCall) => {
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, drawCall.positions, gl.STATIC_DRAW);
+      return {
+        drawCallId: drawCall.drawCallId,
+        color: drawCall.color,
+        vertexCount: drawCall.vertexCount,
+        buffer
+      };
+    });
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    const resource = {
+      cacheKey,
+      sceneData,
+      drawCalls
+    };
+    sceneResources.set(cacheKey, resource);
+    return resource;
+  }
+
+  function syncCanvasSize() {
+    const size =
+      typeof map?.getSize === "function" ? map.getSize() : null;
+    const width = Math.max(1, Number(size?.x ?? canvas.clientWidth ?? 1));
+    const height = Math.max(1, Number(size?.y ?? canvas.clientHeight ?? 1));
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    if (canvas.width !== width) {
+      canvas.width = width;
+    }
+    if (canvas.height !== height) {
+      canvas.height = height;
+    }
+  }
+
+  function buildPerInstanceRenderState(instance, zoom) {
+    const assetProfile =
+      SUPPORTED_ASSET_RUNTIME_PROFILES[instance.assetId] ??
+      SUPPORTED_ASSET_RUNTIME_PROFILES[DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID];
+    const heightMeters = Math.max(instance.sceneData.modelBounds.height, 0.001);
+    const currentMetersPerPixel = metersPerPixel(instance.latitude, zoom);
+    const pixelsPerMeter = 1 / Math.max(currentMetersPerPixel, 0.000001);
+    const unitToMeterScale = assetProfile.targetHeightMeters / heightMeters;
+    const renderScale = pixelsPerMeter * unitToMeterScale * 0.9;
+    const scaledHeight = heightMeters * renderScale;
+    return {
+      renderScale,
+      scaledHeight,
+      pixelsPerMeter,
+      rotationYRadians: assetProfile.rotationYRadians
+    };
+  }
+
+  function buildSharedCameraState(instanceStates) {
+    const maxScaledHeight = Math.max(
+      ...instanceStates.map((entry) => entry.renderState.scaledHeight),
+      48
+    );
+    const cameraPosition = [
+      Math.max(36, maxScaledHeight * 0.55),
+      Math.max(72, maxScaledHeight * 1.15),
+      Math.max(120, maxScaledHeight * 2.2)
+    ];
+    const target = [0, Math.max(18, maxScaledHeight * 0.42), 0];
+    return {
+      projectionMode: "perspective",
+      fieldOfViewDegrees: VIEW_FOV_DEGREES,
+      cameraPosition: deepFreeze(
+        cameraPosition.map((value) => Number(value.toFixed(3)))
+      ),
+      target: deepFreeze(target.map((value) => Number(value.toFixed(3)))),
+      viewingAngle: SHARED_CAMERA_PATH,
+      renderScale: Number(
+        Math.max(
+          ...instanceStates.map((entry) => entry.renderState.renderScale),
+          0
+        ).toFixed(6)
+      ),
+      canvasWidth: canvas.width,
+      canvasHeight: canvas.height
+    };
+  }
+
+  function renderInstances(instances) {
+    if (!Array.isArray(instances) || instances.length === 0) {
+      syncCanvasSize();
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(...CLEAR_COLOR);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      return null;
+    }
+
+    syncCanvasSize();
+    const zoom = Number(map?.getZoom?.() ?? 0);
+    const instanceStates = instances.map((instance) => {
+      const point = map?.latLngToContainerPoint?.([
+        instance.latitude,
+        instance.longitude
+      ]);
+      if (!point || !Number.isFinite(point.x) || !Number.isFinite(point.y)) {
+        throw Object.assign(
+          new Error("ATLAS_TRUE_3D_MAP_PROJECTION_UNAVAILABLE"),
+          { reasonCode: "ATLAS_TRUE_3D_MAP_PROJECTION_UNAVAILABLE" }
+        );
+      }
+      return {
+        ...instance,
+        point,
+        renderState: buildPerInstanceRenderState(instance, zoom)
+      };
+    });
+
+    const cameraState = buildSharedCameraState(instanceStates);
+    const aspect = canvas.width / canvas.height;
+    const projection = perspectiveMatrix(
+      (VIEW_FOV_DEGREES * Math.PI) / 180,
+      aspect,
+      1,
+      4000
+    );
+    const view = lookAtMatrix(cameraState.cameraPosition, cameraState.target, [
+      0, 1, 0
+    ]);
+    const viewProjection = multiplyMat4(projection, view);
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(...CLEAR_COLOR);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.useProgram(program.program);
+    gl.uniformMatrix4fv(program.viewProjectionLocation, false, viewProjection);
+    gl.enableVertexAttribArray(program.positionLocation);
+
+    for (const instanceState of instanceStates) {
+      const anchorNdc = [
+        (instanceState.point.x / canvas.width) * 2 - 1,
+        1 - (instanceState.point.y / canvas.height) * 2
+      ];
+      const model = scaleRotationYMatrix(
+        instanceState.renderState.renderScale,
+        instanceState.renderState.rotationYRadians
+      );
+      gl.uniformMatrix4fv(program.modelLocation, false, model);
+      gl.uniform2fv(program.anchorNdcLocation, anchorNdc);
+      for (const drawCall of instanceState.resource.drawCalls) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, drawCall.buffer);
+        gl.vertexAttribPointer(
+          program.positionLocation,
+          3,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        );
+        gl.uniform4fv(program.colorLocation, drawCall.color);
+        gl.drawArrays(gl.TRIANGLES, 0, drawCall.vertexCount);
+      }
+    }
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    return cameraState;
+  }
+
+  function registerListeners(renderCallback) {
+    for (const eventName of LISTENER_EVENT_NAMES) {
+      const listener = () => renderCallback();
+      map?.on?.(eventName, listener);
+      listeners.push({ eventName, listener });
+    }
+  }
+
+  function removeListeners() {
+    for (const entry of listeners.splice(0)) {
+      map?.off?.(entry.eventName, entry.listener);
+    }
+  }
+
+  function destroy() {
+    removeListeners();
+    for (const resource of sceneResources.values()) {
+      for (const drawCall of resource.drawCalls) {
+        if (drawCall.buffer) {
+          gl.deleteBuffer(drawCall.buffer);
+        }
+      }
+    }
+    sceneResources.clear();
+    gl.deleteProgram(program.program);
+    if (typeof canvas.remove === "function") {
+      canvas.remove();
+    } else {
+      overlayPane.removeChild(canvas);
+    }
+  }
+
+  return {
+    canvas,
+    gl,
+    ensureSceneResource,
+    renderInstances,
+    registerListeners,
+    removeListeners,
+    destroy
+  };
+}
+
+function resolveApprovedAssetRecord(assetRegistry, assetId) {
+  const registryEntry = resolveDeveloperOnlyAtlasAssetRegistryEntry(
+    assetRegistry,
+    assetId
+  );
+  const runtimeProfile = SUPPORTED_ASSET_RUNTIME_PROFILES[registryEntry.assetId];
+  if (!runtimeProfile) {
+    throw Object.assign(new Error("APPROVED_SHARED_ASSET_UNSUPPORTED"), {
+      reasonCode: "APPROVED_SHARED_ASSET_UNSUPPORTED"
+    });
+  }
+
+  return deepFreeze({
+    assetId: registryEntry.assetId,
+    assetVersion: registryEntry.assetVersion,
+    assetReferenceId: registryEntry.assetReferenceId,
+    approvedAssetStatus: registryEntry.status,
+    assetSource:
+      "developer-only-atlas-asset-registry.mjs + shared_true_webgl_renderer_surface",
+    runtimePreviewBindingId: `${registryEntry.assetId}_ACTUAL_GLB_RUNTIME_BINDING`,
+    resolvedGlbIdentity: `asset-factory-workspace/production/${registryEntry.assetFamily}/export/${registryEntry.assetId}_LOD_GAMEPLAY.glb`,
+    representationMode: TRUE_3D_REPRESENTATION_MODE,
+    modelInstanceId: runtimeProfile.modelInstanceId
+  });
+}
+
+function parseApprovedGameplayGlbSceneData(arrayBuffer) {
+  return parseTreeEucalyptusApprovedGameplayGlbSceneData(arrayBuffer);
+}
+
+export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
+  getGrowGoMap = () => null,
+  attachmentStatusProvider = () => null,
+  documentObject = globalThis?.document ?? null,
+  hostObject = globalThis ?? null,
+  assetRegistry = createDeveloperOnlyAtlasAssetRegistry(),
+  fetchProvider = (...args) => globalThis.fetch(...args)
+} = {}) {
+  const state = createState();
+  const sceneDataCache = new Map();
+  let rendererBackend = null;
+
+  function activeAssets() {
+    return [state.firstAsset, state.secondAsset, state.thirdAsset].filter(
+      (asset) => asset.liveAssetPresent === true
+    );
+  }
+
+  function cloneAsset(asset) {
+    return {
+      ...asset
+    };
+  }
+
+  function syncRendererState(cameraState = state.cameraState) {
+    const liveAssets = activeAssets();
+    state.rendererSurfaceCount = rendererBackend && liveAssets.length > 0 ? 1 : 0;
+    state.rendererCanvasCount = rendererBackend && liveAssets.length > 0 ? 1 : 0;
+    state.rendererInstanceCount =
+      rendererBackend && liveAssets.length > 0 ? 1 : 0;
+    state.sharedSceneCount = rendererBackend && liveAssets.length > 0 ? 1 : 0;
+    state.sceneObjectCount = liveAssets.reduce(
+      (sum, asset) => sum + Number(asset.sceneObjectCount ?? 0),
+      0
+    );
+    state.modelInstanceCount = liveAssets.length;
+    state.ownedListenerCount =
+      rendererBackend && liveAssets.length > 0 ? LISTENER_EVENT_NAMES.length : 0;
+    state.renderLoopCount = 0;
+    state.glContextCreated = !!rendererBackend && liveAssets.length > 0;
+    state.true3dRendererReady = !!rendererBackend && liveAssets.length > 0;
+    state.cameraState = cameraState ?? null;
+  }
+
+  function destroyRendererBackend() {
+    if (!rendererBackend) {
+      syncRendererState(null);
+      return;
+    }
+    rendererBackend.destroy();
+    rendererBackend = null;
+    syncRendererState(null);
+  }
+
+  function ensureAttachedLiveMap() {
+    const attachmentStatus = attachmentStatusProvider?.() ?? null;
+    const liveMap = getGrowGoMap?.() ?? null;
+    if (!attachmentStatus || attachmentStatus.attached !== true) {
+      throw Object.assign(new Error("ATLAS_NOT_ATTACHED"), {
+        reasonCode: "ATLAS_NOT_ATTACHED"
+      });
+    }
+    if (attachmentStatus.exactLiveMapBound !== true) {
+      throw Object.assign(new Error("LIVE_MAP_IDENTITY_UNBOUND"), {
+        reasonCode: "LIVE_MAP_IDENTITY_UNBOUND"
+      });
+    }
+    if (!liveMap || typeof liveMap.latLngToContainerPoint !== "function") {
+      throw Object.assign(new Error("LIVE_MAP_UNAVAILABLE"), {
+        reasonCode: "LIVE_MAP_UNAVAILABLE"
+      });
+    }
+    if (!documentObject || typeof documentObject.createElement !== "function") {
+      throw Object.assign(new Error("ATLAS_TRUE_3D_DOCUMENT_UNAVAILABLE"), {
+        reasonCode: "ATLAS_TRUE_3D_DOCUMENT_UNAVAILABLE"
+      });
+    }
+    const hostname = hostObject?.location?.hostname ?? "";
+    if (!isLocalDevelopmentHost(hostname)) {
+      throw Object.assign(new Error("ATLAS_TRUE_3D_LOCAL_DEVELOPMENT_ONLY"), {
+        reasonCode: "ATLAS_TRUE_3D_LOCAL_DEVELOPMENT_ONLY"
+      });
+    }
+    return liveMap;
+  }
+
+  async function resolveSceneData(approvedAssetRecord) {
+    const cacheKey = approvedAssetRecord.resolvedGlbIdentity;
+    if (sceneDataCache.has(cacheKey)) {
+      return sceneDataCache.get(cacheKey);
+    }
+    const response = await fetchProvider(approvedAssetRecord.resolvedGlbIdentity);
+    if (!response || response.ok !== true) {
+      throw Object.assign(new Error("APPROVED_ASSET_GLB_FETCH_FAILED"), {
+        reasonCode: "APPROVED_ASSET_GLB_FETCH_FAILED"
+      });
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    const sceneData = parseApprovedGameplayGlbSceneData(arrayBuffer);
+    sceneDataCache.set(cacheKey, sceneData);
+    return sceneData;
+  }
+
+  function getSlot(slotId) {
+    if (slotId === "first") {
+      return state.firstAsset;
+    }
+    if (slotId === "second") {
+      return state.secondAsset;
+    }
+    return state.thirdAsset;
+  }
+
+  function buildRenderableInstances(overrides = new Map()) {
+    const assets = [state.firstAsset, state.secondAsset, state.thirdAsset].map(
+      (asset) => overrides.get(asset.slotId) ?? asset
+    );
+    return assets
+      .filter((asset) => asset.liveAssetPresent === true)
+      .map((asset) => {
+        const sceneData = sceneDataCache.get(asset.resolvedGlbIdentity);
+        if (!sceneData) {
+          throw Object.assign(new Error("APPROVED_ASSET_SCENE_DATA_MISSING"), {
+            reasonCode: "APPROVED_ASSET_SCENE_DATA_MISSING"
+          });
+        }
+        const resource = rendererBackend.ensureSceneResource({
+          cacheKey: asset.resolvedGlbIdentity,
+          sceneData
+        });
+        return {
+          slotId: asset.slotId,
+          assetId: asset.selectedAssetId,
+          latitude: asset.latitude,
+          longitude: asset.longitude,
+          resource,
+          sceneData
+        };
+      });
+  }
+
+  function renderAll(overrides = new Map()) {
+    if (!rendererBackend) {
+      return null;
+    }
+    const instances = buildRenderableInstances(overrides);
+    if (instances.length === 0) {
+      destroyRendererBackend();
+      return null;
+    }
+    const cameraState = rendererBackend.renderInstances(instances);
+    syncRendererState(cameraState);
+    return cameraState;
+  }
+
+  async function placeOrUpdateSlot(slotId, { assetId, latitude, longitude } = {}) {
+    const slot = getSlot(slotId);
+    state.lastOperation = `${slotId}_place_or_update`;
+    const latitudeValue = sanitizeNumber(latitude);
+    const longitudeValue = sanitizeNumber(longitude);
+    if (latitudeValue == null || longitudeValue == null) {
+      state.lastReasonCode = "APPROVED_ASSET_COORDINATE_INVALID";
+      state.loaderStatus = "blocked";
+      state.loaderReason = "APPROVED_ASSET_COORDINATE_INVALID";
+      slot.lastReasonCode = "APPROVED_ASSET_COORDINATE_INVALID";
+      return buildResult(state, "blocked", "APPROVED_ASSET_COORDINATE_INVALID");
+    }
+
+    let approvedAssetRecord;
+    let liveMap;
+    try {
+      liveMap = ensureAttachedLiveMap();
+      approvedAssetRecord = resolveApprovedAssetRecord(
+        assetRegistry,
+        assetId ?? slot.selectedAssetId
+      );
+    } catch (error) {
+      const reasonCode = error?.reasonCode ?? "APPROVED_ASSET_RESOLUTION_FAILED";
+      state.lastReasonCode = reasonCode;
+      state.loaderStatus = "blocked";
+      state.loaderReason = reasonCode;
+      slot.lastReasonCode = reasonCode;
+      return buildResult(state, "blocked", reasonCode);
+    }
+
+    const wasPresent = slot.liveAssetPresent === true;
+    try {
+      state.loaderStatus = "loading_actual_glb";
+      state.loaderReason = null;
+      const sceneData = await resolveSceneData(approvedAssetRecord);
+      if (!rendererBackend) {
+        rendererBackend = createTrue3DRendererBackend({
+          documentObject,
+          map: liveMap
+        });
+        rendererBackend.registerListeners(() => {
+          if (activeAssets().length === 0) {
+            return;
+          }
+          try {
+            renderAll();
+          } catch (_error) {
+            // remain fail-closed without introducing retries
+          }
+        });
+      }
+
+      const nextSlot = cloneAsset(slot);
+      nextSlot.selectedAssetId = approvedAssetRecord.assetId;
+      nextSlot.selectedAssetVersion = approvedAssetRecord.assetVersion;
+      nextSlot.approvedAssetStatus = approvedAssetRecord.approvedAssetStatus;
+      nextSlot.assetReferenceId = approvedAssetRecord.assetReferenceId;
+      nextSlot.assetSource = approvedAssetRecord.assetSource;
+      nextSlot.runtimePreviewBindingId = approvedAssetRecord.runtimePreviewBindingId;
+      nextSlot.resolvedGlbIdentity = approvedAssetRecord.resolvedGlbIdentity;
+      nextSlot.modelInstanceId = approvedAssetRecord.modelInstanceId;
+      nextSlot.liveAssetPresent = true;
+      nextSlot.latitude = latitudeValue;
+      nextSlot.longitude = longitudeValue;
+      nextSlot.representationMode = approvedAssetRecord.representationMode;
+      nextSlot.actualGlbLoaded = true;
+      nextSlot.meshCount = sceneData.meshCount;
+      nextSlot.materialCount = sceneData.materialCount;
+      nextSlot.sceneObjectCount = sceneData.sceneObjectCount;
+      nextSlot.lastReasonCode = "ATLAS_TRUE_3D_RENDERED";
+
+      const overrides = new Map([[slotId, nextSlot]]);
+      const cameraState = renderAll(overrides);
+      Object.assign(slot, nextSlot);
+      state.loaderStatus = "loaded_actual_glb";
+      state.loaderReason = "ACTUAL_GLB_LOADED";
+      state.lastReasonCode = "ATLAS_TRUE_3D_RENDERED";
+      syncRendererState(cameraState);
+
+      return buildResult(
+        state,
+        wasPresent ? "updated" : "created",
+        "ATLAS_TRUE_3D_RENDERED",
+        {
+          loaderResult: deepFreeze({
+            loaderStatus: state.loaderStatus,
+            loaderReason: state.loaderReason,
+            actualGlbLoaded: slot.actualGlbLoaded,
+            meshCount: slot.meshCount,
+            materialCount: slot.materialCount
+          })
+        }
+      );
+    } catch (error) {
+      state.loaderStatus = "failed_closed";
+      state.loaderReason =
+        error?.reasonCode ?? "APPROVED_ASSET_TRUE_3D_RENDER_FAILED";
+      state.lastReasonCode = state.loaderReason;
+      slot.lastReasonCode = state.loaderReason;
+      if (activeAssets().length === 0) {
+        destroyRendererBackend();
+      } else {
+        try {
+          renderAll();
+        } catch (_ignored) {
+          destroyRendererBackend();
+        }
+      }
+      return buildResult(state, "failed_closed", state.loaderReason);
+    }
+  }
+
+  function clearSlot(slotId) {
+    const slot = getSlot(slotId);
+    state.lastOperation = `${slotId}_clear`;
+    slot.liveAssetPresent = false;
+    slot.latitude = null;
+    slot.longitude = null;
+    slot.actualGlbLoaded = false;
+    slot.sceneObjectCount = 0;
+    slot.lastReasonCode = "APPROVED_ASSET_REMOVED";
+    state.lastReasonCode = "APPROVED_ASSET_REMOVED";
+    state.loaderStatus = activeAssets().length > 0 ? "loaded_actual_glb" : "idle";
+    state.loaderReason = activeAssets().length > 0 ? "ACTUAL_GLB_LOADED" : null;
+
+    try {
+      const remaining = activeAssets().length;
+      if (remaining === 0) {
+        destroyRendererBackend();
+      } else {
+        renderAll();
+      }
+    } catch (_error) {
+      destroyRendererBackend();
+    }
+
+    return buildResult(state, "removed", "APPROVED_ASSET_REMOVED");
+  }
+
+  function clearAll() {
+    state.lastOperation = "clear_all";
+    clearSlot("first");
+    clearSlot("second");
+    clearSlot("third");
+    state.loaderStatus = "idle";
+    state.loaderReason = null;
+    state.lastReasonCode = "APPROVED_ASSET_REMOVED";
+    return buildResult(state, "removed", "APPROVED_ASSET_REMOVED");
+  }
+
+  function getStatus() {
+    return buildStatus(state);
+  }
+
+  return deepFreeze({
+    placeFirstApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("first", {
+        assetId: DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    updateFirstApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("first", {
+        assetId: DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    clearFirstApprovedLiveAsset: () => clearSlot("first"),
+    placeSecondApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("second", {
+        assetId: DEFAULT_SECOND_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    updateSecondApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("second", {
+        assetId: DEFAULT_SECOND_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    clearSecondApprovedLiveAsset: () => clearSlot("second"),
+    placeThirdApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("third", {
+        assetId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    updateThirdApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("third", {
+        assetId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    clearThirdApprovedLiveAsset: () => clearSlot("third"),
+    clearAllApprovedLiveAssets: clearAll,
+    getFirstApprovedLiveAssetStatus: getStatus,
+    getSharedApprovedLiveAssetStatus: getStatus
+  });
+}
