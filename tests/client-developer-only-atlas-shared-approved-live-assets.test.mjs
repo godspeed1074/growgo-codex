@@ -640,3 +640,132 @@ test("shared approved asset controller fails closed when the live map is unavail
   assert.equal(result.outcome, "blocked");
   assert.equal(result.reasonCode, "LIVE_MAP_UNAVAILABLE");
 });
+
+test("shared approved asset controller exposes a locked shared renderer foundation contract", async () => {
+  const { controller } = await createControllerHarness();
+
+  const contract = controller.getLockedSharedRendererFoundationContract();
+
+  assert.equal(
+    contract.schemaId,
+    "GROWGO_DEVELOPER_ONLY_ATLAS_SHARED_RENDERER_FOUNDATION_CONTRACT_001"
+  );
+  assert.equal(contract.foundationLocked, true);
+  assert.equal(contract.sharedRendererSingletonRequired, true);
+  assert.equal(contract.sharedCanvasSingletonRequired, true);
+  assert.equal(contract.sharedSceneSingletonRequired, true);
+  assert.equal(contract.perAssetRendererForbidden, true);
+  assert.equal(contract.perAssetCanvasForbidden, true);
+  assert.equal(contract.duplicateSceneCreationForbidden, true);
+  assert.equal(contract.duplicateMapListenerOwnershipForbidden, true);
+  assert.equal(contract.orphanedRenderLoopForbidden, true);
+  assert.equal(contract.leakedModelInstanceForbidden, true);
+  assert.equal(
+    contract.minimumSupportedRendererApi.createModelInstance.operation,
+    "createApprovedSharedAssetModelInstance"
+  );
+  assert.equal(
+    contract.provisionalVisualCalibrationObservation.developerScaleMultiplier,
+    0.62
+  );
+  assert.equal(
+    contract.provisionalVisualCalibrationObservation.developerTargetHeightMeters,
+    3.6
+  );
+  assert.match(
+    contract.visualQualityFinding,
+    /technically functional but visually below the desired GrowGo quality bar/i
+  );
+  assert.throws(() => {
+    contract.foundationLocked = false;
+  }, /Cannot assign to read only property|read only/i);
+});
+
+test("shared approved asset controller generic lifecycle API preserves singleton renderer counts", async () => {
+  const { controller } = await createControllerHarness();
+
+  const initResult = controller.initializeSharedApprovedLiveAssetRenderer();
+  assert.equal(initResult.outcome, "ready");
+  assert.equal(
+    initResult.reasonCode,
+    "ATLAS_SHARED_RENDERER_DEFERRED_UNTIL_FIRST_MODEL_INSTANCE"
+  );
+
+  await controller.createApprovedSharedAssetModelInstance({
+    slotId: "first",
+    assetId: "TREE_EUCALYPTUS_001",
+    latitude: -38.12,
+    longitude: 144.61
+  });
+  await controller.createApprovedSharedAssetModelInstance({
+    slotId: "second",
+    assetId: "TREE_BOTTLEBRUSH_001",
+    latitude: -38.1218,
+    longitude: 144.6124
+  });
+  await controller.createApprovedSharedAssetModelInstance({
+    slotId: "third",
+    assetId: "BUILDING_CIVIC_SPORTS_PAVILION_001",
+    latitude: -38.1189,
+    longitude: 144.6161
+  });
+  await controller.createApprovedSharedAssetModelInstance({
+    slotId: "fourth",
+    assetId: "SHRUB_COASTAL_LOW_001",
+    latitude: -38.1236,
+    longitude: 144.6111
+  });
+
+  let status = controller.getSharedApprovedLiveAssetStatus();
+  assert.equal(status.rendererInstanceCount, 1);
+  assert.equal(status.rendererCanvasCount, 1);
+  assert.equal(status.sharedSceneCount, 1);
+  assert.equal(status.modelInstanceCount, 4);
+
+  await controller.updateApprovedSharedAssetGeographicPosition({
+    slotId: "fourth",
+    latitude: -38.1241,
+    longitude: 144.6102
+  });
+
+  const removeResult = controller.removeApprovedSharedAssetModelInstance({
+    slotId: "fourth"
+  });
+  assert.equal(removeResult.outcome, "removed");
+  status = controller.getSharedApprovedLiveAssetStatus();
+  assert.equal(status.rendererInstanceCount, 1);
+  assert.equal(status.rendererCanvasCount, 1);
+  assert.equal(status.sharedSceneCount, 1);
+  assert.equal(status.modelInstanceCount, 3);
+
+  const clearResult = controller.clearApprovedSharedAssetModelInstances();
+  assert.equal(clearResult.outcome, "removed");
+  status = controller.getSharedApprovedLiveAssetStatus();
+  assert.equal(status.rendererInstanceCount, 0);
+  assert.equal(status.rendererCanvasCount, 0);
+  assert.equal(status.sharedSceneCount, 0);
+  assert.equal(status.modelInstanceCount, 0);
+  assert.equal(status.ownedListenerCount, 0);
+  assert.equal(status.renderLoopCount, 0);
+
+  const disposeResult = controller.disposeApprovedSharedAssetRendererFoundation();
+  assert.equal(disposeResult.outcome, "removed");
+  status = controller.getSharedApprovedLiveAssetStatus();
+  assert.equal(status.rendererInstanceCount, 0);
+  assert.equal(status.rendererCanvasCount, 0);
+  assert.equal(status.sharedSceneCount, 0);
+  assert.equal(status.modelInstanceCount, 0);
+});
+
+test("shared approved asset controller generic lifecycle API fails closed for invalid slot ids", async () => {
+  const { controller } = await createControllerHarness();
+
+  const result = await controller.createApprovedSharedAssetModelInstance({
+    slotId: "fifth",
+    assetId: "TREE_EUCALYPTUS_001",
+    latitude: -38.12,
+    longitude: 144.61
+  }).catch((error) => error);
+
+  assert.equal(result.reasonCode, "APPROVED_SHARED_ASSET_SLOT_INVALID");
+});

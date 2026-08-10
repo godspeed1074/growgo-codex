@@ -10,6 +10,8 @@ const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_SHARED_APPROVED_LIVE_ASSET_STATUS_001";
 const RESULT_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_SHARED_APPROVED_LIVE_ASSET_RESULT_001";
+const FOUNDATION_CONTRACT_SCHEMA_ID =
+  "GROWGO_DEVELOPER_ONLY_ATLAS_SHARED_RENDERER_FOUNDATION_CONTRACT_001";
 
 export const DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID = "TREE_EUCALYPTUS_001";
 export const DEFAULT_FIRST_APPROVED_LIVE_ASSET_VERSION = "v001";
@@ -45,6 +47,8 @@ const CLEAR_COLOR = Object.freeze([0, 0, 0, 0]);
 const DEFAULT_ROTATION_Y_RADIANS = 0.18;
 const SHARED_CAMERA_PATH = "shared_fixed_north_up_oblique";
 const SHARED_RENDERER_TECHNOLOGY_PATH = "webgl-shared-scene-fixed-camera";
+const PROVISIONAL_PAVILION_DEVELOPER_SCALE_MULTIPLIER = 0.62;
+const PROVISIONAL_PAVILION_DEVELOPER_TARGET_HEIGHT_METERS = 3.6;
 
 const SUPPORTED_ASSET_RUNTIME_PROFILES = Object.freeze({
   TREE_EUCALYPTUS_001: Object.freeze({
@@ -308,6 +312,88 @@ function buildResult(state, outcome, reasonCode, extra = {}) {
     reasonCode,
     status: buildStatus(state),
     ...extra
+  });
+}
+
+function isSupportedSlotId(slotId) {
+  return (
+    slotId === "first" ||
+    slotId === "second" ||
+    slotId === "third" ||
+    slotId === "fourth"
+  );
+}
+
+function buildLockedSharedRendererFoundationContract() {
+  return deepFreeze({
+    schemaId: FOUNDATION_CONTRACT_SCHEMA_ID,
+    foundationLocked: true,
+    developerAlphaOnly: true,
+    sharedRendererSingletonRequired: true,
+    sharedCanvasSingletonRequired: true,
+    sharedSceneSingletonRequired: true,
+    perAssetRendererForbidden: true,
+    perAssetCanvasForbidden: true,
+    duplicateSceneCreationForbidden: true,
+    duplicateMapListenerOwnershipForbidden: true,
+    orphanedRenderLoopForbidden: true,
+    leakedModelInstanceForbidden: true,
+    authoritativeLiveLeafletMapRequired: true,
+    lazyRendererInitialization: true,
+    rendererTechnologyPath: SHARED_RENDERER_TECHNOLOGY_PATH,
+    sharedCameraPath: SHARED_CAMERA_PATH,
+    minimumSupportedRendererApi: deepFreeze({
+      attach: deepFreeze({
+        kind: "external_contract",
+        controller: "developer-only-atlas-map-attachment-controller",
+        operation: "attachAtlasMapDiagnostic"
+      }),
+      initializeSharedRenderer: deepFreeze({
+        kind: "controller_method",
+        operation: "initializeSharedApprovedLiveAssetRenderer",
+        mode: "lazy_on_first_model_instance"
+      }),
+      loadApprovedGlb: deepFreeze({
+        kind: "controller_method",
+        operation: "createApprovedSharedAssetModelInstance",
+        note: "approved GLB load is coupled to first model-instance creation in developer alpha"
+      }),
+      createModelInstance: deepFreeze({
+        kind: "controller_method",
+        operation: "createApprovedSharedAssetModelInstance"
+      }),
+      updateGeographicPosition: deepFreeze({
+        kind: "controller_method",
+        operation: "updateApprovedSharedAssetGeographicPosition"
+      }),
+      removeModel: deepFreeze({
+        kind: "controller_method",
+        operation: "removeApprovedSharedAssetModelInstance"
+      }),
+      clearModels: deepFreeze({
+        kind: "controller_method",
+        operation: "clearApprovedSharedAssetModelInstances"
+      }),
+      detachDispose: deepFreeze({
+        kind: "combined_contract",
+        operations: deepFreeze([
+          "clearApprovedSharedAssetModelInstances",
+          "detachAtlasMapDiagnostic"
+        ])
+      })
+    }),
+    provisionalVisualCalibrationObservation: deepFreeze({
+      pavilionAssetId: "BUILDING_CIVIC_SPORTS_PAVILION_001",
+      pavilionAssetVersion: "1.0.0",
+      developerScaleMultiplier: PROVISIONAL_PAVILION_DEVELOPER_SCALE_MULTIPLIER,
+      developerTargetHeightMeters:
+        PROVISIONAL_PAVILION_DEVELOPER_TARGET_HEIGHT_METERS,
+      observationOnly: true,
+      universalProductionRule: false
+    }),
+    visualQualityFinding:
+      "Current proof assets are technically functional but visually below the desired GrowGo quality bar.",
+    canonicalSafetyFlags: canonicalSafetyFlags()
   });
 }
 
@@ -874,6 +960,14 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     return state.fourthAsset;
   }
 
+  function requireSupportedSlotId(slotId) {
+    if (!isSupportedSlotId(slotId)) {
+      throw Object.assign(new Error("APPROVED_SHARED_ASSET_SLOT_INVALID"), {
+        reasonCode: "APPROVED_SHARED_ASSET_SLOT_INVALID"
+      });
+    }
+  }
+
   function buildRenderableInstances(overrides = new Map()) {
     const assets = [
       state.firstAsset,
@@ -919,7 +1013,40 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     return cameraState;
   }
 
+  function initializeSharedApprovedLiveAssetRenderer() {
+    try {
+      ensureAttachedLiveMap();
+    } catch (error) {
+      return buildResult(
+        state,
+        "blocked",
+        error?.reasonCode ?? "ATLAS_SHARED_RENDERER_INITIALIZATION_BLOCKED"
+      );
+    }
+
+    const liveAssets = activeAssets();
+    if (rendererBackend && liveAssets.length > 0) {
+      syncRendererState(state.cameraState);
+      return buildResult(
+        state,
+        "ready",
+        "ATLAS_SHARED_RENDERER_ALREADY_ACTIVE"
+      );
+    }
+
+    syncRendererState(state.cameraState);
+    return buildResult(
+      state,
+      "ready",
+      "ATLAS_SHARED_RENDERER_DEFERRED_UNTIL_FIRST_MODEL_INSTANCE",
+      {
+        foundationContract: buildLockedSharedRendererFoundationContract()
+      }
+    );
+  }
+
   async function placeOrUpdateSlot(slotId, { assetId, latitude, longitude } = {}) {
+    requireSupportedSlotId(slotId);
     const slot = getSlot(slotId);
     state.lastOperation = `${slotId}_place_or_update`;
     const latitudeValue = sanitizeNumber(latitude);
@@ -1032,6 +1159,7 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
   }
 
   function clearSlot(slotId) {
+    requireSupportedSlotId(slotId);
     const slot = getSlot(slotId);
     state.lastOperation = `${slotId}_clear`;
     slot.liveAssetPresent = false;
@@ -1074,7 +1202,51 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     return buildStatus(state);
   }
 
+  function createApprovedSharedAssetModelInstance({
+    slotId,
+    assetId,
+    latitude,
+    longitude
+  } = {}) {
+    return placeOrUpdateSlot(slotId, {
+      assetId,
+      latitude,
+      longitude
+    });
+  }
+
+  function updateApprovedSharedAssetGeographicPosition({
+    slotId,
+    latitude,
+    longitude
+  } = {}) {
+    return placeOrUpdateSlot(slotId, {
+      latitude,
+      longitude
+    });
+  }
+
+  function removeApprovedSharedAssetModelInstance({ slotId } = {}) {
+    return clearSlot(slotId);
+  }
+
+  function clearApprovedSharedAssetModelInstances() {
+    return clearAll();
+  }
+
+  function disposeApprovedSharedAssetRendererFoundation() {
+    return clearAll();
+  }
+
   return deepFreeze({
+    getLockedSharedRendererFoundationContract:
+      buildLockedSharedRendererFoundationContract,
+    initializeSharedApprovedLiveAssetRenderer,
+    createApprovedSharedAssetModelInstance,
+    updateApprovedSharedAssetGeographicPosition,
+    removeApprovedSharedAssetModelInstance,
+    clearApprovedSharedAssetModelInstances,
+    disposeApprovedSharedAssetRendererFoundation,
     placeFirstApprovedLiveAsset: (input = {}) =>
       placeOrUpdateSlot("first", {
         assetId: DEFAULT_FIRST_APPROVED_LIVE_ASSET_ID,
