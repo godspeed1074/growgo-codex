@@ -86,7 +86,7 @@ import {
 } from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277c";
 import {
   createDeveloperOnlyAtlasFirstApprovedLiveAssetController
-} from "./developer-only-atlas-first-approved-live-asset.mjs?v=atlas21277c";
+} from "./developer-only-atlas-first-approved-live-asset.mjs?v=atlas21278b";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -281,6 +281,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         approvedAssetStatus?.assetReferenceId ?? null,
       atlasApprovedAssetPrimitiveObjectId:
         approvedAssetStatus?.primitiveObjectId ?? null,
+      atlasApprovedAssetModelInstanceId:
+        approvedAssetStatus?.modelInstanceId ?? null,
       atlasApprovedAssetRepresentationMode:
         approvedAssetStatus?.representationMode ?? null,
       atlasApprovedAssetRuntimePreviewBindingId:
@@ -299,6 +301,26 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         approvedAssetStatus?.meshCount ?? 0,
       atlasApprovedAssetMaterialCount:
         approvedAssetStatus?.materialCount ?? 0,
+      atlasApprovedAssetRendererSurfaceCount:
+        approvedAssetStatus?.rendererSurfaceCount ?? 0,
+      atlasApprovedAssetRendererCanvasCount:
+        approvedAssetStatus?.rendererCanvasCount ?? 0,
+      atlasApprovedAssetSceneObjectCount:
+        approvedAssetStatus?.sceneObjectCount ?? 0,
+      atlasApprovedAssetModelInstanceCount:
+        approvedAssetStatus?.modelInstanceCount ?? 0,
+      atlasApprovedAssetOwnedListenerCount:
+        approvedAssetStatus?.ownedListenerCount ?? 0,
+      atlasApprovedAssetRenderLoopCount:
+        approvedAssetStatus?.renderLoopCount ?? 0,
+      atlasApprovedAssetGlContextCreated:
+        approvedAssetStatus?.glContextCreated === true,
+      atlasApprovedAssetTrue3DRendererReady:
+        approvedAssetStatus?.true3dRendererReady === true,
+      atlasApprovedAssetRendererTechnologyPath:
+        approvedAssetStatus?.rendererTechnologyPath ?? null,
+      atlasApprovedAssetCameraState:
+        approvedAssetStatus?.cameraState ?? null,
       rendererActivity: controllerStatus.rendererActivity === true,
       overlayActivity: controllerStatus.overlayActivity === true,
       pollingOrTimerActivity:
@@ -338,6 +360,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   });
 
   detachButton?.addEventListener("click", () => {
+    const clearedApprovedAsset =
+      approvedAssetController?.clearFirstApprovedLiveAsset?.() ?? null;
     const clearedVisual = visualController?.clearAtlasFirstHarmlessVisual?.() ?? null;
     const clearedPrimitives =
       primitiveLayer?.clearAllAtlasVisualPrimitives?.() ?? null;
@@ -345,8 +369,9 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     authorization.revokeAtlasMapAttachmentSession();
     writeSurfaceStatus(
       "detach",
-      clearedVisual || clearedPrimitives
+      clearedApprovedAsset || clearedVisual || clearedPrimitives
         ? {
+            clearedApprovedAsset,
             clearedVisual,
             clearedPrimitives,
             detachResult: result
@@ -415,11 +440,27 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   });
 
   updateApprovedAssetButton?.addEventListener("click", async () => {
-    const center = getGrowGoMap()?.getCenter?.() ?? null;
+    const liveMap = getGrowGoMap();
+    const center = liveMap?.getCenter?.() ?? null;
+    const shiftedCoordinate =
+      center &&
+      liveMap &&
+      typeof liveMap.latLngToContainerPoint === "function" &&
+      typeof liveMap.containerPointToLatLng === "function"
+        ? (() => {
+            const point = liveMap.latLngToContainerPoint(center);
+            return liveMap.containerPointToLatLng([
+              Number(point?.x ?? 0) + 52,
+              Number(point?.y ?? 0) - 26
+            ]);
+          })()
+        : null;
     const result =
       (await approvedAssetController?.updateFirstApprovedLiveAsset?.({
-        latitude: center?.lat != null ? center.lat + 0.002 : null,
-        longitude: center?.lng != null ? center.lng + 0.002 : null
+        latitude:
+          shiftedCoordinate?.lat ?? (center?.lat != null ? center.lat + 0.002 : null),
+        longitude:
+          shiftedCoordinate?.lng ?? (center?.lng != null ? center.lng + 0.002 : null)
       })) ?? {
         outcome: "blocked",
         reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
@@ -443,10 +484,18 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   });
 
   clearPrimitivesButton?.addEventListener("click", () => {
-    const result = primitiveLayer?.clearAllAtlasVisualPrimitives?.() ?? {
+    const clearedApprovedAsset =
+      approvedAssetController?.clearFirstApprovedLiveAsset?.() ?? null;
+    const clearedPrimitives = primitiveLayer?.clearAllAtlasVisualPrimitives?.() ?? {
       outcome: "blocked",
       reasonCode: "ATLAS_PRIMITIVE_LAYER_UNAVAILABLE"
     };
+    const result = clearedApprovedAsset
+      ? {
+          clearedApprovedAsset,
+          clearedPrimitives
+        }
+      : clearedPrimitives;
     writeSurfaceStatus("clear_primitives", result);
   });
 
@@ -1229,7 +1278,11 @@ const atlasVisualPrimitiveLayer = createDeveloperOnlyAtlasVisualPrimitiveLayer({
 
 const atlasFirstApprovedLiveAssetController =
   createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
-    primitiveLayer: atlasVisualPrimitiveLayer
+    getGrowGoMap: rawLeafletMapProviderFromScriptDiagnostics,
+    attachmentStatusProvider: () =>
+      atlasMapAttachmentController.getAtlasMapAttachmentStatus(),
+    documentObject: globalThis?.document ?? null,
+    hostObject: globalThis
   });
 
 const atlasAttachmentBrowserSurface =
