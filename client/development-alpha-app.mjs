@@ -83,10 +83,10 @@ import {
 } from "./developer-only-atlas-first-harmless-visual.mjs?v=atlas21277a";
 import {
   createDeveloperOnlyAtlasVisualPrimitiveLayer
-} from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277a";
+} from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277c";
 import {
   createDeveloperOnlyAtlasFirstApprovedLiveAssetController
-} from "./developer-only-atlas-first-approved-live-asset.mjs?v=atlas21277a";
+} from "./developer-only-atlas-first-approved-live-asset.mjs?v=atlas21277c";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -289,6 +289,16 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         approvedAssetStatus?.resolvedGlbIdentity ?? null,
       atlasApprovedAssetLatitude: approvedAssetStatus?.latitude ?? null,
       atlasApprovedAssetLongitude: approvedAssetStatus?.longitude ?? null,
+      atlasApprovedAssetLoaderStatus:
+        approvedAssetStatus?.loaderStatus ?? null,
+      atlasApprovedAssetLoaderReason:
+        approvedAssetStatus?.loaderReason ?? null,
+      atlasApprovedAssetActualGlbLoaded:
+        approvedAssetStatus?.actualGlbLoaded === true,
+      atlasApprovedAssetMeshCount:
+        approvedAssetStatus?.meshCount ?? 0,
+      atlasApprovedAssetMaterialCount:
+        approvedAssetStatus?.materialCount ?? 0,
       rendererActivity: controllerStatus.rendererActivity === true,
       overlayActivity: controllerStatus.overlayActivity === true,
       pollingOrTimerActivity:
@@ -391,27 +401,29 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     writeSurfaceStatus("sprite_primitive", result);
   });
 
-  approvedAssetButton?.addEventListener("click", () => {
+  approvedAssetButton?.addEventListener("click", async () => {
     const center = getGrowGoMap()?.getCenter?.() ?? null;
-    const result = approvedAssetController?.placeFirstApprovedLiveAsset?.({
-      latitude: center?.lat ?? null,
-      longitude: center?.lng ?? null
-    }) ?? {
-      outcome: "blocked",
-      reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
-    };
+    const result =
+      (await approvedAssetController?.placeFirstApprovedLiveAsset?.({
+        latitude: center?.lat ?? null,
+        longitude: center?.lng ?? null
+      })) ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
     writeSurfaceStatus("approved_asset", result);
   });
 
-  updateApprovedAssetButton?.addEventListener("click", () => {
+  updateApprovedAssetButton?.addEventListener("click", async () => {
     const center = getGrowGoMap()?.getCenter?.() ?? null;
-    const result = approvedAssetController?.updateFirstApprovedLiveAsset?.({
-      latitude: center?.lat != null ? center.lat + 0.01 : null,
-      longitude: center?.lng != null ? center.lng + 0.01 : null
-    }) ?? {
-      outcome: "blocked",
-      reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
-    };
+    const result =
+      (await approvedAssetController?.updateFirstApprovedLiveAsset?.({
+        latitude: center?.lat != null ? center.lat + 0.002 : null,
+        longitude: center?.lng != null ? center.lng + 0.002 : null
+      })) ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
     writeSurfaceStatus("update_approved_asset", result);
   });
 

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
+import { readFile } from "node:fs/promises";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 
@@ -90,14 +91,56 @@ function createPrimitiveLayer() {
   return { map, layer };
 }
 
-test("approved live asset controller resolves TREE_EUCALYPTUS_001 and creates an Atlas-owned live primitive", () => {
+const treeGameplayGlbPath = path.join(
+  repoRoot,
+  "asset-factory-workspace",
+  "production",
+  "COASTAL_NATURE_FAMILY_001",
+  "export",
+  "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb"
+);
+
+async function loadTreeGameplayGlbArrayBuffer() {
+  const buffer = await readFile(treeGameplayGlbPath);
+  return buffer.buffer.slice(
+    buffer.byteOffset,
+    buffer.byteOffset + buffer.byteLength
+  );
+}
+
+function createFetchProvider(arrayBuffer) {
+  return async (requestedPath) => ({
+    ok: requestedPath.endsWith("TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb"),
+    async arrayBuffer() {
+      return arrayBuffer;
+    }
+  });
+}
+
+test("actual gameplay GLB projection parses the approved eucalyptus file", async () => {
+  const arrayBuffer = await loadTreeGameplayGlbArrayBuffer();
+  const projection =
+    approvedAssetModule.parseTreeEucalyptusApprovedGameplayGlbProjection(
+      arrayBuffer
+    );
+
+  assert.ok(projection.meshCount > 0);
+  assert.ok(projection.materialCount > 0);
+  assert.ok(projection.vertexCount > 0);
+  assert.ok(projection.projectedPolygons.length > 0);
+});
+
+test("approved live asset controller loads the actual gameplay GLB and creates one Atlas-owned live primitive", async () => {
   const { map, layer } = createPrimitiveLayer();
   const controller =
     approvedAssetModule.createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
-      primitiveLayer: layer
+      primitiveLayer: layer,
+      fetchProvider: createFetchProvider(
+        await loadTreeGameplayGlbArrayBuffer()
+      )
     });
 
-  const result = controller.placeFirstApprovedLiveAsset({
+  const result = await controller.placeFirstApprovedLiveAsset({
     latitude: -38.12,
     longitude: 144.61
   });
@@ -108,50 +151,63 @@ test("approved live asset controller resolves TREE_EUCALYPTUS_001 and creates an
   assert.equal(result.status.approvedAssetStatus, "approved");
   assert.match(
     result.status.assetSource,
-    /developer-only-atlas-asset-registry\.mjs/
+    /actual TREE_EUCALYPTUS_001_LOD_GAMEPLAY\.glb/
   );
   assert.match(
     result.status.resolvedGlbIdentity,
     /TREE_EUCALYPTUS_001_LOD_GAMEPLAY\.glb/
   );
+  assert.equal(result.status.representationMode, "actual_glb_projected_mesh_overlay");
+  assert.equal(result.status.loaderStatus, "loaded_actual_glb");
+  assert.equal(result.status.actualGlbLoaded, true);
+  assert.ok(result.status.meshCount > 0);
+  assert.ok(result.status.materialCount > 0);
   assert.equal(result.status.liveAssetPresent, true);
   assert.equal(map.layerCount(), 1);
 });
 
-test("approved live asset controller updates deterministically and preserves asset identity", () => {
+test("approved live asset controller updates deterministically and preserves actual GLB identity", async () => {
   const { layer } = createPrimitiveLayer();
   const controller =
     approvedAssetModule.createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
-      primitiveLayer: layer
+      primitiveLayer: layer,
+      fetchProvider: createFetchProvider(
+        await loadTreeGameplayGlbArrayBuffer()
+      )
     });
 
-  controller.placeFirstApprovedLiveAsset({
+  await controller.placeFirstApprovedLiveAsset({
     latitude: -38.12,
     longitude: 144.61
   });
-  const updated = controller.updateFirstApprovedLiveAsset({
-    latitude: -38.115,
-    longitude: 144.615
+  const updated = await controller.updateFirstApprovedLiveAsset({
+    latitude: -38.118,
+    longitude: 144.612
   });
 
   assert.equal(updated.outcome, "updated");
   assert.equal(updated.status.selectedAssetId, "TREE_EUCALYPTUS_001");
-  assert.equal(updated.status.latitude, -38.115);
-  assert.equal(updated.status.longitude, 144.615);
+  assert.equal(updated.status.representationMode, "actual_glb_projected_mesh_overlay");
+  assert.equal(updated.status.actualGlbLoaded, true);
+  assert.equal(updated.status.latitude, -38.118);
+  assert.equal(updated.status.longitude, 144.612);
   assert.equal(
     updated.status.primitiveObjectId,
     approvedAssetModule.DEFAULT_FIRST_APPROVED_LIVE_ASSET_PRIMITIVE_ID
   );
 });
 
-test("approved live asset controller clears cleanly and leaves zero Atlas-owned primitive objects", () => {
+test("approved live asset controller clears cleanly and leaves zero Atlas-owned primitive objects", async () => {
   const { map, layer } = createPrimitiveLayer();
   const controller =
     approvedAssetModule.createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
-      primitiveLayer: layer
+      primitiveLayer: layer,
+      fetchProvider: createFetchProvider(
+        await loadTreeGameplayGlbArrayBuffer()
+      )
     });
 
-  controller.placeFirstApprovedLiveAsset({
+  await controller.placeFirstApprovedLiveAsset({
     latitude: -38.12,
     longitude: 144.61
   });
@@ -164,13 +220,31 @@ test("approved live asset controller clears cleanly and leaves zero Atlas-owned 
   assert.equal(map.layerCount(), 0);
 });
 
-test("approved live asset controller fails closed when primitive layer is unavailable", () => {
+test("approved live asset controller fails closed when the actual GLB fetch fails", async () => {
+  const { layer } = createPrimitiveLayer();
+  const controller =
+    approvedAssetModule.createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
+      primitiveLayer: layer,
+      fetchProvider: async () => ({ ok: false, async arrayBuffer() { return new ArrayBuffer(0); } })
+    });
+
+  const result = await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+
+  assert.equal(result.outcome, "failed_closed");
+  assert.equal(result.reasonCode, "APPROVED_ASSET_GLB_FETCH_FAILED");
+  assert.equal(result.status.actualGlbLoaded, false);
+});
+
+test("approved live asset controller fails closed when primitive layer is unavailable", async () => {
   const controller =
     approvedAssetModule.createDeveloperOnlyAtlasFirstApprovedLiveAssetController({
       primitiveLayer: null
     });
 
-  const result = controller.placeFirstApprovedLiveAsset({
+  const result = await controller.placeFirstApprovedLiveAsset({
     latitude: -38.12,
     longitude: 144.61
   });

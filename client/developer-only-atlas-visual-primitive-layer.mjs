@@ -109,11 +109,27 @@ function buildIcon(leaflet, primitiveType, label, options = {}) {
     primitiveType === "sprite_image"
       ? spriteHtml(label, options.spriteSvg, options.metadata)
       : pointHtml(label);
+  const iconWidth =
+    Number.isFinite(options.iconWidth) && options.iconWidth > 0
+      ? Number(options.iconWidth)
+      : primitiveType === "sprite_image"
+        ? 96
+        : 104;
+  const iconHeight =
+    Number.isFinite(options.iconHeight) && options.iconHeight > 0
+      ? Number(options.iconHeight)
+      : primitiveType === "sprite_image"
+        ? 28
+        : 24;
+  const iconAnchorX =
+    Number.isFinite(options.iconAnchorX) ? Number(options.iconAnchorX) : 10;
+  const iconAnchorY =
+    Number.isFinite(options.iconAnchorY) ? Number(options.iconAnchorY) : 10;
   return leaflet.divIcon({
     className: `${ROOT_CLASS_NAME}-wrapper`,
     html,
-    iconSize: primitiveType === "sprite_image" ? [96, 28] : [104, 24],
-    iconAnchor: [10, 10]
+    iconSize: [iconWidth, iconHeight],
+    iconAnchor: [iconAnchorX, iconAnchorY]
   });
 }
 
@@ -210,7 +226,11 @@ export function createDeveloperOnlyAtlasVisualPrimitiveLayer({
     longitude,
     label,
     spriteSvg = null,
-    metadata = null
+    metadata = null,
+    iconWidth = null,
+    iconHeight = null,
+    iconAnchorX = null,
+    iconAnchorY = null
   } = {}) {
     state.lastOperation = "upsert";
     const primitiveIdValue = sanitizeString(primitiveId);
@@ -247,7 +267,11 @@ export function createDeveloperOnlyAtlasVisualPrimitiveLayer({
       existing.marker.setIcon(
         buildIcon(leaflet, primitiveTypeValue, labelValue, {
           spriteSvg,
-          metadata: metadataValue
+          metadata: metadataValue,
+          iconWidth,
+          iconHeight,
+          iconAnchorX,
+          iconAnchorY
         })
       );
       existing.primitiveType = primitiveTypeValue;
@@ -262,7 +286,11 @@ export function createDeveloperOnlyAtlasVisualPrimitiveLayer({
     const marker = leaflet.marker([latitudeValue, longitudeValue], {
       icon: buildIcon(leaflet, primitiveTypeValue, labelValue, {
         spriteSvg,
-        metadata: metadataValue
+        metadata: metadataValue,
+        iconWidth,
+        iconHeight,
+        iconAnchorX,
+        iconAnchorY
       }),
       keyboard: false,
       interactive: false
