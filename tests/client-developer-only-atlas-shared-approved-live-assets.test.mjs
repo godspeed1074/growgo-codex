@@ -40,6 +40,15 @@ const pavilionGameplayGlbPath = path.join(
   "BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb"
 );
 
+const shrubGameplayGlbPath = path.join(
+  repoRoot,
+  "asset-factory-workspace",
+  "production",
+  "COASTAL_SHRUB_FAMILY_001",
+  "export",
+  "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb"
+);
+
 async function loadGameplayGlbArrayBuffer(filePath) {
   const buffer = await readFile(filePath);
   return buffer.buffer.slice(
@@ -256,6 +265,9 @@ async function createControllerHarness() {
   const pavilionArrayBuffer = await loadGameplayGlbArrayBuffer(
     pavilionGameplayGlbPath
   );
+  const shrubArrayBuffer = await loadGameplayGlbArrayBuffer(
+    shrubGameplayGlbPath
+  );
   const { gl, stats } = createFakeWebGLContext();
   const documentStub = createDocumentStub(gl);
   const map = createMapStub(documentStub, stats);
@@ -271,6 +283,10 @@ async function createControllerHarness() {
     [
       "asset-factory-workspace/production/CIVIC_SPORTS_PAVILION_FAMILY_001/export/BUILDING_CIVIC_SPORTS_PAVILION_001_LOD_GAMEPLAY.glb",
       pavilionArrayBuffer
+    ],
+    [
+      "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
+      shrubArrayBuffer
     ]
   ]);
 
@@ -516,6 +532,83 @@ test("shared approved asset controller updates the pavilion without moving the t
   assert.equal(status.thirdLatitude, -38.1182);
   assert.equal(status.thirdLongitude, 144.6186);
   assert.equal(status.modelInstanceCount, 3);
+});
+
+test("shared approved asset controller renders eucalyptus, bottlebrush, pavilion, and shrub in one shared renderer surface", async () => {
+  const { controller, map, documentStub } = await createControllerHarness();
+
+  await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+  await controller.placeSecondApprovedLiveAsset({
+    latitude: -38.1218,
+    longitude: 144.6124
+  });
+  await controller.placeThirdApprovedLiveAsset({
+    latitude: -38.1189,
+    longitude: 144.6161
+  });
+  const fourthResult = await controller.placeFourthApprovedLiveAsset({
+    latitude: -38.1236,
+    longitude: 144.6111
+  });
+  const status = controller.getSharedApprovedLiveAssetStatus();
+
+  assert.equal(fourthResult.outcome, "created");
+  assert.equal(status.rendererCanvasCount, 1);
+  assert.equal(status.rendererInstanceCount, 1);
+  assert.equal(status.sharedSceneCount, 1);
+  assert.equal(status.modelInstanceCount, 4);
+  assert.equal(status.sharedAssetInstances.length, 4);
+  assert.equal(status.fourthSelectedAssetId, "SHRUB_COASTAL_LOW_001");
+  assert.equal(status.fourthSelectedAssetVersion, "v002");
+  assert.equal(
+    status.fourthResolvedGlbIdentity,
+    "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb"
+  );
+  assert.equal(status.fourthActualGlbLoaded, true);
+  assert.equal(status.ownedListenerCount, 3);
+  assert.equal(documentStub.overlayPane.children.length, 1);
+  assert.equal(map.listenerCount(), 3);
+});
+
+test("shared approved asset controller updates the shrub without moving the other three assets", async () => {
+  const { controller } = await createControllerHarness();
+
+  await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+  await controller.placeSecondApprovedLiveAsset({
+    latitude: -38.1218,
+    longitude: 144.6124
+  });
+  await controller.placeThirdApprovedLiveAsset({
+    latitude: -38.1189,
+    longitude: 144.6161
+  });
+  await controller.placeFourthApprovedLiveAsset({
+    latitude: -38.1236,
+    longitude: 144.6111
+  });
+
+  const result = await controller.updateFourthApprovedLiveAsset({
+    latitude: -38.1241,
+    longitude: 144.6102
+  });
+  const status = controller.getSharedApprovedLiveAssetStatus();
+
+  assert.equal(result.outcome, "updated");
+  assert.equal(status.latitude, -38.12);
+  assert.equal(status.longitude, 144.61);
+  assert.equal(status.secondLatitude, -38.1218);
+  assert.equal(status.secondLongitude, 144.6124);
+  assert.equal(status.thirdLatitude, -38.1189);
+  assert.equal(status.thirdLongitude, 144.6161);
+  assert.equal(status.fourthLatitude, -38.1241);
+  assert.equal(status.fourthLongitude, 144.6102);
+  assert.equal(status.modelInstanceCount, 4);
 });
 
 test("shared approved asset controller fails closed when the live map is unavailable", async () => {

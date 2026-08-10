@@ -86,7 +86,7 @@ import {
 } from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277c";
 import {
   createDeveloperOnlyAtlasSharedApprovedLiveAssetController
-} from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21280b";
+} from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21281a";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -156,11 +156,14 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const approvedAssetButtonId = "growgo-dev-atlas-approved-asset";
   const secondApprovedAssetButtonId = "growgo-dev-atlas-second-approved-asset";
   const thirdApprovedAssetButtonId = "growgo-dev-atlas-third-approved-asset";
+  const fourthApprovedAssetButtonId = "growgo-dev-atlas-fourth-approved-asset";
   const updateApprovedAssetButtonId = "growgo-dev-atlas-update-approved-asset";
   const updateSecondApprovedAssetButtonId = "growgo-dev-atlas-update-second-approved-asset";
   const updateThirdApprovedAssetButtonId = "growgo-dev-atlas-update-third-approved-asset";
+  const updateFourthApprovedAssetButtonId = "growgo-dev-atlas-update-fourth-approved-asset";
   const clearSecondApprovedAssetButtonId = "growgo-dev-atlas-clear-second-approved-asset";
   const clearThirdApprovedAssetButtonId = "growgo-dev-atlas-clear-third-approved-asset";
+  const clearFourthApprovedAssetButtonId = "growgo-dev-atlas-clear-fourth-approved-asset";
   const updatePrimitiveButtonId = "growgo-dev-atlas-update-primitive";
   const clearPrimitivesButtonId = "growgo-dev-atlas-clear-primitives";
   const refreshButtonId = "growgo-dev-atlas-attachment-refresh";
@@ -200,11 +203,14 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
       <button id="${approvedAssetButtonId}" type="button">approved asset</button>
       <button id="${secondApprovedAssetButtonId}" type="button">second approved asset</button>
       <button id="${thirdApprovedAssetButtonId}" type="button">third approved asset</button>
+      <button id="${fourthApprovedAssetButtonId}" type="button">fourth approved asset</button>
       <button id="${updateApprovedAssetButtonId}" type="button">update approved asset</button>
       <button id="${updateSecondApprovedAssetButtonId}" type="button">update second approved asset</button>
       <button id="${updateThirdApprovedAssetButtonId}" type="button">update third approved asset</button>
+      <button id="${updateFourthApprovedAssetButtonId}" type="button">update fourth approved asset</button>
       <button id="${clearSecondApprovedAssetButtonId}" type="button">clear second approved asset</button>
       <button id="${clearThirdApprovedAssetButtonId}" type="button">clear third approved asset</button>
+      <button id="${clearFourthApprovedAssetButtonId}" type="button">clear fourth approved asset</button>
       <button id="${updatePrimitiveButtonId}" type="button">update primitive</button>
       <button id="${clearPrimitivesButtonId}" type="button">clear primitives</button>
       <button id="${refreshButtonId}" type="button">refresh atlas status</button>
@@ -231,6 +237,9 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const thirdApprovedAssetButton = surface.querySelector(
     `#${thirdApprovedAssetButtonId}`
   );
+  const fourthApprovedAssetButton = surface.querySelector(
+    `#${fourthApprovedAssetButtonId}`
+  );
   const updateApprovedAssetButton = surface.querySelector(
     `#${updateApprovedAssetButtonId}`
   );
@@ -240,11 +249,17 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const updateThirdApprovedAssetButton = surface.querySelector(
     `#${updateThirdApprovedAssetButtonId}`
   );
+  const updateFourthApprovedAssetButton = surface.querySelector(
+    `#${updateFourthApprovedAssetButtonId}`
+  );
   const clearSecondApprovedAssetButton = surface.querySelector(
     `#${clearSecondApprovedAssetButtonId}`
   );
   const clearThirdApprovedAssetButton = surface.querySelector(
     `#${clearThirdApprovedAssetButtonId}`
+  );
+  const clearFourthApprovedAssetButton = surface.querySelector(
+    `#${clearFourthApprovedAssetButtonId}`
   );
   const updatePrimitiveButton = surface.querySelector(
     `#${updatePrimitiveButtonId}`
@@ -373,6 +388,26 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         approvedAssetStatus?.thirdLongitude ?? null,
       atlasApprovedAssetThirdActualGlbLoaded:
         approvedAssetStatus?.thirdActualGlbLoaded === true,
+      atlasApprovedAssetFourthPresent:
+        approvedAssetStatus?.fourthLiveAssetPresent === true,
+      atlasApprovedAssetFourthId:
+        approvedAssetStatus?.fourthSelectedAssetId ?? null,
+      atlasApprovedAssetFourthVersion:
+        approvedAssetStatus?.fourthSelectedAssetVersion ?? null,
+      atlasApprovedAssetFourthStatus:
+        approvedAssetStatus?.fourthApprovedAssetStatus ?? null,
+      atlasApprovedAssetFourthModelInstanceId:
+        approvedAssetStatus?.fourthModelInstanceId ?? null,
+      atlasApprovedAssetFourthRepresentationMode:
+        approvedAssetStatus?.fourthRepresentationMode ?? null,
+      atlasApprovedAssetFourthResolvedGlbIdentity:
+        approvedAssetStatus?.fourthResolvedGlbIdentity ?? null,
+      atlasApprovedAssetFourthLatitude:
+        approvedAssetStatus?.fourthLatitude ?? null,
+      atlasApprovedAssetFourthLongitude:
+        approvedAssetStatus?.fourthLongitude ?? null,
+      atlasApprovedAssetFourthActualGlbLoaded:
+        approvedAssetStatus?.fourthActualGlbLoaded === true,
       atlasApprovedAssetRendererSurfaceCount:
         approvedAssetStatus?.rendererSurfaceCount ?? 0,
       atlasApprovedAssetRendererCanvasCount:
@@ -579,6 +614,35 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     writeSurfaceStatus("third_approved_asset", result);
   });
 
+  fourthApprovedAssetButton?.addEventListener("click", async () => {
+    const liveMap = getGrowGoMap();
+    const center = liveMap?.getCenter?.() ?? null;
+    const shiftedCoordinate =
+      center &&
+      liveMap &&
+      typeof liveMap.latLngToContainerPoint === "function" &&
+      typeof liveMap.containerPointToLatLng === "function"
+        ? (() => {
+            const point = liveMap.latLngToContainerPoint(center);
+            return liveMap.containerPointToLatLng([
+              Number(point?.x ?? 0) + 28,
+              Number(point?.y ?? 0) + 158
+            ]);
+          })()
+        : null;
+    const result =
+      (await approvedAssetController?.placeFourthApprovedLiveAsset?.({
+        latitude:
+          shiftedCoordinate?.lat ?? (center?.lat != null ? center.lat - 0.0052 : null),
+        longitude:
+          shiftedCoordinate?.lng ?? (center?.lng != null ? center.lng + 0.0011 : null)
+      })) ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
+    writeSurfaceStatus("fourth_approved_asset", result);
+  });
+
   updateApprovedAssetButton?.addEventListener("click", async () => {
     const liveMap = getGrowGoMap();
     const center = liveMap?.getCenter?.() ?? null;
@@ -666,6 +730,35 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     writeSurfaceStatus("update_third_approved_asset", result);
   });
 
+  updateFourthApprovedAssetButton?.addEventListener("click", async () => {
+    const liveMap = getGrowGoMap();
+    const center = liveMap?.getCenter?.() ?? null;
+    const shiftedCoordinate =
+      center &&
+      liveMap &&
+      typeof liveMap.latLngToContainerPoint === "function" &&
+      typeof liveMap.containerPointToLatLng === "function"
+        ? (() => {
+            const point = liveMap.latLngToContainerPoint(center);
+            return liveMap.containerPointToLatLng([
+              Number(point?.x ?? 0) - 18,
+              Number(point?.y ?? 0) + 204
+            ]);
+          })()
+        : null;
+    const result =
+      (await approvedAssetController?.updateFourthApprovedLiveAsset?.({
+        latitude:
+          shiftedCoordinate?.lat ?? (center?.lat != null ? center.lat - 0.0064 : null),
+        longitude:
+          shiftedCoordinate?.lng ?? (center?.lng != null ? center.lng - 0.0007 : null)
+      })) ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
+    writeSurfaceStatus("update_fourth_approved_asset", result);
+  });
+
   clearSecondApprovedAssetButton?.addEventListener("click", () => {
     const result =
       approvedAssetController?.clearSecondApprovedLiveAsset?.() ?? {
@@ -682,6 +775,15 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
       };
     writeSurfaceStatus("clear_third_approved_asset", result);
+  });
+
+  clearFourthApprovedAssetButton?.addEventListener("click", () => {
+    const result =
+      approvedAssetController?.clearFourthApprovedLiveAsset?.() ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
+    writeSurfaceStatus("clear_fourth_approved_asset", result);
   });
 
   updatePrimitiveButton?.addEventListener("click", () => {
@@ -772,11 +874,14 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     approvedAssetButtonId,
     secondApprovedAssetButtonId,
     thirdApprovedAssetButtonId,
+    fourthApprovedAssetButtonId,
     updateApprovedAssetButtonId,
     updateSecondApprovedAssetButtonId,
     updateThirdApprovedAssetButtonId,
+    updateFourthApprovedAssetButtonId,
     clearSecondApprovedAssetButtonId,
     clearThirdApprovedAssetButtonId,
+    clearFourthApprovedAssetButtonId,
     updatePrimitiveButtonId,
     clearPrimitivesButtonId,
     refreshButtonId

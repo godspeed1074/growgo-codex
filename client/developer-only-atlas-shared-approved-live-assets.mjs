@@ -24,6 +24,11 @@ export const DEFAULT_THIRD_APPROVED_LIVE_ASSET_ID =
 export const DEFAULT_THIRD_APPROVED_LIVE_ASSET_VERSION = "1.0.0";
 export const DEFAULT_THIRD_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID =
   "ATLAS_APPROVED_ASSET_BUILDING_CIVIC_SPORTS_PAVILION_001_3D_001";
+export const DEFAULT_FOURTH_APPROVED_LIVE_ASSET_ID =
+  "SHRUB_COASTAL_LOW_001";
+export const DEFAULT_FOURTH_APPROVED_LIVE_ASSET_VERSION = "v002";
+export const DEFAULT_FOURTH_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID =
+  "ATLAS_APPROVED_ASSET_SHRUB_COASTAL_LOW_001_3D_001";
 
 const LOCAL_DEVELOPMENT_HOSTS = new Set([
   "localhost",
@@ -58,6 +63,12 @@ const SUPPORTED_ASSET_RUNTIME_PROFILES = Object.freeze({
     defaultVersion: DEFAULT_THIRD_APPROVED_LIVE_ASSET_VERSION,
     modelInstanceId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID,
     targetHeightMeters: 3.6,
+    rotationYRadians: 0
+  }),
+  SHRUB_COASTAL_LOW_001: Object.freeze({
+    defaultVersion: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_VERSION,
+    modelInstanceId: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID,
+    targetHeightMeters: 1.35,
     rotationYRadians: 0
   })
 });
@@ -150,6 +161,12 @@ function createState() {
       defaultAssetVersion: DEFAULT_THIRD_APPROVED_LIVE_ASSET_VERSION,
       defaultModelInstanceId: DEFAULT_THIRD_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID
     }),
+    fourthAsset: createAssetSlot({
+      slotId: "fourth",
+      defaultAssetId: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_ID,
+      defaultAssetVersion: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_VERSION,
+      defaultModelInstanceId: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_MODEL_INSTANCE_ID
+    }),
     loaderStatus: "idle",
     loaderReason: null,
     rendererSurfaceCount: 0,
@@ -191,7 +208,8 @@ function buildStatus(state) {
   const first = state.firstAsset;
   const second = state.secondAsset;
   const third = state.thirdAsset;
-  const liveInstances = [first, second, third]
+  const fourth = state.fourthAsset;
+  const liveInstances = [first, second, third, fourth]
     .filter((asset) => asset.liveAssetPresent)
     .map((asset) => buildInstanceSummary(asset));
 
@@ -233,17 +251,32 @@ function buildStatus(state) {
     thirdLatitude: third.latitude,
     thirdLongitude: third.longitude,
     thirdRepresentationMode: third.representationMode,
+    fourthSelectedAssetId: fourth.selectedAssetId,
+    fourthSelectedAssetVersion: fourth.selectedAssetVersion,
+    fourthApprovedAssetStatus: fourth.approvedAssetStatus,
+    fourthAssetReferenceId: fourth.assetReferenceId,
+    fourthAssetSource: fourth.assetSource,
+    fourthRuntimePreviewBindingId: fourth.runtimePreviewBindingId,
+    fourthResolvedGlbIdentity: fourth.resolvedGlbIdentity,
+    fourthModelInstanceId: fourth.modelInstanceId,
+    fourthLiveAssetPresent: fourth.liveAssetPresent,
+    fourthLatitude: fourth.latitude,
+    fourthLongitude: fourth.longitude,
+    fourthRepresentationMode: fourth.representationMode,
     loaderStatus: state.loaderStatus,
     loaderReason: state.loaderReason,
     actualGlbLoaded: first.actualGlbLoaded,
     secondActualGlbLoaded: second.actualGlbLoaded,
     thirdActualGlbLoaded: third.actualGlbLoaded,
+    fourthActualGlbLoaded: fourth.actualGlbLoaded,
     meshCount: first.meshCount,
     secondMeshCount: second.meshCount,
     thirdMeshCount: third.meshCount,
+    fourthMeshCount: fourth.meshCount,
     materialCount: first.materialCount,
     secondMaterialCount: second.materialCount,
     thirdMaterialCount: third.materialCount,
+    fourthMaterialCount: fourth.materialCount,
     rendererSurfaceCount: state.rendererSurfaceCount,
     rendererCanvasCount: state.rendererCanvasCount,
     rendererInstanceCount: state.rendererInstanceCount,
@@ -252,6 +285,7 @@ function buildStatus(state) {
     firstSceneObjectCount: first.sceneObjectCount,
     secondSceneObjectCount: second.sceneObjectCount,
     thirdSceneObjectCount: third.sceneObjectCount,
+    fourthSceneObjectCount: fourth.sceneObjectCount,
     modelInstanceCount: state.modelInstanceCount,
     ownedListenerCount: state.ownedListenerCount,
     renderLoopCount: state.renderLoopCount,
@@ -732,7 +766,12 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
   let rendererBackend = null;
 
   function activeAssets() {
-    return [state.firstAsset, state.secondAsset, state.thirdAsset].filter(
+    return [
+      state.firstAsset,
+      state.secondAsset,
+      state.thirdAsset,
+      state.fourthAsset
+    ].filter(
       (asset) => asset.liveAssetPresent === true
     );
   }
@@ -829,13 +868,19 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     if (slotId === "second") {
       return state.secondAsset;
     }
-    return state.thirdAsset;
+    if (slotId === "third") {
+      return state.thirdAsset;
+    }
+    return state.fourthAsset;
   }
 
   function buildRenderableInstances(overrides = new Map()) {
-    const assets = [state.firstAsset, state.secondAsset, state.thirdAsset].map(
-      (asset) => overrides.get(asset.slotId) ?? asset
-    );
+    const assets = [
+      state.firstAsset,
+      state.secondAsset,
+      state.thirdAsset,
+      state.fourthAsset
+    ].map((asset) => overrides.get(asset.slotId) ?? asset);
     return assets
       .filter((asset) => asset.liveAssetPresent === true)
       .map((asset) => {
@@ -1018,6 +1063,7 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
     clearSlot("first");
     clearSlot("second");
     clearSlot("third");
+    clearSlot("fourth");
     state.loaderStatus = "idle";
     state.loaderReason = null;
     state.lastReasonCode = "APPROVED_ASSET_REMOVED";
@@ -1062,6 +1108,17 @@ export function createDeveloperOnlyAtlasSharedApprovedLiveAssetController({
         ...input
       }),
     clearThirdApprovedLiveAsset: () => clearSlot("third"),
+    placeFourthApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("fourth", {
+        assetId: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    updateFourthApprovedLiveAsset: (input = {}) =>
+      placeOrUpdateSlot("fourth", {
+        assetId: DEFAULT_FOURTH_APPROVED_LIVE_ASSET_ID,
+        ...input
+      }),
+    clearFourthApprovedLiveAsset: () => clearSlot("fourth"),
     clearAllApprovedLiveAssets: clearAll,
     getFirstApprovedLiveAssetStatus: getStatus,
     getSharedApprovedLiveAssetStatus: getStatus
