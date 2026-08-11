@@ -49,6 +49,24 @@ const shrubGameplayGlbPath = path.join(
   "SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb"
 );
 
+const shrubV002GameplayGlbPath = path.join(
+  repoRoot,
+  "asset-factory-workspace",
+  "production",
+  "COASTAL_SHRUB_FAMILY_001",
+  "export",
+  "SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb"
+);
+
+const shrubV003GameplayGlbPath = path.join(
+  repoRoot,
+  "asset-factory-workspace",
+  "production",
+  "COASTAL_SHRUB_FAMILY_001",
+  "export",
+  "SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb"
+);
+
 async function loadGameplayGlbArrayBuffer(filePath) {
   const buffer = await readFile(filePath);
   return buffer.buffer.slice(
@@ -195,7 +213,8 @@ function createDocumentStub(gl) {
 function createMapStub(documentStub, stats) {
   const listeners = new Map();
   const center = { lat: -38.12, lng: 144.61 };
-  let zoom = 18;
+  const baseZoom = 18;
+  let zoom = baseZoom;
   let paneShiftX = 0;
   let paneShiftY = 0;
 
@@ -216,19 +235,29 @@ function createMapStub(documentStub, stats) {
       zoom += Number(delta);
       this.fire("zoomend");
     },
+    zoomOut(delta = 1) {
+      zoom -= Number(delta);
+      this.fire("zoomend");
+    },
+    setZoom(nextZoom) {
+      zoom = Number(nextZoom);
+      this.fire("zoomend");
+    },
     getCenter() {
       return center;
     },
     getPixelOrigin() {
+      const zoomScale = Math.pow(2, zoom - baseZoom);
       return {
-        x: paneShiftX,
-        y: paneShiftY
+        x: paneShiftX + zoomScale * 1024,
+        y: paneShiftY + zoomScale * 2048
       };
     },
     latLngToLayerPoint([lat, lng]) {
+      const zoomScale = Math.pow(2, zoom - baseZoom);
       return {
-        x: 320 + (lng - center.lng) * 20000,
-        y: 240 - (lat - center.lat) * 20000
+        x: 320 + (lng - center.lng) * 20000 * zoomScale,
+        y: 240 - (lat - center.lat) * 20000 * zoomScale
       };
     },
     latLngToContainerPoint([lat, lng]) {
@@ -303,6 +332,12 @@ async function createControllerHarness() {
   const shrubArrayBuffer = await loadGameplayGlbArrayBuffer(
     shrubGameplayGlbPath
   );
+  const shrubV002ArrayBuffer = await loadGameplayGlbArrayBuffer(
+    shrubV002GameplayGlbPath
+  );
+  const shrubV003ArrayBuffer = await loadGameplayGlbArrayBuffer(
+    shrubV003GameplayGlbPath
+  );
   const { gl, stats } = createFakeWebGLContext();
   const documentStub = createDocumentStub(gl);
   const map = createMapStub(documentStub, stats);
@@ -322,6 +357,14 @@ async function createControllerHarness() {
     [
       "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb",
       shrubArrayBuffer
+    ],
+    [
+      "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb",
+      shrubV002ArrayBuffer
+    ],
+    [
+      "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb",
+      shrubV003ArrayBuffer
     ]
   ]);
 
@@ -425,6 +468,173 @@ test("shared approved asset controller keeps model anchor locked through pane mo
   assert.equal(statusAfterPan.longitude, 144.61);
   assert.equal(statusAfterPanBack.latitude, -38.12);
   assert.equal(statusAfterPanBack.longitude, 144.61);
+});
+
+test("shared approved asset controller keeps stored coordinates and final renderer anchor locked through repeated zoom cycles", async () => {
+  const { controller, map } = await createControllerHarness();
+
+  await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+
+  const statusAt18 = controller.getSharedApprovedLiveAssetStatus();
+  map.setZoom(19);
+  const statusAt19 = controller.getSharedApprovedLiveAssetStatus();
+  map.setZoom(18);
+  const statusBackAt18 = controller.getSharedApprovedLiveAssetStatus();
+  map.setZoom(17);
+  const statusAt17 = controller.getSharedApprovedLiveAssetStatus();
+  map.setZoom(18);
+  const statusFinal18 = controller.getSharedApprovedLiveAssetStatus();
+
+  const diagnosticsAt18 =
+    statusAt18.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+  const diagnosticsAt19 =
+    statusAt19.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+  const diagnosticsBackAt18 =
+    statusBackAt18.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+  const diagnosticsAt17 =
+    statusAt17.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+  const diagnosticsFinal18 =
+    statusFinal18.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+
+  assert.equal(statusAt19.latitude, -38.12);
+  assert.equal(statusAt19.longitude, 144.61);
+  assert.equal(statusBackAt18.latitude, -38.12);
+  assert.equal(statusBackAt18.longitude, 144.61);
+  assert.equal(statusAt17.latitude, -38.12);
+  assert.equal(statusAt17.longitude, 144.61);
+  assert.equal(statusFinal18.latitude, -38.12);
+  assert.equal(statusFinal18.longitude, 144.61);
+
+  assert.equal(statusAt18.mapProjectionState?.zoom, 18);
+  assert.equal(statusAt19.mapProjectionState?.zoom, 19);
+  assert.equal(statusBackAt18.mapProjectionState?.zoom, 18);
+  assert.equal(statusAt17.mapProjectionState?.zoom, 17);
+  assert.equal(statusFinal18.mapProjectionState?.zoom, 18);
+
+  assert.equal(
+    diagnosticsAt18?.finalAnchorNdcX,
+    diagnosticsAt18?.desiredAnchorNdcX
+  );
+  assert.equal(
+    diagnosticsAt18?.finalAnchorNdcY,
+    diagnosticsAt18?.desiredAnchorNdcY
+  );
+  assert.equal(
+    diagnosticsAt19?.finalAnchorNdcX,
+    diagnosticsAt19?.desiredAnchorNdcX
+  );
+  assert.equal(
+    diagnosticsAt19?.finalAnchorNdcY,
+    diagnosticsAt19?.desiredAnchorNdcY
+  );
+  assert.equal(
+    diagnosticsBackAt18?.finalAnchorNdcX,
+    diagnosticsBackAt18?.desiredAnchorNdcX
+  );
+  assert.equal(
+    diagnosticsBackAt18?.finalAnchorNdcY,
+    diagnosticsBackAt18?.desiredAnchorNdcY
+  );
+  assert.equal(
+    diagnosticsAt17?.finalAnchorNdcX,
+    diagnosticsAt17?.desiredAnchorNdcX
+  );
+  assert.equal(
+    diagnosticsAt17?.finalAnchorNdcY,
+    diagnosticsAt17?.desiredAnchorNdcY
+  );
+  assert.equal(
+    diagnosticsFinal18?.finalAnchorNdcX,
+    diagnosticsFinal18?.desiredAnchorNdcX
+  );
+  assert.equal(
+    diagnosticsFinal18?.finalAnchorNdcY,
+    diagnosticsFinal18?.desiredAnchorNdcY
+  );
+
+  assert.equal(
+    statusBackAt18.mapProjectionState?.firstProjectedPixelX,
+    statusAt18.mapProjectionState?.firstProjectedPixelX
+  );
+  assert.equal(
+    statusBackAt18.mapProjectionState?.firstProjectedPixelY,
+    statusAt18.mapProjectionState?.firstProjectedPixelY
+  );
+  assert.equal(
+    statusFinal18.mapProjectionState?.firstProjectedPixelX,
+    statusAt18.mapProjectionState?.firstProjectedPixelX
+  );
+  assert.equal(
+    statusFinal18.mapProjectionState?.firstProjectedPixelY,
+    statusAt18.mapProjectionState?.firstProjectedPixelY
+  );
+});
+
+test("shared approved asset controller keeps final renderer anchor locked through combined pan and zoom round trips", async () => {
+  const { controller, map } = await createControllerHarness();
+
+  await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+  await controller.placeSecondApprovedLiveAsset({
+    latitude: -38.1218,
+    longitude: 144.6124
+  });
+
+  const statusAtStart = controller.getSharedApprovedLiveAssetStatus();
+  map.panBy([180, -120]);
+  map.setZoom(19);
+  const statusAfterPanZoom = controller.getSharedApprovedLiveAssetStatus();
+  map.panBy([-180, 120]);
+  map.setZoom(18);
+  const statusAfterReturn = controller.getSharedApprovedLiveAssetStatus();
+
+  const firstAfterPanZoom =
+    statusAfterPanZoom.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+  const secondAfterPanZoom =
+    statusAfterPanZoom.mapProjectionState?.instanceProjectionDiagnostics?.[1] ?? null;
+  const firstAfterReturn =
+    statusAfterReturn.mapProjectionState?.instanceProjectionDiagnostics?.[0] ?? null;
+  const secondAfterReturn =
+    statusAfterReturn.mapProjectionState?.instanceProjectionDiagnostics?.[1] ?? null;
+
+  assert.equal(firstAfterPanZoom?.finalAnchorNdcX, firstAfterPanZoom?.desiredAnchorNdcX);
+  assert.equal(firstAfterPanZoom?.finalAnchorNdcY, firstAfterPanZoom?.desiredAnchorNdcY);
+  assert.equal(secondAfterPanZoom?.finalAnchorNdcX, secondAfterPanZoom?.desiredAnchorNdcX);
+  assert.equal(secondAfterPanZoom?.finalAnchorNdcY, secondAfterPanZoom?.desiredAnchorNdcY);
+  assert.equal(firstAfterReturn?.finalAnchorNdcX, firstAfterReturn?.desiredAnchorNdcX);
+  assert.equal(firstAfterReturn?.finalAnchorNdcY, firstAfterReturn?.desiredAnchorNdcY);
+  assert.equal(secondAfterReturn?.finalAnchorNdcX, secondAfterReturn?.desiredAnchorNdcX);
+  assert.equal(secondAfterReturn?.finalAnchorNdcY, secondAfterReturn?.desiredAnchorNdcY);
+
+  assert.equal(statusAfterReturn.latitude, statusAtStart.latitude);
+  assert.equal(statusAfterReturn.longitude, statusAtStart.longitude);
+  assert.equal(statusAfterReturn.secondLatitude, statusAtStart.secondLatitude);
+  assert.equal(statusAfterReturn.secondLongitude, statusAtStart.secondLongitude);
+  assert.equal(statusAfterReturn.mapProjectionState?.zoom, 18);
+  assert.equal(
+    statusAfterReturn.mapProjectionState?.firstProjectedPixelX,
+    statusAtStart.mapProjectionState?.firstProjectedPixelX
+  );
+  assert.equal(
+    statusAfterReturn.mapProjectionState?.firstProjectedPixelY,
+    statusAtStart.mapProjectionState?.firstProjectedPixelY
+  );
+  assert.equal(
+    statusAfterReturn.mapProjectionState?.secondProjectedPixelX,
+    statusAtStart.mapProjectionState?.secondProjectedPixelX
+  );
+  assert.equal(
+    statusAfterReturn.mapProjectionState?.secondProjectedPixelY,
+    statusAtStart.mapProjectionState?.secondProjectedPixelY
+  );
+  assert.equal(statusAfterReturn.rendererCanvasCount, 1);
+  assert.equal(statusAfterReturn.sharedSceneCount, 1);
+  assert.equal(statusAfterReturn.ownedListenerCount, 3);
 });
 
 test("shared approved asset controller updates one asset without moving the other", async () => {
@@ -635,7 +845,7 @@ test("shared approved asset controller renders eucalyptus, bottlebrush, pavilion
   assert.equal(status.fourthSelectedAssetVersion, "v002");
   assert.equal(
     status.fourthResolvedGlbIdentity,
-    "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_LOD_GAMEPLAY.glb"
+    "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb"
   );
   assert.equal(status.fourthActualGlbLoaded, true);
   assert.equal(status.ownedListenerCount, 3);
@@ -679,6 +889,36 @@ test("shared approved asset controller updates the shrub without moving the othe
   assert.equal(status.fourthLatitude, -38.1241);
   assert.equal(status.fourthLongitude, 144.6102);
   assert.equal(status.modelInstanceCount, 4);
+});
+
+test("shared approved asset controller resolves the shrub v003 review candidate through the versioned override path", async () => {
+  const { controller } = await createControllerHarness();
+
+  await controller.placeFirstApprovedLiveAsset({
+    latitude: -38.12,
+    longitude: 144.61
+  });
+
+  const result = await controller.createApprovedSharedAssetModelInstance({
+    slotId: "fourth",
+    assetId: "SHRUB_COASTAL_LOW_001",
+    assetVersion: "v003",
+    latitude: -38.1214,
+    longitude: 144.6118
+  });
+  const status = controller.getSharedApprovedLiveAssetStatus();
+
+  assert.equal(result.outcome, "created");
+  assert.equal(status.fourthSelectedAssetId, "SHRUB_COASTAL_LOW_001");
+  assert.equal(status.fourthSelectedAssetVersion, "v003");
+  assert.equal(
+    status.fourthResolvedGlbIdentity,
+    "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb"
+  );
+  assert.equal(status.fourthActualGlbLoaded, true);
+  assert.equal(status.fourthMeshCount, 10);
+  assert.equal(status.modelInstanceCount, 2);
+  assert.equal(status.rendererCanvasCount, 1);
 });
 
 test("shared approved asset controller fails closed when the live map is unavailable", async () => {

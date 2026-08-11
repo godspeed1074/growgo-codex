@@ -1,0 +1,21 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V003_AUTHORING_MANIFEST_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v003",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "sourceBlend": "SHRUB_COASTAL_LOW_001_v003.blend",
+  "sourceBlendCarryForwardFromVersion": "v002",
+  "reviewIntent": "gold_standard_shrub_candidate_review",
+  "requiredOutputs": [
+    "SHRUB_COASTAL_LOW_001_v003_LOD_CLOSE.glb",
+    "SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb",
+    "SHRUB_COASTAL_LOW_001_v003_LOD_MAP.glb"
+  ],
+  "notes": [
+    "increase_front_back_depth_without_turning_the_shrub_into_a_miniature_tree",
+    "use_multiple_overlapping_foliage_masses_for_low_spreading_volume",
+    "improve_side_profile_readability_from_the_north_up_oblique_camera",
+    "preserve_mobile_lightweight_geometry_and_simple_materials",
+    "keep_the_asset_clearly_in_the_low_landscape_shrub_category"
+  ]
+}

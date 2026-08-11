@@ -1,0 +1,26 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V003_SOURCE_VERIFICATION_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v003",
+  "verifiedOn": "2026-08-10",
+  "sourceBlend": {
+    "filename": "SHRUB_COASTAL_LOW_001_v003.blend",
+    "relativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/source/SHRUB_COASTAL_LOW_001_v003.blend",
+    "legacyCompatibilityPath": "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v003.blend",
+    "sizeBytes": 1547440,
+    "sha256": "151afc237fdc94cb41282252bc657380794f63852f814104cf3463b29528ee8c",
+    "carriedForwardFromVersion": "v002"
+  },
+  "sourceIdentityVerification": {
+    "assetIdentityMatches": true,
+    "recipeIdentityMatches": true,
+    "dependencyIdentityMatches": true,
+    "identityAnchorsPresent": true,
+    "lodRootsPresent": true,
+    "universalExporterCompatible": true
+  },
+  "preservedHistoricalRevision": {
+    "previousRegisteredVersion": "v002",
+    "overwritten": false
+  }
+}

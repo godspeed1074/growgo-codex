@@ -1,0 +1,16 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V003_GOLD_STANDARD_REVIEW_CANDIDATE_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v003",
+  "approvalStatus": "PENDING_GOLD_STANDARD_REVIEW",
+  "referenceTreeAssetId": "TREE_EUCALYPTUS_001",
+  "referenceTreeVersion": "v002",
+  "gameplayGlb": "SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb",
+  "gameplayGlbRelativePath": "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb",
+  "safety": {
+    "published": false,
+    "runtimeActivated": false,
+    "registrationReplaced": false,
+    "promotionPerformed": false
+  }
+}

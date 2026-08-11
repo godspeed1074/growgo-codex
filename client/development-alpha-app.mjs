@@ -86,7 +86,7 @@ import {
 } from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277c";
 import {
   createDeveloperOnlyAtlasSharedApprovedLiveAssetController
-} from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21281c";
+} from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21282a";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -152,6 +152,7 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const panMapButtonId = "growgo-dev-atlas-pan-map";
   const panMapBackButtonId = "growgo-dev-atlas-pan-map-back";
   const zoomMapButtonId = "growgo-dev-atlas-zoom-map";
+  const zoomMapOutButtonId = "growgo-dev-atlas-zoom-map-out";
   const pointPrimitiveButtonId = "growgo-dev-atlas-point-primitive";
   const spritePrimitiveButtonId = "growgo-dev-atlas-sprite-primitive";
   const approvedAssetButtonId = "growgo-dev-atlas-approved-asset";
@@ -162,6 +163,10 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     "growgo-dev-atlas-gold-standard-tree-v002";
   const goldStandardTreeV001ReferenceButtonId =
     "growgo-dev-atlas-gold-standard-tree-v001-reference";
+  const goldStandardShrubV003ButtonId =
+    "growgo-dev-atlas-gold-standard-shrub-v003";
+  const goldStandardShrubV002ReferenceButtonId =
+    "growgo-dev-atlas-gold-standard-shrub-v002-reference";
   const updateApprovedAssetButtonId = "growgo-dev-atlas-update-approved-asset";
   const updateSecondApprovedAssetButtonId = "growgo-dev-atlas-update-second-approved-asset";
   const updateThirdApprovedAssetButtonId = "growgo-dev-atlas-update-third-approved-asset";
@@ -204,6 +209,7 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
       <button id="${panMapButtonId}" type="button">pan map</button>
       <button id="${panMapBackButtonId}" type="button">pan map back</button>
       <button id="${zoomMapButtonId}" type="button">zoom map</button>
+      <button id="${zoomMapOutButtonId}" type="button">zoom map out</button>
       <button id="${pointPrimitiveButtonId}" type="button">point primitive</button>
       <button id="${spritePrimitiveButtonId}" type="button">sprite primitive</button>
       <button id="${approvedAssetButtonId}" type="button">approved asset</button>
@@ -212,6 +218,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
       <button id="${fourthApprovedAssetButtonId}" type="button">fourth approved asset</button>
       <button id="${goldStandardTreeV002ButtonId}" type="button">gold standard tree v002</button>
       <button id="${goldStandardTreeV001ReferenceButtonId}" type="button">gold standard tree v001 ref</button>
+      <button id="${goldStandardShrubV003ButtonId}" type="button">gold standard shrub v003</button>
+      <button id="${goldStandardShrubV002ReferenceButtonId}" type="button">gold standard shrub v002 ref</button>
       <button id="${updateApprovedAssetButtonId}" type="button">update approved asset</button>
       <button id="${updateSecondApprovedAssetButtonId}" type="button">update second approved asset</button>
       <button id="${updateThirdApprovedAssetButtonId}" type="button">update third approved asset</button>
@@ -235,6 +243,7 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   const panMapButton = surface.querySelector(`#${panMapButtonId}`);
   const panMapBackButton = surface.querySelector(`#${panMapBackButtonId}`);
   const zoomMapButton = surface.querySelector(`#${zoomMapButtonId}`);
+  const zoomMapOutButton = surface.querySelector(`#${zoomMapOutButtonId}`);
   const pointPrimitiveButton = surface.querySelector(`#${pointPrimitiveButtonId}`);
   const spritePrimitiveButton = surface.querySelector(
     `#${spritePrimitiveButtonId}`
@@ -254,6 +263,12 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
   );
   const goldStandardTreeV001ReferenceButton = surface.querySelector(
     `#${goldStandardTreeV001ReferenceButtonId}`
+  );
+  const goldStandardShrubV003Button = surface.querySelector(
+    `#${goldStandardShrubV003ButtonId}`
+  );
+  const goldStandardShrubV002ReferenceButton = surface.querySelector(
+    `#${goldStandardShrubV002ReferenceButtonId}`
   );
   const updateApprovedAssetButton = surface.querySelector(
     `#${updateApprovedAssetButtonId}`
@@ -650,6 +665,70 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     writeSurfaceStatus("gold_standard_tree_v001_reference", result);
   });
 
+  goldStandardShrubV003Button?.addEventListener("click", async () => {
+    const liveMap = getGrowGoMap();
+    const center = liveMap?.getCenter?.() ?? null;
+    const shiftedCoordinate =
+      center &&
+      liveMap &&
+      typeof liveMap.latLngToContainerPoint === "function" &&
+      typeof liveMap.containerPointToLatLng === "function"
+        ? (() => {
+            const point = liveMap.latLngToContainerPoint(center);
+            return liveMap.containerPointToLatLng([
+              Number(point?.x ?? 0) + 92,
+              Number(point?.y ?? 0) + 138
+            ]);
+          })()
+        : null;
+    const result =
+      (await approvedAssetController?.createApprovedSharedAssetModelInstance?.({
+        slotId: "fourth",
+        assetId: "SHRUB_COASTAL_LOW_001",
+        assetVersion: "v003",
+        latitude:
+          shiftedCoordinate?.lat ?? (center?.lat != null ? center.lat - 0.0014 : null),
+        longitude:
+          shiftedCoordinate?.lng ?? (center?.lng != null ? center.lng + 0.0018 : null)
+      })) ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
+    writeSurfaceStatus("gold_standard_shrub_v003_review", result);
+  });
+
+  goldStandardShrubV002ReferenceButton?.addEventListener("click", async () => {
+    const liveMap = getGrowGoMap();
+    const center = liveMap?.getCenter?.() ?? null;
+    const shiftedCoordinate =
+      center &&
+      liveMap &&
+      typeof liveMap.latLngToContainerPoint === "function" &&
+      typeof liveMap.containerPointToLatLng === "function"
+        ? (() => {
+            const point = liveMap.latLngToContainerPoint(center);
+            return liveMap.containerPointToLatLng([
+              Number(point?.x ?? 0) - 104,
+              Number(point?.y ?? 0) + 146
+            ]);
+          })()
+        : null;
+    const result =
+      (await approvedAssetController?.createApprovedSharedAssetModelInstance?.({
+        slotId: "second",
+        assetId: "SHRUB_COASTAL_LOW_001",
+        assetVersion: "v002",
+        latitude:
+          shiftedCoordinate?.lat ?? (center?.lat != null ? center.lat - 0.0015 : null),
+        longitude:
+          shiftedCoordinate?.lng ?? (center?.lng != null ? center.lng - 0.0019 : null)
+      })) ?? {
+        outcome: "blocked",
+        reasonCode: "ATLAS_APPROVED_ASSET_CONTROLLER_UNAVAILABLE"
+      };
+    writeSurfaceStatus("gold_standard_shrub_v002_reference", result);
+  });
+
   thirdApprovedAssetButton?.addEventListener("click", async () => {
     const liveMap = getGrowGoMap();
     const center = liveMap?.getCenter?.() ?? null;
@@ -938,6 +1017,24 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     writeSurfaceStatus("zoom_map", result);
   });
 
+  zoomMapOutButton?.addEventListener("click", () => {
+    const liveMap = getGrowGoMap();
+    let result = {
+      outcome: "blocked",
+      reasonCode: "MAP_ZOOM_OUT_UNAVAILABLE"
+    };
+
+    if (liveMap && typeof liveMap.zoomOut === "function") {
+      liveMap.zoomOut(1, { animate: false });
+      result = {
+        outcome: "completed",
+        reasonCode: "MAP_ZOOMED_OUT"
+      };
+    }
+
+    writeSurfaceStatus("zoom_map_out", result);
+  });
+
   refreshButton?.addEventListener("click", () => {
     writeSurfaceStatus("refresh", null);
   });
@@ -953,6 +1050,7 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
     panMapButtonId,
     panMapBackButtonId,
     zoomMapButtonId,
+    zoomMapOutButtonId,
     pointPrimitiveButtonId,
     spritePrimitiveButtonId,
     approvedAssetButtonId,

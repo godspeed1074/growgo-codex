@@ -1,0 +1,94 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V003_EXPORT_VALIDATION_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "version": "v003",
+  "validatedOn": "2026-08-10",
+  "exportStatus": "VERIFIED_COMPLETE",
+  "files": [
+    {
+      "filename": "SHRUB_COASTAL_LOW_001_v003_LOD_CLOSE.glb",
+      "sha256": "0237fe8278d91f053263bc0891608559d8b26a3d62fb539dcc9d85aa980981ea",
+      "sizeBytes": 15160,
+      "meshCount": 13,
+      "triangleCount": 217,
+      "materialCount": 4,
+      "bounds": {
+        "minX": -1.647491,
+        "maxX": 1.585228,
+        "minY": 0,
+        "maxY": 1.469221,
+        "minZ": -1.131762,
+        "maxZ": 1.074648,
+        "width": 3.23272,
+        "height": 1.469221,
+        "depth": 2.206409
+      },
+      "metadataPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "filename": "SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb",
+      "sha256": "558dbfaa0290ca3147c084f049203bbbeeadd3bf29d5ab4d1c463e5c7eb74709",
+      "sizeBytes": 12096,
+      "meshCount": 10,
+      "triangleCount": 165,
+      "materialCount": 4,
+      "bounds": {
+        "minX": -1.647491,
+        "maxX": 1.376533,
+        "minY": 0,
+        "maxY": 1.469221,
+        "minZ": -1.131762,
+        "maxZ": 1.000667,
+        "width": 3.024025,
+        "height": 1.469221,
+        "depth": 2.132429
+      },
+      "metadataPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    },
+    {
+      "filename": "SHRUB_COASTAL_LOW_001_v003_LOD_MAP.glb",
+      "sha256": "5a30ed937c70f04ea9c9821eabe982d47dd0911779b0a35da1ee97e7c07f3ec0",
+      "sizeBytes": 6712,
+      "meshCount": 5,
+      "triangleCount": 73,
+      "materialCount": 4,
+      "bounds": {
+        "minX": -1.350504,
+        "maxX": 1.282135,
+        "minY": 0,
+        "maxY": 1.198182,
+        "minZ": -0.599893,
+        "maxZ": 0.679157,
+        "width": 2.632639,
+        "height": 1.198182,
+        "depth": 1.27905
+      },
+      "metadataPreserved": true,
+      "dependencyIdentityPreserved": true,
+      "anchorIdentityPreserved": true,
+      "hasExternalDependencies": false
+    }
+  ],
+  "lodOrdering": {
+    "requirement": "CLOSE > GAMEPLAY > MAP",
+    "passed": true
+  },
+  "silhouetteDepth": {
+    "closeDepthToHeightRatio": 1.501754,
+    "gameplayDepthToHeightRatio": 1.451401,
+    "mapDepthToHeightRatio": 1.067492
+  },
+  "exportManifest": {
+    "filename": "shrub-coastal-low-v003-export-manifest.json",
+    "schemaId": "ASSET_FACTORY_UNIVERSAL_EXPORT_MANIFEST_001",
+    "deterministicFingerprint": "368119ce70aa490075d8be92df9d754c0769de7d6d427434d0f9af0d869c29f2"
+  },
+  "registrationPerformed": false,
+  "promotionPerformed": false
+}

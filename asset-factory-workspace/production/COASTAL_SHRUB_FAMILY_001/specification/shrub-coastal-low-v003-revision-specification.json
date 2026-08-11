@@ -1,0 +1,38 @@
+{
+  "schemaId": "SHRUB_COASTAL_LOW_V003_REVISION_SPECIFICATION_001",
+  "assetId": "SHRUB_COASTAL_LOW_001",
+  "familyId": "COASTAL_SHRUB_FAMILY_001",
+  "previousRevisionVersion": "v002",
+  "targetRevisionVersion": "v003",
+  "revisionReason": "v002 is development-approved but needs a Gold Standard low-shrub candidate with stronger depth and side-profile readability beside TREE_EUCALYPTUS_001@v002.",
+  "visualIssues": [
+    "flattened_live_map_read",
+    "insufficient_front_back_depth",
+    "insufficient_layered_foliage_volume"
+  ],
+  "requiredChanges": [
+    "increase_front_back_depth_without_turning_the_shrub_into_a_miniature_tree",
+    "use_multiple_overlapping_foliage_masses_for_low_spreading_volume",
+    "improve_side_profile_readability_from_the_north_up_oblique_camera",
+    "preserve_mobile_lightweight_geometry_and_simple_materials",
+    "keep_the_asset_clearly_in_the_low_landscape_shrub_category"
+  ],
+  "constraints": {
+    "preserveV001Completely": true,
+    "preserveV002Completely": true,
+    "overwriteHistoricalVersionsForbidden": true,
+    "goldStandardApprovalAutomatic": false,
+    "publishingAllowed": false,
+    "mobileFirstGeometryRequired": true,
+    "papercut25DStyleRequired": true,
+    "lowShrubIdentityRequired": true
+  },
+  "expectedOutputs": {
+    "blend": "SHRUB_COASTAL_LOW_001_v003.blend",
+    "glbs": [
+      "SHRUB_COASTAL_LOW_001_v003_LOD_CLOSE.glb",
+      "SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb",
+      "SHRUB_COASTAL_LOW_001_v003_LOD_MAP.glb"
+    ]
+  }
+}

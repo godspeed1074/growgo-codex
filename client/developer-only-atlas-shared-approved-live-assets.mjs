@@ -89,6 +89,18 @@ const VERSIONED_REVIEW_OVERRIDE_PROFILES = Object.freeze({
     assetReferenceId: "TREE_EUCALYPTUS_001@v002",
     resolvedGlbIdentity:
       "asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/export/TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb"
+  }),
+  "SHRUB_COASTAL_LOW_001@v002": Object.freeze({
+    assetVersion: "v002",
+    assetReferenceId: "SHRUB_COASTAL_LOW_001@v002",
+    resolvedGlbIdentity:
+      "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v002_LOD_GAMEPLAY.glb"
+  }),
+  "SHRUB_COASTAL_LOW_001@v003": Object.freeze({
+    assetVersion: "v003",
+    assetReferenceId: "SHRUB_COASTAL_LOW_001@v003",
+    resolvedGlbIdentity:
+      "asset-factory-workspace/production/COASTAL_SHRUB_FAMILY_001/export/SHRUB_COASTAL_LOW_001_v003_LOD_GAMEPLAY.glb"
   })
 });
 
@@ -553,6 +565,28 @@ function scaleRotationYMatrix(scale, rotationYRadians = DEFAULT_ROTATION_Y_RADIA
   ]);
 }
 
+function projectPointToNdc(matrix, point) {
+  const x = Number(point?.[0] ?? 0);
+  const y = Number(point?.[1] ?? 0);
+  const z = Number(point?.[2] ?? 0);
+  const clipX = matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12];
+  const clipY = matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13];
+  const clipZ = matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14];
+  const clipW = matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15];
+  if (!Number.isFinite(clipW) || Math.abs(clipW) < 0.000001) {
+    return null;
+  }
+  return {
+    clipX,
+    clipY,
+    clipZ,
+    clipW,
+    ndcX: clipX / clipW,
+    ndcY: clipY / clipW,
+    ndcZ: clipZ / clipW
+  };
+}
+
 function metersPerPixel(latitude, zoom) {
   const safeLatitude = Math.max(-85, Math.min(85, Number(latitude) || 0));
   return (
@@ -791,7 +825,25 @@ function createTrue3DRendererBackend({
       thirdProjectedPixelX: sanitizeNumber(instanceStates[2]?.point?.x ?? null),
       thirdProjectedPixelY: sanitizeNumber(instanceStates[2]?.point?.y ?? null),
       fourthProjectedPixelX: sanitizeNumber(instanceStates[3]?.point?.x ?? null),
-      fourthProjectedPixelY: sanitizeNumber(instanceStates[3]?.point?.y ?? null)
+      fourthProjectedPixelY: sanitizeNumber(instanceStates[3]?.point?.y ?? null),
+      canvasPageLeft: sanitizeNumber(canvas?.getBoundingClientRect?.()?.left ?? null),
+      canvasPageTop: sanitizeNumber(canvas?.getBoundingClientRect?.()?.top ?? null),
+      canvasWidth: sanitizeNumber(canvas.width),
+      canvasHeight: sanitizeNumber(canvas.height),
+      overlayPaneTransform:
+        sanitizeString(
+          overlayPane?.style?.transform ||
+            documentObject?.defaultView?.getComputedStyle?.(overlayPane)
+              ?.transform ||
+            null
+        ) ?? null,
+      mapPaneTransform:
+        sanitizeString(
+          map?.getPanes?.()?.mapPane?.style?.transform ||
+            documentObject?.defaultView?.getComputedStyle?.(map?.getPanes?.()?.mapPane)
+              ?.transform ||
+            null
+        ) ?? null
     });
     const aspect = canvas.width / canvas.height;
     const projection = perspectiveMatrix(
@@ -804,6 +856,13 @@ function createTrue3DRendererBackend({
       0, 1, 0
     ]);
     const viewProjection = multiplyMat4(projection, view);
+    const modelOriginProjection = projectPointToNdc(viewProjection, [0, 0, 0]);
+    if (!modelOriginProjection) {
+      throw Object.assign(new Error("ATLAS_TRUE_3D_CAMERA_PROJECTION_INVALID"), {
+        reasonCode: "ATLAS_TRUE_3D_CAMERA_PROJECTION_INVALID"
+      });
+    }
+    const instanceProjectionDiagnostics = [];
 
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(...CLEAR_COLOR);
@@ -813,16 +872,41 @@ function createTrue3DRendererBackend({
     gl.enableVertexAttribArray(program.positionLocation);
 
     for (const instanceState of instanceStates) {
-      const anchorNdc = [
+      const desiredAnchorNdc = [
         (instanceState.point.x / canvas.width) * 2 - 1,
         1 - (instanceState.point.y / canvas.height) * 2
+      ];
+      const anchorShiftNdc = [
+        desiredAnchorNdc[0] - modelOriginProjection.ndcX,
+        desiredAnchorNdc[1] - modelOriginProjection.ndcY
       ];
       const model = scaleRotationYMatrix(
         instanceState.renderState.renderScale,
         instanceState.renderState.rotationYRadians
       );
       gl.uniformMatrix4fv(program.modelLocation, false, model);
-      gl.uniform2fv(program.anchorNdcLocation, anchorNdc);
+      gl.uniform2fv(program.anchorNdcLocation, anchorShiftNdc);
+      instanceProjectionDiagnostics.push(
+        deepFreeze({
+          slotId: instanceState.slotId,
+          storedLatitude: sanitizeNumber(instanceState.latitude),
+          storedLongitude: sanitizeNumber(instanceState.longitude),
+          layerPointX: sanitizeNumber(instanceState.point.x),
+          layerPointY: sanitizeNumber(instanceState.point.y),
+          desiredAnchorNdcX: sanitizeNumber(desiredAnchorNdc[0]),
+          desiredAnchorNdcY: sanitizeNumber(desiredAnchorNdc[1]),
+          modelOriginProjectedNdcX: sanitizeNumber(modelOriginProjection.ndcX),
+          modelOriginProjectedNdcY: sanitizeNumber(modelOriginProjection.ndcY),
+          anchorShiftNdcX: sanitizeNumber(anchorShiftNdc[0]),
+          anchorShiftNdcY: sanitizeNumber(anchorShiftNdc[1]),
+          finalAnchorNdcX: sanitizeNumber(
+            modelOriginProjection.ndcX + anchorShiftNdc[0]
+          ),
+          finalAnchorNdcY: sanitizeNumber(
+            modelOriginProjection.ndcY + anchorShiftNdc[1]
+          )
+        })
+      );
       for (const drawCall of instanceState.resource.drawCalls) {
         gl.bindBuffer(gl.ARRAY_BUFFER, drawCall.buffer);
         gl.vertexAttribPointer(
@@ -841,7 +925,12 @@ function createTrue3DRendererBackend({
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     return {
       cameraState,
-      mapProjectionState
+      mapProjectionState: deepFreeze({
+        ...mapProjectionState,
+        modelOriginProjectedNdcX: sanitizeNumber(modelOriginProjection.ndcX),
+        modelOriginProjectedNdcY: sanitizeNumber(modelOriginProjection.ndcY),
+        instanceProjectionDiagnostics
+      })
     };
   }
 

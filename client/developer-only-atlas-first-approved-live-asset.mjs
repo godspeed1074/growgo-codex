@@ -707,6 +707,28 @@ function scaleRotationYMatrix(scale, rotationYRadians = 0.22) {
   ]);
 }
 
+function projectPointToNdc(matrix, point) {
+  const x = Number(point?.[0] ?? 0);
+  const y = Number(point?.[1] ?? 0);
+  const z = Number(point?.[2] ?? 0);
+  const clipX = matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12];
+  const clipY = matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13];
+  const clipZ = matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14];
+  const clipW = matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15];
+  if (!Number.isFinite(clipW) || Math.abs(clipW) < 0.000001) {
+    return null;
+  }
+  return {
+    clipX,
+    clipY,
+    clipZ,
+    clipW,
+    ndcX: clipX / clipW,
+    ndcY: clipY / clipW,
+    ndcZ: clipZ / clipW
+  };
+}
+
 function metersPerPixel(latitude, zoom) {
   const safeLatitude = Math.max(-85, Math.min(85, Number(latitude) || 0));
   return (
@@ -849,6 +871,16 @@ function createTrue3DRendererBackend({
     );
     const viewProjection = multiplyMat4(projection, view);
     const model = scaleRotationYMatrix(cameraState.renderScale, 0.18);
+    const modelOriginProjection = projectPointToNdc(viewProjection, [0, 0, 0]);
+    if (!modelOriginProjection) {
+      throw Object.assign(new Error("ATLAS_TRUE_3D_CAMERA_PROJECTION_INVALID"), {
+        reasonCode: "ATLAS_TRUE_3D_CAMERA_PROJECTION_INVALID"
+      });
+    }
+    const anchorShiftNdc = [
+      anchorNdc[0] - modelOriginProjection.ndcX,
+      anchorNdc[1] - modelOriginProjection.ndcY
+    ];
 
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(...CLEAR_COLOR);
@@ -856,7 +888,7 @@ function createTrue3DRendererBackend({
     gl.useProgram(program.program);
     gl.uniformMatrix4fv(program.viewProjectionLocation, false, viewProjection);
     gl.uniformMatrix4fv(program.modelLocation, false, model);
-    gl.uniform2fv(program.anchorNdcLocation, anchorNdc);
+    gl.uniform2fv(program.anchorNdcLocation, anchorShiftNdc);
     gl.enableVertexAttribArray(program.positionLocation);
 
     for (const drawCall of drawCalls) {
