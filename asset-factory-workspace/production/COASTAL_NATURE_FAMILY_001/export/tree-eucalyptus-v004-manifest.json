@@ -1,0 +1,16 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "v004",
+  "manifestVersion": "1.0.0",
+  "category": "nature",
+  "lodOrder": [
+    "CLOSE",
+    "GAMEPLAY",
+    "MAP"
+  ],
+  "deterministicSeed": 41004,
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "activated": false
+}

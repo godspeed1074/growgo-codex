@@ -1,0 +1,12 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "v005",
+  "manifestVersion": "1.0.0",
+  "lodOrder": [
+    "CLOSE",
+    "GAMEPLAY",
+    "MAP"
+  ],
+  "groundAnchor": "per-LOD IDENTITY_ANCHOR at root contact",
+  "deterministicSeed": 51005
+}

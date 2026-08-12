@@ -1,0 +1,54 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousCandidateVersion": "v009",
+  "targetRevisionVersion": "v018",
+  "status": "PENDING_OPERATOR_REVIEW",
+  "authoredDimensionsMetres": {
+    "height": 14.0,
+    "crownWidth": 9.0,
+    "crownDepth": 7.0
+  },
+  "construction": {
+    "method": "direct recreation of supplied stylized tree: thick twisted trunk, one large top crown, two smaller rounded side crowns, bright scalloped green foliage, and simple planted roots",
+    "manuallyAuthoredMajorBranchShapes": [
+      "MAIN_TRUNK"
+    ],
+    "secondarySupportingBranches": [],
+    "foliageIslands": [
+      "TOP_ROUND_CROWN",
+      "LOW_LEFT_ROUND",
+      "LOW_RIGHT_ROUND"
+    ],
+    "foliageIslandCount": 3,
+    "reusableFoliageCardTypes": 4,
+    "textureAtlas": {
+      "filename": "TREE_EUCALYPTUS_001_v014_GENERIC_FOLIAGE_ATLAS_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "bytes": 4859,
+      "reusedFrom": "v006"
+    },
+    "barkTechnique": "material assignments on actual trunk and branch mesh faces; zero detached bark geometry",
+    "materials": 5
+  },
+  "protectedHistoricalVersions": [
+    "v001",
+    "v002",
+    "v003",
+    "v004",
+    "v005",
+    "v006",
+    "v007",
+    "v008",
+    "v009"
+  ],
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "activated": false
+}

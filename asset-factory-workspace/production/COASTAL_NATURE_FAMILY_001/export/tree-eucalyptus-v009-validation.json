@@ -1,0 +1,534 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V009_PRODUCTION_VERIFICATION_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "previousVersion": "v007",
+  "targetVersion": "v009",
+  "blend": {
+    "filename": "TREE_EUCALYPTUS_001_v009.blend",
+    "sizeBytes": 2230160,
+    "sha256": "ea87af4f3319585cb42bda60cb15eca982704e9cd37bed5e450c81c141c0e840"
+  },
+  "textureAtlas": {
+    "filename": "TREE_EUCALYPTUS_001_v006_FOLIAGE_ATLAS_512.png",
+    "dimensions": [
+      512,
+      512
+    ],
+    "sizeBytes": 318123,
+    "sha256": "0a2c4a7f9e2a48a5a333d36e4ff4096880634bdb51db643ffd0fa52b6443bb36"
+  },
+  "lods": {
+    "CLOSE": {
+      "filename": "TREE_EUCALYPTUS_001_v009_LOD_CLOSE.glb",
+      "sizeBytes": 612988,
+      "sha256": "5633d6f836f19b8b32f2a5ae9addb409ea6f47000c6a8a1e751d732b33d0ab81",
+      "triangleCount": 9416,
+      "meshCount": 31,
+      "materialCount": 5,
+      "materialNames": [
+        "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_009",
+        "MAT_EUCALYPTUS_CREAM_009",
+        "MAT_EUCALYPTUS_TAN_009",
+        "MAT_EUCALYPTUS_PEACH_009",
+        "MAT_EUCALYPTUS_RUST_009"
+      ],
+      "alphaModes": [
+        "MASK",
+        "OPAQUE",
+        "OPAQUE",
+        "OPAQUE",
+        "OPAQUE"
+      ],
+      "embeddedImageCount": 1,
+      "nodeNames": [
+        "TREE_EUCALYPTUS_001_CLOSE_AUTHORED_FOLIAGE_ISLANDS",
+        "TREE_EUCALYPTUS_001_CLOSE_BROAD_PLANTED_ROOT_MOUND",
+        "TREE_EUCALYPTUS_001_CLOSE_CENTRAL_CROWN_FORK",
+        "TREE_EUCALYPTUS_001_CLOSE_CENTRE_BACK_SUPPORT",
+        "TREE_EUCALYPTUS_001_CLOSE_LEFT_LOWER_SUPPORT",
+        "TREE_EUCALYPTUS_001_CLOSE_LEFT_TOP_SUPPORT",
+        "TREE_EUCALYPTUS_001_CLOSE_LOWER_LEFT_SWEEP",
+        "TREE_EUCALYPTUS_001_CLOSE_LOWER_RIGHT_REACH",
+        "TREE_EUCALYPTUS_001_CLOSE_MAIN_TRUNK",
+        "TREE_EUCALYPTUS_001_CLOSE_MID_LEFT_ARCH",
+        "TREE_EUCALYPTUS_001_CLOSE_MID_RIGHT_SWEEP",
+        "TREE_EUCALYPTUS_001_CLOSE_RIGHT_TOP_SUPPORT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_FRONT_LEFT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_FRONT_RIGHT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_LEFT_REAR",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_LONG_LEFT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_REAR_SHORT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_RIGHT_SIDE",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_TOE_FRONT_LEFT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_TOE_FRONT_RIGHT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_TOE_LEFT_REAR",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_TOE_LONG_LEFT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_TOE_REAR_SHORT",
+        "TREE_EUCALYPTUS_001_CLOSE_ROOT_TOE_RIGHT_SIDE",
+        "TREE_EUCALYPTUS_001_CLOSE_SCULPTED_FORK_SWELL_0",
+        "TREE_EUCALYPTUS_001_CLOSE_SCULPTED_FORK_SWELL_1",
+        "TREE_EUCALYPTUS_001_CLOSE_SCULPTED_FORK_SWELL_2",
+        "TREE_EUCALYPTUS_001_CLOSE_SCULPTED_FORK_SWELL_3",
+        "TREE_EUCALYPTUS_001_CLOSE_SCULPTED_ROOT_COLLAR",
+        "TREE_EUCALYPTUS_001_CLOSE_UPPER_LEFT_FORK",
+        "TREE_EUCALYPTUS_001_CLOSE_UPPER_RIGHT_ARCH",
+        "TREE_EUCALYPTUS_001_LOD_CLOSE_IDENTITY_ANCHOR",
+        "TREE_EUCALYPTUS_001_LOD_CLOSE_ROOT"
+      ],
+      "bounds": {
+        "min": [
+          -5.090029716491699,
+          -0.20000000298023224,
+          -2.7907962799072266
+        ],
+        "max": [
+          4.980000019073486,
+          13.979999542236328,
+          3.7841525077819824
+        ],
+        "dimensions": [
+          10.070029735565186,
+          14.17999954521656,
+          6.574948787689209
+        ]
+      },
+      "externalDependencies": 0
+    },
+    "GAMEPLAY": {
+      "filename": "TREE_EUCALYPTUS_001_v009_LOD_GAMEPLAY.glb",
+      "sizeBytes": 575908,
+      "sha256": "266adc055e6604922d0b535c8f3c8b71aa48c8f3a2283e42757b19090aaf1c6e",
+      "triangleCount": 8000,
+      "meshCount": 31,
+      "materialCount": 5,
+      "materialNames": [
+        "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_009",
+        "MAT_EUCALYPTUS_CREAM_009",
+        "MAT_EUCALYPTUS_TAN_009",
+        "MAT_EUCALYPTUS_PEACH_009",
+        "MAT_EUCALYPTUS_RUST_009"
+      ],
+      "alphaModes": [
+        "MASK",
+        "OPAQUE",
+        "OPAQUE",
+        "OPAQUE",
+        "OPAQUE"
+      ],
+      "embeddedImageCount": 1,
+      "nodeNames": [
+        "TREE_EUCALYPTUS_001_GAMEPLAY_AUTHORED_FOLIAGE_ISLANDS",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_BROAD_PLANTED_ROOT_MOUND",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_CENTRAL_CROWN_FORK",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_CENTRE_BACK_SUPPORT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_LEFT_LOWER_SUPPORT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_LEFT_TOP_SUPPORT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_LOWER_LEFT_SWEEP",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_LOWER_RIGHT_REACH",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_MAIN_TRUNK",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_MID_LEFT_ARCH",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_MID_RIGHT_SWEEP",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_RIGHT_TOP_SUPPORT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_FRONT_LEFT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_FRONT_RIGHT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_LEFT_REAR",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_LONG_LEFT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_REAR_SHORT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_RIGHT_SIDE",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_TOE_FRONT_LEFT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_TOE_FRONT_RIGHT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_TOE_LEFT_REAR",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_TOE_LONG_LEFT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_TOE_REAR_SHORT",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_ROOT_TOE_RIGHT_SIDE",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_SCULPTED_FORK_SWELL_0",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_SCULPTED_FORK_SWELL_1",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_SCULPTED_FORK_SWELL_2",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_SCULPTED_FORK_SWELL_3",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_SCULPTED_ROOT_COLLAR",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_UPPER_LEFT_FORK",
+        "TREE_EUCALYPTUS_001_GAMEPLAY_UPPER_RIGHT_ARCH",
+        "TREE_EUCALYPTUS_001_LOD_GAMEPLAY_IDENTITY_ANCHOR",
+        "TREE_EUCALYPTUS_001_LOD_GAMEPLAY_ROOT"
+      ],
+      "bounds": {
+        "min": [
+          -5.090029716491699,
+          -0.20000000298023224,
+          -2.7907962799072266
+        ],
+        "max": [
+          4.980000019073486,
+          13.979999542236328,
+          3.7841525077819824
+        ],
+        "dimensions": [
+          10.070029735565186,
+          14.17999954521656,
+          6.574948787689209
+        ]
+      },
+      "externalDependencies": 0
+    },
+    "MAP": {
+      "filename": "TREE_EUCALYPTUS_001_v009_LOD_MAP.glb",
+      "sizeBytes": 381364,
+      "sha256": "92e617ab36617920307bd1b8825ccb739ada75a7a95d5facf3e4c06c1b369a9d",
+      "triangleCount": 1190,
+      "meshCount": 16,
+      "materialCount": 5,
+      "materialNames": [
+        "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_009",
+        "MAT_EUCALYPTUS_CREAM_009",
+        "MAT_EUCALYPTUS_TAN_009",
+        "MAT_EUCALYPTUS_PEACH_009",
+        "MAT_EUCALYPTUS_RUST_009"
+      ],
+      "alphaModes": [
+        "MASK",
+        "OPAQUE",
+        "OPAQUE",
+        "OPAQUE",
+        "OPAQUE"
+      ],
+      "embeddedImageCount": 1,
+      "nodeNames": [
+        "TREE_EUCALYPTUS_001_LOD_MAP_IDENTITY_ANCHOR",
+        "TREE_EUCALYPTUS_001_MAP_AUTHORED_FOLIAGE_ISLANDS",
+        "TREE_EUCALYPTUS_001_MAP_CENTRAL_CROWN_FORK",
+        "TREE_EUCALYPTUS_001_MAP_LEFT_TOP_SUPPORT",
+        "TREE_EUCALYPTUS_001_MAP_LOWER_LEFT_SWEEP",
+        "TREE_EUCALYPTUS_001_MAP_LOWER_RIGHT_REACH",
+        "TREE_EUCALYPTUS_001_MAP_MAIN_TRUNK",
+        "TREE_EUCALYPTUS_001_MAP_MID_LEFT_ARCH",
+        "TREE_EUCALYPTUS_001_MAP_MID_RIGHT_SWEEP",
+        "TREE_EUCALYPTUS_001_MAP_RIGHT_TOP_SUPPORT",
+        "TREE_EUCALYPTUS_001_MAP_ROOT_FRONT_LEFT",
+        "TREE_EUCALYPTUS_001_MAP_ROOT_FRONT_RIGHT",
+        "TREE_EUCALYPTUS_001_MAP_ROOT_LONG_LEFT",
+        "TREE_EUCALYPTUS_001_MAP_ROOT_RIGHT_SIDE",
+        "TREE_EUCALYPTUS_001_MAP_SCULPTED_ROOT_COLLAR",
+        "TREE_EUCALYPTUS_001_MAP_UPPER_LEFT_FORK",
+        "TREE_EUCALYPTUS_001_MAP_UPPER_RIGHT_ARCH",
+        "TREE_EUCALYPTUS_001_LOD_MAP_ROOT"
+      ],
+      "bounds": {
+        "min": [
+          -5.090029716491699,
+          0,
+          -2.7907962799072266
+        ],
+        "max": [
+          4.980000019073486,
+          13.979999542236328,
+          3.7841525077819824
+        ],
+        "dimensions": [
+          10.070029735565186,
+          13.979999542236328,
+          6.574948787689209
+        ]
+      },
+      "externalDependencies": 0
+    }
+  },
+  "limits": {
+    "CLOSE": {
+      "preferredMin": 8000,
+      "preferredMax": 12000,
+      "hardCeiling": 18000
+    },
+    "GAMEPLAY": {
+      "preferredMin": 3000,
+      "preferredMax": 5000,
+      "hardCeiling": 8000
+    },
+    "MAP": {
+      "preferredMin": 600,
+      "preferredMax": 1200,
+      "hardCeiling": 2000
+    }
+  },
+  "previousProtectedEvidence": [
+    {
+      "filename": "TREE_EUCALYPTUS_001_v001.blend",
+      "sha256": "74d87e40a65a99f3f89e20539ad81cacdfe9060046bcd987abbcd3e4711044b4"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002.blend",
+      "sha256": "f2b3acce9ed1109e1c7e3d135350378030d23e0492b7cff5a7bc0baecf42ba82"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002_LOD_CLOSE.glb",
+      "sha256": "f2e4cbe9cc14e8ffe83e0649014aa22ef97001fe1790185869983d5d6d923458"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002_LOD_GAMEPLAY.glb",
+      "sha256": "ce81d0a86dc241f51f3d9564a203aec2be84f0426a59cd72ab314dbdfdea038b"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v002_LOD_MAP.glb",
+      "sha256": "272a1615e36eea577a59ce640c3ed1f80d4e9707f33df86b8a262c645aecbba8"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v003.blend",
+      "sha256": "8e9f939cadda303ee1b9689f07cd898accef0ec4ff774b05e3c1b6013249436a"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v003_LOD_CLOSE.glb",
+      "sha256": "a73c5d6cc09ac9a105dc5a78b00ec649f656ef0a7771dd976356131bd5f6a258"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v003_LOD_GAMEPLAY.glb",
+      "sha256": "7983a828694dc7dd0647c3a5f2c07f03598cdae0c9244ebc2d5a0d21bff7fdfb"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v003_LOD_MAP.glb",
+      "sha256": "301ace766844cb0255b6ed03a0b2b0e7c13b554085d983e0f7c7da1c28d05081"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v004.blend",
+      "sha256": "196c851ec4a1fc7ec7efa008f1d83df03587ac806af08f16068eba6f389f8313"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v004_LOD_CLOSE.glb",
+      "sha256": "a5023634df6155e69e6493edc24126b8d7a50366f0a7d512e944a125100f6853"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v004_LOD_GAMEPLAY.glb",
+      "sha256": "3a51db2a9f6280022df2436c5f399460b43f3e3cfb451fd27a6adb1f3d00fb28"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v004_LOD_MAP.glb",
+      "sha256": "b7e8768e02eff67571ab3b891b1857bfb688f132a1ec42c1c0481f2867188265"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v005.blend",
+      "sha256": "b4f4fe4914eba322495d817d50795e466f5e40688b6b210e0763b4deda50b96f"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v005_LOD_CLOSE.glb",
+      "sha256": "5f4f2f305955499ce22e58716ab0d044861ca3939c88b3109774a40dbb5c2f48"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v005_LOD_GAMEPLAY.glb",
+      "sha256": "c6e29767a423c60392af9c2115b796b7533215e98b9abbba3ffb71db7f888ea5"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v005_LOD_MAP.glb",
+      "sha256": "4842140ac7c1a71e82dabc2bde6439edd2af9faf4d54b1e9ef67ce45ca7d582d"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v006.blend",
+      "sha256": "95984dbbb6a08afee5ea7febe0d5db60f4a53553563878013eb8333bfb8b424f"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v006_LOD_CLOSE.glb",
+      "sha256": "0bd599c9b61b3c239564eefcbe6d249264125794f96feb5b24301336931682f5"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v006_LOD_GAMEPLAY.glb",
+      "sha256": "4b7ed7d848d483f3e70e74d295f3f7500a1a9f1550f925178e369a3c72e80c6f"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v006_LOD_MAP.glb",
+      "sha256": "979892e953d100d2381e26b8af10efe87e2866db1265f748c1a5382f5ed1259d"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v007.blend",
+      "sha256": "a34b922bebc3cee64ffeb48707510a349281bf416325cbed48fb19466116c790"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v007_LOD_CLOSE.glb",
+      "sha256": "956cd35fabc6bfc6cc54f75e41a1e7ace15658a0ffcc7402750dd79412fe873b"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v007_LOD_GAMEPLAY.glb",
+      "sha256": "949bfc8b1a360ecb8f1c4431ca300bbf9c094983acf5cd086ad852d94a04cd6e"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v007_LOD_MAP.glb",
+      "sha256": "9c55db5c83a8443ca45b91ba572273d0996fee70b52dbf8104c18beaca6a5ed2"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v008.blend",
+      "sha256": "08f144f291896078c7487ed6282c95d03515b7c40a75ef762c4454d1af56b183"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v008_LOD_CLOSE.glb",
+      "sha256": "ce2c53b5edaaea151dd6f2072c6b5783117c2fe70f52fe5346c56f23f160963b"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v008_LOD_GAMEPLAY.glb",
+      "sha256": "2c0fc1a2d29d515a4f7ac75364e374f8e77e680ca81ec0f4d7d292544208a75a"
+    },
+    {
+      "filename": "TREE_EUCALYPTUS_001_v008_LOD_MAP.glb",
+      "sha256": "7c740d4a40c8b8a8e472f7cab819aa7dbb8a77968541e50c42bb2c7cd099faaf"
+    }
+  ],
+  "checks": [
+    {
+      "name": "close_under_hard_ceiling",
+      "ok": true,
+      "detail": "9416 <= 18000"
+    },
+    {
+      "name": "close_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "close_root_exported",
+      "ok": true
+    },
+    {
+      "name": "close_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.20000000298023224"
+    },
+    {
+      "name": "close_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "close_alpha_mask_material",
+      "ok": true,
+      "detail": "MASK,OPAQUE,OPAQUE,OPAQUE,OPAQUE"
+    },
+    {
+      "name": "close_atlas_embedded",
+      "ok": true,
+      "detail": "embeddedImages=1"
+    },
+    {
+      "name": "close_no_detached_bark_geometry",
+      "ok": true
+    },
+    {
+      "name": "close_integrated_bark_materials",
+      "ok": true,
+      "detail": "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_009,MAT_EUCALYPTUS_CREAM_009,MAT_EUCALYPTUS_TAN_009,MAT_EUCALYPTUS_PEACH_009,MAT_EUCALYPTUS_RUST_009"
+    },
+    {
+      "name": "gameplay_under_hard_ceiling",
+      "ok": true,
+      "detail": "8000 <= 8000"
+    },
+    {
+      "name": "gameplay_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_root_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.20000000298023224"
+    },
+    {
+      "name": "gameplay_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "gameplay_alpha_mask_material",
+      "ok": true,
+      "detail": "MASK,OPAQUE,OPAQUE,OPAQUE,OPAQUE"
+    },
+    {
+      "name": "gameplay_atlas_embedded",
+      "ok": true,
+      "detail": "embeddedImages=1"
+    },
+    {
+      "name": "gameplay_no_detached_bark_geometry",
+      "ok": true
+    },
+    {
+      "name": "gameplay_integrated_bark_materials",
+      "ok": true,
+      "detail": "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_009,MAT_EUCALYPTUS_CREAM_009,MAT_EUCALYPTUS_TAN_009,MAT_EUCALYPTUS_PEACH_009,MAT_EUCALYPTUS_RUST_009"
+    },
+    {
+      "name": "map_under_hard_ceiling",
+      "ok": true,
+      "detail": "1190 <= 2000"
+    },
+    {
+      "name": "map_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "map_root_exported",
+      "ok": true
+    },
+    {
+      "name": "map_ground_contact",
+      "ok": true,
+      "detail": "minY=0"
+    },
+    {
+      "name": "map_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "map_alpha_mask_material",
+      "ok": true,
+      "detail": "MASK,OPAQUE,OPAQUE,OPAQUE,OPAQUE"
+    },
+    {
+      "name": "map_atlas_embedded",
+      "ok": true,
+      "detail": "embeddedImages=1"
+    },
+    {
+      "name": "map_no_detached_bark_geometry",
+      "ok": true
+    },
+    {
+      "name": "lod_complexity_order",
+      "ok": true
+    },
+    {
+      "name": "authored_height_coherent",
+      "ok": true,
+      "detail": "maxY=13.979999542236328"
+    },
+    {
+      "name": "crown_width_in_target_band",
+      "ok": true,
+      "detail": "width=10.070029735565186"
+    },
+    {
+      "name": "crown_depth_in_target_band",
+      "ok": true,
+      "detail": "depth=6.574948787689209"
+    },
+    {
+      "name": "gameplay_over_preferred_documented",
+      "ok": true
+    },
+    {
+      "name": "gameplay_in_v009_refinement_band",
+      "ok": true,
+      "detail": "8000 triangles"
+    },
+    {
+      "name": "atlas_png_signature",
+      "ok": true
+    },
+    {
+      "name": "atlas_512_square",
+      "ok": true,
+      "detail": "512x512"
+    }
+  ],
+  "technicalValidationPassed": true,
+  "operatorVisualApprovalRequired": true,
+  "runtimeActivated": false,
+  "publishingPerformed": false,
+  "gameplayPreferredTargetExceptionReason": "The candidate reaches the 8,000-triangle hard ceiling because smoother fork blending, broad planted root sculpture, and the requested inner-canopy fullness materially improve the reference match; operator review is required before any further optimization.",
+  "readyForOperatorReview": true,
+  "visualApprovalStatus": "PENDING_OPERATOR_REVIEW"
+}

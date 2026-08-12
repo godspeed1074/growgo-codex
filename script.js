@@ -283144,11 +283144,17 @@ function buildPinIcon(pin, state = null) {
   const ownedClass = iconState.owned ? "pin-owned" : "";
   const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
   const valueClass = iconState.type === "water" ? "" : getBasePinValueClass(iconState.points);
-  const pinImage = iconState.type === "water" ? "pin-water-blue.png" : "pin-base-purple.png";
   const showPointNumber = iconState.type !== "water" && !iconState.capturedToday;
   const fish = getActiveWaterPinFish(pin);
+  const hasAnimatedBlueFish = fish?.className === "blue";
+  const pinImage = hasAnimatedBlueFish
+    ? "assets/map/GrowGo_fish_map_pin_animated_transparent.webp"
+    : iconState.type === "water"
+      ? "pin-water-blue.png"
+      : "pin-base-purple.png";
   const fishClass = fish ? "water-pin-has-fish" : "";
-  const fishBadge = fish
+  const animatedFishClass = hasAnimatedBlueFish ? "water-pin-blue-fish-animated" : "";
+  const fishBadge = fish && !hasAnimatedBlueFish
     ? `
       <div
         class="water-pin-fish water-pin-fish-${escapeAttribute(fish.className)}"
@@ -283158,7 +283164,11 @@ function buildPinIcon(pin, state = null) {
       </div>
     `
     : "";
-  const pinAlt = iconState.type === "water" ? "Water Pin" : "Base Pin";
+  const pinAlt = hasAnimatedBlueFish
+    ? "Water Pin with Blue Fish"
+    : iconState.type === "water"
+      ? "Water Pin"
+      : "Base Pin";
   const plantVisual = getPinPlantVisual(pin);
   const plantBadge = iconState.plantStage > 0
     ? `
@@ -283172,7 +283182,7 @@ function buildPinIcon(pin, state = null) {
     : "";
 
   const html = `
-    <div class="base-pin-marker ${typeClass} ${valueClass} ${fishClass} ${glowClass} ${capturedClass} ${ownedClass}">
+    <div class="base-pin-marker ${typeClass} ${valueClass} ${fishClass} ${animatedFishClass} ${glowClass} ${capturedClass} ${ownedClass}">
       <img src="${pinImage}" alt="${pinAlt}">
       ${showPointNumber ? `<div class="base-pin-number">${iconState.points}</div>` : ""}
       ${fishBadge}

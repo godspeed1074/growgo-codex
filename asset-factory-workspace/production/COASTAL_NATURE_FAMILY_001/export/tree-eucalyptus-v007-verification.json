@@ -1,0 +1,163 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V007_PRODUCTION_VERIFICATION_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "checks": [
+    {
+      "name": "close_under_hard_ceiling",
+      "ok": true,
+      "detail": "3160 <= 18000"
+    },
+    {
+      "name": "close_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "close_root_exported",
+      "ok": true
+    },
+    {
+      "name": "close_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.053383197635412216"
+    },
+    {
+      "name": "close_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "close_alpha_mask_material",
+      "ok": true,
+      "detail": "MASK,OPAQUE,OPAQUE,OPAQUE,OPAQUE"
+    },
+    {
+      "name": "close_atlas_embedded",
+      "ok": true,
+      "detail": "embeddedImages=1"
+    },
+    {
+      "name": "close_no_detached_bark_geometry",
+      "ok": true
+    },
+    {
+      "name": "close_integrated_bark_materials",
+      "ok": true,
+      "detail": "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_007,MAT_EUCALYPTUS_CREAM_007,MAT_EUCALYPTUS_TAN_007,MAT_EUCALYPTUS_PEACH_007,MAT_EUCALYPTUS_RUST_007"
+    },
+    {
+      "name": "gameplay_under_hard_ceiling",
+      "ok": true,
+      "detail": "2510 <= 8000"
+    },
+    {
+      "name": "gameplay_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_root_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.051438964903354645"
+    },
+    {
+      "name": "gameplay_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "gameplay_alpha_mask_material",
+      "ok": true,
+      "detail": "MASK,OPAQUE,OPAQUE,OPAQUE,OPAQUE"
+    },
+    {
+      "name": "gameplay_atlas_embedded",
+      "ok": true,
+      "detail": "embeddedImages=1"
+    },
+    {
+      "name": "gameplay_no_detached_bark_geometry",
+      "ok": true
+    },
+    {
+      "name": "gameplay_integrated_bark_materials",
+      "ok": true,
+      "detail": "MAT_EUCALYPTUS_FOLIAGE_ATLAS_MASK_007,MAT_EUCALYPTUS_CREAM_007,MAT_EUCALYPTUS_TAN_007,MAT_EUCALYPTUS_PEACH_007,MAT_EUCALYPTUS_RUST_007"
+    },
+    {
+      "name": "map_under_hard_ceiling",
+      "ok": true,
+      "detail": "976 <= 2000"
+    },
+    {
+      "name": "map_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "map_root_exported",
+      "ok": true
+    },
+    {
+      "name": "map_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.05449507758021355"
+    },
+    {
+      "name": "map_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "map_alpha_mask_material",
+      "ok": true,
+      "detail": "MASK,OPAQUE,OPAQUE,OPAQUE,OPAQUE"
+    },
+    {
+      "name": "map_atlas_embedded",
+      "ok": true,
+      "detail": "embeddedImages=1"
+    },
+    {
+      "name": "map_no_detached_bark_geometry",
+      "ok": true
+    },
+    {
+      "name": "lod_complexity_order",
+      "ok": true
+    },
+    {
+      "name": "authored_height_coherent",
+      "ok": true,
+      "detail": "maxY=13.90000057220459"
+    },
+    {
+      "name": "crown_width_in_target_band",
+      "ok": true,
+      "detail": "width=9.622963428497314"
+    },
+    {
+      "name": "crown_depth_in_target_band",
+      "ok": true,
+      "detail": "depth=6.577107667922974"
+    },
+    {
+      "name": "gameplay_over_preferred_documented",
+      "ok": true
+    },
+    {
+      "name": "gameplay_in_v007_density_target",
+      "ok": true,
+      "detail": "2510 triangles"
+    },
+    {
+      "name": "atlas_png_signature",
+      "ok": true
+    },
+    {
+      "name": "atlas_512_square",
+      "ok": true,
+      "detail": "512x512"
+    }
+  ],
+  "technicalValidationPassed": true,
+  "deterministicFingerprint": "f3988b673bcb7b6126e560f3a1ebd89cc34d87c49031befa053ab03c5b2c5855"
+}

@@ -1,0 +1,87 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V003_PRODUCTION_VERIFICATION_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "checks": [
+    {
+      "name": "close_under_hard_ceiling",
+      "ok": true,
+      "detail": "11374 <= 18000"
+    },
+    {
+      "name": "close_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "close_root_exported",
+      "ok": true
+    },
+    {
+      "name": "close_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.044774238020181656"
+    },
+    {
+      "name": "close_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "gameplay_under_hard_ceiling",
+      "ok": true,
+      "detail": "5320 <= 8000"
+    },
+    {
+      "name": "gameplay_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_root_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.04775853455066681"
+    },
+    {
+      "name": "gameplay_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "map_under_hard_ceiling",
+      "ok": true,
+      "detail": "924 <= 2000"
+    },
+    {
+      "name": "map_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "map_root_exported",
+      "ok": true
+    },
+    {
+      "name": "map_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.048634227365255356"
+    },
+    {
+      "name": "map_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "lod_complexity_order",
+      "ok": true
+    },
+    {
+      "name": "authored_height_coherent",
+      "ok": true,
+      "detail": "maxY=14.010668754577637"
+    },
+    {
+      "name": "gameplay_over_preferred_documented",
+      "ok": true
+    }
+  ],
+  "technicalValidationPassed": true,
+  "deterministicFingerprint": "adbadef087ef35f478838f8011c8b561c69b788701e7df7cb7c09bf35eae3a8b"
+}

@@ -1,0 +1,97 @@
+{
+  "schemaId": "TREE_EUCALYPTUS_V005_PRODUCTION_VERIFICATION_001",
+  "assetId": "TREE_EUCALYPTUS_001",
+  "checks": [
+    {
+      "name": "close_under_hard_ceiling",
+      "ok": true,
+      "detail": "9210 <= 18000"
+    },
+    {
+      "name": "close_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "close_root_exported",
+      "ok": true
+    },
+    {
+      "name": "close_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.044557906687259674"
+    },
+    {
+      "name": "close_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "gameplay_under_hard_ceiling",
+      "ok": true,
+      "detail": "4910 <= 8000"
+    },
+    {
+      "name": "gameplay_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_root_exported",
+      "ok": true
+    },
+    {
+      "name": "gameplay_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.04346373304724693"
+    },
+    {
+      "name": "gameplay_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "map_under_hard_ceiling",
+      "ok": true,
+      "detail": "766 <= 2000"
+    },
+    {
+      "name": "map_anchor_exported",
+      "ok": true
+    },
+    {
+      "name": "map_root_exported",
+      "ok": true
+    },
+    {
+      "name": "map_ground_contact",
+      "ok": true,
+      "detail": "minY=-0.045864030718803406"
+    },
+    {
+      "name": "map_no_external_dependencies",
+      "ok": true
+    },
+    {
+      "name": "lod_complexity_order",
+      "ok": true
+    },
+    {
+      "name": "authored_height_coherent",
+      "ok": true,
+      "detail": "maxY=13.958080291748047"
+    },
+    {
+      "name": "crown_width_in_target_band",
+      "ok": true,
+      "detail": "width=9.982845306396484"
+    },
+    {
+      "name": "crown_depth_in_target_band",
+      "ok": true,
+      "detail": "depth=6.808640241622925"
+    },
+    {
+      "name": "gameplay_over_preferred_documented",
+      "ok": true
+    }
+  ],
+  "technicalValidationPassed": true,
+  "deterministicFingerprint": "419647b5165abe6b2f639f3d486a76b1cfe5eb5821c247544a36fe86c5261ce1"
+}

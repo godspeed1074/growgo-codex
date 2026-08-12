@@ -86,7 +86,7 @@ import {
 } from "./developer-only-atlas-visual-primitive-layer.mjs?v=atlas21277c";
 import {
   createDeveloperOnlyAtlasSharedApprovedLiveAssetController
-} from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21282a";
+} from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21282b";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -676,8 +676,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         ? (() => {
             const point = liveMap.latLngToContainerPoint(center);
             return liveMap.containerPointToLatLng([
-              Number(point?.x ?? 0) + 92,
-              Number(point?.y ?? 0) + 138
+              Number(point?.x ?? 0) + 64,
+              Number(point?.y ?? 0) + 176
             ]);
           })()
         : null;
@@ -740,8 +740,8 @@ function installDeveloperOnlyAtlasAttachmentBrowserSurface({
         ? (() => {
             const point = liveMap.latLngToContainerPoint(center);
             return liveMap.containerPointToLatLng([
-              Number(point?.x ?? 0) + 196,
-              Number(point?.y ?? 0) + 118
+              Number(point?.x ?? 0) + 136,
+              Number(point?.y ?? 0) + 146
             ]);
           })()
         : null;

@@ -1,0 +1,12 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "v016",
+  "manifestVersion": "1.0.0",
+  "lodOrder": [
+    "CLOSE",
+    "GAMEPLAY",
+    "MAP"
+  ],
+  "groundAnchor": "per-LOD IDENTITY_ANCHOR at trunk/root ground contact (Z=0)",
+  "macroPlacement": "fully authored; no random distribution"
+}

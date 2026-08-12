@@ -1501,6 +1501,13 @@ body.phone-preview .menu-overlay {
     drop-shadow(0 0 9px rgba(54, 191, 255, 0.72));
 }
 
+.water-pin-marker.water-pin-blue-fish-animated img {
+  width: 84px !important;
+  height: 84px !important;
+  margin: 0 0 0 -10px;
+  filter: drop-shadow(0 0 9px rgba(54, 191, 255, 0.72));
+}
+
 .water-pin-marker .base-pin-number {
   color: #012b6f;
   -webkit-text-stroke-color: rgba(225,247,255,0.84);

@@ -1,0 +1,71 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousCandidateVersion": "v009",
+  "targetRevisionVersion": "v011",
+  "status": "PENDING_OPERATOR_REVIEW",
+  "authoredDimensionsMetres": {
+    "height": 14.0,
+    "crownWidth": 9.0,
+    "crownDepth": 7.0
+  },
+  "construction": {
+    "method": "full-canopy cartoony pass with art-directed branch skeleton, broader planted roots, face-bound graphic bark, authored foliage islands, and reusable alpha-masked eucalyptus foliage atlas cards",
+    "manuallyAuthoredMajorBranchShapes": [
+      "MAIN_TRUNK",
+      "LOWER_LEFT_SWEEP",
+      "MID_LEFT_ARCH",
+      "UPPER_LEFT_FORK",
+      "CENTRAL_CROWN_FORK",
+      "MID_RIGHT_SWEEP",
+      "UPPER_RIGHT_ARCH",
+      "LOWER_RIGHT_REACH"
+    ],
+    "secondarySupportingBranches": [
+      "LEFT_TOP_SUPPORT",
+      "RIGHT_TOP_SUPPORT",
+      "LEFT_LOWER_SUPPORT",
+      "CENTRE_BACK_SUPPORT"
+    ],
+    "foliageIslands": [
+      "FULL_ROUND_CROWN",
+      "CROWN_LEFT",
+      "CROWN_RIGHT",
+      "LOW_LEFT_ROUND",
+      "LOW_RIGHT_ROUND",
+      "LOW_FRONT",
+      "UPPER_LEFT_HIGHLIGHT",
+      "UPPER_RIGHT_HIGHLIGHT"
+    ],
+    "foliageIslandCount": 8,
+    "reusableFoliageCardTypes": 4,
+    "textureAtlas": {
+      "filename": "TREE_EUCALYPTUS_001_v006_FOLIAGE_ATLAS_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "bytes": 318123,
+      "reusedFrom": "v006"
+    },
+    "barkTechnique": "material assignments on actual trunk and branch mesh faces; zero detached bark geometry",
+    "materials": 5
+  },
+  "protectedHistoricalVersions": [
+    "v001",
+    "v002",
+    "v003",
+    "v004",
+    "v005",
+    "v006",
+    "v007",
+    "v008",
+    "v009"
+  ],
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "activated": false
+}

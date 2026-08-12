@@ -1,0 +1,69 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousCandidateVersion": "v006",
+  "targetRevisionVersion": "v007",
+  "status": "PENDING_OPERATOR_REVIEW",
+  "authoredDimensionsMetres": {
+    "height": 14.0,
+    "crownWidth": 9.0,
+    "crownDepth": 7.0
+  },
+  "construction": {
+    "method": "concept-matched art-directed fixed control points with denser layered atlas cards and integrated bark face regions",
+    "manuallyAuthoredMajorBranchShapes": [
+      "MAIN_TRUNK",
+      "LOWER_LEFT_SWEEP",
+      "MID_LEFT_ARCH",
+      "UPPER_LEFT_FORK",
+      "CENTRAL_CROWN_FORK",
+      "MID_RIGHT_SWEEP",
+      "UPPER_RIGHT_ARCH",
+      "LOWER_RIGHT_REACH"
+    ],
+    "secondarySupportingBranches": [
+      "LEFT_TOP_SUPPORT",
+      "RIGHT_TOP_SUPPORT",
+      "LEFT_LOWER_SUPPORT",
+      "CENTRE_BACK_SUPPORT"
+    ],
+    "foliageIslands": [
+      "TOP_LEFT",
+      "TOP_CENTRE",
+      "TOP_RIGHT",
+      "MID_LEFT",
+      "MID_CENTRE_BACK",
+      "MID_RIGHT",
+      "LOW_LEFT",
+      "LOW_CENTRE",
+      "LOW_RIGHT"
+    ],
+    "foliageIslandCount": 9,
+    "reusableFoliageCardTypes": 4,
+    "textureAtlas": {
+      "filename": "TREE_EUCALYPTUS_001_v006_FOLIAGE_ATLAS_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "bytes": 318123,
+      "reusedFrom": "v006"
+    },
+    "barkTechnique": "material assignments on actual trunk and branch mesh faces; zero detached bark geometry",
+    "materials": 5
+  },
+  "protectedHistoricalVersions": [
+    "v001",
+    "v002",
+    "v003",
+    "v004",
+    "v005",
+    "v006"
+  ],
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "activated": false
+}

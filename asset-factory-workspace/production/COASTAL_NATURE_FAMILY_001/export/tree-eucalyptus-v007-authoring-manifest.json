@@ -1,0 +1,13 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "v007",
+  "expectedBlendFilename": "TREE_EUCALYPTUS_001_v007.blend",
+  "expectedOutputs": [
+    "TREE_EUCALYPTUS_001_v007_LOD_CLOSE.glb",
+    "TREE_EUCALYPTUS_001_v007_LOD_GAMEPLAY.glb",
+    "TREE_EUCALYPTUS_001_v007_LOD_MAP.glb"
+  ],
+  "previewDirectory": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/production/COASTAL_NATURE_FAMILY_001/preview/TREE_EUCALYPTUS_001_v007",
+  "operatorVisualApprovalRequired": true,
+  "status": "PENDING_OPERATOR_REVIEW"
+}

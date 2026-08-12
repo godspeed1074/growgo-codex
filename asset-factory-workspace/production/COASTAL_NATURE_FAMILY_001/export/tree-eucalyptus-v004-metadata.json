@@ -1,0 +1,29 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousCandidateVersion": "v003",
+  "targetRevisionVersion": "v004",
+  "status": "PENDING_OPERATOR_REVIEW",
+  "authoredHeightMetres": 14.0,
+  "visualDirection": "50 percent recognizable eucalyptus / 50 percent graphic papercut sculpture",
+  "construction": {
+    "dominantLimbSystems": 5,
+    "majorFoliageMasses": 11,
+    "foliageTechnique": "layered double-sided lobed papercut plates",
+    "paletteSlots": 7
+  },
+  "identityContractV2": {
+    "assetId": "TREE_EUCALYPTUS_001",
+    "category": "nature",
+    "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+    "version": "v004",
+    "identityAnchor": {
+      "componentRole": "IDENTITY_ANCHOR",
+      "required": true
+    },
+    "anchorValidation": "REQUIRE_PER_LOD_EXPORTED_ANCHOR"
+  },
+  "runtimeActivated": false,
+  "publishingPerformed": false
+}

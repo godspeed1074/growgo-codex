@@ -1,0 +1,59 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousCandidateVersion": "v009",
+  "targetRevisionVersion": "v013",
+  "status": "PENDING_OPERATOR_REVIEW",
+  "authoredDimensionsMetres": {
+    "height": 14.0,
+    "crownWidth": 9.0,
+    "crownDepth": 7.0
+  },
+  "construction": {
+    "method": "direct reference recreation: simple brown trunk, minimal roots, and one compact scalloped green canopy; no eucalyptus-specific branching or bark treatment",
+    "manuallyAuthoredMajorBranchShapes": [
+      "MAIN_TRUNK"
+    ],
+    "secondarySupportingBranches": [],
+    "foliageIslands": [
+      "FULL_ROUND_CROWN",
+      "CROWN_LEFT",
+      "CROWN_RIGHT",
+      "LOW_LEFT_ROUND",
+      "LOW_RIGHT_ROUND",
+      "LOW_FRONT",
+      "UPPER_LEFT_HIGHLIGHT",
+      "UPPER_RIGHT_HIGHLIGHT"
+    ],
+    "foliageIslandCount": 8,
+    "reusableFoliageCardTypes": 4,
+    "textureAtlas": {
+      "filename": "TREE_EUCALYPTUS_001_v006_FOLIAGE_ATLAS_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "alphaMode": "MASK",
+      "bytes": 318123,
+      "reusedFrom": "v006"
+    },
+    "barkTechnique": "material assignments on actual trunk and branch mesh faces; zero detached bark geometry",
+    "materials": 5
+  },
+  "protectedHistoricalVersions": [
+    "v001",
+    "v002",
+    "v003",
+    "v004",
+    "v005",
+    "v006",
+    "v007",
+    "v008",
+    "v009"
+  ],
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "activated": false
+}

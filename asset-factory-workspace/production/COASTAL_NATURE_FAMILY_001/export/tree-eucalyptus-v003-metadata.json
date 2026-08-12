@@ -1,0 +1,62 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousRegisteredVersion": "v002",
+  "targetRevisionVersion": "v003",
+  "authoredDimensionsMetres": {
+    "height": 14.0,
+    "targetCrownWidth": 9.0,
+    "targetCrownDepth": 7.5
+  },
+  "identityContractV2": {
+    "assetId": "TREE_EUCALYPTUS_001",
+    "category": "nature",
+    "recipeId": "TREE_EUCALYPTUS_RECIPE_001",
+    "version": "v003",
+    "variantId": "DEFAULT",
+    "paletteId": "AU_NATIVE_GREEN_001",
+    "lodProfile": "NATURE_STANDARD_001",
+    "dependencies": [
+      {
+        "dependencyId": "MOD_TREE_LEAF_CLUSTER_001",
+        "category": "module",
+        "identityPolicy": "DEPENDENCY_DECLARED_ONLY"
+      }
+    ],
+    "identityAnchor": {
+      "componentRole": "IDENTITY_ANCHOR",
+      "required": true
+    },
+    "anchorValidation": "REQUIRE_PER_LOD_EXPORTED_ANCHOR"
+  },
+  "geometryLimits": {
+    "CLOSE": {
+      "preferred": [
+        8000,
+        12000
+      ],
+      "hardCeiling": 18000
+    },
+    "GAMEPLAY": {
+      "preferred": [
+        3000,
+        5000
+      ],
+      "hardCeiling": 8000
+    },
+    "MAP": {
+      "preferred": [
+        600,
+        1200
+      ],
+      "hardCeiling": 2000
+    }
+  },
+  "productionIntent": [
+    "translate approved Classic River Red Eucalyptus Version 1 concept",
+    "preserve open asymmetric crown and negative space",
+    "use merged reusable foliage sprays",
+    "author coherent fourteen metre source scale"
+  ]
+}

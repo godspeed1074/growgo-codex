@@ -1,0 +1,29 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "assetFamilyId": "COASTAL_NATURE_FAMILY_001",
+  "recipeReference": "TREE_EUCALYPTUS_RECIPE_001",
+  "previousCandidateVersion": "v004",
+  "targetRevisionVersion": "v005",
+  "status": "PENDING_OPERATOR_REVIEW",
+  "authoredDimensionsMetres": {
+    "height": 14.0,
+    "crownWidth": 9.0,
+    "crownDepth": 7.0
+  },
+  "construction": {
+    "majorCanopyGroups": 9,
+    "majorLimbSystems": 7,
+    "foliageTechnique": "reusable irregular low-poly sub-masses with restrained drooping silhouette leaves",
+    "materials": 7
+  },
+  "protectedHistoricalVersions": [
+    "v001",
+    "v002",
+    "v003",
+    "v004"
+  ],
+  "registered": false,
+  "promoted": false,
+  "published": false,
+  "activated": false
+}
