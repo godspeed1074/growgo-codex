@@ -65,7 +65,7 @@ export function dispatchLocalFolder(pkg, destinationRoot, { dispatchedAt = new D
 
 function validateManifest(root, manifest, { result = false } = {}) {
   if (!manifest?.artifacts || manifest.manifestChecksum !== sha256(manifest.artifacts)) fail("TRANSPORT_PACKAGE_INVALID", "Artifact manifest checksum is invalid");
-  for (const item of manifest.artifacts.filter(entry => entry.required)) { const rootFile = result && item.logicalId === "BLENDER_WORKER_RESULT" ? item.filename : item.logicalId === "BLENDER_WORKER_JOB" ? "BLENDER_WORKER_JOB.json" : null; const file = rootFile ? path.join(root, rootFile) : path.join(root, "artifacts", item.filename); if (!fs.existsSync(file)) fail("WORKER_ARTIFACT_MISSING", item.logicalId); if (fileChecksum(file) !== item.checksum) fail("WORKER_ARTIFACT_CHECKSUM_FAIL", item.logicalId); }
+  for (const item of manifest.artifacts.filter(entry => entry.required)) { const rootFile = result && ["BLENDER_WORKER_RESULT", "WORKER_RUNTIME_CERTIFICATE"].includes(item.logicalId) ? item.filename : item.logicalId === "BLENDER_WORKER_JOB" ? "BLENDER_WORKER_JOB.json" : null; const file = rootFile ? path.join(root, rootFile) : path.join(root, "artifacts", item.filename); if (!fs.existsSync(file)) fail("WORKER_ARTIFACT_MISSING", item.logicalId); if (fileChecksum(file) !== item.checksum) fail("WORKER_ARTIFACT_CHECKSUM_FAIL", item.logicalId); }
   return true;
 }
 
