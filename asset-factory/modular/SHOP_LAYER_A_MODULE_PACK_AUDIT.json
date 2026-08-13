@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedDeterministically": true,
+  "status": "PASS",
+  "findingCount": 10,
+  "findings": [
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-WALL-BRICK-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-FOUNDATION-SHOP-002",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    },
+    {
+      "code": "ORPHANED_MODULE",
+      "assetId": "GG-VEG-PLANTER-SHRUB-001",
+      "assetVersion": "1.0.0",
+      "severity": "INFO"
+    }
+  ]
+}
