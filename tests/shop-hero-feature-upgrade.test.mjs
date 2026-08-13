@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve('test-output/shop-hero-features');const r=JSON.parse(fs.readFileSync(path.join(root,'SHOP_HERO_FEATURE_RESULT.json')));
+test('hero feature candidates pass technical gates',()=>{assert.equal(r.modules.length,5);for(const m of r.modules){assert.equal(m.version,'3.0.0');assert.ok(m.budget.triangles<=1200);assert.ok(m.budget.materials<=3);assert.equal(m.budget.anonymousGeometryCount,0);const d=path.join(root,`${m.assetId}@3.0.0`);for(const f of ['MODULE_COMPONENT_ID_RENDER.png','MODULE_COMPONENT_ID_MAP.json','FRONT.png','BACK.png','LEFT.png','RIGHT.png','CLOSE_UP.png'])assert.ok(fs.existsSync(path.join(d,f)));}});
+test('feature report remains review gated',()=>{assert.ok(fs.existsSync('asset-factory/modular/SHOP_HERO_FEATURE_UPGRADE_REPORT.md'));});
