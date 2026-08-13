@@ -1,0 +1,448 @@
+{
+  "status": "APPROVED_WITH_NOTES",
+  "reviewVersion": "GG-SHOP-LAYER-A-REVIEW-1.0.0",
+  "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+  "modules": [
+    {
+      "moduleId": "GG-BLD-FOUNDATION-SHOP-002",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FOUNDATION-SHOP-002/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 48,
+        "vertices": 32,
+        "materials": 5,
+        "objectCount": 5,
+        "fileSizeBytes": 90114,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WALL-SHOP-BROWN-001/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 48,
+        "vertices": 32,
+        "materials": 5,
+        "objectCount": 5,
+        "fileSizeBytes": 90134,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-DOOR-SHOP-002",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-DOOR-SHOP-002/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 192,
+        "vertices": 128,
+        "materials": 8,
+        "objectCount": 17,
+        "fileSizeBytes": 96026,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-WINDOW-SHOP-LARGE-002/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 144,
+        "vertices": 96,
+        "materials": 7,
+        "objectCount": 13,
+        "fileSizeBytes": 94214,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 480,
+        "vertices": 320,
+        "materials": 14,
+        "objectCount": 41,
+        "fileSizeBytes": 105175,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-FASCIA-SHOP-NAVY-001/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 144,
+        "vertices": 96,
+        "materials": 7,
+        "objectCount": 13,
+        "fileSizeBytes": 94141,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-SIGN-INSERT-SHOP-001/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 48,
+        "vertices": 32,
+        "materials": 5,
+        "objectCount": 5,
+        "fileSizeBytes": 90139,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-TRIM-SHOP-CREAM-001/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 96,
+        "vertices": 64,
+        "materials": 6,
+        "objectCount": 9,
+        "fileSizeBytes": 91802,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    },
+    {
+      "moduleId": "GG-VEG-PLANTER-SHRUB-001",
+      "version": "1.0.0",
+      "reference": {
+        "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "status": "SPECIFICATION_BOUND",
+        "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+      },
+      "fourSide": {
+        "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/FRONT.png",
+        "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/BACK.png",
+        "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/LEFT.png",
+        "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/RIGHT.png",
+        "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/FOUR_SIDE_REVIEW_BOARD.png",
+        "status": "PASS"
+      },
+      "componentId": {
+        "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/MODULE_COMPONENT_ID_RENDER.png",
+        "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-VEG-PLANTER-SHRUB-001/MODULE_COMPONENT_ID_MAP.json",
+        "status": "PASS",
+        "confidence": "EXPLICIT_RENDER_ID"
+      },
+      "budget": {
+        "triangles": 288,
+        "vertices": 192,
+        "materials": 10,
+        "objectCount": 25,
+        "fileSizeBytes": 98754,
+        "lods": [
+          "LOD0",
+          "LOD1",
+          "LOD2"
+        ],
+        "status": "PASS"
+      },
+      "criteria": {
+        "silhouette": "APPROVED_WITH_NOTES",
+        "proportion": "APPROVED_WITH_NOTES",
+        "materialColour": "PASS",
+        "mobileReadability": "PASS",
+        "modularity": "PASS"
+      },
+      "status": "APPROVED_WITH_NOTES",
+      "notes": [
+        "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+        "No automatic visual approval was performed."
+      ]
+    }
+  ],
+  "approvedModules": [],
+  "needsCorrection": [],
+  "rejectedModules": [],
+  "fourSideReviewsGenerated": 9,
+  "componentIdReviewsGenerated": 9,
+  "budgetStatus": "PASS",
+  "goldenReferenceStatus": "SPECIFICATION_BOUND_OPERATOR_REVIEW_REQUIRED",
+  "operatorApprovalRequired": true,
+  "layerBAssembly": "NOT_CREATED"
+}
