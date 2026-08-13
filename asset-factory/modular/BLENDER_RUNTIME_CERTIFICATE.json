@@ -1,0 +1,58 @@
+{
+  "certificateVersion": "GG-BLENDER-RUNTIME-CERTIFICATE-1.0.0",
+  "runtimeSelectionVersion": "GG-BLENDER-RUNTIME-SELECTION-1.0.0",
+  "certificationStatus": "BLOCKED",
+  "errorCode": "BLENDER_PYTHON_EXECUTION_FAIL",
+  "certified": false,
+  "host": {
+    "platform": "darwin",
+    "hostArchitecture": "x86_64",
+    "kernelArchitecture": "x86_64",
+    "processArchitecture": "x86_64",
+    "rosettaTranslationActive": false,
+    "osRelease": "25.6.0",
+    "cpuCount": 12
+  },
+  "discoveredRuntimes": [
+    {
+      "executable": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "exists": true,
+      "architecture": "x86_64",
+      "version": "Blender 4.5.12 LTS",
+      "versionExitCode": 0,
+      "fileDescription": "/Applications/Blender.app/Contents/MacOS/Blender: Mach-O 64-bit executable x86_64"
+    },
+    {
+      "executable": "/Applications/Blender 4.2.app/Contents/MacOS/Blender",
+      "exists": true,
+      "architecture": "x86_64",
+      "version": "Blender 4.2.23 LTS",
+      "versionExitCode": 0,
+      "fileDescription": "/Applications/Blender 4.2.app/Contents/MacOS/Blender: Mach-O 64-bit executable x86_64"
+    },
+    {
+      "executable": "/Applications/Blender.app/Contents/MacOS/blender",
+      "exists": true,
+      "architecture": "x86_64",
+      "version": "Blender 4.5.12 LTS",
+      "versionExitCode": 0,
+      "fileDescription": "/Applications/Blender.app/Contents/MacOS/blender: Mach-O 64-bit executable x86_64"
+    }
+  ],
+  "selectedRuntime": {
+    "executable": "/Applications/Blender.app/Contents/MacOS/Blender",
+    "exists": true,
+    "architecture": "x86_64",
+    "version": "Blender 4.5.12 LTS",
+    "versionExitCode": 0,
+    "fileDescription": "/Applications/Blender.app/Contents/MacOS/Blender: Mach-O 64-bit executable x86_64"
+  },
+  "tests": {
+    "headlessLaunch": "HEADLESS_LAUNCH_PASS",
+    "pythonExecution": "BLENDER_PYTHON_EXECUTION_FAIL",
+    "fixtureOpen": "FIXTURE_NOT_PROVIDED",
+    "rgbaRender": "BLENDER_RGBA_RENDER_FAIL"
+  },
+  "render": null,
+  "certificationTimestamp": "2026-08-13T02:36:41.975Z"
+}

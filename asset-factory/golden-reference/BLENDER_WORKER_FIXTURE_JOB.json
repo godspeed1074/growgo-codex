@@ -1,0 +1,22 @@
+{
+  "contractVersion": "GG-BLENDER-WORKER-CONTRACT-1.0.0",
+  "jobId": "GG-WORKER-JOB-SIMPLE-SHOP-FIXTURE-001",
+  "assetId": "GG-REC-BLD-SIMPLE-SHOP-001",
+  "assetVersion": "1.0.0",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-001",
+  "recipeVersion": "1.0.0",
+  "blenderBuildId": "BLENDER-EXTERNAL-WORKER-FIXTURE",
+  "backend": "EXTERNAL_BLENDER",
+  "deterministic": true,
+  "untrustedWorker": true,
+  "goldenReference": { "referenceId": "GG-REF-SIMPLE-SHOP-FIXTURE-001", "referenceVersion": "1.0.0", "checksum": "fixture-reference-sha256" },
+  "componentMappings": [{ "componentId": "AWNING", "objectId": "GG_BLD_AWNING_SHOP_001" }],
+  "modules": [{ "componentId": "AWNING", "assetId": "GG-BLD-AWNING-SHOP-001", "assetVersion": "1.0.0", "moduleId": "GG-BLD-AWNING-SHOP-001", "moduleVersion": "1.0.0", "moduleFamily": "SHOP_AWNING" }],
+  "operations": [{ "componentId": "AWNING", "objectId": "GG_BLD_AWNING_SHOP_001", "operation": "SCALE_X", "value": 1.1 }],
+  "protectedComponents": ["MAIN_WALL"],
+  "budgetProfile": { "profileId": "BUILDING_MODULE_LIGHT", "hardTriangleCeiling": 1200, "hardVertexCeiling": 1500, "hardMaterialCeiling": 2 },
+  "cameraContract": { "id": "GG-CAMERA-SIMPLE-SHOP-001", "projection": "ORTHOGRAPHIC_LOCKED", "resolution": "32x32" },
+  "renderContract": { "format": "PNG", "colorMode": "RGBA", "width": 32, "height": 32 },
+  "exportContract": { "blendOutput": "SIMPLE_SHOP_BUILD_FIXTURE.blend", "glbOutputs": [] },
+  "checksums": { "sourceBuild": "fixture-source-sha256", "goldenReference": "fixture-reference-sha256", "recipe": "fixture-recipe-sha256" }
+}

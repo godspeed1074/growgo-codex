@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "growgo://asset-factory/BLENDER_WORKER_RESULT/1.0.0",
+  "title": "GrowGo untrusted external Blender worker result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["jobId", "status", "assetId", "assetVersion", "recipeId", "recipeVersion", "blenderVersion", "executableIdentity", "modules", "budget", "cameraValidation", "protectedObjectValidation", "render", "sourceChecksum", "oneIterationStop"],
+  "properties": { "jobId": { "type": "string" }, "status": { "enum": ["COMPLETED", "REJECTED", "FAILED"] }, "assetId": { "type": "string" }, "assetVersion": { "type": "string" }, "recipeId": { "type": "string" }, "recipeVersion": { "type": "string" }, "blenderVersion": { "type": "string" }, "executableIdentity": { "type": "object" }, "modules": { "type": "array" }, "budget": { "type": "object" }, "cameraValidation": { "type": "object" }, "protectedObjectValidation": { "type": "object" }, "render": { "type": "object" }, "sourceChecksum": { "type": "string" }, "goldenReference": { "type": "object" }, "outputChecksum": { "type": "string" }, "transformsBeforeAfter": { "type": "array" }, "executionDurationMs": { "type": "number" }, "iteration": { "const": 1 }, "oneIterationStop": { "const": true } }
+}
