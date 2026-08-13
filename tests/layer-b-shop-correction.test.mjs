@@ -1,0 +1,5 @@
+import test from "node:test";import assert from "node:assert/strict";import fs from "node:fs";
+const b=JSON.parse(fs.readFileSync('test-output/shop-layer-b-real/SHOP_BUDGET.json'));const a=JSON.parse(fs.readFileSync('test-output/shop-layer-b-corrected/SHOP_BUDGET.json'));const r=JSON.parse(fs.readFileSync('test-output/shop-layer-b-corrected/SHOP_LAYER_B_ASSEMBLY_RESULT.json'));
+test('single correction reduces LOD/object overhead',()=>{assert.ok(a.materials<b.materials);assert.ok(a.objectCount<b.objectCount);assert.equal(a.anonymousGeometryCount,0)});
+test('corrected build remains unpromoted',()=>{assert.equal(r.knownGoodBuildId,null);assert.equal(r.operatorApprovalRequired,true);for(const f of ['SHOP_FRONT.png','SHOP_BACK.png','SHOP_LEFT.png','SHOP_RIGHT.png','SHOP_COMPONENT_ID_RENDER.png','SHOP_COMPONENT_ID_MAP.json'])assert.ok(fs.existsSync('test-output/shop-layer-b-corrected/'+f))});
+test('correction does not alter recipe identity',()=>{assert.equal(r.recipeId,'GG-REC-BLD-SIMPLE-SHOP-GROWGO-001');assert.equal(r.recipeVersion,'1.0.0')});
