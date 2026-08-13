@@ -1,0 +1,12 @@
+{
+  "packId":"GG-PACK-BLD-SIMPLE-SHOP-GROWGO-001",
+  "packVersion":"1.2.0",
+  "parentPackVersion":"1.1.0",
+  "modules":[
+    {"assetId":"GG-BLD-FASCIA-SHOP-NAVY-001","assetVersion":"1.2.0","parentVersion":"1.1.0","type":"FASCIA_MODULE","family":"SHOP_FASCIA","palette":"SHOP_NAVY","change":"increase cap thickness and sign-mount projection within bounds","visualGoal":"stronger commercial silhouette and sign hierarchy"},
+    {"assetId":"GG-BLD-AWNING-SHOP-FABRIC-001","assetVersion":"1.2.0","parentVersion":"1.1.0","type":"AWNING_MODULE","family":"SHOP_AWNING","palette":"SHOP_PLUM_FABRIC","change":"increase canopy projection and scallop depth within bounds","visualGoal":"clearer fabric character and shadow separation"},
+    {"assetId":"GG-BLD-WINDOW-SHOP-LARGE-002","assetVersion":"1.2.0","parentVersion":"1.1.0","type":"WINDOW_MODULE","family":"SHOP_WINDOW","palette":"SHOP_TEAL_GLASS","change":"increase frame/sill projection and glass inset","visualGoal":"stronger display-window read"},
+    {"assetId":"GG-BLD-DOOR-SHOP-002","assetVersion":"1.2.0","parentVersion":"1.1.0","type":"DOOR_MODULE","family":"SHOP_DOOR","palette":"SHOP_WARM_BROWN","change":"increase frame prominence and threshold readability","visualGoal":"stronger entrance hierarchy"},
+    {"assetId":"GG-VEG-PLANTER-SHRUB-001","assetVersion":"1.2.0","parentVersion":"1.1.0","type":"PLANTER_SHRUB_MODULE","family":"SHOP_SHRUB","palette":"SHOP_GREEN_VEGETATION","change":"increase planter rim and foliage silhouette layering","visualGoal":"balanced, readable vegetation silhouette"}
+  ]
+}
