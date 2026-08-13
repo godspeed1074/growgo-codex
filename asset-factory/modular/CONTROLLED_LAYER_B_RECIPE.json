@@ -1,0 +1,116 @@
+{
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-001",
+  "recipeVersion": "1.0.0",
+  "layer": "LAYER_B_RECIPE",
+  "recipeFamily": "SIMPLE_SHOP",
+  "assemblyOrder": [
+    "FOUNDATION_BASE",
+    "WALL_FRONT",
+    "DOOR_FRONT",
+    "WINDOW_SET",
+    "TRIM_FRONT",
+    "ROOF_MAIN",
+    "AWNING_FRONT",
+    "SHRUB_ACCENT"
+  ],
+  "components": [
+    {
+      "componentId": "WALL_FRONT",
+      "assetId": "GG-BLD-WALL-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 0
+      },
+      "orientation": "N"
+    },
+    {
+      "componentId": "ROOF_MAIN",
+      "assetId": "GG-BLD-ROOF-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 90
+      },
+      "orientation": "E"
+    },
+    {
+      "componentId": "DOOR_FRONT",
+      "assetId": "GG-BLD-DOOR-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 0
+      },
+      "orientation": "N"
+    },
+    {
+      "componentId": "WINDOW_SET",
+      "assetId": "GG-BLD-WINDOW-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 90
+      },
+      "orientation": "E"
+    },
+    {
+      "componentId": "TRIM_FRONT",
+      "assetId": "GG-BLD-TRIM-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 0
+      },
+      "orientation": "N"
+    },
+    {
+      "componentId": "AWNING_FRONT",
+      "assetId": "GG-BLD-AWNING-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 90
+      },
+      "orientation": "E"
+    },
+    {
+      "componentId": "FOUNDATION_BASE",
+      "assetId": "GG-BLD-FOUNDATION-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 0
+      },
+      "orientation": "N"
+    },
+    {
+      "componentId": "SHRUB_ACCENT",
+      "assetId": "GG-VEG-SHRUB-SHOP-001",
+      "assetVersion": "1.0.0",
+      "transform": {
+        "ROTATE": 90
+      },
+      "orientation": "E"
+    }
+  ],
+  "deterministicSeedRule": "SHA256_RECIPE_VERSION_SEED_CONTEXT",
+  "budgetAggregation": {
+    "mode": "SUM_COMPONENT_BUDGETS",
+    "excludes": [
+      "shared_atlas_duplicates"
+    ]
+  },
+  "goldenReferenceBindings": [
+    {
+      "componentId": "WINDOW_SET",
+      "assetId": "GG-BLD-WINDOW-SHOP-001",
+      "assetVersion": "1.0.0",
+      "reuseStatus": "EXACT_REUSE"
+    },
+    {
+      "componentId": "ROOF",
+      "assetId": "GG-BLD-ROOF-SHOP-001",
+      "assetVersion": "1.0.0",
+      "reuseStatus": "EXACT_REUSE"
+    }
+  ],
+  "provenance": {
+    "sourceType": "CONTROLLED_FIXTURE",
+    "sourceId": "GG-CONTROLLED-LAYER-A-PACK-1.0.0",
+    "productionAttached": false
+  }
+}

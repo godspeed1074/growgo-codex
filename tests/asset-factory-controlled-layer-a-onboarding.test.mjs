@@ -1,0 +1,30 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import { ContractError, aggregateRecipeBudget, validateLayerBRecipe, validateTransform } from "../asset-factory/modular/modular-asset-contract.mjs";
+import { runControlledOnboardingProof } from "../asset-factory/modular/controlled-onboarding-proof.mjs";
+
+const proof = runControlledOnboardingProof();
+const { report, recipe, index, assemblies } = proof;
+const throwsCode = (fn, code) => assert.throws(fn, error => error instanceof ContractError && error.code === code);
+
+test("controlled Layer A module registration", () => assert.equal(report.layerAModuleCount, 8));
+test("permanent IDs assigned to every onboarded module", () => assert.equal(new Set(report.permanentAssetIds).size, 8));
+test("duplicate prevention remains active", () => assert.equal(report.index.history.filter(item => item.event === "REGISTER_VERSION").length, 9));
+test("search-before-create evidence recorded for every candidate", () => assert.ok(report.reuseSearchOutcomes.every(result => result.outcome === "NO_COMPATIBLE_MODULE" && result.rejectionReasons.every(reason => ["DIMENSION_MISMATCH", "STYLE_FAMILY_MISMATCH"].includes(reason.reason)))));
+test("budget profile validation passes for the pack", () => assert.ok(report.permanentAssetIds.every(assetId => index.resolve(assetId, "1.0.0").mobileBudgetProfile === "BUILDING_MODULE_LIGHT")));
+test("material and atlas references resolve", () => assert.ok(report.permanentAssetIds.every(assetId => index.resolve(assetId, "1.0.0").textureAtlases[0].textureAtlasId === "GG-ATLAS-BUILDING-A")));
+test("required LODs resolve for every module", () => assert.ok(report.permanentAssetIds.every(assetId => index.resolve(assetId, "1.0.0").lod.available.length === 3)));
+test("allowed transform is accepted", () => assert.equal(validateTransform(index.resolve("GG-BLD-ROOF-SHOP-001", "1.0.0"), { ROTATE: 90 }).ok, true));
+test("forbidden transform is blocked in Layer B", () => { const invalid = structuredClone(recipe); invalid.components[0].transform = { UNIFORM_SCALE: 2 }; throwsCode(() => validateLayerBRecipe(invalid, index), "FORBIDDEN_TRANSFORM"); });
+test("palette restriction survives assembly", () => assert.ok(assemblies.firstAssembly.components.every(component => ["HERITAGE_BRICK_RED", "HERITAGE_CREAM"].includes(component.selectedPaletteId))));
+test("same-seed assembly is deterministic", () => assert.deepEqual(assemblies.firstAssembly, assemblies.secondAssembly));
+test("different seed produces only deterministic allowed variation", () => { assert.notEqual(assemblies.firstAssembly.runtimeIdentity, assemblies.variationAssembly.runtimeIdentity); assert.ok(assemblies.variationAssembly.components.every(component => ["HERITAGE_BRICK_RED", "HERITAGE_CREAM"].includes(component.selectedPaletteId))); });
+test("Layer B module resolution uses registered versions", () => assert.equal(report.layerBRecipe.componentCount, 8) && assert.ok(recipe.components.every(component => index.resolve(component.assetId, component.assetVersion))));
+test("Layer B contains zero anonymous geometry", () => assert.equal(report.layerBRecipe.anonymousGeometryCount, 0));
+test("recipe budget aggregation sums component budgets", () => { const budget = aggregateRecipeBudget(recipe, index); assert.equal(budget.moduleCount, 8); assert.equal(budget.preferredTriangles, 8 * 320); assert.equal(budget.materialIds.length, 1); assert.equal(budget.textureAtlasRefs.length, 1); });
+test("Golden Reference bindings preserve module IDs", () => assert.equal(report.goldenReferenceBindingProof.moduleIdsPreservedAcrossHandoff, true));
+test("module identity and history are preserved", () => assert.ok(report.index.history.every(entry => entry.assetId.startsWith("GG-")) && report.historyEntryCount === 25));
+test("Master Asset Index audit passes after onboarding", () => assert.equal(report.audit.status, "PASS"));
+test("controlled onboarding proof report is machine-readable", () => { const reportPath = path.resolve(import.meta.dirname, "..", "asset-factory", "modular", "CONTROLLED_MODULAR_ONBOARDING_REPORT.json"); assert.equal(JSON.parse(fs.readFileSync(reportPath, "utf8")).status, "PASS"); });

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0.0",
+  "indexVersion": "1.0.0",
+  "generatedDeterministically": true,
+  "scope": "CONTROLLED_FIXTURES_ONLY",
+  "status": "PASS",
+  "findingCount": 0,
+  "findings": []
+}

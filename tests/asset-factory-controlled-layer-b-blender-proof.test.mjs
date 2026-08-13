@@ -1,0 +1,44 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { runControlledOnboardingProof } from "../asset-factory/modular/controlled-onboarding-proof.mjs";
+import { runControlledLayerBBlenderProof } from "../asset-factory/modular/controlled-layer-b-blender-proof.mjs";
+
+const onboarding = runControlledOnboardingProof();
+const proof = runControlledLayerBBlenderProof({ writeArtifacts: true });
+const blocked = proof.status === "BLOCKED";
+const opts = () => blocked ? { skip: `Compatible real Blender runtime unavailable: ${proof.evaluation?.errorCode}` } : {};
+
+test("Master Index resolves the proof recipe", () => {
+  assert.equal(onboarding.recipe.recipeId, "GG-REC-BLD-SIMPLE-SHOP-001");
+  assert.equal(onboarding.recipe.components.length, 8);
+  assert.ok(onboarding.recipe.components.every(component => onboarding.index.resolve(component.assetId, component.assetVersion)));
+});
+test("real Layer A modules assemble as Blender objects", opts(), () => assert.equal(proof.status, "PASS"));
+test("Blender object metadata preserves module identity", opts(), () => assert.ok(proof.modularValidation.moduleIdsPreserved));
+test("same-seed assembly manifests are deterministic", opts(), () => assert.equal(proof.evaluation.sameSeedManifestDeterministic, true));
+test("Golden Reference component bindings are present", opts(), () => assert.ok(proof.recipe.goldenReferenceBindings.length >= 2));
+test("baseline real Blender render exists", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/baseline/BLENDER_RENDER_BASELINE.png`)));
+test("baseline raster analysis exists", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/baseline/raster/RASTER_ANALYSIS.json`)));
+test("baseline component analysis exists", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/baseline/BASELINE_COMPONENT_COMPARISON.json`)));
+test("intentional awning defect is identified", opts(), () => assert.equal(proof.evaluation.targetComponent, "AWNING"));
+test("unaffected modules become protected", opts(), () => assert.ok(proof.baselineComparison.components.protectedComponents.includes("MAIN_WALL")));
+test("correction derives from raster component analysis", opts(), () => assert.equal(proof.dryRun.operations[0].issueType, "COMPONENT_WIDTH_FAIL"));
+test("DRY_RUN correction succeeds", opts(), () => assert.equal(proof.dryRun.status, "PLANNED"));
+test("allowed transform validation succeeds", opts(), () => assert.equal(proof.dryRun.operations[0].operation, "SCALE_X"));
+test("real Blender correction is applied", opts(), () => assert.equal(proof.bridge.status, "APPLIED"));
+test("baseline source build is preserved", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/baseline/SIMPLE_SHOP_BUILD_001.blend`)));
+test("corrected build is versioned separately", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/corrected/SIMPLE_SHOP_BUILD_002.blend`)));
+test("corrected real Blender render exists", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/corrected/BLENDER_RENDER_CORRECTED.png`)));
+test("corrected raster analysis exists", opts(), () => assert.ok(fs.existsSync(`${proof.outputRoot}/corrected/raster/RASTER_ANALYSIS.json`)));
+test("target component measurably improves", opts(), () => assert.equal(proof.evaluation.targetComponentEvaluation, "TARGET_COMPONENT_IMPROVED"));
+test("protected visual components remain stable", opts(), () => assert.equal(proof.evaluation.protectedRegression.regression, false));
+test("modular identities survive the correction", opts(), () => assert.equal(proof.modularValidation.moduleIdsPreserved, true));
+test("no anonymous geometry appears after correction", opts(), () => assert.equal(proof.modularValidation.anonymousGeometryCount, 0));
+test("mobile budget passes before and after", opts(), () => assert.equal(proof.budgetValidation.status, "VISUAL_PASS_BUDGET_PASS"));
+test("Golden Reference remains immutable", opts(), () => assert.equal(proof.evaluation.goldenReferenceImmutable, true));
+test("comparison camera remains immutable", opts(), () => assert.equal(proof.evaluation.cameraImmutable, true));
+test("original Layer B recipe remains immutable", opts(), () => assert.equal(proof.evaluation.recipeImmutable, true));
+test("proof stops after one correction iteration", opts(), () => assert.equal(proof.evaluation.oneIterationStop, true));
+test("known-good build selection is recorded", opts(), () => assert.equal(proof.evaluation.knownGoodBuildId, "SIMPLE_SHOP_BUILD_002"));
+test("controlled proof report is machine-readable", () => assert.ok(fs.existsSync(`${proof.outputRoot}/CONTROLLED_LAYER_B_BLENDER_PROOF_REPORT.md`)));
