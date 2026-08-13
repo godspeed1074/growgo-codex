@@ -1,0 +1,241 @@
+{
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "deterministicSeed": "GG-SIMPLE-SHOP-GROWGO-SEED-001",
+  "components": [
+    {
+      "componentId": "FOUNDATION",
+      "assetId": "GG-BLD-FOUNDATION-SHOP-002",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-FOUNDATION-SHOP-002",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          -1,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_GRAY"
+    },
+    {
+      "componentId": "WALL",
+      "assetId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_WARM_BROWN"
+    },
+    {
+      "componentId": "DOOR",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-DOOR-SHOP-002",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          1,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_CREAM"
+    },
+    {
+      "componentId": "WINDOW",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          -1,
+          0,
+          0.6
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_TEAL_GLASS"
+    },
+    {
+      "componentId": "AWNING",
+      "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          0,
+          0,
+          0.6
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_PLUM_FABRIC"
+    },
+    {
+      "componentId": "FASCIA",
+      "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          1,
+          0,
+          0.6
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_NAVY"
+    },
+    {
+      "componentId": "SIGN",
+      "assetId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          -1,
+          0,
+          1.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_CREAM"
+    },
+    {
+      "componentId": "TRIM",
+      "assetId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          0,
+          0,
+          1.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_CREAM"
+    },
+    {
+      "componentId": "PLANTER",
+      "assetId": "GG-VEG-PLANTER-SHRUB-001",
+      "assetVersion": "1.0.0",
+      "moduleId": "GG-VEG-PLANTER-SHRUB-001",
+      "moduleVersion": "1.0.0",
+      "transform": {
+        "location": [
+          1,
+          0,
+          1.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "orientation": "N",
+      "palette": "SHOP_GREEN_VEGETATION"
+    }
+  ]
+}
