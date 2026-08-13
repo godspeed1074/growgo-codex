@@ -1,0 +1,9 @@
+{
+  "profileId": "STEAM_DECK_BLENDER_FLATPAK",
+  "transportType": "SSH_SFTP",
+  "blenderInvocation": ["flatpak", "run", "org.blender.Blender"],
+  "platform": "SteamOS",
+  "architecture": "x86_64",
+  "remoteWorkerRoot": "~/growgo-worker",
+  "runtimeId": "STEAM-DECK-BLENDER-FLATPAK"
+}
