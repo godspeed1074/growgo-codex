@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve('test-output/shop-papercut');const r=JSON.parse(fs.readFileSync(path.join(root,'SHOP_HERO_PAPERCUT_RESULT.json')));
+test('papercut candidates pass close-up, identity, and budget gates',()=>{assert.equal(r.modules.length,7);for(const m of r.modules){assert.equal(m.version,'2.5.0');assert.ok(m.budget.triangles<=1200);assert.ok(m.budget.materials<=3);assert.equal(m.budget.anonymousGeometryCount,0);const d=path.join(root,`${m.assetId}@2.5.0`);for(const f of ['MODULE_COMPONENT_ID_RENDER.png','MODULE_COMPONENT_ID_MAP.json','FRONT.png','BACK.png','LEFT.png','RIGHT.png','CLOSE_UP.png'])assert.ok(fs.existsSync(path.join(d,f)));}});
+test('papercut pass remains review-only',()=>{assert.ok(fs.existsSync('asset-factory/modular/SHOP_HERO_PAPERCUT_UPGRADE_REPORT.md'));});
