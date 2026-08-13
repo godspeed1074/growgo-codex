@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "PLAN_ONLY",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001@1.0.0",
+  "sourceBuild": "SHOP_LAYER_B_BUILD_002",
+  "goldenReferenceComparison": "NEEDS_CORRECTION",
+  "noNewGeometry": true,
+  "correctionIteration": 1,
+  "findings": [
+    {"component":"silhouette","status":"NEEDS_CORRECTION","evidence":"Current render reads as a low-contrast block; the reference has a clear 4u storefront, strong top fascia, projecting awning, and visible plinth.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-FASCIA-SHOP-NAVY-001","GG-BLD-AWNING-SHOP-FABRIC-001","GG-BLD-FOUNDATION-SHOP-002"],"measurement":"Increase fascia Z prominence by 20% (bounded scaleZ 1.0-1.2), awning Y projection by 25% (0.75u to 0.94u), and retain foundation step visibility."}},
+    {"component":"storefrontHierarchy","status":"NEEDS_CORRECTION","evidence":"Fascia/sign and entrance do not dominate the facade as in the reference.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-FASCIA-SHOP-NAVY-001","GG-BLD-SIGN-INSERT-SHOP-001","GG-BLD-DOOR-SHOP-002"],"measurement":"Center sign on fascia; make fascia/sign occupy approximately 15-20% of facade height; keep door centered in its 1.25u x 2.25u module envelope."}},
+    {"component":"proportions","status":"NEEDS_CORRECTION","evidence":"Window, awning, and fascia read smaller than the approved concept relative to the wall panel.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-WINDOW-SHOP-LARGE-002","GG-BLD-AWNING-SHOP-FABRIC-001","GG-BLD-FASCIA-SHOP-NAVY-001"],"measurement":"Increase window visible area by 15% within its 1.25u x 1.75u module bounds; do not exceed registered dimensions or budget."}},
+    {"component":"awning","status":"NEEDS_CORRECTION","evidence":"Scalloped fabric edge and projection are not sufficiently readable from the locked review camera.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-AWNING-SHOP-FABRIC-001"],"measurement":"Increase depth 25% from 0.75u to 0.94u and preserve segmented/scalloped lower edge; no new geometry."}},
+    {"component":"fasciaSign","status":"NEEDS_CORRECTION","evidence":"Navy fascia/sign contrast and vertical prominence are weak in the current render.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-FASCIA-SHOP-NAVY-001","GG-BLD-SIGN-INSERT-SHOP-001"],"measurement":"Use shared navy material, keep sign insert centered, and increase fascia height by 20% within module transform limits."}},
+    {"component":"window","status":"NEEDS_CORRECTION","evidence":"Teal window is present but does not carry enough visual weight.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-WINDOW-SHOP-LARGE-002"],"measurement":"Increase visible width and height by 15% within registered module bounds; preserve teal glass and cream trim materials."}},
+    {"component":"door","status":"NEEDS_CORRECTION","evidence":"Entrance readability is weak at gameplay scale.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-BLD-DOOR-SHOP-002"],"measurement":"Keep door front-facing, align its center to the facade grid, and place the front plane at the registered storefront depth (approximately y=-0.25u); no geometry additions."}},
+    {"component":"planter","status":"NEEDS_CORRECTION","evidence":"Planter/shrub relationship is too small or visually detached from the storefront.","recommendedChange":{"type":"PARAMETRIC_TRANSFORM","targetModuleIds":["GG-VEG-PLANTER-SHRUB-001"],"measurement":"Place the planter at the right-front storefront bay (x approximately 2.0-2.25u, y approximately -0.1u), keeping registered scale and green vegetation identity."}},
+    {"component":"palette","status":"PASS","evidence":"Required palette families are registered; the next run must use only shared atlas materials.","recommendedChange":{"type":"MATERIAL_REFERENCE","measurement":"Use the seven shared material IDs from SHOP_MATERIAL_CONSOLIDATION_REPORT.json."}}
+  ],
+  "protectedState": ["recipe ID/version","Layer A module IDs","Golden Reference checksum","camera contract","approved palette rules","one-iteration limit"],
+  "acceptanceGates": ["material count <= 32","component IDs complete","anonymous geometry = 0","four-side review regenerated","budget PASS","Golden Reference and camera unchanged"]
+}
