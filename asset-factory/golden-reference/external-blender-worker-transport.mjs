@@ -65,7 +65,7 @@ export function dispatchLocalFolder(pkg, destinationRoot, { dispatchedAt = new D
 
 function validateManifest(root, manifest, { result = false } = {}) {
   if (!manifest?.artifacts || manifest.manifestChecksum !== sha256(manifest.artifacts)) fail("TRANSPORT_PACKAGE_INVALID", "Artifact manifest checksum is invalid");
-  for (const item of manifest.artifacts.filter(entry => entry.required)) { const rootFile = result && ["BLENDER_WORKER_RESULT", "WORKER_RUNTIME_CERTIFICATE"].includes(item.logicalId) ? item.filename : item.logicalId === "BLENDER_WORKER_JOB" ? "BLENDER_WORKER_JOB.json" : null; const file = rootFile ? path.join(root, rootFile) : path.join(root, "artifacts", item.filename); if (!fs.existsSync(file)) fail("WORKER_ARTIFACT_MISSING", item.logicalId); if (fileChecksum(file) !== item.checksum) fail("WORKER_ARTIFACT_CHECKSUM_FAIL", item.logicalId); }
+  for (const item of manifest.artifacts.filter(entry => entry.required)) { const rootFile = result && ["BLENDER_WORKER_RESULT", "WORKER_RUNTIME_CERTIFICATE", "COMPONENT_ID_MAP"].includes(item.logicalId) ? item.filename : item.logicalId === "BLENDER_WORKER_JOB" ? "BLENDER_WORKER_JOB.json" : null; const file = rootFile ? path.join(root, rootFile) : path.join(root, "artifacts", item.filename); if (!fs.existsSync(file)) fail("WORKER_ARTIFACT_MISSING", item.logicalId); if (fileChecksum(file) !== item.checksum) fail("WORKER_ARTIFACT_CHECKSUM_FAIL", item.logicalId); }
   return true;
 }
 
@@ -80,7 +80,21 @@ export function createWorkerResultReceipt({ transportPackage, resultRoot, result
   if (actualResult.assetId !== envelope.assetId) fail("WORKER_ASSET_ID_MISMATCH", "Result assetId mismatch"); if (actualResult.recipeId !== envelope.recipeId) fail("WORKER_RECIPE_ID_MISMATCH", "Result recipeId mismatch");
   const job = JSON.parse(fs.readFileSync(path.join(transportPackage.root, "BLENDER_WORKER_JOB.json"), "utf8"));
   if (job.checksums?.sourceBuild !== transportPackage.envelope.sourceBuildId) fail("WORKER_SOURCE_BUILD_MISMATCH", "Source build identity mismatch");
-  const localResult = clone(actualResult); if (localResult.render?.path && !path.isAbsolute(localResult.render.path)) localResult.render.path = path.join(resultRoot, localResult.render.path); const local = validateWorkerResult(localResult, job); const render = validateWorkerRenderLocally(localResult, path.resolve(referencePath));
+  const localResult = clone(actualResult); if (localResult.render?.path && !path.isAbsolute(localResult.render.path)) localResult.render.path = path.join(resultRoot, localResult.render.path);
+  const componentIdRequired = job.componentIdRenderContract?.required === true;
+  if (componentIdRequired && (!localResult.componentIdRender?.path || !localResult.componentIdRender.checksum || localResult.componentIdRender.format !== "PNG" || localResult.componentIdRender.colorMode !== "RGBA")) fail("WORKER_COMPONENT_ID_METADATA_MISSING", "Worker component-ID render metadata must identify a PNG RGBA artifact");
+  let componentIdMap = null; let componentMapPath = null;
+  if (localResult.componentIdRender?.path) {
+    if (!path.isAbsolute(localResult.componentIdRender.path)) localResult.componentIdRender.path = path.join(resultRoot, localResult.componentIdRender.path);
+    if (!fs.existsSync(localResult.componentIdRender.path)) fail("WORKER_COMPONENT_ID_RENDER_MISSING", "Worker component-ID render artifact is missing");
+    if (fileChecksum(localResult.componentIdRender.path) !== localResult.componentIdRender.checksum) fail("WORKER_COMPONENT_ID_RENDER_CHECKSUM_MISMATCH", "Worker component-ID render checksum does not match artifact");
+    componentMapPath = path.join(resultRoot, localResult.componentIdMapPath || "COMPONENT_ID_MAP.json");
+    if (!fs.existsSync(componentMapPath)) fail("WORKER_COMPONENT_ID_MAP_MISSING", "Worker component-ID map is missing");
+    try { componentIdMap = JSON.parse(fs.readFileSync(componentMapPath, "utf8")); } catch (error) { fail("WORKER_COMPONENT_ID_MAP_INVALID", "Worker component-ID map is not valid JSON", { cause: error.message }); }
+    if (!componentIdMap || typeof componentIdMap !== "object" || !Object.keys(componentIdMap).length) fail("WORKER_COMPONENT_ID_MAP_INVALID", "Worker component-ID map is empty");
+  }
+  const local = validateWorkerResult(localResult, job); const render = validateWorkerRenderLocally(localResult, path.resolve(referencePath));
+  if (componentIdMap) local.componentId = { ok: true, renderChecksum: localResult.componentIdRender.checksum, mapPath: componentMapPath, componentCount: Object.keys(componentIdMap).length };
   let raster = { analysis: render.rasterAnalysis }; if (componentInput) raster.components = rasterizeComponents(render.rasterAnalysis, componentInput.componentMap, componentInput.actualComponents); if (comparisonInput) raster.comparison = compareReference({ ...comparisonInput, referencePath, renderPath: actualResult.render.path, silhouetteIoU: render.rasterAnalysis.metrics.iou });
   return { transportVersion: TRANSPORT_VERSION, transportJobId: envelope.transportJobId, workerJobId: envelope.workerJobId, receivedAt, status: "ACCEPTED", statusHistory: [{ state: "RECEIVED", at: receivedAt }, { state: "VALIDATING", at: receivedAt }, { state: "ACCEPTED", at: receivedAt }], trusted: false, localValidation: local, raster, resultChecksum: fileChecksum(resultFile), duplicate: false };
 }
