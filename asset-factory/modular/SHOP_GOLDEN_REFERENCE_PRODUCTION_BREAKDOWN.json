@@ -1,0 +1,17 @@
+{
+  "status":"PASS","scope":"PLAN_ONLY","referenceId":"GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001","referenceVersion":"1.0.0","styleTarget":"PREMIUM_MOBILE_2.5D_PAPERCUT",
+  "architecturalLayers":["FOUNDATION","WALL","TRIM","WINDOW","DOOR","AWNING","FASCIA","SIGNAGE","VEGETATION"],
+  "components":[
+    {"id":"FOUNDATION","depthLayers":["ground-contact","stepped-plinth","front-step"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE"},
+    {"id":"WALL_PANEL","depthLayers":["panel-face","corner-return","base-trim","panel-lines"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE"},
+    {"id":"TRIM_MODULE","depthLayers":["outer-trim","corner-block","window/door surround"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE"},
+    {"id":"WINDOW_MODULE","depthLayers":["outer-frame","recess","teal-glass","sill","display-shelf/interior-suggestion"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE_PLUS_REUSABLE_DETAILS"},
+    {"id":"DOOR_MODULE","depthLayers":["frame-depth","slab","glass-inset","panel","handle","mail-slot","threshold"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE_PLUS_REUSABLE_DETAILS"},
+    {"id":"AWNING_MODULE","depthLayers":["mount-band","fabric-canopy","fold-lines","scalloped-edge","support-arms","shadow-gap"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE_PLUS_REUSABLE_DETAILS"},
+    {"id":"FASCIA_MODULE","depthLayers":["cornice-cap","shadow-gap","sign-recess","border","side-returns"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE_PLUS_REUSABLE_DETAILS"},
+    {"id":"SIGNAGE","depthLayers":["sign-face","border","mount/bracket","letter insert"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"NEW_REUSABLE_LAYER_A_DETAILS"},
+    {"id":"PLANTER_SHRUB_MODULE","depthLayers":["planter-box","rim/soil","lower-fill","layered foliage","flower accent"],"importance":"HIGH","gameplayVisibility":"HIGH","decision":"EXISTING_MODULE_UPGRADE_PLUS_REUSABLE_DETAILS"}
+  ],
+  "previousFailure":"Technically valid blockout lacked layered construction, material separation, silhouette hierarchy, and readable micro-detail.",
+  "protectedRules":["registered Layer A modules only","no Layer B-only geometry","recipe identity unchanged","Golden Reference immutable","operator approval required"]
+}
