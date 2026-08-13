@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { encodePng } from "../../../../Developer/growgo-codex/asset-factory/golden-reference/golden-reference-raster-analysis.mjs";
+import { encodePng } from "./golden-reference-raster-analysis.mjs";
 
 export const COMPONENT_RASTER_VERSION = "GOLDEN_REFERENCE_COMPONENT_RASTER_001";
 export const CONFIDENCE = Object.freeze({ explicit: "EXPLICIT_MASK", high: "HIGH_CONFIDENCE", bounds: "BOUNDING_REGION", low: "LOW_CONFIDENCE", unresolved: "UNRESOLVED" });
