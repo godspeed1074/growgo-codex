@@ -17,7 +17,8 @@
   "modules": {
     "DOOR": "PROVEN",
     "WINDOW": "PROVEN",
-    "SHRUB_PLANTER": "PROVEN_ORGANIC_MODULE"
+    "SHRUB_PLANTER": "PROVEN_ORGANIC_MODULE",
+    "AWNING": "PROVEN_PROJECTING_FEATURE"
   },
   "globalFreeze": "NOT_APPROVED",
   "organicModuleLessons": [
@@ -25,5 +26,11 @@
     "silhouette gate",
     "layered foliage masses",
     "planter/foliage identity separation"
+  ],
+  "projectingFeatureLessons": [
+    "projection gate",
+    "scallop silhouette gate",
+    "support visibility",
+    "side-view depth proof"
   ]
 }
