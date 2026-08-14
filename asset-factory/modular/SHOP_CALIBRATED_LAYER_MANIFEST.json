@@ -13,7 +13,7 @@
     "beforeVisibleHeightPx":195,
     "visibleHeightRatio":1.4615384615,
     "rootScaleBefore":1.0,
-    "requestedRootScale":1.4615384615,
+    "requestedRootScale":1.32,
     "requestedRootPosition":[-1.10,-0.55,1.32],
     "openingMargins":{"x":0.08,"z":0.10},
     "protectedComponents":["WINDOW","AWNING","FASCIA","SHRUB"]

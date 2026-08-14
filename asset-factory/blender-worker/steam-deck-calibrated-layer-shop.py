@@ -53,7 +53,10 @@ def image_mat(name,p):
 def add_art(comp,p,asset,ver,placement,target_width,target_height=1):
  rootNames={'DOOR':'GG_ROOT_DOOR_SHOP_002','WINDOW':'GG_ROOT_WINDOW_SHOP_LARGE_002','AWNING':'GG_ROOT_AWNING_SHOP_FABRIC_001','FASCIA':'GG_ROOT_FASCIA_SHOP_NAVY_001','SHRUB':'GG_ROOT_PLANTER_SHRUB_001'};root=bpy.data.objects.new(rootNames[comp],None);bpy.context.collection.objects.link(root);root.location=placement;root['assetId']=asset;root['visibleArtBounds']={'width':target_width,'height':target_height};root['operatorVisibleBoundsContract']='GROWGO_VISIBLE_ART_BOUNDS_CONTRACT@1.0.0';
  correction=cfg.get('doorRootCorrection') if comp=='DOOR' else None
- bpy.ops.mesh.primitive_plane_add(size=2,location=(0,0,0),rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=comp+'_CALIBRATED_ARTWORK';o.parent=root;o.location=(0,0,0);o.data.materials.append(image_mat('MAT_'+comp+'_CALIBRATED',p));o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE';o.dimensions=(target_width,1,target_height);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);roots[comp]=root;return [o]
+ bpy.ops.mesh.primitive_plane_add(size=2,location=(0,0,0),rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=comp+'_CALIBRATED_ARTWORK';o.parent=root;o.location=(0,0,0);o.data.materials.append(image_mat('MAT_'+comp+'_CALIBRATED',p));o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE'
+ # Author the calibrated plane in local space so the Door root scale remains
+ # a true uniform transform instead of being cancelled by world dimensions.
+ o.scale=(target_width/2,target_height/2,1);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);roots[comp]=root;return [o]
  if correction:
   root.scale=(correction['requestedRootScale'],correction['requestedRootScale'],correction['requestedRootScale'])
   root.location=correction['requestedRootPosition']
@@ -62,6 +65,10 @@ def add_art(comp,p,asset,ver,placement,target_width,target_height=1):
 artfiles={'DOOR':'DOOR_REPAIRED_FIDELITY_FRONT.png','WINDOW':'WINDOW_FIDELITY_FRONT.png','AWNING':'AWNING_FIDELITY_FRONT.png','FASCIA':'FASCIA_FIDELITY_FRONT.png','SHRUB':'SHRUB_FIDELITY_FRONT.png'}
 for comp in ['DOOR','WINDOW','AWNING','FASCIA','SHRUB']:
  r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'],r.get('targetHeight',1))
+# Apply the Door root transform after all child dimensions are authored. This
+# prevents Blender's parent-space dimension assignment from cancelling it.
+if cfg.get('doorRootCorrection') and roots.get('DOOR'):
+ c=cfg['doorRootCorrection'];roots['DOOR'].scale=(c['requestedRootScale'],c['requestedRootScale'],c['requestedRootScale']);roots['DOOR'].location=c['requestedRootPosition']
 # Reusable shallow wall-panel architecture and opening contact planes. Door opening,
 # surround, adjacent panel and landing are derived from the corrected root bounds.
 door_cfg=cfg.get('doorRootCorrection',{})
