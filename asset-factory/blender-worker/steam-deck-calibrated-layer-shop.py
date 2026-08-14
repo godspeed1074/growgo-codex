@@ -31,7 +31,7 @@ def load_file(source,comp,asset,ver,placement,target_width=None):
    k=target_width/width
    for o in loaded:o.scale*=k
  return loaded
-objs=[]
+objs=[];roots={}
 def solid_mat(name,color):
  m=bpy.data.materials.get(name) or bpy.data.materials.new(name);m.diffuse_color=(*color,1);m.use_nodes=True;bs=m.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(*color,1);bs.inputs['Roughness'].default_value=.82;return m
 MAT_WALL=solid_mat('GG_SHELL_WARM_BROWN',(.34,.16,.09));MAT_CREAM=solid_mat('GG_SHELL_CREAM',(.72,.58,.40));MAT_GRAY=solid_mat('GG_SHELL_FOUNDATION_GRAY',(.25,.25,.25))
@@ -51,14 +51,30 @@ def image_mat(name,p):
  except:pass
  return m
 def add_art(comp,p,asset,ver,placement,target_width,target_height=1):
- rootNames={'DOOR':'GG_ROOT_DOOR_SHOP_002','WINDOW':'GG_ROOT_WINDOW_SHOP_LARGE_002','AWNING':'GG_ROOT_AWNING_SHOP_FABRIC_001','FASCIA':'GG_ROOT_FASCIA_SHOP_NAVY_001','SHRUB':'GG_ROOT_PLANTER_SHRUB_001'};root=bpy.data.objects.new(rootNames[comp],None);bpy.context.collection.objects.link(root);root.location=placement;root['assetId']=asset;root['visibleArtBounds']={'width':target_width,'height':target_height};bpy.ops.mesh.primitive_plane_add(size=2,location=(0,0,0),rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=comp+'_CALIBRATED_ARTWORK';o.parent=root;o.location=(0,0,0);o.data.materials.append(image_mat('MAT_'+comp+'_CALIBRATED',p));o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE';o.dimensions=(target_width,1,target_height);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return [o]
+ rootNames={'DOOR':'GG_ROOT_DOOR_SHOP_002','WINDOW':'GG_ROOT_WINDOW_SHOP_LARGE_002','AWNING':'GG_ROOT_AWNING_SHOP_FABRIC_001','FASCIA':'GG_ROOT_FASCIA_SHOP_NAVY_001','SHRUB':'GG_ROOT_PLANTER_SHRUB_001'};root=bpy.data.objects.new(rootNames[comp],None);bpy.context.collection.objects.link(root);root.location=placement;root['assetId']=asset;root['visibleArtBounds']={'width':target_width,'height':target_height};root['operatorVisibleBoundsContract']='GROWGO_VISIBLE_ART_BOUNDS_CONTRACT@1.0.0';
+ correction=cfg.get('doorRootCorrection') if comp=='DOOR' else None
+ bpy.ops.mesh.primitive_plane_add(size=2,location=(0,0,0),rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=comp+'_CALIBRATED_ARTWORK';o.parent=root;o.location=(0,0,0);o.data.materials.append(image_mat('MAT_'+comp+'_CALIBRATED',p));o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE';o.dimensions=(target_width,1,target_height);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);roots[comp]=root;return [o]
+ if correction:
+  root.scale=(correction['requestedRootScale'],correction['requestedRootScale'],correction['requestedRootScale'])
+  root.location=correction['requestedRootPosition']
+  root['rootCorrectionId']=correction['correctionId'];root['rootScaleBefore']=correction['rootScaleBefore'];root['rootScaleAfter']=correction['requestedRootScale']
+ roots[comp]=root;return [o]
 artfiles={'DOOR':'DOOR_REPAIRED_FIDELITY_FRONT.png','WINDOW':'WINDOW_FIDELITY_FRONT.png','AWNING':'AWNING_FIDELITY_FRONT.png','FASCIA':'FASCIA_FIDELITY_FRONT.png','SHRUB':'SHRUB_FIDELITY_FRONT.png'}
 for comp in ['DOOR','WINDOW','AWNING','FASCIA','SHRUB']:
  r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'],r.get('targetHeight',1))
-# Reusable shallow wall-panel architecture and opening contact planes.
-for name,loc,dims in [('WALL_PANEL_MAIN',(0,.02,2.05),(3.9,.10,2.5)),('WALL_PANEL_LEFT',(-1.65,-.04,2.0),(1.1,.08,2.3)),('WALL_PANEL_RIGHT',(1.75,-.04,2.0),(1.0,.08,2.3)),('WALL_PANEL_ABOVE_DOOR',(-1.15,-.08,2.45),(1.25,.06,.72)),('WALL_PANEL_ABOVE_WINDOW',(.78,-.08,2.45),(1.72,.06,.72)),('DOOR_OPENING_RECESS',(-1.15,-.12,1.15),(1.16,.05,2.28)),('WINDOW_OPENING_RECESS',(.78,-.12,1.65),(1.62,.05,1.62))]:
+# Reusable shallow wall-panel architecture and opening contact planes. Door opening,
+# surround, adjacent panel and landing are derived from the corrected root bounds.
+door_cfg=cfg.get('doorRootCorrection',{})
+door=cfg['calibrated']['DOOR'];ds=float(door_cfg.get('requestedRootScale',1.0));dw=float(door['targetWidth'])*ds;dh=float(door['targetHeight'])*ds;dx,dy,dz=door_cfg.get('requestedRootPosition',door['placement']);margin_x=.08;margin_z=.10
+door_open_w=dw+2*margin_x;door_open_h=dh+margin_z;door_top=dz+dh/2;door_bottom=dz-dh/2
+for name,loc,dims in [('WALL_PANEL_MAIN',(0,.02,2.05),(3.9,.10,2.5)),('WALL_PANEL_LEFT',(-1.65,-.04,2.0),(1.1,.08,2.3)),('WALL_PANEL_RIGHT',(1.75,-.04,2.0),(1.0,.08,2.3)),('WALL_PANEL_ABOVE_DOOR',(dx,-.08,door_top+.36),(door_open_w,.06,.72)),('WALL_PANEL_ABOVE_WINDOW',(.78,-.08,2.45),(1.72,.06,.72)),('DOOR_OPENING_RECESS',(dx,-.12,(door_top+door_bottom)/2),(door_open_w,.05,door_open_h)),('WINDOW_OPENING_RECESS',(.78,-.12,1.65),(1.62,.05,1.62))]:
  q=shell_box(name,loc,dims,MAT_WALL)
  if 'OPENING_RECESS' in name:q.hide_render=True;q['renderCollection']='CALIBRATION_HELPERS'
+# Responsive cream surround and landing use the same door anchors, without
+# stretching any calibrated Door artwork.
+for o in bpy.data.objects:
+ if o.name=='DOOR_SURROUND': o.location=(dx,-.03,(door_top+door_bottom)/2);o.dimensions=(door_open_w+.12,.16,door_open_h+.12);bpy.context.view_layer.objects.active=o;o.select_set(True);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.select_set(False)
+ if o.name=='FOUNDATION_STEP': o.location=(dx,-.24,max(.025,door_bottom-.08));o.dimensions=(door_open_w+.20,.52,.12);bpy.context.view_layer.objects.active=o;o.select_set(True);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.select_set(False)
 # keep all source artwork materials; remove only hidden LODs if any.
 s=bpy.context.scene;s.render.resolution_x=960;s.render.resolution_y=640;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=False
 try:s.render.engine='BLENDER_EEVEE'
