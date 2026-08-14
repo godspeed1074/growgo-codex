@@ -1,0 +1,70 @@
+{
+  "doorRoot": {
+    "object": "DOOR_ROOT",
+    "parent": null,
+    "scaleAfterRestore": [
+      1,
+      1,
+      1
+    ],
+    "dimensions": [
+      1.08,
+      1,
+      1.5
+    ],
+    "constraints": [],
+    "modifiers": [],
+    "drivers": [],
+    "instance": false
+  },
+  "windowRoot": {
+    "object": "WINDOW_ROOT",
+    "parent": null,
+    "scaleAfterRestore": [
+      1,
+      1,
+      1
+    ]
+  },
+  "temporaryTransformsRestored": true,
+  "isolatedRendered": true,
+  "exaggerationRendered": true,
+  "renderedBounds": {
+    "doorIsolated": {
+      "width": 238,
+      "height": 220,
+      "left": 121,
+      "top": 152,
+      "pixels": 52356
+    },
+    "doorExaggerated": {
+      "width": 238,
+      "height": 437,
+      "left": 121,
+      "top": 43,
+      "pixels": 104004
+    },
+    "windowIsolated": {
+      "width": 328,
+      "height": 264,
+      "left": 76,
+      "top": 108,
+      "pixels": 82630
+    },
+    "windowExaggerated": {
+      "width": 480,
+      "height": 264,
+      "left": 0,
+      "top": 108,
+      "pixels": 116070
+    },
+    "doorExaggerationHeightChangePct": 98.63636363636363,
+    "windowExaggerationWidthChangePct": 46.34146341463414
+  },
+  "classifications": [
+    "TRANSFORM_PIPELINE_PASS",
+    "VISIBLE_ART_BOUNDS_MISMATCH",
+    "OPENING_NOT_RESPONSIVE_TO_MODULE_SCALE"
+  ],
+  "primaryRootCause": "Current worker bakes dimensions directly onto artwork planes; there is no persistent named parent/root transform hierarchy. Shell openings are separate fixed-size planes, so they do not respond automatically to module scale."
+}

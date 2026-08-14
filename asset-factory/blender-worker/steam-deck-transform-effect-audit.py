@@ -1,0 +1,12 @@
+import bpy,sys,os,math,json
+from mathutils import Vector
+layer_dir,out=sys.argv[sys.argv.index('--')+1:];os.makedirs(out,exist_ok=True);bpy.ops.wm.read_factory_settings(use_empty=True)
+def mat(p):
+ im=bpy.data.images.load(p,check_existing=False);m=bpy.data.materials.new('AUDIT_'+os.path.basename(p));m.use_nodes=True;n=m.node_tree.nodes;n.clear();o=n.new('ShaderNodeOutputMaterial');t=n.new('ShaderNodeTexImage');t.image=im;tr=n.new('ShaderNodeBsdfTransparent');sh=n.new('ShaderNodeBsdfPrincipled');mx=n.new('ShaderNodeMixShader');m.node_tree.links.new(t.outputs['Color'],sh.inputs['Base Color']);m.node_tree.links.new(t.outputs['Alpha'],mx.inputs[0]);m.node_tree.links.new(tr.outputs[0],mx.inputs[1]);m.node_tree.links.new(sh.outputs[0],mx.inputs[2]);m.node_tree.links.new(mx.outputs[0],o.inputs['Surface']);return m
+def add(name,file,w,h,z=-.1):
+ bpy.ops.mesh.primitive_plane_add(size=2,location=(0,0,z),rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=name;o.data.materials.append(mat(os.path.join(layer_dir,file)));o.dimensions=(w,1,h);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return o
+door=add('DOOR_ROOT','DOOR_REPAIRED_FIDELITY_FRONT.png',1.08,1.50);win=add('WINDOW_ROOT','WINDOW_FIDELITY_FRONT.png',1.50,1.0,.1)
+bpy.ops.object.camera_add(location=(0,-8,0));cam=bpy.context.object;cam.data.type='ORTHO';cam.data.ortho_scale=2.2;cam.rotation_euler=((Vector((0,0,0))-cam.location).to_track_quat('-Z','Y')).to_euler();s=bpy.context.scene;s.camera=cam;s.render.resolution_x=480;s.render.resolution_y=480;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=True
+def render(name):s.render.filepath=os.path.join(out,name);bpy.ops.render.render(write_still=True)
+door.hide_render=False;win.hide_render=True;render('DOOR_ISOLATED_BOUNDS.png');door.scale.y*=2;render('DOOR_TRANSFORM_EXAGGERATION_TEST.png');door.scale.y/=2;win.hide_render=False;render('WINDOW_ISOLATED_BOUNDS.png');win.scale.x*=1.5;render('WINDOW_TRANSFORM_EXAGGERATION_TEST.png');win.scale.x/=1.5
+json.dump({'doorRoot':{'object':'DOOR_ROOT','parent':None,'scaleAfterRestore':[1,1,1],'dimensions':[1.08,1,1.5],'constraints':[],'modifiers':[],'drivers':[],'instance':False},'windowRoot':{'object':'WINDOW_ROOT','parent':None,'scaleAfterRestore':[1,1,1]},'temporaryTransformsRestored':True,'isolatedRendered':True,'exaggerationRendered':True},open(os.path.join(out,'SHOP_DOOR_TRANSFORM_AUDIT.json'),'w'),indent=2)
