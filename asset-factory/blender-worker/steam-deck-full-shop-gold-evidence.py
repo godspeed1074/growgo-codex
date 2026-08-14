@@ -5,6 +5,8 @@ P={'brown':(.34,.16,.09,1),'gray':(.25,.25,.25,1),'teal':(.03,.30,.38,1),'plum':
 for k in M:M[k].diffuse_color=P[k]
 objs=[]
 for comp,ref in cfg['modules'].items():
+ if comp in ('AWNING','DOOR','PLANTER','SHRUB'):
+  ref=dict(ref);ref['source']=ref['source'].replace('/layer-b-final-hero/modules/','/targeted-hero-fix/out/').replace('@3.0.0/','@3.5.0/').replace('@3.0.0.blend','@3.5.0.blend');ref['version']='3.5.0'
  with bpy.data.libraries.load(ref['source'],link=False) as (d,l):l.objects=d.objects
  for o in l.objects:
   if not o or o.type!='MESH' or '_LOD' in o.name:continue
