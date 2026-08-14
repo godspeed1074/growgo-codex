@@ -1,0 +1,327 @@
+{
+  "status": "PASS",
+  "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+  "reference": {
+    "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-refbake/reference-crops/fascia-sign.png",
+    "sourceChecksum": "f0296d1a20a177a78b132fcabf35f23d8a6331315b718de2bec0d1b52c5f8a07",
+    "cropDimensions": [
+      600,
+      250
+    ],
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "cropOrigin": [
+      0,
+      0
+    ],
+    "cropChecksum": "94c73dadd057d46beb7796a75b3b4d507ad081d11a2ae93f13ea02b2665eb9f8"
+  },
+  "scope": {
+    "bounds": [
+      0,
+      0,
+      570,
+      160
+    ],
+    "coveragePercent": 100,
+    "coveredPixels": 77669,
+    "contextExcluded": true
+  },
+  "layers": {
+    "FASCIA_BACK_SHADOW": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FASCIA_MAIN_BODY": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FASCIA_TOP_CAP": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FASCIA_BOTTOM_TRIM": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_RECESS": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_BORDER": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_FACE": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_LETTERING": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_DECORATIVE_ACCENTS": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "fullSourceBackplateUsed": false,
+  "blenderRun": true,
+  "permanentFasciaVersionPromoted": false,
+  "layerBAssembled": false,
+  "blender": {
+    "worker": "Steam Deck 10.0.0.4",
+    "version": "5.2.0 LTS",
+    "runtime": "flatpak run org.blender.Blender",
+    "cleanExit": true
+  },
+  "fidelityMetrics": {
+    "foregroundPixels": 77669,
+    "meanRGBDifference": 3.9410747316603585,
+    "greaterThan2Percent": 33.51787714532181,
+    "greaterThan5Percent": 20.69551558536868,
+    "greaterThan10Percent": 12.424519435038432,
+    "alphaDifferencePixels": 0,
+    "alignmentErrorPixels": [
+      0,
+      0
+    ]
+  },
+  "visiblePixelChecks": {
+    "navyFasciaDetail": "YES",
+    "topCapCornice": "YES",
+    "bottomTrim": "YES",
+    "signRecess": "YES",
+    "signBorder": "YES",
+    "signFace": "YES",
+    "signLettering": "YES",
+    "decorativeAccents": "YES",
+    "papercutDepth": "YES"
+  },
+  "silhouette": {
+    "status": "PASS",
+    "output": "FASCIA_BLACK_SILHOUETTE.png"
+  },
+  "fourSide": {
+    "status": "PASS"
+  },
+  "componentIds": [
+    "FASCIA_BODY",
+    "FASCIA_TOP_CAP",
+    "FASCIA_BOTTOM_TRIM",
+    "SIGN_RECESS",
+    "SIGN_BORDER",
+    "SIGN_FACE",
+    "SIGN_LETTERING",
+    "SIGN_DECORATION"
+  ],
+  "anonymousGeometry": 0,
+  "budget": {
+    "triangles": 18,
+    "vertices": 36,
+    "objects": 11,
+    "materials": 18,
+    "textures": 9,
+    "imageBytes": 445745,
+    "anonymousGeometry": 0,
+    "mobileBudget": "PASS"
+  },
+  "depthContract": {
+    "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+    "camera": {
+      "type": "ORTHO",
+      "orthoScale": 2.4,
+      "resolution": [
+        600,
+        250
+      ],
+      "locked": true
+    },
+    "layers": [
+      {
+        "componentId": "FASCIA_BACK_SHADOW",
+        "sourceFile": "FASCIA_BACK_SHADOW.png",
+        "zOffset": 0,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FASCIA_BODY",
+        "sourceFile": "FASCIA_MAIN_BODY.png",
+        "zOffset": 0.01,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FASCIA_TOP_CAP",
+        "sourceFile": "FASCIA_TOP_CAP.png",
+        "zOffset": 0.02,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FASCIA_BOTTOM_TRIM",
+        "sourceFile": "FASCIA_BOTTOM_TRIM.png",
+        "zOffset": 0.03,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "SIGN_RECESS",
+        "sourceFile": "SIGN_RECESS.png",
+        "zOffset": 0.04,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "SIGN_BORDER",
+        "sourceFile": "SIGN_BORDER.png",
+        "zOffset": 0.05,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "SIGN_FACE",
+        "sourceFile": "SIGN_FACE.png",
+        "zOffset": 0.06,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "SIGN_LETTERING",
+        "sourceFile": "SIGN_LETTERING.png",
+        "zOffset": 0.07,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "SIGN_DECORATION",
+        "sourceFile": "SIGN_DECORATIVE_ACCENTS.png",
+        "zOffset": 0.08,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      }
+    ],
+    "fullSourceBackplateUsed": false
+  },
+  "operatorApprovalRequired": true
+}

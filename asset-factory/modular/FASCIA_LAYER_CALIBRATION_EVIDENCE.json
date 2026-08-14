@@ -1,0 +1,127 @@
+{
+  "status": "PASS",
+  "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+  "reference": {
+    "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-refbake/reference-crops/fascia-sign.png",
+    "sourceChecksum": "f0296d1a20a177a78b132fcabf35f23d8a6331315b718de2bec0d1b52c5f8a07",
+    "cropDimensions": [
+      600,
+      250
+    ],
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "cropOrigin": [
+      0,
+      0
+    ]
+  },
+  "scope": {
+    "bounds": [
+      0,
+      0,
+      570,
+      160
+    ],
+    "coveragePercent": 100,
+    "coveredPixels": 77669,
+    "contextExcluded": true
+  },
+  "layers": {
+    "FASCIA_BACK_SHADOW": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FASCIA_MAIN_BODY": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FASCIA_TOP_CAP": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FASCIA_BOTTOM_TRIM": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_RECESS": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_BORDER": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_FACE": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_LETTERING": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "SIGN_DECORATIVE_ACCENTS": {
+      "dimensions": [
+        600,
+        250
+      ],
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "fullSourceBackplateUsed": false,
+  "blenderRun": false,
+  "permanentFasciaVersionPromoted": false,
+  "layerBAssembled": false
+}
