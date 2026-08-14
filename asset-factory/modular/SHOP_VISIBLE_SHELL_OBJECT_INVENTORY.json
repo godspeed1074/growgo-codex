@@ -1,0 +1,23 @@
+{
+  "productionVisible": [
+    "WALL_FACADE_SHELL",
+    "WALL_PANEL_MAIN",
+    "WALL_PANEL_LEFT",
+    "WALL_PANEL_RIGHT",
+    "WALL_PANEL_ABOVE_DOOR",
+    "WALL_PANEL_ABOVE_WINDOW",
+    "WALL_CORNER_POST_L",
+    "WALL_CORNER_POST_R",
+    "WALL_BASE_TRIM",
+    "FOUNDATION_BASE",
+    "FOUNDATION_STEP",
+    "DOOR_SURROUND",
+    "WINDOW_SURROUND"
+  ],
+  "calibrationHelpers": [
+    "DOOR_OPENING_RECESS",
+    "WINDOW_OPENING_RECESS"
+  ],
+  "helperVisibilityInBeauty": "EXCLUDED",
+  "palePlaceholderObjectsVisible": 0
+}

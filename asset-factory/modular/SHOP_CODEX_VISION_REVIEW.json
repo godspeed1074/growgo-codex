@@ -1,0 +1,25 @@
+{
+  "verdict": "VISION_METRIC_CONFLICT",
+  "whatCodexActuallySees": {
+    "doorVisuallyTooShort": "YES",
+    "windowVisuallyTooSmall": "NO",
+    "signVisiblyOffCenter": "NO",
+    "wallPanelsVisiblyPresent": "YES",
+    "wallPanelsLookLikeFinalArchitecture": "YES",
+    "palePlaceholderGeometryVisible": "NO",
+    "doorAppearsToFloat": "YES",
+    "windowAppearsToFloat": "NO",
+    "awningAppearsAttached": "YES",
+    "shrubAppearsGrounded": "YES",
+    "papercutDepthReadsClearly": "YES",
+    "overallShopResemblesGoldenReference": "NO"
+  },
+  "supportingImages": [
+    "SHOP_REALWALL_HERO.png",
+    "SHOP_REALWALL_CLOSEUP.png",
+    "SHOP_REALWALL_FOUR_SIDE_BOARD.png"
+  ],
+  "severity": "HIGH",
+  "recommendedCorrectionType": "TRUE_SCALE_ALIGNMENT",
+  "visualReviewWins": true
+}

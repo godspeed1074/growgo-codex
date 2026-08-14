@@ -17,6 +17,12 @@ def load_file(source,comp,asset,ver,placement,target_width=None):
  for o in l.objects:
   if not o or o.type!='MESH': continue
   bpy.context.collection.objects.link(o);o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE';o.location=placement;loaded.append(o)
+  if comp=='WALL':
+   o.data.materials.clear();o.data.materials.append(MAT_WALL)
+  elif comp=='FOUNDATION':
+   o.data.materials.clear();o.data.materials.append(MAT_GRAY)
+  elif comp=='TRIM':
+   o.data.materials.clear();o.data.materials.append(MAT_CREAM)
  if target_width and loaded:
   xs=[]
   for o in loaded: xs += [o.matrix_world @ Vector(c) for c in o.bound_box]
@@ -50,7 +56,9 @@ artfiles={'DOOR':'DOOR_REPAIRED_FIDELITY_FRONT.png','WINDOW':'WINDOW_FIDELITY_FR
 for comp in ['DOOR','WINDOW','AWNING','FASCIA','SHRUB']:
  r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'],r.get('targetHeight',1))
 # Reusable shallow wall-panel architecture and opening contact planes.
-for name,loc,dims in [('WALL_PANEL_MAIN',(0,.02,2.05),(3.9,.10,2.5)),('WALL_PANEL_LEFT',(-1.65,-.04,2.0),(1.1,.08,2.3)),('WALL_PANEL_RIGHT',(1.75,-.04,2.0),(1.0,.08,2.3)),('WALL_PANEL_ABOVE_DOOR',(-1.15,-.08,2.45),(1.25,.06,.72)),('WALL_PANEL_ABOVE_WINDOW',(.78,-.08,2.45),(1.72,.06,.72)),('DOOR_OPENING_RECESS',(-1.15,-.12,1.15),(1.16,.05,2.28)),('WINDOW_OPENING_RECESS',(.78,-.12,1.65),(1.62,.05,1.62))]:shell_box(name,loc,dims,MAT_WALL)
+for name,loc,dims in [('WALL_PANEL_MAIN',(0,.02,2.05),(3.9,.10,2.5)),('WALL_PANEL_LEFT',(-1.65,-.04,2.0),(1.1,.08,2.3)),('WALL_PANEL_RIGHT',(1.75,-.04,2.0),(1.0,.08,2.3)),('WALL_PANEL_ABOVE_DOOR',(-1.15,-.08,2.45),(1.25,.06,.72)),('WALL_PANEL_ABOVE_WINDOW',(.78,-.08,2.45),(1.72,.06,.72)),('DOOR_OPENING_RECESS',(-1.15,-.12,1.15),(1.16,.05,2.28)),('WINDOW_OPENING_RECESS',(.78,-.12,1.65),(1.62,.05,1.62))]:
+ q=shell_box(name,loc,dims,MAT_WALL)
+ if 'OPENING_RECESS' in name:q.hide_render=True;q['renderCollection']='CALIBRATION_HELPERS'
 # keep all source artwork materials; remove only hidden LODs if any.
 s=bpy.context.scene;s.render.resolution_x=960;s.render.resolution_y=640;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=False
 try:s.render.engine='BLENDER_EEVEE'
