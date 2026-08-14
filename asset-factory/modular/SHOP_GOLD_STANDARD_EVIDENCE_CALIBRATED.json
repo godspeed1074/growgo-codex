@@ -41,13 +41,13 @@
   "anonymousGeometryCount": 0,
   "fourSide": "PASS",
   "budget": {
-    "triangles": 202,
-    "vertices": 148,
-    "objects": 21,
-    "materials": 10,
+    "triangles": 298,
+    "vertices": 212,
+    "objects": 29,
+    "materials": 13,
     "textures": 6,
     "imageBytes": 602319,
-    "blendSizeBytes": 113678,
+    "blendSizeBytes": 121712,
     "glbSizeBytes": 0,
     "anonymousGeometryCount": 0,
     "mobileBudget": "PASS"
@@ -55,5 +55,14 @@
   "goldStandardFrozen": false,
   "knownGoodBuildId": null,
   "operatorApprovalRequired": true,
-  "bottleneck": "FACADE_SHELL"
+  "bottleneck": "FACADE_SHELL",
+  "shellCorrection": {
+    "status": "CAPTURED",
+    "changes": [
+      "warm brown facade envelope",
+      "cream corner/opening trim",
+      "stepped gray foundation and landing"
+    ],
+    "protectedHeroModules": "PASS"
+  }
 }

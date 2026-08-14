@@ -26,6 +26,17 @@ def load_file(source,comp,asset,ver,placement,target_width=None):
    for o in loaded:o.scale*=k
  return loaded
 objs=[]
+def solid_mat(name,color):
+ m=bpy.data.materials.get(name) or bpy.data.materials.new(name);m.diffuse_color=(*color,1);m.use_nodes=True;bs=m.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(*color,1);bs.inputs['Roughness'].default_value=.82;return m
+MAT_WALL=solid_mat('GG_SHELL_WARM_BROWN',(.34,.16,.09));MAT_CREAM=solid_mat('GG_SHELL_CREAM',(.72,.58,.40));MAT_GRAY=solid_mat('GG_SHELL_FOUNDATION_GRAY',(.25,.25,.25))
+def shell_box(name,loc,dims,mat):
+ bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.name=name;o.dimensions=dims;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(mat);o['componentId']=name;o['moduleId']='GG-BLD-SHELL-CORRECTION-REFERENCE-001';o['moduleVersion']='1.0.0';o['layer']='LAYER_A_MODULE';objs.append(o);return o
+# One reusable shell correction: wall envelope, corner posts, opening surrounds, and stepped foundation.
+shell_box('WALL_FACADE_SHELL',(0,0.18,2.0),(5.0,.22,3.5),MAT_WALL)
+shell_box('WALL_CORNER_POST_L',(-2.25,-.02,2.0),(.22,.18,3.35),MAT_CREAM);shell_box('WALL_CORNER_POST_R',(2.25,-.02,2.0),(.22,.18,3.35),MAT_CREAM)
+shell_box('WALL_BASE_TRIM',(0,-.03,.42),(4.6,.22,.22),MAT_CREAM)
+shell_box('FOUNDATION_BASE',(0,.08,.18),(5.1,.65,.32),MAT_GRAY);shell_box('FOUNDATION_STEP',(0,-.28,.03),(2.0,.72,.18),MAT_GRAY)
+shell_box('WINDOW_SURROUND',(0.85,-.03,1.65),(1.9,.18,1.95),MAT_CREAM);shell_box('DOOR_SURROUND',(-1.2,-.03,1.15),(1.35,.18,2.55),MAT_CREAM)
 for comp in ['FOUNDATION','WALL','TRIM']:
  r=cfg['modules'][comp];objs+=load_file(r['source'],comp,r['assetId'],r['version'],r['placement'])
 def image_mat(name,p):
@@ -44,6 +55,7 @@ try:s.render.engine='BLENDER_EEVEE'
 except:s.render.engine='BLENDER_EEVEE_NEXT'
 if s.world is None:s.world=bpy.data.worlds.new('CALIBRATED_SHOP_WORLD');s.world.color=(.92,.92,.92)
 s.view_settings.view_transform='Standard';s.view_settings.look='None';s.view_settings.exposure=0;s.view_settings.gamma=1
+bpy.ops.object.light_add(type='AREA',location=(-3,-6,7));bpy.context.object.data.energy=700;bpy.context.object.data.size=5
 bpy.ops.object.camera_add(location=(0,-18,2.8));cam=bpy.context.object;cam.name='GG_CAMERA_SIMPLE_SHOP_LOCKED';cam.data.type='ORTHO';cam.data.ortho_scale=7.2;cam.rotation_euler=((Vector((0,0,2.0))-cam.location).to_track_quat('-Z','Y')).to_euler();s.camera=cam
 blend=os.path.join(out,'SHOP_CALIBRATED_LAYER_B.blend');bpy.ops.wm.save_as_mainfile(filepath=blend)
 def render(n,loc=(0,-18,2.8),scale=7.2):
