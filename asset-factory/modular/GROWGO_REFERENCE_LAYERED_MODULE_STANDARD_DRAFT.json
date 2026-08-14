@@ -1,0 +1,22 @@
+{
+  "draftStatus": "OPERATOR_REVIEW_REQUIRED",
+  "standardId": "GROWGO_REFERENCE_LAYERED_MODULE_STANDARD_DRAFT",
+  "method": [
+    "reference crop required",
+    "module scope/context separation",
+    "lossless PNG layer integrity required",
+    "2D reassembly gate required",
+    "shallow papercut depth required",
+    "source artwork front-face preservation",
+    "simple palette sides/back",
+    "component IDs",
+    "four-side review",
+    "visible-pixel gate",
+    "mobile budget"
+  ],
+  "modules": {
+    "DOOR": "PROVEN",
+    "WINDOW": "PROVEN"
+  },
+  "globalFreeze": "NOT_APPROVED"
+}
