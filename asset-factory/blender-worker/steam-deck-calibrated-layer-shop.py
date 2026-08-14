@@ -63,6 +63,8 @@ def add_art(comp,p,asset,ver,placement,target_width,target_height=1):
   root['rootCorrectionId']=correction['correctionId'];root['rootScaleBefore']=correction['rootScaleBefore'];root['rootScaleAfter']=correction['requestedRootScale']
  roots[comp]=root;return [o]
 artfiles={'DOOR':'DOOR_REPAIRED_FIDELITY_FRONT.png','WINDOW':'WINDOW_FIDELITY_FRONT.png','AWNING':'AWNING_FIDELITY_FRONT.png','FASCIA':'FASCIA_FIDELITY_FRONT.png','SHRUB':'SHRUB_FIDELITY_FRONT.png'}
+clean_door=os.path.join(layer_root,'DOOR_REPAIRED_FIDELITY_FRONT_TRANSPARENT.png')
+if os.path.isfile(clean_door): artfiles['DOOR']='DOOR_REPAIRED_FIDELITY_FRONT_TRANSPARENT.png'
 for comp in ['DOOR','WINDOW','AWNING','FASCIA','SHRUB']:
  r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'],r.get('targetHeight',1))
 # Apply the Door root transform after all child dimensions are authored. This
@@ -77,6 +79,14 @@ door_open_w=dw+2*margin_x;door_open_h=dh+margin_z;door_top=dz+dh/2;door_bottom=d
 for name,loc,dims in [('WALL_PANEL_MAIN',(0,.02,2.05),(3.9,.10,2.5)),('WALL_PANEL_LEFT',(-1.65,-.04,2.0),(1.1,.08,2.3)),('WALL_PANEL_RIGHT',(1.75,-.04,2.0),(1.0,.08,2.3)),('WALL_PANEL_ABOVE_DOOR',(dx,-.08,door_top+.36),(door_open_w,.06,.72)),('WALL_PANEL_ABOVE_WINDOW',(.78,-.08,2.45),(1.72,.06,.72)),('DOOR_OPENING_RECESS',(dx,-.12,(door_top+door_bottom)/2),(door_open_w,.05,door_open_h)),('WINDOW_OPENING_RECESS',(.78,-.12,1.65),(1.62,.05,1.62))]:
  q=shell_box(name,loc,dims,MAT_WALL)
  if 'OPENING_RECESS' in name:q.hide_render=True;q['renderCollection']='CALIBRATION_HELPERS'
+# Window wall-panel architecture is derived from the Window visible-art width.
+window=cfg['calibrated']['WINDOW'];wx,wy,wz=window['placement'];ww=float(window['targetWidth']);wh=1.15;wm=.08
+for name,loc,dims in [('WALL_PANEL_WINDOW_LEFT',(wx-ww/2-wm/2,-.055,wz),(wm,.08,wh+.16)),('WALL_PANEL_WINDOW_RIGHT',(wx+ww/2+wm/2,-.055,wz),(wm,.08,wh+.16)),('WALL_PANEL_WINDOW_TOP',(wx,-.055,wz+wh/2+wm/2),(ww+2*wm,.08,wm)),('WALL_PANEL_WINDOW_BELOW',(wx,-.055,wz-wh/2-wm/2),(ww+2*wm,.08,wm))]:
+ q=shell_box(name,loc,dims,MAT_WALL);q['moduleId']=cfg['modules']['WALL']['assetId'];q['moduleVersion']=cfg['modules']['WALL']['version'];q['responsiveSource']='WINDOW.operatorVisibleBounds';q['openingMargin']=wm
+# Persistent reusable upper-corner trim roots, anchored between posts and fascia.
+for side,x in [('LEFT',-2.16),('RIGHT',2.16)]:
+ root=bpy.data.objects.new('GG_ROOT_UPPER_CORNER_TRIM_'+side,None);bpy.context.collection.objects.link(root);root.location=(x,-.10,3.30);root['moduleId']=cfg['modules']['TRIM']['assetId'];root['moduleVersion']=cfg['modules']['TRIM']['version'];root['anchors']=['TOP_CONTACT','POST_CONTACT','FASCIA_CONTACT','VISIBLE_ART_CENTER']
+ q=shell_box('UPPER_CORNER_TRIM_'+side,(x,-.10,3.30),(.22,.18,.62),MAT_CREAM);q.parent=root;q.location=(0,0,0);q['componentId']='UPPER_CORNER_TRIM_'+side;q['moduleId']=cfg['modules']['TRIM']['assetId'];q['moduleVersion']=cfg['modules']['TRIM']['version'];q['rootName']=root.name
 # Responsive cream surround and landing use the same door anchors, without
 # stretching any calibrated Door artwork.
 for o in bpy.data.objects:
