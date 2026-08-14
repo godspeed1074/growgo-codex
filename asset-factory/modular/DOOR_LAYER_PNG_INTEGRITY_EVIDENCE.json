@@ -1,0 +1,211 @@
+{
+  "status": "PASS",
+  "rootCauseIdentified": true,
+  "rootCauseClassification": "SOURCE_DECODE_FAIL",
+  "rootCauseDetail": "Shared PNG decoder ignored PNG filter types and assumed RGBA-only input; authoritative crop is non-interlaced RGB8.",
+  "sharedUtilityAffected": true,
+  "sourceChecksum": "1d628c720fc81921ce4421d37b13193db14938fbf5b68328a14b92db87f6c6ab",
+  "sourceDimensions": [
+    300,
+    350
+  ],
+  "maskSemanticsPreserved": true,
+  "layers": {
+    "DOOR_OPENING_SHADOW": {
+      "bounds": [
+        82,
+        0,
+        258,
+        315
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_FRAME": {
+      "bounds": [
+        88,
+        0,
+        253,
+        250
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_SLAB": {
+      "bounds": [
+        105,
+        28,
+        235,
+        250
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_GLASS": {
+      "bounds": [
+        130,
+        38,
+        215,
+        153
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_LOWER_PANEL": {
+      "bounds": [
+        128,
+        155,
+        220,
+        232
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_MAIL_SLOT": {
+      "bounds": [
+        143,
+        183,
+        204,
+        211
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_KNOB_LOCK": {
+      "bounds": [
+        200,
+        105,
+        240,
+        198
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_THRESHOLD": {
+      "bounds": [
+        80,
+        242,
+        260,
+        318
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDLayerOnlyReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "noiseOrCorruptionRemaining": false,
+  "blenderRun": false,
+  "permanentDoorVersion": false,
+  "sourceLayerPipelineReady": true,
+  "outputs": [
+    "DOOR_LAYER_PNG_INTEGRITY_BOARD.png",
+    "DOOR_LAYER_PNG_REASSEMBLED.png",
+    "DOOR_LAYER_PNG_FULL_CONTEXT_REASSEMBLED.png"
+  ]
+}
