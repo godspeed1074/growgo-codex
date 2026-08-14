@@ -22,6 +22,7 @@
     "FASCIA_SIGN": "PROVEN_LAYERED_COMMERCIAL_IDENTITY"
   },
   "globalFreeze": "NOT_APPROVED",
+  "calibratedLayerBProof": {"recipeId":"GG-REC-BLD-SIMPLE-SHOP-GROWGO-001","status":"CAPTURED_NOT_FROZEN","operatorApprovalRequired":true},
   "organicModuleLessons": [
     "irregular foreground mask",
     "silhouette gate",
