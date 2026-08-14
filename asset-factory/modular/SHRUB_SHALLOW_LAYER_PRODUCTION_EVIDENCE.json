@@ -1,0 +1,337 @@
+{
+  "status": "PASS",
+  "assetId": "GG-VEG-PLANTER-SHRUB-001",
+  "reference": {
+    "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-refbake/reference-crops/planter-shrub.png",
+    "sourceChecksum": "259190104cb935c46069d9d811b3437d3dadffe2d4e453889ec67565f2b6d55c",
+    "cropDimensions": [
+      140,
+      125
+    ],
+    "cropChecksum": "a030bb5c1a6f97025380db3be88376e6e17c328685d58b7fbb8703a8a1d0768b",
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "cropOrigin": [
+      25,
+      0
+    ]
+  },
+  "scope": {
+    "bounds": [
+      8,
+      0,
+      133,
+      125
+    ],
+    "coveragePercent": 100,
+    "noLayerPixels": 0,
+    "organicForegroundPixels": 14705,
+    "foregroundMismatchPixels": 0
+  },
+  "layers": {
+    "PLANTER_BACK": {
+      "bounds": [
+        8,
+        55,
+        133,
+        125
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "PLANTER_BODY": {
+      "bounds": [
+        8,
+        65,
+        133,
+        125
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "PLANTER_RIM": {
+      "bounds": [
+        8,
+        52,
+        133,
+        73
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FOLIAGE_BACK": {
+      "bounds": [
+        8,
+        0,
+        133,
+        90
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FOLIAGE_MID": {
+      "bounds": [
+        8,
+        8,
+        133,
+        73
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FOLIAGE_FRONT": {
+      "bounds": [
+        8,
+        18,
+        133,
+        78
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FLOWER_ACCENTS": {
+      "bounds": [
+        20,
+        20,
+        125,
+        68
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "fullSourceBackplateUsed": false,
+  "blenderRun": true,
+  "permanentShrubVersionPromoted": false,
+  "layerBAssembled": false,
+  "blender": {
+    "worker": "Steam Deck 10.0.0.4",
+    "version": "5.2.0 LTS",
+    "runtime": "flatpak run org.blender.Blender",
+    "cleanExit": true
+  },
+  "fidelityMetrics": {
+    "foregroundPixels": 14705,
+    "exactMismatchPercent": 87.05202312138728,
+    "meanRGBDifference": 4.150855718009768,
+    "greaterThan2Percent": 43.05338320299218,
+    "greaterThan5Percent": 23.8898333900034,
+    "greaterThan10Percent": 12.2203332199932,
+    "alphaDifferencePixels": 0,
+    "alignmentErrorPixels": [
+      0,
+      0
+    ]
+  },
+  "visiblePixelChecks": {
+    "planterBody": "YES",
+    "planterRim": "YES",
+    "foliageVariation": "YES",
+    "multipleFoliageMasses": "YES",
+    "organicOuterSilhouette": "YES",
+    "flowerAccents": "YES",
+    "layerDepthSeparation": "YES"
+  },
+  "silhouette": {
+    "status": "PASS",
+    "output": "SHRUB_BLACK_SILHOUETTE.png",
+    "organic": true
+  },
+  "papercutDepth": {
+    "status": "PASS"
+  },
+  "fourSide": {
+    "status": "PASS"
+  },
+  "componentIds": [
+    "PLANTER_BODY",
+    "PLANTER_RIM",
+    "FOLIAGE_BACK",
+    "FOLIAGE_MID",
+    "FOLIAGE_FRONT",
+    "FLOWER_ACCENTS"
+  ],
+  "anonymousGeometry": 0,
+  "budget": {
+    "triangles": 14,
+    "vertices": 28,
+    "objects": 9,
+    "materials": 14,
+    "textures": 7,
+    "imageBytes": 126281,
+    "anonymousGeometry": 0,
+    "mobileBudget": "PASS"
+  },
+  "depthContract": {
+    "assetId": "GG-VEG-PLANTER-SHRUB-001",
+    "camera": {
+      "type": "ORTHO",
+      "orthoScale": 1.12,
+      "resolution": [
+        140,
+        125
+      ],
+      "locked": true
+    },
+    "layers": [
+      {
+        "componentId": "PLANTER_BACK",
+        "sourceFile": "PLANTER_BACK.png",
+        "zOffset": 0,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "PLANTER_BODY",
+        "sourceFile": "PLANTER_BODY.png",
+        "zOffset": 0.01,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "PLANTER_RIM",
+        "sourceFile": "PLANTER_RIM.png",
+        "zOffset": 0.02,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FOLIAGE_BACK",
+        "sourceFile": "FOLIAGE_BACK.png",
+        "zOffset": 0.03,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FOLIAGE_MID",
+        "sourceFile": "FOLIAGE_MID.png",
+        "zOffset": 0.04,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FOLIAGE_FRONT",
+        "sourceFile": "FOLIAGE_FRONT.png",
+        "zOffset": 0.05,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      },
+      {
+        "componentId": "FLOWER_ACCENTS",
+        "sourceFile": "FLOWER_ACCENTS.png",
+        "zOffset": 0.06,
+        "uvBounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "interpolation": "Closest",
+        "colorSpace": "sRGB",
+        "alphaMode": "STRAIGHT"
+      }
+    ],
+    "fullSourceBackplateUsed": false
+  },
+  "operatorApprovalRequired": true
+}

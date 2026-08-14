@@ -16,7 +16,14 @@
   ],
   "modules": {
     "DOOR": "PROVEN",
-    "WINDOW": "PROVEN"
+    "WINDOW": "PROVEN",
+    "SHRUB_PLANTER": "PROVEN_ORGANIC_MODULE"
   },
-  "globalFreeze": "NOT_APPROVED"
+  "globalFreeze": "NOT_APPROVED",
+  "organicModuleLessons": [
+    "irregular foreground mask",
+    "silhouette gate",
+    "layered foliage masses",
+    "planter/foliage identity separation"
+  ]
 }

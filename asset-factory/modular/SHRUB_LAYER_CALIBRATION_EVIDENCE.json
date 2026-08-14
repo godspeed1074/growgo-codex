@@ -1,0 +1,165 @@
+{
+  "status": "PASS",
+  "assetId": "GG-VEG-PLANTER-SHRUB-001",
+  "reference": {
+    "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-refbake/reference-crops/planter-shrub.png",
+    "sourceChecksum": "259190104cb935c46069d9d811b3437d3dadffe2d4e453889ec67565f2b6d55c",
+    "cropDimensions": [
+      140,
+      125
+    ],
+    "cropChecksum": "a030bb5c1a6f97025380db3be88376e6e17c328685d58b7fbb8703a8a1d0768b",
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "cropOrigin": [
+      25,
+      0
+    ]
+  },
+  "scope": {
+    "bounds": [
+      8,
+      0,
+      133,
+      125
+    ],
+    "coveragePercent": 100,
+    "noLayerPixels": 0,
+    "organicForegroundPixels": 14705,
+    "foregroundMismatchPixels": 0
+  },
+  "layers": {
+    "PLANTER_BACK": {
+      "bounds": [
+        8,
+        55,
+        133,
+        125
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "PLANTER_BODY": {
+      "bounds": [
+        8,
+        65,
+        133,
+        125
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "PLANTER_RIM": {
+      "bounds": [
+        8,
+        52,
+        133,
+        73
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FOLIAGE_BACK": {
+      "bounds": [
+        8,
+        0,
+        133,
+        90
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FOLIAGE_MID": {
+      "bounds": [
+        8,
+        8,
+        133,
+        73
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FOLIAGE_FRONT": {
+      "bounds": [
+        8,
+        18,
+        133,
+        78
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "FLOWER_ACCENTS": {
+      "bounds": [
+        20,
+        20,
+        125,
+        68
+      ],
+      "dimensions": [
+        140,
+        125
+      ],
+      "expectedBytes": 70000,
+      "decodedBytes": 70000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "fullSourceBackplateUsed": false,
+  "blenderRun": false,
+  "permanentShrubVersionPromoted": false,
+  "layerBAssembled": false
+}
