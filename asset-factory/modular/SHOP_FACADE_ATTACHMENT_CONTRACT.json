@@ -1,0 +1,19 @@
+{
+  "depthOrder": [
+    "WALL_BACKGROUND",
+    "PANEL_FACE",
+    "OPENING_RECESS",
+    "TRIM",
+    "HERO_MODULE",
+    "FOREGROUND_DETAIL"
+  ],
+  "relationships": {
+    "FASCIA": "TOP_WALL/CORNER_POSTS",
+    "AWNING": "WALL/AWNING_BACKPLATE",
+    "DOOR": "DOOR_OPENING/SURROUND",
+    "WINDOW": "WINDOW_OPENING/SURROUND",
+    "SHRUB": "GROUND/FOUNDATION_PLANE",
+    "FOUNDATION": "WALL+DOOR_LANDING"
+  },
+  "protectedHeroes": "PASS"
+}

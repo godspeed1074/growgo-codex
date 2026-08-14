@@ -44,11 +44,13 @@ def image_mat(name,p):
  try:m.surface_render_method='DITHERED'
  except:pass
  return m
-def add_art(comp,p,asset,ver,placement,target_width):
- bpy.ops.mesh.primitive_plane_add(size=2,location=placement,rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=comp+'_CALIBRATED_ARTWORK';o.data.materials.append(image_mat('MAT_'+comp+'_CALIBRATED',p));o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE';o.dimensions=(target_width,1,1);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return [o]
+def add_art(comp,p,asset,ver,placement,target_width,target_height=1):
+ bpy.ops.mesh.primitive_plane_add(size=2,location=placement,rotation=(math.pi/2,0,0));o=bpy.context.object;o.name=comp+'_CALIBRATED_ARTWORK';o.data.materials.append(image_mat('MAT_'+comp+'_CALIBRATED',p));o['componentId']=comp;o['moduleId']=asset;o['moduleVersion']=ver;o['recipeId']=cfg['recipeId'];o['recipeVersion']=cfg['recipeVersion'];o['layer']='LAYER_B_RECIPE';o.dimensions=(target_width,1,target_height);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return [o]
 artfiles={'DOOR':'DOOR_REPAIRED_FIDELITY_FRONT.png','WINDOW':'WINDOW_FIDELITY_FRONT.png','AWNING':'AWNING_FIDELITY_FRONT.png','FASCIA':'FASCIA_FIDELITY_FRONT.png','SHRUB':'SHRUB_FIDELITY_FRONT.png'}
 for comp in ['DOOR','WINDOW','AWNING','FASCIA','SHRUB']:
- r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'])
+ r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'],r.get('targetHeight',1))
+# Reusable shallow wall-panel architecture and opening contact planes.
+for name,loc,dims in [('WALL_PANEL_MAIN',(0,.02,2.05),(3.9,.10,2.5)),('WALL_PANEL_LEFT',(-1.65,-.04,2.0),(1.1,.08,2.3)),('WALL_PANEL_RIGHT',(1.75,-.04,2.0),(1.0,.08,2.3)),('WALL_PANEL_ABOVE_DOOR',(-1.15,-.08,2.45),(1.25,.06,.72)),('WALL_PANEL_ABOVE_WINDOW',(.78,-.08,2.45),(1.72,.06,.72)),('DOOR_OPENING_RECESS',(-1.15,-.12,1.15),(1.16,.05,2.28)),('WINDOW_OPENING_RECESS',(.78,-.12,1.65),(1.62,.05,1.62))]:shell_box(name,loc,dims,MAT_WALL)
 # keep all source artwork materials; remove only hidden LODs if any.
 s=bpy.context.scene;s.render.resolution_x=960;s.render.resolution_y=640;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=False
 try:s.render.engine='BLENDER_EEVEE'
