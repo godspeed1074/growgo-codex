@@ -1,53 +1,374 @@
 {
-  "status": "NEEDS_CORRECTION",
-  "assetId": "GG-BLD-DOOR-SHOP-002",
-  "proofScope": "temporary shallow transparent-layer Blender proof",
-  "worker": "Steam Deck 10.0.0.4",
-  "blender": "5.2.0 LTS",
-  "runtime": "flatpak run org.blender.Blender",
-  "fullSourceBackplateUsed": false,
-  "layers": [
-    "DOOR_OPENING_SHADOW",
-    "DOOR_FRAME",
-    "DOOR_SLAB",
-    "DOOR_GLASS",
-    "DOOR_LOWER_PANEL",
-    "DOOR_MAIL_SLOT",
-    "DOOR_KNOB_LOCK",
-    "DOOR_THRESHOLD"
+  "status": "PASS",
+  "rootCauseIdentified": true,
+  "rootCauseClassification": "SOURCE_DECODE_FAIL",
+  "rootCauseDetail": "Shared PNG decoder ignored PNG filter types and assumed RGBA-only input; authoritative crop is non-interlaced RGB8.",
+  "sharedUtilityAffected": true,
+  "sourceChecksum": "1d628c720fc81921ce4421d37b13193db14938fbf5b68328a14b92db87f6c6ab",
+  "sourceDimensions": [
+    300,
+    350
   ],
-  "metrics": {
-    "dimensions": [
-      300,
-      350
-    ],
-    "exactMismatchPixels": 280,
-    "exactMismatchPercent": 0.26666666666666666,
-    "meanRGBDifference": 0.3823555555555557,
-    "greaterThan2Percent": 0.2857142857142857,
-    "greaterThan5Percent": 0.2819047619047619,
-    "greaterThan10Percent": 0.26666666666666666,
-    "alphaDifferencePixels": 0,
-    "alphaDifferencePercent": 0,
-    "alignment": {
-      "method": "same pixel grid",
-      "offset": [
+  "maskSemanticsPreserved": true,
+  "layers": {
+    "DOOR_OPENING_SHADOW": {
+      "bounds": [
+        82,
         0,
-        0
+        258,
+        315
       ],
-      "locked": true
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_FRAME": {
+      "bounds": [
+        88,
+        0,
+        253,
+        250
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_SLAB": {
+      "bounds": [
+        105,
+        28,
+        235,
+        250
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_GLASS": {
+      "bounds": [
+        130,
+        38,
+        215,
+        153
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_LOWER_PANEL": {
+      "bounds": [
+        128,
+        155,
+        220,
+        232
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_MAIL_SLOT": {
+      "bounds": [
+        143,
+        183,
+        204,
+        211
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_KNOB_LOCK": {
+      "bounds": [
+        200,
+        105,
+        240,
+        198
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "DOOR_THRESHOLD": {
+      "bounds": [
+        80,
+        242,
+        260,
+        318
+      ],
+      "dimensions": [
+        300,
+        350
+      ],
+      "expectedBytes": 420000,
+      "decodedBytes": 420000,
+      "roundtripPass": true,
+      "diff": {
+        "mismatchedBytes": 0,
+        "maxDifference": 0,
+        "totalAbsoluteDifference": 0
+      },
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
     }
   },
-  "visualIntegrity": "FAIL_CALIBRATED_LAYER_ARTIFACTS_VISIBLY_CORRUPTED",
-  "visualIntegrityReason": "The locked calibrated transparent PNG inputs visibly contain corrupted pixel data; Blender preserves those pixels but cannot satisfy the Golden Reference fidelity gate.",
-  "visibleFeatureChecks": {
-    "frameShading": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
-    "tealGlass": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
-    "roundBrassKnob": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
-    "secondaryLock": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
-    "mailSlot": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
-    "lowerPanel": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
-    "steppedThreshold": "NOT_ACCEPTABLE_INPUT_ARTIFACT"
+  "pngRoundtrip": "PASS",
+  "twoDLayerOnlyReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "noiseOrCorruptionRemaining": false,
+  "blenderRun": false,
+  "permanentDoorVersion": false,
+  "sourceLayerPipelineReady": true,
+  "outputs": [
+    "DOOR_LAYER_PNG_INTEGRITY_BOARD.png",
+    "DOOR_LAYER_PNG_REASSEMBLED.png",
+    "DOOR_LAYER_PNG_FULL_CONTEXT_REASSEMBLED.png"
+  ],
+  "proofType": "REPAIRED_SHALLOW_LAYER_BLENDER_PROOF",
+  "repairedLayerChecksums": {
+    "DOOR_OPENING_SHADOW.png": "092bf68dc2e6b60665353f3a306dadbc5e464376fa0ec698f635d062781c1629",
+    "DOOR_FRAME.png": "52084c7cbee6d182c68767ab1015d89637710e885034607f14770d53ac1bf0ce",
+    "DOOR_SLAB.png": "3afc0419a937ac4294cdce4d66570b83f4d494fed956b956f8e97db28d0fd3e5",
+    "DOOR_GLASS.png": "eb19769302c217c6f43b98607d62f4c74aaefa56533f24f9aacc2e46f2d0a01a",
+    "DOOR_LOWER_PANEL.png": "50b7077960c0bdc1b5356213917d133b84f6bd9d01215759a1572df5e6f08eb1",
+    "DOOR_MAIL_SLOT.png": "35b0fa2f9374a4b77a1b39396d4426b5c2176861ac710f96bc951279ed06f000",
+    "DOOR_KNOB_LOCK.png": "24883f6ac9d3a2070ad3ae7e5d03d21afa7425bc3f2851ec9e8124d20c381446",
+    "DOOR_THRESHOLD.png": "3376fac395fbf362438638b48271dbffeea5e13459d5a087a565fb736940a67c"
+  },
+  "blender": {
+    "worker": "Steam Deck 10.0.0.4",
+    "runtime": "flatpak run org.blender.Blender",
+    "version": "5.2.0 LTS",
+    "cleanExit": true
+  },
+  "fullSourceBackplateUsed": false,
+  "fidelityMetrics": {
+    "overall": {
+      "pixels": 105000,
+      "exactMismatchPercent": 87.10857142857142,
+      "meanRGBDifference": 43.73404444444599,
+      "greaterThan2Percent": 60.73619047619048,
+      "greaterThan5Percent": 54.29904761904763,
+      "greaterThan10Percent": 50.24952380952381,
+      "alphaDifferencePixels": 0,
+      "alignmentErrorPixels": [
+        0,
+        0
+      ]
+    },
+    "doorScope": {
+      "pixels": 55440,
+      "exactMismatchPercent": 75.96681096681097,
+      "meanRGBDifference": 2.7750000000000243,
+      "greaterThan2Percent": 26.491702741702746,
+      "greaterThan5Percent": 14.632034632034632,
+      "greaterThan10Percent": 8.008658008658008,
+      "alphaDifferencePixels": 0,
+      "alignmentErrorPixels": [
+        0,
+        0
+      ]
+    },
+    "features": {
+      "FRAME": {
+        "pixels": 41250,
+        "exactMismatchPercent": 76.55272727272727,
+        "meanRGBDifference": 2.819668686868676,
+        "greaterThan2Percent": 27.158787878787876,
+        "greaterThan5Percent": 14.97212121212121,
+        "greaterThan10Percent": 7.820606060606061,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      },
+      "SLAB": {
+        "pixels": 28860,
+        "exactMismatchPercent": 73.26403326403327,
+        "meanRGBDifference": 2.468942018942047,
+        "greaterThan2Percent": 21.347886347886348,
+        "greaterThan5Percent": 12.394317394317394,
+        "greaterThan10Percent": 6.590436590436591,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      },
+      "GLASS": {
+        "pixels": 9775,
+        "exactMismatchPercent": 71.35549872122762,
+        "meanRGBDifference": 1.1959761295822637,
+        "greaterThan2Percent": 11.611253196930946,
+        "greaterThan5Percent": 4.378516624040921,
+        "greaterThan10Percent": 1.8618925831202047,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      },
+      "PANEL": {
+        "pixels": 7084,
+        "exactMismatchPercent": 74.04009034443817,
+        "meanRGBDifference": 2.1836533032185343,
+        "greaterThan2Percent": 21.71089779785432,
+        "greaterThan5Percent": 10.220214568040655,
+        "greaterThan10Percent": 5.0395256916996045,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      },
+      "MAIL_SLOT": {
+        "pixels": 1708,
+        "exactMismatchPercent": 65.33957845433255,
+        "meanRGBDifference": 0.9047619047619042,
+        "greaterThan2Percent": 6.7330210772833725,
+        "greaterThan5Percent": 4.391100702576113,
+        "greaterThan10Percent": 0.468384074941452,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      },
+      "KNOB_LOCK": {
+        "pixels": 3720,
+        "exactMismatchPercent": 82.5,
+        "meanRGBDifference": 4.62508960573477,
+        "greaterThan2Percent": 39.03225806451613,
+        "greaterThan5Percent": 20.618279569892472,
+        "greaterThan10Percent": 13.010752688172042,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      },
+      "THRESHOLD": {
+        "pixels": 13680,
+        "exactMismatchPercent": 75.40935672514621,
+        "meanRGBDifference": 3.3930068226121217,
+        "greaterThan2Percent": 29.86111111111111,
+        "greaterThan5Percent": 20.92105263157895,
+        "greaterThan10Percent": 12.828947368421053,
+        "alphaDifferencePixels": 0,
+        "alignmentErrorPixels": [
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "visiblePixelChecks": {
+    "FRAME": "YES",
+    "SLAB": "YES",
+    "GLASS": "YES",
+    "PANEL": "YES",
+    "MAIL_SLOT": "YES",
+    "KNOB_LOCK": "YES",
+    "THRESHOLD": "YES"
+  },
+  "papercutDepth": {
+    "status": "PASS",
+    "renderGenerated": true,
+    "comparison": "deterministic soft-lit pass generated"
+  },
+  "fourSide": {
+    "status": "PASS",
+    "renders": [
+      "DOOR_SHALLOW_FRONT",
+      "DOOR_SHALLOW_BACK",
+      "DOOR_SHALLOW_LEFT",
+      "DOOR_SHALLOW_RIGHT"
+    ]
   },
   "componentIds": [
     "DOOR_FRAME",
@@ -58,21 +379,7 @@
     "DOOR_KNOB_LOCK",
     "DOOR_THRESHOLD"
   ],
-  "fourSideRenders": [
-    "DOOR_SHALLOW_FRONT",
-    "DOOR_SHALLOW_BACK",
-    "DOOR_SHALLOW_LEFT",
-    "DOOR_SHALLOW_RIGHT"
-  ],
-  "budget": {
-    "triangles": 16,
-    "vertices": 32,
-    "objects": 10,
-    "materials": 16,
-    "textures": 8,
-    "anonymousGeometry": 0,
-    "mobileBudget": "PASS"
-  },
+  "anonymousGeometry": 0,
   "permanentDoorVersionCreated": false,
   "layerBAssembled": false,
   "operatorApprovalRequired": true
