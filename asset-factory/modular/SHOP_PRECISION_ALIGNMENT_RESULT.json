@@ -1,0 +1,23 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "protectedInternals": "PASS",
+  "steamDeck": "PASS",
+  "fourSide": "PASS",
+  "componentIds": "PASS",
+  "anonymousGeometry": 0,
+  "budget": {
+    "triangles": 382,
+    "vertices": 268,
+    "objects": 36,
+    "materials": 13,
+    "textures": 6,
+    "imageBytes": 0,
+    "blendSizeBytes": 125173,
+    "glbSizeBytes": 0,
+    "anonymousGeometryCount": 0,
+    "mobileBudget": "PASS"
+  },
+  "knownGoodBuildId": null
+}
