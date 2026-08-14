@@ -32,11 +32,11 @@ MAT_WALL=solid_mat('GG_SHELL_WARM_BROWN',(.34,.16,.09));MAT_CREAM=solid_mat('GG_
 def shell_box(name,loc,dims,mat):
  bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.name=name;o.dimensions=dims;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(mat);o['componentId']=name;o['moduleId']='GG-BLD-SHELL-CORRECTION-REFERENCE-001';o['moduleVersion']='1.0.0';o['layer']='LAYER_A_MODULE';objs.append(o);return o
 # One reusable shell correction: wall envelope, corner posts, opening surrounds, and stepped foundation.
-shell_box('WALL_FACADE_SHELL',(0,0.18,2.0),(5.0,.22,3.5),MAT_WALL)
-shell_box('WALL_CORNER_POST_L',(-2.25,-.02,2.0),(.22,.18,3.35),MAT_CREAM);shell_box('WALL_CORNER_POST_R',(2.25,-.02,2.0),(.22,.18,3.35),MAT_CREAM)
-shell_box('WALL_BASE_TRIM',(0,-.03,.42),(4.6,.22,.22),MAT_CREAM)
-shell_box('FOUNDATION_BASE',(0,.08,.18),(5.1,.65,.32),MAT_GRAY);shell_box('FOUNDATION_STEP',(0,-.28,.03),(2.0,.72,.18),MAT_GRAY)
-shell_box('WINDOW_SURROUND',(0.85,-.03,1.65),(1.9,.18,1.95),MAT_CREAM);shell_box('DOOR_SURROUND',(-1.2,-.03,1.15),(1.35,.18,2.55),MAT_CREAM)
+shell_box('WALL_FACADE_SHELL',(0,0.18,2.0),(4.8,.22,3.5),MAT_WALL)
+shell_box('WALL_CORNER_POST_L',(-2.16,-.02,2.0),(.16,.16,3.25),MAT_CREAM);shell_box('WALL_CORNER_POST_R',(2.16,-.02,2.0),(.16,.16,3.25),MAT_CREAM)
+shell_box('WALL_BASE_TRIM',(0,-.03,.38),(4.5,.18,.16),MAT_CREAM)
+shell_box('FOUNDATION_BASE',(0,.08,.16),(4.7,.48,.22),MAT_GRAY);shell_box('FOUNDATION_STEP',(-1.15,-.24,.025),(1.45,.52,.12),MAT_GRAY)
+shell_box('WINDOW_SURROUND',(0.78,-.03,1.65),(1.72,.16,1.75),MAT_CREAM);shell_box('DOOR_SURROUND',(-1.15,-.03,1.15),(1.22,.16,2.35),MAT_CREAM)
 for comp in ['FOUNDATION','WALL','TRIM']:
  r=cfg['modules'][comp];objs+=load_file(r['source'],comp,r['assetId'],r['version'],r['placement'])
 def image_mat(name,p):
