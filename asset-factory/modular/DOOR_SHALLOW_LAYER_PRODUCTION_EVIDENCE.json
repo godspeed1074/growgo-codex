@@ -1,0 +1,79 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "assetId": "GG-BLD-DOOR-SHOP-002",
+  "proofScope": "temporary shallow transparent-layer Blender proof",
+  "worker": "Steam Deck 10.0.0.4",
+  "blender": "5.2.0 LTS",
+  "runtime": "flatpak run org.blender.Blender",
+  "fullSourceBackplateUsed": false,
+  "layers": [
+    "DOOR_OPENING_SHADOW",
+    "DOOR_FRAME",
+    "DOOR_SLAB",
+    "DOOR_GLASS",
+    "DOOR_LOWER_PANEL",
+    "DOOR_MAIL_SLOT",
+    "DOOR_KNOB_LOCK",
+    "DOOR_THRESHOLD"
+  ],
+  "metrics": {
+    "dimensions": [
+      300,
+      350
+    ],
+    "exactMismatchPixels": 280,
+    "exactMismatchPercent": 0.26666666666666666,
+    "meanRGBDifference": 0.3823555555555557,
+    "greaterThan2Percent": 0.2857142857142857,
+    "greaterThan5Percent": 0.2819047619047619,
+    "greaterThan10Percent": 0.26666666666666666,
+    "alphaDifferencePixels": 0,
+    "alphaDifferencePercent": 0,
+    "alignment": {
+      "method": "same pixel grid",
+      "offset": [
+        0,
+        0
+      ],
+      "locked": true
+    }
+  },
+  "visualIntegrity": "FAIL_CALIBRATED_LAYER_ARTIFACTS_VISIBLY_CORRUPTED",
+  "visualIntegrityReason": "The locked calibrated transparent PNG inputs visibly contain corrupted pixel data; Blender preserves those pixels but cannot satisfy the Golden Reference fidelity gate.",
+  "visibleFeatureChecks": {
+    "frameShading": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
+    "tealGlass": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
+    "roundBrassKnob": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
+    "secondaryLock": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
+    "mailSlot": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
+    "lowerPanel": "NOT_ACCEPTABLE_INPUT_ARTIFACT",
+    "steppedThreshold": "NOT_ACCEPTABLE_INPUT_ARTIFACT"
+  },
+  "componentIds": [
+    "DOOR_FRAME",
+    "DOOR_SLAB",
+    "DOOR_GLASS",
+    "DOOR_PANEL",
+    "DOOR_MAIL_SLOT",
+    "DOOR_KNOB_LOCK",
+    "DOOR_THRESHOLD"
+  ],
+  "fourSideRenders": [
+    "DOOR_SHALLOW_FRONT",
+    "DOOR_SHALLOW_BACK",
+    "DOOR_SHALLOW_LEFT",
+    "DOOR_SHALLOW_RIGHT"
+  ],
+  "budget": {
+    "triangles": 16,
+    "vertices": 32,
+    "objects": 10,
+    "materials": 16,
+    "textures": 8,
+    "anonymousGeometry": 0,
+    "mobileBudget": "PASS"
+  },
+  "permanentDoorVersionCreated": false,
+  "layerBAssembled": false,
+  "operatorApprovalRequired": true
+}
