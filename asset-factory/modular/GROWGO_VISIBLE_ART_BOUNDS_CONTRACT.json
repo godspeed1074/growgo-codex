@@ -1,0 +1,1 @@
+{"contractId":"GROWGO_VISIBLE_ART_BOUNDS_CONTRACT","version":"1.0.0","rule":"visible_alpha_content_bounds_are_authoritative_for_alignment","fields":["geometricBounds","visibleArtBounds","contentOffset","rootOrigin","visibleContentCenter","groundContact"],"transparentPadding":"preserve_texture; exclude_padding_from_alignment_and_opening_dimensions"}
