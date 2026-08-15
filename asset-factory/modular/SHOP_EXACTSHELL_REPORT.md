@@ -1,0 +1,3 @@
+# Exact Upper Transition + Wall Surface Reconstruction
+
+Status: BLOCKED by SOURCE_INFORMATION_BLOCKER. The upper-transition and wall-surface differences were visually confirmed, but the available broad source regions do not permit contamination-free exact extraction. No generic blocks, AO, or full-facade texture was added. Current clean-context candidate remains the safe baseline. Steam Deck/four-side/component IDs/anonymous geometry/budget remain PASS. Known-good: NO.

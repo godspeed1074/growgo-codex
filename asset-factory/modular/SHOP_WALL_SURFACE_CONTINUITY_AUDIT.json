@@ -1,0 +1,9 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "readsAsOneContinuousFacade": "PARTIAL",
+  "panelSeams": "VISIBLE_BUT_NOT_CRITICAL",
+  "tonalContinuity": "INSUFFICIENT",
+  "depthContinuity": "INSUFFICIENT",
+  "helperGeometryVisible": "NO",
+  "anonymousGeometryCount": 0
+}

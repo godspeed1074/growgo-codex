@@ -53,4 +53,5 @@
   ,"upperTransitionDecomposition": "upper architectural transitions must be visually decomposed from the reference before first-pass assembly",
   "wallContinuity": "modular wall pieces preserve cross-panel tonal continuity",
   "organicSideVisionGate": "organic modules require side-depth vision review before operator review"
+  ,"shellSurfaceDecomposition": "visible shell surface detail, cornices, transition trims, contact shadows, and cross-panel continuity are mandatory in initial reference decomposition"
 }
