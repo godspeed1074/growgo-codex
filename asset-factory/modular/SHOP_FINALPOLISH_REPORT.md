@@ -1,0 +1,3 @@
+# Final Trim Weight + Fascia/Awning Context + Shrub Integration
+
+Status: NEEDS_CORRECTION. Window and transom trim weight were reduced on the real Steam Deck render and visibly improved. Fascia/awning context cleanup remains blocked by contaminated source artwork; no unsafe mask was invented. Shrub front fidelity and shallow depth were preserved. Steam Deck, four-side, component IDs, anonymous geometry, and budget PASS. Known-good NO.

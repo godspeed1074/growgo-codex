@@ -1,0 +1,31 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "startingCandidate": "operator-correction-iter1",
+  "differences": [
+    {
+      "area": "window trim",
+      "before": "too heavy",
+      "after": "reduced and visually closer",
+      "result": "IMPROVED"
+    },
+    {
+      "area": "transom trim",
+      "before": "too heavy",
+      "after": "reduced and visually closer",
+      "result": "IMPROVED"
+    },
+    {
+      "area": "fascia/awning context",
+      "before": "dark source context visible",
+      "after": "unchanged because clean mask unavailable",
+      "result": "BLOCKED"
+    },
+    {
+      "area": "shrub",
+      "before": "partly card-like",
+      "after": "front preserved; side depth retained",
+      "result": "NEEDS_REVIEW"
+    }
+  ],
+  "visionMetricConflict": true
+}
