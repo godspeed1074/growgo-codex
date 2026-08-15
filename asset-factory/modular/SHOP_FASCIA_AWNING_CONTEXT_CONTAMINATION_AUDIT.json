@@ -1,0 +1,16 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "FASCIA": {
+    "validArtworkPct": 61.199999999999996,
+    "contextContaminationPct": 38.800000000000004,
+    "omittedValidArtworkPct": 0,
+    "ambiguousPixelPct": 0
+  },
+  "AWNING": {
+    "validArtworkPct": 77.45128205128205,
+    "contextContaminationPct": 22.54871794871795,
+    "omittedValidArtworkPct": 0,
+    "ambiguousPixelPct": 0
+  },
+  "method": "bounded visible-shape scope with manual visual verification"
+}

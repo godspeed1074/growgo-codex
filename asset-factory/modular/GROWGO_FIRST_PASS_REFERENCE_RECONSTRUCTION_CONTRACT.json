@@ -47,5 +47,7 @@
     "window visible size and four-corner trim continuity",
     "organic asset complete silhouette and side depth",
     "lowest structural point meets ground"
-  ]
+  ],
+  "contextMaskRequirement": "Codex creates clean component masks autonomously; context contamination must be zero or explicitly vision-approved before first serious candidate",
+  "heroModuleExtentReview": "required front and side extent review for fascia, awning, and organic modules"
 }

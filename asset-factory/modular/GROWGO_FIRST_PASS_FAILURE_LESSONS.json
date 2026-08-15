@@ -73,5 +73,6 @@
       "prevention": "mandatory visible-art alignment, transom-relative, trim-join, crop, and grounding checks"
     }
   ],
-  "northStar": "REFERENCE IMAGE -> ACCURATE BLENDER REPRODUCTION -> FIRST SERIOUS PRODUCTION CANDIDATE"
+  "northStar": "REFERENCE IMAGE -> ACCURATE BLENDER REPRODUCTION -> FIRST SERIOUS PRODUCTION CANDIDATE",
+  "maskLesson": "Codex must create and refine clean fascia/awning masks itself; operators are not responsible for preparing visible-component masks"
 }
