@@ -103,5 +103,6 @@
     "Codex visually inspects Blender output",
     "bounded internal correction",
     "operator sees first serious candidate"
-  ]
+  ],
+  "assemblyVisionSelfCorrectionRule": "REFERENCE → CODEX VISUAL DECOMPOSITION → CALIBRATED LAYER A MODULES → CLEAN LAYER B ASSEMBLY → CODEX VISION SELF-CORRECTION → FIRST SERIOUS CANDIDATE"
 }

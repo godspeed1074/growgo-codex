@@ -1,0 +1,44 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "initialDifferences": [
+    "facade too small in frame",
+    "fascia/awning gap",
+    "top trim too low",
+    "wall spans read as separate rectangles",
+    "presentation darker than reference"
+  ],
+  "retainedCorrections": [
+    "camera ortho framing 6.6",
+    "camera target vertical shift",
+    "awning root raised",
+    "upper wall spans raised",
+    "upper trim roots raised"
+  ],
+  "revertedCorrections": [],
+  "finalScores": {
+    "status": "NEEDS_CORRECTION",
+    "internalAssemblyIterations": 3,
+    "OVERALL_LIKENESS": 78,
+    "SILHOUETTE": 76,
+    "PROPORTIONS": 74,
+    "WALL_ARCHITECTURE": 72,
+    "DOOR": 82,
+    "WINDOW": 78,
+    "AWNING": 80,
+    "FASCIA_SIGN": 76,
+    "UPPER_TRIM": 70,
+    "FOUNDATION": 74,
+    "SHRUB": 78,
+    "PAPERCUT_STYLE": 70,
+    "GROUNDING": 75,
+    "PRESENTATION": 73,
+    "rationale": "Iteration 3 improved framing, fascia/awning vertical relationship, and top-shell alignment. Remaining mismatch is the generic-looking warm-brown wall continuity and protected hero context compared with the brighter reference."
+  },
+  "protectedModules": [
+    "DOOR",
+    "WINDOW",
+    "SHRUB",
+    "FOUNDATION"
+  ],
+  "visionMetricConflict": true
+}
