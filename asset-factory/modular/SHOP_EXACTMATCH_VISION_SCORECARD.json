@@ -1,0 +1,17 @@
+{
+  "OVERALL_LIKENESS": 64,
+  "SILHOUETTE": 62,
+  "PROPORTIONS": 66,
+  "FACADE_ARCHITECTURE": 55,
+  "DOOR": 82,
+  "WINDOW": 70,
+  "AWNING": 72,
+  "FASCIA_SIGN": 68,
+  "UPPER_TRIM": 45,
+  "FOUNDATION": 62,
+  "SHRUB": 74,
+  "GROUNDING": 70,
+  "PAPERCUT_STYLE": 65,
+  "LIGHTING_PRESENTATION": 66,
+  "rationale": "Lighting and Door integration improved over the safe baseline. The candidate remains visibly different in fascia/awning backing, upper trim, transom integration, foundation layering, and overall shell continuity."
+}

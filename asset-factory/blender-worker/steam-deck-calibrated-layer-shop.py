@@ -91,9 +91,10 @@ for name,loc,dims in [('WALL_PANEL_WINDOW_LEFT',(wx-ww/2-wm/2,-.055,wz),(wm,.08,
 # Persistent reusable upper-corner trim roots, anchored between posts and fascia.
 for side,x in [('LEFT',-2.16),('RIGHT',2.16)]:
  root=bpy.data.objects.new('GG_ROOT_UPPER_CORNER_TRIM_'+side,None);bpy.context.collection.objects.link(root);root.location=(x,-.10,3.30);root['moduleId']=cfg['modules']['TRIM']['assetId'];root['moduleVersion']=cfg['modules']['TRIM']['version'];root['anchors']=['TOP_CONTACT','POST_CONTACT','FASCIA_CONTACT','VISIBLE_ART_CENTER']
- q=shell_box('UPPER_CORNER_TRIM_'+side,(x,-.10,3.34),(.20,.16,.44),MAT_CREAM);q.parent=root;q.location=(0,0,.04);q['componentId']='UPPER_CORNER_TRIM_'+side;q['moduleId']=cfg['modules']['TRIM']['assetId'];q['moduleVersion']=cfg['modules']['TRIM']['version'];q['rootName']=root.name
+ q=shell_box('UPPER_CORNER_TRIM_'+side,(x,-.10,3.34),(.20,.16,.44),MAT_CREAM);q.parent=root;q.location=(0,0,.04);q.hide_render=True;q['componentId']='UPPER_CORNER_TRIM_'+side;q['moduleId']=cfg['modules']['TRIM']['assetId'];q['moduleVersion']=cfg['modules']['TRIM']['version'];q['rootName']=root.name
  # Reusable shallow cap closes the visual connection into the fascia.
- cap=shell_box('UPPER_CORNER_TRIM_CAP_'+side,(x+(-.10 if side=='LEFT' else .10),-.10,3.56),(.26,.16,.12),MAT_CREAM);cap['componentId']='UPPER_CORNER_TRIM_'+side;cap['moduleId']=cfg['modules']['TRIM']['assetId'];cap['moduleVersion']=cfg['modules']['TRIM']['version'];cap['rootName']='GG_ROOT_UPPER_CORNER_TRIM_'+side;cap['anchors']=['TOP_CONTACT','FASCIA_CONTACT']
+ cap=shell_box('UPPER_CORNER_TRIM_CAP_'+side,(x+(-.10 if side=='LEFT' else .10),-.10,3.56),(.26,.16,.12),MAT_CREAM);cap.hide_render=True;cap['componentId']='UPPER_CORNER_TRIM_'+side;cap['moduleId']=cfg['modules']['TRIM']['assetId'];cap['moduleVersion']=cfg['modules']['TRIM']['version'];cap['rootName']='GG_ROOT_UPPER_CORNER_TRIM_'+side;cap['anchors']=['TOP_CONTACT','FASCIA_CONTACT']
+ block=shell_box('AWNING_CORNER_BLOCK_'+side,(x+(-.28 if side=='LEFT' else .28),-.18,2.72),(.28,.16,.30),MAT_CREAM);block.hide_render=True;block['componentId']='UPPER_CORNER_TRIM_'+side;block['moduleId']=cfg['modules']['TRIM']['assetId'];block['moduleVersion']=cfg['modules']['TRIM']['version'];block['anchors']=['POST_CONTACT','FASCIA_CONTACT']
 # Responsive cream surround and landing use the same door anchors, without
 # stretching any calibrated Door artwork.
 for o in bpy.data.objects:
@@ -107,6 +108,8 @@ if s.world is None:s.world=bpy.data.worlds.new('CALIBRATED_SHOP_WORLD')
 s.world.color=(.92,.92,.92)
 s.view_settings.view_transform='Standard';s.view_settings.look='None';s.view_settings.exposure=0;s.view_settings.gamma=1
 bpy.ops.object.light_add(type='AREA',location=(-3,-6,7));bpy.context.object.data.energy=700;bpy.context.object.data.size=5
+bpy.ops.object.light_add(type='AREA',location=(1.5,-7,4.5));bpy.context.object.data.energy=900;bpy.context.object.data.size=6
+bpy.ops.object.light_add(type='AREA',location=(5,-3,3));bpy.context.object.data.energy=350;bpy.context.object.data.size=4
 bpy.ops.object.camera_add(location=(0,-18,2.8));cam=bpy.context.object;cam.name='GG_CAMERA_SIMPLE_SHOP_LOCKED';cam.data.type='ORTHO';cam.data.ortho_scale=7.2;cam.rotation_euler=((Vector((0,0,2.0))-cam.location).to_track_quat('-Z','Y')).to_euler();s.camera=cam
 blend=os.path.join(out,'SHOP_CALIBRATED_LAYER_B.blend');bpy.ops.wm.save_as_mainfile(filepath=blend)
 def render(n,loc=(0,-18,2.8),scale=7.2):

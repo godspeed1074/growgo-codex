@@ -31,6 +31,13 @@
     "operatorBoardMustLabel": "ACTUAL BLENDER ASSET — FRONT",
     "knownGoodAutoPromotion": false
   },
+  "exactMatchLessons": [
+    "checkpoint blend and render checksums before every visual correction",
+    "retain an iteration only when Codex image review shows improvement over the safe baseline",
+    "revert visually regressive shell and trim experiments immediately",
+    "compare fascia, awning, foundation, transom, and presentation against the immutable reference crop",
+    "treat calibrated hero artwork as protected while correcting shell/context/backing layers"
+  ],
   "calibratedLayerBProof": {"recipeId":"GG-REC-BLD-SIMPLE-SHOP-GROWGO-001","status":"CAPTURED_NOT_FROZEN","operatorApprovalRequired":true,"shellIntegrationRequirements":["warm brown facade envelope","cream opening/corner trim","stepped foundation","hero modules remain visually protected"]},
   "organicModuleLessons": [
     "irregular foreground mask",
