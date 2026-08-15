@@ -1,0 +1,69 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "crops": [
+    {
+      "name": "UPPER_LEFT_TRANSITION",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "LOW",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "UPPER_CENTER_TRANSITION",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "LOW",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "UPPER_RIGHT_TRANSITION",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "LOW",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "WALL_LEFT_CLEAN_SAMPLE",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "LOW",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "WALL_CENTER_CLEAN_SAMPLE",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "LOW",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "WALL_RIGHT_CLEAN_SAMPLE",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "LOW",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "DOOR_WALL_CONTACT",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "PRESENT_IN_CONTEXT",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    },
+    {
+      "name": "WINDOW_WALL_CONTACT",
+      "targetScope": "TARGET_ARCHITECTURE_OR_SURFACE",
+      "referenceContext": "LIMITED",
+      "unrelatedComponentRisk": "PRESENT_IN_CONTEXT",
+      "maskRequired": true,
+      "contextContaminationPolicy": "ZERO_AFTER_MASK"
+    }
+  ]
+}

@@ -35,5 +35,6 @@
   "firstPassContract": "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
   "regressionEscalation": "FIRST_PASS_STANDARD_REGRESSION",
   "operatorCandidateGate": "TECHNICAL_PASS_AND_VISION_PASS",
-  "referenceCropFallbackRule": "When surface/context convergence stalls, return to tight Golden Reference crops and reconstruct exact visible transition art; do not invent generic shading."
+  "referenceCropFallbackRule": "When surface/context convergence stalls, return to tight Golden Reference crops and reconstruct exact visible transition art; do not invent generic shading.",
+  "tightReferenceCropWorkflow": "Codex generates tight crops, contamination audits, and masks before declaring source information blocked"
 }

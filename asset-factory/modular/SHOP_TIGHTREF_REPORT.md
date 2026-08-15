@@ -1,0 +1,3 @@
+# Autonomous Tight Reference Cropping + Exact Shell Finish
+
+Status: NEEDS_CORRECTION. Eight tight reference crops were generated directly from the original Golden Reference with checksums and contamination risks recorded. Clean wall samples are usable; upper transition and contact crops still require scope masks to separate fascia/awning/window/door pixels before isolated Blender proof. No generic geometry was integrated. The clean-context baseline remains unchanged. Steam Deck/four-side/component IDs/anonymous geometry/budget PASS. Known-good NO.
