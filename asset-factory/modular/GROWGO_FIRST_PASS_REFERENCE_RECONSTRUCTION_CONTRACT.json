@@ -1,0 +1,24 @@
+{
+  "contractId": "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
+  "version": "1.0.0",
+  "requiredBeforeFirstSeriousCandidate": [
+    "complete visual reference study",
+    "visible component and relationship inventory",
+    "Master Asset Index search-before-create",
+    "missing visible components registered as reusable Layer A assets",
+    "reference crop -> scope mask -> context separation -> PNG integrity -> 2D reassembly -> shallow 2.5D",
+    "persistent roots, visible-art bounds, anchors, component IDs, side/back treatment",
+    "responsive openings, wall panels, trim, foundation, and landing contracts",
+    "helper geometry excluded from beauty renders",
+    "real Steam Deck Blender execution",
+    "Codex inspection of the actual Blender render",
+    "autonomous correction with rollback"
+  ],
+  "qualityGate": {"technicalPassRequired": true, "visionPassRequired": true, "operatorReviewBlockedWhileMajorSafeDifferenceVisible": true},
+  "autonomousConvergence": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
+  "stopConditions": ["VISION_PASS","STALLED_VISUAL_CONVERGENCE","HARD_TECHNICAL_BLOCKER","BUDGET_BLOCKER","SOURCE_INFORMATION_BLOCKER","STRUCTURAL_CONTRACT_BLOCKER"],
+  "requiredReviews": ["front","gameplay","hero close-up","back","left","right","component ID","four-side"],
+  "mobileBudgets": true,
+  "anonymousGeometryPolicy": "REJECT",
+  "goldenReference": "IMMUTABLE"
+}

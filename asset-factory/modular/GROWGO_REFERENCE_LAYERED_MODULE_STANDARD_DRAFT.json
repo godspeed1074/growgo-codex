@@ -33,7 +33,9 @@
       "rebuild",
       "codex-image-review"
     ],
-    "maxInternalIterations": 3,
+    "maxInternalIterations": null,
+    "arbitraryIterationStop": false,
+    "firstSeriousCandidateGate": "CODEX MUST NOT PRESENT A FIRST SERIOUS REFERENCE-DRIVEN CANDIDATE WHILE CODEX ITSELF CAN STILL SEE A MAJOR CORRECTABLE DIFFERENCE.",
     "visionOverridesMetrics": true,
     "stopOn": [
       "VISION_PASS",

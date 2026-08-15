@@ -27,5 +27,9 @@
   "productionAssetPolicy": "NO_PRODUCTION_MUTATION",
   "selectiveUnlockPolicy": "SELECTIVE_UNLOCK + SAFE_BASELINE + VISION_GUIDED_CORRECTION + REGRESSION_ROLLBACK",
   "protectionRule": "Protection must not prevent Codex from fixing a visual defect Codex itself can see",
-  "richnessPolicy": "surface/context richness is part of fidelity; rollback any accent that becomes more visible than the reference"
+  "richnessPolicy": "surface/context richness is part of fidelity; rollback any accent that becomes more visible than the reference",
+  "firstPassContract": "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
+  "regressionEscalation": "FIRST_PASS_STANDARD_REGRESSION",
+  "operatorCandidateGate": "TECHNICAL_PASS_AND_VISION_PASS",
+  "referenceCropFallbackRule": "When surface/context convergence stalls, return to tight Golden Reference crops and reconstruct exact visible transition art; do not invent generic shading."
 }
