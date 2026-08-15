@@ -1,0 +1,32 @@
+{
+  "status": "CANDIDATE",
+  "strategy": "physical-module-front-art",
+  "modules": [
+    "WALL_LEFT",
+    "WALL_CENTRE",
+    "WALL_RIGHT"
+  ],
+  "source": "SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "crop": {
+    "x": 42,
+    "y": 135,
+    "w": 676,
+    "h": 385
+  },
+  "partition": {
+    "LEFT": [
+      0,
+      197
+    ],
+    "CENTRE": [
+      197,
+      363
+    ],
+    "RIGHT": [
+      363,
+      676
+    ]
+  },
+  "seamPolicy": "shared pixel boundaries, no overlap",
+  "heroModulesProtected": true
+}
