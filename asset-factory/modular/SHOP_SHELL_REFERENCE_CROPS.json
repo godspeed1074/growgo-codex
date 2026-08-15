@@ -1,0 +1,152 @@
+{
+  "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "dimensions": [
+    760,
+    670
+  ],
+  "crops": {
+    "WALL_LEFT": {
+      "file": "test-output/shell-reference-crops/WALL_LEFT.png",
+      "sourceBox": [
+        28,
+        155,
+        125,
+        515
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "WALL_CENTRE": {
+      "file": "test-output/shell-reference-crops/WALL_CENTRE.png",
+      "sourceBox": [
+        275,
+        258,
+        612,
+        518
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "WALL_RIGHT": {
+      "file": "test-output/shell-reference-crops/WALL_RIGHT.png",
+      "sourceBox": [
+        560,
+        155,
+        645,
+        515
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "WALL_TOP_LEFT": {
+      "file": "test-output/shell-reference-crops/WALL_TOP_LEFT.png",
+      "sourceBox": [
+        25,
+        12,
+        150,
+        178
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "WALL_TOP_RIGHT": {
+      "file": "test-output/shell-reference-crops/WALL_TOP_RIGHT.png",
+      "sourceBox": [
+        610,
+        12,
+        735,
+        178
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "FOUNDATION_LEFT": {
+      "file": "test-output/shell-reference-crops/FOUNDATION_LEFT.png",
+      "sourceBox": [
+        12,
+        495,
+        126,
+        592
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "FOUNDATION_ENTRANCE": {
+      "file": "test-output/shell-reference-crops/FOUNDATION_ENTRANCE.png",
+      "sourceBox": [
+        280,
+        495,
+        610,
+        592
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "FOUNDATION_RIGHT": {
+      "file": "test-output/shell-reference-crops/FOUNDATION_RIGHT.png",
+      "sourceBox": [
+        548,
+        495,
+        618,
+        592
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "UPPER_CORNER_TRIM_LEFT": {
+      "file": "test-output/shell-reference-crops/UPPER_CORNER_TRIM_LEFT.png",
+      "sourceBox": [
+        28,
+        125,
+        112,
+        210
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "UPPER_CORNER_TRIM_RIGHT": {
+      "file": "test-output/shell-reference-crops/UPPER_CORNER_TRIM_RIGHT.png",
+      "sourceBox": [
+        648,
+        125,
+        738,
+        210
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "FASCIA_TO_WALL_TRANSITION": {
+      "file": "test-output/shell-reference-crops/FASCIA_TO_WALL_TRANSITION.png",
+      "sourceBox": [
+        25,
+        145,
+        735,
+        190
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "AWNING_MOUNTING_REGION": {
+      "file": "test-output/shell-reference-crops/AWNING_MOUNTING_REGION.png",
+      "sourceBox": [
+        55,
+        160,
+        705,
+        285
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    },
+    "SHELL_COMPOSITE": {
+      "file": "test-output/shell-reference-crops/SHELL_COMPOSITE.png",
+      "sourceBox": [
+        16,
+        10,
+        744,
+        590
+      ],
+      "alphaMode": "STRAIGHT_RGBA",
+      "heroProtected": true
+    }
+  }
+}

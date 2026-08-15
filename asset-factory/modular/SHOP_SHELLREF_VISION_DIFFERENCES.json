@@ -1,0 +1,54 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "internalIterationsUsed": 2,
+  "protectedModules": [
+    "DOOR",
+    "WINDOW",
+    "SHRUB",
+    "AWNING",
+    "FASCIA"
+  ],
+  "referenceCrops": "asset-factory/modular/SHOP_SHELL_REFERENCE_CROPS.json",
+  "initialDifferences": [
+    {
+      "region": "FASCIA_TO_WALL_TRANSITION",
+      "severity": "HIGH",
+      "finding": "dark backing/context remains around fascia and awning"
+    },
+    {
+      "region": "UPPER_CORNER_TRIM",
+      "severity": "HIGH",
+      "finding": "left/right trim remains blocky and disconnected"
+    },
+    {
+      "region": "WALL_ARCHITECTURE",
+      "severity": "HIGH",
+      "finding": "shell reads as segmented panels rather than continuous facade"
+    },
+    {
+      "region": "FOUNDATION",
+      "severity": "MEDIUM",
+      "finding": "layering and proportions remain unlike reference"
+    },
+    {
+      "region": "FLOATING_BACKING",
+      "severity": "HIGH",
+      "finding": "visible dark/white context artifacts in experimental crop layers"
+    }
+  ],
+  "retainedCorrections": [],
+  "revertedCorrections": [
+    "alpha-backed shell crop planes",
+    "white-backed shell composite plane"
+  ],
+  "vision": {
+    "overallLikeness": 66,
+    "facadeArchitecture": 57,
+    "upperTrim": 45,
+    "foundation": 62,
+    "awningIntegration": 72,
+    "fasciaIntegration": 72,
+    "protectedHeroRegression": "PASS",
+    "overallShellResemblesReference": "NO"
+  }
+}
