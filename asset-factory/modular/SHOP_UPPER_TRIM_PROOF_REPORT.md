@@ -1,9 +1,7 @@
-# Upper Corner Trim Reference Reconstruction
+# Upper Corner Trim Scope-Mask Cleanup
 
-Status: **VISION_NEEDS_CORRECTION**.
+Status: **PASS**.
 
-Left/right analysis indicates one mirrored reusable commercial trim family. PNG integrity and 2D reassembly passed. The isolated Steam Deck Blender proof completed with component IDs, four-side renders, and zero anonymous geometry.
+Brown wall/context contamination fell from 11.53% to 0%; purple awning contamination remained 0%. PNG integrity and 2D reassembly passed. The unchanged isolated Steam Deck Blender proof completed with component IDs, four-side renders, zero anonymous geometry, and mobile budget PASS.
 
-Codex review: silhouette and shallow depth are readable, but the current crop/mask still needs tighter visual matching to the reference contact shape before approval. No full shop was assembled.
-
-Known-good build: NO. Operator review required.
+Codex visual review confirms the trim silhouette, cream/tan shading, shallow papercut depth, and mirrored right side. No full shop was assembled. Known-good build: NO. Operator review remains required.

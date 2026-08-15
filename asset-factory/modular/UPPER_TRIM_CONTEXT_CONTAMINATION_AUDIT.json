@@ -1,0 +1,28 @@
+{
+  "before": {
+    "classifiedContaminationPixels": 203,
+    "trimPixels": 1760,
+    "contaminationPercent": 11.53,
+    "brownWallPixels": 203,
+    "purpleAwningPixels": 0,
+    "otherContextPixels": 0
+  },
+  "after": {
+    "trimPixels": 1557,
+    "brownWallPixels": 0,
+    "purpleAwningPixels": 0,
+    "otherContextPixels": 0,
+    "contaminationPercent": 0
+  },
+  "classification": [
+    "VALID_TRIM_PIXEL",
+    "VALID_TRIM_SHADOW",
+    "VALID_TRIM_HIGHLIGHT",
+    "WALL_CONTEXT",
+    "AWNING_CONTEXT",
+    "FASCIA_CONTEXT",
+    "BACKGROUND_CONTEXT",
+    "OTHER_CONTAMINATION"
+  ],
+  "status": "PASS"
+}

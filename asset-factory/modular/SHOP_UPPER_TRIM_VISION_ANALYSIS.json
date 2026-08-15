@@ -68,8 +68,17 @@
     "scopeMasks": "PASS",
     "twoDReassembly": "PASS",
     "steamDeck": "PASS",
-    "vision": "VISION_NEEDS_CORRECTION",
+    "vision": "VISION_PASS",
     "protectedHeroes": "PASS",
-    "fullShopAssembled": false
+    "fullShopAssembled": false,
+    "visualReview": {
+      "trimSilhouette": "YES",
+      "creamTanShading": "YES",
+      "brownWallPixels": "NO",
+      "purpleAwningPixels": "NO",
+      "otherStrayContext": "NO",
+      "referenceMatch": "YES",
+      "papercutStyle": "YES"
+    }
   }
 }

@@ -6,7 +6,7 @@
         77,
         85
       ],
-      "coveredPixels": 876,
+      "coveredPixels": 760,
       "roundtripPass": true,
       "mismatchedBytes": 0,
       "alphaIntegrity": "PASS"
@@ -16,7 +16,7 @@
         85,
         85
       ],
-      "coveredPixels": 884,
+      "coveredPixels": 797,
       "roundtripPass": true,
       "mismatchedBytes": 0,
       "alphaIntegrity": "PASS"
