@@ -1,0 +1,12 @@
+{
+  "status": "SAFE_BASELINE",
+  "calibrationAsset": true,
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "camera": "GG_CAMERA_SIMPLE_SHOP_LOCKED",
+  "visionScore": 87,
+  "budget": "PASS",
+  "componentIds": "PASS",
+  "anonymousGeometryCount": 0,
+  "knownGoodAssigned": false
+}

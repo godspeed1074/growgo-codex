@@ -8,5 +8,17 @@
   "shopCurrentRecordedScore": 87,
   "nextAssetTarget": "FIRST SERIOUS CANDIDATE SHOULD BE CLOSE TO FINAL",
   "regressionEscalation": "FIRST_PASS_STANDARD_REGRESSION",
-  "requiredMeasurement": ["internal correction count","operator correction count","starting vision score","first operator-candidate vision score","final vision score"]
+  "requiredMeasurement": [
+    "internal correction count",
+    "operator correction count",
+    "starting vision score",
+    "first operator-candidate vision score",
+    "final vision score"
+  ],
+  "lifecycleStatus": "CALIBRATION_ASSET",
+  "finalVisionScore": 87,
+  "permanentStandardsCreated": [
+    "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
+    "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT"
+  ]
 }
