@@ -1,0 +1,75 @@
+{
+  "reference": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "dimensions": [
+    760,
+    670
+  ],
+  "leftRightIdentical": true,
+  "mirrorable": true,
+  "visibleSilhouette": "cream rectangular corner return with shallow lower shadow and fascia/post contact",
+  "colour": "warm cream/tan",
+  "depth": "shallow papercut projection",
+  "relationship": {
+    "post": "flush contact",
+    "fascia": "under-fascia termination",
+    "awning": "outer mounting boundary"
+  },
+  "crops": {
+    "LEFT": {
+      "crop": "UPPER_TRIM_LEFT_REFERENCE.png",
+      "mask": "UPPER_TRIM_LEFT_SCOPE_MASK.png",
+      "sourceBox": [
+        38,
+        140,
+        115,
+        225
+      ],
+      "artBox": [
+        52,
+        164,
+        91,
+        210
+      ],
+      "visibleArtBounds": {
+        "x": 14,
+        "y": 24,
+        "width": 39,
+        "height": 46
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    },
+    "RIGHT": {
+      "crop": "UPPER_TRIM_RIGHT_REFERENCE.png",
+      "mask": "UPPER_TRIM_RIGHT_SCOPE_MASK.png",
+      "sourceBox": [
+        575,
+        140,
+        660,
+        225
+      ],
+      "artBox": [
+        607,
+        164,
+        645,
+        220
+      ],
+      "visibleArtBounds": {
+        "x": 32,
+        "y": 24,
+        "width": 38,
+        "height": 56
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    }
+  },
+  "proof": {
+    "moduleId": "GG-BLD-TRIM-UPPER-CORNER-COMMERCIAL-001",
+    "mirrorable": true,
+    "scopeMasks": "PASS",
+    "twoDReassembly": "PASS",
+    "steamDeck": "PASS",
+    "vision": "VISION_NEEDS_CORRECTION",
+    "protectedHeroes": "PASS",
+    "fullShopAssembled": false
+  }
+}

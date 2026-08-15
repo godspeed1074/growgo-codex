@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "sides": {
+    "LEFT": {
+      "dimensions": [
+        77,
+        85
+      ],
+      "coveredPixels": 876,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaIntegrity": "PASS"
+    },
+    "RIGHT": {
+      "dimensions": [
+        85,
+        85
+      ],
+      "coveredPixels": 884,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaIntegrity": "PASS"
+    }
+  }
+}
