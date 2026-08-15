@@ -119,5 +119,7 @@
     "Door/window/transom relationships must be extracted from the reference before first assembly.",
     "Large hero modules such as awnings must use reference-relative proportions, not generic default sizes.",
     "Organic layered assets must be checked from side views so they do not appear as pasted 2D cards."
-  ]
+  ],
+  "autonomousConvergenceContract": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
+  "firstSeriousCandidateGate": "CODEX MUST NOT PRESENT A FIRST SERIOUS REFERENCE-DRIVEN CANDIDATE WHILE CODEX ITSELF CAN STILL SEE A MAJOR CORRECTABLE DIFFERENCE."
 }

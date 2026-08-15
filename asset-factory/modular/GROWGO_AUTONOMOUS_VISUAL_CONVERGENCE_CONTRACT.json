@@ -1,0 +1,28 @@
+{
+  "contractId": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
+  "version": "1.0.0",
+  "referenceAuthority": "IMMUTABLE_GOLDEN_REFERENCE",
+  "loop": [
+    "inspect reference and actual render",
+    "inventory and rank differences",
+    "assign correction ownership",
+    "apply safest Layer A/Layer B correction",
+    "run real Steam Deck Blender",
+    "inspect actual images",
+    "retain only visual improvements",
+    "rollback regressions"
+  ],
+  "stopConditions": [
+    "VISION_PASS",
+    "STALLED_VISUAL_CONVERGENCE",
+    "HARD_TECHNICAL_BLOCKER",
+    "BUDGET_BLOCKER",
+    "SOURCE_INFORMATION_BLOCKER",
+    "STRUCTURAL_CONTRACT_BLOCKER"
+  ],
+  "arbitraryIterationStop": false,
+  "visionOverridesMetrics": true,
+  "knownGoodAutoPromotion": false,
+  "anonymousGeometryPolicy": "REJECT",
+  "productionAssetPolicy": "NO_PRODUCTION_MUTATION"
+}
