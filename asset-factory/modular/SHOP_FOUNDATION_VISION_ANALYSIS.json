@@ -1,0 +1,86 @@
+{
+  "reference": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "dimensions": [
+    760,
+    670
+  ],
+  "structureDecision": "REUSABLE_PARAMETRIC_FAMILY_WITH_LEFT_ENTRANCE_RIGHT_SUBMODULES",
+  "visibleTiers": 3,
+  "stepCount": 2,
+  "totalFoundationWidthPx": 610,
+  "totalFoundationHeightPx": 94,
+  "landing": "central entrance landing meets protected Door threshold",
+  "grounding": "continuous left/entrance/right gray base",
+  "crops": {
+    "LEFT": {
+      "reference": "FOUNDATION_LEFT_REFERENCE.png",
+      "mask": "FOUNDATION_LEFT_SCOPE_MASK.png",
+      "sourceBox": [
+        10,
+        488,
+        128,
+        596
+      ],
+      "visibleArtBounds": {
+        "width": 118,
+        "height": 108
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    },
+    "ENTRANCE": {
+      "reference": "FOUNDATION_ENTRANCE_REFERENCE.png",
+      "mask": "FOUNDATION_ENTRANCE_SCOPE_MASK.png",
+      "sourceBox": [
+        116,
+        488,
+        292,
+        596
+      ],
+      "visibleArtBounds": {
+        "width": 176,
+        "height": 108
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    },
+    "RIGHT": {
+      "reference": "FOUNDATION_RIGHT_REFERENCE.png",
+      "mask": "FOUNDATION_RIGHT_SCOPE_MASK.png",
+      "sourceBox": [
+        278,
+        488,
+        620,
+        596
+      ],
+      "visibleArtBounds": {
+        "width": 342,
+        "height": 108
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    }
+  },
+  "proof": {
+    "moduleId": "GG-BLD-FOUNDATION-COMMERCIAL-001",
+    "pngIntegrity": "PASS",
+    "twoDReassembly": "PASS",
+    "steamDeck": "PASS",
+    "vision": "VISION_PASS",
+    "componentIds": "PASS",
+    "fourSide": "PASS",
+    "anonymousGeometry": 0,
+    "budget": "PASS",
+    "fullShopAssembled": false,
+    "visualReview": {
+      "silhouette": "YES",
+      "height": "YES",
+      "width": "YES",
+      "stepCount": "YES",
+      "stepProjections": "YES",
+      "landing": "YES",
+      "stoneShading": "YES",
+      "papercutDepth": "YES",
+      "grounded": "YES",
+      "strayContext": "NO",
+      "backingRectangle": "NO"
+    }
+  }
+}
