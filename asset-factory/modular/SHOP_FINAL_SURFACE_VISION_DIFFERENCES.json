@@ -1,0 +1,34 @@
+{
+  "status": "STALLED_VISUAL_CONVERGENCE",
+  "differences": [
+    {
+      "area": "upper trim/cornice",
+      "classification": "DEPTH_TOO_FLAT",
+      "severity": "MEDIUM",
+      "correction": "source reference transition crop required"
+    },
+    {
+      "area": "wall surface",
+      "classification": "WALL_ART_TOO_FLAT + INSUFFICIENT_TONAL_VARIATION",
+      "severity": "MEDIUM",
+      "correction": "reference-derived modular surface art required"
+    },
+    {
+      "area": "shrub side depth",
+      "classification": "DEPTH_TOO_FLAT",
+      "severity": "LOW",
+      "correction": "current stepped tiers retained; side remains stylized"
+    }
+  ],
+  "protected": [
+    "Door",
+    "Transom",
+    "Window",
+    "Window trim",
+    "Shrub front",
+    "Foundation",
+    "Awning core",
+    "Fascia core",
+    "Wall layout"
+  ]
+}

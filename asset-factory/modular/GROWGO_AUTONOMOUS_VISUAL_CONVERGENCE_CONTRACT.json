@@ -27,6 +27,7 @@
   "productionAssetPolicy": "NO_PRODUCTION_MUTATION",
   "autonomousMaskCreation": true,
   "contextContaminationGate": "ZERO_OR_VISION_APPROVED",
+  "safeDifferenceContinuation": "Codex must continue while it sees a safe correctable visual difference",
   "selectiveUnlockPolicy": "SELECTIVE_UNLOCK + SAFE_BASELINE + VISION_GUIDED_CORRECTION + REGRESSION_ROLLBACK",
   "protectionRule": "Protection must not prevent Codex from fixing a visual defect Codex itself can see",
   "richnessPolicy": "surface/context richness is part of fidelity; rollback any accent that becomes more visible than the reference",
