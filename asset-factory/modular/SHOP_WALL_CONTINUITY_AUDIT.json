@@ -1,0 +1,27 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "seams": [
+    {
+      "between": "LEFT/CENTRE",
+      "classification": "TONAL_DISCONTINUITY",
+      "fix": "shared warm-brown material plus controlled overlap"
+    },
+    {
+      "between": "CENTRE/RIGHT",
+      "classification": "TONAL_DISCONTINUITY",
+      "fix": "shared warm-brown material plus controlled overlap"
+    },
+    {
+      "between": "wall/foundation",
+      "classification": "INTENTIONAL_ARCHITECTURAL_BREAK",
+      "fix": "retained gray base shadow and foundation edge"
+    },
+    {
+      "between": "wall/hero-context",
+      "classification": "DEPTH_DISCONTINUITY",
+      "fix": "retained protected artwork; no artwork edits"
+    }
+  ],
+  "modularity": "Layer A wall IDs preserved",
+  "anonymousGeometryCount": 0
+}

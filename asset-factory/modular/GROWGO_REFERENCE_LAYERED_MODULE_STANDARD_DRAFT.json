@@ -104,5 +104,12 @@
     "bounded internal correction",
     "operator sees first serious candidate"
   ],
-  "assemblyVisionSelfCorrectionRule": "REFERENCE → CODEX VISUAL DECOMPOSITION → CALIBRATED LAYER A MODULES → CLEAN LAYER B ASSEMBLY → CODEX VISION SELF-CORRECTION → FIRST SERIOUS CANDIDATE"
+  "assemblyVisionSelfCorrectionRule": "REFERENCE → CODEX VISUAL DECOMPOSITION → CALIBRATED LAYER A MODULES → CLEAN LAYER B ASSEMBLY → CODEX VISION SELF-CORRECTION → FIRST SERIOUS CANDIDATE",
+  "firstPassLessons": [
+    "vision-approved modules still require vision-approved assembly context",
+    "adjacent modular panels must have designed visual continuity",
+    "hero-module context/backplates must be independently validated",
+    "safe-baseline rollback is mandatory",
+    "Codex must self-correct obvious visual differences before operator review"
+  ]
 }
