@@ -70,6 +70,8 @@ def add_art(comp,p,asset,ver,placement,target_width,target_height=1):
 artfiles={'DOOR':'DOOR_REPAIRED_FIDELITY_FRONT.png','WINDOW':'WINDOW_FIDELITY_FRONT.png','AWNING':'AWNING_FIDELITY_FRONT.png','FASCIA':'FASCIA_FIDELITY_FRONT.png','SHRUB':'SHRUB_FIDELITY_FRONT.png'}
 clean_door=os.path.join(layer_root,'DOOR_REPAIRED_FIDELITY_FRONT_TRANSPARENT.png')
 if os.path.isfile(clean_door): artfiles['DOOR']='DOOR_REPAIRED_FIDELITY_FRONT_TRANSPARENT.png'
+clean_fascia=os.path.join(layer_root,'FASCIA_FIDELITY_FRONT_TRANSPARENT.png')
+if os.path.isfile(clean_fascia): artfiles['FASCIA']='FASCIA_FIDELITY_FRONT_TRANSPARENT.png'
 for comp in ['DOOR','WINDOW','AWNING','FASCIA','SHRUB']:
  r=cfg['calibrated'][comp];objs+=add_art(comp,os.path.join(layer_root,artfiles[comp]),r['assetId'],r['version'],r['placement'],r['targetWidth'],r.get('targetHeight',1))
 # Apply the Door root transform after all child dimensions are authored. This
