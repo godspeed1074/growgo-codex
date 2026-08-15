@@ -1,20 +1,7 @@
 {
-  "finalVerdict": "VISION_NEEDS_CORRECTION",
-  "internalIterationsUsed": 3,
-  "whatCodexActuallySees": {
-    "doorVisuallyCorrect": "YES",
-    "windowVisuallyCorrect": "YES",
-    "awningVisuallyCorrect": "YES",
-    "fasciaSignVisuallyCorrect": "YES",
-    "wallPanelsVisuallyCorrect": "YES",
-    "upperTrimVisuallyCorrect": "NO",
-    "foundationVisuallyCorrect": "YES",
-    "shrubVisuallyCorrect": "YES",
-    "floatingComponents": "YES",
-    "unintendedVisibleGeometry": "NO",
-    "overallShopResemblesGoldenReference": "NO"
-  },
-  "components": [
+  "referenceAuthority": "IMMUTABLE_GOLDEN_REFERENCE",
+  "actualBlenderFront": "test-output/window-panel-pass/SHOP_WINDOWPANEL_FRONT.png",
+  "inventory": [
     {
       "component": "DOOR",
       "description": "Backing cleanup now removes the large rectangular artifact; threshold/landing remains slightly heavier than the reference.",

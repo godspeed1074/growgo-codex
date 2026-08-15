@@ -46,7 +46,12 @@ shell_box('WINDOW_SURROUND',(0.78,-.03,1.65),(1.72,.16,1.75),MAT_CREAM);shell_bo
 for comp in ['FOUNDATION','WALL','TRIM']:
  r=cfg['modules'][comp];objs+=load_file(r['source'],comp,r['assetId'],r['version'],r['placement'])
 def image_mat(name,p):
- im=bpy.data.images.load(p,check_existing=False);m=bpy.data.materials.new(name);m.use_nodes=True;n=m.node_tree.nodes;n.clear();o=n.new('ShaderNodeOutputMaterial');t=n.new('ShaderNodeTexImage');t.image=im;t.interpolation='Closest';tr=n.new('ShaderNodeBsdfTransparent');sh=n.new('ShaderNodeBsdfPrincipled');mix=n.new('ShaderNodeMixShader');m.node_tree.links.new(t.outputs['Color'],sh.inputs['Base Color']);m.node_tree.links.new(t.outputs['Alpha'],mix.inputs[0]);m.node_tree.links.new(tr.outputs[0],mix.inputs[1]);m.node_tree.links.new(sh.outputs[0],mix.inputs[2]);m.node_tree.links.new(mix.outputs[0],o.inputs['Surface']);
+ im=bpy.data.images.load(p,check_existing=False);m=bpy.data.materials.new(name);m.use_nodes=True;n=m.node_tree.nodes;n.clear();o=n.new('ShaderNodeOutputMaterial');t=n.new('ShaderNodeTexImage');t.image=im;t.interpolation='Closest';sh=n.new('ShaderNodeBsdfPrincipled');m.node_tree.links.new(t.outputs['Color'],sh.inputs['Base Color']);
+ if 'TRANSPARENT' in os.path.basename(p):
+  m.node_tree.links.new(t.outputs['Alpha'],sh.inputs['Alpha'])
+ else:
+  tr=n.new('ShaderNodeBsdfTransparent');mix=n.new('ShaderNodeMixShader');m.node_tree.links.new(t.outputs['Alpha'],mix.inputs[0]);m.node_tree.links.new(tr.outputs[0],mix.inputs[1]);m.node_tree.links.new(sh.outputs[0],mix.inputs[2]);m.node_tree.links.new(mix.outputs[0],o.inputs['Surface'])
+ if 'TRANSPARENT' in os.path.basename(p):m.node_tree.links.new(sh.outputs[0],o.inputs['Surface'])
  try:m.surface_render_method='DITHERED'
  except:pass
  return m
@@ -86,7 +91,9 @@ for name,loc,dims in [('WALL_PANEL_WINDOW_LEFT',(wx-ww/2-wm/2,-.055,wz),(wm,.08,
 # Persistent reusable upper-corner trim roots, anchored between posts and fascia.
 for side,x in [('LEFT',-2.16),('RIGHT',2.16)]:
  root=bpy.data.objects.new('GG_ROOT_UPPER_CORNER_TRIM_'+side,None);bpy.context.collection.objects.link(root);root.location=(x,-.10,3.30);root['moduleId']=cfg['modules']['TRIM']['assetId'];root['moduleVersion']=cfg['modules']['TRIM']['version'];root['anchors']=['TOP_CONTACT','POST_CONTACT','FASCIA_CONTACT','VISIBLE_ART_CENTER']
- q=shell_box('UPPER_CORNER_TRIM_'+side,(x,-.10,3.30),(.22,.18,.62),MAT_CREAM);q.parent=root;q.location=(0,0,0);q['componentId']='UPPER_CORNER_TRIM_'+side;q['moduleId']=cfg['modules']['TRIM']['assetId'];q['moduleVersion']=cfg['modules']['TRIM']['version'];q['rootName']=root.name
+ q=shell_box('UPPER_CORNER_TRIM_'+side,(x,-.10,3.34),(.20,.16,.44),MAT_CREAM);q.parent=root;q.location=(0,0,.04);q['componentId']='UPPER_CORNER_TRIM_'+side;q['moduleId']=cfg['modules']['TRIM']['assetId'];q['moduleVersion']=cfg['modules']['TRIM']['version'];q['rootName']=root.name
+ # Reusable shallow cap closes the visual connection into the fascia.
+ cap=shell_box('UPPER_CORNER_TRIM_CAP_'+side,(x+(-.10 if side=='LEFT' else .10),-.10,3.56),(.26,.16,.12),MAT_CREAM);cap['componentId']='UPPER_CORNER_TRIM_'+side;cap['moduleId']=cfg['modules']['TRIM']['assetId'];cap['moduleVersion']=cfg['modules']['TRIM']['version'];cap['rootName']='GG_ROOT_UPPER_CORNER_TRIM_'+side;cap['anchors']=['TOP_CONTACT','FASCIA_CONTACT']
 # Responsive cream surround and landing use the same door anchors, without
 # stretching any calibrated Door artwork.
 for o in bpy.data.objects:
@@ -96,7 +103,8 @@ for o in bpy.data.objects:
 s=bpy.context.scene;s.render.resolution_x=960;s.render.resolution_y=640;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=False
 try:s.render.engine='BLENDER_EEVEE'
 except:s.render.engine='BLENDER_EEVEE_NEXT'
-if s.world is None:s.world=bpy.data.worlds.new('CALIBRATED_SHOP_WORLD');s.world.color=(.92,.92,.92)
+if s.world is None:s.world=bpy.data.worlds.new('CALIBRATED_SHOP_WORLD')
+s.world.color=(.92,.92,.92)
 s.view_settings.view_transform='Standard';s.view_settings.look='None';s.view_settings.exposure=0;s.view_settings.gamma=1
 bpy.ops.object.light_add(type='AREA',location=(-3,-6,7));bpy.context.object.data.energy=700;bpy.context.object.data.size=5
 bpy.ops.object.camera_add(location=(0,-18,2.8));cam=bpy.context.object;cam.name='GG_CAMERA_SIMPLE_SHOP_LOCKED';cam.data.type='ORTHO';cam.data.ortho_scale=7.2;cam.rotation_euler=((Vector((0,0,2.0))-cam.location).to_track_quat('-Z','Y')).to_euler();s.camera=cam

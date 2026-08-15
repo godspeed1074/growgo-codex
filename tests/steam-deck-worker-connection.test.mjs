@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+test('steam deck worker preflight audit is complete',()=>{const a=JSON.parse(fs.readFileSync(path.join(root,'asset-factory/modular/STEAM_DECK_WORKER_CONNECTION_AUDIT.json')));assert.equal(a.status,'STEAM_DECK_WORKER_READY');assert.equal(a.user,'deck');assert.equal(a.architecture,'x86_64');assert.equal(a.sshKeyAuthentication,'PASS');assert.equal(a.hostIdentity,'PASS');assert.equal(a.pythonHealthCheck,'PASS');assert.equal(a.transportHealthCheck,'PASS');assert.equal(a.transportChecksumVerified,true);assert.equal(a.productionAssetWorkStarted,false);});
