@@ -2,19 +2,76 @@
   "status": "PASS",
   "sourceAsset": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
   "lessons": [
-    {"cause":"SEMANTIC_RECONSTRUCTION","failure":"modules matched names but not visible reference relationships","prevention":"decompose the complete image before modeling"},
-    {"cause":"FLAT_BLOCKOUT_MODULES","failure":"colored rectangles were presented as serious candidates","prevention":"blockouts remain internal; operator candidates require VISION_PASS"},
-    {"cause":"INSUFFICIENT_REFERENCE_DECOMPOSITION","failure":"trim, surrounds, transom, cornice, and depth relationships were discovered late","prevention":"inventory every visible component and connection before first build"},
-    {"cause":"PNG_DECODING","failure":"alpha/fringe and dark source context contaminated renders","prevention":"scope mask, PNG integrity, context separation, and isolated proof"},
-    {"cause":"TRANSPARENT_PADDING","failure":"object bounds disagreed with visible art","prevention":"operator-visible bounds are authoritative"},
-    {"cause":"NON_RESPONSIVE_OPENINGS","failure":"door/window changes broke shell continuity","prevention":"persistent roots and responsive opening contracts"},
-    {"cause":"MISSING_PERSISTENT_ROOTS","failure":"calibrated pieces could not be safely repositioned","prevention":"every layered asset gets a named root and anchors"},
-    {"cause":"HELPER_BACKPLATES","failure":"debug/context geometry appeared in beauty renders","prevention":"helper geometry excluded from production collections and audited"},
-    {"cause":"CONTEXT_CONTAMINATION","failure":"reference crop surroundings became reusable asset pixels","prevention":"MODULE_SCOPE versus REFERENCE_CONTEXT with contamination=0"},
-    {"cause":"FLAT_ORGANIC_ASSETS","failure":"shrub/planter read as a card from side views","prevention":"shallow depth tiers and mandatory side review"},
-    {"cause":"VISION_METRIC_CONFLICT","failure":"technical PASS hid obvious visual mismatch","prevention":"Vision overrides metrics"},
-    {"cause":"ARBITRARY_CORRECTION_LIMITS","failure":"safe convergence stopped while fixable issues remained","prevention":"continue until Vision PASS or genuine stop condition"},
-    {"cause":"LATE_OPERATOR_DISCOVERY","failure":"operator repeatedly identified visible issues Codex could already see","prevention":"autonomous self-review before first serious candidate"}
+    {
+      "cause": "SEMANTIC_RECONSTRUCTION",
+      "failure": "modules matched names but not visible reference relationships",
+      "prevention": "decompose the complete image before modeling"
+    },
+    {
+      "cause": "FLAT_BLOCKOUT_MODULES",
+      "failure": "colored rectangles were presented as serious candidates",
+      "prevention": "blockouts remain internal; operator candidates require VISION_PASS"
+    },
+    {
+      "cause": "INSUFFICIENT_REFERENCE_DECOMPOSITION",
+      "failure": "trim, surrounds, transom, cornice, and depth relationships were discovered late",
+      "prevention": "inventory every visible component and connection before first build"
+    },
+    {
+      "cause": "PNG_DECODING",
+      "failure": "alpha/fringe and dark source context contaminated renders",
+      "prevention": "scope mask, PNG integrity, context separation, and isolated proof"
+    },
+    {
+      "cause": "TRANSPARENT_PADDING",
+      "failure": "object bounds disagreed with visible art",
+      "prevention": "operator-visible bounds are authoritative"
+    },
+    {
+      "cause": "NON_RESPONSIVE_OPENINGS",
+      "failure": "door/window changes broke shell continuity",
+      "prevention": "persistent roots and responsive opening contracts"
+    },
+    {
+      "cause": "MISSING_PERSISTENT_ROOTS",
+      "failure": "calibrated pieces could not be safely repositioned",
+      "prevention": "every layered asset gets a named root and anchors"
+    },
+    {
+      "cause": "HELPER_BACKPLATES",
+      "failure": "debug/context geometry appeared in beauty renders",
+      "prevention": "helper geometry excluded from production collections and audited"
+    },
+    {
+      "cause": "CONTEXT_CONTAMINATION",
+      "failure": "reference crop surroundings became reusable asset pixels",
+      "prevention": "MODULE_SCOPE versus REFERENCE_CONTEXT with contamination=0"
+    },
+    {
+      "cause": "FLAT_ORGANIC_ASSETS",
+      "failure": "shrub/planter read as a card from side views",
+      "prevention": "shallow depth tiers and mandatory side review"
+    },
+    {
+      "cause": "VISION_METRIC_CONFLICT",
+      "failure": "technical PASS hid obvious visual mismatch",
+      "prevention": "Vision overrides metrics"
+    },
+    {
+      "cause": "ARBITRARY_CORRECTION_LIMITS",
+      "failure": "safe convergence stopped while fixable issues remained",
+      "prevention": "continue until Vision PASS or genuine stop condition"
+    },
+    {
+      "cause": "LATE_OPERATOR_DISCOVERY",
+      "failure": "operator repeatedly identified visible issues Codex could already see",
+      "prevention": "autonomous self-review before first serious candidate"
+    },
+    {
+      "cause": "OPERATOR_CAUGHT_ALIGNMENT_REGRESSION",
+      "failure": "sign/transom/window/grounding mismatches survived prior vision gate",
+      "prevention": "mandatory visible-art alignment, transom-relative, trim-join, crop, and grounding checks"
+    }
   ],
   "northStar": "REFERENCE IMAGE -> ACCURATE BLENDER REPRODUCTION -> FIRST SERIOUS PRODUCTION CANDIDATE"
 }

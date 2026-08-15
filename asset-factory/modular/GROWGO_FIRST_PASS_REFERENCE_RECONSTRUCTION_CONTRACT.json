@@ -14,11 +14,38 @@
     "Codex inspection of the actual Blender render",
     "autonomous correction with rollback"
   ],
-  "qualityGate": {"technicalPassRequired": true, "visionPassRequired": true, "operatorReviewBlockedWhileMajorSafeDifferenceVisible": true},
+  "qualityGate": {
+    "technicalPassRequired": true,
+    "visionPassRequired": true,
+    "operatorReviewBlockedWhileMajorSafeDifferenceVisible": true
+  },
   "autonomousConvergence": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
-  "stopConditions": ["VISION_PASS","STALLED_VISUAL_CONVERGENCE","HARD_TECHNICAL_BLOCKER","BUDGET_BLOCKER","SOURCE_INFORMATION_BLOCKER","STRUCTURAL_CONTRACT_BLOCKER"],
-  "requiredReviews": ["front","gameplay","hero close-up","back","left","right","component ID","four-side"],
+  "stopConditions": [
+    "VISION_PASS",
+    "STALLED_VISUAL_CONVERGENCE",
+    "HARD_TECHNICAL_BLOCKER",
+    "BUDGET_BLOCKER",
+    "SOURCE_INFORMATION_BLOCKER",
+    "STRUCTURAL_CONTRACT_BLOCKER"
+  ],
+  "requiredReviews": [
+    "front",
+    "gameplay",
+    "hero close-up",
+    "back",
+    "left",
+    "right",
+    "component ID",
+    "four-side"
+  ],
   "mobileBudgets": true,
   "anonymousGeometryPolicy": "REJECT",
-  "goldenReference": "IMMUTABLE"
+  "goldenReference": "IMMUTABLE",
+  "regressionChecks": [
+    "visible signage centering",
+    "transom presence/relative size/relative center",
+    "window visible size and four-corner trim continuity",
+    "organic asset complete silhouette and side depth",
+    "lowest structural point meets ground"
+  ]
 }

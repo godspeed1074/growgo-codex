@@ -1,0 +1,60 @@
+{
+  "status": "FIRST_PASS_STANDARD_REGRESSION",
+  "baselineScore": 87,
+  "confirmedByCodex": [
+    {
+      "issue": "sign centering",
+      "confirmed": "YES_WITH_NOTES",
+      "severity": "MEDIUM",
+      "correction": "visible-art centering audit"
+    },
+    {
+      "issue": "transom too low/left",
+      "confirmed": "YES",
+      "severity": "HIGH",
+      "correction": "root/trim group reposition"
+    },
+    {
+      "issue": "window undersized",
+      "confirmed": "YES",
+      "severity": "HIGH",
+      "correction": "complete Window root scale"
+    },
+    {
+      "issue": "window trim joins",
+      "confirmed": "YES",
+      "severity": "HIGH",
+      "correction": "responsive surround completion"
+    },
+    {
+      "issue": "shrub cropping",
+      "confirmed": "YES_WITH_NOTES",
+      "severity": "MEDIUM",
+      "correction": "visible extent audit"
+    },
+    {
+      "issue": "door/steps too high",
+      "confirmed": "YES",
+      "severity": "HIGH",
+      "correction": "entrance root/foundation response"
+    },
+    {
+      "issue": "steps-ground gap",
+      "confirmed": "YES_WITH_NOTES",
+      "severity": "HIGH",
+      "correction": "landing/step anchor response"
+    }
+  ],
+  "additionalDifferences": [
+    "trim bars remain visually heavier than reference",
+    "fascia/awning context remains dark"
+  ],
+  "correctionsRetained": [
+    "Door root lowered",
+    "Window root enlarged 1.10x",
+    "transom repositioned and raised",
+    "window left/right/top/bottom trim completed",
+    "landing and steps lowered"
+  ],
+  "correctionsReverted": []
+}
