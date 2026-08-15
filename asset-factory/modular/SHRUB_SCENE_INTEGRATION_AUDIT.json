@@ -1,0 +1,19 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "before": {
+    "pastedAppearance": true,
+    "depthSeparation": "single front plane",
+    "contactShadow": "weak"
+  },
+  "retainedChanges": [
+    "protected shrub artwork unchanged",
+    "assembly placement preserved"
+  ],
+  "remaining": {
+    "pastedAppearance": true,
+    "planterDepth": "limited",
+    "foliageLayerDepth": "not independently separated",
+    "sideView": "still card-like"
+  },
+  "anonymousGeometryCount": 0
+}

@@ -110,6 +110,14 @@
     "adjacent modular panels must have designed visual continuity",
     "hero-module context/backplates must be independently validated",
     "safe-baseline rollback is mandatory",
-    "Codex must self-correct obvious visual differences before operator review"
+    "Codex must self-correct obvious visual differences before operator review",
+    "Codex must detect missing architectural trim itself.",
+    "Door/window/transom relationships must be extracted from the reference before first assembly.",
+    "Large hero modules such as awnings must use reference-relative proportions, not generic default sizes.",
+    "Organic layered assets must be checked from side views so they do not appear as pasted 2D cards.",
+    "Codex must detect missing architectural trim itself.",
+    "Door/window/transom relationships must be extracted from the reference before first assembly.",
+    "Large hero modules such as awnings must use reference-relative proportions, not generic default sizes.",
+    "Organic layered assets must be checked from side views so they do not appear as pasted 2D cards."
   ]
 }
