@@ -1,0 +1,26 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "startingScore": 87,
+  "finalScore": {
+    "OVERALL_LIKENESS": 87,
+    "FASCIA_CONTEXT": 72,
+    "AWNING_CONTEXT": 74,
+    "UPPER_TRIM_TRANSITION": 75,
+    "WALL_RICHNESS": 76,
+    "PAPERCUT_RICHNESS": 78,
+    "PRESENTATION": 82
+  },
+  "differences": [
+    "dark protected fascia/awning context",
+    "upper trim transition flatter than reference",
+    "wall surface richness below reference"
+  ],
+  "attempts": [
+    {
+      "target": "shallow wall surface breaks",
+      "result": "REVERTED_WORSE"
+    }
+  ],
+  "retained": [],
+  "stopReason": "STALLED_VISUAL_CONVERGENCE"
+}
