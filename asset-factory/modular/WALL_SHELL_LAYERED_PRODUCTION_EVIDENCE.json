@@ -1,0 +1,214 @@
+{
+  "status": "PASS",
+  "crops": {
+    "LEFT": {
+      "reference": "WALL_LEFT_REFERENCE.png",
+      "mask": "WALL_LEFT_SCOPE_MASK.png",
+      "sourceBox": [
+        42,
+        245,
+        125,
+        505
+      ],
+      "visibleArtBounds": {
+        "width": 83,
+        "height": 260
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "shading": "warm brown tonal variation",
+      "panelBoundaries": "subtle vertical/edge breaks",
+      "relationships": [
+        "Door/Window opening contact",
+        "trim contact",
+        "foundation contact"
+      ],
+      "papercutDepth": "shallow"
+    },
+    "CENTRE": {
+      "reference": "WALL_CENTRE_REFERENCE.png",
+      "mask": "WALL_CENTRE_SCOPE_MASK.png",
+      "sourceBox": [
+        284,
+        255,
+        320,
+        505
+      ],
+      "visibleArtBounds": {
+        "width": 36,
+        "height": 250
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "shading": "warm brown tonal variation",
+      "panelBoundaries": "subtle vertical/edge breaks",
+      "relationships": [
+        "Door/Window opening contact",
+        "trim contact",
+        "foundation contact"
+      ],
+      "papercutDepth": "shallow"
+    },
+    "RIGHT": {
+      "reference": "WALL_RIGHT_REFERENCE.png",
+      "mask": "WALL_RIGHT_SCOPE_MASK.png",
+      "sourceBox": [
+        560,
+        255,
+        620,
+        505
+      ],
+      "visibleArtBounds": {
+        "width": 60,
+        "height": 250
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "shading": "warm brown tonal variation",
+      "panelBoundaries": "subtle vertical/edge breaks",
+      "relationships": [
+        "Door/Window opening contact",
+        "trim contact",
+        "foundation contact"
+      ],
+      "papercutDepth": "shallow"
+    },
+    "ABOVE_DOOR": {
+      "reference": "WALL_ABOVE_DOOR_REFERENCE.png",
+      "mask": "WALL_ABOVE_DOOR_SCOPE_MASK.png",
+      "sourceBox": [
+        118,
+        245,
+        290,
+        282
+      ],
+      "visibleArtBounds": {
+        "width": 172,
+        "height": 37
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "shading": "warm brown tonal variation",
+      "panelBoundaries": "subtle vertical/edge breaks",
+      "relationships": [
+        "Door/Window opening contact",
+        "trim contact",
+        "foundation contact"
+      ],
+      "papercutDepth": "shallow"
+    },
+    "ABOVE_WINDOW": {
+      "reference": "WALL_ABOVE_WINDOW_REFERENCE.png",
+      "mask": "WALL_ABOVE_WINDOW_SCOPE_MASK.png",
+      "sourceBox": [
+        318,
+        245,
+        575,
+        282
+      ],
+      "visibleArtBounds": {
+        "width": 257,
+        "height": 37
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "shading": "warm brown tonal variation",
+      "panelBoundaries": "subtle vertical/edge breaks",
+      "relationships": [
+        "Door/Window opening contact",
+        "trim contact",
+        "foundation contact"
+      ],
+      "papercutDepth": "shallow"
+    },
+    "LOWER": {
+      "reference": "WALL_LOWER_REFERENCE.png",
+      "mask": "WALL_LOWER_SCOPE_MASK.png",
+      "sourceBox": [
+        42,
+        470,
+        620,
+        510
+      ],
+      "visibleArtBounds": {
+        "width": 578,
+        "height": 40
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "shading": "warm brown tonal variation",
+      "panelBoundaries": "subtle vertical/edge breaks",
+      "relationships": [
+        "Door/Window opening contact",
+        "trim contact",
+        "foundation contact"
+      ],
+      "papercutDepth": "shallow"
+    }
+  },
+  "pngIntegrity": {
+    "status": "PASS",
+    "regions": {
+      "LEFT": {
+        "coveredPixels": 16613,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "CENTRE": {
+        "coveredPixels": 6555,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "RIGHT": {
+        "coveredPixels": 10979,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "ABOVE_DOOR": {
+        "coveredPixels": 2719,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "ABOVE_WINDOW": {
+        "coveredPixels": 2567,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "LOWER": {
+        "coveredPixels": 11726,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      }
+    }
+  },
+  "twoDReassembly": "PASS",
+  "wallFamilyDecision": "THREE_REUSABLE_COMMERCIAL_PANEL_WIDTHS_WITH_TOP_AND_LOWER_VARIANTS",
+  "depthTiers": [
+    "LEVEL_0_BASE_SHADOW",
+    "LEVEL_1_MAIN_WALL",
+    "LEVEL_2_PANEL_VARIATION",
+    "LEVEL_2_EDGE_RETURN"
+  ],
+  "roots": [
+    "GG_ROOT_WALL_PANEL_COMMERCIAL_MAIN",
+    "GG_ROOT_WALL_PANEL_COMMERCIAL_NARROW",
+    "GG_ROOT_WALL_PANEL_COMMERCIAL_TOP"
+  ],
+  "anchors": [
+    "LEFT_EDGE",
+    "RIGHT_EDGE",
+    "TOP_EDGE",
+    "BOTTOM_EDGE",
+    "DOOR_OPENING_CONTACT",
+    "WINDOW_OPENING_CONTACT",
+    "TRIM_CONTACT",
+    "FOUNDATION_CONTACT",
+    "VISIBLE_ART_CENTER"
+  ],
+  "responsiveOpeningCompatibility": "PASS",
+  "vision": "VISION_PASS",
+  "budget": {
+    "triangles": 96,
+    "vertices": 64,
+    "objects": 8,
+    "materials": 3,
+    "textures": 0,
+    "imageBytes": 0,
+    "blendSizeBytes": 97028,
+    "mobileBudget": "PASS"
+  }
+}
