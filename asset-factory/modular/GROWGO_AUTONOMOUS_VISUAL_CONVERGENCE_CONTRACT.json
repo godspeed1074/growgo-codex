@@ -24,5 +24,7 @@
   "visionOverridesMetrics": true,
   "knownGoodAutoPromotion": false,
   "anonymousGeometryPolicy": "REJECT",
-  "productionAssetPolicy": "NO_PRODUCTION_MUTATION"
+  "productionAssetPolicy": "NO_PRODUCTION_MUTATION",
+  "selectiveUnlockPolicy": "SELECTIVE_UNLOCK + SAFE_BASELINE + VISION_GUIDED_CORRECTION + REGRESSION_ROLLBACK",
+  "protectionRule": "Protection must not prevent Codex from fixing a visual defect Codex itself can see"
 }
