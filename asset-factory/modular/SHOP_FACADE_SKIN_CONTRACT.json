@@ -1,0 +1,18 @@
+{
+  "contractId": "GROWGO_REFERENCE_PROJECTED_FACADE_SKIN",
+  "version": "1.0.0",
+  "status": "CANDIDATE_BLOCKED",
+  "purpose": "Reference-derived front-surface projection for a camera-locked modular facade underlay",
+  "rules": [
+    "Use only on registered Layer A wall-family geometry",
+    "Keep hero modules, component IDs, recipe identity, camera, and Golden Reference immutable",
+    "Project only the camera-visible front wall shell; exclude door, window, awning, fascia, shrub, and foundation regions",
+    "Use a shared atlas-backed wall material and reject white-background contamination",
+    "Require Steam Deck render, component-ID render, four-side render, budget, and seam inspection before promotion",
+    "Never assign KNOWN_GOOD_BUILD_ID automatically"
+  ],
+  "atlasId": "GG-ATLAS-COMMERCIAL-FACADE-A",
+  "atlasVersion": "1.0.0",
+  "candidateEvidence": "test-output/facadeskin-iter3",
+  "decision": "NEEDS_TARGETED_FIX"
+}

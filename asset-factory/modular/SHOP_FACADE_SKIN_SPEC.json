@@ -1,0 +1,26 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "source": "SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "crop": {
+    "x": 42,
+    "y": 135,
+    "w": 676,
+    "h": 430
+  },
+  "keptPixels": 27089,
+  "maskedPixels": 263591,
+  "excluded": [
+    "Door",
+    "Transom",
+    "Window",
+    "Awning",
+    "Fascia",
+    "Shrub",
+    "Foundation",
+    "White background"
+  ],
+  "underlay": "GG_MAT_WALL_WARM_BROWN_001",
+  "atlasId": "GG-ATLAS-COMMERCIAL-FACADE-A",
+  "atlasVersion": "1.0.0",
+  "projection": "camera-locked front wall modules only"
+}
