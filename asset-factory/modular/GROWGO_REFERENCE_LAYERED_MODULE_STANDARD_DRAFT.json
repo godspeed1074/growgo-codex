@@ -93,5 +93,15 @@
   "calibratedExampleSet": {
     "shell": "Wall Panel Family"
   },
-  "visibleShellArchitectureRule": "VISIBLE SHELL ARCHITECTURE MUST BE REFERENCE-DERIVED AND VISION-APPROVED, NOT GENERIC PLACEHOLDER GEOMETRY."
+  "visibleShellArchitectureRule": "VISIBLE SHELL ARCHITECTURE MUST BE REFERENCE-DERIVED AND VISION-APPROVED, NOT GENERIC PLACEHOLDER GEOMETRY.",
+  "endToEndPermanentWorkflow": [
+    "Codex visually decomposes reference",
+    "Master Asset Index reuse search",
+    "reconstruct visible Layer A modules",
+    "vision-approve modules",
+    "deterministic Layer B assembly",
+    "Codex visually inspects Blender output",
+    "bounded internal correction",
+    "operator sees first serious candidate"
+  ]
 }

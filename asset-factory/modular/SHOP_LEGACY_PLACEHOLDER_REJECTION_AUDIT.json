@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "legacyPlaceholderCount": 0,
+  "rejectedClasses": [
+    "generic wall rectangle",
+    "pale shell plane",
+    "oversized opening backplate",
+    "calibration helper",
+    "old foundation slab",
+    "old generic corner trim",
+    "old flat-material hero module",
+    "reference-context plane"
+  ],
+  "visibleObjectsAllLayerA": true,
+  "anonymousGeometryCount": 0
+}
