@@ -1,0 +1,8 @@
+{
+  "status": "BLOCKED",
+  "targetSource": "PLANT_TARGET_MEASUREMENTS.json",
+  "winner": "DEPTH_B",
+  "comparison": {"widthErrorPercent": 5.6, "heightErrorPercent": 6.4, "centreXErrorPercent": 1.9, "centreYErrorPercent": 4.8, "frontDensityPercent": 57.0, "targetDensityMinimumPercent": 78.0, "flowerBandAlignment": "PASS", "planterRelationship": "PASS"},
+  "majorLeafPlacement": "PARTIAL",
+  "reason": "The traced front arrangement preserves the apex and stepped side hierarchy but remains too separated and sparse to pass the target crop likeness gate."
+}
