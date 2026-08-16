@@ -1,0 +1,75 @@
+{
+  "status": "PASS_BOARD_CREATED",
+  "sourceTarget": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "panels": [
+    {
+      "label": "EXACT TARGET CROP",
+      "x": 20,
+      "y": 25,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "ACTUAL GEOMETRY FRONT",
+      "x": 620,
+      "y": 25,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "50% OVERLAY",
+      "x": 1220,
+      "y": 25,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "TARGET LEAF-ID MAP",
+      "x": 20,
+      "y": 375,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "BLENDER COMPONENT-ID MAP",
+      "x": 620,
+      "y": 375,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "BLENDER WIREFRAME FRONT",
+      "x": 1220,
+      "y": 375,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "DIFFERENCE VIEW",
+      "x": 20,
+      "y": 725,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "TARGET FLOWERS CLOSEUP",
+      "x": 620,
+      "y": 725,
+      "width": 560,
+      "height": 300
+    },
+    {
+      "label": "BLENDER FLOWERS CLOSEUP",
+      "x": 1220,
+      "y": 725,
+      "width": 560,
+      "height": 300
+    }
+  ],
+  "beautyInputs": {
+    "referenceTextureUsed": false,
+    "referencePlaneVisible": false,
+    "foliageCompositeUsed": false,
+    "bakedTargetFoliageUsed": false
+  }
+}

@@ -5,9 +5,40 @@ const root = path.resolve(import.meta.dirname, '../..');
 const workspaceRoot = path.resolve(root, '..');
 const map = JSON.parse(fs.readFileSync(path.join(root, 'asset-factory/modular/PLANT_TARGET_VISIBLE_LEAF_MAP.json'), 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(path.join(workspaceRoot, 'test-output/plant-leaf-by-leaf-front/PLANT_LEAF_LAYER_MANIFEST.json'), 'utf8'));
+const geometryMetricsPath = path.join(workspaceRoot, 'test-output/plant-26leaf-geometry-only/GEOMETRY_LEAF_METRICS.json');
+const geometryMetrics = fs.existsSync(geometryMetricsPath)
+  ? JSON.parse(fs.readFileSync(geometryMetricsPath, 'utf8')).leafProjection
+  : [];
+const metricById = new Map(geometryMetrics.map((entry) => [entry.id, entry]));
+const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const angleDifference = (a, b) => {
+  let d = Math.abs(a - b) % 180;
+  if (d > 90) d = 180 - d;
+  return d;
+};
 
-const leaves = map.leaves.map((leaf, index) => ({
+const leaves = map.leaves.map((leaf, index) => {
+  const actual = metricById.get(leaf.id);
+  const dominant = leaf.visible_width_px >= 27 && leaf.visible_height_px >= 26;
+  const errors = actual ? {
+    centreErrorPx: Number(distance(actual.renderedCentrePx, actual.referenceCentrePx).toFixed(3)),
+    widthErrorPercent: Number((Math.abs(actual.renderedSizePx[0] - actual.referenceSizePx[0]) / actual.referenceSizePx[0] * 100).toFixed(3)),
+    heightErrorPercent: Number((Math.abs(actual.renderedSizePx[1] - actual.referenceSizePx[1]) / actual.referenceSizePx[1] * 100).toFixed(3)),
+    tipErrorPx: Number(distance(actual.renderedTipPx, actual.referenceTipPx).toFixed(3)),
+    angleErrorDeg: Number(angleDifference(actual.renderedAngleDeg, actual.referenceAngleDeg).toFixed(3)),
+    tipAxisAngleErrorDeg: Number(angleDifference(actual.renderedAngleMeasuredFromTipBaseDeg ?? actual.renderedAngleDeg, actual.referenceAngleDeg).toFixed(3))
+  } : {
+    centreErrorPx: null, widthErrorPercent: null, heightErrorPercent: null, tipErrorPx: null, angleErrorDeg: null, tipAxisAngleErrorDeg: null
+  };
+  const pass = errors.centreErrorPx !== null &&
+    errors.centreErrorPx <= (dominant ? 3 : 5) &&
+    errors.widthErrorPercent <= (dominant ? 8 : 12) &&
+    errors.heightErrorPercent <= (dominant ? 8 : 12) &&
+    errors.tipErrorPx <= (dominant ? 4 : 6) &&
+    errors.angleErrorDeg <= (dominant ? 8 : 12);
+  return {
   id: leaf.id,
+  priority: dominant ? 'DOMINANT' : 'SECONDARY_OCCLUDED',
   target: {
     centrePx: [leaf.centre_x_px, leaf.centre_y_px],
     visibleSizePx: [leaf.visible_width_px, leaf.visible_height_px],
@@ -25,20 +56,22 @@ const leaves = map.leaves.map((leaf, index) => ({
     angleDeg: leaf.angle_deg,
     source: 'MEASURED_TARGET_MAP'
   },
-  errors: {
-    centreErrorPx: null,
-    widthErrorPercent: null,
-    heightErrorPercent: null,
-    tipErrorPx: null,
-    angleErrorDeg: null
-  },
+  renderedProjection: actual || null,
+  errors,
   contourOverlap: 'NOT_INDEPENDENTLY_MEASURED',
-  fitStatus: 'TARGET_LOCKED_TRANSFORM_ONLY',
-  note: 'The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated.'
-}));
+  fitStatus: actual ? (pass ? 'PASS_LANDMARK_THRESHOLDS' : 'FAIL_LANDMARK_THRESHOLDS') : 'NOT_RENDERED',
+  note: actual
+    ? 'Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation.'
+    : 'No standalone geometry projection was available.'
+  };
+});
+
+const dominant = leaves.filter((leaf) => leaf.priority === 'DOMINANT');
+const mean = (key) => dominant.length ? Number((dominant.reduce((sum, leaf) => sum + (leaf.errors[key] ?? 0), 0) / dominant.length).toFixed(3)) : null;
+const worst = (key) => dominant.reduce((best, leaf) => !best || (leaf.errors[key] ?? -1) > best.value ? { id: leaf.id, value: leaf.errors[key] } : best, null);
 
 const report = {
-  status: 'PASS_FRONT_VISUAL_TARGET_WITH_CONTOUR_METRICS_PENDING',
+  status: geometryMetrics.length ? 'BLOCKED_GEOMETRY_ONLY_VISUAL_GATE' : 'PASS_FRONT_VISUAL_TARGET_WITH_CONTOUR_METRICS_PENDING',
   assetId: 'GG-VEG-PLANTER-SHRUB-001',
   referenceChecksum: map.referenceChecksum,
   mapFile: 'PLANT_TARGET_VISIBLE_LEAF_MAP.json',
@@ -55,20 +88,31 @@ const report = {
     colourClass: 0.05
   },
   aggregateErrors: {
-    meanCentreErrorPx: null,
-    meanWidthErrorPercent: null,
-    meanHeightErrorPercent: null,
-    meanTipErrorPx: null,
-    meanAngleErrorDeg: null,
-    reason: 'NOT_INDEPENDENTLY_MEASURED; exact reference surface is used for the front beauty proof.'
+    meanDominantCentreErrorPx: mean('centreErrorPx'),
+    meanDominantWidthErrorPercent: mean('widthErrorPercent'),
+    meanDominantHeightErrorPercent: mean('heightErrorPercent'),
+    meanDominantTipErrorPx: mean('tipErrorPx'),
+    meanDominantAngleErrorDeg: mean('angleErrorDeg'),
+    meanDominantTipAxisAngleErrorDeg: mean('tipAxisAngleErrorDeg'),
+    worstDominant: {
+      centre: worst('centreErrorPx'), width: worst('widthErrorPercent'), height: worst('heightErrorPercent'),
+      tip: worst('tipErrorPx'), angle: worst('angleErrorDeg'), tipAxisAngle: worst('tipAxisAngleErrorDeg')
+    },
+    reason: geometryMetrics.length
+      ? 'Computed from standalone Blender mesh projection; contour overlap remains unmeasured.'
+      : 'NOT_INDEPENDENTLY_MEASURED; exact reference surface is used for the earlier front beauty proof.'
   },
   visualGate: {
     targetCropComparedDirectly: true,
-    blenderFrontFile: 'test-output/plant-leaf-by-leaf-front/output/PLANT_LEAF_BY_LEAF_FRONT.png',
+    blenderFrontFile: geometryMetrics.length
+      ? 'test-output/plant-26leaf-geometry-only/PLANT_26LEAF_GEOMETRY_FRONT.png'
+      : 'test-output/plant-leaf-by-leaf-front/output/PLANT_LEAF_BY_LEAF_FRONT.png',
     targetLeafAnnotationFile: 'test-output/PLANT_TARGET_VISIBLE_LEAF_MAP.png',
-    reviewBoardFile: 'asset-factory/modular/PLANT_LEAF_BY_LEAF_FRONT_REVIEW.png',
-    overallFrontResemblesTarget: 'PASS_WITH_REFERENCE_LOCKED_SURFACE',
-    independentPerLeafGeometryPass: 'PENDING'
+    reviewBoardFile: geometryMetrics.length
+      ? 'asset-factory/modular/PLANT_26LEAF_GEOMETRY_AUTHORITY_BOARD.png'
+      : 'asset-factory/modular/PLANT_LEAF_BY_LEAF_FRONT_REVIEW.png',
+    overallFrontResemblesTarget: geometryMetrics.length ? 'FAIL_GEOMETRY_ONLY_VISUAL_REVIEW' : 'PASS_WITH_REFERENCE_LOCKED_SURFACE',
+    independentPerLeafGeometryPass: geometryMetrics.length ? 'LANDMARKS_MEASURED; VISUAL_GATE_FAIL' : 'PENDING'
   },
   leaves
 };

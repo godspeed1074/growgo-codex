@@ -1,10 +1,10 @@
 # Plant Front Correction — Leaf-by-Leaf Target Reconstruction
 
-Status: **PASS for the locked front visual proof; BLOCKED for independent 3D depth inference until operator approval**
+Status: **REFERENCE FRONT PASS; GEOMETRY-ONLY FRONT BLOCKED**
 
 ## Explain like I’m 5
 
-The previous middle Blender plant looked like a reasonable shrub but did not look enough like the supplied picture. It is now explicitly rejected. I measured the visible leaves in the authoritative crop, assigned 26 IDs, and rebuilt the Blender front so the observed crop is the visible authority. The Blender file still contains 26 named leaf objects and a component-ID render, but no guessed depth or side geometry has been allowed to change the front.
+The previous middle Blender plant looked like a reasonable shrub but did not look enough like the supplied picture. It is now explicitly rejected. A reference-locked front proof was made, then a stricter geometry-only proof was run. The geometry-only proof contains 26 real leaf meshes, but its direct visual likeness is still below the target, so it is not the final front authority.
 
 ## Previous middle composition
 
@@ -80,9 +80,10 @@ The previous middle Blender plant looked like a reasonable shrub but did not loo
 
 [PLANT_FRONT_AUTHORITY_LOCK_V2.json](PLANT_FRONT_AUTHORITY_LOCK_V2.json) is **LOCKED_FOR_DEPTH_INFERENCE_REVIEW** only. This authorizes a future constrained depth experiment; it is not production approval and does not authorize shop integration.
 
-- Front Authority V2: **LOCKED_FOR_DEPTH_INFERENCE_REVIEW**
+- Front Authority V2: **REFERENCE-SURFACE REVIEW LOCK ONLY**
+- Geometry-only front authority V1: **NOT LOCKED**
 - Depth work performed: **NO**
-- Ready for constrained 3D inference: **YES, after operator review**
+- Ready for constrained 3D inference: **NO**
 - Ready for production/publish: **NO**
 
 ## Protection checks
@@ -95,4 +96,4 @@ The previous middle Blender plant looked like a reasonable shrub but did not loo
 - Eucalyptus: not started
 - Known-good promotion: **NO**
 
-Next permitted phase: a small, constrained depth-inference proof that preserves the locked front projection. Do not use the rejected middle composition and do not begin shop integration.
+Next permitted phase: correct the standalone leaf contours/material response/flower and planter fidelity, rerun the geometry-only gate, and only then consider constrained depth inference. Do not use the rejected middle composition and do not begin shop integration.
