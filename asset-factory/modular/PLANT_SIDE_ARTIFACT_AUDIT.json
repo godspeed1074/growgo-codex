@@ -1,0 +1,15 @@
+{
+  "baseline": "GG-VEG-PLANTER-SHRUB-001@3.0.0 Candidate B",
+  "status": "BLOCKED",
+  "offendingInstances": [
+    {"instanceId":"B_LEAF_00_0","clusterId":"0","problem":"left/right thin outward projection","proposedFix":"yaw toward radial 45-70 degrees"},
+    {"instanceId":"B_LEAF_01_2","clusterId":"1","problem":"parallel shelf with neighboring leaf","proposedFix":"roll +0.35 and move inward"},
+    {"instanceId":"B_LEAF_02_0","clusterId":"2","problem":"long side projection","proposedFix":"replace with SMALL_CURVED profile"},
+    {"instanceId":"B_LEAF_03_2","clusterId":"3","problem":"repeated horizontal side blade","proposedFix":"pitch upward and reduce width"},
+    {"instanceId":"B_LEAF_04_0","clusterId":"4","problem":"side-facing shelf","proposedFix":"yaw away from camera axis"},
+    {"instanceId":"B_LEAF_05_2","clusterId":"5","problem":"parallel projection","proposedFix":"move toward foliage volume center"},
+    {"instanceId":"B_LEAF_06_0","clusterId":"6","problem":"upper side spike","proposedFix":"use BROAD_CUPPED with increased depth"},
+    {"instanceId":"B_LEAF_07_2","clusterId":"7","problem":"upper horizontal blade","proposedFix":"roll and shorten local width"},
+    {"instanceId":"B_LEAF_08_0","clusterId":"8","problem":"lower side shelf","proposedFix":"pitch downward and tuck into mass"}
+  ]
+}
