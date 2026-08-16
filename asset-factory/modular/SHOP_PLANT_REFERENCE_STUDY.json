@@ -1,0 +1,11 @@
+{
+  "status": "PASS_WITH_OPERATOR_REVIEW",
+  "scope": "planter_and_shrub_only",
+  "authority": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+  "observations": {
+    "planter": {"frontFace": "rectangular green planter", "rim": "projecting top rim", "opening": "dark soil region implied", "grounding": "rests on foundation/ground"},
+    "foliage": {"silhouette": "rounded layered shrub", "structure": "upper, mid, lower overlapping masses", "palette": ["green_dark", "green_mid", "green_light"], "depth": "shallow but visible in side perspective"},
+    "flowers": {"appearance": "small warm yellow accents", "distribution": "sparse accents across front foliage"}
+  },
+  "productionDecisions": {"leafGeometry": "low_poly_curved_module", "clusterCount": 7, "depthRatioCandidate": 0.42, "cardOnlyConstruction": false}
+}

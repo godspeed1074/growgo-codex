@@ -283,6 +283,26 @@
         "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
       },
       "approvalState": "REVIEW",
+      "candidateVersions": [
+        {
+          "assetVersion": "2.0.0",
+          "parentVersion": "1.0.0",
+          "status": "READY_FOR_OPERATOR_REVIEW",
+          "geometryProof": "test-output/plant3d/PLANT_3D.blend",
+          "leafModuleIds": ["GG-VEG-LEAF-SHRUB-BROAD-001"],
+          "flowerModuleIds": ["GG-VEG-FLOWER-ACCENT-001"],
+          "leafInstances": 28,
+          "flowerInstances": 3,
+          "foliageClusters": 7,
+          "triangles": 832,
+          "vertices": 528,
+          "objects": 56,
+          "materials": 6,
+          "depthToWidthRatio": 0.42,
+          "deterministicSeedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM",
+          "mobileBudget": "PASS"
+        }
+      ],
       "provenance": {
         "sourceType": "REFERENCE_ANALYSIS",
         "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
