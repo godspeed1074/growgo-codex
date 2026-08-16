@@ -1,38 +1,57 @@
 {
-  "status": "BLOCKED_SHARED_PLANTER_GEOMETRY",
+  "status": "BLOCKED_LOCKED_SPRITE_COMPOSITE",
   "foliagePresentationPreserved": true,
   "planterFrontWidthErrorPercent": 0,
   "planterFrontHeightErrorPercent": 0,
   "depthCandidatesPercent": [
-    16,
-    20,
-    24
+    18,
+    22,
+    26
   ],
-  "winningPlanterDepthPercent": "NOT_SELECTED",
+  "winningPlanterDepthPercent": 20,
+  "planterRatios": {
+    "heightToWidth": 0.5057,
+    "depthToWidth": 0.2,
+    "depthToHeight": 0.3955
+  },
+  "rootRotationDegrees": [
+    0,
+    0,
+    0
+  ],
+  "appliedScale": [
+    1,
+    1,
+    1
+  ],
   "foliageAnchor": {
     "id": "PLANTER_FOLIAGE_ORIGIN",
     "x": -0.014367818832397461,
     "sceneDepth": 0.12600001060962676,
     "vertical": -0.17942528307437897
   },
-  "foliageAnchorXErrorPx": "NOT_MEASURABLE — no final composite is permitted",
-  "foliageAnchorZErrorPx": "NOT_MEASURABLE — no final composite is permitted",
+  "foliageAnchorXErrorPx": "NOT_MEASURABLE — locked five-view PNGs already contain the prior planter render",
+  "foliageAnchorZErrorPx": "NOT_MEASURABLE — locked five-view PNGs already contain the prior planter render",
   "views": {
-    "0": "PASS_FRONT_ONLY",
-    "M30": "FAIL_TALL_SLAB",
-    "M15": "FAIL_TALL_SLAB",
-    "P15": "FAIL_TALL_SLAB",
-    "P30": "FAIL_TALL_SLAB"
+    "0": "PASS_PLANTER_ONLY",
+    "M30": "PASS_PLANTER_ONLY",
+    "M15": "PASS_PLANTER_ONLY",
+    "P15": "PASS_PLANTER_ONLY",
+    "P30": "PASS_PLANTER_ONLY"
   },
-  "giantWallArtifact": "YES",
+  "orthoFront": "PASS",
+  "orthoSide": "PASS_SHALLOW_RECTANGLE",
+  "orthoTop": "PASS_SHALLOW_FOOTPRINT",
+  "giantWallArtifact": "NO",
   "planterDetached": "NO",
+  "soilHorizontal": "YES",
   "soilOpening": "PASS_SOURCE_SOIL_RETAINED",
-  "gameplay1X": "FAIL_PLANTER",
-  "gameplay2X": "FAIL_PLANTER",
+  "gameplay1X": "BLOCKED_FINAL_COMPOSITE",
+  "gameplay2X": "BLOCKED_FINAL_COMPOSITE",
   "sourcePreserved": true,
   "foliageModified": false,
   "shopUnchanged": true,
   "eucalyptusStarted": false,
   "anonymousGeometry": 0,
-  "decisionReason": "All bounded depth variants preserve the front but the existing 2.5D planter construction remains a tall slab at oblique angles. It must be rebuilt as a genuine shallow box before any sprite composite is considered."
+  "decisionReason": "The shared planter is valid in isolation. Final integration remains blocked because the locked foliage PNGs already include the previous planter render; compositing this one would double-render planter pixels."
 }

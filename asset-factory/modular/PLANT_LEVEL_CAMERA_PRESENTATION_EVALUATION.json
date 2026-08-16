@@ -1,0 +1,50 @@
+{
+  "status": "BLOCKED_LEVEL_CAMERA_COMPOSITE_SCALE",
+  "view0ChecksumPreserved": true,
+  "view0ChecksumBefore": "d20775bf40e702c40e1fe8c87d957cf30bf4cd883ba6ad11000b531e733c4df6",
+  "view0ChecksumAfter": "d20775bf40e702c40e1fe8c87d957cf30bf4cd883ba6ad11000b531e733c4df6",
+  "oldSideCameraRoll": "NONZERO_ROLLED_CONTRACT",
+  "newCameraRollDegrees": 0,
+  "rerenderedViews": [
+    "M30",
+    "M15",
+    "P15",
+    "P30"
+  ],
+  "anchorErrorsPx": {
+    "0": [
+      0,
+      0
+    ],
+    "M30": [
+      "VISUAL_FAIL",
+      "VISUAL_FAIL"
+    ],
+    "M15": [
+      "VISUAL_FAIL",
+      "VISUAL_FAIL"
+    ],
+    "P15": [
+      "VISUAL_FAIL",
+      "VISUAL_FAIL"
+    ],
+    "P30": [
+      "VISUAL_FAIL",
+      "VISUAL_FAIL"
+    ]
+  },
+  "plantIdentity": "PASS_FOLIAGE_ONLY",
+  "fiveViewContinuity": "FAIL_PLANTER_SCALE",
+  "gameplay1X": "FAIL",
+  "gameplay2X": "FAIL",
+  "accentCandidate": "NONE",
+  "shared3DPlanter": "FAIL_OVERSIZED_IN_REMAPPED_PRESENTATION",
+  "duplicatePlanter": false,
+  "presentationDerivative": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "knownGood": "NO",
+  "readyForOperatorPlantReview": false,
+  "shopUnchanged": true,
+  "atlasUnchanged": true,
+  "eucalyptusStarted": false,
+  "reason": "The camera roll is corrected, but visual inspection shows the remapped planter is oversized beneath the foliage. The shared presentation scale/anchor mapping must be calibrated before composite approval."
+}

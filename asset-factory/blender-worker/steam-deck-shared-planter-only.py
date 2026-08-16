@@ -19,9 +19,12 @@ def compress_depth(percent):
   for v in o.data.vertices:
    wz=(o.matrix_world@v.co).z;v.co.z=front-(front-wz)*factor-o.location.z
  return {'depthPercent':percent,'frontWidth':width,'frontHeight':b['vertical'][1]-b['vertical'][0],'frontDepth':front,'targetDepth':target,'factor':factor,'anchor':{'id':'PLANTER_FOLIAGE_ORIGIN','x':(b['x'][0]+b['x'][1])/2,'sceneDepth':front-target*.48,'vertical':b['vertical'][1]-.03}}
-def look(c):c.rotation_euler=(Vector((0,-.32,.1))-c.location).to_track_quat('-Z','Y').to_euler()
 def cam(name,a,elev=0):
- d=bpy.data.cameras.new(name);c=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(c);r=math.radians(a);c.location=(math.sin(r)*9,elev,math.cos(r)*9);c.data.type='ORTHO';c.data.ortho_scale=1;look(c);return c
+ d=bpy.data.cameras.new(name);c=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(c);r=math.radians(a);c.location=(math.sin(r)*9,elev,math.cos(r)*9);c.data.type='ORTHO';c.data.ortho_scale=1
+ # The planter is X-horizontal / Y-vertical / Z-depth in this locked Blender
+ # scene. A direct world-Y orbit preserves screen-up; track-quaternion setup
+ # previously rolled the camera and fabricated the apparent tall-slab failure.
+ c.rotation_euler=(0,r,0);return c
 def render(s,c,name):
  s.camera=c;s.render.resolution_x=189;s.render.resolution_y=261;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=True;s.render.filepath=os.path.join(out,name+'.png');bpy.ops.render.render(write_still=True)
 def candidate(label,depth,final=False):

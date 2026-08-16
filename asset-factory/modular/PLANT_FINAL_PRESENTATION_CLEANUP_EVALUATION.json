@@ -1,0 +1,20 @@
+{
+  "status": "BLOCKED_CAMERA_CONTRACT_MISMATCH",
+  "oldPlanterRemovedFromFiveFoliageImages": true,
+  "oldPlanterPixelsRemoved": 56271,
+  "foliagePixelDrift": 0,
+  "flowerPixelDrift": 0,
+  "shared3DPlanterComposited": false,
+  "accentCandidateSelected": "NONE",
+  "accentColour": null,
+  "approxGameplayLineWeightPx": 0,
+  "duplicatePlanter": false,
+  "gameplay1X": "BLOCKED",
+  "gameplay2X": "BLOCKED",
+  "fiveViewContinuity": "BLOCKED",
+  "budget": "PASS",
+  "readyForOperatorPlantReview": false,
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "reason": "The locked foliage-only side sprites retain the former rolled camera contract. The valid shallow planter is rendered with world-up camera orientation. Compositing them would misalign their anchors; changing either violates its lock."
+}

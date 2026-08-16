@@ -1,7 +1,7 @@
 # Shared 3D Planter Geometry
 
-Status: **BLOCKED**
+Status: **BLOCKED — final composite only**
 
-The source planter front remains exact, but all 16%, 20%, and 24% depth variants still read as a tall slab at oblique angles. No depth is selected. The foliage presentation outputs remain untouched, and no final composite was attempted.
+The corrected world-up camera proves the source planter is a shallow box, not a tall slab. Its fixed front is exact and the bounded 20% depth candidate passes orthographic and ±15°/±30° planter-only views. The foliage presentation PNGs remain untouched; they already bake the prior planter render, so final combination would double-render two planters.
 
 - [Review board](./PLANTER_3D_SHARED_GEOMETRY_REVIEW_BOARD.png)
