@@ -4,7 +4,7 @@ Status: **BLOCKED**
 
 ## Explain like I’m 5
 
-The leaves are now real Blender meshes, not a hidden picture. Blender produced 26 separately named leaf objects, a real planter, and real flower geometry. That technical proof passes. The standalone geometry is still too simplified to be accepted as the final visual front, so the geometry authority lock has not been issued.
+The leaves are real Blender meshes, not a hidden picture. Blender produced 26 separately named leaf objects, a real planter, and real flower geometry. The target-specific contour pass now uses 26 independently traced target contours, faceted materials, and a shallow backing ring inside each same-ID leaf mesh to restore dark overlap edges. The technical proof passes, but direct visual comparison still shows a simpler foliage read than the target, so the geometry authority lock remains blocked.
 
 ## Proof results
 
@@ -14,7 +14,7 @@ The leaves are now real Blender meshes, not a hidden picture. Blender produced 2
 - Secondary/occluded leaves: **7**
 - Flower groups: **3**
 - Flower geometry objects: **18 petals/centres**
-- Planter geometry objects: **9**
+- Planter geometry objects: **11**
 - Reference imagery contributing to beauty render: **NO**
 - Target foliage bake contributing to beauty render: **NO**
 - Reference plane visible: **NO**
@@ -23,6 +23,9 @@ The leaves are now real Blender meshes, not a hidden picture. Blender produced 2
 - Anonymous geometry: **0**
 - Blender: Steam Deck, **5.2.0 LTS**, clean exit **PASS**
 - Mobile budget: **PASS**
+- Target-specific contour records: **26**
+- Beauty materials: **20 shared/faceted materials** (45 datablocks including ID-review materials)
+- Shallow per-leaf backing rings: **26**, same leaf object IDs, no canopy object
 
 Audit: [PLANT_FRONT_GEOMETRY_ONLY_PROOF.json](../../../test-output/plant-26leaf-geometry-only/PLANT_FRONT_GEOMETRY_ONLY_PROOF.json)
 
@@ -35,6 +38,8 @@ Audit: [PLANT_FRONT_GEOMETRY_ONLY_PROOF.json](../../../test-output/plant-26leaf-
 - Board: [PLANT_26LEAF_GEOMETRY_AUTHORITY_BOARD.png](PLANT_26LEAF_GEOMETRY_AUTHORITY_BOARD.png)
 - Metrics: `test-output/plant-26leaf-geometry-only/GEOMETRY_LEAF_METRICS.json`
 - Fit report: [PLANT_PER_LEAF_FIT_REPORT.json](PLANT_PER_LEAF_FIT_REPORT.json)
+- Contour report: [PLANT_PER_LEAF_CONTOUR_REPORT.json](PLANT_PER_LEAF_CONTOUR_REPORT.json)
+- Front fidelity board: [PLANT_GEOMETRY_FRONT_FIDELITY_BOARD.png](PLANT_GEOMETRY_FRONT_FIDELITY_BOARD.png)
 
 ## Per-leaf landmark metrics
 
@@ -50,7 +55,10 @@ Measured from the projected standalone meshes:
 - Worst dominant width: **LEAF_006 — 4.839%**
 - Worst dominant height: **LEAF_019 — 4.997%**
 - Worst dominant projected tip-axis angle: **LEAF_007 — 13.200°**
-- Silhouette overlap: **not claimed**; no independent contour segmentation was fabricated.
+- Mean all-leaf contour IoU: **0.658**
+- Mean dominant-leaf contour IoU (19 leaves): **0.658**
+- Lowest measured IoU: **0.177 — LEAF_019**
+- Contour basis: target-mask convex hulls for independently rendered leaf meshes; no target pixels enter the Blender beauty render.
 
 All measured landmark values are inside the requested dominant-leaf tolerances. That does not override the visual gate.
 
@@ -70,9 +78,9 @@ All measured landmark values are inside the requested dominant-leaf tolerances. 
 | Leaf pointedness | NEEDS_WORK |
 | Colour hierarchy | NEEDS_WORK |
 | Flowers | NEEDS_WORK |
-| Planter | NEEDS_WORK |
+| Planter | PASS TECHNICAL / NEEDS_WORK VISUALLY |
 
-The geometry aligns the measured centres, sizes, tips, and commanded orientations, but the flat standalone contours/material response do not yet reproduce the reference’s richer leaf shape, overlap shading, flower appearance, or planter finish closely enough.
+The geometry aligns the measured centres, sizes, tips, and commanded orientations, and the independent contour report is measurable. The backing rings improve overlap separation, but the direct front board still shows less tonal richness and simpler flower/leaf detail than the target. Those visual differences block approval even though the mesh and budget gates pass.
 
 ## Authority decision
 

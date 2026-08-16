@@ -16,24 +16,24 @@
     "colourClass": 0.05
   },
   "aggregateErrors": {
-    "meanDominantCentreErrorPx": 0.393,
-    "meanDominantWidthErrorPercent": 0.32,
-    "meanDominantHeightErrorPercent": 1.763,
+    "meanDominantCentreErrorPx": 0.112,
+    "meanDominantWidthErrorPercent": 0.255,
+    "meanDominantHeightErrorPercent": 0.361,
     "meanDominantTipErrorPx": 0,
     "meanDominantAngleErrorDeg": 0,
-    "meanDominantTipAxisAngleErrorDeg": 4.189,
+    "meanDominantTipAxisAngleErrorDeg": 24.164,
     "worstDominant": {
       "centre": {
-        "id": "LEAF_010",
-        "value": 0.944
+        "id": "LEAF_006",
+        "value": 0.75
       },
       "width": {
         "id": "LEAF_006",
         "value": 4.839
       },
       "height": {
-        "id": "LEAF_019",
-        "value": 4.997
+        "id": "LEAF_013",
+        "value": 2.941
       },
       "tip": {
         "id": "LEAF_002",
@@ -44,11 +44,12 @@
         "value": 0
       },
       "tipAxisAngle": {
-        "id": "LEAF_007",
-        "value": 13.2
+        "id": "LEAF_020",
+        "value": 47.965
       }
     },
-    "reason": "Computed from standalone Blender mesh projection; contour overlap remains unmeasured."
+    "meanDominantContourIoU": 0.6581,
+    "reason": "Computed from standalone Blender mesh projection with independent target-mask contour IoU."
   },
   "visualGate": {
     "targetCropComparedDirectly": true,
@@ -56,7 +57,7 @@
     "targetLeafAnnotationFile": "test-output/PLANT_TARGET_VISIBLE_LEAF_MAP.png",
     "reviewBoardFile": "asset-factory/modular/PLANT_26LEAF_GEOMETRY_AUTHORITY_BOARD.png",
     "overallFrontResemblesTarget": "FAIL_GEOMETRY_ONLY_VISUAL_REVIEW",
-    "independentPerLeafGeometryPass": "LANDMARKS_MEASURED; VISUAL_GATE_FAIL"
+    "independentPerLeafGeometryPass": "LANDMARKS_AND_CONTOUR_IOU_MEASURED; VISUAL_GATE_FAIL"
   },
   "leaves": [
     {
@@ -105,7 +106,7 @@
         ],
         "renderedCentrePx": [
           95,
-          49.5
+          49
         ],
         "referenceSizePx": [
           25,
@@ -113,7 +114,7 @@
         ],
         "renderedSizePx": [
           25,
-          41
+          42
         ],
         "referenceTipPx": [
           95,
@@ -125,68 +126,92 @@
         ],
         "referenceAngleDeg": 0,
         "renderedAngleDeg": 0,
-        "renderedAngleMeasuredFromTipBaseDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -8.010227645868486,
         "projectedPolygonPx": [
           [
             95,
             29
           ],
           [
-            101.5,
-            33.46
-          ],
-          [
-            106.25,
-            41.44
+            105.227,
+            36.842
           ],
           [
             107.5,
-            50.26
+            42.368
           ],
           [
-            103.5,
-            60.76
+            107.5,
+            43.474
           ],
           [
-            99.5,
-            68.32
+            106.364,
+            55.632
+          ],
+          [
+            102.955,
+            64.474
+          ],
+          [
+            101.818,
+            65.579
+          ],
+          [
+            96.136,
+            70
           ],
           [
             95,
             70
           ],
           [
-            90.5,
-            68.32
+            89.318,
+            65.579
           ],
           [
-            86.5,
-            60.76
+            85.909,
+            62.263
+          ],
+          [
+            84.773,
+            58.947
           ],
           [
             82.5,
-            50.26
+            51.211
           ],
           [
-            83.75,
-            41.44
+            82.5,
+            44.579
           ],
           [
-            88.5,
-            33.46
+            83.636,
+            41.263
+          ],
+          [
+            85.909,
+            35.737
+          ],
+          [
+            87.045,
+            33.526
+          ],
+          [
+            92.727,
+            28
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.5,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 2.381,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0
+        "tipAxisAngleErrorDeg": 8.01
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.7725,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -256,55 +281,83 @@
         ],
         "referenceAngleDeg": -24,
         "renderedAngleDeg": -24,
-        "renderedAngleMeasuredFromTipBaseDeg": -24.459633612414194,
+        "renderedAngleMeasuredFromTipBaseDeg": -59.65337641588658,
         "projectedPolygonPx": [
           [
             61,
             48
           ],
           [
-            71.476,
-            50.667
+            63.538,
+            49
           ],
           [
-            79.401,
-            55.428
+            67.846,
+            50.152
+          ],
+          [
+            71.077,
+            51.303
+          ],
+          [
+            73.231,
+            52.455
+          ],
+          [
+            78.615,
+            57.061
+          ],
+          [
+            79.692,
+            58.212
+          ],
+          [
+            82.923,
+            62.818
           ],
           [
             84,
-            62.647
+            72.03
           ],
           [
-            83.768,
-            73.927
+            84,
+            77.788
           ],
           [
-            82.435,
-            82.596
+            79.692,
+            84.697
           ],
           [
-            78.384,
-            86.29
-          ],
-          [
-            73.075,
+            77.538,
             87
           ],
           [
-            66.087,
-            82.245
+            72.154,
+            87
           ],
           [
-            57.999,
-            74.88
+            65.692,
+            85.848
+          ],
+          [
+            64.615,
+            84.697
           ],
           [
             56,
-            66.438
+            74.333
           ],
           [
-            57.955,
-            57.028
+            56,
+            66.273
+          ],
+          [
+            58.154,
+            54.758
+          ],
+          [
+            60.308,
+            50.152
           ]
         ],
         "silhouetteOverlap": null
@@ -315,9 +368,9 @@
         "heightErrorPercent": 2.632,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0.46
+        "tipAxisAngleErrorDeg": 35.653
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.8095,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -387,55 +440,67 @@
         ],
         "referenceAngleDeg": 24,
         "renderedAngleDeg": 24,
-        "renderedAngleMeasuredFromTipBaseDeg": 28.84070355382956,
+        "renderedAngleMeasuredFromTipBaseDeg": 22.673194514932668,
         "projectedPolygonPx": [
           [
             132,
             49
           ],
           [
-            132.759,
-            56.862
+            135,
+            73.014
           ],
           [
             135,
-            66.599
+            74.129
           ],
           [
-            132.997,
-            75.269
+            129.643,
+            80.814
           ],
           [
-            124.466,
-            82.721
+            126.429,
+            84.157
           ],
           [
-            117.07,
+            122.143,
+            86.386
+          ],
+          [
+            113.571,
             87.5
           ],
           [
-            111.382,
-            86.674
+            112.5,
+            87.5
           ],
           [
-            106.991,
-            82.793
-          ],
-          [
-            105.428,
-            73.83
+            106.071,
+            78.586
           ],
           [
             105,
-            62.195
+            76.357
           ],
           [
-            109.803,
-            54.832
+            105,
+            74.129
           ],
           [
-            118.201,
-            50.063
+            106.071,
+            61.871
+          ],
+          [
+            112.5,
+            55.186
+          ],
+          [
+            116.786,
+            51.843
+          ],
+          [
+            120,
+            50.729
           ]
         ],
         "silhouetteOverlap": null
@@ -446,9 +511,9 @@
         "heightErrorPercent": 1.282,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 4.841
+        "tipAxisAngleErrorDeg": 1.327
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.618,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -518,55 +583,71 @@
         ],
         "referenceAngleDeg": 0,
         "renderedAngleDeg": 0,
-        "renderedAngleMeasuredFromTipBaseDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -31.046093735738566,
         "projectedPolygonPx": [
           [
             95,
             68
           ],
           [
-            101.5,
-            70.64
+            98.804,
+            69.074
           ],
           [
-            106.25,
-            75.96
+            103.152,
+            72.185
+          ],
+          [
+            105.326,
+            75.296
           ],
           [
             107.5,
-            81.84
+            79.444
           ],
           [
-            103.5,
-            88.84
+            107.5,
+            82.556
           ],
           [
-            99.5,
-            93.88
+            106.413,
+            85.667
           ],
           [
-            95,
+            104.239,
+            90.852
+          ],
+          [
+            95.543,
             95
           ],
           [
-            90.5,
-            93.88
+            94.457,
+            95
           ],
           [
-            86.5,
-            88.84
+            85.761,
+            90.852
+          ],
+          [
+            83.587,
+            85.667
           ],
           [
             82.5,
-            81.84
+            82.556
           ],
           [
-            83.75,
-            75.96
+            82.5,
+            79.444
           ],
           [
-            88.5,
-            70.64
+            84.674,
+            75.296
+          ],
+          [
+            91.196,
+            69.074
           ]
         ],
         "silhouetteOverlap": null
@@ -577,9 +658,9 @@
         "heightErrorPercent": 3.571,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0
+        "tipAxisAngleErrorDeg": 31.046
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.8463,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -649,55 +730,87 @@
         ],
         "referenceAngleDeg": -35,
         "renderedAngleDeg": -35,
-        "renderedAngleMeasuredFromTipBaseDeg": -36.45531665964523,
+        "renderedAngleMeasuredFromTipBaseDeg": -81.97179960811356,
         "projectedPolygonPx": [
           [
             40,
             73
           ],
           [
-            50.753,
+            41,
             67.5
           ],
           [
-            59.731,
-            71.099
+            43,
+            67.5
           ],
           [
-            65.791,
-            78.262
+            53,
+            68.742
           ],
           [
-            67.704,
-            91.158
+            55,
+            69.985
+          ],
+          [
+            60,
+            73.712
+          ],
+          [
+            63,
+            76.197
+          ],
+          [
+            65,
+            78.682
+          ],
+          [
+            67,
+            87.379
           ],
           [
             68,
-            101.335
+            92.348
           ],
           [
-            64.578,
-            106.471
+            68,
+            97.318
           ],
           [
-            59.307,
+            66,
+            103.53
+          ],
+          [
+            64,
             108.5
           ],
           [
-            51.285,
-            104.692
+            52,
+            108.5
           ],
           [
-            41.645,
-            98.165
+            50,
+            107.258
+          ],
+          [
+            47,
+            104.773
+          ],
+          [
+            43,
+            101.045
+          ],
+          [
+            40,
+            97.318
           ],
           [
             38,
-            89.012
+            84.894
           ],
           [
-            38.197,
-            77.85
+            38,
+            81.167
           ]
         ],
         "silhouetteOverlap": null
@@ -708,9 +821,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 1.455
+        "tipAxisAngleErrorDeg": 46.972
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.8091,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -780,55 +893,75 @@
         ],
         "referenceAngleDeg": 35,
         "renderedAngleDeg": 35,
-        "renderedAngleMeasuredFromTipBaseDeg": 43.36897475889559,
+        "renderedAngleMeasuredFromTipBaseDeg": 41.479802916618304,
         "projectedPolygonPx": [
           [
             155,
             75
           ],
           [
-            153.03,
-            78.561
-          ],
-          [
             153.5,
-            89.531
+            98
           ],
           [
-            149.915,
-            98.406
+            152.393,
+            99.25
           ],
           [
-            140.014,
-            104.513
+            147.964,
+            103
           ],
           [
-            131.737,
+            141.321,
             108
           ],
           [
-            126.191,
-            105.841
+            130.25,
+            108
+          ],
+          [
+            126.929,
+            105.5
+          ],
+          [
+            125.821,
+            104.25
+          ],
+          [
+            124.714,
+            101.75
           ],
           [
             122.5,
-            100.689
+            95.5
           ],
           [
-            122.567,
-            90.702
+            122.5,
+            91.75
           ],
           [
-            124.258,
-            78.096
+            125.821,
+            76.75
           ],
           [
-            130.408,
-            71.252
+            126.929,
+            75.5
           ],
           [
-            139.688,
+            134.679,
+            70.5
+          ],
+          [
+            139.107,
             68
+          ],
+          [
+            140.214,
+            68
+          ],
+          [
+            141.321,
+            69.25
           ]
         ],
         "silhouetteOverlap": null
@@ -839,9 +972,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 8.369
+        "tipAxisAngleErrorDeg": 6.48
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.613,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -911,55 +1044,79 @@
         ],
         "referenceAngleDeg": -48,
         "renderedAngleDeg": -48,
-        "renderedAngleMeasuredFromTipBaseDeg": -34.79974410764958,
+        "renderedAngleMeasuredFromTipBaseDeg": -48.39927809052799,
         "projectedPolygonPx": [
           [
             28,
             89
           ],
           [
-            32.61,
+            36.552,
             86
           ],
           [
-            40.498,
-            87.102
+            45.241,
+            89.931
           ],
           [
-            46.567,
-            92.501
+            46.207,
+            91.241
           ],
           [
-            50.157,
-            104.665
+            48.138,
+            95.172
           ],
           [
             52,
-            114.593
+            105.655
           ],
           [
-            50.018,
-            120.574
+            52,
+            108.276
           ],
           [
-            46.039,
+            51.034,
+            116.138
+          ],
+          [
+            50.069,
+            120.069
+          ],
+          [
+            44.276,
+            122.69
+          ],
+          [
+            40.414,
             124
           ],
           [
-            38.898,
-            122.433
+            37.517,
+            122.69
           ],
           [
-            30.009,
-            118.631
+            30.759,
+            118.759
           ],
           [
-            25.596,
-            110.619
+            28.828,
+            117.448
+          ],
+          [
+            27.862,
+            116.138
+          ],
+          [
+            25.931,
+            110.897
           ],
           [
             24,
-            99.588
+            104.345
+          ],
+          [
+            24,
+            87.31
           ]
         ],
         "silhouetteOverlap": null
@@ -970,9 +1127,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 13.2
+        "tipAxisAngleErrorDeg": 0.399
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.7382,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1022,7 +1179,7 @@
         ],
         "renderedCentrePx": [
           65,
-          106.75998618853833
+          106
         ],
         "referenceSizePx": [
           29,
@@ -1030,7 +1187,7 @@
         ],
         "renderedSizePx": [
           29,
-          37.480027622923316
+          39
         ],
         "referenceTipPx": [
           59,
@@ -1042,68 +1199,88 @@
         ],
         "referenceAngleDeg": -25,
         "renderedAngleDeg": -25,
-        "renderedAngleMeasuredFromTipBaseDeg": -22.78936123603971,
+        "renderedAngleMeasuredFromTipBaseDeg": -55.29279228269175,
         "projectedPolygonPx": [
           [
             59,
             89
           ],
           [
-            66.341,
-            88.02
+            63.885,
+            87.647
           ],
           [
-            74.629,
-            92.754
+            67.231,
+            88.794
+          ],
+          [
+            69.462,
+            89.941
+          ],
+          [
+            77.269,
+            96.824
+          ],
+          [
+            78.385,
+            97.971
           ],
           [
             79.5,
-            100.104
+            102.559
           ],
           [
-            79.414,
-            111.756
+            79.5,
+            108.294
           ],
           [
-            78.15,
-            120.738
+            78.385,
+            117.471
           ],
           [
-            73.997,
-            124.645
+            77.269,
+            119.765
           ],
           [
-            68.499,
+            75.038,
+            123.206
+          ],
+          [
+            72.808,
             125.5
           ],
           [
-            61.183,
-            120.75
+            63.885,
+            124.353
           ],
           [
-            52.69,
-            113.33
+            60.538,
+            123.206
           ],
           [
             50.5,
-            104.658
+            112.882
           ],
           [
-            52.399,
-            94.898
+            50.5,
+            95.676
+          ],
+          [
+            54.962,
+            86.5
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.76,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 3.897,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 2.211
+        "tipAxisAngleErrorDeg": 30.293
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.7869,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1173,55 +1350,71 @@
         ],
         "referenceAngleDeg": 0,
         "renderedAngleDeg": 0,
-        "renderedAngleMeasuredFromTipBaseDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -12.896717862791503,
         "projectedPolygonPx": [
           [
             94,
             86
           ],
           [
-            100.24,
-            90.46
-          ],
-          [
-            104.8,
-            98.44
+            101.826,
+            91.462
           ],
           [
             106,
-            107.26
+            104.385
           ],
           [
-            102.16,
-            117.76
+            106,
+            106.538
           ],
           [
-            98.32,
-            125.32
+            104.957,
+            110.846
           ],
           [
-            94,
+            102.87,
+            118.385
+          ],
+          [
+            101.826,
+            120.538
+          ],
+          [
+            100.783,
+            121.615
+          ],
+          [
+            94.522,
             127
           ],
           [
-            89.68,
-            125.32
+            93.478,
+            127
           ],
           [
-            85.84,
-            117.76
+            89.304,
+            122.692
+          ],
+          [
+            83.043,
+            109.769
           ],
           [
             82,
-            107.26
+            106.538
           ],
           [
-            83.2,
-            98.44
+            82,
+            104.385
           ],
           [
-            87.76,
-            90.46
+            86.174,
+            91.462
+          ],
+          [
+            91.391,
+            86.077
           ]
         ],
         "silhouetteOverlap": null
@@ -1232,9 +1425,9 @@
         "heightErrorPercent": 2.381,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0
+        "tipAxisAngleErrorDeg": 12.897
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.7929,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1284,7 +1477,7 @@
         ],
         "renderedCentrePx": [
           119,
-          106.94424448601347
+          106
         ],
         "referenceSizePx": [
           30,
@@ -1292,7 +1485,7 @@
         ],
         "renderedSizePx": [
           30,
-          37.111511027973066
+          39
         ],
         "referenceTipPx": [
           125,
@@ -1304,68 +1497,76 @@
         ],
         "referenceAngleDeg": 22,
         "renderedAngleDeg": 22,
-        "renderedAngleMeasuredFromTipBaseDeg": 21.64905891640869,
+        "renderedAngleMeasuredFromTipBaseDeg": 0.46732100534960835,
         "projectedPolygonPx": [
           [
             125,
             90
           ],
           [
-            131.448,
-            94.592
+            127.333,
+            86.5
+          ],
+          [
+            132.889,
+            96.529
           ],
           [
             134,
-            104.153
+            103.214
           ],
           [
-            132.294,
-            112.811
+            134,
+            112.129
           ],
           [
-            124.052,
-            120.499
+            129.556,
+            117.7
           ],
           [
-            116.85,
+            124,
+            123.271
+          ],
+          [
+            120.667,
+            124.386
+          ],
+          [
+            114,
             125.5
           ],
           [
-            111.162,
-            124.888
-          ],
-          [
-            106.664,
-            121.205
-          ],
-          [
-            104.812,
-            112.386
+            110.667,
+            125.5
           ],
           [
             104,
-            100.88
+            116.586
           ],
           [
-            108.535,
-            93.415
+            104,
+            99.871
           ],
           [
-            116.735,
-            88.388
+            112.889,
+            90.957
+          ],
+          [
+            115.111,
+            89.843
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.944,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 4.842,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0.351
+        "tipAxisAngleErrorDeg": 21.533
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.8415,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1435,7 +1636,7 @@
         ],
         "referenceAngleDeg": 48,
         "renderedAngleDeg": 48,
-        "renderedAngleMeasuredFromTipBaseDeg": 37.371318629193276,
+        "renderedAngleMeasuredFromTipBaseDeg": 17.10140411924769,
         "projectedPolygonPx": [
           [
             163,
@@ -1443,46 +1644,66 @@
           ],
           [
             165.5,
-            101.534
+            90.1
           ],
           [
-            163.881,
-            112.871
+            165.5,
+            105.7
           ],
           [
-            159.329,
-            121.084
+            162.6,
+            114.8
           ],
           [
-            150.12,
-            124.936
+            160.667,
+            120
           ],
           [
-            142.715,
+            156.8,
+            122.6
+          ],
+          [
+            151.967,
+            125.2
+          ],
+          [
+            149.067,
             126.5
           ],
           [
-            138.576,
-            122.949
+            146.167,
+            126.5
+          ],
+          [
+            139.4,
+            123.9
+          ],
+          [
+            137.467,
+            122.6
           ],
           [
             136.5,
-            116.784
+            114.8
           ],
           [
-            138.379,
-            106.583
+            136.5,
+            107
           ],
           [
-            142.064,
-            94.095
+            139.4,
+            99.2
           ],
           [
-            148.342,
-            88.581
+            142.3,
+            92.7
           ],
           [
-            156.522,
+            153.9,
+            87.5
+          ],
+          [
+            154.867,
             87.5
           ]
         ],
@@ -1494,9 +1715,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 10.629
+        "tipAxisAngleErrorDeg": 30.899
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.6645,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1546,7 +1767,7 @@
         ],
         "renderedCentrePx": [
           42,
-          125.99999999999999
+          126
         ],
         "referenceSizePx": [
           33,
@@ -1554,7 +1775,7 @@
         ],
         "renderedSizePx": [
           33,
-          37.99999999999997
+          38
         ],
         "referenceTipPx": [
           28,
@@ -1566,55 +1787,71 @@
         ],
         "referenceAngleDeg": -50,
         "renderedAngleDeg": -50,
-        "renderedAngleMeasuredFromTipBaseDeg": -43.16774314753996,
+        "renderedAngleMeasuredFromTipBaseDeg": -71.55652121145498,
         "projectedPolygonPx": [
           [
             28,
             111
           ],
           [
-            36.367,
-            107.195
+            29.625,
+            109.452
           ],
           [
-            45.787,
+            39.938,
             107
           ],
           [
-            52.855,
-            111.654
+            43.031,
+            107
           ],
           [
-            56.681,
-            123.878
+            48.188,
+            108.226
+          ],
+          [
+            52.312,
+            109.452
           ],
           [
             58.5,
-            134.042
+            124.161
           ],
           [
-            55.885,
-            140.697
+            58.5,
+            127.839
           ],
           [
-            50.976,
+            57.469,
+            133.968
+          ],
+          [
+            56.438,
+            135.194
+          ],
+          [
+            47.156,
+            143.774
+          ],
+          [
+            45.094,
             145
           ],
           [
-            42.47,
-            144.576
+            43.031,
+            145
           ],
           [
-            31.956,
-            142.094
+            30.656,
+            140.097
           ],
           [
-            26.978,
-            134.395
+            27.562,
+            131.516
           ],
           [
             25.5,
-            123.024
+            125.387
           ]
         ],
         "silhouetteOverlap": null
@@ -1625,9 +1862,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 6.832
+        "tipAxisAngleErrorDeg": 21.557
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.7681,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1677,7 +1914,7 @@
         ],
         "renderedCentrePx": [
           69,
-          130.75
+          130.63235294117646
         ],
         "referenceSizePx": [
           32,
@@ -1685,7 +1922,7 @@
         ],
         "renderedSizePx": [
           32,
-          41.5
+          41.73529411764706
         ],
         "referenceTipPx": [
           61,
@@ -1697,68 +1934,80 @@
         ],
         "referenceAngleDeg": -22,
         "renderedAngleDeg": -22,
-        "renderedAngleMeasuredFromTipBaseDeg": -22.164454037453147,
+        "renderedAngleMeasuredFromTipBaseDeg": -28.897961079512584,
         "projectedPolygonPx": [
           [
             61,
             110
           ],
           [
-            71.251,
-            110.697
+            71.133,
+            112.294
           ],
           [
-            80.067,
-            116.331
+            73.267,
+            113.559
+          ],
+          [
+            83.933,
+            126.206
           ],
           [
             85,
-            124.598
+            143.912
           ],
           [
-            84.27,
-            137.238
+            85,
+            145.176
           ],
           [
-            82.397,
-            146.91
+            81.8,
+            150.235
           ],
           [
-            77.637,
-            150.901
-          ],
-          [
-            71.57,
+            80.733,
             151.5
           ],
           [
-            63.819,
-            145.908
+            77.533,
+            151.5
           ],
           [
-            54.925,
-            137.347
+            72.2,
+            150.235
           ],
           [
             53,
-            127.805
+            138.853
           ],
           [
-            55.612,
-            117.327
+            53,
+            130
+          ],
+          [
+            54.067,
+            121.147
+          ],
+          [
+            55.133,
+            118.618
+          ],
+          [
+            59.4,
+            109.765
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.75,
+        "centreErrorPx": 0.632,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 3.488,
+        "heightErrorPercent": 2.941,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0.164
+        "tipAxisAngleErrorDeg": 6.898
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.6606,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1808,7 +2057,7 @@
         ],
         "renderedCentrePx": [
           96,
-          132.75
+          132
         ],
         "referenceSizePx": [
           30,
@@ -1816,7 +2065,7 @@
         ],
         "renderedSizePx": [
           30,
-          37.5
+          39
         ],
         "referenceTipPx": [
           96,
@@ -1828,68 +2077,96 @@
         ],
         "referenceAngleDeg": 0,
         "renderedAngleDeg": 0,
-        "renderedAngleMeasuredFromTipBaseDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -42.26849919451166,
         "projectedPolygonPx": [
           [
             96,
             114
           ],
           [
-            103.8,
-            117.57
+            96.517,
+            112.5
           ],
           [
-            109.5,
-            124.98
+            99.621,
+            114.608
+          ],
+          [
+            104.793,
+            118.824
+          ],
+          [
+            105.828,
+            119.878
+          ],
+          [
+            107.897,
+            124.095
           ],
           [
             111,
-            133.17
+            131.473
           ],
           [
-            106.2,
-            142.92
+            111,
+            132.527
           ],
           [
-            101.4,
-            149.94
+            108.931,
+            138.851
           ],
           [
-            96,
+            104.793,
+            146.23
+          ],
+          [
+            102.724,
+            148.338
+          ],
+          [
+            97.552,
             151.5
           ],
           [
-            90.6,
-            149.94
+            94.448,
+            151.5
           ],
           [
-            85.8,
-            142.92
+            89.276,
+            148.338
+          ],
+          [
+            86.172,
+            146.23
+          ],
+          [
+            84.103,
+            142.014
           ],
           [
             81,
-            133.17
+            132.527
           ],
           [
-            82.5,
-            124.98
+            81,
+            131.473
           ],
           [
-            88.2,
-            117.57
+            84.103,
+            124.095
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.75,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 3.846,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0
+        "tipAxisAngleErrorDeg": 42.268
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.9151,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -1939,7 +2216,7 @@
         ],
         "renderedCentrePx": [
           121,
-          130.9147726096424
+          130
         ],
         "referenceSizePx": [
           33,
@@ -1947,7 +2224,7 @@
         ],
         "renderedSizePx": [
           33,
-          39.170454780715176
+          41
         ],
         "referenceTipPx": [
           128,
@@ -1959,68 +2236,88 @@
         ],
         "referenceAngleDeg": 22,
         "renderedAngleDeg": 22,
-        "renderedAngleMeasuredFromTipBaseDeg": 22.006332940633214,
+        "renderedAngleMeasuredFromTipBaseDeg": -19.303439534446674,
         "projectedPolygonPx": [
           [
             128,
             112
           ],
           [
-            134.541,
-            118.136
+            129.8,
+            109.5
+          ],
+          [
+            130.9,
+            110.639
+          ],
+          [
+            135.3,
+            118.611
+          ],
+          [
+            136.4,
+            120.889
           ],
           [
             137.5,
-            128.272
+            124.306
           ],
           [
-            135.767,
-            137.38
+            137.5,
+            137.972
           ],
           [
-            126.841,
-            145.349
+            133.1,
+            142.528
           ],
           [
-            119.013,
+            124.3,
             150.5
           ],
           [
-            112.757,
-            149.754
+            117.7,
+            150.5
           ],
           [
-            107.757,
-            145.788
-          ],
-          [
-            105.579,
-            136.447
+            106.7,
+            142.528
           ],
           [
             104.5,
-            124.289
+            140.25
           ],
           [
-            109.359,
-            116.491
+            104.5,
+            134.556
           ],
           [
-            118.282,
-            111.33
+            105.6,
+            123.167
+          ],
+          [
+            110,
+            118.611
+          ],
+          [
+            116.6,
+            112.917
+          ],
+          [
+            124.3,
+            110.639
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.915,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 4.462,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 0.006
+        "tipAxisAngleErrorDeg": 41.303
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.7241,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2090,7 +2387,7 @@
         ],
         "referenceAngleDeg": 48,
         "renderedAngleDeg": 48,
-        "renderedAngleMeasuredFromTipBaseDeg": 40.25029841439815,
+        "renderedAngleMeasuredFromTipBaseDeg": 39.79781379861714,
         "projectedPolygonPx": [
           [
             164,
@@ -2098,47 +2395,63 @@
           ],
           [
             167,
-            125.886
+            115.903
           ],
           [
-            165.737,
-            137.14
+            159.32,
+            146.548
           ],
           [
-            161.004,
-            144.999
+            156.76,
+            147.774
           ],
           [
-            150.793,
-            148.071
-          ],
-          [
-            142.507,
+            152.92,
             149
           ],
           [
-            137.653,
-            145.072
+            141.4,
+            145.323
+          ],
+          [
+            138.84,
+            144.097
+          ],
+          [
+            137.56,
+            141.645
+          ],
+          [
+            136.28,
+            136.742
           ],
           [
             135,
-            138.695
+            130.613
           ],
           [
-            136.614,
-            128.605
+            135,
+            129.387
           ],
           [
-            140.153,
-            116.373
+            142.68,
+            114.677
           ],
           [
-            146.97,
-            111.377
+            150.36,
+            112.226
           ],
           [
-            156.157,
+            155.48,
             111
+          ],
+          [
+            161.88,
+            111
+          ],
+          [
+            164.44,
+            112.226
           ]
         ],
         "silhouetteOverlap": null
@@ -2149,9 +2462,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 7.75
+        "tipAxisAngleErrorDeg": 8.202
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.5072,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2200,7 +2513,7 @@
           146
         ],
         "renderedCentrePx": [
-          29.178721404900603,
+          29,
           146
         ],
         "referenceSizePx": [
@@ -2208,7 +2521,7 @@
           26
         ],
         "renderedSizePx": [
-          28.642557190198794,
+          29,
           26
         ],
         "referenceTipPx": [
@@ -2221,68 +2534,68 @@
         ],
         "referenceAngleDeg": -68,
         "renderedAngleDeg": -68,
-        "renderedAngleMeasuredFromTipBaseDeg": -62.38258162587278,
+        "renderedAngleMeasuredFromTipBaseDeg": -60.56083755072569,
         "projectedPolygonPx": [
           [
             16,
             137
           ],
           [
-            21.385,
-            136.071
+            24.587,
+            134.238
           ],
           [
-            29.062,
+            30.891,
             133
           ],
           [
-            35.539,
-            133.661
+            35.935,
+            133
           ],
           [
-            40.495,
-            140.01
+            40.978,
+            137.952
           ],
           [
             43.5,
-            145.716
+            141.667
           ],
           [
-            42.355,
-            150.644
+            43.5,
+            154.048
           ],
           [
-            38.981,
-            154.838
-          ],
-          [
-            31.959,
-            157.24
-          ],
-          [
-            22.987,
+            38.457,
             159
           ],
           [
-            17.765,
-            155.805
+            18.283,
+            159
           ],
           [
-            14.857,
-            149.247
+            15.761,
+            155.286
+          ],
+          [
+            14.5,
+            146.619
+          ],
+          [
+            14.5,
+            142.905
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.179,
-        "widthErrorPercent": 1.233,
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 5.617
+        "tipAxisAngleErrorDeg": 7.439
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.5782,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2339,7 +2652,7 @@
           35
         ],
         "renderedSizePx": [
-          31.000000000000007,
+          31,
           35
         ],
         "referenceTipPx": [
@@ -2352,55 +2665,43 @@
         ],
         "referenceAngleDeg": -42,
         "renderedAngleDeg": -42,
-        "renderedAngleMeasuredFromTipBaseDeg": -39.12225206483398,
+        "renderedAngleMeasuredFromTipBaseDeg": 5.098178397166511,
         "projectedPolygonPx": [
           [
             42,
             137
           ],
           [
-            50.057,
+            47.289,
             133.5
           ],
           [
-            59.309,
-            134.64
-          ],
-          [
-            65.672,
-            139.683
-          ],
-          [
-            67.945,
-            150.874
+            55.447,
+            133.5
           ],
           [
             68.5,
-            159.991
+            152.167
           ],
           [
-            65.135,
-            165.431
-          ],
-          [
-            59.807,
+            68.5,
             168.5
           ],
           [
-            51.525,
-            166.947
-          ],
-          [
-            41.524,
-            163.319
-          ],
-          [
-            37.576,
-            155.913
+            44.026,
+            168.5
           ],
           [
             37.5,
-            145.791
+            166.167
+          ],
+          [
+            37.5,
+            154.5
+          ],
+          [
+            39.132,
+            142.833
           ]
         ],
         "silhouetteOverlap": null
@@ -2411,9 +2712,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 2.878
+        "tipAxisAngleErrorDeg": 47.098
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.2038,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2463,15 +2764,15 @@
         ],
         "renderedCentrePx": [
           79,
-          151.92443452846362
+          151
         ],
         "referenceSizePx": [
           31,
           37
         ],
         "renderedSizePx": [
-          30.999999999999986,
-          35.15113094307276
+          31,
+          37
         ],
         "referenceTipPx": [
           72,
@@ -2483,68 +2784,64 @@
         ],
         "referenceAngleDeg": -20,
         "renderedAngleDeg": -20,
-        "renderedAngleMeasuredFromTipBaseDeg": -22.031160246522763,
+        "renderedAngleMeasuredFromTipBaseDeg": -14.712106641625965,
         "projectedPolygonPx": [
           [
             72,
             135
           ],
           [
-            82.181,
-            134.349
-          ],
-          [
-            90.295,
-            139.163
+            81.818,
+            138.667
           ],
           [
             94.5,
-            146.264
+            157.167
           ],
           [
-            92.97,
-            157.157
+            94.5,
+            159.222
           ],
           [
-            90.534,
-            165.498
+            93.091,
+            167.444
           ],
           [
-            85.693,
-            168.957
-          ],
-          [
-            79.816,
+            91.682,
             169.5
           ],
           [
-            72.724,
-            164.717
+            80.409,
+            169.5
           ],
           [
-            64.727,
-            157.381
+            70.545,
+            167.444
+          ],
+          [
+            67.727,
+            161.278
           ],
           [
             63.5,
-            149.169
+            148.944
           ],
           [
-            66.699,
-            140.13
+            64.909,
+            132.5
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.924,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 4.997,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 2.031
+        "tipAxisAngleErrorDeg": 5.288
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.1767,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2594,7 +2891,7 @@
         ],
         "renderedCentrePx": [
           108,
-          152.75
+          152
         ],
         "referenceSizePx": [
           31,
@@ -2602,7 +2899,7 @@
         ],
         "renderedSizePx": [
           31,
-          35.5
+          37
         ],
         "referenceTipPx": [
           109,
@@ -2614,68 +2911,88 @@
         ],
         "referenceAngleDeg": 18,
         "renderedAngleDeg": 18,
-        "renderedAngleMeasuredFromTipBaseDeg": 10.989512473955415,
+        "renderedAngleMeasuredFromTipBaseDeg": -29.964984232100374,
         "projectedPolygonPx": [
           [
             109,
             135
           ],
           [
-            120.004,
-            140.863
+            113.879,
+            133.5
+          ],
+          [
+            117.086,
+            137.985
+          ],
+          [
+            121.362,
+            144.712
+          ],
+          [
+            122.431,
+            150.318
           ],
           [
             123.5,
-            149.727
+            157.045
           ],
           [
-            122.555,
-            157.926
+            123.5,
+            158.167
           ],
           [
-            114.832,
-            165.497
+            121.362,
+            161.53
           ],
           [
-            107.926,
+            116.017,
+            168.258
+          ],
+          [
+            114.948,
+            169.379
+          ],
+          [
+            112.81,
             170.5
           ],
           [
-            102.049,
-            170.17
+            99.983,
+            170.5
           ],
           [
-            97.106,
-            166.906
+            98.914,
+            169.379
           ],
           [
-            94.395,
-            158.708
+            93.569,
+            162.652
           ],
           [
             92.5,
-            147.944
+            151.439
           ],
           [
-            96.45,
-            140.742
+            92.5,
+            148.076
           ],
           [
-            104.375,
-            135.672
+            102.121,
+            137.985
           ]
         ],
         "silhouetteOverlap": null
       },
       "errors": {
-        "centreErrorPx": 0.75,
+        "centreErrorPx": 0,
         "widthErrorPercent": 0,
-        "heightErrorPercent": 4.054,
+        "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 7.01
+        "tipAxisAngleErrorDeg": 47.965
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.8273,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2732,7 +3049,7 @@
           34
         ],
         "renderedSizePx": [
-          32.999999999999986,
+          33,
           34
         ],
         "referenceTipPx": [
@@ -2745,54 +3062,74 @@
         ],
         "referenceAngleDeg": 38,
         "renderedAngleDeg": 38,
-        "renderedAngleMeasuredFromTipBaseDeg": 36.47318489708303,
+        "renderedAngleMeasuredFromTipBaseDeg": -6.019851268648915,
         "projectedPolygonPx": [
           [
             145,
             136
           ],
           [
-            151.446,
-            144.521
+            148.1,
+            135.345
+          ],
+          [
+            150.3,
+            140.034
           ],
           [
             152.5,
-            154.283
+            147.069
           ],
           [
-            149.114,
-            161.526
+            151.4,
+            156.448
           ],
           [
-            138.84,
-            165.286
+            150.3,
+            159.966
           ],
           [
-            130.169,
+            149.2,
+            161.138
+          ],
+          [
+            143.7,
+            164.655
+          ],
+          [
+            139.3,
             167
           ],
           [
-            124.133,
-            164.181
+            136,
+            167
           ],
           [
-            119.93,
-            159.024
+            126.1,
+            164.655
+          ],
+          [
+            125,
+            163.483
           ],
           [
             119.5,
-            150.219
+            151.759
           ],
           [
-            120.673,
-            139.37
+            119.5,
+            149.414
           ],
           [
-            126.903,
-            134.342
+            121.7,
+            140.034
           ],
           [
-            136.657,
+            126.1,
+            135.345
+          ],
+          [
+            131.6,
             133
           ]
         ],
@@ -2804,9 +3141,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 1.527
+        "tipAxisAngleErrorDeg": 44.02
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.5993,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -2876,7 +3213,7 @@
         ],
         "referenceAngleDeg": 62,
         "renderedAngleDeg": 62,
-        "renderedAngleMeasuredFromTipBaseDeg": 57.73489625012777,
+        "renderedAngleMeasuredFromTipBaseDeg": 48.487052406015216,
         "projectedPolygonPx": [
           [
             171,
@@ -2884,47 +3221,47 @@
           ],
           [
             172.5,
-            152.987
+            150.413
           ],
           [
-            170.242,
-            160.389
+            171.326,
+            156.283
           ],
           [
-            165.588,
+            170.152,
+            158.63
+          ],
+          [
+            166.63,
             164.5
           ],
           [
-            157.084,
-            163.811
+            153.717,
+            164.5
           ],
           [
-            150.358,
-            162.176
-          ],
-          [
-            146.914,
-            158.14
+            150.196,
+            162.152
           ],
           [
             145.5,
-            153.021
+            158.63
           ],
           [
-            147.909,
-            146.518
+            145.5,
+            145.717
           ],
           [
-            152.094,
-            139.068
+            147.848,
+            142.196
           ],
           [
-            158.098,
+            151.37,
             137.5
           ],
           [
-            165.484,
-            139.763
+            160.761,
+            137.5
           ]
         ],
         "silhouetteOverlap": null
@@ -2935,9 +3272,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 4.265
+        "tipAxisAngleErrorDeg": 13.513
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.6628,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -3007,55 +3344,47 @@
         ],
         "referenceAngleDeg": -55,
         "renderedAngleDeg": -55,
-        "renderedAngleMeasuredFromTipBaseDeg": -57.500091511133675,
+        "renderedAngleMeasuredFromTipBaseDeg": -16.606697250796994,
         "projectedPolygonPx": [
           [
             25,
             154
           ],
           [
-            32.551,
-            154.606
-          ],
-          [
-            39.999,
+            46.111,
             153
           ],
           [
-            45.139,
-            153.952
-          ],
-          [
-            47.015,
-            158.829
+            47.5,
+            156.273
           ],
           [
             47.5,
-            163.103
+            157.909
           ],
           [
-            44.816,
-            166.516
+            44.722,
+            169.364
           ],
           [
-            40.542,
-            169.24
-          ],
-          [
-            33.872,
-            170.421
-          ],
-          [
-            25.811,
+            43.333,
             171
           ],
           [
-            22.604,
-            168.343
+            23.889,
+            171
           ],
           [
             22.5,
-            163.471
+            169.364
+          ],
+          [
+            22.5,
+            164.455
+          ],
+          [
+            23.889,
+            156.273
           ]
         ],
         "silhouetteOverlap": null
@@ -3066,9 +3395,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 2.5
+        "tipAxisAngleErrorDeg": 38.393
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.5025,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -3138,55 +3467,59 @@
         ],
         "referenceAngleDeg": -25,
         "renderedAngleDeg": -25,
-        "renderedAngleMeasuredFromTipBaseDeg": -33.958830778130945,
+        "renderedAngleMeasuredFromTipBaseDeg": -49.89909245378775,
         "projectedPolygonPx": [
           [
             50,
             151
           ],
           [
-            60.8,
+            59.714,
             151
           ],
           [
-            66.938,
-            152.555
+            62,
+            151
+          ],
+          [
+            66.571,
+            152.429
           ],
           [
             70,
-            155.938
+            155.286
           ],
           [
-            68.538,
-            162.248
+            70,
+            161
           ],
           [
-            66.443,
-            167.256
+            68.857,
+            166.714
           ],
           [
-            62.617,
-            169.872
-          ],
-          [
-            58.067,
+            65.429,
             171
           ],
           [
-            52.718,
-            169.319
-          ],
-          [
-            46.735,
-            166.337
+            48.286,
+            171
           ],
           [
             46,
-            161.914
+            168.143
           ],
           [
-            48.703,
-            156.407
+            46,
+            166.714
+          ],
+          [
+            47.143,
+            159.571
+          ],
+          [
+            49.429,
+            155.286
           ]
         ],
         "silhouetteOverlap": null
@@ -3197,9 +3530,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 8.959
+        "tipAxisAngleErrorDeg": 24.899
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.6077,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -3269,54 +3602,42 @@
         ],
         "referenceAngleDeg": 30,
         "renderedAngleDeg": 30,
-        "renderedAngleMeasuredFromTipBaseDeg": 36.9113111229592,
+        "renderedAngleMeasuredFromTipBaseDeg": 49.61331600204447,
         "projectedPolygonPx": [
           [
             138,
             151
           ],
           [
-            140.368,
-            157.728
+            140.524,
+            152.818
+          ],
+          [
+            141.762,
+            156.455
           ],
           [
             143,
-            163.461
+            161.909
           ],
           [
-            141.922,
-            167.728
-          ],
-          [
-            135.167,
-            169.967
-          ],
-          [
-            129.188,
+            143,
             171
           ],
           [
-            124.259,
-            169.361
+            121.952,
+            171
           ],
           [
-            120.216,
-            166.342
-          ],
-          [
-            118.22,
-            161.17
+            119.476,
+            167.364
           ],
           [
             117,
-            154.79
+            161.909
           ],
           [
-            120.57,
-            151.817
-          ],
-          [
-            127.408,
+            117,
             151
           ]
         ],
@@ -3328,9 +3649,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 6.911
+        "tipAxisAngleErrorDeg": 19.613
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.5021,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     },
@@ -3400,55 +3721,55 @@
         ],
         "referenceAngleDeg": 58,
         "renderedAngleDeg": 58,
-        "renderedAngleMeasuredFromTipBaseDeg": 59.95522603708242,
+        "renderedAngleMeasuredFromTipBaseDeg": 56.67546146411448,
         "projectedPolygonPx": [
           [
             164,
             153
           ],
           [
+            165.079,
+            158.059
+          ],
+          [
             166.5,
-            162.88
+            167.471
           ],
           [
-            165.832,
-            168.189
+            166.5,
+            168.647
           ],
           [
-            162.06,
+            165.079,
             171
           ],
           [
-            153.406,
-            170.154
+            143.763,
+            171
           ],
           [
-            146.326,
-            168.69
-          ],
-          [
-            142.014,
-            165.606
+            140.921,
+            168.647
           ],
           [
             139.5,
-            161.814
+            163.941
           ],
           [
-            140.512,
-            157.167
+            139.5,
+            155.706
           ],
           [
-            143.098,
-            151.901
+            140.921,
+            154.529
           ],
           [
-            148.766,
+            148.026,
             151
           ],
           [
-            156.64,
-            152.949
+            153.711,
+            151
           ]
         ],
         "silhouetteOverlap": null
@@ -3459,9 +3780,9 @@
         "heightErrorPercent": 0,
         "tipErrorPx": 0,
         "angleErrorDeg": 0,
-        "tipAxisAngleErrorDeg": 1.955
+        "tipAxisAngleErrorDeg": 1.325
       },
-      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "contourOverlap": 0.5868,
       "fitStatus": "PASS_LANDMARK_THRESHOLDS",
       "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
     }

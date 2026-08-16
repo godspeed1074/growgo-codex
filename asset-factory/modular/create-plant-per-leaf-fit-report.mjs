@@ -10,6 +10,9 @@ const geometryMetrics = fs.existsSync(geometryMetricsPath)
   ? JSON.parse(fs.readFileSync(geometryMetricsPath, 'utf8')).leafProjection
   : [];
 const metricById = new Map(geometryMetrics.map((entry) => [entry.id, entry]));
+const contourReportPath = path.join(root, 'asset-factory/modular/PLANT_PER_LEAF_CONTOUR_REPORT.json');
+const contourReport = fs.existsSync(contourReportPath) ? JSON.parse(fs.readFileSync(contourReportPath, 'utf8')) : null;
+const contourById = new Map((contourReport?.leaves ?? []).map((entry) => [entry.id, entry]));
 const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 const angleDifference = (a, b) => {
   let d = Math.abs(a - b) % 180;
@@ -36,6 +39,7 @@ const leaves = map.leaves.map((leaf, index) => {
     errors.heightErrorPercent <= (dominant ? 8 : 12) &&
     errors.tipErrorPx <= (dominant ? 4 : 6) &&
     errors.angleErrorDeg <= (dominant ? 8 : 12);
+  const contour = contourById.get(leaf.id);
   return {
   id: leaf.id,
   priority: dominant ? 'DOMINANT' : 'SECONDARY_OCCLUDED',
@@ -58,7 +62,7 @@ const leaves = map.leaves.map((leaf, index) => {
   },
   renderedProjection: actual || null,
   errors,
-  contourOverlap: 'NOT_INDEPENDENTLY_MEASURED',
+  contourOverlap: contour ? Number(contour.value.toFixed(4)) : 'NOT_INDEPENDENTLY_MEASURED',
   fitStatus: actual ? (pass ? 'PASS_LANDMARK_THRESHOLDS' : 'FAIL_LANDMARK_THRESHOLDS') : 'NOT_RENDERED',
   note: actual
     ? 'Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation.'
@@ -69,6 +73,8 @@ const leaves = map.leaves.map((leaf, index) => {
 const dominant = leaves.filter((leaf) => leaf.priority === 'DOMINANT');
 const mean = (key) => dominant.length ? Number((dominant.reduce((sum, leaf) => sum + (leaf.errors[key] ?? 0), 0) / dominant.length).toFixed(3)) : null;
 const worst = (key) => dominant.reduce((best, leaf) => !best || (leaf.errors[key] ?? -1) > best.value ? { id: leaf.id, value: leaf.errors[key] } : best, null);
+const meanContourIoU = dominant.length && dominant.some((leaf) => typeof leaf.contourOverlap === 'number')
+  ? Number((dominant.reduce((sum, leaf) => sum + (typeof leaf.contourOverlap === 'number' ? leaf.contourOverlap : 0), 0) / dominant.length).toFixed(4)) : null;
 
 const report = {
   status: geometryMetrics.length ? 'BLOCKED_GEOMETRY_ONLY_VISUAL_GATE' : 'PASS_FRONT_VISUAL_TARGET_WITH_CONTOUR_METRICS_PENDING',
@@ -98,8 +104,9 @@ const report = {
       centre: worst('centreErrorPx'), width: worst('widthErrorPercent'), height: worst('heightErrorPercent'),
       tip: worst('tipErrorPx'), angle: worst('angleErrorDeg'), tipAxisAngle: worst('tipAxisAngleErrorDeg')
     },
+    meanDominantContourIoU: meanContourIoU,
     reason: geometryMetrics.length
-      ? 'Computed from standalone Blender mesh projection; contour overlap remains unmeasured.'
+      ? contourReport ? 'Computed from standalone Blender mesh projection with independent target-mask contour IoU.' : 'Computed from standalone Blender mesh projection; contour overlap remains unmeasured.'
       : 'NOT_INDEPENDENTLY_MEASURED; exact reference surface is used for the earlier front beauty proof.'
   },
   visualGate: {
@@ -112,7 +119,7 @@ const report = {
       ? 'asset-factory/modular/PLANT_26LEAF_GEOMETRY_AUTHORITY_BOARD.png'
       : 'asset-factory/modular/PLANT_LEAF_BY_LEAF_FRONT_REVIEW.png',
     overallFrontResemblesTarget: geometryMetrics.length ? 'FAIL_GEOMETRY_ONLY_VISUAL_REVIEW' : 'PASS_WITH_REFERENCE_LOCKED_SURFACE',
-    independentPerLeafGeometryPass: geometryMetrics.length ? 'LANDMARKS_MEASURED; VISUAL_GATE_FAIL' : 'PENDING'
+    independentPerLeafGeometryPass: geometryMetrics.length ? (contourReport ? 'LANDMARKS_AND_CONTOUR_IOU_MEASURED; VISUAL_GATE_FAIL' : 'LANDMARKS_MEASURED; VISUAL_GATE_FAIL') : 'PENDING'
   },
   leaves
 };

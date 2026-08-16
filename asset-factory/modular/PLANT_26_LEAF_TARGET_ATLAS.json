@@ -1,0 +1,401 @@
+{
+  "status": "PASS_TARGET_LEAF_ATLAS",
+  "cellSize": [
+    240,
+    220
+  ],
+  "columns": 5,
+  "rows": 6,
+  "leaves": [
+    {
+      "id": "LEAF_001",
+      "cell": [
+        0,
+        0
+      ],
+      "crop": "PLANT_TARGET_LEAF_001.png",
+      "mask": "PLANT_TARGET_LEAF_001_MASK.png",
+      "baseColourRgb": [
+        135,
+        144,
+        67
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_002",
+      "cell": [
+        1,
+        0
+      ],
+      "crop": "PLANT_TARGET_LEAF_002.png",
+      "mask": "PLANT_TARGET_LEAF_002_MASK.png",
+      "baseColourRgb": [
+        112,
+        126,
+        59
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_003",
+      "cell": [
+        2,
+        0
+      ],
+      "crop": "PLANT_TARGET_LEAF_003.png",
+      "mask": "PLANT_TARGET_LEAF_003_MASK.png",
+      "baseColourRgb": [
+        109,
+        121,
+        56
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_004",
+      "cell": [
+        3,
+        0
+      ],
+      "crop": "PLANT_TARGET_LEAF_004.png",
+      "mask": "PLANT_TARGET_LEAF_004_MASK.png",
+      "baseColourRgb": [
+        95,
+        111,
+        53
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_005",
+      "cell": [
+        4,
+        0
+      ],
+      "crop": "PLANT_TARGET_LEAF_005.png",
+      "mask": "PLANT_TARGET_LEAF_005_MASK.png",
+      "baseColourRgb": [
+        102,
+        113,
+        56
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_006",
+      "cell": [
+        0,
+        1
+      ],
+      "crop": "PLANT_TARGET_LEAF_006.png",
+      "mask": "PLANT_TARGET_LEAF_006_MASK.png",
+      "baseColourRgb": [
+        104,
+        117,
+        57
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_007",
+      "cell": [
+        1,
+        1
+      ],
+      "crop": "PLANT_TARGET_LEAF_007.png",
+      "mask": "PLANT_TARGET_LEAF_007_MASK.png",
+      "baseColourRgb": [
+        104,
+        114,
+        59
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_008",
+      "cell": [
+        2,
+        1
+      ],
+      "crop": "PLANT_TARGET_LEAF_008.png",
+      "mask": "PLANT_TARGET_LEAF_008_MASK.png",
+      "baseColourRgb": [
+        89,
+        103,
+        51
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_009",
+      "cell": [
+        3,
+        1
+      ],
+      "crop": "PLANT_TARGET_LEAF_009.png",
+      "mask": "PLANT_TARGET_LEAF_009_MASK.png",
+      "baseColourRgb": [
+        68,
+        83,
+        44
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_010",
+      "cell": [
+        4,
+        1
+      ],
+      "crop": "PLANT_TARGET_LEAF_010.png",
+      "mask": "PLANT_TARGET_LEAF_010_MASK.png",
+      "baseColourRgb": [
+        65,
+        79,
+        42
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_011",
+      "cell": [
+        0,
+        2
+      ],
+      "crop": "PLANT_TARGET_LEAF_011.png",
+      "mask": "PLANT_TARGET_LEAF_011_MASK.png",
+      "baseColourRgb": [
+        98,
+        114,
+        74
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_012",
+      "cell": [
+        1,
+        2
+      ],
+      "crop": "PLANT_TARGET_LEAF_012.png",
+      "mask": "PLANT_TARGET_LEAF_012_MASK.png",
+      "baseColourRgb": [
+        93,
+        107,
+        54
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_013",
+      "cell": [
+        2,
+        2
+      ],
+      "crop": "PLANT_TARGET_LEAF_013.png",
+      "mask": "PLANT_TARGET_LEAF_013_MASK.png",
+      "baseColourRgb": [
+        80,
+        94,
+        49
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_014",
+      "cell": [
+        3,
+        2
+      ],
+      "crop": "PLANT_TARGET_LEAF_014.png",
+      "mask": "PLANT_TARGET_LEAF_014_MASK.png",
+      "baseColourRgb": [
+        65,
+        81,
+        44
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_015",
+      "cell": [
+        4,
+        2
+      ],
+      "crop": "PLANT_TARGET_LEAF_015.png",
+      "mask": "PLANT_TARGET_LEAF_015_MASK.png",
+      "baseColourRgb": [
+        61,
+        75,
+        42
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_016",
+      "cell": [
+        0,
+        3
+      ],
+      "crop": "PLANT_TARGET_LEAF_016.png",
+      "mask": "PLANT_TARGET_LEAF_016_MASK.png",
+      "baseColourRgb": [
+        83,
+        99,
+        53
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_017",
+      "cell": [
+        1,
+        3
+      ],
+      "crop": "PLANT_TARGET_LEAF_017.png",
+      "mask": "PLANT_TARGET_LEAF_017_MASK.png",
+      "baseColourRgb": [
+        82,
+        93,
+        54
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_018",
+      "cell": [
+        2,
+        3
+      ],
+      "crop": "PLANT_TARGET_LEAF_018.png",
+      "mask": "PLANT_TARGET_LEAF_018_MASK.png",
+      "baseColourRgb": [
+        79,
+        94,
+        67
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_019",
+      "cell": [
+        3,
+        3
+      ],
+      "crop": "PLANT_TARGET_LEAF_019.png",
+      "mask": "PLANT_TARGET_LEAF_019_MASK.png",
+      "baseColourRgb": [
+        77,
+        92,
+        59
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_020",
+      "cell": [
+        4,
+        3
+      ],
+      "crop": "PLANT_TARGET_LEAF_020.png",
+      "mask": "PLANT_TARGET_LEAF_020_MASK.png",
+      "baseColourRgb": [
+        78,
+        93,
+        61
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_021",
+      "cell": [
+        0,
+        4
+      ],
+      "crop": "PLANT_TARGET_LEAF_021.png",
+      "mask": "PLANT_TARGET_LEAF_021_MASK.png",
+      "baseColourRgb": [
+        78,
+        93,
+        66
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_022",
+      "cell": [
+        1,
+        4
+      ],
+      "crop": "PLANT_TARGET_LEAF_022.png",
+      "mask": "PLANT_TARGET_LEAF_022_MASK.png",
+      "baseColourRgb": [
+        127,
+        140,
+        124
+      ],
+      "lightSide": "RIGHT_LIGHT"
+    },
+    {
+      "id": "LEAF_023",
+      "cell": [
+        2,
+        4
+      ],
+      "crop": "PLANT_TARGET_LEAF_023.png",
+      "mask": "PLANT_TARGET_LEAF_023_MASK.png",
+      "baseColourRgb": [
+        80,
+        95,
+        69
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_024",
+      "cell": [
+        3,
+        4
+      ],
+      "crop": "PLANT_TARGET_LEAF_024.png",
+      "mask": "PLANT_TARGET_LEAF_024_MASK.png",
+      "baseColourRgb": [
+        78,
+        93,
+        68
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_025",
+      "cell": [
+        4,
+        4
+      ],
+      "crop": "PLANT_TARGET_LEAF_025.png",
+      "mask": "PLANT_TARGET_LEAF_025_MASK.png",
+      "baseColourRgb": [
+        79,
+        94,
+        67
+      ],
+      "lightSide": "LEFT_LIGHT"
+    },
+    {
+      "id": "LEAF_026",
+      "cell": [
+        0,
+        5
+      ],
+      "crop": "PLANT_TARGET_LEAF_026.png",
+      "mask": "PLANT_TARGET_LEAF_026_MASK.png",
+      "baseColourRgb": [
+        79,
+        96,
+        69
+      ],
+      "lightSide": "LEFT_LIGHT"
+    }
+  ]
+}
