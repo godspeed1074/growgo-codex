@@ -79,7 +79,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 168,
       "maskPixels": 487
     },
@@ -88,7 +88,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 140,
       "maskPixels": 334
     },
@@ -151,7 +151,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 140,
       "maskPixels": 284
     },
@@ -187,7 +187,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 111,
       "maskPixels": 699
     },
@@ -196,7 +196,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 144,
       "maskPixels": 466
     },
@@ -205,7 +205,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 159,
       "maskPixels": 347
     },
@@ -214,7 +214,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 96,
       "maskPixels": 147
     },
@@ -223,7 +223,7 @@
       "dominant": true,
       "protected": false,
       "secondaryObservedRegion": false,
-      "candidates": 14,
+      "candidates": 28,
       "contourVertices": 104,
       "maskPixels": 212
     },

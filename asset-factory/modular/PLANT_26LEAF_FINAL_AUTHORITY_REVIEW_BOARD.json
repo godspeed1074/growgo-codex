@@ -1,0 +1,56 @@
+{
+  "status": "PASS_BOARD_CREATED_OPERATOR_REVIEW_REQUIRED",
+  "panels": [
+    {
+      "label": "EXACT TARGET CROP",
+      "index": 0
+    },
+    {
+      "label": "FINAL 26-LEAF GEOMETRY FRONT",
+      "index": 1
+    },
+    {
+      "label": "50% OVERLAY",
+      "index": 2
+    },
+    {
+      "label": "DIFFERENCE VIEW",
+      "index": 3
+    },
+    {
+      "label": "TARGET LEAF-ID MAP",
+      "index": 4
+    },
+    {
+      "label": "FINAL COMPONENT-ID MAP",
+      "index": 5
+    },
+    {
+      "label": "WIRE FRONT",
+      "index": 6
+    },
+    {
+      "label": "LEAF_004 TARGET / BLENDER",
+      "index": 7
+    },
+    {
+      "label": "LEAF_011 TARGET / BLENDER",
+      "index": 8
+    }
+  ],
+  "dominantStatus": "PLANT_19_DOMINANT_LEAF_FINAL_STATUS.json",
+  "directVision": {
+    "sameShrub": "NO",
+    "reason": "The isolated leaf masks pass, but the assembled geometry-only front remains visibly sparser and flatter than the supplied target; dark-green transition areas remain uncovered.",
+    "exactRemainingVisualMismatchRegions": [
+      "LEAF_017",
+      "LEAF_018",
+      "LEAF_019",
+      "UNMAPPED_DARK_GREEN_TRANSITION_AREAS"
+    ]
+  },
+  "authorityLock": "NOT_LOCKED",
+  "geometryOnly": true,
+  "referenceTextureUsedInBeauty": false,
+  "referencePlaneVisible": false
+}

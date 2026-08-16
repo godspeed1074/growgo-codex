@@ -81,7 +81,7 @@ const mean = (values) => values.reduce((s, v) => s + v, 0) / (values.length || 1
 const selections = Object.fromEntries(leaves.map((leaf) => {
     const spec = JSON.parse(fs.readFileSync(path.join(specDir, `${leaf.id}.json`), 'utf8'));
     const selected = protectedSelections[leaf.id] || spec.candidates.find((c) => c.candidateId === leaf.selectedCandidate);
-  return [leaf.id, { leafId: leaf.id, candidateId: leaf.selectedCandidate, vertexCount: leaf.contourVertices, contour: selected.contour, maskRuns: selected.maskRuns, maskOffsetPx: selected.maskOffsetPx, source: selected.source || leaf.contourSource }];
+  return [leaf.id, { leafId: leaf.id, candidateId: leaf.selectedCandidate, vertexCount: leaf.contourVertices, contour: selected.contour, maskRuns: selected.maskRuns, maskOffsetPx: selected.maskOffsetPx, projectionShiftPx: selected.projectionShiftPx, source: selected.source || leaf.contourSource }];
 }));
 const selectionManifest = { status: 'PASS_26_LEAF_SELECTIONS', selections, protectedCalibrationLeaves: Object.keys(protectedSelections), remainingLeafCount: 23, referenceTextureUsedInBeauty: false, depthPerformed: false, otherLeavesChanged: false, flowersChanged: false, planterChanged: false };
 fs.writeFileSync(path.join(root, 'asset-factory/modular/PLANT_26_LEAF_SELECTION_MANIFEST.json'), JSON.stringify(selectionManifest, null, 2) + '\n');

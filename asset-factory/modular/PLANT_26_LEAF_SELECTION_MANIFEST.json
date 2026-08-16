@@ -243,7 +243,7 @@
     },
     "LEAF_003": {
       "leafId": "LEAF_003",
-      "candidateId": "LEAF_003_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_003_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 196,
       "contour": [
         [
@@ -750,11 +750,15 @@
           11
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_004": {
       "leafId": "LEAF_004",
-      "candidateId": "LEAF_004_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_004_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 184,
       "contour": [
         [
@@ -1246,7 +1250,11 @@
           16
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_005": {
       "leafId": "LEAF_005",
@@ -2600,7 +2608,7 @@
     },
     "LEAF_011": {
       "leafId": "LEAF_011",
-      "candidateId": "LEAF_011_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_011_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 128,
       "contour": [
         [
@@ -3022,7 +3030,11 @@
           15
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_012": {
       "leafId": "LEAF_012",
@@ -3498,7 +3510,7 @@
     },
     "LEAF_015": {
       "leafId": "LEAF_015",
-      "candidateId": "LEAF_015_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_015_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 148,
       "contour": [
         [
@@ -3945,11 +3957,15 @@
           22
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_016": {
       "leafId": "LEAF_016",
-      "candidateId": "LEAF_016_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_016_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 144,
       "contour": [
         [
@@ -4391,11 +4407,15 @@
           16
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_017": {
       "leafId": "LEAF_017",
-      "candidateId": "LEAF_017_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_017_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 152,
       "contour": [
         [
@@ -4847,11 +4867,15 @@
           25
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_018": {
       "leafId": "LEAF_018",
-      "candidateId": "LEAF_018_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_018_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 80,
       "contour": [
         [
@@ -5213,11 +5237,15 @@
           20
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_019": {
       "leafId": "LEAF_019",
-      "candidateId": "LEAF_019_DOMINANT_RASTER_MASK",
+      "candidateId": "LEAF_019_DOMINANT_REPAIR_SHIFT_Y_0P5",
       "vertexCount": 92,
       "contour": [
         [
@@ -5594,7 +5622,11 @@
           31
         ]
       ],
-      "source": "TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY"
+      "projectionShiftPx": [
+        0,
+        0.5
+      ],
+      "source": "TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_SHIFT_Y_0P5"
     },
     "LEAF_020": {
       "leafId": "LEAF_020",

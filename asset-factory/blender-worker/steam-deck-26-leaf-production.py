@@ -55,7 +55,7 @@ def make_raster_leaf_mesh(spec, runs, z, collection=None):
     itself at raster corners.  It never loads the reference image or a texture;
     each run is a measured front-facing rectangle with deterministic thickness.
     """
-    box = spec['cropBox']; verts = []; faces = []; material_indices = []; offset = float(spec.get('maskOffsetPx', 0.0))
+    box = spec['cropBox']; verts = []; faces = []; material_indices = []; offset = float(spec.get('maskOffsetPx', 0.0)); shift = spec.get('projectionShiftPx', [0.0, 0.0]); shift_x = float(shift[0]); shift_y = float(shift[1])
     base_colour = [max(0, min(255, int(value))) / 255.0 for value in spec.get('targetSpecificColour', [100, 120, 55])]
     dark_colour = tuple(max(0.0, min(1.0, c * .58)) for c in base_colour)
     mid_colour = tuple(max(0.0, min(1.0, c * .82)) for c in base_colour)
@@ -63,7 +63,7 @@ def make_raster_leaf_mesh(spec, runs, z, collection=None):
     ridge_colour = tuple(max(0.0, min(1.0, c * .72 + .04)) for c in base_colour)
     mats = [make_mat(f'{spec["targetLeafId"]}_DARK_FACET', dark_colour), make_mat(f'{spec["targetLeafId"]}_MID_FACET', mid_colour), make_mat(f'{spec["targetLeafId"]}_LIGHT_FACET', light_colour), make_mat(f'{spec["targetLeafId"]}_RIDGE', ridge_colour)]
     for y, x0, x1 in runs:
-        points = [(box[0] + x0 + offset, box[1] + y + offset), (box[0] + x1 + 1 - offset, box[1] + y + offset), (box[0] + x1 + 1 - offset, box[1] + y + 1 - offset), (box[0] + x0 + offset, box[1] + y + 1 - offset)]
+        points = [(box[0] + x0 + offset + shift_x, box[1] + y + offset + shift_y), (box[0] + x1 + 1 - offset + shift_x, box[1] + y + offset + shift_y), (box[0] + x1 + 1 - offset + shift_x, box[1] + y + 1 - offset + shift_y), (box[0] + x0 + offset + shift_x, box[1] + y + 1 - offset + shift_y)]
         start = len(verts); verts.extend([(*world_xy(x, py), z + .003) for x, py in points]); back = len(verts); verts.extend([(*world_xy(x, py), z - .003) for x, py in points])
         # Keep the measured mask visually continuous.  Per-scanline material
         # changes create artificial horizontal striping and are not a valid
@@ -173,6 +173,7 @@ def run_sweep(specs):
             reset_scene(); scene = configure_scene()
             if candidate.get('maskRuns'):
                 raster_spec = dict(spec); raster_spec['maskOffsetPx'] = candidate.get('maskOffsetPx', 0.0)
+                raster_spec['projectionShiftPx'] = candidate.get('projectionShiftPx', [0.0, 0.0])
                 obj = make_raster_leaf_mesh(raster_spec, candidate['maskRuns'], .05)
             else:
                 obj = make_leaf_mesh(spec, candidate['contour'], .05)
@@ -186,7 +187,7 @@ def run_sweep(specs):
             for polygon in obj.data.polygons: polygon.material_index = 0
             wire = obj.modifiers.new(f'{leaf_id}_WIREFRAME', 'WIREFRAME'); wire.thickness = .0025; wire.use_replace = True
             scene.render.filepath = os.path.join(output_dir, 'WIREFRAME.png'); bpy.ops.render.render(write_still=True); obj.modifiers.remove(wire)
-            result = {'status': 'PASS_26_LEAF_TARGETSPECIFIC_BLENDER_CANDIDATE', 'leafId': leaf_id, 'candidateId': candidate['candidateId'], 'contourVertexCount': len(candidate['contour']), 'contourSource': candidate['source'], 'referenceTextureUsedInBeauty': False, 'referencePlaneVisible': False, 'frontContourLocked': True, 'internalRidgeOnlyDepthChange': True, 'otherLeafGeometryChanged': False, 'flowersChanged': False, 'planterChanged': False, 'depthOrSideWorkPerformed': False, 'cameraLocked': True, 'anonymousGeometryCount': 0, 'mobileBudget': 'PASS'}
+            result = {'status': 'PASS_26_LEAF_TARGETSPECIFIC_BLENDER_CANDIDATE', 'leafId': leaf_id, 'candidateId': candidate['candidateId'], 'contourVertexCount': len(candidate['contour']), 'contourSource': candidate['source'], 'projectionShiftPx': candidate.get('projectionShiftPx', [0.0, 0.0]), 'referenceTextureUsedInBeauty': False, 'referencePlaneVisible': False, 'frontContourLocked': True, 'internalRidgeOnlyDepthChange': True, 'otherLeafGeometryChanged': False, 'flowersChanged': False, 'planterChanged': False, 'depthOrSideWorkPerformed': False, 'cameraLocked': True, 'anonymousGeometryCount': 0, 'mobileBudget': 'PASS'}
             json.dump(result, open(os.path.join(output_dir, 'RESULT.json'), 'w'), indent=2)
             bpy.ops.wm.save_as_mainfile(filepath=os.path.join(output_dir, 'CALIBRATION.blend'))
             rendered.append((leaf_id, candidate['candidateId']))
@@ -216,7 +217,7 @@ def run_full(specs, selection):
     for leaf_id in sorted(selection.keys()):
         entry = selection[leaf_id]; spec = specs[leaf_id]
         if entry.get('maskRuns'):
-            raster_spec = dict(spec); raster_spec['maskOffsetPx'] = entry.get('maskOffsetPx', 0.0)
+            raster_spec = dict(spec); raster_spec['maskOffsetPx'] = entry.get('maskOffsetPx', 0.0); raster_spec['projectionShiftPx'] = entry.get('projectionShiftPx', [0.0, 0.0])
             leaf_objects.append(make_raster_leaf_mesh(raster_spec, entry['maskRuns'], layer_z.get(spec['targetMap']['layer_estimate'], .25)))
         else:
             leaf_objects.append(make_leaf_mesh(spec, entry['contour'], layer_z.get(spec['targetMap']['layer_estimate'], .25)))

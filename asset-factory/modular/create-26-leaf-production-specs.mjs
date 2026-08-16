@@ -196,6 +196,31 @@ function maskRuns(mask, w, h) {
   return runs;
 }
 
+// A small, target-specific repair family for leaves whose measured pixel-run
+// rectangles are rasterized one edge off or merge neighbouring runs at the
+// Blender pixel boundary.  These are deliberately local mask-run edits; they
+// do not alter any other leaf and do not introduce textures or reference
+// imagery into the beauty render.
+const frontRepairIds = new Set(['LEAF_003', 'LEAF_004', 'LEAF_011', 'LEAF_015', 'LEAF_016', 'LEAF_017', 'LEAF_018', 'LEAF_019']);
+function repairRuns(baseRuns, kind) {
+  const out = baseRuns.map(([y, x0, x1]) => [y, x0, x1]);
+  if (kind === 'LEFT_INSET') return out.map(([y, x0, x1]) => [y, Math.min(x1, x0 + 1), x1]);
+  if (kind === 'RIGHT_EXPAND') return out.map(([y, x0, x1]) => [y, x0, x1 + 1]);
+  if (kind === 'BOTH_INSET') return out.map(([y, x0, x1]) => [y, Math.min(x1, x0 + 1), Math.max(x0, x1 - 1)]).filter(([, x0, x1]) => x0 <= x1);
+  if (kind === 'LEFT_INSET_BOTTOM_EXTEND') {
+    const adjusted = out.map(([y, x0, x1]) => [y, Math.min(x1, x0 + 1), x1]);
+    const maxY = Math.max(...adjusted.map(([y]) => y));
+    return adjusted.concat(adjusted.filter(([y]) => y === maxY).map(([, x0, x1]) => [maxY + 1, x0, x1]));
+  }
+  if (kind === 'BOTH_INSET_BOTTOM_EXTEND') {
+    const adjusted = out.map(([y, x0, x1]) => [y, Math.min(x1, x0 + 1), Math.max(x0, x1 - 1)]).filter(([, x0, x1]) => x0 <= x1);
+    const maxY = Math.max(...adjusted.map(([y]) => y));
+    return adjusted.concat(adjusted.filter(([y]) => y === maxY).map(([, x0, x1]) => [maxY + 1, x0, x1]));
+  }
+  if (kind === 'LEFT_INSET_RIGHT_EXPAND') return out.map(([y, x0, x1]) => [y, Math.min(x1, x0 + 1), x1 + 1]);
+  return out;
+}
+
 const specs = [], diagnostics = [];
 for (const leaf of map.leaves) {
   const contourEntry = contourMap.leaves.find((entry) => entry.id === leaf.id);
@@ -248,6 +273,31 @@ for (const leaf of map.leaves) {
     maskOffsetPx: offset,
     source: 'TARGET_GREEN_FAMILY_CLEANED_VISIBLE_MASK_RUN_GEOMETRY_OFFSET_CALIBRATION'
   });
+  if (frontRepairIds.has(leaf.id)) {
+    const baseRuns = maskRuns(cleaned.mask, crop.w, crop.h);
+    for (const kind of ['LEFT_INSET', 'RIGHT_EXPAND', 'BOTH_INSET', 'LEFT_INSET_BOTTOM_EXTEND', 'BOTH_INSET_BOTTOM_EXTEND', 'LEFT_INSET_RIGHT_EXPAND']) {
+      const repairedRuns = repairRuns(baseRuns, kind);
+      candidates.push({
+        candidateId: `${leaf.id}_${secondaryIds.has(leaf.id) ? 'SECONDARY' : 'DOMINANT'}_REPAIR_${kind}`,
+        vertexCount: repairedRuns.length * 4,
+        contour: resampleClosed(fallback, Math.min(64, Math.max(16, fallback.length))),
+        maskRuns: repairedRuns,
+        source: `TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_REPAIR_${kind}`,
+        repairScope: 'FRONT_ONLY_SINGLE_LEAF_LOCAL_EDGE_CALIBRATION'
+      });
+    }
+    for (const [label, shift] of [['SHIFT_X_M0P5', [-0.5, 0]], ['SHIFT_X_0P5', [0.5, 0]], ['SHIFT_Y_M0P5', [0, -0.5]], ['SHIFT_Y_0P5', [0, 0.5]], ['SHIFT_X_M0P5_Y_M0P5', [-0.5, -0.5]], ['SHIFT_X_0P5_Y_M0P5', [0.5, -0.5]], ['SHIFT_X_M0P5_Y_0P5', [-0.5, 0.5]], ['SHIFT_X_0P5_Y_0P5', [0.5, 0.5]]]) {
+      candidates.push({
+        candidateId: `${leaf.id}_${secondaryIds.has(leaf.id) ? 'SECONDARY' : 'DOMINANT'}_REPAIR_${label}`,
+        vertexCount: baseRuns.length * 4,
+        contour: resampleClosed(fallback, Math.min(64, Math.max(16, fallback.length))),
+        maskRuns: baseRuns,
+        projectionShiftPx: shift,
+        source: `TARGET_SPECIFIC_VISIBLE_MASK_RUN_LOCAL_PROJECTION_SHIFT_${label}`,
+        repairScope: 'FRONT_ONLY_SINGLE_LEAF_LOCAL_EDGE_CALIBRATION'
+      });
+    }
+  }
   const referenceRgba = cropRgba(crop), maskRgba = Buffer.alloc(crop.w * crop.h * 4, 0);
   for (let i = 0; i < cleaned.mask.length; i++) {
     const a = cleaned.mask[i] ? 255 : 0, p = i * 4;

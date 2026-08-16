@@ -52,11 +52,18 @@ test('full front proof, component map, wireframe, and operator board exist', () 
   ]) assert.equal(fs.existsSync(path.join(output, file)), true, file);
   assert.equal(fs.existsSync(path.join(modular, 'PLANT_26LEAF_TARGETSPECIFIC_REVIEW_BOARD.png')), true);
   assert.equal(fs.existsSync(path.join(modular, 'PLANT_26LEAF_TARGETSPECIFIC_REVIEW_BOARD.json')), true);
+  assert.equal(fs.existsSync(path.join(modular, 'PLANT_26LEAF_FINAL_AUTHORITY_REVIEW_BOARD.png')), true);
+  assert.equal(fs.existsSync(path.join(modular, 'PLANT_26LEAF_FINAL_AUTHORITY_REVIEW_BOARD.json')), true);
 });
 
-test('front authority lock is withheld while hard gates remain blocked', () => {
-  assert.equal(status.status, 'BLOCKED_26_LEAF_TARGET_SPECIFIC_FRONT_REBUILD');
-  assert.ok(status.leavesBelowPoint90.length > 0);
+test('19-leaf numeric gate is reconciled but direct visual authority remains withheld', () => {
+  const finalStatus = JSON.parse(fs.readFileSync(path.join(modular, 'PLANT_19_DOMINANT_LEAF_FINAL_STATUS.json'), 'utf8'));
+  assert.equal(status.status, 'BLOCKED_26_LEAF_FRONT_VISION_REVIEW');
+  assert.equal(status.leavesBelowPoint90.length, 0);
+  assert.equal(finalStatus.entries.length, 19);
+  assert.equal(finalStatus.fullPassCount, 19);
+  assert.equal(finalStatus.failCount, 0);
+  assert.equal(finalStatus.directVision.sameShrub, 'NO');
   assert.equal(fs.existsSync(path.join(modular, 'PLANT_FOLIAGE_GEOMETRY_FRONT_AUTHORITY_LOCK_V1.json')), false);
   assert.equal(status.readyForFlowerAndPlanterFidelityPhase, false);
 });
