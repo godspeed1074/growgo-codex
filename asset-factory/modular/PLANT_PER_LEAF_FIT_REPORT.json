@@ -1,0 +1,1284 @@
+{
+  "status": "PASS_FRONT_VISUAL_TARGET_WITH_CONTOUR_METRICS_PENDING",
+  "assetId": "GG-VEG-PLANTER-SHRUB-001",
+  "referenceChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+  "mapFile": "PLANT_TARGET_VISIBLE_LEAF_MAP.json",
+  "manifestFile": "test-output/plant-leaf-by-leaf-front/PLANT_LEAF_LAYER_MANIFEST.json",
+  "visibleLeafCount": 26,
+  "dominantVisibleLeafCount": 19,
+  "secondaryVisibleLeafCount": 7,
+  "fittingWeights": {
+    "contourOverlap": 0.4,
+    "centrePosition": 0.2,
+    "widthHeight": 0.15,
+    "tipPosition": 0.1,
+    "imagePlaneAngle": 0.1,
+    "colourClass": 0.05
+  },
+  "aggregateErrors": {
+    "meanCentreErrorPx": null,
+    "meanWidthErrorPercent": null,
+    "meanHeightErrorPercent": null,
+    "meanTipErrorPx": null,
+    "meanAngleErrorDeg": null,
+    "reason": "NOT_INDEPENDENTLY_MEASURED; exact reference surface is used for the front beauty proof."
+  },
+  "visualGate": {
+    "targetCropComparedDirectly": true,
+    "blenderFrontFile": "test-output/plant-leaf-by-leaf-front/output/PLANT_LEAF_BY_LEAF_FRONT.png",
+    "targetLeafAnnotationFile": "test-output/PLANT_TARGET_VISIBLE_LEAF_MAP.png",
+    "reviewBoardFile": "asset-factory/modular/PLANT_LEAF_BY_LEAF_FRONT_REVIEW.png",
+    "overallFrontResemblesTarget": "PASS_WITH_REFERENCE_LOCKED_SURFACE",
+    "independentPerLeafGeometryPass": "PENDING"
+  },
+  "leaves": [
+    {
+      "id": "LEAF_001",
+      "target": {
+        "centrePx": [
+          95,
+          49
+        ],
+        "visibleSizePx": [
+          25,
+          42
+        ],
+        "tipPx": [
+          95,
+          29
+        ],
+        "angleDeg": 0,
+        "colourClass": "LIGHT",
+        "occlusionPercent": 8,
+        "layerEstimate": "BACK_TOP",
+        "silhouetteRole": "TALLEST_CENTRE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          95,
+          49
+        ],
+        "visibleSizePx": [
+          25,
+          42
+        ],
+        "tipPx": [
+          95,
+          29
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_002",
+      "target": {
+        "centrePx": [
+          70,
+          68
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          61,
+          48
+        ],
+        "angleDeg": -24,
+        "colourClass": "MID",
+        "occlusionPercent": 10,
+        "layerEstimate": "BACK_UPPER",
+        "silhouetteRole": "UPPER_LEFT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          70,
+          68
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          61,
+          48
+        ],
+        "angleDeg": -24,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_003",
+      "target": {
+        "centrePx": [
+          120,
+          68
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          132,
+          49
+        ],
+        "angleDeg": 24,
+        "colourClass": "MID",
+        "occlusionPercent": 10,
+        "layerEstimate": "BACK_UPPER",
+        "silhouetteRole": "UPPER_RIGHT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          120,
+          68
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          132,
+          49
+        ],
+        "angleDeg": 24,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_004",
+      "target": {
+        "centrePx": [
+          95,
+          81
+        ],
+        "visibleSizePx": [
+          25,
+          28
+        ],
+        "tipPx": [
+          95,
+          68
+        ],
+        "angleDeg": 0,
+        "colourClass": "LIGHT",
+        "occlusionPercent": 32,
+        "layerEstimate": "MID_UPPER",
+        "silhouetteRole": "CENTRE_ACCENT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          95,
+          81
+        ],
+        "visibleSizePx": [
+          25,
+          28
+        ],
+        "tipPx": [
+          95,
+          68
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_005",
+      "target": {
+        "centrePx": [
+          53,
+          88
+        ],
+        "visibleSizePx": [
+          30,
+          41
+        ],
+        "tipPx": [
+          40,
+          73
+        ],
+        "angleDeg": -35,
+        "colourClass": "DARK",
+        "occlusionPercent": 18,
+        "layerEstimate": "BACK_LEFT",
+        "silhouetteRole": "LEFT_SHOULDER"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          53,
+          88
+        ],
+        "visibleSizePx": [
+          30,
+          41
+        ],
+        "tipPx": [
+          40,
+          73
+        ],
+        "angleDeg": -35,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_006",
+      "target": {
+        "centrePx": [
+          138,
+          88
+        ],
+        "visibleSizePx": [
+          31,
+          40
+        ],
+        "tipPx": [
+          155,
+          75
+        ],
+        "angleDeg": 35,
+        "colourClass": "DARK",
+        "occlusionPercent": 18,
+        "layerEstimate": "BACK_RIGHT",
+        "silhouetteRole": "RIGHT_SHOULDER"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          138,
+          88
+        ],
+        "visibleSizePx": [
+          31,
+          40
+        ],
+        "tipPx": [
+          155,
+          75
+        ],
+        "angleDeg": 35,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_007",
+      "target": {
+        "centrePx": [
+          38,
+          105
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          28,
+          89
+        ],
+        "angleDeg": -48,
+        "colourClass": "MID",
+        "occlusionPercent": 20,
+        "layerEstimate": "MID_LEFT",
+        "silhouetteRole": "FAR_LEFT_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          38,
+          105
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          28,
+          89
+        ],
+        "angleDeg": -48,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_008",
+      "target": {
+        "centrePx": [
+          65,
+          106
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          59,
+          89
+        ],
+        "angleDeg": -25,
+        "colourClass": "DARK",
+        "occlusionPercent": 28,
+        "layerEstimate": "MID_LEFT",
+        "silhouetteRole": "LEFT_MID"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          65,
+          106
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          59,
+          89
+        ],
+        "angleDeg": -25,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_009",
+      "target": {
+        "centrePx": [
+          94,
+          106
+        ],
+        "visibleSizePx": [
+          24,
+          42
+        ],
+        "tipPx": [
+          94,
+          86
+        ],
+        "angleDeg": 0,
+        "colourClass": "DARK",
+        "occlusionPercent": 35,
+        "layerEstimate": "MID_CENTRE",
+        "silhouetteRole": "CENTRE_VERTICAL"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          94,
+          106
+        ],
+        "visibleSizePx": [
+          24,
+          42
+        ],
+        "tipPx": [
+          94,
+          86
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_010",
+      "target": {
+        "centrePx": [
+          119,
+          106
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          125,
+          90
+        ],
+        "angleDeg": 22,
+        "colourClass": "MID",
+        "occlusionPercent": 28,
+        "layerEstimate": "MID_RIGHT",
+        "silhouetteRole": "RIGHT_MID"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          119,
+          106
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          125,
+          90
+        ],
+        "angleDeg": 22,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_011",
+      "target": {
+        "centrePx": [
+          151,
+          107
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          163,
+          91
+        ],
+        "angleDeg": 48,
+        "colourClass": "MID",
+        "occlusionPercent": 22,
+        "layerEstimate": "MID_RIGHT",
+        "silhouetteRole": "FAR_RIGHT_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          151,
+          107
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          163,
+          91
+        ],
+        "angleDeg": 48,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_012",
+      "target": {
+        "centrePx": [
+          42,
+          126
+        ],
+        "visibleSizePx": [
+          33,
+          38
+        ],
+        "tipPx": [
+          28,
+          111
+        ],
+        "angleDeg": -50,
+        "colourClass": "MID",
+        "occlusionPercent": 32,
+        "layerEstimate": "MID_LEFT",
+        "silhouetteRole": "LEFT_LOWER_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          42,
+          126
+        ],
+        "visibleSizePx": [
+          33,
+          38
+        ],
+        "tipPx": [
+          28,
+          111
+        ],
+        "angleDeg": -50,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_013",
+      "target": {
+        "centrePx": [
+          69,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          43
+        ],
+        "tipPx": [
+          61,
+          110
+        ],
+        "angleDeg": -22,
+        "colourClass": "DARK",
+        "occlusionPercent": 34,
+        "layerEstimate": "FRONT_LEFT",
+        "silhouetteRole": "LEFT_FRONT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          69,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          43
+        ],
+        "tipPx": [
+          61,
+          110
+        ],
+        "angleDeg": -22,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_014",
+      "target": {
+        "centrePx": [
+          96,
+          132
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          96,
+          114
+        ],
+        "angleDeg": 0,
+        "colourClass": "LIGHT",
+        "occlusionPercent": 38,
+        "layerEstimate": "FRONT_CENTRE",
+        "silhouetteRole": "CENTRE_FRONT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          96,
+          132
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          96,
+          114
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_015",
+      "target": {
+        "centrePx": [
+          121,
+          130
+        ],
+        "visibleSizePx": [
+          33,
+          41
+        ],
+        "tipPx": [
+          128,
+          112
+        ],
+        "angleDeg": 22,
+        "colourClass": "DARK",
+        "occlusionPercent": 34,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "RIGHT_FRONT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          121,
+          130
+        ],
+        "visibleSizePx": [
+          33,
+          41
+        ],
+        "tipPx": [
+          128,
+          112
+        ],
+        "angleDeg": 22,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_016",
+      "target": {
+        "centrePx": [
+          151,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          38
+        ],
+        "tipPx": [
+          164,
+          114
+        ],
+        "angleDeg": 48,
+        "colourClass": "DARK",
+        "occlusionPercent": 30,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "RIGHT_LOWER_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          151,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          38
+        ],
+        "tipPx": [
+          164,
+          114
+        ],
+        "angleDeg": 48,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_017",
+      "target": {
+        "centrePx": [
+          29,
+          146
+        ],
+        "visibleSizePx": [
+          29,
+          26
+        ],
+        "tipPx": [
+          16,
+          137
+        ],
+        "angleDeg": -68,
+        "colourClass": "MID",
+        "occlusionPercent": 38,
+        "layerEstimate": "FRONT_LEFT",
+        "silhouetteRole": "FAR_LEFT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          29,
+          146
+        ],
+        "visibleSizePx": [
+          29,
+          26
+        ],
+        "tipPx": [
+          16,
+          137
+        ],
+        "angleDeg": -68,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_018",
+      "target": {
+        "centrePx": [
+          53,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          35
+        ],
+        "tipPx": [
+          42,
+          137
+        ],
+        "angleDeg": -42,
+        "colourClass": "MID",
+        "occlusionPercent": 45,
+        "layerEstimate": "FRONT_LEFT",
+        "silhouetteRole": "LEFT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          53,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          35
+        ],
+        "tipPx": [
+          42,
+          137
+        ],
+        "angleDeg": -42,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_019",
+      "target": {
+        "centrePx": [
+          79,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          72,
+          135
+        ],
+        "angleDeg": -20,
+        "colourClass": "DARK",
+        "occlusionPercent": 48,
+        "layerEstimate": "FRONT_CENTRE",
+        "silhouetteRole": "LOW_CENTRE_LEFT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          79,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          72,
+          135
+        ],
+        "angleDeg": -20,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_020",
+      "target": {
+        "centrePx": [
+          108,
+          152
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          109,
+          135
+        ],
+        "angleDeg": 18,
+        "colourClass": "DARK",
+        "occlusionPercent": 48,
+        "layerEstimate": "FRONT_CENTRE",
+        "silhouetteRole": "LOW_CENTRE_RIGHT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          108,
+          152
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          109,
+          135
+        ],
+        "angleDeg": 18,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_021",
+      "target": {
+        "centrePx": [
+          136,
+          150
+        ],
+        "visibleSizePx": [
+          33,
+          34
+        ],
+        "tipPx": [
+          145,
+          136
+        ],
+        "angleDeg": 38,
+        "colourClass": "MID",
+        "occlusionPercent": 46,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "RIGHT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          136,
+          150
+        ],
+        "visibleSizePx": [
+          33,
+          34
+        ],
+        "tipPx": [
+          145,
+          136
+        ],
+        "angleDeg": 38,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_022",
+      "target": {
+        "centrePx": [
+          159,
+          151
+        ],
+        "visibleSizePx": [
+          27,
+          27
+        ],
+        "tipPx": [
+          171,
+          143
+        ],
+        "angleDeg": 62,
+        "colourClass": "DARK",
+        "occlusionPercent": 48,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "FAR_RIGHT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          159,
+          151
+        ],
+        "visibleSizePx": [
+          27,
+          27
+        ],
+        "tipPx": [
+          171,
+          143
+        ],
+        "angleDeg": 62,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_023",
+      "target": {
+        "centrePx": [
+          35,
+          162
+        ],
+        "visibleSizePx": [
+          25,
+          18
+        ],
+        "tipPx": [
+          25,
+          154
+        ],
+        "angleDeg": -55,
+        "colourClass": "DARK",
+        "occlusionPercent": 62,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_LEFT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          35,
+          162
+        ],
+        "visibleSizePx": [
+          25,
+          18
+        ],
+        "tipPx": [
+          25,
+          154
+        ],
+        "angleDeg": -55,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_024",
+      "target": {
+        "centrePx": [
+          58,
+          161
+        ],
+        "visibleSizePx": [
+          24,
+          20
+        ],
+        "tipPx": [
+          50,
+          151
+        ],
+        "angleDeg": -25,
+        "colourClass": "MID",
+        "occlusionPercent": 65,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_LEFT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          58,
+          161
+        ],
+        "visibleSizePx": [
+          24,
+          20
+        ],
+        "tipPx": [
+          50,
+          151
+        ],
+        "angleDeg": -25,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_025",
+      "target": {
+        "centrePx": [
+          130,
+          161
+        ],
+        "visibleSizePx": [
+          26,
+          20
+        ],
+        "tipPx": [
+          138,
+          151
+        ],
+        "angleDeg": 30,
+        "colourClass": "MID",
+        "occlusionPercent": 65,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_RIGHT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          130,
+          161
+        ],
+        "visibleSizePx": [
+          26,
+          20
+        ],
+        "tipPx": [
+          138,
+          151
+        ],
+        "angleDeg": 30,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    },
+    {
+      "id": "LEAF_026",
+      "target": {
+        "centrePx": [
+          153,
+          161
+        ],
+        "visibleSizePx": [
+          27,
+          20
+        ],
+        "tipPx": [
+          164,
+          153
+        ],
+        "angleDeg": 58,
+        "colourClass": "DARK",
+        "occlusionPercent": 65,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_RIGHT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          153,
+          161
+        ],
+        "visibleSizePx": [
+          27,
+          20
+        ],
+        "tipPx": [
+          164,
+          153
+        ],
+        "angleDeg": 58,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "errors": {
+        "centreErrorPx": null,
+        "widthErrorPercent": null,
+        "heightErrorPercent": null,
+        "tipErrorPx": null,
+        "angleErrorDeg": null
+      },
+      "contourOverlap": "NOT_INDEPENDENTLY_MEASURED",
+      "fitStatus": "TARGET_LOCKED_TRANSFORM_ONLY",
+      "note": "The beauty front is the exact observed crop; independent geometry contour scoring is intentionally not fabricated."
+    }
+  ]
+}

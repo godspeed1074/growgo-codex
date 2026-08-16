@@ -1,0 +1,177 @@
+{
+  "status": "MIDDLE_COMPOSITION_VISUAL_RECONSTRUCTION_REJECTED;_OCCUPANCY_DIAGNOSTIC_ONLY",
+  "authoritativeReference": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "candidatePath": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/test-output/plant-traced-front/FRONT_B/FRONT.png",
+  "candidateVariant": "FRONT_B",
+  "middleCompositionStatus": "VISUAL_RECONSTRUCTION_REJECTED",
+  "maskScoreIsDiagnosticOnly": true,
+  "leafInstances": 64,
+  "frontDepthSlabRatio": 0.05,
+  "target": {
+    "width": 137,
+    "height": 139,
+    "left": 28,
+    "top": 31,
+    "right": 164,
+    "bottom": 169,
+    "leafPixels": 11995,
+    "fillRatio": 0.63,
+    "occupancyGrid5x5": [
+      [
+        0,
+        0.287,
+        0.73,
+        0.194,
+        0
+      ],
+      [
+        0.333,
+        0.958,
+        0.835,
+        0.548,
+        0.049
+      ],
+      [
+        0.685,
+        0.97,
+        0.987,
+        0.991,
+        0.335
+      ],
+      [
+        0.9,
+        0.778,
+        0.979,
+        0.863,
+        0.581
+      ],
+      [
+        0.851,
+        0.608,
+        0.865,
+        0.601,
+        0.805
+      ]
+    ]
+  },
+  "candidate": {
+    "width": 239,
+    "height": 249,
+    "left": 197,
+    "top": 211,
+    "right": 435,
+    "bottom": 459,
+    "leafPixels": 39193,
+    "fillRatio": 0.659,
+    "occupancyGrid5x5": [
+      [
+        0,
+        0.127,
+        0.64,
+        0.349,
+        0
+      ],
+      [
+        0.309,
+        0.827,
+        0.952,
+        0.887,
+        0.326
+      ],
+      [
+        0.846,
+        0.989,
+        0.973,
+        0.958,
+        0.837
+      ],
+      [
+        0.792,
+        0.986,
+        0.951,
+        0.95,
+        0.885
+      ],
+      [
+        0.537,
+        0.659,
+        0.615,
+        0.642,
+        0.415
+      ]
+    ]
+  },
+  "authoritativeLayerCandidate": {
+    "path": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/test-output/plant-authoritative-layer-proof/PLANT_FRONT_LAYERED.png",
+    "measurement": {
+      "width": 137,
+      "height": 139,
+      "left": 28,
+      "top": 31,
+      "right": 164,
+      "bottom": 169,
+      "leafPixels": 11799,
+      "fillRatio": 0.62,
+      "occupancyGrid5x5": [
+        [
+          0,
+          0.278,
+          0.718,
+          0.188,
+          0
+        ],
+        [
+          0.324,
+          0.954,
+          0.834,
+          0.536,
+          0.048
+        ],
+        [
+          0.687,
+          0.957,
+          0.99,
+          0.995,
+          0.317
+        ],
+        [
+          0.887,
+          0.768,
+          0.979,
+          0.857,
+          0.554
+        ],
+        [
+          0.796,
+          0.592,
+          0.842,
+          0.592,
+          0.781
+        ]
+      ]
+    },
+    "overlap": {
+      "referencePixels": 13447,
+      "renderedPixels": 13179,
+      "intersectionPixels": 13106,
+      "unionPixels": 13520,
+      "coverage": 0.9746,
+      "iou": 0.9694
+    },
+    "gates": {
+      "widthError": 0,
+      "heightError": 0,
+      "occupancyCoverage": 0.9746,
+      "status": "PASS_FRONT_AUTHORITY"
+    }
+  },
+  "gates": {
+    "widthHeightEnvelope": "PASS",
+    "centerAlignment": "PASS_BY_LOCKED_CAMERA",
+    "occupancy": "FAIL_TARGET_CONNECTED_MASS_NOT_REACHED",
+    "pointedSilhouette": "PASS",
+    "visibleStems": "PASS_NONE",
+    "depthOrSideWorkAuthorized": false
+  },
+  "note": "The previous middle Blender arrangement is rejected despite its mask score. The measured 26-leaf map and the exact target-crop front proof are now authoritative for visual review. Occupancy/IoU remain diagnostic only; depth and side work remain frozen."
+}

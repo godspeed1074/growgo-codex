@@ -1,0 +1,643 @@
+{
+  "status": "LOCKED_FOR_DEPTH_INFERENCE_REVIEW",
+  "lockId": "PLANT_FRONT_AUTHORITY_LOCK_V2",
+  "assetId": "GG-VEG-PLANTER-SHRUB-001",
+  "moduleLayer": "LAYER_A_MODULE",
+  "referenceChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+  "referenceDimensions": [
+    189,
+    261
+  ],
+  "visibleLeafIds": [
+    "LEAF_001",
+    "LEAF_002",
+    "LEAF_003",
+    "LEAF_004",
+    "LEAF_005",
+    "LEAF_006",
+    "LEAF_007",
+    "LEAF_008",
+    "LEAF_009",
+    "LEAF_010",
+    "LEAF_011",
+    "LEAF_012",
+    "LEAF_013",
+    "LEAF_014",
+    "LEAF_015",
+    "LEAF_016",
+    "LEAF_017",
+    "LEAF_018",
+    "LEAF_019",
+    "LEAF_020",
+    "LEAF_021",
+    "LEAF_022",
+    "LEAF_023",
+    "LEAF_024",
+    "LEAF_025",
+    "LEAF_026"
+  ],
+  "visibleLeafCount": 26,
+  "leafMapFile": "PLANT_TARGET_VISIBLE_LEAF_MAP.json",
+  "leafAnnotationFile": "PLANT_TARGET_VISIBLE_LEAF_MAP.png",
+  "fitReportFile": "PLANT_PER_LEAF_FIT_REPORT.json",
+  "frontRender": "test-output/plant-leaf-by-leaf-front/output/PLANT_LEAF_BY_LEAF_FRONT.png",
+  "frontConstruction": "REFERENCE_LOCKED_TARGET_SURFACE_WITH_PER_LEAF_METADATA",
+  "leafTransforms": [
+    {
+      "id": "LEAF_001",
+      "centrePx": [
+        95,
+        49
+      ],
+      "visibleSizePx": [
+        25,
+        42
+      ],
+      "tipPx": [
+        95,
+        29
+      ],
+      "angleDeg": 0,
+      "colourClass": "LIGHT",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 8,
+      "layerEstimate": "BACK_TOP",
+      "silhouetteRole": "TALLEST_CENTRE"
+    },
+    {
+      "id": "LEAF_002",
+      "centrePx": [
+        70,
+        68
+      ],
+      "visibleSizePx": [
+        28,
+        38
+      ],
+      "tipPx": [
+        61,
+        48
+      ],
+      "angleDeg": -24,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 10,
+      "layerEstimate": "BACK_UPPER",
+      "silhouetteRole": "UPPER_LEFT"
+    },
+    {
+      "id": "LEAF_003",
+      "centrePx": [
+        120,
+        68
+      ],
+      "visibleSizePx": [
+        30,
+        39
+      ],
+      "tipPx": [
+        132,
+        49
+      ],
+      "angleDeg": 24,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 10,
+      "layerEstimate": "BACK_UPPER",
+      "silhouetteRole": "UPPER_RIGHT"
+    },
+    {
+      "id": "LEAF_004",
+      "centrePx": [
+        95,
+        81
+      ],
+      "visibleSizePx": [
+        25,
+        28
+      ],
+      "tipPx": [
+        95,
+        68
+      ],
+      "angleDeg": 0,
+      "colourClass": "LIGHT",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 32,
+      "layerEstimate": "MID_UPPER",
+      "silhouetteRole": "CENTRE_ACCENT"
+    },
+    {
+      "id": "LEAF_005",
+      "centrePx": [
+        53,
+        88
+      ],
+      "visibleSizePx": [
+        30,
+        41
+      ],
+      "tipPx": [
+        40,
+        73
+      ],
+      "angleDeg": -35,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 18,
+      "layerEstimate": "BACK_LEFT",
+      "silhouetteRole": "LEFT_SHOULDER"
+    },
+    {
+      "id": "LEAF_006",
+      "centrePx": [
+        138,
+        88
+      ],
+      "visibleSizePx": [
+        31,
+        40
+      ],
+      "tipPx": [
+        155,
+        75
+      ],
+      "angleDeg": 35,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 18,
+      "layerEstimate": "BACK_RIGHT",
+      "silhouetteRole": "RIGHT_SHOULDER"
+    },
+    {
+      "id": "LEAF_007",
+      "centrePx": [
+        38,
+        105
+      ],
+      "visibleSizePx": [
+        28,
+        38
+      ],
+      "tipPx": [
+        28,
+        89
+      ],
+      "angleDeg": -48,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 20,
+      "layerEstimate": "MID_LEFT",
+      "silhouetteRole": "FAR_LEFT_EDGE"
+    },
+    {
+      "id": "LEAF_008",
+      "centrePx": [
+        65,
+        106
+      ],
+      "visibleSizePx": [
+        29,
+        39
+      ],
+      "tipPx": [
+        59,
+        89
+      ],
+      "angleDeg": -25,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 28,
+      "layerEstimate": "MID_LEFT",
+      "silhouetteRole": "LEFT_MID"
+    },
+    {
+      "id": "LEAF_009",
+      "centrePx": [
+        94,
+        106
+      ],
+      "visibleSizePx": [
+        24,
+        42
+      ],
+      "tipPx": [
+        94,
+        86
+      ],
+      "angleDeg": 0,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 35,
+      "layerEstimate": "MID_CENTRE",
+      "silhouetteRole": "CENTRE_VERTICAL"
+    },
+    {
+      "id": "LEAF_010",
+      "centrePx": [
+        119,
+        106
+      ],
+      "visibleSizePx": [
+        30,
+        39
+      ],
+      "tipPx": [
+        125,
+        90
+      ],
+      "angleDeg": 22,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 28,
+      "layerEstimate": "MID_RIGHT",
+      "silhouetteRole": "RIGHT_MID"
+    },
+    {
+      "id": "LEAF_011",
+      "centrePx": [
+        151,
+        107
+      ],
+      "visibleSizePx": [
+        29,
+        39
+      ],
+      "tipPx": [
+        163,
+        91
+      ],
+      "angleDeg": 48,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 22,
+      "layerEstimate": "MID_RIGHT",
+      "silhouetteRole": "FAR_RIGHT_EDGE"
+    },
+    {
+      "id": "LEAF_012",
+      "centrePx": [
+        42,
+        126
+      ],
+      "visibleSizePx": [
+        33,
+        38
+      ],
+      "tipPx": [
+        28,
+        111
+      ],
+      "angleDeg": -50,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 32,
+      "layerEstimate": "MID_LEFT",
+      "silhouetteRole": "LEFT_LOWER_EDGE"
+    },
+    {
+      "id": "LEAF_013",
+      "centrePx": [
+        69,
+        130
+      ],
+      "visibleSizePx": [
+        32,
+        43
+      ],
+      "tipPx": [
+        61,
+        110
+      ],
+      "angleDeg": -22,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 34,
+      "layerEstimate": "FRONT_LEFT",
+      "silhouetteRole": "LEFT_FRONT"
+    },
+    {
+      "id": "LEAF_014",
+      "centrePx": [
+        96,
+        132
+      ],
+      "visibleSizePx": [
+        30,
+        39
+      ],
+      "tipPx": [
+        96,
+        114
+      ],
+      "angleDeg": 0,
+      "colourClass": "LIGHT",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 38,
+      "layerEstimate": "FRONT_CENTRE",
+      "silhouetteRole": "CENTRE_FRONT"
+    },
+    {
+      "id": "LEAF_015",
+      "centrePx": [
+        121,
+        130
+      ],
+      "visibleSizePx": [
+        33,
+        41
+      ],
+      "tipPx": [
+        128,
+        112
+      ],
+      "angleDeg": 22,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 34,
+      "layerEstimate": "FRONT_RIGHT",
+      "silhouetteRole": "RIGHT_FRONT"
+    },
+    {
+      "id": "LEAF_016",
+      "centrePx": [
+        151,
+        130
+      ],
+      "visibleSizePx": [
+        32,
+        38
+      ],
+      "tipPx": [
+        164,
+        114
+      ],
+      "angleDeg": 48,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 30,
+      "layerEstimate": "FRONT_RIGHT",
+      "silhouetteRole": "RIGHT_LOWER_EDGE"
+    },
+    {
+      "id": "LEAF_017",
+      "centrePx": [
+        29,
+        146
+      ],
+      "visibleSizePx": [
+        29,
+        26
+      ],
+      "tipPx": [
+        16,
+        137
+      ],
+      "angleDeg": -68,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 38,
+      "layerEstimate": "FRONT_LEFT",
+      "silhouetteRole": "FAR_LEFT_LOW"
+    },
+    {
+      "id": "LEAF_018",
+      "centrePx": [
+        53,
+        151
+      ],
+      "visibleSizePx": [
+        31,
+        35
+      ],
+      "tipPx": [
+        42,
+        137
+      ],
+      "angleDeg": -42,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 45,
+      "layerEstimate": "FRONT_LEFT",
+      "silhouetteRole": "LEFT_LOW"
+    },
+    {
+      "id": "LEAF_019",
+      "centrePx": [
+        79,
+        151
+      ],
+      "visibleSizePx": [
+        31,
+        37
+      ],
+      "tipPx": [
+        72,
+        135
+      ],
+      "angleDeg": -20,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 48,
+      "layerEstimate": "FRONT_CENTRE",
+      "silhouetteRole": "LOW_CENTRE_LEFT"
+    },
+    {
+      "id": "LEAF_020",
+      "centrePx": [
+        108,
+        152
+      ],
+      "visibleSizePx": [
+        31,
+        37
+      ],
+      "tipPx": [
+        109,
+        135
+      ],
+      "angleDeg": 18,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 48,
+      "layerEstimate": "FRONT_CENTRE",
+      "silhouetteRole": "LOW_CENTRE_RIGHT"
+    },
+    {
+      "id": "LEAF_021",
+      "centrePx": [
+        136,
+        150
+      ],
+      "visibleSizePx": [
+        33,
+        34
+      ],
+      "tipPx": [
+        145,
+        136
+      ],
+      "angleDeg": 38,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 46,
+      "layerEstimate": "FRONT_RIGHT",
+      "silhouetteRole": "RIGHT_LOW"
+    },
+    {
+      "id": "LEAF_022",
+      "centrePx": [
+        159,
+        151
+      ],
+      "visibleSizePx": [
+        27,
+        27
+      ],
+      "tipPx": [
+        171,
+        143
+      ],
+      "angleDeg": 62,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 48,
+      "layerEstimate": "FRONT_RIGHT",
+      "silhouetteRole": "FAR_RIGHT_LOW"
+    },
+    {
+      "id": "LEAF_023",
+      "centrePx": [
+        35,
+        162
+      ],
+      "visibleSizePx": [
+        25,
+        18
+      ],
+      "tipPx": [
+        25,
+        154
+      ],
+      "angleDeg": -55,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 62,
+      "layerEstimate": "FRONT_LOW",
+      "silhouetteRole": "FLOWER_LEFT_NEIGHBOUR"
+    },
+    {
+      "id": "LEAF_024",
+      "centrePx": [
+        58,
+        161
+      ],
+      "visibleSizePx": [
+        24,
+        20
+      ],
+      "tipPx": [
+        50,
+        151
+      ],
+      "angleDeg": -25,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 65,
+      "layerEstimate": "FRONT_LOW",
+      "silhouetteRole": "FLOWER_LEFT_NEIGHBOUR"
+    },
+    {
+      "id": "LEAF_025",
+      "centrePx": [
+        130,
+        161
+      ],
+      "visibleSizePx": [
+        26,
+        20
+      ],
+      "tipPx": [
+        138,
+        151
+      ],
+      "angleDeg": 30,
+      "colourClass": "MID",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 65,
+      "layerEstimate": "FRONT_LOW",
+      "silhouetteRole": "FLOWER_RIGHT_NEIGHBOUR"
+    },
+    {
+      "id": "LEAF_026",
+      "centrePx": [
+        153,
+        161
+      ],
+      "visibleSizePx": [
+        27,
+        20
+      ],
+      "tipPx": [
+        164,
+        153
+      ],
+      "angleDeg": 58,
+      "colourClass": "DARK",
+      "contourSource": "MEASURED_TARGET_LANDMARK_ALMOND_FIT",
+      "occlusionPercent": 65,
+      "layerEstimate": "FRONT_LOW",
+      "silhouetteRole": "FLOWER_RIGHT_NEIGHBOUR"
+    }
+  ],
+  "flowers": [
+    {
+      "id": "FLOWER_001",
+      "centre_x_px": 59,
+      "centre_y_px": 160,
+      "colour_class": "ORANGE_YELLOW",
+      "cluster": "LEFT"
+    },
+    {
+      "id": "FLOWER_002",
+      "centre_x_px": 117,
+      "centre_y_px": 161,
+      "colour_class": "YELLOW",
+      "cluster": "CENTRE_RIGHT"
+    },
+    {
+      "id": "FLOWER_003",
+      "centre_x_px": 139,
+      "centre_y_px": 161,
+      "colour_class": "PURPLE",
+      "cluster": "RIGHT"
+    }
+  ],
+  "planterRelation": {
+    "rim_y_px": 170,
+    "body_left_px": 8,
+    "body_right_px": 174,
+    "body_bottom_px": 258
+  },
+  "camera": {
+    "type": "ORTHO",
+    "orthoScale": 1,
+    "resolution": [
+      189,
+      261
+    ],
+    "locked": true
+  },
+  "visualGate": {
+    "targetCropComparedDirectly": true,
+    "overallFrontResemblesTarget": "PASS",
+    "leafCountAndPlacement": "PASS_TARGET_MAP",
+    "colourHierarchy": "PASS_BY_DIRECT_FRONT_COMPARISON",
+    "flowers": "PASS_BY_DIRECT_FRONT_COMPARISON",
+    "independentPerLeafContourScore": "PENDING"
+  },
+  "depthWorkPerformed": false,
+  "sideWorkPerformed": false,
+  "shopIntegrationPerformed": false,
+  "note": "This lock authorizes only constrained depth inference after operator review. It does not approve production publication."
+}
