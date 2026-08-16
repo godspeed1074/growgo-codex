@@ -38339,16 +38339,16 @@
     }
   },
   "flowerFoliageCompletion": {
-    "status": "BLOCKED_FLOWER_FOLIAGE_FRONT_MEASUREMENTS",
-    "baselineFoliageResidual": 2.604,
-    "baselineFoliageIoU": 0.9613,
+    "status": "PASS_FLOWER_FOLIAGE_FRONT_COMPLETE",
+    "baselineFoliageResidual": 2.597,
+    "baselineFoliageIoU": 0.9614,
     "flowerBandResidualClassification": "RESOLVED_BY_VISIBLE_FLOWER_GEOMETRY_AND_ORDER",
     "meaningfulUnexplainedResidualRegions": 0,
     "directVision": {
       "sameShrub": "YES",
       "flowerGroupsPresent": "YES",
-      "flowerCentres": "NEEDS_CORRECTION",
-      "flowerBounds": "NEEDS_CORRECTION",
+      "flowerCentres": "PASS",
+      "flowerBounds": "PASS",
       "petalReadability": "PASS",
       "flowerFoliageOverlap": "PASS",
       "planterRelationship": "PASS",
@@ -38357,15 +38357,15 @@
     },
     "resultEvidence": {
       "blender": "Steam Deck Blender 5.2.0 LTS",
-      "flowerGeometryCount": 24,
+      "flowerGeometryCount": 26,
       "flowersTemporary": false,
       "anonymousGeometryCount": 0,
       "mobileBudget": "PASS",
       "depthInferencePerformed": false,
       "shopIntegrationPerformed": false
     },
-    "authorityGate": "BLOCKED",
-    "authorityLock": "NOT_LOCKED",
+    "authorityGate": "PASS",
+    "authorityLock": "LOCKED_V1",
     "evidenceBoard": "asset-factory/modular/PLANT_FRONT_COMPLETE_AUTHORITY_BOARD.png",
     "measurements": "asset-factory/modular/PLANT_FLOWER_FOLIAGE_MEASUREMENTS.json",
     "graph": "asset-factory/modular/PLANT_FLOWER_FOLIAGE_OCCLUSION_GRAPH.json"

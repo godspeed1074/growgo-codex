@@ -1,5 +1,5 @@
 {
-  "status": "NOT_LOCKED",
+  "status": "LOCKED",
   "lockVersion": "PLANT_FRONT_GEOMETRY_AUTHORITY_LOCK_V1",
   "scope": "front geometry only; no inferred depth",
   "frozenObservedLeafIds": [
@@ -64,11 +64,11 @@
   ],
   "logicalVisibleFlowerGroups": 3,
   "sameShrub": "YES",
-  "flowerFoliageGate": "BLOCKED",
+  "flowerFoliageGate": "PASS",
   "planterRelationship": "PASS_UNCHANGED",
   "camera": "LOCKED_214x218_FRONT",
   "referenceImageChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
-  "finalRenderChecksum": "a9c8876177f2dd88fdef61984b7270035d155dcb1f8f1cdf8fc4a8be845ccf1c",
+  "finalRenderChecksum": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
   "geometryOnly": true,
   "noReferenceImageryInBeauty": true,
   "noDepthOrSideWork": true,

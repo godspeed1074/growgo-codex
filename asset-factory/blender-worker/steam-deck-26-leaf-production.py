@@ -300,7 +300,11 @@ def run_full(specs, selection, transitions=None):
     flower_objects += build_flower_group('FLOWER_GROUP_LEFT_ACCENT', (53, 140.5), [{'length': 6.8, 'half_width': 1.9, 'angle': -math.pi / 2 + 2 * math.pi * k / 5, 'material': flower_pink if k % 2 else flower_purple, 'zOffset': k * .0003} for k in range(5)], flower_cream, .326, 'FLOWER_GROUP_LEFT')
     flower_objects += build_flower_group('FLOWER_GROUP_MIDDLE', (114, 146.2), [{'length': 8.2, 'half_width': 2.65, 'angle': -math.pi / 2 + 2 * math.pi * k / 5, 'material': flower_yellow, 'zOffset': k * .0004} for k in range(5)], flower_orange, .334, 'FLOWER_GROUP_MIDDLE')
     right_angles = [-math.pi / 2, -math.pi / 10, math.radians(35), math.radians(145), math.radians(198)]
-    flower_objects += build_flower_group('FLOWER_GROUP_RIGHT', (131, 146.3), [{'length': 7.2, 'half_width': 3.7, 'angle': right_angles[k], 'material': flower_purple if k % 2 else flower_pink, 'zOffset': k * .0004} for k in range(5)], flower_cream, .335, 'FLOWER_GROUP_RIGHT')
+    right_petals = [{'length': 7.2, 'half_width': 3.7, 'angle': right_angles[k], 'material': flower_purple, 'zOffset': k * .0004} for k in range(5)]
+    # The target has two shallow side lobes at this group.  They are separate
+    # low-poly petals, not a flattened colour strip or a change to foliage.
+    right_petals += [{'length': 6.5, 'half_width': 1.1, 'angle': 0, 'material': flower_purple, 'zOffset': .0025}, {'length': 8.0, 'half_width': 1.1, 'angle': math.pi, 'material': flower_purple, 'zOffset': .0026}]
+    flower_objects += build_flower_group('FLOWER_GROUP_RIGHT', (131, 146.3), right_petals, flower_cream, .335, 'FLOWER_GROUP_RIGHT')
     scene.render.filepath = os.path.join(out, 'PLANT_26LEAF_TARGETSPECIFIC_FRONT.png'); scene.render.film_transparent = False; bpy.ops.render.render(write_still=True)
     visible_objects = leaf_objects + transition_objects + flower_objects
     original = {obj.name: [slot.material for slot in obj.material_slots] for obj in visible_objects}

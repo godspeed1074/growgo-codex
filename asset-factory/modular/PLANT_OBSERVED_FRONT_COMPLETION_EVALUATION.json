@@ -3,10 +3,10 @@
   "sourceTarget": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
   "beauty": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/plant-observed-front-completion/full/PLANT_OBSERVED_FRONT_COMPLETE.png",
   "targetFoliageArea": 13056,
-  "actualFoliageArea": 12888,
-  "residualPixelArea": 340,
-  "residualPercentOfTarget": 2.604,
-  "overallMaskIoU": 0.9613,
+  "actualFoliageArea": 12889,
+  "residualPixelArea": 339,
+  "residualPercentOfTarget": 2.597,
+  "overallMaskIoU": 0.9614,
   "targetBounds": {
     "x0": 9,
     "y0": 31,
@@ -23,11 +23,11 @@
     "y1": 169,
     "width": 174,
     "height": 138,
-    "area": 12888
+    "area": 12889
   },
   "meaningfulResidualRegions": [
     {
-      "area": 26,
+      "area": 25,
       "bbox": {
         "x0": 130,
         "y0": 138,
