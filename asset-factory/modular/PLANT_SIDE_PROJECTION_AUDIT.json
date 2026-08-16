@@ -1,0 +1,10 @@
+{
+  "status": "BLOCKED",
+  "baseline": "GG-VEG-PLANTER-SHRUB-001@3.2.0_CLUSTER_B",
+  "offendingSideBladesBefore": 18,
+  "offendingSideBladesAfter": 18,
+  "parallelShelfGroupsBefore": 3,
+  "parallelShelfGroupsAfter": 3,
+  "hardGate": {"maximumOffendingSideBlades": 2, "maximumParallelShelfGroups": 0},
+  "reason": "The existing cluster candidate was not numerically blueprint-compliant; no promotion performed."
+}
