@@ -1,0 +1,10 @@
+{
+  "presentationId": "GG-PRES-BLD-SIMPLE-SHOP-GROWGO-001",
+  "version": "1.0.0",
+  "sourceRecipe": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "sourceRender": "SHOP_OPTIMIZED_FINAL_FRONT.png",
+  "camera": "GG_CAMERA_SIMPLE_SHOP_LOCKED",
+  "method": "real-Blender-render-derived camera-locked front composition",
+  "alpha": "source silhouette threshold",
+  "heroModulesPreserved": true
+}
