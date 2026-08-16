@@ -38369,5 +38369,55 @@
     "evidenceBoard": "asset-factory/modular/PLANT_FRONT_COMPLETE_AUTHORITY_BOARD.png",
     "measurements": "asset-factory/modular/PLANT_FLOWER_FOLIAGE_MEASUREMENTS.json",
     "graph": "asset-factory/modular/PLANT_FLOWER_FOLIAGE_OCCLUSION_GRAPH.json"
+  },
+  "constrained3dDepth": {
+    "status": "BLOCKED_3D_DEPTH_REVIEW",
+    "front": {
+      "iou": 0.9999,
+      "widthDriftPercent": 0,
+      "heightDriftPercent": 0,
+      "centreXDriftPercent": 0,
+      "centreZDriftPercent": 0,
+      "lockedBounds": {
+        "x0": 3,
+        "y0": 32,
+        "x1": 177,
+        "y1": 257,
+        "width": 175,
+        "height": 226,
+        "n": 26335,
+        "cx": 90,
+        "cy": 144.5
+      },
+      "finalBounds": {
+        "x0": 3,
+        "y0": 32,
+        "x1": 177,
+        "y1": 257,
+        "width": 175,
+        "height": 226,
+        "n": 26338,
+        "cx": 90,
+        "cy": 144.5
+      }
+    },
+    "vision": {
+      "frontSameShrub": "YES",
+      "frontAuthority": "PASS",
+      "individualLeafDepth": "NEEDS_WORK",
+      "threeQuarter": "FAIL",
+      "left": "FAIL",
+      "right": "FAIL",
+      "top": "FAIL",
+      "shelfPattern": "YES",
+      "cardStackAppearance": "YES",
+      "blobFoliage": "NO",
+      "flowers": "PASS",
+      "planterDepth": "FAIL",
+      "supportLeavesVisibleIncorrectly": "NO"
+    },
+    "selectedDepthCandidate": "DEPTH_B",
+    "authorityLock": "NOT_LOCKED",
+    "reviewBoard": "asset-factory/modular/PLANT_LOCKED_FRONT_3D_DEPTH_REVIEW_BOARD.png"
   }
 }
