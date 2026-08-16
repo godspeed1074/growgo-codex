@@ -1,0 +1,69 @@
+{
+  "status": "BLOCKED_HIDDEN_GEOMETRY_RECONSTRUCTION",
+  "front": {
+    "iou": 0.8696,
+    "widthDriftPercent": 1.714,
+    "heightDriftPercent": 0,
+    "centreDriftPercent": 0.857
+  },
+  "frontHardGate": {
+    "iou": ">=0.98",
+    "drift": "<=0.5%"
+  },
+  "offendingElements": [
+    {
+      "id": "LEAF_SUPPORT_001",
+      "view": "FRONT/3Q",
+      "cause": "inferred support shell becomes visible through locked-front gaps"
+    },
+    {
+      "id": "LEAF_SUPPORT_002",
+      "view": "FRONT/3Q",
+      "cause": "inferred support shell becomes visible through locked-front gaps"
+    },
+    {
+      "id": "LEAF_SUPPORT_003",
+      "view": "FRONT/3Q",
+      "cause": "inferred support shell becomes visible through locked-front gaps"
+    },
+    {
+      "id": "LEAF_SUPPORT_004",
+      "view": "FRONT/3Q",
+      "cause": "inferred support shell becomes visible through locked-front gaps"
+    },
+    {
+      "id": "LEAF_SUPPORT_005",
+      "view": "FRONT/3Q",
+      "cause": "inferred support shell becomes visible through locked-front gaps"
+    },
+    {
+      "id": "LEAF_SUPPORT_006",
+      "view": "FRONT/3Q",
+      "cause": "inferred support shell becomes visible through locked-front gaps"
+    },
+    {
+      "id": "OBSERVED_TAPERED_BODIES",
+      "view": "3Q_LEFT/RIGHT",
+      "cause": "back-body surfaces remain too planar and form shelf streaks"
+    },
+    {
+      "id": "PLANTER_REAR_VOLUME",
+      "view": "3Q_LEFT",
+      "cause": "hidden box does not align with visible planter perspective"
+    }
+  ],
+  "sideShelfGroupsBefore": 1,
+  "sideShelfGroupsAfter": 1,
+  "vision": {
+    "cardStack": "YES",
+    "shelfPattern": "YES",
+    "blobFoliage": "NO",
+    "planterDetached": "YES",
+    "foliageGroundedInSoil": "NO"
+  },
+  "authorityLock": "NOT_LOCKED",
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "anonymousGeometry": 0,
+  "mobileBudget": "PASS"
+}
