@@ -1,0 +1,2 @@
+import os
+source=os.path.join(os.path.dirname(__file__),'steam-deck-global-facade-uv.py');text=open(source,encoding='utf-8').read();text=text.replace("wo.name.startswith(('WALL_PANEL_','WALL_RETURN_'))","wo.name.startswith('WALL_PANEL_')");text=text.replace("for li in poly.loop_indices:\n    vi=", "if poly.normal.y < -0.5:\n    for li in poly.loop_indices:\n     vi=");exec(compile(text,source,'exec'),globals(),globals())
