@@ -1,0 +1,461 @@
+{
+  "status": "PASS_OBSERVED_FRONT_OCCLUSION_GRAPH",
+  "scope": "observed front overlap only; not full depth",
+  "frozenLeafCount": 26,
+  "addedPartialLeafIds": [
+    "LEAF_OBS_027",
+    "LEAF_OBS_028",
+    "LEAF_OBS_029",
+    "LEAF_OBS_030",
+    "LEAF_OBS_031",
+    "LEAF_OBS_032",
+    "LEAF_OBS_033"
+  ],
+  "transitionIds": [
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_030",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_014",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_003",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_073",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_005",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_038",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_074",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_029",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_077",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_063",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_053",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_039",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_081"
+  ],
+  "overlapCorrectionIds": [
+    "OBSERVED_OCCLUSION_CORRECTION_001"
+  ],
+  "nodes": [
+    "LEAF_OBS_001",
+    "LEAF_OBS_002",
+    "LEAF_OBS_003",
+    "LEAF_OBS_004",
+    "LEAF_OBS_005",
+    "LEAF_OBS_006",
+    "LEAF_OBS_007",
+    "LEAF_OBS_008",
+    "LEAF_OBS_009",
+    "LEAF_OBS_010",
+    "LEAF_OBS_011",
+    "LEAF_OBS_012",
+    "LEAF_OBS_013",
+    "LEAF_OBS_014",
+    "LEAF_OBS_015",
+    "LEAF_OBS_016",
+    "LEAF_OBS_017",
+    "LEAF_OBS_018",
+    "LEAF_OBS_019",
+    "LEAF_OBS_020",
+    "LEAF_OBS_021",
+    "LEAF_OBS_022",
+    "LEAF_OBS_023",
+    "LEAF_OBS_024",
+    "LEAF_OBS_025",
+    "LEAF_OBS_026",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+    "LEAF_OBS_027",
+    "LEAF_OBS_028",
+    "LEAF_OBS_029",
+    "LEAF_OBS_030",
+    "LEAF_OBS_031",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+    "LEAF_OBS_032",
+    "LEAF_OBS_033",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_030",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_014",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_003",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_073",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_005",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_038",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_074",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_029",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_077",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_063",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_053",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_039",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_081",
+    "OBSERVED_OCCLUSION_CORRECTION_001"
+  ],
+  "edges": [
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_017",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_018",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_019",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_020",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_021",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_022",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_023",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_024",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_025",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "back": "LEAF_026",
+      "evidence": "REGION_061",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_001",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_002",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_004",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_005",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_008",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_009",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_013",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_014",
+      "back": "LEAF_OBS_027",
+      "evidence": "REGION_002",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_OBS_028",
+      "back": "LEAF_003",
+      "evidence": "REGION_009",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_OBS_028",
+      "back": "LEAF_004",
+      "evidence": "REGION_009",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_OBS_028",
+      "back": "LEAF_006",
+      "evidence": "REGION_009",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_OBS_028",
+      "back": "LEAF_009",
+      "evidence": "REGION_009",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_OBS_028",
+      "back": "LEAF_010",
+      "evidence": "REGION_009",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_001",
+      "back": "LEAF_OBS_029",
+      "evidence": "REGION_004",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_003",
+      "back": "LEAF_OBS_029",
+      "evidence": "REGION_004",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_004",
+      "back": "LEAF_OBS_029",
+      "evidence": "REGION_004",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_012",
+      "back": "LEAF_OBS_030",
+      "evidence": "REGION_032",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_017",
+      "back": "LEAF_OBS_030",
+      "evidence": "REGION_032",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_014",
+      "back": "LEAF_OBS_031",
+      "evidence": "REGION_065",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_019",
+      "back": "LEAF_OBS_031",
+      "evidence": "REGION_065",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_020",
+      "back": "LEAF_OBS_031",
+      "evidence": "REGION_065",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_006",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+      "evidence": "REGION_026",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_010",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+      "evidence": "REGION_026",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_011",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+      "evidence": "REGION_026",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_015",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+      "evidence": "REGION_026",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_016",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_026",
+      "evidence": "REGION_026",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_002",
+      "back": "LEAF_OBS_032",
+      "evidence": "REGION_007",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_005",
+      "back": "LEAF_OBS_032",
+      "evidence": "REGION_007",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_005",
+      "back": "LEAF_OBS_033",
+      "evidence": "REGION_018",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_007",
+      "back": "LEAF_OBS_033",
+      "evidence": "REGION_018",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_009",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_030",
+      "evidence": "REGION_030",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_010",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_030",
+      "evidence": "REGION_030",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_014",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_030",
+      "evidence": "REGION_030",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_015",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_030",
+      "evidence": "REGION_030",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_004",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_014",
+      "evidence": "REGION_014",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_009",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_014",
+      "evidence": "REGION_014",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_001",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_003",
+      "evidence": "REGION_003",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_021",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_073",
+      "evidence": "REGION_073",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_002",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_005",
+      "evidence": "REGION_005",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_016",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_038",
+      "evidence": "REGION_038",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_074",
+      "back": "LEAF_019",
+      "evidence": "REGION_074",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_011",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_029",
+      "evidence": "REGION_029",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_077",
+      "back": "LEAF_021",
+      "evidence": "REGION_077",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_077",
+      "back": "LEAF_026",
+      "evidence": "REGION_077",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_018",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_063",
+      "evidence": "REGION_063",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_015",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_053",
+      "evidence": "REGION_053",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_021",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_053",
+      "evidence": "REGION_053",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_012",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_039",
+      "evidence": "REGION_039",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "LEAF_013",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_039",
+      "evidence": "REGION_039",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_081",
+      "back": "LEAF_020",
+      "evidence": "REGION_081",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_081",
+      "back": "LEAF_021",
+      "evidence": "REGION_081",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    },
+    {
+      "front": "OBSERVED_TRANSITION_FOLIAGE_REGION_081",
+      "back": "LEAF_025",
+      "evidence": "REGION_081",
+      "scope": "SHALLOW_OBSERVED_FRONT_ONLY"
+    }
+  ],
+  "noExistingPassingLeafReshaped": true,
+  "noReferenceImageryInBeauty": true
+}

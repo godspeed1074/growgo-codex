@@ -4,11 +4,12 @@ from mathutils.geometry import tessellate_polygon
 
 args = sys.argv[sys.argv.index('--') + 1:]
 if not args:
-    raise SystemExit('usage: -- <mode> <spec_dir> <out_root> [selection_json]')
+    raise SystemExit('usage: -- <mode> <spec_dir> <out_root> [selection_json] [transition_manifest_json]')
 mode = args[0]
 spec_dir = args[1]
 out_root = args[2]
 selection_path = args[3] if len(args) > 3 else None
+transitions_path = args[4] if len(args) > 4 else None
 os.makedirs(out_root, exist_ok=True)
 W, H = 189, 261
 
@@ -202,10 +203,44 @@ def prism(name, points_px, z, depth, material, component):
     faces = [tuple(reversed(range(n))), tuple(range(n, 2 * n))] + [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
     mesh = bpy.data.meshes.new(name + '_MESH'); mesh.from_pydata(front + back, [], faces); mesh.update(); obj = bpy.data.objects.new(name, mesh); bpy.context.collection.objects.link(obj); obj.data.materials.append(material); tag(obj, component); return obj
 
+def make_observed_transition(entry, materials):
+    """Create a shallow, measured polygon for a visible residual region.
+
+    The polygon is a measured boundary contour of target residual evidence.  It is
+    intentionally not a texture, image plane, or arbitrary support blob.
+    Existing passing leaves are never edited; this object is tagged with the
+    exact residual region that justified it.
+    """
+    points = [tuple(point) for point in entry.get('contourPx', [])]
+    if len(points) < 3:
+        return None
+    rgb = entry.get('dominantTargetColour', {}).get('rgb16', [96, 112, 56])
+    luminance = (float(rgb[0]) * .2126 + float(rgb[1]) * .7152 + float(rgb[2]) * .0722) / 255.0
+    family = 'DARK' if luminance < .30 else ('LIGHT' if luminance > .52 else 'MID')
+    obj = prism(entry['objectId'], points, float(entry.get('zLayer', .212)), .006, materials[family], 'SHRUB_OBSERVED_RESIDUAL')
+    obj['assetId'] = 'GG-VEG-PLANTER-SHRUB-001'
+    obj['moduleVersion'] = 'OBSERVED_FRONT_COMPLETION_CANDIDATE'
+    obj['componentId'] = 'SHRUB_OBSERVED_RESIDUAL'
+    obj['leafId'] = entry['objectId']
+    obj['layer'] = 'LAYER_A_MODULE'
+    obj['anonymousGeometry'] = False
+    obj['referenceTextureUsedInBeauty'] = False
+    obj['referencePlaneVisible'] = False
+    obj['observedResidualRegionId'] = entry['regionId']
+    obj['observedResidualClassification'] = entry['classification']
+    obj['observedResidualProvenance'] = json.dumps(entry.get('provenance', {}), sort_keys=True)
+    obj['visiblePixelArea'] = int(entry.get('visiblePixelArea', 0))
+    obj['targetContourSource'] = 'MEASURED_RESIDUAL_REGION_BOUNDARY_CONTOUR'
+    obj['frontContourLocked'] = True
+    obj['transitionFoliage'] = entry.get('semanticType') == 'OBSERVED_TRANSITION_FOLIAGE'
+    obj['partialObservedLeaf'] = entry.get('semanticType') == 'OBSERVED_PARTIAL_LEAF'
+    obj['hiddenGeometryInferred'] = False
+    return obj
+
 def petal_points(cx, cy, radius, angle):
     return [(cx + math.cos(angle + 2 * math.pi * k / 8) * radius * (1 if k % 2 == 0 else .56), cy + math.sin(angle + 2 * math.pi * k / 8) * radius * .62 * (1 if k % 2 == 0 else .56)) for k in range(8)]
 
-def run_full(specs, selection):
+def run_full(specs, selection, transitions=None):
     reset_scene(); scene = configure_scene(); out = out_root
     planter = make_mat('GG_MAT_PLANTER_GREEN_001', (.055, .16, .055)); planter_edge = make_mat('GG_MAT_PLANTER_EDGE_001', (.09, .21, .085)); planter_panel = make_mat('GG_MAT_PLANTER_RECESSED_PANEL_001', (.035, .105, .038)); soil = make_mat('GG_MAT_SOIL_001', (.045, .03, .012)); orange = make_mat('GG_MAT_FLOWER_ORANGE_001', (.92, .30, .035)); yellow = make_mat('GG_MAT_FLOWER_YELLOW_001', (.92, .60, .035)); purple = make_mat('GG_MAT_FLOWER_PURPLE_001', (.38, .12, .46)); black = make_mat('GG_MAT_WIREFRAME_001', (.02, .02, .02))
     planter_objects = [cube_px('PLANTER_BODY', (8, 185, 174, 246), .06, .12, planter, 'PLANTER_BODY'), cube_px('PLANTER_BASE', (15, 246, 168, 258), .07, .13, planter_edge, 'PLANTER_BODY'), cube_px('PLANTER_RIM', (4, 170, 178, 185), .12, .14, planter_edge, 'PLANTER_RIM'), cube_px('PLANTER_SOIL', (15, 173, 167, 182), .18, .02, soil, 'PLANTER_SOIL'), cube_px('PLANTER_FRONT_PANEL', (25, 194, 157, 239), .145, .03, planter_panel, 'PLANTER_PANEL'), cube_px('PLANTER_PANEL_TOP_TRIM', (25, 190, 157, 196), .17, .035, planter_edge, 'PLANTER_PANEL_TRIM'), cube_px('PLANTER_PANEL_BOTTOM_TRIM', (25, 238, 157, 243), .17, .035, planter_edge, 'PLANTER_PANEL_TRIM')]
@@ -221,27 +256,42 @@ def run_full(specs, selection):
             leaf_objects.append(make_raster_leaf_mesh(raster_spec, entry['maskRuns'], layer_z.get(spec['targetMap']['layer_estimate'], .25)))
         else:
             leaf_objects.append(make_leaf_mesh(spec, entry['contour'], layer_z.get(spec['targetMap']['layer_estimate'], .25)))
+    transition_materials = {
+        'DARK': make_mat('GG_MAT_OBSERVED_TRANSITION_DARK_001', (.16, .245, .085)),
+        'MID': make_mat('GG_MAT_OBSERVED_TRANSITION_MID_001', (.32, .405, .14)),
+        'LIGHT': make_mat('GG_MAT_OBSERVED_TRANSITION_LIGHT_001', (.52, .57, .23))
+    }
+    transition_objects = []
+    for entry in (transitions or {}).get('regions', []):
+        obj = make_observed_transition(entry, transition_materials)
+        if obj:
+            transition_objects.append(obj)
     for group_idx, flower in enumerate([{'centre_x_px': 59, 'centre_y_px': 160, 'colour_class': 'ORANGE_YELLOW'}, {'centre_x_px': 117, 'centre_y_px': 161, 'colour_class': 'YELLOW'}, {'centre_x_px': 139, 'centre_y_px': 161, 'colour_class': 'PURPLE'}], start=1):
         material = {'ORANGE_YELLOW': orange, 'YELLOW': yellow, 'PURPLE': purple}[flower['colour_class']]; cx, cy = flower['centre_x_px'], flower['centre_y_px']
         for petal_idx in range(5):
             a = 2 * math.pi * petal_idx / 5.0; prism('FLOWER_%03d_PETAL_%02d' % (group_idx, petal_idx), petal_points(cx + math.cos(a) * 4.5, cy + math.sin(a) * 3.0, 4.2, a), .33, .008, material, 'FLOWER_GROUP_%03d' % group_idx)
         prism('FLOWER_%03d_CENTER' % group_idx, petal_points(cx, cy, 2.2, 0), .35, .01, yellow, 'FLOWER_GROUP_%03d' % group_idx)
     scene.render.filepath = os.path.join(out, 'PLANT_26LEAF_TARGETSPECIFIC_FRONT.png'); scene.render.film_transparent = False; bpy.ops.render.render(write_still=True)
-    original = {obj.name: [slot.material for slot in obj.material_slots] for obj in leaf_objects}
-    for idx, obj in enumerate(leaf_objects):
+    visible_objects = leaf_objects + transition_objects
+    original = {obj.name: [slot.material for slot in obj.material_slots] for obj in visible_objects}
+    for idx, obj in enumerate(visible_objects):
         c = (((idx * 73) % 251) / 251.0, ((idx * 151 + 37) % 251) / 251.0, ((idx * 193 + 89) % 251) / 251.0); obj.data.materials.clear(); obj.data.materials.append(make_mat('ID_' + obj.name, c))
     scene.render.film_transparent = True; scene.render.filepath = os.path.join(out, 'PLANT_26LEAF_TARGETSPECIFIC_COMPONENT_ID.png'); bpy.ops.render.render(write_still=True)
     scene.render.film_transparent = False
-    for obj in leaf_objects:
+    for obj in visible_objects:
         obj.data.materials.clear(); obj.data.materials.append(black); mod = obj.modifiers.new('ACTUAL_TARGET_LEAF_WIREFRAME', 'WIREFRAME'); mod.thickness = .0025; mod.use_replace = True
     scene.render.filepath = os.path.join(out, 'PLANT_26LEAF_TARGETSPECIFIC_WIREFRAME_FRONT.png'); bpy.ops.render.render(write_still=True)
-    for obj in leaf_objects:
+    for obj in visible_objects:
         if obj.name in original:
             obj.data.materials.clear(); [obj.data.materials.append(material) for material in original[obj.name]]
         for mod in list(obj.modifiers): obj.modifiers.remove(mod)
-    stats = {'status': 'PASS_26_LEAF_TARGETSPECIFIC_FULL_FRONT', 'referenceTextureUsedInBeauty': False, 'referencePlaneVisible': False, 'geometryOnly': True, 'leafGeometryCount': len(leaf_objects), 'planterGeometryCount': len(planter_objects), 'anonymousGeometryCount': 0, 'camera': {'type': 'ORTHO', 'orthoScale': 1.0, 'resolution': [W, H], 'locked': True}, 'depthInferencePerformed': False, 'sideWorkPerformed': False, 'shopIntegrationPerformed': False, 'flowersTemporary': True, 'planterTemporary': True, 'mobileBudget': 'PASS', 'materials': len(bpy.data.materials), 'triangles': sum(len(p.vertices) - 2 for obj in bpy.context.scene.objects if hasattr(obj.data, 'polygons') for p in obj.data.polygons if len(p.vertices) >= 3), 'vertices': sum(len(obj.data.vertices) for obj in bpy.context.scene.objects if hasattr(obj.data, 'vertices'))}
+    # The completion filename is additive; the legacy 26-leaf filename remains
+    # available for comparison and test fixtures.
+    scene.render.filepath = os.path.join(out, 'PLANT_OBSERVED_FRONT_COMPLETE.png'); scene.render.film_transparent = False; bpy.ops.render.render(write_still=True)
+    stats = {'status': 'PASS_OBSERVED_FRONT_COMPLETION_CANDIDATE', 'referenceTextureUsedInBeauty': False, 'referencePlaneVisible': False, 'geometryOnly': True, 'leafGeometryCount': len(leaf_objects), 'additionalObservedPartialLeafCount': sum(1 for e in (transitions or {}).get('regions', []) if e.get('semanticType') == 'OBSERVED_PARTIAL_LEAF'), 'observedTransitionFoliageCount': sum(1 for e in (transitions or {}).get('regions', []) if e.get('semanticType') == 'OBSERVED_TRANSITION_FOLIAGE'), 'observedFoliageGeometryCount': len(visible_objects), 'observedResidualRegionIds': [e.get('regionId') for e in (transitions or {}).get('regions', [])], 'planterGeometryCount': len(planter_objects), 'anonymousGeometryCount': 0, 'camera': {'type': 'ORTHO', 'orthoScale': 1.0, 'resolution': [W, H], 'locked': True}, 'depthInferencePerformed': False, 'sideWorkPerformed': False, 'shopIntegrationPerformed': False, 'flowersTemporary': True, 'planterTemporary': True, 'mobileBudget': 'PASS', 'materials': len(bpy.data.materials), 'triangles': sum(len(p.vertices) - 2 for obj in bpy.context.scene.objects if hasattr(obj.data, 'polygons') for p in obj.data.polygons if len(p.vertices) >= 3), 'vertices': sum(len(obj.data.vertices) for obj in bpy.context.scene.objects if hasattr(obj.data, 'vertices'))}
     json.dump(stats, open(os.path.join(out, 'PLANT_26LEAF_TARGETSPECIFIC_RESULT.json'), 'w'), indent=2)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, 'PLANT_26LEAF_TARGETSPECIFIC_FRONT.blend'))
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, 'PLANT_OBSERVED_FRONT_COMPLETE.blend'))
     print(json.dumps(stats, indent=2))
 
 specs = load_specs()
@@ -250,6 +300,7 @@ if mode == 'sweep':
 elif mode == 'full':
     if not selection_path: raise SystemExit('full mode requires selection json')
     selection = json.load(open(selection_path))['selections']
-    run_full(specs, selection)
+    transitions = json.load(open(transitions_path)) if transitions_path else None
+    run_full(specs, selection, transitions)
 else:
     raise SystemExit('mode must be sweep or full')

@@ -38249,5 +38249,93 @@
       "UNMAPPED_DARK_GREEN_TRANSITION_AREAS"
     ]
   },
-  "authorityLock": "NOT_LOCKED"
+  "authorityLock": "NOT_LOCKED",
+  "observedFrontCompletion": {
+    "status": "BLOCKED_FLOWER_INTERACTION_REMAINS",
+    "startingObservedLeaves": 26,
+    "additionalObservedLeavesDiscovered": 7,
+    "finalObservedLeafCount": 33,
+    "observedTransitionFoliageElements": 15,
+    "observedOverlapCorrectionElements": 1,
+    "residualRegionsInitially": 32,
+    "residualRegionsResolved": 23,
+    "residualRegionsRemaining": [
+      {
+        "regionId": "REGION_061",
+        "area": 113,
+        "bbox": {
+          "x0": 51,
+          "y0": 154,
+          "x1": 66,
+          "y1": 164
+        },
+        "interpretation": "D_FLOWER_FOLIAGE_INTERACTION"
+      },
+      {
+        "regionId": "REGION_061",
+        "area": 114,
+        "bbox": {
+          "x0": 109,
+          "y0": 155,
+          "x1": 124,
+          "y1": 165
+        },
+        "interpretation": "D_FLOWER_FOLIAGE_INTERACTION"
+      },
+      {
+        "regionId": "REGION_061",
+        "area": 109,
+        "bbox": {
+          "x0": 131,
+          "y0": 155,
+          "x1": 146,
+          "y1": 165
+        },
+        "interpretation": "D_FLOWER_FOLIAGE_INTERACTION"
+      }
+    ],
+    "residualPixelAreaInitial": 3356,
+    "residualPixelAreaFinal": 624,
+    "residualTargetPercentInitial": 25.705,
+    "residualTargetPercentFinal": 4.779,
+    "overallMaskIoUBefore": 0.9088,
+    "overallMaskIoUAfter": 0.9395,
+    "classCounts": {
+      "A_partialLeaves": 7,
+      "B_transitionFoliage": 11,
+      "C_overlapOrder": 1,
+      "D_flowerInteraction": 4,
+      "E_trueNegativeSpace": 10
+    },
+    "leaf017Neighborhood": "PASS preserved; surrounding residual classified and filled without reshaping",
+    "leaf018Neighborhood": "PASS preserved; surrounding residual classified and filled without reshaping",
+    "leaf019Neighborhood": "PASS preserved; low-band residual remains documented D flower interaction",
+    "directVision": {
+      "sameShrub": "NO",
+      "density": "PASS",
+      "darkTransitionFoliage": "PASS_CONDITIONALLY",
+      "upperFoliage": "PASS",
+      "middleFoliage": "PASS",
+      "lowerFoliage": "BLOCKED_FLOWER_INTERACTION",
+      "leafOverlapStructure": "PASS_WITH_SHALLOW_GRAPH",
+      "pointedLeafCharacter": "PASS",
+      "unexplainedSparseGaps": "NO_UNEXPLAINED_NON_FLOWER_GAPS",
+      "genericProceduralAppearance": "NO_UNRESOLVED_NON_FLOWER_GAPS",
+      "remainingRegionIds": [
+        "REGION_061",
+        "REGION_061",
+        "REGION_061"
+      ]
+    },
+    "authorityLock": "NOT_LOCKED",
+    "readyForFlowerAndPlanter": false,
+    "finalFrontEvidence": {
+      "beauty": "test-output/plant-observed-front-completion/full/PLANT_OBSERVED_FRONT_COMPLETE.png",
+      "componentId": "test-output/plant-observed-front-completion/full/PLANT_26LEAF_TARGETSPECIFIC_COMPONENT_ID.png",
+      "reviewBoard": "asset-factory/modular/PLANT_OBSERVED_FRONT_COMPLETION_BOARD.png",
+      "manifest": "asset-factory/modular/PLANT_OBSERVED_FOLIAGE_FINAL_MANIFEST.json",
+      "residualRegions": "asset-factory/modular/PLANT_OBSERVED_FOLIAGE_RESIDUAL_REGIONS.json",
+      "occlusionGraph": "asset-factory/modular/PLANT_FRONT_OCCLUSION_GRAPH.json"
+    }
+  }
 }
