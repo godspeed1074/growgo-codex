@@ -1,0 +1,90 @@
+{
+  "id": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "layer": "LAYER_C_RUNTIME_ASSEMBLY",
+  "status": "PASS_PRESENTATION_DERIVATIVE_READY_FOR_OPERATOR_REVIEW",
+  "sourceLayerA": "GG-VEG-PLANTER-SHRUB-001",
+  "sourceBlend": "test-output/plant-observed-front-completion/full/PLANT_OBSERVED_FRONT_COMPLETE.blend",
+  "sharedPlanterSource": "PLANTER_BODY / PLANTER_RIM / PLANTER_SOIL / PLANTER_PANEL",
+  "foliageSource": "observed leaves, transition foliage, and flowers from locked source",
+  "targetCrop": "asset-factory/modular/PLANT_TARGET_VISIBLE_LEAF_MAP.json",
+  "frontAuthorityLock": "asset-factory/modular/PLANT_FRONT_GEOMETRY_AUTHORITY_LOCK_V1.json",
+  "coordinateContract": {
+    "runtimeWorldUp": "+Z",
+    "presentationSourceAxisMap": "source Y-up is mapped to runtime Z-up at presentation-root export",
+    "cameraRollDegrees": 0,
+    "projection": "ORTHOGRAPHIC",
+    "resolution": "189x261"
+  },
+  "views": {
+    "0": {
+      "file": "test-output/plant-complete-five-view/final/PLANT_VIEW_0_COMPLETE.png",
+      "sha256": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+      "bytes": 52048,
+      "dimensions": [
+        189,
+        261
+      ],
+      "completeSameSceneRender": true
+    },
+    "M30": {
+      "file": "test-output/plant-complete-five-view/final/PLANT_VIEW_M30_COMPLETE.png",
+      "sha256": "ce6385a6af3c212b660cb9f0a28b99064db34487349c1bec19edab4d523a8d87",
+      "bytes": 49151,
+      "dimensions": [
+        189,
+        261
+      ],
+      "completeSameSceneRender": true
+    },
+    "M15": {
+      "file": "test-output/plant-complete-five-view/final/PLANT_VIEW_M15_COMPLETE.png",
+      "sha256": "dba14d31e653bdc7b9270932f6bd4bfbde88e3b619c37c84206960fb474aa7a7",
+      "bytes": 51185,
+      "dimensions": [
+        189,
+        261
+      ],
+      "completeSameSceneRender": true
+    },
+    "P15": {
+      "file": "test-output/plant-complete-five-view/final/PLANT_VIEW_P15_COMPLETE.png",
+      "sha256": "2ce509f7cf630bc3469b56011b12b1f3fb76032999f6fd314bde28a7cb6d28f7",
+      "bytes": 51151,
+      "dimensions": [
+        189,
+        261
+      ],
+      "completeSameSceneRender": true
+    },
+    "P30": {
+      "file": "test-output/plant-complete-five-view/final/PLANT_VIEW_P30_COMPLETE.png",
+      "sha256": "aef046aa41c221a2ec376140db8f66dc9f1d99d3b2cee37311d5ab191cc80800",
+      "bytes": 48043,
+      "dimensions": [
+        189,
+        261
+      ],
+      "completeSameSceneRender": true
+    }
+  },
+  "frontAuthority": {
+    "expected": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+    "actual": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+    "pass": true
+  },
+  "performance": {
+    "compressedTotalBytes": 251578,
+    "uncompressedTotalBytes": 986580,
+    "expectedDrawCalls": 1,
+    "runtimeSelectionCost": "nearest of five presentation sprites; no geometry assembly at selection time",
+    "crossfadeCompatibility": "UNKNOWN — Atlas is intentionally unmodified"
+  },
+  "invariants": {
+    "shopModified": false,
+    "atlasModified": false,
+    "eucalyptusStarted": false,
+    "knownGoodAssigned": false,
+    "sourceModularPlantPreserved": true,
+    "rawPresentationViewsNoPostPlanterComposite": true
+  }
+}
