@@ -1,0 +1,1523 @@
+{
+  "status": "PASS_TWO_ADDITIONAL_LEAF_CALIBRATION",
+  "selectedLeaves": [
+    {
+      "id": "LEAF_005",
+      "role": "BROAD_LEFT_SHOULDER",
+      "family": "BROAD"
+    },
+    {
+      "id": "LEAF_007",
+      "role": "NARROW_ANGLED_FAR_LEFT_EDGE",
+      "family": "NARROW_ANGLED"
+    }
+  ],
+  "leaf001": {
+    "id": "LEAF_001",
+    "silhouetteIoU": 0.9643,
+    "status": "PASS_CENTRAL_LEAF_ISOLATED_CALIBRATION"
+  },
+  "leaves": [
+    {
+      "leafId": "LEAF_005",
+      "targetRole": "BROAD_LEFT_SHOULDER",
+      "targetFamily": "BROAD",
+      "targetAngleDeg": -35,
+      "targetSpecificContourSource": "TARGET_GREEN_FAMILY_CLEANED_BOUNDARY_CONTOUR",
+      "contourCandidates": [
+        {
+          "candidateId": "LEAF_005_BROAD_C16",
+          "vertexCount": 16,
+          "silhouetteIoU": 0.937,
+          "centreErrorPx": 0.45,
+          "widthErrorPercent": 3.226,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 1,
+          "angleErrorDeg": 0.857,
+          "targetStats": {
+            "centre": [
+              18.21372031662269,
+              24.67282321899736
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              23,
+              40
+            ],
+            "angleDeg": 11.481991354748097
+          },
+          "actualStats": {
+            "centre": [
+              18.232309746328436,
+              24.222963951935913
+            ],
+            "bbox": {
+              "x0": 4,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 30,
+              "height": 33
+            },
+            "tip": [
+              15.5,
+              8
+            ],
+            "base": [
+              22.5,
+              40
+            ],
+            "angleDeg": 12.339087278326195
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": false,
+            "height": true,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_005",
+            "targetFamily": "BROAD",
+            "candidateId": "LEAF_005_BROAD_C16",
+            "contourVertexCount": 16,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_005_BROAD_C20",
+          "vertexCount": 20,
+          "silhouetteIoU": 0.9339,
+          "centreErrorPx": 0.435,
+          "widthErrorPercent": 3.226,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 0.5,
+          "angleErrorDeg": 3.477,
+          "targetStats": {
+            "centre": [
+              18.21372031662269,
+              24.67282321899736
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              23,
+              40
+            ],
+            "angleDeg": 11.481991354748097
+          },
+          "actualStats": {
+            "centre": [
+              18.261224489795918,
+              24.240816326530613
+            ],
+            "bbox": {
+              "x0": 4,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 30,
+              "height": 33
+            },
+            "tip": [
+              17,
+              8
+            ],
+            "base": [
+              21.5,
+              40
+            ],
+            "angleDeg": 8.004728857292857
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": false,
+            "height": true,
+            "tip": true,
+            "angle": false
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_005",
+            "targetFamily": "BROAD",
+            "candidateId": "LEAF_005_BROAD_C20",
+            "contourVertexCount": 20,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_005_BROAD_C24",
+          "vertexCount": 24,
+          "silhouetteIoU": 0.9495,
+          "centreErrorPx": 0.348,
+          "widthErrorPercent": 3.226,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 3.477,
+          "targetStats": {
+            "centre": [
+              18.21372031662269,
+              24.67282321899736
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              23,
+              40
+            ],
+            "angleDeg": 11.481991354748097
+          },
+          "actualStats": {
+            "centre": [
+              18.167336010709505,
+              24.327978580990628
+            ],
+            "bbox": {
+              "x0": 4,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 30,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              21,
+              40
+            ],
+            "angleDeg": 8.004728857292857
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": false,
+            "height": true,
+            "tip": true,
+            "angle": false
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_005",
+            "targetFamily": "BROAD",
+            "candidateId": "LEAF_005_BROAD_C24",
+            "contourVertexCount": 24,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_005_BROAD_C28",
+          "vertexCount": 28,
+          "silhouetteIoU": 0.9639,
+          "centreErrorPx": 0.262,
+          "widthErrorPercent": 0,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 0,
+          "targetStats": {
+            "centre": [
+              18.21372031662269,
+              24.67282321899736
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              23,
+              40
+            ],
+            "angleDeg": 11.481991354748097
+          },
+          "actualStats": {
+            "centre": [
+              18.14005235602094,
+              24.421465968586386
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              23,
+              40
+            ],
+            "angleDeg": 11.481991354748097
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": true,
+            "height": true,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_005",
+            "targetFamily": "BROAD",
+            "candidateId": "LEAF_005_BROAD_C28",
+            "contourVertexCount": 28,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_005_BROAD_C32",
+          "vertexCount": 32,
+          "silhouetteIoU": 0.9563,
+          "centreErrorPx": 0.368,
+          "widthErrorPercent": 0,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 0.5,
+          "angleErrorDeg": 1.73,
+          "targetStats": {
+            "centre": [
+              18.21372031662269,
+              24.67282321899736
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              16.5,
+              8
+            ],
+            "base": [
+              23,
+              40
+            ],
+            "angleDeg": 11.481991354748097
+          },
+          "actualStats": {
+            "centre": [
+              18.13219895287958,
+              24.31413612565445
+            ],
+            "bbox": {
+              "x0": 3,
+              "y0": 8,
+              "x1": 33,
+              "y1": 40,
+              "width": 31,
+              "height": 33
+            },
+            "tip": [
+              17,
+              8
+            ],
+            "base": [
+              22.5,
+              40
+            ],
+            "angleDeg": 9.752424941653784
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": true,
+            "height": true,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_005",
+            "targetFamily": "BROAD",
+            "candidateId": "LEAF_005_BROAD_C32",
+            "contourVertexCount": 32,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        }
+      ],
+      "selectedCandidate": {
+        "candidateId": "LEAF_005_BROAD_C28",
+        "vertexCount": 28,
+        "silhouetteIoU": 0.9639,
+        "centreErrorPx": 0.262,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "targetStats": {
+          "centre": [
+            18.21372031662269,
+            24.67282321899736
+          ],
+          "bbox": {
+            "x0": 3,
+            "y0": 8,
+            "x1": 33,
+            "y1": 40,
+            "width": 31,
+            "height": 33
+          },
+          "tip": [
+            16.5,
+            8
+          ],
+          "base": [
+            23,
+            40
+          ],
+          "angleDeg": 11.481991354748097
+        },
+        "actualStats": {
+          "centre": [
+            18.14005235602094,
+            24.421465968586386
+          ],
+          "bbox": {
+            "x0": 3,
+            "y0": 8,
+            "x1": 33,
+            "y1": 40,
+            "width": 31,
+            "height": 33
+          },
+          "tip": [
+            16.5,
+            8
+          ],
+          "base": [
+            23,
+            40
+          ],
+          "angleDeg": 11.481991354748097
+        },
+        "steamDeckBlenderProof": "PASS",
+        "gates": {
+          "silhouette": true,
+          "centre": true,
+          "width": true,
+          "height": true,
+          "tip": true,
+          "angle": true
+        },
+        "blenderResult": {
+          "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+          "leafId": "LEAF_005",
+          "targetFamily": "BROAD",
+          "candidateId": "LEAF_005_BROAD_C28",
+          "contourVertexCount": 28,
+          "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+          "referenceTextureUsedInBeauty": false,
+          "referencePlaneVisible": false,
+          "frontContourLocked": true,
+          "internalRidgeOnlyDepthChange": true,
+          "otherLeafGeometryChanged": false,
+          "flowersChanged": false,
+          "planterChanged": false,
+          "depthOrSideWorkPerformed": false,
+          "cameraLocked": true,
+          "anonymousGeometryCount": 0,
+          "mobileBudget": "PASS"
+        }
+      },
+      "directVision": {
+        "sameTargetLeaf": "YES",
+        "broadShoulderCharacter": "PASS",
+        "targetAsymmetry": "PASS",
+        "correctTip": "PASS",
+        "baseTaper": "PASS",
+        "narrownessMatches": "N/A",
+        "imagePlaneAngleMatches": "PASS",
+        "targetSpecificSilhouette": "PASS",
+        "targetSpecificTonalFaceting": "PASS",
+        "genericAppearance": "NO"
+      },
+      "visiblyDistinctFromLeaf001": true,
+      "otherLeavesChanged": false,
+      "flowersChanged": false,
+      "planterChanged": false,
+      "depthPerformed": false,
+      "referenceTextureUsedInBeauty": false,
+      "referencePlaneVisible": false,
+      "anonymousGeometryCount": 0,
+      "mobileBudget": "PASS"
+    },
+    {
+      "leafId": "LEAF_007",
+      "targetRole": "NARROW_ANGLED_FAR_LEFT_EDGE",
+      "targetFamily": "NARROW_ANGLED",
+      "targetAngleDeg": -48,
+      "targetSpecificContourSource": "TARGET_GREEN_FAMILY_CLEANED_BOUNDARY_CONTOUR",
+      "contourCandidates": [
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C16",
+          "vertexCount": 16,
+          "silhouetteIoU": 0.8502,
+          "centreErrorPx": 0.721,
+          "widthErrorPercent": 12,
+          "heightErrorPercent": 6.667,
+          "tipErrorPx": 1,
+          "angleErrorDeg": 0.176,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              21.895287958115183,
+              21.99214659685864
+            ],
+            "bbox": {
+              "x0": 10,
+              "y0": 8,
+              "x1": 31,
+              "y1": 35,
+              "width": 22,
+              "height": 28
+            },
+            "tip": [
+              15,
+              8
+            ],
+            "base": [
+              20.5,
+              35
+            ],
+            "angleDeg": 11.51383118448701
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C16",
+            "contourVertexCount": 16,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C20",
+          "vertexCount": 20,
+          "silhouetteIoU": 0.8841,
+          "centreErrorPx": 0.449,
+          "widthErrorPercent": 8,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 3.306,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              21.853535353535353,
+              22.31313131313131
+            ],
+            "bbox": {
+              "x0": 10,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 23,
+              "height": 29
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              21.5,
+              36
+            ],
+            "angleDeg": 14.995079129175988
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": false
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C20",
+            "contourVertexCount": 20,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C24",
+          "vertexCount": 24,
+          "silhouetteIoU": 0.8892,
+          "centreErrorPx": 0.482,
+          "widthErrorPercent": 4,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 0.5,
+          "angleErrorDeg": 1.38,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              22.088772845953002,
+              22.198433420365536
+            ],
+            "bbox": {
+              "x0": 9,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 24,
+              "height": 29
+            },
+            "tip": [
+              14.5,
+              8
+            ],
+            "base": [
+              21,
+              36
+            ],
+            "angleDeg": 13.069317896282179
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C24",
+            "contourVertexCount": 24,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C28",
+          "vertexCount": 28,
+          "silhouetteIoU": 0.8983,
+          "centreErrorPx": 0.452,
+          "widthErrorPercent": 8,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 1,
+          "angleErrorDeg": 0.576,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              22.055118110236222,
+              22.230971128608925
+            ],
+            "bbox": {
+              "x0": 10,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 23,
+              "height": 29
+            },
+            "tip": [
+              15,
+              8
+            ],
+            "base": [
+              20.5,
+              36
+            ],
+            "angleDeg": 11.1130405359483
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C28",
+            "contourVertexCount": 28,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C32",
+          "vertexCount": 32,
+          "silhouetteIoU": 0.8775,
+          "centreErrorPx": 0.579,
+          "widthErrorPercent": 4,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 1,
+          "angleErrorDeg": 1.565,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              22.041884816753928,
+              22.104712041884817
+            ],
+            "bbox": {
+              "x0": 9,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 24,
+              "height": 29
+            },
+            "tip": [
+              15,
+              8
+            ],
+            "base": [
+              20,
+              36
+            ],
+            "angleDeg": 10.124671655397817
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C32",
+            "contourVertexCount": 32,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C40",
+          "vertexCount": 40,
+          "silhouetteIoU": 0.9029,
+          "centreErrorPx": 0.348,
+          "widthErrorPercent": 0,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 3.306,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              21.8925,
+              22.41
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 25,
+              "height": 29
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              21.5,
+              36
+            ],
+            "angleDeg": 14.995079129175988
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": true,
+            "height": false,
+            "tip": true,
+            "angle": false
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C40",
+            "contourVertexCount": 40,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C48",
+          "vertexCount": 48,
+          "silhouetteIoU": 0.9024,
+          "centreErrorPx": 0.455,
+          "widthErrorPercent": 4,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 1,
+          "angleErrorDeg": 1.565,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              22.068181818181817,
+              22.227272727272727
+            ],
+            "bbox": {
+              "x0": 9,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 24,
+              "height": 29
+            },
+            "tip": [
+              15,
+              8
+            ],
+            "base": [
+              20,
+              36
+            ],
+            "angleDeg": 10.124671655397817
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": false,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C48",
+            "contourVertexCount": 48,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C64",
+          "vertexCount": 64,
+          "silhouetteIoU": 0.92,
+          "centreErrorPx": 0.241,
+          "widthErrorPercent": 4,
+          "heightErrorPercent": 3.333,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 0.405,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              22.135416666666668,
+              22.440104166666668
+            ],
+            "bbox": {
+              "x0": 9,
+              "y0": 8,
+              "x1": 32,
+              "y1": 36,
+              "width": 24,
+              "height": 29
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              36
+            ],
+            "angleDeg": 12.094757077012103
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": false,
+            "height": false,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C64",
+            "contourVertexCount": 64,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER",
+          "vertexCount": 64,
+          "silhouetteIoU": 0.9221,
+          "centreErrorPx": 0.423,
+          "widthErrorPercent": 4,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 0,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              22.002463054187192,
+              23.088669950738915
+            ],
+            "bbox": {
+              "x0": 9,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 24,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": false,
+            "height": true,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER",
+            "contourVertexCount": 64,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED_BASE_TAPER_MICRO_CALIBRATION",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        },
+        {
+          "candidateId": "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER_WIDTH",
+          "vertexCount": 64,
+          "silhouetteIoU": 0.9201,
+          "centreErrorPx": 0.523,
+          "widthErrorPercent": 0,
+          "heightErrorPercent": 0,
+          "tipErrorPx": 0,
+          "angleErrorDeg": 0,
+          "targetStats": {
+            "centre": [
+              22.111979166666668,
+              22.6796875
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "actualStats": {
+            "centre": [
+              21.90709046454768,
+              23.161369193154034
+            ],
+            "bbox": {
+              "x0": 8,
+              "y0": 8,
+              "x1": 32,
+              "y1": 37,
+              "width": 25,
+              "height": 30
+            },
+            "tip": [
+              14,
+              8
+            ],
+            "base": [
+              20,
+              37
+            ],
+            "angleDeg": 11.689369175439191
+          },
+          "steamDeckBlenderProof": "PASS",
+          "gates": {
+            "silhouette": true,
+            "centre": true,
+            "width": true,
+            "height": true,
+            "tip": true,
+            "angle": true
+          },
+          "blenderResult": {
+            "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+            "leafId": "LEAF_007",
+            "targetFamily": "NARROW_ANGLED",
+            "candidateId": "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER_WIDTH",
+            "contourVertexCount": 64,
+            "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED_BASE_TAPER_WIDTH_MICRO_CALIBRATION",
+            "referenceTextureUsedInBeauty": false,
+            "referencePlaneVisible": false,
+            "frontContourLocked": true,
+            "internalRidgeOnlyDepthChange": true,
+            "otherLeafGeometryChanged": false,
+            "flowersChanged": false,
+            "planterChanged": false,
+            "depthOrSideWorkPerformed": false,
+            "cameraLocked": true,
+            "anonymousGeometryCount": 0,
+            "mobileBudget": "PASS"
+          }
+        }
+      ],
+      "selectedCandidate": {
+        "candidateId": "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER_WIDTH",
+        "vertexCount": 64,
+        "silhouetteIoU": 0.9201,
+        "centreErrorPx": 0.523,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "targetStats": {
+          "centre": [
+            22.111979166666668,
+            22.6796875
+          ],
+          "bbox": {
+            "x0": 8,
+            "y0": 8,
+            "x1": 32,
+            "y1": 37,
+            "width": 25,
+            "height": 30
+          },
+          "tip": [
+            14,
+            8
+          ],
+          "base": [
+            20,
+            37
+          ],
+          "angleDeg": 11.689369175439191
+        },
+        "actualStats": {
+          "centre": [
+            21.90709046454768,
+            23.161369193154034
+          ],
+          "bbox": {
+            "x0": 8,
+            "y0": 8,
+            "x1": 32,
+            "y1": 37,
+            "width": 25,
+            "height": 30
+          },
+          "tip": [
+            14,
+            8
+          ],
+          "base": [
+            20,
+            37
+          ],
+          "angleDeg": 11.689369175439191
+        },
+        "steamDeckBlenderProof": "PASS",
+        "gates": {
+          "silhouette": true,
+          "centre": true,
+          "width": true,
+          "height": true,
+          "tip": true,
+          "angle": true
+        },
+        "blenderResult": {
+          "status": "PASS_TWO_LEAF_BLENDER_CANDIDATE",
+          "leafId": "LEAF_007",
+          "targetFamily": "NARROW_ANGLED",
+          "candidateId": "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER_WIDTH",
+          "contourVertexCount": 64,
+          "contourSource": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED_BASE_TAPER_WIDTH_MICRO_CALIBRATION",
+          "referenceTextureUsedInBeauty": false,
+          "referencePlaneVisible": false,
+          "frontContourLocked": true,
+          "internalRidgeOnlyDepthChange": true,
+          "otherLeafGeometryChanged": false,
+          "flowersChanged": false,
+          "planterChanged": false,
+          "depthOrSideWorkPerformed": false,
+          "cameraLocked": true,
+          "anonymousGeometryCount": 0,
+          "mobileBudget": "PASS"
+        }
+      },
+      "directVision": {
+        "sameTargetLeaf": "YES",
+        "broadShoulderCharacter": "N/A",
+        "targetAsymmetry": "PASS",
+        "correctTip": "PASS",
+        "baseTaper": "PASS",
+        "narrownessMatches": "PASS",
+        "imagePlaneAngleMatches": "PASS",
+        "targetSpecificSilhouette": "PASS",
+        "targetSpecificTonalFaceting": "PASS",
+        "genericAppearance": "NO"
+      },
+      "visiblyDistinctFromLeaf001": true,
+      "otherLeavesChanged": false,
+      "flowersChanged": false,
+      "planterChanged": false,
+      "depthPerformed": false,
+      "referenceTextureUsedInBeauty": false,
+      "referencePlaneVisible": false,
+      "anonymousGeometryCount": 0,
+      "mobileBudget": "PASS"
+    }
+  ],
+  "threeLeafMethodGeneralizes": true,
+  "targetSpecificContourMethod": "GENERALIZES",
+  "targetSpecificFacetMethod": "GENERALIZES",
+  "referenceImageryInBeauty": false,
+  "other23LeavesModified": false,
+  "depthPerformed": false,
+  "shopModified": false,
+  "eucalyptusStarted": false,
+  "steamDeck": "PASS",
+  "blenderVersion": "5.2.0 LTS",
+  "anonymousGeometry": 0,
+  "budget": "PASS",
+  "readyToRebuildRemaining23": true
+}

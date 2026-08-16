@@ -1,0 +1,58 @@
+{
+  "status": "PASS_TWO_LEAF_TARGET_SPECIFIC_SPECS",
+  "selected": [
+    {
+      "id": "LEAF_005",
+      "role": "BROAD_LEFT_SHOULDER",
+      "family": "BROAD"
+    },
+    {
+      "id": "LEAF_007",
+      "role": "NARROW_ANGLED_FAR_LEFT_EDGE",
+      "family": "NARROW_ANGLED"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "LEAF_005",
+      "family": "BROAD",
+      "candidateCount": 5,
+      "sourceContourVertexCount": 134,
+      "candidateIds": [
+        "LEAF_005_BROAD_C16",
+        "LEAF_005_BROAD_C20",
+        "LEAF_005_BROAD_C24",
+        "LEAF_005_BROAD_C28",
+        "LEAF_005_BROAD_C32"
+      ]
+    },
+    {
+      "id": "LEAF_007",
+      "family": "NARROW_ANGLED",
+      "candidateCount": 10,
+      "sourceContourVertexCount": 130,
+      "candidateIds": [
+        "LEAF_007_NARROW_ANGLED_C16",
+        "LEAF_007_NARROW_ANGLED_C20",
+        "LEAF_007_NARROW_ANGLED_C24",
+        "LEAF_007_NARROW_ANGLED_C28",
+        "LEAF_007_NARROW_ANGLED_C32",
+        "LEAF_007_NARROW_ANGLED_C40",
+        "LEAF_007_NARROW_ANGLED_C48",
+        "LEAF_007_NARROW_ANGLED_C64",
+        "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER",
+        "LEAF_007_NARROW_ANGLED_C64_BASE_TAPER_WIDTH"
+      ]
+    }
+  ],
+  "method": "TARGET_RASTER_BOUNDARY_CONTOUR_RESAMPLED",
+  "candidateCounts": [
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "depthPerformed": false,
+  "otherLeavesChanged": false
+}
