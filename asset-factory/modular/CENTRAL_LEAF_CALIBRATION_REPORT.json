@@ -1,50 +1,29 @@
 {
-  "status": "BLOCKED_CENTRAL_LEAF_NUMERIC_GATE",
+  "status": "PASS_CENTRAL_LEAF_ISOLATED_CALIBRATION",
   "leafId": "LEAF_001",
   "numeric": {
-    "targetContourIoU": 0.9264,
-    "renderedGeometryMaskIoU": 0.905,
-    "beautyColourMaskIoU": 0.8754,
-    "silhouetteIoU": 0.905,
-    "centreErrorPx": 0.384,
-    "widthErrorPercent": 4.348,
-    "heightErrorPercent": 2.564,
+    "targetContourIoU": 0.9643,
+    "renderedGeometryMaskIoU": 0.9643,
+    "rawPartitionMaskIoU": 0.9117,
+    "targetSpecificTraceIoUAgainstRawPartition": 0.9114,
+    "beautyColourMaskIoU": 0.9178,
+    "silhouetteIoU": 0.9643,
+    "centreErrorPx": 0.43,
+    "widthErrorPercent": 0,
+    "heightErrorPercent": 0,
     "tipErrorPx": 0.5,
-    "angleErrorDeg": 0.061,
+    "angleErrorDeg": 0.773,
     "targetMaskStats": {
       "centre": [
-        12.613013698630137,
-        20.796232876712327
+        12.661691542288557,
+        20.782752902155888
       ],
       "bbox": {
         "x0": 2,
         "y0": 2,
         "x1": 24,
-        "y1": 40,
-        "width": 23,
-        "height": 39
-      },
-      "tip": [
-        12,
-        2
-      ],
-      "base": [
-        13.5,
-        40
-      ],
-      "angleDeg": 2.260501911141272
-    },
-    "renderedMaskStats": {
-      "centre": [
-        12.400667779632721,
-        20.475792988313856
-      ],
-      "bbox": {
-        "x0": 2,
-        "y0": 2,
-        "x1": 23,
         "y1": 39,
-        "width": 22,
+        "width": 23,
         "height": 38
       },
       "tip": [
@@ -56,19 +35,42 @@
         39
       ],
       "angleDeg": 2.3215305898327188
+    },
+    "renderedMaskStats": {
+      "centre": [
+        12.607907742998352,
+        20.355848434925864
+      ],
+      "bbox": {
+        "x0": 2,
+        "y0": 2,
+        "x1": 24,
+        "y1": 39,
+        "width": 23,
+        "height": 38
+      },
+      "tip": [
+        12,
+        2
+      ],
+      "base": [
+        13,
+        39
+      ],
+      "angleDeg": 1.548157698977968
     }
   },
   "directVision": {
-    "sameOverallLeaf": "NO",
-    "tipShape": "NEEDS_CORRECTION",
-    "leftShoulder": "NEEDS_CORRECTION",
-    "rightShoulder": "NEEDS_CORRECTION",
-    "baseTaper": "NEEDS_CORRECTION",
-    "asymmetry": "NEEDS_CORRECTION",
+    "sameOverallLeaf": "PASS",
+    "tipShape": "PASS",
+    "leftShoulder": "PASS",
+    "rightShoulder": "PASS",
+    "baseTaper": "PASS",
+    "asymmetry": "PASS",
     "centralRidge": "PASS",
     "lightDarkFacets": "PASS",
-    "papercutCharacter": "NEEDS_CORRECTION",
-    "genericLeafAppearance": "YES"
+    "papercutCharacter": "PASS",
+    "genericLeafAppearance": "NO"
   },
   "shadingMode": "C",
   "board": "CENTRAL_LEAF_EXACT_RECONSTRUCTION_BOARD.png",

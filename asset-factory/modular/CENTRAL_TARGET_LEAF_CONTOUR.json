@@ -1975,15 +1975,23 @@
     "1.5": 0.92562
   },
   "chosenTolerance": "0.75",
-  "chosenVertexCount": 22,
+  "chosenVertexCount": 28,
   "chosenContour": [
     [
       94.5,
       31.5
     ],
     [
+      97,
+      33.5
+    ],
+    [
       98,
       35
+    ],
+    [
+      99,
+      36
     ],
     [
       101,
@@ -1994,16 +2002,16 @@
       40
     ],
     [
-      103.5,
-      43
-    ],
-    [
       105.5,
       44.5
     ],
     [
-      106,
+      106.5,
       46
+    ],
+    [
+      105.7,
+      47
     ],
     [
       105,
@@ -2022,6 +2030,10 @@
       65
     ],
     [
+      98.5,
+      66.5
+    ],
+    [
       96,
       69
     ],
@@ -2030,8 +2042,16 @@
       69
     ],
     [
+      92,
+      68
+    ],
+    [
       90,
       66
+    ],
+    [
+      88,
+      64.5
     ],
     [
       87,
@@ -2040,6 +2060,10 @@
     [
       85,
       59
+    ],
+    [
+      84,
+      56
     ],
     [
       83,
@@ -2152,8 +2176,16 @@
       31.5
     ],
     [
+      97,
+      33.5
+    ],
+    [
       98,
       35
+    ],
+    [
+      99,
+      36
     ],
     [
       101,
@@ -2164,16 +2196,16 @@
       40
     ],
     [
-      103.5,
-      43
-    ],
-    [
       105.5,
       44.5
     ],
     [
-      106,
+      106.5,
       46
+    ],
+    [
+      105.7,
+      47
     ],
     [
       105,
@@ -2192,6 +2224,10 @@
       65
     ],
     [
+      98.5,
+      66.5
+    ],
+    [
       96,
       69
     ],
@@ -2200,8 +2236,16 @@
       69
     ],
     [
+      92,
+      68
+    ],
+    [
       90,
       66
+    ],
+    [
+      88,
+      64.5
     ],
     [
       87,
@@ -2210,6 +2254,10 @@
     [
       85,
       59
+    ],
+    [
+      84,
+      56
     ],
     [
       83,
@@ -2236,7 +2284,8 @@
       31.5
     ]
   ],
-  "targetSpecificContourScore": 0.92635,
+  "targetSpecificContourScore": 0.911433,
+  "targetSpecificContourScoreAgainstRawPartition": 0.911433,
   "tonalMeasurement": {
     "baseColourRgb": [
       135,
@@ -2246,6 +2295,15 @@
     "lightSide": "LEFT_LIGHT",
     "colourClass": "LIGHT",
     "method": "target crop robust green-family median; no target pixels used in Blender material"
+  },
+  "rawPartitionMask": {
+    "filename": "CENTRAL_TARGET_LEAF_RAW_PARTITION_MASK.png",
+    "pixelCount": 584
+  },
+  "cleanVisibleMask": {
+    "filename": "CENTRAL_TARGET_LEAF_VISIBLE_MASK.png",
+    "pixelCount": 603,
+    "source": "TARGET_SPECIFIC_OCCLUSION_CLEANED_TRACE"
   },
   "outputs": {
     "reference": "CENTRAL_TARGET_LEAF_REFERENCE.png",

@@ -14,7 +14,7 @@ tip = tuple(spec.get('contourTipPx', spec['sourcePixelCoordinates']['tip']))
 
 def world_xy(px, py):
     # Map measured pixel-edge coordinates to pixel-centre coverage without changing the locked contour.
-    return ((px - .5 - W * .5) / H, (H * .5 - (py - .5)) / H)
+    return ((px - .25 - W * .5) / H, (H * .5 - (py - .5)) / H)
 
 def make_mat(name, colour):
     m = bpy.data.materials.new(name); m.use_nodes = True

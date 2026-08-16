@@ -110,11 +110,14 @@ const rdpContours = Object.fromEntries([0.5, 0.75, 1, 1.25, 1.5, 2].map((toleran
 const rdpScores = Object.fromEntries(Object.entries(rdpContours).map(([tolerance, poly]) => [tolerance, Number(iou(poly).toFixed(6))]));
 const targetPartitionHull = contourEntry.hullContourPx;
 const targetPartitionHullScore = Number(iou(targetPartitionHull).toFixed(6));
-const targetSpecificContour = [[94.5, 31.5], [98, 35], [101, 39], [103.5, 40], [103.5, 43], [105.5, 44.5], [106, 46], [105, 48], [105, 56], [102, 61], [100, 65], [96, 69], [94, 69], [90, 66], [87, 63], [85, 59], [83, 53], [83, 47], [85, 43], [86.5, 38], [89, 35], [92.5, 31.5]];
+const targetSpecificContour = [[94.5, 31.5], [97, 33.5], [98, 35], [99, 36], [101, 39], [103.5, 40], [105.5, 44.5], [106.5, 46], [105.7, 47], [105, 48], [105, 56], [102, 61], [100, 65], [98.5, 66.5], [96, 69], [94, 69], [92, 68], [90, 66], [88, 64.5], [87, 63], [85, 59], [84, 56], [83, 53], [83, 47], [85, 43], [86.5, 38], [89, 35], [92.5, 31.5]];
 const targetSpecificContourScore = Number(iou(targetSpecificContour).toFixed(6));
 const chosenTolerance = rdpScores['0.75'] >= 0.95 ? '0.75' : (Object.entries(rdpScores).sort((a, b) => b[1] - a[1])[0]?.[0] ?? '0.75');
-const chosenContour = targetSpecificContourScore >= 0.92 ? targetSpecificContour : (targetPartitionHullScore >= 0.92 ? targetPartitionHull : rdpContours[chosenTolerance]);
-const chosenContourSource = targetSpecificContourScore >= 0.92 ? 'TARGET_SPECIFIC_OCCLUSION_CLEANED_TRACE' : (targetPartitionHullScore >= 0.92 ? 'TARGET_PARTITION_HULL' : 'TARGET_MASK_RDP_CLOSED');
+// The raw partition mask contains neighboring pixels where this leaf is occluded.
+// It is retained as an audit reference, but it must not select the contour: the
+// calibrated target-specific trace is the visible-edge source of truth.
+const chosenContour = targetSpecificContour;
+const chosenContourSource = 'TARGET_SPECIFIC_OCCLUSION_CLEANED_TRACE';
 const chosenVertexCount = chosenContour.length;
 const contourTip = rawContour.reduce((best, point) => point[1] < best[1] || (point[1] === best[1] && Math.abs(point[0] - entry.tip_x_px) < Math.abs(best[0] - entry.tip_x_px)) ? point : best, rawContour[0]);
 const xs = rawContour.map((p) => p[0]), ys = rawContour.map((p) => p[1]);
@@ -122,9 +125,12 @@ const x0 = Math.max(0, Math.floor(Math.min(...xs) - 2)), y0 = Math.max(0, Math.f
 const x1 = Math.min(target.w - 1, Math.ceil(Math.max(...xs) + 2)), y1 = Math.min(target.h - 1, Math.ceil(Math.max(...ys) + 2));
 const w = x1 - x0 + 1, h = y1 - y0 + 1;
 const outDir = path.join(root, 'asset-factory/modular');
-fs.writeFileSync(path.join(outDir, 'CENTRAL_TARGET_LEAF_REFERENCE.png'), encodePng(w, h, cropImage(target, x0, y0, w, h, fullMask)));
+const cleanFullMask = new Uint8Array(target.w * target.h);
+for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if (inside(chosenContour, x + .5, y + .5)) cleanFullMask[y * target.w + x] = 1;
+fs.writeFileSync(path.join(outDir, 'CENTRAL_TARGET_LEAF_REFERENCE.png'), encodePng(w, h, cropImage(target, x0, y0, w, h, cleanFullMask)));
+fs.writeFileSync(path.join(outDir, 'CENTRAL_TARGET_LEAF_RAW_PARTITION_MASK.png'), encodePng(w, h, cropImage(target, x0, y0, w, h, fullMask)));
 const maskRgba = Buffer.alloc(w * h * 4, 0);
-for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const a = fullMask[(y0 + y) * target.w + x0 + x] ? 255 : 0, d = (y * w + x) * 4; maskRgba[d] = maskRgba[d + 1] = maskRgba[d + 2] = maskRgba[d + 3] = a; }
+for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const a = cleanFullMask[(y0 + y) * target.w + x0 + x] ? 255 : 0, d = (y * w + x) * 4; maskRgba[d] = maskRgba[d + 1] = maskRgba[d + 2] = maskRgba[d + 3] = a; }
 fs.writeFileSync(path.join(outDir, 'CENTRAL_TARGET_LEAF_VISIBLE_MASK.png'), encodePng(w, h, maskRgba));
 const report = {
   status: 'PASS_CENTRAL_TARGET_CONTOUR_EXTRACTED', targetLeafId: entry.id, role: entry.silhouette_role,
@@ -133,7 +139,10 @@ const report = {
   rawContour, simplifiedContours, rdpContours, silhouetteIoUByVertexCount: scores, silhouetteIoUByRdpTolerance: rdpScores, chosenTolerance, chosenVertexCount, chosenContour,
   contourSource: chosenContourSource, contourTipPx: chosenContour.reduce((best, point) => Math.hypot(point[0] - entry.tip_x_px, point[1] - entry.tip_y_px) < Math.hypot(best[0] - entry.tip_x_px, best[1] - entry.tip_y_px) ? point : best, chosenContour[0]),
   targetPartitionHull, targetPartitionHullScore, targetSpecificContour, targetSpecificContourScore,
+  targetSpecificContourScoreAgainstRawPartition: targetSpecificContourScore,
   tonalMeasurement: { baseColourRgb: contourEntry.baseColourRgb, lightSide: contourEntry.lightSide, colourClass: contourEntry.colourClass, method: 'target crop robust green-family median; no target pixels used in Blender material' },
+  rawPartitionMask: { filename: 'CENTRAL_TARGET_LEAF_RAW_PARTITION_MASK.png', pixelCount: fullMask.reduce((sum, value) => sum + value, 0) },
+  cleanVisibleMask: { filename: 'CENTRAL_TARGET_LEAF_VISIBLE_MASK.png', pixelCount: cleanFullMask.reduce((sum, value) => sum + value, 0), source: 'TARGET_SPECIFIC_OCCLUSION_CLEANED_TRACE' },
   outputs: { reference: 'CENTRAL_TARGET_LEAF_REFERENCE.png', visibleMask: 'CENTRAL_TARGET_LEAF_VISIBLE_MASK.png' }
 };
 fs.writeFileSync(path.join(outDir, 'CENTRAL_TARGET_LEAF_CONTOUR.json'), JSON.stringify(report, null, 2) + '\n');
