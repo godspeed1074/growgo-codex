@@ -1,0 +1,696 @@
+{
+  "status": "PASS_26_LEAF_TARGET_SPECIFIC_PRODUCTION_SPECS",
+  "referenceChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+  "visibleLeafCount": 26,
+  "protectedCalibrationLeaves": [
+    "LEAF_001",
+    "LEAF_005",
+    "LEAF_007"
+  ],
+  "remainingLeaves": [
+    "LEAF_002",
+    "LEAF_003",
+    "LEAF_004",
+    "LEAF_006",
+    "LEAF_008",
+    "LEAF_009",
+    "LEAF_010",
+    "LEAF_011",
+    "LEAF_012",
+    "LEAF_013",
+    "LEAF_014",
+    "LEAF_015",
+    "LEAF_016",
+    "LEAF_017",
+    "LEAF_018",
+    "LEAF_019",
+    "LEAF_020",
+    "LEAF_021",
+    "LEAF_022",
+    "LEAF_023",
+    "LEAF_024",
+    "LEAF_025",
+    "LEAF_026"
+  ],
+  "secondaryObservedRegionLeaves": [
+    "LEAF_020",
+    "LEAF_021",
+    "LEAF_022",
+    "LEAF_023",
+    "LEAF_024",
+    "LEAF_025",
+    "LEAF_026"
+  ],
+  "candidateCounts": [
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "method": "TARGET_GREEN_FAMILY_CLEANED_BOUNDARY_CONTOUR_RESAMPLED_PER_LEAF",
+  "depthPerformed": false,
+  "otherLeavesChanged": false,
+  "flowersChanged": false,
+  "planterChanged": false,
+  "shopModified": false,
+  "eucalyptusStarted": false,
+  "specs": [
+    {
+      "id": "LEAF_001",
+      "dominant": true,
+      "protected": true,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 130,
+      "maskPixels": 571
+    },
+    {
+      "id": "LEAF_002",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 138,
+      "maskPixels": 663
+    },
+    {
+      "id": "LEAF_003",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 168,
+      "maskPixels": 487
+    },
+    {
+      "id": "LEAF_004",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 140,
+      "maskPixels": 334
+    },
+    {
+      "id": "LEAF_005",
+      "dominant": true,
+      "protected": true,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 134,
+      "maskPixels": 758
+    },
+    {
+      "id": "LEAF_006",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 116,
+      "maskPixels": 480
+    },
+    {
+      "id": "LEAF_007",
+      "dominant": true,
+      "protected": true,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 130,
+      "maskPixels": 384
+    },
+    {
+      "id": "LEAF_008",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 146,
+      "maskPixels": 693
+    },
+    {
+      "id": "LEAF_009",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 154,
+      "maskPixels": 536
+    },
+    {
+      "id": "LEAF_010",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 128,
+      "maskPixels": 760
+    },
+    {
+      "id": "LEAF_011",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 140,
+      "maskPixels": 284
+    },
+    {
+      "id": "LEAF_012",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 152,
+      "maskPixels": 720
+    },
+    {
+      "id": "LEAF_013",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 142,
+      "maskPixels": 623
+    },
+    {
+      "id": "LEAF_014",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 142,
+      "maskPixels": 714
+    },
+    {
+      "id": "LEAF_015",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 111,
+      "maskPixels": 699
+    },
+    {
+      "id": "LEAF_016",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 144,
+      "maskPixels": 466
+    },
+    {
+      "id": "LEAF_017",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 159,
+      "maskPixels": 347
+    },
+    {
+      "id": "LEAF_018",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 96,
+      "maskPixels": 147
+    },
+    {
+      "id": "LEAF_019",
+      "dominant": true,
+      "protected": false,
+      "secondaryObservedRegion": false,
+      "candidates": 14,
+      "contourVertices": 104,
+      "maskPixels": 212
+    },
+    {
+      "id": "LEAF_020",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 88,
+      "maskPixels": 322
+    },
+    {
+      "id": "LEAF_021",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 228,
+      "maskPixels": 480
+    },
+    {
+      "id": "LEAF_022",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 88,
+      "maskPixels": 235
+    },
+    {
+      "id": "LEAF_023",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 62,
+      "maskPixels": 202
+    },
+    {
+      "id": "LEAF_024",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 96,
+      "maskPixels": 251
+    },
+    {
+      "id": "LEAF_025",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 68,
+      "maskPixels": 242
+    },
+    {
+      "id": "LEAF_026",
+      "dominant": false,
+      "protected": false,
+      "secondaryObservedRegion": true,
+      "candidates": 14,
+      "contourVertices": 76,
+      "maskPixels": 289
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "LEAF_001",
+      "cropBox": [
+        79,
+        25,
+        111,
+        73
+      ],
+      "componentSizes": [
+        571,
+        9
+      ],
+      "selectedLargestComponent": 571,
+      "contourVertices": 130,
+      "maskPixels": 571
+    },
+    {
+      "id": "LEAF_002",
+      "cropBox": [
+        53,
+        46,
+        87,
+        90
+      ],
+      "componentSizes": [
+        663
+      ],
+      "selectedLargestComponent": 663,
+      "contourVertices": 138,
+      "maskPixels": 663
+    },
+    {
+      "id": "LEAF_003",
+      "cropBox": [
+        102,
+        45,
+        138,
+        91
+      ],
+      "componentSizes": [
+        487,
+        1
+      ],
+      "selectedLargestComponent": 487,
+      "contourVertices": 168,
+      "maskPixels": 487
+    },
+    {
+      "id": "LEAF_004",
+      "cropBox": [
+        79,
+        64,
+        111,
+        98
+      ],
+      "componentSizes": [
+        334
+      ],
+      "selectedLargestComponent": 334,
+      "contourVertices": 140,
+      "maskPixels": 334
+    },
+    {
+      "id": "LEAF_005",
+      "cropBox": [
+        35,
+        64,
+        71,
+        112
+      ],
+      "componentSizes": [
+        758
+      ],
+      "selectedLargestComponent": 758,
+      "contourVertices": 134,
+      "maskPixels": 758
+    },
+    {
+      "id": "LEAF_006",
+      "cropBox": [
+        119,
+        65,
+        157,
+        111
+      ],
+      "componentSizes": [
+        480,
+        2
+      ],
+      "selectedLargestComponent": 480,
+      "contourVertices": 116,
+      "maskPixels": 480
+    },
+    {
+      "id": "LEAF_007",
+      "cropBox": [
+        21,
+        83,
+        55,
+        127
+      ],
+      "componentSizes": [
+        384
+      ],
+      "selectedLargestComponent": 384,
+      "contourVertices": 130,
+      "maskPixels": 384
+    },
+    {
+      "id": "LEAF_008",
+      "cropBox": [
+        47,
+        83,
+        83,
+        129
+      ],
+      "componentSizes": [
+        693
+      ],
+      "selectedLargestComponent": 693,
+      "contourVertices": 146,
+      "maskPixels": 693
+    },
+    {
+      "id": "LEAF_009",
+      "cropBox": [
+        79,
+        82,
+        109,
+        130
+      ],
+      "componentSizes": [
+        536
+      ],
+      "selectedLargestComponent": 536,
+      "contourVertices": 154,
+      "maskPixels": 536
+    },
+    {
+      "id": "LEAF_010",
+      "cropBox": [
+        101,
+        83,
+        137,
+        129
+      ],
+      "componentSizes": [
+        760
+      ],
+      "selectedLargestComponent": 760,
+      "contourVertices": 128,
+      "maskPixels": 760
+    },
+    {
+      "id": "LEAF_011",
+      "cropBox": [
+        133,
+        84,
+        169,
+        130
+      ],
+      "componentSizes": [
+        284
+      ],
+      "selectedLargestComponent": 284,
+      "contourVertices": 140,
+      "maskPixels": 284
+    },
+    {
+      "id": "LEAF_012",
+      "cropBox": [
+        22,
+        104,
+        62,
+        148
+      ],
+      "componentSizes": [
+        720
+      ],
+      "selectedLargestComponent": 720,
+      "contourVertices": 152,
+      "maskPixels": 720
+    },
+    {
+      "id": "LEAF_013",
+      "cropBox": [
+        50,
+        105,
+        88,
+        155
+      ],
+      "componentSizes": [
+        623
+      ],
+      "selectedLargestComponent": 623,
+      "contourVertices": 142,
+      "maskPixels": 623
+    },
+    {
+      "id": "LEAF_014",
+      "cropBox": [
+        78,
+        109,
+        114,
+        155
+      ],
+      "componentSizes": [
+        714
+      ],
+      "selectedLargestComponent": 714,
+      "contourVertices": 142,
+      "maskPixels": 714
+    },
+    {
+      "id": "LEAF_015",
+      "cropBox": [
+        101,
+        106,
+        141,
+        154
+      ],
+      "componentSizes": [
+        699
+      ],
+      "selectedLargestComponent": 699,
+      "contourVertices": 111,
+      "maskPixels": 699
+    },
+    {
+      "id": "LEAF_016",
+      "cropBox": [
+        132,
+        108,
+        170,
+        152
+      ],
+      "componentSizes": [
+        466
+      ],
+      "selectedLargestComponent": 466,
+      "contourVertices": 144,
+      "maskPixels": 466
+    },
+    {
+      "id": "LEAF_017",
+      "cropBox": [
+        11,
+        130,
+        47,
+        162
+      ],
+      "componentSizes": [
+        347
+      ],
+      "selectedLargestComponent": 347,
+      "contourVertices": 159,
+      "maskPixels": 347
+    },
+    {
+      "id": "LEAF_018",
+      "cropBox": [
+        34,
+        130,
+        72,
+        167
+      ],
+      "componentSizes": [
+        147,
+        1
+      ],
+      "selectedLargestComponent": 147,
+      "contourVertices": 96,
+      "maskPixels": 147
+    },
+    {
+      "id": "LEAF_019",
+      "cropBox": [
+        60,
+        129,
+        98,
+        167
+      ],
+      "componentSizes": [
+        212
+      ],
+      "selectedLargestComponent": 212,
+      "contourVertices": 104,
+      "maskPixels": 212
+    },
+    {
+      "id": "LEAF_020",
+      "cropBox": [
+        89,
+        130,
+        127,
+        167
+      ],
+      "componentSizes": [
+        322,
+        203,
+        6
+      ],
+      "selectedLargestComponent": 322,
+      "contourVertices": 88,
+      "maskPixels": 322
+    },
+    {
+      "id": "LEAF_021",
+      "cropBox": [
+        116,
+        130,
+        156,
+        167
+      ],
+      "componentSizes": [
+        480,
+        2,
+        1,
+        1,
+        1
+      ],
+      "selectedLargestComponent": 480,
+      "contourVertices": 228,
+      "maskPixels": 480
+    },
+    {
+      "id": "LEAF_022",
+      "cropBox": [
+        142,
+        134,
+        176,
+        167
+      ],
+      "componentSizes": [
+        235
+      ],
+      "selectedLargestComponent": 235,
+      "contourVertices": 88,
+      "maskPixels": 235
+    },
+    {
+      "id": "LEAF_023",
+      "cropBox": [
+        19,
+        150,
+        51,
+        167
+      ],
+      "componentSizes": [
+        202
+      ],
+      "selectedLargestComponent": 202,
+      "contourVertices": 62,
+      "maskPixels": 202
+    },
+    {
+      "id": "LEAF_024",
+      "cropBox": [
+        43,
+        148,
+        73,
+        167
+      ],
+      "componentSizes": [
+        251
+      ],
+      "selectedLargestComponent": 251,
+      "contourVertices": 96,
+      "maskPixels": 251
+    },
+    {
+      "id": "LEAF_025",
+      "cropBox": [
+        114,
+        148,
+        146,
+        167
+      ],
+      "componentSizes": [
+        242
+      ],
+      "selectedLargestComponent": 242,
+      "contourVertices": 68,
+      "maskPixels": 242
+    },
+    {
+      "id": "LEAF_026",
+      "cropBox": [
+        136,
+        148,
+        170,
+        167
+      ],
+      "componentSizes": [
+        289
+      ],
+      "selectedLargestComponent": 289,
+      "contourVertices": 76,
+      "maskPixels": 289
+    }
+  ]
+}
