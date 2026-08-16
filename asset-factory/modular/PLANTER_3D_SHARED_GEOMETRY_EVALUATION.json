@@ -1,0 +1,38 @@
+{
+  "status": "BLOCKED_SHARED_PLANTER_GEOMETRY",
+  "foliagePresentationPreserved": true,
+  "planterFrontWidthErrorPercent": 0,
+  "planterFrontHeightErrorPercent": 0,
+  "depthCandidatesPercent": [
+    16,
+    20,
+    24
+  ],
+  "winningPlanterDepthPercent": "NOT_SELECTED",
+  "foliageAnchor": {
+    "id": "PLANTER_FOLIAGE_ORIGIN",
+    "x": -0.014367818832397461,
+    "sceneDepth": 0.12600001060962676,
+    "vertical": -0.17942528307437897
+  },
+  "foliageAnchorXErrorPx": "NOT_MEASURABLE — no final composite is permitted",
+  "foliageAnchorZErrorPx": "NOT_MEASURABLE — no final composite is permitted",
+  "views": {
+    "0": "PASS_FRONT_ONLY",
+    "M30": "FAIL_TALL_SLAB",
+    "M15": "FAIL_TALL_SLAB",
+    "P15": "FAIL_TALL_SLAB",
+    "P30": "FAIL_TALL_SLAB"
+  },
+  "giantWallArtifact": "YES",
+  "planterDetached": "NO",
+  "soilOpening": "PASS_SOURCE_SOIL_RETAINED",
+  "gameplay1X": "FAIL_PLANTER",
+  "gameplay2X": "FAIL_PLANTER",
+  "sourcePreserved": true,
+  "foliageModified": false,
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "anonymousGeometry": 0,
+  "decisionReason": "All bounded depth variants preserve the front but the existing 2.5D planter construction remains a tall slab at oblique angles. It must be rebuilt as a genuine shallow box before any sprite composite is considered."
+}
