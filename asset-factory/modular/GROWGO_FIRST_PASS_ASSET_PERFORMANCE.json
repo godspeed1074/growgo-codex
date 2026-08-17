@@ -30,6 +30,22 @@
       "lessonsApplied": ["ownership before measurement", "shared reference grid", "measured parametric architecture", "profiles before Blender", "reference-derived modular front art from the beginning", "unlit presentation treatment", "camera-scoped visibility requirements"]
     }
   ],
+  "approvedFirstPassAssemblies": [
+    {
+      "facadeFamily": "GG-FACADE-COMMERCIAL-SIMPLE-001",
+      "recipe": "GG-BLD-FACADE-SIMPLE-SHOP-001",
+      "operatorApproved": true,
+      "ownershipFirstPlanning": "PASS",
+      "sharedFacadeGrid": "PASS",
+      "approvedDoorWindowReuse": "PASS",
+      "twoDSameStorefrontPreflight": "YES",
+      "retainedBlenderCandidates": 1,
+      "sameStorefrontVision": "YES",
+      "genericBlockout": "NO",
+      "budget": "PASS",
+      "firstPassStandardRegression": "NO"
+    }
+  ],
   "permanentStandardsCreated": [
     "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
     "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT"
