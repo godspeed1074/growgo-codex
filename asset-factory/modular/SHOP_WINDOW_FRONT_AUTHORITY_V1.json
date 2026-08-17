@@ -1,0 +1,21 @@
+{
+  "authorityId": "SHOP_WINDOW_FRONT_AUTHORITY_V1",
+  "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+  "version": "1.0.0",
+  "status": "LOCKED_PENDING_OPERATOR_APPROVAL",
+  "lockedEvidence": {
+    "sameWindowVision": "YES",
+    "frontRequiredVisibility": "11/11 PASS",
+    "obliqueRequiredVisibility": "2/2 PASS",
+    "guideAudit": "PASS",
+    "ownership": "PASS",
+    "papercut": "PASS",
+    "genericBlockout": "NO",
+    "budget": "PASS",
+    "steamDeck": "PASS",
+    "meaningfulFrontRegression": "NO"
+  },
+  "protected": ["shared X/Z grid", "manufacturing specification", "reference-derived art layers", "front appearance", "component ownership"],
+  "knownGood": "NO",
+  "promotion": "Operator approval is still required; no publishing or Layer B integration occurred."
+}

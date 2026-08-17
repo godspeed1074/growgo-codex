@@ -1,0 +1,22 @@
+{
+  "contractId": "SHOP_WINDOW_COMPONENT_VISIBILITY_SCOPE_V1",
+  "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+  "version": "1.0.0",
+  "authority": "SHOP_WINDOW_FRONT_AUTHORITY_V1_PENDING",
+  "rule": "A required component is evaluated in the camera/view where its reference-backed purpose is intended to be visible. FRONT_REQUIRED components need meaningful authoritative-front beauty pixels; OBLIQUE_REQUIRED depth returns need meaningful pixels in their named oblique QA view; STRUCTURAL_ONLY components remain validated by ownership and structural presence.",
+  "components": [
+    {"componentId":"W01","name":"main glass","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"The teal glass is the principal storefront surface.","referenceEvidence":"Visible interior/glass field within the measured opening."},
+    {"componentId":"W02","name":"dark reveal","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"The reference visibly uses a dark perimeter/shadow relationship around the glass.","referenceEvidence":"Reference-derived WINDOW_OPENING_SHADOW art layer; measured 8–10 px reveal boundary."},
+    {"componentId":"W03","name":"left inner frame","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible left edge of the inner opening.","referenceEvidence":"Measured inner-frame left boundary."},
+    {"componentId":"W04","name":"right inner frame","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible right edge of the inner opening.","referenceEvidence":"Measured inner-frame right boundary."},
+    {"componentId":"W05","name":"top inner frame","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible top of the inner opening.","referenceEvidence":"Measured inner-frame top boundary."},
+    {"componentId":"W06","name":"bottom inner frame","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible lower edge of the inner opening.","referenceEvidence":"Measured inner-frame lower boundary."},
+    {"componentId":"W07","name":"left outer casing","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible cream casing.","referenceEvidence":"Measured left casing silhouette."},
+    {"componentId":"W08","name":"right outer casing","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible cream casing.","referenceEvidence":"Measured right casing silhouette."},
+    {"componentId":"W09","name":"head","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible top architectural cap.","referenceEvidence":"Measured head band."},
+    {"componentId":"W10","name":"sill","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible cream sill band.","referenceEvidence":"Measured sill silhouette."},
+    {"componentId":"W11","name":"apron","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"Front-visible lower trim/apron.","referenceEvidence":"Measured apron silhouette."},
+    {"componentId":"W12","name":"left sill return","visibilityScope":"OBLIQUE_REQUIRED","expectedView":"15_LEFT","reason":"A shallow side return supports real sill depth but is intentionally not forced into the front silhouette.","referenceEvidence":"Reference front shows the sill face, not a required left-return projection."},
+    {"componentId":"W13","name":"right sill return","visibilityScope":"OBLIQUE_REQUIRED","expectedView":"15_RIGHT","reason":"A shallow side return supports real sill depth but is intentionally not forced into the front silhouette.","referenceEvidence":"Reference front shows the sill face, not a required right-return projection."}
+  ]
+}

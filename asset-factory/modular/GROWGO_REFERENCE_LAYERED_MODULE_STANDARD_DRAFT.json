@@ -11,7 +11,7 @@
     "simple palette sides/back",
     "component IDs",
     "four-side review",
-    "visible-pixel gate",
+    "visibility-scope pixel gate",
     "mobile budget"
   ],
   "modules": {
@@ -129,5 +129,7 @@
     "decisionTree": ["define module ownership", "shared reference grid", "exact front measurements", "visible-component inventory", "depth/profile rules", "material/tonal map", "2D preflight", "fabricate measured 3D structural carcass", "when geometry-only presentation remains blocky, add modular reference-derived front art layers", "use unlit material for locked front art", "preserve real 3D structure for depth, anchors, collision, and side QA"],
     "requirements": ["no monolithic full-door texture", "component-owned transparent art layers", "source-context contamination equals zero", "structural source remains editable", "side/back use simple structural materials", "front authority remains separately versioned"],
     "doorProof": "SHOP_DOOR_FRONT_AUTHORITY_V4"
-  }
+  },
+  "requiredComponentVisibilityRule": "Required component visibility must be evaluated in the camera/view where that component is intended to be visible. Front-authority components require front beauty pixels. Depth returns and side construction may satisfy visibility through oblique/side QA. Structural-only components must not be artificially exposed merely to satisfy a front-render detector.",
+  "frontRequiredVisibilityRule": "Any component classified FRONT_REQUIRED must actually contribute meaningful beauty pixels in the authoritative front render."
 }

@@ -10,7 +10,7 @@ def box(n,l,r,t,b,y,d,cid,m):
 box('W01_MAIN_GLASS',10,231,23,190,-.060,.010,'W01',T)
 for n,l,r,t,b in [('TOP',8,233,21,23),('BOTTOM',8,233,190,192),('LEFT',8,10,23,190),('RIGHT',231,233,23,190)]:box('W02_DARK_REVEAL_'+n,l,r,t,b,-.072,.012,'W02',D)
 for cid,l,r,t,b in [('W03',8,10,21,192),('W04',231,233,21,192),('W05',8,233,21,23),('W06',8,233,190,192)]:box(cid+'_INNER_FRAME',l,r,t,b,-.088,.018,cid,C)
-for cid,l,r,t,b in [('W07',0,8,15,206),('W08',239,247,15,206),('W09',0,247,0,15),('W10',0,247,190,206),('W11',0,247,206,222),('W12',0,10,190,206),('W13',237,247,190,206)]:box(cid+'_STRUCTURE',l,r,t,b,-.080 if cid in ['W10','W11','W12','W13'] else -.050,.030,cid,C)
+for cid,l,r,t,b in [('W07',0,8,15,206),('W08',239,247,15,206),('W09',0,247,0,15),('W10',0,247,190,206),('W11',0,247,206,222),('W12',0,10,190,206),('W13',237,247,190,206)]:box(cid+'_STRUCTURE',l,r,t,b,-.098 if cid in ['W12','W13'] else (-.080 if cid in ['W10','W11'] else -.050),.030,cid,C)
 anchor=bpy.data.objects.new('WINDOW_DISPLAY_ANCHOR',None);bpy.context.collection.objects.link(anchor);anchor.parent=root;anchor['assetId']='GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001'
 artFiles=[('WINDOW_OPENING_SHADOW','W02'),('WINDOW_OUTER_FRAME','W07'),('WINDOW_INNER_FRAME','W03'),('WINDOW_GLASS','W01'),('WINDOW_SILL','W10'),('WINDOW_DISPLAY_INTERIOR','P01'),('WINDOW_DISPLAY_SIGN','P08')];planes=[]
 def artplane(n,cid,i):
@@ -19,6 +19,10 @@ for i,(n,c) in enumerate(artFiles):artplane(n,c,i)
 s=bpy.context.scene;s.render.engine='BLENDER_EEVEE';s.render.resolution_x=750;s.render.resolution_y=675;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.view_settings.view_transform='Standard';s.view_settings.look='None';bpy.ops.object.camera_add(location=(0,-8,Z(111)));cam=bpy.context.object;cam.data.type='ORTHO';cam.data.ortho_scale=225*U*1.05;s.camera=cam;cam.rotation_euler=((Vector((0,0,cam.location.z))-cam.location).to_track_quat('-Z','Y')).to_euler()
 def render(n):s.render.filepath=os.path.join(out,n);bpy.ops.render.render(write_still=True)
 render('SHOP_WINDOW_V1_FRONT.png')
+target=Vector((0,0,cam.location.z));radius=8.0
+for degrees,label in [(15,'15_LEFT'),(30,'30_LEFT'),(-15,'15_RIGHT'),(-30,'30_RIGHT')]:
+ a=degrees*math.pi/180;cam.location=(radius*math.sin(a),-radius*math.cos(a),target.z);cam.rotation_euler=((target-cam.location).to_track_quat('-Z','Y')).to_euler();render('SHOP_WINDOW_V1_'+label+'.png')
+cam.location=(0,-radius,target.z);cam.rotation_euler=((target-cam.location).to_track_quat('-Z','Y')).to_euler()
 # Structural component ID image and occlusion-aware visibility masks.
 for p in planes:p.hide_render=True
 s.render.engine='BLENDER_WORKBENCH'
