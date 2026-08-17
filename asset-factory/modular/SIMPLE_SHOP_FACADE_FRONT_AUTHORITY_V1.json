@@ -1,1 +1,16 @@
-{"authorityId":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1","status":"OPERATOR_APPROVED","operatorApproved":true,"facadeFamily":"GG-FACADE-COMMERCIAL-SIMPLE-001","recipe":"GG-BLD-FACADE-SIMPLE-SHOP-001","gates":{"sameStorefront":"YES","ownership":"PASS","reuseAudit":"PASS","guideAudit":"PASS","visibility":"PASS","papercut":"PASS","genericBlockout":"NO","budget":"PASS","steamDeck":"PASS"},"knownGood":"NO","knownGoodReason":"The existing contract does not permit automatic known-good assignment.","shopIntegrated":false,"frontChecksum":"c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3"}
+{
+  "authorityId": "SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1",
+  "status": "OPERATOR_APPROVED",
+  "operatorApproved": true,
+  "facadeFamily": "GG-FACADE-COMMERCIAL-SIMPLE-001",
+  "recipe": "GG-BLD-FACADE-SIMPLE-SHOP-001",
+  "gates": {"sameStorefront":"YES","ownership":"PASS","reuseAudit":"PASS","guideAudit":"PASS","visibility":"PASS","papercut":"PASS","genericBlockout":"NO","budget":"PASS","steamDeck":"PASS"},
+  "knownGood": "NO",
+  "knownGoodReason": "The existing contract does not permit automatic known-good assignment.",
+  "shopIntegrated": false,
+  "frontChecksum": "c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3",
+  "historicalRawArtifactSha256": "c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3",
+  "canonicalVisualChecksum": {"contractVersion":"CANONICAL_DECODED_RGBA8_SHA256_V1","algorithm":"SHA-256","canonicalization":"DECODE_PNG_RGBA8_ROW_MAJOR_R_G_B_A","width":760,"height":670,"channelFormat":"RGBA8","checksum":"3487de9ab46bea98af5b4979633621a56c60d881656c675a6df145ad27ddd2a9","provenance":{"approvedArtifact":"SIMPLE_SHOP_FACADE_V1_FRONT.png","migration":"ADDITIVE_CANONICAL_VISUAL_AUTHORITY_UPGRADE_V1","historicalRawArtifactSha256Preserved":true}},
+  "semanticPresentationSignature": {"algorithm":"SHA-256","canonicalization":"SORTED_JSON_OBJECT_KEYS_V1","checksum":"45705cc2c8b14a37e56c07082ae720a4409bec4229776d0e0ceaf387b7249bba","includes":["object IDs and names","component IDs","transforms","dimensions","mesh counts","material IDs","art-layer checksums","camera ID and settings","render dimensions and settings","guide-contract identity"],"guideContractIdentity":"SIMPLE_SHOP_FACADE_X_GUIDES_V1+SIMPLE_SHOP_FACADE_Z_GUIDES_V1"},
+  "authorityMigration": {"version":"ADDITIVE_CANONICAL_VISUAL_AUTHORITY_UPGRADE_V1","approvalStateChanged":false,"knownGoodChanged":false,"visualAppearanceChanged":false}
+}

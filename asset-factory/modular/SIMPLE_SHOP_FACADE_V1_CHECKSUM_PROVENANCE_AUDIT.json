@@ -15,5 +15,6 @@
   "byteDeterministicBlendRequiredByExistingContract": false,
   "contractGuarantees": ["deterministic modular generation metadata", "deterministic recipe assembly", "worker artifact checksums per returned package", "visual authority and protected camera gates"],
   "contractDoesNotGuarantee": ["byte-identical Blender .blend saves", "byte-identical PNG containers across Blender writes"],
-  "remediationForApproval": "Add a canonical decoded-pixel/semantic presentation checksum to a future authority-contract revision; do not rewrite the existing operator-approved raw SHA-256."
+  "remediationForApproval": "Complete: the additive canonical decoded-pixel/semantic presentation checksum authority upgrade preserves the existing operator-approved raw SHA-256.",
+  "canonicalVisualAuthorityUpgrade": {"contractVersion":"CANONICAL_DECODED_RGBA8_SHA256_V1","historicalRawArtifactSha256":"c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3","approvedCanonicalSha256":"3487de9ab46bea98af5b4979633621a56c60d881656c675a6df145ad27ddd2a9","regeneratedCanonicalSha256":"3487de9ab46bea98af5b4979633621a56c60d881656c675a6df145ad27ddd2a9","canonicalMatch":"YES","semanticMatch":"YES","provenance":"PASS","visualRegression":"NO","approvedPresentationEquivalent":"YES"}
 }
