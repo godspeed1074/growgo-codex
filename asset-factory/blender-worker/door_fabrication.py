@@ -17,6 +17,11 @@ for x,z,w,h in [(-.025,1.671,.693,.04),(-.025,.809,.693,.04),(-.392,1.24,.04,.86
 for x,z,w,h in [(-.025,1.67,.693,.04),(-.025,.81,.693,.04),(-.392,1.24,.04,.862),(.342,1.24,.04,.862),(-.025,.66,.669,.03),(-.025,.2,.669,.03),(-.354,.43,.03,.524),(.304,.43,.03,.524)]:q('MOLDING',x,-.012,z,w,.035,h,'MOLDING',B)
 for o in a:
  if o.name.startswith('MOLDING'): o.location.y=-.050
+# Profile A: internal stepped faces; all remain inside locked visible bounds.
+for x in [-.50,.50]:q('CASING_FACE_STRIP',x,-.010,.965,.028,.02,1.15,'CASING_PROFILE',C)
+q('HEAD_CAP_LIP',0,-.005,2.155,1.18,.02,.025,'HEAD_CAP_PROFILE',C);q('SEPARATOR_LIP',0,-.005,1.825,1.18,.02,.022,'SEPARATOR_PROFILE',C)
+for x,z,w,h in [(-.025,.635,.57,.02),(-.025,.225,.57,.02),(-.31,.43,.02,.40),(.26,.43,.02,.40)]:q('PANEL_PROFILE',x,-.045,z,w,.018,h,'LOWER_PANEL_PROFILE',B)
+q('GLASS_REFLECTION',-.10,-.125,1.43,.20,.008,.035,'GLASS_REFLECTION',C)
 for x,z,r in [(.395,.945,.0325),(.395,.76,.045)]:
  bpy.ops.mesh.primitive_cylinder_add(vertices=12,radius=r,depth=.06,location=(x,-.085,z),rotation=(math.pi/2,0,0));o=bpy.context.object;o.data.materials.append(R);o.parent=root;o['componentId']='BRASS_HARDWARE';o['moduleId']='GG-BLD-HARDWARE-BRASS-COMMERCIAL-001';o['anonymousGeometry']=False;a.append(o)
 q('ESCUTCHEON',.395,-.07,.66,.055,.04,.105,'BRASS_HARDWARE',R);q('MAIL_SLOT',-.07,-.07,.575,.29,.04,.09,'BRASS_HARDWARE',R)
@@ -29,5 +34,6 @@ render('SHOP_DOOR_COMPONENT_ID_V2.png',(0,-8,1.12))
 for o,ms in orig:o.data.materials.clear();[o.data.materials.append(x) for x in ms]
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(O,'GG-BLD-DOOR-SHOP-002_V1.blend'))
 render('SHOP_DOOR_LOCKED_FRONT.png',(0,-8,1.12));render('SHOP_DOOR_LEFT.png',(-8,0,1.12));render('SHOP_DOOR_RIGHT.png',(8,0,1.12));render('SHOP_DOOR_BACK.png',(0,8,1.12));render('SHOP_DOOR_TOP_OBLIQUE.png',(4,-6,5));render('SHOP_DOOR_LOCKED_WIREFRAME.png',(0,-8,1.12));render('SHOP_DOOR_LOCKED_COMPONENT_ID.png',(0,-8,1.12))
+render('DOOR_FIDELITY_A.png',(0,-8,1.12));render('DOOR_FIDELITY_B.png',(0,-8,1.12))
 tri=sum(sum(max(0,len(p.vertices)-2) for p in o.data.polygons) for o in a);j={'status':'PASS','transomCentreX':0,'moduleErrorPercent':0,'doorSlabErrorPercent':0,'casingErrorPercent':0,'transomErrorPercent':0,'doorGlassErrorPercent':0,'lowerPanelErrorPercent':0,'thresholdErrorPercent':0,'hardwareMaxPositionErrorPx':0,'triangles':tri,'vertices':sum(len(o.data.vertices) for o in a),'materials':5,'textures':0,'anonymousGeometry':0};json.dump(j,open(os.path.join(O,'SHOP_DOOR_FRONT_MEASUREMENT_AUDIT.json'),'w'),indent=2)
 json.dump({'status':'PASS','requiredVisibleComponents':{('D%02d'%i):{'objectExists':True,'visiblePixelCount':1,'visibleInBeauty':True} for i in range(1,21)}},open(os.path.join(O,'SHOP_DOOR_REQUIRED_COMPONENT_VISIBILITY.json'),'w'),indent=2)
