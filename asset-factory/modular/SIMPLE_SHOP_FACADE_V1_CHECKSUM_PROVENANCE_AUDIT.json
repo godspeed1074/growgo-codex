@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "classification": "NONDETERMINISTIC_CONTAINER_BYTES",
+  "authority": {"fieldPath":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1.frontChecksum","checksum":"c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3","algorithm":"SHA-256","artifactType":"approved front PNG render","artifactName":"SIMPLE_SHOP_FACADE_V1_FRONT.png","recordedAtLockCommit":"c7ca79b4ba89438eb74e5396a4f0652f95bcf818","stableThroughPromotionCommit":"29d2e9ec43dc7ae5888104318c465cbcb91cb12f"},
+  "regenerated": {"checksum":"7980e7bafb9bed1ae46aac3b94f8e807f5d9404d91d3e7abac79cd0e80d14a2e","algorithm":"SHA-256","artifactType":"regenerated front PNG render","path":"test-output/simple-shop-facade-v1/SIMPLE_SHOP_FACADE_V1_FRONT.png","pipelineStage":"Steam Deck Blender 5.2.0 LTS facade build","generatingScript":"asset-factory/blender-worker/steam-deck-simple-shop-facade-v1.py","postProcess":"none after Blender PNG write"},
+  "chain": [
+    {"stage":"authoritative reference","artifact":"SHOP_REFERENCE_VISIBLE_FACADE.png","checksum":"e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c","algorithm":"SHA-256","record":"SIMPLE_SHOP_FACADE_REFERENCE_AUTHORITY.json"},
+    {"stage":"manufacturing spec","artifact":"SIMPLE_SHOP_FACADE_MANUFACTURING_SPEC_V1.json","checksum":"8eb3637e6852231dbea285d7eff33dfb021e190bd3fb4b43d7afaad6c79a22eb","algorithm":"SHA-256","producingScript":"build-simple-shop-facade-preflight.mjs"},
+    {"stage":"original approved Blender build","artifact":"GG-BLD-FACADE-SIMPLE-SHOP-001_V1.blend","checksum":"48f4ad9ba2c55bb58eba51b809cdaddc3de51ba5a3112f5bb7382dbfaf62290b","algorithm":"SHA-256","recordedArtifact":"read-only approved output cache"},
+    {"stage":"regenerated Blender build","artifact":"GG-BLD-FACADE-SIMPLE-SHOP-001_V1.blend","checksum":"86e9714be863e4f653c094013b039547389969188d3c565c21fe33c1d104f58c","algorithm":"SHA-256","recordedArtifact":"normal checkout ignored output cache"},
+    {"stage":"approved render authority","artifact":"SIMPLE_SHOP_FACADE_V1_FRONT.png","checksum":"c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3","algorithm":"SHA-256","record":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1.json"},
+    {"stage":"promotion","artifact":"COMMERCIAL_SIMPLE_FACADE_LIBRARY_PROMOTION_V1.json","checksumReference":"c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3","record":"provenance.appearanceChecksum"}
+  ],
+  "promotionRecordsAgree": true,
+  "byteDeterministicBlendRequiredByExistingContract": false,
+  "contractGuarantees": ["deterministic modular generation metadata", "deterministic recipe assembly", "worker artifact checksums per returned package", "visual authority and protected camera gates"],
+  "contractDoesNotGuarantee": ["byte-identical Blender .blend saves", "byte-identical PNG containers across Blender writes"],
+  "remediationForApproval": "Add a canonical decoded-pixel/semantic presentation checksum to a future authority-contract revision; do not rewrite the existing operator-approved raw SHA-256."
+}

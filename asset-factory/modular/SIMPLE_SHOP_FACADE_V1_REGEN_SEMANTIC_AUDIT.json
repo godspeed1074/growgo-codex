@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "semanticMatch": "YES",
+  "approvedBuild": {"blendSha256":"48f4ad9ba2c55bb58eba51b809cdaddc3de51ba5a3112f5bb7382dbfaf62290b","frontPngSha256":"c21ffefb1bce1e2341816d4e695dcec3644c9deb511430523b65a8e484f745c3"},
+  "regeneratedBuild": {"blendSha256":"86e9714be863e4f653c094013b039547389969188d3c565c21fe33c1d104f58c","frontPngSha256":"7980e7bafb9bed1ae46aac3b94f8e807f5d9404d91d3e7abac79cd0e80d14a2e"},
+  "semanticInspection": {"objectNames":"MATCH","objectCount":"MATCH","transforms":"MATCH","meshVertexTriangleCounts":"MATCH","materialsAndParameters":"MATCH","dimensions":"MATCH","registeredAssetIds":"MATCH","camera":"MATCH","renderSettings":"MATCH","artLayerChecksums":"MATCH"},
+  "visualComparison": {"sameDimensions":true,"meanRgbDifference":0,"differentPixelPercent":0,"maxRgbDifference":0,"silhouetteIoU":1,"guideAlignment":"PASS","sameStorefront":"YES","visualRegression":"NO","approvedDoorUnchanged":"YES","approvedWindowUnchanged":"YES"},
+  "interpretation":"Raw PNG SHA-256 differs because Blender emitted different container bytes; decoded visual content and inspected build semantics are equivalent."
+}
