@@ -3,7 +3,7 @@ from mathutils import Vector
 O=sys.argv[sys.argv.index('--')+1];os.makedirs(O,exist_ok=True);bpy.ops.wm.read_factory_settings(use_empty=True)
 def M(n,c):
  m=bpy.data.materials.new(n);m.diffuse_color=(*c,1);m.use_nodes=True;m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*c,1);m.node_tree.nodes.get('Principled BSDF').inputs['Roughness'].default_value=.8;return m
-B,C,T,R,D=M('MAT_DOOR_WARM_BROWN',(.22,.1,.05)),M('MAT_TRIM_WARM_CREAM',(.7,.55,.35)),M('MAT_GLASS_TEAL',(.05,.3,.35)),M('MAT_BRASS_GROWGO',(.7,.45,.1)),M('MAT_DARK_REVEAL',(.04,.02,.015));a=[]
+B,C,T,R,D,LT=M('MAT_DOOR_WARM_BROWN',(.22,.1,.05)),M('MAT_TRIM_WARM_CREAM',(.7,.55,.35)),M('MAT_GLASS_TEAL',(.05,.3,.35)),M('MAT_BRASS_GROWGO',(.7,.45,.1)),M('MAT_DARK_REVEAL',(.04,.02,.015)),M('MAT_GLASS_TEAL_REFLECTION',(.12,.43,.47));a=[]
 root=bpy.data.objects.new('GG_ROOT_DOOR_SHOP_002',None);bpy.context.collection.objects.link(root)
 def q(n,x,y,z,w,d,h,cid,mat):
  bpy.ops.mesh.primitive_cube_add(size=1,location=(x,y,z));o=bpy.context.object;o.name=n;o.dimensions=(w,d,h);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(mat);o.parent=root;o['componentId']=cid;o['moduleId']='GG-BLD-DOOR-SHOP-002';o['layer']='LAYER_A_MODULE';o['anonymousGeometry']=False;a.append(o)
@@ -21,7 +21,9 @@ for o in a:
 for x in [-.50,.50]:q('CASING_FACE_STRIP',x,-.010,.965,.028,.02,1.15,'CASING_PROFILE',C)
 q('HEAD_CAP_LIP',0,-.005,2.155,1.18,.02,.025,'HEAD_CAP_PROFILE',C);q('SEPARATOR_LIP',0,-.005,1.825,1.18,.02,.022,'SEPARATOR_PROFILE',C)
 for x,z,w,h in [(-.025,.635,.57,.02),(-.025,.225,.57,.02),(-.31,.43,.02,.40),(.26,.43,.02,.40)]:q('PANEL_PROFILE',x,-.045,z,w,.018,h,'LOWER_PANEL_PROFILE',B)
-q('GLASS_REFLECTION',-.10,-.125,1.43,.20,.008,.035,'GLASS_REFLECTION',C)
+q('GLASS_REFLECTION',-.10,-.125,1.43,.20,.008,.035,'GLASS_REFLECTION',LT)
+for o in a:
+ if o.name=='GLASS_REFLECTION':o.rotation_euler[1]=-.32
 for x,z,r in [(.395,.945,.0325),(.395,.76,.045)]:
  bpy.ops.mesh.primitive_cylinder_add(vertices=12,radius=r,depth=.06,location=(x,-.085,z),rotation=(math.pi/2,0,0));o=bpy.context.object;o.data.materials.append(R);o.parent=root;o['componentId']='BRASS_HARDWARE';o['moduleId']='GG-BLD-HARDWARE-BRASS-COMMERCIAL-001';o['anonymousGeometry']=False;a.append(o)
 q('ESCUTCHEON',.395,-.07,.66,.055,.04,.105,'BRASS_HARDWARE',R);q('MAIL_SLOT',-.07,-.07,.575,.29,.04,.09,'BRASS_HARDWARE',R)
