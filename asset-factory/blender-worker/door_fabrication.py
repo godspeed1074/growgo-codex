@@ -1,6 +1,6 @@
 import bpy,sys,os,json,math,hashlib
 from mathutils import Vector
-ARG=sys.argv[sys.argv.index('--')+1:];O=ARG[0];SPEC=ARG[1] if len(ARG)>1 else None;PARAMETRIC_ARCHITECTURE=(len(ARG)>2 and ARG[2]=='PARAMETRIC_ARCHITECTURE_V1');os.makedirs(O,exist_ok=True);bpy.ops.wm.read_factory_settings(use_empty=True)
+ARG=sys.argv[sys.argv.index('--')+1:];O=ARG[0];SPEC=ARG[1] if len(ARG)>1 else None;MODE=ARG[2] if len(ARG)>2 else '';PARAMETRIC_ARCHITECTURE=MODE in ('PARAMETRIC_ARCHITECTURE_V1','LOCAL_FIX_CANDIDATES_V1');LOCAL_FIX_CANDIDATES=MODE=='LOCAL_FIX_CANDIDATES_V1';os.makedirs(O,exist_ok=True);bpy.ops.wm.read_factory_settings(use_empty=True)
 def M(n,c):
  m=bpy.data.materials.new(n);m.diffuse_color=(*c,1);m.use_nodes=True;m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*c,1);m.node_tree.nodes.get('Principled BSDF').inputs['Roughness'].default_value=.8;return m
 B,C,T,R,D,LT=M('MAT_DOOR_WARM_BROWN',(.22,.1,.05)),M('MAT_TRIM_WARM_CREAM',(.7,.55,.35)),M('MAT_GLASS_TEAL',(.05,.3,.35)),M('MAT_BRASS_GROWGO',(.7,.45,.1)),M('MAT_DARK_REVEAL',(.04,.02,.015)),M('MAT_GLASS_TEAL_REFLECTION',(.12,.43,.47));a=[]
@@ -8,7 +8,7 @@ root=bpy.data.objects.new('GG_ROOT_DOOR_SHOP_002',None);bpy.context.collection.o
 REPLACED={'CASING','PLINTH','TRANSOM_SEPARATOR','HEAD_CAP','LOWER_PANEL','THRESHOLD','CASING_FACE_STRIP','HEAD_CAP_LIP','SEPARATOR_LIP','PANEL_PROFILE','CASING_BAND_A','CASING_BAND_B','CASING_BEAD','CASING_REVEAL','HEAD_CAP_TIER','SEPARATOR_TIER','PLINTH_TIER','THRESHOLD_TIER','LOWER_PANEL_TIER'}
 def q(n,x,y,z,w,d,h,cid,mat):
  if SPEC and (n in REPLACED or (n=='MOLDING' and z < .7)): return
- bpy.ops.mesh.primitive_cube_add(size=1,location=(x,y,z));o=bpy.context.object;o.name=n;o.dimensions=(w,d,h);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(mat);o.parent=root;o['componentId']=cid;o['moduleId']='GG-BLD-DOOR-SHOP-002';o['layer']='LAYER_A_MODULE';o['anonymousGeometry']=False;a.append(o)
+ bpy.ops.mesh.primitive_cube_add(size=1,location=(x,y,z));o=bpy.context.object;o.name=n;o.dimensions=(w,d,h);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(mat);o.parent=root;o['componentId']=cid;o['moduleId']='GG-BLD-DOOR-SHOP-002';o['layer']='LAYER_A_MODULE';o['anonymousGeometry']=False;a.append(o);return o
 q('DOOR_SLAB',0,-.018,.965,.931,.10,1.726,'DOOR_SLAB',B)
 for x in [-.537,.537]:q('CASING',x,.024,.965,.15,.07,1.726,'CASING_VERTICAL',C);q('PLINTH',x,.036,.15,.15,.09,.30,'PLINTH_BLOCK',C)
 q('TRANSOM_SEPARATOR',0,.04,1.862,1.25,.08,.109,'TRANSOM_SEPARATOR',C);q('TRANSOM_GLASS',0,-.035,2.048,.872,.03,.183,'TRANSOM_GLASS',T);q('HEAD_CAP',0,.04,2.194,1.25,.08,.113,'HEAD_CAP',C)
@@ -73,16 +73,44 @@ if PARAMETRIC_ARCHITECTURE:
   q('PLINTH_UPPER_TRANSITION',x0,-.085,.325,.150,.028,.050,'D12' if side<0 else 'D13',C)
   q('PLINTH_MAIN_BLOCK',x0,-.090,.200,.150,.030,.180,'D12' if side<0 else 'D13',C)
   q('PLINTH_LOWER_FOOT',x0,-.103,.065,.150,.036,.070,'D12' if side<0 else 'D13',C)
- # D05 outer molding, D04 inner step and recessed panel use the locked 0.609×0.464 bounds.
- for x,z,w,h in [(-.025,.647,.609,.030),(-.025,.213,.609,.030),(-.3195,.430,.030,.464),(.2695,.430,.030,.464)]:q('LOWER_PANEL_OUTER_MOLDING',x,-.008,z,w,.018,h,'D05',B)
- for x,z,w,h in [(-.025,.617,.549,.020),(-.025,.243,.549,.020),(-.2945,.430,.020,.384),(.2445,.430,.020,.384)]:q('LOWER_PANEL_INNER_STEP',x,-.020,z,w,.020,h,'D05',B)
- q('LOWER_PANEL_RECESSED_FACE',-.025,-.032,.430,.509,.010,.344,'D04',D)
- # D20: three strictly rectangular threshold steps inside its locked envelope.
- q('THRESHOLD_TOP_SILL',0,-.025,.095,1.05,.025,.030,'D20',C)
- q('THRESHOLD_MIDDLE_STEP',0,-.038,.060,1.05,.038,.035,'D20',C)
- q('THRESHOLD_FRONT_LIP',0,-.050,.020,1.05,.050,.025,'D20',C)
+ if not LOCAL_FIX_CANDIDATES:
+  # D05 outer molding, D04 inner step and recessed panel use the locked 0.609×0.464 bounds.
+  for x,z,w,h in [(-.025,.647,.609,.030),(-.025,.213,.609,.030),(-.3195,.430,.030,.464),(.2695,.430,.030,.464)]:q('LOWER_PANEL_OUTER_MOLDING',x,-.008,z,w,.018,h,'D05',B)
+  for x,z,w,h in [(-.025,.617,.549,.020),(-.025,.243,.549,.020),(-.2945,.430,.020,.384),(.2445,.430,.020,.384)]:q('LOWER_PANEL_INNER_STEP',x,-.020,z,w,.020,h,'D05',B)
+  q('LOWER_PANEL_RECESSED_FACE',-.025,-.032,.430,.509,.010,.344,'D04',D)
+  # D20: three strictly rectangular threshold steps inside its locked envelope.
+  q('THRESHOLD_TOP_SILL',0,-.025,.095,1.05,.025,.030,'D20',C)
+  q('THRESHOLD_MIDDLE_STEP',0,-.038,.060,1.05,.038,.035,'D20',C)
+  q('THRESHOLD_FRONT_LIP',0,-.050,.020,1.05,.050,.025,'D20',C)
+candidate_objects=[]
+if LOCAL_FIX_CANDIDATES:
+ def cand(o,label): o['candidate']=label;candidate_objects.append(o);return o
+ def panel_variant(label,outer,step,y_outer,y_step,y_face):
+  cx,cz,w,h=-.025,.430,.609,.464;ix=w/2-outer;iz=h/2-outer
+  for x,z,ww,hh in [(cx,cz+iz,w,outer),(cx,cz-iz,w,outer),(cx-w/2+outer/2,cz,outer,h),(cx+w/2-outer/2,cz,outer,h)]:cand(q('PANEL_'+label+'_OUTER',x,y_outer,z,ww,.018,hh,'D05',B),label)
+  iw=w-2*(outer+step);ih=h-2*(outer+step);sx=iw/2+step/2;sz=ih/2+step/2
+  for x,z,ww,hh in [(cx,cz+sz,iw+2*step,step),(cx,cz-sz,iw+2*step,step),(cx-sx,cz,step,ih),(cx+sx,cz,step,ih)]:cand(q('PANEL_'+label+'_STEP',x,y_step,z,ww,.020,hh,'D05',B),label)
+  cand(q('PANEL_'+label+'_RECESSED_FACE',cx,y_face,cz,iw,.010,ih,'D04',D),label)
+ def threshold_variant(label,top_h,mid_h,lip_h,y_top,y_mid,y_lip):
+  cand(q('THRESHOLD_'+label+'_TOP',0,y_top,.11-top_h/2,.98,.025,top_h,'D20',C),label)
+  cand(q('THRESHOLD_'+label+'_MIDDLE',0,y_mid,.11-top_h-mid_h/2,1.02,.038,mid_h,'D20',C),label)
+  cand(q('THRESHOLD_'+label+'_LIP',0,y_lip,lip_h/2,1.05,.050,lip_h,'D20',C),label)
+ # Camera-facing Y is negative in this locked scene.  These shallow offsets keep
+ # the same prescribed X/Z envelopes but put each nested layer ahead of the slab.
+ panel_variant('A',.026,.016,-.079,-.072,-.066);threshold_variant('A',.026,.034,.050,-.075,-.088,-.100)
+ panel_variant('B',.030,.020,-.087,-.077,-.069);threshold_variant('B',.022,.038,.050,-.075,-.088,-.100)
+ panel_variant('C',.034,.022,-.095,-.082,-.072);threshold_variant('C',.018,.040,.052,-.077,-.090,-.102)
+ for o in candidate_objects:o.hide_render=(o['candidate']!='B')
 s=bpy.context.scene;s.render.resolution_x=600;s.render.resolution_y=900;s.render.image_settings.file_format='PNG';bpy.ops.object.light_add(type='AREA',location=(-3,-5,5));bpy.context.object.data.energy=800;bpy.context.object.data.size=4;bpy.ops.object.camera_add(location=(0,-8,1.12));cam=bpy.context.object;cam.data.type='ORTHO';cam.data.ortho_scale=2.8;s.camera=cam
 def render(n,p):cam.location=p;cam.rotation_euler=((Vector((0,0,1.12))-cam.location).to_track_quat('-Z','Y')).to_euler();s.render.filepath=os.path.join(O,n);bpy.ops.render.render(write_still=True)
+def render_candidate(label,n):
+ for o in candidate_objects:o.hide_render=(o['candidate']!=label)
+ render(n,(0,-8,1.12))
+if LOCAL_FIX_CANDIDATES:
+ render_candidate('A','SHOP_DOOR_LOCAL_FIX_A.png');render_candidate('B','SHOP_DOOR_LOCAL_FIX_B.png');render_candidate('C','SHOP_DOOR_LOCAL_FIX_C.png');render_candidate('B','SHOP_DOOR_LOCAL_FIX_FINAL.png')
+ # Review variants A/C are evidence only.  The isolated candidate contains B only.
+ for o in list(candidate_objects):
+  if o['candidate']!='B': a.remove(o);bpy.data.objects.remove(o,do_unlink=True)
 render('SHOP_DOOR_FRONT_V2.png',(0,-8,1.12))
 if not SPEC:
  render('SHOP_DOOR_LEFT_V2.png',(-8,0,1.12));render('SHOP_DOOR_RIGHT_V2.png',(8,0,1.12));render('SHOP_DOOR_BACK_V2.png',(0,8,1.12));render('SHOP_DOOR_TOP_OBLIQUE_V2.png',(4,-6,5))

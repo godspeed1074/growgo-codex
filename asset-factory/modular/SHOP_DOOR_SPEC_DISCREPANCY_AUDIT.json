@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "comparisonBasis": "width/height normalized to the V1 module width; V1 values are copied from the current isolated door script and V2 values derive only from the shared reference grid.",
+  "components": {
+    "slab": {"v1": {"width": 0.761, "height": 1.410}, "v2": {"width": 0.683, "height": 1.323}, "deltaPercent": {"width": -10.3, "height": -6.2}},
+    "mainGlass": {"v1": {"width": 0.501, "height": 0.672}, "v2": {"width": 0.457, "height": 0.640}, "deltaPercent": {"width": -8.8, "height": -4.8}},
+    "glassFrame": {"v1": {"width": 0.566, "height": 0.737}, "v2": {"width": 0.457, "height": 0.640}, "deltaPercent": {"width": -19.3, "height": -13.2}},
+    "casing": {"v1": {"width": 0.123, "height": 1.410}, "v2": {"width": 0.140, "height": 1.323}, "deltaPercent": {"width": 13.8, "height": -6.2}},
+    "panel": {"v1": {"width": 0.498, "height": 0.379}, "v2": {"width": 0.457, "height": 0.341}, "deltaPercent": {"width": -8.2, "height": -10.0}},
+    "mailSlot": {"v1": {"width": 0.237, "axisZ": 0.470}, "v2": {"width": 0.226, "axisZ": 0.506}, "deltaPercent": {"width": -4.6, "axisZ": 7.7}},
+    "hardwareAxis": {"v1": {"x": 0.823}, "v2": {"x": 0.774}, "deltaPercent": {"x": -6.0}},
+    "threshold": {"v1": {"width": 0.858, "height": 0.090}, "v2": {"width": 0.683, "height": 0.232}, "deltaPercent": {"width": -20.4, "height": 157.8}},
+    "transom": {"v1": {"width": 0.712, "height": 0.150}, "v2": {"width": 0.683, "height": 0.189}, "deltaPercent": {"width": -4.1, "height": 26.0}},
+    "head": {"v1": {"width": 1.021, "height": 0.092}, "v2": {"width": 0.976, "height": 0.122}, "deltaPercent": {"width": -4.4, "height": 32.6}}
+  },
+  "largestV1Discrepancy": {"component": "threshold height", "percent": 157.8},
+  "visibleMismatchDrivers": [
+    "V1 threshold is 20.4% too wide and 157.8% too short relative to the shared reference grid.",
+    "V1 glass frame is 19.3% too wide and 13.2% too tall.",
+    "V1 slab is 10.3% too wide; this expands the door independently of its casing.",
+    "V1 panel is both wider and taller than the shared reference opening."
+  ]
+}

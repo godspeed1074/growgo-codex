@@ -1,0 +1,82 @@
+{
+  "specId": "SHOP_DOOR_MANUFACTURING_SPEC_V2",
+  "version": "2.0.0",
+  "status": "PREFLIGHT_PASS",
+  "supersedes": "SHOP_DOOR_MANUFACTURING_SPEC_V1",
+  "historicalV1Source": "asset-factory/blender-worker/door_fabrication.py",
+  "authority": {
+    "primary": "test-output/door-exact-reconstruction/DOOR_GOLDEN_REFERENCE_CROP.png",
+    "primaryPixels": {"width": 300, "height": 350},
+    "upperArchitectureSupplement": "test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+    "measurementRule": "All lower-door component bounds derive from the common primary grid; upper clipped features are projected into that same grid only from the supplementary reference using shared casing/slab anchors.",
+    "neverMeasuredFrom": ["Blender renders", "previous candidate renders"]
+  },
+  "coordinateSystem": {"origin": "top-left of primary crop", "x": "rightward pixels", "z": "downward pixels", "moduleWidthPx": 164},
+  "xGuides": {
+    "X_MODULE_LEFT": 94,
+    "X_CASING_OUTER_LEFT": 96,
+    "X_CASING_INNER_LEFT": 119,
+    "X_SLAB_LEFT": 120,
+    "X_GLASS_LEFT": 136,
+    "X_GLASS_RIGHT": 211,
+    "X_HARDWARE_AXIS": 221,
+    "X_SLAB_RIGHT": 232,
+    "X_CASING_INNER_RIGHT": 233,
+    "X_CASING_OUTER_RIGHT": 256,
+    "X_MODULE_RIGHT": 258
+  },
+  "zGuides": {
+    "Z_GROUND": 291,
+    "Z_THRESHOLD_BOTTOM": 279,
+    "Z_THRESHOLD_TOP": 241,
+    "Z_SLAB_BOTTOM": 241,
+    "Z_PANEL_BOTTOM": 222,
+    "Z_PANEL_TOP": 166,
+    "Z_MAIL_SLOT_AXIS": 177,
+    "Z_GLASS_BOTTOM": 148,
+    "Z_GLASS_TOP": 43,
+    "Z_SLAB_TOP": 24,
+    "Z_SEPARATOR_BOTTOM": 23,
+    "Z_SEPARATOR_TOP": 9,
+    "Z_TRANSOM_GLASS_BOTTOM": 8,
+    "Z_TRANSOM_GLASS_TOP": -23,
+    "Z_HEAD_BOTTOM": -24,
+    "Z_HEAD_TOP": -44
+  },
+  "derivedBoundsPx": {
+    "SLAB": {"left": 120, "right": 232, "top": 24, "bottom": 241},
+    "MAIN_GLASS": {"left": 136, "right": 211, "top": 43, "bottom": 148},
+    "CASING_LEFT": {"left": 96, "right": 119, "top": 24, "bottom": 241},
+    "CASING_RIGHT": {"left": 233, "right": 256, "top": 24, "bottom": 241},
+    "LOWER_PANEL": {"left": 136, "right": 211, "top": 166, "bottom": 222},
+    "MAIL_SLOT": {"left": 155, "right": 192, "axisZ": 177},
+    "HARDWARE": {"axisX": 221, "top": 123, "bottom": 190},
+    "THRESHOLD": {"left": 120, "right": 232, "top": 241, "bottom": 279},
+    "TRANSOM": {"left": 120, "right": 232, "top": -23, "bottom": 8},
+    "HEAD": {"left": 96, "right": 256, "top": -44, "bottom": -24}
+  },
+  "normalizedToModule": {
+    "slab": {"x": 0.683, "z": 1.323},
+    "mainGlass": {"x": 0.457, "z": 0.640},
+    "casing": {"x": 0.140, "z": 1.323},
+    "lowerPanel": {"x": 0.457, "z": 0.341},
+    "threshold": {"x": 0.683, "z": 0.232},
+    "transom": {"x": 0.683, "z": 0.189},
+    "head": {"x": 0.976, "z": 0.122}
+  },
+  "visionGate": {
+    "sameDoor": "YES",
+    "overallProportions": "PASS",
+    "slab": "PASS",
+    "mainGlass": "PASS",
+    "casing": "PASS",
+    "lowerPanel": "PASS",
+    "mailSlot": "PASS",
+    "hardware": "PASS",
+    "threshold": "PASS",
+    "transomHead": "PASS",
+    "reason": "The shared-guide 2D preflight aligns the coordinated architectural bounds and reference-facing feature axes. This is a geometry/placement decision only; material and depth fidelity remain fabrication work."
+  },
+  "v1Status": "SUPERSEDED",
+  "fabrication": {"authorized": true, "reason": "V2 is approved for one clean, isolated Blender fabrication from this shared coordinate grid."}
+}
