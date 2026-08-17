@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "presentation": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "sourceModularPlantPreserved": true,
+  "view0ChecksumPreserved": true,
+  "shopIntegration": "RENDERED_FOR_OPERATOR_REVIEW",
+  "plantScale": "NEEDS_OPERATOR_REVIEW",
+  "plantPosition": "NEEDS_OPERATOR_REVIEW",
+  "plantGrounding": "NEEDS_OPERATOR_REVIEW",
+  "gameplay1X": true,
+  "gameplay2X": true,
+  "fiveViewPresentation": true,
+  "crossfadeCompatibility": "UNKNOWN",
+  "steamDeck": "REAL_BLENDER_WORKER_EXECUTION",
+  "budget": {
+    "triangles": 374,
+    "objects": 37,
+    "materials": 15,
+    "textures": 9,
+    "mobileBudget": "PASS"
+  },
+  "anonymousGeometryCount": 0,
+  "knownGood": "NO",
+  "sourceShopUnchanged": true,
+  "cameraUnchanged": true,
+  "atlasModified": false,
+  "artifacts": {
+    "SHOP_FINAL_PLANT_FRONT.png": "96117c3840b9eee4beaf94c85d962a4ddcb82d0aa35d291bde2c2d363e391345",
+    "SHOP_FINAL_PLANT_GAMEPLAY_1X.png": "8f418a41791e59b11313ab6ec124b686c93b63b3c5f056cc41b7951f9cb3ac79",
+    "SHOP_FINAL_PLANT_GAMEPLAY_2X.png": "8433302a72c8cf2909440576cd87da1b27cca442c783393b2773685ba29a6534",
+    "SHOP_FINAL_PLANT_HERO.png": "5541dcedd379771f8fea078e93672e5d86e4b6b87b09d56c9424ba61f623a34b",
+    "SHOP_PLANT_M30.png": "edb47dbfb7efdc4e7eb1bf619a21165f8b25eb07aef1d5ed896efccfc31a2c19",
+    "SHOP_PLANT_M15.png": "65d1726835bfbc4ed299283ba58829809506fa05c65f77e6a067ca83c6d873ea",
+    "SHOP_PLANT_P15.png": "cdb39efc6ebb34a15441a89e0850c822a03a71bf2bdb0a9716ac49c4395e981b",
+    "SHOP_PLANT_P30.png": "476634d064dadda0f588dd74e54d4ae8278398f3505229a2af03bb91fd2f133a",
+    "SHOP_WITH_FINAL_PLANT_OPERATOR_REVIEW_BOARD.png": "c3ac71a4a203638e91abe60af90b71fd04345174f5497199dcb18fb258ce0d7e"
+  }
+}

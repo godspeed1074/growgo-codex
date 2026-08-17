@@ -1,19 +1,58 @@
 {
   "id": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "permanentPresentationId": "GG-PRES-VEG-PLANTER-SHRUB-001",
+  "version": "1.0.0",
   "layer": "LAYER_C_RUNTIME_ASSEMBLY",
   "status": "PASS_PRESENTATION_DERIVATIVE_READY_FOR_OPERATOR_REVIEW",
+  "operatorApprovalState": "CURRENT_REVIEW_CANDIDATE",
+  "knownGoodState": "NO",
+  "sourceAsset": {
+    "id": "GG-VEG-PLANTER-SHRUB-001",
+    "version": "FRONT_AUTHORITY_2_5D_1.0.0",
+    "blend": "test-output/plant-observed-front-completion/full/PLANT_OBSERVED_FRONT_COMPLETE.blend"
+  },
   "sourceLayerA": "GG-VEG-PLANTER-SHRUB-001",
   "sourceBlend": "test-output/plant-observed-front-completion/full/PLANT_OBSERVED_FRONT_COMPLETE.blend",
   "sharedPlanterSource": "PLANTER_BODY / PLANTER_RIM / PLANTER_SOIL / PLANTER_PANEL",
   "foliageSource": "observed leaves, transition foliage, and flowers from locked source",
   "targetCrop": "asset-factory/modular/PLANT_TARGET_VISIBLE_LEAF_MAP.json",
+  "targetReferenceChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
   "frontAuthorityLock": "asset-factory/modular/PLANT_FRONT_GEOMETRY_AUTHORITY_LOCK_V1.json",
   "coordinateContract": {
     "runtimeWorldUp": "+Z",
     "presentationSourceAxisMap": "source Y-up is mapped to runtime Z-up at presentation-root export",
     "cameraRollDegrees": 0,
     "projection": "ORTHOGRAPHIC",
-    "resolution": "189x261"
+    "resolution": "189x261",
+    "cameraAnglesDegrees": {
+      "0": 0,
+      "M30": -30,
+      "M15": -15,
+      "P15": 15,
+      "P30": 30
+    },
+    "selectionRangesDegrees": {
+      "0": [
+        -7.5,
+        7.5
+      ],
+      "M30": [
+        -37.5,
+        -22.5
+      ],
+      "M15": [
+        -22.5,
+        -7.5
+      ],
+      "P15": [
+        7.5,
+        22.5
+      ],
+      "P30": [
+        22.5,
+        37.5
+      ]
+    }
   },
   "views": {
     "0": {
@@ -77,6 +116,7 @@
     "uncompressedTotalBytes": 986580,
     "expectedDrawCalls": 1,
     "runtimeSelectionCost": "nearest of five presentation sprites; no geometry assembly at selection time",
+    "fiveViewRuntimeSelectionRequired": "YES",
     "crossfadeCompatibility": "UNKNOWN — Atlas is intentionally unmodified"
   },
   "invariants": {

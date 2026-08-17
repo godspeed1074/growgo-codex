@@ -55,5 +55,7 @@
   "organicSideVisionGate": "organic modules require side-depth vision review before operator review",
   "shellSurfaceDecomposition": "visible shell surface detail, cornices, transition trims, contact shadows, and cross-panel continuity are mandatory in initial reference decomposition",
   "autonomousTightCrops": true,
-  "tightCropBeforeSourceBlocker": true
+  "tightCropBeforeSourceBlocker": true,
+  "observedPixelsPrinciple": "OBSERVED PIXELS ARE CONSTRAINTS. HIDDEN GEOMETRY IS INFERENCE.",
+  "organicPresentationDerivativePolicy": "For small organic GrowGo assets where full 3D reconstruction provides poor cost/benefit, a deterministic multi-view presentation derivative is allowed when editable modular source is preserved, the reference-facing view is faithful, all required gameplay views are approved, identity remains consistent, and runtime budget passes."
 }

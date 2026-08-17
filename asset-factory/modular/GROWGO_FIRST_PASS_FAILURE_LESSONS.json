@@ -3,6 +3,16 @@
   "sourceAsset": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
   "lessons": [
     {
+      "cause": "UNMEASURED_ORGANIC_INFERENCE",
+      "failure": "procedural generic shrub, blob foliage, card-stack foliage, static leaf depth shells, hidden central foliage core, camera-shadow support geometry, depth fins, and limited per-leaf billboarding did not reproduce observed plant pixels",
+      "prevention": "treat visible leaves, flowers, and planter relationships as measured front constraints before inferring hidden depth"
+    },
+    {
+      "cause": "INCOMPATIBLE_PRESENTATION_COMPOSITES",
+      "failure": "independent foliage/planter composites with incompatible camera contracts broke the plant relationship",
+      "prevention": "use one deterministic presentation contract and preserve the shared editable source"
+    },
+    {
       "cause": "SEMANTIC_RECONSTRUCTION",
       "failure": "modules matched names but not visible reference relationships",
       "prevention": "decompose the complete image before modeling"
@@ -74,5 +84,7 @@
     }
   ],
   "northStar": "REFERENCE IMAGE -> ACCURATE BLENDER REPRODUCTION -> FIRST SERIOUS PRODUCTION CANDIDATE",
-  "maskLesson": "Codex must create and refine clean fascia/awning masks itself; operators are not responsible for preparing visible-component masks"
+  "maskLesson": "Codex must create and refine clean fascia/awning masks itself; operators are not responsible for preparing visible-component masks",
+  "organicSuccessfulSequence": "TARGET CROP → OBSERVED LEAF DECOMPOSITION → TARGET-SPECIFIC FRONT GEOMETRY → FRONT AUTHORITY → COMPLETE ANGLE-SPECIFIC PRESENTATION VIEWS → SHARED SOURCE PRESERVED → GAMEPLAY REVIEW",
+  "futureOrganicRoute": "Attempt a dedicated image-to-3D scaffold provider if available; otherwise reconstruct the exact observed front and decide early between TRUE 3D and MULTI-VIEW PRESENTATION."
 }
