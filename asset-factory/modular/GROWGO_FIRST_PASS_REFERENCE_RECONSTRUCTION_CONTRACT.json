@@ -1,6 +1,6 @@
 {
   "contractId": "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "requiredBeforeFirstSeriousCandidate": [
     "complete visual reference study",
     "visible component and relationship inventory",
@@ -57,5 +57,12 @@
   "autonomousTightCrops": true,
   "tightCropBeforeSourceBlocker": true,
   "observedPixelsPrinciple": "OBSERVED PIXELS ARE CONSTRAINTS. HIDDEN GEOMETRY IS INFERENCE.",
-  "organicPresentationDerivativePolicy": "For small organic GrowGo assets where full 3D reconstruction provides poor cost/benefit, a deterministic multi-view presentation derivative is allowed when editable modular source is preserved, the reference-facing view is faithful, all required gameplay views are approved, identity remains consistent, and runtime budget passes."
+  "organicPresentationDerivativePolicy": "For small organic GrowGo assets where full 3D reconstruction provides poor cost/benefit, a deterministic multi-view presentation derivative is allowed when editable modular source is preserved, the reference-facing view is faithful, all required gameplay views are approved, identity remains consistent, and runtime budget passes.",
+  "architecturalReconstructionRule": {
+    "rectilinearArchitecture": "measurement-driven parametric primitives",
+    "moldingDepth": "measured cross-sections and parallel face bands",
+    "irregularDecorativeSilhouette": "landmark polygon reconstruction",
+    "organic": "organic reconstruction workflow",
+    "prohibition": "Do not turn shadows, antialiasing, or perspective pixels into physical geometry for simple rectilinear building components."
+  }
 }

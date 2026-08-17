@@ -1,0 +1,66 @@
+{
+  "status": "BLOCKED",
+  "authority": "SHOP_DOOR_LANDMARK_PROFILE_SPEC_V1",
+  "execution": {
+    "mode": "REAL_BLENDER_WORKER_EXECUTION",
+    "worker": "Steam Deck",
+    "blender": "5.2.0 LTS",
+    "frontOnlyGate": true
+  },
+  "moduleSpacePolygonsUsedDirectly": true,
+  "dimensionsChanged": false,
+  "profilesReplaced": [
+    "CASING_LEFT_FRONT_POLYGON",
+    "CASING_RIGHT_MIRROR_OF_LEFT",
+    "HEAD_CAP_FRONT_POLYGON",
+    "TRANSOM_SEPARATOR_FRONT_POLYGON",
+    "LOWER_PANEL_OUTER_POLYGON",
+    "LOWER_PANEL_INNER_POLYGON",
+    "PLINTH_LEFT_FRONT_POLYGON",
+    "PLINTH_RIGHT_MIRROR_OF_LEFT",
+    "THRESHOLD_FRONT_POLYGON"
+  ],
+  "protectedComponents": ["D01", "D02", "D03", "D06", "D07", "D08", "D09", "D14", "D15"],
+  "extrusion": {
+    "axis": "Y_ONLY",
+    "frontProjectionDrift": "0 by construction",
+    "depthsU": {
+      "casing": 0.024,
+      "headCap": 0.024,
+      "transomSeparator": 0.02,
+      "lowerPanelOuter": 0.016,
+      "lowerPanelInner": 0.02,
+      "plinth": 0.028,
+      "threshold": 0.032
+    }
+  },
+  "structuralBudget": {
+    "triangles": 624,
+    "vertices": 372,
+    "materials": 5,
+    "textures": 0,
+    "anonymousGeometry": 0,
+    "status": "PASS"
+  },
+  "visionGate": {
+    "sameDoor": "NO",
+    "casing": "FAIL",
+    "headCap": "NEEDS_REVIEW",
+    "separator": "NEEDS_REVIEW",
+    "lowerPanel": "NEEDS_REVIEW",
+    "plinth": "FAIL",
+    "threshold": "NEEDS_REVIEW",
+    "genericBlockout": "YES",
+    "reason": "The direct approved casing and plinth polygons render as narrow, splayed strips rather than the solid reference casing/plinth silhouettes. The front fidelity gate therefore fails."
+  },
+  "unrunGates": [
+    "raster-based D01-D20 visibility",
+    "side/back/top-oblique QA",
+    "SHOP_DOOR_FRONT_AUTHORITY_V1 lock"
+  ],
+  "checksums": {
+    "profileSpecSha256": "654166c533880c6a6a3d8c1c11c4dad8c076372d750df91ea0104fd0a9abc30c",
+    "blendSha256": "0e8b34281ada1670a8482072d627bd2330caff441b151ca7decb1723659687ef",
+    "frontRenderSha256": "005c0fb7663595a1652d0eb7f2430065a932e604b50b5e7a832785cd620f6830"
+  }
+}
