@@ -1,0 +1,63 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "internalIterations": 3,
+  "reference": "SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "baselineChecksum": "0d0e1529d3e84f5d6591cd9eb4813a1b8893c45a305d0cb94cf8a59ae276119b",
+  "differences": [
+    {
+      "issue": "window trim",
+      "reference": "cream left and top surround visible",
+      "current": "trim is thinner and closer but remains slightly heavier than reference",
+      "severity": "MEDIUM",
+      "system": "WINDOW_TRIM"
+    },
+    {
+      "issue": "awning width",
+      "reference": "near full storefront width",
+      "current": "root widened to 1.18x and centered; materially closer",
+      "severity": "HIGH",
+      "system": "AWNING_ROOT"
+    },
+    {
+      "issue": "door proportions",
+      "reference": "wider balanced entrance",
+      "current": "root x1.16/z.91; materially improved",
+      "severity": "HIGH",
+      "system": "DOOR_ROOT"
+    },
+    {
+      "issue": "transom",
+      "reference": "teal glass transom above door",
+      "current": "separate darker teal transom and cream trim present",
+      "severity": "HIGH",
+      "system": "DOOR_TRANSOM_WINDOW"
+    },
+    {
+      "issue": "shrub integration",
+      "reference": "grounded planter",
+      "current": "shallow palette-consistent core added behind protected art; angled view remains partly card-like",
+      "severity": "MEDIUM",
+      "system": "SHRUB_SCENE"
+    },
+    {
+      "issue": "additional",
+      "reference": "richer wall context",
+      "current": "wall remains simpler than reference",
+      "severity": "MEDIUM",
+      "system": "WALL_CONTEXT"
+    }
+  ],
+  "visionAnswers": {
+    "windowTrimLeft": "YES_WITH_NOTES",
+    "windowTrimTop": "YES_WITH_NOTES",
+    "windowIntegrated": "YES_WITH_NOTES",
+    "doorTransom": "YES",
+    "transomTrim": "YES_WITH_NOTES",
+    "doorProportions": "YES",
+    "awningWidth": "YES_WITH_NOTES",
+    "awningPlacement": "YES",
+    "shrubPasted": "YES_WITH_NOTES",
+    "shrubDepth": "YES_WITH_NOTES",
+    "overallCloser": "YES"
+  }
+}

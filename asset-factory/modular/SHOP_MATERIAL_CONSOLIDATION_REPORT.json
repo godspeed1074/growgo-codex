@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "PLAN_ONLY",
+  "sourceBuild": "SHOP_LAYER_B_BUILD_002",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001@1.0.0",
+  "materialCountBefore": 139,
+  "materialCountCurrent": 46,
+  "targetMaterialCount": 32,
+  "proposedMaterialCount": 7,
+  "inventoryMethod": "budget_and_registered_palette_metadata; exact Blender slot names are intentionally not re-enumerated because this phase forbids a worker dispatch",
+  "groupedMaterialSlotCoverage": {"currentSlots":46,"coveredByPaletteFamilies":46,"unclassifiedSlots":0},
+  "sharedMaterials": [
+    {"sharedMaterialId":"GG-MAT-SHOP-WALL-WARM-BROWN","paletteFamily":"SHOP_WARM_BROWN","atlas":"GG-ATLAS-BUILDING-A@1.0.0","affectedModules":["GG-BLD-WALL-SHOP-BROWN-001"],"currentMaterialPatterns":["wall brown variants","brown duplicate slots"],"reason":"one approved warm-brown identity and one atlas slot"},
+    {"sharedMaterialId":"GG-MAT-SHOP-FASCIA-NAVY","paletteFamily":"SHOP_NAVY","atlas":"GG-ATLAS-BUILDING-A@1.0.0","affectedModules":["GG-BLD-FASCIA-SHOP-NAVY-001","GG-BLD-SIGN-INSERT-SHOP-001"],"currentMaterialPatterns":["navy fascia variants","sign navy duplicate slots"],"reason":"same approved navy family; consolidate duplicates"},
+    {"sharedMaterialId":"GG-MAT-SHOP-AWNING-PLUM","paletteFamily":"SHOP_PLUM_FABRIC","atlas":"GG-ATLAS-FABRIC-A@1.0.0","affectedModules":["GG-BLD-AWNING-SHOP-FABRIC-001"],"currentMaterialPatterns":["plum fabric variants","awning duplicate slots"],"reason":"one approved plum fabric identity"},
+    {"sharedMaterialId":"GG-MAT-SHOP-GLASS-TEAL","paletteFamily":"SHOP_TEAL_GLASS","atlas":"GG-ATLAS-GLASS-A@1.0.0","affectedModules":["GG-BLD-DOOR-SHOP-002","GG-BLD-WINDOW-SHOP-LARGE-002"],"currentMaterialPatterns":["teal glass variants","window/door glass duplicates"],"reason":"shared teal glass appearance and atlas compatibility"},
+    {"sharedMaterialId":"GG-MAT-SHOP-TRIM-CREAM","paletteFamily":"SHOP_CREAM","atlas":"GG-ATLAS-BUILDING-A@1.0.0","affectedModules":["GG-BLD-DOOR-SHOP-002","GG-BLD-WINDOW-SHOP-LARGE-002","GG-BLD-TRIM-SHOP-CREAM-001","GG-BLD-FASCIA-SHOP-NAVY-001"],"currentMaterialPatterns":["cream trim variants","frame/trim duplicate slots"],"reason":"one approved cream trim identity"},
+    {"sharedMaterialId":"GG-MAT-SHOP-FOUNDATION-GRAY","paletteFamily":"SHOP_GRAY","atlas":"GG-ATLAS-BUILDING-A@1.0.0","affectedModules":["GG-BLD-FOUNDATION-SHOP-002"],"currentMaterialPatterns":["foundation gray variants","plinth duplicate slots"],"reason":"one approved foundation gray identity"},
+    {"sharedMaterialId":"GG-MAT-SHOP-VEGETATION-GREEN","paletteFamily":"SHOP_GREEN_VEGETATION","atlas":"GG-ATLAS-VEGETATION-A@1.0.0","affectedModules":["GG-VEG-PLANTER-SHRUB-001"],"currentMaterialPatterns":["vegetation green variants","foliage/planter duplicate slots"],"reason":"one approved vegetation family; preserve separate module identity"}
+  ],
+  "consolidationRules": [
+    "Replace only visually equivalent slots; do not merge geometry or module identities.",
+    "Use shared atlas materials and approved palette families only.",
+    "Do not introduce arbitrary tint, texture, or default gray materials.",
+    "Keep recipe ID/version, Golden Reference, camera contract, and Layer A IDs immutable.",
+    "Verify material count after the next controlled worker run is <= 32 before acceptance."
+  ],
+  "currentBuildEvidence": {"materials":46,"objects":31,"triangles":1488,"vertices":992,"anonymousGeometryCount":0},
+  "expectedAfterConsolidation": {"materials":7,"withinTarget":true}
+}

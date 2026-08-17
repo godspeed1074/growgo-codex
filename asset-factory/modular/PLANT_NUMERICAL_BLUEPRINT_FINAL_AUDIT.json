@@ -1,0 +1,22 @@
+{
+  "status": "BLOCKED",
+  "candidates": {"BLUEPRINT_A":"BUILT", "BLUEPRINT_B":"BUILT", "BLUEPRINT_C":"BUILT"},
+  "selected": "BLUEPRINT_B",
+  "clusterCount": 10,
+  "leafCount": 60,
+  "distribution": {"LARGE": 10, "MEDIUM": 30, "SMALL": 20},
+  "depthWidthRatio": 0.32,
+  "frontOccupancyPercent": 61.0,
+  "widthErrorPercent": 7.8,
+  "heightErrorPercent": 4.9,
+  "centreXErrorPercent": 1.8,
+  "centreZErrorPercent": 3.7,
+  "offendingSideBladesBefore": 18,
+  "offendingSideBladesAfter": 14,
+  "parallelShelfGroupsBefore": 3,
+  "parallelShelfGroupsAfter": 2,
+  "visibleStemAreaPercent": 0,
+  "anonymousGeometryCount": 0,
+  "budget": "PASS",
+  "hardGates": {"frontDensity": false, "frontBounds": false, "leftBlade": false, "rightBlade": false, "parallelShelf": false, "stemVisibility": true, "true3D": true}
+}

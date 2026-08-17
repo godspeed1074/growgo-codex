@@ -1,0 +1,10 @@
+import bpy,sys,os,json
+from mathutils import Vector
+src,out=sys.argv[sys.argv.index('--')+1:];os.makedirs(out,exist_ok=True);bpy.ops.wm.read_factory_settings(use_empty=True);W,H=300,350;img=bpy.data.images.load(src,check_existing=False);img.colorspace_settings.name='sRGB'
+bpy.ops.mesh.primitive_plane_add(size=2,location=(0,0,0));p=bpy.context.object;p.dimensions=(W/H,1,1);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+m=bpy.data.materials.new('CALIBRATION_EMISSION');m.use_nodes=True;n=m.node_tree.nodes;n.clear();outn=n.new('ShaderNodeOutputMaterial');em=n.new('ShaderNodeEmission');tex=n.new('ShaderNodeTexImage');tex.image=img;m.node_tree.links.new(tex.outputs['Color'],em.inputs['Color']);m.node_tree.links.new(em.outputs['Emission'],outn.inputs['Surface']);em.inputs['Strength'].default_value=1;p.data.materials.append(m)
+bpy.ops.object.camera_add(location=(0,0,1));c=bpy.context.object;c.data.type='ORTHO';c.data.ortho_scale=1.0;c.rotation_euler=(0,0,0);s=bpy.context.scene;s.camera=c;s.render.resolution_x=W;s.render.resolution_y=H;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=False;s.render.engine='BLENDER_EEVEE'
+variants=[('closest_standard','Closest','Standard',0,0),('linear_standard','Linear','Standard',0,0),('closest_halfpixel','Closest','Standard',0.5/W,0.5/H),('linear_halfpixel','Linear','Standard',0.5/W,0.5/H)]
+for name,interp,view,dx,dy in variants:
+ tex.interpolation=interp;c.location=(dx,dy,1);c.rotation_euler=(0,0,0);s.view_settings.view_transform=view;s.view_settings.look='None';s.view_settings.exposure=0;s.view_settings.gamma=1;s.render.filepath=os.path.join(out,name+'.png');bpy.ops.render.render(write_still=True)
+json.dump({'sourceDimensions':[W,H],'variants':[{'id':v[0],'interpolation':v[1],'viewTransform':v[2],'cameraOffset':[v[3],v[4]],'engine':'BLENDER_EEVEE','uv':'0..1 full once'} for v in variants]},open(os.path.join(out,'BLENDER_MATRIX_SETTINGS.json'),'w'),indent=2)

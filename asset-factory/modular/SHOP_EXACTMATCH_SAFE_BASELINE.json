@@ -1,0 +1,12 @@
+{
+  "baselineId":"SHOP_EXACTMATCH_SAFE_BASELINE_001",
+  "recipe":"GG-REC-BLD-SIMPLE-SHOP-GROWGO-001@1.0.0",
+  "blend":"test-output/window-panel-pass/SHOP_CALIBRATED_LAYER_B.blend",
+  "checksums":{"blend":"15bb9dcbc012dbe22688ee2e63be4769291480ee1f78d78c3b88c5e61130cf06","front":"c3f158244ae4bce255b74de77216c1a3a855d9f6eb2b090a32010f7ed30dfef1","hero":"04b3cf45700a73cfee180357d98db847bc1e26c190a66c2282b5c626cf17badf","componentId":"e60590924e19caa4d41441a22d95bd9662561a4a016f5372a57b149766d6aee0"},
+  "camera":"GG_CAMERA_SIMPLE_SHOP_LOCKED / ORTHO",
+  "worker":"Steam Deck 10.0.0.4 / Blender 5.2.0 LTS",
+  "budget":"PASS",
+  "componentIds":"PASS",
+  "visionScore":60,
+  "operatorApprovalRequired":true
+}

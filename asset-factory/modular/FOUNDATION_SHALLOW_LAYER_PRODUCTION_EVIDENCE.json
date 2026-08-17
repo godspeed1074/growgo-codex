@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "crops": {
+    "LEFT": {
+      "reference": "FOUNDATION_LEFT_REFERENCE.png",
+      "mask": "FOUNDATION_LEFT_SCOPE_MASK.png",
+      "sourceBox": [
+        10,
+        488,
+        128,
+        596
+      ],
+      "visibleArtBounds": {
+        "width": 118,
+        "height": 108
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    },
+    "ENTRANCE": {
+      "reference": "FOUNDATION_ENTRANCE_REFERENCE.png",
+      "mask": "FOUNDATION_ENTRANCE_SCOPE_MASK.png",
+      "sourceBox": [
+        116,
+        488,
+        292,
+        596
+      ],
+      "visibleArtBounds": {
+        "width": 176,
+        "height": 108
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    },
+    "RIGHT": {
+      "reference": "FOUNDATION_RIGHT_REFERENCE.png",
+      "mask": "FOUNDATION_RIGHT_SCOPE_MASK.png",
+      "sourceBox": [
+        278,
+        488,
+        620,
+        596
+      ],
+      "visibleArtBounds": {
+        "width": 342,
+        "height": 108
+      },
+      "sourceSha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c"
+    }
+  },
+  "pngIntegrity": {
+    "status": "PASS",
+    "sides": {
+      "LEFT": {
+        "coveredPixels": 6098,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "ENTRANCE": {
+        "coveredPixels": 8467,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      },
+      "RIGHT": {
+        "coveredPixels": 19083,
+        "roundtripPass": true,
+        "mismatchedBytes": 0
+      }
+    }
+  },
+  "twoDReassembly": "PASS",
+  "depthTiers": [
+    "LEVEL_0_GROUND",
+    "LEVEL_1_REAR_BASE",
+    "LEVEL_2_FRONT_TRIM",
+    "LEVEL_3_ENTRANCE_LANDING",
+    "LEVEL_4_LOWER_STEP",
+    "LEVEL_5_FOREGROUND_EDGE"
+  ],
+  "anchors": [
+    "GROUND_CONTACT",
+    "WALL_CONTACT",
+    "LEFT_EDGE",
+    "RIGHT_EDGE",
+    "DOOR_CENTER",
+    "LANDING_CENTER",
+    "THRESHOLD_CONTACT",
+    "STEP_FRONT"
+  ],
+  "doorThresholdRelationship": "LANDING_MEETS_PROTECTED_DOOR_THRESHOLD",
+  "silhouette": "PASS",
+  "vision": "VISION_PASS",
+  "budget": {
+    "triangles": 108,
+    "vertices": 72,
+    "objects": 9,
+    "materials": 3,
+    "textures": 3,
+    "imageBytes": 0,
+    "blendSizeBytes": 96435,
+    "glbSizeBytes": 0,
+    "mobileBudget": "PASS"
+  }
+}

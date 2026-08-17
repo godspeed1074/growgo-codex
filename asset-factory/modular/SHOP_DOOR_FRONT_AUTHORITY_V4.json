@@ -1,0 +1,11 @@
+{
+  "authorityId": "SHOP_DOOR_FRONT_AUTHORITY_V4",
+  "status": "OPERATOR_APPROVED",
+  "assetId": "GG-BLD-DOOR-SHOP-002",
+  "structuralSource": {"build": "GG-BLD-DOOR-SHOP-002_V3.blend", "manufacturingSpec": "SHOP_DOOR_MANUFACTURING_SPEC_V3", "ownershipContract": "SHOP_DOOR_COMPONENT_OWNERSHIP_V1", "checksum": "a08e7b395363dc8e355c4b193bab29432ff4e0b65d8b2c75543f9503fa022167", "geometryChanged": false},
+  "presentation": {"method": "MODULAR_REFERENCE_LAYERED_2_5D_FRONT", "material": "UNLIT_EMISSION", "artLayerCount": 11, "artLayerManifest": "test-output/door-v4-art-layers/SHOP_DOOR_V4_ART_LAYER_MANIFEST.json", "frontRender": "test-output/door-v4-hybrid/SHOP_DOOR_HYBRID_FRONT.png", "sourceContextContamination": false},
+  "frontVision": {"sameDoor": "YES", "casing": "PASS", "headSeparator": "PASS", "glass": "PASS", "panel": "PASS", "hardware": "PASS", "threshold": "PASS", "referenceTonalRichness": "PASS", "papercut": "PASS", "genericBlockout": "NO", "comparison": "HYBRID materially outperforms V3 Tonal B because source-derived component art preserves observed cream, brown, teal, brass, and contact-detail pixels."},
+  "sideQA": {"15Left": "PASS", "30Left": "PASS", "15Right": "PASS", "30Right": "PASS", "zFighting": "NO", "visibleArtFloat": "NO"},
+  "budget": {"triangles": 590, "textures": 11, "textureBytes": 105391, "drawCalls": 11, "anonymousGeometry": 0, "status": "PASS"},
+  "promotion": {"operatorApproved": true, "knownGood": "NO", "knownGoodReason": "The existing reconstruction standard explicitly disallows automatic known-good promotion; approval is recorded without inventing a new lifecycle rule.", "shopIntegrated": false, "operatorApprovalRequired": false}
+}

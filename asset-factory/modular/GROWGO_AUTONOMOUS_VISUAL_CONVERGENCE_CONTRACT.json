@@ -1,0 +1,40 @@
+{
+  "contractId": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
+  "version": "1.0.0",
+  "referenceAuthority": "IMMUTABLE_GOLDEN_REFERENCE",
+  "loop": [
+    "inspect reference and actual render",
+    "inventory and rank differences",
+    "assign correction ownership",
+    "apply safest Layer A/Layer B correction",
+    "run real Steam Deck Blender",
+    "inspect actual images",
+    "retain only visual improvements",
+    "rollback regressions"
+  ],
+  "stopConditions": [
+    "VISION_PASS",
+    "STALLED_VISUAL_CONVERGENCE",
+    "HARD_TECHNICAL_BLOCKER",
+    "BUDGET_BLOCKER",
+    "SOURCE_INFORMATION_BLOCKER",
+    "STRUCTURAL_CONTRACT_BLOCKER"
+  ],
+  "arbitraryIterationStop": false,
+  "visionOverridesMetrics": true,
+  "knownGoodAutoPromotion": false,
+  "anonymousGeometryPolicy": "REJECT",
+  "productionAssetPolicy": "NO_PRODUCTION_MUTATION",
+  "autonomousMaskCreation": true,
+  "contextContaminationGate": "ZERO_OR_VISION_APPROVED",
+  "safeDifferenceContinuation": "Codex must continue while it sees a safe correctable visual difference",
+  "shellSurfaceGate": "upper architectural transitions and modular wall surface continuity require isolated reference-derived proof",
+  "selectiveUnlockPolicy": "SELECTIVE_UNLOCK + SAFE_BASELINE + VISION_GUIDED_CORRECTION + REGRESSION_ROLLBACK",
+  "protectionRule": "Protection must not prevent Codex from fixing a visual defect Codex itself can see",
+  "richnessPolicy": "surface/context richness is part of fidelity; rollback any accent that becomes more visible than the reference",
+  "firstPassContract": "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
+  "regressionEscalation": "FIRST_PASS_STANDARD_REGRESSION",
+  "operatorCandidateGate": "TECHNICAL_PASS_AND_VISION_PASS",
+  "referenceCropFallbackRule": "When surface/context convergence stalls, return to tight Golden Reference crops and reconstruct exact visible transition art; do not invent generic shading.",
+  "tightReferenceCropWorkflow": "Codex generates tight crops, contamination audits, and masks before declaring source information blocked"
+}

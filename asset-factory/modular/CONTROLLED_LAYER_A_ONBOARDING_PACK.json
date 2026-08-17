@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "packId": "GG-CONTROLLED-LAYER-A-PACK-1.0.0",
+  "scope": "CONTROLLED_FIXTURE_ONLY",
+  "moduleCount": 8,
+  "assetIds": [
+    "GG-BLD-WALL-SHOP-001",
+    "GG-BLD-ROOF-SHOP-001",
+    "GG-BLD-DOOR-SHOP-001",
+    "GG-BLD-WINDOW-SHOP-001",
+    "GG-BLD-TRIM-SHOP-001",
+    "GG-BLD-AWNING-SHOP-001",
+    "GG-BLD-FOUNDATION-SHOP-001",
+    "GG-VEG-SHRUB-SHOP-001"
+  ],
+  "registrationSource": "controlled-onboarding-proof.mjs",
+  "productionAttached": false
+}

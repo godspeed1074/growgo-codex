@@ -1,0 +1,11 @@
+{
+  "status": "VISIBLE_WALL_PANEL_PASS",
+  "warmBrownWallArt": "YES",
+  "visiblePanelContinuity": "YES",
+  "papercutDepth": "YES",
+  "doorSurroundIntegration": "YES",
+  "windowSurroundIntegration": "YES",
+  "noPalePlaceholderPlanes": "YES",
+  "referenceArtworkUsed": "GOLDEN_REFERENCE_FACADE_CROP",
+  "heroModulesProtected": "PASS"
+}

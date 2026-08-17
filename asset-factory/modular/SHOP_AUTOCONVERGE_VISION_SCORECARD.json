@@ -1,0 +1,26 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "startingScore": 84,
+  "finalScore": {
+    "OVERALL_LIKENESS": 87,
+    "SILHOUETTE": 84,
+    "PROPORTIONS": 84,
+    "FACADE_ARCHITECTURE": 80,
+    "WALL_CONTINUITY": 79,
+    "DOOR": 88,
+    "DOOR_TRANSOM": 84,
+    "WINDOW": 82,
+    "WINDOW_TRIM": 80,
+    "AWNING": 86,
+    "FASCIA_SIGN": 80,
+    "UPPER_TRIM": 75,
+    "FOUNDATION": 80,
+    "SHRUB": 82,
+    "SHRUB_DEPTH": 80,
+    "GROUNDING": 81,
+    "PAPERCUT_STYLE": 78,
+    "PRESENTATION": 82
+  },
+  "stopReason": "STALLED_VISUAL_CONVERGENCE",
+  "visionWins": true
+}

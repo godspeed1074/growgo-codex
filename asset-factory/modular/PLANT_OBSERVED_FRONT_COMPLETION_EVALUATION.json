@@ -1,0 +1,53 @@
+{
+  "status": "BLOCKED_OBSERVED_FRONT_RESIDUAL_REMAINS",
+  "sourceTarget": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "beauty": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/plant-observed-front-completion/full/PLANT_OBSERVED_FRONT_COMPLETE.png",
+  "targetFoliageArea": 13056,
+  "actualFoliageArea": 12889,
+  "residualPixelArea": 339,
+  "residualPercentOfTarget": 2.597,
+  "overallMaskIoU": 0.9614,
+  "targetBounds": {
+    "x0": 9,
+    "y0": 31,
+    "x1": 164,
+    "y1": 169,
+    "width": 156,
+    "height": 139,
+    "area": 13056
+  },
+  "actualBounds": {
+    "x0": 4,
+    "y0": 32,
+    "x1": 177,
+    "y1": 169,
+    "width": 174,
+    "height": 138,
+    "area": 12889
+  },
+  "meaningfulResidualRegions": [
+    {
+      "area": 25,
+      "bbox": {
+        "x0": 130,
+        "y0": 138,
+        "x1": 139,
+        "y1": 147
+      }
+    }
+  ],
+  "referenceTextureUsedInBeauty": false,
+  "geometryOnly": true,
+  "flowersTemporary": true,
+  "planterTemporary": true,
+  "depthPerformed": false,
+  "shopIntegrationPerformed": false,
+  "anonymousGeometry": 0,
+  "mobileBudget": "PASS",
+  "directVision": {
+    "sameShrub": "PENDING_OPERATOR_REVIEW",
+    "density": "PENDING_OPERATOR_REVIEW",
+    "darkTransitionFoliage": "PENDING_OPERATOR_REVIEW",
+    "unexplainedMeaningfulRegions": 1
+  }
+}

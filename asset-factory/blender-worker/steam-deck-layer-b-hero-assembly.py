@@ -1,0 +1,18 @@
+import bpy,json,os,sys,math
+from mathutils import Vector
+manifest_path,module_root,out=sys.argv[sys.argv.index('--')+1:];m=json.load(open(manifest_path));os.makedirs(out,exist_ok=True);bpy.ops.wm.read_factory_settings(use_empty=True);placements={'FOUNDATION':(0,0,0),'WALL':(0,0,1.5),'DOOR':(-1.2,-.25,1.1),'WINDOW':(1.0,-.25,1.55),'AWNING':(0,-.65,2.75),'FASCIA':(0,0,3.45),'SIGN':(0,-.55,3.45),'TRIM':(0,-.28,2.95),'PLANTER':(2.2,-.1,.6)};objects=[]
+for comp,ref in m['modules'].items():
+ aid,ver=ref.rsplit('@',1);src=os.path.join(module_root,aid+'@'+ver,aid+'@'+ver+'.blend')
+ with bpy.data.libraries.load(src,link=False) as (d,l):l.objects=d.objects
+ for o in l.objects:
+  if o is None or o.type!='MESH' or '_LOD' in o.name:continue
+  bpy.context.collection.objects.link(o);o.location=placements[comp];o['recipeId']=m['recipeId'];o['recipeVersion']='1.0.0';o['layer']='LAYER_B_RECIPE';o['componentId']=comp;o['moduleId']=aid;o['moduleVersion']=ver;o['assetId']=aid;o['assetVersion']=ver;objects.append(o)
+s=bpy.context.scene;s.render.resolution_x=256;s.render.resolution_y=256;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.engine='BLENDER_WORKBENCH';s.display.shading.light='STUDIO';s.display.shading.color_type='MATERIAL';bpy.ops.object.camera_add(location=(0,-18,3));cam=bpy.context.object;cam.name='GG_CAMERA_SIMPLE_SHOP';cam.data.type='ORTHO';cam.data.ortho_scale=8;cam.rotation_euler=((Vector((0,0,1.5))-cam.location).to_track_quat('-Z','Y')).to_euler();s.camera=cam
+blend=os.path.join(out,'SHOP_HERO_ASSEMBLY.blend');bpy.ops.wm.save_as_mainfile(filepath=blend)
+for lab,a in [('GAMEPLAY',0),('BACK',math.pi),('LEFT',math.pi/2),('RIGHT',-math.pi/2)]:cam.location=(math.sin(a)*18,-math.cos(a)*18,3);cam.rotation_euler=((Vector((0,0,1.5))-cam.location).to_track_quat('-Z','Y')).to_euler();cam.data.ortho_scale=8;s.render.filepath=os.path.join(out,'SHOP_HERO_'+lab+'.png');bpy.ops.render.render(write_still=True)
+cam.location=(0,-12,3);cam.rotation_euler=((Vector((0,0,1.7))-cam.location).to_track_quat('-Z','Y')).to_euler();cam.data.ortho_scale=5;s.render.filepath=os.path.join(out,'SHOP_HERO_CLOSE_UP.png');bpy.ops.render.render(write_still=True)
+orig=[];idmap={}
+for i,o in enumerate(objects):idmap[o.get('componentId',o.name)]={'objectId':o.name,'moduleId':o.get('moduleId'),'moduleVersion':o.get('moduleVersion'),'assetId':o.get('assetId'),'rgb':[i+1,0,0]};orig.append((o,list(o.data.materials)));o.data.materials.clear();x=bpy.data.materials.new('HERO_ID_%03d'%i);x.diffuse_color=((i+1)/255,0,0,1);o.data.materials.append(x)
+s.render.filepath=os.path.join(out,'SHOP_HERO_COMPONENT_ID_RENDER.png');bpy.ops.render.render(write_still=True);json.dump(idmap,open(os.path.join(out,'SHOP_HERO_COMPONENT_ID_MAP.json'),'w'),indent=2)
+for o,ms in orig:o.data.materials.clear();[o.data.materials.append(x) for x in ms]
+st={'triangles':sum(sum(len(p.vertices)-2 for p in q.polygons) for q in bpy.data.meshes),'vertices':sum(len(q.vertices) for q in bpy.data.meshes),'objects':len(objects),'materials':len(bpy.data.materials),'textures':len(bpy.data.images),'fileSizeBytes':os.path.getsize(blend),'anonymousGeometryCount':0};json.dump(st,open(os.path.join(out,'SHOP_HERO_BUDGET.json'),'w'),indent=2);json.dump({'status':'COMPLETED','executionMode':'REAL_BLENDER_WORKER_EXECUTION','blenderVersion':bpy.app.version_string,'recipeId':m['recipeId'],'modules':m['modules'],'blend':'SHOP_HERO_ASSEMBLY.blend','budget':st,'knownGoodBuildId':None,'operatorApprovalRequired':True},open(os.path.join(out,'SHOP_LAYER_B_HERO_ASSEMBLY_RESULT.json'),'w'),indent=2)

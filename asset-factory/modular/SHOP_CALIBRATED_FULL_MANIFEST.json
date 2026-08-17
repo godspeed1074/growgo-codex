@@ -1,0 +1,20 @@
+{
+  "recipeId":"GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion":"1.0.0",
+  "assemblyType":"LAYER_B_RECIPE",
+  "modules":{
+    "DOOR":{"assetId":"GG-BLD-DOOR-SHOP-002","version":"CALIBRATED_SHALLOW_PROOF"},
+    "WINDOW":{"assetId":"GG-BLD-WINDOW-SHOP-LARGE-002","version":"CALIBRATED_SHALLOW_PROOF"},
+    "AWNING":{"assetId":"GG-BLD-AWNING-SHOP-FABRIC-001","version":"CALIBRATED_SHALLOW_PROOF"},
+    "FASCIA":{"assetId":"GG-BLD-FASCIA-SHOP-NAVY-001","version":"CALIBRATED_SHALLOW_PROOF"},
+    "SHRUB":{"assetId":"GG-VEG-PLANTER-SHRUB-001","version":"CALIBRATED_SHALLOW_PROOF"},
+    "TRIM":{"assetId":"GG-BLD-TRIM-UPPER-CORNER-COMMERCIAL-001","version":"1.0.0"},
+    "FOUNDATION":{"assetId":"GG-BLD-FOUNDATION-COMMERCIAL-001","version":"1.0.0"},
+    "WALL_MAIN":{"assetId":"GG-BLD-WALL-PANEL-COMMERCIAL-MAIN-001","version":"1.0.0"},
+    "WALL_NARROW":{"assetId":"GG-BLD-WALL-PANEL-COMMERCIAL-NARROW-001","version":"1.0.0"},
+    "WALL_TOP":{"assetId":"GG-BLD-WALL-PANEL-COMMERCIAL-TOP-001","version":"1.0.0"}
+  },
+  "legacyPlaceholderPolicy":"REJECT_ALL_LEGACY_PLACEHOLDER_OBJECTS",
+  "camera":"GG_CAMERA_SIMPLE_SHOP_LOCKED",
+  "goldenReference":"IMMUTABLE"
+}

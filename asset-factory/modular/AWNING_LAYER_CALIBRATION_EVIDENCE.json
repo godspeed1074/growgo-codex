@@ -1,0 +1,182 @@
+{
+  "status": "PASS",
+  "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+  "reference": {
+    "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-refbake/reference-crops/awning.png",
+    "sourceChecksum": "0b59ee9b7a09daaa5b5f02418696c937e5891df27adcd2381351ba1eb9d7919b",
+    "cropDimensions": [
+      600,
+      130
+    ],
+    "cropChecksum": "07a7ae8050ed5f26be73691ce941b6ec1c284c16365745b2973e660e941bfd32",
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "cropOrigin": [
+      20,
+      0
+    ]
+  },
+  "scope": {
+    "bounds": [
+      0,
+      0,
+      600,
+      130
+    ],
+    "coveragePercent": 100,
+    "organicAwningPixels": 58681,
+    "foregroundMismatchPixels": 0
+  },
+  "layers": {
+    "AWNING_BACK_SHADOW": {
+      "bounds": [
+        0,
+        0,
+        600,
+        125
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_CANOPY": {
+      "bounds": [
+        10,
+        0,
+        590,
+        92
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_FABRIC_SEGMENTS": {
+      "bounds": [
+        10,
+        15,
+        590,
+        92
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_VALANCE": {
+      "bounds": [
+        10,
+        70,
+        590,
+        118
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_SCALLOPS": {
+      "bounds": [
+        10,
+        78,
+        590,
+        120
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_UNDERSIDE": {
+      "bounds": [
+        10,
+        78,
+        590,
+        125
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_LEFT_SUPPORT": {
+      "bounds": [
+        0,
+        18,
+        65,
+        130
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    },
+    "AWNING_RIGHT_SUPPORT": {
+      "bounds": [
+        535,
+        18,
+        600,
+        130
+      ],
+      "dimensions": [
+        600,
+        130
+      ],
+      "expectedBytes": 312000,
+      "decodedBytes": 312000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaMode": "STRAIGHT",
+      "channelOrder": "RGBA"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "fullSourceBackplateUsed": false,
+  "blenderRun": false,
+  "permanentAwningVersionPromoted": false,
+  "layerBAssembled": false
+}

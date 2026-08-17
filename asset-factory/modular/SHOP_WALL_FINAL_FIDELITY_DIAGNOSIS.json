@@ -1,0 +1,12 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "diagnosis": [
+    "WALL_ART_TOO_FLAT",
+    "MISSING_EDGE_SHADING",
+    "INSUFFICIENT_TONAL_VARIATION",
+    "DEPTH_TOO_FLAT"
+  ],
+  "layoutChanged": false,
+  "genericOverlayAdded": false,
+  "referenceDerivedSurfaceArtRequired": true
+}

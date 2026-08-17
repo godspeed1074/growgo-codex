@@ -1,0 +1,33 @@
+{
+  "status": "BLOCKED",
+  "build": "V2_B",
+  "worker": {"type": "REAL_BLENDER_WORKER_EXECUTION", "host": "Steam Deck", "blender": "5.2.0 LTS"},
+  "dimensionAuthority": "SHOP_DOOR_MANUFACTURING_SPEC_V2 only",
+  "targetedCorrection": {"component": "D15 transom reveal", "change": "full hidden rectangle replaced by a visible four-band reveal border", "v2FrontGuideChanges": 0},
+  "sharedGuideAudit": {"status": "PASS", "maxPixelEquivalentError": 0, "transomCentreXErrorPx": 0},
+  "visibility": {"status": "PASS", "meaningfulVisibleComponents": 20, "method": "occlusion-aware rendered masks"},
+  "budget": {"status": "PASS", "triangles": 532, "vertices": 344, "materials": 5, "textures": 0, "anonymousGeometry": 0},
+  "vision": {
+    "sameDoor": "NO",
+    "overallProportions": "NEEDS_CORRECTION",
+    "slab": "PASS",
+    "mainGlass": "PASS",
+    "glassSurround": "PASS",
+    "casing": "PASS",
+    "lowerPanel": "NEEDS_CORRECTION",
+    "hardware": "PASS",
+    "threshold": "FAIL",
+    "transom": "PASS",
+    "headSeparator": "NEEDS_CORRECTION",
+    "colourHierarchy": "NEEDS_CORRECTION",
+    "papercutStyle": "FAIL",
+    "genericBlockout": "YES"
+  },
+  "firstPassStandardRegression": {
+    "value": "YES",
+    "reason": "The shared-grid preflight validated only reference-facing bounds and axes. It did not validate threshold ownership against the larger entry-step context, depth hierarchy, or the complete stylized silhouette; those omissions caused a visually simplified Blender output despite zero guide drift."
+  },
+  "frontAuthority": "NOT_CREATED",
+  "sideBackQA": "NOT_RUN",
+  "knownGood": "NO"
+}

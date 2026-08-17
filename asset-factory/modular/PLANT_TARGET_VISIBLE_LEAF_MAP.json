@@ -1,0 +1,42 @@
+{
+  "status": "MEASURED_TARGET_MAP",
+  "referencePath": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "referenceChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+  "referenceDimensions": [189, 261],
+  "visibleLeafCount": 26,
+  "annotationMethod": "operator-measured-visible-leaf-landmarks",
+  "leaves": [
+    {"id":"LEAF_001","centre_x_px":95,"centre_y_px":49,"visible_width_px":25,"visible_height_px":42,"tip_x_px":95,"tip_y_px":29,"angle_deg":0,"colour_class":"LIGHT","occlusion_percent":8,"layer_estimate":"BACK_TOP","silhouette_role":"TALLEST_CENTRE"},
+    {"id":"LEAF_002","centre_x_px":70,"centre_y_px":68,"visible_width_px":28,"visible_height_px":38,"tip_x_px":61,"tip_y_px":48,"angle_deg":-24,"colour_class":"MID","occlusion_percent":10,"layer_estimate":"BACK_UPPER","silhouette_role":"UPPER_LEFT"},
+    {"id":"LEAF_003","centre_x_px":120,"centre_y_px":68,"visible_width_px":30,"visible_height_px":39,"tip_x_px":132,"tip_y_px":49,"angle_deg":24,"colour_class":"MID","occlusion_percent":10,"layer_estimate":"BACK_UPPER","silhouette_role":"UPPER_RIGHT"},
+    {"id":"LEAF_004","centre_x_px":95,"centre_y_px":81,"visible_width_px":25,"visible_height_px":28,"tip_x_px":95,"tip_y_px":68,"angle_deg":0,"colour_class":"LIGHT","occlusion_percent":32,"layer_estimate":"MID_UPPER","silhouette_role":"CENTRE_ACCENT"},
+    {"id":"LEAF_005","centre_x_px":53,"centre_y_px":88,"visible_width_px":30,"visible_height_px":41,"tip_x_px":40,"tip_y_px":73,"angle_deg":-35,"colour_class":"DARK","occlusion_percent":18,"layer_estimate":"BACK_LEFT","silhouette_role":"LEFT_SHOULDER"},
+    {"id":"LEAF_006","centre_x_px":138,"centre_y_px":88,"visible_width_px":31,"visible_height_px":40,"tip_x_px":155,"tip_y_px":75,"angle_deg":35,"colour_class":"DARK","occlusion_percent":18,"layer_estimate":"BACK_RIGHT","silhouette_role":"RIGHT_SHOULDER"},
+    {"id":"LEAF_007","centre_x_px":38,"centre_y_px":105,"visible_width_px":28,"visible_height_px":38,"tip_x_px":28,"tip_y_px":89,"angle_deg":-48,"colour_class":"MID","occlusion_percent":20,"layer_estimate":"MID_LEFT","silhouette_role":"FAR_LEFT_EDGE"},
+    {"id":"LEAF_008","centre_x_px":65,"centre_y_px":106,"visible_width_px":29,"visible_height_px":39,"tip_x_px":59,"tip_y_px":89,"angle_deg":-25,"colour_class":"DARK","occlusion_percent":28,"layer_estimate":"MID_LEFT","silhouette_role":"LEFT_MID"},
+    {"id":"LEAF_009","centre_x_px":94,"centre_y_px":106,"visible_width_px":24,"visible_height_px":42,"tip_x_px":94,"tip_y_px":86,"angle_deg":0,"colour_class":"DARK","occlusion_percent":35,"layer_estimate":"MID_CENTRE","silhouette_role":"CENTRE_VERTICAL"},
+    {"id":"LEAF_010","centre_x_px":119,"centre_y_px":106,"visible_width_px":30,"visible_height_px":39,"tip_x_px":125,"tip_y_px":90,"angle_deg":22,"colour_class":"MID","occlusion_percent":28,"layer_estimate":"MID_RIGHT","silhouette_role":"RIGHT_MID"},
+    {"id":"LEAF_011","centre_x_px":151,"centre_y_px":107,"visible_width_px":29,"visible_height_px":39,"tip_x_px":163,"tip_y_px":91,"angle_deg":48,"colour_class":"MID","occlusion_percent":22,"layer_estimate":"MID_RIGHT","silhouette_role":"FAR_RIGHT_EDGE"},
+    {"id":"LEAF_012","centre_x_px":42,"centre_y_px":126,"visible_width_px":33,"visible_height_px":38,"tip_x_px":28,"tip_y_px":111,"angle_deg":-50,"colour_class":"MID","occlusion_percent":32,"layer_estimate":"MID_LEFT","silhouette_role":"LEFT_LOWER_EDGE"},
+    {"id":"LEAF_013","centre_x_px":69,"centre_y_px":130,"visible_width_px":32,"visible_height_px":43,"tip_x_px":61,"tip_y_px":110,"angle_deg":-22,"colour_class":"DARK","occlusion_percent":34,"layer_estimate":"FRONT_LEFT","silhouette_role":"LEFT_FRONT"},
+    {"id":"LEAF_014","centre_x_px":96,"centre_y_px":132,"visible_width_px":30,"visible_height_px":39,"tip_x_px":96,"tip_y_px":114,"angle_deg":0,"colour_class":"LIGHT","occlusion_percent":38,"layer_estimate":"FRONT_CENTRE","silhouette_role":"CENTRE_FRONT"},
+    {"id":"LEAF_015","centre_x_px":121,"centre_y_px":130,"visible_width_px":33,"visible_height_px":41,"tip_x_px":128,"tip_y_px":112,"angle_deg":22,"colour_class":"DARK","occlusion_percent":34,"layer_estimate":"FRONT_RIGHT","silhouette_role":"RIGHT_FRONT"},
+    {"id":"LEAF_016","centre_x_px":151,"centre_y_px":130,"visible_width_px":32,"visible_height_px":38,"tip_x_px":164,"tip_y_px":114,"angle_deg":48,"colour_class":"DARK","occlusion_percent":30,"layer_estimate":"FRONT_RIGHT","silhouette_role":"RIGHT_LOWER_EDGE"},
+    {"id":"LEAF_017","centre_x_px":29,"centre_y_px":146,"visible_width_px":29,"visible_height_px":26,"tip_x_px":16,"tip_y_px":137,"angle_deg":-68,"colour_class":"MID","occlusion_percent":38,"layer_estimate":"FRONT_LEFT","silhouette_role":"FAR_LEFT_LOW"},
+    {"id":"LEAF_018","centre_x_px":53,"centre_y_px":151,"visible_width_px":31,"visible_height_px":35,"tip_x_px":42,"tip_y_px":137,"angle_deg":-42,"colour_class":"MID","occlusion_percent":45,"layer_estimate":"FRONT_LEFT","silhouette_role":"LEFT_LOW"},
+    {"id":"LEAF_019","centre_x_px":79,"centre_y_px":151,"visible_width_px":31,"visible_height_px":37,"tip_x_px":72,"tip_y_px":135,"angle_deg":-20,"colour_class":"DARK","occlusion_percent":48,"layer_estimate":"FRONT_CENTRE","silhouette_role":"LOW_CENTRE_LEFT"},
+    {"id":"LEAF_020","centre_x_px":108,"centre_y_px":152,"visible_width_px":31,"visible_height_px":37,"tip_x_px":109,"tip_y_px":135,"angle_deg":18,"colour_class":"DARK","occlusion_percent":48,"layer_estimate":"FRONT_CENTRE","silhouette_role":"LOW_CENTRE_RIGHT"},
+    {"id":"LEAF_021","centre_x_px":136,"centre_y_px":150,"visible_width_px":33,"visible_height_px":34,"tip_x_px":145,"tip_y_px":136,"angle_deg":38,"colour_class":"MID","occlusion_percent":46,"layer_estimate":"FRONT_RIGHT","silhouette_role":"RIGHT_LOW"},
+    {"id":"LEAF_022","centre_x_px":159,"centre_y_px":151,"visible_width_px":27,"visible_height_px":27,"tip_x_px":171,"tip_y_px":143,"angle_deg":62,"colour_class":"DARK","occlusion_percent":48,"layer_estimate":"FRONT_RIGHT","silhouette_role":"FAR_RIGHT_LOW"},
+    {"id":"LEAF_023","centre_x_px":35,"centre_y_px":162,"visible_width_px":25,"visible_height_px":18,"tip_x_px":25,"tip_y_px":154,"angle_deg":-55,"colour_class":"DARK","occlusion_percent":62,"layer_estimate":"FRONT_LOW","silhouette_role":"FLOWER_LEFT_NEIGHBOUR"},
+    {"id":"LEAF_024","centre_x_px":58,"centre_y_px":161,"visible_width_px":24,"visible_height_px":20,"tip_x_px":50,"tip_y_px":151,"angle_deg":-25,"colour_class":"MID","occlusion_percent":65,"layer_estimate":"FRONT_LOW","silhouette_role":"FLOWER_LEFT_NEIGHBOUR"},
+    {"id":"LEAF_025","centre_x_px":130,"centre_y_px":161,"visible_width_px":26,"visible_height_px":20,"tip_x_px":138,"tip_y_px":151,"angle_deg":30,"colour_class":"MID","occlusion_percent":65,"layer_estimate":"FRONT_LOW","silhouette_role":"FLOWER_RIGHT_NEIGHBOUR"},
+    {"id":"LEAF_026","centre_x_px":153,"centre_y_px":161,"visible_width_px":27,"visible_height_px":20,"tip_x_px":164,"tip_y_px":153,"angle_deg":58,"colour_class":"DARK","occlusion_percent":65,"layer_estimate":"FRONT_LOW","silhouette_role":"FLOWER_RIGHT_NEIGHBOUR"}
+  ],
+  "flowers": [
+    {"id":"FLOWER_001","centre_x_px":59,"centre_y_px":160,"colour_class":"ORANGE_YELLOW","cluster":"LEFT"},
+    {"id":"FLOWER_002","centre_x_px":117,"centre_y_px":161,"colour_class":"YELLOW","cluster":"CENTRE_RIGHT"},
+    {"id":"FLOWER_003","centre_x_px":139,"centre_y_px":161,"colour_class":"PURPLE","cluster":"RIGHT"}
+  ],
+  "planterRelation": {"rim_y_px":170,"body_left_px":8,"body_right_px":174,"body_bottom_px":258}
+}

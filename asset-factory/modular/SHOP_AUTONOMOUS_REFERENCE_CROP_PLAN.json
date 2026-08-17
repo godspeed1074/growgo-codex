@@ -1,0 +1,126 @@
+{
+  "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+  "sourceDimensions": {
+    "width": 760,
+    "height": 670
+  },
+  "crops": [
+    {
+      "name": "UPPER_LEFT_TRANSITION",
+      "file": "test-output/tight-reference-crops/SHOP_REF_UPPER_LEFT_TRANSITION_TIGHT.png",
+      "coordinates": {
+        "x": 20,
+        "y": 125,
+        "width": 150,
+        "height": 210
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "cornice/post/awning contact",
+      "expectedContaminationRisks": [],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "UPPER_CENTER_TRANSITION",
+      "file": "test-output/tight-reference-crops/SHOP_REF_UPPER_CENTER_TRANSITION_TIGHT.png",
+      "coordinates": {
+        "x": 280,
+        "y": 125,
+        "width": 480,
+        "height": 205
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "fascia-to-wall and awning mounting",
+      "expectedContaminationRisks": [],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "UPPER_RIGHT_TRANSITION",
+      "file": "test-output/tight-reference-crops/SHOP_REF_UPPER_RIGHT_TRANSITION_TIGHT.png",
+      "coordinates": {
+        "x": 610,
+        "y": 125,
+        "width": 735,
+        "height": 210
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "cornice/post/awning contact",
+      "expectedContaminationRisks": [],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "WALL_LEFT_CLEAN_SAMPLE",
+      "file": "test-output/tight-reference-crops/SHOP_REF_WALL_LEFT_CLEAN_SAMPLE_TIGHT.png",
+      "coordinates": {
+        "x": 55,
+        "y": 285,
+        "width": 120,
+        "height": 475
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "warm wall tonal surface",
+      "expectedContaminationRisks": [],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "WALL_CENTER_CLEAN_SAMPLE",
+      "file": "test-output/tight-reference-crops/SHOP_REF_WALL_CENTER_CLEAN_SAMPLE_TIGHT.png",
+      "coordinates": {
+        "x": 285,
+        "y": 280,
+        "width": 315,
+        "height": 475
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "wall surface between openings",
+      "expectedContaminationRisks": [],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "WALL_RIGHT_CLEAN_SAMPLE",
+      "file": "test-output/tight-reference-crops/SHOP_REF_WALL_RIGHT_CLEAN_SAMPLE_TIGHT.png",
+      "coordinates": {
+        "x": 565,
+        "y": 285,
+        "width": 620,
+        "height": 475
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "warm wall tonal surface",
+      "expectedContaminationRisks": [],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "DOOR_WALL_CONTACT",
+      "file": "test-output/tight-reference-crops/SHOP_REF_DOOR_WALL_CONTACT_TIGHT.png",
+      "coordinates": {
+        "x": 90,
+        "y": 255,
+        "width": 300,
+        "height": 540
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "door surround and wall contact; door context risk",
+      "expectedContaminationRisks": [
+        "hero component pixels"
+      ],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    },
+    {
+      "name": "WINDOW_WALL_CONTACT",
+      "file": "test-output/tight-reference-crops/SHOP_REF_WINDOW_WALL_CONTACT_TIGHT.png",
+      "coordinates": {
+        "x": 300,
+        "y": 270,
+        "width": 575,
+        "height": 520
+      },
+      "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+      "intendedVisualInformation": "window surround and wall contact; window context risk",
+      "expectedContaminationRisks": [
+        "hero component pixels"
+      ],
+      "scopeStatus": "TIGHT_REFERENCE_SCOPE"
+    }
+  ]
+}

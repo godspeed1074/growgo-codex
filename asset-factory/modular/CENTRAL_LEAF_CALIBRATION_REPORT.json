@@ -1,0 +1,89 @@
+{
+  "status": "PASS_CENTRAL_LEAF_ISOLATED_CALIBRATION",
+  "leafId": "LEAF_001",
+  "numeric": {
+    "targetContourIoU": 0.9643,
+    "renderedGeometryMaskIoU": 0.9643,
+    "rawPartitionMaskIoU": 0.9117,
+    "targetSpecificTraceIoUAgainstRawPartition": 0.9114,
+    "beautyColourMaskIoU": 0.9178,
+    "silhouetteIoU": 0.9643,
+    "centreErrorPx": 0.43,
+    "widthErrorPercent": 0,
+    "heightErrorPercent": 0,
+    "tipErrorPx": 0.5,
+    "angleErrorDeg": 0.773,
+    "targetMaskStats": {
+      "centre": [
+        12.661691542288557,
+        20.782752902155888
+      ],
+      "bbox": {
+        "x0": 2,
+        "y0": 2,
+        "x1": 24,
+        "y1": 39,
+        "width": 23,
+        "height": 38
+      },
+      "tip": [
+        11.5,
+        2
+      ],
+      "base": [
+        13,
+        39
+      ],
+      "angleDeg": 2.3215305898327188
+    },
+    "renderedMaskStats": {
+      "centre": [
+        12.607907742998352,
+        20.355848434925864
+      ],
+      "bbox": {
+        "x0": 2,
+        "y0": 2,
+        "x1": 24,
+        "y1": 39,
+        "width": 23,
+        "height": 38
+      },
+      "tip": [
+        12,
+        2
+      ],
+      "base": [
+        13,
+        39
+      ],
+      "angleDeg": 1.548157698977968
+    }
+  },
+  "directVision": {
+    "sameOverallLeaf": "PASS",
+    "tipShape": "PASS",
+    "leftShoulder": "PASS",
+    "rightShoulder": "PASS",
+    "baseTaper": "PASS",
+    "asymmetry": "PASS",
+    "centralRidge": "PASS",
+    "lightDarkFacets": "PASS",
+    "papercutCharacter": "PASS",
+    "genericLeafAppearance": "NO"
+  },
+  "shadingMode": "C",
+  "board": "CENTRAL_LEAF_EXACT_RECONSTRUCTION_BOARD.png",
+  "renders": [
+    "CENTRAL_LEAF_MODE_A_FLAT_FACETED.png",
+    "CENTRAL_LEAF_MODE_B_CONTROLLED_NORMALS.png",
+    "CENTRAL_LEAF_MODE_C_PAPERCUT_FACETS.png",
+    "CENTRAL_LEAF_FINAL_FRONT.png",
+    "CENTRAL_LEAF_FINAL_3Q.png",
+    "CENTRAL_LEAF_FINAL_SIDE.png",
+    "CENTRAL_LEAF_WIREFRAME_FRONT.png"
+  ],
+  "otherLeavesChanged": false,
+  "flowersChanged": false,
+  "planterChanged": false
+}

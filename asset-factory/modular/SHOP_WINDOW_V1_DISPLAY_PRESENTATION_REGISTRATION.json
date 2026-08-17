@@ -1,0 +1,15 @@
+{
+  "assetId": "GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001",
+  "assetVersion": "1.0.0",
+  "layer": "LAYER_A_MODULE",
+  "type": "WINDOW_DISPLAY_PRESENTATION",
+  "status": "OPERATOR_APPROVED",
+  "structuralDependency": "GG-BLD-WINDOW-SHOP-LARGE-002@1.0.0",
+  "swappable": true,
+  "independentFromStructuralWindow": true,
+  "anchor": "WINDOW_DISPLAY_ANCHOR",
+  "presentation": {"treatment":"UNLIT_EMISSION","layers":["WINDOW_DISPLAY_INTERIOR","WINDOW_DISPLAY_SIGN"],"referenceDerived":true,"recompressed":false},
+  "provenance": {"evidence":"WINDOW_LAYER_CALIBRATION_EVIDENCE.json","sourceCropChecksum":"fa5890923ce305ea7aada80b0734716ddd216fd01f5d83e337074d1a107db78b","cropCoordinates":[0,0,243,220],"moduleSpaceMapping":"SHOP_WINDOW_MANUFACTURING_SPEC_V1","artLayerIntegrity":"RGBA straight alpha; lossless roundtrip PASS","artLayerChecksums":{"WINDOW_OPENING_SHADOW":"54921d683d48c21dffa51bf258b9bb82550da10221e6dcca5fc2aa2d827d5322","WINDOW_OUTER_FRAME":"5d7a360b733a46a8d3a40e94261327fbfa474348e0ac5d4f7a4de9195eb7a180","WINDOW_INNER_FRAME":"4709dcbc98213d78bc4c1f2cbe23e76d8949e43b77ec8c88a5fee88b18652d7f","WINDOW_GLASS":"a76ec1f78809e6cf1f0e648877d34f975b131e7b25fd2d791a9d1c8b2590b6ed","WINDOW_SILL":"7c6717d6766019a62187decf66e9f7af03cb9f64c362f9bc727cfd94d8505905","WINDOW_DISPLAY_INTERIOR":"a76ec1f78809e6cf1f0e648877d34f975b131e7b25fd2d791a9d1c8b2590b6ed","WINDOW_DISPLAY_SIGN":"ae83068b6a5fa059ddcf54893d7a834bad6532ec9a66b876bcd8f8aff0845139"}},
+  "appearanceChecksum": "8d0047bc31584dbfd713f996473fddc72a1ae55cc21574b652716672cf992182",
+  "shopIntegrated": false
+}

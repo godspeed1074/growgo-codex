@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve('test-output/layer-b-presentation');const r=JSON.parse(fs.readFileSync(path.join(root,'SHOP_PRESENTATION_RESULT.json')));
+test('presentation pass consolidates materials without geometry increase',()=>{assert.equal(r.materialsAfter,7);assert.ok(r.materialsAfter<=32);assert.equal(r.budget.anonymousGeometryCount,0);for(const f of ['SHOP_PRESENTATION.blend','SHOP_PRESENTATION_GAMEPLAY.png','SHOP_PRESENTATION_HERO.png','SHOP_PRESENTATION_CLOSEUP.png','SHOP_PRESENTATION_BACK.png','SHOP_PRESENTATION_LEFT.png','SHOP_PRESENTATION_RIGHT.png'])assert.ok(fs.existsSync(path.join(root,f)),f);});
+test('presentation remains unpromoted',()=>assert.equal(r.knownGoodBuildId,null));

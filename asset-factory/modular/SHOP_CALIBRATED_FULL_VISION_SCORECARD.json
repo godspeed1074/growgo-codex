@@ -1,0 +1,19 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "internalAssemblyIterations": 1,
+  "OVERALL_LIKENESS": 72,
+  "SILHOUETTE": 70,
+  "PROPORTIONS": 63,
+  "WALL_ARCHITECTURE": 68,
+  "DOOR": 82,
+  "WINDOW": 78,
+  "AWNING": 72,
+  "FASCIA_SIGN": 70,
+  "UPPER_TRIM": 64,
+  "FOUNDATION": 72,
+  "SHRUB": 78,
+  "PAPERCUT_STYLE": 68,
+  "GROUNDING": 72,
+  "PRESENTATION": 70,
+  "rationale": "Clean Layer A-only assembly removes legacy shell placeholders, but the facade remains wider/flatter than the reference and protected fascia/awning context remains visibly darker than the reference."
+}

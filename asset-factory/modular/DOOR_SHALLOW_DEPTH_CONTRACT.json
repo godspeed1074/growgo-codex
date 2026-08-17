@@ -1,0 +1,147 @@
+{
+  "assetId": "GG-BLD-DOOR-SHOP-002",
+  "proofType": "TEMPORARY_SHALLOW_LAYER",
+  "versionPromoted": false,
+  "camera": {
+    "type": "ORTHO",
+    "orthoScale": 1.0,
+    "resolution": [
+      300,
+      350
+    ],
+    "locked": true
+  },
+  "layers": [
+    {
+      "layerId": "DOOR_OPENING_SHADOW",
+      "componentId": "DOOR_OPENING_SHADOW",
+      "sourceFile": "DOOR_OPENING_SHADOW.png",
+      "zOffset": 0.0,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_FRAME",
+      "componentId": "DOOR_FRAME",
+      "sourceFile": "DOOR_FRAME.png",
+      "zOffset": 0.01,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_SLAB",
+      "componentId": "DOOR_SLAB",
+      "sourceFile": "DOOR_SLAB.png",
+      "zOffset": 0.02,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_GLASS",
+      "componentId": "DOOR_GLASS",
+      "sourceFile": "DOOR_GLASS.png",
+      "zOffset": 0.03,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_LOWER_PANEL",
+      "componentId": "DOOR_PANEL",
+      "sourceFile": "DOOR_LOWER_PANEL.png",
+      "zOffset": 0.04,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_MAIL_SLOT",
+      "componentId": "DOOR_MAIL_SLOT",
+      "sourceFile": "DOOR_MAIL_SLOT.png",
+      "zOffset": 0.05,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_KNOB_LOCK",
+      "componentId": "DOOR_KNOB_LOCK",
+      "sourceFile": "DOOR_KNOB_LOCK.png",
+      "zOffset": 0.06,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    },
+    {
+      "layerId": "DOOR_THRESHOLD",
+      "componentId": "DOOR_THRESHOLD",
+      "sourceFile": "DOOR_THRESHOLD.png",
+      "zOffset": 0.07,
+      "uvBounds": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "interpolation": "Closest",
+      "colorSpace": "sRGB",
+      "alphaMode": "STRAIGHT"
+    }
+  ],
+  "fullSourceBackplateUsed": false,
+  "sourceDirectoryFiles": [
+    "DOOR_FRAME.png",
+    "DOOR_GLASS.png",
+    "DOOR_KNOB_LOCK.png",
+    "DOOR_LOWER_PANEL.png",
+    "DOOR_MAIL_SLOT.png",
+    "DOOR_OPENING_SHADOW.png",
+    "DOOR_SLAB.png",
+    "DOOR_THRESHOLD.png"
+  ]
+}

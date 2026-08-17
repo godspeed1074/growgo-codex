@@ -1,0 +1,18 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "before": {
+    "window": "undersized",
+    "transom": "low/left",
+    "door": "high",
+    "steps": "floating"
+  },
+  "after": {
+    "window": "root scaled 1.10x",
+    "transom": "raised and centered over door",
+    "door": "lowered",
+    "steps": "landing and lower step lowered"
+  },
+  "visiblePixelAuthority": true,
+  "trimCornerJoins": "PASS_WITH_NOTES",
+  "shrubExtent": "PASS_WITH_NOTES"
+}

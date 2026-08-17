@@ -1,0 +1,13 @@
+{
+  "packId": "GG-PACK-BLD-SIMPLE-SHOP-GROWGO-001",
+  "packVersion": "1.1.0",
+  "parentPackVersion": "1.0.0",
+  "layer": "LAYER_A_MODULE_PACK",
+  "modules": [
+    {"assetId":"GG-BLD-FASCIA-SHOP-NAVY-001","assetVersion":"1.1.0","parentVersion":"1.0.0","type":"FASCIA_MODULE","family":"SHOP_FASCIA","palette":"SHOP_NAVY","change":"deeper cap, raised sign mount, cream edge trim"},
+    {"assetId":"GG-BLD-AWNING-SHOP-FABRIC-001","assetVersion":"1.1.0","parentVersion":"1.0.0","type":"AWNING_MODULE","family":"SHOP_AWNING","palette":"SHOP_PLUM_FABRIC","change":"deeper canopy, segmented bands, readable scalloped edge and brackets"},
+    {"assetId":"GG-BLD-WINDOW-SHOP-LARGE-002","assetVersion":"1.1.0","parentVersion":"1.0.0","type":"WINDOW_MODULE","family":"SHOP_WINDOW","palette":"SHOP_TEAL_GLASS","change":"recessed glass, deep frame, sill and mullion"},
+    {"assetId":"GG-BLD-DOOR-SHOP-002","assetVersion":"1.1.0","parentVersion":"1.0.0","type":"DOOR_MODULE","family":"SHOP_DOOR","palette":"SHOP_WARM_BROWN","change":"deeper frame, glass inset, threshold and handle"},
+    {"assetId":"GG-VEG-PLANTER-SHRUB-001","assetVersion":"1.1.0","parentVersion":"1.0.0","type":"PLANTER_SHRUB_MODULE","family":"SHOP_SHRUB","palette":"SHOP_GREEN_VEGETATION","change":"layered planter rim and staggered foliage silhouette"}
+  ]
+}

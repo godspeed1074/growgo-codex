@@ -1,0 +1,14 @@
+{
+  "auditId": "SHOP_DOOR_V3_TONAL_APPEARANCE_AUDIT",
+  "status": "BLOCKED",
+  "scope": "V3 appearance-only pass; no geometry or ownership changes",
+  "worker": {"runtime": "flatpak run org.blender.Blender", "version": "5.2.0 LTS", "result": "PASS"},
+  "variants": {"TONAL_A": "subtle contrast", "TONAL_B": "stronger controlled papercut contrast", "selected": "TONAL_B"},
+  "materialFamilies": ["MAT_DOOR_WARM_BROWN", "MAT_TRIM_WARM_CREAM", "MAT_GLASS_TEAL", "MAT_BRASS_GROWGO", "MAT_DARK_REVEAL"],
+  "controlledVariants": ["TRIM_LIGHT", "TRIM_DARK", "SLAB_LIGHT", "SLAB_DARK", "GLASS_REFLECTION_TEAL", "BRASS_SHADOW"],
+  "structure": {"geometryChanged": false, "structuralDrift": 0, "sharedGuideDriftPx": 0, "componentHierarchyChanged": false, "componentVisibility": "PASS", "visibleDoorComponents": 20},
+  "budget": {"triangles": 568, "vertices": 368, "materialInstances": 11, "materialFamilies": 5, "textures": 0, "anonymousGeometry": 0, "status": "PASS", "reason": "No geometry, textures, or material families were added; six deterministic variants are restricted to the five locked base families."},
+  "directVision": {"sameDoor": "NO", "casingDepthReadability": "FAIL", "headSeparator": "FAIL", "lowerPanel": "PASS", "threshold": "PASS", "glass": "PASS", "hardware": "PASS", "colourHierarchy": "PASS", "papercutStyle": "FAIL", "genericBlockout": "YES", "reason": "Tonal B improves feature separation without moving structure, but the locked V3 profile/silhouette remains materially simpler than the authoritative reference."},
+  "authority": {"SHOP_DOOR_FRONT_AUTHORITY_V3": "NOT_LOCKED", "knownGood": "NO", "readyForOperatorFinalDoorReview": "NO"},
+  "protected": {"shopModified": false, "atlasModified": false, "eucalyptusModified": false, "goldenReferenceModified": false}
+}

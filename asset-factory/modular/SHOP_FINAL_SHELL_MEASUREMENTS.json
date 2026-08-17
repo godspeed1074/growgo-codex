@@ -1,0 +1,40 @@
+{
+  "reference": {
+    "foundation": {
+      "width": 0.54,
+      "height": 0.11,
+      "stepWidth": 0.14,
+      "stepHeight": 0.03,
+      "landingWidth": 0.14
+    },
+    "leftPost": {
+      "width": 0.035,
+      "height": 0.78,
+      "centerX": 0.24
+    },
+    "rightPost": {
+      "width": 0.035,
+      "height": 0.78,
+      "centerX": 0.76
+    },
+    "baseTrim": {
+      "width": 0.5,
+      "height": 0.06
+    },
+    "doorSurround": {
+      "marginX": 0.02,
+      "marginY": 0.02
+    },
+    "windowSurround": {
+      "marginX": 0.02,
+      "marginY": 0.02
+    },
+    "wall": {
+      "leftMargin": 0.09,
+      "doorWindowGap": 0.05,
+      "rightMargin": 0.08,
+      "height": 0.7
+    }
+  },
+  "method": "Golden Reference normalized shell-only measurement"
+}

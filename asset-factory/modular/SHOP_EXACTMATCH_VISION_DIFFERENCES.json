@@ -1,0 +1,48 @@
+{
+  "reference": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "actual": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/exactmatch-final/SHOP_EXACTMATCH_FRONT.png",
+  "differences": [
+    [
+      "FASCIA_BACKING",
+      "HIGH",
+      "Dark rectangular fascia context remains visible; reference has clean navy envelope.",
+      "VISIBLE_ART_MASK"
+    ],
+    [
+      "AWNING_BACKING",
+      "HIGH",
+      "Dark side/underside context remains heavier than reference.",
+      "VISIBLE_ART_MASK"
+    ],
+    [
+      "UPPER_TRIM",
+      "HIGH",
+      "Upper corner trim remains generic and not identical to reference corner blocks.",
+      "FACADE_SHELL"
+    ],
+    [
+      "DOOR_TRANSOM",
+      "HIGH",
+      "Reference has a clear transom/top frame; current Door top relationship remains different.",
+      "FACADE_SHELL"
+    ],
+    [
+      "FOUNDATION",
+      "MEDIUM",
+      "Current foundation/landing remains pale and segmented rather than the reference layered gray base.",
+      "FACADE_SHELL"
+    ],
+    [
+      "PRESENTATION",
+      "MEDIUM",
+      "Lighting is brighter after correction but still darker/less white than reference.",
+      "LIGHTING_PRESENTATION"
+    ],
+    [
+      "WALL_CONTINUITY",
+      "MEDIUM",
+      "Wall panel rhythm remains more assembled than the continuous reference facade.",
+      "FACADE_SHELL"
+    ]
+  ]
+}

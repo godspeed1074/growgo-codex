@@ -1,0 +1,102 @@
+{
+  "status": "BLOCKED_3D_DEPTH_REVIEW",
+  "frontAuthorityLock": "LOCKED",
+  "sourceFrontChecksum": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+  "finalFrontChecksum": "bbc2dbf4730c02bfa88a299b5c00e8b26a43ec9301a702a862286c43bea6d149",
+  "front": {
+    "iou": 0.9999,
+    "widthDriftPercent": 0,
+    "heightDriftPercent": 0,
+    "centreXDriftPercent": 0,
+    "centreZDriftPercent": 0,
+    "lockedBounds": {
+      "x0": 3,
+      "y0": 32,
+      "x1": 177,
+      "y1": 257,
+      "width": 175,
+      "height": 226,
+      "n": 26335,
+      "cx": 90,
+      "cy": 144.5
+    },
+    "finalBounds": {
+      "x0": 3,
+      "y0": 32,
+      "x1": 177,
+      "y1": 257,
+      "width": 175,
+      "height": 226,
+      "n": 26338,
+      "cx": 90,
+      "cy": 144.5
+    }
+  },
+  "depthCandidates": [
+    {
+      "candidate": "DEPTH_A",
+      "percent": 22,
+      "observedLeaves": 33,
+      "observedTransitionFoliage": 23,
+      "supportLeaves": 0,
+      "depthBands": {
+        "FRONT": 15,
+        "MID_FRONT": 9,
+        "MID": 6,
+        "MID_BACK": 8,
+        "BACK": 11
+      }
+    },
+    {
+      "candidate": "DEPTH_B",
+      "percent": 26,
+      "observedLeaves": 33,
+      "observedTransitionFoliage": 23,
+      "supportLeaves": 0,
+      "depthBands": {
+        "FRONT": 15,
+        "MID_FRONT": 9,
+        "MID": 6,
+        "MID_BACK": 8,
+        "BACK": 11
+      }
+    },
+    {
+      "candidate": "DEPTH_C",
+      "percent": 30,
+      "observedLeaves": 33,
+      "observedTransitionFoliage": 23,
+      "supportLeaves": 0,
+      "depthBands": {
+        "FRONT": 15,
+        "MID_FRONT": 9,
+        "MID": 6,
+        "MID_BACK": 8,
+        "BACK": 11
+      }
+    }
+  ],
+  "selected": "DEPTH_B",
+  "vision": {
+    "frontSameShrub": "YES",
+    "frontAuthority": "PASS",
+    "individualLeafDepth": "NEEDS_WORK",
+    "threeQuarter": "FAIL",
+    "left": "FAIL",
+    "right": "FAIL",
+    "top": "FAIL",
+    "shelfPattern": "YES",
+    "cardStackAppearance": "YES",
+    "blobFoliage": "NO",
+    "flowers": "PASS",
+    "planterDepth": "FAIL",
+    "supportLeavesVisibleIncorrectly": "NO"
+  },
+  "reason": "DEPTH_B preserves the front but fails the required side/3Q quality gates: visible shelf/card pattern and detached planter perspective.",
+  "worker": "Steam Deck",
+  "blender": "5.2.0 LTS",
+  "anonymousGeometryCount": 0,
+  "mobileBudget": "PASS",
+  "shopUnchanged": true,
+  "eucalyptusStarted": false
+}

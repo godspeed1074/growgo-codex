@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..'),mod=path.join(root,'asset-factory/modular');
+test('shared-transform solver proves the locked front transform',()=>{const e=JSON.parse(fs.readFileSync(path.join(mod,'PLANT_SHARED_TRANSFORM_FIVE_VIEW_ERRORS.json'),'utf8'));assert.equal(e.frontGate.pass,true);assert.equal(e.candidates.length,9);assert.equal(e.winner.transform.length,3);});
+test('shared-transform solver keeps the model and foliage immutable',()=>{const a=JSON.parse(fs.readFileSync(path.join(mod,'PLANT_SHARED_TRANSFORM_HIERARCHY_AUDIT.json'),'utf8'));assert.equal(a.meshChanged,false);assert.equal(a.foliageRerendered,false);assert.equal(a.doubleScaleFound,false);assert.equal(a.hiddenParentScaleFound,false);});

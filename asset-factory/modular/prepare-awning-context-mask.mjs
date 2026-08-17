@@ -1,0 +1,2 @@
+import fs from 'node:fs';import {decodePng,encodePng} from '../golden-reference/golden-reference-raster-analysis.mjs';
+const im=decodePng('/tmp/growgo-layers/AWNING_FIDELITY_FRONT.png'),rgba=Buffer.from(im.rgba);for(let y=0;y<im.h;y++)for(let x=0;x<im.w;x++){const i=(y*im.w+x)*4,r=rgba[i],g=rgba[i+1],b=rgba[i+2];const neutral=Math.max(r,g,b)-Math.min(r,g,b)<18;const edge=(x<14||x>im.w-15||y<12||y>im.h-16);if(neutral&&edge)rgba[i+3]=0}fs.writeFileSync('test-output/upper-shell-iter1/AWNING_FIDELITY_FRONT_TRANSPARENT.png',encodePng(im.w,im.h,rgba));

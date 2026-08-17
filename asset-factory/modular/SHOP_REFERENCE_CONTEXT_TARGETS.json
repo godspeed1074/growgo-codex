@@ -1,0 +1,53 @@
+{
+  "status": "SOURCE_INFORMATION_BLOCKER",
+  "targets": [
+    {
+      "region": "FASCIA_TO_WALL_TRANSITION",
+      "referenceCrop": "test-output/shop-refbake/reference-crops/fascia-sign.png",
+      "currentRender": "test-output/autoconverge2-iter6/SHOP_CALIBRATED_FULL_FRONT.png",
+      "difference": "fascia bottom and wall contact remain darker/less articulated in Blender",
+      "severity": "HIGH",
+      "likelyResponsibleLayer": "CONTEXT_ART",
+      "newLayerAArtRequired": "YES_BUT_SOURCE_CROP_MUST_BE_TIGHTENED"
+    },
+    {
+      "region": "AWNING_TO_WALL_TRANSITION",
+      "referenceCrop": "test-output/shop-refbake/reference-crops/awning.png",
+      "currentRender": "test-output/autoconverge2-iter6/SHOP_CALIBRATED_FULL_FRONT.png",
+      "difference": "mounting/contact region contains source-context darkness in current calibrated image",
+      "severity": "HIGH",
+      "likelyResponsibleLayer": "CONTEXT_CONTAMINATION",
+      "newLayerAArtRequired": "YES_BUT_SOURCE_CROP_MUST_BE_TIGHTENED"
+    },
+    {
+      "region": "UPPER_LEFT_TRIM_TRANSITION",
+      "referenceCrop": "test-output/facade-architecture/GG-BLD-TRIM-UPPER-CORNER-COMMERCIAL-001@3.5.0/FRONT.png",
+      "currentRender": "test-output/autoconverge2-iter6/SHOP_CALIBRATED_FULL_FRONT.png",
+      "difference": "assembled post-to-cornice transition flatter than target",
+      "severity": "MEDIUM",
+      "likelyResponsibleLayer": "FACADE_SHELL",
+      "newLayerAArtRequired": "YES_BUT_SOURCE_CROP_MUST_BE_TIGHTENED"
+    },
+    {
+      "region": "UPPER_RIGHT_TRIM_TRANSITION",
+      "referenceCrop": "test-output/facade-architecture/GG-BLD-TRIM-UPPER-CORNER-COMMERCIAL-001@3.5.0/FRONT.png",
+      "currentRender": "test-output/autoconverge2-iter6/SHOP_CALIBRATED_FULL_FRONT.png",
+      "difference": "assembled post-to-cornice transition flatter than target",
+      "severity": "MEDIUM",
+      "likelyResponsibleLayer": "FACADE_SHELL",
+      "newLayerAArtRequired": "YES_BUT_SOURCE_CROP_MUST_BE_TIGHTENED"
+    },
+    {
+      "region": "REPRESENTATIVE_WALL_SURFACE",
+      "referenceCrop": "test-output/shop-refbake/reference-crops/wall-foundation.png",
+      "currentRender": "test-output/autoconverge2-iter6/SHOP_CALIBRATED_FULL_FRONT.png",
+      "difference": "reference has richer local surface treatment; exact reusable pixels require tighter source crop",
+      "severity": "MEDIUM",
+      "likelyResponsibleLayer": "LAYER_A_ARTWORK",
+      "newLayerAArtRequired": "YES_BUT_SOURCE_CROP_MUST_BE_TIGHTENED"
+    }
+  ],
+  "contextContaminationPolicy": "REQUIRED_ZERO",
+  "correctionsRetained": [],
+  "correctionsReverted": []
+}

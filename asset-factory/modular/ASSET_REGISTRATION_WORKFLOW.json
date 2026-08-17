@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "workflowId": "GG-ASSET-REGISTRATION-WORKFLOW-001",
+  "steps": [
+    "CREATE_SPEC",
+    "VALIDATE",
+    "REGISTER_DRAFT",
+    "BUILD",
+    "REFERENCE_REVIEW",
+    "BUDGET_VALIDATION",
+    "MODULAR_REUSE_VALIDATION",
+    "APPROVE",
+    "PUBLISH_INDEX_VERSION"
+  ],
+  "registrationState": "DRAFT",
+  "approvalEvidenceRequired": ["BUILD", "REFERENCE_REVIEW", "BUDGET_VALIDATION", "MODULAR_REUSE_VALIDATION"],
+  "blenderOutputAloneMayRegister": false,
+  "approvedHistoryMutable": false
+}

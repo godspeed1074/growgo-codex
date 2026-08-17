@@ -1,0 +1,28 @@
+{
+  "status": "REJECTED",
+  "candidateId": "HIDDEN_FOLIAGE_CORE_001",
+  "scope": "isolated gameplay-optimized 2.5D experiment only",
+  "reasons": [
+    "VISIBLE_FROM_LOCKED_FRONT",
+    "FRONT_IOU_BELOW_98_PERCENT",
+    "FRONT_DRIFT_EXCEEDS_0_5_PERCENT",
+    "CARD_AND_SHELF_EFFECT_IN_GAMEPLAY_CONE"
+  ],
+  "frontAuthority": {
+    "lockVersion": "PLANT_FRONT_GEOMETRY_AUTHORITY_LOCK_V1",
+    "status": "LOCKED",
+    "checksum": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+    "preserved": true
+  },
+  "metrics": {
+    "iou": 0.9193,
+    "widthDriftPercent": 1.143,
+    "heightDriftPercent": 0,
+    "centreDriftPercent": 0.571
+  },
+  "neverPromotedToLayerA": true,
+  "neverPromotedToLayerB": true,
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "retainedOnlyAsRejectedEvidence": "asset-factory/modular/PLANT_GAMEPLAY_OPTIMIZED_2_5D_BOARD.png"
+}

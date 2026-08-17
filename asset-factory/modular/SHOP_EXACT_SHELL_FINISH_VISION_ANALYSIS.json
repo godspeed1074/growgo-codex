@@ -1,0 +1,41 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "regions": {
+    "upperTransition": {
+      "missing": [
+        "cornice/contact transition",
+        "post-to-fascia layering",
+        "shallow shadow gap"
+      ],
+      "responsibility": "LAYER_A_TRANSITION_ART"
+    },
+    "leftWall": {
+      "missing": [
+        "subtle warm-brown tonal variation",
+        "opening-adjacent edge shading"
+      ],
+      "responsibility": "LAYER_A_WALL_SURFACE_ART"
+    },
+    "centreWall": {
+      "missing": [
+        "papercut depth separation",
+        "contact shading around openings"
+      ],
+      "responsibility": "LAYER_A_WALL_SURFACE_ART"
+    },
+    "rightWall": {
+      "missing": [
+        "surface continuity treatment"
+      ],
+      "responsibility": "LAYER_A_WALL_SURFACE_ART"
+    },
+    "openingEdges": {
+      "missing": [
+        "consistent shadow/trim joins"
+      ],
+      "responsibility": "FACADE_SHELL"
+    }
+  },
+  "sourceInformation": "Current broad crops do not isolate these pixels losslessly",
+  "visionMetricConflict": true
+}

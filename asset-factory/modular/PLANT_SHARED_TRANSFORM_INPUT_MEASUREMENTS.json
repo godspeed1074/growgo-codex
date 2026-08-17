@@ -1,0 +1,46 @@
+{
+  "targetPlanter": {
+    "left": 4,
+    "right": 175,
+    "top": 170,
+    "bottom": 257,
+    "width": 172,
+    "height": 88,
+    "centerX": 89.5,
+    "centerY": 213.5,
+    "rimY": 170,
+    "method": "direct outer-silhouette edge measurement at final 189x261 presentation resolution"
+  },
+  "originalRenderedPlanter": {
+    "left": 3,
+    "right": 177,
+    "top": 3,
+    "bottom": 91,
+    "width": 175,
+    "height": 89,
+    "centerX": 90,
+    "centerY": 47,
+    "rimY": 3
+  },
+  "scaleWidth": 0.9828571428571429,
+  "scaleHeight": 0.9887640449438202,
+  "scaleDifferencePercent": 0.599,
+  "frontSolvedPlanter": {
+    "left": 4,
+    "right": 175,
+    "top": 170,
+    "bottom": 257,
+    "width": 172,
+    "height": 88,
+    "centerX": 89.5,
+    "centerY": 213.5,
+    "rimY": 170
+  },
+  "calculatedSharedTransform": {
+    "S": 0.98285714,
+    "TX": -0.00306878,
+    "TZ": 0.63249042,
+    "TY": 0
+  },
+  "notes": "The target and raw measurements were taken from actual final-resolution pixels. The front solver meets all locked-planter gates."
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PASS_FLOWER_FOLIAGE_FRONT_COMPLETE",
+  "baselineFoliageResidual": 2.597,
+  "baselineFoliageIoU": 0.9614,
+  "flowerBandResidualClassification": "RESOLVED_BY_VISIBLE_FLOWER_GEOMETRY_AND_ORDER",
+  "meaningfulUnexplainedResidualRegions": 0,
+  "directVision": {
+    "sameShrub": "YES",
+    "flowerGroupsPresent": "YES",
+    "flowerCentres": "PASS",
+    "flowerBounds": "PASS",
+    "petalReadability": "PASS",
+    "flowerFoliageOverlap": "PASS",
+    "planterRelationship": "PASS",
+    "noMeaningfulUnexplainedResidualRegion": "YES",
+    "geometryOnly": "YES"
+  },
+  "resultEvidence": {
+    "blender": "Steam Deck Blender 5.2.0 LTS",
+    "flowerGeometryCount": 26,
+    "flowersTemporary": false,
+    "anonymousGeometryCount": 0,
+    "mobileBudget": "PASS",
+    "depthInferencePerformed": false,
+    "shopIntegrationPerformed": false
+  },
+  "authorityGate": "PASS"
+}

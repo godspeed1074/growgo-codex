@@ -1,0 +1,48 @@
+{
+  "moduleId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+  "version": "1.0.0",
+  "reference": {
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "status": "SPECIFICATION_BOUND",
+    "sourceChecksum": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f"
+  },
+  "fourSide": {
+    "front": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/FRONT.png",
+    "back": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/BACK.png",
+    "left": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/LEFT.png",
+    "right": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/RIGHT.png",
+    "board": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/FOUR_SIDE_REVIEW_BOARD.png",
+    "status": "PASS"
+  },
+  "componentId": {
+    "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/MODULE_COMPONENT_ID_RENDER.png",
+    "map": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-layer-a-real/GG-BLD-AWNING-SHOP-FABRIC-001/MODULE_COMPONENT_ID_MAP.json",
+    "status": "PASS",
+    "confidence": "EXPLICIT_RENDER_ID"
+  },
+  "budget": {
+    "triangles": 480,
+    "vertices": 320,
+    "materials": 14,
+    "objectCount": 41,
+    "fileSizeBytes": 105175,
+    "lods": [
+      "LOD0",
+      "LOD1",
+      "LOD2"
+    ],
+    "status": "PASS"
+  },
+  "criteria": {
+    "silhouette": "APPROVED_WITH_NOTES",
+    "proportion": "APPROVED_WITH_NOTES",
+    "materialColour": "PASS",
+    "mobileReadability": "PASS",
+    "modularity": "PASS"
+  },
+  "status": "APPROVED_WITH_NOTES",
+  "notes": [
+    "Reference comparison is specification-bound; operator must inspect the supplied concept image against the four-side board.",
+    "No automatic visual approval was performed."
+  ]
+}

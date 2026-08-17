@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const out=path.join(root,'test-output/door-repaired-layer-proof/output');
+const evidence=JSON.parse(fs.readFileSync(path.join(root,'asset-factory/modular/DOOR_SHALLOW_LAYER_PRODUCTION_EVIDENCE.json')));
+const required=['DOOR_REPAIRED_FIDELITY_FRONT.png','DOOR_REPAIRED_PAPERCUT_FRONT.png','DOOR_REPAIRED_GAMEPLAY.png','DOOR_REPAIRED_CLOSEUP.png','DOOR_REPAIRED_BACK.png','DOOR_REPAIRED_LEFT.png','DOOR_REPAIRED_RIGHT.png','DOOR_REPAIRED_COMPONENT_ID.png','DOOR_REPAIRED_COMPARISON_BOARD.png','DOOR_REPAIRED_LAYER_PROOF.blend'];
+test('repaired proof completed on real Steam Deck Blender',()=>{assert.equal(evidence.status,'PASS');assert.equal(evidence.blender.version,'5.2.0 LTS');assert.equal(evidence.blender.cleanExit,true);assert.equal(evidence.fullSourceBackplateUsed,false);assert.equal(evidence.permanentDoorVersionCreated,false);assert.equal(evidence.layerBAssembled,false);});
+test('repaired proof outputs exist',()=>{for(const f of required)assert.equal(fs.existsSync(path.join(out,f)),true,f);});
+test('visible feature and shallow review gates pass',()=>{for(const v of Object.values(evidence.visiblePixelChecks))assert.equal(v,'YES');assert.equal(evidence.papercutDepth.status,'PASS');assert.equal(evidence.fourSide.status,'PASS');assert.equal(evidence.anonymousGeometry,0);});

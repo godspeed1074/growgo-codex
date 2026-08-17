@@ -1,0 +1,33 @@
+{
+  "referenceAuthority": "IMMUTABLE_GOLDEN_REFERENCE",
+  "status": "STALLED_VISUAL_CONVERGENCE",
+  "differences": [
+    {
+      "area": "wall/context",
+      "severity": "HIGH",
+      "ownership": "FACADE_SHELL",
+      "observation": "wall remains simpler and flatter than reference"
+    },
+    {
+      "area": "upper trim",
+      "severity": "MEDIUM",
+      "ownership": "LAYER_B_RECIPE_PLACEMENT",
+      "observation": "upper trim transition remains flatter than reference"
+    },
+    {
+      "area": "shrub depth",
+      "severity": "HIGH",
+      "ownership": "LAYER_A_GEOMETRY",
+      "observation": "front art is attractive but side view remains partly card-like"
+    },
+    {
+      "area": "hero context",
+      "severity": "HIGH",
+      "ownership": "CONTEXT_CONTAMINATION",
+      "observation": "dark surrounding context remains in protected fascia/awning artwork"
+    }
+  ],
+  "visionMetricConflicts": [
+    "technical budget PASS but visual mismatch remains"
+  ]
+}

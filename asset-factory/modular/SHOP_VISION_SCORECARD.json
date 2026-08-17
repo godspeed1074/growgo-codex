@@ -1,0 +1,15 @@
+{
+  "OVERALL_LIKENESS": 60,
+  "SILHOUETTE": 58,
+  "PROPORTIONS": 65,
+  "FACADE_ARCHITECTURE": 52,
+  "DOOR": 82,
+  "WINDOW": 68,
+  "AWNING": 70,
+  "FASCIA_SIGN": 65,
+  "SHRUB": 72,
+  "FOUNDATION": 68,
+  "PAPERCUT_STYLE": 62,
+  "GROUNDING_CONTACT": 70,
+  "rationale": "The Door backing is now removed and the Door is grounded at the landing. Window panels are visible. The upper corner trim remains too blocky/disconnected and the facade envelope still differs from the warmer, more compact Golden Reference."
+}

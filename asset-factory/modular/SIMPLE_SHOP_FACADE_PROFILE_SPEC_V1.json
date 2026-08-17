@@ -1,0 +1,1 @@
+{"status":"PASS","profiles":{"broadWalls":"lightweight shallow boxes","pilasters":"shallow stepped papercut","basePlinth":"layered shallow profile","fascia":"body + sign zone + lower band + top cap","awning":"rigid shallow projection with supports"},"prohibitions":["no cloth simulation","no shadow tracing","no anti-aliasing geometry"]}

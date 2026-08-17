@@ -1,0 +1,31 @@
+{
+  "status": "BLOCKED",
+  "execution": {"mode": "REAL_BLENDER_WORKER_EXECUTION", "worker": "Steam Deck", "blender": "5.2.0 LTS", "frontOnly": true},
+  "variants": {
+    "panelTested": ["A", "B", "C"],
+    "thresholdTested": ["A", "B", "C"],
+    "selected": "B",
+    "selectionReason": "Medium rectangular molding and step depth give the clearest reference-like front read without thickening the locked panel envelope."
+  },
+  "preserved": {"casing": "PASS", "plinth": "PASS", "mainGlass": "PASS", "hardware": "PASS", "transom": "PASS"},
+  "vision": {
+    "lowerPanel": "NEEDS_REVIEW",
+    "panelClearlyRecessed": "YES",
+    "panelFrameTooThick": "NO",
+    "threshold": "NEEDS_REVIEW",
+    "thresholdLayered": "YES",
+    "thresholdTooHeavy": "NO",
+    "sameDoor": "NO",
+    "genericBlockout": "YES"
+  },
+  "budget": {"triangles": 692, "vertices": 444, "materials": 5, "textures": 0, "anonymousGeometry": 0, "status": "PASS"},
+  "measurements": {"status": "STRUCTURAL_PASS", "scope": "locked module coordinates and budget; no raster measurement performed"},
+  "visibility": {"status": "NOT_VALIDATED", "required20of20": "FAIL", "reason": "No rendered-pixel visibility analyzer was run in this front-only gate."},
+  "frontAuthority": "NOT_LOCKED",
+  "operatorReviewReady": "NO",
+  "checksums": {
+    "blendSha256": "ee54f18f1d44edaad4f74ac33394c255672c5725d85e868ccdf552fbaf8ecbec",
+    "finalFrontSha256": "87c46bf15fe252d37934ac17ac373a803ce4906c08bd569eb8a8bdd81d631748",
+    "boardSha256": "2a4894d8bf22c5160aee74a9a23ed49e17be2f46c176a22e05c03c402d11c99f"
+  }
+}

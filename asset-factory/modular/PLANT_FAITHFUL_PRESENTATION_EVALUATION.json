@@ -1,0 +1,33 @@
+{
+  "status": "PASS_FINISHED_FRONT_AUTHORITATIVE_2_5D_ASSET",
+  "frontAuthority": {
+    "preserved": true,
+    "expected": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+    "actual": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63"
+  },
+  "sourceAxes": "X=screen-horizontal,Y=screen-vertical,Z=hidden-depth",
+  "cameraRollDegrees": 0,
+  "sideViews": [
+    "FAITHFUL_FINAL_M30.png",
+    "FAITHFUL_FINAL_M15.png",
+    "FAITHFUL_FINAL_P15.png",
+    "FAITHFUL_FINAL_P30.png"
+  ],
+  "sourcePlanterUnchanged": true,
+  "observedFoliageBaseAnchorsPreserved": true,
+  "topology": {
+    "observedLeafMeshes": 33,
+    "allFoliageMeshes": 49,
+    "flowerMeshes": 26,
+    "planterMeshes": 11,
+    "minimumLeafDepth": 0.006,
+    "maximumLeafDepth": 0.015,
+    "maximumPlanterDepth": 0.14,
+    "anonymousGeometryCount": 0
+  },
+  "topologyPass": true,
+  "shopUnchanged": true,
+  "atlasUnchanged": true,
+  "eucalyptusStarted": false,
+  "automaticApproval": false
+}

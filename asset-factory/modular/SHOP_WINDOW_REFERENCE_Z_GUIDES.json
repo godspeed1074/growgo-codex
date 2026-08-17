@@ -1,0 +1,1 @@
+{"source":"test-output/window-layer-calibration/WINDOW_GOLDEN_REFERENCE_CROP.png","guides":{"Z_MODULE_TOP":0,"Z_HEAD_TOP":0,"Z_HEAD_BOTTOM":15,"Z_GLASS_TOP":23,"Z_GLASS_BOTTOM":190,"Z_SILL_TOP":190,"Z_SILL_BOTTOM":206,"Z_APRON_TOP":206,"Z_APRON_BOTTOM":222,"Z_MODULE_BOTTOM":222},"status":"PASS","measurementRule":"All vertical component edges derive from this one shared grid."}

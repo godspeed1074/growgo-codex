@@ -1,0 +1,41 @@
+{
+  "status": "BLOCKED",
+  "buildMode": "PARAMETRIC_ARCHITECTURE_V1",
+  "rejectedTracedComponentsRemoved": ["casing", "plinth", "lower panel", "threshold"],
+  "preservedComponents": ["D01", "D02", "D03", "D06", "D07", "D08", "D09", "D14", "D15"],
+  "frontOnly": true,
+  "architecture": {
+    "casing": "straight mirrored rectangular bands",
+    "plinth": "rectangular upper transition, main block, lower foot",
+    "lowerPanel": "outer rectangular molding, inner step, recessed face",
+    "threshold": "top sill, middle step, front lip",
+    "headAndSeparator": "retained reference-derived horizontal profiles"
+  },
+  "vision": {
+    "casingStraight": "YES",
+    "casingDepthBands": "PASS",
+    "casingTaperedOrSlanted": "NO",
+    "plinths": "PASS",
+    "lowerPanel": "NEEDS_CORRECTION",
+    "threshold": "NEEDS_CORRECTION",
+    "mainGlassPreserved": "YES",
+    "hardwarePreserved": "YES",
+    "transomPreserved": "YES",
+    "sameDoor": "NO",
+    "genericBlockout": "YES",
+    "operatorReviewReady": "NO"
+  },
+  "budget": {
+    "triangles": 692,
+    "vertices": 444,
+    "materials": 5,
+    "textures": 0,
+    "anonymousGeometry": 0,
+    "status": "PASS"
+  },
+  "unrun": ["raster D01-D20 visibility", "side/back/top QA", "front authority lock"],
+  "checksums": {
+    "blendSha256": "aa009cefca32f1f29e426647d1aca9f418b12dc038ac9bde99f10d3c20e20308",
+    "frontRenderSha256": "9398f984c45fa36c535ff0f53377a3b44bc6adcbe6131b87ddac380f57034b32"
+  }
+}

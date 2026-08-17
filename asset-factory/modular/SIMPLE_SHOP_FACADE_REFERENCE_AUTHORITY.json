@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "source": {
+    "path": "test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+    "sha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+    "cropCoordinates": [
+      0,
+      0,
+      760,
+      670
+    ],
+    "dimensions": [
+      760,
+      670
+    ],
+    "authority": "operator-supplied upper-left Simple Shop panel, previously clean-cropped"
+  },
+  "layers": {
+    "FASCIA": {
+      "x": 28,
+      "y": 12,
+      "w": 644,
+      "h": 151,
+      "sha256": "dc2e94600a44b38b671067caaac67373d2fe49432992a7a152de7851c7a2744b"
+    },
+    "AWNING": {
+      "x": 74,
+      "y": 161,
+      "w": 553,
+      "h": 99,
+      "sha256": "c0f5dcb929b984db39ee714b50adf830a963989180e29a839ee9bb66cc25883e"
+    },
+    "WALL_LEFT": {
+      "x": 49,
+      "y": 256,
+      "w": 40,
+      "h": 272,
+      "sha256": "40a181d9b38f0cd9538388d3c8a946b72f1c0ac18320fb13b4ab8e448f6b19c9"
+    },
+    "WALL_BETWEEN": {
+      "x": 284,
+      "y": 256,
+      "w": 20,
+      "h": 272,
+      "sha256": "50b95c97c604a0a3144597bd87a04e78b28100103f094bee381ad2e8ec3114ac"
+    },
+    "WALL_RIGHT": {
+      "x": 582,
+      "y": 256,
+      "w": 44,
+      "h": 272,
+      "sha256": "763ebd2626134f220a4ca6456be095d4e19abbca558303fb7e8892477587d75b"
+    },
+    "WALL_ABOVE": {
+      "x": 49,
+      "y": 257,
+      "w": 577,
+      "h": 18,
+      "sha256": "cd0d1fffda440ec3f3edd7c782eb1500d5b8bcb48a40c031db1dd5ed72bbd0e1"
+    },
+    "BASE_LEFT": {
+      "x": 17,
+      "y": 500,
+      "w": 72,
+      "h": 86,
+      "sha256": "fa25395bb255593922c437c339b6b48bd7b5a18dc318fadb957af6819516b093"
+    },
+    "BASE_BETWEEN": {
+      "x": 284,
+      "y": 500,
+      "w": 298,
+      "h": 86,
+      "sha256": "c84a082642ed64092ae2c4d8fde6a3dc045b0a8aeaefb35a3a7215c8b130d145"
+    },
+    "BASE_RIGHT": {
+      "x": 582,
+      "y": 500,
+      "w": 44,
+      "h": 86,
+      "sha256": "0c46c2f2ff9ee7030e19d22a3ffad040cbf63f99391b6377a94023c5b5628b9d"
+    },
+    "APPROVED_DOOR": {
+      "x": 89,
+      "y": 256,
+      "w": 195,
+      "h": 327,
+      "sha256": "c71456b624b81609499ff0d1e5d0b851b343b09a35d9ff02798f24be55c782b6"
+    },
+    "APPROVED_WINDOW": {
+      "x": 304,
+      "y": 275,
+      "w": 278,
+      "h": 231,
+      "sha256": "1226d9c183f3a2a178ef4d94da46b02f8edc80368ae81893a480abefb7238edb"
+    }
+  }
+}

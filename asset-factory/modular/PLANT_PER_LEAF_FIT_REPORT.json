@@ -1,0 +1,3790 @@
+{
+  "status": "BLOCKED_GEOMETRY_ONLY_VISUAL_GATE",
+  "assetId": "GG-VEG-PLANTER-SHRUB-001",
+  "referenceChecksum": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+  "mapFile": "PLANT_TARGET_VISIBLE_LEAF_MAP.json",
+  "manifestFile": "test-output/plant-leaf-by-leaf-front/PLANT_LEAF_LAYER_MANIFEST.json",
+  "visibleLeafCount": 26,
+  "dominantVisibleLeafCount": 19,
+  "secondaryVisibleLeafCount": 7,
+  "fittingWeights": {
+    "contourOverlap": 0.4,
+    "centrePosition": 0.2,
+    "widthHeight": 0.15,
+    "tipPosition": 0.1,
+    "imagePlaneAngle": 0.1,
+    "colourClass": 0.05
+  },
+  "aggregateErrors": {
+    "meanDominantCentreErrorPx": 0.112,
+    "meanDominantWidthErrorPercent": 0.255,
+    "meanDominantHeightErrorPercent": 0.361,
+    "meanDominantTipErrorPx": 0,
+    "meanDominantAngleErrorDeg": 0,
+    "meanDominantTipAxisAngleErrorDeg": 24.164,
+    "worstDominant": {
+      "centre": {
+        "id": "LEAF_006",
+        "value": 0.75
+      },
+      "width": {
+        "id": "LEAF_006",
+        "value": 4.839
+      },
+      "height": {
+        "id": "LEAF_013",
+        "value": 2.941
+      },
+      "tip": {
+        "id": "LEAF_002",
+        "value": 0
+      },
+      "angle": {
+        "id": "LEAF_002",
+        "value": 0
+      },
+      "tipAxisAngle": {
+        "id": "LEAF_020",
+        "value": 47.965
+      }
+    },
+    "meanDominantContourIoU": 0.6581,
+    "reason": "Computed from standalone Blender mesh projection with independent target-mask contour IoU."
+  },
+  "visualGate": {
+    "targetCropComparedDirectly": true,
+    "blenderFrontFile": "test-output/plant-26leaf-geometry-only/PLANT_26LEAF_GEOMETRY_FRONT.png",
+    "targetLeafAnnotationFile": "test-output/PLANT_TARGET_VISIBLE_LEAF_MAP.png",
+    "reviewBoardFile": "asset-factory/modular/PLANT_26LEAF_GEOMETRY_AUTHORITY_BOARD.png",
+    "overallFrontResemblesTarget": "FAIL_GEOMETRY_ONLY_VISUAL_REVIEW",
+    "independentPerLeafGeometryPass": "LANDMARKS_AND_CONTOUR_IOU_MEASURED; VISUAL_GATE_FAIL"
+  },
+  "leaves": [
+    {
+      "id": "LEAF_001",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          95,
+          49
+        ],
+        "visibleSizePx": [
+          25,
+          42
+        ],
+        "tipPx": [
+          95,
+          29
+        ],
+        "angleDeg": 0,
+        "colourClass": "LIGHT",
+        "occlusionPercent": 8,
+        "layerEstimate": "BACK_TOP",
+        "silhouetteRole": "TALLEST_CENTRE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          95,
+          49
+        ],
+        "visibleSizePx": [
+          25,
+          42
+        ],
+        "tipPx": [
+          95,
+          29
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_001",
+        "referenceCentrePx": [
+          95,
+          49
+        ],
+        "renderedCentrePx": [
+          95,
+          49
+        ],
+        "referenceSizePx": [
+          25,
+          42
+        ],
+        "renderedSizePx": [
+          25,
+          42
+        ],
+        "referenceTipPx": [
+          95,
+          29
+        ],
+        "renderedTipPx": [
+          95,
+          29
+        ],
+        "referenceAngleDeg": 0,
+        "renderedAngleDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -8.010227645868486,
+        "projectedPolygonPx": [
+          [
+            95,
+            29
+          ],
+          [
+            105.227,
+            36.842
+          ],
+          [
+            107.5,
+            42.368
+          ],
+          [
+            107.5,
+            43.474
+          ],
+          [
+            106.364,
+            55.632
+          ],
+          [
+            102.955,
+            64.474
+          ],
+          [
+            101.818,
+            65.579
+          ],
+          [
+            96.136,
+            70
+          ],
+          [
+            95,
+            70
+          ],
+          [
+            89.318,
+            65.579
+          ],
+          [
+            85.909,
+            62.263
+          ],
+          [
+            84.773,
+            58.947
+          ],
+          [
+            82.5,
+            51.211
+          ],
+          [
+            82.5,
+            44.579
+          ],
+          [
+            83.636,
+            41.263
+          ],
+          [
+            85.909,
+            35.737
+          ],
+          [
+            87.045,
+            33.526
+          ],
+          [
+            92.727,
+            28
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 8.01
+      },
+      "contourOverlap": 0.7725,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_002",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          70,
+          68
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          61,
+          48
+        ],
+        "angleDeg": -24,
+        "colourClass": "MID",
+        "occlusionPercent": 10,
+        "layerEstimate": "BACK_UPPER",
+        "silhouetteRole": "UPPER_LEFT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          70,
+          68
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          61,
+          48
+        ],
+        "angleDeg": -24,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_002",
+        "referenceCentrePx": [
+          70,
+          68
+        ],
+        "renderedCentrePx": [
+          70,
+          67.5
+        ],
+        "referenceSizePx": [
+          28,
+          38
+        ],
+        "renderedSizePx": [
+          28,
+          39
+        ],
+        "referenceTipPx": [
+          61,
+          48
+        ],
+        "renderedTipPx": [
+          61,
+          48
+        ],
+        "referenceAngleDeg": -24,
+        "renderedAngleDeg": -24,
+        "renderedAngleMeasuredFromTipBaseDeg": -59.65337641588658,
+        "projectedPolygonPx": [
+          [
+            61,
+            48
+          ],
+          [
+            63.538,
+            49
+          ],
+          [
+            67.846,
+            50.152
+          ],
+          [
+            71.077,
+            51.303
+          ],
+          [
+            73.231,
+            52.455
+          ],
+          [
+            78.615,
+            57.061
+          ],
+          [
+            79.692,
+            58.212
+          ],
+          [
+            82.923,
+            62.818
+          ],
+          [
+            84,
+            72.03
+          ],
+          [
+            84,
+            77.788
+          ],
+          [
+            79.692,
+            84.697
+          ],
+          [
+            77.538,
+            87
+          ],
+          [
+            72.154,
+            87
+          ],
+          [
+            65.692,
+            85.848
+          ],
+          [
+            64.615,
+            84.697
+          ],
+          [
+            56,
+            74.333
+          ],
+          [
+            56,
+            66.273
+          ],
+          [
+            58.154,
+            54.758
+          ],
+          [
+            60.308,
+            50.152
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0.5,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 2.632,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 35.653
+      },
+      "contourOverlap": 0.8095,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_003",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          120,
+          68
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          132,
+          49
+        ],
+        "angleDeg": 24,
+        "colourClass": "MID",
+        "occlusionPercent": 10,
+        "layerEstimate": "BACK_UPPER",
+        "silhouetteRole": "UPPER_RIGHT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          120,
+          68
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          132,
+          49
+        ],
+        "angleDeg": 24,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_003",
+        "referenceCentrePx": [
+          120,
+          68
+        ],
+        "renderedCentrePx": [
+          120,
+          68.25
+        ],
+        "referenceSizePx": [
+          30,
+          39
+        ],
+        "renderedSizePx": [
+          30,
+          38.5
+        ],
+        "referenceTipPx": [
+          132,
+          49
+        ],
+        "renderedTipPx": [
+          132,
+          49
+        ],
+        "referenceAngleDeg": 24,
+        "renderedAngleDeg": 24,
+        "renderedAngleMeasuredFromTipBaseDeg": 22.673194514932668,
+        "projectedPolygonPx": [
+          [
+            132,
+            49
+          ],
+          [
+            135,
+            73.014
+          ],
+          [
+            135,
+            74.129
+          ],
+          [
+            129.643,
+            80.814
+          ],
+          [
+            126.429,
+            84.157
+          ],
+          [
+            122.143,
+            86.386
+          ],
+          [
+            113.571,
+            87.5
+          ],
+          [
+            112.5,
+            87.5
+          ],
+          [
+            106.071,
+            78.586
+          ],
+          [
+            105,
+            76.357
+          ],
+          [
+            105,
+            74.129
+          ],
+          [
+            106.071,
+            61.871
+          ],
+          [
+            112.5,
+            55.186
+          ],
+          [
+            116.786,
+            51.843
+          ],
+          [
+            120,
+            50.729
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0.25,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 1.282,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 1.327
+      },
+      "contourOverlap": 0.618,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_004",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          95,
+          81
+        ],
+        "visibleSizePx": [
+          25,
+          28
+        ],
+        "tipPx": [
+          95,
+          68
+        ],
+        "angleDeg": 0,
+        "colourClass": "LIGHT",
+        "occlusionPercent": 32,
+        "layerEstimate": "MID_UPPER",
+        "silhouetteRole": "CENTRE_ACCENT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          95,
+          81
+        ],
+        "visibleSizePx": [
+          25,
+          28
+        ],
+        "tipPx": [
+          95,
+          68
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_004",
+        "referenceCentrePx": [
+          95,
+          81
+        ],
+        "renderedCentrePx": [
+          95,
+          81.5
+        ],
+        "referenceSizePx": [
+          25,
+          28
+        ],
+        "renderedSizePx": [
+          25,
+          27
+        ],
+        "referenceTipPx": [
+          95,
+          68
+        ],
+        "renderedTipPx": [
+          95,
+          68
+        ],
+        "referenceAngleDeg": 0,
+        "renderedAngleDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -31.046093735738566,
+        "projectedPolygonPx": [
+          [
+            95,
+            68
+          ],
+          [
+            98.804,
+            69.074
+          ],
+          [
+            103.152,
+            72.185
+          ],
+          [
+            105.326,
+            75.296
+          ],
+          [
+            107.5,
+            79.444
+          ],
+          [
+            107.5,
+            82.556
+          ],
+          [
+            106.413,
+            85.667
+          ],
+          [
+            104.239,
+            90.852
+          ],
+          [
+            95.543,
+            95
+          ],
+          [
+            94.457,
+            95
+          ],
+          [
+            85.761,
+            90.852
+          ],
+          [
+            83.587,
+            85.667
+          ],
+          [
+            82.5,
+            82.556
+          ],
+          [
+            82.5,
+            79.444
+          ],
+          [
+            84.674,
+            75.296
+          ],
+          [
+            91.196,
+            69.074
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0.5,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 3.571,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 31.046
+      },
+      "contourOverlap": 0.8463,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_005",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          53,
+          88
+        ],
+        "visibleSizePx": [
+          30,
+          41
+        ],
+        "tipPx": [
+          40,
+          73
+        ],
+        "angleDeg": -35,
+        "colourClass": "DARK",
+        "occlusionPercent": 18,
+        "layerEstimate": "BACK_LEFT",
+        "silhouetteRole": "LEFT_SHOULDER"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          53,
+          88
+        ],
+        "visibleSizePx": [
+          30,
+          41
+        ],
+        "tipPx": [
+          40,
+          73
+        ],
+        "angleDeg": -35,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_005",
+        "referenceCentrePx": [
+          53,
+          88
+        ],
+        "renderedCentrePx": [
+          53,
+          88
+        ],
+        "referenceSizePx": [
+          30,
+          41
+        ],
+        "renderedSizePx": [
+          30,
+          41
+        ],
+        "referenceTipPx": [
+          40,
+          73
+        ],
+        "renderedTipPx": [
+          40,
+          73
+        ],
+        "referenceAngleDeg": -35,
+        "renderedAngleDeg": -35,
+        "renderedAngleMeasuredFromTipBaseDeg": -81.97179960811356,
+        "projectedPolygonPx": [
+          [
+            40,
+            73
+          ],
+          [
+            41,
+            67.5
+          ],
+          [
+            43,
+            67.5
+          ],
+          [
+            53,
+            68.742
+          ],
+          [
+            55,
+            69.985
+          ],
+          [
+            60,
+            73.712
+          ],
+          [
+            63,
+            76.197
+          ],
+          [
+            65,
+            78.682
+          ],
+          [
+            67,
+            87.379
+          ],
+          [
+            68,
+            92.348
+          ],
+          [
+            68,
+            97.318
+          ],
+          [
+            66,
+            103.53
+          ],
+          [
+            64,
+            108.5
+          ],
+          [
+            52,
+            108.5
+          ],
+          [
+            50,
+            107.258
+          ],
+          [
+            47,
+            104.773
+          ],
+          [
+            43,
+            101.045
+          ],
+          [
+            40,
+            97.318
+          ],
+          [
+            38,
+            84.894
+          ],
+          [
+            38,
+            81.167
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 46.972
+      },
+      "contourOverlap": 0.8091,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_006",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          138,
+          88
+        ],
+        "visibleSizePx": [
+          31,
+          40
+        ],
+        "tipPx": [
+          155,
+          75
+        ],
+        "angleDeg": 35,
+        "colourClass": "DARK",
+        "occlusionPercent": 18,
+        "layerEstimate": "BACK_RIGHT",
+        "silhouetteRole": "RIGHT_SHOULDER"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          138,
+          88
+        ],
+        "visibleSizePx": [
+          31,
+          40
+        ],
+        "tipPx": [
+          155,
+          75
+        ],
+        "angleDeg": 35,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_006",
+        "referenceCentrePx": [
+          138,
+          88
+        ],
+        "renderedCentrePx": [
+          138.75,
+          88
+        ],
+        "referenceSizePx": [
+          31,
+          40
+        ],
+        "renderedSizePx": [
+          32.5,
+          40
+        ],
+        "referenceTipPx": [
+          155,
+          75
+        ],
+        "renderedTipPx": [
+          155,
+          75
+        ],
+        "referenceAngleDeg": 35,
+        "renderedAngleDeg": 35,
+        "renderedAngleMeasuredFromTipBaseDeg": 41.479802916618304,
+        "projectedPolygonPx": [
+          [
+            155,
+            75
+          ],
+          [
+            153.5,
+            98
+          ],
+          [
+            152.393,
+            99.25
+          ],
+          [
+            147.964,
+            103
+          ],
+          [
+            141.321,
+            108
+          ],
+          [
+            130.25,
+            108
+          ],
+          [
+            126.929,
+            105.5
+          ],
+          [
+            125.821,
+            104.25
+          ],
+          [
+            124.714,
+            101.75
+          ],
+          [
+            122.5,
+            95.5
+          ],
+          [
+            122.5,
+            91.75
+          ],
+          [
+            125.821,
+            76.75
+          ],
+          [
+            126.929,
+            75.5
+          ],
+          [
+            134.679,
+            70.5
+          ],
+          [
+            139.107,
+            68
+          ],
+          [
+            140.214,
+            68
+          ],
+          [
+            141.321,
+            69.25
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0.75,
+        "widthErrorPercent": 4.839,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 6.48
+      },
+      "contourOverlap": 0.613,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_007",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          38,
+          105
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          28,
+          89
+        ],
+        "angleDeg": -48,
+        "colourClass": "MID",
+        "occlusionPercent": 20,
+        "layerEstimate": "MID_LEFT",
+        "silhouetteRole": "FAR_LEFT_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          38,
+          105
+        ],
+        "visibleSizePx": [
+          28,
+          38
+        ],
+        "tipPx": [
+          28,
+          89
+        ],
+        "angleDeg": -48,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_007",
+        "referenceCentrePx": [
+          38,
+          105
+        ],
+        "renderedCentrePx": [
+          38,
+          105
+        ],
+        "referenceSizePx": [
+          28,
+          38
+        ],
+        "renderedSizePx": [
+          28,
+          38
+        ],
+        "referenceTipPx": [
+          28,
+          89
+        ],
+        "renderedTipPx": [
+          28,
+          89
+        ],
+        "referenceAngleDeg": -48,
+        "renderedAngleDeg": -48,
+        "renderedAngleMeasuredFromTipBaseDeg": -48.39927809052799,
+        "projectedPolygonPx": [
+          [
+            28,
+            89
+          ],
+          [
+            36.552,
+            86
+          ],
+          [
+            45.241,
+            89.931
+          ],
+          [
+            46.207,
+            91.241
+          ],
+          [
+            48.138,
+            95.172
+          ],
+          [
+            52,
+            105.655
+          ],
+          [
+            52,
+            108.276
+          ],
+          [
+            51.034,
+            116.138
+          ],
+          [
+            50.069,
+            120.069
+          ],
+          [
+            44.276,
+            122.69
+          ],
+          [
+            40.414,
+            124
+          ],
+          [
+            37.517,
+            122.69
+          ],
+          [
+            30.759,
+            118.759
+          ],
+          [
+            28.828,
+            117.448
+          ],
+          [
+            27.862,
+            116.138
+          ],
+          [
+            25.931,
+            110.897
+          ],
+          [
+            24,
+            104.345
+          ],
+          [
+            24,
+            87.31
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 0.399
+      },
+      "contourOverlap": 0.7382,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_008",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          65,
+          106
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          59,
+          89
+        ],
+        "angleDeg": -25,
+        "colourClass": "DARK",
+        "occlusionPercent": 28,
+        "layerEstimate": "MID_LEFT",
+        "silhouetteRole": "LEFT_MID"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          65,
+          106
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          59,
+          89
+        ],
+        "angleDeg": -25,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_008",
+        "referenceCentrePx": [
+          65,
+          106
+        ],
+        "renderedCentrePx": [
+          65,
+          106
+        ],
+        "referenceSizePx": [
+          29,
+          39
+        ],
+        "renderedSizePx": [
+          29,
+          39
+        ],
+        "referenceTipPx": [
+          59,
+          89
+        ],
+        "renderedTipPx": [
+          59,
+          89
+        ],
+        "referenceAngleDeg": -25,
+        "renderedAngleDeg": -25,
+        "renderedAngleMeasuredFromTipBaseDeg": -55.29279228269175,
+        "projectedPolygonPx": [
+          [
+            59,
+            89
+          ],
+          [
+            63.885,
+            87.647
+          ],
+          [
+            67.231,
+            88.794
+          ],
+          [
+            69.462,
+            89.941
+          ],
+          [
+            77.269,
+            96.824
+          ],
+          [
+            78.385,
+            97.971
+          ],
+          [
+            79.5,
+            102.559
+          ],
+          [
+            79.5,
+            108.294
+          ],
+          [
+            78.385,
+            117.471
+          ],
+          [
+            77.269,
+            119.765
+          ],
+          [
+            75.038,
+            123.206
+          ],
+          [
+            72.808,
+            125.5
+          ],
+          [
+            63.885,
+            124.353
+          ],
+          [
+            60.538,
+            123.206
+          ],
+          [
+            50.5,
+            112.882
+          ],
+          [
+            50.5,
+            95.676
+          ],
+          [
+            54.962,
+            86.5
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 30.293
+      },
+      "contourOverlap": 0.7869,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_009",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          94,
+          106
+        ],
+        "visibleSizePx": [
+          24,
+          42
+        ],
+        "tipPx": [
+          94,
+          86
+        ],
+        "angleDeg": 0,
+        "colourClass": "DARK",
+        "occlusionPercent": 35,
+        "layerEstimate": "MID_CENTRE",
+        "silhouetteRole": "CENTRE_VERTICAL"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          94,
+          106
+        ],
+        "visibleSizePx": [
+          24,
+          42
+        ],
+        "tipPx": [
+          94,
+          86
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_009",
+        "referenceCentrePx": [
+          94,
+          106
+        ],
+        "renderedCentrePx": [
+          94,
+          106.5
+        ],
+        "referenceSizePx": [
+          24,
+          42
+        ],
+        "renderedSizePx": [
+          24,
+          41
+        ],
+        "referenceTipPx": [
+          94,
+          86
+        ],
+        "renderedTipPx": [
+          94,
+          86
+        ],
+        "referenceAngleDeg": 0,
+        "renderedAngleDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -12.896717862791503,
+        "projectedPolygonPx": [
+          [
+            94,
+            86
+          ],
+          [
+            101.826,
+            91.462
+          ],
+          [
+            106,
+            104.385
+          ],
+          [
+            106,
+            106.538
+          ],
+          [
+            104.957,
+            110.846
+          ],
+          [
+            102.87,
+            118.385
+          ],
+          [
+            101.826,
+            120.538
+          ],
+          [
+            100.783,
+            121.615
+          ],
+          [
+            94.522,
+            127
+          ],
+          [
+            93.478,
+            127
+          ],
+          [
+            89.304,
+            122.692
+          ],
+          [
+            83.043,
+            109.769
+          ],
+          [
+            82,
+            106.538
+          ],
+          [
+            82,
+            104.385
+          ],
+          [
+            86.174,
+            91.462
+          ],
+          [
+            91.391,
+            86.077
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0.5,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 2.381,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 12.897
+      },
+      "contourOverlap": 0.7929,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_010",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          119,
+          106
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          125,
+          90
+        ],
+        "angleDeg": 22,
+        "colourClass": "MID",
+        "occlusionPercent": 28,
+        "layerEstimate": "MID_RIGHT",
+        "silhouetteRole": "RIGHT_MID"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          119,
+          106
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          125,
+          90
+        ],
+        "angleDeg": 22,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_010",
+        "referenceCentrePx": [
+          119,
+          106
+        ],
+        "renderedCentrePx": [
+          119,
+          106
+        ],
+        "referenceSizePx": [
+          30,
+          39
+        ],
+        "renderedSizePx": [
+          30,
+          39
+        ],
+        "referenceTipPx": [
+          125,
+          90
+        ],
+        "renderedTipPx": [
+          125,
+          90
+        ],
+        "referenceAngleDeg": 22,
+        "renderedAngleDeg": 22,
+        "renderedAngleMeasuredFromTipBaseDeg": 0.46732100534960835,
+        "projectedPolygonPx": [
+          [
+            125,
+            90
+          ],
+          [
+            127.333,
+            86.5
+          ],
+          [
+            132.889,
+            96.529
+          ],
+          [
+            134,
+            103.214
+          ],
+          [
+            134,
+            112.129
+          ],
+          [
+            129.556,
+            117.7
+          ],
+          [
+            124,
+            123.271
+          ],
+          [
+            120.667,
+            124.386
+          ],
+          [
+            114,
+            125.5
+          ],
+          [
+            110.667,
+            125.5
+          ],
+          [
+            104,
+            116.586
+          ],
+          [
+            104,
+            99.871
+          ],
+          [
+            112.889,
+            90.957
+          ],
+          [
+            115.111,
+            89.843
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 21.533
+      },
+      "contourOverlap": 0.8415,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_011",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          151,
+          107
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          163,
+          91
+        ],
+        "angleDeg": 48,
+        "colourClass": "MID",
+        "occlusionPercent": 22,
+        "layerEstimate": "MID_RIGHT",
+        "silhouetteRole": "FAR_RIGHT_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          151,
+          107
+        ],
+        "visibleSizePx": [
+          29,
+          39
+        ],
+        "tipPx": [
+          163,
+          91
+        ],
+        "angleDeg": 48,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_011",
+        "referenceCentrePx": [
+          151,
+          107
+        ],
+        "renderedCentrePx": [
+          151,
+          107
+        ],
+        "referenceSizePx": [
+          29,
+          39
+        ],
+        "renderedSizePx": [
+          29,
+          39
+        ],
+        "referenceTipPx": [
+          163,
+          91
+        ],
+        "renderedTipPx": [
+          163,
+          91
+        ],
+        "referenceAngleDeg": 48,
+        "renderedAngleDeg": 48,
+        "renderedAngleMeasuredFromTipBaseDeg": 17.10140411924769,
+        "projectedPolygonPx": [
+          [
+            163,
+            91
+          ],
+          [
+            165.5,
+            90.1
+          ],
+          [
+            165.5,
+            105.7
+          ],
+          [
+            162.6,
+            114.8
+          ],
+          [
+            160.667,
+            120
+          ],
+          [
+            156.8,
+            122.6
+          ],
+          [
+            151.967,
+            125.2
+          ],
+          [
+            149.067,
+            126.5
+          ],
+          [
+            146.167,
+            126.5
+          ],
+          [
+            139.4,
+            123.9
+          ],
+          [
+            137.467,
+            122.6
+          ],
+          [
+            136.5,
+            114.8
+          ],
+          [
+            136.5,
+            107
+          ],
+          [
+            139.4,
+            99.2
+          ],
+          [
+            142.3,
+            92.7
+          ],
+          [
+            153.9,
+            87.5
+          ],
+          [
+            154.867,
+            87.5
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 30.899
+      },
+      "contourOverlap": 0.6645,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_012",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          42,
+          126
+        ],
+        "visibleSizePx": [
+          33,
+          38
+        ],
+        "tipPx": [
+          28,
+          111
+        ],
+        "angleDeg": -50,
+        "colourClass": "MID",
+        "occlusionPercent": 32,
+        "layerEstimate": "MID_LEFT",
+        "silhouetteRole": "LEFT_LOWER_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          42,
+          126
+        ],
+        "visibleSizePx": [
+          33,
+          38
+        ],
+        "tipPx": [
+          28,
+          111
+        ],
+        "angleDeg": -50,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_012",
+        "referenceCentrePx": [
+          42,
+          126
+        ],
+        "renderedCentrePx": [
+          42,
+          126
+        ],
+        "referenceSizePx": [
+          33,
+          38
+        ],
+        "renderedSizePx": [
+          33,
+          38
+        ],
+        "referenceTipPx": [
+          28,
+          111
+        ],
+        "renderedTipPx": [
+          28,
+          111
+        ],
+        "referenceAngleDeg": -50,
+        "renderedAngleDeg": -50,
+        "renderedAngleMeasuredFromTipBaseDeg": -71.55652121145498,
+        "projectedPolygonPx": [
+          [
+            28,
+            111
+          ],
+          [
+            29.625,
+            109.452
+          ],
+          [
+            39.938,
+            107
+          ],
+          [
+            43.031,
+            107
+          ],
+          [
+            48.188,
+            108.226
+          ],
+          [
+            52.312,
+            109.452
+          ],
+          [
+            58.5,
+            124.161
+          ],
+          [
+            58.5,
+            127.839
+          ],
+          [
+            57.469,
+            133.968
+          ],
+          [
+            56.438,
+            135.194
+          ],
+          [
+            47.156,
+            143.774
+          ],
+          [
+            45.094,
+            145
+          ],
+          [
+            43.031,
+            145
+          ],
+          [
+            30.656,
+            140.097
+          ],
+          [
+            27.562,
+            131.516
+          ],
+          [
+            25.5,
+            125.387
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 21.557
+      },
+      "contourOverlap": 0.7681,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_013",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          69,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          43
+        ],
+        "tipPx": [
+          61,
+          110
+        ],
+        "angleDeg": -22,
+        "colourClass": "DARK",
+        "occlusionPercent": 34,
+        "layerEstimate": "FRONT_LEFT",
+        "silhouetteRole": "LEFT_FRONT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          69,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          43
+        ],
+        "tipPx": [
+          61,
+          110
+        ],
+        "angleDeg": -22,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_013",
+        "referenceCentrePx": [
+          69,
+          130
+        ],
+        "renderedCentrePx": [
+          69,
+          130.63235294117646
+        ],
+        "referenceSizePx": [
+          32,
+          43
+        ],
+        "renderedSizePx": [
+          32,
+          41.73529411764706
+        ],
+        "referenceTipPx": [
+          61,
+          110
+        ],
+        "renderedTipPx": [
+          61,
+          110
+        ],
+        "referenceAngleDeg": -22,
+        "renderedAngleDeg": -22,
+        "renderedAngleMeasuredFromTipBaseDeg": -28.897961079512584,
+        "projectedPolygonPx": [
+          [
+            61,
+            110
+          ],
+          [
+            71.133,
+            112.294
+          ],
+          [
+            73.267,
+            113.559
+          ],
+          [
+            83.933,
+            126.206
+          ],
+          [
+            85,
+            143.912
+          ],
+          [
+            85,
+            145.176
+          ],
+          [
+            81.8,
+            150.235
+          ],
+          [
+            80.733,
+            151.5
+          ],
+          [
+            77.533,
+            151.5
+          ],
+          [
+            72.2,
+            150.235
+          ],
+          [
+            53,
+            138.853
+          ],
+          [
+            53,
+            130
+          ],
+          [
+            54.067,
+            121.147
+          ],
+          [
+            55.133,
+            118.618
+          ],
+          [
+            59.4,
+            109.765
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0.632,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 2.941,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 6.898
+      },
+      "contourOverlap": 0.6606,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_014",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          96,
+          132
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          96,
+          114
+        ],
+        "angleDeg": 0,
+        "colourClass": "LIGHT",
+        "occlusionPercent": 38,
+        "layerEstimate": "FRONT_CENTRE",
+        "silhouetteRole": "CENTRE_FRONT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          96,
+          132
+        ],
+        "visibleSizePx": [
+          30,
+          39
+        ],
+        "tipPx": [
+          96,
+          114
+        ],
+        "angleDeg": 0,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_014",
+        "referenceCentrePx": [
+          96,
+          132
+        ],
+        "renderedCentrePx": [
+          96,
+          132
+        ],
+        "referenceSizePx": [
+          30,
+          39
+        ],
+        "renderedSizePx": [
+          30,
+          39
+        ],
+        "referenceTipPx": [
+          96,
+          114
+        ],
+        "renderedTipPx": [
+          96,
+          114
+        ],
+        "referenceAngleDeg": 0,
+        "renderedAngleDeg": 0,
+        "renderedAngleMeasuredFromTipBaseDeg": -42.26849919451166,
+        "projectedPolygonPx": [
+          [
+            96,
+            114
+          ],
+          [
+            96.517,
+            112.5
+          ],
+          [
+            99.621,
+            114.608
+          ],
+          [
+            104.793,
+            118.824
+          ],
+          [
+            105.828,
+            119.878
+          ],
+          [
+            107.897,
+            124.095
+          ],
+          [
+            111,
+            131.473
+          ],
+          [
+            111,
+            132.527
+          ],
+          [
+            108.931,
+            138.851
+          ],
+          [
+            104.793,
+            146.23
+          ],
+          [
+            102.724,
+            148.338
+          ],
+          [
+            97.552,
+            151.5
+          ],
+          [
+            94.448,
+            151.5
+          ],
+          [
+            89.276,
+            148.338
+          ],
+          [
+            86.172,
+            146.23
+          ],
+          [
+            84.103,
+            142.014
+          ],
+          [
+            81,
+            132.527
+          ],
+          [
+            81,
+            131.473
+          ],
+          [
+            84.103,
+            124.095
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 42.268
+      },
+      "contourOverlap": 0.9151,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_015",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          121,
+          130
+        ],
+        "visibleSizePx": [
+          33,
+          41
+        ],
+        "tipPx": [
+          128,
+          112
+        ],
+        "angleDeg": 22,
+        "colourClass": "DARK",
+        "occlusionPercent": 34,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "RIGHT_FRONT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          121,
+          130
+        ],
+        "visibleSizePx": [
+          33,
+          41
+        ],
+        "tipPx": [
+          128,
+          112
+        ],
+        "angleDeg": 22,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_015",
+        "referenceCentrePx": [
+          121,
+          130
+        ],
+        "renderedCentrePx": [
+          121,
+          130
+        ],
+        "referenceSizePx": [
+          33,
+          41
+        ],
+        "renderedSizePx": [
+          33,
+          41
+        ],
+        "referenceTipPx": [
+          128,
+          112
+        ],
+        "renderedTipPx": [
+          128,
+          112
+        ],
+        "referenceAngleDeg": 22,
+        "renderedAngleDeg": 22,
+        "renderedAngleMeasuredFromTipBaseDeg": -19.303439534446674,
+        "projectedPolygonPx": [
+          [
+            128,
+            112
+          ],
+          [
+            129.8,
+            109.5
+          ],
+          [
+            130.9,
+            110.639
+          ],
+          [
+            135.3,
+            118.611
+          ],
+          [
+            136.4,
+            120.889
+          ],
+          [
+            137.5,
+            124.306
+          ],
+          [
+            137.5,
+            137.972
+          ],
+          [
+            133.1,
+            142.528
+          ],
+          [
+            124.3,
+            150.5
+          ],
+          [
+            117.7,
+            150.5
+          ],
+          [
+            106.7,
+            142.528
+          ],
+          [
+            104.5,
+            140.25
+          ],
+          [
+            104.5,
+            134.556
+          ],
+          [
+            105.6,
+            123.167
+          ],
+          [
+            110,
+            118.611
+          ],
+          [
+            116.6,
+            112.917
+          ],
+          [
+            124.3,
+            110.639
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 41.303
+      },
+      "contourOverlap": 0.7241,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_016",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          151,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          38
+        ],
+        "tipPx": [
+          164,
+          114
+        ],
+        "angleDeg": 48,
+        "colourClass": "DARK",
+        "occlusionPercent": 30,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "RIGHT_LOWER_EDGE"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          151,
+          130
+        ],
+        "visibleSizePx": [
+          32,
+          38
+        ],
+        "tipPx": [
+          164,
+          114
+        ],
+        "angleDeg": 48,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_016",
+        "referenceCentrePx": [
+          151,
+          130
+        ],
+        "renderedCentrePx": [
+          151,
+          130
+        ],
+        "referenceSizePx": [
+          32,
+          38
+        ],
+        "renderedSizePx": [
+          32,
+          38
+        ],
+        "referenceTipPx": [
+          164,
+          114
+        ],
+        "renderedTipPx": [
+          164,
+          114
+        ],
+        "referenceAngleDeg": 48,
+        "renderedAngleDeg": 48,
+        "renderedAngleMeasuredFromTipBaseDeg": 39.79781379861714,
+        "projectedPolygonPx": [
+          [
+            164,
+            114
+          ],
+          [
+            167,
+            115.903
+          ],
+          [
+            159.32,
+            146.548
+          ],
+          [
+            156.76,
+            147.774
+          ],
+          [
+            152.92,
+            149
+          ],
+          [
+            141.4,
+            145.323
+          ],
+          [
+            138.84,
+            144.097
+          ],
+          [
+            137.56,
+            141.645
+          ],
+          [
+            136.28,
+            136.742
+          ],
+          [
+            135,
+            130.613
+          ],
+          [
+            135,
+            129.387
+          ],
+          [
+            142.68,
+            114.677
+          ],
+          [
+            150.36,
+            112.226
+          ],
+          [
+            155.48,
+            111
+          ],
+          [
+            161.88,
+            111
+          ],
+          [
+            164.44,
+            112.226
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 8.202
+      },
+      "contourOverlap": 0.5072,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_017",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          29,
+          146
+        ],
+        "visibleSizePx": [
+          29,
+          26
+        ],
+        "tipPx": [
+          16,
+          137
+        ],
+        "angleDeg": -68,
+        "colourClass": "MID",
+        "occlusionPercent": 38,
+        "layerEstimate": "FRONT_LEFT",
+        "silhouetteRole": "FAR_LEFT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          29,
+          146
+        ],
+        "visibleSizePx": [
+          29,
+          26
+        ],
+        "tipPx": [
+          16,
+          137
+        ],
+        "angleDeg": -68,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_017",
+        "referenceCentrePx": [
+          29,
+          146
+        ],
+        "renderedCentrePx": [
+          29,
+          146
+        ],
+        "referenceSizePx": [
+          29,
+          26
+        ],
+        "renderedSizePx": [
+          29,
+          26
+        ],
+        "referenceTipPx": [
+          16,
+          137
+        ],
+        "renderedTipPx": [
+          16,
+          137
+        ],
+        "referenceAngleDeg": -68,
+        "renderedAngleDeg": -68,
+        "renderedAngleMeasuredFromTipBaseDeg": -60.56083755072569,
+        "projectedPolygonPx": [
+          [
+            16,
+            137
+          ],
+          [
+            24.587,
+            134.238
+          ],
+          [
+            30.891,
+            133
+          ],
+          [
+            35.935,
+            133
+          ],
+          [
+            40.978,
+            137.952
+          ],
+          [
+            43.5,
+            141.667
+          ],
+          [
+            43.5,
+            154.048
+          ],
+          [
+            38.457,
+            159
+          ],
+          [
+            18.283,
+            159
+          ],
+          [
+            15.761,
+            155.286
+          ],
+          [
+            14.5,
+            146.619
+          ],
+          [
+            14.5,
+            142.905
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 7.439
+      },
+      "contourOverlap": 0.5782,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_018",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          53,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          35
+        ],
+        "tipPx": [
+          42,
+          137
+        ],
+        "angleDeg": -42,
+        "colourClass": "MID",
+        "occlusionPercent": 45,
+        "layerEstimate": "FRONT_LEFT",
+        "silhouetteRole": "LEFT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          53,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          35
+        ],
+        "tipPx": [
+          42,
+          137
+        ],
+        "angleDeg": -42,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_018",
+        "referenceCentrePx": [
+          53,
+          151
+        ],
+        "renderedCentrePx": [
+          53,
+          151
+        ],
+        "referenceSizePx": [
+          31,
+          35
+        ],
+        "renderedSizePx": [
+          31,
+          35
+        ],
+        "referenceTipPx": [
+          42,
+          137
+        ],
+        "renderedTipPx": [
+          42,
+          137
+        ],
+        "referenceAngleDeg": -42,
+        "renderedAngleDeg": -42,
+        "renderedAngleMeasuredFromTipBaseDeg": 5.098178397166511,
+        "projectedPolygonPx": [
+          [
+            42,
+            137
+          ],
+          [
+            47.289,
+            133.5
+          ],
+          [
+            55.447,
+            133.5
+          ],
+          [
+            68.5,
+            152.167
+          ],
+          [
+            68.5,
+            168.5
+          ],
+          [
+            44.026,
+            168.5
+          ],
+          [
+            37.5,
+            166.167
+          ],
+          [
+            37.5,
+            154.5
+          ],
+          [
+            39.132,
+            142.833
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 47.098
+      },
+      "contourOverlap": 0.2038,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_019",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          79,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          72,
+          135
+        ],
+        "angleDeg": -20,
+        "colourClass": "DARK",
+        "occlusionPercent": 48,
+        "layerEstimate": "FRONT_CENTRE",
+        "silhouetteRole": "LOW_CENTRE_LEFT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          79,
+          151
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          72,
+          135
+        ],
+        "angleDeg": -20,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_019",
+        "referenceCentrePx": [
+          79,
+          151
+        ],
+        "renderedCentrePx": [
+          79,
+          151
+        ],
+        "referenceSizePx": [
+          31,
+          37
+        ],
+        "renderedSizePx": [
+          31,
+          37
+        ],
+        "referenceTipPx": [
+          72,
+          135
+        ],
+        "renderedTipPx": [
+          72,
+          135
+        ],
+        "referenceAngleDeg": -20,
+        "renderedAngleDeg": -20,
+        "renderedAngleMeasuredFromTipBaseDeg": -14.712106641625965,
+        "projectedPolygonPx": [
+          [
+            72,
+            135
+          ],
+          [
+            81.818,
+            138.667
+          ],
+          [
+            94.5,
+            157.167
+          ],
+          [
+            94.5,
+            159.222
+          ],
+          [
+            93.091,
+            167.444
+          ],
+          [
+            91.682,
+            169.5
+          ],
+          [
+            80.409,
+            169.5
+          ],
+          [
+            70.545,
+            167.444
+          ],
+          [
+            67.727,
+            161.278
+          ],
+          [
+            63.5,
+            148.944
+          ],
+          [
+            64.909,
+            132.5
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 5.288
+      },
+      "contourOverlap": 0.1767,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_020",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          108,
+          152
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          109,
+          135
+        ],
+        "angleDeg": 18,
+        "colourClass": "DARK",
+        "occlusionPercent": 48,
+        "layerEstimate": "FRONT_CENTRE",
+        "silhouetteRole": "LOW_CENTRE_RIGHT"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          108,
+          152
+        ],
+        "visibleSizePx": [
+          31,
+          37
+        ],
+        "tipPx": [
+          109,
+          135
+        ],
+        "angleDeg": 18,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_020",
+        "referenceCentrePx": [
+          108,
+          152
+        ],
+        "renderedCentrePx": [
+          108,
+          152
+        ],
+        "referenceSizePx": [
+          31,
+          37
+        ],
+        "renderedSizePx": [
+          31,
+          37
+        ],
+        "referenceTipPx": [
+          109,
+          135
+        ],
+        "renderedTipPx": [
+          109,
+          135
+        ],
+        "referenceAngleDeg": 18,
+        "renderedAngleDeg": 18,
+        "renderedAngleMeasuredFromTipBaseDeg": -29.964984232100374,
+        "projectedPolygonPx": [
+          [
+            109,
+            135
+          ],
+          [
+            113.879,
+            133.5
+          ],
+          [
+            117.086,
+            137.985
+          ],
+          [
+            121.362,
+            144.712
+          ],
+          [
+            122.431,
+            150.318
+          ],
+          [
+            123.5,
+            157.045
+          ],
+          [
+            123.5,
+            158.167
+          ],
+          [
+            121.362,
+            161.53
+          ],
+          [
+            116.017,
+            168.258
+          ],
+          [
+            114.948,
+            169.379
+          ],
+          [
+            112.81,
+            170.5
+          ],
+          [
+            99.983,
+            170.5
+          ],
+          [
+            98.914,
+            169.379
+          ],
+          [
+            93.569,
+            162.652
+          ],
+          [
+            92.5,
+            151.439
+          ],
+          [
+            92.5,
+            148.076
+          ],
+          [
+            102.121,
+            137.985
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 47.965
+      },
+      "contourOverlap": 0.8273,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_021",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          136,
+          150
+        ],
+        "visibleSizePx": [
+          33,
+          34
+        ],
+        "tipPx": [
+          145,
+          136
+        ],
+        "angleDeg": 38,
+        "colourClass": "MID",
+        "occlusionPercent": 46,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "RIGHT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          136,
+          150
+        ],
+        "visibleSizePx": [
+          33,
+          34
+        ],
+        "tipPx": [
+          145,
+          136
+        ],
+        "angleDeg": 38,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_021",
+        "referenceCentrePx": [
+          136,
+          150
+        ],
+        "renderedCentrePx": [
+          136,
+          150
+        ],
+        "referenceSizePx": [
+          33,
+          34
+        ],
+        "renderedSizePx": [
+          33,
+          34
+        ],
+        "referenceTipPx": [
+          145,
+          136
+        ],
+        "renderedTipPx": [
+          145,
+          136
+        ],
+        "referenceAngleDeg": 38,
+        "renderedAngleDeg": 38,
+        "renderedAngleMeasuredFromTipBaseDeg": -6.019851268648915,
+        "projectedPolygonPx": [
+          [
+            145,
+            136
+          ],
+          [
+            148.1,
+            135.345
+          ],
+          [
+            150.3,
+            140.034
+          ],
+          [
+            152.5,
+            147.069
+          ],
+          [
+            151.4,
+            156.448
+          ],
+          [
+            150.3,
+            159.966
+          ],
+          [
+            149.2,
+            161.138
+          ],
+          [
+            143.7,
+            164.655
+          ],
+          [
+            139.3,
+            167
+          ],
+          [
+            136,
+            167
+          ],
+          [
+            126.1,
+            164.655
+          ],
+          [
+            125,
+            163.483
+          ],
+          [
+            119.5,
+            151.759
+          ],
+          [
+            119.5,
+            149.414
+          ],
+          [
+            121.7,
+            140.034
+          ],
+          [
+            126.1,
+            135.345
+          ],
+          [
+            131.6,
+            133
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 44.02
+      },
+      "contourOverlap": 0.5993,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_022",
+      "priority": "DOMINANT",
+      "target": {
+        "centrePx": [
+          159,
+          151
+        ],
+        "visibleSizePx": [
+          27,
+          27
+        ],
+        "tipPx": [
+          171,
+          143
+        ],
+        "angleDeg": 62,
+        "colourClass": "DARK",
+        "occlusionPercent": 48,
+        "layerEstimate": "FRONT_RIGHT",
+        "silhouetteRole": "FAR_RIGHT_LOW"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          159,
+          151
+        ],
+        "visibleSizePx": [
+          27,
+          27
+        ],
+        "tipPx": [
+          171,
+          143
+        ],
+        "angleDeg": 62,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_022",
+        "referenceCentrePx": [
+          159,
+          151
+        ],
+        "renderedCentrePx": [
+          159,
+          151
+        ],
+        "referenceSizePx": [
+          27,
+          27
+        ],
+        "renderedSizePx": [
+          27,
+          27
+        ],
+        "referenceTipPx": [
+          171,
+          143
+        ],
+        "renderedTipPx": [
+          171,
+          143
+        ],
+        "referenceAngleDeg": 62,
+        "renderedAngleDeg": 62,
+        "renderedAngleMeasuredFromTipBaseDeg": 48.487052406015216,
+        "projectedPolygonPx": [
+          [
+            171,
+            143
+          ],
+          [
+            172.5,
+            150.413
+          ],
+          [
+            171.326,
+            156.283
+          ],
+          [
+            170.152,
+            158.63
+          ],
+          [
+            166.63,
+            164.5
+          ],
+          [
+            153.717,
+            164.5
+          ],
+          [
+            150.196,
+            162.152
+          ],
+          [
+            145.5,
+            158.63
+          ],
+          [
+            145.5,
+            145.717
+          ],
+          [
+            147.848,
+            142.196
+          ],
+          [
+            151.37,
+            137.5
+          ],
+          [
+            160.761,
+            137.5
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 13.513
+      },
+      "contourOverlap": 0.6628,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_023",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          35,
+          162
+        ],
+        "visibleSizePx": [
+          25,
+          18
+        ],
+        "tipPx": [
+          25,
+          154
+        ],
+        "angleDeg": -55,
+        "colourClass": "DARK",
+        "occlusionPercent": 62,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_LEFT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          35,
+          162
+        ],
+        "visibleSizePx": [
+          25,
+          18
+        ],
+        "tipPx": [
+          25,
+          154
+        ],
+        "angleDeg": -55,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_023",
+        "referenceCentrePx": [
+          35,
+          162
+        ],
+        "renderedCentrePx": [
+          35,
+          162
+        ],
+        "referenceSizePx": [
+          25,
+          18
+        ],
+        "renderedSizePx": [
+          25,
+          18
+        ],
+        "referenceTipPx": [
+          25,
+          154
+        ],
+        "renderedTipPx": [
+          25,
+          154
+        ],
+        "referenceAngleDeg": -55,
+        "renderedAngleDeg": -55,
+        "renderedAngleMeasuredFromTipBaseDeg": -16.606697250796994,
+        "projectedPolygonPx": [
+          [
+            25,
+            154
+          ],
+          [
+            46.111,
+            153
+          ],
+          [
+            47.5,
+            156.273
+          ],
+          [
+            47.5,
+            157.909
+          ],
+          [
+            44.722,
+            169.364
+          ],
+          [
+            43.333,
+            171
+          ],
+          [
+            23.889,
+            171
+          ],
+          [
+            22.5,
+            169.364
+          ],
+          [
+            22.5,
+            164.455
+          ],
+          [
+            23.889,
+            156.273
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 38.393
+      },
+      "contourOverlap": 0.5025,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_024",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          58,
+          161
+        ],
+        "visibleSizePx": [
+          24,
+          20
+        ],
+        "tipPx": [
+          50,
+          151
+        ],
+        "angleDeg": -25,
+        "colourClass": "MID",
+        "occlusionPercent": 65,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_LEFT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          58,
+          161
+        ],
+        "visibleSizePx": [
+          24,
+          20
+        ],
+        "tipPx": [
+          50,
+          151
+        ],
+        "angleDeg": -25,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_024",
+        "referenceCentrePx": [
+          58,
+          161
+        ],
+        "renderedCentrePx": [
+          58,
+          161
+        ],
+        "referenceSizePx": [
+          24,
+          20
+        ],
+        "renderedSizePx": [
+          24,
+          20
+        ],
+        "referenceTipPx": [
+          50,
+          151
+        ],
+        "renderedTipPx": [
+          50,
+          151
+        ],
+        "referenceAngleDeg": -25,
+        "renderedAngleDeg": -25,
+        "renderedAngleMeasuredFromTipBaseDeg": -49.89909245378775,
+        "projectedPolygonPx": [
+          [
+            50,
+            151
+          ],
+          [
+            59.714,
+            151
+          ],
+          [
+            62,
+            151
+          ],
+          [
+            66.571,
+            152.429
+          ],
+          [
+            70,
+            155.286
+          ],
+          [
+            70,
+            161
+          ],
+          [
+            68.857,
+            166.714
+          ],
+          [
+            65.429,
+            171
+          ],
+          [
+            48.286,
+            171
+          ],
+          [
+            46,
+            168.143
+          ],
+          [
+            46,
+            166.714
+          ],
+          [
+            47.143,
+            159.571
+          ],
+          [
+            49.429,
+            155.286
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 24.899
+      },
+      "contourOverlap": 0.6077,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_025",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          130,
+          161
+        ],
+        "visibleSizePx": [
+          26,
+          20
+        ],
+        "tipPx": [
+          138,
+          151
+        ],
+        "angleDeg": 30,
+        "colourClass": "MID",
+        "occlusionPercent": 65,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_RIGHT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          130,
+          161
+        ],
+        "visibleSizePx": [
+          26,
+          20
+        ],
+        "tipPx": [
+          138,
+          151
+        ],
+        "angleDeg": 30,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_025",
+        "referenceCentrePx": [
+          130,
+          161
+        ],
+        "renderedCentrePx": [
+          130,
+          161
+        ],
+        "referenceSizePx": [
+          26,
+          20
+        ],
+        "renderedSizePx": [
+          26,
+          20
+        ],
+        "referenceTipPx": [
+          138,
+          151
+        ],
+        "renderedTipPx": [
+          138,
+          151
+        ],
+        "referenceAngleDeg": 30,
+        "renderedAngleDeg": 30,
+        "renderedAngleMeasuredFromTipBaseDeg": 49.61331600204447,
+        "projectedPolygonPx": [
+          [
+            138,
+            151
+          ],
+          [
+            140.524,
+            152.818
+          ],
+          [
+            141.762,
+            156.455
+          ],
+          [
+            143,
+            161.909
+          ],
+          [
+            143,
+            171
+          ],
+          [
+            121.952,
+            171
+          ],
+          [
+            119.476,
+            167.364
+          ],
+          [
+            117,
+            161.909
+          ],
+          [
+            117,
+            151
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 19.613
+      },
+      "contourOverlap": 0.5021,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    },
+    {
+      "id": "LEAF_026",
+      "priority": "SECONDARY_OCCLUDED",
+      "target": {
+        "centrePx": [
+          153,
+          161
+        ],
+        "visibleSizePx": [
+          27,
+          20
+        ],
+        "tipPx": [
+          164,
+          153
+        ],
+        "angleDeg": 58,
+        "colourClass": "DARK",
+        "occlusionPercent": 65,
+        "layerEstimate": "FRONT_LOW",
+        "silhouetteRole": "FLOWER_RIGHT_NEIGHBOUR"
+      },
+      "fittedTransform": {
+        "centrePx": [
+          153,
+          161
+        ],
+        "visibleSizePx": [
+          27,
+          20
+        ],
+        "tipPx": [
+          164,
+          153
+        ],
+        "angleDeg": 58,
+        "source": "MEASURED_TARGET_MAP"
+      },
+      "renderedProjection": {
+        "id": "LEAF_026",
+        "referenceCentrePx": [
+          153,
+          161
+        ],
+        "renderedCentrePx": [
+          153,
+          161
+        ],
+        "referenceSizePx": [
+          27,
+          20
+        ],
+        "renderedSizePx": [
+          27,
+          20
+        ],
+        "referenceTipPx": [
+          164,
+          153
+        ],
+        "renderedTipPx": [
+          164,
+          153
+        ],
+        "referenceAngleDeg": 58,
+        "renderedAngleDeg": 58,
+        "renderedAngleMeasuredFromTipBaseDeg": 56.67546146411448,
+        "projectedPolygonPx": [
+          [
+            164,
+            153
+          ],
+          [
+            165.079,
+            158.059
+          ],
+          [
+            166.5,
+            167.471
+          ],
+          [
+            166.5,
+            168.647
+          ],
+          [
+            165.079,
+            171
+          ],
+          [
+            143.763,
+            171
+          ],
+          [
+            140.921,
+            168.647
+          ],
+          [
+            139.5,
+            163.941
+          ],
+          [
+            139.5,
+            155.706
+          ],
+          [
+            140.921,
+            154.529
+          ],
+          [
+            148.026,
+            151
+          ],
+          [
+            153.711,
+            151
+          ]
+        ],
+        "silhouetteOverlap": null
+      },
+      "errors": {
+        "centreErrorPx": 0,
+        "widthErrorPercent": 0,
+        "heightErrorPercent": 0,
+        "tipErrorPx": 0,
+        "angleErrorDeg": 0,
+        "tipAxisAngleErrorDeg": 1.325
+      },
+      "contourOverlap": 0.5868,
+      "fitStatus": "PASS_LANDMARK_THRESHOLDS",
+      "note": "Errors are computed from the projected standalone Blender mesh. Silhouette overlap is not claimed without an independent contour segmentation."
+    }
+  ]
+}

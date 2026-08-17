@@ -1,0 +1,68 @@
+{
+  "contractId": "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
+  "version": "1.1.0",
+  "requiredBeforeFirstSeriousCandidate": [
+    "complete visual reference study",
+    "visible component and relationship inventory",
+    "Master Asset Index search-before-create",
+    "missing visible components registered as reusable Layer A assets",
+    "reference crop -> scope mask -> context separation -> PNG integrity -> 2D reassembly -> shallow 2.5D",
+    "persistent roots, visible-art bounds, anchors, component IDs, side/back treatment",
+    "responsive openings, wall panels, trim, foundation, and landing contracts",
+    "helper geometry excluded from beauty renders",
+    "real Steam Deck Blender execution",
+    "Codex inspection of the actual Blender render",
+    "autonomous correction with rollback"
+  ],
+  "qualityGate": {
+    "technicalPassRequired": true,
+    "visionPassRequired": true,
+    "operatorReviewBlockedWhileMajorSafeDifferenceVisible": true
+  },
+  "autonomousConvergence": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
+  "stopConditions": [
+    "VISION_PASS",
+    "STALLED_VISUAL_CONVERGENCE",
+    "HARD_TECHNICAL_BLOCKER",
+    "BUDGET_BLOCKER",
+    "SOURCE_INFORMATION_BLOCKER",
+    "STRUCTURAL_CONTRACT_BLOCKER"
+  ],
+  "requiredReviews": [
+    "front",
+    "gameplay",
+    "hero close-up",
+    "back",
+    "left",
+    "right",
+    "component ID",
+    "four-side"
+  ],
+  "mobileBudgets": true,
+  "anonymousGeometryPolicy": "REJECT",
+  "goldenReference": "IMMUTABLE",
+  "regressionChecks": [
+    "visible signage centering",
+    "transom presence/relative size/relative center",
+    "window visible size and four-corner trim continuity",
+    "organic asset complete silhouette and side depth",
+    "lowest structural point meets ground"
+  ],
+  "contextMaskRequirement": "Codex creates clean component masks autonomously; context contamination must be zero or explicitly vision-approved before first serious candidate",
+  "heroModuleExtentReview": "required front and side extent review for fascia, awning, and organic modules"
+  ,"upperTransitionDecomposition": "upper architectural transitions must be visually decomposed from the reference before first-pass assembly",
+  "wallContinuity": "modular wall pieces preserve cross-panel tonal continuity",
+  "organicSideVisionGate": "organic modules require side-depth vision review before operator review",
+  "shellSurfaceDecomposition": "visible shell surface detail, cornices, transition trims, contact shadows, and cross-panel continuity are mandatory in initial reference decomposition",
+  "autonomousTightCrops": true,
+  "tightCropBeforeSourceBlocker": true,
+  "observedPixelsPrinciple": "OBSERVED PIXELS ARE CONSTRAINTS. HIDDEN GEOMETRY IS INFERENCE.",
+  "organicPresentationDerivativePolicy": "For small organic GrowGo assets where full 3D reconstruction provides poor cost/benefit, a deterministic multi-view presentation derivative is allowed when editable modular source is preserved, the reference-facing view is faithful, all required gameplay views are approved, identity remains consistent, and runtime budget passes.",
+  "architecturalReconstructionRule": {
+    "rectilinearArchitecture": "measurement-driven parametric primitives",
+    "moldingDepth": "measured cross-sections and parallel face bands",
+    "irregularDecorativeSilhouette": "landmark polygon reconstruction",
+    "organic": "organic reconstruction workflow",
+    "prohibition": "Do not turn shadows, antialiasing, or perspective pixels into physical geometry for simple rectilinear building components."
+  }
+}

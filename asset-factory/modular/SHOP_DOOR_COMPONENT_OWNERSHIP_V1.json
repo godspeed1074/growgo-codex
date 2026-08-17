@@ -1,0 +1,20 @@
+{
+  "ownershipSpecId": "SHOP_DOOR_COMPONENT_OWNERSHIP_V1",
+  "status": "LOCKED_FOR_V3_FABRICATION",
+  "assetId": "GG-BLD-DOOR-SHOP-002",
+  "authority": "test-output/door-exact-reconstruction/DOOR_GOLDEN_REFERENCE_CROP.png",
+  "rule": "Observed pixels are constraints. Module ownership is determined before measurement; adjacent architecture is not absorbed to make a component inventory appear complete.",
+  "doorModule": {
+    "components": ["D01 slab", "D02 main glass", "D03 glass surround/reveal", "D04 lower recessed face", "D05 lower panel molding", "D06-D09 hardware", "D10-D11 casing", "D12-D13 casing plinths", "D14 transom glass", "D15 transom reveal", "D16-D17 transom blocks", "D18 separator", "D19 head cap", "D20 narrow sill"],
+    "thresholdD20Px": {"left": 120, "right": 232, "top": 241, "bottom": 249, "relationship": "attached immediately below SLAB_BOTTOM=241; it spans the slab only and does not reach the external landing"}
+  },
+  "adjacentBuildingContext": {
+    "elements": ["external concrete/stone landing", "lower exterior steps", "foundation/base course", "surrounding wall", "neighbouring facade trim"],
+    "referenceRegionsPx": [
+      {"name": "externalLanding", "left": 114, "right": 238, "top": 249, "bottom": 279},
+      {"name": "lowerExteriorStepsAndFoundation", "left": 94, "right": 258, "top": 279, "bottom": 291}
+    ],
+    "futureOwnershipReservation": {"assetId": "GG-BLD-ENTRANCE-STEPS-COMMERCIAL-001", "status": "RESERVED_NOT_BUILT", "reason": "The landing and exterior steps are reusable building context, not geometry owned by the door module."}
+  },
+  "v2Correction": {"mixedOwnershipComponent": "D20", "v2ThresholdPx": {"left": 120, "right": 232, "top": 241, "bottom": 279}, "correction": "Retain only the first 8px narrow sill as D20; explicitly exclude the remaining landing/steps."}
+}

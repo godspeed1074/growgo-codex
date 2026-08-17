@@ -1,0 +1,33 @@
+{
+  "status": "SAFE_BASELINE",
+  "sourceCandidate": "storefront-detail-iter3",
+  "frontRenderChecksum": "a08af415842ee12d93a0c1e1a0ba690083ca21bf1f4c9d71a8aca3f45d79a6ec",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "blender": "Steam Deck / Blender 5.2.0 LTS",
+  "camera": "GG_CAMERA_SIMPLE_SHOP_LOCKED",
+  "componentIds": "PASS",
+  "anonymousGeometryCount": 0,
+  "budget": "PASS",
+  "visionScorecard": {
+    "OVERALL_LIKENESS": 84,
+    "SILHOUETTE": 82,
+    "PROPORTIONS": 83,
+    "FACADE_ARCHITECTURE": 78,
+    "WALL_CONTINUITY": 78,
+    "DOOR": 88,
+    "DOOR_TRANSOM": 84,
+    "WINDOW": 82,
+    "WINDOW_TRIM": 80,
+    "AWNING": 86,
+    "FASCIA_SIGN": 80,
+    "UPPER_TRIM": 74,
+    "FOUNDATION": 80,
+    "SHRUB": 78,
+    "SHRUB_DEPTH": 72,
+    "GROUNDING": 80,
+    "PAPERCUT_STYLE": 76,
+    "PRESENTATION": 82
+  },
+  "knownGoodAssigned": false
+}

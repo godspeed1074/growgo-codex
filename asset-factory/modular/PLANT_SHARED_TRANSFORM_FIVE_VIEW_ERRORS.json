@@ -1,0 +1,954 @@
+{
+  "status": "BLOCKED_PROVEN_MATHEMATICAL_CONTRADICTION",
+  "weights": {
+    "0": 0.4,
+    "M15": 0.15,
+    "P15": 0.15,
+    "M30": 0.15,
+    "P30": 0.15
+  },
+  "target": {
+    "left": 4,
+    "right": 175,
+    "top": 170,
+    "bottom": 257,
+    "width": 172,
+    "height": 88,
+    "centerX": 89.5,
+    "centerY": 213.5,
+    "rimY": 170,
+    "method": "direct outer-silhouette edge measurement at final 189x261 presentation resolution"
+  },
+  "frontGate": {
+    "widthErrorPercent": 0,
+    "heightErrorPercent": 0,
+    "centerErrorPx": 0,
+    "rimErrorPx": 0,
+    "pass": true
+  },
+  "foliageBounds": {
+    "0": {
+      "left": 8,
+      "right": 164,
+      "top": 30,
+      "bottom": 168,
+      "width": 157,
+      "height": 139,
+      "centerX": 86,
+      "centerY": 99,
+      "rimY": 30
+    },
+    "M30": {
+      "left": 0,
+      "right": 151,
+      "top": 4,
+      "bottom": 143,
+      "width": 152,
+      "height": 140,
+      "centerX": 75.5,
+      "centerY": 73.5,
+      "rimY": 4
+    },
+    "M15": {
+      "left": 10,
+      "right": 165,
+      "top": 5,
+      "bottom": 143,
+      "width": 156,
+      "height": 139,
+      "centerX": 87.5,
+      "centerY": 74,
+      "rimY": 5
+    },
+    "P15": {
+      "left": 37,
+      "right": 188,
+      "top": 5,
+      "bottom": 143,
+      "width": 152,
+      "height": 139,
+      "centerX": 112.5,
+      "centerY": 74,
+      "rimY": 5
+    },
+    "P30": {
+      "left": 50,
+      "right": 188,
+      "top": 4,
+      "bottom": 143,
+      "width": 139,
+      "height": 140,
+      "centerX": 119,
+      "centerY": 73.5,
+      "rimY": 4
+    }
+  },
+  "candidates": [
+    {
+      "id": "TY_M10",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -45.5,
+          "y": 17,
+          "distance": 48.572,
+          "planter": {
+            "left": 54,
+            "right": 188,
+            "top": 126,
+            "bottom": 260,
+            "width": 135,
+            "height": 135,
+            "centerX": 121,
+            "centerY": 193,
+            "rimY": 126
+          }
+        },
+        "M15": {
+          "x": -19.5,
+          "y": -6,
+          "distance": 20.402,
+          "planter": {
+            "left": 26,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 163,
+            "height": 112,
+            "centerX": 107,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36,
+          "y": -4,
+          "distance": 36.222,
+          "planter": {
+            "left": 0,
+            "right": 153,
+            "top": 147,
+            "bottom": 260,
+            "width": 154,
+            "height": 114,
+            "centerX": 76.5,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 55,
+          "y": 20,
+          "distance": 58.523,
+          "planter": {
+            "left": 0,
+            "right": 128,
+            "top": 123,
+            "bottom": 260,
+            "width": 129,
+            "height": 138,
+            "centerX": 64,
+            "centerY": 191.5,
+            "rimY": 123
+          }
+        }
+      },
+      "score": 26.17
+    },
+    {
+      "id": "TY_M7P5",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -45.5,
+          "y": 17,
+          "distance": 48.572,
+          "planter": {
+            "left": 54,
+            "right": 188,
+            "top": 126,
+            "bottom": 260,
+            "width": 135,
+            "height": 135,
+            "centerX": 121,
+            "centerY": 193,
+            "rimY": 126
+          }
+        },
+        "M15": {
+          "x": -19.5,
+          "y": -6,
+          "distance": 20.402,
+          "planter": {
+            "left": 26,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 163,
+            "height": 112,
+            "centerX": 107,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36,
+          "y": -4,
+          "distance": 36.222,
+          "planter": {
+            "left": 0,
+            "right": 153,
+            "top": 147,
+            "bottom": 260,
+            "width": 154,
+            "height": 114,
+            "centerX": 76.5,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 55,
+          "y": 20,
+          "distance": 58.523,
+          "planter": {
+            "left": 0,
+            "right": 128,
+            "top": 123,
+            "bottom": 260,
+            "width": 129,
+            "height": 138,
+            "centerX": 64,
+            "centerY": 191.5,
+            "rimY": 123
+          }
+        }
+      },
+      "score": 26.17
+    },
+    {
+      "id": "TY_M5",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -46,
+          "y": 17,
+          "distance": 49.041,
+          "planter": {
+            "left": 55,
+            "right": 188,
+            "top": 126,
+            "bottom": 260,
+            "width": 134,
+            "height": 135,
+            "centerX": 121.5,
+            "centerY": 193,
+            "rimY": 126
+          }
+        },
+        "M15": {
+          "x": -20,
+          "y": -6,
+          "distance": 20.881,
+          "planter": {
+            "left": 27,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 162,
+            "height": 112,
+            "centerX": 107.5,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36,
+          "y": -4,
+          "distance": 36.222,
+          "planter": {
+            "left": 0,
+            "right": 153,
+            "top": 147,
+            "bottom": 260,
+            "width": 154,
+            "height": 114,
+            "centerX": 76.5,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 55,
+          "y": 21,
+          "distance": 58.873,
+          "planter": {
+            "left": 0,
+            "right": 128,
+            "top": 122,
+            "bottom": 260,
+            "width": 129,
+            "height": 139,
+            "centerX": 64,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.365
+    },
+    {
+      "id": "TY_M2P5",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -46,
+          "y": 17,
+          "distance": 49.041,
+          "planter": {
+            "left": 55,
+            "right": 188,
+            "top": 126,
+            "bottom": 260,
+            "width": 134,
+            "height": 135,
+            "centerX": 121.5,
+            "centerY": 193,
+            "rimY": 126
+          }
+        },
+        "M15": {
+          "x": -20,
+          "y": -6,
+          "distance": 20.881,
+          "planter": {
+            "left": 27,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 162,
+            "height": 112,
+            "centerX": 107.5,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36,
+          "y": -4,
+          "distance": 36.222,
+          "planter": {
+            "left": 0,
+            "right": 153,
+            "top": 147,
+            "bottom": 260,
+            "width": 154,
+            "height": 114,
+            "centerX": 76.5,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 55.5,
+          "y": 21,
+          "distance": 59.34,
+          "planter": {
+            "left": 0,
+            "right": 127,
+            "top": 122,
+            "bottom": 260,
+            "width": 128,
+            "height": 139,
+            "centerX": 63.5,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.435
+    },
+    {
+      "id": "TY_0",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -46,
+          "y": 18,
+          "distance": 49.396,
+          "planter": {
+            "left": 55,
+            "right": 188,
+            "top": 125,
+            "bottom": 260,
+            "width": 134,
+            "height": 136,
+            "centerX": 121.5,
+            "centerY": 192.5,
+            "rimY": 125
+          }
+        },
+        "M15": {
+          "x": -20,
+          "y": -6,
+          "distance": 20.881,
+          "planter": {
+            "left": 27,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 162,
+            "height": 112,
+            "centerX": 107.5,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36,
+          "y": -4,
+          "distance": 36.222,
+          "planter": {
+            "left": 0,
+            "right": 153,
+            "top": 147,
+            "bottom": 260,
+            "width": 154,
+            "height": 114,
+            "centerX": 76.5,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 55.5,
+          "y": 21,
+          "distance": 59.34,
+          "planter": {
+            "left": 0,
+            "right": 127,
+            "top": 122,
+            "bottom": 260,
+            "width": 128,
+            "height": 139,
+            "centerX": 63.5,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.488
+    },
+    {
+      "id": "TY_P2P5",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -46.5,
+          "y": 18,
+          "distance": 49.862,
+          "planter": {
+            "left": 56,
+            "right": 188,
+            "top": 125,
+            "bottom": 260,
+            "width": 133,
+            "height": 136,
+            "centerX": 122,
+            "centerY": 192.5,
+            "rimY": 125
+          }
+        },
+        "M15": {
+          "x": -20,
+          "y": -6,
+          "distance": 20.881,
+          "planter": {
+            "left": 27,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 162,
+            "height": 112,
+            "centerX": 107.5,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36.5,
+          "y": -4,
+          "distance": 36.719,
+          "planter": {
+            "left": 0,
+            "right": 152,
+            "top": 147,
+            "bottom": 260,
+            "width": 153,
+            "height": 114,
+            "centerX": 76,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 56,
+          "y": 21,
+          "distance": 59.808,
+          "planter": {
+            "left": 0,
+            "right": 126,
+            "top": 122,
+            "bottom": 260,
+            "width": 127,
+            "height": 139,
+            "centerX": 63,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.703
+    },
+    {
+      "id": "TY_P5",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -46.5,
+          "y": 18,
+          "distance": 49.862,
+          "planter": {
+            "left": 56,
+            "right": 188,
+            "top": 125,
+            "bottom": 260,
+            "width": 133,
+            "height": 136,
+            "centerX": 122,
+            "centerY": 192.5,
+            "rimY": 125
+          }
+        },
+        "M15": {
+          "x": -20.5,
+          "y": -6,
+          "distance": 21.36,
+          "planter": {
+            "left": 28,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 161,
+            "height": 112,
+            "centerX": 108,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36.5,
+          "y": -4,
+          "distance": 36.719,
+          "planter": {
+            "left": 0,
+            "right": 152,
+            "top": 147,
+            "bottom": 260,
+            "width": 153,
+            "height": 114,
+            "centerX": 76,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 56,
+          "y": 21,
+          "distance": 59.808,
+          "planter": {
+            "left": 0,
+            "right": 126,
+            "top": 122,
+            "bottom": 260,
+            "width": 127,
+            "height": 139,
+            "centerX": 63,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.775
+    },
+    {
+      "id": "TY_P7P5",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -46.5,
+          "y": 18,
+          "distance": 49.862,
+          "planter": {
+            "left": 56,
+            "right": 188,
+            "top": 125,
+            "bottom": 260,
+            "width": 133,
+            "height": 136,
+            "centerX": 122,
+            "centerY": 192.5,
+            "rimY": 125
+          }
+        },
+        "M15": {
+          "x": -20.5,
+          "y": -6,
+          "distance": 21.36,
+          "planter": {
+            "left": 28,
+            "right": 188,
+            "top": 149,
+            "bottom": 260,
+            "width": 161,
+            "height": 112,
+            "centerX": 108,
+            "centerY": 204.5,
+            "rimY": 149
+          }
+        },
+        "P15": {
+          "x": 36.5,
+          "y": -4,
+          "distance": 36.719,
+          "planter": {
+            "left": 0,
+            "right": 152,
+            "top": 147,
+            "bottom": 260,
+            "width": 153,
+            "height": 114,
+            "centerX": 76,
+            "centerY": 203.5,
+            "rimY": 147
+          }
+        },
+        "P30": {
+          "x": 56,
+          "y": 21,
+          "distance": 59.808,
+          "planter": {
+            "left": 0,
+            "right": 126,
+            "top": 122,
+            "bottom": 260,
+            "width": 127,
+            "height": 139,
+            "centerX": 63,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.775
+    },
+    {
+      "id": "TY_P10",
+      "errors": {
+        "0": {
+          "x": -3.5,
+          "y": -2,
+          "distance": 4.031,
+          "planter": {
+            "left": 4,
+            "right": 175,
+            "top": 170,
+            "bottom": 257,
+            "width": 172,
+            "height": 88,
+            "centerX": 89.5,
+            "centerY": 213.5,
+            "rimY": 170
+          }
+        },
+        "M30": {
+          "x": -47,
+          "y": 19,
+          "distance": 50.695,
+          "planter": {
+            "left": 57,
+            "right": 188,
+            "top": 124,
+            "bottom": 260,
+            "width": 132,
+            "height": 137,
+            "centerX": 122.5,
+            "centerY": 192,
+            "rimY": 124
+          }
+        },
+        "M15": {
+          "x": -20.5,
+          "y": -5,
+          "distance": 21.101,
+          "planter": {
+            "left": 28,
+            "right": 188,
+            "top": 148,
+            "bottom": 260,
+            "width": 161,
+            "height": 113,
+            "centerX": 108,
+            "centerY": 204,
+            "rimY": 148
+          }
+        },
+        "P15": {
+          "x": 36.5,
+          "y": -3,
+          "distance": 36.623,
+          "planter": {
+            "left": 0,
+            "right": 152,
+            "top": 146,
+            "bottom": 260,
+            "width": 153,
+            "height": 115,
+            "centerX": 76,
+            "centerY": 203,
+            "rimY": 146
+          }
+        },
+        "P30": {
+          "x": 56.5,
+          "y": 21,
+          "distance": 60.276,
+          "planter": {
+            "left": 0,
+            "right": 125,
+            "top": 122,
+            "bottom": 260,
+            "width": 126,
+            "height": 139,
+            "centerX": 62.5,
+            "centerY": 191,
+            "rimY": 122
+          }
+        }
+      },
+      "score": 26.917
+    }
+  ],
+  "winner": {
+    "id": "TY_M10",
+    "errors": {
+      "0": {
+        "x": -3.5,
+        "y": -2,
+        "distance": 4.031,
+        "planter": {
+          "left": 4,
+          "right": 175,
+          "top": 170,
+          "bottom": 257,
+          "width": 172,
+          "height": 88,
+          "centerX": 89.5,
+          "centerY": 213.5,
+          "rimY": 170
+        }
+      },
+      "M30": {
+        "x": -45.5,
+        "y": 17,
+        "distance": 48.572,
+        "planter": {
+          "left": 54,
+          "right": 188,
+          "top": 126,
+          "bottom": 260,
+          "width": 135,
+          "height": 135,
+          "centerX": 121,
+          "centerY": 193,
+          "rimY": 126
+        }
+      },
+      "M15": {
+        "x": -19.5,
+        "y": -6,
+        "distance": 20.402,
+        "planter": {
+          "left": 26,
+          "right": 188,
+          "top": 149,
+          "bottom": 260,
+          "width": 163,
+          "height": 112,
+          "centerX": 107,
+          "centerY": 204.5,
+          "rimY": 149
+        }
+      },
+      "P15": {
+        "x": 36,
+        "y": -4,
+        "distance": 36.222,
+        "planter": {
+          "left": 0,
+          "right": 153,
+          "top": 147,
+          "bottom": 260,
+          "width": 154,
+          "height": 114,
+          "centerX": 76.5,
+          "centerY": 203.5,
+          "rimY": 147
+        }
+      },
+      "P30": {
+        "x": 55,
+        "y": 20,
+        "distance": 58.523,
+        "planter": {
+          "left": 0,
+          "right": 128,
+          "top": 123,
+          "bottom": 260,
+          "width": 129,
+          "height": 138,
+          "centerX": 64,
+          "centerY": 191.5,
+          "rimY": 123
+        }
+      }
+    },
+    "score": 26.17,
+    "transform": [
+      -0.00306878,
+      -0.01376,
+      0.63249042
+    ]
+  },
+  "reason": "One shared transform cannot satisfy the locked views: required horizontal correction changes sign from M30 to P30, while the full ±10% TY search changes those errors by at most 1 px."
+}

@@ -1,0 +1,30 @@
+{
+  "status": "BLOCKED_PLANTER_CALIBRATION",
+  "underlyingModularSourcePreserved": true,
+  "view0IoU": 100,
+  "views": {
+    "0": "PASS_AUTHORITY_RENDERED",
+    "M30": "PASS_FOLIAGE_SPRITE_ONLY",
+    "M15": "PASS_FOLIAGE_SPRITE_ONLY",
+    "P15": "PASS_FOLIAGE_SPRITE_ONLY",
+    "P30": "PASS_FOLIAGE_SPRITE_ONLY"
+  },
+  "adjacentViewContinuity": "PASS_FOLIAGE_ONLY",
+  "plantIdentity": "PASS_FOLIAGE_ONLY",
+  "gameplay1X": "BLOCKED_BY_PLANTER",
+  "gameplay2X": "BLOCKED_BY_PLANTER",
+  "cardWall": "NO_IN_DERIVED_VIEW_SPRITES",
+  "shelfEffect": "NO_IN_DERIVED_VIEW_SPRITES",
+  "planter": "FAIL_SHARED_3D_DERIVATIVE_READS_AS_TALL_SIDE_SLAB",
+  "spriteResolution": "189x261 RGBA",
+  "totalTextureMemoryBytes": 986580,
+  "atlasCompatibility": "NO — current Atlas presentation runtime has no documented view-family or opacity-crossfade adapter; no Atlas change was made",
+  "presentationDerivativeId": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "knownGood": "NO",
+  "readyForOperatorPlantReview": false,
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "anonymousGeometry": 0,
+  "reviewBoard": "asset-factory/modular/PLANT_FIVE_VIEW_IMPOSTOR_REVIEW_BOARD.png",
+  "decisionReason": "The camera-specific foliage sprites remove the card-wall issue, but the shared planter requires coordinate-calibrated side/rear geometry before the family can be approved."
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS_NUMERIC_AND_DIRECT_VISION_PENDING_OPERATOR_CONFIRMATION",
+  "leafId": "LEAF_001",
+  "target": "TALLEST_CENTRE",
+  "previousRender": "test-output/central-leaf-calibration-final/CENTRAL_LEAF_FINAL_FRONT.png",
+  "newRender": "test-output/central-leaf-calibration-final-c28/CENTRAL_LEAF_FINAL_FRONT.png",
+  "panels": [
+    "TARGET LEAF",
+    "PREVIOUS 0.9050",
+    "NEW CANDIDATE",
+    "50% OVERLAY",
+    "CONTOUR DIFFERENCE",
+    "WIREFRAME FRONT",
+    "LEFT SHOULDER TARGET | NEW",
+    "RIGHT SHOULDER TARGET | NEW",
+    "BASE TARGET | NEW"
+  ],
+  "targetMask": "CENTRAL_TARGET_LEAF_VISIBLE_MASK.png",
+  "rawPartitionMask": "CENTRAL_TARGET_LEAF_RAW_PARTITION_MASK.png",
+  "output": "LEAF_001_FINAL_CALIBRATION_BOARD.png"
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": "VISION_NEEDS_CORRECTION",
+  "iterations": 2,
+  "whatCodexActuallySees": {
+    "overallShopMatchesReference": "NO",
+    "doorCorrect": "YES",
+    "windowCorrect": "YES",
+    "awningCorrect": "NO",
+    "fasciaSignCorrect": "NO",
+    "upperTrimCorrect": "NO",
+    "wallPanelsCorrect": "NO",
+    "foundationCorrect": "NO",
+    "shrubCorrect": "YES",
+    "floatingComponents": "YES",
+    "unintendedBackingGeometry": "YES",
+    "presentationClose": "NO",
+    "papercutStyleConsistent": "PARTIAL"
+  },
+  "revertedIteration": "corner-block experiment (visually regressive)",
+  "safeBaselineProtected": true
+}

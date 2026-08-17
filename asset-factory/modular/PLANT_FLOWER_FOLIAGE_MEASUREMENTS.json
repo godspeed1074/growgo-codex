@@ -1,0 +1,124 @@
+{
+  "status": "PASS_FLOWER_FRONT_MEASUREMENTS",
+  "target": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "render": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/plant-observed-front-completion/full/PLANT_FRONT_FLOWER_COMPLETE.png",
+  "rules": {
+    "centerErrorPixels": "<=2",
+    "widthErrorPercent": "<=8",
+    "heightErrorPercent": "<=8"
+  },
+  "groups": {
+    "LEFT": {
+      "reference": {
+        "pixels": 322,
+        "center": {
+          "x": 62.66,
+          "y": 142.73
+        },
+        "bounds": {
+          "x0": 48,
+          "y0": 134,
+          "x1": 77,
+          "y1": 153,
+          "width": 30,
+          "height": 20
+        }
+      },
+      "rendered": {
+        "pixels": 306,
+        "center": {
+          "x": 62.11,
+          "y": 142.45
+        },
+        "bounds": {
+          "x0": 47,
+          "y0": 134,
+          "x1": 75,
+          "y1": 152,
+          "width": 29,
+          "height": 19
+        }
+      },
+      "centerErrorPixels": 0.62,
+      "widthErrorPercent": 3.33,
+      "heightErrorPercent": 5,
+      "gate": "PASS",
+      "pixelPredicate": "orange_or_purple_or_pink"
+    },
+    "MIDDLE": {
+      "reference": {
+        "pixels": 167,
+        "center": {
+          "x": 113.59,
+          "y": 146.01
+        },
+        "bounds": {
+          "x0": 105,
+          "y0": 138,
+          "x1": 126,
+          "y1": 155,
+          "width": 22,
+          "height": 18
+        }
+      },
+      "rendered": {
+        "pixels": 128,
+        "center": {
+          "x": 113.84,
+          "y": 145.63
+        },
+        "bounds": {
+          "x0": 104,
+          "y0": 137,
+          "x1": 126,
+          "y1": 155,
+          "width": 23,
+          "height": 19
+        }
+      },
+      "centerErrorPixels": 0.45,
+      "widthErrorPercent": 4.55,
+      "heightErrorPercent": 5.56,
+      "gate": "PASS",
+      "pixelPredicate": "middle"
+    },
+    "RIGHT": {
+      "reference": {
+        "pixels": 99,
+        "center": {
+          "x": 130.06,
+          "y": 145.28
+        },
+        "bounds": {
+          "x0": 124,
+          "y0": 139,
+          "x1": 137,
+          "y1": 151,
+          "width": 14,
+          "height": 13
+        }
+      },
+      "rendered": {
+        "pixels": 114,
+        "center": {
+          "x": 130.19,
+          "y": 145.16
+        },
+        "bounds": {
+          "x0": 124,
+          "y0": 139,
+          "x1": 136,
+          "y1": 150,
+          "width": 13,
+          "height": 12
+        }
+      },
+      "centerErrorPixels": 0.18,
+      "widthErrorPercent": 7.14,
+      "heightErrorPercent": 7.69,
+      "gate": "PASS",
+      "pixelPredicate": "right"
+    }
+  },
+  "conclusion": "Three visible flower groups use individual low-poly petals; all source-pixel placement gates pass."
+}

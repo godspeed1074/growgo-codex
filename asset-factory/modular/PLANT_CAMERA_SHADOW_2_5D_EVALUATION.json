@@ -1,0 +1,66 @@
+{
+  "status": "BLOCKED_CAMERA_SHADOW_GAMEPLAY_CONE",
+  "front": {
+    "iou": 1,
+    "widthDriftPercent": 0,
+    "heightDriftPercent": 0,
+    "centreDriftPercent": 0
+  },
+  "negativeSpaceIntrusionPixels": 0,
+  "hiddenMagentaVisiblePixels": 0,
+  "observedLeavesChanged": false,
+  "depthVariants": [
+    {
+      "candidate": "SHADOW_DEPTH_A",
+      "envelopePercent": 14,
+      "shadowObjectCount": 49,
+      "rearContourScaleRange": [
+        0.96,
+        0.96
+      ],
+      "depth": 0.006
+    },
+    {
+      "candidate": "SHADOW_DEPTH_B",
+      "envelopePercent": 18,
+      "shadowObjectCount": 49,
+      "rearContourScaleRange": [
+        0.96,
+        0.96
+      ],
+      "depth": 0.009
+    },
+    {
+      "candidate": "SHADOW_DEPTH_C",
+      "envelopePercent": 22,
+      "shadowObjectCount": 49,
+      "rearContourScaleRange": [
+        0.96,
+        0.96
+      ],
+      "depth": 0.012
+    }
+  ],
+  "winningDepth": "NOT_SELECTED",
+  "hiddenSupportObjects": 49,
+  "supportFrontVisibility": "0%",
+  "gameplay1X": "PASS_FRONT_ONLY",
+  "gameplay2X": "PASS_FRONT_ONLY",
+  "left15": "NEEDS_WORK",
+  "right15": "NEEDS_WORK",
+  "left30": "FAIL_CARD_WALL_AND_PLANTER_EDGE",
+  "right30": "FAIL_CARD_WALL_AND_PLANTER_EDGE",
+  "view45": "NEEDS_WORK",
+  "qa90": "CLEAN",
+  "cardEffectGameplayCone": "YES",
+  "shelfEffectGameplayCone": "YES",
+  "planterDepthPercent": "NOT_ACCEPTED",
+  "planterAttached": "NO",
+  "triangles": "NOT_PROMOTED",
+  "objects": "NOT_PROMOTED",
+  "authorityLock": "NOT_LOCKED",
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "anonymousGeometry": 0,
+  "mobileBudget": "PASS"
+}

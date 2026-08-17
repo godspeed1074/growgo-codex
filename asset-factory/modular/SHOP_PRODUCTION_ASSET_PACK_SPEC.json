@@ -1,0 +1,26 @@
+{
+  "packId": "GG-PACK-BLD-SIMPLE-SHOP-GROWGO-001",
+  "packVersion": "1.0.0",
+  "layerAModules": [
+    { "assetId": "GG-BLD-FOUNDATION-SHOP-002", "type": "FOUNDATION", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001"] },
+    { "assetId": "GG-BLD-WALL-SHOP-BROWN-001", "type": "WALL_PANEL", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001", "FUTURE_SHOPS", "FUTURE_HOUSES"] },
+    { "assetId": "GG-BLD-DOOR-SHOP-002", "type": "DOOR_MODULE", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001"] },
+    { "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002", "type": "WINDOW_MODULE", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001"] },
+    { "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001", "type": "AWNING_MODULE", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001", "CAFES", "BAKERIES", "MARKETS"] },
+    { "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001", "type": "FASCIA_MODULE", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001"] },
+    { "assetId": "GG-BLD-TRIM-SHOP-CREAM-001", "type": "TRIM_MODULE", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001", "FUTURE_SHOPS", "FUTURE_HOUSES"] },
+    { "assetId": "GG-VEG-PLANTER-SHRUB-001", "type": "PLANTER_SHRUB_MODULE", "recipeCompatibility": ["GG-REC-BLD-SIMPLE-SHOP-GROWGO-001", "PARKS", "STREET_FRONTAGES"] }
+  ],
+  "layerBRecipe": {
+    "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+    "recipeVersion": "1.0.0",
+    "layer": "LAYER_B_RECIPE",
+    "components": ["FOUNDATION", "WALL_PANEL", "DOOR_MODULE", "WINDOW_MODULE", "AWNING_MODULE", "FASCIA_MODULE", "TRIM_MODULE", "PLANTER_SHRUB_MODULE"],
+    "anonymousGeometryCount": 0,
+    "deterministicSeedRule": "SHA256_RECIPE_VERSION_REFERENCE_CHECKSUM"
+  },
+  "worker": { "requiredExecutionMode": "REAL_BLENDER_WORKER_EXECUTION", "runtimeProfile": "STEAM_DECK_BLENDER_FLATPAK", "invocation": "flatpak run org.blender.Blender" },
+  "requiredOutputs": ["VERSIONED_BLEND", "BLENDER_RENDER.png", "COMPONENT_ID_RENDER.png", "COMPONENT_ID_MAP.json", "SHOP_FRONT.png", "SHOP_BACK.png", "SHOP_LEFT.png", "SHOP_RIGHT.png", "SHOP_FOUR_SIDE_REVIEW_BOARD.png"],
+  "approval": { "operatorReviewRequired": true, "autoApproval": false, "publishAutomatically": false },
+  "status": "SPEC_ONLY_REFERENCE_MISMATCH_BLOCKS_BUILD_APPROVAL"
+}

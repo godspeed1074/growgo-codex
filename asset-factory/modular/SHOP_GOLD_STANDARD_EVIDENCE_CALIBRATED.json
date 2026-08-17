@@ -1,0 +1,68 @@
+{
+  "status": "EVIDENCE_CAPTURED_NOT_FROZEN",
+  "evidenceVersion": "0.6.0",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "executionMode": "REAL_BLENDER_WORKER_EXECUTION",
+  "worker": "Steam Deck 10.0.0.4",
+  "blenderVersion": "5.2.0 LTS",
+  "calibratedModules": [
+    "DOOR",
+    "WINDOW",
+    "SHRUB",
+    "AWNING",
+    "FASCIA"
+  ],
+  "visiblePixelGates": {
+    "doorKnob": "YES",
+    "doorMailSlot": "YES",
+    "doorGlass": "YES",
+    "windowDisplay": "YES",
+    "windowOpenSign": "YES",
+    "awningScallops": "YES",
+    "awningFabricDetail": "YES",
+    "fasciaLettering": "YES",
+    "fasciaDecorativeAccents": "YES",
+    "shrubFoliageVariation": "YES",
+    "shrubFlowers": "YES"
+  },
+  "componentIds": [
+    "WALL",
+    "FOUNDATION",
+    "DOOR",
+    "WINDOW",
+    "AWNING",
+    "FASCIA",
+    "SIGN",
+    "TRIM",
+    "PLANTER",
+    "SHRUB"
+  ],
+  "anonymousGeometryCount": 0,
+  "fourSide": "PASS",
+  "budget": {
+    "triangles": 298,
+    "vertices": 212,
+    "objects": 29,
+    "materials": 13,
+    "textures": 6,
+    "imageBytes": 602319,
+    "blendSizeBytes": 121712,
+    "glbSizeBytes": 0,
+    "anonymousGeometryCount": 0,
+    "mobileBudget": "PASS"
+  },
+  "goldStandardFrozen": false,
+  "knownGoodBuildId": null,
+  "operatorApprovalRequired": true,
+  "bottleneck": "FACADE_SHELL",
+  "shellCorrection": {
+    "status": "CAPTURED",
+    "changes": [
+      "warm brown facade envelope",
+      "cream corner/opening trim",
+      "stepped gray foundation and landing"
+    ],
+    "protectedHeroModules": "PASS"
+  }
+}

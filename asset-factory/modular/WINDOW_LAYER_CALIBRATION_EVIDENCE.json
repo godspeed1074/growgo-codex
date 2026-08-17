@@ -1,0 +1,166 @@
+{
+  "status": "PASS",
+  "reference": {
+    "source": "/Users/michaelpeterson/.codex/.chatgpt-projects/g-p-6863f0a29ae08191b7d09cf52fb8aa46/growgo-codex/test-output/shop-refbake/reference-crops/window.png",
+    "sourceChecksum": "c82967e381849886dae0dfec3ad2300ec1527fb7fc26cd1f29cccc5046110184",
+    "cropDimensions": [
+      250,
+      225
+    ],
+    "cropChecksum": "fa5890923ce305ea7aada80b0734716ddd216fd01f5d83e337074d1a107db78b",
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001"
+  },
+  "scope": {
+    "bounds": [
+      0,
+      0,
+      243,
+      220
+    ],
+    "coveragePercent": 100,
+    "noLayerPixels": 0,
+    "overlapPercent": 0
+  },
+  "layers": {
+    "WINDOW_OPENING_SHADOW": {
+      "bounds": [
+        0,
+        0,
+        243,
+        220
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "WINDOW_OUTER_FRAME": {
+      "bounds": [
+        0,
+        0,
+        243,
+        218
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "WINDOW_INNER_FRAME": {
+      "bounds": [
+        5,
+        15,
+        238,
+        207
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "WINDOW_GLASS": {
+      "bounds": [
+        10,
+        23,
+        231,
+        190
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "WINDOW_DISPLAY_INTERIOR": {
+      "bounds": [
+        10,
+        23,
+        231,
+        190
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "WINDOW_SILL": {
+      "bounds": [
+        0,
+        190,
+        247,
+        222
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    },
+    "WINDOW_DISPLAY_SIGN": {
+      "bounds": [
+        115,
+        65,
+        198,
+        142
+      ],
+      "dimensions": [
+        250,
+        225
+      ],
+      "expectedBytes": 225000,
+      "decodedBytes": 225000,
+      "roundtripPass": true,
+      "mismatchedBytes": 0,
+      "alphaOutsidePixels": 0,
+      "channelOrder": "RGBA",
+      "alphaMode": "STRAIGHT"
+    }
+  },
+  "pngRoundtrip": "PASS",
+  "twoDReassembly": "PASS",
+  "fullCropReconstruction": "PASS",
+  "fullSourceBackplateUsed": false,
+  "blenderRun": false,
+  "permanentWindowVersionCreated": false,
+  "layerBAssembled": false
+}

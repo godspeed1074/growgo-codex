@@ -1,0 +1,12 @@
+{
+  "status": "IN_PROGRESS",
+  "startingScore": 89,
+  "totalBlenderCandidates": 32,
+  "parameterSetsTested": 32,
+  "retained": ["wall-tone", "transition-contact-shrub-B", "wall-shell-depth-E", "phase-B-15"],
+  "reverted": ["facade-skin", "transition-contact-shrub-A", "transition-contact-shrub-C", "wall-depth-D", "contact-shadow-F", "phase-A-1..10", "phase-B-11..14", "phase-B-16..20", "phase-C-21..25"],
+  "searchFamilies": ["wall tonal value", "upper transition depth", "contact separation", "shrub foliage depth", "wall shell depth"],
+  "currentScore": 91,
+  "visionStatus": "NEEDS_MORE_CONVERGENCE",
+  "knownGoodAssigned": false
+}

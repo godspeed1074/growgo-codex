@@ -1,0 +1,7 @@
+{
+  "packVersion":"1.4.0","parentVersion":"1.3.0","reviewStatus":"NEEDS_REVIEW",
+  "modules":[
+    {"assetId":"GG-VEG-PLANTER-SHRUB-001","version":"1.4.0","parentVersion":"1.3.0","family":"SHOP_SHRUB","palette":"SHOP_GREEN_VEGETATION","detailModules":["GG-VEG-SHRUB-LEAF-CLUSTER-001","GG-VEG-SHRUB-FOLIAGE-CAP-001","GG-VEG-SHRUB-SIDE-FILL-001","GG-VEG-PLANTER-SOIL-FILL-001","GG-VEG-FLOWER-ACCENT-001"]},
+    {"assetId":"GG-BLD-DOOR-SHOP-002","version":"1.4.0","parentVersion":"1.3.0","family":"SHOP_DOOR","palette":"SHOP_WARM_BROWN","detailModules":["GG-BLD-DOOR-HANDLE-001","GG-BLD-DOOR-MAIL-SLOT-001","GG-BLD-DOOR-PANEL-001","GG-BLD-DOOR-THRESHOLD-001","GG-BLD-DOOR-FRAME-DEPTH-001"]}
+  ]
+}

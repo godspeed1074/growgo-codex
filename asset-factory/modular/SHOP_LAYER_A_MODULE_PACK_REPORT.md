@@ -1,0 +1,36 @@
+# Shop Layer A Module Pack Report
+
+Status: **PASS**
+
+This pack registers reusable module specifications only. Real Blender module builds and Layer B assembly are intentionally pending review.
+
+## Modules
+
+- GG-BLD-FOUNDATION-SHOP-002@1.0.0 — FOUNDATION; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-WALL-SHOP-BROWN-001@1.0.0 — WALL_PANEL; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-DOOR-SHOP-002@1.0.0 — DOOR_MODULE; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-WINDOW-SHOP-LARGE-002@1.0.0 — WINDOW_MODULE; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-AWNING-SHOP-FABRIC-001@1.0.0 — AWNING_MODULE; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-FASCIA-SHOP-NAVY-001@1.0.0 — FASCIA_MODULE; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-SIGN-INSERT-SHOP-001@1.0.0 — SIGN_INSERT; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-BLD-TRIM-SHOP-CREAM-001@1.0.0 — TRIM_MODULE; BUILDING_MODULE_LIGHT; 1200 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+- GG-VEG-PLANTER-SHRUB-001@1.0.0 — PLANTER_SHRUB_MODULE; VEGETATION_MODULE_LIGHT; 900 triangle ceiling; atlas GG-ATLAS-BUILDING-A@1.0.0
+
+## Golden Reference bindings
+
+- WALL → GG-BLD-WALL-SHOP-BROWN-001@1.0.0 (EXACT_REUSE)
+- DOOR → GG-BLD-DOOR-SHOP-002@1.0.0 (EXACT_REUSE)
+- WINDOW → GG-BLD-WINDOW-SHOP-LARGE-002@1.0.0 (EXACT_REUSE)
+- AWNING → GG-BLD-AWNING-SHOP-FABRIC-001@1.0.0 (EXACT_REUSE)
+- FASCIA → GG-BLD-FASCIA-SHOP-NAVY-001@1.0.0 (EXACT_REUSE)
+- TRIM → GG-BLD-TRIM-SHOP-CREAM-001@1.0.0 (EXACT_REUSE)
+- PLANTER → GG-VEG-PLANTER-SHRUB-001@1.0.0 (EXACT_REUSE)
+
+- Anonymous geometry: 0
+- Atlas/material validation: PASS
+- LOD validation: PASS
+- Budget validation: PASS
+- Palette/transform validation: PASS
+- Registry lifecycle: REVIEW
+- Final shop assembly: NOT CREATED
+- Operator approval: still required

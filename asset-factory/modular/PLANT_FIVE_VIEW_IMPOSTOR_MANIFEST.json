@@ -1,0 +1,66 @@
+{
+  "presentationId": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "layer": "LAYER_C_RUNTIME_ASSEMBLY",
+  "derivedPresentationOnly": true,
+  "sourceAssetId": "GG-VEG-PLANTER-SHRUB-001",
+  "frontAuthorityLock": "PLANT_FRONT_GEOMETRY_AUTHORITY_LOCK_V1",
+  "sourceRenderChecksum": "2d55f606daccb10abc1161e5c7dec9b7cea4be5da118a5655b870c67901b3a63",
+  "selection": [
+    {
+      "range": "-30..-22.5",
+      "view": "M30"
+    },
+    {
+      "range": "-22.5..-7.5",
+      "view": "M15"
+    },
+    {
+      "range": "-7.5..7.5",
+      "view": "0"
+    },
+    {
+      "range": "7.5..22.5",
+      "view": "P15"
+    },
+    {
+      "range": "22.5..30",
+      "view": "P30"
+    }
+  ],
+  "textures": [
+    {
+      "view": "M30",
+      "file": "VIEW_M30_RGBA.png",
+      "resolution": "189x261 RGBA",
+      "byteSize": 45103
+    },
+    {
+      "view": "M15",
+      "file": "VIEW_M15_RGBA.png",
+      "resolution": "189x261 RGBA",
+      "byteSize": 46600
+    },
+    {
+      "view": "0R",
+      "file": "VIEW_0_RGBA.png",
+      "resolution": "189x261 RGBA",
+      "byteSize": 51155
+    },
+    {
+      "view": "P15",
+      "file": "VIEW_P15_RGBA.png",
+      "resolution": "189x261 RGBA",
+      "byteSize": 47021
+    },
+    {
+      "view": "P30",
+      "file": "VIEW_P30_RGBA.png",
+      "resolution": "189x261 RGBA",
+      "byteSize": 44961
+    }
+  ],
+  "totalPngBytes": 234840,
+  "estimatedRuntimeMemoryRGBABytes": 986580,
+  "drawCalls": "one foliage sprite plus one shared 3D planter; nearest-view selection",
+  "atlasCompatibility": "NO — current Atlas presentation runtime has no documented view-family or opacity-crossfade adapter; no Atlas change was made"
+}

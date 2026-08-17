@@ -1,0 +1,2 @@
+import fs from 'node:fs';import {decodePng,encodePng} from '../golden-reference/golden-reference-raster-analysis.mjs';
+const im=decodePng('/tmp/growgo-layers/FASCIA_FIDELITY_FRONT.png'),rgba=Buffer.from(im.rgba);for(let y=0;y<im.h;y++)for(let x=0;x<im.w;x++){const i=(y*im.w+x)*4,r=rgba[i],g=rgba[i+1],b=rgba[i+2];const neutral=Math.max(r,g,b)-Math.min(r,g,b)<18;if(neutral&&(y>158||y<8))rgba[i+3]=0}fs.writeFileSync('test-output/exactmatch-final/FASCIA_FIDELITY_FRONT_TRANSPARENT.png',encodePng(im.w,im.h,rgba));

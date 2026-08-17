@@ -1,0 +1,75 @@
+{
+  "finalVerdict": "VISION_NEEDS_CORRECTION",
+  "internalIterationsUsed": 3,
+  "whatCodexActuallySees": {
+    "doorVisuallyCorrect": "YES",
+    "windowVisuallyCorrect": "YES",
+    "awningVisuallyCorrect": "YES",
+    "fasciaSignVisuallyCorrect": "YES",
+    "wallPanelsVisuallyCorrect": "YES",
+    "upperTrimVisuallyCorrect": "NO",
+    "foundationVisuallyCorrect": "YES",
+    "shrubVisuallyCorrect": "YES",
+    "floatingComponents": "YES",
+    "unintendedVisibleGeometry": "NO",
+    "overallShopResemblesGoldenReference": "NO"
+  },
+  "components": [
+    {
+      "component": "DOOR",
+      "description": "Backing cleanup now removes the large rectangular artifact; threshold/landing remains slightly heavier than the reference.",
+      "severity": "MEDIUM",
+      "correctionType": "FACADE_SHELL / LANDING",
+      "responsibility": "FACADE_SHELL",
+      "confidence": 0.88,
+      "evidence": [
+        "SHOP_WINDOWPANEL_FRONT.png",
+        "SHOP_WINDOWPANEL_CLOSEUP.png"
+      ]
+    },
+    {
+      "component": "UPPER_TRIM_LEFT",
+      "description": "Upper corner trim reads as a disconnected vertical block rather than a continuous corner termination.",
+      "severity": "HIGH",
+      "correctionType": "LAYER_A_MODULE",
+      "responsibility": "FACADE_SHELL",
+      "confidence": 0.91,
+      "evidence": [
+        "SHOP_WINDOWPANEL_FRONT.png"
+      ]
+    },
+    {
+      "component": "UPPER_TRIM_RIGHT",
+      "description": "Upper corner trim reads as a disconnected vertical block rather than a continuous corner termination.",
+      "severity": "HIGH",
+      "correctionType": "LAYER_A_MODULE",
+      "responsibility": "FACADE_SHELL",
+      "confidence": 0.91,
+      "evidence": [
+        "SHOP_WINDOWPANEL_FRONT.png"
+      ]
+    },
+    {
+      "component": "FACADE",
+      "description": "Wall/fascia envelope remains darker and more segmented than the warm, compact Golden Reference facade.",
+      "severity": "HIGH",
+      "correctionType": "FACADE_SHELL / DEPTH_ORDER",
+      "responsibility": "FACADE_SHELL",
+      "confidence": 0.86,
+      "evidence": [
+        "SHOP_WINDOWPANEL_GOLDEN_COMPARISON_BOARD.png"
+      ]
+    },
+    {
+      "component": "WINDOW",
+      "description": "Window is readable and embedded, but surrounding panel rhythm remains weaker than reference.",
+      "severity": "MEDIUM",
+      "correctionType": "FACADE_SHELL",
+      "responsibility": "LAYER_A_MODULE",
+      "confidence": 0.84,
+      "evidence": [
+        "SHOP_WINDOWPANEL_CLOSEUP.png"
+      ]
+    }
+  ]
+}

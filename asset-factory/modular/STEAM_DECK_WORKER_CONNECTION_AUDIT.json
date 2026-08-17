@@ -1,0 +1,29 @@
+{
+  "status": "STEAM_DECK_WORKER_READY",
+  "resolvedHost": "steamdeck",
+  "resolvedIp": "10.0.0.4",
+  "connectionMethod": "IP",
+  "user": "deck",
+  "sshKeyPathReference": "/Users/michaelpeterson/.ssh/id_ed25519",
+  "identityFilePresent": true,
+  "sshKeyAuthentication": "PASS",
+  "hostIdentity": "PASS",
+  "knownHostEntryPresent": true,
+  "os": "Linux / SteamOS worker",
+  "architecture": "x86_64",
+  "blender": {
+    "version": "5.2.0 LTS",
+    "runtime": "flatpak run org.blender.Blender",
+    "platform": "Linux",
+    "buildHash": "fbe6228777e7",
+    "versionCheck": "PASS"
+  },
+  "pythonHealthCheck": "PASS",
+  "workerRoot": "~/growgo-worker",
+  "workerRootStatus": "PASS",
+  "transportHealthCheck": "PASS",
+  "transportChecksumVerified": true,
+  "temporaryTestDataRemoved": true,
+  "productionAssetWorkStarted": false,
+  "timestamp": "2026-08-15"
+}

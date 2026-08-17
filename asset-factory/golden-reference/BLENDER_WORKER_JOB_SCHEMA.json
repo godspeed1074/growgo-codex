@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "growgo://asset-factory/BLENDER_WORKER_JOB/1.0.0",
+  "title": "GrowGo constrained external Blender worker job",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractVersion", "jobId", "assetId", "assetVersion", "recipeId", "recipeVersion", "blenderBuildId", "backend", "deterministic", "untrustedWorker", "goldenReference", "componentMappings", "modules", "operations", "protectedComponents", "budgetProfile", "cameraContract", "renderContract", "exportContract", "checksums"],
+  "properties": {
+    "contractVersion": { "const": "GG-BLENDER-WORKER-CONTRACT-1.0.0" },
+    "jobId": { "type": "string" }, "assetId": { "type": "string" }, "assetVersion": { "type": "string" }, "recipeId": { "type": "string" }, "recipeVersion": { "type": "string" },
+    "backend": { "enum": ["LOCAL_BLENDER", "EXTERNAL_BLENDER"] },
+    "blenderBuildId": { "type": "string" }, "deterministic": { "const": true }, "untrustedWorker": { "const": true }, "generatedJobChecksum": { "type": "string" },
+    "goldenReference": { "type": "object", "required": ["referenceId", "referenceVersion", "checksum"] }, "componentMappings": { "type": "array" },
+    "operations": { "type": "array", "items": { "type": "object", "required": ["componentId", "objectId", "operation", "value"] } },
+    "modules": { "type": "array", "items": { "type": "object", "required": ["componentId", "assetId", "assetVersion", "moduleId", "moduleVersion", "moduleFamily"] } },
+    "checksums": { "type": "object" }, "protectedComponents": { "type": "array" }, "budgetProfile": { "type": "object" }, "cameraContract": { "type": "object" }, "renderContract": { "type": "object" }, "exportContract": { "type": "object" }
+  }
+}

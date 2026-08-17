@@ -1,0 +1,11 @@
+{
+  "status": "CANDIDATE",
+  "baselineScore": 89,
+  "winningVariant": "PHASE_B_15",
+  "wall": {"mainPanelDepth": 0.28, "topPanelDepth": 0.24, "tonalPalette": "darker_warm_brown"},
+  "upperTransition": {"trimDepth": 0.08, "contactShadowDepth": 0.045},
+  "shrub": {"backDepth": 0.36, "midDepth": 0.28, "frontDepth": 0.20, "planterDepth": 0.36},
+  "camera": "GG_CAMERA_SIMPLE_SHOP_LOCKED",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "knownGoodAssigned": false
+}

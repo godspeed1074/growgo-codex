@@ -1,0 +1,24 @@
+{
+  "status": "SOURCE_INFORMATION_BLOCKER",
+  "wallFamily": [
+    "MAIN",
+    "NARROW",
+    "TOP"
+  ],
+  "requiredFeatures": [
+    "subtle warm-brown variation",
+    "edge darkening",
+    "opening contact shadows",
+    "shallow panel shading",
+    "cross-panel tonal continuity"
+  ],
+  "forbidden": [
+    "full-facade baked texture",
+    "generic AO strips",
+    "invented pattern"
+  ],
+  "referenceRegions": [
+    "test-output/shop-refbake/reference-crops/wall-foundation.png"
+  ],
+  "safeIntegration": "requires tighter reference crop and isolated Blender proof"
+}

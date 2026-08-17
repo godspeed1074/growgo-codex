@@ -1,0 +1,135 @@
+{
+  "draftStatus": "OPERATOR_REVIEW_REQUIRED",
+  "standardId": "GROWGO_REFERENCE_LAYERED_MODULE_STANDARD_DRAFT",
+  "method": [
+    "reference crop required",
+    "module scope/context separation",
+    "lossless PNG layer integrity required",
+    "2D reassembly gate required",
+    "shallow papercut depth required",
+    "source artwork front-face preservation",
+    "simple palette sides/back",
+    "component IDs",
+    "four-side review",
+    "visibility-scope pixel gate",
+    "mobile budget"
+  ],
+  "modules": {
+    "DOOR": "PROVEN",
+    "WINDOW": "PROVEN",
+    "SHRUB_PLANTER": "PROVEN_ORGANIC_MODULE",
+    "AWNING": "PROVEN_PROJECTING_FEATURE",
+    "FASCIA_SIGN": "PROVEN_LAYERED_COMMERCIAL_IDENTITY"
+  },
+  "globalFreeze": "NOT_APPROVED",
+  "visualConvergence": {
+    "mandatory": true,
+    "workflow": [
+      "golden-reference-authority",
+      "real-blender-build",
+      "codex-image-review",
+      "difference-inventory",
+      "bounded-correction",
+      "rebuild",
+      "codex-image-review"
+    ],
+    "maxInternalIterations": null,
+    "arbitraryIterationStop": false,
+    "firstSeriousCandidateGate": "CODEX MUST NOT PRESENT A FIRST SERIOUS REFERENCE-DRIVEN CANDIDATE WHILE CODEX ITSELF CAN STILL SEE A MAJOR CORRECTABLE DIFFERENCE.",
+    "visionOverridesMetrics": true,
+    "stopOn": [
+      "VISION_PASS",
+      "repeated-unimproved-discrepancy",
+      "budget-blocker",
+      "missing-source-evidence",
+      "structural-contract-failure"
+    ],
+    "operatorBoardMustLabel": "ACTUAL BLENDER ASSET — FRONT",
+    "knownGoodAutoPromotion": false
+  },
+  "exactMatchLessons": [
+    "checkpoint blend and render checksums before every visual correction",
+    "retain an iteration only when Codex image review shows improvement over the safe baseline",
+    "revert visually regressive shell and trim experiments immediately",
+    "compare fascia, awning, foundation, transom, and presentation against the immutable reference crop",
+    "treat calibrated hero artwork as protected while correcting shell/context/backing layers"
+  ],
+  "calibratedLayerBProof": {
+    "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+    "status": "CAPTURED_NOT_FROZEN",
+    "operatorApprovalRequired": true,
+    "shellIntegrationRequirements": [
+      "warm brown facade envelope",
+      "cream opening/corner trim",
+      "stepped foundation",
+      "hero modules remain visually protected"
+    ]
+  },
+  "organicModuleLessons": [
+    "irregular foreground mask",
+    "silhouette gate",
+    "layered foliage masses",
+    "planter/foliage identity separation"
+  ],
+  "projectingFeatureLessons": [
+    "projection gate",
+    "scallop silhouette gate",
+    "support visibility",
+    "side-view depth proof"
+  ],
+  "referenceDerivedShellLesson": "REFERENCE-DRIVEN ASSETS MUST NOT USE GENERIC PLACEHOLDER SHELL GEOMETRY.",
+  "referenceDerivedShellMethod": [
+    "reference crop",
+    "scope mask",
+    "context separation",
+    "PNG integrity",
+    "2D reassembly",
+    "shallow 2.5D depth",
+    "persistent root",
+    "visible-art bounds",
+    "attachment anchors",
+    "component ID"
+  ],
+  "difficultShellArchitectureLesson": "Reconstruct and vision-approve each reusable visible shell module independently before Layer B assembly; never use a full-facade composite shortcut.",
+  "foundationGroundingModuleExample": "FOUNDATION / GROUNDING MODULE: reconstruct and vision-approve foundation/steps independently before full building assembly when visually important.",
+  "calibratedExampleSet": {
+    "shell": "Wall Panel Family"
+  },
+  "visibleShellArchitectureRule": "VISIBLE SHELL ARCHITECTURE MUST BE REFERENCE-DERIVED AND VISION-APPROVED, NOT GENERIC PLACEHOLDER GEOMETRY.",
+  "endToEndPermanentWorkflow": [
+    "Codex visually decomposes reference",
+    "Master Asset Index reuse search",
+    "reconstruct visible Layer A modules",
+    "vision-approve modules",
+    "deterministic Layer B assembly",
+    "Codex visually inspects Blender output",
+    "bounded internal correction",
+    "operator sees first serious candidate"
+  ],
+  "assemblyVisionSelfCorrectionRule": "REFERENCE → CODEX VISUAL DECOMPOSITION → CALIBRATED LAYER A MODULES → CLEAN LAYER B ASSEMBLY → CODEX VISION SELF-CORRECTION → FIRST SERIOUS CANDIDATE",
+  "firstPassLessons": [
+    "vision-approved modules still require vision-approved assembly context",
+    "adjacent modular panels must have designed visual continuity",
+    "hero-module context/backplates must be independently validated",
+    "safe-baseline rollback is mandatory",
+    "Codex must self-correct obvious visual differences before operator review",
+    "Codex must detect missing architectural trim itself.",
+    "Door/window/transom relationships must be extracted from the reference before first assembly.",
+    "Large hero modules such as awnings must use reference-relative proportions, not generic default sizes.",
+    "Organic layered assets must be checked from side views so they do not appear as pasted 2D cards.",
+    "Codex must detect missing architectural trim itself.",
+    "Door/window/transom relationships must be extracted from the reference before first assembly.",
+    "Large hero modules such as awnings must use reference-relative proportions, not generic default sizes.",
+    "Organic layered assets must be checked from side views so they do not appear as pasted 2D cards."
+  ],
+  "autonomousConvergenceContract": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
+  "firstSeriousCandidateGate": "CODEX MUST NOT PRESENT A FIRST SERIOUS REFERENCE-DRIVEN CANDIDATE WHILE CODEX ITSELF CAN STILL SEE A MAJOR CORRECTABLE DIFFERENCE."
+  ,"approvedHybridPresentationMethod": {
+    "scope": "Use only when measured modular geometry and controlled tonal materials still fail to reproduce required stylized papercut front fidelity.",
+    "decisionTree": ["define module ownership", "shared reference grid", "exact front measurements", "visible-component inventory", "depth/profile rules", "material/tonal map", "2D preflight", "fabricate measured 3D structural carcass", "when geometry-only presentation remains blocky, add modular reference-derived front art layers", "use unlit material for locked front art", "preserve real 3D structure for depth, anchors, collision, and side QA"],
+    "requirements": ["no monolithic full-door texture", "component-owned transparent art layers", "source-context contamination equals zero", "structural source remains editable", "side/back use simple structural materials", "front authority remains separately versioned"],
+    "doorProof": "SHOP_DOOR_FRONT_AUTHORITY_V4"
+  },
+  "requiredComponentVisibilityRule": "Required component visibility must be evaluated in the camera/view where that component is intended to be visible. Front-authority components require front beauty pixels. Depth returns and side construction may satisfy visibility through oblique/side QA. Structural-only components must not be artificially exposed merely to satisfy a front-render detector.",
+  "frontRequiredVisibilityRule": "Any component classified FRONT_REQUIRED must actually contribute meaningful beauty pixels in the authoritative front render."
+}

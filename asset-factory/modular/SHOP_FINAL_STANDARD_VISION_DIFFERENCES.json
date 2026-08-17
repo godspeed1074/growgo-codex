@@ -1,0 +1,10 @@
+{
+  "status": "STALLED_VISUAL_CONVERGENCE",
+  "differences": [
+    "dark fascia/awning context",
+    "flatter upper trim transition",
+    "wall/papercut richness below reference"
+  ],
+  "sourceInformationBlocker": true,
+  "visionMetricConflict": true
+}

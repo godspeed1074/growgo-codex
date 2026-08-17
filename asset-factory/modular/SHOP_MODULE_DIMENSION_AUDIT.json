@@ -1,0 +1,215 @@
+{
+  "status": "CANDIDATE",
+  "sourceReference": "SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "sourceRender": "SHOP_CALIBRATED_FULL_FRONT.png",
+  "modules": {
+    "FASCIA": {
+      "reference": {
+        "width": 600,
+        "height": 82,
+        "centerX": 380,
+        "centerY": 55
+      },
+      "before": {
+        "width": 520,
+        "height": 84,
+        "centerX": 480,
+        "centerY": 55
+      },
+      "after": {
+        "width": 520,
+        "height": 84,
+        "centerX": 480,
+        "centerY": 55
+      },
+      "errors": {
+        "widthBeforePct": -13.3,
+        "heightBeforePct": 2.4,
+        "centerXBeforePct": 16.7,
+        "centerYBeforePct": 0
+      }
+    },
+    "AWNING": {
+      "reference": {
+        "width": 560,
+        "height": 112,
+        "centerX": 380,
+        "centerY": 160
+      },
+      "before": {
+        "width": 520,
+        "height": 110,
+        "centerX": 480,
+        "centerY": 155
+      },
+      "after": {
+        "width": 520,
+        "height": 110,
+        "centerX": 480,
+        "centerY": 155
+      },
+      "errors": {
+        "widthBeforePct": -7.1,
+        "heightBeforePct": -1.8,
+        "centerXBeforePct": 17.9,
+        "centerYBeforePct": -4.5
+      }
+    },
+    "DOOR": {
+      "reference": {
+        "width": 160,
+        "height": 190,
+        "centerX": 190,
+        "centerY": 330
+      },
+      "before": {
+        "width": 145,
+        "height": 210,
+        "centerX": 340,
+        "centerY": 370
+      },
+      "after": {
+        "width": 145,
+        "height": 210,
+        "centerX": 340,
+        "centerY": 370
+      },
+      "errors": {
+        "widthBeforePct": -9.4,
+        "heightBeforePct": 10.5,
+        "centerXBeforePct": 93.8,
+        "centerYBeforePct": 21.1
+      }
+    },
+    "TRANSOM": {
+      "reference": {
+        "width": 150,
+        "height": 42,
+        "centerX": 190,
+        "centerY": 240
+      },
+      "before": {
+        "width": 125,
+        "height": 38,
+        "centerX": 340,
+        "centerY": 250
+      },
+      "after": {
+        "width": 125,
+        "height": 38,
+        "centerX": 340,
+        "centerY": 250
+      },
+      "errors": {
+        "widthBeforePct": -16.7,
+        "heightBeforePct": -9.5,
+        "centerXBeforePct": 100,
+        "centerYBeforePct": 23.8
+      }
+    },
+    "WINDOW": {
+      "reference": {
+        "width": 270,
+        "height": 185,
+        "centerX": 440,
+        "centerY": 350
+      },
+      "before": {
+        "width": 245,
+        "height": 205,
+        "centerX": 590,
+        "centerY": 350
+      },
+      "after": {
+        "width": 245,
+        "height": 205,
+        "centerX": 590,
+        "centerY": 350
+      },
+      "errors": {
+        "widthBeforePct": -9.3,
+        "heightBeforePct": 10.8,
+        "centerXBeforePct": 55.6,
+        "centerYBeforePct": 0
+      }
+    },
+    "FOUNDATION": {
+      "reference": {
+        "width": 700,
+        "height": 55,
+        "centerX": 380,
+        "centerY": 540
+      },
+      "before": {
+        "width": 700,
+        "height": 55,
+        "centerX": 480,
+        "centerY": 560
+      },
+      "after": {
+        "width": 700,
+        "height": 55,
+        "centerX": 480,
+        "centerY": 560
+      },
+      "errors": {
+        "widthBeforePct": 0,
+        "heightBeforePct": 0,
+        "centerXBeforePct": 14.3,
+        "centerYBeforePct": 36.4
+      }
+    },
+    "PLANTER": {
+      "reference": {
+        "width": 100,
+        "height": 80,
+        "centerX": 665,
+        "centerY": 525
+      },
+      "before": {
+        "width": 100,
+        "height": 90,
+        "centerX": 785,
+        "centerY": 520
+      },
+      "after": {
+        "width": 100,
+        "height": 90,
+        "centerX": 785,
+        "centerY": 520
+      },
+      "errors": {
+        "widthBeforePct": 0,
+        "heightBeforePct": 12.5,
+        "centerXBeforePct": 120,
+        "centerYBeforePct": -6.2
+      }
+    },
+    "SHRUB": {
+      "reference": {
+        "width": 125,
+        "height": 180,
+        "centerX": 665,
+        "centerY": 430
+      },
+      "before": {
+        "width": 125,
+        "height": 175,
+        "centerX": 785,
+        "centerY": 440
+      },
+      "after": {
+        "width": 125,
+        "height": 175,
+        "centerX": 785,
+        "centerY": 440
+      },
+      "errors": {
+        "widthBeforePct": 0,
+        "heightBeforePct": -2.8,
+        "centerXBeforePct": 96,
+        "centerYBeforePct": 5.6
+      }
+    }
+  }
+}

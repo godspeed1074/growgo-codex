@@ -21,3 +21,4 @@ firebase-debug.*.log
 service-account*.json
 *.tmp.glb
 *.tmp.blend
+test-output/

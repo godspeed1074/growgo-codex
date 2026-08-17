@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "sides": {
+    "LEFT": {
+      "coveredPixels": 6098,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "ENTRANCE": {
+      "coveredPixels": 8467,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "RIGHT": {
+      "coveredPixels": 19083,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    }
+  }
+}

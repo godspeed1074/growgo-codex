@@ -1,0 +1,41 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "safeBaseline": {
+    "frontChecksum": "3a30e034178ee0d250ff1f9add23b0a266c5c0dd8639fad356e27743f1c355db",
+    "render": "SHOP_FINALCONVERGE_FRONT.png"
+  },
+  "differences": [
+    {
+      "area": "wall continuity",
+      "classification": "TONAL_DISCONTINUITY",
+      "severity": "HIGH",
+      "observation": "baseline wall reads as separate brown rectangles; iter1 uses shared wall material, overlaps, and edge returns"
+    },
+    {
+      "area": "fascia/awning context",
+      "classification": "CONTEXT_ART",
+      "severity": "HIGH",
+      "observation": "protected hero artwork retains dark surrounding context; artwork was not altered"
+    },
+    {
+      "area": "upper trim",
+      "classification": "DEPTH_DISCONTINUITY",
+      "severity": "MEDIUM",
+      "observation": "trim is present but transition into fascia remains flatter than reference"
+    },
+    {
+      "area": "presentation",
+      "classification": "OTHER",
+      "severity": "MEDIUM",
+      "observation": "iter1 is brighter and warmer, closer to reference"
+    }
+  ],
+  "protected": [
+    "DOOR",
+    "WINDOW",
+    "SHRUB",
+    "FOUNDATION",
+    "AWNING_ART",
+    "FASCIA_ART"
+  ]
+}

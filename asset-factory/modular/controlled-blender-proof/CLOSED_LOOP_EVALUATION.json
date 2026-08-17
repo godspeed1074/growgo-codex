@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0.0",
+  "proofId": "GG-CONTROLLED-LAYER-B-BLENDER-PROOF-1.0.0",
+  "status": "BLOCKED",
+  "errorCode": "BLENDER_RUNTIME_UNAVAILABLE",
+  "message": "BLENDER_EXECUTION_FAIL:  ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()\n Function: Arch_ValidateAssumptions\n     File: /Users/raulito/blender-platform/build_darwin/deps_x64/build/usd/src/external_usd/pxr/base/arch/assumptions.cpp\n     Line: 155\n\nBlender 4.2.23 LTS (hash d0cbe84903e8 built 2026-07-21 01:30:45)\nWriting: /var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/blender.crash.txt\n",
+  "blenderExecutable": "/Applications/Blender 4.2.app/Contents/MacOS/Blender",
+  "reason": "The installed x86_64 Blender binary crashes during GPU backend initialization under the current host architecture before Python scene assembly.",
+  "productionAttached": false,
+  "oneIterationStop": true
+}

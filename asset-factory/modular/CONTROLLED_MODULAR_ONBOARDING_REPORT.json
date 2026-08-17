@@ -1,0 +1,1447 @@
+{
+  "schemaVersion": "1.0.0",
+  "proofId": "GG-CONTROLLED-LAYER-A-PACK-1.0.0",
+  "status": "PASS",
+  "scope": "CONTROLLED_FIXTURE_ONLY",
+  "productionAttached": false,
+  "layerAModuleCount": 8,
+  "newlyRegisteredModuleCount": 8,
+  "reusedModuleCount": 0,
+  "permanentAssetIds": [
+    "GG-BLD-WALL-SHOP-001",
+    "GG-BLD-ROOF-SHOP-001",
+    "GG-BLD-DOOR-SHOP-001",
+    "GG-BLD-WINDOW-SHOP-001",
+    "GG-BLD-TRIM-SHOP-001",
+    "GG-BLD-AWNING-SHOP-001",
+    "GG-BLD-FOUNDATION-SHOP-001",
+    "GG-VEG-SHRUB-SHOP-001"
+  ],
+  "reuseSearchOutcomes": [
+    {
+      "candidateId": "GG-BLD-WALL-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": [
+        {
+          "assetId": "GG-BLD-WALL-BRICK-001",
+          "reason": "STYLE_FAMILY_MISMATCH"
+        }
+      ]
+    },
+    {
+      "candidateId": "GG-BLD-ROOF-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    },
+    {
+      "candidateId": "GG-BLD-DOOR-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    },
+    {
+      "candidateId": "GG-BLD-WINDOW-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    },
+    {
+      "candidateId": "GG-BLD-TRIM-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    },
+    {
+      "candidateId": "GG-BLD-AWNING-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    },
+    {
+      "candidateId": "GG-BLD-FOUNDATION-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    },
+    {
+      "candidateId": "GG-VEG-SHRUB-SHOP-001",
+      "outcome": "NO_COMPATIBLE_MODULE",
+      "rejectionReasons": []
+    }
+  ],
+  "layerBRecipe": {
+    "recipeId": "GG-REC-BLD-SIMPLE-SHOP-001",
+    "recipeVersion": "1.0.0",
+    "componentCount": 8,
+    "componentAssetIds": [
+      "GG-BLD-WALL-SHOP-001@1.0.0",
+      "GG-BLD-ROOF-SHOP-001@1.0.0",
+      "GG-BLD-DOOR-SHOP-001@1.0.0",
+      "GG-BLD-WINDOW-SHOP-001@1.0.0",
+      "GG-BLD-TRIM-SHOP-001@1.0.0",
+      "GG-BLD-AWNING-SHOP-001@1.0.0",
+      "GG-BLD-FOUNDATION-SHOP-001@1.0.0",
+      "GG-VEG-SHRUB-SHOP-001@1.0.0"
+    ],
+    "anonymousGeometryCount": 0
+  },
+  "deterministicAssembly": {
+    "sameSeedSameContext": true,
+    "differentSeedChangesOnlyAllowedPalette": true,
+    "runtimeIdentityChangesWithSeed": true
+  },
+  "transformationProof": {
+    "allowedRotateAccepted": true,
+    "forbiddenScaleRejected": true
+  },
+  "paletteProof": {
+    "family": "HERITAGE_BUILDING",
+    "restrictedToApprovedIds": true,
+    "deterministic": true
+  },
+  "budgetAggregation": {
+    "triangleCeiling": 4800,
+    "preferredTriangles": 2560,
+    "vertexCeiling": 6400,
+    "materialIds": [
+      "GG-MAT-BRICK-ATLAS-A"
+    ],
+    "textureAtlasRefs": [
+      "GG-ATLAS-BUILDING-A@1.0.0"
+    ],
+    "moduleCount": 8,
+    "reusedModuleCount": 0,
+    "estimatedFileSizeBytes": 720000
+  },
+  "goldenReferenceBindingProof": {
+    "bindingCount": 2,
+    "moduleIdsPreservedAcrossHandoff": true
+  },
+  "audit": {
+    "schemaVersion": "1.0.0",
+    "generatedDeterministically": true,
+    "status": "PASS",
+    "findingCount": 1,
+    "findings": [
+      {
+        "code": "ORPHANED_MODULE",
+        "assetId": "GG-BLD-WALL-BRICK-001",
+        "assetVersion": "1.0.0",
+        "severity": "INFO"
+      }
+    ]
+  },
+  "historyEntryCount": 25,
+  "knownLimitations": [
+    "Controlled fixture geometry and atlas/material metadata only",
+    "No production asset migration or reconstruction was performed"
+  ],
+  "index": {
+    "schemaVersion": "1.0.0",
+    "indexVersion": "1.0.0",
+    "published": false,
+    "fixtureOnly": true,
+    "atlases": [
+      {
+        "textureAtlasId": "GG-ATLAS-BUILDING-A",
+        "textureAtlasVersion": "1.0.0",
+        "status": "APPROVED"
+      }
+    ],
+    "materials": [
+      {
+        "materialId": "GG-MAT-BRICK-ATLAS-A",
+        "materialVersion": "1.0.0",
+        "textureAtlasId": "GG-ATLAS-BUILDING-A",
+        "status": "APPROVED"
+      }
+    ],
+    "paletteFamilies": {
+      "HERITAGE_BUILDING": {
+        "allowedPaletteIds": [
+          "HERITAGE_BRICK_RED",
+          "HERITAGE_CREAM"
+        ]
+      }
+    },
+    "modules": [
+      {
+        "assetId": "GG-BLD-WALL-BRICK-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "EXTERIOR_WALL",
+        "family": "HERITAGE_BRICK",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 4,
+          "height": 3,
+          "depth": 0.2
+        },
+        "geometryBudget": {
+          "preferredTriangles": 700,
+          "triangleCeiling": 1000,
+          "vertexCeiling": 1200
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 160000,
+          "ceilingBytes": 250000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "BRICK_RED_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "BRICK",
+          "allowedVariants": [
+            "BRICK",
+            "CREAM_BRICK"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          },
+          {
+            "type": "BOUNDED_SCALE_X",
+            "min": 0.75,
+            "max": 1.5
+          },
+          {
+            "type": "APPROVED_TINT"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-GEN-WALL-001",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "repeatAxis": "X",
+          "identityPreservation": "REQUIRED"
+        },
+        "recipeCompatibility": [
+          "HOUSE",
+          "SHOP",
+          "BAKERY",
+          "RAILWAY_STATION"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_001",
+          "goldenReferenceId": "FIXTURE_BAKERY_REFERENCE_001"
+        },
+        "tags": [
+          "wall",
+          "brick",
+          "modular"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-WALL-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "EXTERIOR_WALL",
+        "family": "SHOP_WALL",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 4,
+          "height": 3,
+          "depth": 0.2
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "EXTERIOR_WALL_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_WALL",
+          "allowedVariants": [
+            "SHOP_WALL"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "EXTERIOR_WALL_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "exterior_wall"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-ROOF-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "ROOF",
+        "family": "SHOP_ROOF",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 4.4,
+          "height": 0.8,
+          "depth": 3.4
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "ROOF_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_ROOF",
+          "allowedVariants": [
+            "SHOP_ROOF"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "ROOF_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "roof"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-DOOR-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "DOOR",
+        "family": "SHOP_DOOR",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 1,
+          "height": 2.1,
+          "depth": 0.12
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "DOOR_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_DOOR",
+          "allowedVariants": [
+            "SHOP_DOOR"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "DOOR_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "door"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-WINDOW-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "WINDOW",
+        "family": "SHOP_WINDOW",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 1.2,
+          "height": 1.2,
+          "depth": 0.1
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "WINDOW_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_WINDOW",
+          "allowedVariants": [
+            "SHOP_WINDOW"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "WINDOW_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "window"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-TRIM-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "TRIM",
+        "family": "SHOP_TRIM",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 4,
+          "height": 0.25,
+          "depth": 0.12
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "TRIM_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_TRIM",
+          "allowedVariants": [
+            "SHOP_TRIM"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "TRIM_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "trim"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-AWNING-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "AWNING",
+        "family": "SHOP_AWNING",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 2.2,
+          "height": 0.35,
+          "depth": 0.9
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "AWNING_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_AWNING",
+          "allowedVariants": [
+            "SHOP_AWNING"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "AWNING_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "awning"
+        ]
+      },
+      {
+        "assetId": "GG-BLD-FOUNDATION-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "BUILDING",
+        "type": "FOUNDATION",
+        "family": "SHOP_FOUNDATION",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 4.4,
+          "height": 0.25,
+          "depth": 3.4
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "FOUNDATION_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_FOUNDATION",
+          "allowedVariants": [
+            "SHOP_FOUNDATION"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "SIMPLE_BOX"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "FOUNDATION_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "foundation"
+        ]
+      },
+      {
+        "assetId": "GG-VEG-SHRUB-SHOP-001",
+        "assetVersion": "1.0.0",
+        "layer": "LAYER_A_MODULE",
+        "category": "VEGETATION",
+        "type": "SHRUB",
+        "family": "SHOP_SHRUB",
+        "designSpecification": {
+          "construction": "modular brick wall section",
+          "silhouette": "rectangular"
+        },
+        "dimensionsMeters": {
+          "width": 1.2,
+          "height": 0.8,
+          "depth": 1.2
+        },
+        "geometryBudget": {
+          "preferredTriangles": 320,
+          "triangleCeiling": 600,
+          "vertexCeiling": 800
+        },
+        "textureBudget": {
+          "textureCount": 1,
+          "maxDimension": 1024
+        },
+        "materialBudget": {
+          "materialCeiling": 1,
+          "materialIds": [
+            "GG-MAT-BRICK-ATLAS-A"
+          ]
+        },
+        "exportedFileSizeBudget": {
+          "targetBytes": 90000,
+          "ceilingBytes": 180000
+        },
+        "lod": {
+          "required": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "available": [
+            "LOD_CLOSE",
+            "LOD_GAMEPLAY",
+            "LOD_MAP"
+          ],
+          "identityPreservation": "REQUIRED"
+        },
+        "textureAtlases": [
+          {
+            "textureAtlasId": "GG-ATLAS-BUILDING-A",
+            "textureAtlasVersion": "1.0.0",
+            "uvRegion": "SHRUB_FIXTURE_01"
+          }
+        ],
+        "orientationRules": {
+          "allowed": [
+            "N",
+            "E",
+            "S",
+            "W"
+          ],
+          "frontAxis": "+Y"
+        },
+        "variationRules": {
+          "variantFamily": "SHOP_SHRUB",
+          "allowedVariants": [
+            "SHOP_SHRUB"
+          ]
+        },
+        "allowedTransformations": [
+          {
+            "type": "ROTATE"
+          },
+          {
+            "type": "MIRROR"
+          }
+        ],
+        "collisionRules": {
+          "type": "NONE_OR_SIMPLE_HULL"
+        },
+        "deterministicGeneration": {
+          "generatorId": "GG-CONTROLLED-ONBOARDING-002",
+          "generatorVersion": "1.0.0",
+          "seedRule": "ASSET_ID_VERSION"
+        },
+        "modularReuse": {
+          "searchRequired": true,
+          "identityPreservation": "REQUIRED",
+          "sourceSearchRecorded": true
+        },
+        "recipeCompatibility": [
+          "SIMPLE_SHOP"
+        ],
+        "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+        "palette": {
+          "paletteFamily": "HERITAGE_BUILDING",
+          "allowedPaletteIds": [
+            "HERITAGE_BRICK_RED",
+            "HERITAGE_CREAM"
+          ],
+          "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+        },
+        "approvalState": "APPROVED",
+        "provenance": {
+          "sourceType": "CONTROLLED_FIXTURE",
+          "sourceId": "MODULAR_CONTRACT_PHASE_002",
+          "fixtureGeometry": "SHRUB_SAFE_FIXTURE",
+          "productionAttached": false
+        },
+        "tags": [
+          "controlled-fixture",
+          "onboarding-pack",
+          "shrub"
+        ]
+      }
+    ],
+    "history": [
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-WALL-BRICK-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_FIXTURE",
+        "reason": "CONTRACT_VALIDATION"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-WALL-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-WALL-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-WALL-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-ROOF-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-ROOF-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-ROOF-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-DOOR-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-DOOR-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-DOOR-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-WINDOW-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-WINDOW-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-WINDOW-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-TRIM-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-TRIM-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-TRIM-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-AWNING-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-AWNING-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-AWNING-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-BLD-FOUNDATION-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-FOUNDATION-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-BLD-FOUNDATION-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "REGISTER_VERSION",
+        "assetId": "GG-VEG-SHRUB-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": null,
+        "toState": "DRAFT",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "SEARCHED_AND_AUTHORIZED"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-VEG-SHRUB-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "DRAFT",
+        "toState": "REVIEW",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      },
+      {
+        "event": "STATE_TRANSITION",
+        "assetId": "GG-VEG-SHRUB-SHOP-001",
+        "assetVersion": "1.0.0",
+        "fromState": "REVIEW",
+        "toState": "APPROVED",
+        "actor": "CONTROLLED_ONBOARDING",
+        "reason": "CONTROLLED_LIFECYCLE"
+      }
+    ]
+  }
+}

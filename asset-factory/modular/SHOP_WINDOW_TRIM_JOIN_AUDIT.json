@@ -1,0 +1,10 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "corners": {
+    "topLeft": "JOIN_PASS_WITH_NOTES",
+    "topRight": "JOIN_PASS_WITH_NOTES",
+    "bottomLeft": "JOIN_PASS_WITH_NOTES",
+    "bottomRight": "JOIN_PASS_WITH_NOTES"
+  },
+  "remaining": "trim thickness/visual weight differs from reference"
+}

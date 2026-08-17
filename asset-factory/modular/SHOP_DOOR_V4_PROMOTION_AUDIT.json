@@ -1,0 +1,13 @@
+{
+  "auditId": "SHOP_DOOR_V4_PROMOTION_AUDIT",
+  "status": "PASS",
+  "finishedAsset": "GG-BLD-DOOR-SHOP-002",
+  "operatorApproval": true,
+  "authority": "SHOP_DOOR_FRONT_AUTHORITY_V4",
+  "knownGood": {"assigned": false, "reason": "GROWGO_REFERENCE_LAYERED_MODULE_STANDARD_DRAFT.json sets knownGoodAutoPromotion to false; operator approval is recorded without changing that contract."},
+  "registration": {"layer": "LAYER_A_MODULE", "assetVersion": "4.0.0", "masterIndex": "SHOP_LAYER_A_MASTER_ASSET_INDEX.json", "approvalState": "OPERATOR_APPROVED", "componentFamilies": ["casing", "plinth", "head_cap", "separator", "transom_glass", "door_slab", "glass_frame", "lower_panel", "threshold", "brass_hardware"], "status": "PASS"},
+  "presentationSeparation": {"structuralSource": "GG-BLD-DOOR-SHOP-002_V3", "structuralSourcePreserved": true, "frontArtLayersSeparate": true, "artLayers": ["ART_CASING_LEFT", "ART_CASING_RIGHT", "ART_HEAD_CAP", "ART_TRANSOM_SEPARATOR", "ART_TRANSOM_GLASS", "ART_DOOR_SLAB", "ART_MAIN_GLASS", "ART_MAIN_GLASS_FRAME_REVEAL", "ART_LOWER_PANEL", "ART_HARDWARE", "ART_THRESHOLD"], "swappableFamilies": ["casing", "slab", "glass", "panel", "hardware"], "monolithicTexture": false},
+  "finalTechnicalValidation": {"steamDeck": "PASS", "triangles": 590, "budget": "PASS", "anonymousGeometry": 0, "artLayerCompressedBytes": 105391, "allApprovedFrontLayersPresent": true, "authorityChecksumUnchanged": true},
+  "recipe": {"recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001", "status": "PASS", "shopIntegrated": false, "reason": "The recipe is protected and unchanged; no Layer B shop integration was performed."},
+  "protected": {"appearanceChanged": false, "atlasModified": false, "eucalyptusStarted": false, "goldenReferenceModified": false}
+}

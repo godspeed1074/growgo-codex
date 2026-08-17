@@ -1,0 +1,145 @@
+{
+  "status": "PASS_CANDIDATES_RENDERED",
+  "targetLeafId": "LEAF_001",
+  "candidates": [
+    {
+      "candidateId": "LEAF001_C24_LOCAL_SHOULDER_BASE",
+      "vertexCount": 24,
+      "silhouetteIoU": 0.961,
+      "centreErrorPx": 0.475,
+      "widthErrorPercent": 0,
+      "heightErrorPercent": 0,
+      "tipErrorPx": 0.5,
+      "angleErrorDeg": 0.773,
+      "targetStats": {
+        "centre": [
+          12.661691542288557,
+          20.782752902155888
+        ],
+        "width": 23,
+        "height": 38,
+        "tip": [
+          11.5,
+          2
+        ],
+        "base": [
+          13,
+          39
+        ],
+        "angleDeg": 2.3215305898327188
+      },
+      "actualStats": {
+        "centre": [
+          12.62809917355372,
+          20.30909090909091
+        ],
+        "width": 23,
+        "height": 38,
+        "tip": [
+          12,
+          2
+        ],
+        "base": [
+          13,
+          39
+        ],
+        "angleDeg": 1.548157698977968
+      },
+      "steamDeckBlenderProof": "PASS"
+    },
+    {
+      "candidateId": "LEAF001_C28_LOCAL_SHOULDER_BASE",
+      "vertexCount": 28,
+      "silhouetteIoU": 0.9643,
+      "centreErrorPx": 0.43,
+      "widthErrorPercent": 0,
+      "heightErrorPercent": 0,
+      "tipErrorPx": 0.5,
+      "angleErrorDeg": 0.773,
+      "targetStats": {
+        "centre": [
+          12.661691542288557,
+          20.782752902155888
+        ],
+        "width": 23,
+        "height": 38,
+        "tip": [
+          11.5,
+          2
+        ],
+        "base": [
+          13,
+          39
+        ],
+        "angleDeg": 2.3215305898327188
+      },
+      "actualStats": {
+        "centre": [
+          12.607907742998352,
+          20.355848434925864
+        ],
+        "width": 23,
+        "height": 38,
+        "tip": [
+          12,
+          2
+        ],
+        "base": [
+          13,
+          39
+        ],
+        "angleDeg": 1.548157698977968
+      },
+      "steamDeckBlenderProof": "PASS"
+    },
+    {
+      "candidateId": "LEAF001_C32_LOCAL_SHOULDER_BASE",
+      "vertexCount": 32,
+      "silhouetteIoU": 0.9643,
+      "centreErrorPx": 0.43,
+      "widthErrorPercent": 0,
+      "heightErrorPercent": 0,
+      "tipErrorPx": 0.5,
+      "angleErrorDeg": 0.773,
+      "targetStats": {
+        "centre": [
+          12.661691542288557,
+          20.782752902155888
+        ],
+        "width": 23,
+        "height": 38,
+        "tip": [
+          11.5,
+          2
+        ],
+        "base": [
+          13,
+          39
+        ],
+        "angleDeg": 2.3215305898327188
+      },
+      "actualStats": {
+        "centre": [
+          12.607907742998352,
+          20.355848434925864
+        ],
+        "width": 23,
+        "height": 38,
+        "tip": [
+          12,
+          2
+        ],
+        "base": [
+          13,
+          39
+        ],
+        "angleDeg": 1.548157698977968
+      },
+      "steamDeckBlenderProof": "PASS"
+    }
+  ],
+  "bestCandidateByRenderedIoU": "LEAF001_C28_LOCAL_SHOULDER_BASE",
+  "allOtherLeavesChanged": false,
+  "flowersChanged": false,
+  "planterChanged": false
+}

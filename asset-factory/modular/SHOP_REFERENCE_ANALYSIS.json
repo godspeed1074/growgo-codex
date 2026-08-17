@@ -1,0 +1,33 @@
+{
+  "analysisVersion": "GG-SHOP-REFERENCE-ANALYSIS-1.0.0",
+  "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+  "referenceVersion": "1.0.0",
+  "source": {
+    "filename": "codex-clipboard-ebd1feb7-85bc-478b-a01c-93ce973da8fb.png",
+    "sha256": "049fca9022f2348cc68cd9cf47b83a660c57345881993e9acd716113751efe2f",
+    "width": 1448,
+    "height": 1086,
+    "colorMode": "RGB"
+  },
+  "style": { "family": "2.5D_PAPERCUT_LOW_POLY", "confidence": "HIGH", "notes": "Friendly neighbourhood Grow Goods storefront assembled from reusable Layer A modules." },
+  "estimatedDimensions": { "footprintMeters": { "width": 4, "depth": 2, "confidence": "MEDIUM" }, "heightMeters": { "value": 3.5, "confidence": "MEDIUM" }, "gridMeters": 1 },
+  "camera": { "hero": { "projection": "ORTHOGRAPHIC_LOCKED", "framing": "FRONT_ELEVATION_CENTERED", "confidence": "HIGH" }, "sidePanel": { "projection": "ORTHOGRAPHIC_LOCKED", "framing": "RIGHT_ELEVATION", "confidence": "HIGH" } },
+  "paletteFamilies": { "walls": ["WARM_BROWN", "CREAM"], "fascia": ["NAVY"], "awning": ["CURATED_FABRIC_PLUM"], "glass": ["TEAL_BLUE"], "vegetation": ["APPROVED_GREENS"], "trim": ["CREAM", "GRAY"] },
+  "visibleComponents": [
+    { "componentId": "FOUNDATION", "confidence": "HIGH" },
+    { "componentId": "WALL_PANEL", "confidence": "HIGH" },
+    { "componentId": "DOOR_MODULE", "confidence": "HIGH" },
+    { "componentId": "WINDOW_MODULE", "confidence": "HIGH" },
+    { "componentId": "AWNING_MODULE", "confidence": "HIGH" },
+    { "componentId": "FASCIA_MODULE", "confidence": "HIGH" },
+    { "componentId": "TRIM_MODULE", "confidence": "HIGH" },
+    { "componentId": "PLANTER_SHRUB_MODULE", "confidence": "HIGH" },
+    { "componentId": "GROW_GOODS_SIGN", "confidence": "MEDIUM" }
+  ],
+  "hiddenComponents": [
+    { "componentId": "REAR_WALL_PANEL", "confidence": "LOW", "reconstructionRule": "Reuse_WALL_PANEL_No_Unique_Geometry" },
+    { "componentId": "SIDE_WALL_PANEL", "confidence": "MEDIUM", "reconstructionRule": "Reuse_WALL_PANEL_Rotated" },
+    { "componentId": "AWNING_MOUNT_BRACKETS", "confidence": "MEDIUM", "reconstructionRule": "Reuse_TRIM_MODULE_or_APPROVED_BRACKET" }
+  ],
+  "acceptance": { "mustUseRegisteredLayerAModules": true, "mustGenerateComponentIdRender": true, "mustGenerateFourSideReview": true, "mustRemainOperatorApprovalRequired": true, "exactVisualTarget": "SOURCE_REFERENCE_BOARD" }
+}

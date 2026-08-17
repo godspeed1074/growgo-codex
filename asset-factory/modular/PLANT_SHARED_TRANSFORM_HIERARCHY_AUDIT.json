@@ -1,0 +1,83 @@
+{
+  "status": "PASS_NORMALIZED_SINGLE_SCALE_HIERARCHY",
+  "nodes": {
+    "PLANT_PRESENTATION_ROOT": {
+      "location": [
+        -0.00306878,
+        -0.01376,
+        0.6324904
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.98285717,
+        0.98285717,
+        0.98285717
+      ]
+    },
+    "PLANTER_3D_ROOT": {
+      "location": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "FOLIAGE_PRESENTATION_ANCHOR": {
+      "location": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "CAMERA": {
+      "location": [
+        0,
+        9,
+        0
+      ],
+      "rotation": [
+        -1.57079649,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "authoritativeScaleNode": "PLANT_PRESENTATION_ROOT",
+  "doubleScaleFound": false,
+  "hiddenParentScaleFound": false,
+  "nonUnitMeshRootFound": false,
+  "cameraContract": {
+    "worldUp": "+Z",
+    "rollDegrees": 0
+  },
+  "meshChanged": false,
+  "foliageRerendered": false
+}

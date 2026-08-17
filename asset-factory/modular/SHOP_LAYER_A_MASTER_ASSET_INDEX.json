@@ -1,0 +1,1562 @@
+{
+  "schemaVersion": "1.0.0",
+  "indexVersion": "1.0.0",
+  "published": false,
+  "fixtureOnly": true,
+  "atlases": [
+    {
+      "textureAtlasId": "GG-ATLAS-BUILDING-A",
+      "textureAtlasVersion": "1.0.0",
+      "status": "APPROVED"
+    }
+  ],
+  "materials": [
+    {
+      "materialId": "GG-MAT-BRICK-ATLAS-A",
+      "materialVersion": "1.0.0",
+      "textureAtlasId": "GG-ATLAS-BUILDING-A",
+      "status": "APPROVED"
+    }
+  ],
+  "paletteFamilies": {
+    "HERITAGE_BUILDING": {
+      "allowedPaletteIds": [
+        "HERITAGE_BRICK_RED",
+        "HERITAGE_CREAM"
+      ]
+    },
+    "SHOP_CONCEPT": {
+      "allowedPaletteIds": [
+        "SHOP_WARM_BROWN",
+        "SHOP_CREAM",
+        "SHOP_NAVY",
+        "SHOP_PLUM_FABRIC",
+        "SHOP_TEAL_GLASS",
+        "SHOP_GREEN_VEGETATION",
+        "SHOP_GRAY"
+      ]
+    }
+  },
+  "modules": [
+    {
+      "assetId": "GG-BLD-WALL-BRICK-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "EXTERIOR_WALL",
+      "family": "HERITAGE_BRICK",
+      "designSpecification": {
+        "construction": "modular brick wall section",
+        "silhouette": "rectangular"
+      },
+      "dimensionsMeters": {
+        "width": 4,
+        "height": 3,
+        "depth": 0.2
+      },
+      "geometryBudget": {
+        "preferredTriangles": 700,
+        "triangleCeiling": 1000,
+        "vertexCeiling": 1200
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 1,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 160000,
+        "ceilingBytes": 250000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "BRICK_RED_01"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "BRICK",
+        "allowedVariants": [
+          "BRICK",
+          "CREAM_BRICK"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.5
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-GEN-WALL-001",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "X",
+        "identityPreservation": "REQUIRED"
+      },
+      "recipeCompatibility": [
+        "HOUSE",
+        "SHOP",
+        "BAKERY",
+        "RAILWAY_STATION"
+      ],
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "palette": {
+        "paletteFamily": "HERITAGE_BUILDING",
+        "allowedPaletteIds": [
+          "HERITAGE_BRICK_RED",
+          "HERITAGE_CREAM"
+        ],
+        "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "CONTROLLED_FIXTURE",
+        "sourceId": "MODULAR_CONTRACT_PHASE_001",
+        "goldenReferenceId": "FIXTURE_BAKERY_REFERENCE_001"
+      },
+      "tags": [
+        "wall",
+        "brick",
+        "modular"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-FOUNDATION-SHOP-002",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "FOUNDATION",
+      "family": "SHOP_FOUNDATION",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "FOUNDATION reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 4,
+        "height": 0.25,
+        "depth": 2
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "FOUNDATION_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_FOUNDATION",
+        "allowedVariants": [
+          "SHOP_FOUNDATION",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_GRAY"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "candidateVersions": [
+        {
+          "assetVersion": "2.0.0",
+          "parentVersion": "1.0.0",
+          "status": "READY_FOR_OPERATOR_REVIEW",
+          "geometryProof": "test-output/plant3d/PLANT_3D.blend",
+          "leafModuleIds": ["GG-VEG-LEAF-SHRUB-BROAD-001"],
+          "flowerModuleIds": ["GG-VEG-FLOWER-ACCENT-001"],
+          "leafInstances": 28,
+          "flowerInstances": 3,
+          "foliageClusters": 7,
+          "triangles": 832,
+          "vertices": 528,
+          "objects": 56,
+          "materials": 6,
+          "depthToWidthRatio": 0.42,
+          "deterministicSeedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM",
+          "mobileBudget": "PASS"
+        }
+      ],
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "foundation"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "WALL_PANEL",
+      "family": "SHOP_WALL",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "WALL_PANEL reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 4,
+        "height": 3,
+        "depth": 0.2
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "WALL_PANEL_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_WALL",
+        "allowedVariants": [
+          "SHOP_WALL",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_WARM_BROWN"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "wall_panel"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "assetVersion": "4.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "DOOR_MODULE",
+      "family": "SHOP_DOOR",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "DOOR_MODULE reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_REFERENCE_LAYERED",
+        "confidence": "HIGH",
+        "gridAlignment": "1u",
+        "approvedPresentation": "MEASURED_MODULAR_3D_STRUCTURE + REFERENCE_DERIVED_MODULAR_FRONT_ART_LAYERS + UNLIT_PRESENTATION_MATERIAL",
+        "componentFamilies": ["casing", "plinth", "head_cap", "separator", "transom_glass", "door_slab", "glass_frame", "lower_panel", "threshold", "brass_hardware"],
+        "presentationLayerContract": "SHOP_DOOR_FRONT_AUTHORITY_V4"
+      },
+      "dimensionsMeters": {
+        "width": 1.25,
+        "height": 2.25,
+        "depth": 0.25
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "DOOR_MODULE_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_DOOR",
+        "allowedVariants": [
+          "SHOP_DOOR",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_CREAM"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "OPERATOR_APPROVED",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false,
+        "authorityId": "SHOP_DOOR_FRONT_AUTHORITY_V4",
+        "structuralSource": "GG-BLD-DOOR-SHOP-002_V3",
+        "presentationVariant": "REFERENCE_LAYERED_V4"
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "door_module"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "WINDOW_MODULE",
+      "family": "SHOP_WINDOW",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "WINDOW_MODULE reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 1.25,
+        "height": 1.75,
+        "depth": 0.25
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "WINDOW_MODULE_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_WINDOW",
+        "allowedVariants": [
+          "SHOP_WINDOW",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_TEAL_GLASS"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false,
+        "authorityId": "SHOP_WINDOW_FRONT_AUTHORITY_V1",
+        "manufacturingSpec": "SHOP_WINDOW_MANUFACTURING_SPEC_V1",
+        "componentOwnership": "SHOP_WINDOW_COMPONENT_OWNERSHIP_V1",
+        "visibilityScopeContract": "SHOP_WINDOW_COMPONENT_VISIBILITY_SCOPE_V1",
+        "referenceArtEvidence": "WINDOW_LAYER_CALIBRATION_EVIDENCE.json",
+        "operatorApproved": true
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "window_module"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "AWNING_MODULE",
+      "family": "SHOP_AWNING",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "AWNING_MODULE reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 3.25,
+        "height": 1.75,
+        "depth": 0.75
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "AWNING_MODULE_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_AWNING",
+        "allowedVariants": [
+          "SHOP_AWNING",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_PLUM_FABRIC"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "awning_module"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "FASCIA_MODULE",
+      "family": "SHOP_FASCIA",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "FASCIA_MODULE reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 4,
+        "height": 0.75,
+        "depth": 0.75
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "FASCIA_MODULE_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_FASCIA",
+        "allowedVariants": [
+          "SHOP_FASCIA",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_NAVY"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "fascia_module"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "SIGN_INSERT",
+      "family": "SHOP_SIGN",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "SIGN_INSERT reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 2.25,
+        "height": 0.35,
+        "depth": 0.05
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "SIGN_INSERT_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_SIGN",
+        "allowedVariants": [
+          "SHOP_SIGN",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_CREAM"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "sign_insert"
+      ]
+    },
+    {
+      "assetId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "TRIM_MODULE",
+      "family": "SHOP_TRIM",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "TRIM_MODULE reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 1,
+        "height": 0.25,
+        "depth": 0.12
+      },
+      "geometryBudget": {
+        "preferredTriangles": 800,
+        "triangleCeiling": 1200,
+        "vertexCeiling": 1500
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "TRIM_MODULE_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_TRIM",
+        "allowedVariants": [
+          "SHOP_TRIM",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_CREAM"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "trim_module"
+      ]
+    },
+    {
+      "assetId": "GG-VEG-PLANTER-SHRUB-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "VEGETATION",
+      "type": "PLANTER_SHRUB_MODULE",
+      "family": "SHOP_PLANTER",
+      "designSpecification": {
+        "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
+        "purpose": "PLANTER_SHRUB_MODULE reusable Layer A module",
+        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "confidence": "HIGH",
+        "gridAlignment": "1u"
+      },
+      "dimensionsMeters": {
+        "width": 1,
+        "height": 1.25,
+        "depth": 1
+      },
+      "geometryBudget": {
+        "preferredTriangles": 500,
+        "triangleCeiling": 900,
+        "vertexCeiling": 1100
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 140000,
+        "ceilingBytes": 240000
+      },
+      "mobileBudgetProfile": "VEGETATION_MODULE_LIGHT",
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "PLANTER_SHRUB_MODULE_SHOP_001"
+        }
+      ],
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "SHOP_PLANTER",
+        "allowedVariants": [
+          "SHOP_PLANTER",
+          "SHOP_CONCEPT_VARIANT"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.25
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "NONE_OR_SIMPLE_HULL"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-SHOP-LAYER-A-MODULE-GENERATOR",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION_REFERENCE_CHECKSUM"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "identityPreservation": "REQUIRED",
+        "sourceSearchRecorded": true,
+        "repeatable": true
+      },
+      "recipeCompatibility": [
+        "SIMPLE_SHOP_GROWGO",
+        "FUTURE_SHOPS",
+        "FUTURE_COMMERCIAL"
+      ],
+      "palette": {
+        "paletteFamily": "SHOP_CONCEPT",
+        "allowedPaletteIds": [
+          "SHOP_GREEN_VEGETATION"
+        ],
+        "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "REFERENCE_ANALYSIS",
+        "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+        "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
+        "productionAttached": false
+      },
+      "tags": [
+        "shop-production-pack",
+        "layer-a",
+        "reusable",
+        "planter_shrub_module"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "fromState": "REVIEW",
+      "toState": "APPROVED",
+      "actor": "OPERATOR",
+      "reason": "SHOP_WINDOW_FRONT_AUTHORITY_V1_OPERATOR_APPROVAL"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-WALL-BRICK-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "APPROVED",
+      "actor": "CONTROLLED_FIXTURE",
+      "reason": "CONTRACT_VALIDATION"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-FOUNDATION-SHOP-002",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-FOUNDATION-SHOP-002",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-VEG-PLANTER-SHRUB-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "REFERENCE_ANALYSIS_AND_SEARCH_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-VEG-PLANTER-SHRUB-001",
+      "assetVersion": "1.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "SHOP_LAYER_A_PACK",
+      "reason": "CONTROLLED_LIFECYCLE"
+    }
+  ]
+}

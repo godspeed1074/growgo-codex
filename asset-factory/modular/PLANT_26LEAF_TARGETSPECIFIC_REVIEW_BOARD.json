@@ -1,0 +1,82 @@
+{
+  "status": "PASS_BOARD_CREATED",
+  "sourceTarget": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "panels": [
+    {
+      "label": "EXACT TARGET CROP",
+      "x": 20,
+      "y": 40,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "FINAL BLENDER FRONT",
+      "x": 800,
+      "y": 40,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "50% OVERLAY",
+      "x": 1580,
+      "y": 40,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "DIFFERENCE VIEW",
+      "x": 20,
+      "y": 595,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "TARGET LEAF-ID MAP",
+      "x": 800,
+      "y": 595,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "BLENDER COMPONENT-ID MAP",
+      "x": 1580,
+      "y": 595,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "WIREFRAME FRONT",
+      "x": 20,
+      "y": 1150,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "UPPER CLOSEUP",
+      "x": 800,
+      "y": 1150,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "MIDDLE CLOSEUP",
+      "x": 1580,
+      "y": 1150,
+      "width": 760,
+      "height": 500
+    },
+    {
+      "label": "LOWER CLOSEUP",
+      "x": 20,
+      "y": 1705,
+      "width": 760,
+      "height": 500
+    }
+  ],
+  "geometryOnly": true,
+  "referenceTextureUsedInBeauty": false,
+  "referencePlaneVisible": false,
+  "depthPerformed": false,
+  "flowersFinal": false,
+  "planterFinal": false
+}

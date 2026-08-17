@@ -1,0 +1,19 @@
+{
+  "jobId": "GG-WORKER-JOB-SIMPLE-SHOP-FIXTURE-001",
+  "status": "COMPLETED",
+  "assetId": "GG-REC-BLD-SIMPLE-SHOP-001",
+  "assetVersion": "1.0.0",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-001",
+  "recipeVersion": "1.0.0",
+  "blenderVersion": "external-worker-fixture",
+  "executableIdentity": { "path": "external-worker://blender", "buildId": "BLENDER-EXTERNAL-WORKER-FIXTURE", "architecture": "x86_64" },
+  "sourceChecksum": "fixture-source-sha256",
+  "goldenReference": { "referenceId": "GG-REF-SIMPLE-SHOP-FIXTURE-001", "referenceVersion": "1.0.0", "checksum": "fixture-reference-sha256" },
+  "modules": [{ "componentId": "AWNING", "assetId": "GG-BLD-AWNING-SHOP-001", "assetVersion": "1.0.0", "moduleId": "GG-BLD-AWNING-SHOP-001", "moduleVersion": "1.0.0", "moduleFamily": "SHOP_AWNING", "recipeId": "GG-REC-BLD-SIMPLE-SHOP-001", "recipeVersion": "1.0.0" }],
+  "protectedObjectValidation": { "allStable": true },
+  "budget": { "triangles": 100, "vertices": 100, "materials": 1, "objectCount": 1 },
+  "cameraValidation": { "id": "GG-CAMERA-SIMPLE-SHOP-001", "projection": "ORTHOGRAPHIC_LOCKED", "resolution": "32x32" },
+  "render": { "path": "controlled-fixture/BLENDER_RENDER.png", "checksum": "fixture-render-sha256", "format": "PNG", "colorMode": "RGBA" },
+  "iteration": 1,
+  "oneIterationStop": true
+}

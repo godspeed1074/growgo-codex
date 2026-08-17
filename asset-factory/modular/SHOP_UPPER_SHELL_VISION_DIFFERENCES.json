@@ -1,0 +1,13 @@
+{
+  "status":"NEEDS_CORRECTION",
+  "differences":[
+    {"component":"FASCIA_BACKING","severity":"HIGH","finding":"Targeted fascia mask removed the lower gray context, but a dark upper context strip remains."},
+    {"component":"AWNING_BACKING","severity":"HIGH","finding":"Awning mounting region remains darker and heavier than the reference; attempted edge mask was reverted as visually regressive."},
+    {"component":"UPPER_CORNER_TRIM","severity":"HIGH","finding":"Current upper trim remains generic and does not match the reference corner blocks exactly."},
+    {"component":"WALL_CONTINUITY","severity":"HIGH","finding":"Facade still reads as assembled panels rather than one continuous storefront shell."},
+    {"component":"FOUNDATION","severity":"MEDIUM","finding":"Foundation and landing remain more segmented and pale than the reference base."},
+    {"component":"PRESENTATION","severity":"MEDIUM","finding":"Lighting is materially improved but still not as bright and clean as the reference."}
+  ],
+  "protectedModules":["DOOR","WINDOW","SHRUB"],
+  "revertedCorrections":["large corner-block experiment","generic awning edge mask"]
+}

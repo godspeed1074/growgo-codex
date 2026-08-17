@@ -1,0 +1,28 @@
+{
+  "recipeId":"GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion":"1.0.0",
+  "modules":{
+    "FOUNDATION":{"assetId":"GG-BLD-FOUNDATION-SHOP-002","version":"3.5.0","source":"/home/deck/growgo-worker/facade-architecture/out/GG-BLD-FOUNDATION-SHOP-002@3.5.0/GG-BLD-FOUNDATION-SHOP-002@3.5.0.blend","placement":[0,0,0]},
+    "WALL":{"assetId":"GG-BLD-WALL-SHOP-BROWN-001","version":"3.5.0","source":"/home/deck/growgo-worker/facade-architecture/out/GG-BLD-WALL-SHOP-BROWN-001@3.5.0/GG-BLD-WALL-SHOP-BROWN-001@3.5.0.blend","placement":[0,0,1.5]},
+    "TRIM":{"assetId":"GG-BLD-TRIM-SHOP-CREAM-001","version":"1.0.0","source":"/home/deck/growgo-worker/layer-b-final-hero/modules/GG-BLD-TRIM-SHOP-CREAM-001@1.0.0/GG-BLD-TRIM-SHOP-CREAM-001@1.0.0.blend","placement":[0,-0.28,2.95]}
+  },
+  "doorRootCorrection":{
+    "correctionId":"SHOP_DOOR_ROOT_VISIBLE_BOUNDS_CORRECTION_001",
+    "operatorVisibleBoundsSource":"SHOP_VISIBLE_FACADE_SANITY_AUDIT.json",
+    "referenceVisibleHeightPx":285,
+    "beforeVisibleHeightPx":195,
+    "visibleHeightRatio":1.4615384615,
+    "rootScaleBefore":1.0,
+    "requestedRootScale":1.32,
+    "requestedRootPosition":[-1.10,-0.55,1.32],
+    "openingMargins":{"x":0.08,"z":0.10},
+    "protectedComponents":["WINDOW","AWNING","FASCIA","SHRUB"]
+  },
+  "calibrated":{
+    "DOOR":{"assetId":"GG-BLD-DOOR-SHOP-002","version":"CALIBRATED_SHALLOW_PROOF","source":"/home/deck/growgo-worker/calibrated-shop/DOOR_SHALLOW_LAYER_PROOF.blend","placement":[-1.10,-0.55,1.30],"targetWidth":1.08,"targetHeight":1.70},
+    "WINDOW":{"assetId":"GG-BLD-WINDOW-SHOP-LARGE-002","version":"CALIBRATED_SHALLOW_PROOF","source":"/home/deck/growgo-worker/calibrated-shop/WINDOW_SHALLOW_LAYER_PROOF.blend","placement":[0.78,-0.55,1.65],"targetWidth":1.50},
+    "AWNING":{"assetId":"GG-BLD-AWNING-SHOP-FABRIC-001","version":"CALIBRATED_SHALLOW_PROOF","source":"/home/deck/growgo-worker/calibrated-shop/AWNING_SHALLOW_LAYER_PROOF.blend","placement":[0,-0.72,2.72],"targetWidth":3.2},
+    "FASCIA":{"assetId":"GG-BLD-FASCIA-SHOP-NAVY-001","version":"CALIBRATED_SHALLOW_PROOF","source":"/home/deck/growgo-worker/calibrated-shop/FASCIA_SHALLOW_LAYER_PROOF.blend","placement":[0,-0.4,3.58],"targetWidth":3.8},
+    "SHRUB":{"assetId":"GG-VEG-PLANTER-SHRUB-001","version":"CALIBRATED_SHALLOW_PROOF","source":"/home/deck/growgo-worker/calibrated-shop/SHRUB_SHALLOW_LAYER_PROOF.blend","placement":[2.05,-0.6,0.75],"targetWidth":0.90}
+  }
+}

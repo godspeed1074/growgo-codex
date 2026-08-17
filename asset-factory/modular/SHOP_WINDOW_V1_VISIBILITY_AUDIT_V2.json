@@ -1,0 +1,11 @@
+{
+  "contractId": "SHOP_WINDOW_V1_VISIBILITY_AUDIT_V2",
+  "status": "PASS",
+  "frontRequired": {"passing": 11, "total": 11, "status": "PASS", "evidence": "component-owned reference-derived front presentation layers rendered in real Blender"},
+  "obliqueRequired": {"passing": 2, "total": 2, "status": "PASS", "components": {"W12": {"view": "15_LEFT", "pixels": 51}, "W13": {"view": "15_RIGHT", "pixels": 51}}},
+  "structuralOnly": {"valid": 0, "total": 0, "status": "PASS"},
+  "w02Audit": {"classification": "FRONT_REQUIRED", "frontVisible": "PASS", "beautyContributionSource": "ART_WINDOW_OPENING_SHADOW", "frontBeautyPixels": 20250, "occlusionByFrame": true, "coplanarZFighting": false, "finding": "The opening-shadow presentation layer visibly supplies the measured dark perimeter; its concealed structural backing is not artificially exposed."},
+  "renderedOn": {"worker": "Steam Deck", "runtime": "flatpak run org.blender.Blender", "version": "5.2.0 LTS"},
+  "frontAppearanceChangedMaterially": false,
+  "geometryChangedForScopeCorrection": false
+}

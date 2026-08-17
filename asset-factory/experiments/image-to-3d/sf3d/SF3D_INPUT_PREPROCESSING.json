@@ -1,0 +1,23 @@
+{
+  "status": "ORIGINAL_INPUT_PRESERVED_NO_DERIVED_PREPROCESSING",
+  "provider": "Stable Fast 3D (SF3D)",
+  "input": {
+    "path": "asset-factory/experiments/image-to-3d/sf3d/input/SF3D_SHRUB_TARGET_ORIGINAL.png",
+    "sha256": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+    "dimensionsPx": [189, 261],
+    "format": "PNG RGBA 8-bit",
+    "hasAlpha": true,
+    "provenance": "Original operator-supplied Golden Reference shrub crop; copied unchanged from the locked source path."
+  },
+  "transformations": [],
+  "providerDefaultPreprocessing": {
+    "backgroundRemoval": "SF3D run.py default; not executed because inference is hardware-blocked.",
+    "foregroundRatio": 0.85,
+    "squarePaddingOrNormalization": "Not performed outside the provider."
+  },
+  "prohibitions": [
+    "No reconstructed Blender plant used as input.",
+    "No foliage sprite used as input.",
+    "No existing shrub authority file was read or modified."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "status": "LOCKED_REFERENCE",
+  "source": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-816ce9c8-3da3-4c9b-9add-00eae998ed1b.png",
+  "sha256": "4a0bd6fb6eb6aaf8e835dededc004e48c3c459d9824eaf4d3b51a1aba150aacf",
+  "imagePixels": {"width": 189, "height": 261},
+  "measuredBounds": {"planter": {"left": 8, "right": 174, "top": 169, "bottom": 258, "width": 166, "height": 89}, "foliage": {"left": 28, "right": 161, "top": 25, "bottom": 174, "width": 133, "height": 149}, "flowerBand": {"top": 148, "bottom": 174, "height": 26}},
+  "ratios": {"foliageToPlanterWidth": 0.801, "foliageToPlanterHeight": 1.674, "foliageAspect": 0.893},
+  "visibleLeafStudy": {"dominantTallCentre": 1, "upperSideLeaves": 6, "midLeaves": 16, "lowerLeaves": 14, "flowerGroups": 3},
+  "provenance": "operator-supplied cropped planter/shrub reference"
+}

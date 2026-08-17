@@ -1,0 +1,100 @@
+{
+  "status": "PASS",
+  "sourceAsset": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "lessons": [
+    {
+      "cause": "UNMEASURED_ORGANIC_INFERENCE",
+      "failure": "procedural generic shrub, blob foliage, card-stack foliage, static leaf depth shells, hidden central foliage core, camera-shadow support geometry, depth fins, and limited per-leaf billboarding did not reproduce observed plant pixels",
+      "prevention": "treat visible leaves, flowers, and planter relationships as measured front constraints before inferring hidden depth"
+    },
+    {
+      "cause": "INCOMPATIBLE_PRESENTATION_COMPOSITES",
+      "failure": "independent foliage/planter composites with incompatible camera contracts broke the plant relationship",
+      "prevention": "use one deterministic presentation contract and preserve the shared editable source"
+    },
+    {
+      "cause": "SEMANTIC_RECONSTRUCTION",
+      "failure": "modules matched names but not visible reference relationships",
+      "prevention": "decompose the complete image before modeling"
+    },
+    {
+      "cause": "FLAT_BLOCKOUT_MODULES",
+      "failure": "colored rectangles were presented as serious candidates",
+      "prevention": "blockouts remain internal; operator candidates require VISION_PASS"
+    },
+    {
+      "cause": "INSUFFICIENT_REFERENCE_DECOMPOSITION",
+      "failure": "trim, surrounds, transom, cornice, and depth relationships were discovered late",
+      "prevention": "inventory every visible component and connection before first build"
+    },
+    {
+      "cause": "PNG_DECODING",
+      "failure": "alpha/fringe and dark source context contaminated renders",
+      "prevention": "scope mask, PNG integrity, context separation, and isolated proof"
+    },
+    {
+      "cause": "TRANSPARENT_PADDING",
+      "failure": "object bounds disagreed with visible art",
+      "prevention": "operator-visible bounds are authoritative"
+    },
+    {
+      "cause": "NON_RESPONSIVE_OPENINGS",
+      "failure": "door/window changes broke shell continuity",
+      "prevention": "persistent roots and responsive opening contracts"
+    },
+    {
+      "cause": "MISSING_PERSISTENT_ROOTS",
+      "failure": "calibrated pieces could not be safely repositioned",
+      "prevention": "every layered asset gets a named root and anchors"
+    },
+    {
+      "cause": "HELPER_BACKPLATES",
+      "failure": "debug/context geometry appeared in beauty renders",
+      "prevention": "helper geometry excluded from production collections and audited"
+    },
+    {
+      "cause": "CONTEXT_CONTAMINATION",
+      "failure": "reference crop surroundings became reusable asset pixels",
+      "prevention": "MODULE_SCOPE versus REFERENCE_CONTEXT with contamination=0"
+    },
+    {
+      "cause": "FLAT_ORGANIC_ASSETS",
+      "failure": "shrub/planter read as a card from side views",
+      "prevention": "shallow depth tiers and mandatory side review"
+    },
+    {
+      "cause": "VISION_METRIC_CONFLICT",
+      "failure": "technical PASS hid obvious visual mismatch",
+      "prevention": "Vision overrides metrics"
+    },
+    {
+      "cause": "ARBITRARY_CORRECTION_LIMITS",
+      "failure": "safe convergence stopped while fixable issues remained",
+      "prevention": "continue until Vision PASS or genuine stop condition"
+    },
+    {
+      "cause": "LATE_OPERATOR_DISCOVERY",
+      "failure": "operator repeatedly identified visible issues Codex could already see",
+      "prevention": "autonomous self-review before first serious candidate"
+    },
+    {
+      "cause": "DOOR_SHARED_GRID_AND_OWNERSHIP_FAILURES",
+      "failure": "independent door-component measurements and the mixed D20 threshold/entrance-step ownership produced a coherent-looking but wrong door module",
+      "prevention": "define ownership before measurement, then derive every component from one shared X/Z guide grid; exclude adjacent landing, exterior steps, and foundation from the door module"
+    },
+    {
+      "cause": "DOOR_VISUAL_VALIDATION_FAILURES",
+      "failure": "numeric PASS, missing beauty visibility checks, occluded main glass, generic rectangular profile inference, raw raster-shadow tracing, and tonal-only materials masked a remaining blockout appearance",
+      "prevention": "require occlusion-aware required-component beauty visibility; do not convert shadows directly into geometry; when the measured structural carcass remains visually blocky, use modular reference-derived front art layers with unlit presentation material"
+    },
+    {
+      "cause": "OPERATOR_CAUGHT_ALIGNMENT_REGRESSION",
+      "failure": "sign/transom/window/grounding mismatches survived prior vision gate",
+      "prevention": "mandatory visible-art alignment, transom-relative, trim-join, crop, and grounding checks"
+    }
+  ],
+  "northStar": "REFERENCE IMAGE -> ACCURATE BLENDER REPRODUCTION -> FIRST SERIOUS PRODUCTION CANDIDATE",
+  "maskLesson": "Codex must create and refine clean fascia/awning masks itself; operators are not responsible for preparing visible-component masks",
+  "organicSuccessfulSequence": "TARGET CROP → OBSERVED LEAF DECOMPOSITION → TARGET-SPECIFIC FRONT GEOMETRY → FRONT AUTHORITY → COMPLETE ANGLE-SPECIFIC PRESENTATION VIEWS → SHARED SOURCE PRESERVED → GAMEPLAY REVIEW",
+  "futureOrganicRoute": "Attempt a dedicated image-to-3D scaffold provider if available; otherwise reconstruct the exact observed front and decide early between TRUE 3D and MULTI-VIEW PRESENTATION."
+}

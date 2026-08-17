@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "presentation": "GG-PRES-VEG-PLANTER-SHRUB-001@1.0.0",
+  "sourceModularPlantPreserved": true,
+  "view0ChecksumPreserved": true,
+  "shopIntegration": "RENDERED_FOR_OPERATOR_REVIEW",
+  "plantScale": "PASS",
+  "plantPosition": "PASS",
+  "plantGrounding": "PASS",
+  "colourHierarchy": "PASS",
+  "washedOutAppearance": false,
+  "colourRootCause": "The approved sprite was re-lit through a Principled material under shop lighting; the runtime derivative now uses unlit emission with its deterministic alpha.",
+  "gameplay1X": true,
+  "gameplay2X": true,
+  "fiveViewPresentation": true,
+  "crossfadeCompatibility": "UNKNOWN",
+  "steamDeck": "REAL_BLENDER_WORKER_EXECUTION",
+  "budget": {
+    "triangles": 374,
+    "objects": 37,
+    "materials": 15,
+    "textures": 9,
+    "mobileBudget": "PASS"
+  },
+  "anonymousGeometryCount": 0,
+  "knownGood": "NO",
+  "sourceShopUnchanged": true,
+  "cameraUnchanged": true,
+  "atlasModified": false,
+  "artifacts": {
+    "SHOP_FINAL_PLANT_FRONT.png": "b89c9e6abf8fde80bea77e8280c394eebfec6402cbcc9f40529a45ba042dd62b",
+    "SHOP_FINAL_PLANT_GAMEPLAY_1X.png": "5a6239702133836d010ff1c6aba2ce402e0e258b3b22bf47d61f101aca72a766",
+    "SHOP_FINAL_PLANT_GAMEPLAY_2X.png": "949a7f9b389546348a6a0cea3b528db4352dc8b080b970caffe29014bccdbc02",
+    "SHOP_FINAL_PLANT_HERO.png": "7c9400980c03c9ebffdf3b8448bdc12e373d837583b6490831d22ab9171861fd",
+    "SHOP_PLANT_M30.png": "87d2c515839e5e8666a91fff3318a7fd4f3bcaf9a936052757c3e916fadda04b",
+    "SHOP_PLANT_M15.png": "6bb18de99b1402e19753d5e34f62344ff115859fceda151dd81f3ca6eb106b0b",
+    "SHOP_PLANT_P15.png": "f59f3136d6385de93378b2b0f8bc66f2c0106e899beac9c870ad6cae95ca4727",
+    "SHOP_PLANT_P30.png": "3907dcfd95d98c79071a005382573c9d7421f11a4e3abb0d47ff3ec2825d0586",
+    "SHOP_WITH_FINAL_PLANT_OPERATOR_REVIEW_BOARD.png": "bf9b1777e4d5cdfbb3b30bbadf1a14866f6f23a7c4d94b66e8b3bf7e37824020",
+    "SHOP_FINAL_PLANT_INTEGRATION_CORRECTION_BOARD.png": "bf9b1777e4d5cdfbb3b30bbadf1a14866f6f23a7c4d94b66e8b3bf7e37824020"
+  }
+}

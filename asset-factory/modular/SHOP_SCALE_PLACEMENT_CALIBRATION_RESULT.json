@@ -1,0 +1,22 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "protectedInternals": "PASS",
+  "worker": "Steam Deck 10.0.0.4",
+  "blenderVersion": "5.2.0 LTS",
+  "budget": {
+    "triangles": 298,
+    "vertices": 212,
+    "objects": 29,
+    "materials": 13,
+    "textures": 6,
+    "imageBytes": 0,
+    "blendSizeBytes": 121753,
+    "glbSizeBytes": 0,
+    "anonymousGeometryCount": 0,
+    "mobileBudget": "PASS"
+  },
+  "knownGoodBuildId": null,
+  "operatorApprovalRequired": true
+}

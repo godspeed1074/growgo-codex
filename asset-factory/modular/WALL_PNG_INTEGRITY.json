@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "regions": {
+    "LEFT": {
+      "coveredPixels": 16613,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "CENTRE": {
+      "coveredPixels": 6555,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "RIGHT": {
+      "coveredPixels": 10979,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "ABOVE_DOOR": {
+      "coveredPixels": 2719,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "ABOVE_WINDOW": {
+      "coveredPixels": 2567,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    },
+    "LOWER": {
+      "coveredPixels": 11726,
+      "roundtripPass": true,
+      "mismatchedBytes": 0
+    }
+  }
+}

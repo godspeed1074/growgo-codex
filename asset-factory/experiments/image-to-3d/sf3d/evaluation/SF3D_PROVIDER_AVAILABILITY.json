@@ -1,0 +1,58 @@
+{
+  "status": "HARDWARE_BLOCKED",
+  "provider": {
+    "name": "Stable Fast 3D (SF3D)",
+    "officialRepository": "https://github.com/Stability-AI/stable-fast-3d",
+    "officialModel": "stabilityai/stable-fast-3d",
+    "license": "Stability AI Community License (July 5, 2024)",
+    "installationAttempted": false,
+    "reasonNotInstalled": "The official implementation needs CUDA or experimental Apple-Silicon MPS for its texture baker. Neither is available on the currently accessible machines. Installing a large isolated environment cannot make unsupported hardware viable."
+  },
+  "officialRequirements": {
+    "python": ">=3.8",
+    "accelerator": "CUDA, or experimental MPS on Apple Silicon; CPU is documented but the official inference path notes texture baking fails without CUDA/MPS.",
+    "defaultSingleImageVram": "approximately 6 GB",
+    "modelAccess": "Gated Hugging Face model access and a read token are required."
+  },
+  "executionOptions": [
+    {
+      "location": "Current Mac",
+      "hardware": "Intel MacBookPro16,1; AMD Radeon Pro 5300M 4 GB; Intel UHD 630",
+      "python": "3.9.6",
+      "cuda": false,
+      "mps": false,
+      "verdict": "BLOCKED: 4 GB VRAM is below SF3D's documented approximately 6 GB default, and MPS is not available on Intel macOS."
+    },
+    {
+      "location": "Steam Deck",
+      "hardware": "AMD Custom APU 0932; 15 GB shared system memory",
+      "python": "3.13.1",
+      "cuda": false,
+      "mps": false,
+      "rocmToolchainDetected": false,
+      "verdict": "BLOCKED: Steam Deck remains the Blender worker; no official CUDA/MPS SF3D route is present."
+    },
+    {
+      "location": "Another GPU environment",
+      "verdict": "REQUIRED for a real proof: Linux or Windows with a supported CUDA GPU and at least 6 GB usable VRAM is the lowest-risk choice."
+    },
+    {
+      "location": "CPU fallback",
+      "verdict": "NOT SELECTED: it is unsuitable for a reliable raw-output proof because the official baking path requires an accelerator; no inference is fabricated."
+    }
+  ],
+  "recommendedLocation": "External CUDA-capable GPU environment; retain the Steam Deck solely for the required Blender import and review once a raw GLB is returned.",
+  "disk": {
+    "macAvailable": "22 GiB",
+    "steamDeckAvailable": "46 GiB"
+  },
+  "productionIsolation": {
+    "productionAssetsModified": false,
+    "simpleShopModified": false,
+    "shrubAuthorityModified": false,
+    "atlasModified": false,
+    "rendererModified": false,
+    "masterIndexProductionEntriesModified": false,
+    "eucalyptusStarted": false
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "status": "BLOCKED_LOCKED_SPRITE_COMPOSITE",
+  "foliagePresentationPreserved": true,
+  "planterFrontWidthErrorPercent": 0,
+  "planterFrontHeightErrorPercent": 0,
+  "depthCandidatesPercent": [
+    18,
+    22,
+    26
+  ],
+  "winningPlanterDepthPercent": 20,
+  "planterRatios": {
+    "heightToWidth": 0.5057,
+    "depthToWidth": 0.2,
+    "depthToHeight": 0.3955
+  },
+  "rootRotationDegrees": [
+    0,
+    0,
+    0
+  ],
+  "appliedScale": [
+    1,
+    1,
+    1
+  ],
+  "foliageAnchor": {
+    "id": "PLANTER_FOLIAGE_ORIGIN",
+    "x": -0.014367818832397461,
+    "sceneDepth": 0.12600001060962676,
+    "vertical": -0.17942528307437897
+  },
+  "foliageAnchorXErrorPx": "NOT_MEASURABLE — locked five-view PNGs already contain the prior planter render",
+  "foliageAnchorZErrorPx": "NOT_MEASURABLE — locked five-view PNGs already contain the prior planter render",
+  "views": {
+    "0": "PASS_PLANTER_ONLY",
+    "M30": "PASS_PLANTER_ONLY",
+    "M15": "PASS_PLANTER_ONLY",
+    "P15": "PASS_PLANTER_ONLY",
+    "P30": "PASS_PLANTER_ONLY"
+  },
+  "orthoFront": "PASS",
+  "orthoSide": "PASS_SHALLOW_RECTANGLE",
+  "orthoTop": "PASS_SHALLOW_FOOTPRINT",
+  "giantWallArtifact": "NO",
+  "planterDetached": "NO",
+  "soilHorizontal": "YES",
+  "soilOpening": "PASS_SOURCE_SOIL_RETAINED",
+  "gameplay1X": "BLOCKED_FINAL_COMPOSITE",
+  "gameplay2X": "BLOCKED_FINAL_COMPOSITE",
+  "sourcePreserved": true,
+  "foliageModified": false,
+  "shopUnchanged": true,
+  "eucalyptusStarted": false,
+  "anonymousGeometry": 0,
+  "decisionReason": "The shared planter is valid in isolation. Final integration remains blocked because the locked foliage PNGs already include the previous planter render; compositing this one would double-render planter pixels."
+}

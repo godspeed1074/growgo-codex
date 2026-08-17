@@ -1,0 +1,47 @@
+{
+  "cycles": [
+    {
+      "cycle": 1,
+      "target": "wall continuity and presentation",
+      "hypothesis": "shared wall material, overlap, edge returns, brighter fill",
+      "before": 78,
+      "after": 80,
+      "verdict": "IMPROVED",
+      "retained": true
+    },
+    {
+      "cycle": 2,
+      "target": "window trim, transom, door proportion, awning width",
+      "hypothesis": "reusable trim/transom plus root transforms",
+      "before": 80,
+      "after": 83,
+      "verdict": "IMPROVED",
+      "retained": true
+    },
+    {
+      "cycle": 3,
+      "target": "trim weight, transom tone, shrub shallow depth",
+      "hypothesis": "lighter trim, darker glass, palette-consistent planter core",
+      "before": 83,
+      "after": 84,
+      "verdict": "IMPROVED_BUT_STALLED",
+      "retained": true
+    },
+    {
+      "cycle": 4,
+      "target": "shrub card-like side depth",
+      "hypothesis": "additional depth separation",
+      "before": 84,
+      "after": 84,
+      "verdict": "STALLED",
+      "retained": false,
+      "reverted": true
+    }
+  ],
+  "remainingDifferences": [
+    "wall/context simplicity",
+    "upper trim transition",
+    "shrub side depth",
+    "protected hero context"
+  ]
+}

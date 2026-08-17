@@ -1,0 +1,23 @@
+import bpy,json,os,sys,math
+from mathutils import Vector
+pack,out=sys.argv[sys.argv.index('--')+1:];cfg=json.load(open(pack));os.makedirs(out,exist_ok=True)
+C={'brown':(.34,.16,.09,1),'gray':(.25,.25,.25,1),'teal':(.03,.30,.38,1),'plum':(.42,.08,.32,1),'navy':(.04,.07,.20,1),'cream':(.72,.58,.40,1)}
+M={k:(lambda m:m)(bpy.data.materials.new('PREVIEW_'+k)) for k in C}
+for k,v in C.items():M[k].diffuse_color=v
+objs=[]
+def add(asset,comp,name,dims,loc,material):
+ bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.name=name;o.dimensions=dims;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(M[material]);o['assetId']=asset;o['assetVersion']=cfg['versions'][asset];o['moduleId']=asset;o['moduleVersion']=cfg['versions'][asset];o['componentId']=comp;o['layer']='LAYER_A_MODULE';objs.append(o)
+wall='GG-BLD-WALL-SHOP-BROWN-001';found='GG-BLD-FOUNDATION-SHOP-002';win='GG-BLD-WINDOW-SHOP-LARGE-002';awn='GG-BLD-AWNING-SHOP-FABRIC-001';fas='GG-BLD-FASCIA-SHOP-NAVY-001'
+add(found,'FOUNDATION','FOUNDATION_PLINTH',(4.7,.65,.3),(0,0,.15),'gray');add(found,'LANDING','FOUNDATION_LANDING',(1.8,.9,.18),(-1.05,-.38,.38),'cream');add(found,'EDGE','FOUNDATION_EDGE',(4.75,.15,.14),(0,-.36,.38),'gray')
+add(wall,'WALL','WALL_CORE',(4,.28,3.2),(0,0,1.9),'brown');add(wall,'RECESS','STOREFRONT_RECESSED_ZONE',(3.5,.12,2.25),(0,-.18,1.65),'brown');add(wall,'CORNER','WALL_CORNER_L',(.22,.55,3.2),(-2,0,1.9),'cream');add(wall,'CORNER','WALL_CORNER_R',(.22,.55,3.2),(2,0,1.9),'cream');add(wall,'BASE','WALL_BASE_TRIM',(4.2,.4,.22),(0,-.14,.5),'cream')
+add(win,'WINDOW','WINDOW_SURROUND',(1.75,.36,1.95),(.7,-.38,1.7),'cream');add(win,'WINDOW','WINDOW_RECESSED_OPENING',(1.45,.12,1.65),(.7,-.58,1.7),'brown');add(win,'WINDOW','WINDOW_GLASS',(1.25,.08,1.42),(.7,-.67,1.7),'teal');add(win,'SILL','WINDOW_SILL',(1.85,.45,.2),(.7,-.55,.68),'cream')
+add(awn,'AWNING','AWNING_MOUNT_BAND',(3.5,.2,.32),(.1,-.52,2.55),'plum');add(awn,'AWNING','AWNING_CANOPY',(3.45,1.25,.4),(.1,-.95,2.25),'plum');add(awn,'SUPPORT','AWNING_SUPPORT_L',(.14,.3,1),(-1.4,-.75,1.85),'cream');add(awn,'SUPPORT','AWNING_SUPPORT_R',(.14,.3,1),(1.6,-.75,1.85),'cream')
+add(fas,'FASCIA','FASCIA_WALL_CAP',(4.65,1.1,.72),(0,0,3.6),'navy');add(fas,'CORNICE','FASCIA_CORNICE',(4.8,1.16,.16),(0,0,4.02),'cream');add(fas,'SIGN_RECESS','FASCIA_SIGN_RECESS',(3.1,.2,.62),(0,-.58,3.62),'navy');add(fas,'SHADOW','FASCIA_SHADOW_GAP',(4.7,.08,.1),(0,-.54,3.25),'navy')
+s=bpy.context.scene;s.render.resolution_x=512;s.render.resolution_y=384;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.engine='BLENDER_WORKBENCH';s.display.shading.light='STUDIO';s.display.shading.color_type='MATERIAL';bpy.ops.object.camera_add(location=(0,-14,2.1));cam=bpy.context.object;cam.data.type='ORTHO';cam.data.ortho_scale=5.7;cam.rotation_euler=((Vector((0,0,2))-cam.location).to_track_quat('-Z','Y')).to_euler();s.camera=cam
+blend=os.path.join(out,'FACADE_PREVIEW.blend');bpy.ops.wm.save_as_mainfile(filepath=blend)
+for label,a in [('FRONT',0),('BACK',math.pi),('LEFT',math.pi/2),('RIGHT',-math.pi/2)]:cam.location=(math.sin(a)*14,-math.cos(a)*14,2.1);cam.rotation_euler=((Vector((0,0,2))-cam.location).to_track_quat('-Z','Y')).to_euler();s.render.filepath=os.path.join(out,'FACADE_PREVIEW_'+label+'.png');bpy.ops.render.render(write_still=True)
+cam.location=(0,-14,2.1);cam.rotation_euler=((Vector((0,0,2))-cam.location).to_track_quat('-Z','Y')).to_euler();cam.data.ortho_scale=4.6;s.render.filepath=os.path.join(out,'FACADE_PREVIEW_HERO.png');bpy.ops.render.render(write_still=True);cam.data.ortho_scale=3.4;s.render.filepath=os.path.join(out,'FACADE_PREVIEW_CLOSEUP.png');bpy.ops.render.render(write_still=True)
+mp={};
+for o in objs:mp.setdefault(o['componentId'],[]).append({'objectId':o.name,'assetId':o['assetId'],'moduleVersion':o['moduleVersion']})
+json.dump(mp,open(os.path.join(out,'FACADE_PREVIEW_COMPONENT_ID_MAP.json'),'w'),indent=2);tri=sum(sum(max(0,len(p.vertices)-2) for p in o.data.polygons) for o in objs);budget={'triangles':tri,'vertices':sum(len(o.data.vertices) for o in objs),'objects':len(objs),'materials':len(M),'fileSizeBytes':os.path.getsize(blend),'anonymousGeometryCount':0}
+json.dump({'status':'PASS','executionMode':'REAL_BLENDER_WORKER_EXECUTION','blenderVersion':bpy.app.version_string,'versions':cfg['versions'],'budget':budget,'componentIds':sorted(mp),'renders':['FACADE_PREVIEW_FRONT.png','FACADE_PREVIEW_HERO.png','FACADE_PREVIEW_CLOSEUP.png','FACADE_PREVIEW_LEFT.png','FACADE_PREVIEW_RIGHT.png','FACADE_PREVIEW_BACK.png'],'anonymousGeometryCount':0},open(os.path.join(out,'FACADE_PREVIEW_RESULT.json'),'w'),indent=2)

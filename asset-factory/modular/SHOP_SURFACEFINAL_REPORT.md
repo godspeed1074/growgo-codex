@@ -1,0 +1,3 @@
+# Final Upper-Trim Transition + Wall-Surface Fidelity
+
+Status: NEEDS_CORRECTION / STALLED_VISUAL_CONVERGENCE. Clean fascia/awning context remains PASS. Upper trim transition and wall surface remain visibly flatter than the Golden Reference; safe reference-derived transition crops are not available, so no generic blocks or shading were invented. Shrub front is preserved and side depth is acceptable but stylized. Steam Deck, four-side, component IDs, anonymous geometry, and budget PASS. Known-good NO.

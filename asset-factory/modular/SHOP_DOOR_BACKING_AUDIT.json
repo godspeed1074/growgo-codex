@@ -1,0 +1,26 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "backingClassification": "UNINTENDED_VISIBLE_GEOMETRY",
+  "backingSource": "calibrated Door presentation layer / surrounding backing pixels",
+  "sourceArtworkUnchanged": true,
+  "doorBackingVisibleBefore": true,
+  "doorBackingVisibleAfter": true,
+  "doorIntegrated": false,
+  "windowPanels": [
+    "WALL_PANEL_WINDOW_LEFT",
+    "WALL_PANEL_WINDOW_RIGHT",
+    "WALL_PANEL_WINDOW_TOP",
+    "WALL_PANEL_WINDOW_BELOW"
+  ],
+  "windowPanelsVisible": true,
+  "windowEmbedded": true,
+  "upperCornerTrim": [
+    "UPPER_CORNER_TRIM_LEFT",
+    "UPPER_CORNER_TRIM_RIGHT"
+  ],
+  "upperTrimConnected": true,
+  "paleHelperGeometryVisible": false,
+  "protectedHeroModules": "PASS",
+  "visionVerdict": "VISION_METRIC_CONFLICT",
+  "reason": "The measured Door artwork remains correct, but the rendered candidate still shows a dark rectangular surround; visual review wins."
+}

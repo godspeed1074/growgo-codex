@@ -1,0 +1,53 @@
+{
+  "status": "BASELINE_RECORDED",
+  "calibrationAsset": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "shopInternalCorrectionCycles": "MULTI_PHASE_CALIBRATION_HISTORY",
+  "shopOperatorCorrectionPhases": "MULTI_PHASE_CALIBRATION_HISTORY",
+  "shopStartingVisionScore": 78,
+  "shopFirstSeriousCandidateScore": 84,
+  "shopCurrentRecordedScore": 87,
+  "nextAssetTarget": "FIRST SERIOUS CANDIDATE SHOULD BE CLOSE TO FINAL",
+  "regressionEscalation": "FIRST_PASS_STANDARD_REGRESSION",
+  "requiredMeasurement": [
+    "internal correction count",
+    "operator correction count",
+    "starting vision score",
+    "first operator-candidate vision score",
+    "final vision score"
+  ],
+  "lifecycleStatus": "CALIBRATION_ASSET",
+  "finalVisionScore": 87,
+  "approvedFirstPassModules": [
+    {
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "displayAssetId": "GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001",
+      "status": "OPERATOR_APPROVED",
+      "twoDSameWindowPreflight": "YES",
+      "firstBlenderBuild": "PASS",
+      "boundedCorrections": 1,
+      "firstPassStandardRegression": "NO",
+      "finalVisualSameWindow": "YES",
+      "lessonsApplied": ["ownership before measurement", "shared reference grid", "measured parametric architecture", "profiles before Blender", "reference-derived modular front art from the beginning", "unlit presentation treatment", "camera-scoped visibility requirements"]
+    }
+  ],
+  "approvedFirstPassAssemblies": [
+    {
+      "facadeFamily": "GG-FACADE-COMMERCIAL-SIMPLE-001",
+      "recipe": "GG-BLD-FACADE-SIMPLE-SHOP-001",
+      "operatorApproved": true,
+      "ownershipFirstPlanning": "PASS",
+      "sharedFacadeGrid": "PASS",
+      "approvedDoorWindowReuse": "PASS",
+      "twoDSameStorefrontPreflight": "YES",
+      "retainedBlenderCandidates": 1,
+      "sameStorefrontVision": "YES",
+      "genericBlockout": "NO",
+      "budget": "PASS",
+      "firstPassStandardRegression": "NO"
+    }
+  ],
+  "permanentStandardsCreated": [
+    "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
+    "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT"
+  ]
+}

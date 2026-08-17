@@ -1,0 +1,32 @@
+{
+  "before": {
+    "foundationWidth": 0.56,
+    "foundationHeight": 0.15,
+    "postWidth": 0.04,
+    "baseTrimHeight": 0.08,
+    "doorSurroundMargin": 0.04,
+    "windowSurroundMargin": 0.04
+  },
+  "after": {
+    "foundationWidth": 0.52,
+    "foundationHeight": 0.1,
+    "postWidth": 0.029,
+    "baseTrimHeight": 0.05,
+    "doorSurroundMargin": 0.025,
+    "windowSurroundMargin": 0.018
+  },
+  "errors": {
+    "foundationWidthBefore": 3.7,
+    "foundationWidthAfter": -3.7,
+    "foundationHeightBefore": 36.4,
+    "foundationHeightAfter": -9.1,
+    "postWidthBefore": 14.3,
+    "postWidthAfter": -17.1,
+    "baseTrimBefore": 33.3,
+    "baseTrimAfter": -16.7,
+    "doorSurroundBefore": 100,
+    "doorSurroundAfter": 25,
+    "windowSurroundBefore": 100,
+    "windowSurroundAfter": -10
+  }
+}

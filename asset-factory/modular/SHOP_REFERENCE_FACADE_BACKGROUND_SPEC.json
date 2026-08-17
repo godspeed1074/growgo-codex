@@ -1,0 +1,28 @@
+{
+  "moduleId": "GG-BLD-FACADE-BACKGROUND-SIMPLE-SHOP-001",
+  "version": "1.0.0",
+  "layer": "LAYER_A_MODULE",
+  "crop": {
+    "x": 42,
+    "y": 135,
+    "w": 676,
+    "h": 430
+  },
+  "holes": [
+    "FASCIA",
+    "AWNING",
+    "DOOR",
+    "TRANSOM",
+    "WINDOW",
+    "SHRUB",
+    "FOUNDATION"
+  ],
+  "source": "SHOP_REFERENCE_VISIBLE_FACADE.png",
+  "visibleArtBounds": {
+    "width": 676,
+    "height": 430
+  },
+  "atlasId": "GG-ATLAS-COMMERCIAL-FACADE-A",
+  "textureBudget": "PASS",
+  "provenance": "Golden Reference front facade crop with protected foreground exclusions"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "BLOCKED",
+  "baseline": "GG-VEG-PLANTER-SHRUB-001@3.2.0_CLUSTER_B",
+  "requiredBlueprint": {"foliageWidth": 1.0, "foliageHeight": 0.92, "foliageDepth": 0.32, "clusterCount": 10, "leafCountMin": 50, "leafCountMax": 72},
+  "currentMeasured": {"clusterCount": 11, "leafCount": 66, "depthWidthRatio": 0.32, "frontOccupancyPercent": 61.0, "visibleStemAreaPercent": 0.0},
+  "yawBands": {"-65_to_-45": 11, "-40_to_-20": 11, "-15_to_10": 11, "20_to_40": 11, "45_to_65": 11, "additional": 11},
+  "violations": ["cluster count is 11 instead of 10", "front occupancy below 78% target", "side shelf groups remain"]
+}

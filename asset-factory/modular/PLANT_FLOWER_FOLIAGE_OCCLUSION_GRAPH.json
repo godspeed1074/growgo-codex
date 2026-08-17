@@ -1,0 +1,46 @@
+{
+  "status": "PASS_FLOWER_FOLIAGE_OCCLUSION_GRAPH",
+  "scope": "front projection only; locked foliage and unchanged planter",
+  "foliageLocked": true,
+  "cameraLocked": true,
+  "nodes": [
+    "FLOWER_GROUP_LEFT_PRIMARY",
+    "FLOWER_GROUP_LEFT_ACCENT",
+    "FLOWER_GROUP_MIDDLE",
+    "FLOWER_GROUP_RIGHT",
+    "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+    "LEAF_023",
+    "LEAF_024",
+    "LEAF_025",
+    "LEAF_026"
+  ],
+  "edges": [
+    {
+      "front": "FLOWER_GROUP_LEFT_PRIMARY",
+      "back": "OBSERVED_TRANSITION_FOLIAGE_REGION_061",
+      "evidence": "target lower flower-band overlap",
+      "resolution": "flower petal order only"
+    },
+    {
+      "front": "FLOWER_GROUP_LEFT_ACCENT",
+      "back": "LEAF_023",
+      "evidence": "target left flower accent overlap",
+      "resolution": "flower petal order only"
+    },
+    {
+      "front": "FLOWER_GROUP_MIDDLE",
+      "back": "LEAF_025",
+      "evidence": "target middle flower overlap",
+      "resolution": "flower petal order only"
+    },
+    {
+      "front": "FLOWER_GROUP_RIGHT",
+      "back": "LEAF_026",
+      "evidence": "target right flower overlap",
+      "resolution": "flower petal order only"
+    }
+  ],
+  "noFoliageTransformChanged": true,
+  "noPlanterGeometryChanged": true,
+  "noReferenceImageryInBeauty": true
+}

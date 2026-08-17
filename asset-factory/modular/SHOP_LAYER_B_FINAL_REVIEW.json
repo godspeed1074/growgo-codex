@@ -1,0 +1,113 @@
+{
+  "status": "NEEDS_CORRECTION",
+  "recipeId": "GG-REC-BLD-SIMPLE-SHOP-GROWGO-001",
+  "recipeVersion": "1.0.0",
+  "overallVisualResult": "NEEDS_CORRECTION",
+  "visual": {
+    "silhouette": "NEEDS_CORRECTION",
+    "proportions": "NEEDS_CORRECTION",
+    "storefrontHierarchy": "NEEDS_CORRECTION",
+    "colourMaterial": "FAIL",
+    "gameplayReadability": "NEEDS_CORRECTION"
+  },
+  "modules": [
+    {
+      "componentId": "FOUNDATION",
+      "assetId": "GG-BLD-FOUNDATION-SHOP-002",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "WALL",
+      "assetId": "GG-BLD-WALL-SHOP-BROWN-001",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "DOOR",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "WINDOW",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "AWNING",
+      "assetId": "GG-BLD-AWNING-SHOP-FABRIC-001",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "FASCIA",
+      "assetId": "GG-BLD-FASCIA-SHOP-NAVY-001",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "SIGN",
+      "assetId": "GG-BLD-SIGN-INSERT-SHOP-001",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "TRIM",
+      "assetId": "GG-BLD-TRIM-SHOP-CREAM-001",
+      "status": "NEEDS_CORRECTION"
+    },
+    {
+      "componentId": "PLANTER",
+      "assetId": "GG-VEG-PLANTER-SHRUB-001",
+      "status": "NEEDS_CORRECTION"
+    }
+  ],
+  "fourSideReview": {
+    "front": "NEEDS_CORRECTION",
+    "back": "NEEDS_CORRECTION",
+    "left": "NEEDS_CORRECTION",
+    "right": "NEEDS_CORRECTION",
+    "boardExists": true
+  },
+  "componentId": {
+    "required": [
+      "WALL",
+      "DOOR",
+      "WINDOW",
+      "AWNING",
+      "FASCIA",
+      "SIGN",
+      "TRIM",
+      "FOUNDATION",
+      "PLANTER",
+      "SHRUB"
+    ],
+    "pass": true,
+    "anonymousGeometryCount": 0
+  },
+  "budget": {
+    "triangles": 1488,
+    "vertices": 992,
+    "materials": 139,
+    "objectCount": 124,
+    "fileSizeBytes": 161774,
+    "anonymousGeometryCount": 0,
+    "pass": false,
+    "materialsReason": "ASSEMBLY_MATERIAL_BUDGET_EXCEEDED"
+  },
+  "goldenReference": {
+    "referenceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
+    "unchanged": true,
+    "comparison": "FAIL_VISUAL_MISMATCH"
+  },
+  "correctionDecision": {
+    "required": true,
+    "iteration": 1,
+    "plan": [
+      "Reassemble using LOD0/source module objects only; exclude imported LOD collections from runtime assembly.",
+      "Preserve approved palette materials instead of flattening to Workbench gray.",
+      "Re-render storefront with locked camera and verify navy fascia, plum awning, teal glass, cream trim, and planter silhouette."
+    ],
+    "preserveRecipe": true,
+    "preserveModuleIds": true,
+    "preserveCamera": true
+  },
+  "knownGoodBuildId": null,
+  "recipeImmutable": true,
+  "operatorApprovalRequired": true
+}
