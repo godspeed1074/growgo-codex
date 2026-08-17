@@ -17,6 +17,19 @@
   ],
   "lifecycleStatus": "CALIBRATION_ASSET",
   "finalVisionScore": 87,
+  "approvedFirstPassModules": [
+    {
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "displayAssetId": "GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001",
+      "status": "OPERATOR_APPROVED",
+      "twoDSameWindowPreflight": "YES",
+      "firstBlenderBuild": "PASS",
+      "boundedCorrections": 1,
+      "firstPassStandardRegression": "NO",
+      "finalVisualSameWindow": "YES",
+      "lessonsApplied": ["ownership before measurement", "shared reference grid", "measured parametric architecture", "profiles before Blender", "reference-derived modular front art from the beginning", "unlit presentation treatment", "camera-scoped visibility requirements"]
+    }
+  ],
   "permanentStandardsCreated": [
     "GROWGO_FIRST_PASS_REFERENCE_RECONSTRUCTION_CONTRACT",
     "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT"

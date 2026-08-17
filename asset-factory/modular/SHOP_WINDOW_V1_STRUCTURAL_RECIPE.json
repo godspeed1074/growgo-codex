@@ -1,0 +1,18 @@
+{
+  "recipeId": "GG-REC-BLD-WINDOW-SHOP-LARGE-001",
+  "recipeVersion": "1.0.0",
+  "layer": "LAYER_B_RECIPE",
+  "recipeFamily": "SHOP_WINDOW_STRUCTURAL_ASSEMBLY",
+  "components": [
+    {"componentId":"W01","assetId":"GG-BLD-WINDOW-GLASS-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W01"}},
+    {"componentId":"W02","assetId":"GG-BLD-WINDOW-DARK-REVEAL-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W02"}},
+    {"componentId":"W03_W06","assetId":"GG-BLD-WINDOW-INNER-FRAME-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W03_W06"}},
+    {"componentId":"W07_W08","assetId":"GG-BLD-WINDOW-VERTICAL-CASING-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W07_W08"}},
+    {"componentId":"W09","assetId":"GG-BLD-WINDOW-HEAD-MOLDING-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W09"}},
+    {"componentId":"W10","assetId":"GG-BLD-WINDOW-SILL-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W10"}},
+    {"componentId":"W11","assetId":"GG-BLD-WINDOW-APRON-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W11"}},
+    {"componentId":"W12_W13","assetId":"GG-BLD-WINDOW-SILL-RETURN-001","assetVersion":"1.0.0","transform":{"fromMeasuredBounds":"W12_W13"}}
+  ],
+  "deterministicSeedRule": "SHOP_WINDOW_MANUFACTURING_SPEC_V1 + reference checksum fa5890923ce305ea7aada80b0734716ddd216fd01f5d83e337074d1a107db78b",
+  "provenance": {"structuralAsset":"GG-BLD-WINDOW-SHOP-LARGE-002@1.0.0","componentRegistry":"SHOP_WINDOW_V1_LAYER_A_COMPONENT_REGISTRY","manufacturingSpec":"SHOP_WINDOW_MANUFACTURING_SPEC_V1","anonymousGeometry":0,"shopIntegrated":false}
+}

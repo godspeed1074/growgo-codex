@@ -701,12 +701,18 @@
         ],
         "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
       },
-      "approvalState": "REVIEW",
+      "approvalState": "APPROVED",
       "provenance": {
         "sourceType": "REFERENCE_ANALYSIS",
         "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
         "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
-        "productionAttached": false
+        "productionAttached": false,
+        "authorityId": "SHOP_WINDOW_FRONT_AUTHORITY_V1",
+        "manufacturingSpec": "SHOP_WINDOW_MANUFACTURING_SPEC_V1",
+        "componentOwnership": "SHOP_WINDOW_COMPONENT_OWNERSHIP_V1",
+        "visibilityScopeContract": "SHOP_WINDOW_COMPONENT_VISIBILITY_SCOPE_V1",
+        "referenceArtEvidence": "WINDOW_LAYER_CALIBRATION_EVIDENCE.json",
+        "operatorApproved": true
       },
       "tags": [
         "shop-production-pack",
@@ -1372,6 +1378,15 @@
     }
   ],
   "history": [
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "assetVersion": "1.0.0",
+      "fromState": "REVIEW",
+      "toState": "APPROVED",
+      "actor": "OPERATOR",
+      "reason": "SHOP_WINDOW_FRONT_AUTHORITY_V1_OPERATOR_APPROVAL"
+    },
     {
       "event": "REGISTER_VERSION",
       "assetId": "GG-BLD-WALL-BRICK-001",

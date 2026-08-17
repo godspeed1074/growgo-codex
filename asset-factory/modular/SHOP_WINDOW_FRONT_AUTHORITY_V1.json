@@ -2,7 +2,7 @@
   "authorityId": "SHOP_WINDOW_FRONT_AUTHORITY_V1",
   "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
   "version": "1.0.0",
-  "status": "LOCKED_PENDING_OPERATOR_APPROVAL",
+  "status": "OPERATOR_APPROVED",
   "lockedEvidence": {
     "sameWindowVision": "YES",
     "frontRequiredVisibility": "11/11 PASS",
@@ -16,6 +16,7 @@
     "meaningfulFrontRegression": "NO"
   },
   "protected": ["shared X/Z grid", "manufacturing specification", "reference-derived art layers", "front appearance", "component ownership"],
+  "operatorApproved": true,
   "knownGood": "NO",
-  "promotion": "Operator approval is still required; no publishing or Layer B integration occurred."
+  "promotion": "Operator approval is recorded. The existing lifecycle contract does not permit automatic known-good assignment; no publishing or Layer B integration occurred."
 }

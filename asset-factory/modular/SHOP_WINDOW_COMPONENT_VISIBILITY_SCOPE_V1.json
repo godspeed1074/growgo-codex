@@ -2,7 +2,7 @@
   "contractId": "SHOP_WINDOW_COMPONENT_VISIBILITY_SCOPE_V1",
   "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
   "version": "1.0.0",
-  "authority": "SHOP_WINDOW_FRONT_AUTHORITY_V1_PENDING",
+  "authority": "SHOP_WINDOW_FRONT_AUTHORITY_V1",
   "rule": "A required component is evaluated in the camera/view where its reference-backed purpose is intended to be visible. FRONT_REQUIRED components need meaningful authoritative-front beauty pixels; OBLIQUE_REQUIRED depth returns need meaningful pixels in their named oblique QA view; STRUCTURAL_ONLY components remain validated by ownership and structural presence.",
   "components": [
     {"componentId":"W01","name":"main glass","visibilityScope":"FRONT_REQUIRED","expectedView":"AUTHORITATIVE_FRONT","reason":"The teal glass is the principal storefront surface.","referenceEvidence":"Visible interior/glass field within the measured opening."},

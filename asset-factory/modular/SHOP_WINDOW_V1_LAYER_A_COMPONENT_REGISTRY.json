@@ -1,0 +1,22 @@
+{
+  "registryId": "SHOP_WINDOW_V1_LAYER_A_COMPONENT_REGISTRY",
+  "status": "APPROVED",
+  "parentStructuralAsset": "GG-BLD-WINDOW-SHOP-LARGE-002@1.0.0",
+  "registrationRule": "These permanent component registrations remain independently addressable Layer A pieces. The approved structural-window recipe may only reference these registered IDs; it may not introduce anonymous geometry.",
+  "components": [
+    {"componentId":"W01","assetId":"GG-BLD-WINDOW-GLASS-001","purpose":"main glass"},
+    {"componentId":"W02","assetId":"GG-BLD-WINDOW-DARK-REVEAL-001","purpose":"dark reveal"},
+    {"componentId":"W03","assetId":"GG-BLD-WINDOW-INNER-FRAME-001","purpose":"inner frame"},
+    {"componentId":"W04","assetId":"GG-BLD-WINDOW-INNER-FRAME-001","purpose":"inner frame"},
+    {"componentId":"W05","assetId":"GG-BLD-WINDOW-INNER-FRAME-001","purpose":"inner frame"},
+    {"componentId":"W06","assetId":"GG-BLD-WINDOW-INNER-FRAME-001","purpose":"inner frame"},
+    {"componentId":"W07","assetId":"GG-BLD-WINDOW-VERTICAL-CASING-001","purpose":"left vertical casing"},
+    {"componentId":"W08","assetId":"GG-BLD-WINDOW-VERTICAL-CASING-001","purpose":"right vertical casing"},
+    {"componentId":"W09","assetId":"GG-BLD-WINDOW-HEAD-MOLDING-001","purpose":"head molding"},
+    {"componentId":"W10","assetId":"GG-BLD-WINDOW-SILL-001","purpose":"sill"},
+    {"componentId":"W11","assetId":"GG-BLD-WINDOW-APRON-001","purpose":"apron"},
+    {"componentId":"W12","assetId":"GG-BLD-WINDOW-SILL-RETURN-001","purpose":"left sill return"},
+    {"componentId":"W13","assetId":"GG-BLD-WINDOW-SILL-RETURN-001","purpose":"right sill return"}
+  ],
+  "anonymousGeometry": 0
+}
