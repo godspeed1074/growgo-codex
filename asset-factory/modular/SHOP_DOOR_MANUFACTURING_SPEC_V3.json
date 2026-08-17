@@ -1,0 +1,27 @@
+{
+  "specId": "SHOP_DOOR_MANUFACTURING_SPEC_V3",
+  "version": "3.0.0",
+  "status": "PREFLIGHT_PASS",
+  "supersedesForFabrication": "SHOP_DOOR_MANUFACTURING_SPEC_V2",
+  "ownershipAuthority": "asset-factory/modular/SHOP_DOOR_COMPONENT_OWNERSHIP_V1.json",
+  "assetId": "GG-BLD-DOOR-SHOP-002",
+  "authority": {"primary": "test-output/door-exact-reconstruction/DOOR_GOLDEN_REFERENCE_CROP.png", "neverMeasuredFrom": ["Blender renders", "previous candidate renders"]},
+  "coordinateSystem": {"origin": "top-left of primary crop", "x": "rightward pixels", "z": "downward pixels", "moduleWidthPx": 164},
+  "xGuides": {"X_MODULE_LEFT":94,"X_CASING_OUTER_LEFT":96,"X_CASING_INNER_LEFT":119,"X_SLAB_LEFT":120,"X_GLASS_LEFT":136,"X_GLASS_RIGHT":211,"X_HARDWARE_AXIS":221,"X_SLAB_RIGHT":232,"X_CASING_INNER_RIGHT":233,"X_CASING_OUTER_RIGHT":256,"X_MODULE_RIGHT":258},
+  "zGuides": {"Z_GROUND":291,"Z_THRESHOLD_BOTTOM":249,"Z_THRESHOLD_TOP":241,"Z_SLAB_BOTTOM":241,"Z_PANEL_BOTTOM":222,"Z_PANEL_TOP":166,"Z_MAIL_SLOT_AXIS":177,"Z_GLASS_BOTTOM":148,"Z_GLASS_TOP":43,"Z_SLAB_TOP":24,"Z_SEPARATOR_BOTTOM":23,"Z_SEPARATOR_TOP":9,"Z_TRANSOM_GLASS_BOTTOM":8,"Z_TRANSOM_GLASS_TOP":-23,"Z_HEAD_BOTTOM":-24,"Z_HEAD_TOP":-44},
+  "derivedBoundsPx": {
+    "SLAB":{"left":120,"right":232,"top":24,"bottom":241},"MAIN_GLASS":{"left":136,"right":211,"top":43,"bottom":148},"CASING_LEFT":{"left":96,"right":119,"top":24,"bottom":241},"CASING_RIGHT":{"left":233,"right":256,"top":24,"bottom":241},"LOWER_PANEL":{"left":136,"right":211,"top":166,"bottom":222},"MAIL_SLOT":{"left":155,"right":192,"axisZ":177},"HARDWARE":{"axisX":221,"top":123,"bottom":190},"THRESHOLD":{"left":120,"right":232,"top":241,"bottom":249},"TRANSOM":{"left":120,"right":232,"top":-23,"bottom":8},"HEAD":{"left":96,"right":256,"top":-44,"bottom":-24}
+  },
+  "normalizedToModule": {"slab":{"x":0.683,"z":1.323},"mainGlass":{"x":0.457,"z":0.640},"casing":{"x":0.140,"z":1.323},"lowerPanel":{"x":0.457,"z":0.341},"threshold":{"x":0.683,"z":0.049},"transom":{"x":0.683,"z":0.189},"head":{"x":0.976,"z":0.122}},
+  "lockedFromV2": ["all X guides","slab","main glass","casing","hardware axis","transom glass","panel outer X/Z bounds","head X/Z/W/H","separator X/Z/W/H"],
+  "panelDepthCandidates": {
+    "A":{"outer":{"y":-0.076,"depth":0.014},"innerStep":{"y":-0.067,"depth":0.010},"face":{"y":-0.059,"depth":0.007}},
+    "B":{"outer":{"y":-0.082,"depth":0.016},"innerStep":{"y":-0.071,"depth":0.012},"face":{"y":-0.061,"depth":0.009}},
+    "C":{"outer":{"y":-0.088,"depth":0.018},"innerStep":{"y":-0.075,"depth":0.014},"face":{"y":-0.063,"depth":0.010}},
+    "selected":"B",
+    "rule":"Front X/Z bounds are identical in every candidate; B adds a narrow raised brown border, a darker small inner step, and a dominant recessed warm-brown face."
+  },
+  "depthHierarchy": {"head":{"body":"cream body","face":"shallow cream face","lowerLip":"small projecting lower lip"},"separator":{"body":"cream body","lowerLip":"small cream lower lip","underside":"narrow dark reveal"}},
+  "preflightVision": {"sameDoor":"YES","doorModuleBoundary":"PASS","largeExternalStepsWronglyIncluded":"NO","thresholdSize":"PASS","panelProportions":"PASS","transomHead":"PASS","basis":"The V3 flat preflight retains the V2 passing door grid and removes the explicitly marked landing/step context from D20."},
+  "fabrication":{"authorized":true,"oneCandidateOnly":true,"doNotIntegrateIntoShop":true,"knownGood":"NO_PENDING_OPERATOR_REVIEW"}
+}

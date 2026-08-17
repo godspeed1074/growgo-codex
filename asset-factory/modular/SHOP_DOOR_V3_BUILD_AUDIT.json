@@ -1,0 +1,15 @@
+{
+  "auditId": "SHOP_DOOR_V3_BUILD_AUDIT",
+  "status": "BLOCKED",
+  "assetId": "GG-BLD-DOOR-SHOP-002",
+  "version": "3.0.0",
+  "scope": "isolated door candidate only; no shop integration",
+  "worker": {"host": "Steam Deck 10.0.0.4", "runtime": "flatpak run org.blender.Blender", "blenderVersion": "5.2.0 LTS", "cleanExit": "PASS"},
+  "ownership": {"spec": "SHOP_DOOR_COMPONENT_OWNERSHIP_V1", "externalStepsEmbedded": "NO", "externalStepsExcluded": "YES", "futureContextAsset": "GG-BLD-ENTRANCE-STEPS-COMMERCIAL-001", "v2ThresholdPx": {"width":112,"height":38}, "v3ThresholdPx": {"width":112,"height":8}},
+  "preservation": {"v2SharedGuides": "PASS", "guideDriftPx": 0, "slab": "PASS", "mainGlass": "PASS", "casing": "PASS", "hardware": "PASS", "transom": "PASS"},
+  "panelDepth": {"A":{"outerY":-0.076,"innerStepY":-0.067,"faceY":-0.059},"B":{"outerY":-0.082,"innerStepY":-0.071,"faceY":-0.061},"C":{"outerY":-0.088,"innerStepY":-0.075,"faceY":-0.063},"selected":"B"},
+  "renderedValidation": {"componentVisibility":"PASS", "meaningfulVisibleComponents":20, "anonymousGeometry":0, "triangles":568, "vertices":368, "materials":5, "textures":0, "budget":"PASS"},
+  "vision": {"sameDoor":"NO", "moduleBoundary":"PASS", "threshold":"PASS", "lowerPanel":"NEEDS_WORK", "headCap":"NEEDS_WORK", "separator":"NEEDS_WORK", "casing":"PASS", "glass":"PASS", "hardware":"PASS", "papercutDepth":"NEEDS_WORK", "genericBlockout":"YES", "reason":"V3 correctly removes unrelated architecture and adds shallow hierarchy, but the visible profile language, tonal shaping, and integrated architectural finish remain simpler than the measured reference. The candidate must not become front authority."},
+  "authority": {"SHOP_DOOR_FRONT_AUTHORITY_V3":"NOT_LOCKED", "knownGood":"NO", "operatorReviewReady":"NO"},
+  "protected": {"shopModified":false,"atlasModified":false,"eucalyptusModified":false,"goldenReferenceModified":false}
+}
