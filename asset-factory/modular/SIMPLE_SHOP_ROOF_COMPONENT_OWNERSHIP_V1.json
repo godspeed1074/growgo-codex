@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "family": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+  "facadeDependency": "GG-BLD-FACADE-SIMPLE-SHOP-001@1.0.0",
+  "roofOwned": {
+    "R01": "GG-ROOF-PARAPET-SIMPLE-001",
+    "R02": "GG-ROOF-TOP-CAP-SIMPLE-001",
+    "R03": "GG-ROOF-LOWER-LIP-SIMPLE-001",
+    "R04": "GG-ROOF-TOP-PLANE-SIMPLE-001",
+    "R05": "GG-ROOF-SIDE-RETURN-SIMPLE-001",
+    "R06": "GG-ROOF-SIDE-RETURN-SIMPLE-001",
+    "R07": "GG-ROOF-REAR-CLOSURE-SIMPLE-001",
+    "R08": "GG-ROOF-FACADE-ATTACHMENT-SIMPLE-001"
+  },
+  "facadeOwnedExcluded": ["storefront fascia", "sign zone", "GROW GOODS presentation", "awning system", "GG-FAC-HEAD-CORNICE-SIMPLE-001"],
+  "resolution": "The protected facade front cornice remains the visible frontmost cap. The roof parapet/cap attach immediately behind it and contribute only the supported roof volume and oblique return pixels.",
+  "duplicateFacadeGeometry": false,
+  "anonymousGeometry": 0
+}

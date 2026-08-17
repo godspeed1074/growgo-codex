@@ -1,0 +1,1 @@
+{"status":"BLOCKED","frontRequired":{"passing":0,"total":3,"reason":"The returned isolated beauty render does not preserve the required navy front presentation."},"obliqueRequired":{"passing":3,"total":3},"structuralOnly":{"passing":2,"total":2},"anonymousGeometry":0}

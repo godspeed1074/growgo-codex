@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "authorityId": "SIMPLE_SHOP_ROOF_REFERENCE_AUTHORITY_V1",
+  "sourceAuthority": "SIMPLE_SHOP_FACADE_REFERENCE_AUTHORITY.json",
+  "sourceChecksum": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+  "cropCoordinates": {"x": 17, "y": 0, "width": 655, "height": 170},
+  "dimensions": [655, 170],
+  "shows": ["full top width", "parapet", "top cap", "lower roof-edge relationship", "side-return evidence", "approved facade beneath"],
+  "referenceArtModified": false
+}
