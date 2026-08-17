@@ -78,6 +78,16 @@
       "prevention": "autonomous self-review before first serious candidate"
     },
     {
+      "cause": "DOOR_SHARED_GRID_AND_OWNERSHIP_FAILURES",
+      "failure": "independent door-component measurements and the mixed D20 threshold/entrance-step ownership produced a coherent-looking but wrong door module",
+      "prevention": "define ownership before measurement, then derive every component from one shared X/Z guide grid; exclude adjacent landing, exterior steps, and foundation from the door module"
+    },
+    {
+      "cause": "DOOR_VISUAL_VALIDATION_FAILURES",
+      "failure": "numeric PASS, missing beauty visibility checks, occluded main glass, generic rectangular profile inference, raw raster-shadow tracing, and tonal-only materials masked a remaining blockout appearance",
+      "prevention": "require occlusion-aware required-component beauty visibility; do not convert shadows directly into geometry; when the measured structural carcass remains visually blocky, use modular reference-derived front art layers with unlit presentation material"
+    },
+    {
       "cause": "OPERATOR_CAUGHT_ALIGNMENT_REGRESSION",
       "failure": "sign/transom/window/grounding mismatches survived prior vision gate",
       "prevention": "mandatory visible-art alignment, transom-relative, trim-join, crop, and grounding checks"

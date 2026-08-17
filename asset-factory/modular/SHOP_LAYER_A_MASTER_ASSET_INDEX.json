@@ -449,7 +449,7 @@
     },
     {
       "assetId": "GG-BLD-DOOR-SHOP-002",
-      "assetVersion": "1.0.0",
+      "assetVersion": "4.0.0",
       "layer": "LAYER_A_MODULE",
       "category": "BUILDING",
       "type": "DOOR_MODULE",
@@ -457,9 +457,12 @@
       "designSpecification": {
         "sourceReference": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001@1.0.0",
         "purpose": "DOOR_MODULE reusable Layer A module",
-        "visualStyle": "2.5D_PAPERCUT_LOW_POLY",
+        "visualStyle": "2.5D_PAPERCUT_REFERENCE_LAYERED",
         "confidence": "HIGH",
-        "gridAlignment": "1u"
+        "gridAlignment": "1u",
+        "approvedPresentation": "MEASURED_MODULAR_3D_STRUCTURE + REFERENCE_DERIVED_MODULAR_FRONT_ART_LAYERS + UNLIT_PRESENTATION_MATERIAL",
+        "componentFamilies": ["casing", "plinth", "head_cap", "separator", "transom_glass", "door_slab", "glass_frame", "lower_panel", "threshold", "brass_hardware"],
+        "presentationLayerContract": "SHOP_DOOR_FRONT_AUTHORITY_V4"
       },
       "dimensionsMeters": {
         "width": 1.25,
@@ -564,12 +567,15 @@
         ],
         "deterministicPaletteRule": "REFERENCE_FAMILY_SEED_MOD_APPROVED_PALETTE_COUNT"
       },
-      "approvalState": "REVIEW",
+      "approvalState": "OPERATOR_APPROVED",
       "provenance": {
         "sourceType": "REFERENCE_ANALYSIS",
         "sourceId": "GG-REF-SIMPLE-SHOP-GROWGO-CONCEPT-001",
         "specId": "SHOP_PRODUCTION_ASSET_PACK_SPEC.json",
-        "productionAttached": false
+        "productionAttached": false,
+        "authorityId": "SHOP_DOOR_FRONT_AUTHORITY_V4",
+        "structuralSource": "GG-BLD-DOOR-SHOP-002_V3",
+        "presentationVariant": "REFERENCE_LAYERED_V4"
       },
       "tags": [
         "shop-production-pack",

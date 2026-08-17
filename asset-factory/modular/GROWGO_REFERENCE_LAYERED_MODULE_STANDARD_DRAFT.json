@@ -124,4 +124,10 @@
   ],
   "autonomousConvergenceContract": "GROWGO_AUTONOMOUS_VISUAL_CONVERGENCE_CONTRACT",
   "firstSeriousCandidateGate": "CODEX MUST NOT PRESENT A FIRST SERIOUS REFERENCE-DRIVEN CANDIDATE WHILE CODEX ITSELF CAN STILL SEE A MAJOR CORRECTABLE DIFFERENCE."
+  ,"approvedHybridPresentationMethod": {
+    "scope": "Use only when measured modular geometry and controlled tonal materials still fail to reproduce required stylized papercut front fidelity.",
+    "decisionTree": ["define module ownership", "shared reference grid", "exact front measurements", "visible-component inventory", "depth/profile rules", "material/tonal map", "2D preflight", "fabricate measured 3D structural carcass", "when geometry-only presentation remains blocky, add modular reference-derived front art layers", "use unlit material for locked front art", "preserve real 3D structure for depth, anchors, collision, and side QA"],
+    "requirements": ["no monolithic full-door texture", "component-owned transparent art layers", "source-context contamination equals zero", "structural source remains editable", "side/back use simple structural materials", "front authority remains separately versioned"],
+    "doorProof": "SHOP_DOOR_FRONT_AUTHORITY_V4"
+  }
 }
