@@ -24,6 +24,15 @@ for x,z,w,h in [(-.025,.635,.57,.02),(-.025,.225,.57,.02),(-.31,.43,.02,.40),(.2
 q('GLASS_REFLECTION',-.10,-.125,1.43,.20,.008,.035,'GLASS_REFLECTION',LT)
 for o in a:
  if o.name=='GLASS_REFLECTION':o.rotation_euler[1]=-.32
+# SHOP_DOOR_PROFILE_SPEC_V1: exact internal profile tiers, kept within locked bounds.
+for x,s in [(-.477,1),(.477,-1)]:
+ q('CASING_BAND_A',x,.018,.965,.030,.02,1.726,'D10_D11_PROFILE_A',C);q('CASING_BAND_B',x+s*.056,.026,.965,.082,.02,1.726,'D10_D11_PROFILE_B',C);q('CASING_BEAD',x+s*.109,.034,.965,.025,.02,1.726,'D10_D11_PROFILE_C',C);q('CASING_REVEAL',x+s*.128,.008,.965,.013,.015,1.726,'D10_D11_PROFILE_D',D)
+for z,h,y in [(2.228,.045,.025),(2.194,.045,.035),(2.160,.023,.045)]:q('HEAD_CAP_TIER',0,y,z,1.25,.02,h,'D19_PROFILE',C)
+for z,h,y in [(1.900,.055,.028),(1.850,.039,.040)]:q('SEPARATOR_TIER',0,y,z,1.25,.02,h,'D18_PROFILE',C)
+for x in [-.537,.537]:
+ q('PLINTH_TIER',x,.028,.275,.15,.02,.05,'D12_D13_PROFILE',C);q('PLINTH_TIER',x,.030,.150,.15,.02,.18,'D12_D13_PROFILE',C);q('PLINTH_TIER',x,.036,.035,.15,.02,.07,'D12_D13_PROFILE',C)
+for z,y,h in [(.095,.025,.03),(.060,.038,.035),(.020,.050,.025)]:q('THRESHOLD_TIER',0,y,z,1.05,.02,h,'D20_PROFILE',C)
+for x,z,w,h,y in [(-.025,.635,.609,.030,-.008),(-.025,.225,.609,.030,-.008),(-.319,.430,.030,.464,-.008),(.269,.430,.030,.464,-.008),(-.025,.610,.549,.020,-.020),(-.025,.250,.549,.020,-.020),(-.294,.430,.020,.384,-.020),(.244,.430,.020,.384,-.020)]:q('LOWER_PANEL_TIER',x,y,z,w,.015,h,'D04_D05_PROFILE',B)
 for x,z,r in [(.395,.945,.0325),(.395,.76,.045)]:
  bpy.ops.mesh.primitive_cylinder_add(vertices=12,radius=r,depth=.06,location=(x,-.085,z),rotation=(math.pi/2,0,0));o=bpy.context.object;o.data.materials.append(R);o.parent=root;o['componentId']='BRASS_HARDWARE';o['moduleId']='GG-BLD-HARDWARE-BRASS-COMMERCIAL-001';o['anonymousGeometry']=False;a.append(o)
 q('ESCUTCHEON',.395,-.07,.66,.055,.04,.105,'BRASS_HARDWARE',R);q('MAIL_SLOT',-.07,-.07,.575,.29,.04,.09,'BRASS_HARDWARE',R)
