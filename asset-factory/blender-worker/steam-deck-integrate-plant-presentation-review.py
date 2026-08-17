@@ -82,8 +82,10 @@ plane['componentId']='PLANTER_SHRUB_PRESENTATION';plane['moduleId']='GG-PRES-VEG
 
 def material_for(p):
     im=bpy.data.images.load(p,check_existing=False);m=bpy.data.materials.new('GG_MAT_PRES_VEG_PLANTER_SHRUB_001');m.use_nodes=True;n=m.node_tree.nodes;n.clear();links=m.node_tree.links
-    outn=n.new('ShaderNodeOutputMaterial');mix=n.new('ShaderNodeMixShader');trans=n.new('ShaderNodeBsdfTransparent');shade=n.new('ShaderNodeBsdfPrincipled');tex=n.new('ShaderNodeTexImage');tex.image=im;tex.interpolation='Closest'
-    links.new(tex.outputs['Color'],shade.inputs['Base Color']);links.new(tex.outputs['Alpha'],mix.inputs[0]);links.new(trans.outputs[0],mix.inputs[1]);links.new(shade.outputs[0],mix.inputs[2]);links.new(mix.outputs[0],outn.inputs['Surface'])
+    outn=n.new('ShaderNodeOutputMaterial');mix=n.new('ShaderNodeMixShader');trans=n.new('ShaderNodeBsdfTransparent');shade=n.new('ShaderNodeEmission');tex=n.new('ShaderNodeTexImage');tex.image=im;tex.interpolation='Closest'
+    # Presentation pixels are approved colour authority: do not re-light or
+    # colour-shift them through the shop's Principled material pipeline.
+    links.new(tex.outputs['Color'],shade.inputs['Color']);links.new(tex.outputs['Alpha'],mix.inputs[0]);links.new(trans.outputs[0],mix.inputs[1]);links.new(shade.outputs[0],mix.inputs[2]);links.new(mix.outputs[0],outn.inputs['Surface'])
     try:m.surface_render_method='BLENDED'
     except:pass
     return m,tex
