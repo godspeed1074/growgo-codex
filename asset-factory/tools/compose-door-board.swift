@@ -12,8 +12,8 @@ let titleAttrs: [NSAttributedString.Key: Any] = [.font: NSFont.boldSystemFont(of
 let labelAttrs: [NSAttributedString.Key: Any] = [.font: NSFont.boldSystemFont(ofSize: 22), .foregroundColor: NSColor(calibratedRed: 0.96, green: 0.91, blue: 0.82, alpha: 1)]
 func text(_ value: String, _ x: CGFloat, _ y: CGFloat, _ attrs: [NSAttributedString.Key: Any] = labelAttrs) { value.draw(at: NSPoint(x: x, y: y), withAttributes: attrs) }
 func image(_ path: String, _ rect: NSRect, _ alpha: CGFloat = 1) { NSImage(contentsOfFile: path)?.draw(in: rect, from: .zero, operation: .sourceOver, fraction: alpha, respectFlipped: false, hints: nil) }
-text("Simple Shop Door — Local Panel + Threshold Correction", 55, 1320, titleAttrs)
-text("AUTHORITATIVE REFERENCE", 70, 1260); text("PREVIOUS PARAMETRIC DOOR", 480, 1260); text("FINAL LOCAL FIX (B)", 950, 1260); text("50% OVERLAY", 1410, 1260)
+text("Simple Shop Door — V2 Fabrication Evidence (Build B)", 55, 1320, titleAttrs)
+text("AUTHORITATIVE REFERENCE", 70, 1260); text("PREVIOUS V1 CANDIDATE", 480, 1260); text("NEW V2 BUILD B", 950, 1260); text("50% OVERLAY", 1410, 1260)
 image(args[2], NSRect(x: 70, y: 500, width: 300, height: 720)); image(args[3], NSRect(x: 470, y: 500, width: 360, height: 720)); image(args[4], NSRect(x: 940, y: 500, width: 360, height: 720)); image(args[2], NSRect(x: 1400, y: 500, width: 300, height: 720), 0.5); image(args[4], NSRect(x: 1400, y: 500, width: 300, height: 720), 0.5)
 text("COMPONENT ID", 120, 435); text("WIREFRAME", 700, 435); text("BLOCKED — FRONT EVIDENCE ONLY", 1240, 435)
 image(args[5], NSRect(x: 70, y: 60, width: 430, height: 340)); image(args[6], NSRect(x: 650, y: 60, width: 430, height: 340))
