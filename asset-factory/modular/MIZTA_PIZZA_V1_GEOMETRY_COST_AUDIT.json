@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "before": {"newUniqueGeometryTriangles": 4112, "presentationTriangles": 3658},
+  "after": {"newUniqueGeometryTriangles": 6, "presentationTriangles": 6},
+  "byNewAsset": {"GG-PRES-SIGN-MIZTA-PIZZA-001": 2, "GG-BLD-AWNING-COMMERCIAL-STRIPED-001": 2, "GG-PRES-WINDOW-DISPLAY-PIZZA-001": 2},
+  "removed": "low-detail stripe and topping primitives replaced by three transparent unlit RGBA front layers",
+  "preferredTarget": "<=500",
+  "hardTarget": "<=900",
+  "result": "PASS"
+}

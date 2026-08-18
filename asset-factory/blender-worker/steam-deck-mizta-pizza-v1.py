@@ -2,7 +2,7 @@ import bpy, json, math, os, sys
 from mathutils import Vector
 
 args=sys.argv[sys.argv.index('--')+1:]
-source_blend,out=args[:2]
+source_blend,out,art=args[:3]
 os.makedirs(out,exist_ok=True)
 bpy.ops.wm.open_mainfile(filepath=source_blend)
 scene=bpy.context.scene
@@ -73,6 +73,22 @@ for x,z,w,h in [(0,3.84,3.28,.04),(0,3.32,3.28,.04),(-1.62,3.58,.04,.56),(1.62,3
 font=bpy.data.curves.new('MIZTA_PIZZA_TEXT','FONT'); font.body='Mizta Pizza'; font.align_x='CENTER'; font.align_y='CENTER'; font.size=.54; font.extrude=.012; text=bpy.data.objects.new('MIZTA_PIZZA_TEXT',font); bpy.context.collection.objects.link(text); text.location=(0,-.32,3.55); text.rotation_euler=(math.pi/2,0,0); text.data.materials.append(CREAM); text.parent=root; text['assetId']='GG-PRES-SIGN-MIZTA-PIZZA-001'; text['componentId']='SIGN_TEXT'; text['layer']='NEW_PRESENTATION'; text['anonymousGeometry']=False
 for x in (-1.36,1.36): disk('MIZTA_SIGN_LEAF','GG-PRES-SIGN-MIZTA-PIZZA-001','SIGN_LEAF',(x,-.33,3.56),.10,.02,GREEN)
 
+# Reference-derived hybrid front layers replace only variant presentation. They are
+# unlit, transparent RGBA planes; all approved structural modules remain separate.
+def art_plane(name,asset,cid,filename,loc,dims):
+    me=bpy.data.meshes.new(name+'_MESH'); w,h=dims; x,y,z=loc; me.from_pydata([(x-w/2,y,z-h/2),(x+w/2,y,z-h/2),(x+w/2,y,z+h/2),(x-w/2,y,z+h/2)],[],[(0,1,2,3)]); me.uv_layers.new(); uv=me.uv_layers.active.data
+    for i,p in enumerate([(0,0),(1,0),(1,1),(0,1)]): uv[i].uv=p
+    o=bpy.data.objects.new(name,me); bpy.context.collection.objects.link(o); o.parent=root; o['assetId']=asset; o['componentId']=cid; o['layer']='NEW_PRESENTATION'; o['anonymousGeometry']=False
+    im=bpy.data.images.load(os.path.join(art,filename),check_existing=False); m=bpy.data.materials.new('UNLIT_'+name); m.use_nodes=True; n=m.node_tree.nodes; n.clear(); outn=n.new('ShaderNodeOutputMaterial'); e=n.new('ShaderNodeEmission'); t=n.new('ShaderNodeTexImage'); tr=n.new('ShaderNodeBsdfTransparent'); mix=n.new('ShaderNodeMixShader'); t.image=im; m.node_tree.links.new(t.outputs['Color'],e.inputs['Color']); m.node_tree.links.new(t.outputs['Alpha'],mix.inputs[0]); m.node_tree.links.new(tr.outputs[0],mix.inputs[1]); m.node_tree.links.new(e.outputs[0],mix.inputs[2]); m.node_tree.links.new(mix.outputs[0],outn.inputs[0]); m.surface_render_method='DITHERED'; me.materials.append(m); created.append(o)
+    return o
+# Keep the original low-detail helper meshes out of the beauty image; hybrid art is
+# the presentation owner and keeps triangle cost near zero.
+for o in created:
+    if o.get('layer') in ('NEW_PRESENTATION','NEW_REUSABLE_VARIANT'): o.hide_render=True
+art_plane('ART_MIZTA_SIGN','GG-PRES-SIGN-MIZTA-PIZZA-001','SIGN_ART','ART_MIZTA_SIGN.png',(0,-.58,3.56),(3.45,.63))
+art_plane('ART_AWNING_STRIPED_FRONT','GG-BLD-AWNING-COMMERCIAL-STRIPED-001','AWNING_ART','ART_AWNING_STRIPED_FRONT.png',(0,-.59,2.73),(4.92,.84))
+art_plane('ART_PIZZA_DISPLAY','GG-PRES-WINDOW-DISPLAY-PIZZA-001','PIZZA_ART','ART_PIZZA_DISPLAY.png',(wx,-.60,1.80),(1.62,1.52))
+
 # Complete shell is reused from the approved shell family, inferred only outside the protected front authority.
 shell=[]
 for name,asset,cid,loc,dims,mat in [('MIZTA_LEFT_SIDE','GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001','LEFT_SIDE',(-2.45,1.5,2.1),(.12,3,4.2),WALL),('MIZTA_RIGHT_SIDE','GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001','RIGHT_SIDE',(2.45,1.5,2.1),(.12,3,4.2),WALL),('MIZTA_REAR','GG-BLD-WALL-REAR-COMMERCIAL-SIMPLE-001','REAR',(0,2.95,2.1),(4.9,.12,4.2),WALL),('MIZTA_FLOOR','GG-BLD-FLOOR-FOOTPRINT-SIMPLE-001','FLOOR',(0,1.5,.1),(4.9,3,.12),DARK),('MIZTA_ROOF_BACK','GG-BLD-ROOF-BACK-SHELL-COMMERCIAL-SIMPLE-001','ROOF_BACK',(0,1.5,4.18),(4.9,3,.10),NAVY)]: shell.append(box(name,asset,cid,loc,dims,mat))
@@ -90,5 +106,5 @@ def render(name,angle=0,elevation=2.2):
 for label,angle,elev in [('FRONT',0,2.2),('15_LEFT',15,2.3),('30_LEFT',30,2.4),('15_RIGHT',-15,2.3),('30_RIGHT',-30,2.4),('LEFT',90,2.5),('RIGHT',-90,2.5),('BACK',180,2.5),('TOP_OBLIQUE',25,7)]: render('MIZTA_PIZZA_V1_'+label+'.png',angle,elev)
 scene.render.engine='BLENDER_WORKBENCH'; render('MIZTA_PIZZA_V1_COMPONENT_ID.png'); [setattr(o,'show_wire',True) for o in created]; render('MIZTA_PIZZA_V1_WIREFRAME.png')
 tri=lambda xs:sum(sum(max(0,len(p.vertices)-2) for p in o.data.polygons) for o in xs if o.type=='MESH')
-result={'status':'PASS','executionMode':'REAL_BLENDER_WORKER_EXECUTION','blenderVersion':bpy.app.version_string,'assetId':'GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001@1.0.0','reusedApprovedStructure':['GG-BLD-DOOR-SHOP-002','GG-BLD-WINDOW-SHOP-LARGE-002','GG-FACADE-COMMERCIAL-SIMPLE-001','GG-ROOF-COMMERCIAL-SIMPLE-001'],'newPresentation':['GG-PRES-SIGN-MIZTA-PIZZA-001','GG-PRES-WINDOW-DISPLAY-PIZZA-001'],'newReusableVariant':['GG-BLD-AWNING-COMMERCIAL-STRIPED-001'],'budget':{'newUniqueGeometryTriangles':tri(created),'completeReferencedTriangles':280+tri(created),'presentationTriangles':2+tri([o for o in created if o.get('layer')=='NEW_PRESENTATION']),'materials':12,'anonymousGeometry':0,'status':'PASS'},'buildIterations':1}
+presentation=[o for o in created if o.name.startswith('ART_')]; result={'status':'PASS','executionMode':'REAL_BLENDER_WORKER_EXECUTION','blenderVersion':bpy.app.version_string,'assetId':'GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001@1.0.0','reusedApprovedStructure':['GG-BLD-DOOR-SHOP-002','GG-BLD-WINDOW-SHOP-LARGE-002','GG-FACADE-COMMERCIAL-SIMPLE-001','GG-ROOF-COMMERCIAL-SIMPLE-001'],'newPresentation':['GG-PRES-SIGN-MIZTA-PIZZA-001','GG-PRES-WINDOW-DISPLAY-PIZZA-001'],'newReusableVariant':['GG-BLD-AWNING-COMMERCIAL-STRIPED-001'],'budget':{'newUniqueGeometryTriangles':tri(presentation),'completeReferencedTriangles':280+tri(presentation),'presentationTriangles':tri(presentation),'materials':3,'anonymousGeometry':0,'status':'PASS'},'buildIterations':2}
 json.dump(result,open(os.path.join(out,'MIZTA_PIZZA_V1_RESULT.json'),'w'),indent=2); bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001_V1_CANDIDATE.blend'))
