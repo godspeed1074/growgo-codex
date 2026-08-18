@@ -44,6 +44,18 @@
       "genericBlockout": "NO",
       "budget": "PASS",
       "firstPassStandardRegression": "NO"
+    },
+    {
+      "roofFamily": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+      "recipe": "GG-BLD-ROOF-SIMPLE-SHOP-001",
+      "operatorApproved": true,
+      "structuralFirstPass": "PASS",
+      "presentationFirstPassFailure": "YES",
+      "retainedHybridPresentation": "COMPONENT_OWNED_REFERENCE_DERIVED_UNLIT_FRONT_ART",
+      "sameShopTopVision": "YES",
+      "genericBlockout": "NO",
+      "budget": "PASS",
+      "firstPassStandardRegression": "YES"
     }
   ],
   "permanentStandardsCreated": [

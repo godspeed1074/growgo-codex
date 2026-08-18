@@ -91,6 +91,11 @@
       "cause": "OPERATOR_CAUGHT_ALIGNMENT_REGRESSION",
       "failure": "sign/transom/window/grounding mismatches survived prior vision gate",
       "prevention": "mandatory visible-art alignment, transom-relative, trim-join, crop, and grounding checks"
+    },
+    {
+      "cause": "LIT_STRUCTURE_LOST_PAINTED_ROOF_CHARACTER",
+      "failure": "the first retained Commercial Simple roof structure was dimensionally correct but its lit navy front read as a pale generic blockout",
+      "prevention": "for stylized GrowGo architecture with strong painted or papercut front evidence, include component-owned reference-derived unlit front presentation in the first retained fabrication whenever flat lit materials cannot preserve the reference character"
     }
   ],
   "northStar": "REFERENCE IMAGE -> ACCURATE BLENDER REPRODUCTION -> FIRST SERIOUS PRODUCTION CANDIDATE",
