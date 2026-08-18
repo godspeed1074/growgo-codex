@@ -1,0 +1,33 @@
+{
+  "authorityId": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V3",
+  "assetId": "GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+  "version": "1.0.0",
+  "state": "NOT_LOCKED",
+  "checks": {
+    "frontVariantAssembly": "PASS",
+    "sameCommercialSimpleFamily": "YES",
+    "doorExactLibraryAsset": "YES",
+    "windowExactLibraryAsset": "YES",
+    "wallLayerAExactReuse": "YES",
+    "moldingsExactReuse": "YES",
+    "roofExactReuse": "CONTRACT_ONLY_NOT_RENDERED",
+    "windowLeft": "PASS",
+    "doorRight": "PASS",
+    "miztaSign": "PASS",
+    "stripedAwning": "PASS",
+    "pizzaDisplay": "PASS",
+    "pizzaFullyInsideWindow": "PASS",
+    "pizzaBehindGlass": "UNPROVEN_WITH_CURRENT_WINDOW_PRESENTATION",
+    "pizzaOverlapsAwning": "NO",
+    "plantsAbsent": "YES",
+    "papercutQualityEqualToGrowGoods": "FAIL_REAR_SHELL",
+    "referenceRichness": "FAIL_REAR_SHELL",
+    "genericBlockout": "YES_REAR_VIEW",
+    "budget": "PASS",
+    "anonymousGeometry": 0
+  },
+  "blockers": [
+    "Approved side/rear/floor shell artifacts were not instantiated; rear view mirrors front-facing presentation.",
+    "Pizza display is visually contained, but a clean separate approved glass layer is required to prove it is behind glass."
+  ]
+}

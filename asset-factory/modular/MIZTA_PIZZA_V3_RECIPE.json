@@ -1,0 +1,24 @@
+{
+  "recipeId": "GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+  "recipeVersion": "1.0.0",
+  "layer": "LAYER_B_RECIPE",
+  "status": "REVIEW_CANDIDATE",
+  "deterministicSeedRule": "SHA256_RECIPE_VERSION_SEED_CONTEXT",
+  "references": [
+    "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001@1.0.0",
+    "GG-BLD-DOOR-SHOP-002",
+    "GG-BLD-WINDOW-SHOP-LARGE-002",
+    "GG-FAC-WALL-PANEL-SIMPLE-001",
+    "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+    "GG-FAC-BASE-PLINTH-SIMPLE-001",
+    "GG-FAC-FASCIA-BAND-SIMPLE-001",
+    "GG-ROOF-COMMERCIAL-SIMPLE-001",
+    "GG-BLD-AWNING-COMMERCIAL-001",
+    "GG-PRES-SIGN-MIZTA-PIZZA-001",
+    "GG-PRES-WINDOW-DISPLAY-PIZZA-001"
+  ],
+  "anonymousGeometry": 0,
+  "operatorApproved": false,
+  "knownGood": "NO",
+  "atlasIntegrated": false
+}

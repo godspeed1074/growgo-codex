@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "components": [
+    {
+      "component": "door",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "version": "1.0.0",
+      "runtimeArtifact": "APPROVED_DOOR_01",
+      "reused": "YES",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "window",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "version": "1.0.0",
+      "runtimeArtifact": "APPROVED_WINDOW_01",
+      "reused": "YES",
+      "presentationDependency": "GG-PRES-WINDOW-DISPLAY-PIZZA-001"
+    },
+    {
+      "component": "wall panels",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "materialized independent artifacts",
+      "reused": "YES",
+      "presentationDependency": "owned terracotta presentation"
+    },
+    {
+      "component": "pilasters/moldings",
+      "assetId": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "materialized independent artifacts",
+      "reused": "YES",
+      "presentationDependency": "shared cream presentation"
+    },
+    {
+      "component": "base/plinth",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "materialized independent artifacts",
+      "reused": "YES",
+      "presentationDependency": "owned base presentation"
+    },
+    {
+      "component": "fascia",
+      "assetId": "GG-FAC-FASCIA-BAND-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "materialized independent artifacts",
+      "reused": "YES",
+      "presentationDependency": "structural fascia presentation"
+    },
+    {
+      "component": "roof",
+      "assetId": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "approved commercial roof/shell contract",
+      "reused": "YES",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "awning structure",
+      "assetId": "GG-BLD-AWNING-COMMERCIAL-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "AWNING_STRUCTURE.blend",
+      "reused": "YES",
+      "presentationDependency": "GG-PRES-AWNING-MIZTA-STRIPED-001"
+    },
+    {
+      "component": "sign",
+      "assetId": "GG-PRES-SIGN-MIZTA-PIZZA-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "MIZTA_SIGN.png",
+      "reused": "NEW",
+      "presentationDependency": "unlit sign presentation"
+    },
+    {
+      "component": "pizza display",
+      "assetId": "GG-PRES-WINDOW-DISPLAY-PIZZA-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "MIZTA_PIZZA.png",
+      "reused": "NEW",
+      "presentationDependency": "unlit contained display"
+    }
+  ],
+  "anonymousGeometry": 0
+}

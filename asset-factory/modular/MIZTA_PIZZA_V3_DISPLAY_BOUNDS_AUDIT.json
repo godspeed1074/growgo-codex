@@ -1,0 +1,22 @@
+{
+  "status": "PARTIAL_PASS",
+  "PIZZA_DISPLAY_ALLOWED_BOUNDS": {
+    "left": 142,
+    "right": 314,
+    "top": 325,
+    "bottom": 482
+  },
+  "pizzaBounds": {
+    "left": 142,
+    "right": 314,
+    "top": 325,
+    "bottom": 482
+  },
+  "pixelsOutsideApprovedDisplayBounds": 0,
+  "pizzaAwningOverlapPixels": 0,
+  "pizzaCasingOverlapPixels": 0,
+  "pizzaSillOverlapPixels": 0,
+  "pizzaBehindGlass": "UNPROVEN",
+  "plantsAbsent": "YES",
+  "openSignAbsent": "YES"
+}

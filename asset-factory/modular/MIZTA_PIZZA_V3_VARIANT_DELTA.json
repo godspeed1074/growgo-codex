@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "baseFacade": "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001@1.0.0",
+  "structuralDelta": [
+    "approved window-left/door-right layout only"
+  ],
+  "presentationDelta": [
+    "GG-PRES-SIGN-MIZTA-PIZZA-001",
+    "GG-PRES-AWNING-MIZTA-STRIPED-001",
+    "GG-PRES-WINDOW-DISPLAY-PIZZA-001"
+  ],
+  "newStructuralArchitecture": 0,
+  "unexpectedStructuralDelta": []
+}

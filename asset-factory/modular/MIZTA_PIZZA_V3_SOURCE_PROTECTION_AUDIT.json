@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "approvedDoorChanged": "NO",
+  "approvedWindowChanged": "NO",
+  "approvedCommercialSimpleLayerAChanged": "NO",
+  "approvedRoofChanged": "NO",
+  "approvedShellModulesChanged": "NO",
+  "validatedSwappedFacadeChanged": "NO"
+}
