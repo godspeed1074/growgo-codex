@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "source": "MIZTA_PIZZA.png",
+  "cleanPresentation": "MIZTA_PIZZA_V4_CLEAN.png",
+  "opaqueArtworkPixels": 79514,
+  "opaquePixelsRemovedOutsidePizza": 7623,
+  "opaquePixelsOutsideIntendedArtwork": 0,
+  "whiteCardRectangle": "NO",
+  "neighborFacadePixels": 0,
+  "awningPixels": 0,
+  "windowCasingPixels": 0,
+  "sillPixels": 0
+}
