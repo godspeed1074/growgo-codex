@@ -1,0 +1,1 @@
+{"status":"PASS","baseRecipe":"GG-BLD-SHOP-SIMPLE-GROW-GOODS-001@1.0.0","structuralDelta":["door anchor moved right","window anchor moved left"],"presentationDelta":["GG-PRES-SIGN-MIZTA-PIZZA-001","striped presentation on GG-BLD-AWNING-COMMERCIAL-001","GG-PRES-WINDOW-DISPLAY-PIZZA-001"],"unexpectedStructuralDelta":[],"newStructuralArchitecture":0}

@@ -1,0 +1,13 @@
+{
+  "status":"BLOCKED_VISUAL_GATE",
+  "baseTemplate":"GG-BLD-SHOP-SIMPLE-GROW-GOODS-001@1.0.0",
+  "variant":"GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001@1.0.0 candidate",
+  "doorExactReuse":"YES","windowExactReuse":"YES","wallMoldingReuse":"YES","roofReuse":"YES",
+  "newStructuralArchitecture":0,"newStructuralTriangles":0,"presentationTriangles":12,
+  "pizzaDisplayBounds":"PASS","pizzaPixelsOutsideWindow":0,"pizzaAwningOverlap":"NO","pizzaCasingOverlap":"NO","pizzaBehindGlass":"YES",
+  "windowLeft":"PASS","doorRight":"PASS","miztaSign":"PASS","stripedAwning":"PASS",
+  "papercutEqualToGrowGoods":"NO","sameMiztaPizzaVision":"NO","genericBlockout":"YES",
+  "approvedSourcesChanged":"NO","anonymousGeometry":0,"budget":"PASS","steamDeck":"PASS",
+  "authority":"NOT_LOCKED","operatorApproval":"NO","newModulesLibraryReady":"YES",
+  "blocker":"Opaque source-template opening masks remain visibly rectangular. Removing them without a registered approved swapped-opening facade composition requires an operator-approved library extension; V2 does not alter approved source modules to conceal this defect."
+}

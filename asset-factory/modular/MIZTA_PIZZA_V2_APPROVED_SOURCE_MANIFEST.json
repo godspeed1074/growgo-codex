@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "baseTemplate": "GG-BLD-SHOP-SIMPLE-GROW-GOODS-001@1.0.0",
+  "components": [
+    {"component":"DOOR","assetId":"GG-BLD-DOOR-SHOP-002","version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SHOP_DOOR_FRONT_AUTHORITY_V4","recipeCompatibility":"COMMERCIAL_SIMPLE_SHOP"},
+    {"component":"WINDOW_STRUCTURE_CASING_SILL_GLASS","assetId":"GG-BLD-WINDOW-SHOP-LARGE-002","version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SHOP_WINDOW_FRONT_AUTHORITY_V1","recipeCompatibility":"COMMERCIAL_SIMPLE_SHOP"},
+    {"component":"WALL_PANELS","assetIds":["GG-FAC-WALL-BAY-SIMPLE-001","GG-FAC-WALL-PANEL-SIMPLE-001"],"version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1"},
+    {"component":"VERTICAL_MOLDINGS_AND_BASE","assetIds":["GG-FAC-PILASTER-VERTICAL-SIMPLE-001","GG-FAC-BASE-PLINTH-SIMPLE-001","GG-FAC-BASE-BAND-SIMPLE-001","GG-FAC-HEAD-CORNICE-SIMPLE-001"],"version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1"},
+    {"component":"FACADE","assetId":"GG-FACADE-COMMERCIAL-SIMPLE-001","version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1"},
+    {"component":"ROOF","assetId":"GG-ROOF-COMMERCIAL-SIMPLE-001","version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SIMPLE_SHOP_ROOF_FRONT_AUTHORITY_V1"},
+    {"component":"SHELL","assetIds":["GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001","GG-BLD-WALL-REAR-COMMERCIAL-SIMPLE-001","GG-BLD-CORNER-COMMERCIAL-SIMPLE-001","GG-BLD-FLOOR-FOOTPRINT-SIMPLE-001","GG-BLD-ROOF-BACK-SHELL-COMMERCIAL-SIMPLE-001"],"version":"1.0.0","approvalState":"APPROVED","authority":"SIMPLE_SHOP_COMPLETE_AUTHORITY_V1"},
+    {"component":"AWNING_STRUCTURE","assetId":"GG-BLD-AWNING-COMMERCIAL-001","version":"1.0.0","approvalState":"OPERATOR_APPROVED","authority":"SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1"}
+  ],
+  "unresolvedVisibleComponents": 0
+}

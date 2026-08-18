@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "sources": {
+    "APPROVED_TEMPLATE": {
+      "source": "/Users/michaelpeterson/Developer/growgo-codex/test-output/simple-shop-facade-v1/SIMPLE_SHOP_FACADE_V1_FRONT.png",
+      "sha256": "7980e7bafb9bed1ae46aac3b94f8e807f5d9404d91d3e7abac79cd0e80d14a2e",
+      "copiedArt": "test-output/mizta-pizza-v2/strict-art/APPROVED_TEMPLATE.png"
+    },
+    "APPROVED_DOOR": {
+      "source": "/Users/michaelpeterson/Developer/growgo-codex/test-output/simple-shop-facade-v1/APPROVED_DOOR_FRONT.png",
+      "sha256": "c71456b624b81609499ff0d1e5d0b851b343b09a35d9ff02798f24be55c782b6",
+      "copiedArt": "test-output/mizta-pizza-v2/strict-art/APPROVED_DOOR.png"
+    },
+    "APPROVED_WINDOW": {
+      "source": "/Users/michaelpeterson/Developer/growgo-codex/test-output/simple-shop-facade-v1/APPROVED_WINDOW_FRONT.png",
+      "sha256": "1226d9c183f3a2a178ef4d94da46b02f8edc80368ae81893a480abefb7238edb",
+      "copiedArt": "test-output/mizta-pizza-v2/strict-art/APPROVED_WINDOW.png"
+    },
+    "MIZTA_SIGN": {
+      "source": "/Users/michaelpeterson/Developer/growgo-codex/test-output/mizta-pizza-v1/hybrid-art/ART_MIZTA_SIGN.png",
+      "sha256": "a5b43d744b9c332b270ec0e88fc1ece1f22b571164d45351874627c937fb5d7f",
+      "copiedArt": "test-output/mizta-pizza-v2/strict-art/MIZTA_SIGN.png"
+    },
+    "MIZTA_AWNING": {
+      "source": "/Users/michaelpeterson/Developer/growgo-codex/test-output/mizta-pizza-v1/hybrid-art/ART_AWNING_STRIPED_FRONT.png",
+      "sha256": "d75e14668323cdb9792e023a51abc46047f6fbf2cf0cbff260d08b0ab27ae68d",
+      "copiedArt": "test-output/mizta-pizza-v2/strict-art/MIZTA_AWNING.png"
+    },
+    "MIZTA_PIZZA": {
+      "source": "/Users/michaelpeterson/Developer/growgo-codex/test-output/mizta-pizza-v1/hybrid-art/ART_PIZZA_DISPLAY.png",
+      "sha256": "f7a16ccdd9112173ac4c78e014b6dbab383c4a665f53c47204fdf00ea51e31ea",
+      "copiedArt": "test-output/mizta-pizza-v2/strict-art/MIZTA_PIZZA.png"
+    }
+  }
+}

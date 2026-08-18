@@ -1,0 +1,1 @@
+{"status":"PASS","PIZZA_DISPLAY_ALLOWED_BOUNDS":{"left":-1.72,"right":-0.38,"top":2.43,"bottom":1.09},"pizzaBounds":{"left":-1.66,"right":-0.44,"top":2.35,"bottom":1.17},"safetyInsetPercent":6.0,"pixelsOutsideApprovedDisplayBounds":0,"pizzaOverlapsAwningPixels":0,"pizzaOverlapsCasingPixels":0,"pizzaOverlapsSillPixels":0}
