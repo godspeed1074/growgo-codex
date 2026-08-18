@@ -1,0 +1,1 @@
+{"status":"PASS","derivedFrom":["GG-BLD-FACADE-SIMPLE-SHOP-001@1.0.0","GG-BLD-ROOF-SIMPLE-SHOP-001@1.0.0"],"dimensionsMeters":{"width":5.08,"height":4.55,"depth":3.0,"frontPlaneY":-0.18,"rearPlaneY":2.95,"roofHeight":4.45,"baseFloorHeight":0.1},"rule":"Front width and height are inherited without scaling; hidden shell depth is inferred around the approved front."}
