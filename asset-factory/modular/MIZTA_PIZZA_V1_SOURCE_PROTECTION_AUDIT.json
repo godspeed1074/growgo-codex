@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "approvedDoorChanged": "NO",
+  "approvedWindowChanged": "NO",
+  "approvedFacadeChanged": "NO",
+  "approvedRoofChanged": "NO",
+  "approvedShellChanged": "NO",
+  "method": "INPUT_CHECKSUMS_AND_APPROVED_SOURCE_IDENTITIES_RETAINED"
+}

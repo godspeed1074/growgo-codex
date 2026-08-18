@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "baseGrid": "SIMPLE_SHOP_FACADE_X_GUIDES_V1 + SIMPLE_SHOP_FACADE_Z_GUIDES_V1",
+  "buildingOuterWidth": 4.9,
+  "windowLeftAnchor": {"x": -0.72, "status": "PASS"},
+  "doorRightAnchor": {"x": 1.34, "status": "PASS"},
+  "fasciaAwningAlignment": "PASS",
+  "signCentered": "PASS",
+  "variation": "OPENING_ANCHOR_SWAP_ONLY"
+}

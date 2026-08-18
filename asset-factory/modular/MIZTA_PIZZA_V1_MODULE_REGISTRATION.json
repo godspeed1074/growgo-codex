@@ -1,0 +1,9 @@
+{
+  "status": "LIBRARY_READY_PENDING_OPERATOR_APPROVAL",
+  "modules": [
+    {"assetId":"GG-PRES-SIGN-MIZTA-PIZZA-001","assetVersion":"1.0.0","layer":"LAYER_A_MODULE","category":"PRESENTATION","type":"SHOP_SIGN_FRONT_ART","dimensionsMeters":{"width":3.25,"height":0.55,"depth":0.04},"budget":{"triangles":6,"materials":3,"textureBytes":0},"orientation":"FRONT","allowedTransforms":["ROTATE","MIRROR","APPROVED_TEXT_SWAP"],"variationRules":"REGISTERED_SIGN_TEXT_ONLY","provenance":"MIZTA_PIZZA_OPERATOR_REFERENCE","recipeCompatibility":["COMMERCIAL_SIMPLE_SHOP"],"approvalState":"REVIEW"},
+    {"assetId":"GG-PRES-WINDOW-DISPLAY-PIZZA-001","assetVersion":"1.0.0","layer":"LAYER_A_MODULE","category":"PRESENTATION","type":"PIZZA_WINDOW_DISPLAY","dimensionsMeters":{"width":1.56,"height":1.56,"depth":0.08},"budget":{"triangles":384,"materials":4,"textureBytes":0},"orientation":"FRONT","allowedTransforms":["ROTATE","APPROVED_DISPLAY_SWAP"],"variationRules":"REGISTERED_PIZZA_TOPPING_SET_ONLY","provenance":"MIZTA_PIZZA_OPERATOR_REFERENCE","recipeCompatibility":["COMMERCIAL_SIMPLE_SHOP"],"approvalState":"REVIEW"},
+    {"assetId":"GG-BLD-AWNING-COMMERCIAL-STRIPED-001","assetVersion":"1.0.0","layer":"LAYER_A_MODULE","category":"BUILDING","type":"COMMERCIAL_STRIPED_AWNING","dimensionsMeters":{"width":4.8,"height":0.64,"depth":0.30},"budget":{"triangles":224,"materials":2,"textureBytes":0},"orientation":"FRONT","allowedTransforms":["ROTATE","MIRROR","APPROVED_PALETTE_SWAP"],"variationRules":"ALTERNATING_STRIPE_PALETTE_ONLY","provenance":"MIZTA_PIZZA_OPERATOR_REFERENCE","recipeCompatibility":["COMMERCIAL_SIMPLE_SHOP","CAFE","BAKERY"],"approvalState":"REVIEW"}
+  ],
+  "checksums": "WORKER_RESULT_AND_RENDER_CHECKSUMS_RECORDED_WITH_OUTPUT_PACKAGE"
+}

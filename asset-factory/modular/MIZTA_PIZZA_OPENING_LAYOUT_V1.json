@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "layout": "WINDOW_LEFT_DOOR_RIGHT",
+  "facadeFamily": "GG-FACADE-COMMERCIAL-SIMPLE-001",
+  "window": {"assetId": "GG-BLD-WINDOW-SHOP-LARGE-002", "anchor": "MIZTA_WINDOW_LEFT_01", "orientation": "FRONT", "scale": 1.0, "clearance": "PASS"},
+  "door": {"assetId": "GG-BLD-DOOR-SHOP-002", "anchor": "MIZTA_DOOR_RIGHT_01", "orientation": "FRONT", "scale": 1.0, "clearance": "PASS"},
+  "reuseDecision": "SOURCE_MESHES_UNCHANGED; COPIED_RUNTIME_INSTANCES_USE_NEW_APPROVED_ANCHORS"
+}

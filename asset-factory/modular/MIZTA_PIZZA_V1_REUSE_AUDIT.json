@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "doorSourceReused": "YES",
+  "windowSourceReused": "YES",
+  "newStructuralWindowRequired": "NO",
+  "facadeReused": "YES",
+  "roofReused": "YES",
+  "shellReused": "YES",
+  "newAssets": ["GG-PRES-SIGN-MIZTA-PIZZA-001", "GG-BLD-AWNING-COMMERCIAL-STRIPED-001", "GG-PRES-WINDOW-DISPLAY-PIZZA-001"],
+  "anonymousGeometry": 0,
+  "embeddedUnauthorizedUniqueGeometry": false
+}
