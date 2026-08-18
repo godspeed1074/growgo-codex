@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "previousCandidate": "SIMPLE_SHOP_ROOF_V1_FRONT.png",
+  "hybridCandidate": "SIMPLE_SHOP_ROOF_V1_HYBRID_FRONT.png",
+  "authoritativeReference": "SIMPLE_SHOP_ROOF_REFERENCE_AUTHORITY.png",
+  "comparison": {
+    "referenceVsHybrid": {
+      "exact": false,
+      "sameDimensions": true,
+      "meanChannelDifference": 38.299506061966774,
+      "differentPixelCount": 111001,
+      "differentPixelPercent": 99.6865738661877,
+      "maxChannelDifference": 241,
+      "silhouetteIoU": 1
+    },
+    "interpretation": "The hybrid uses exact component-owned roof-band art over frozen geometry and is visually closer to the painted navy reference than the pale lit structural candidate; it is not asserted as pixel-identical to the original source crop."
+  },
+  "vision": {
+    "sameShopTop": "YES",
+    "parapet": "PASS",
+    "topCap": "PASS",
+    "lowerLip": "PASS",
+    "navyColourHierarchy": "PASS",
+    "referenceCharacter": "PASS",
+    "papercut": "PASS",
+    "genericBlockout": "NO",
+    "attachment": "PASS"
+  },
+  "visibility": {
+    "frontRequired": {
+      "passing": 3,
+      "total": 3
+    },
+    "obliqueRequired": {
+      "passing": 3,
+      "total": 3
+    },
+    "structuralOnly": {
+      "passing": 2,
+      "total": 2
+    }
+  },
+  "budget": {
+    "structuralTriangles": 96,
+    "presentationTriangles": 6,
+    "totalTriangles": 102,
+    "vertices": 76,
+    "materials": 6,
+    "referenceArtBytes": 48651,
+    "status": "PASS"
+  },
+  "anonymousGeometry": 0,
+  "steamDeck": "PASS",
+  "structuralFirstPass": "PASS",
+  "presentationFirstPassFailure": "YES",
+  "firstPassStandardRegression": "YES: the retained structural-first candidate lacked required unlit reference-facing presentation; this hybrid proof corrects that presentation-only omission.",
+  "readyForOperatorReview": "YES"
+}

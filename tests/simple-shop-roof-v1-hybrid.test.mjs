@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import test from 'node:test';
+
+const root=path.resolve(import.meta.dirname,'..');
+const modular=path.join(root,'asset-factory/modular');
+test('roof hybrid art specification is component-owned, clean, and swappable',()=>{const spec=JSON.parse(fs.readFileSync(path.join(modular,'SIMPLE_SHOP_ROOF_V1_ART_LAYER_SPEC.json'),'utf8'));assert.equal(spec.status,'PASS');assert.equal(spec.fullFacadeBackplateUsed,false);assert.equal(spec.layers.length,3);for(const layer of spec.layers){assert.ok(['R01','R02','R03'].includes(layer.componentId));assert.equal(layer.alphaCleanupStatus,'PASS_REFERENCE_BACKGROUND_TRANSPARENT');assert.equal(layer.sourceContamination,'NONE');assert.match(layer.checksum,/^[a-f0-9]{64}$/);}});
+test('roof hybrid eligibility keeps the facade immutable and never assembles the complete shop',()=>{const eligibility=JSON.parse(fs.readFileSync(path.join(modular,'SIMPLE_SHOP_ROOF_V1_FACADE_PROOF_ELIGIBILITY.json'),'utf8'));const recipe=JSON.parse(fs.readFileSync(path.join(modular,'SIMPLE_SHOP_ROOF_RECIPE_V1.json'),'utf8'));assert.equal(eligibility.ROOF_ATTACHMENT_PROOF_DEPENDENCY,'VALID');assert.equal(eligibility.approvedFacadeAppearanceChanged,'NO');assert.equal(recipe.completeShopAssembled,false);});
+test('roof hybrid review locks only a pending-operator authority after all visibility and attachment gates pass',()=>{const review=JSON.parse(fs.readFileSync(path.join(modular,'SIMPLE_SHOP_ROOF_V1_HYBRID_REVIEW_AUDIT.json'),'utf8'));const attachment=JSON.parse(fs.readFileSync(path.join(modular,'SIMPLE_SHOP_ROOF_V1_ATTACHMENT_AUDIT_V3.json'),'utf8'));const authority=JSON.parse(fs.readFileSync(path.join(modular,'SIMPLE_SHOP_ROOF_FRONT_AUTHORITY_V1.json'),'utf8'));assert.equal(review.visibility.frontRequired.passing,3);assert.equal(review.visibility.obliqueRequired.passing,3);assert.equal(review.visibility.structuralOnly.passing,2);assert.equal(attachment.attachment,'PASS');assert.equal(attachment.facadeSourceModified,false);assert.equal(authority.status,'LOCKED_PENDING_OPERATOR_APPROVAL');assert.equal(authority.knownGood,'NO');});

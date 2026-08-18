@@ -1,0 +1,13 @@
+{
+  "authorityId": "SIMPLE_SHOP_ROOF_FRONT_AUTHORITY_V1",
+  "assetFamily": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+  "status": "LOCKED_PENDING_OPERATOR_APPROVAL",
+  "operatorApproved": false,
+  "knownGood": "NO",
+  "source": "SIMPLE_SHOP_ROOF_REFERENCE_AUTHORITY_V1",
+  "presentation": "MEASURED_FROZEN_STRUCTURE_PLUS_COMPONENT_OWNED_UNLIT_FRONT_ART",
+  "components": ["R01", "R02", "R03"],
+  "hybridReviewAudit": "SIMPLE_SHOP_ROOF_V1_HYBRID_REVIEW_AUDIT.json",
+  "attachmentAudit": "SIMPLE_SHOP_ROOF_V1_ATTACHMENT_AUDIT_V3.json",
+  "completeShopAssembled": false
+}

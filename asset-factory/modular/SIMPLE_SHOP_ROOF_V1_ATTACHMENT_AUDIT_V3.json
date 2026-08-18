@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "facade": "GG-BLD-FACADE-SIMPLE-SHOP-001@1.0.0",
+  "facadeSourceModified": false,
+  "canonicalPresentationEquivalence": "PASS",
+  "canonicalVisualHash": "3487de9ab46bea98af5b4979633621a56c60d881656c675a6df145ad27ddd2a9",
+  "semanticPresentationMatch": "YES",
+  "provenance": "PASS",
+  "roofCentred": "PASS",
+  "visibleGap": "NO",
+  "destructiveOverlap": "NO",
+  "duplicateFacadeFasciaOrSign": "NO",
+  "scale": 1,
+  "attachment": "PASS",
+  "attachedProofOnly": true,
+  "completeShopAssembled": false
+}

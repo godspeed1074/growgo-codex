@@ -1,0 +1,126 @@
+{
+  "status": "PASS",
+  "assetFamily": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+  "authority": "SIMPLE_SHOP_ROOF_REFERENCE_AUTHORITY_V1",
+  "source": {
+    "path": "test-output/visible-facade-sanity/SHOP_REFERENCE_VISIBLE_FACADE.png",
+    "sha256": "e0eb097d4b4ebff5cbb9b63aa6966f6fbcaacc23c75dd83283d84a152155014c",
+    "dimensions": [
+      760,
+      670
+    ]
+  },
+  "layers": [
+    {
+      "layerId": "ART_ROOF_PARAPET_FRONT",
+      "componentId": "R01",
+      "root": "GG_ROOT_ROOF_COMMERCIAL_SIMPLE_001",
+      "sourcePixelBounds": {
+        "x": 28,
+        "y": 12,
+        "width": 644,
+        "height": 23
+      },
+      "destinationComponentBounds": {
+        "width": 4.92,
+        "height": 0.18,
+        "frontY": 0.019
+      },
+      "file": "ART_ROOF_PARAPET_FRONT.png",
+      "normalizedBounds": {
+        "x": 0.03684210526315789,
+        "y": 0.01791044776119403,
+        "width": 0.8473684210526315,
+        "height": 0.034328358208955224
+      },
+      "destinationComponentBoundsNormalized": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "checksum": "c69b3edac616d14ebd9d2f98411dc8f040c2b3a79f098dca33cc2703413c78ff",
+      "byteSize": 30552,
+      "alphaCleanupStatus": "PASS_REFERENCE_BACKGROUND_TRANSPARENT",
+      "sourceContamination": "NONE"
+    },
+    {
+      "layerId": "ART_ROOF_TOP_CAP_FRONT",
+      "componentId": "R02",
+      "root": "GG_ROOT_ROOF_COMMERCIAL_SIMPLE_001",
+      "sourcePixelBounds": {
+        "x": 28,
+        "y": 4,
+        "width": 644,
+        "height": 8
+      },
+      "destinationComponentBounds": {
+        "width": 5.08,
+        "height": 0.1,
+        "frontY": 0.019
+      },
+      "file": "ART_ROOF_TOP_CAP_FRONT.png",
+      "normalizedBounds": {
+        "x": 0.03684210526315789,
+        "y": 0.005970149253731343,
+        "width": 0.8473684210526315,
+        "height": 0.011940298507462687
+      },
+      "destinationComponentBoundsNormalized": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "checksum": "748f00663959b434501d858a4d185d42dec28829bbe42fb0de139ea7bf371ae5",
+      "byteSize": 5023,
+      "alphaCleanupStatus": "PASS_REFERENCE_BACKGROUND_TRANSPARENT",
+      "sourceContamination": "NONE"
+    },
+    {
+      "layerId": "ART_ROOF_LOWER_LIP_FRONT",
+      "componentId": "R03",
+      "root": "GG_ROOT_ROOF_COMMERCIAL_SIMPLE_001",
+      "sourcePixelBounds": {
+        "x": 28,
+        "y": 35,
+        "width": 644,
+        "height": 12
+      },
+      "destinationComponentBounds": {
+        "width": 5,
+        "height": 0.08,
+        "frontY": 0.019
+      },
+      "file": "ART_ROOF_LOWER_LIP_FRONT.png",
+      "normalizedBounds": {
+        "x": 0.03684210526315789,
+        "y": 0.05223880597014925,
+        "width": 0.8473684210526315,
+        "height": 0.01791044776119403
+      },
+      "destinationComponentBoundsNormalized": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "checksum": "299abbcfe1a007c63c68ca6dad02337da9476335cae411e7df9ba817e59416aa",
+      "byteSize": 13076,
+      "alphaCleanupStatus": "PASS_REFERENCE_BACKGROUND_TRANSPARENT",
+      "sourceContamination": "NONE"
+    }
+  ],
+  "fullFacadeBackplateUsed": false,
+  "excludedSourceContent": [
+    "GROW GOODS wording",
+    "façade fascia",
+    "awning",
+    "wall",
+    "door",
+    "window",
+    "unrelated context"
+  ],
+  "referenceArtBytes": 48651,
+  "generatedBy": "generate-simple-shop-roof-v1-art-layers.mjs"
+}
