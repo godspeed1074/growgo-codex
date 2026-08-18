@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "asset": "GG-BLD-SHOP-SIMPLE-GROW-GOODS-001@1.0.0",
+  "authority": "SIMPLE_SHOP_COMPLETE_AUTHORITY_V1",
+  "operatorApproval": "YES",
+  "masterAssetIndex": "PASS",
+  "layerBRecipe": "PASS",
+  "allDependenciesRegistered": "PASS",
+  "sourceProtection": "PASS",
+  "sourceChanges": {"door": "NO", "window": "NO", "display": "NO", "facade": "NO", "roof": "NO"},
+  "anonymousGeometry": 0,
+  "sameShopVision": "YES",
+  "presentation": {"separateReusableLayers": true, "monolithicCompleteShopTexture": false},
+  "knownGood": "NO",
+  "atlasIntegrated": false,
+  "changedDuringPromotion": {"appearance": "NO", "geometry": "NO", "transforms": "NO", "approvedSourceModules": "NO"},
+  "nextAssetMayStart": "YES"
+}

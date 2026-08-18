@@ -56,6 +56,19 @@
       "genericBlockout": "NO",
       "budget": "PASS",
       "firstPassStandardRegression": "YES"
+    },
+    {
+      "completeBuilding": "GG-BLD-SHOP-SIMPLE-GROW-GOODS-001@1.0.0",
+      "recipe": "GG-BLD-SHOP-SIMPLE-GROW-GOODS-001@1.0.0",
+      "operatorApproved": true,
+      "endToEndMilestone": ["REFERENCE", "Layer A modules", "approved Door", "approved Window", "approved Façade", "approved Roof", "reusable side/back shell", "complete deterministic Layer B building"],
+      "sameShopVision": "YES",
+      "sourceProtection": "PASS",
+      "budget": "PASS",
+      "anonymousGeometry": 0,
+      "firstPassStandardRegression": "NO",
+      "atlasIntegrated": false,
+      "knownGood": "NO"
     }
   ],
   "permanentStandardsCreated": [

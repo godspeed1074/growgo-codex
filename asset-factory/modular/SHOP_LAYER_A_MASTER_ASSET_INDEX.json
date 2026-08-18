@@ -1401,7 +1401,45 @@
       "assetId":"GG-ROOF-FACADE-ATTACHMENT-SIMPLE-001","assetVersion":"1.0.0","layer":"LAYER_A_MODULE","category":"BUILDING","type":"ROOF_FACADE_ATTACHMENT","family":"GG-ROOF-COMMERCIAL-SIMPLE-001","designSpecification":{"construction":"facade attachment root and reveal","componentId":"R08"},"dimensionsMeters":{"width":4.92,"height":0.02,"depth":0.1},"geometryBudget":{"preferredTriangles":12,"triangleCeiling":12,"vertexCeiling":8},"textureBudget":{"textureCount":0,"maxDimension":0},"materialBudget":{"materialCeiling":1,"materialIds":["MAT_ROOF_NAVY_DARK"]},"exportedFileSizeBudget":{"targetBytes":30000,"ceilingBytes":60000},"lod":{"required":["LOD_CLOSE","LOD_GAMEPLAY","LOD_MAP"],"available":["LOD_CLOSE","LOD_GAMEPLAY","LOD_MAP"],"identityPreservation":"REQUIRED"},"textureAtlases":[],"orientationRules":{"allowed":["N","E","S","W"],"frontAxis":"-Y"},"variationRules":{"variantFamily":"COMMERCIAL_SIMPLE_ROOF","allowedVariants":["LOCKED_ATTACHMENT_ROOT"]},"allowedTransformations":[{"type":"ROTATE"},{"type":"MIRROR"},{"type":"BOUNDED_SCALE_X","min":0.9,"max":1.25}],"collisionRules":{"type":"SIMPLE_BOX"},"deterministicGeneration":{"generatorId":"steam-deck-simple-shop-roof-v1-hybrid.py","generatorVersion":"1.0.0","seedRule":"ASSET_ID_VERSION"},"modularReuse":{"searchRequired":true,"identityPreservation":"REQUIRED","repeatable":true},"recipeCompatibility":["SIMPLE_SHOP_ROOF","COMMERCIAL_SIMPLE_ROOF"],"mobileBudgetProfile":"BUILDING_MODULE_LIGHT","palette":{"paletteFamily":"SHOP_CONCEPT","allowedPaletteIds":["SHOP_NAVY"],"deterministicPaletteRule":"APPROVED_PALETTE_ONLY"},"approvalState":"APPROVED","provenance":{"sourceType":"ATTACHMENT_CONTRACT","sourceId":"SIMPLE_SHOP_ROOF_FACADE_ATTACHMENT_V1.json","facade":"GG-BLD-FACADE-SIMPLE-SHOP-001@1.0.0"},"tags":["roof","attachment","reusable","approved"]
     }
   ],
+  "layerBRecipes": [
+    {
+      "assetId": "GG-BLD-SHOP-SIMPLE-GROW-GOODS-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_B_RECIPE",
+      "category": "BUILDING",
+      "type": "COMPLETE_COMMERCIAL_SHOP",
+      "family": "GG-BLD-COMMERCIAL-SIMPLE-SHOP-001",
+      "dimensionsMeters": {"width": 4.9, "height": 4.2, "depth": 3},
+      "geometryBudget": {"referencedTriangles": 280, "uniqueAssemblyTriangles": 210, "presentationTriangles": 6, "vertexCeiling": 600, "status": "PASS"},
+      "textureArtBudget": {"bytes": 345301, "status": "PASS", "monolithicCompleteShopTexture": false},
+      "materialBudget": {"materialCeiling": 4, "status": "PASS"},
+      "collisionRules": {"type": "SIMPLE_BOX", "owner": "GG-BLD-FLOOR-FOOTPRINT-SIMPLE-001"},
+      "lod": {"LOD0": "full approved front plus complete shell", "LOD1": "approved front retained; shell simplified", "LOD2": "recognizable storefront and roof silhouette"},
+      "orientationRules": {"allowed": ["N", "E", "S", "W"], "frontAxis": "-Y"},
+      "variationRules": {"compatibleSwaps": ["door", "window", "display", "sign", "awning", "wallPalette", "roofPalette", "planterPropConfiguration"], "rule": "REGISTERED_COMPATIBLE_IDS_ONLY"},
+      "allowedTransformations": [{"type": "ROTATE"}, {"type": "MIRROR"}, {"type": "APPROVED_VARIANT_SWAP"}],
+      "deterministicGeneration": {"generatorId": "steam-deck-simple-shop-complete-v1.py", "generatorVersion": "1.0.0", "seedRule": "RECIPE_ID_VERSION_APPROVED_MODULE_IDENTITIES"},
+      "modularReuse": {"rule": "LAYER_A_MODULES_TO_DETERMINISTIC_LAYER_B_RECIPE", "anonymousGeometry": 0, "identityPreservation": "REQUIRED"},
+      "recipeCompatibility": ["COMMERCIAL_SIMPLE_SHOP", "SHOP_VARIANT_FAMILY"],
+      "mobileBudgetProfile": "BUILDING_ASSEMBLY_LIGHT",
+      "approvalState": "APPROVED",
+      "knownGood": "NO",
+      "atlasIntegrated": false,
+      "provenance": {"authority": "SIMPLE_SHOP_COMPLETE_AUTHORITY_V1", "reviewAudit": "SIMPLE_SHOP_COMPLETE_V1_FINAL_REVIEW_AUDIT.json", "sourceProtectionAudit": "SIMPLE_SHOP_COMPLETE_V1_SOURCE_CHECKSUM_AUDIT.json", "worker": "Steam Deck Blender 5.2.0 LTS"},
+      "modularDependencies": ["GG-BLD-DOOR-SHOP-002", "GG-BLD-WINDOW-SHOP-LARGE-002", "GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001", "GG-BLD-FACADE-SIMPLE-SHOP-001@1.0.0", "GG-BLD-ROOF-SIMPLE-SHOP-001@1.0.0", "GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001", "GG-BLD-WALL-REAR-COMMERCIAL-SIMPLE-001", "GG-BLD-CORNER-COMMERCIAL-SIMPLE-001", "GG-BLD-FLOOR-FOOTPRINT-SIMPLE-001", "GG-BLD-ROOF-BACK-SHELL-COMMERCIAL-SIMPLE-001"],
+      "shellRegistration": "SIMPLE_SHOP_COMPLETE_SHELL_LAYER_A_REGISTRY_V1.json"
+    }
+  ],
   "history": [
+    {
+      "event": "OPERATOR_APPROVAL_AND_LAYER_B_LIBRARY_PROMOTION",
+      "assetId": "GG-BLD-SHOP-SIMPLE-GROW-GOODS-001",
+      "assetVersion": "1.0.0",
+      "fromState": "REVIEW_CANDIDATE",
+      "toState": "APPROVED",
+      "actor": "OPERATOR",
+      "reason": "SIMPLE_SHOP_COMPLETE_AUTHORITY_V1_OPERATOR_APPROVAL"
+    },
     {
       "event": "OPERATOR_APPROVAL_AND_LIBRARY_PROMOTION",
       "assetId": "GG-ROOF-COMMERCIAL-SIMPLE-001",
