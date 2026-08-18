@@ -6,36 +6,588 @@
   "visibleArtBoundsContract": "GROWGO_VISIBLE_ART_BOUNDS_CONTRACT@1.0.0",
   "responsiveOpeningContract": "GROWGO_RESPONSIVE_OPENING_CONTRACT@1.0.0",
   "fixtureOnly": true,
-  "atlases": [{ "textureAtlasId": "GG-ATLAS-BUILDING-A", "textureAtlasVersion": "1.0.0", "status": "APPROVED" }],
-  "materials": [{ "materialId": "GG-MAT-BRICK-ATLAS-A", "materialVersion": "1.0.0", "textureAtlasId": "GG-ATLAS-BUILDING-A", "status": "APPROVED" }],
-  "paletteFamilies": { "HERITAGE_BUILDING": { "allowedPaletteIds": ["HERITAGE_BRICK_RED", "HERITAGE_CREAM"] } },
-  "modules": [{
-    "assetId": "GG-BLD-WALL-BRICK-001",
-    "assetVersion": "1.0.0",
-    "layer": "LAYER_A_MODULE",
-    "category": "BUILDING",
-    "type": "EXTERIOR_WALL",
-    "family": "HERITAGE_BRICK",
-    "designSpecification": { "construction": "modular brick wall section", "silhouette": "rectangular" },
-    "dimensionsMeters": { "width": 4, "height": 3, "depth": 0.2 },
-    "geometryBudget": { "preferredTriangles": 700, "triangleCeiling": 1000, "vertexCeiling": 1200 },
-    "textureBudget": { "textureCount": 1, "maxDimension": 1024 },
-    "materialBudget": { "materialCeiling": 1, "materialIds": ["GG-MAT-BRICK-ATLAS-A"] },
-    "exportedFileSizeBudget": { "targetBytes": 160000, "ceilingBytes": 250000 },
-    "lod": { "required": ["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"], "available": ["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"], "identityPreservation": "REQUIRED" },
-    "textureAtlases": [{ "textureAtlasId": "GG-ATLAS-BUILDING-A", "textureAtlasVersion": "1.0.0", "uvRegion": "BRICK_RED_01" }],
-    "orientationRules": { "allowed": ["N", "E", "S", "W"], "frontAxis": "+Y" },
-    "variationRules": { "variantFamily": "BRICK", "allowedVariants": ["BRICK", "CREAM_BRICK"] },
-    "allowedTransformations": [{ "type": "ROTATE" }, { "type": "MIRROR" }, { "type": "BOUNDED_SCALE_X", "min": 0.75, "max": 1.5 }, { "type": "APPROVED_TINT" }],
-    "collisionRules": { "type": "SIMPLE_BOX" },
-    "deterministicGeneration": { "generatorId": "GG-GEN-WALL-001", "generatorVersion": "1.0.0", "seedRule": "ASSET_ID_VERSION" },
-    "modularReuse": { "searchRequired": true, "repeatAxis": "X", "identityPreservation": "REQUIRED" },
-    "recipeCompatibility": ["HOUSE", "SHOP", "BAKERY", "RAILWAY_STATION"],
-    "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
-    "palette": { "paletteFamily": "HERITAGE_BUILDING", "allowedPaletteIds": ["HERITAGE_BRICK_RED", "HERITAGE_CREAM"], "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT" },
-    "approvalState": "APPROVED",
-    "provenance": { "sourceType": "CONTROLLED_FIXTURE", "sourceId": "MODULAR_CONTRACT_PHASE_001", "goldenReferenceId": "FIXTURE_BAKERY_REFERENCE_001" },
-    "tags": ["wall", "brick", "modular"]
-  }],
-  "history": [{ "event": "REGISTER_VERSION", "assetId": "GG-BLD-WALL-BRICK-001", "assetVersion": "1.0.0", "fromState": null, "toState": "APPROVED", "actor": "CONTROLLED_FIXTURE", "reason": "CONTRACT_VALIDATION" }]
+  "atlases": [
+    {
+      "textureAtlasId": "GG-ATLAS-BUILDING-A",
+      "textureAtlasVersion": "1.0.0",
+      "status": "APPROVED"
+    }
+  ],
+  "materials": [
+    {
+      "materialId": "GG-MAT-BRICK-ATLAS-A",
+      "materialVersion": "1.0.0",
+      "textureAtlasId": "GG-ATLAS-BUILDING-A",
+      "status": "APPROVED"
+    }
+  ],
+  "paletteFamilies": {
+    "HERITAGE_BUILDING": {
+      "allowedPaletteIds": [
+        "HERITAGE_BRICK_RED",
+        "HERITAGE_CREAM"
+      ]
+    }
+  },
+  "modules": [
+    {
+      "assetId": "GG-BLD-WALL-BRICK-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "EXTERIOR_WALL",
+      "family": "HERITAGE_BRICK",
+      "designSpecification": {
+        "construction": "modular brick wall section",
+        "silhouette": "rectangular"
+      },
+      "dimensionsMeters": {
+        "width": 4,
+        "height": 3,
+        "depth": 0.2
+      },
+      "geometryBudget": {
+        "preferredTriangles": 700,
+        "triangleCeiling": 1000,
+        "vertexCeiling": 1200
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 1,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 160000,
+        "ceilingBytes": 250000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "BRICK_RED_01"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "BRICK",
+        "allowedVariants": [
+          "BRICK",
+          "CREAM_BRICK"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.5
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-GEN-WALL-001",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "X",
+        "identityPreservation": "REQUIRED"
+      },
+      "recipeCompatibility": [
+        "HOUSE",
+        "SHOP",
+        "BAKERY",
+        "RAILWAY_STATION"
+      ],
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "palette": {
+        "paletteFamily": "HERITAGE_BUILDING",
+        "allowedPaletteIds": [
+          "HERITAGE_BRICK_RED",
+          "HERITAGE_CREAM"
+        ],
+        "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "CONTROLLED_FIXTURE",
+        "sourceId": "MODULAR_CONTRACT_PHASE_001",
+        "goldenReferenceId": "FIXTURE_BAKERY_REFERENCE_001"
+      },
+      "tags": [
+        "wall",
+        "brick",
+        "modular"
+      ]
+    },
+    {
+      "assetId": "GG-PRES-SIGN-MIZTA-PIZZA-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "SIGN_PRESENTATION",
+      "family": "COMMERCIAL_SIMPLE_PRESENTATION",
+      "designSpecification": {
+        "construction": "reusable unlit presentation variant",
+        "silhouette": "reference-locked front layer"
+      },
+      "dimensionsMeters": {
+        "width": 3.25,
+        "height": 0.84,
+        "depth": 0.02
+      },
+      "geometryBudget": {
+        "preferredTriangles": 2,
+        "triangleCeiling": 8,
+        "vertexCeiling": 12
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 1,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "BRICK_RED_01"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "MIZTA_PIZZA",
+        "allowedVariants": [
+          "MIZTA_PIZZA"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.5
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-GEN-WALL-001",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "X",
+        "identityPreservation": "REQUIRED"
+      },
+      "recipeCompatibility": [
+        "PIZZA_SHOP",
+        "SHOP"
+      ],
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "palette": {
+        "paletteFamily": "HERITAGE_BUILDING",
+        "allowedPaletteIds": [
+          "HERITAGE_BRICK_RED",
+          "HERITAGE_CREAM"
+        ],
+        "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "OPERATOR_APPROVED_REFERENCE",
+        "sourceId": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5",
+        "goldenReferenceId": "MIZTA_PIZZA_REFERENCE_001"
+      },
+      "tags": [
+        "mizta",
+        "sign",
+        "presentation"
+      ]
+    },
+    {
+      "assetId": "GG-PRES-WINDOW-DISPLAY-PIZZA-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "WINDOW_DISPLAY_PRESENTATION",
+      "family": "COMMERCIAL_SIMPLE_PRESENTATION",
+      "designSpecification": {
+        "construction": "reusable unlit presentation variant",
+        "silhouette": "reference-locked front layer"
+      },
+      "dimensionsMeters": {
+        "width": 3.25,
+        "height": 0.84,
+        "depth": 0.02
+      },
+      "geometryBudget": {
+        "preferredTriangles": 2,
+        "triangleCeiling": 8,
+        "vertexCeiling": 12
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 1,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "BRICK_RED_01"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "MIZTA_PIZZA",
+        "allowedVariants": [
+          "MIZTA_PIZZA"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.5
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-GEN-WALL-001",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "X",
+        "identityPreservation": "REQUIRED"
+      },
+      "recipeCompatibility": [
+        "PIZZA_SHOP",
+        "SHOP"
+      ],
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "palette": {
+        "paletteFamily": "HERITAGE_BUILDING",
+        "allowedPaletteIds": [
+          "HERITAGE_BRICK_RED",
+          "HERITAGE_CREAM"
+        ],
+        "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "OPERATOR_APPROVED_REFERENCE",
+        "sourceId": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5",
+        "goldenReferenceId": "MIZTA_PIZZA_REFERENCE_001"
+      },
+      "tags": [
+        "mizta",
+        "pizza",
+        "transparent",
+        "presentation"
+      ]
+    },
+    {
+      "assetId": "GG-PRES-AWNING-MIZTA-STRIPED-001",
+      "assetVersion": "1.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "BUILDING",
+      "type": "AWNING_PRESENTATION_VARIANT",
+      "family": "COMMERCIAL_SIMPLE_PRESENTATION",
+      "designSpecification": {
+        "construction": "reusable unlit presentation variant",
+        "silhouette": "reference-locked front layer"
+      },
+      "dimensionsMeters": {
+        "width": 3.25,
+        "height": 0.84,
+        "depth": 0.02
+      },
+      "geometryBudget": {
+        "preferredTriangles": 2,
+        "triangleCeiling": 8,
+        "vertexCeiling": 12
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1024
+      },
+      "materialBudget": {
+        "materialCeiling": 1,
+        "materialIds": [
+          "GG-MAT-BRICK-ATLAS-A"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 180000,
+        "ceilingBytes": 300000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED"
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-BUILDING-A",
+          "textureAtlasVersion": "1.0.0",
+          "uvRegion": "BRICK_RED_01"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "N",
+          "E",
+          "S",
+          "W"
+        ],
+        "frontAxis": "+Y"
+      },
+      "variationRules": {
+        "variantFamily": "MIZTA_PIZZA",
+        "allowedVariants": [
+          "MIZTA_PIZZA"
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "BOUNDED_SCALE_X",
+          "min": 0.75,
+          "max": 1.5
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_BOX"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GG-GEN-WALL-001",
+        "generatorVersion": "1.0.0",
+        "seedRule": "ASSET_ID_VERSION"
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "X",
+        "identityPreservation": "REQUIRED"
+      },
+      "recipeCompatibility": [
+        "PIZZA_SHOP",
+        "SHOP"
+      ],
+      "mobileBudgetProfile": "BUILDING_MODULE_LIGHT",
+      "palette": {
+        "paletteFamily": "HERITAGE_BUILDING",
+        "allowedPaletteIds": [
+          "HERITAGE_BRICK_RED",
+          "HERITAGE_CREAM"
+        ],
+        "deterministicPaletteRule": "HASH_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "OPERATOR_APPROVED_REFERENCE",
+        "sourceId": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5",
+        "goldenReferenceId": "MIZTA_PIZZA_REFERENCE_001"
+      },
+      "tags": [
+        "mizta",
+        "awning",
+        "striped",
+        "presentation"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-BLD-WALL-BRICK-001",
+      "assetVersion": "1.0.0",
+      "fromState": null,
+      "toState": "APPROVED",
+      "actor": "CONTROLLED_FIXTURE",
+      "reason": "CONTRACT_VALIDATION"
+    },
+    {
+      "event": "OPERATOR_PROMOTION",
+      "assetId": "GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+      "assetVersion": "1.0.0",
+      "toState": "APPROVED",
+      "authority": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5"
+    },
+    {
+      "event": "OPERATOR_PROMOTION",
+      "assetId": "GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+      "assetVersion": "1.0.0",
+      "toState": "APPROVED",
+      "authority": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5"
+    }
+  ],
+  "recipes": [
+    {
+      "recipeId": "GG-REC-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001",
+      "assetId": "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001",
+      "recipeVersion": "1.0.0",
+      "layer": "LAYER_B_RECIPE",
+      "approvalState": "APPROVED",
+      "family": "GG-FACADE-COMMERCIAL-SIMPLE-001",
+      "layout": "WINDOW_LEFT_DOOR_RIGHT",
+      "newStructuralGeometry": 0
+    },
+    {
+      "recipeId": "GG-REC-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+      "assetId": "GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+      "recipeVersion": "1.0.0",
+      "layer": "LAYER_B_RECIPE",
+      "approvalState": "APPROVED",
+      "family": "COMMERCIAL_SIMPLE",
+      "deterministicSeedRule": "SHA256_RECIPE_VERSION_SEED_CONTEXT",
+      "dependencies": [
+        "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001",
+        "GG-BLD-DOOR-SHOP-002",
+        "GG-BLD-WINDOW-SHOP-LARGE-002",
+        "GG-ROOF-COMMERCIAL-SIMPLE-001",
+        "GG-PRES-SIGN-MIZTA-PIZZA-001",
+        "GG-PRES-WINDOW-DISPLAY-PIZZA-001",
+        "GG-PRES-AWNING-MIZTA-STRIPED-001"
+      ],
+      "newStructuralGeometry": 0,
+      "knownGood": "NO",
+      "atlasIntegrated": "NO"
+    }
+  ]
 }

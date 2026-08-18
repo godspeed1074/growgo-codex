@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "components": [
+    {
+      "component": "Door",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Window",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Wall panels",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Moldings",
+      "assetId": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Base/plinth",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Roof",
+      "assetId": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Shell",
+      "assetId": "GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "status": "REUSED"
+    },
+    {
+      "component": "Swapped facade",
+      "assetId": "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001",
+      "version": "1.0.0",
+      "status": "REUSABLE_LAYOUT_RECIPE"
+    },
+    {
+      "component": "Mizta sign",
+      "assetId": "GG-PRES-SIGN-MIZTA-PIZZA-001",
+      "version": "1.0.0",
+      "status": "NEW_PRESENTATION"
+    },
+    {
+      "component": "Pizza display",
+      "assetId": "GG-PRES-WINDOW-DISPLAY-PIZZA-001",
+      "version": "1.0.0",
+      "status": "NEW_PRESENTATION"
+    },
+    {
+      "component": "Striped awning",
+      "assetId": "GG-PRES-AWNING-MIZTA-STRIPED-001",
+      "version": "1.0.0",
+      "status": "NEW_PRESENTATION_VARIANT"
+    }
+  ],
+  "newStructuralArchitecture": 0
+}

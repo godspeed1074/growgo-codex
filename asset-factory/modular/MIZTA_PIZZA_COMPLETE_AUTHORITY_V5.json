@@ -1,0 +1,16 @@
+{
+  "authorityId": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5",
+  "assetId": "GG-BLD-SHOP-SIMPLE-MIZTA-PIZZA-001",
+  "version": "1.0.0",
+  "state": "LOCKED_PENDING_OPERATOR_APPROVAL",
+  "operatorApproved": "YES",
+  "knownGood": "NO",
+  "atlasIntegrated": "NO",
+  "sourceProtection": "PASS",
+  "pizzaAlpha": "PASS",
+  "pizzaBehindGlass": "YES",
+  "whiteCard": "NO",
+  "tealCard": "NO",
+  "newStructuralArchitecture": 0,
+  "anonymousGeometry": 0
+}
