@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "sourcePackage": "GG-BLD-FACADE-SIMPLE-SHOP-001_V1.blend",
+  "materializedArtifactRoot": "test-output/commercial-simple-layer-a-materialization",
+  "assetsAudited": 13,
+  "realIndependentLayerAAfter": 13,
+  "fullyIndependentRuntimeLayerA": 13,
+  "geometryOnlyIncomplete": 0,
+  "parentFacadeDependency": "NONE",
+  "anonymousGeometry": 0,
+  "validatedWith": [
+    "PRESENTATION_AUDIT_V1",
+    "PRESENTATION_CONTAMINATION_AUDIT_V1",
+    "ISOLATED_ARTIFACT_BOARD_V2",
+    "INSTANTIATION_AUDIT_V2",
+    "NATIVE_GROW_GOODS_SOURCE_AUDIT_V1"
+  ]
+}

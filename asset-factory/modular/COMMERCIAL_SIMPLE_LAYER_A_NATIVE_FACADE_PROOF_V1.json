@@ -1,0 +1,31 @@
+{
+  "status": "VALIDATED_RECONSTRUCTION_PROOF",
+  "authority": "SIMPLE_SHOP_FACADE_FRONT_AUTHORITY_V1",
+  "authorityChecksum": "7980e7bafb9bed1ae46aac3b94f8e807f5d9404d91d3e7abac79cd0e80d14a2e",
+  "nativeRenderChecksum": "0350059e10d800debcfdf89e972e6794060f697a3cd7a8f5706743ac43c2c38e",
+  "canonicalParity": {
+    "dimensionsIdentical": true,
+    "decodedPixelEquality": false,
+    "pixelChannelsCompared": 2036800,
+    "pixelChannelsDifferent": 22314,
+    "meanChannelDifference": 0.764037706205813,
+    "maxChannelDifference": 183,
+    "silhouetteIoU": 1,
+    "guideDriftPixels": 0,
+    "visibleModularSeams": "NO",
+    "rectangularGaps": "NO"
+  },
+  "semantic": {
+    "sameStorefront": "YES",
+    "door": "PASS",
+    "window": "PASS",
+    "wall": "PASS",
+    "pilasters": "PASS",
+    "basePlinth": "PASS",
+    "fascia": "PASS",
+    "sign": "PASS",
+    "awning": "PASS",
+    "papercut": "PASS",
+    "genericBlockout": "NO"
+  }
+}

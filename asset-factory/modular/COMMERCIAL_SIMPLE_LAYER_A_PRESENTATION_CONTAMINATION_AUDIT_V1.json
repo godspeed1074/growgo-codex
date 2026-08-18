@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "rule": "all owned presentation layers must exclude neighbor pixels",
+  "checkedPresentations": [
+    {
+      "presentationAssetId": "GG-PRES-WALL-LEFT-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-WALL-BETWEEN-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-WALL-RIGHT-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-WALL-ABOVE-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-BASE-LEFT-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-BASE-BETWEEN-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-BASE-RIGHT-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-FASCIA-STRUCTURE-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-AWNING-PLUM-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "OWNED"
+    },
+    {
+      "presentationAssetId": "GG-PRES-DOOR-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "OWNED",
+      "windowPixels": "0",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-WINDOW-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "OWNED",
+      "signWording": "0",
+      "awningPattern": "0"
+    },
+    {
+      "presentationAssetId": "GG-PRES-SIGN-GROW-GOODS-001",
+      "neighboringComponentPixels": 0,
+      "doorPixels": "0",
+      "windowPixels": "0",
+      "signWording": "OWNED",
+      "awningPattern": "0"
+    }
+  ],
+  "contaminatedModules": 0
+}

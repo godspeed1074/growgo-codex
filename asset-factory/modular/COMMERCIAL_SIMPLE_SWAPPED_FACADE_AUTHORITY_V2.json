@@ -1,0 +1,25 @@
+{
+  "authorityId": "COMMERCIAL_SIMPLE_SWAPPED_FACADE_AUTHORITY_V2",
+  "assetId": "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001",
+  "version": "1.0.0",
+  "state": "LOCKED_PENDING_OPERATOR_APPROVAL",
+  "source": "INDEPENDENT_LAYER_A_ARTIFACTS_ONLY",
+  "layout": "WINDOW_LEFT_DOOR_RIGHT",
+  "checks": {
+    "sameCommercialSimpleFamily": "YES",
+    "windowLeft": "PASS",
+    "doorRight": "PASS",
+    "wallContinuity": "PASS",
+    "pilasters": "PASS",
+    "basePlinth": "PASS",
+    "fascia": "PASS",
+    "papercutParity": "PASS",
+    "rectangularGaps": "NO",
+    "masks": "NO",
+    "genericBlockout": "NO",
+    "parentFacadeDependency": "NO",
+    "newStructuralGeometryTriangles": 0,
+    "anonymousGeometry": 0
+  },
+  "frontChecksum": "275f1e810948bfa4e97f25ce1ef0ef147076a0c5f7134e350d52efcb010fea6b"
+}

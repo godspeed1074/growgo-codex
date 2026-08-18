@@ -1,0 +1,210 @@
+{
+  "status": "PASS",
+  "proof": "VALIDATED_RECONSTRUCTION_PROOF",
+  "parentFacadePresentationCard": "NO",
+  "bakedFullFacadeTexture": "NO",
+  "masks": "NO",
+  "allVisibleArchitectureMappedToPermanentIds": true,
+  "components": [
+    {
+      "component": "WALL_LEFT_OF_DOOR",
+      "assetId": "GG-FAC-WALL-BAY-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-WALL-BAY-SIMPLE-001__WALL_LEFT_OF_DOOR.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_BETWEEN_DOOR_WINDOW",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-WALL-PANEL-SIMPLE-001__WALL_BETWEEN_DOOR_WINDOW.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_RIGHT_OF_WINDOW",
+      "assetId": "GG-FAC-WALL-BAY-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-WALL-BAY-SIMPLE-001__WALL_RIGHT_OF_WINDOW.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_ABOVE_OPENINGS",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-WALL-PANEL-SIMPLE-001__WALL_ABOVE_OPENINGS.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "LEFT_PILASTER",
+      "assetId": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001__LEFT_PILASTER.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "RIGHT_PILASTER",
+      "assetId": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001__RIGHT_PILASTER.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "BASE_PLINTH",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-BASE-PLINTH-SIMPLE-001__BASE_PLINTH.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "BASE_BAND",
+      "assetId": "GG-FAC-BASE-BAND-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-BASE-BAND-SIMPLE-001__BASE_BAND.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "TOP_CAP",
+      "assetId": "GG-FAC-HEAD-CORNICE-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-HEAD-CORNICE-SIMPLE-001__TOP_CAP.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "FASCIA_BAND",
+      "assetId": "GG-FAC-FASCIA-BAND-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-FASCIA-BAND-SIMPLE-001__FASCIA_BAND.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "AWNING_RAIL",
+      "assetId": "GG-FAC-AWNING-RAIL-SIMPLE-001",
+      "runtimeArtifact": "GG-FAC-AWNING-RAIL-SIMPLE-001__AWNING_RAIL.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "AWNING",
+      "assetId": "GG-BLD-AWNING-COMMERCIAL-001",
+      "runtimeArtifact": "GG-BLD-AWNING-COMMERCIAL-001__AWNING_STRUCTURE.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "SIGN",
+      "assetId": "GG-BLD-SIGN-FASCIA-COMMERCIAL-001",
+      "runtimeArtifact": "GG-BLD-SIGN-FASCIA-COMMERCIAL-001__SIGN_FASCIA_STRUCTURE.blend",
+      "presentationArtifact": null,
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_LEFT_OF_DOOR",
+      "assetId": "GG-FAC-WALL-BAY-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_WALL_LEFT.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_BETWEEN_DOOR_WINDOW",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_WALL_BETWEEN.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_RIGHT_OF_WINDOW",
+      "assetId": "GG-FAC-WALL-BAY-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_WALL_RIGHT.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WALL_ABOVE_OPENINGS",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_WALL_ABOVE.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "BASE_PLINTH_LEFT",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_BASE_LEFT.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "BASE_PLINTH_BETWEEN",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_BASE_BETWEEN.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "BASE_PLINTH_RIGHT",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_BASE_RIGHT.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "FASCIA_BAND",
+      "assetId": "GG-FAC-FASCIA-BAND-SIMPLE-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_FASCIA_STRUCTURE.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "AWNING",
+      "assetId": "GG-PRES-AWNING-PLUM-COMMERCIAL-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_AWNING_PLUM.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "SIGN",
+      "assetId": "GG-PRES-SIGN-GROW-GOODS-001",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_SIGN_GROW_GOODS.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "DOOR",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_DOOR.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    },
+    {
+      "component": "WINDOW",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "runtimeArtifact": null,
+      "presentationArtifact": "PRES_WINDOW.png",
+      "reused": "YES",
+      "anonymousGeometry": false
+    }
+  ]
+}
