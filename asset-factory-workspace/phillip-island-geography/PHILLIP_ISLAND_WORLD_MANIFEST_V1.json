@@ -1,0 +1,36 @@
+{
+  "schemaId": "GROWGO_PHILLIP_ISLAND_GEOGRAPHY_MANIFEST_V1",
+  "manifestVersion": "1.0.0",
+  "region": {
+    "regionId": "REGION_PHILLIP_ISLAND_V1",
+    "name": "Phillip Island",
+    "approvalState": "DEVELOPER_ONLY_CANDIDATE",
+    "deterministicGenerationVersion": "PHILLIP_ISLAND_GENERATION_V1",
+    "coordinateReferenceSystem": "WGS84 latitude/longitude decimal degrees",
+    "bounds": { "south": -38.6, "west": 145.08, "north": -38.42, "east": 145.42 }
+  },
+  "packageId": "PHILLIP_ISLAND_WORLD_PACKAGE_V1",
+  "subregions": [
+    { "subregionId": "PHILLIP_ISLAND_COWES_V1", "geographyClass": "URBAN_TOWN", "bounds": { "south": -38.49, "west": 145.205, "north": -38.43, "east": 145.26 } },
+    { "subregionId": "PHILLIP_ISLAND_SILVERLEAVES_V1", "geographyClass": "RESIDENTIAL", "bounds": { "south": -38.475, "west": 145.26, "north": -38.43, "east": 145.3 } },
+    { "subregionId": "PHILLIP_ISLAND_RHYLL_V1", "geographyClass": "WETLAND", "bounds": { "south": -38.55, "west": 145.28, "north": -38.475, "east": 145.34 } },
+    { "subregionId": "PHILLIP_ISLAND_CENTRAL_RURAL_V1", "geographyClass": "FARMLAND", "bounds": { "south": -38.59, "west": 145.205, "north": -38.475, "east": 145.34 } },
+    { "subregionId": "PHILLIP_ISLAND_WESTERN_V1", "geographyClass": "COASTAL_SCRUB", "bounds": { "south": -38.56, "west": 145.08, "north": -38.43, "east": 145.205 } }
+  ],
+  "geographyClasses": ["URBAN_TOWN", "RESIDENTIAL", "COMMERCIAL", "PARKLAND", "FARMLAND", "OPEN_GRASSLAND", "COASTAL_SCRUB", "WOODLAND", "WETLAND", "BEACH", "COASTAL_EDGE", "WATER"],
+  "populationRules": {
+    "URBAN_TOWN": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": ["BUILDING_CIVIC_SPORTS_PAVILION_001", "TREE_EUCALYPTUS_001", "SHRUB_COASTAL_LOW_001"] },
+    "RESIDENTIAL": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": ["TREE_EUCALYPTUS_001", "SHRUB_COASTAL_LOW_001"] },
+    "COMMERCIAL": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"] },
+    "PARKLAND": { "recipeId": "PARK_PUBLIC_GREEN_RECIPE_001", "approvedAssetIds": ["TREE_EUCALYPTUS_001", "SHRUB_COASTAL_LOW_001"] },
+    "FARMLAND": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": ["TREE_EUCALYPTUS_001", "TREE_BOTTLEBRUSH_001"] },
+    "OPEN_GRASSLAND": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": ["TREE_EUCALYPTUS_001"] },
+    "COASTAL_SCRUB": { "recipeId": "COASTAL_GREEN_RECIPE_001", "approvedAssetIds": ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"] },
+    "WOODLAND": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": ["TREE_EUCALYPTUS_001", "TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"] },
+    "WETLAND": { "recipeId": "COASTAL_GREEN_RECIPE_001", "approvedAssetIds": ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"] },
+    "BEACH": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": [] },
+    "COASTAL_EDGE": { "recipeId": "COASTAL_GREEN_RECIPE_001", "approvedAssetIds": ["TREE_BOTTLEBRUSH_001", "SHRUB_COASTAL_LOW_001"] },
+    "WATER": { "recipeId": "COASTAL_LOCATION_RECIPE_001", "approvedAssetIds": [] }
+  },
+  "provenance": "Phillip Island Phase 2A deterministic geography manifest; representative developer population only."
+}

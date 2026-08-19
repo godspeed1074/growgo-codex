@@ -1,0 +1,9 @@
+{
+  "schemaId": "GROWGO_PHILLIP_ISLAND_MISSING_ASSET_REPORT_V1",
+  "regionId": "REGION_PHILLIP_ISLAND_V1",
+  "manifestVersion": "1.0.0",
+  "requiredNow": ["coastal grass and ground-cover family", "street tree family", "residential building family"],
+  "requiredSoon": ["fence and hedgerow family", "farm structure family", "beach and coastal rock family", "street furniture family"],
+  "later": ["wetland reed family", "watercraft and pier family", "landmark-specific families"],
+  "note": "These are asset-family requirements only. No unregistered asset IDs or placeholder geometry are authorized by this report."
+}
