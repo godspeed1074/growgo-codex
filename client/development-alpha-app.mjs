@@ -90,6 +90,13 @@ import {
 import {
   createDeveloperOnlyAtlasSharedApprovedLiveAssetController
 } from "./developer-only-atlas-shared-approved-live-assets.mjs?v=atlas21282b";
+import {
+  createDeveloperOnlyPhillipIslandVisiblePopulationSlice,
+  getDeveloperOnlyPhillipIslandVisiblePopulationSliceStatus,
+  reconcileDeveloperOnlyPhillipIslandVisiblePopulation,
+  releaseDeveloperOnlyPhillipIslandVisiblePopulation
+} from "./developer-only-phillip-island-visible-population-slice.mjs";
+import { phillipIslandProofChunks } from "./developer-only-phillip-island-geography-manifest.mjs";
 
 const developmentAlphaStartupDiagnosticsNamespace =
   globalThis?.GrowGoDeveloperDiagnostics &&
@@ -1804,6 +1811,13 @@ const atlasFirstApprovedLiveAssetController =
     hostObject: globalThis
   });
 
+// Explicit developer diagnostics may use this slice after authorization and attach.
+// Constructing it does not initialize a renderer, canvas, listener, or population.
+const phillipIslandVisiblePopulationSlice =
+  createDeveloperOnlyPhillipIslandVisiblePopulationSlice({
+    sharedAssetController: atlasFirstApprovedLiveAssetController
+  });
+
 const atlasAttachmentBrowserSurface =
   installDeveloperOnlyAtlasAttachmentBrowserSurface({
     authorization: atlasMapAttachmentAuthorization,
@@ -2896,14 +2910,14 @@ const diagnosticsNamespace =
 
 if (diagnosticsNamespace) {
   diagnosticsNamespace.initializeSharedApprovedLiveAssetRenderer = () =>
-    approvedAssetController?.initializeSharedApprovedLiveAssetRenderer?.() ?? null;
+    atlasFirstApprovedLiveAssetController?.initializeSharedApprovedLiveAssetRenderer?.() ?? null;
   diagnosticsNamespace.getAtlasSharedApprovedLiveAssetStatus = () =>
-    approvedAssetController?.getStatus?.() ?? null;
+    atlasFirstApprovedLiveAssetController?.getSharedApprovedLiveAssetStatus?.() ?? null;
   diagnosticsNamespace.placeGoldStandardTreeV002Review = async ({
     latitude,
     longitude
   } = {}) =>
-    (await approvedAssetController?.createApprovedSharedAssetModelInstance?.({
+    (await atlasFirstApprovedLiveAssetController?.createApprovedSharedAssetModelInstance?.({
       slotId: "first",
       assetId: "TREE_EUCALYPTUS_001",
       assetVersion: "v002",
@@ -2914,7 +2928,7 @@ if (diagnosticsNamespace) {
     latitude,
     longitude
   } = {}) =>
-    (await approvedAssetController?.createApprovedSharedAssetModelInstance?.({
+    (await atlasFirstApprovedLiveAssetController?.createApprovedSharedAssetModelInstance?.({
       slotId: "second",
       assetId: "TREE_EUCALYPTUS_001",
       assetVersion: "v001",
@@ -2922,7 +2936,25 @@ if (diagnosticsNamespace) {
       longitude
     })) ?? null;
   diagnosticsNamespace.clearGoldStandardTreeReview = () =>
-    approvedAssetController?.clearApprovedSharedAssetModelInstances?.() ?? null;
+    atlasFirstApprovedLiveAssetController?.clearApprovedSharedAssetModelInstances?.() ?? null;
+  diagnosticsNamespace.getPhillipIslandVisiblePopulationStatus = () =>
+    getDeveloperOnlyPhillipIslandVisiblePopulationSliceStatus(
+      phillipIslandVisiblePopulationSlice
+    );
+  diagnosticsNamespace.renderPhillipIslandVisibleProof = async ({ proofChunk = "COWES" } = {}) => {
+    const chunk = phillipIslandProofChunks()[String(proofChunk)] ?? null;
+    if (!chunk) {
+      return { outcome: "blocked", reasonCode: "PHILLIP_ISLAND_PROOF_CHUNK_UNKNOWN" };
+    }
+    return reconcileDeveloperOnlyPhillipIslandVisiblePopulation(
+      phillipIslandVisiblePopulationSlice,
+      { chunks: [chunk] }
+    );
+  };
+  diagnosticsNamespace.clearPhillipIslandVisibleProof = () =>
+    releaseDeveloperOnlyPhillipIslandVisiblePopulation(
+      phillipIslandVisiblePopulationSlice
+    );
   diagnosticsNamespace.getCustom25DOneFrameAdapterRuntimeIdentity = () =>
     growGoCustom25DLiveOneFrameAdapter.getCustom25DOneFrameAdapterRuntimeIdentity?.() ??
     null;

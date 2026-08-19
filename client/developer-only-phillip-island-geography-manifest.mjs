@@ -116,8 +116,9 @@ export function createPhillipIslandProofPopulation(chunk, options = {}) {
   const resolution = resolvePhillipIslandChunk(chunk, options);
   const placementProvider = options.placementProvider ?? createDeveloperOnlyAtlasMultiAssetPlacementProvider({ registry: options.registry ?? createDeveloperOnlyAtlasAssetRegistry() });
   const population = resolution.eligibleAssetIds.map((assetId, index) => {
-    const placement = resolveDeveloperOnlyAtlasMultiAssetPlacement(placementProvider, { assetId, version: resolveDeveloperOnlyAtlasAssetRegistryEntry(options.registry ?? placementProvider.__internal.registry, assetId).assetVersion, coordinate: resolution.coordinate, regionId: resolution.regionId, packageId: resolution.packageId, recipeId: resolution.recipeId, selectorSeed: `${resolution.manifestVersion}:${resolution.chunkId}:${assetId}:${index}` });
-    return Object.freeze({ populationId: stablePopulationId(resolution.chunkId, assetId, index), assetId, placement });
+    const coordinate = Object.freeze({ latitude: Number((resolution.coordinate.latitude + index * 0.001).toFixed(6)), longitude: Number((resolution.coordinate.longitude + index * 0.001).toFixed(6)) });
+    const placement = resolveDeveloperOnlyAtlasMultiAssetPlacement(placementProvider, { assetId, version: resolveDeveloperOnlyAtlasAssetRegistryEntry(options.registry ?? placementProvider.__internal.registry, assetId).assetVersion, coordinate, regionId: resolution.regionId, packageId: resolution.packageId, recipeId: resolution.recipeId, selectorSeed: `${resolution.manifestVersion}:${resolution.chunkId}:${assetId}:${index}` });
+    return Object.freeze({ populationId: stablePopulationId(resolution.chunkId, assetId, index), assetId, coordinate, placement });
   });
   if (new Set(population.map((item) => item.populationId)).size !== population.length) fail("PHILLIP_ISLAND_POPULATION_ID_DUPLICATE");
   return Object.freeze({ resolution, population: Object.freeze(population) });
