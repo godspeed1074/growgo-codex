@@ -105,9 +105,24 @@ test("canonical real configuration denies attachment and installs zero listeners
 
   assert.equal(result.outcome, "blocked");
   assert.equal(result.reasonCode, "MAP_ATTACHMENT_NOT_AUTHORIZED");
+  assert.equal(result.status.runtimeAuthorization.authorized, false);
+  assert.equal(result.status.runtimeAuthorization.reasonCode, "MISSING_AUTHORIZATION");
   assert.equal(result.status.attached, false);
   assert.equal(result.status.ownedListenerCount, 0);
   assert.equal(map.listenerCount("moveend"), 0);
+});
+
+test("runtime environment gate denies mismatched authorization before touching map resources", () => {
+  const map = createMapStub();
+  const controller = controllerModule.createGatedDeveloperOnlyAtlasMapAttachmentController({
+    getGrowGoMap: () => map,
+    getAuthorizationState: () => ({ source: "isolated-test-seam", mapAttachmentAllowed: true }),
+    getRuntimeEnvironment: () => "production"
+  });
+  const result = controller.attachAtlasMapDiagnostic();
+  assert.equal(result.outcome, "blocked");
+  assert.equal(result.reasonCode, "ENVIRONMENT_MISMATCH");
+  assert.deepEqual({ renderer: 0, canvas: 0, scene: 0, chunks: 0, population: 0, listeners: result.status.ownedListenerCount }, { renderer: 0, canvas: 0, scene: 0, chunks: 0, population: 0, listeners: 0 });
 });
 
 test("missing map fails closed", () => {

@@ -1761,6 +1761,11 @@ const atlasMapAttachmentController =
     },
     getAuthorizationState() {
       return atlasMapAttachmentAuthorization.readAttachmentAuthorizationStateForController();
+    },
+    getRuntimeEnvironment() {
+      return isLocalDevelopmentHost(globalThis?.location?.hostname ?? "")
+        ? "development"
+        : "production";
     }
   });
 

@@ -1,4 +1,9 @@
 import { createBrowserReadyDeveloperOnlyAtlasMapAdapter } from "./developer-only-atlas-browser-contract.mjs";
+import {
+  ATLAS_RUNTIME_AUTHORIZATION_CONTRACT_VERSION,
+  ATLAS_RUNTIME_AUTHORIZATION_VERSION,
+  evaluateAtlasRuntimeAuthorization
+} from "./atlas-runtime-authorization-gate.mjs";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) {
@@ -67,12 +72,32 @@ function createDefaultAuthorizationReader(atlasAdapter) {
   };
 }
 
+function createDefaultRuntimeAuthorizationReader(getAuthorizationState) {
+  return () => {
+    const authorizationState = getAuthorizationState();
+    if (authorizationState?.mapAttachmentAllowed !== true) return null;
+    // Existing developer authorization is translated, never promoted, into a
+    // development-only runtime grant.
+    return {
+      environment: "development",
+      contractVersion: ATLAS_RUNTIME_AUTHORIZATION_CONTRACT_VERSION,
+      authorizationVersion: ATLAS_RUNTIME_AUTHORIZATION_VERSION,
+      state: "enabled",
+      enabled: true
+    };
+  };
+}
+
 export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {}) {
   const atlasAdapter =
     options.atlasAdapter ?? createBrowserReadyDeveloperOnlyAtlasMapAdapter();
   const getGrowGoMap = options.getGrowGoMap ?? (() => null);
   const getAuthorizationState =
     options.getAuthorizationState ?? createDefaultAuthorizationReader(atlasAdapter);
+  const getRuntimeEnvironment = options.getRuntimeEnvironment ?? (() => "development");
+  const getRuntimeAuthorization =
+    options.getRuntimeAuthorization ??
+    createDefaultRuntimeAuthorizationReader(getAuthorizationState);
 
   let attached = false;
   let ownedMap = null;
@@ -93,6 +118,13 @@ export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {
     return normalizeAuthorizationState(getAuthorizationState(), getSafetyFlags());
   }
 
+  function getRuntimeAuthorizationDecision() {
+    return evaluateAtlasRuntimeAuthorization({
+      environment: getRuntimeEnvironment(),
+      authorization: getRuntimeAuthorization()
+    });
+  }
+
   function buildStatus() {
     const currentLiveMap = getGrowGoMap();
     const currentLiveMapIdentityId = assignMapIdentityId(currentLiveMap);
@@ -110,6 +142,7 @@ export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {
         currentLiveMapIdentityId === ownedMapIdentityId,
       liveMapValidationStatus: ownedMap ? "validated" : "unbound",
       authorizationState: getNormalizedAuthorizationState(),
+      runtimeAuthorization: getRuntimeAuthorizationDecision(),
       listenerEventName: null,
       ownedListenerCount: 0,
       diagnosticInvocationCount,
@@ -139,6 +172,20 @@ export function createGatedDeveloperOnlyAtlasMapAttachmentController(options = {
   function attachAtlasMapDiagnostic() {
     if (attached) {
       return buildOperationResult("attach", "noop", "ALREADY_ATTACHED");
+    }
+
+    const runtimeAuthorization = getRuntimeAuthorizationDecision();
+    if (runtimeAuthorization.authorized !== true) {
+      // Preserve the established developer attachment diagnostic while the
+      // structured runtime decision retains the precise default-deny reason.
+      const legacyAuthorization = getNormalizedAuthorizationState();
+      return buildOperationResult(
+        "attach",
+        "blocked",
+        legacyAuthorization.attachAllowed
+          ? runtimeAuthorization.reasonCode
+          : "MAP_ATTACHMENT_NOT_AUTHORIZED"
+      );
     }
 
     const liveMap = getGrowGoMap();
