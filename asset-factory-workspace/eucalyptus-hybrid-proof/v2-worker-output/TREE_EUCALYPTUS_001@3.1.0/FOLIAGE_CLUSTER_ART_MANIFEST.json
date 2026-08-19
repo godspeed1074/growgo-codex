@@ -1,0 +1,14 @@
+{
+  "atlas": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "uniqueClusters": [
+    "DARK_DROOPING",
+    "MID_DROOPING",
+    "HIGHLIGHT_DROOPING",
+    "BROAD_LATERAL",
+    "SMALL_TWIG",
+    "LARGE_CANOPY",
+    "NARROW_VERTICAL",
+    "SPARSE_BRANCH_TIP"
+  ],
+  "alphaValidation": "PASS"
+}

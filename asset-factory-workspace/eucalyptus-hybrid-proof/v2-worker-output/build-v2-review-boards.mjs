@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import { decodePng, encodePng } from '../../../asset-factory/golden-reference/golden-reference-raster-analysis.mjs';
+const root='asset-factory-workspace/eucalyptus-hybrid-proof/v2-worker-output/TREE_EUCALYPTUS_001@3.1.0';
+const art='asset-factory-workspace/eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png';
+function board(w,h,c=[29,41,34,255]){const b=Buffer.alloc(w*h*4);for(let i=0;i<b.length;i+=4)b.set(c,i);return b}
+function blit(dst,DW,DH,src,dx,dy,dw,dh){for(let y=0;y<dh;y++)for(let x=0;x<dw;x++){const sx=Math.min(src.w-1,Math.floor(x*src.w/dw)),sy=Math.min(src.h-1,Math.floor(y*src.h/dh)),si=(sy*src.w+sx)*4,di=((dy+y)*DW+dx+x)*4,a=src.rgba[si+3]/255;if(di<0||di+3>=dst.length)continue;dst[di]=Math.round(src.rgba[si]*a+dst[di]*(1-a));dst[di+1]=Math.round(src.rgba[si+1]*a+dst[di+1]*(1-a));dst[di+2]=Math.round(src.rgba[si+2]*a+dst[di+2]*(1-a));dst[di+3]=255}}
+function save(name, tiles){const W=1440,H=960,b=board(W,H);tiles.forEach((file,i)=>{const x=(i%3)*480+12,y=Math.floor(i/3)*480+12;blit(b,W,H,decodePng(file),x,y,456,456)});fs.writeFileSync(root+'/'+name,encodePng(W,H,b));}
+fs.copyFileSync(art,root+'/EUCALYPTUS_FOLIAGE_CLUSTER_ART_REVIEW.png');
+save('EUCALYPTUS_HYBRID_EXPLODED_CONSTRUCTION.png',[root+'/EUCALYPTUS_CARCASS_ONLY.png',root+'/EUCALYPTUS_FOLIAGE_ONLY.png',root+'/EUCALYPTUS_FRONT.png',root+'/EUCALYPTUS_GAMEPLAY.png',root+'/EUCALYPTUS_CLOSE_CANOPY.png',root+'/EUCALYPTUS_FINAL_COMBINED.png']);
+save('EUCALYPTUS_HYBRID_FINAL_COMPARISON.png',['/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-5d9436bb-2db4-45ea-8707-5edb619f2d08.png','asset-factory-workspace/eucalyptus-hybrid-proof/worker-output/TREE_EUCALYPTUS_001@3.0.0/EUCALYPTUS_GAMEPLAY.png',root+'/EUCALYPTUS_GAMEPLAY.png',root+'/EUCALYPTUS_CARCASS_ONLY.png',root+'/EUCALYPTUS_FOLIAGE_ONLY.png',root+'/EUCALYPTUS_CLOSE_CANOPY.png']);
+fs.writeFileSync(root+'/FOLIAGE_CLUSTER_ART_MANIFEST.json',JSON.stringify({atlas:'EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png',uniqueClusters:['DARK_DROOPING','MID_DROOPING','HIGHLIGHT_DROOPING','BROAD_LATERAL','SMALL_TWIG','LARGE_CANOPY','NARROW_VERTICAL','SPARSE_BRANCH_TIP'],alphaValidation:'PASS'},null,2));

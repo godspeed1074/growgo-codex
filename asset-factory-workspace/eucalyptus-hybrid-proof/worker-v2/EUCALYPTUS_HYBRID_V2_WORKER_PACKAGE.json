@@ -1,0 +1,10 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "3.1.0",
+  "state": "REVIEW_CANDIDATE",
+  "worker": "deck@10.0.0.4",
+  "blender": "flatpak run org.blender.Blender",
+  "atlas": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2.png",
+  "contract": "illustrated-rgba-clusters-plus-real-3d-carcass",
+  "protected": ["TREE_EUCALYPTUS_001@3.0.0", "Atlas architecture"]
+}
