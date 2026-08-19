@@ -1,0 +1,17 @@
+{
+  "packageId": "GG-PHILLIP-ISLAND-COASTAL-GROUND-COVER-WORKER-001",
+  "packageVersion": "1.0.0",
+  "executionMode": "REAL_BLENDER_WORKER_EXECUTION",
+  "referenceAnalysis": "../COASTAL_GROUND_COVER_REFERENCE_ANALYSIS.json",
+  "treeExclusion": true,
+  "camera": { "projection": "ORTHOGRAPHIC_LOCKED", "orthographicScaleMultiplier": 1.6, "resolution": 512, "lighting": "LOCKED_SOFT_PAPERCUT_V1" },
+  "budget": { "materialCeiling": 2, "triangleCeiling": 900, "vertexCeiling": 1100, "lods": ["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"] },
+  "targets": [
+    { "assetId": "GG-VEG-GRASS-COASTAL-TUFT-001", "name": "GRASS_COASTAL_TUFT_01", "kind": "tuft", "width": 1.0, "height": 0.78, "depth": 0.42, "groups": 13, "accents": 4, "geography": ["FARMLAND", "OPEN_GRASSLAND", "COASTAL_SCRUB", "PARKLAND"] },
+    { "assetId": "GG-VEG-GRASS-COASTAL-TUFT-002", "name": "GRASS_COASTAL_TUFT_02", "kind": "tuft", "width": 1.2, "height": 0.94, "depth": 0.46, "groups": 15, "accents": 6, "geography": ["FARMLAND", "OPEN_GRASSLAND", "COASTAL_SCRUB", "PARKLAND"] },
+    { "assetId": "GG-VEG-GRASS-COASTAL-DENSE-001", "name": "GRASS_COASTAL_DENSE_01", "kind": "dense", "width": 1.5, "height": 1.04, "depth": 0.56, "groups": 18, "accents": 0, "geography": ["FARMLAND", "OPEN_GRASSLAND", "COASTAL_SCRUB", "PARKLAND"] },
+    { "assetId": "GG-VEG-GRASS-COASTAL-DUNE-001", "name": "GRASS_COASTAL_DUNE_01", "kind": "dune", "width": 1.5, "height": 1.12, "depth": 0.52, "groups": 14, "accents": 3, "geography": ["COASTAL_SCRUB", "COASTAL_EDGE", "OPEN_GRASSLAND"] },
+    { "assetId": "GG-VEG-GROUND-COVER-CREEPING-001", "name": "GROUND_COVER_CREEPING_01", "kind": "creeping", "width": 1.0, "height": 0.42, "depth": 0.58, "groups": 16, "accents": 6, "geography": ["FARMLAND", "OPEN_GRASSLAND", "COASTAL_SCRUB", "COASTAL_EDGE", "PARKLAND"] },
+    { "assetId": "GG-VEG-GROUND-COVER-SUCCULENT-001", "name": "GROUND_COVER_SUCCULENT_01", "kind": "succulent", "width": 1.0, "height": 0.58, "depth": 0.60, "groups": 14, "accents": 6, "geography": ["COASTAL_SCRUB", "COASTAL_EDGE", "PARKLAND"] }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "contract": "GROWGO_FOLIAGE_RECONSTRUCTION_METHOD_V2_PROOF",
+  "v1Decision": "VISUALLY_REJECTED_ALL_SIX_V1_CANDIDATES",
+  "assetId": "GG-VEG-GRASS-COASTAL-TUFT-001",
+  "version": "2.0.0",
+  "state": "REVIEW_CANDIDATE",
+  "worker": "REAL_STEAM_DECK_BLENDER_5.2.0",
+  "treeExclusion": true,
+  "method": {
+    "bladeSilhouetteModules": [
+      "tall straight-curved blade",
+      "left-curved blade",
+      "right-curved blade",
+      "broad outward foreground leaf",
+      "stacked tapered seed head"
+    ],
+    "layers": [
+      "rear dark crown",
+      "middle foliage mass",
+      "front low footprint leaves",
+      "highlight yellow-green blades",
+      "seed heads"
+    ],
+    "depth": "front/middle/rear cards use 0.018m shallow extrusion and fixed offsets; front silhouette remains primary",
+    "materials": [
+      "GG_MAT_COASTAL_FOLIAGE_DARK_ATLAS",
+      "GG_MAT_COASTAL_FOLIAGE_MID_ATLAS",
+      "GG_MAT_COASTAL_FOLIAGE_LIGHT_ATLAS",
+      "GG_MAT_COASTAL_SEED_GOLD_ATLAS"
+    ]
+  },
+  "lodStats": {
+    "close": {
+      "triangles": 808,
+      "vertices": 602,
+      "materials": 4,
+      "objects": 43
+    },
+    "gameplay": {
+      "triangles": 600,
+      "vertices": 350,
+      "materials": 4,
+      "objects": 25
+    },
+    "map": {
+      "triangles": 160,
+      "vertices": 224,
+      "materials": 4,
+      "objects": 16
+    }
+  },
+  "automatedComparison": {
+    "foregroundBounds": {
+      "reference": {
+        "x": 0,
+        "y": 1,
+        "width": 236,
+        "height": 209,
+        "count": 40663,
+        "ratio": 1.1291866028708133
+      },
+      "v1": {
+        "x": 139,
+        "y": 125,
+        "width": 233,
+        "height": 250,
+        "count": 29516,
+        "ratio": 0.932
+      },
+      "v2": {
+        "x": 0,
+        "y": 159,
+        "width": 720,
+        "height": 418,
+        "count": 142451,
+        "ratio": 1.722488038277512
+      },
+      "overlay": {
+        "reference": {
+          "x": 0,
+          "y": 1,
+          "width": 236,
+          "height": 209,
+          "count": 40663,
+          "ratio": 1.1291866028708133
+        },
+        "v2": {
+          "x": 0,
+          "y": 159,
+          "width": 720,
+          "height": 418,
+          "count": 142451,
+          "ratio": 1.722488038277512
+        }
+      }
+    },
+    "note": "Extent comparison is a supporting diagnostic only; silhouette and papercut fidelity require human review."
+  },
+  "evidence": {
+    "referenceVsV1VsV2": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/v2-worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@2.0.0/COASTAL_TUFT_01_V1_REFERENCE_V2_COMPARISON_BOARD.png",
+    "silhouetteOverlay": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/v2-worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@2.0.0/COASTAL_TUFT_01_V2_SILHOUETTE_OVERLAY.png"
+  }
+}

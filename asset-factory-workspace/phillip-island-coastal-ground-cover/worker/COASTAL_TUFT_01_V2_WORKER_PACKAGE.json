@@ -1,0 +1,14 @@
+{
+  "packageId": "GG-PHILLIP-ISLAND-COASTAL-TUFT-01-V2-PROOF-001",
+  "assetId": "GG-VEG-GRASS-COASTAL-TUFT-001",
+  "version": "2.0.0",
+  "referenceAuthority": "COASTAL_GROUND_COVER_REFERENCE_ANALYSIS.json",
+  "state": "REVIEW_CANDIDATE",
+  "method": "PAPERCUT_FOLIAGE_RECONSTRUCTION_V2",
+  "sourceV1": "GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0",
+  "dimensionsMeters": {"width": 1.0, "height": 0.78, "depth": 0.42},
+  "lods": ["CLOSE", "GAMEPLAY", "MAP"],
+  "limits": {"closeTriangles": 900, "gameplayTriangles": 600, "mapTriangles": 350, "materials": 6},
+  "treeExclusion": true,
+  "lockedRule": "Observed front pixels are constraints. Hidden depth may only support the locked front silhouette."
+}

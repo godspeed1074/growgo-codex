@@ -1,0 +1,30 @@
+{
+  "referencePath": "/var/folders/18/n7r_f51d491gtzstrrwpsqgr0000gn/T/codex-clipboard-807f0633-cb3b-4530-89bd-39c0432e416c.png",
+  "boardContract": "left=locked approved reference crop; right=Steam Deck Blender front render; green bars distinguish source and candidate",
+  "boards": [
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-TUFT-001",
+      "boardPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/REFERENCE_COMPARISON_BOARD.png"
+    },
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-TUFT-002",
+      "boardPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/REFERENCE_COMPARISON_BOARD.png"
+    },
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-DENSE-001",
+      "boardPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/REFERENCE_COMPARISON_BOARD.png"
+    },
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-DUNE-001",
+      "boardPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/REFERENCE_COMPARISON_BOARD.png"
+    },
+    {
+      "assetId": "GG-VEG-GROUND-COVER-CREEPING-001",
+      "boardPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/REFERENCE_COMPARISON_BOARD.png"
+    },
+    {
+      "assetId": "GG-VEG-GROUND-COVER-SUCCULENT-001",
+      "boardPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/REFERENCE_COMPARISON_BOARD.png"
+    }
+  ]
+}

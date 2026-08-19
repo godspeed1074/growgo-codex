@@ -1,0 +1,504 @@
+{
+  "contractVersion": "COASTAL_GROUND_COVER_WORKER_VALIDATION_V1",
+  "worker": {
+    "host": "deck@10.0.0.4",
+    "runtime": "flatpak run org.blender.Blender",
+    "blenderVersion": "5.2.0 LTS",
+    "exitCode": 0,
+    "backgroundPython": "PASS",
+    "cleanExit": "PASS"
+  },
+  "limits": {
+    "triangles": 900,
+    "vertices": 1100,
+    "materials": 2
+  },
+  "candidateCount": 6,
+  "completed": 6,
+  "budgetPassed": 4,
+  "treeExclusionPass": true,
+  "productionRegistration": "NOT_PERFORMED",
+  "approval": "HUMAN_VISUAL_REVIEW_REQUIRED",
+  "candidates": [
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-TUFT-001",
+      "version": "1.0.0",
+      "workerState": "REVIEW_CANDIDATE",
+      "treeExclusion": true,
+      "blend": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001.blend",
+      "lods": [
+        {
+          "lod": "CLOSE",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001_LOD_CLOSE.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001_LOD_CLOSE_STATS.json",
+          "stats": {
+            "triangles": 308,
+            "vertices": 190,
+            "materials": 2,
+            "objects": 18
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "GAMEPLAY",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001_LOD_GAMEPLAY.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001_LOD_GAMEPLAY_STATS.json",
+          "stats": {
+            "triangles": 172,
+            "vertices": 108,
+            "materials": 2,
+            "objects": 11
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "MAP",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001_LOD_MAP.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-001_LOD_MAP_STATS.json",
+          "stats": {
+            "triangles": 92,
+            "vertices": 58,
+            "materials": 2,
+            "objects": 6
+          },
+          "budgetPass": true
+        }
+      ],
+      "reviews": [
+        {
+          "name": "ASSET_REVIEW_FRONT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/ASSET_REVIEW_FRONT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_BACK.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/ASSET_REVIEW_BACK.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_LEFT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/ASSET_REVIEW_LEFT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_RIGHT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/ASSET_REVIEW_RIGHT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_GAMEPLAY.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/ASSET_REVIEW_GAMEPLAY.png",
+          "exists": true
+        },
+        {
+          "name": "REFERENCE_COMPARISON_BOARD.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0/REFERENCE_COMPARISON_BOARD.png",
+          "exists": true
+        }
+      ],
+      "artifactsPass": true,
+      "budgetPass": true,
+      "finalState": "REVIEW_CANDIDATE"
+    },
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-TUFT-002",
+      "version": "1.0.0",
+      "workerState": "REVIEW_CANDIDATE",
+      "treeExclusion": true,
+      "blend": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002.blend",
+      "lods": [
+        {
+          "lod": "CLOSE",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002_LOD_CLOSE.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002_LOD_CLOSE_STATS.json",
+          "stats": {
+            "triangles": 420,
+            "vertices": 254,
+            "materials": 2,
+            "objects": 22
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "GAMEPLAY",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002_LOD_GAMEPLAY.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002_LOD_GAMEPLAY_STATS.json",
+          "stats": {
+            "triangles": 228,
+            "vertices": 140,
+            "materials": 2,
+            "objects": 13
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "MAP",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002_LOD_MAP.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/GG-VEG-GRASS-COASTAL-TUFT-002_LOD_MAP_STATS.json",
+          "stats": {
+            "triangles": 148,
+            "vertices": 90,
+            "materials": 2,
+            "objects": 8
+          },
+          "budgetPass": true
+        }
+      ],
+      "reviews": [
+        {
+          "name": "ASSET_REVIEW_FRONT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/ASSET_REVIEW_FRONT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_BACK.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/ASSET_REVIEW_BACK.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_LEFT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/ASSET_REVIEW_LEFT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_RIGHT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/ASSET_REVIEW_RIGHT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_GAMEPLAY.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/ASSET_REVIEW_GAMEPLAY.png",
+          "exists": true
+        },
+        {
+          "name": "REFERENCE_COMPARISON_BOARD.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-TUFT-002@1.0.0/REFERENCE_COMPARISON_BOARD.png",
+          "exists": true
+        }
+      ],
+      "artifactsPass": true,
+      "budgetPass": true,
+      "finalState": "REVIEW_CANDIDATE"
+    },
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-DENSE-001",
+      "version": "1.0.0",
+      "workerState": "REVIEW_CANDIDATE",
+      "treeExclusion": true,
+      "blend": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001.blend",
+      "lods": [
+        {
+          "lod": "CLOSE",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001_LOD_CLOSE.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001_LOD_CLOSE_STATS.json",
+          "stats": {
+            "triangles": 156,
+            "vertices": 116,
+            "materials": 2,
+            "objects": 19
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "GAMEPLAY",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001_LOD_GAMEPLAY.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001_LOD_GAMEPLAY_STATS.json",
+          "stats": {
+            "triangles": 100,
+            "vertices": 74,
+            "materials": 2,
+            "objects": 12
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "MAP",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001_LOD_MAP.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/GG-VEG-GRASS-COASTAL-DENSE-001_LOD_MAP_STATS.json",
+          "stats": {
+            "triangles": 60,
+            "vertices": 44,
+            "materials": 2,
+            "objects": 7
+          },
+          "budgetPass": true
+        }
+      ],
+      "reviews": [
+        {
+          "name": "ASSET_REVIEW_FRONT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/ASSET_REVIEW_FRONT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_BACK.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/ASSET_REVIEW_BACK.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_LEFT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/ASSET_REVIEW_LEFT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_RIGHT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/ASSET_REVIEW_RIGHT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_GAMEPLAY.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/ASSET_REVIEW_GAMEPLAY.png",
+          "exists": true
+        },
+        {
+          "name": "REFERENCE_COMPARISON_BOARD.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DENSE-001@1.0.0/REFERENCE_COMPARISON_BOARD.png",
+          "exists": true
+        }
+      ],
+      "artifactsPass": true,
+      "budgetPass": true,
+      "finalState": "REVIEW_CANDIDATE"
+    },
+    {
+      "assetId": "GG-VEG-GRASS-COASTAL-DUNE-001",
+      "version": "1.0.0",
+      "workerState": "REVIEW_CANDIDATE",
+      "treeExclusion": true,
+      "blend": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001.blend",
+      "lods": [
+        {
+          "lod": "CLOSE",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001_LOD_CLOSE.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001_LOD_CLOSE_STATS.json",
+          "stats": {
+            "triangles": 268,
+            "vertices": 170,
+            "materials": 2,
+            "objects": 18
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "GAMEPLAY",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001_LOD_GAMEPLAY.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001_LOD_GAMEPLAY_STATS.json",
+          "stats": {
+            "triangles": 124,
+            "vertices": 82,
+            "materials": 2,
+            "objects": 10
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "MAP",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001_LOD_MAP.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/GG-VEG-GRASS-COASTAL-DUNE-001_LOD_MAP_STATS.json",
+          "stats": {
+            "triangles": 100,
+            "vertices": 64,
+            "materials": 2,
+            "objects": 7
+          },
+          "budgetPass": true
+        }
+      ],
+      "reviews": [
+        {
+          "name": "ASSET_REVIEW_FRONT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/ASSET_REVIEW_FRONT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_BACK.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/ASSET_REVIEW_BACK.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_LEFT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/ASSET_REVIEW_LEFT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_RIGHT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/ASSET_REVIEW_RIGHT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_GAMEPLAY.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/ASSET_REVIEW_GAMEPLAY.png",
+          "exists": true
+        },
+        {
+          "name": "REFERENCE_COMPARISON_BOARD.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GRASS-COASTAL-DUNE-001@1.0.0/REFERENCE_COMPARISON_BOARD.png",
+          "exists": true
+        }
+      ],
+      "artifactsPass": true,
+      "budgetPass": true,
+      "finalState": "REVIEW_CANDIDATE"
+    },
+    {
+      "assetId": "GG-VEG-GROUND-COVER-CREEPING-001",
+      "version": "1.0.0",
+      "workerState": "REVIEW_CANDIDATE",
+      "treeExclusion": true,
+      "blend": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001.blend",
+      "lods": [
+        {
+          "lod": "CLOSE",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001_LOD_CLOSE.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001_LOD_CLOSE_STATS.json",
+          "stats": {
+            "triangles": 1068,
+            "vertices": 580,
+            "materials": 2,
+            "objects": 23
+          },
+          "budgetPass": false
+        },
+        {
+          "lod": "GAMEPLAY",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001_LOD_GAMEPLAY.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001_LOD_GAMEPLAY_STATS.json",
+          "stats": {
+            "triangles": 588,
+            "vertices": 320,
+            "materials": 2,
+            "objects": 13
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "MAP",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001_LOD_MAP.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/GG-VEG-GROUND-COVER-CREEPING-001_LOD_MAP_STATS.json",
+          "stats": {
+            "triangles": 348,
+            "vertices": 190,
+            "materials": 2,
+            "objects": 8
+          },
+          "budgetPass": true
+        }
+      ],
+      "reviews": [
+        {
+          "name": "ASSET_REVIEW_FRONT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/ASSET_REVIEW_FRONT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_BACK.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/ASSET_REVIEW_BACK.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_LEFT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/ASSET_REVIEW_LEFT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_RIGHT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/ASSET_REVIEW_RIGHT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_GAMEPLAY.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/ASSET_REVIEW_GAMEPLAY.png",
+          "exists": true
+        },
+        {
+          "name": "REFERENCE_COMPARISON_BOARD.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-CREEPING-001@1.0.0/REFERENCE_COMPARISON_BOARD.png",
+          "exists": true
+        }
+      ],
+      "artifactsPass": true,
+      "budgetPass": false,
+      "finalState": "REVIEW_CANDIDATE_BUDGET_EXCEPTION"
+    },
+    {
+      "assetId": "GG-VEG-GROUND-COVER-SUCCULENT-001",
+      "version": "1.0.0",
+      "workerState": "REVIEW_CANDIDATE",
+      "treeExclusion": true,
+      "blend": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001.blend",
+      "lods": [
+        {
+          "lod": "CLOSE",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001_LOD_CLOSE.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001_LOD_CLOSE_STATS.json",
+          "stats": {
+            "triangles": 972,
+            "vertices": 528,
+            "materials": 2,
+            "objects": 21
+          },
+          "budgetPass": false
+        },
+        {
+          "lod": "GAMEPLAY",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001_LOD_GAMEPLAY.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001_LOD_GAMEPLAY_STATS.json",
+          "stats": {
+            "triangles": 540,
+            "vertices": 294,
+            "materials": 2,
+            "objects": 12
+          },
+          "budgetPass": true
+        },
+        {
+          "lod": "MAP",
+          "glb": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001_LOD_MAP.glb",
+          "statsPath": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/GG-VEG-GROUND-COVER-SUCCULENT-001_LOD_MAP_STATS.json",
+          "stats": {
+            "triangles": 348,
+            "vertices": 190,
+            "materials": 2,
+            "objects": 8
+          },
+          "budgetPass": true
+        }
+      ],
+      "reviews": [
+        {
+          "name": "ASSET_REVIEW_FRONT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/ASSET_REVIEW_FRONT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_BACK.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/ASSET_REVIEW_BACK.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_LEFT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/ASSET_REVIEW_LEFT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_RIGHT.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/ASSET_REVIEW_RIGHT.png",
+          "exists": true
+        },
+        {
+          "name": "ASSET_REVIEW_GAMEPLAY.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/ASSET_REVIEW_GAMEPLAY.png",
+          "exists": true
+        },
+        {
+          "name": "REFERENCE_COMPARISON_BOARD.png",
+          "path": "/Users/michaelpeterson/Developer/growgo-codex/asset-factory-workspace/phillip-island-coastal-ground-cover/worker-output/GG-VEG-GROUND-COVER-SUCCULENT-001@1.0.0/REFERENCE_COMPARISON_BOARD.png",
+          "exists": true
+        }
+      ],
+      "artifactsPass": true,
+      "budgetPass": false,
+      "finalState": "REVIEW_CANDIDATE_BUDGET_EXCEPTION"
+    }
+  ]
+}

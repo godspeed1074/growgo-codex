@@ -1,0 +1,9 @@
+{
+  "assetId": "GG-VEG-GRASS-COASTAL-TUFT-001",
+  "version": "2.0.0",
+  "source": "REAL_STEAM_DECK_BLENDER_5.2.0",
+  "method": "PAPERCUT_FOLIAGE_RECONSTRUCTION_V2",
+  "sourceV1": "GG-VEG-GRASS-COASTAL-TUFT-001@1.0.0",
+  "treeExclusion": true,
+  "reviewState": "REVIEW_CANDIDATE"
+}

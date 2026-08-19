@@ -1,0 +1,76 @@
+{
+  "referenceCrop": {
+    "x": 35,
+    "y": 165,
+    "w": 220,
+    "h": 185
+  },
+  "regions": {
+    "LOW_FOREGROUND": [
+      12,
+      122,
+      190,
+      52
+    ],
+    "BROAD_CURVE_LEFT": [
+      23,
+      56,
+      62,
+      95
+    ],
+    "BROAD_CURVE_RIGHT": [
+      145,
+      55,
+      65,
+      103
+    ],
+    "MEDIUM_CURVE_LEFT": [
+      68,
+      61,
+      35,
+      100
+    ],
+    "MEDIUM_CURVE_RIGHT": [
+      123,
+      61,
+      36,
+      102
+    ],
+    "TALL_NARROW": [
+      100,
+      28,
+      26,
+      115
+    ],
+    "TALL_CURVED": [
+      50,
+      30,
+      52,
+      118
+    ],
+    "SHORT_FILLER": [
+      85,
+      88,
+      58,
+      77
+    ],
+    "HIGHLIGHT": [
+      72,
+      42,
+      66,
+      105
+    ],
+    "SEED_STEM": [
+      74,
+      8,
+      72,
+      100
+    ],
+    "SEED_SEGMENT": [
+      68,
+      0,
+      75,
+      52
+    ]
+  }
+}
