@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createAtlasAutomaticPopulationController, enableAutomaticViewportPopulation, disableAutomaticViewportPopulation, requestAutomaticViewportPopulationRefresh, runQueuedAutomaticViewportPopulationRefresh, getAutomaticViewportPopulationControllerStatus } from '../client/developer-only-atlas-automatic-population-controller.mjs';
 import { createAtlasChunkPopulationReconciler } from '../client/developer-only-atlas-chunk-population-reconciler.mjs';
+import { selectVisibleAtlasChunks } from '../client/developer-only-atlas-chunk-identity.mjs';
 let bounds={south:-38.486,west:145.228,north:-38.482,east:145.234};
 const controller=createAtlasAutomaticPopulationController({
   viewportIdentityProvider:()=>({viewportIdentity:`VP_${bounds.west}`,featureSourceGenerationId:'FEATURE_1',bounds,zoom:16}),
@@ -44,4 +45,20 @@ test('developer-gated controller reconciles chunk-owned references only after a 
   assert.equal(calls.release>0,true);
   disableAutomaticViewportPopulation(controlled);
   assert.equal(getAutomaticViewportPopulationControllerStatus(controlled).chunkOwnedPopulationReferenceCount,0);
+});
+
+test('automatic population diagnostics apply the configured active-chunk cap before reconciliation', () => {
+  const pressureBounds={south:-38.486,west:145.228,north:-38.476,east:145.238};
+  const capped=createAtlasAutomaticPopulationController({
+    viewportIdentityProvider:()=>({viewportIdentity:'CAP_PRESSURE',featureSourceGenerationId:'CAP_PRESSURE',bounds:pressureBounds,zoom:16}),
+    atlasIdentityProvider:()=>({mapIdentityId:'MAP_PI_001',regionId:'PHILLIP_ISLAND',packageId:'PHILLIP_ISLAND_V1',recipeId:'COASTAL_LOCATION_RECIPE_001',selectorSeed:'PI_SEED_001'}),
+    readinessProvider:()=>({approved:true}), liveFeatureAdapter:()=>({sourceFeatures:[],normalizedFeatures:[]}), populationPlanner:()=>({commands:[]}), populationDrawIntegration:()=>({drawCompleted:true}), populationReferenceReleaseProvider:()=>({released:true}),
+    chunkSelector:({bounds})=>selectVisibleAtlasChunks({bounds,marginChunks:2}), maxActiveChunks:4
+  });
+  enableAutomaticViewportPopulation(capped);
+  requestAutomaticViewportPopulationRefresh(capped,{eventName:'moveend'});
+  const status=getAutomaticViewportPopulationControllerStatus(capped);
+  assert.equal(status.currentRelevantChunkIds.length,4);
+  assert.equal(status.requestedRelevantChunkIds.length>4,true);
+  assert.equal(status.chunksEvictedByCap.length>0,true);
 });

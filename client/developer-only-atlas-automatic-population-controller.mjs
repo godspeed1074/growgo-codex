@@ -1,4 +1,5 @@
 import { selectVisibleAtlasChunks, diffAtlasChunkSets } from "./developer-only-atlas-chunk-identity.mjs";
+import { prioritizeAtlasActiveChunks } from "./developer-only-atlas-active-chunk-policy.mjs";
 import {
   getAtlasChunkPopulationReconcilerStatus,
   reconcileAtlasChunkPopulation,
@@ -246,6 +247,8 @@ function clearGenerationState(state, internal) {
   state.chunksAdded = [];
   state.chunksRetained = [];
   state.chunksRemoved = [];
+  state.requestedRelevantChunkIds = [];
+  state.chunksEvictedByCap = [];
 }
 
 function reconcileChunkOwnedPopulation(controller, generation) {
@@ -287,13 +290,20 @@ function resolveChunkDiagnostics(controller, viewportIdentity) {
   if (!viewportIdentity?.bounds) return null;
   const selector = isAvailableFunction(controller.__deps.chunkSelector) ? controller.__deps.chunkSelector : selectVisibleAtlasChunks;
   const selection = selector({ bounds: viewportIdentity.bounds, zoom: viewportIdentity.zoom });
-  const diff = diffAtlasChunkSets(controller.__internal.relevantChunks, selection?.chunks ?? []);
-  controller.__internal.relevantChunks = [...(selection?.chunks ?? [])];
-  controller.__state.currentRelevantChunkIds = [...(selection?.chunkIds ?? [])];
+  const pressure = prioritizeAtlasActiveChunks({
+    chunks: selection?.chunks ?? [],
+    viewportBounds: viewportIdentity.bounds,
+    maxActiveChunks: controller.__deps.maxActiveChunks
+  });
+  const diff = diffAtlasChunkSets(controller.__internal.relevantChunks, pressure.activeChunks);
+  controller.__internal.relevantChunks = [...pressure.activeChunks];
+  controller.__state.requestedRelevantChunkIds = [...pressure.requestedChunkIds];
+  controller.__state.currentRelevantChunkIds = [...pressure.activeChunkIds];
   controller.__state.chunksAdded = [...diff.addedChunkIds];
   controller.__state.chunksRetained = [...diff.retainedChunkIds];
   controller.__state.chunksRemoved = [...diff.removedChunkIds];
-  return deepFreeze({ selection, diff });
+  controller.__state.chunksEvictedByCap = [...pressure.evictedChunkIds];
+  return deepFreeze({ selection, pressure, diff });
 }
 
 function clearActiveGeneration(state, internal) {
@@ -473,6 +483,7 @@ export function createAtlasAutomaticPopulationController({
   ),
   chunkSelector = null,
   chunkPopulationReconciler = null,
+  maxActiveChunks = undefined,
   budgets = DEFAULT_BUDGETS
 } = {}) {
   const state = {
@@ -512,6 +523,8 @@ export function createAtlasAutomaticPopulationController({
     chunksAdded: [],
     chunksRetained: [],
     chunksRemoved: [],
+    requestedRelevantChunkIds: [],
+    chunksEvictedByCap: [],
     chunkOwnedPopulationReferenceCount: 0,
     activeChunkPopulationIds: []
   };
@@ -543,7 +556,8 @@ export function createAtlasAutomaticPopulationController({
     populationDrawIntegration,
     populationReferenceReleaseProvider,
     chunkSelector,
-    chunkPopulationReconciler
+    chunkPopulationReconciler,
+    maxActiveChunks
   };
 
   state.controllerReady = validateDependencyAvailability(deps);
@@ -596,6 +610,8 @@ export function getAutomaticViewportPopulationControllerStatus(controller) {
       chunksAdded: deepFreeze([]),
       chunksRetained: deepFreeze([]),
       chunksRemoved: deepFreeze([]),
+      requestedRelevantChunkIds: deepFreeze([]),
+      chunksEvictedByCap: deepFreeze([]),
       chunkOwnedPopulationReferenceCount: 0,
       activeChunkPopulationIds: deepFreeze([]),
       canonicalSafetyFlags: canonicalSafetyFlags()
@@ -642,6 +658,8 @@ export function getAutomaticViewportPopulationControllerStatus(controller) {
     chunksAdded: deepFreeze([...state.chunksAdded]),
     chunksRetained: deepFreeze([...state.chunksRetained]),
     chunksRemoved: deepFreeze([...state.chunksRemoved]),
+    requestedRelevantChunkIds: deepFreeze([...state.requestedRelevantChunkIds]),
+    chunksEvictedByCap: deepFreeze([...state.chunksEvictedByCap]),
     chunkOwnedPopulationReferenceCount: state.chunkOwnedPopulationReferenceCount,
     activeChunkPopulationIds: deepFreeze([...state.activeChunkPopulationIds]),
     canonicalSafetyFlags: canonicalSafetyFlags()
