@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "phase": "PREFLIGHT_ONLY",
+  "recipeId": "GG-BLD-SHOP-SIMPLE-THE-SAD-TOMATO-001",
+  "modules": [
+    {
+      "assetId": "GG-PRES-SIGN-THE-SAD-TOMATO-001",
+      "kind": "PRESENTATION_LAYER_A",
+      "version": "1.0.0",
+      "artifact": "asset-factory/modular/presentation-art/sad-tomato-v1/SAD_TOMATO_SIGN.png",
+      "sha256": "8cf2a90892681a6498fea989dc1ac36b16f2d50c2b742a37336733b0eec76955",
+      "sourceOwnership": "sign presentation slot",
+      "structuralGeometry": false
+    },
+    {
+      "assetId": "GG-PRES-AWNING-SAD-TOMATO-GREEN-WHITE-STRIPED-001",
+      "kind": "PRESENTATION_LAYER_A",
+      "version": "1.0.0",
+      "artifact": "asset-factory/modular/presentation-art/sad-tomato-v1/SAD_TOMATO_AWNING.png",
+      "sha256": "bebc4e1d1733d20f93f73c2fd185a42272d15c3fd1654147aef3db69c5985e3e",
+      "sourceOwnership": "awning presentation slot",
+      "structuralGeometry": false,
+      "palette": [
+        "forest_green",
+        "warm_ivory"
+      ],
+      "scallopedLowerEdge": true
+    },
+    {
+      "assetId": "GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001",
+      "kind": "PRESENTATION_LAYER_A",
+      "version": "1.0.0",
+      "artifact": "asset-factory/modular/presentation-art/sad-tomato-v1/SAD_TOMATO_PASTA_TRANSPARENT.png",
+      "sha256": "9b176d183e34fccfcc4df4ca2cf5e2057c2205edb055996bfcd275aacc477ee5",
+      "sourceOwnership": "window display presentation slot",
+      "structuralGeometry": false,
+      "alphaAudit": "SAD_TOMATO_V1_DISPLAY_ALPHA_AUDIT.json"
+    }
+  ],
+  "forbiddenContamination": {
+    "structuralGeometry": 0,
+    "foliageOrPlanter": 0,
+    "windowCasingOrSill": 0,
+    "opaqueBackgroundCards": 0
+  },
+  "assemblyPerformed": "NO",
+  "fabricationReady": "YES"
+}

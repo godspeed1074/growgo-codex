@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "cameraContract": "COMMERCIAL_SIMPLE_FRONT_PRESENTATION_V1",
+  "orderingFrontToBack": [
+    "GG-FAC-WINDOW-OPENING-SIMPLE-001: approved teal glass/background",
+    "GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001: transparent art behind glass",
+    "GG-FAC-WALL-BAY-SIMPLE-001: wall shell"
+  ],
+  "displayDepthRelativeToGlass": "+0.012u behind",
+  "displayDepthRelativeToWall": "-0.018u forward",
+  "preservesWindowOwnership": "YES",
+  "createsNoStructuralGeometry": "YES"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "assetId": "GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001",
+  "source": "asset-factory/modular/presentation-art/sad-tomato-v1/SAD_TOMATO_PASTA.png",
+  "repairedArtifact": "asset-factory/modular/presentation-art/sad-tomato-v1/SAD_TOMATO_PASTA_TRANSPARENT.png",
+  "sourceHadTransparentPixels": true,
+  "edgeConnectedCheckerPixelsRemoved": 0,
+  "transparentPixels": 145418,
+  "opaqueOrPartialPixels": 51190,
+  "visibleBoundsPx": {
+    "left": 75,
+    "top": 12,
+    "right": 444,
+    "bottom": 345
+  },
+  "outsideArtworkTransparent": "YES",
+  "forbiddenBackgroundGeometry": "NONE",
+  "notes": "Alpha repair is limited to edge-connected neutral checkerboard pixels; no scene or Blender source was opened."
+}

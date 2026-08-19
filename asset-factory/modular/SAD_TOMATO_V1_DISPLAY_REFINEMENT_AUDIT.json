@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "selected": "C",
+  "assetId": "GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001",
+  "candidates": {
+    "A": {
+      "referenceCharacterLikeness": "PASS",
+      "sadExpression": "PASS",
+      "cartoonPasta": "FAIL",
+      "aiFoodAppearance": "YES",
+      "lettering": "YES",
+      "papercut": "NEEDS_WORK",
+      "gameplayReadability": "NEEDS_WORK",
+      "discarded": "YES"
+    },
+    "B": {
+      "referenceCharacterLikeness": "PASS",
+      "sadExpression": "PASS",
+      "cartoonPasta": "NEEDS_WORK",
+      "aiFoodAppearance": "YES",
+      "lettering": "YES",
+      "papercut": "NEEDS_WORK",
+      "gameplayReadability": "PASS",
+      "discarded": "YES"
+    },
+    "C": {
+      "referenceCharacterLikeness": "PASS",
+      "sadExpression": "PASS",
+      "cartoonPasta": "PASS",
+      "aiFoodAppearance": "NO",
+      "lettering": "YES",
+      "papercut": "PASS",
+      "gameplayReadability": "PASS",
+      "selected": "YES"
+    }
+  },
+  "architectureChanged": "NO",
+  "signChanged": "NO",
+  "awningChanged": "NO",
+  "displayBehindGlass": "YES",
+  "displayBounds": "PASS",
+  "artifacts": [
+    "DISPLAY_A.png",
+    "DISPLAY_B.png",
+    "DISPLAY_C.png"
+  ]
+}
