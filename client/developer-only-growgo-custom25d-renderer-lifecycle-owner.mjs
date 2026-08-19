@@ -493,6 +493,10 @@ export function createDeveloperOnlyGrowGoCustom25DRendererLifecycleOwner({
   return deepFreeze({
     registerOwnedResources,
     disposeOwnedResources,
-    getLifecycleOwnerStatus
+    getLifecycleOwnerStatus,
+    // Public orchestration aliases. Callers should not duplicate ownership verbs.
+    register: registerOwnedResources,
+    dispose: disposeOwnedResources,
+    status: getLifecycleOwnerStatus
   });
 }

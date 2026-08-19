@@ -53,6 +53,9 @@ import {
   createAtlasAutomaticPopulationController
 } from "./developer-only-atlas-automatic-population-controller.mjs";
 import {
+  createDeveloperOnlyPersistentAtlasRendererLifecycleBridge
+} from "./developer-only-persistent-atlas-renderer-lifecycle-bridge.mjs";
+import {
   createAtlasAutomaticPopulationLiveEventAdapter
 } from "./developer-only-atlas-automatic-population-live-event-adapter.mjs";
 import {
@@ -1890,6 +1893,15 @@ const persistentOneFrameSurfaceOperations =
     devicePixelRatioProvider: () => globalThis?.devicePixelRatio ?? 1
   });
 
+const persistentAtlasRendererLifecycleBridge =
+  createDeveloperOnlyPersistentAtlasRendererLifecycleBridge({
+    mapProvider: () => resolvePersistentAuthoritativeMapReference(),
+    surfaceProvider: () => persistentPreparedSurface,
+    surfaceRollbackProvider: ({ surface } = {}) =>
+      persistentOneFrameSurfaceOperations.rollbackPreparedSurface({ surface }),
+    clearRuntimeReferences: clearPersistentRuntimeReferences
+  });
+
 const controlledPersistentAtlasIntegration =
   createControlledPersistentAtlasContractIntegration({
     hostnameProvider: () => globalThis?.location?.hostname ?? "",
@@ -1976,23 +1988,11 @@ const controlledPersistentAtlasIntegration =
           persistentLifecycleGenerationId = generationId;
           persistentSurfaceOwnerId = surfaceOwnerId;
 
-          persistentLifecycleOwner = {
-            ownerId,
-            id: ownerId,
-            registerOwnedResources() {
-              return true;
-            },
-            disposeOwnedResources() {
-              return true;
-            },
-            getLifecycleOwnerStatus() {
-              return Object.freeze({
-                lifecycleOwnerId: ownerId,
-                lifecycleGenerationId: generationId,
-                surfaceOwnerId
-              });
-            }
-          };
+          persistentLifecycleOwner = persistentAtlasRendererLifecycleBridge.attach({
+            lifecycleOwnerId: ownerId,
+            lifecycleGenerationId: generationId,
+            surfaceOwnerId
+          });
         }
 
         return {
@@ -2138,31 +2138,11 @@ const controlledPersistentAtlasIntegration =
     },
     retainedCleanupProvider: {
       cleanupPersistentAttachment({ lifecycleOwner } = {}) {
-        const cleanupFailureReasons = [];
-
-        if (persistentPreparedSurface) {
-          const rollback =
-            persistentOneFrameSurfaceOperations.rollbackPreparedSurface({
-              surface: persistentPreparedSurface
-            });
-
-          if (
-            rollback?.outcome === "failed_closed" &&
-            typeof rollback?.reasonCode === "string"
-          ) {
-            cleanupFailureReasons.push(rollback.reasonCode);
-          }
-        }
-
-        try {
-          lifecycleOwner?.disposeOwnedResources?.();
-        } catch (error) {
-          cleanupFailureReasons.push(
-            toReasonCode(error, "LIFECYCLE_OWNER_RELEASE_FAILED")
-          );
-        }
-
-        clearPersistentRuntimeReferences();
+        const cleanupResult = lifecycleOwner?.dispose?.();
+        const cleanupFailureReasons =
+          cleanupResult?.outcome === "failed_closed"
+            ? [cleanupResult.reasonCode ?? "LIFECYCLE_OWNER_RELEASE_FAILED"]
+            : [];
 
         return {
           cleanupCompleted: cleanupFailureReasons.length === 0,
