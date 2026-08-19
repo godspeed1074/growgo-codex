@@ -1,0 +1,104 @@
+{
+  "status": "BLOCKED",
+  "components": [
+    {
+      "component": "door",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "window",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "wall panels",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "pilasters/moldings",
+      "assetId": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "base/plinth",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "fascia",
+      "assetId": "GG-FAC-FASCIA-BAND-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "roof",
+      "assetId": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "awning structure",
+      "assetId": "GG-BLD-AWNING-COMMERCIAL-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "side/rear/floor shell",
+      "assetId": "GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "PRESENTATION_PLANE_OR_TAGGED_SHELL",
+      "reused": "NOT_PROVEN",
+      "presentationDependency": "none"
+    },
+    {
+      "component": "Sad Tomato sign",
+      "assetId": "GG-PRES-SIGN-THE-SAD-TOMATO-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "SAD_TOMATO_SIGN.png",
+      "reused": "LOCKED_PRESENTATION",
+      "presentationDependency": "sign slot"
+    },
+    {
+      "component": "Sad Tomato awning",
+      "assetId": "GG-PRES-AWNING-SAD-TOMATO-GREEN-WHITE-STRIPED-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "SAD_TOMATO_AWNING.png",
+      "reused": "LOCKED_PRESENTATION",
+      "presentationDependency": "awning slot"
+    },
+    {
+      "component": "Sad Tomato display",
+      "assetId": "GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001",
+      "version": "1.0.0",
+      "runtimeArtifact": "SAD_TOMATO_DISPLAY.png",
+      "reused": "LOCKED_PRESENTATION",
+      "presentationDependency": "display slot"
+    }
+  ],
+  "anonymousGeometry": 0,
+  "exactSourceReuse": "NO",
+  "reason": "The actual front render proves overlapping prior template imagery. The worker did not instantiate exact approved structural source artifacts."
+}

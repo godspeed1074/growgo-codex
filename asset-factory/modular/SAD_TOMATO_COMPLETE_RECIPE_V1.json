@@ -1,0 +1,18 @@
+{
+  "recipeId": "GG-BLD-RESTAURANT-SIMPLE-THE-SAD-TOMATO-001",
+  "recipeVersion": "1.0.0",
+  "layer": "LAYER_B_RECIPE",
+  "status": "BLOCKED_REUSE_PROOF_REQUIRED",
+  "dependencies": [
+    "GG-BLD-FACADE-SIMPLE-SHOP-MIRRORED-001",
+    "GG-BLD-DOOR-SHOP-002",
+    "GG-BLD-WINDOW-SHOP-LARGE-002",
+    "GG-ROOF-COMMERCIAL-SIMPLE-001",
+    "GG-PRES-SIGN-THE-SAD-TOMATO-001",
+    "GG-PRES-AWNING-SAD-TOMATO-GREEN-WHITE-STRIPED-001",
+    "GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001"
+  ],
+  "anonymousGeometry": 0,
+  "knownGood": "NO",
+  "atlasIntegrated": "NO"
+}

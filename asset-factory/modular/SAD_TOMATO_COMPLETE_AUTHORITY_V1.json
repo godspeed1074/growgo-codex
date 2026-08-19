@@ -1,0 +1,32 @@
+{
+  "authorityId": "SAD_TOMATO_COMPLETE_AUTHORITY_V1",
+  "assetId": "GG-BLD-RESTAURANT-SIMPLE-THE-SAD-TOMATO-001@1.0.0",
+  "state": "NOT_LOCKED",
+  "knownGood": "NO",
+  "atlasIntegrated": "NO",
+  "operatorApproval": "NO",
+  "firstPassStandardRegression": "YES",
+  "checks": {
+    "sameSadTomato": "NO",
+    "sameCommercialSimpleFamily": "PARTIAL",
+    "doorExactReuse": "NO",
+    "windowExactReuse": "NO",
+    "wallMoldingExactReuse": "NO",
+    "roofExactReuse": "NO",
+    "shellExactReuse": "NO",
+    "sign": "FAIL_OVERLAP",
+    "greenWhiteAwning": "FAIL_OVERLAP",
+    "pastaMadeWithLove": "PASS",
+    "pastaIllustration": "PASS",
+    "sadTomato": "PASS",
+    "sadExpression": "PASS",
+    "displayBounds": "FAIL",
+    "displayBehindGlass": "UNPROVEN",
+    "whiteTealCard": "YES_TEAL_CARD",
+    "aiLookingFood": "NO",
+    "papercutEqualToBenchmark": "NO",
+    "genericBlockout": "YES",
+    "budget": "PARTIAL_PASS",
+    "steamDeck": "PASS"
+  }
+}

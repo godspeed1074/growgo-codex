@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "approvedSwappedFacadeChanged": "NO",
+  "approvedDoorChanged": "NO",
+  "approvedWindowChanged": "NO",
+  "approvedCommercialSimpleLayerAChanged": "NO",
+  "approvedRoofChanged": "NO",
+  "approvedShellChanged": "NO",
+  "approvedAwningStructureChanged": "NO",
+  "candidateBuildChecksum": "de4041439e935d802f8da8ba443ff61f1d71a90e84724cc30212d6f7c026765f"
+}

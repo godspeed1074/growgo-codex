@@ -1,0 +1,16 @@
+{
+  "status": "BLOCKED",
+  "reportedNewStructuralTriangles": 0,
+  "verifiedExactArtifactReuse": "NO",
+  "newWallGeometry": 0,
+  "newMoldingGeometry": 0,
+  "newDoorGeometry": 0,
+  "newWindowGeometry": 0,
+  "newRoofGeometry": 0,
+  "newShellGeometry": 0,
+  "anonymousGeometry": 0,
+  "blockers": [
+    "Front composition uses presentation planes rather than verified imported approved Layer A/Layer B runtime artifacts.",
+    "Shell source IDs are tagged, but their approved source artifacts were not instantiated; source-ID ownership alone is not proof of reuse."
+  ]
+}

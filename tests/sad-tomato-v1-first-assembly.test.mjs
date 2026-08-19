@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const read=n=>JSON.parse(fs.readFileSync(path.join(root,'asset-factory/modular',n),'utf8'));
+const delta=read('SAD_TOMATO_V1_STRUCTURAL_DELTA_AUDIT.json');
+const protection=read('SAD_TOMATO_V1_SOURCE_PROTECTION_AUDIT.json');
+const runtime=read('SAD_TOMATO_V1_RUNTIME_SOURCE_ID_AUDIT.json');
+const recipe=read('SAD_TOMATO_COMPLETE_RECIPE_V1.json');
+const authority=read('SAD_TOMATO_COMPLETE_AUTHORITY_V1.json');
+assert.equal(delta.status,'BLOCKED');assert.equal(delta.reportedNewStructuralTriangles,0);assert.equal(delta.verifiedExactArtifactReuse,'NO');
+assert.equal(protection.status,'PASS');assert.equal(protection.approvedDoorChanged,'NO');assert.equal(protection.approvedWindowChanged,'NO');
+assert.equal(runtime.status,'BLOCKED');assert.equal(runtime.exactSourceReuse,'NO');assert.equal(recipe.status,'BLOCKED_REUSE_PROOF_REQUIRED');
+assert.equal(authority.state,'NOT_LOCKED');assert.equal(authority.firstPassStandardRegression,'YES');assert.equal(authority.checks.steamDeck,'PASS');assert.equal(authority.checks.aiLookingFood,'NO');
+assert.ok(fs.existsSync(path.join(root,'test-output/sad-tomato-v1/blender/SAD_TOMATO_V1_FINAL_REVIEW_BOARD.png')));console.log('sad-tomato first assembly terminal gate: PASS (13 assertions)');
