@@ -1,4 +1,9 @@
 import { selectVisibleAtlasChunks, diffAtlasChunkSets } from "./developer-only-atlas-chunk-identity.mjs";
+import {
+  getAtlasChunkPopulationReconcilerStatus,
+  reconcileAtlasChunkPopulation,
+  releaseAtlasChunkPopulation
+} from "./developer-only-atlas-chunk-population-reconciler.mjs";
 
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_AUTOMATIC_POPULATION_CONTROLLER_STATUS_001";
@@ -243,6 +248,41 @@ function clearGenerationState(state, internal) {
   state.chunksRemoved = [];
 }
 
+function reconcileChunkOwnedPopulation(controller, generation) {
+  const reconciler = controller.__deps.chunkPopulationReconciler;
+  if (!reconciler) return null;
+  const result = reconcileAtlasChunkPopulation(reconciler, {
+    chunks: controller.__internal.relevantChunks,
+    identity: {
+      mapIdentityId: generation.mapIdentityId,
+      regionId: generation.regionId,
+      packageId: generation.packageId,
+      recipeId: generation.recipeId,
+      selectorSeed: generation.selectorSeed
+    }
+  });
+  if (result.outcome !== "reconciled") {
+    throw Object.assign(new Error(result.reasonCode), { reasonCode: result.reasonCode });
+  }
+  const ownership = result.status;
+  controller.__state.chunkOwnedPopulationReferenceCount = ownership.populationReferenceCount;
+  controller.__state.activeChunkPopulationIds = ownership.activePopulationIds;
+  return result;
+}
+
+function releaseChunkOwnedPopulation(controller) {
+  const reconciler = controller.__deps.chunkPopulationReconciler;
+  if (!reconciler) return null;
+  const result = releaseAtlasChunkPopulation(reconciler);
+  const ownership = getAtlasChunkPopulationReconcilerStatus(reconciler);
+  controller.__state.chunkOwnedPopulationReferenceCount = ownership.populationReferenceCount;
+  controller.__state.activeChunkPopulationIds = ownership.activePopulationIds;
+  if (result.outcome !== "released") {
+    appendCleanupFailure(controller.__state, result.reasonCode);
+  }
+  return result;
+}
+
 function resolveChunkDiagnostics(controller, viewportIdentity) {
   if (!viewportIdentity?.bounds) return null;
   const selector = isAvailableFunction(controller.__deps.chunkSelector) ? controller.__deps.chunkSelector : selectVisibleAtlasChunks;
@@ -432,6 +472,7 @@ export function createAtlasAutomaticPopulationController({
     "POPULATION_REFERENCE_RELEASE_PROVIDER_UNAVAILABLE"
   ),
   chunkSelector = null,
+  chunkPopulationReconciler = null,
   budgets = DEFAULT_BUDGETS
 } = {}) {
   const state = {
@@ -470,7 +511,9 @@ export function createAtlasAutomaticPopulationController({
     currentRelevantChunkIds: [],
     chunksAdded: [],
     chunksRetained: [],
-    chunksRemoved: []
+    chunksRemoved: [],
+    chunkOwnedPopulationReferenceCount: 0,
+    activeChunkPopulationIds: []
   };
 
   const internal = {
@@ -499,7 +542,8 @@ export function createAtlasAutomaticPopulationController({
     populationPlanner,
     populationDrawIntegration,
     populationReferenceReleaseProvider,
-    chunkSelector
+    chunkSelector,
+    chunkPopulationReconciler
   };
 
   state.controllerReady = validateDependencyAvailability(deps);
@@ -552,6 +596,8 @@ export function getAutomaticViewportPopulationControllerStatus(controller) {
       chunksAdded: deepFreeze([]),
       chunksRetained: deepFreeze([]),
       chunksRemoved: deepFreeze([]),
+      chunkOwnedPopulationReferenceCount: 0,
+      activeChunkPopulationIds: deepFreeze([]),
       canonicalSafetyFlags: canonicalSafetyFlags()
     });
   }
@@ -596,6 +642,8 @@ export function getAutomaticViewportPopulationControllerStatus(controller) {
     chunksAdded: deepFreeze([...state.chunksAdded]),
     chunksRetained: deepFreeze([...state.chunksRetained]),
     chunksRemoved: deepFreeze([...state.chunksRemoved]),
+    chunkOwnedPopulationReferenceCount: state.chunkOwnedPopulationReferenceCount,
+    activeChunkPopulationIds: deepFreeze([...state.activeChunkPopulationIds]),
     canonicalSafetyFlags: canonicalSafetyFlags()
   });
 }
@@ -634,6 +682,7 @@ export function disableAutomaticViewportPopulation(controller) {
   state.automaticPopulationEnabled = false;
   state.state = "cleanup_pending";
   clearGenerationState(state, internal);
+  releaseChunkOwnedPopulation(controller);
   releaseControllerOwnedPopulationReferences(
     controller,
     "disableAutomaticViewportPopulation"
@@ -661,6 +710,7 @@ export function invalidateAutomaticViewportPopulationController(
   state.invalidationReason = normalizedReason;
   state.lastFailureReason = normalizedReason;
   clearGenerationState(state, internal);
+  releaseChunkOwnedPopulation(controller);
   releaseControllerOwnedPopulationReferences(
     controller,
     "invalidateAutomaticViewportPopulationController"
@@ -1078,12 +1128,15 @@ export function runQueuedAutomaticViewportPopulationRefresh(controller) {
       });
     }
 
+    const chunkPopulation = reconcileChunkOwnedPopulation(controller, generation);
+
     internal.submissionActive = true;
     state.state = "submitting";
     const integrationResult = deps.populationDrawIntegration({
       generation,
       plan,
       currentPopulation: clonePlain(internal.currentPopulation),
+      chunkPopulation: clonePlain(chunkPopulation),
       redrawReason: generation.triggerReason
     });
     internal.submissionActive = false;

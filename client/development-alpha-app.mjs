@@ -2588,7 +2588,11 @@ const atlasAutomaticPopulationController =
           "ATLAS_AUTO_VIEWPORT_UNAVAILABLE",
         featureSourceGenerationId:
           atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()
-            ?.viewportIdentity ?? null
+            ?.viewportIdentity ?? null,
+        // Developer-only chunk diagnostics consume the same authoritative Leaflet
+        // viewport snapshot as feature extraction; this does not enable Atlas.
+        bounds: atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()?.bounds ?? null,
+        zoom: atlasLiveFeatureInputAdapter.__deps.viewportProvider?.()?.zoom ?? null
       }),
     atlasIdentityProvider: () =>
       readApprovedPersistentReadinessIdentity(
