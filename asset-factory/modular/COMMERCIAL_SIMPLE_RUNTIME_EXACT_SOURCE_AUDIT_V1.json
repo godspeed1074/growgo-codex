@@ -1,0 +1,88 @@
+{
+  "status": "PARTIAL_PASS",
+  "sources": [
+    {
+      "component": "DOOR",
+      "assetId": "GG-BLD-DOOR-SHOP-002",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/simple-shop-complete-v1/GG-BLD-SHOP-SIMPLE-GROW-GOODS-001_V1_CANDIDATE.blend",
+      "objectIdentity": "APPROVED_DOOR_01",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "WINDOW",
+      "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/simple-shop-complete-v1/GG-BLD-SHOP-SIMPLE-GROW-GOODS-001_V1_CANDIDATE.blend",
+      "objectIdentity": "APPROVED_WINDOW_01",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "WALL",
+      "assetId": "GG-FAC-WALL-PANEL-SIMPLE-001",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/commercial-simple-native-v1/COMMERCIAL_SIMPLE_LAYER_A_NATIVE_GROW_GOODS_V1.blend",
+      "objectIdentity": "WALL_*",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "PILASTER_MOLDING",
+      "assetId": "GG-FAC-PILASTER-VERTICAL-SIMPLE-001",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/commercial-simple-native-v1/COMMERCIAL_SIMPLE_LAYER_A_NATIVE_GROW_GOODS_V1.blend",
+      "objectIdentity": "*_PILASTER / FASCIA_BAND",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "BASE_PLINTH",
+      "assetId": "GG-FAC-BASE-PLINTH-SIMPLE-001",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/commercial-simple-native-v1/COMMERCIAL_SIMPLE_LAYER_A_NATIVE_GROW_GOODS_V1.blend",
+      "objectIdentity": "BASE_*",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "FASCIA",
+      "assetId": "GG-BLD-SIGN-FASCIA-COMMERCIAL-001",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/commercial-simple-native-v1/COMMERCIAL_SIMPLE_LAYER_A_NATIVE_GROW_GOODS_V1.blend",
+      "objectIdentity": "SIGN_FASCIA_STRUCTURE.001",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "ROOF",
+      "assetId": "GG-ROOF-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/simple-shop-roof-v1/GG-BLD-ROOF-SIMPLE-SHOP-001_V1.blend",
+      "objectIdentity": "ROOF_*",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    },
+    {
+      "component": "SHELL",
+      "assetId": "GG-BLD-WALL-SIDE-COMMERCIAL-SIMPLE-001",
+      "version": "1.0.0",
+      "approvedArtifactPath": "test-output/simple-shop-complete-v1/GG-BLD-SHOP-SIMPLE-GROW-GOODS-001_V1_CANDIDATE.blend",
+      "objectIdentity": "COMPLETE_*",
+      "transform": "SOURCE_LOCKED_TO_RECIPE_ANCHOR",
+      "presentationDependencies": "NONE",
+      "exactReuse": true
+    }
+  ],
+  "exactArtifactPathsResolved": true,
+  "exactArtifactInstanceBuildProven": false,
+  "reason": "The inventory proves source object availability, but not a clean direct-import runtime build that disables baked parent presentations."
+}

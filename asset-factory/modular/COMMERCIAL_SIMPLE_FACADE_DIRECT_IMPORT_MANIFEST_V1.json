@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "source": "test-output/commercial-simple-native-v1/COMMERCIAL_SIMPLE_LAYER_A_NATIVE_GROW_GOODS_V1.blend",
+  "objects": [
+    {"object":"WALL_* / BASE_* / *_PILASTER / FASCIA_BAND.001 / SIGN_FASCIA_STRUCTURE.001 / AWNING_STRUCTURE.001 / AWNING_RAIL.001","classification":"STRUCTURAL_REQUIRED","runtimePolicy":"DIRECT_IMPORT"},
+    {"object":"WALL_*_PRESENTATION / BASE_*_PRESENTATION / FASCIA_PRESENTATION / DOOR_PRESENTATION","classification":"STRUCTURAL_PRESENTATION_REQUIRED","runtimePolicy":"DIRECT_IMPORT"},
+    {"object":"SIGN_PRESENTATION","classification":"DEFAULT_SIGN_PRESENTATION","runtimePolicy":"SUPPRESS_UNLESS_EXPLICITLY_BOUND"},
+    {"object":"AWNING_PRESENTATION","classification":"DEFAULT_AWNING_PRESENTATION","runtimePolicy":"SUPPRESS_UNLESS_EXPLICITLY_BOUND"},
+    {"object":"WINDOW_PRESENTATION","classification":"DEFAULT_WINDOW_DISPLAY","runtimePolicy":"SUPPRESS_UNLESS_EXPLICITLY_BOUND"},
+    {"object":"Camera / Area","classification":"ANCHOR_METADATA","runtimePolicy":"DO_NOT_IMPORT_AS_RUNTIME_GEOMETRY"},
+    {"object":"RETIRED_PARENT_PRESENTATION","classification":"RETIRED_PRESENTATION","runtimePolicy":"NEVER_IMPORT"}
+  ],
+  "unknownCount": 0,
+  "exclusiveSlots":["SIGN_PRESENTATION_SLOT","AWNING_PRESENTATION_SLOT","WINDOW_DISPLAY_SLOT"]
+}

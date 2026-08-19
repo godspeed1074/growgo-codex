@@ -1,3 +1,5 @@
+import { selectVisibleAtlasChunks, diffAtlasChunkSets } from "./developer-only-atlas-chunk-identity.mjs";
+
 const STATUS_SCHEMA_ID =
   "GROWGO_DEVELOPER_ONLY_ATLAS_AUTOMATIC_POPULATION_CONTROLLER_STATUS_001";
 const RESULT_SCHEMA_ID =
@@ -135,9 +137,9 @@ function normalizeViewportIdentity(value = {}) {
     viewportIdentity: sanitizeString(
       value.viewportIdentity ?? value.viewportOrTileId
     ),
-    featureSourceGenerationId: sanitizeString(
-      value.featureSourceGenerationId ?? value.sourceGenerationId
-    )
+    featureSourceGenerationId: sanitizeString(value.featureSourceGenerationId ?? value.sourceGenerationId),
+    bounds: value?.bounds ?? null,
+    zoom: value?.zoom == null ? null : Number(value.zoom)
   };
 }
 
@@ -234,6 +236,24 @@ function clearGenerationState(state, internal) {
   internal.queuedGeneration = null;
   internal.activeGeneration = null;
   internal.followUpGeneration = null;
+  internal.relevantChunks = [];
+  state.currentRelevantChunkIds = [];
+  state.chunksAdded = [];
+  state.chunksRetained = [];
+  state.chunksRemoved = [];
+}
+
+function resolveChunkDiagnostics(controller, viewportIdentity) {
+  if (!viewportIdentity?.bounds) return null;
+  const selector = isAvailableFunction(controller.__deps.chunkSelector) ? controller.__deps.chunkSelector : selectVisibleAtlasChunks;
+  const selection = selector({ bounds: viewportIdentity.bounds, zoom: viewportIdentity.zoom });
+  const diff = diffAtlasChunkSets(controller.__internal.relevantChunks, selection?.chunks ?? []);
+  controller.__internal.relevantChunks = [...(selection?.chunks ?? [])];
+  controller.__state.currentRelevantChunkIds = [...(selection?.chunkIds ?? [])];
+  controller.__state.chunksAdded = [...diff.addedChunkIds];
+  controller.__state.chunksRetained = [...diff.retainedChunkIds];
+  controller.__state.chunksRemoved = [...diff.removedChunkIds];
+  return deepFreeze({ selection, diff });
 }
 
 function clearActiveGeneration(state, internal) {
@@ -411,6 +431,7 @@ export function createAtlasAutomaticPopulationController({
   populationReferenceReleaseProvider = unavailable(
     "POPULATION_REFERENCE_RELEASE_PROVIDER_UNAVAILABLE"
   ),
+  chunkSelector = null,
   budgets = DEFAULT_BUDGETS
 } = {}) {
   const state = {
@@ -445,7 +466,11 @@ export function createAtlasAutomaticPopulationController({
     parallelFeatureReadDetected: false,
     parallelPlanningDetected: false,
     parallelSubmissionDetected: false,
-    parallelDrawDetected: false
+    parallelDrawDetected: false,
+    currentRelevantChunkIds: [],
+    chunksAdded: [],
+    chunksRetained: [],
+    chunksRemoved: []
   };
 
   const internal = {
@@ -462,7 +487,8 @@ export function createAtlasAutomaticPopulationController({
     submissionActive: false,
     drawActive: false,
     lastCompletedViewportGenerationId: null,
-    lastCompletedViewportIdentity: null
+    lastCompletedViewportIdentity: null,
+    relevantChunks: []
   };
 
   const deps = {
@@ -472,7 +498,8 @@ export function createAtlasAutomaticPopulationController({
     liveFeatureAdapter,
     populationPlanner,
     populationDrawIntegration,
-    populationReferenceReleaseProvider
+    populationReferenceReleaseProvider,
+    chunkSelector
   };
 
   state.controllerReady = validateDependencyAvailability(deps);
@@ -521,6 +548,10 @@ export function getAutomaticViewportPopulationControllerStatus(controller) {
       parallelPlanningDetected: false,
       parallelSubmissionDetected: false,
       parallelDrawDetected: false,
+      currentRelevantChunkIds: deepFreeze([]),
+      chunksAdded: deepFreeze([]),
+      chunksRetained: deepFreeze([]),
+      chunksRemoved: deepFreeze([]),
       canonicalSafetyFlags: canonicalSafetyFlags()
     });
   }
@@ -561,6 +592,10 @@ export function getAutomaticViewportPopulationControllerStatus(controller) {
     parallelPlanningDetected: state.parallelPlanningDetected,
     parallelSubmissionDetected: state.parallelSubmissionDetected,
     parallelDrawDetected: state.parallelDrawDetected,
+    currentRelevantChunkIds: deepFreeze([...state.currentRelevantChunkIds]),
+    chunksAdded: deepFreeze([...state.chunksAdded]),
+    chunksRetained: deepFreeze([...state.chunksRetained]),
+    chunksRemoved: deepFreeze([...state.chunksRemoved]),
     canonicalSafetyFlags: canonicalSafetyFlags()
   });
 }
@@ -699,6 +734,8 @@ export function requestAutomaticViewportPopulationRefresh(
       viewportIdentity,
       atlasIdentity
     });
+    // Diagnostics-only foundation: this never loads, unloads, or renders a chunk.
+    const chunkDiagnostics = resolveChunkDiagnostics(controller, viewportIdentity);
 
     state.refreshRequestedCount += 1;
     state.lastTriggerReason = generation.triggerReason;
@@ -724,7 +761,7 @@ export function requestAutomaticViewportPopulationRefresh(
         "skipped",
         "UNCHANGED_VIEWPORT",
         controller,
-        { generation }
+        { generation, chunkDiagnostics }
       );
     }
 
@@ -740,7 +777,7 @@ export function requestAutomaticViewportPopulationRefresh(
         "coalesced",
         "FOLLOW_UP_REFRESH_QUEUED",
         controller,
-        { generation }
+        { generation, chunkDiagnostics }
       );
     }
 
@@ -754,7 +791,7 @@ export function requestAutomaticViewportPopulationRefresh(
         "coalesced",
         "QUEUED_REFRESH_REPLACED",
         controller,
-        { generation }
+        { generation, chunkDiagnostics }
       );
     }
 
@@ -767,7 +804,7 @@ export function requestAutomaticViewportPopulationRefresh(
       "queued",
       "VIEWPORT_REFRESH_QUEUED",
       controller,
-      { generation }
+      { generation, chunkDiagnostics }
     );
   } catch (error) {
     const reasonCode = toReasonCode(error, "VIEWPORT_REFRESH_REQUEST_FAILED");

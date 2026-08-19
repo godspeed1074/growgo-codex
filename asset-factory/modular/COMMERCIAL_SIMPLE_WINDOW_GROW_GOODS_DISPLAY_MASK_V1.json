@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "maskPath": "test-output/commercial-simple-window-runtime-decomposition-v1/COMMERCIAL_SIMPLE_WINDOW_GROW_GOODS_DISPLAY_MASK_V1.png",
+  "dimensions": [
+    278,
+    231
+  ],
+  "pixelCount": 22043,
+  "coveragePercent": 34.32526705908001,
+  "method": "DETERMINISTIC_OBSERVED_PROP_ZONE_AND_SOURCE_COLOUR_CLASSIFICATION_V1",
+  "semanticOwnership": [
+    "plants",
+    "shelves",
+    "watering can",
+    "OPEN sign",
+    "hanging cords"
+  ],
+  "excluded": [
+    "teal/dark backing",
+    "generic shadow",
+    "glass reflection",
+    "casing",
+    "sill",
+    "reveal"
+  ],
+  "rectangularFallbackCard": false
+}

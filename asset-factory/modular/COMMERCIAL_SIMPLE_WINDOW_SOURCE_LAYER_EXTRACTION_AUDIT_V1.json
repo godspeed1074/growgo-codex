@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "extractionScope": "ADDITIVE_RUNTIME_DECOMPOSITION_ONLY",
+  "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002@1.0.0",
+  "authority": "SHOP_WINDOW_FRONT_AUTHORITY_V1 (UNCHANGED)",
+  "sourceLayers": [
+    {
+      "role": "approvedFrontAuthority",
+      "path": "test-output/simple-shop-facade-v1/APPROVED_WINDOW_FRONT.png",
+      "dimensions": [
+        278,
+        231
+      ],
+      "rawSha256": "1226d9c183f3a2a178ef4d94da46b02f8edc80368ae81893a480abefb7238edb",
+      "canonical": {
+        "contractVersion": "CANONICAL_DECODED_RGBA8_SHA256_V1",
+        "algorithm": "SHA-256",
+        "canonicalization": "DECODE_PNG_RGBA8_ROW_MAJOR_R_G_B_A",
+        "width": 278,
+        "height": 231,
+        "channelFormat": "RGBA8",
+        "checksum": "a7d96e51988977e6b8c897a2ddb86e6d8148cdfe10b147d6b935a6740b75ba50"
+      }
+    },
+    {
+      "role": "structureCasingReveal",
+      "path": "test-output/commercial-simple-window-runtime-decomposition-v1/COMMERCIAL_SIMPLE_WINDOW_STRUCTURE_V1.png",
+      "source": "approved front excluding opening",
+      "componentRegistryIds": [
+        "W02",
+        "W03",
+        "W04",
+        "W05",
+        "W06",
+        "W07",
+        "W08",
+        "W09",
+        "W10",
+        "W11",
+        "W12",
+        "W13"
+      ]
+    },
+    {
+      "role": "glassPresentation",
+      "path": "test-output/commercial-simple-window-runtime-decomposition-v1/COMMERCIAL_SIMPLE_WINDOW_GLASS_PRESENTATION_V1.png",
+      "componentRegistryIds": [
+        "W01"
+      ],
+      "displayPixels": 0
+    },
+    {
+      "role": "interiorBacking",
+      "path": "test-output/commercial-simple-window-runtime-decomposition-v1/COMMERCIAL_SIMPLE_WINDOW_INTERIOR_BACKING_V1.png",
+      "source": "approved interior with observed display alpha removed"
+    },
+    {
+      "role": "growGoodsDisplay",
+      "path": "test-output/commercial-simple-window-runtime-decomposition-v1/COMMERCIAL_SIMPLE_WINDOW_GROW_GOODS_DISPLAY_V1.png",
+      "presentationId": "GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001"
+    }
+  ],
+  "embeddedGrowGoodsRegions": [
+    "upper plants and shelf",
+    "lower plants and shelf",
+    "watering can",
+    "OPEN sign and hanging cords"
+  ],
+  "occlusionOrder": [
+    "WINDOW_STRUCTURE/CASING",
+    "WINDOW_GLASS_PRESENTATION",
+    "WINDOW_DISPLAY_SLOT",
+    "WINDOW_INTERIOR_BACKING"
+  ],
+  "calibratedTransforms": {
+    "pixelDimensions": [
+      278,
+      231
+    ],
+    "openingBounds": [
+      18,
+      17,
+      260,
+      197
+    ],
+    "anchor": "WINDOW_DISPLAY_ANCHOR",
+    "guideDrift": 0
+  }
+}

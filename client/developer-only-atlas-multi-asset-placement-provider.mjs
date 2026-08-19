@@ -215,7 +215,7 @@ function computeScale(instanceId, scaleRules) {
 }
 
 function computeRotation(instanceId, rotationRules, rotationOverride = null) {
-  if (Number.isFinite(Number(rotationOverride))) {
+  if (rotationOverride != null && Number.isFinite(Number(rotationOverride))) {
     return Number(rotationOverride);
   }
   if (rotationRules.mode === "seeded_degrees") {

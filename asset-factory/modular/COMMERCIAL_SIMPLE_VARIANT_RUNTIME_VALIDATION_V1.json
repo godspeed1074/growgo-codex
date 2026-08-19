@@ -1,0 +1,17 @@
+{
+  "status": "BLOCKED",
+  "growGoods": {
+    "contractResolver": "PASS",
+    "realRender": "NOT_RUN_SOURCE_DECOMPOSITION_REQUIRED"
+  },
+  "miztaPizza": {
+    "contractResolver": "PASS",
+    "realRender": "NOT_RUN_SOURCE_DECOMPOSITION_REQUIRED"
+  },
+  "exclusivePresentationSlots": "PASS",
+  "exactStructuralRuntimeReuse": "NOT_YET_PROVEN_IN_REAL_RENDER",
+  "fallbackCards": 0,
+  "duplicatePresentations": 0,
+  "anonymousGeometry": 0,
+  "sadTomatoRuntimeAssemblyDependency": "INVALID"
+}

@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "canonicalParity": {
+    "approved": {
+      "contractVersion": "CANONICAL_DECODED_RGBA8_SHA256_V1",
+      "algorithm": "SHA-256",
+      "canonicalization": "DECODE_PNG_RGBA8_ROW_MAJOR_R_G_B_A",
+      "width": 278,
+      "height": 231,
+      "channelFormat": "RGBA8",
+      "checksum": "a7d96e51988977e6b8c897a2ddb86e6d8148cdfe10b147d6b935a6740b75ba50"
+    },
+    "rebuilt": {
+      "contractVersion": "CANONICAL_DECODED_RGBA8_SHA256_V1",
+      "algorithm": "SHA-256",
+      "canonicalization": "DECODE_PNG_RGBA8_ROW_MAJOR_R_G_B_A",
+      "width": 278,
+      "height": 231,
+      "channelFormat": "RGBA8",
+      "checksum": "a7d96e51988977e6b8c897a2ddb86e6d8148cdfe10b147d6b935a6740b75ba50"
+    },
+    "comparison": {
+      "exact": true,
+      "sameDimensions": true,
+      "meanChannelDifference": 0,
+      "differentPixelCount": 0,
+      "differentPixelPercent": 0,
+      "maxChannelDifference": 0,
+      "silhouetteIoU": 1
+    },
+    "pass": true
+  },
+  "guideDrift": 0,
+  "sourceLayerAudit": "asset-factory/modular/COMMERCIAL_SIMPLE_WINDOW_SOURCE_LAYER_EXTRACTION_AUDIT_V1.json",
+  "runtime": {
+    "status": "VALID",
+    "states": {
+      "GROW_GOODS": {
+        "pass": true,
+        "source": "explicit GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001"
+      },
+      "EMPTY": {
+        "pass": true,
+        "displayPixels": 0
+      },
+      "PIZZA": {
+        "pass": true,
+        "source": "explicit GG-PRES-WINDOW-DISPLAY-PIZZA-001"
+      },
+      "SAD_TOMATO": {
+        "pass": true,
+        "source": "explicit GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001"
+      }
+    },
+    "permanentWindowIdPreserved": true,
+    "approvedAuthorityChanged": false,
+    "sadTomatoRebuilt": false
+  }
+}

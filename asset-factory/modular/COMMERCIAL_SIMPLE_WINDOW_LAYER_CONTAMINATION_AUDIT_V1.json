@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "rule": "Shop-specific display pixels are permitted only in explicit WINDOW_DISPLAY_SLOT bindings.",
+  "checks": {
+    "INTERIOR_BACKING": {
+      "growGoodsDisplayPixels": 0
+    },
+    "GROW_GOODS_DISPLAY": {
+      "structuralWindowPixels": 0
+    },
+    "GLASS_PRESENTATION": {
+      "displayPixels": 0
+    },
+    "CASING_STRUCTURE": {
+      "displayPixels": 0
+    },
+    "UNKNOWN_OWNERSHIP": {
+      "pixels": 0
+    }
+  },
+  "fallbackCard": {
+    "teal": false,
+    "white": false,
+    "rectangularDisplayAlpha": false
+  }
+}

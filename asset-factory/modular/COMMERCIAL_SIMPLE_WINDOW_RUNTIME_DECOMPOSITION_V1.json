@@ -1,0 +1,24 @@
+{
+  "status": "VALID",
+  "states": {
+    "GROW_GOODS": {
+      "pass": true,
+      "source": "explicit GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001"
+    },
+    "EMPTY": {
+      "pass": true,
+      "displayPixels": 0
+    },
+    "PIZZA": {
+      "pass": true,
+      "source": "explicit GG-PRES-WINDOW-DISPLAY-PIZZA-001"
+    },
+    "SAD_TOMATO": {
+      "pass": true,
+      "source": "explicit GG-PRES-WINDOW-DISPLAY-SAD-TOMATO-PASTA-001"
+    }
+  },
+  "permanentWindowIdPreserved": true,
+  "approvedAuthorityChanged": false,
+  "sadTomatoRebuilt": false
+}

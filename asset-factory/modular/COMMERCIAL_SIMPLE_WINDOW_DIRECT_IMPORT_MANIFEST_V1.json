@@ -1,0 +1,18 @@
+{
+  "status": "VALID_RUNTIME_DECOMPOSITION_V1",
+  "source": "test-output/simple-shop-complete-v1/GG-BLD-SHOP-SIMPLE-GROW-GOODS-001_V1_CANDIDATE.blend",
+  "assetId": "GG-BLD-WINDOW-SHOP-LARGE-002",
+  "objects": [
+    {"object":"WINDOW_STRUCTURE","classification":"STRUCTURAL_REQUIRED","runtimePolicy":"DIRECT_IMPORT artifact: COMMERCIAL_SIMPLE_WINDOW_STRUCTURE_V1.png"},
+    {"object":"WINDOW_GLASS_PRESENTATION","classification":"GLASS_PRESENTATION","runtimePolicy":"DIRECT_IMPORT artifact: COMMERCIAL_SIMPLE_WINDOW_GLASS_PRESENTATION_V1.png; display-free"},
+    {"object":"WINDOW_INTERIOR_BACKING","classification":"INTERIOR_BACKING","runtimePolicy":"DIRECT_IMPORT artifact: COMMERCIAL_SIMPLE_WINDOW_INTERIOR_BACKING_V1.png; display-free"},
+    {"object":"WINDOW_DISPLAY_ANCHOR","classification":"ANCHOR_METADATA","runtimePolicy":"LOCKED calibrated anchor; guide drift = 0"},
+    {"object":"WINDOW_DISPLAY_SLOT","classification":"EXCLUSIVE_RECIPE_SLOT","runtimePolicy":"Exactly one explicit transparent presentation binding, or EMPTY"},
+    {"object":"GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001","classification":"DEFAULT_WINDOW_DISPLAY","runtimePolicy":"EXPLICIT_RECIPE_BINDING_ONLY"}
+  ],
+  "unknownCount": 0,
+  "decompositionEvidence":"COMMERCIAL_SIMPLE_WINDOW_RUNTIME_DECOMPOSITION_V1.json",
+  "validatorRule":"A swappable runtime Window may not contain shop-specific display pixels in structure, glass, or interior/backing; such pixels must be isolated behind WINDOW_DISPLAY_SLOT.",
+  "fallbackCard":"FORBIDDEN",
+  "transparentDisplayBehavior":"REVEAL_APPROVED_GLASS_AND_INTERIOR"
+}

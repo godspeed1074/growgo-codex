@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {resolveCommercialSimpleVariant,validateSwappableWindowDisplayIsolation} from '../asset-factory/modular/commercial-simple-runtime-slot-contract.mjs';
+const structural=['DOOR','WINDOW','WALL','PILASTER_MOLDING','BASE_PLINTH','FASCIA','ROOF','SHELL'].map(component=>({component,approvedArtifactPath:`approved/${component}.blend`,exactReuse:true}));
+const grow=[{slot:'SIGN_PRESENTATION_SLOT',assetId:'GG-PRES-SIGN-GROW-GOODS-001'},{slot:'AWNING_PRESENTATION_SLOT',assetId:'GG-PRES-AWNING-PLUM-COMMERCIAL-001'},{slot:'WINDOW_DISPLAY_SLOT',assetId:'GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001',alphaMode:'TRANSPARENT'}];
+const mizta=[{slot:'SIGN_PRESENTATION_SLOT',assetId:'GG-PRES-SIGN-MIZTA-PIZZA-001'},{slot:'SIGN_PRESENTATION_SLOT',assetId:'GG-PRES-SIGN-GROW-GOODS-001',active:false},{slot:'AWNING_PRESENTATION_SLOT',assetId:'GG-PRES-AWNING-MIZTA-STRIPED-001'},{slot:'AWNING_PRESENTATION_SLOT',assetId:'GG-PRES-AWNING-PLUM-COMMERCIAL-001',active:false},{slot:'WINDOW_DISPLAY_SLOT',assetId:'GG-PRES-WINDOW-DISPLAY-PIZZA-001',alphaMode:'TRANSPARENT'},{slot:'WINDOW_DISPLAY_SLOT',assetId:'GG-PRES-WINDOW-DISPLAY-GROW-GOODS-001',active:false}];
+assert.equal(resolveCommercialSimpleVariant({structuralInstances:structural,bindings:grow}).status,'PASS');
+const r=resolveCommercialSimpleVariant({structuralInstances:structural,bindings:mizta});assert.equal(r.active.SIGN_PRESENTATION_SLOT.assetId,'GG-PRES-SIGN-MIZTA-PIZZA-001');assert.equal(r.active.AWNING_PRESENTATION_SLOT.assetId,'GG-PRES-AWNING-MIZTA-STRIPED-001');assert.equal(r.active.WINDOW_DISPLAY_SLOT.assetId,'GG-PRES-WINDOW-DISPLAY-PIZZA-001');
+assert.throws(()=>resolveCommercialSimpleVariant({structuralInstances:structural,bindings:[...mizta,{slot:'SIGN_PRESENTATION_SLOT',assetId:'DOUBLE'}]}),/EXCLUSIVE_SLOT_VIOLATION/);
+assert.throws(()=>resolveCommercialSimpleVariant({structuralInstances:structural.map((x,i)=>i?x:{...x,exactReuse:false}),bindings:grow}),/EXACT_STRUCTURAL_SOURCE_REQUIRED/);
+assert.throws(()=>resolveCommercialSimpleVariant({structuralInstances:structural,bindings:grow.map(x=>x.slot==='WINDOW_DISPLAY_SLOT'?{...x,fallbackCard:true}:x)}),/FALLBACK_CARD_FORBIDDEN/);
+assert.throws(()=>resolveCommercialSimpleVariant({structuralInstances:structural,bindings:grow.map(x=>x.slot==='WINDOW_DISPLAY_SLOT'?{...x,alphaMode:'OPAQUE'}:x)}),/WINDOW_DISPLAY_ALPHA_REQUIRED/);
+assert.equal(validateSwappableWindowDisplayIsolation({}).status,'PASS');
+assert.throws(()=>validateSwappableWindowDisplayIsolation({interiorBackingDisplayPixels:1}),/WINDOW_DISPLAY_ISOLATION_REQUIRED/);
+console.log('commercial simple runtime slot contract: PASS (11 assertions)');
