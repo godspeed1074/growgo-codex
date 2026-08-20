@@ -1,0 +1,16 @@
+{
+  "geometryPresent": true,
+  "materialCount": 1,
+  "textureCount": 1,
+  "alphaMode": "BLEND",
+  "doubleSided": true,
+  "baseColorTexture": 0,
+  "uvSet": "TEXCOORD_0",
+  "textureDimensions": {
+    "width": 257,
+    "height": 309
+  },
+  "glbBytes": 3640,
+  "sourceTexture": "GROWGO_NATIVE_ROUNDED_SINGLE_CLUSTER_RGBA_CLEAN.png",
+  "sameStandaloneSource": true
+}
