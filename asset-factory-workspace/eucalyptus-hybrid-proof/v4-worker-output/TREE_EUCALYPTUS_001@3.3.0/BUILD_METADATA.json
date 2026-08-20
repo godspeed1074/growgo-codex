@@ -4,7 +4,7 @@
   "state": "REVIEW_CANDIDATE",
   "previousVersion": "3.2.0",
   "previousStatus": "NEEDS_TARGETED_CORRECTION",
-  "atlas": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "atlas": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_FINAL_CLEAN.png",
   "atlasDimensions": [
     1254,
     1254
@@ -23,21 +23,21 @@
       "cards": 63,
       "materials": 6,
       "glb": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
-      "glbBytes": 2789016
+      "glbBytes": 2775100
     },
     "GAMEPLAY": {
       "triangles": 1424,
       "cards": 28,
       "materials": 9,
       "glb": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
-      "glbBytes": 2747824
+      "glbBytes": 2733904
     },
     "MAP": {
       "triangles": 950,
       "cards": 7,
       "materials": 12,
       "glb": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
-      "glbBytes": 2714716
+      "glbBytes": 2700796
     }
   },
   "treeExclusion": true,

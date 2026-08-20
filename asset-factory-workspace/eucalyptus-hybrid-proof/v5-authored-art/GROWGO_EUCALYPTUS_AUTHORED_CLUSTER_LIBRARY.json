@@ -1,0 +1,94 @@
+{
+  "version": "V5",
+  "rgba": true,
+  "background": "transparent",
+  "designs": [
+    {
+      "id": "GG_EUC_CLUSTER_DARK_SMALL",
+      "atlasUv": [
+        0,
+        0.5,
+        0.25,
+        1
+      ],
+      "leafShapes": 11
+    },
+    {
+      "id": "GG_EUC_CLUSTER_DARK_MEDIUM",
+      "atlasUv": [
+        0.25,
+        0.5,
+        0.5,
+        1
+      ],
+      "leafShapes": 16
+    },
+    {
+      "id": "GG_EUC_CLUSTER_MID_DROOPING",
+      "atlasUv": [
+        0.5,
+        0.5,
+        0.75,
+        1
+      ],
+      "leafShapes": 14
+    },
+    {
+      "id": "GG_EUC_CLUSTER_MID_BROAD",
+      "atlasUv": [
+        0.75,
+        0.5,
+        1,
+        1
+      ],
+      "leafShapes": 18
+    },
+    {
+      "id": "GG_EUC_CLUSTER_LIGHT_SMALL",
+      "atlasUv": [
+        0,
+        0,
+        0.25,
+        0.5
+      ],
+      "leafShapes": 10
+    },
+    {
+      "id": "GG_EUC_CLUSTER_LIGHT_CROWN",
+      "atlasUv": [
+        0.25,
+        0,
+        0.5,
+        0.5
+      ],
+      "leafShapes": 15
+    },
+    {
+      "id": "GG_EUC_CLUSTER_LATERAL_LEFT",
+      "atlasUv": [
+        0.5,
+        0,
+        0.75,
+        0.5
+      ],
+      "leafShapes": 17
+    },
+    {
+      "id": "GG_EUC_CLUSTER_SPARSE_TIP",
+      "atlasUv": [
+        0.75,
+        0,
+        1,
+        0.5
+      ],
+      "leafShapes": 9
+    }
+  ],
+  "palette": [
+    "DARK",
+    "MID",
+    "LIGHT",
+    "SHADOW",
+    "STEM"
+  ]
+}

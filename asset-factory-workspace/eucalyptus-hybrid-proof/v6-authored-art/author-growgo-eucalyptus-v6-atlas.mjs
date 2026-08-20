@@ -1,0 +1,9 @@
+import fs from 'node:fs';import{encodePng}from'../../../asset-factory/golden-reference/golden-reference-raster-analysis.mjs';
+const W=2048,H=1024,C=512,b=Buffer.alloc(W*H*4),pal=[[19,53,49,255],[38,89,74,255],[76,122,80,255],[157,177,94,255],[117,82,48,255]];
+function leaf(cx,cy,rx,ry,a,c){const ca=Math.cos(a),sa=Math.sin(a),r=Math.ceil(Math.max(rx,ry)*1.5);for(let y=Math.max(0,Math.floor(cy-r));y<Math.min(H,Math.ceil(cy+r));y++)for(let x=Math.max(0,Math.floor(cx-r));x<Math.min(W,Math.ceil(cx+r));x++){let X=(x-cx)*ca+(y-cy)*sa,Y=-(x-cx)*sa+(y-cy)*ca,q=X*X/(rx*rx)+Y*Y/(ry*ry);if(q<=1){let i=(y*W+x)*4;b[i]=c[0];b[i+1]=c[1];b[i+2]=c[2];b[i+3]=255}}}
+const ids=['DROOP_SMALL_LEFT','DROOP_SMALL_RIGHT','DROOP_MEDIUM','DROOP_LARGE','LATERAL_WIDE','CROWN_UPPER','SPARSE_TIP','DARK_REAR'];
+for(let n=0;n<8;n++){let ox=n%4*C,oy=Math.floor(n/4)*C,flip=n%2?-1:1,count=10+(n%4)*2;
+ // 1–3 directional tan branchlets, never a radial centre stem.
+ for(let q=0;q<2+(n%3===0);q++){let sx=ox+235+q*28*flip,sy=oy+142+q*18,ang=(.43+q*.27)*flip;leaf(sx+55*Math.cos(ang),sy+85*Math.sin(ang),7,118,ang,pal[4])}
+ for(let k=0;k<count;k++){let branch=k%3,progress=Math.floor(k/3),x=ox+230+branch*36*flip+progress*(18+branch*7)*flip,y=oy+132+progress*39+branch*26,a=(.20+((k*17+n*9)%45)/100)*flip+(k%2?.32:-.22),c=pal[k%7===0?3:k%3===0?2:k%2?1:0];leaf(x,y,34+(k%3)*5,74+(k%4)*9,a,c)}}
+fs.writeFileSync('asset-factory-workspace/eucalyptus-hybrid-proof/v6-authored-art/GROWGO_EUCALYPTUS_V6_CLUSTER_ATLAS.png',encodePng(W,H,b));fs.writeFileSync('asset-factory-workspace/eucalyptus-hybrid-proof/v6-authored-art/GROWGO_EUCALYPTUS_V6_CLUSTER_LIBRARY.json',JSON.stringify({version:'V6',ids:ids.map(x=>'GG_EUC_V6_'+x),rgba:true,transparentExterior:true,composition:'1–3 directional branchlets with 10–18 elongated drooping leaves',atlas:[W,H]},null,2));

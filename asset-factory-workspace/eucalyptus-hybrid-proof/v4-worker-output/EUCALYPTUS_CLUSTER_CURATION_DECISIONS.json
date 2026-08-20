@@ -1,0 +1,958 @@
+{
+  "contract": "EUCALYPTUS_CLUSTER_ART_CURATION_V1",
+  "source": "asset-factory-workspace/eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "output": "asset-factory-workspace/eucalyptus-hybrid-proof/v4-worker-output/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_CURATED.png",
+  "method": "eight explicit source-card windows; a hand-reviewed main illustrated composition is retained per card; disconnected components require an explicit satellite decision and none qualified; cards repacked into non-overlapping padded atlas cells",
+  "globalPixelThresholdUsed": false,
+  "atlas": {
+    "dimensions": [
+      2800,
+      1280
+    ],
+    "paddingPx": 12,
+    "uvs": [
+      [
+        0.004285714285714286,
+        0.5953125,
+        0.15142857142857144,
+        0.990625
+      ],
+      [
+        0.2542857142857143,
+        0.5640625,
+        0.38142857142857145,
+        0.990625
+      ],
+      [
+        0.5042857142857143,
+        0.52734375,
+        0.6364285714285715,
+        0.990625
+      ],
+      [
+        0.7542857142857143,
+        0.74140625,
+        0.9703571428571428,
+        0.990625
+      ],
+      [
+        0.004285714285714286,
+        0.303125,
+        0.09857142857142857,
+        0.490625
+      ],
+      [
+        0.2542857142857143,
+        0.4046875,
+        0.2732142857142857,
+        0.490625
+      ],
+      [
+        0.5042857142857143,
+        0.15,
+        0.7367857142857143,
+        0.490625
+      ],
+      [
+        0.7542857142857143,
+        0.16171875,
+        0.8260714285714286,
+        0.490625
+      ]
+    ]
+  },
+  "cards": [
+    {
+      "clusterId": "DARK_DROOPING",
+      "sourceUv": [
+        0,
+        0.53,
+        0.37,
+        1
+      ],
+      "sourceBoundsPx": [
+        0,
+        0,
+        464,
+        590
+      ],
+      "componentsBefore": 7,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 6,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            17,
+            13,
+            429,
+            519
+          ],
+          "pixels": 111665
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            70,
+            489,
+            313,
+            590
+          ],
+          "pixels": 11635
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            377,
+            537,
+            421,
+            590
+          ],
+          "pixels": 1133
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            426,
+            539,
+            457,
+            590
+          ],
+          "pixels": 892
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            313,
+            567,
+            372,
+            590
+          ],
+          "pixels": 698
+        },
+        {
+          "component": 5,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            355,
+            581,
+            404,
+            590
+          ],
+          "pixels": 303
+        },
+        {
+          "component": 6,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            435,
+            582,
+            464,
+            590
+          ],
+          "pixels": 94
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        12,
+        12,
+        424,
+        518
+      ],
+      "packedUv": [
+        0.004285714285714286,
+        0.5953125,
+        0.15142857142857144,
+        0.990625
+      ]
+    },
+    {
+      "clusterId": "MID_DROOPING",
+      "sourceUv": [
+        0.36,
+        0.55,
+        0.68,
+        1
+      ],
+      "sourceBoundsPx": [
+        451,
+        0,
+        853,
+        565
+      ],
+      "componentsBefore": 2,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 1,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            478,
+            18,
+            834,
+            564
+          ],
+          "pixels": 112582
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            451,
+            539,
+            457,
+            565
+          ],
+          "pixels": 105
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        712,
+        12,
+        1068,
+        558
+      ],
+      "packedUv": [
+        0.2542857142857143,
+        0.5640625,
+        0.38142857142857145,
+        0.990625
+      ]
+    },
+    {
+      "clusterId": "HIGHLIGHT_DROOPING",
+      "sourceUv": [
+        0.66,
+        0.5,
+        1,
+        1
+      ],
+      "sourceBoundsPx": [
+        827,
+        0,
+        1254,
+        627
+      ],
+      "componentsBefore": 6,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 5,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            863,
+            18,
+            1233,
+            611
+          ],
+          "pixels": 111675
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            870,
+            561,
+            916,
+            627
+          ],
+          "pixels": 1582
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            831,
+            598,
+            859,
+            627
+          ],
+          "pixels": 526
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            909,
+            609,
+            974,
+            627
+          ],
+          "pixels": 518
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            827,
+            392,
+            834,
+            425
+          ],
+          "pixels": 149
+        },
+        {
+          "component": 5,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            827,
+            608,
+            830,
+            627
+          ],
+          "pixels": 47
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        1412,
+        12,
+        1782,
+        605
+      ],
+      "packedUv": [
+        0.5042857142857143,
+        0.52734375,
+        0.6364285714285715,
+        0.990625
+      ]
+    },
+    {
+      "clusterId": "BROAD_LATERAL",
+      "sourceUv": [
+        0,
+        0.33,
+        0.55,
+        0.6
+      ],
+      "sourceBoundsPx": [
+        0,
+        501,
+        690,
+        841
+      ],
+      "componentsBefore": 8,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 7,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            48,
+            501,
+            653,
+            820
+          ],
+          "pixels": 95691
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            194,
+            793,
+            451,
+            841
+          ],
+          "pixels": 7330
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            558,
+            501,
+            604,
+            553
+          ],
+          "pixels": 1603
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            667,
+            501,
+            690,
+            531
+          ],
+          "pixels": 395
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            338,
+            501,
+            355,
+            519
+          ],
+          "pixels": 191
+        },
+        {
+          "component": 5,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            539,
+            501,
+            553,
+            515
+          ],
+          "pixels": 120
+        },
+        {
+          "component": 6,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            96,
+            501,
+            107,
+            512
+          ],
+          "pixels": 79
+        },
+        {
+          "component": 7,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            317,
+            501,
+            327,
+            513
+          ],
+          "pixels": 76
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        2112,
+        12,
+        2717,
+        331
+      ],
+      "packedUv": [
+        0.7542857142857143,
+        0.74140625,
+        0.9703571428571428,
+        0.990625
+      ]
+    },
+    {
+      "clusterId": "SMALL_TWIG",
+      "sourceUv": [
+        0.57,
+        0.35,
+        0.82,
+        0.58
+      ],
+      "sourceBoundsPx": [
+        714,
+        526,
+        1029,
+        816
+      ],
+      "componentsBefore": 6,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 5,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            730,
+            561,
+            994,
+            801
+          ],
+          "pixels": 19850
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            716,
+            526,
+            740,
+            564
+          ],
+          "pixels": 601
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            972,
+            526,
+            991,
+            551
+          ],
+          "pixels": 290
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            765,
+            799,
+            784,
+            816
+          ],
+          "pixels": 261
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            729,
+            808,
+            760,
+            816
+          ],
+          "pixels": 183
+        },
+        {
+          "component": 5,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            795,
+            809,
+            828,
+            816
+          ],
+          "pixels": 153
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        12,
+        652,
+        276,
+        892
+      ],
+      "packedUv": [
+        0.004285714285714286,
+        0.303125,
+        0.09857142857142857,
+        0.490625
+      ]
+    },
+    {
+      "clusterId": "SPARSE_BRANCH_TIP",
+      "sourceUv": [
+        0.75,
+        0.32,
+        1,
+        0.6
+      ],
+      "sourceBoundsPx": [
+        940,
+        501,
+        1254,
+        853
+      ],
+      "componentsBefore": 11,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 10,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            1127,
+            501,
+            1180,
+            611
+          ],
+          "pixels": 2832
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            1049,
+            775,
+            1119,
+            853
+          ],
+          "pixels": 2596
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            940,
+            707,
+            994,
+            783
+          ],
+          "pixels": 1871
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            963,
+            501,
+            992,
+            551
+          ],
+          "pixels": 907
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            1113,
+            501,
+            1145,
+            557
+          ],
+          "pixels": 892
+        },
+        {
+          "component": 5,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            940,
+            632,
+            982,
+            663
+          ],
+          "pixels": 606
+        },
+        {
+          "component": 6,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            940,
+            664,
+            971,
+            691
+          ],
+          "pixels": 558
+        },
+        {
+          "component": 7,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            1157,
+            823,
+            1187,
+            853
+          ],
+          "pixels": 519
+        },
+        {
+          "component": 8,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            1086,
+            501,
+            1106,
+            543
+          ],
+          "pixels": 412
+        },
+        {
+          "component": 9,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            940,
+            609,
+            974,
+            625
+          ],
+          "pixels": 236
+        },
+        {
+          "component": 10,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            940,
+            724,
+            946,
+            750
+          ],
+          "pixels": 104
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        712,
+        652,
+        765,
+        762
+      ],
+      "packedUv": [
+        0.2542857142857143,
+        0.4046875,
+        0.2732142857142857,
+        0.490625
+      ]
+    },
+    {
+      "clusterId": "LARGE_CANOPY",
+      "sourceUv": [
+        0,
+        0,
+        0.55,
+        0.38
+      ],
+      "sourceBoundsPx": [
+        0,
+        777,
+        690,
+        1254
+      ],
+      "componentsBefore": 7,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 6,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            26,
+            793,
+            677,
+            1229
+          ],
+          "pixels": 169290
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            484,
+            777,
+            519,
+            820
+          ],
+          "pixels": 885
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            556,
+            777,
+            582,
+            819
+          ],
+          "pixels": 654
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            456,
+            777,
+            473,
+            797
+          ],
+          "pixels": 220
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            544,
+            777,
+            555,
+            787
+          ],
+          "pixels": 72
+        },
+        {
+          "component": 5,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            439,
+            777,
+            446,
+            782
+          ],
+          "pixels": 24
+        },
+        {
+          "component": 6,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            614,
+            777,
+            619,
+            781
+          ],
+          "pixels": 15
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        1412,
+        652,
+        2063,
+        1088
+      ],
+      "packedUv": [
+        0.5042857142857143,
+        0.15,
+        0.7367857142857143,
+        0.490625
+      ]
+    },
+    {
+      "clusterId": "NARROW_VERTICAL",
+      "sourceUv": [
+        0.5,
+        0,
+        0.77,
+        0.35
+      ],
+      "sourceBoundsPx": [
+        627,
+        815,
+        966,
+        1254
+      ],
+      "componentsBefore": 5,
+      "componentsRetained": 1,
+      "intentionalSatellitesRetained": 0,
+      "componentsRemoved": 4,
+      "classification": [
+        {
+          "component": 0,
+          "decision": "KEEP — PRIMARY",
+          "boundsPx": [
+            696,
+            815,
+            897,
+            1236
+          ],
+          "pixels": 54257
+        },
+        {
+          "component": 1,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            627,
+            1068,
+            677,
+            1209
+          ],
+          "pixels": 4367
+        },
+        {
+          "component": 2,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            917,
+            948,
+            966,
+            982
+          ],
+          "pixels": 1099
+        },
+        {
+          "component": 3,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            927,
+            1012,
+            966,
+            1055
+          ],
+          "pixels": 829
+        },
+        {
+          "component": 4,
+          "decision": "REMOVE — SOURCE DEBRIS",
+          "boundsPx": [
+            963,
+            1049,
+            966,
+            1073
+          ],
+          "pixels": 62
+        }
+      ],
+      "selfCheck": {
+        "deliberateIllustratedCluster": "YES",
+        "unexplainedFloatingFragments": "NO",
+        "abruptBoundaryCrops": "NO",
+        "naturalIrregularity": "YES",
+        "transparentExteriorClean": "YES"
+      },
+      "packedBoundsPx": [
+        2112,
+        652,
+        2313,
+        1073
+      ],
+      "packedUv": [
+        0.7542857142857143,
+        0.16171875,
+        0.8260714285714286,
+        0.490625
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": "V6",
+  "ids": [
+    "GG_EUC_V6_DROOP_SMALL_LEFT",
+    "GG_EUC_V6_DROOP_SMALL_RIGHT",
+    "GG_EUC_V6_DROOP_MEDIUM",
+    "GG_EUC_V6_DROOP_LARGE",
+    "GG_EUC_V6_LATERAL_WIDE",
+    "GG_EUC_V6_CROWN_UPPER",
+    "GG_EUC_V6_SPARSE_TIP",
+    "GG_EUC_V6_DARK_REAR"
+  ],
+  "rgba": true,
+  "transparentExterior": true,
+  "composition": "1–3 directional branchlets with 10–18 elongated drooping leaves",
+  "atlas": [
+    2048,
+    1024
+  ]
+}

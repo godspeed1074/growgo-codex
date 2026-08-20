@@ -1,0 +1,53 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "3.5.0",
+  "state": "REVIEW_CANDIDATE",
+  "previousVersion": "3.2.0",
+  "previousStatus": "NEEDS_TARGETED_CORRECTION",
+  "atlas": "GROWGO_EUCALYPTUS_V6_CLUSTER_ATLAS.png",
+  "atlasDimensions": [
+    1254,
+    1254
+  ],
+  "uniqueClusterDesigns": 8,
+  "canopyMasses": 7,
+  "depthLayers": [
+    "REAR",
+    "MID",
+    "FRONT"
+  ],
+  "engine": "BLENDER_EEVEE",
+  "lods": {
+    "CLOSE": {
+      "triangles": 1782,
+      "cards": 63,
+      "materials": 6,
+      "glb": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+      "glbBytes": 159324
+    },
+    "GAMEPLAY": {
+      "triangles": 1424,
+      "cards": 28,
+      "materials": 9,
+      "glb": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+      "glbBytes": 117508
+    },
+    "MAP": {
+      "triangles": 950,
+      "cards": 7,
+      "materials": 12,
+      "glb": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
+      "glbBytes": 85388
+    }
+  },
+  "treeExclusion": true,
+  "atlasChanged": false,
+  "selfCheck": {
+    "rectangularCardBackgroundsVisible": "NO",
+    "illustratedEucalyptusLeaves": "YES",
+    "multipleCanopyMasses": "YES",
+    "trunkVisible": "YES",
+    "depthParallax": "YES",
+    "genericLowPolyFoliage": "NO"
+  }
+}

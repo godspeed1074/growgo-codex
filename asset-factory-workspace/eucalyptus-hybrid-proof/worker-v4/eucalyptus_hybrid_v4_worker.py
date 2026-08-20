@@ -6,6 +6,7 @@ src=src.replace("'previousVersion':'3.0.0'","'previousVersion':'3.2.0'").replace
 src=src.replace("(.63,.50,.30,1)","(.33,.30,.22,1)").replace("(.34,.18,.09,1)","(.29,.14,.055,1)")
 src=src.replace("img.image=bpy.data.images.load(atlas_path, check_existing=True); img.interpolation='Linear'","img.image=bpy.data.images.load(atlas_path, check_existing=True); img.interpolation='Closest'")
 src=src.replace("u0,v0,u1,v1=uv","u0,v0,u1,v1=uv\n    # Half-texel safety inset prevents sampling neighbouring atlas cells.\n    pad=.004; u0+=pad; v0+=pad; u1-=pad; v1-=pad")
+src=src.replace("UV=[(.00,.53,.37,1.00),(.36,.55,.68,1.00),(.66,.50,1.00,1.00),(.00,.33,.55,.60),(.57,.35,.82,.58),(.75,.32,1.00,.60),(.00,.00,.55,.38),(.50,.00,.77,.35)]", "UV=[(.0043,.595,.151,.991),(.175,.564,.302,.987),(.312,.487,.444,.986),(.504,.737,.720,.986),(.754,.811,.848,.999),(.891,.904,.910,.987),(.004,.020,.236,.361),(.254,.014,.326,.343)]")
 src=re.sub(r"BRANCHES=\[.*?\]\n\n","BRANCHES=[]\n\n",src,count=1,flags=re.S)
 insert=r'''
 def organic_curve(name, points, base_radius, mat):

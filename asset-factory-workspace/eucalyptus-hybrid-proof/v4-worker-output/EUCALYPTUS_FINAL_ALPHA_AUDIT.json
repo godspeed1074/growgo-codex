@@ -1,0 +1,87 @@
+{
+  "source": "asset-factory-workspace/eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "output": "asset-factory-workspace/eucalyptus-hybrid-proof/v4-worker-output/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_FINAL_CLEAN.png",
+  "rule": "per-atlas-cell disconnected component <5000 alpha>=32 pixels removed",
+  "cells": [
+    {
+      "cell": [
+        0,
+        0.53,
+        0.37,
+        1
+      ],
+      "removedPixels": 869,
+      "retainedPixels": 146304
+    },
+    {
+      "cell": [
+        0.36,
+        0.55,
+        0.68,
+        1
+      ],
+      "removedPixels": 1609,
+      "retainedPixels": 111822
+    },
+    {
+      "cell": [
+        0.66,
+        0.5,
+        1,
+        1
+      ],
+      "removedPixels": 6952,
+      "retainedPixels": 58867
+    },
+    {
+      "cell": [
+        0,
+        0.33,
+        0.55,
+        0.6
+      ],
+      "removedPixels": 8460,
+      "retainedPixels": 68594
+    },
+    {
+      "cell": [
+        0.57,
+        0.35,
+        0.82,
+        0.58
+      ],
+      "removedPixels": 15573,
+      "retainedPixels": 0
+    },
+    {
+      "cell": [
+        0.75,
+        0.32,
+        1,
+        0.6
+      ],
+      "removedPixels": 2065,
+      "retainedPixels": 15037
+    },
+    {
+      "cell": [
+        0,
+        0,
+        0.55,
+        0.38
+      ],
+      "removedPixels": 0,
+      "retainedPixels": 166012
+    },
+    {
+      "cell": [
+        0.5,
+        0,
+        0.77,
+        0.35
+      ],
+      "removedPixels": 362,
+      "retainedPixels": 48599
+    }
+  ]
+}
