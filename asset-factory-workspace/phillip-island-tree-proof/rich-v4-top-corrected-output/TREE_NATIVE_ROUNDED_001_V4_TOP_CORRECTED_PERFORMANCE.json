@@ -1,0 +1,75 @@
+{
+  "assetId": "TREE_NATIVE_ROUNDED_001",
+  "state": "REVIEW_CANDIDATE",
+  "correction": {
+    "applied": true,
+    "before": {
+      "sourceComponent": 2,
+      "width": 4.5,
+      "height": 5.2
+    },
+    "after": {
+      "sourceComponent": 1,
+      "width": 4.2,
+      "height": 5.15
+    },
+    "scope": "upper crown card only"
+  },
+  "before": {
+    "CLOSE": {
+      "cards": 12,
+      "triangles": 96,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2681360
+    },
+    "GAMEPLAY": {
+      "cards": 8,
+      "triangles": 88,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2677532
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 78,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2672744
+    }
+  },
+  "after": {
+    "CLOSE": {
+      "cards": 12,
+      "triangles": 96,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2681388
+    },
+    "GAMEPLAY": {
+      "cards": 8,
+      "triangles": 88,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2677560
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 78,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2672772
+    }
+  },
+  "costNeutral": true,
+  "glbBytesDelta": {
+    "CLOSE": 28,
+    "GAMEPLAY": 28,
+    "MAP": 28
+  },
+  "protected": {
+    "carcassUnchanged": true,
+    "sourceUnchanged": true,
+    "cameraUnchanged": true
+  }
+}

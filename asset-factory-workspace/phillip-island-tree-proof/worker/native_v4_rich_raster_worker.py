@@ -2,7 +2,13 @@
 import bpy, os, sys, math, json
 from mathutils import Vector
 ROOT, ATLAS, EUCALYPTUS = sys.argv[-3:]
-OUT=os.path.join(ROOT,'rich-v4-output');os.makedirs(OUT,exist_ok=True)
+# The accepted V4 proof remains the default.  A named, additive output directory
+# lets a tightly scoped presentation correction be rendered without overwriting
+# approved evidence or changing the tree's source asset contract.
+OUTPUT_DIR=os.environ.get('GROWGO_OUTPUT_DIR','rich-v4-output')
+OUTPUT_PREFIX=os.environ.get('GROWGO_OUTPUT_PREFIX','TREE_NATIVE_ROUNDED_001_V4_RICH')
+UPPER_CROWN_REBALANCED=os.environ.get('GROWGO_UPPER_CROWN_REBALANCED') == '1'
+OUT=os.path.join(ROOT,OUTPUT_DIR);os.makedirs(OUT,exist_ok=True)
 W,H=1254,1254
 # V2 reviewed alpha-component bounds, converted from top-left pixels to Blender UVs.
 BOXES=[(17,13,428,518),(478,18,833,563),(863,18,1232,610),(730,561,993,800),(26,793,676,1228),(696,799,896,1235),(917,775,1237,1218),(48,489,652,819)]
@@ -39,7 +45,12 @@ def carcass(bark):
  for i,(a,b,r) in enumerate([((0,TREE_Y,0),(0,TREE_Y,2.55),.30),((0,TREE_Y,2.20),(-1.05,TREE_Y+.10,4.15),.16),((0,TREE_Y,2.35),(1.05,TREE_Y-.08,4.0),.16)]):branch(a,b,r,bark,'GG_NATIVE_V4_LOCKED_CARCASS_%02d'%i)
 def build(level):
  clear();engine();bark=solid('GG_MAT_TREE_BARK_SHARED',(.28,.17,.09,1));fol=foliage();carcass(bark)
- layout=[(0,.34,5.35,4.5,5.2,2,0),(-1.45,.05,4.45,4.45,4.7,0,-10),(1.45,.10,4.45,4.35,4.75,1,11),(0,-.20,3.8,5.0,4.35,4,0),(-1.9,.25,3.95,3.4,3.5,3,-14),(1.9,.22,3.95,3.35,3.5,5,14),(0,.52,4.35,4.65,4.0,6,3),(-.72,-.12,3.2,3.55,3.2,7,-7),( .78,-.15,3.25,3.5,3.25,1,7),(-.9,.46,5.15,3.1,3.6,0,-10),( .95,.45,5.1,3.1,3.6,2,10),(0,-.35,2.95,3.8,2.9,4,0)]
+ # V4 originally used the largest/lightest source component (UV 2) for the
+ # top card.  The controlled correction replaces only that card with the
+ # naturally smaller mixed-leaf source (UV 1), retaining crown bounds while
+ # preventing an oversized bright layer from dominating the silhouette.
+ top=(0,.34,5.35,4.2,5.15,1,0) if UPPER_CROWN_REBALANCED else (0,.34,5.35,4.5,5.2,2,0)
+ layout=[top,(-1.45,.05,4.45,4.45,4.7,0,-10),(1.45,.10,4.45,4.35,4.75,1,11),(0,-.20,3.8,5.0,4.35,4,0),(-1.9,.25,3.95,3.4,3.5,3,-14),(1.9,.22,3.95,3.35,3.5,5,14),(0,.52,4.35,4.65,4.0,6,3),(-.72,-.12,3.2,3.55,3.2,7,-7),( .78,-.15,3.25,3.5,3.25,1,7),(-.9,.46,5.15,3.1,3.6,0,-10),( .95,.45,5.1,3.1,3.6,2,10),(0,-.35,2.95,3.8,2.9,4,0)]
  count={'CLOSE':12,'GAMEPLAY':8,'MAP':3}[level]
  for i,item in enumerate(layout[:count]):card(*item[:5],UV[item[5]],fol,i,item[6])
  # Match the live renderer's minimum 48-unit scaled-height review state. Runtime
@@ -68,15 +79,15 @@ def render(name,mobile=False,context=False):
 def export_lods():
  stats={}
  for level in ('CLOSE','GAMEPLAY','MAP'):
-  cards=build(level);blend=os.path.join(OUT,'TREE_NATIVE_ROUNDED_001_V4_RICH_'+level+'.blend');bpy.ops.wm.save_as_mainfile(filepath=blend);glb=os.path.join(OUT,'TREE_NATIVE_ROUNDED_001_V4_RICH_LOD_'+level+'.glb');bpy.ops.export_scene.gltf(filepath=glb,export_format='GLB',export_materials='EXPORT');stats[level]={'cards':cards,'triangles':tri_count(),'materials':2,'textures':1,'glbBytes':os.path.getsize(glb)}
+  cards=build(level);blend=os.path.join(OUT,OUTPUT_PREFIX+'_'+level+'.blend');bpy.ops.wm.save_as_mainfile(filepath=blend);glb=os.path.join(OUT,OUTPUT_PREFIX+'_LOD_'+level+'.glb');bpy.ops.export_scene.gltf(filepath=glb,export_format='GLB',export_materials='EXPORT');stats[level]={'cards':cards,'triangles':tri_count(),'materials':2,'textures':1,'glbBytes':os.path.getsize(glb)}
  return stats
-stats=export_lods();build('GAMEPLAY');render('TREE_NATIVE_ROUNDED_001_V4_RICH_GAMEPLAY_CAMERA.png');build('GAMEPLAY');render('TREE_NATIVE_ROUNDED_001_V4_RICH_MOBILE_SCALE.png',mobile=True);build('GAMEPLAY');render('TREE_NATIVE_ROUNDED_001_V4_RICH_IN_GAME_CONTEXT.png',context=True)
+stats=export_lods();build('GAMEPLAY');render(OUTPUT_PREFIX+'_GAMEPLAY.png');build('GAMEPLAY');render(OUTPUT_PREFIX+'_MOBILE.png',mobile=True);build('GAMEPLAY');render(OUTPUT_PREFIX+'_CONTEXT.png',context=True)
 # Six deterministic instances, copied from one base mesh/material set.
 build('MAP');original=[o for o in bpy.context.scene.objects if o.type=='MESH'];variants=[(-12,8,.88,False,'BASE'),(-7,8,1.00,True,'BASE'),(-2,8,1.08,False,'COOL'),(3,8,.94,False,'WARM'),(8,8,1.11,True,'LIGHT'),(13,8,.98,False,'BASE')]
 for v,(x,y,scale,mirror,palette) in enumerate(variants):
  for o in original:
   copy=o.copy();copy.data=o.data.copy();bpy.context.collection.objects.link(copy);copy.location.x+=x*RUNTIME_REVIEW_SCALE;copy.location.y+=y*RUNTIME_REVIEW_SCALE;copy.scale=((-scale if mirror else scale),scale,scale);copy['variation']=palette
 for o in original:bpy.data.objects.remove(o,do_unlink=True)
-setup_camera();bpy.context.scene.render.filepath=os.path.join(OUT,'TREE_NATIVE_ROUNDED_001_V4_RICH_VARIATION_PROOF.png');bpy.ops.render.render(write_still=True)
-receipt={'assetId':'TREE_NATIVE_ROUNDED_001','version':'4.0.0-rich-raster','state':'REVIEW_CANDIDATE','worker':'Steam Deck','blender':bpy.app.version_string,'cameraContract':'GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0','approvedSource':'EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png','rejectedSources':['GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png','V5 simple authored oval foliage','V6 simple authored foliage','procedural V4 foliage'],'proceduralPolygonFoliageCloseGameplay':False,'carcassReused':True,'lods':stats,'atlasArchitectureModified':False,'productionPopulationModified':False}
-json.dump(receipt,open(os.path.join(OUT,'TREE_NATIVE_ROUNDED_001_V4_RICH_RECEIPT.json'),'w'),indent=2);print('GROWGO_NATIVE_V4_RICH_RASTER_COMPLETE')
+setup_camera();bpy.context.scene.render.filepath=os.path.join(OUT,OUTPUT_PREFIX+'_VARIATION_PROOF.png');bpy.ops.render.render(write_still=True)
+receipt={'assetId':'TREE_NATIVE_ROUNDED_001','version':'4.0.0-rich-raster-top-corrected' if UPPER_CROWN_REBALANCED else '4.0.0-rich-raster','state':'REVIEW_CANDIDATE','worker':'Steam Deck','blender':bpy.app.version_string,'cameraContract':'GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0','approvedSource':'EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png','rejectedSources':['GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png','V5 simple authored oval foliage','V6 simple authored foliage','procedural V4 foliage'],'proceduralPolygonFoliageCloseGameplay':False,'carcassReused':True,'upperCrownCorrection':{'applied':UPPER_CROWN_REBALANCED,'before':{'sourceComponent':2,'width':4.5,'height':5.2},'after':{'sourceComponent':1,'width':4.2,'height':5.15} if UPPER_CROWN_REBALANCED else None,'scope':'upper crown card only'},'lods':stats,'atlasArchitectureModified':False,'productionPopulationModified':False}
+json.dump(receipt,open(os.path.join(OUT,OUTPUT_PREFIX+'_RECEIPT.json'),'w'),indent=2);print('GROWGO_NATIVE_V4_RICH_RASTER_COMPLETE')
