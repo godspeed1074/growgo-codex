@@ -1,0 +1,9 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "3.2.0",
+  "state": "REVIEW_CANDIDATE",
+  "parent": "TREE_EUCALYPTUS_001@3.1.0",
+  "scope": ["carcass", "bark", "alpha-edge revalidation", "canopy blending"],
+  "worker": "deck@10.0.0.4",
+  "runtime": "flatpak run org.blender.Blender --background"
+}

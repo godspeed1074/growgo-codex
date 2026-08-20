@@ -1,0 +1,59 @@
+{
+  "assetId": "TREE_EUCALYPTUS_001",
+  "version": "3.2.0",
+  "state": "REVIEW_CANDIDATE",
+  "previousVersion": "3.1.0",
+  "previousStatus": "NEEDS_TARGETED_CORRECTION",
+  "atlas": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "atlasDimensions": [
+    1254,
+    1254
+  ],
+  "uniqueClusterDesigns": 8,
+  "canopyMasses": 7,
+  "depthLayers": [
+    "REAR",
+    "MID",
+    "FRONT"
+  ],
+  "engine": "BLENDER_EEVEE",
+  "lods": {
+    "CLOSE": {
+      "triangles": 1170,
+      "cards": 63,
+      "materials": 6,
+      "glb": "TREE_EUCALYPTUS_001_LOD_CLOSE.glb",
+      "glbBytes": 2798984
+    },
+    "GAMEPLAY": {
+      "triangles": 620,
+      "cards": 28,
+      "materials": 9,
+      "glb": "TREE_EUCALYPTUS_001_LOD_GAMEPLAY.glb",
+      "glbBytes": 2733108
+    },
+    "MAP": {
+      "triangles": 338,
+      "cards": 7,
+      "materials": 12,
+      "glb": "TREE_EUCALYPTUS_001_LOD_MAP.glb",
+      "glbBytes": 2696168
+    }
+  },
+  "treeExclusion": true,
+  "atlasChanged": false,
+  "v3Corrections": [
+    "tapered-curved-carcass",
+    "warm-grey-bark",
+    "clean-atlas-revalidated",
+    "canopy-placement-preserved"
+  ],
+  "selfCheck": {
+    "rectangularCardBackgroundsVisible": "NO",
+    "illustratedEucalyptusLeaves": "YES",
+    "multipleCanopyMasses": "YES",
+    "trunkVisible": "YES",
+    "depthParallax": "YES",
+    "genericLowPolyFoliage": "NO"
+  }
+}
