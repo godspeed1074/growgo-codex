@@ -1,0 +1,25 @@
+{
+  "state": "REVIEW_CANDIDATE",
+  "blender": "5.2.0 LTS",
+  "carcassReused": true,
+  "atlas": "GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png",
+  "materials": 2,
+  "textures": 1,
+  "lods": {
+    "CLOSE": {
+      "cards": 12,
+      "triangles": 24,
+      "glbBytes": 49952
+    },
+    "GAMEPLAY": {
+      "cards": 8,
+      "triangles": 16,
+      "glbBytes": 46556
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 6,
+      "glbBytes": 42132
+    }
+  }
+}

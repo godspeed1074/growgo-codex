@@ -1,0 +1,27 @@
+{
+  "state": "REVIEW_CANDIDATE",
+  "roles": [
+    "rear-rounded",
+    "medium-body",
+    "broad-lateral",
+    "upper-crown",
+    "small-filler",
+    "light-front",
+    "asymmetric-side",
+    "sparse-edge"
+  ],
+  "dimensions": [
+    1024,
+    512
+  ],
+  "cells": [
+    4,
+    2
+  ],
+  "transparentExterior": true,
+  "artMethod": "DETERMINISTIC_ILLUSTRATED_CLUSTER_LEAVES",
+  "leafCountRange": [
+    12,
+    25
+  ]
+}

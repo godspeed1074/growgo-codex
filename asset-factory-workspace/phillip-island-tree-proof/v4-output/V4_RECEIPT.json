@@ -1,0 +1,25 @@
+{
+  "state": "REVIEW_CANDIDATE",
+  "blender": "5.2.0 LTS",
+  "carcassReused": true,
+  "atlas": "GROWGO_NATIVE_ROUNDED_V4_CLUSTER_ATLAS.png",
+  "materials": 2,
+  "textures": 1,
+  "lods": {
+    "CLOSE": {
+      "cards": 12,
+      "triangles": 24,
+      "glbBytes": 26744
+    },
+    "GAMEPLAY": {
+      "cards": 8,
+      "triangles": 16,
+      "glbBytes": 23356
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 6,
+      "glbBytes": 18948
+    }
+  }
+}

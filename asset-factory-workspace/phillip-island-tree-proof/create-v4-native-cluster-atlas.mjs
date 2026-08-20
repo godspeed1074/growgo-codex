@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import { encodePng } from '../../asset-factory/golden-reference/golden-reference-raster-analysis.mjs';
+const W=1024,H=512,rgba=Buffer.alloc(W*H*4),out='asset-factory-workspace/phillip-island-tree-proof/GROWGO_NATIVE_ROUNDED_V4_CLUSTER_ATLAS.png';
+const palette=[[29,73,52,255],[49,105,67,255],[78,132,76,255],[132,161,82,255],[104,143,69,255]];
+function px(x,y,c){x=Math.round(x);y=Math.round(y);if(x<0||x>=W||y<0||y>=H)return;let i=(y*W+x)*4;rgba[i]=c[0];rgba[i+1]=c[1];rgba[i+2]=c[2];rgba[i+3]=c[3]}
+function poly(pts,c){let min=Math.max(0,Math.floor(Math.min(...pts.map(p=>p[1])))),max=Math.min(H-1,Math.ceil(Math.max(...pts.map(p=>p[1]))));for(let y=min;y<=max;y++){let q=[];for(let i=0;i<pts.length;i++){let a=pts[i],b=pts[(i+1)%pts.length];if((a[1]<=y&&b[1]>y)||(b[1]<=y&&a[1]>y))q.push(a[0]+(y-a[1])*(b[0]-a[0])/(b[1]-a[1]))}q.sort((a,b)=>a-b);for(let i=0;i<q.length;i+=2)for(let x=Math.ceil(q[i]);x<=Math.floor(q[i+1]);x++)px(x,y,c)}}
+function leaf(cx,cy,s,a,c){let r=a*Math.PI/180,dx=Math.cos(r),dy=Math.sin(r),nx=-dy,ny=dx;let pts=[[cx-dx*s*.38,cy-dy*s*.38],[cx-dx*s*.08+nx*s*.34,cy-dy*s*.08+ny*s*.34],[cx+dx*s*.36+nx*s*.27,cy+dy*s*.36+ny*s*.27],[cx+dx*s*.58,cy+dy*s*.58],[cx+dx*s*.36-nx*s*.27,cy+dy*s*.36-ny*s*.27],[cx-dx*s*.08-nx*s*.34,cy-dy*s*.08-ny*s*.34]];poly(pts,c)}
+const roles=['rear-rounded','medium-body','broad-lateral','upper-crown','small-filler','light-front','asymmetric-side','sparse-edge'];
+for(let cell=0;cell<8;cell++){let ox=(cell%4)*256+128,oy=Math.floor(cell/4)*256+128,count=[16,22,19,15,12,18,20,13][cell];for(let i=0;i<count;i++){let a=(i*137+cell*31)%360,rad=4+((i*29+cell*11)%43),s=36+((i*17+cell*7)%25);if(cell===4)s*=.72;if(cell===2)s*=1.18;let c=palette[(i*3+cell)%palette.length];leaf(ox+Math.cos(a*Math.PI/180)*rad,oy+Math.sin(a*Math.PI/180)*rad*.65,s,a+((i%3)-1)*17,c)} }
+fs.writeFileSync(out,encodePng(W,H,rgba));fs.writeFileSync(out.replace('.png','.json'),JSON.stringify({state:'REVIEW_CANDIDATE',roles,dimensions:[W,H],cells:[4,2],transparentExterior:true,artMethod:'DETERMINISTIC_ILLUSTRATED_CLUSTER_LEAVES',leafCountRange:[12,25]},null,2)+'\n');console.log(out);
