@@ -1,0 +1,53 @@
+{
+  "assetId": "TREE_EUCALYPTUS_COASTAL_002",
+  "version": "1.0.0",
+  "state": "REVIEW_CANDIDATE",
+  "worker": "Steam Deck",
+  "blender": "5.2.0 LTS",
+  "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0",
+  "cameraReview": "GROWGO_GAMEPLAY_CAMERA_REVIEW",
+  "lods": {
+    "CLOSE": {
+      "triangles": 204,
+      "cards": 54,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 93452
+    },
+    "GAMEPLAY": {
+      "triangles": 168,
+      "cards": 36,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 76268
+    },
+    "MAP": {
+      "triangles": 108,
+      "cards": 6,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 47668
+    }
+  },
+  "allowHorizontalMirror": true,
+  "deterministicVariation": {
+    "uniformScale": [
+      0.91,
+      1.08
+    ],
+    "worldRotationDegrees": [
+      -12,
+      12
+    ],
+    "paletteVariants": [
+      "BASE",
+      "COOL",
+      "WARM",
+      "LIGHT"
+    ],
+    "canopySubstitution": "V6_SHARED_CLUSTER_ATLAS_SEED_SELECTED"
+  },
+  "atlas": "GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png",
+  "atlasSha256": "22f1c50d114fce3886c7387e4ff34aae20b2820ef78fd13866b7779808531f52",
+  "atlasArchitectureModified": false
+}

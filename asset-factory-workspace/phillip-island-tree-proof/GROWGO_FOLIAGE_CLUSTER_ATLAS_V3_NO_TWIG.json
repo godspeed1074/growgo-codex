@@ -1,0 +1,10 @@
+{
+  "source": "asset-factory-workspace/eucalyptus-hybrid-proof/v6-authored-art/GROWGO_EUCALYPTUS_V6_CLUSTER_ATLAS.png",
+  "output": "asset-factory-workspace/phillip-island-tree-proof/GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png",
+  "method": "DETERMINISTIC_BROWN_BRANCHLET_ALPHA_KEY_PLUS_GAMEPLAY_TONE_LIFT",
+  "sourceModified": false,
+  "removedBrownPixels": 20207,
+  "liftedFoliagePixels": 427723,
+  "width": 2048,
+  "height": 1024
+}
