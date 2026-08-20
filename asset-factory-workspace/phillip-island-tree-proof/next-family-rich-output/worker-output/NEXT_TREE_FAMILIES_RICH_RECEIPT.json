@@ -1,0 +1,102 @@
+{
+  "status": "PASS",
+  "state": "REVIEW_CANDIDATE",
+  "worker": "Steam Deck",
+  "blender": "5.2.0 LTS",
+  "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0",
+  "sourceArt": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "method": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD@1.0.0",
+  "families": [
+    {
+      "assetId": "TREE_EUCALYPTUS_COASTAL_002",
+      "assetVersion": "2.0.0",
+      "lods": {
+        "CLOSE": {
+          "cards": 12,
+          "triangles": 144,
+          "materials": 2,
+          "textures": 1,
+          "glbBytes": 2686504
+        },
+        "GAMEPLAY": {
+          "cards": 8,
+          "triangles": 136,
+          "materials": 2,
+          "textures": 1,
+          "glbBytes": 2682512
+        },
+        "MAP": {
+          "cards": 3,
+          "triangles": 126,
+          "materials": 2,
+          "textures": 1,
+          "glbBytes": 2677512
+        }
+      },
+      "variation": {
+        "mirror": true,
+        "uniformScale": [
+          0.91,
+          1.08
+        ],
+        "worldYawDegrees": [
+          -12,
+          12
+        ],
+        "palette": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ]
+      }
+    },
+    {
+      "assetId": "TREE_COASTAL_WIND_001",
+      "assetVersion": "2.0.0",
+      "lods": {
+        "CLOSE": {
+          "cards": 12,
+          "triangles": 144,
+          "materials": 2,
+          "textures": 1,
+          "glbBytes": 408884
+        },
+        "GAMEPLAY": {
+          "cards": 8,
+          "triangles": 136,
+          "materials": 2,
+          "textures": 1,
+          "glbBytes": 404988
+        },
+        "MAP": {
+          "cards": 3,
+          "triangles": 126,
+          "materials": 2,
+          "textures": 1,
+          "glbBytes": 400000
+        }
+      },
+      "variation": {
+        "mirror": true,
+        "uniformScale": [
+          0.88,
+          1.1
+        ],
+        "worldYawDegrees": [
+          -10,
+          10
+        ],
+        "palette": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ]
+      }
+    }
+  ],
+  "atlasArchitectureModified": false,
+  "productionPopulationModified": false,
+  "anonymousGeometryCount": 0
+}

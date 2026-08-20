@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "worker": "Steam Deck",
+  "blender": "5.2.0 LTS",
+  "candidates": [
+    {
+      "assetId": "GG-VEG-TREE-EUCALYPTUS-COASTAL-002",
+      "assetVersion": "2.0.0",
+      "approvalState": "REVIEW"
+    },
+    {
+      "assetId": "GG-VEG-TREE-COASTAL-WIND-001",
+      "assetVersion": "2.0.0",
+      "approvalState": "REVIEW"
+    }
+  ],
+  "atlasArchitectureModified": false,
+  "productionAtlasEnabled": false
+}

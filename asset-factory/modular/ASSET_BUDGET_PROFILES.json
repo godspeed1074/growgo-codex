@@ -12,7 +12,11 @@
       "textureAtlasRequired": true,
       "exportedFileSizeTargetBytes": 180000,
       "exportedFileSizeCeilingBytes": 300000,
-      "requiredLods": ["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"],
+      "requiredLods": [
+        "LOD_CLOSE",
+        "LOD_GAMEPLAY",
+        "LOD_MAP"
+      ],
       "collisionExpectation": "SIMPLE_BOX",
       "instancingExpectation": "REQUIRED"
     },
@@ -26,7 +30,29 @@
       "textureAtlasRequired": true,
       "exportedFileSizeTargetBytes": 140000,
       "exportedFileSizeCeilingBytes": 240000,
-      "requiredLods": ["LOD_CLOSE", "LOD_GAMEPLAY", "LOD_MAP"],
+      "requiredLods": [
+        "LOD_CLOSE",
+        "LOD_GAMEPLAY",
+        "LOD_MAP"
+      ],
+      "collisionExpectation": "NONE_OR_SIMPLE_HULL",
+      "instancingExpectation": "REQUIRED"
+    },
+    "VEGETATION_RICH_RASTER_SHARED_ATLAS_LIGHT": {
+      "preferredTriangleTarget": 500,
+      "hardTriangleCeiling": 900,
+      "vertexCeiling": 1100,
+      "materialCeiling": 2,
+      "textureCount": 1,
+      "maxTextureDimension": 2048,
+      "textureAtlasRequired": true,
+      "exportedFileSizeTargetBytes": 2800000,
+      "exportedFileSizeCeilingBytes": 3000000,
+      "requiredLods": [
+        "LOD_CLOSE",
+        "LOD_GAMEPLAY",
+        "LOD_MAP"
+      ],
       "collisionExpectation": "NONE_OR_SIMPLE_HULL",
       "instancingExpectation": "REQUIRED"
     }

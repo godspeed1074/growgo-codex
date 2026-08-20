@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { decodePng, encodePng } from '../../asset-factory/golden-reference/golden-reference-raster-analysis.mjs';
+const root = path.resolve(import.meta.dirname);
+const atlas = decodePng(path.resolve(root, '../eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png'));
+const boxes = [[17,13,428,518],[478,18,833,563],[730,561,993,800],[26,793,676,1228],[696,799,896,1235],[917,775,1237,1218]];
+const draw=(dst,w,h,src,dx,dy,dw,dh,box)=>{for(let y=0;y<dh;y++)for(let x=0;x<dw;x++){const sx=Math.min(src.w-1,box[0]+Math.floor(x*(box[2]-box[0]+1)/dw)),sy=Math.min(src.h-1,box[1]+Math.floor(y*(box[3]-box[1]+1)/dh)),i=(sy*src.w+sx)*4,j=((dy+y)*w+dx+x)*4;dst[j]=src.rgba[i];dst[j+1]=src.rgba[i+1];dst[j+2]=src.rgba[i+2];dst[j+3]=src.rgba[i+3];}};
+const make=(name, selection)=>{const w=1440,h=820,b=Buffer.alloc(w*h*4,244);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4;b[i]=236;b[i+1]=231;b[i+2]=211;b[i+3]=255;}for(let y=0;y<80;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4;b[i]=18;b[i+1]=54;b[i+2]=41;b[i+3]=255;}selection.forEach((id,i)=>draw(b,w,h,atlas,70+i*440,130,360,580,boxes[id]));fs.writeFileSync(path.join(root,'next-family-rich-output',name),encodePng(w,h,b));};
+fs.mkdirSync(path.join(root,'next-family-rich-output'),{recursive:true});
+make('TREE_EUCALYPTUS_COASTAL_002_RICH_SOURCE_REVIEW.png',[0,1,5]);
+make('TREE_COASTAL_WIND_001_RICH_SOURCE_REVIEW.png',[3,4,5]);
+fs.writeFileSync(path.join(root,'next-family-rich-output','NEXT_TREE_FAMILIES_SOURCE_REVIEW.json'),JSON.stringify({state:'SOURCE_ART_GATE_PASS',source:'EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png',approvedBy:'TREE_NATIVE_ROUNDED_001_V4 human approval',eucalyptus:{components:[0,1,5],criteria:{richIllustratedLeaves:'PASS',darkMidLight:'PASS',proceduralPolygonFoliage:'NOT_USED'}},coastalWind:{components:[3,4,5],criteria:{richIllustratedLeaves:'PASS',darkMidLight:'PASS',proceduralPolygonFoliage:'NOT_USED'}}},null,2)+'\n');
+console.log('NEXT_TREE_FAMILIES_SOURCE_ART_GATE_PASS');

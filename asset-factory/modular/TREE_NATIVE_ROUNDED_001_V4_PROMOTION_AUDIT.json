@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
+  "runtimeAssetId": "TREE_NATIVE_ROUNDED_001",
+  "version": "4.0.0",
+  "approvalState": "APPROVED",
+  "operatorApproval": "YES",
+  "evidence": {
+    "richRasterFoliage": "PASS",
+    "upperCrownCorrection": "PASS",
+    "lods": "PASS",
+    "budget": "PASS",
+    "modularReuse": "PASS",
+    "anonymousGeometry": 0,
+    "cameraContract": "PASS"
+  },
+  "atlasArchitectureModified": false,
+  "productionAtlasEnabled": false
+}

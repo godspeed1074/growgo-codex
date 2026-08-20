@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "registry": "PHILLIP_ISLAND_TREE_LAYER_A_REGISTRY",
+  "productionAtlasEligible": false,
+  "atlasRuntimeEnabled": false,
+  "modules": [
+    {
+      "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
+      "runtimeAssetId": "TREE_NATIVE_ROUNDED_001",
+      "assetVersion": "4.0.0",
+      "approvalState": "APPROVED",
+      "packageState": "APPROVED_LOCAL_ASSET_FACTORY",
+      "lodAssets": {
+        "CLOSE": "rich-v4-top-corrected-output/TREE_NATIVE_ROUNDED_001_V4_TOP_CORRECTED_LOD_CLOSE.glb",
+        "GAMEPLAY": "rich-v4-top-corrected-output/TREE_NATIVE_ROUNDED_001_V4_TOP_CORRECTED_LOD_GAMEPLAY.glb",
+        "MAP": "rich-v4-top-corrected-output/TREE_NATIVE_ROUNDED_001_V4_TOP_CORRECTED_LOD_MAP.glb"
+      },
+      "atlasEligibility": "REGISTERED_NOT_ENABLED"
+    },
+    {
+      "assetId": "GG-VEG-TREE-EUCALYPTUS-COASTAL-002",
+      "runtimeAssetId": "TREE_EUCALYPTUS_COASTAL_002",
+      "assetVersion": "2.0.0",
+      "approvalState": "REVIEW",
+      "packageState": "REVIEW_CANDIDATE",
+      "atlasEligibility": "REGISTERED_NOT_ENABLED",
+      "lodAssets": {
+        "CLOSE": "next-family-rich-output/worker-output/TREE_EUCALYPTUS_COASTAL_002@2.0.0_LOD_CLOSE.glb",
+        "GAMEPLAY": "next-family-rich-output/worker-output/TREE_EUCALYPTUS_COASTAL_002@2.0.0_LOD_GAMEPLAY.glb",
+        "MAP": "next-family-rich-output/worker-output/TREE_EUCALYPTUS_COASTAL_002@2.0.0_LOD_MAP.glb"
+      }
+    },
+    {
+      "assetId": "GG-VEG-TREE-COASTAL-WIND-001",
+      "runtimeAssetId": "TREE_COASTAL_WIND_001",
+      "assetVersion": "2.0.0",
+      "approvalState": "REVIEW",
+      "packageState": "REVIEW_CANDIDATE",
+      "atlasEligibility": "REGISTERED_NOT_ENABLED",
+      "lodAssets": {
+        "CLOSE": "next-family-rich-output/worker-output/TREE_COASTAL_WIND_001@2.0.0_LOD_CLOSE.glb",
+        "GAMEPLAY": "next-family-rich-output/worker-output/TREE_COASTAL_WIND_001@2.0.0_LOD_GAMEPLAY.glb",
+        "MAP": "next-family-rich-output/worker-output/TREE_COASTAL_WIND_001@2.0.0_LOD_MAP.glb"
+      }
+    }
+  ]
+}

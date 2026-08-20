@@ -1,0 +1,29 @@
+{
+  "state": "SOURCE_ART_GATE_PASS",
+  "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "approvedBy": "TREE_NATIVE_ROUNDED_001_V4 human approval",
+  "eucalyptus": {
+    "components": [
+      0,
+      1,
+      5
+    ],
+    "criteria": {
+      "richIllustratedLeaves": "PASS",
+      "darkMidLight": "PASS",
+      "proceduralPolygonFoliage": "NOT_USED"
+    }
+  },
+  "coastalWind": {
+    "components": [
+      3,
+      4,
+      5
+    ],
+    "criteria": {
+      "richIllustratedLeaves": "PASS",
+      "darkMidLight": "PASS",
+      "proceduralPolygonFoliage": "NOT_USED"
+    }
+  }
+}

@@ -11,6 +11,11 @@
       "textureAtlasId": "GG-ATLAS-BUILDING-A",
       "textureAtlasVersion": "1.0.0",
       "status": "APPROVED"
+    },
+    {
+      "textureAtlasId": "GG-ATLAS-FOLIAGE-RICH-V2",
+      "textureAtlasVersion": "2.0.0",
+      "status": "APPROVED"
     }
   ],
   "materials": [
@@ -19,6 +24,18 @@
       "materialVersion": "1.0.0",
       "textureAtlasId": "GG-ATLAS-BUILDING-A",
       "status": "APPROVED"
+    },
+    {
+      "materialId": "GG-MAT-TREE-BARK-SHARED",
+      "materialVersion": "1.0.0",
+      "textureAtlasId": "GG-ATLAS-FOLIAGE-RICH-V2",
+      "status": "APPROVED"
+    },
+    {
+      "materialId": "GG-MAT-FOLIAGE-RICH-RASTER-V2",
+      "materialVersion": "2.0.0",
+      "textureAtlasId": "GG-ATLAS-FOLIAGE-RICH-V2",
+      "status": "APPROVED"
     }
   ],
   "paletteFamilies": {
@@ -26,6 +43,14 @@
       "allowedPaletteIds": [
         "HERITAGE_BRICK_RED",
         "HERITAGE_CREAM"
+      ]
+    },
+    "GROWGO_NATIVE_FOLIAGE": {
+      "allowedPaletteIds": [
+        "BASE",
+        "COOL",
+        "WARM",
+        "LIGHT"
       ]
     }
   },
@@ -530,6 +555,491 @@
         "striped",
         "presentation"
       ]
+    },
+    {
+      "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
+      "assetVersion": "4.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "VEGETATION",
+      "type": "TREE_CAMERA_AUTHORED_RICH_RASTER",
+      "family": "PHILLIP_ISLAND_NATIVE_TREE",
+      "designSpecification": {
+        "construction": "locked V4 native-rounded trunk/carcass with camera-authored illustrated foliage cards",
+        "silhouette": "dense rounded native crown; upper highlight card rebalanced",
+        "runtimeAssetId": "TREE_NATIVE_ROUNDED_001"
+      },
+      "dimensionsMeters": {
+        "width": 8,
+        "height": 8.6,
+        "depth": 4
+      },
+      "geometryBudget": {
+        "preferredTriangles": 150,
+        "triangleCeiling": 300,
+        "vertexCeiling": 450
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1254
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-TREE-BARK-SHARED",
+          "GG-MAT-FOLIAGE-RICH-RASTER-V2"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 2800000,
+        "ceilingBytes": 3000000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED",
+        "cards": {
+          "CLOSE": 12,
+          "GAMEPLAY": 8,
+          "MAP": 3
+        },
+        "triangles": {
+          "CLOSE": 96,
+          "GAMEPLAY": 88,
+          "MAP": 78
+        }
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-FOLIAGE-RICH-V2",
+          "textureAtlasVersion": "2.0.0",
+          "uvRegion": "APPROVED_RICH_CLUSTER_LIBRARY_V2"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "CAMERA_AUTHORED_FRONT",
+          "MIRRORED_FRONT"
+        ],
+        "frontAxis": "+Y",
+        "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0"
+      },
+      "variationRules": {
+        "variantFamily": "NATIVE_ROUNDED",
+        "allowedVariants": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ],
+        "deterministicRule": "SHA256_RUNTIME_PLACEMENT_SEED",
+        "mirrorAllowed": true,
+        "uniformScaleRange": [
+          0.89,
+          1.1
+        ],
+        "worldRotationDegrees": [
+          -12,
+          12
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "UNIFORM_SCALE",
+          "min": 0.89,
+          "max": 1.1
+        },
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_HULL",
+        "source": "LOCKED_V4_CARCASS"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD",
+        "generatorVersion": "1.0.0",
+        "seedRule": "SHA256_ASSET_VERSION_PLACEMENT_CONTEXT",
+        "sourceArtLocked": true
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "NONE",
+        "identityPreservation": "REQUIRED",
+        "instancing": "REQUIRED",
+        "anonymousGeometryCount": 0
+      },
+      "recipeCompatibility": [
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_001",
+        "RECIPE_NATURE_ROADSIDE_NATIVE_001",
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_001"
+      ],
+      "mobileBudgetProfile": "VEGETATION_RICH_RASTER_SHARED_ATLAS_LIGHT",
+      "palette": {
+        "paletteFamily": "GROWGO_NATIVE_FOLIAGE",
+        "allowedPaletteIds": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ],
+        "deterministicPaletteRule": "SHA256_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "APPROVED",
+      "provenance": {
+        "sourceType": "HUMAN_APPROVED_BLENDER_OUTPUT",
+        "sourceId": "TREE_NATIVE_ROUNDED_001_V4_RICH_RASTER_HUMAN_APPROVAL",
+        "specId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD@1.0.0",
+        "goldenReferenceId": "GROWGO_LUSH_MOBILE_MAP_VEGETATION_DIRECTION_001",
+        "worker": "Steam Deck Blender 5.2.0 LTS",
+        "evidenceCommit": "f2a41a9"
+      },
+      "tags": [
+        "tree",
+        "native",
+        "rounded",
+        "phillip-island",
+        "camera-authored",
+        "rich-raster",
+        "layer-a"
+      ]
+    },
+    {
+      "assetId": "GG-VEG-TREE-EUCALYPTUS-COASTAL-002",
+      "assetVersion": "2.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "VEGETATION",
+      "type": "TREE_CAMERA_AUTHORED_RICH_RASTER",
+      "family": "PHILLIP_ISLAND_COASTAL_EUCALYPTUS",
+      "designSpecification": {
+        "construction": "existing family structural silhouette rebuilt with approved rich illustrated raster foliage cards",
+        "silhouette": "medium-tall, open asymmetric eucalyptus crown with visible branch gaps",
+        "runtimeAssetId": "TREE_EUCALYPTUS_COASTAL_002"
+      },
+      "dimensionsMeters": {
+        "width": 6.1,
+        "height": 10.8,
+        "depth": 4
+      },
+      "geometryBudget": {
+        "preferredTriangles": 160,
+        "triangleCeiling": 320,
+        "vertexCeiling": 480
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1254
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-TREE-BARK-SHARED",
+          "GG-MAT-FOLIAGE-RICH-RASTER-V2"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 2800000,
+        "ceilingBytes": 3000000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED",
+        "cards": {
+          "CLOSE": 12,
+          "GAMEPLAY": 8,
+          "MAP": 3
+        },
+        "triangles": {
+          "CLOSE": 144,
+          "GAMEPLAY": 136,
+          "MAP": 126
+        }
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-FOLIAGE-RICH-V2",
+          "textureAtlasVersion": "2.0.0",
+          "uvRegion": "APPROVED_RICH_CLUSTER_LIBRARY_V2"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "CAMERA_AUTHORED_FRONT",
+          "MIRRORED_FRONT"
+        ],
+        "frontAxis": "+Y",
+        "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0"
+      },
+      "variationRules": {
+        "variantFamily": "TREE_EUCALYPTUS_COASTAL_002",
+        "allowedVariants": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ],
+        "deterministicRule": "SHA256_RUNTIME_PLACEMENT_SEED",
+        "mirrorAllowed": true,
+        "uniformScaleRange": [
+          0.91,
+          1.08
+        ],
+        "worldRotationDegrees": [
+          -12,
+          12
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "UNIFORM_SCALE",
+          "min": 0.91,
+          "max": 1.08
+        },
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_HULL",
+        "source": "FAMILY_STRUCTURE"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD",
+        "generatorVersion": "1.0.0",
+        "seedRule": "SHA256_ASSET_VERSION_PLACEMENT_CONTEXT",
+        "sourceArtLocked": true
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "NONE",
+        "identityPreservation": "REQUIRED",
+        "instancing": "REQUIRED",
+        "anonymousGeometryCount": 0
+      },
+      "recipeCompatibility": [
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_001",
+        "RECIPE_NATURE_ROADSIDE_NATIVE_001",
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_001"
+      ],
+      "mobileBudgetProfile": "VEGETATION_RICH_RASTER_SHARED_ATLAS_LIGHT",
+      "palette": {
+        "paletteFamily": "GROWGO_NATIVE_FOLIAGE",
+        "allowedPaletteIds": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ],
+        "deterministicPaletteRule": "SHA256_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "APPROVED_SOURCE_ART_BLENDER_CANDIDATE",
+        "sourceId": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+        "specId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD@1.0.0",
+        "worker": "Steam Deck Blender 5.2.0 LTS",
+        "sourceArtGate": "PASS"
+      },
+      "tags": [
+        "tree",
+        "eucalyptus",
+        "coastal",
+        "open-crown",
+        "rich-raster",
+        "layer-a"
+      ]
+    },
+    {
+      "assetId": "GG-VEG-TREE-COASTAL-WIND-001",
+      "assetVersion": "2.0.0",
+      "layer": "LAYER_A_MODULE",
+      "category": "VEGETATION",
+      "type": "TREE_CAMERA_AUTHORED_RICH_RASTER",
+      "family": "PHILLIP_ISLAND_COASTAL_WIND_TREE",
+      "designSpecification": {
+        "construction": "existing family structural silhouette rebuilt with approved rich illustrated raster foliage cards",
+        "silhouette": "low wide, wind-directed lateral canopy with foliage-dominant silhouette",
+        "runtimeAssetId": "TREE_COASTAL_WIND_001"
+      },
+      "dimensionsMeters": {
+        "width": 7.4,
+        "height": 6.7,
+        "depth": 3.4
+      },
+      "geometryBudget": {
+        "preferredTriangles": 160,
+        "triangleCeiling": 320,
+        "vertexCeiling": 480
+      },
+      "textureBudget": {
+        "textureCount": 1,
+        "maxDimension": 1254
+      },
+      "materialBudget": {
+        "materialCeiling": 2,
+        "materialIds": [
+          "GG-MAT-TREE-BARK-SHARED",
+          "GG-MAT-FOLIAGE-RICH-RASTER-V2"
+        ]
+      },
+      "exportedFileSizeBudget": {
+        "targetBytes": 2800000,
+        "ceilingBytes": 3000000
+      },
+      "lod": {
+        "required": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "available": [
+          "LOD_CLOSE",
+          "LOD_GAMEPLAY",
+          "LOD_MAP"
+        ],
+        "identityPreservation": "REQUIRED",
+        "cards": {
+          "CLOSE": 12,
+          "GAMEPLAY": 8,
+          "MAP": 3
+        },
+        "triangles": {
+          "CLOSE": 144,
+          "GAMEPLAY": 136,
+          "MAP": 126
+        }
+      },
+      "textureAtlases": [
+        {
+          "textureAtlasId": "GG-ATLAS-FOLIAGE-RICH-V2",
+          "textureAtlasVersion": "2.0.0",
+          "uvRegion": "APPROVED_ISOLATED_RICH_CLUSTER"
+        }
+      ],
+      "orientationRules": {
+        "allowed": [
+          "CAMERA_AUTHORED_FRONT",
+          "MIRRORED_FRONT"
+        ],
+        "frontAxis": "+Y",
+        "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0"
+      },
+      "variationRules": {
+        "variantFamily": "TREE_COASTAL_WIND_001",
+        "allowedVariants": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ],
+        "deterministicRule": "SHA256_RUNTIME_PLACEMENT_SEED",
+        "mirrorAllowed": true,
+        "uniformScaleRange": [
+          0.88,
+          1.1
+        ],
+        "worldRotationDegrees": [
+          -10,
+          10
+        ]
+      },
+      "allowedTransformations": [
+        {
+          "type": "MIRROR"
+        },
+        {
+          "type": "UNIFORM_SCALE",
+          "min": 0.88,
+          "max": 1.1
+        },
+        {
+          "type": "ROTATE"
+        },
+        {
+          "type": "APPROVED_TINT"
+        }
+      ],
+      "collisionRules": {
+        "type": "SIMPLE_HULL",
+        "source": "FAMILY_STRUCTURE"
+      },
+      "deterministicGeneration": {
+        "generatorId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD",
+        "generatorVersion": "1.0.0",
+        "seedRule": "SHA256_ASSET_VERSION_PLACEMENT_CONTEXT",
+        "sourceArtLocked": true
+      },
+      "modularReuse": {
+        "searchRequired": true,
+        "repeatAxis": "NONE",
+        "identityPreservation": "REQUIRED",
+        "instancing": "REQUIRED",
+        "anonymousGeometryCount": 0
+      },
+      "recipeCompatibility": [
+        "RECIPE_NATURE_COASTAL_ENVIRONMENT_001",
+        "RECIPE_NATURE_ROADSIDE_NATIVE_001",
+        "RECIPE_NATURE_PARK_STANDARD_001",
+        "RECIPE_NATURE_FOREST_ENVIRONMENT_001"
+      ],
+      "mobileBudgetProfile": "VEGETATION_RICH_RASTER_SHARED_ATLAS_LIGHT",
+      "palette": {
+        "paletteFamily": "GROWGO_NATIVE_FOLIAGE",
+        "allowedPaletteIds": [
+          "BASE",
+          "COOL",
+          "WARM",
+          "LIGHT"
+        ],
+        "deterministicPaletteRule": "SHA256_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
+      },
+      "approvalState": "REVIEW",
+      "provenance": {
+        "sourceType": "APPROVED_SOURCE_ART_BLENDER_CANDIDATE",
+        "sourceId": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+        "specId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD@1.0.0",
+        "worker": "Steam Deck Blender 5.2.0 LTS",
+        "sourceArtGate": "PASS"
+      },
+      "tags": [
+        "tree",
+        "coastal",
+        "wind-shaped",
+        "lateral-crown",
+        "rich-raster",
+        "layer-a"
+      ]
     }
   ],
   "history": [
@@ -555,6 +1065,69 @@
       "assetVersion": "1.0.0",
       "toState": "APPROVED",
       "authority": "MIZTA_PIZZA_COMPLETE_AUTHORITY_V5"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
+      "assetVersion": "4.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "OPERATOR",
+      "reason": "HUMAN_VISUAL_APPROVAL_V4"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
+      "assetVersion": "4.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "ASSET_FACTORY",
+      "reason": "BUILD_AND_REVIEW_EVIDENCE_COMPLETE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
+      "assetVersion": "4.0.0",
+      "fromState": "REVIEW",
+      "toState": "APPROVED",
+      "actor": "OPERATOR",
+      "reason": "HUMAN_FINAL_APPROVAL"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-VEG-TREE-EUCALYPTUS-COASTAL-002",
+      "assetVersion": "2.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "ASSET_FACTORY",
+      "reason": "NEXT_TREE_FAMILY_CANDIDATE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-VEG-TREE-EUCALYPTUS-COASTAL-002",
+      "assetVersion": "2.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "ASSET_FACTORY",
+      "reason": "SOURCE_ART_AND_BLENDER_BUILD_PASS"
+    },
+    {
+      "event": "REGISTER_VERSION",
+      "assetId": "GG-VEG-TREE-COASTAL-WIND-001",
+      "assetVersion": "2.0.0",
+      "fromState": null,
+      "toState": "DRAFT",
+      "actor": "ASSET_FACTORY",
+      "reason": "NEXT_TREE_FAMILY_CANDIDATE"
+    },
+    {
+      "event": "STATE_TRANSITION",
+      "assetId": "GG-VEG-TREE-COASTAL-WIND-001",
+      "assetVersion": "2.0.0",
+      "fromState": "DRAFT",
+      "toState": "REVIEW",
+      "actor": "ASSET_FACTORY",
+      "reason": "SOURCE_ART_AND_BLENDER_BUILD_PASS"
     }
   ],
   "recipes": [

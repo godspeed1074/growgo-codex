@@ -1,13 +1,20 @@
 # GrowGo Camera-Authored Illustrated Foliage Cluster Method
 
-1. Gameplay-camera fidelity is authoritative for vegetation.
-2. Structural geometry provides the anchor, trunk, major branches, and minimal physical depth.
-3. Rich illustrated raster clusters provide visible foliage fidelity.
-4. One presentation card may contain many illustrated leaves.
-5. Procedural polygon reconstruction of approved foliage art is prohibited for Close and Gameplay LODs unless explicitly human-approved.
-6. Source foliage art must pass human visual review before Blender.
-7. The cluster library must pass human visual review before tree assembly.
-8. Distant LODs may simplify aggressively, but Close and Gameplay retain approved raster art.
-9. Deterministic mirror, modest scale, yaw, and palette variations are preferred to duplicate source files.
+**State:** APPROVED_PRODUCTION_METHOD
+**Authority:** `TREE_NATIVE_ROUNDED_001@4.0.0` human-approved V4 rich-raster proof
+**Scope:** Layer A vegetation; approved for camera-authored 2.5D trees, shrubs, and ground-cover families.
+
+1. The locked GrowGo gameplay camera is authoritative for vegetation fidelity. Vegetation does not need equal 360° fidelity.
+2. Vegetation may be mostly 2.5D while reading convincingly as 3D from that camera.
+3. Lightweight structural geometry supplies anchors, trunks, limbs, stems, physical scale, and collision where needed.
+4. Human-approved rich illustrated raster cards supply leaves, canopy colour, silhouette, density, and papercut shading.
+5. One lightweight card may visibly carry many painted leaves.
+6. Do not rebuild approved foliage art as procedural polygons.
+7. Procedural or simple polygon foliage is prohibited at Close and Gameplay LODs unless a specific asset receives human approval.
+8. Source artwork must pass visual review before Blender fabrication.
+9. A reusable cluster library must pass visual review before tree assembly.
+10. Gameplay LOD reduces card count while retaining approved rich artwork; Map/Far LOD may simplify aggressively.
+11. Deterministic mirroring, subtle scale, limited yaw, and restrained BASE/COOL/WARM/LIGHT palette variation reduce clone appearance without creating a new asset.
+12. Performance target: **high visual density + low per-object complexity**. The lush GrowGo mobile-map reference defines desired world density, not excessive geometry per tree.
 
 The extraction rule is permanent: isolate authored foliage by alpha-component ownership rather than a rectangular atlas crop; force every pixel outside the approved mask transparent and include transparent padding.
