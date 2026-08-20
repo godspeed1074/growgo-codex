@@ -1,0 +1,15 @@
+{
+  "state": "REVIEW_CANDIDATE",
+  "approvedSource": "GROWGO_RICH_FOLIAGE_APPROVED_CLUSTER_RGBA.png",
+  "fullCardUV": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "materialCount": 1,
+  "textureCount": 1,
+  "doubleSided": true,
+  "glb": "GROWGO_RICH_FOLIAGE_APPROVED_SINGLE_CARD.glb",
+  "blender": "5.2.0 LTS"
+}

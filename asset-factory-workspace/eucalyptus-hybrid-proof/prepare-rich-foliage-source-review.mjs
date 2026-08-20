@@ -1,0 +1,39 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { decodePng, encodePng } from '../../asset-factory/golden-reference/golden-reference-raster-analysis.mjs';
+
+const root = path.resolve(process.cwd(), 'asset-factory-workspace/eucalyptus-hybrid-proof');
+const reviewDir = path.join(root, 'rich-foliage-source-review'); fs.mkdirSync(reviewDir, { recursive: true });
+const candidates = [
+  { id: 'V2 CLEAN RICH', status: 'RECOMMENDED', file: path.join(root, 'v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png'), quality: { leaves: true, overlap: true, tonal: true, organic: true, papercut: true, northStar: true, crude: false } },
+  { id: 'V5 AUTHORED', status: 'REJECTED TOO SIMPLE', file: path.join(root, 'v5-authored-art/GROWGO_EUCALYPTUS_AUTHORED_CLUSTER_ATLAS.png'), quality: { leaves: false, overlap: false, tonal: false, organic: false, papercut: false, northStar: false, crude: true } },
+  { id: 'V6 AUTHORED', status: 'REJECTED TOO SIMPLE', file: path.join(root, 'v6-authored-art/GROWGO_EUCALYPTUS_V6_CLUSTER_ATLAS.png'), quality: { leaves: false, overlap: false, tonal: false, organic: false, papercut: false, northStar: false, crude: true } },
+  { id: 'V3 NO TWIG', status: 'REJECTED TOO SIMPLE', file: path.resolve(process.cwd(), 'asset-factory-workspace/phillip-island-tree-proof/GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png'), quality: { leaves: false, overlap: false, tonal: false, organic: false, papercut: false, northStar: false, crude: true } },
+].map((candidate) => ({ ...candidate, image: decodePng(candidate.file) }));
+
+const glyph={A:['0110','1001','1001','1111','1001','1001'],B:['1110','1001','1110','1001','1001','1110'],C:['0111','1000','1000','1000','1000','0111'],D:['1110','1001','1001','1001','1001','1110'],E:['1111','1000','1110','1000','1000','1111'],F:['1111','1000','1110','1000','1000','1000'],G:['0111','1000','1011','1001','1001','0111'],H:['1001','1001','1111','1001','1001','1001'],I:['111','010','010','010','010','111'],J:['0011','0001','0001','0001','1001','0110'],K:['1001','1010','1100','1010','1001','1001'],L:['1000','1000','1000','1000','1000','1111'],M:['10001','11011','10101','10001','10001','10001'],N:['1001','1101','1011','1001','1001','1001'],O:['0110','1001','1001','1001','1001','0110'],P:['1110','1001','1110','1000','1000','1000'],R:['1110','1001','1110','1010','1001','1001'],S:['0111','1000','0110','0001','0001','1110'],T:['11111','00100','00100','00100','00100','00100'],U:['1001','1001','1001','1001','1001','0110'],V:['10001','10001','01010','01010','00100','00100'],W:['10001','10001','10101','10101','11011','10001'],X:['1001','1001','0110','0110','1001','1001'],Y:['1001','1001','0110','0010','0010','0010'],Z:['1111','0001','0010','0100','1000','1111'],'0':['0110','1001','1001','1001','1001','0110'],'1':['010','110','010','010','010','111'],'2':['1110','0001','0110','1000','1000','1111'],'3':['1110','0001','0110','0001','0001','1110'],'5':['1111','1000','1110','0001','0001','1110'],'6':['0111','1000','1110','1001','1001','0110'],' ':['0'],'-':['0','0','111','0','0'],'.':['0','0','0','0','1'],':':['0','1','0','0','1'],'/':['0001','0010','0010','0100','1000']};
+const newBoard=(w,h)=>Buffer.alloc(w*h*4,245); const set=(b,w,h,x,y,c)=>{if(x>=0&&x<w&&y>=0&&y<h)b.set(c,(y*w+x)*4)}; const fill=(b,w,h,x,y,ww,hh,c)=>{for(let yy=y;yy<y+hh;yy++)for(let xx=x;xx<x+ww;xx++)set(b,w,h,xx,yy,c)};
+const text=(b,w,h,value,x,y,scale=4,c=[20,45,35,255])=>{let cx=x;for(const ch of value.toUpperCase()){const rows=glyph[ch]||glyph[' '],gw=Math.max(...rows.map(r=>r.length));for(let gy=0;gy<rows.length;gy++)for(let gx=0;gx<rows[gy].length;gx++)if(rows[gy][gx]==='1')fill(b,w,h,cx+gx*scale,y+gy*scale,scale,scale,c);cx+=(gw+1)*scale;}};
+const scaled=(b,w,h,source,dx,dy,dw,dh,{crop,checker=true}={})=>{const sx0=crop?.x||0,sy0=crop?.y||0,sw=crop?.w||source.w,sh=crop?.h||source.h;for(let y=0;y<dh;y++)for(let x=0;x<dw;x++){const sx=Math.min(source.w-1,sx0+Math.floor(x*sw/dw)),sy=Math.min(source.h-1,sy0+Math.floor(y*sh/dh)),i=(sy*source.w+sx)*4;let r=source.rgba[i],g=source.rgba[i+1],bb=source.rgba[i+2],a=source.rgba[i+3];if(checker){const q=((Math.floor(x/16)+Math.floor(y/16))&1)?205:150;r=Math.round((r*a+q*(255-a))/255);g=Math.round((g*a+q*(255-a))/255);bb=Math.round((bb*a+q*(255-a))/255);a=255;}set(b,w,h,dx+x,dy+y,[r,g,bb,a]);}};
+
+const CW=1800,CH=1110,contact=newBoard(CW,CH);fill(contact,CW,CH,0,0,CW,84,[17,52,40,255]);text(contact,CW,CH,'GROWGO FOLIAGE RICH SOURCE CANDIDATES',38,22,6,[245,248,238,255]);
+candidates.forEach((candidate,index)=>{const x=35+index*445;fill(contact,CW,CH,x-8,130,405,540,[19,55,43,255]);text(contact,CW,CH,candidate.id,x,95,5);scaled(contact,CW,CH,candidate.image,x,130,390,450);text(contact,CW,CH,candidate.status,x,600,4,candidate.status==='RECOMMENDED'?[20,120,55,255]:[170,45,35,255]);text(contact,CW,CH,`${candidate.image.w} X ${candidate.image.h} RGBA`,x,635,3);});
+text(contact,CW,CH,'QUALITY GATE: V2 CLEAN = RICH ILLUSTRATED LEAVES, ORGANIC OVERLAP, DARK MID LIGHT, PAPERCUT DEPTH',38,730,4);text(contact,CW,CH,'V5 V6 V3 = REJECTED: SIMPLE OVALS / POLYGONS. DO NOT SEND THOSE TO BLENDER.',38,780,4,[150,40,35,255]);
+scaled(contact,CW,CH,candidates[0].image,50,835,500,230,{crop:{x:0,y:0,w:520,h:430}});scaled(contact,CW,CH,candidates[0].image,650,835,500,230,{crop:{x:460,y:0,w:430,h:430}});scaled(contact,CW,CH,candidates[0].image,1250,835,500,230,{crop:{x:820,y:0,w:430,h:430}});
+fs.writeFileSync(path.join(reviewDir,'GROWGO_FOLIAGE_RICH_SOURCE_CANDIDATES.png'),encodePng(CW,CH,contact));
+
+// These are non-overlapping source windows chosen from the component audit. They avoid
+// the former error of presenting a rectangular mixture of neighbouring authored art.
+const clusters=[
+ {id:'CLUSTER 01 HANGING DARK',crop:{x:17,y:13,w:411,h:505}}, {id:'CLUSTER 02 HANGING MIXED',crop:{x:478,y:18,w:355,h:535}},
+ {id:'CLUSTER 03 HANGING LIGHT',crop:{x:863,y:18,w:369,h:550}}, {id:'CLUSTER 04 SHORT BRANCH',crop:{x:730,y:570,w:263,h:230}},
+ {id:'CLUSTER 05 DENSE CROWN',crop:{x:26,y:830,w:650,h:398}}, {id:'CLUSTER 06 LOWER HANGING',crop:{x:696,y:830,w:200,h:405}},
+ {id:'CLUSTER 07 RIGHT BRANCH',crop:{x:917,y:830,w:320,h:388}}, {id:'CLUSTER 08 CROWN DETAIL',crop:{x:130,y:855,w:430,h:350}},
+];
+const LW=1800,LH=1260,library=newBoard(LW,LH);fill(library,LW,LH,0,0,LW,84,[17,52,40,255]);text(library,LW,LH,'GROWGO RICH FOLIAGE CLUSTER LIBRARY REVIEW',38,22,6,[245,248,238,255]);
+clusters.forEach((cluster,index)=>{const col=index%4,row=Math.floor(index/4),x=35+col*445,y=130+row*530;fill(library,LW,LH,x-8,y,405,445,[19,55,43,255]);text(library,LW,LH,cluster.id,x,y-35,4);scaled(library,LW,LH,candidates[0].image,x,y,390,430,{crop:cluster.crop});});
+text(library,LW,LH,'REVIEW GATE: RICH ILLUSTRATED FOLIAGE YES   RECOGNIZABLE LEAVES YES   INTERNAL SHADING YES',38,1150,4);text(library,LW,LH,'IRREGULAR SILHOUETTES YES   SIMPLE OVAL BLOBS NO   LOW POLY APPEARANCE NO',38,1200,4);
+fs.writeFileSync(path.join(reviewDir,'GROWGO_RICH_FOLIAGE_CLUSTER_LIBRARY_REVIEW.png'),encodePng(LW,LH,library));
+
+const audit={decision:'SOURCE_REVIEW_REQUIRED',recommendedSource:{file:path.relative(process.cwd(),candidates[0].file),width:candidates[0].image.w,height:candidates[0].image.h,transparent:true,quality:candidates[0].quality},rejectedSources:candidates.slice(1).map(({id,file,quality})=>({id,file:path.relative(process.cwd(),file),quality})),clusterLibrary:clusters.map(({id,crop})=>({id,source:'EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png',crop})),permanentPipeline:['human-visible source art review','human-visible cluster library review','single-card Blender fidelity proof','full-tree assembly','in-game context','production approval']};
+fs.writeFileSync(path.join(reviewDir,'GROWGO_RICH_FOLIAGE_SOURCE_QUALITY_AUDIT.json'),JSON.stringify(audit,null,2)+'\n');console.log(JSON.stringify(audit,null,2));

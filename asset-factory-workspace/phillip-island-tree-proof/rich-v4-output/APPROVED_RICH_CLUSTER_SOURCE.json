@@ -1,0 +1,19 @@
+{
+  "approvedSource": "asset-factory-workspace/eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "approvedLibraryCluster": "CLUSTER 03 HANGING LIGHT",
+  "sourceBounds": {
+    "left": 863,
+    "top": 18,
+    "right": 1232,
+    "bottom": 610
+  },
+  "output": "asset-factory-workspace/phillip-island-tree-proof/GROWGO_RICH_FOLIAGE_APPROVED_CLUSTER_RGBA.png",
+  "dimensions": {
+    "width": 410,
+    "height": 633
+  },
+  "transparentPaddingPx": 20,
+  "sourceArtRedrawn": false,
+  "sourceArtSimplified": false,
+  "componentArea": 111675
+}

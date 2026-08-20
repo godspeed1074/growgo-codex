@@ -1,0 +1,42 @@
+{
+  "assetId": "TREE_NATIVE_ROUNDED_001",
+  "version": "4.0.0-rich-raster",
+  "state": "REVIEW_CANDIDATE",
+  "worker": "Steam Deck",
+  "blender": "5.2.0 LTS",
+  "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0",
+  "approvedSource": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "rejectedSources": [
+    "GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png",
+    "V5 simple authored oval foliage",
+    "V6 simple authored foliage",
+    "procedural V4 foliage"
+  ],
+  "proceduralPolygonFoliageCloseGameplay": false,
+  "carcassReused": true,
+  "lods": {
+    "CLOSE": {
+      "cards": 12,
+      "triangles": 96,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2681360
+    },
+    "GAMEPLAY": {
+      "cards": 8,
+      "triangles": 88,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2677532
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 78,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2672744
+    }
+  },
+  "atlasArchitectureModified": false,
+  "productionPopulationModified": false
+}

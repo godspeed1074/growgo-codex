@@ -1,0 +1,149 @@
+{
+  "decision": "SOURCE_REVIEW_REQUIRED",
+  "recommendedSource": {
+    "file": "asset-factory-workspace/eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+    "width": 1254,
+    "height": 1254,
+    "transparent": true,
+    "quality": {
+      "leaves": true,
+      "overlap": true,
+      "tonal": true,
+      "organic": true,
+      "papercut": true,
+      "northStar": true,
+      "crude": false
+    }
+  },
+  "rejectedSources": [
+    {
+      "id": "V5 AUTHORED",
+      "file": "asset-factory-workspace/eucalyptus-hybrid-proof/v5-authored-art/GROWGO_EUCALYPTUS_AUTHORED_CLUSTER_ATLAS.png",
+      "quality": {
+        "leaves": false,
+        "overlap": false,
+        "tonal": false,
+        "organic": false,
+        "papercut": false,
+        "northStar": false,
+        "crude": true
+      }
+    },
+    {
+      "id": "V6 AUTHORED",
+      "file": "asset-factory-workspace/eucalyptus-hybrid-proof/v6-authored-art/GROWGO_EUCALYPTUS_V6_CLUSTER_ATLAS.png",
+      "quality": {
+        "leaves": false,
+        "overlap": false,
+        "tonal": false,
+        "organic": false,
+        "papercut": false,
+        "northStar": false,
+        "crude": true
+      }
+    },
+    {
+      "id": "V3 NO TWIG",
+      "file": "asset-factory-workspace/phillip-island-tree-proof/GROWGO_FOLIAGE_CLUSTER_ATLAS_V3_NO_TWIG.png",
+      "quality": {
+        "leaves": false,
+        "overlap": false,
+        "tonal": false,
+        "organic": false,
+        "papercut": false,
+        "northStar": false,
+        "crude": true
+      }
+    }
+  ],
+  "clusterLibrary": [
+    {
+      "id": "CLUSTER 01 HANGING DARK",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 17,
+        "y": 13,
+        "w": 411,
+        "h": 505
+      }
+    },
+    {
+      "id": "CLUSTER 02 HANGING MIXED",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 478,
+        "y": 18,
+        "w": 355,
+        "h": 535
+      }
+    },
+    {
+      "id": "CLUSTER 03 HANGING LIGHT",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 863,
+        "y": 18,
+        "w": 369,
+        "h": 550
+      }
+    },
+    {
+      "id": "CLUSTER 04 SHORT BRANCH",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 730,
+        "y": 570,
+        "w": 263,
+        "h": 230
+      }
+    },
+    {
+      "id": "CLUSTER 05 DENSE CROWN",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 26,
+        "y": 830,
+        "w": 650,
+        "h": 398
+      }
+    },
+    {
+      "id": "CLUSTER 06 LOWER HANGING",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 696,
+        "y": 830,
+        "w": 200,
+        "h": 405
+      }
+    },
+    {
+      "id": "CLUSTER 07 RIGHT BRANCH",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 917,
+        "y": 830,
+        "w": 320,
+        "h": 388
+      }
+    },
+    {
+      "id": "CLUSTER 08 CROWN DETAIL",
+      "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "crop": {
+        "x": 130,
+        "y": 855,
+        "w": 430,
+        "h": 350
+      }
+    }
+  ],
+  "permanentPipeline": [
+    "human-visible source art review",
+    "human-visible cluster library review",
+    "single-card Blender fidelity proof",
+    "full-tree assembly",
+    "in-game context",
+    "production approval"
+  ]
+}

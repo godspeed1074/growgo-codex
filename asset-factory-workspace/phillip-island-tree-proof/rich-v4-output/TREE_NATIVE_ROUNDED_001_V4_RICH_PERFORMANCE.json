@@ -1,0 +1,38 @@
+{
+  "state": "REVIEW_CANDIDATE",
+  "source": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "texture": {
+    "width": 1254,
+    "height": 1254,
+    "estimatedRGBABytes": 6290064
+  },
+  "lods": {
+    "CLOSE": {
+      "cards": 12,
+      "triangles": 96,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2681360
+    },
+    "GAMEPLAY": {
+      "cards": 8,
+      "triangles": 88,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2677532
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 78,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2672744
+    }
+  },
+  "estimatedTenTreeGameplay": {
+    "cards": 80,
+    "triangles": 880,
+    "sharedTextureCount": 1
+  },
+  "alphaOverdraw": "MODERATE: 8 overlapping large alpha cards at gameplay LOD; bounded and visually justified by the approved rich foliage source."
+}
