@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": "asset-factory-workspace/eucalyptus-hybrid-proof/v2-cluster-art/EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "sourceArtRedrawn": false,
+  "sourceArtSimplified": false,
+  "alphaOwnership": "CONNECTED_COMPONENT_ONLY",
+  "components": {
+    "WIDE_DARK": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 17,
+        "top": 13,
+        "right": 428,
+        "bottom": 518
+      },
+      "width": 412,
+      "height": 506,
+      "aspectRatio": 0.8142292490118577,
+      "componentArea": 111665,
+      "uv": {
+        "u0": 0.013556618819776715,
+        "v0": 0.5861244019138756,
+        "u1": 0.34210526315789475,
+        "v1": 0.9896331738437002
+      }
+    },
+    "TALL_MIXED": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 478,
+        "top": 18,
+        "right": 833,
+        "bottom": 563
+      },
+      "width": 356,
+      "height": 546,
+      "aspectRatio": 0.652014652014652,
+      "componentArea": 112582,
+      "uv": {
+        "u0": 0.38118022328548645,
+        "v0": 0.5502392344497608,
+        "u1": 0.6650717703349283,
+        "v1": 0.9856459330143541
+      }
+    },
+    "HANGING_LIGHT": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 863,
+        "top": 18,
+        "right": 1232,
+        "bottom": 610
+      },
+      "width": 370,
+      "height": 593,
+      "aspectRatio": 0.6239460370994941,
+      "componentArea": 111675,
+      "uv": {
+        "u0": 0.6881977671451356,
+        "v0": 0.5127591706539074,
+        "u1": 0.9832535885167464,
+        "v1": 0.9856459330143541
+      }
+    },
+    "COMPACT": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 730,
+        "top": 561,
+        "right": 993,
+        "bottom": 800
+      },
+      "width": 264,
+      "height": 240,
+      "aspectRatio": 1.1,
+      "componentArea": 19850,
+      "uv": {
+        "u0": 0.5821371610845295,
+        "v0": 0.36124401913875603,
+        "u1": 0.7926634768740032,
+        "v1": 0.5526315789473684
+      }
+    },
+    "DENSE_WIDE": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 26,
+        "top": 793,
+        "right": 676,
+        "bottom": 1228
+      },
+      "width": 651,
+      "height": 436,
+      "aspectRatio": 1.4931192660550459,
+      "componentArea": 169290,
+      "uv": {
+        "u0": 0.02073365231259968,
+        "v0": 0.019936204146730474,
+        "u1": 0.539872408293461,
+        "v1": 0.36762360446570974
+      }
+    },
+    "TALL_DARK": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 696,
+        "top": 799,
+        "right": 896,
+        "bottom": 1235
+      },
+      "width": 201,
+      "height": 437,
+      "aspectRatio": 0.459954233409611,
+      "componentArea": 54771,
+      "uv": {
+        "u0": 0.5550239234449761,
+        "v0": 0.014354066985645897,
+        "u1": 0.715311004784689,
+        "v1": 0.3628389154704944
+      }
+    },
+    "LOWER_LIGHT": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 917,
+        "top": 775,
+        "right": 1237,
+        "bottom": 1218
+      },
+      "width": 321,
+      "height": 444,
+      "aspectRatio": 0.722972972972973,
+      "componentArea": 47382,
+      "uv": {
+        "u0": 0.7312599681020734,
+        "v0": 0.027910685805422664,
+        "u1": 0.9872408293460925,
+        "v1": 0.38197767145135564
+      }
+    },
+    "BROAD_MID": {
+      "sourceFilename": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+      "sourceBounds": {
+        "left": 48,
+        "top": 489,
+        "right": 652,
+        "bottom": 819
+      },
+      "width": 605,
+      "height": 331,
+      "aspectRatio": 1.8277945619335347,
+      "componentArea": 95859,
+      "uv": {
+        "u0": 0.03827751196172249,
+        "v0": 0.3460925039872408,
+        "u1": 0.5207336523125997,
+        "v1": 0.6100478468899522
+      }
+    }
+  }
+}

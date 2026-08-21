@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "event": "HUMAN_APPROVAL_RESCINDED",
+  "reason": "Rich raster foliage artwork was being deformed by legacy arbitrary card mesh dimensions. Prior promotion evidence remains immutable history but is not current approval authority.",
+  "currentStates": {
+    "TREE_NATIVE_ROUNDED_001": "REVIEW_CANDIDATE",
+    "TREE_EUCALYPTUS_COASTAL_002": "REVIEW_CANDIDATE",
+    "TREE_COASTAL_WIND_001": "REVIEW_CANDIDATE"
+  },
+  "productionAtlasEligible": false,
+  "productionPopulationModified": false,
+  "nextGate": "HUMAN_VISUAL_REVIEW_OF_SHAPE_SAFE_NATIVE_ROUNDED"
+}

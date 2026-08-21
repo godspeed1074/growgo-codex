@@ -104,6 +104,37 @@ export function validateTransform(module, transform = {}) {
   return { ok: true };
 }
 
+// Raster foliage is authored visual evidence: its visible proportions are not a
+// modelling convenience.  Workers must derive the card dimensions from the
+// source bitmap, then apply only a single (optionally mirrored) uniform scale.
+export const FOLIAGE_ASPECT_RATIO_TOLERANCE = 0.01;
+
+export function deriveNativeFoliageCardGeometry({ sourceWidth, sourceHeight, longestDimension = 1 }) {
+  if (![sourceWidth, sourceHeight, longestDimension].every(Number.isFinite) || sourceWidth <= 0 || sourceHeight <= 0 || longestDimension <= 0) {
+    fail("INVALID_FOLIAGE_SOURCE_DIMENSIONS", "Foliage source dimensions and longestDimension must be positive finite numbers", { sourceWidth, sourceHeight, longestDimension });
+  }
+  const divisor = Math.max(sourceWidth, sourceHeight);
+  return {
+    width: longestDimension * sourceWidth / divisor,
+    height: longestDimension * sourceHeight / divisor,
+    sourceAspectRatio: sourceWidth / sourceHeight
+  };
+}
+
+export function validateFoliageCardPresentation({ sourceWidth, sourceHeight, cardWidth, cardHeight, scaleX = 1, scaleY = 1, tolerance = FOLIAGE_ASPECT_RATIO_TOLERANCE }) {
+  const numbers = { sourceWidth, sourceHeight, cardWidth, cardHeight, scaleX, scaleY, tolerance };
+  if (!Object.values(numbers).every(Number.isFinite) || sourceWidth <= 0 || sourceHeight <= 0 || cardWidth <= 0 || cardHeight <= 0 || tolerance < 0 || scaleX === 0 || scaleY === 0) {
+    fail("INVALID_FOLIAGE_CARD_PRESENTATION", "Foliage source/card dimensions and scales must be valid", numbers);
+  }
+  const uniform = Math.abs(Math.abs(scaleX) - Math.abs(scaleY)) <= 1e-9;
+  if (!uniform) fail("NONUNIFORM_FOLIAGE_SCALE_REJECTED", "Foliage presentation may only use uniform scale after native source-aspect geometry", { scaleX, scaleY });
+  const sourceAspectRatio = sourceWidth / sourceHeight;
+  const renderedAspectRatio = (cardWidth * Math.abs(scaleX)) / (cardHeight * Math.abs(scaleY));
+  const ratioError = Math.abs(renderedAspectRatio / sourceAspectRatio - 1);
+  if (ratioError > tolerance) fail("FOLIAGE_SOURCE_ASPECT_MISMATCH", "Rendered foliage card aspect differs from immutable source art", { sourceAspectRatio, renderedAspectRatio, ratioError, tolerance });
+  return { ok: true, uniform, sourceAspectRatio, renderedAspectRatio, ratioError };
+}
+
 export class MasterAssetIndex {
   constructor({ index, budgetProfiles, atlases, materials, paletteFamilies }) {
     this.index = clone(index);

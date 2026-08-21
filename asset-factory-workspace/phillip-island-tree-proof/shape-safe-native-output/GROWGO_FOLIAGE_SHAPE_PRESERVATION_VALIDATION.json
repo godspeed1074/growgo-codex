@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "NATIVE_RATIO_WIDE_DARK",
+      "status": "PASS"
+    },
+    {
+      "name": "NATIVE_RATIO_TALL_MIXED",
+      "status": "PASS"
+    },
+    {
+      "name": "NATIVE_RATIO_HANGING_LIGHT",
+      "status": "PASS"
+    },
+    {
+      "name": "NATIVE_RATIO_DENSE_WIDE",
+      "status": "PASS"
+    },
+    {
+      "name": "NONUNIFORM_SCALE_REJECTED",
+      "status": "PASS"
+    },
+    {
+      "name": "SOURCE_ASPECT_MISMATCH_REJECTED",
+      "status": "PASS"
+    },
+    {
+      "name": "NATIVE_GEOMETRY_DERIVATION",
+      "status": "PASS"
+    }
+  ],
+  "proofCards": 4,
+  "worker": "5.2.0 LTS",
+  "sourceArtUnchanged": true,
+  "nonuniformScaleRejected": true
+}

@@ -1,7 +1,7 @@
 # GrowGo Camera-Authored Illustrated Foliage Cluster Method
 
-**State:** APPROVED_PRODUCTION_METHOD
-**Authority:** `TREE_NATIVE_ROUNDED_001@4.0.0` human-approved V4 rich-raster proof
+**State:** RICH_RASTER_ART_DIRECTION_APPROVED — TREE ASSEMBLIES REVIEW_CANDIDATE
+**Authority:** locked rich-raster source art; prior tree approvals rescinded pending shape-safe human review
 **Scope:** Layer A vegetation; approved for camera-authored 2.5D trees, shrubs, and ground-cover families.
 
 1. The locked GrowGo gameplay camera is authoritative for vegetation fidelity. Vegetation does not need equal 360° fidelity.
@@ -18,3 +18,5 @@
 12. Performance target: **high visual density + low per-object complexity**. The lush GrowGo mobile-map reference defines desired world density, not excessive geometry per tree.
 
 The extraction rule is permanent: isolate authored foliage by alpha-component ownership rather than a rectangular atlas crop; force every pixel outside the approved mask transparent and include transparent padding.
+
+The shape-preservation rule is permanent: **approved raster foliage silhouettes are immutable presentation assets. Foliage cards may only use uniform scaling and approved mirroring/rotation. Nonuniform scaling that alters the source aspect ratio is prohibited.** Card geometry must be derived from the source pixel width/height, and validation must reject a rendered-aspect mismatch before a tree can be reviewed.

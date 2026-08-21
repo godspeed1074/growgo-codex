@@ -8,14 +8,15 @@
       "assetId": "GG-VEG-TREE-NATIVE-ROUNDED-001",
       "runtimeAssetId": "TREE_NATIVE_ROUNDED_001",
       "assetVersion": "4.0.0",
-      "approvalState": "APPROVED",
-      "packageState": "APPROVED_LOCAL_ASSET_FACTORY",
+      "approvalState": "REVIEW",
+      "packageState": "REVIEW_CANDIDATE",
       "lodAssets": {
-        "CLOSE": "rich-v4-top-corrected-output/TREE_NATIVE_ROUNDED_001_V4_TOP_CORRECTED_LOD_CLOSE.glb",
-        "GAMEPLAY": "rich-v4-top-corrected-output/TREE_NATIVE_ROUNDED_001_V4_TOP_CORRECTED_LOD_GAMEPLAY.glb",
-        "MAP": "rich-v4-top-corrected-output/TREE_NATIVE_ROUNDED_001_V4_TOP_CORRECTED_LOD_MAP.glb"
+        "CLOSE": "shape-safe-native-output/TREE_NATIVE_ROUNDED_001_SHAPE_SAFE_LOD_CLOSE.glb",
+        "GAMEPLAY": "shape-safe-native-output/TREE_NATIVE_ROUNDED_001_SHAPE_SAFE_LOD_GAMEPLAY.glb",
+        "MAP": "shape-safe-native-output/TREE_NATIVE_ROUNDED_001_SHAPE_SAFE_LOD_MAP.glb"
       },
-      "atlasEligibility": "REGISTERED_NOT_ENABLED"
+      "atlasEligibility": "REGISTERED_NOT_ENABLED",
+      "reviewOverride": "HUMAN_APPROVAL_RESCINDED_FOLIAGE_SHAPE_PRESERVATION_REPAIR"
     },
     {
       "assetId": "GG-VEG-TREE-EUCALYPTUS-COASTAL-002",

@@ -1,0 +1,284 @@
+{
+  "assetId": "TREE_NATIVE_ROUNDED_001",
+  "version": "4.0.0",
+  "state": "REVIEW_CANDIDATE",
+  "worker": "Steam Deck",
+  "blender": "5.2.0 LTS",
+  "cameraContract": "GROWGO_VEGETATION_GAMEPLAY_CAMERA_CONTRACT@1.0.0",
+  "sourceArt": "EUCALYPTUS_FOLIAGE_CLUSTER_ATLAS_V2_CLEAN.png",
+  "carcassUnchanged": true,
+  "nonuniformScaleUsed": false,
+  "shapePreservation": "PASS",
+  "lods": {
+    "CLOSE": {
+      "cards": 10,
+      "triangles": 92,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2680048,
+      "aspectChecks": [
+        {
+          "cluster": "TALL_MIXED",
+          "sourceWidth": 356,
+          "sourceHeight": 546,
+          "sourceAspectRatio": 0.652014652014652,
+          "cardWidth": 2.5754578754578756,
+          "cardHeight": 3.9500000000000006,
+          "renderedAspectRatio": 0.6520146520146519,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "HANGING_LIGHT",
+          "sourceWidth": 370,
+          "sourceHeight": 593,
+          "sourceAspectRatio": 0.6239460370994941,
+          "cardWidth": 1.9654300168634065,
+          "cardHeight": 3.15,
+          "renderedAspectRatio": 0.6239460370994941,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "TALL_DARK",
+          "sourceWidth": 201,
+          "sourceHeight": 437,
+          "sourceAspectRatio": 0.459954233409611,
+          "cardWidth": 1.4488558352402745,
+          "cardHeight": 3.15,
+          "renderedAspectRatio": 0.45995423340961095,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "WIDE_DARK",
+          "sourceWidth": 412,
+          "sourceHeight": 506,
+          "sourceAspectRatio": 0.8142292490118577,
+          "cardWidth": 3.2162055335968383,
+          "cardHeight": 3.95,
+          "renderedAspectRatio": 0.8142292490118578,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LEFT"
+        },
+        {
+          "cluster": "DENSE_WIDE",
+          "sourceWidth": 651,
+          "sourceHeight": 436,
+          "sourceAspectRatio": 1.4931192660550459,
+          "cardWidth": 3.7000000000000006,
+          "cardHeight": 2.4780337941628265,
+          "renderedAspectRatio": 1.493119266055046,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LEFT"
+        },
+        {
+          "cluster": "WIDE_DARK",
+          "sourceWidth": 412,
+          "sourceHeight": 506,
+          "sourceAspectRatio": 0.8142292490118577,
+          "cardWidth": 3.2162055335968383,
+          "cardHeight": 3.95,
+          "renderedAspectRatio": 0.8142292490118578,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "RIGHT"
+        },
+        {
+          "cluster": "BROAD_MID",
+          "sourceWidth": 605,
+          "sourceHeight": 331,
+          "sourceAspectRatio": 1.8277945619335347,
+          "cardWidth": 3.7,
+          "cardHeight": 2.024297520661157,
+          "renderedAspectRatio": 1.8277945619335347,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "RIGHT"
+        },
+        {
+          "cluster": "DENSE_WIDE",
+          "sourceWidth": 651,
+          "sourceHeight": 436,
+          "sourceAspectRatio": 1.4931192660550459,
+          "cardWidth": 4.35,
+          "cardHeight": 2.9133640552995392,
+          "renderedAspectRatio": 1.4931192660550456,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LOWER"
+        },
+        {
+          "cluster": "COMPACT",
+          "sourceWidth": 264,
+          "sourceHeight": 240,
+          "sourceAspectRatio": 1.1,
+          "cardWidth": 2.75,
+          "cardHeight": 2.5,
+          "renderedAspectRatio": 1.1,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LOWER"
+        },
+        {
+          "cluster": "LOWER_LIGHT",
+          "sourceWidth": 321,
+          "sourceHeight": 444,
+          "sourceAspectRatio": 0.722972972972973,
+          "cardWidth": 1.9881756756756757,
+          "cardHeight": 2.75,
+          "renderedAspectRatio": 0.7229729729729729,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LOWER"
+        }
+      ]
+    },
+    "GAMEPLAY": {
+      "cards": 7,
+      "triangles": 86,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2677076,
+      "aspectChecks": [
+        {
+          "cluster": "TALL_MIXED",
+          "sourceWidth": 356,
+          "sourceHeight": 546,
+          "sourceAspectRatio": 0.652014652014652,
+          "cardWidth": 2.5754578754578756,
+          "cardHeight": 3.9500000000000006,
+          "renderedAspectRatio": 0.6520146520146519,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "HANGING_LIGHT",
+          "sourceWidth": 370,
+          "sourceHeight": 593,
+          "sourceAspectRatio": 0.6239460370994941,
+          "cardWidth": 1.9654300168634065,
+          "cardHeight": 3.15,
+          "renderedAspectRatio": 0.6239460370994941,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "TALL_DARK",
+          "sourceWidth": 201,
+          "sourceHeight": 437,
+          "sourceAspectRatio": 0.459954233409611,
+          "cardWidth": 1.4488558352402745,
+          "cardHeight": 3.15,
+          "renderedAspectRatio": 0.45995423340961095,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "WIDE_DARK",
+          "sourceWidth": 412,
+          "sourceHeight": 506,
+          "sourceAspectRatio": 0.8142292490118577,
+          "cardWidth": 3.2162055335968383,
+          "cardHeight": 3.95,
+          "renderedAspectRatio": 0.8142292490118578,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LEFT"
+        },
+        {
+          "cluster": "DENSE_WIDE",
+          "sourceWidth": 651,
+          "sourceHeight": 436,
+          "sourceAspectRatio": 1.4931192660550459,
+          "cardWidth": 3.7000000000000006,
+          "cardHeight": 2.4780337941628265,
+          "renderedAspectRatio": 1.493119266055046,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "LEFT"
+        },
+        {
+          "cluster": "WIDE_DARK",
+          "sourceWidth": 412,
+          "sourceHeight": 506,
+          "sourceAspectRatio": 0.8142292490118577,
+          "cardWidth": 3.2162055335968383,
+          "cardHeight": 3.95,
+          "renderedAspectRatio": 0.8142292490118578,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "RIGHT"
+        },
+        {
+          "cluster": "BROAD_MID",
+          "sourceWidth": 605,
+          "sourceHeight": 331,
+          "sourceAspectRatio": 1.8277945619335347,
+          "cardWidth": 3.7,
+          "cardHeight": 2.024297520661157,
+          "renderedAspectRatio": 1.8277945619335347,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "RIGHT"
+        }
+      ]
+    },
+    "MAP": {
+      "cards": 3,
+      "triangles": 78,
+      "materials": 2,
+      "textures": 1,
+      "glbBytes": 2672948,
+      "aspectChecks": [
+        {
+          "cluster": "TALL_MIXED",
+          "sourceWidth": 356,
+          "sourceHeight": 546,
+          "sourceAspectRatio": 0.652014652014652,
+          "cardWidth": 2.5754578754578756,
+          "cardHeight": 3.9500000000000006,
+          "renderedAspectRatio": 0.6520146520146519,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "HANGING_LIGHT",
+          "sourceWidth": 370,
+          "sourceHeight": 593,
+          "sourceAspectRatio": 0.6239460370994941,
+          "cardWidth": 1.9654300168634065,
+          "cardHeight": 3.15,
+          "renderedAspectRatio": 0.6239460370994941,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        },
+        {
+          "cluster": "TALL_DARK",
+          "sourceWidth": 201,
+          "sourceHeight": 437,
+          "sourceAspectRatio": 0.459954233409611,
+          "cardWidth": 1.4488558352402745,
+          "cardHeight": 3.15,
+          "renderedAspectRatio": 0.45995423340961095,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "mass": "UPPER"
+        }
+      ]
+    }
+  },
+  "anonymousGeometryCount": 0,
+  "atlasArchitectureModified": false,
+  "productionPopulationModified": false
+}

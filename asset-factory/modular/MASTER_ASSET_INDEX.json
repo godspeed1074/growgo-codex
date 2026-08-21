@@ -700,10 +700,10 @@
         ],
         "deterministicPaletteRule": "SHA256_RUNTIME_IDENTITY_MOD_PALETTE_COUNT"
       },
-      "approvalState": "APPROVED",
+      "approvalState": "REVIEW",
       "provenance": {
-        "sourceType": "HUMAN_APPROVED_BLENDER_OUTPUT",
-        "sourceId": "TREE_NATIVE_ROUNDED_001_V4_RICH_RASTER_HUMAN_APPROVAL",
+        "sourceType": "HUMAN_REVIEW_RESUBMISSION_SHAPE_SAFE_OUTPUT",
+        "sourceId": "TREE_NATIVE_ROUNDED_001_SHAPE_SAFE_REVIEW_CANDIDATE",
         "specId": "GROWGO_CAMERA_AUTHORED_ILLUSTRATED_FOLIAGE_CLUSTER_METHOD@1.0.0",
         "goldenReferenceId": "GROWGO_LUSH_MOBILE_MAP_VEGETATION_DIRECTION_001",
         "worker": "Steam Deck Blender 5.2.0 LTS",

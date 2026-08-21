@@ -1,0 +1,56 @@
+{
+  "state": "PASS",
+  "type": "SHAPE_PRESERVATION_PROOF",
+  "cards": [
+    {
+      "cluster": "WIDE_DARK",
+      "sourceWidth": 412,
+      "sourceHeight": 506,
+      "sourceAspectRatio": 0.8142292490118577,
+      "cardWidth": 3.4197628458498026,
+      "cardHeight": 4.2,
+      "renderedAspectRatio": 0.8142292490118578,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "mass": "PROOF"
+    },
+    {
+      "cluster": "TALL_MIXED",
+      "sourceWidth": 356,
+      "sourceHeight": 546,
+      "sourceAspectRatio": 0.652014652014652,
+      "cardWidth": 2.7384615384615385,
+      "cardHeight": 4.2,
+      "renderedAspectRatio": 0.652014652014652,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "mass": "PROOF"
+    },
+    {
+      "cluster": "HANGING_LIGHT",
+      "sourceWidth": 370,
+      "sourceHeight": 593,
+      "sourceAspectRatio": 0.6239460370994941,
+      "cardWidth": 2.6205733558178754,
+      "cardHeight": 4.2,
+      "renderedAspectRatio": 0.6239460370994941,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "mass": "PROOF"
+    },
+    {
+      "cluster": "DENSE_WIDE",
+      "sourceWidth": 651,
+      "sourceHeight": 436,
+      "sourceAspectRatio": 1.4931192660550459,
+      "cardWidth": 4.2,
+      "cardHeight": 2.8129032258064517,
+      "renderedAspectRatio": 1.4931192660550459,
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "mass": "PROOF"
+    }
+  ],
+  "blender": "5.2.0 LTS",
+  "nonuniformScaleUsed": false
+}
