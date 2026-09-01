@@ -40,6 +40,24 @@ body {
   position: relative;
 }
 
+/* Keep native mobile text callouts out of the game UI. Long-press remains
+   available to GrowGo's own touch handlers; actual text-entry controls opt
+   back in below. */
+#app,
+#app * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#app input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+#app textarea,
+#app [contenteditable="true"] {
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 #map {
   width: 100%;
   height: 100%;

@@ -12799,6 +12799,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   rebuildSpatialBuckets();
 
   cacheDom();
+  initGameTouchCalloutProtection();
   initMap();
   renderPOIs();
   initBasicUi();
@@ -12839,6 +12840,27 @@ initCraftingUi();
     });
   }
 });
+
+function initGameTouchCalloutProtection() {
+  const editableSelector = [
+    'input:not([type="checkbox"]):not([type="radio"]):not([type="range"])',
+    "textarea",
+    '[contenteditable="true"]'
+  ].join(",");
+
+  const blocksNativeSelection = (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target?.closest("#app") || target.closest(editableSelector)) return;
+    event.preventDefault();
+  };
+
+  // Android and iOS can surface their copy/share callout through either
+  // selection or the context-menu event. Capture both before they reach a
+  // card or map icon.
+  document.addEventListener("contextmenu", blocksNativeSelection, true);
+  document.addEventListener("selectstart", blocksNativeSelection, true);
+  document.addEventListener("dragstart", blocksNativeSelection, true);
+}
 
 /* ----------------------------- */
 /* DOM CACHE */
