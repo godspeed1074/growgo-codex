@@ -85,6 +85,12 @@ export interface AuthoritativeSourceAcquisitionGates {
   cacheWritesEnabled: boolean;
   remoteTransportEnabled: boolean;
   allowStaleFallback: boolean;
+  /**
+   * Serve a still-valid positive source record without waiting for a remote
+   * refresh. This is deliberately opt-in: callers retain the normal refresh
+   * behaviour unless their server-written cache is the authority for play.
+   */
+  preferUsableStaleCache?: boolean;
 }
 
 export type AuthoritativeSourceAcquisitionResult =

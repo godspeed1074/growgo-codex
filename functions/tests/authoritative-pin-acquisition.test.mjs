@@ -124,6 +124,43 @@ test("authoritative acquisition serves a fresh positive cache hit without transp
   assert.equal(cache.writes.length, 0);
 });
 
+test("private-alpha acquisition serves valid stale source geometry without waiting for transport", async () => {
+  const acquisitionModule = await loadAcquisitionModule();
+  const reference = buildReference();
+  const source = buildTransportedSource(reference);
+  const cache = createFakeCache({
+    kind: "positive",
+    source,
+    cachedAt: "2026-07-01T00:00:00.000Z",
+    expiresAt: "2026-07-31T00:00:00.000Z"
+  });
+  const transport = createFakeTransport(() => {
+    throw new Error("a valid stale record must not wait for transport");
+  });
+
+  const result = await acquisitionModule.acquireAuthoritativePinSource({
+    reference,
+    transport: transport.transport,
+    cache: cache.cache,
+    clock: createFakeClock(),
+    policy: buildPolicy(),
+    gates: {
+      enabled: true,
+      cacheReadsEnabled: true,
+      cacheWritesEnabled: true,
+      remoteTransportEnabled: true,
+      allowStaleFallback: true,
+      preferUsableStaleCache: true
+    }
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.cacheStatus, "stale-fallback");
+  assert.equal(result.source.sourceId, reference.sourceId);
+  assert.equal(transport.calls.length, 0);
+  assert.equal(cache.writes.length, 0);
+});
+
 test("authoritative acquisition validates transported source completeness and writes bounded negative cache failures deterministically", async () => {
   const acquisitionModule = await loadAcquisitionModule();
   const reference = buildReference();

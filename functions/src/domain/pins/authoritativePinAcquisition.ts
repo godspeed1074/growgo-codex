@@ -77,6 +77,24 @@ export async function acquireAuthoritativePinSource(params: {
         cacheStatus: "negative-hit"
       };
     }
+
+    // Private-alpha capture records are server-written, canonical source
+    // geometry and remain valid through their explicit expiry. Refreshing a
+    // merely non-fresh record here makes every ordinary capture wait on the
+    // external provider's timeout, even though the canonical/GPS checks below
+    // can be completed from the saved evidence. This gate is opt-in so other
+    // callers continue to refresh in their existing cadence.
+    if (
+      params.gates.preferUsableStaleCache &&
+      validatedCachedRecord.ok &&
+      validatedCachedRecord.record.kind === "positive" &&
+      isAuthoritativeSourceCacheRecordUsableAsStale({
+        record: validatedCachedRecord.record,
+        now
+      })
+    ) {
+      return buildStaleFallbackResult(validatedCachedRecord.record);
+    }
   }
 
   if (!params.gates.remoteTransportEnabled) {

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GrowGo · Starter quest flow review</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    :root { --menu-header-height: 0px; --safe-bottom: 0px; }
+    body { min-height: 100dvh; margin: 0; background: #061b2a; }
+    .mock-shell { position: relative; width: min(100vw, 460px); height: 100dvh; min-height: 620px; margin: auto; overflow: hidden; background: #abcbd1; }
+    .mock-map { position: absolute; inset: 0; background: linear-gradient(30deg, transparent 0 42%, #efdeb780 42.4% 45%, transparent 45.4%), repeating-linear-gradient(90deg, #dce6d5 0 44px, #c1d6d0 45px 47px, #dce6d5 48px 89px), repeating-linear-gradient(0deg, transparent 0 67px, #f7eed5cc 68px 74px, transparent 75px 130px); }
+    .mock-map::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 54%, transparent 0 95px, #082d3a18 96px); pointer-events: none; }
+    .mock-top { position: absolute; z-index: 5; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 13px 18px 11px; color: #fff; background: linear-gradient(#0a2e4ddd, #0a2e4d77, transparent); font: 900 15px ui-rounded, "Avenir Next", sans-serif; }
+    .mock-top small { display: block; color: #d9efbe; font-size: 9px; letter-spacing: .08em; }
+    .player-dot, .base-pin { position: absolute; z-index: 2; width: 47px; height: 47px; border: 3px solid #fff; border-radius: 50% 50% 50% 0; box-shadow: 0 4px 9px #05294077; transform: rotate(-45deg); }
+    .player-dot { top: 48%; left: 46%; background: #1c83c9; } .player-dot::after { content: "YOU"; position: absolute; inset: 10px 5px; color: white; font: 900 9px ui-rounded, sans-serif; text-align: center; transform: rotate(45deg); }
+    .base-pin { background: #0b60b9; cursor: pointer; } .base-pin span { position: absolute; inset: 6px; color: white; font: 900 25px ui-rounded, sans-serif; text-align: center; transform: rotate(45deg); } .base-one { top: 30%; left: 20%; } .base-two { top: 50%; right: 17%; } .base-three { bottom: 20%; left: 19%; } .base-pin.owned { background: #5fa440; } .base-pin.harvest { background: #e7a72b; } .base-pin.target { animation: mock-pin-pulse 1.5s ease-in-out infinite; box-shadow: 0 0 0 8px #f7d05477, 0 4px 9px #05294077; }
+    @keyframes mock-pin-pulse { 50% { box-shadow: 0 0 0 13px #f7d05422, 0 4px 9px #05294077; } }
+    .quest-objective { position: absolute; z-index: 4; left: 14px; right: 14px; bottom: max(18px, env(safe-area-inset-bottom)); padding: 14px 16px 15px; border: 1px solid #d9e8c1; border-radius: 19px; background: linear-gradient(145deg, #103e58f2, #092d45f5); color: #fffdf1; box-shadow: 0 8px 24px #041d2b66; font-family: ui-rounded, "Avenir Next", sans-serif; }
+    .quest-objective-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+    .quest-objective-kicker { color: #d3eea8; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .quest-objective-step { color: #f5dda0; font-size: 11px; font-weight: 900; white-space: nowrap; }
+    .quest-objective h2 { margin: 0 0 4px; color: #fff7d7; font-size: 17px; line-height: 1.2; }
+    .quest-objective p { margin: 0; color: #eef5ed; font-size: 13px; font-weight: 700; line-height: 1.35; }
+    .quest-progress { height: 5px; margin-top: 12px; overflow: hidden; border-radius: 99px; background: #ffffff30; }
+    .quest-progress span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#a5dc5f,#f2d46e); transition: width .2s ease; }
+    #questScreen { top: 0 !important; padding-top: 18px !important; } #questScreen .submenu-intro { margin-bottom: 16px !important; }
+    .mock-review { position: fixed; z-index: 10070; right: 10px; top: 10px; display: flex; align-items: center; gap: 5px; padding: 5px; border: 1px solid #ffffff55; border-radius: 12px; background: #082a3bdd; box-shadow: 0 4px 14px #0016; } .mock-review::before { content: "PREVIEW"; padding: 0 4px; color: #d7e9c4; font: 900 8px ui-rounded, sans-serif; letter-spacing: .1em; } .mock-review button { min-height: 30px; padding: 0 9px; border: 1px solid #d8e5c1; border-radius: 8px; background: #123e55; color: #fffdf1; font: 800 10px ui-rounded, sans-serif; }
+    .starter-quest-intro { z-index: 10065; } .starter-quest-intro > img { width: min(322px, 76vw); height: min(270px, 49vh); } .starter-quest-speech { margin-left: 18px; }
+    .starter-quest-speech strong:empty { display: none; }
+    .mock-complete { position: absolute; z-index: 30; inset: 0; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle, #dff1b8, #4d9363 58%, #0a3650); text-align: center; }
+    .mock-complete article { max-width: 330px; padding: 25px 19px; border: 2px solid #f3d26e; border-radius: 24px; background: linear-gradient(180deg, #185370, #092c45); color: white; box-shadow: 0 13px 32px #001a; } .mock-complete h2 { margin: 6px 0; color: #fff7cf; font: 900 25px ui-rounded, sans-serif; } .mock-complete p { color: #e4f5e4; font: 700 14px/1.45 ui-rounded, sans-serif; } .mock-complete button { width: 100%; min-height: 44px; border: 2px solid #ccf59b; border-radius: 13px; background: linear-gradient(#69b943,#287e25); color: #fff; font: 900 15px ui-rounded, sans-serif; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body class="phone-preview">
+  <main class="mock-shell" aria-label="Starter quest mock using GrowGo game styling">
+    <section class="mock-map"><header class="mock-top"><div><small>GROWGO</small>Rubberlips</div><div>⚡ 100</div></header><div class="base-pin base-one"><span>5</span></div><div class="base-pin base-two"><span>5</span></div><div class="base-pin base-three"><span>5</span></div><div class="player-dot"></div><article id="mapHint" class="quest-objective" aria-live="polite"><div class="quest-objective-head"><span class="quest-objective-kicker">Starter quest</span><span id="questStep" class="quest-objective-step">1 of 5</span></div><h2 id="objectiveTitle">Your first capture</h2><p id="objectiveCopy">Tap the glowing blue pin to capture it.</p><div class="quest-progress"><span id="questProgress"></span></div></article></section>
+    <section id="questScreen" class="submenu-screen gg-standard-screen gg-quests-screen hidden" aria-hidden="true"></section>
+    <section id="dialog" class="starter-quest-intro" role="dialog" aria-label="Bingles quest dialogue"><img src="../assets/quests/leonard/bingles.png" alt="Bingles"><div class="starter-quest-speech"><span>Bingles</span><strong id="dialogTitle">Welcome to GrowGo!</strong><p id="dialogCopy">You know the controls—now let’s build your first little patch of GrowGo together.</p><button id="dialogAction" type="button">Let’s go!</button></div></section>
+    <section id="complete" class="mock-complete hidden"><article><div style="font-size:58px">⭐</div><span class="gg-standard-screen-kicker">Bingles</span><h2>Starter quest complete!</h2><p>You learned the full loop: capture, own, plant, grow, harvest, craft.</p><button id="restart" type="button">Review again</button></article></section>
+    <nav class="mock-review" aria-label="Mock review controls"><button id="back" type="button">‹ Back</button><button id="forward" type="button">Next ›</button></nav>
+  </main>
+  <script>
+    const steps = [
+      {title:'Welcome to GrowGo', objective:'Capture your first pin', instruction:'Tap the glowing blue pin.', reward:'100 coins', extra:'Wheat Seed', dialog:['','You know the controls—now let’s build your first little patch of GrowGo together.','Let’s go!']},
+      {title:'Make It Yours', objective:'Buy your first pin', instruction:'Long-press the pin you just captured, then choose Buy.', reward:'100 coins', extra:'Sugar Cane Seed', dialog:['That one is yours to claim!','Long-press the pin you just captured and make it your first home base.','Show me!']},
+      {title:'Put Down Roots', objective:'Plant your first seed', instruction:'Open your owned pin and plant the Wheat Seed.', reward:'2 Miracle Grow', extra:'', dialog:['Put down roots!','Your Wheat Seed is ready. Plant it in your new home pin.','Let’s plant!']},
+      {title:'Grow Big, Harvest Bigger', objective:'Harvest your crop', instruction:'Use Miracle Grow, wait for the crop to ripen, then tap it to harvest.', reward:'Energy Bar Recipe', extra:'', dialog:['Time to grow!','Give your crop a boost. When it is ready, tap it to collect your harvest.','Grow big!']},
+      {title:'Make an Energy Bar', objective:'Craft an Energy Bar', instruction:'Open Crafting and follow the recipe to make your first Energy Bar.', reward:'200 coins', extra:'2 Wheat Seeds · 2 Sugar Cane Seeds', dialog:['One last job!','Use what you harvested to make your first Energy Bar in Crafting.','Let’s craft!']}
+    ];
+    let step = 0; const $ = id => document.getElementById(id); const pins = [...document.querySelectorAll('.base-pin')];
+    function render(showDialogue = true) { const item = steps[step]; $('dialogTitle').textContent = item.dialog[0]; $('dialogCopy').textContent = item.dialog[1]; $('dialogAction').textContent = item.dialog[2]; $('dialog').classList.toggle('hidden', !showDialogue); $('questScreen').classList.add('hidden'); $('questStep').textContent = `${step + 1} of ${steps.length}`; $('objectiveTitle').textContent = item.objective; $('objectiveCopy').textContent = item.instruction; $('questProgress').style.width = `${((step + 1) / steps.length) * 100}%`; pins.forEach((pin, index) => { pin.classList.toggle('owned', step >= 1); pin.classList.toggle('harvest', step >= 3 && index < 2); pin.classList.toggle('target', !showDialogue && (step < 2 ? index === 0 : step === 2 ? index < 2 : step === 3 ? index < 2 : index === 2)); }); }
+    function start() { render(false); } function advance() { if (!$('dialog').classList.contains('hidden')) return; if (step === steps.length - 1) { $('complete').classList.remove('hidden'); return; } step++; render(true); }
+    $('dialogAction').onclick = start; pins.forEach(pin => pin.onclick = advance); $('forward').onclick = () => { if (step < steps.length - 1) { step++; render(true); } }; $('back').onclick = () => { if (step > 0) { step--; render(true); } }; $('restart').onclick = () => { step = 0; $('complete').classList.add('hidden'); render(true); }; render(true);
+  </script>
+</body>
+</html>

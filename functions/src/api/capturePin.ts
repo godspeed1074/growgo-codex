@@ -1,6 +1,4 @@
 import { HttpsError, onCall, type CallableRequest } from "firebase-functions/v2/https";
-import { Timestamp } from "firebase-admin/firestore";
-
 import { runtimeConfig } from "../config/runtimeConfig";
 import {
   type CapturePinRequest,
@@ -9,14 +7,7 @@ import {
 } from "../domain/captures/captureTypes";
 import {
   buildCaptureRequestFingerprint,
-  buildCaptureRequestKey,
-  buildDeferredCaptureRequestDocument,
-  buildInitialDeferredCaptureResponse,
-  buildReplayDeferredCaptureResponse,
-  getCaptureRequestDocumentRef,
-  normalizeCapturePinRequest,
-  readStoredCaptureRequestDocument,
-  type CaptureRequestDocument
+  normalizeCapturePinRequest
 } from "../domain/captures/captureRequestStore";
 import { getPlayerDocumentRef } from "../domain/players/playerStore";
 import {
@@ -35,9 +26,34 @@ import {
   createNoopAuthoritativeSourceCache
 } from "../domain/pins/authoritativePinCache";
 import {
+  acceptPrivateAlphaCapture,
+  isPrivateAlphaCaptureEnabled,
+  validateAlphaCaptureEvidence
+} from "../domain/captures/privateAlphaCapture";
+import {
+  requireActiveDeviceSessionIfEnabled
+} from "../domain/players/activeDeviceSession";
+import { getAdminFirestore } from "../firebaseAdmin";
+import { createMapBackedAuthoritativeSourceCache, RECOVERY_MAP_GEOMETRY_COLLECTION } from "../infrastructure/pins/mapBackedAuthoritativeSourceCache";
+import type { CanonicalCoordinate } from "../domain/pins/basePinTypes";
+import {
+  AUTHORITATIVE_PIN_SOURCE_CACHE_COLLECTION_NAME,
+  createFirestoreAuthoritativeSourceCache
+} from "../infrastructure/pins/firestoreAuthoritativePinCache";
+import {
+  createOverpassAuthoritativePinTransport,
+  OVERPASS_AUTHORITATIVE_PIN_TRANSPORT_TIMEOUT_MILLISECONDS,
+  type AuthoritativeHttpClient
+} from "../infrastructure/pins/overpassAuthoritativePinTransport";
+import {
+  type DeferredCaptureIdempotencyReservationDecision,
+  reserveDeferredCaptureIdempotencySlot
+} from "../idempotency/idempotency";
+import {
   requireAppCheckIfEnabled,
   requireAuthenticated
 } from "../security/requireAuthenticated";
+import { requireInvitedUserAccess } from "../security/requireInvitedUserAccess";
 import {
   asObject,
   assertAllowedKeys,
@@ -59,37 +75,22 @@ export interface CapturePinVerificationEvidence {
 
 export interface CapturePinPersistence {
   ensurePlayerExists(uid: string): Promise<void>;
-  getStoredRequest(requestKey: string): Promise<CaptureRequestDocument | null>;
-  createDeferredRequest(params: {
+  reserveDeferredRequest(params: {
     uid: string;
     requestFingerprint: string;
     request: ReturnType<typeof normalizeCapturePinRequest>;
-  }): Promise<void>;
+  }): Promise<DeferredCaptureIdempotencyReservationDecision>;
 }
 
 export interface CapturePinHandlerDependencies {
   authoritativePinSourceProvider: AuthoritativePinSourceProvider;
+  authoritativePinSourceProviderForLocation?: (location: { pin: CanonicalCoordinate; player: CanonicalCoordinate }) => AuthoritativePinSourceProvider;
   persistence: CapturePinPersistence;
 }
 
-const defaultCapturePinDependencies: CapturePinHandlerDependencies = {
-  authoritativePinSourceProvider: createAuthoritativePinSourceProvider({
-    acquisitionGates: {
-      enabled: runtimeConfig.authoritativeSourceAcquisition.enabled,
-      cacheReadsEnabled:
-        runtimeConfig.authoritativeSourceAcquisition.cacheReadsEnabled,
-      cacheWritesEnabled:
-        runtimeConfig.authoritativeSourceAcquisition.cacheWritesEnabled,
-      remoteTransportEnabled:
-        runtimeConfig.authoritativeSourceAcquisition.remoteTransportEnabled,
-      allowStaleFallback:
-        runtimeConfig.authoritativeSourceAcquisition.allowStaleFallback
-    },
-    transport: createDisabledAuthoritativeSourceTransport(),
-    cache: createNoopAuthoritativeSourceCache(),
-    clock: createSystemAuthoritativeSourceClock(),
-    policy: runtimeConfig.authoritativeSourceAcquisition.policy
-  }),
+export const defaultCapturePinDependencies: CapturePinHandlerDependencies = {
+  authoritativePinSourceProvider: createRuntimeAuthoritativePinSourceProvider(),
+  authoritativePinSourceProviderForLocation: createRuntimeAuthoritativePinSourceProvider,
   persistence: {
     async ensurePlayerExists(uid: string): Promise<void> {
       const playerSnapshot = await getPlayerDocumentRef(uid).get();
@@ -101,31 +102,12 @@ const defaultCapturePinDependencies: CapturePinHandlerDependencies = {
         );
       }
     },
-    async getStoredRequest(
-      requestKey: string
-    ): Promise<CaptureRequestDocument | null> {
-      const requestSnapshot = await getCaptureRequestDocumentRef(requestKey).get();
-      if (!requestSnapshot.exists) {
-        return null;
-      }
-
-      return readStoredCaptureRequestDocument(requestSnapshot.data());
-    },
-    async createDeferredRequest(params: {
+    async reserveDeferredRequest(params: {
       uid: string;
       requestFingerprint: string;
       request: ReturnType<typeof normalizeCapturePinRequest>;
-    }): Promise<void> {
-      await getCaptureRequestDocumentRef(
-        buildCaptureRequestKey(params.uid, params.request.requestId)
-      ).create(
-        buildDeferredCaptureRequestDocument({
-          uid: params.uid,
-          requestFingerprint: params.requestFingerprint,
-          request: params.request,
-          now: Timestamp.now()
-        })
-      );
+    }): Promise<DeferredCaptureIdempotencyReservationDecision> {
+      return reserveDeferredCaptureIdempotencySlot(params);
     }
   }
 };
@@ -138,6 +120,9 @@ export function validateCapturePinRequestPayload(
     payload,
     [
       "requestId",
+      "deviceId",
+      "pinLatitude",
+      "pinLongitude",
       "pinId",
       "latitude",
       "longitude",
@@ -195,9 +180,58 @@ export function createCapturePinHandler(
   ): Promise<ReturnType<typeof buildCapturePinResponse>> => {
     const authContext = requireAuthenticated(request);
     requireAppCheckIfEnabled(request);
+    requireInvitedUserAccess(request);
 
     const typedRequest = validateCapturePinRequestPayload(request);
+    const rawPayload = asObject(request.data, "capturePin payload");
+    await requireActiveDeviceSessionIfEnabled({
+      uid: authContext.uid,
+      deviceId:
+        typeof (request.data as Record<string, unknown> | undefined)?.deviceId === "string"
+          ? (request.data as Record<string, unknown>).deviceId as string
+          : undefined
+    });
     const normalizedRequest = normalizeCapturePinRequest(typedRequest);
+
+    if (isPrivateAlphaCaptureEnabled()) {
+      const evidence = validateAlphaCaptureEvidence(rawPayload);
+      const verification = await verifyAuthoritativeCanonicalPin({
+        input: {
+          pinId: normalizedRequest.pinId,
+          submittedLatitude: evidence.pinLatitude,
+          submittedLongitude: evidence.pinLongitude
+        },
+        provider: dependencies.authoritativePinSourceProviderForLocation?.({
+          pin: { latitude: evidence.pinLatitude, longitude: evidence.pinLongitude },
+          player: { latitude: normalizedRequest.latitude, longitude: normalizedRequest.longitude }
+        }) ?? dependencies.authoritativePinSourceProvider
+      });
+
+      if (!verification.ok) {
+        console.warn(JSON.stringify({ component: "capture_verification", reason: verification.code }));
+        // A cached map copy can disagree with the validated canonical road.
+        // Return only server-derived public geometry so the client can repair
+        // its marker and retry once. This attempt still awards nothing; the
+        // retry must pass the original coordinate, GPS and daily-lock checks.
+        if (verification.code === "submitted-coordinate-mismatch" && verification.details?.canonicalPin) {
+          throw new HttpsError("failed-precondition", "This pin's map position has changed. Refresh the map and try again.", {
+            reason: "pin-location-updated",
+            pin: verification.details.canonicalPin
+          });
+        }
+        throw new HttpsError(
+          "unavailable",
+          "This pin could not be verified right now. Please refresh the map and try again."
+        );
+      }
+
+      return acceptPrivateAlphaCapture({
+        uid: authContext.uid,
+        request: normalizedRequest,
+        canonicalPin: verification.canonicalPin,
+        evidence
+      });
+    }
 
     const response = await processValidatedCapturePinRequest({
       uid: authContext.uid,
@@ -218,15 +252,7 @@ export async function processValidatedCapturePinRequest(params: {
   dependencies: CapturePinHandlerDependencies;
 }): Promise<CapturePinDeferredResponse> {
   const { uid, normalizedRequest, dependencies } = params;
-  const requestKey = buildCaptureRequestKey(uid, normalizedRequest.requestId);
-  const requestFingerprint = buildCaptureRequestFingerprint(uid, normalizedRequest);
-
   await dependencies.persistence.ensurePlayerExists(uid);
-
-  const existingRequest = await dependencies.persistence.getStoredRequest(requestKey);
-  if (existingRequest) {
-    return resolveStoredRequestOutcome(existingRequest, uid, requestFingerprint);
-  }
 
   await resolveCapturePinVerificationEvidence({
     normalizedRequest,
@@ -234,66 +260,14 @@ export async function processValidatedCapturePinRequest(params: {
       dependencies.authoritativePinSourceProvider
   });
 
-  try {
-    await dependencies.persistence.createDeferredRequest({
-      uid,
-      requestFingerprint,
-      request: normalizedRequest
-    });
-  } catch (error) {
-    if (isAlreadyExistsError(error)) {
-      const storedAfterConflict =
-        await dependencies.persistence.getStoredRequest(requestKey);
+  const requestFingerprint = buildCaptureRequestFingerprint(uid, normalizedRequest);
+  const reservation = await dependencies.persistence.reserveDeferredRequest({
+    uid,
+    requestFingerprint,
+    request: normalizedRequest
+  });
 
-      if (!storedAfterConflict) {
-        throw new HttpsError(
-          "internal",
-          "Capture request ledger creation raced with another writer and the stored document could not be reloaded."
-        );
-      }
-
-      return resolveStoredRequestOutcome(
-        storedAfterConflict,
-        uid,
-        requestFingerprint
-      );
-    }
-
-    throw error;
-  }
-
-  return buildInitialDeferredCaptureResponse(normalizedRequest);
-}
-
-function resolveStoredRequestOutcome(
-  storedRequest: CaptureRequestDocument,
-  uid: string,
-  requestFingerprint: string
-): CapturePinDeferredResponse {
-  if (storedRequest.uid !== uid) {
-    throw new HttpsError(
-      "internal",
-      "Stored capture request uid does not match the authenticated caller."
-    );
-  }
-
-  if (storedRequest.requestFingerprint !== requestFingerprint) {
-    throw new HttpsError(
-      "already-exists",
-      "A different capture request already used this requestId for the authenticated player."
-    );
-  }
-
-  return buildReplayDeferredCaptureResponse(storedRequest);
-}
-
-function isAlreadyExistsError(error: unknown): boolean {
-  const code =
-    typeof error === "object" && error !== null && "code" in error
-      ? String((error as { code?: unknown }).code)
-      : "";
-
-  return code === "6" || code === "already-exists";
+  return reservation.response;
 }
 
 function buildCapturePinResponse(params: {
@@ -346,3 +320,110 @@ export const capturePin = onCall(
   },
   createCapturePinHandler(defaultCapturePinDependencies)
 );
+
+function createRuntimeAuthoritativePinSourceProvider(location?: { pin: CanonicalCoordinate; player: CanonicalCoordinate }): AuthoritativePinSourceProvider {
+  const privateAlphaEnabled = isPrivateAlphaCaptureEnabled();
+  const endpoint = readPrivateAlphaOverpassEndpoint();
+  const sourceEnabled = privateAlphaEnabled && endpoint !== null;
+  const cache = sourceEnabled
+    ? createFirestoreAuthoritativeSourceCache({
+        firestore: getAdminFirestore(),
+        collectionName: AUTHORITATIVE_PIN_SOURCE_CACHE_COLLECTION_NAME,
+        readsEnabled: true, writesEnabled: true
+      })
+    : createNoopAuthoritativeSourceCache();
+
+  return createAuthoritativePinSourceProvider({
+    acquisitionGates: sourceEnabled
+      ? {
+          enabled: true,
+          cacheReadsEnabled: true,
+          cacheWritesEnabled: true,
+          remoteTransportEnabled: true,
+          allowStaleFallback: true,
+          // Capture keeps the exact canonical pin and GPS validation, but
+          // should not block players on a remote refresh of valid
+          // server-written source geometry.
+          preferUsableStaleCache: true
+        }
+      : {
+          enabled: runtimeConfig.authoritativeSourceAcquisition.enabled,
+          cacheReadsEnabled:
+            runtimeConfig.authoritativeSourceAcquisition.cacheReadsEnabled,
+          cacheWritesEnabled:
+            runtimeConfig.authoritativeSourceAcquisition.cacheWritesEnabled,
+          remoteTransportEnabled:
+            runtimeConfig.authoritativeSourceAcquisition.remoteTransportEnabled,
+          allowStaleFallback:
+            runtimeConfig.authoritativeSourceAcquisition.allowStaleFallback
+        },
+    transport: sourceEnabled && endpoint
+      ? createOverpassAuthoritativePinTransport({
+          httpClient: createFetchAuthoritativeHttpClient(),
+          endpoint,
+          enabled: true,
+          clock: createSystemAuthoritativeSourceClock(),
+          timeoutMilliseconds:
+            OVERPASS_AUTHORITATIVE_PIN_TRANSPORT_TIMEOUT_MILLISECONDS
+        })
+      : createDisabledAuthoritativeSourceTransport(),
+    cache: sourceEnabled && location
+      ? createMapBackedAuthoritativeSourceCache({
+          cache, ...location,
+          readCells: async (keys) => {
+            const db = getAdminFirestore();
+            const snapshots = await db.getAll(...keys.map(key => db.collection(RECOVERY_MAP_GEOMETRY_COLLECTION).doc(key)));
+            return snapshots.map(snapshot => snapshot.data());
+          }
+        })
+      : cache,
+    clock: createSystemAuthoritativeSourceClock(),
+    policy: runtimeConfig.authoritativeSourceAcquisition.policy
+  });
+}
+
+function readPrivateAlphaOverpassEndpoint(): string | null {
+  const value = process.env.GROWGO_PRIVATE_ALPHA_OVERPASS_ENDPOINT?.trim();
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+function createFetchAuthoritativeHttpClient(): AuthoritativeHttpClient {
+  return {
+    async request(input) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), input.timeoutMilliseconds);
+
+      try {
+        const response = await fetch(input.url, {
+          method: input.method,
+          headers: input.headers,
+          body: input.body,
+          signal: controller.signal
+        });
+        const bodyText = await response.text();
+        let body: unknown = null;
+
+        try {
+          body = JSON.parse(bodyText);
+        } catch {
+          body = null;
+        }
+
+        return {
+          status: response.status,
+          headers: Object.fromEntries(response.headers.entries()),
+          body
+        };
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+  };
+}
