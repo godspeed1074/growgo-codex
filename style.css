@@ -869,9 +869,9 @@ body.phone-preview .menu-overlay {
   .starter-quest-intro > img { animation: none; }
 }
 
-@media (max-height: 580px) {
+@media (max-height: 720px) {
   .starter-quest-intro {
-    padding-bottom: calc(162.5px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(157.5px + env(safe-area-inset-bottom, 0px));
     padding-left: 30px;
   }
 
@@ -3730,6 +3730,36 @@ body.phone-preview .menu-overlay {
   filter:
     drop-shadow(0 0 4px rgba(80,255,150,0.9))
     drop-shadow(0 0 11px rgba(80,255,150,0.48));
+}
+
+.base-pin-marker.starter-quest-capture-glow::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  inset: 3px 3px 22px;
+  border: 3px solid rgba(255, 226, 104, 0.98);
+  border-radius: 48% 48% 50% 50%;
+  box-shadow:
+    0 0 0 4px rgba(255, 219, 88, 0.28),
+    0 0 17px 7px rgba(255, 209, 50, 0.7);
+  pointer-events: none;
+  animation: starterQuestCaptureHalo 1.35s ease-in-out infinite;
+}
+
+@keyframes starterQuestCaptureHalo {
+  0%, 100% {
+    opacity: 0.68;
+    box-shadow:
+      0 0 0 3px rgba(255, 219, 88, 0.22),
+      0 0 13px 5px rgba(255, 209, 50, 0.58);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 8px rgba(255, 219, 88, 0.3),
+      0 0 22px 9px rgba(255, 209, 50, 0.78);
+  }
 }
 
 @keyframes pinGlowPulse {
@@ -9687,6 +9717,13 @@ body.phone-preview .recipe-panel,
   background:
     radial-gradient(circle at 28% 16%, rgba(127, 255, 247, 0.34), transparent 28%),
     linear-gradient(155deg, #0f8d91, #07536c 55%, #021c31);
+}
+
+.card-set-back.land-of-oz {
+  border-color: rgba(255, 218, 116, 0.86);
+  background:
+    radial-gradient(circle at 28% 16%, rgba(255,255,255,0.36), transparent 28%),
+    linear-gradient(155deg, #239767, #087267 52%, #12234e);
 }
 
 .card-set-back.complete {

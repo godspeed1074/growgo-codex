@@ -12076,6 +12076,53 @@ const FISH_DISCOVERIES_CARD_NAMES = [
   "Oarfish"
 ];
 
+const LAND_OF_OZ_CARD_MANIFEST = [
+  ["land_of_oz_001_kansas_prairie", "Kansas Prairie"],
+  ["land_of_oz_002_dorothy_and_toto", "Dorothy and Toto"],
+  ["land_of_oz_003_aunt_em_and_uncle_henry", "Aunt Em and Uncle Henry"],
+  ["land_of_oz_004_the_cyclone", "The Cyclone"],
+  ["land_of_oz_005_the_house_takes_flight", "The House Takes Flight"],
+  ["land_of_oz_006_the_witch_of_the_east", "The Witch of the East"],
+  ["land_of_oz_007_munchkin_country", "Munchkin Country"],
+  ["land_of_oz_008_the_munchkins", "The Munchkins"],
+  ["land_of_oz_009_good_witch_of_the_north", "Good Witch of the North"],
+  ["land_of_oz_010_silver_shoes", "Silver Shoes"],
+  ["land_of_oz_011_yellow_brick_road", "Yellow Brick Road"],
+  ["land_of_oz_012_the_scarecrow", "The Scarecrow"],
+  ["land_of_oz_013_the_tin_woodman", "The Tin Woodman"],
+  ["land_of_oz_014_the_cowardly_lion", "The Cowardly Lion"],
+  ["land_of_oz_015_the_kalidahs", "The Kalidahs"],
+  ["land_of_oz_016_the_river_crossing", "The River Crossing"],
+  ["land_of_oz_017_the_deadly_poppy_field", "The Deadly Poppy Field"],
+  ["land_of_oz_018_queen_of_the_field_mice", "Queen of the Field Mice"],
+  ["land_of_oz_019_the_emerald_city_gates", "The Emerald City Gates"],
+  ["land_of_oz_020_guardian_of_the_gates", "Guardian of the Gates"],
+  ["land_of_oz_021_the_marvelous_emerald_city", "The Marvelous Emerald City"],
+  ["land_of_oz_022_the_great_oz", "The Great Oz"],
+  ["land_of_oz_023_ozs_command", "Oz’s Command"],
+  ["land_of_oz_024_the_western_country", "The Western Country"],
+  ["land_of_oz_025_the_wolves", "The Wolves"],
+  ["land_of_oz_026_the_wild_crows", "The Wild Crows"],
+  ["land_of_oz_027_the_black_bees", "The Black Bees"],
+  ["land_of_oz_028_the_winged_monkeys", "The Winged Monkeys"],
+  ["land_of_oz_029_wicked_witchs_fortress", "Wicked Witch’s Fortress"],
+  ["land_of_oz_030_the_wicked_witch_of_the_west", "The Wicked Witch of the West"],
+  ["land_of_oz_031_dorothy_melts_the_witch", "Dorothy Melts the Witch"],
+  ["land_of_oz_032_the_winkies_set_free", "The Winkies Set Free"],
+  ["land_of_oz_033_the_golden_cap", "The Golden Cap"],
+  ["land_of_oz_034_oz_unmasked", "Oz Unmasked"],
+  ["land_of_oz_035_scarecrows_new_brains", "Scarecrow’s New Brains"],
+  ["land_of_oz_036_tin_woodmans_silken_heart", "Tin Woodman’s Silken Heart"],
+  ["land_of_oz_037_lions_courage_potion", "Lion’s Courage Potion"],
+  ["land_of_oz_038_the_balloon_escape", "The Balloon Escape"],
+  ["land_of_oz_039_glinda_good_witch_of_the_south", "Glinda, Good Witch of the South"],
+  ["land_of_oz_040_home_at_last", "Home at Last"]
+].map(([cardId, cardName], index) => ({
+  cardId,
+  cardName,
+  cardNumber: index + 1
+}));
+
 const CARD_SETS = [
   {
     setId: "dinosaur-discoveries",
@@ -12149,6 +12196,26 @@ const CARD_SETS = [
       rarity: index === 0 ? "rare" : index < 8 ? "uncommon" : "common",
       image: FISH_CARD_FRONT_IMAGES[index] || null,
       ghostImage: "assets/cards/fishy-business-card-back-v1.jpg?v=1",
+      variationType: "normal",
+      isAnimatedVariation: false,
+      matchingPoiId: null
+    }))
+  },
+  {
+    setId: "land-of-oz",
+    setName: "Land of Oz",
+    themeIcon: "🌈",
+    themeClass: "land-of-oz",
+    coverImage: "assets/cards/land-of-oz/land-of-oz-card-back.jpg?v=1",
+    totalCards: 40,
+    packEligible: true,
+    cards: LAND_OF_OZ_CARD_MANIFEST.map((card) => ({
+      ...card,
+      setId: "land-of-oz",
+      rarity: "common",
+      image: `assets/cards/land-of-oz/${card.cardId}.jpg?v=1`,
+      ghostImage: "assets/cards/land-of-oz/land-of-oz-card-back.jpg?v=1",
+      hideUnownedArt: true,
       variationType: "normal",
       isAnimatedVariation: false,
       matchingPoiId: null
@@ -282093,6 +282160,9 @@ let alphaPewPewTestKitClaimRequested = false;
 let alphaPewPewExtraChargesClaimRequested = false;
 let growBigHarvestCompletionClaimRequested = false;
 let starterQuestStatus = "active";
+let starterQuestStartedAt = "";
+let starterQuestMapHighlightActive = false;
+let starterQuestMapHighlightPlayerId = "";
 const STARTER_QUEST_LOCAL_REWARD_KEY_PREFIX = "growgo-starter-quest-reward";
 const STARTER_TUTORIAL_QUEST = {
   id: "bingles-first-base-pin",
@@ -282853,6 +282923,8 @@ function applyStarterQuestServerResult(result) {
 
   reconcileStarterQuestRun(quest);
   starterQuestStatus = quest.status === "completed" ? "completed" : "active";
+  if (starterQuestStatus === "completed") clearStarterQuestMapHighlight();
+  else syncStarterQuestMapHighlight();
 
   if (result?.player) {
     applyServerCapturePlayerState(result.player);
@@ -282877,15 +282949,21 @@ function applyStarterQuestServerResult(result) {
 
 function reconcileStarterQuestRun(quest) {
   if (quest?.status !== "active" || typeof quest.startedAt !== "string" || !quest.startedAt) return;
+  starterQuestStartedAt = quest.startedAt;
   const playerId = getActivePlayerId();
   const storageKey = `${STARTER_QUEST_RUN_STORAGE_KEY_PREFIX}:${playerId}`;
   try {
     const knownRun = localStorage.getItem(storageKey);
-    if (knownRun === quest.startedAt) return;
+    if (knownRun === quest.startedAt) {
+      syncStarterQuestMapHighlight();
+      return;
+    }
     // An owner reset creates a fresh server run. Reset only this browser's
     // starter tutorial state; all pins, crops, wallet, and inventory remain
     // untouched and continue to use their normal server records.
     starterQuestChain = createFreshStarterQuestChain();
+    starterQuestMapHighlightActive = false;
+    starterQuestMapHighlightPlayerId = playerId;
     saveStarterQuestChain();
     trackedQuestId = STARTER_TUTORIAL_QUEST.id;
     localStorage.setItem(storageKey, quest.startedAt);
@@ -282941,11 +283019,15 @@ function showStarterQuestIntro(introKey) {
     const nextQuest = starterQuestStatus === "completed"
       ? getStarterQuestChainDefinitions().find(isQuestInProgress)
       : STARTER_TUTORIAL_QUEST;
-    if (!sideMenu?.classList.contains("open")) toggleMenu();
-    openQuests();
     if (nextQuest) {
       trackedQuestId = nextQuest.id;
-      openQuestDetail(nextQuest.id);
+      if (nextQuest.id === STARTER_TUTORIAL_QUEST.id && starterQuestStatus === "active") {
+        beginStarterQuestMapGuide();
+      } else {
+        if (!sideMenu?.classList.contains("open")) toggleMenu();
+        openQuests();
+        openQuestDetail(nextQuest.id);
+      }
     }
     try { localStorage.setItem(introKey, "acknowledged"); } catch (_) {}
     document.getElementById("starterQuestChainIntro")?.remove();
@@ -282953,6 +283035,40 @@ function showStarterQuestIntro(introKey) {
   });
 
   document.body.append(intro);
+}
+
+function getStarterQuestMapHighlightStorageKey(playerId = getActivePlayerId()) {
+  return `growgo-starter-quest-map-highlight:${playerId}:${starterQuestStartedAt || "active"}`;
+}
+
+function syncStarterQuestMapHighlight() {
+  const playerId = getActivePlayerId();
+  starterQuestMapHighlightPlayerId = playerId;
+  if (starterQuestStatus !== "active" || starterQuestChain.step !== "capture-first-base" || !starterQuestStartedAt) {
+    starterQuestMapHighlightActive = false;
+    return;
+  }
+  try {
+    starterQuestMapHighlightActive = localStorage.getItem(getStarterQuestMapHighlightStorageKey(playerId)) === "active";
+  } catch (_) {
+    starterQuestMapHighlightActive = false;
+  }
+}
+
+function beginStarterQuestMapGuide() {
+  starterQuestMapHighlightPlayerId = getActivePlayerId();
+  starterQuestMapHighlightActive = true;
+  try { localStorage.setItem(getStarterQuestMapHighlightStorageKey(starterQuestMapHighlightPlayerId), "active"); } catch (_) {}
+  if (sideMenu?.classList.contains("open")) closeMenu();
+  if (map) map.invalidateSize({ pan: false });
+  scheduleRedrawPins();
+  showToast("Choose a base pin", "Tap any glowing base pin to begin your first quest.");
+}
+
+function clearStarterQuestMapHighlight() {
+  starterQuestMapHighlightActive = false;
+  try { localStorage.removeItem(getStarterQuestMapHighlightStorageKey()); } catch (_) {}
+  scheduleRedrawPins();
 }
 
 function initQuestUi() {
@@ -283392,6 +283508,14 @@ function isDinosaurPOI(pin) {
   return text.includes("dinosaur") || text.includes("fossil");
 }
 
+function getCardRewardSetIdForPOI(pin) {
+  const explicitSetId = typeof pin?.cardRewardSetId === "string" && getCardSet(pin.cardRewardSetId)
+    ? pin.cardRewardSetId
+    : null;
+  if (explicitSetId) return explicitSetId;
+  return isDinosaurPOI(pin) ? "dinosaur-discoveries" : null;
+}
+
 function getMissingCardsInSet(setId) {
   const set = getCardSet(setId);
   if (!set) return [];
@@ -283400,19 +283524,22 @@ function getMissingCardsInSet(setId) {
 }
 
 function pickCardRewardForPOI(pin) {
-  if (isDinosaurPOI(pin)) {
-    const missingCards = getMissingCardsInSet("dinosaur-discoveries");
+  const rewardSetId = getCardRewardSetIdForPOI(pin);
+  if (rewardSetId) {
+    const missingCards = getMissingCardsInSet(rewardSetId);
     if (missingCards.length > 0) {
       return {
         card: missingCards[Math.floor(Math.random() * missingCards.length)],
-        mode: "set-missing"
+        mode: "set-missing",
+        rewardSetId
       };
     }
 
-    const set = getCardSet("dinosaur-discoveries");
+    const set = getCardSet(rewardSetId);
     return {
       card: set?.cards[Math.floor(Math.random() * set.cards.length)] || null,
-      mode: "set-duplicate"
+      mode: "set-duplicate",
+      rewardSetId
     };
   }
 
@@ -283424,14 +283551,16 @@ function renderPoiCardRewardLine(pin) {
   const reward = pickCardRewardForPOI(pin);
   const card = reward?.card || null;
 
-  if (isDinosaurPOI(pin)) {
-    const missingCount = getMissingCardsInSet("dinosaur-discoveries").length;
+  const rewardSetId = getCardRewardSetIdForPOI(pin);
+  if (rewardSetId) {
+    const set = getCardSet(rewardSetId);
+    const missingCount = getMissingCardsInSet(rewardSetId).length;
 
     return `
       <div class="poi-card-reward-line ${missingCount > 0 ? "new" : "owned"}">
         <span>Card Reward</span>
-        <strong>Dinosaur Discoveries</strong>
-        <em>${missingCount > 0 ? "Awards one missing dinosaur card" : "Set complete · duplicate card reward"}</em>
+        <strong>${escapeHtml(set?.setName || "Card Collection")}</strong>
+        <em>${missingCount > 0 ? "Awards one missing card" : "Set complete · duplicate card reward"}</em>
       </div>
     `;
   }
@@ -283588,7 +283717,9 @@ function getCardArtMarkup(card, owned) {
   const set = getCardSet(card.setId);
   const icon = set?.themeIcon || "★";
   const initial = String(card.cardName || "?").charAt(0).toUpperCase();
-  const cardImage = owned ? (card.image || null) : (card.ghostImage || card.image || null);
+  const cardImage = owned
+    ? (card.image || null)
+    : (card.ghostImage || (card.hideUnownedArt ? null : card.image) || null);
   const isDinosaurFront = owned && card.setId === "dinosaur-discoveries";
   const nameLength = String(card.cardName || "").length;
   const nameplateSize = nameLength > 14 ? "long" : nameLength > 10 ? "medium" : "standard";
@@ -283890,7 +284021,7 @@ function handleDuplicateCard(cardId) {
 }
 
 function awardCardPack(packSize = 1, source = "test-pack") {
-  const allCards = getAllCards();
+  const allCards = getAllCards().filter((card) => getCardSet(card.setId)?.packEligible !== false);
   const size = Math.max(1, Number(packSize || 1));
   const results = [];
 
@@ -291321,6 +291452,7 @@ async function fetchRoadPinsForViewport(force = false) {
 
 
 function applyServerNearbyPinResponse(response, center, viewportKey) {
+  const usedCachedFallback = response?.mapPinsFallback === true;
   scheduleWaterFishCycleRefresh(response?.fishCycle?.expiresAt);
   applyServerCircuitRouteProgress(response?.circuitRoute);
   applyServerGreatOceanRoadProgress(response?.greatOceanRoad);
@@ -291403,11 +291535,11 @@ function applyServerNearbyPinResponse(response, center, viewportKey) {
     clearPinIconCache();
     scheduleSavePinsToLocal();
   }
-  if (viewportKey) rememberFetchedViewportKey(viewportKey);
+  if (viewportKey && !usedCachedFallback) rememberFetchedViewportKey(viewportKey);
   // A full server response may be trimmed in an unusually dense area.
   // Keep its precise viewport key, but only reuse the broader coverage
   // when every nearby pin could be included in the response.
-  if (newPins.length < SERVER_NEARBY_PIN_RESPONSE_LIMIT) {
+  if (!usedCachedFallback && newPins.length < SERVER_NEARBY_PIN_RESPONSE_LIMIT) {
     rememberServerPinCoverage(center);
   }
   roadErrorToastShown = false;
@@ -292756,7 +292888,7 @@ function redrawVisiblePins() {
 
   selectedPins.forEach((pin) => {
     const iconState = getPinIconState(pin);
-    const zIndex = iconState.type === "poi" ? 1300 : iconState.glowing ? 1500 : 1000;
+    const zIndex = iconState.type === "poi" ? 1300 : iconState.starterQuestCaptureGlow ? 1550 : iconState.glowing ? 1500 : 1000;
     const existingMarker = renderedPinMarkers.get(pin.id);
 
     if (existingMarker) {
@@ -292814,6 +292946,7 @@ function getPinIconState(pin) {
     : (type === "base" && Boolean(pin.plant) && isPinHarvestedToday(pin)) ||
       (wasCapturedToday(pin) && !harvestRecaptureAvailable);
   const glowing = shouldPinGlow(pin, capturedToday);
+  const starterQuestCaptureGlow = isStarterQuestBasePinTarget(pin, capturedToday);
   const ownerId = pin.ownerId || "";
   const plantSeedId = pin.plant?.seedId || "";
   const plantHarvestedKey = isPinHarvestedToday(pin)
@@ -292832,14 +292965,25 @@ function getPinIconState(pin) {
     points,
     capturedToday,
     glowing,
+    starterQuestCaptureGlow,
     owned: Boolean(ownerId),
     ownedByActivePlayer: ownerId === getActivePlayerId(),
     isCircuitSpecial,
     isGreatOceanRoadSpecial,
     plantStage,
     plantSeedId,
-    key: `${type}|${pin.category || ""}|${pin.subcategory || ""}|${pin.rarity || ""}|${pin.icon || ""}|${pin.poiCategory || ""}|${pin.poiName || ""}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}|${isCircuitSpecial ? 1 : 0}|${isGreatOceanRoadSpecial ? 1 : 0}`
+    key: `${type}|${pin.category || ""}|${pin.subcategory || ""}|${pin.rarity || ""}|${pin.icon || ""}|${pin.poiCategory || ""}|${pin.poiName || ""}|${fishType}|${points}|${capturedToday ? 1 : 0}|${glowing ? 1 : 0}|${starterQuestCaptureGlow ? 1 : 0}|${ownerId}|${plantStage}|${plantSeedId}|${plantHarvestedKey}|${isCircuitSpecial ? 1 : 0}|${isGreatOceanRoadSpecial ? 1 : 0}`
   };
+}
+
+function isStarterQuestBasePinTarget(pin, capturedToday) {
+  return starterQuestMapHighlightActive === true &&
+    starterQuestMapHighlightPlayerId === getActivePlayerId() &&
+    starterQuestStatus === "active" &&
+    starterQuestChain.step === "capture-first-base" &&
+    (pin?.type || "base") === "base" &&
+    !pin?.ownerId &&
+    capturedToday !== true;
 }
 
 function buildPinIcon(pin, state = null) {
@@ -292864,6 +293008,7 @@ function buildPinIcon(pin, state = null) {
     ? `pin-growth-stage-${Math.max(1, Math.min(4, iconState.plantStage))}`
     : "";
   const glowClass = iconState.glowing ? "pin-ready-glow" : "";
+  const starterQuestGlowClass = iconState.starterQuestCaptureGlow ? "starter-quest-capture-glow" : "";
   const capturedClass = iconState.capturedToday ? "pin-captured-today" : "";
   const ownedClass = iconState.owned ? "pin-owned" : "";
   const typeClass = iconState.type === "water" ? "water-pin-marker" : "";
@@ -292925,7 +293070,7 @@ function buildPinIcon(pin, state = null) {
     : "";
 
   const html = `
-    <div class="base-pin-marker ${typeClass} ${circuitClass} ${greatOceanRoadClass} ${cropPinClass} ${growthStageClass} ${valueClass} ${fishClass} ${animatedFishClass} ${glowClass} ${capturedClass} ${ownedClass}">
+    <div class="base-pin-marker ${typeClass} ${circuitClass} ${greatOceanRoadClass} ${cropPinClass} ${growthStageClass} ${valueClass} ${fishClass} ${animatedFishClass} ${glowClass} ${starterQuestGlowClass} ${capturedClass} ${ownedClass}">
       <img src="${pinImage}" alt="${pinAlt}">
       ${showPointNumber ? `<div class="base-pin-number ${pointDigitClass}" aria-label="${pointValue} points">${pointValue}</div>` : ""}
       ${fishBadge}

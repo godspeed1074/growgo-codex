@@ -1,7 +1,18 @@
 {
   "name": "growgo-codex",
+  "version": "0.1.18",
   "private": true,
   "scripts": {
+    "release:patch": "npm version patch --no-git-tag-version",
+    "release:minor": "npm version minor --no-git-tag-version",
+    "quests:list": "node quest-factory/cli.mjs list",
+    "quests:validate": "node quest-factory/cli.mjs validate",
+    "quests:simulate": "node quest-factory/cli.mjs simulate",
+    "test:quest-factory": "node --test tests/quest-factory.test.mjs tests/quest-factory-t1-library.test.mjs tests/quest-factory-t1-offers.test.mjs tests/quest-factory-popup.test.mjs",
+    "quests:preview": "node quest-factory/preview/server.mjs",
+    "quests:export-preview": "node quest-factory/preview/export.mjs",
+    "build:alpha-web": "node scripts/prepare-vercel-deployment.mjs",
+    "emulator:start:dev-alpha:persistent": "firebase emulators:start --project growgo-development --only auth,firestore,functions,storage --import=.firebase/emulator-data/development-alpha --export-on-exit=.firebase/emulator-data/development-alpha",
     "test:custom25d:webkit": "PLAYWRIGHT_BROWSERS_PATH=.playwright-browsers node tests/custom25d-manual-webkit-check.js"
   },
   "devDependencies": {

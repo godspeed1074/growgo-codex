@@ -11,7 +11,7 @@
 
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css?v=cards14" />
+  <link rel="stylesheet" href="style.css?v=players-met-20260909" />
 </head>
 
 <body class="phone-preview">
@@ -25,11 +25,17 @@
     <!-- TOP UI -->
     <button id="avatarButton" class="avatar-button" type="button">
       <img id="topAvatarImage" class="hidden" alt="Player avatar" />
-      <span id="topAvatarFallback">+</span>
+      <span id="topAvatarFallback">☰</span>
     </button>
 
     <div class="coin-pill">
       🪙 <span id="coinCount">0</span>
+    </div>
+
+    <div id="activeBuffPill" class="active-buff-pill hidden" role="status" aria-live="polite">
+      <span class="active-buff-icon" aria-hidden="true">🍫</span>
+      <span class="active-buff-copy">+50% XP</span>
+      <strong id="activeBuffTimer">5:00</strong>
     </div>
 
     <div class="live-pill">LIVE</div>
@@ -74,8 +80,8 @@
 
       <div id="menuHome" class="menu-home">
         <div class="menu-grid">
-          <button class="menu-btn" type="button">
-            <img src="assets/ui/stats.png" alt="Stats" />
+          <button class="menu-btn menu-btn-stats" type="button">
+            <img src="assets/ui/menu-stats-v1.png" alt="Stats" />
             <span>Stats</span>
           </button>
 
@@ -85,50 +91,66 @@
           </button>
 
           <button class="menu-btn" type="button">
-            <img src="assets/ui/crafting.png" alt="Crafting" />
+            <img src="assets/ui/menu-crafting-v1.png" alt="Crafting" />
             <span>Crafting</span>
           </button>
 
           <button id="marketBtn" class="menu-btn" type="button">
-            <img src="assets/ui/market.png" alt="Market" />
+            <img src="assets/ui/menu-market-v1.png" alt="Market" />
             <span>Market</span>
           </button>
 
           <button id="inventoryBtn" class="menu-btn" type="button">
-            <img src="assets/ui/inventory.png" alt="Inventory" />
+            <img src="assets/ui/menu-inventory-v1.png" alt="Inventory" />
             <span>Inventory</span>
           </button>
 
           <button id="socialBtn" class="menu-btn" type="button">
-            <img src="assets/ui/social.png" alt="Social" />
+            <img src="assets/ui/menu-social-v1.png" alt="Social" />
             <span>Social</span>
           </button>
 
           <button class="menu-btn" type="button">
-            <img src="assets/ui/achievements.png" alt="Achievements" />
+            <img src="assets/ui/menu-achievements-v1.png" alt="Achievements" />
             <span>Achievements</span>
           </button>
 
           <button class="menu-btn" type="button">
-            <img src="assets/ui/quests.png" alt="Quests" />
+            <img src="assets/ui/menu-quests-v1.png" alt="Quests" />
             <span>Quests</span>
           </button>
 
           <button class="menu-btn" type="button">
-            <img src="assets/ui/collections.png" alt="Collections" />
+            <img src="assets/ui/menu-collections-v1.png" alt="Collections" />
             <span>Collections</span>
           </button>
 
           <button class="menu-btn" type="button">
-            <img src="assets/ui/settings.png" alt="Settings" />
+            <img src="assets/ui/menu-settings-v1.png" alt="Settings" />
             <span>Settings</span>
+          </button>
+
+          <!-- Server-side staff access decides whether this appears. -->
+          <button id="adminControlCenterEntry" class="menu-btn menu-btn-control-center hidden" type="button">
+            <span class="admin-menu-symbol" aria-hidden="true">✦</span>
+            <span>Mission Control</span>
+            <strong id="adminControlCenterRole">Admin</strong>
           </button>
         </div>
       </div>
 
+      <button id="mainMenuReportBugBtn" class="main-menu-report-bug" type="button" aria-label="Report a bug">
+        <span aria-hidden="true">⚑</span> Report bugs
+      </button>
+
       <!-- STATS SCREEN -->
-      <section id="statsScreen" class="submenu-screen hidden">
-        <h2>STATS</h2>
+      <section id="statsScreen" class="submenu-screen gg-standard-screen gg-stats-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Your journey</span>
+            <h2>STATS</h2>
+          </div>
+        </header>
 
         <div class="stats-tabs">
           <button class="tab active" data-tab="today" type="button">Today</button>
@@ -140,8 +162,13 @@
       </section>
 
       <!-- LEADERS SCREEN -->
-      <section id="leadersScreen" class="submenu-screen hidden">
-        <h2>LEADERS</h2>
+      <section id="leadersScreen" class="submenu-screen gg-standard-screen gg-leaders-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">See how you stack up</span>
+            <h2>LEADERS</h2>
+          </div>
+        </header>
 
         <div class="leader-segments stats-tabs" data-leader-filter="metric">
           <button class="seg-btn active" data-board="points" type="button">Points</button>
@@ -166,82 +193,135 @@
       </section>
 
       <!-- ACHIEVEMENTS SCREEN -->
-      <section id="achievementsScreen" class="submenu-screen hidden">
-        <h2>ACHIEVEMENTS</h2>
-        <p class="submenu-intro">POI discovery and capture milestones.</p>
+      <section id="achievementsScreen" class="submenu-screen gg-standard-screen gg-achievements-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Your milestones</span>
+            <h2>ACHIEVEMENTS</h2>
+          </div>
+        </header>
+        <p class="submenu-intro">Track your GrowGo milestones and achievement points.</p>
+
+        <div class="achievement-tabs" role="tablist" aria-label="Achievement status">
+          <button class="achievement-tab active" data-achievement-tab="progress" type="button">In Progress</button>
+          <button class="achievement-tab" data-achievement-tab="completed" type="button">Completed</button>
+        </div>
+
+        <div class="achievement-filter-bar">
+          <label class="achievement-filter-field">
+            <span>Category</span>
+            <select id="achievementCategoryFilter">
+              <option value="all">All Categories</option>
+              <option value="exploration">Exploration</option>
+              <option value="crafting">Crafting</option>
+              <option value="social">Social</option>
+              <option value="collections">Collections</option>
+              <option value="events">Events</option>
+            </select>
+          </label>
+
+          <label id="achievementDateFilterField" class="achievement-filter-field hidden">
+            <span>Completed</span>
+            <select id="achievementDateFilter">
+              <option value="all">Any Time</option>
+              <option value="today">Today</option>
+              <option value="week">Last 7 Days</option>
+              <option value="month">Last 30 Days</option>
+            </select>
+          </label>
+        </div>
 
         <div id="achievementsList" class="achievements-list"></div>
       </section>
 
-      <!-- SOCIAL SCREEN -->
-      <section id="socialScreen" class="submenu-screen hidden">
-        <h2>SOCIAL</h2>
-        <p class="submenu-intro">Friends, parties, QR codes and nearby players.</p>
-
-        <div class="social-profile-card">
-          <div class="social-profile-avatar">
-            <img id="socialAvatarImg" class="hidden" alt="Social avatar" />
-            <span id="socialAvatarFallback">+</span>
-          </div>
-
+      <!-- QUESTS SCREEN -->
+      <section id="questScreen" class="submenu-screen gg-standard-screen gg-quests-screen hidden">
+        <header class="gg-standard-screen-header">
           <div>
-            <strong>rubberlips</strong>
-            <div class="social-public-id">
-              Public ID: <span id="socialPublicId">syncing...</span>
-            </div>
-            <p>Swipe your profile picture in the header to show your QR code.</p>
+            <span class="gg-standard-screen-kicker">Your adventures</span>
+            <h2>QUESTS</h2>
           </div>
-        </div>
+        </header>
+        <p class="submenu-intro">Your active GrowGo adventures.</p>
+        <div id="birdQuestPilotPanel" hidden></div>
 
-        <div class="social-action-grid">
-          <button class="social-action-card" data-social-action="meet" type="button">
-            <span>📷</span>
-            <strong>Meet</strong>
-            <small>Scan another player’s QR code.</small>
-          </button>
+        <div id="questListView" class="quest-view"></div>
+        <div id="questDetailView" class="quest-view hidden"></div>
+      </section>
 
-          <button class="social-action-card" data-social-action="friends" type="button">
-            <span>👥</span>
+      <!-- SOCIAL SCREEN -->
+      <section id="socialScreen" class="submenu-screen gg-standard-screen gg-social-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Play together</span>
+            <h2>SOCIAL</h2>
+          </div>
+        </header>
+        <p class="submenu-intro">Meet nearby players, join up, and discover farmer markets.</p>
+
+        <p class="social-section-label">Community</p>
+        <button class="social-action-card social-action-card--wide social-events-card" data-social-action="event-calendar" type="button">
+          <span class="social-events-icon" aria-hidden="true">✦</span>
+          <span class="social-wide-card-copy"><strong>Event Calendar</strong><small>Official and player-run events</small></span>
+          <span class="social-party-card-arrow" aria-hidden="true">›</span>
+        </button>
+        <button class="social-action-card social-action-card--wide social-meet-card" data-social-action="meet" type="button">
+          <span class="social-qr-scan-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="social-wide-card-copy"><strong>Meet Player</strong><small>Scan a nearby player's QR code</small></span>
+          <span class="social-party-card-arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="social-action-grid social-community-grid">
+          <button class="social-action-card social-action-card--compact" data-social-action="friends" type="button">
+            <span class="social-action-icon"><img src="assets/ui/social-friends-v1.png" alt="" /></span>
             <strong>Friends</strong>
-            <small>View your GrowGo friends.</small>
           </button>
 
-          <button class="social-action-card" data-social-action="party" type="button">
-            <span>🎉</span>
-            <strong>Party</strong>
-            <small>Create or join a nearby party.</small>
-          </button>
-
-          <button class="social-action-card" data-social-action="guild" type="button">
-            <span>🛡️</span>
-            <strong>Guild</strong>
-            <small>Team up with your GrowGo group.</small>
-          </button>
-
-          <button class="social-action-card" data-social-action="create-market" type="button">
-            <span>🏕️</span>
-            <strong>Create Market</strong>
-            <small>Host a local GrowGo market.</small>
-          </button>
-
-          <button class="social-action-card" data-social-action="nearby-markets" type="button">
-            <span>📍</span>
-            <strong>Nearby Markets</strong>
-            <small>Find active markets near you.</small>
-          </button>
-
-          <button class="social-action-card" data-social-action="verify-attendance" type="button">
-            <span>✅</span>
-            <strong>Verify Attendance</strong>
-            <small>Check in at a real-world market.</small>
+          <button class="social-action-card social-action-card--compact" data-social-action="players-met" type="button">
+            <span class="social-action-icon"><img src="assets/ui/social-players-met-v1.png" alt="" /></span>
+            <strong>Players Met</strong>
           </button>
         </div>
+
+        <button class="social-action-card social-action-card--wide social-party-card" data-social-action="party" type="button">
+          <span class="social-party-card-icon" aria-hidden="true">✦</span>
+          <span class="social-party-card-copy"><strong>Party Up</strong><small>Create or join a nearby party</small></span>
+          <span class="social-party-card-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <p class="social-section-label">Farmer Markets</p>
+        <div class="social-action-grid social-market-grid">
+          <button class="social-action-card social-action-card--compact" data-social-action="create-market" type="button">
+            <span class="social-action-icon"><img src="assets/ui/social-create-market-v1.png" alt="" /></span>
+            <strong>Create Market</strong>
+          </button>
+
+          <button class="social-action-card social-action-card--compact" data-social-action="nearby-markets" type="button">
+            <span class="social-action-icon"><img src="assets/ui/social-nearby-markets-v1.png" alt="" /></span>
+            <strong>Nearby Markets</strong>
+          </button>
+        </div>
+
+        <button class="social-action-card social-action-card--wide social-check-in-card" data-social-action="verify-attendance" type="button">
+          <span class="social-action-icon"><img src="assets/ui/social-check-in-v1.png" alt="" /></span>
+          <span class="social-wide-card-copy"><strong>Check In</strong><small>Verify your farmer market attendance</small></span>
+          <span class="social-party-card-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <button class="social-action-card social-guild-card" data-social-action="guild" type="button" disabled>
+          <span class="social-guild-icon" aria-hidden="true">♜</span>
+          <span><strong>Guilds</strong><small>Coming soon</small></span>
+        </button>
       </section>
 
       <!-- MARKET SCREEN -->
-      <section id="marketScreen" class="submenu-screen hidden">
-        <h2>MARKET</h2>
-        <p class="submenu-intro">Buy and sell resources, food, cards and skins.</p>
+      <section id="marketScreen" class="submenu-screen gg-standard-screen gg-market-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Trade with the community</span>
+            <h2>MARKET</h2>
+          </div>
+        </header>
+        <p class="submenu-intro">Buy and sell resources, food, seeds and special items.</p>
 
         <div class="market-wallet">
           0 coins
@@ -254,9 +334,15 @@
       </section>
 
       <!-- SETTINGS SCREEN -->
-      <section id="settingsScreen" class="submenu-screen hidden">
-        <h2>SETTINGS</h2>
-        <p class="submenu-intro">Local profile and device save controls.</p>
+      <section id="settingsScreen" class="submenu-screen gg-standard-screen gg-settings-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Fine tune GrowGo</span>
+            <h2>SETTINGS</h2>
+          </div>
+        </header>
+        <p class="submenu-intro">Adjust your map, game sound and profile picture.</p>
+        <p id="growgoAppVersion" class="submenu-intro">GrowGo · development preview</p>
 
         <div class="settings-card">
           <div class="settings-row">
@@ -264,23 +350,31 @@
             <strong id="settingsPlayerName">rubberlips</strong>
           </div>
 
-          <div class="settings-row">
-            <span>Player ID</span>
-            <strong id="settingsPlayerId">syncing...</strong>
-          </div>
         </div>
 
         <div class="settings-actions">
           <div class="settings-group">
-            <h3>Preferences</h3>
-            <button id="soundEffectsToggle" class="settings-toggle" type="button" aria-pressed="true">
-              <span>Sound effects</span>
-              <strong>On</strong>
+            <h3>Volume</h3>
+            <label class="settings-volume-control" for="soundVolumeInput">
+              <span>Sound Effects</span>
+              <strong id="soundVolumeValue">70%</strong>
+              <input id="soundVolumeInput" type="range" min="0" max="100" step="1" value="70" />
+            </label>
+          </div>
+
+          <div class="settings-group">
+            <h3>Map</h3>
+            <button id="autoFollowToggle" class="settings-toggle off" type="button" aria-pressed="false">
+              <span>Auto-follow</span>
+              <strong>Off</strong>
             </button>
-            <button id="vibrationToggle" class="settings-toggle" type="button" aria-pressed="true">
-              <span>Vibration</span>
-              <strong>On</strong>
-            </button>
+            <button id="scanPoiBtn" class="settings-btn" type="button">Search for POIs</button>
+          </div>
+
+          <div class="settings-group">
+            <h3>Help</h3>
+            <button id="restartNavigationTutorialBtn" class="settings-btn" type="button">Restart navigation tutorial</button>
+            <button id="supportReportBtn" class="settings-btn settings-support-btn" type="button">Support &amp; Report</button>
           </div>
 
           <div class="settings-group">
@@ -289,42 +383,143 @@
             <button id="clearAvatarBtn" class="settings-btn" type="button">Clear avatar</button>
           </div>
 
-          <div class="settings-group">
-            <h3>World Scan</h3>
-            <button id="scanPoiBtn" class="settings-btn" type="button">Scan nearby POIs</button>
-          </div>
-
-          <div class="settings-group">
-            <h3>Backup</h3>
-            <button id="copyBackupBtn" class="settings-btn" type="button">Copy backup</button>
-            <button id="downloadBackupBtn" class="settings-btn" type="button">Download backup</button>
-            <button id="restoreBackupBtn" class="settings-btn" type="button">Restore backup</button>
-            <input id="restoreBackupInput" class="settings-file-input" type="file" accept="application/json,.json" />
-          </div>
-
-          <div class="settings-group">
-            <h3>Farming Test</h3>
-            <button id="advanceCropsBtn" class="settings-btn" type="button">Advance crops one stage</button>
-            <button id="readyCropsBtn" class="settings-btn" type="button">Make crops ready</button>
-          </div>
-
-          <div class="settings-group">
-            <h3>Danger</h3>
-            <button id="resetLocalProgressBtn" class="settings-btn danger" type="button">Reset local progress</button>
-          </div>
         </div>
       </section>
 
+      <!-- CONTROL CENTER: only revealed after server-side role verification. -->
+      <section id="adminControlCenterScreen" class="submenu-screen gg-standard-screen gg-admin-control-center hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">GrowGo team dashboard</span>
+            <h2>MISSION CONTROL</h2>
+          </div>
+          <span id="adminControlCenterRolePill" class="admin-role-pill">Admin</span>
+        </header>
+
+        <div class="leader-segments stats-tabs admin-mission-tabs" data-admin-tabs>
+          <button class="seg-btn active" data-admin-tab="daily" type="button">Daily</button>
+          <button class="seg-btn admin-support-tab" data-admin-tab="support" type="button">Support<span id="adminSupportReportBadge" class="admin-support-report-badge hidden" aria-live="polite"></span></button>
+          <button class="seg-btn" data-admin-tab="players" type="button">Players</button>
+          <button class="seg-btn" data-admin-tab="operations" type="button">Operations</button>
+          <button class="seg-btn" data-admin-tab="team" type="button">Team</button>
+        </div>
+
+        <section class="admin-mission-pane" data-admin-pane="daily">
+          <p class="submenu-intro">Today’s secure game snapshot. All daily comparisons use the GrowGo UTC reset.</p>
+          <div id="adminControlCenterSummary" class="admin-control-center-summary"></div>
+          <div id="adminDailyMomentum" class="admin-mission-card admin-daily-momentum"></div>
+          <div id="adminCostStatus" class="admin-mission-card admin-cost-status"></div>
+        </section>
+
+        <section class="admin-mission-pane hidden" data-admin-pane="support">
+          <div class="admin-mission-card admin-section-hero">
+            <span class="admin-section-icon" aria-hidden="true">!</span>
+            <div>
+              <span>Community care</span>
+              <h3>SUPPORT &amp; REPORTS</h3>
+              <p>Reported players, pictures, map content, events, and market listings will arrive here as secure cases.</p>
+            </div>
+          </div>
+          <div class="admin-support-filters" data-admin-support-filters>
+            <button class="active" data-admin-support-filter="open" type="button">Open</button>
+            <button data-admin-support-filter="reviewing" type="button">Reviewing</button>
+            <button data-admin-support-filter="closed" type="button">Closed</button>
+            <button data-admin-support-filter="bugs" type="button">Bugs</button>
+          </div>
+          <div id="adminSupportOverview" class="admin-empty-state"></div>
+          <div id="adminSupportCaseList" class="admin-support-case-list"></div>
+          <section id="adminSupportCaseDetail" class="admin-support-case-detail hidden"></section>
+        </section>
+
+        <section class="admin-mission-pane hidden" data-admin-pane="players">
+          <div class="admin-mission-card admin-section-hero">
+            <span class="admin-section-icon" aria-hidden="true">⌕</span>
+            <div>
+              <span>Player support</span>
+              <h3>PLAYER LOOKUP</h3>
+              <p>Search an exact player name or GrowGo code. Profiles open straight to their inventory.</p>
+            </div>
+          </div>
+          <form id="adminPlayerSearchForm" class="admin-player-search" novalidate>
+            <label>
+              <span>Player name or code</span>
+              <input id="adminPlayerSearchInput" type="search" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" placeholder="Exact name or GG code" />
+            </label>
+            <button type="submit">Search</button>
+          </form>
+          <div id="adminPlayerLookupNotice" class="admin-empty-state">Search opens a player’s inventory, activity, moderation history, and secure staff tools.</div>
+          <section id="adminPlayerLookupResult" class="admin-player-lookup-result hidden"></section>
+        </section>
+
+        <section class="admin-mission-pane hidden" data-admin-pane="operations">
+          <div class="admin-mission-card admin-section-hero">
+            <span class="admin-section-icon" aria-hidden="true">✦</span>
+            <div>
+              <span>Live game care</span>
+              <h3>OPERATIONS</h3>
+              <p>Official weekly events are controlled here. Every change is recorded, and player-facing schedules update securely.</p>
+            </div>
+          </div>
+          <div id="adminOfficialEventsPanel" class="admin-operation-grid">
+            <div><strong>Official events</strong><span>Loading secure schedule…</span></div>
+          </div>
+          <div class="admin-operation-grid admin-operation-grid--later">
+            <div><strong>Announcements</strong><span>Planned next</span></div>
+            <div><strong>System pauses</strong><span>Not enabled</span></div>
+          </div>
+        </section>
+
+        <section class="admin-mission-pane hidden" data-admin-pane="team">
+          <div class="admin-mission-card admin-section-hero">
+            <span class="admin-section-icon" aria-hidden="true">✦</span>
+            <div>
+              <span>Small trusted team</span>
+              <h3>TEAM ACCESS</h3>
+              <p>There are only two roles: Owner and Admin. Owner-only controls remain hidden from Admin accounts.</p>
+            </div>
+          </div>
+
+          <section id="adminStaffPanel" class="admin-staff-panel hidden">
+            <div class="admin-panel-heading">
+              <div>
+                <span>Owner tools</span>
+                <h3>STAFF ACCOUNTS</h3>
+              </div>
+            </div>
+            <form id="adminStaffForm" class="admin-staff-form">
+              <label>
+                <span>Player code</span>
+                <input id="adminStaffPlayerCode" type="text" autocomplete="off" autocapitalize="characters" maxlength="8" placeholder="GG123ABC" />
+              </label>
+              <label>
+                <span>Access level</span>
+                <select id="adminStaffRoleSelect">
+                  <option value="admin">Admin</option>
+                </select>
+              </label>
+              <button type="submit">Grant Admin access</button>
+            </form>
+            <div id="adminStaffList" class="admin-staff-list"></div>
+          </section>
+          <div id="adminTeamOverview" class="admin-empty-state"></div>
+        </section>
+      </section>
+
       <!-- INVENTORY SCREEN -->
-      <section id="inventoryScreen" class="submenu-screen hidden">
-        <h2>INVENTORY</h2>
-        <p class="submenu-intro">Your resources, food, cards, skins and special rewards.</p>
+      <section id="inventoryScreen" class="submenu-screen gg-standard-screen gg-inventory-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Everything you carry</span>
+            <h2>INVENTORY</h2>
+          </div>
+        </header>
+        <p class="submenu-intro">Your resources, food, seeds, skins and special rewards.</p>
 
         <div id="inventoryListView">
           <div class="inventory-tabs">
             <button class="inventory-tab active" data-inventory-category="resources" type="button">Resources</button>
             <button class="inventory-tab" data-inventory-category="food" type="button">Food</button>
-            <button class="inventory-tab" data-inventory-category="cards" type="button">Cards</button>
+            <button class="inventory-tab" data-inventory-category="seeds" type="button">Seeds</button>
             <button class="inventory-tab" data-inventory-category="skins" type="button">Skins</button>
             <button class="inventory-tab" data-inventory-category="special" type="button">Special</button>
           </div>
@@ -338,12 +533,26 @@
       </section>
 
       <!-- COLLECTIONS SCREEN -->
-      <section id="collectionsScreen" class="submenu-screen hidden">
-        <h2>COLLECTIONS</h2>
-        <p class="submenu-intro">Owned pins, cards, skins, badges and future collections.</p>
+      <section id="collectionsScreen" class="submenu-screen gg-standard-screen gg-collections-screen hidden">
+        <header class="gg-standard-screen-header">
+          <div>
+            <span class="gg-standard-screen-kicker">Treasures found</span>
+            <h2>COLLECTIONS</h2>
+          </div>
+        </header>
+        <p class="submenu-intro">Track the things you have earned and discovered.</p>
 
-        <div class="collections-sections">
-          <section class="collections-section">
+        <div id="collectionsCategoryGrid" class="collections-category-grid">
+          <button class="collection-category-card" data-collection-category="owned-pins" type="button"><span>📍</span><strong>Owned Pins</strong></button>
+          <button class="collection-category-card" data-collection-category="pois" type="button"><span>🗺️</span><strong>Discovered POIs</strong></button>
+          <button class="collection-category-card" data-collection-category="cards" type="button"><span>🃏</span><strong>Cards</strong></button>
+          <button class="collection-category-card" data-collection-category="skins" type="button"><span>🎨</span><strong>Skins</strong></button>
+          <button class="collection-category-card" data-collection-category="pets" type="button"><span>🐾</span><strong>Pets</strong></button>
+          <button class="collection-category-card" data-collection-category="toys" type="button"><span>🧸</span><strong>Toys</strong></button>
+        </div>
+
+        <div id="collectionsSections" class="collections-sections hidden">
+          <section id="collectionOwnedPins" class="collections-section hidden">
             <div class="collections-section-header">
               <h3>Owned Pins</h3>
               <span id="ownedPinsCount">0 owned</span>
@@ -360,7 +569,7 @@
             <div id="ownedPinsList" class="owned-pins-list"></div>
           </section>
 
-          <section class="collections-section">
+          <section id="collectionPois" class="collections-section hidden">
             <div class="collections-section-header">
               <h3>Discovered POIs</h3>
               <span id="poiPinsCount">0 found</span>
@@ -373,13 +582,11 @@
             </div>
           </section>
 
-          <section class="collections-section">
+          <section id="collectionCards" class="collections-section hidden">
             <div class="collections-section-header">
               <h3>Cards</h3>
               <span id="cardCollectionsCount">0 / 0</span>
             </div>
-
-            <button id="openTestCardPackBtn" class="card-pack-test-btn" type="button">Open Test Pack</button>
 
             <div id="cardSetsView" class="card-sets-view"></div>
 
@@ -390,26 +597,51 @@
             </div>
           </section>
 
-          <section class="collections-section locked">
+          <section id="collectionSkins" class="collections-section hidden">
             <div class="collections-section-header">
               <h3>Skins</h3>
-              <span>Coming soon</span>
+              <span>By bird type</span>
+            </div>
+            <div class="collection-grid-three">
+              <div class="collection-entry locked"><span>🕊️</span><strong>Dove Skins</strong></div>
+              <div class="collection-entry locked"><span>🦜</span><strong>Parrot Skins</strong></div>
+              <div class="collection-entry locked"><span>🐦</span><strong>Cocky Skins</strong></div>
             </div>
           </section>
 
-          <section class="collections-section locked">
+          <section id="collectionPets" class="collections-section hidden">
             <div class="collections-section-header">
-              <h3>Badges</h3>
-              <span>Coming soon</span>
+              <h3>Pets</h3>
+              <span>0 collected</span>
+            </div>
+            <div class="collection-grid-three">
+              <div class="collection-entry locked"><span>🐄</span><strong>Cow</strong></div>
+              <div class="collection-entry locked"><span>🐔</span><strong>Chicken</strong></div>
+              <div class="collection-entry locked"><span>🐈</span><strong>Cat</strong></div>
+            </div>
+          </section>
+
+          <section id="collectionToys" class="collections-section hidden">
+            <div class="collections-section-header">
+              <h3>Toys</h3>
+              <span>0 collected</span>
+            </div>
+            <div class="collection-grid-three">
+              <div class="collection-entry locked"><span>🔫</span><strong>Pew Pew 2-2</strong></div>
             </div>
           </section>
         </div>
       </section>
 
       <!-- CRAFTING SCREEN -->
-      <section id="craftingScreen" class="submenu-screen hidden">
+      <section id="craftingScreen" class="submenu-screen gg-standard-screen gg-crafting-screen hidden">
         <div id="recipePanel" class="recipe-panel">
-          <h2>RECIPES</h2>
+          <header class="gg-standard-screen-header">
+            <div>
+              <span class="gg-standard-screen-kicker">Your crafting station</span>
+              <h2>RECIPES</h2>
+            </div>
+          </header>
           <p class="submenu-intro">Craft items to power your journey!</p>
 
           <div class="crafting-header-card">
@@ -434,43 +666,39 @@
         </div>
 
         <div id="recipeDetailsPanel" class="recipe-details-panel hidden">
-          <h2>RECIPE DETAILS</h2>
+          <header class="gg-standard-screen-header">
+            <div>
+              <span class="gg-standard-screen-kicker">Crafting station</span>
+              <h2>RECIPE DETAILS</h2>
+            </div>
+          </header>
 
           <div id="recipeDetailsCard" class="recipe-details-card">
-            <div id="recipeHeroIcon" class="recipe-hero-icon">🥤</div>
+            <div class="recipe-hero-row">
+              <div id="recipeHeroIcon" class="recipe-hero-icon">🥤</div>
 
-            <div class="recipe-detail-title-row">
-              <div>
-                <h3 id="recipeTitle">Energy Drink</h3>
-                <span id="recipeLevel">Lv. 7</span>
+              <div class="recipe-detail-title-row">
+                <div>
+                  <h3 id="recipeTitle">Energy Drink</h3>
+                  <span id="recipeLevel">Lv. 7</span>
+                </div>
               </div>
-
-              <span id="recipeRarity" class="recipe-rarity">Rare</span>
             </div>
 
-            <p id="recipeEffect" class="recipe-effect">
-              A refreshing boost that increases XP gain for a limited time.
-            </p>
+            <p id="recipeEffect" class="recipe-effect hidden"></p>
 
-            <div class="recipe-stat-grid">
-              <div class="recipe-stat-card">
-                <span>XP</span>
-                <strong id="recipeBoostType">Effect Boost</strong>
-              </div>
-
-              <div class="recipe-stat-card">
-                <span>⏱</span>
-                <strong id="recipeDuration">5m</strong>
-              </div>
-
-              <div class="recipe-stat-card">
-                <span>Boost</span>
-                <strong id="recipeBoostAmount">+100%</strong>
-              </div>
-
+            <div class="recipe-meta-grid">
               <div class="recipe-stat-card">
                 <span>Crafting XP</span>
                 <strong id="recipeCraftingXp">250</strong>
+              </div>
+
+              <div class="recipe-stat-card">
+                <span>You receive</span>
+                <strong class="recipe-result-inline">
+                  <span id="recipeResultIcon" aria-hidden="true">🥤</span>
+                  <span id="recipeResultName">Energy Drink ×1</span>
+                </strong>
               </div>
             </div>
 
@@ -493,7 +721,8 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
-  <script src="custom25d-visual-passive-reports.js"></script>
-  <script src="script.js?v=cards14"></script>
+  <script src="script.js?v=world-first-live-1&read-optimization-1&map-response-order-1&admin-inventory-20260908&friends-profile-20260909&players-met-20260909&social-portraits-20260909&pin-load-ahead-live-20260909&cold-map-latency-1&bird-pilot-20260911&shared-dove-20260911"></script>
+  <script src="development-alpha-client-config.js"></script>
+  <script type="module" src="client/development-alpha-app.mjs?v=achievement-pins-3&world-first-live-1&read-optimization-1&friends-profile-20260909&players-met-20260909&bird-pilot-20260911&shared-dove-20260911"></script>
 </body>
 </html>

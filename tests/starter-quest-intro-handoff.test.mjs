@@ -4,11 +4,24 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
 const source = readFileSync(new URL('../script.js', import.meta.url), 'utf8');
+const questStyle = readFileSync(new URL('../style.css', import.meta.url), 'utf8');
+const questMock = readFileSync(new URL('./starter-quest-flow-mock.html', import.meta.url), 'utf8');
 const start = source.slice(source.indexOf('async function startStarterQuestForLivePlayer('), source.indexOf('async function claimAlphaSeedBundleForLivePlayer('));
 const finish = source.slice(source.indexOf('async function completeInterfaceTutorialThenStartStarterQuest('), source.indexOf('function restartNavigationGuide('));
 const longPressOptions = source.slice(source.indexOf('function showNavigationGuideLongPressOptions('), source.indexOf('async function completeInterfaceTutorialThenStartStarterQuest('));
 const navigationIntro = source.slice(source.indexOf('function showNavigationGuideIntro('), source.indexOf('function renderNavigationGuide('));
 const intro = source.slice(source.indexOf('function showStarterQuestIntro('), source.indexOf('function initQuestUi('));
+const starterPinTarget = source.slice(source.indexOf('function isStarterQuestBasePinTarget('), source.indexOf('function buildPinIcon('));
+const syncStarterMapGuide = source.slice(source.indexOf('function getStarterQuestMapHighlightStorageKey('), source.indexOf('function beginStarterQuestMapGuide('));
+const clearStarterMapGuide = source.slice(source.indexOf('function clearStarterQuestMapHighlight('), source.indexOf('function initQuestUi('));
+test('starter quest portrait is half-size and capture halo is centered on the pin head', () => {
+  assert.match(questStyle, /\.starter-quest-intro > img\s*\{[^}]*width:\s*322\.5px;[^}]*height:\s*270px;/s);
+  assert.match(questStyle, /\.starter-quest-intro > img\s*\{[^}]*width:\s*195px;[^}]*height:\s*157\.5px;/s);
+  // The 64×84 pin head is centered around y=32; leave the pointed tail outside
+  // the ring so its visible center aligns with the white circular face.
+  assert.match(questStyle, /\.base-pin-marker\.starter-quest-capture-glow::after\s*\{[^}]*inset:\s*3px 3px 22px;/s);
+  assert.match(questMock, /width:\s*min\(322px, 76vw\); height:\s*min\(270px, 49vh\)/);
+});
 test('Bingles introduces the controls tutorial before the first navigation prompt', () => {
   let click = null;
   let guideRendered = 0;
@@ -60,9 +73,9 @@ test('the final hold options require acknowledgement before Bingles begins', asy
   assert.equal(context.navigationGuideStage, 'complete');
   assert.equal(starterQuestRequested, 1);
 });
-test('actual intro saves acknowledgement only on click and routes completed captures forward', () => {
+test('first-capture intro returns to the map while later starter steps still open their quest', () => {
   for (const status of ['active', 'completed']) {
-    const saved = new Map(); let click; let opened; let removed = false; let menuOpened = false; let questsOpened = false;
+    const saved = new Map(); let click; let opened; let removed = false; let menuOpened = status === 'active'; let questsOpened = false; let pinRedraws = 0;
     const element = { setAttribute() {}, querySelector: () => ({ addEventListener: (_, handler) => { click = handler; } }), remove() { removed = true; } };
     const context = vm.createContext({
       document: { getElementById: () => null, createElement: () => element, body: { append() {} } },
@@ -71,15 +84,65 @@ test('actual intro saves acknowledgement only on click and routes completed capt
       escapeHtml: value => String(value || ''), sideMenu: { classList: { contains: () => menuOpened } },
       toggleMenu: () => { menuOpened = true; }, openQuests: () => { questsOpened = true; },
       trackedQuestId: null, map: null, getQuestMapCoordinates: () => null, showToast() {},
-      openQuestDetail: id => { opened = id; }, localStorage: { setItem: (key, value) => saved.set(key, value) }
+      starterQuestChain: { step: status === 'active' ? 'capture-first-base' : 'claim-first-base' },
+      starterQuestStartedAt: 'run-1', starterQuestMapHighlightActive: false, starterQuestMapHighlightPlayerId: '',
+      getActivePlayerId: () => 'player-1', scheduleRedrawPins: () => { pinRedraws++; },
+      closeMenu: () => { menuOpened = false; },
+      openQuestDetail: id => { opened = id; }, localStorage: {
+        getItem: key => saved.get(key) ?? null,
+        setItem: (key, value) => saved.set(key, value),
+        removeItem: key => saved.delete(key)
+      },
+      showToast() {}, map: { invalidateSize() {} }
     });
     vm.runInContext(intro, context); context.showStarterQuestIntro('receipt');
     assert.equal(saved.size, 0); click();
     assert.equal(saved.get('receipt'), 'acknowledged'); assert.equal(removed, true);
-    assert.equal(menuOpened, true); assert.equal(questsOpened, true);
-    if (status === 'completed') assert.equal(opened, 'second');
-    else assert.equal(context.trackedQuestId, 'first');
+    if (status === 'completed') {
+      assert.equal(menuOpened, true); assert.equal(questsOpened, true); assert.equal(opened, 'second');
+      assert.equal(pinRedraws, 0);
+    } else {
+      assert.equal(menuOpened, false); assert.equal(questsOpened, false); assert.equal(opened, undefined);
+      assert.equal(context.trackedQuestId, 'first'); assert.equal(context.starterQuestMapHighlightActive, true);
+      assert.equal(saved.get('growgo-starter-quest-map-highlight:player-1:run-1'), 'active');
+      assert.equal(pinRedraws, 1);
+    }
   }
+});
+test('starter capture glow targets only uncaptured, unowned base pins for the active player', () => {
+  const context = vm.createContext({
+    starterQuestMapHighlightActive: true,
+    starterQuestMapHighlightPlayerId: 'player-1',
+    starterQuestStatus: 'active',
+    starterQuestChain: { step: 'capture-first-base' },
+    getActivePlayerId: () => 'player-1'
+  });
+  vm.runInContext(starterPinTarget, context);
+  assert.equal(context.isStarterQuestBasePinTarget({ id: 'open', type: 'base' }, false), true);
+  assert.equal(context.isStarterQuestBasePinTarget({ id: 'legacy-base' }, false), true);
+  assert.equal(context.isStarterQuestBasePinTarget({ id: 'owned', type: 'base', ownerId: 'someone' }, false), false);
+  assert.equal(context.isStarterQuestBasePinTarget({ id: 'captured', type: 'base' }, true), false);
+  assert.equal(context.isStarterQuestBasePinTarget({ id: 'water', type: 'water' }, false), false);
+  context.starterQuestMapHighlightPlayerId = 'other-player';
+  assert.equal(context.isStarterQuestBasePinTarget({ id: 'other-player-view', type: 'base' }, false), false);
+});
+test('starter map glow restores only for the acknowledged player and run, then clears', () => {
+  const saved = new Map([['growgo-starter-quest-map-highlight:player-1:run-1', 'active']]);
+  let playerId = 'player-1'; let redraws = 0;
+  const context = vm.createContext({
+    starterQuestStatus: 'active', starterQuestChain: { step: 'capture-first-base' },
+    starterQuestStartedAt: 'run-1', starterQuestMapHighlightActive: false,
+    starterQuestMapHighlightPlayerId: '', getActivePlayerId: () => playerId,
+    localStorage: { getItem: key => saved.get(key) ?? null, removeItem: key => saved.delete(key) },
+    scheduleRedrawPins: () => { redraws++; }
+  });
+  vm.runInContext(syncStarterMapGuide + '\n' + clearStarterMapGuide, context);
+  context.syncStarterQuestMapHighlight(); assert.equal(context.starterQuestMapHighlightActive, true);
+  playerId = 'player-2'; context.syncStarterQuestMapHighlight(); assert.equal(context.starterQuestMapHighlightActive, false);
+  playerId = 'player-1'; context.starterQuestMapHighlightActive = true;
+  context.clearStarterQuestMapHighlight();
+  assert.equal(saved.has('growgo-starter-quest-map-highlight:player-1:run-1'), false);
+  assert.equal(context.starterQuestMapHighlightActive, false); assert.equal(redraws, 1);
 });
 test('missed introduction is offered at every unfinished starter step', async () => {
   for (const step of ['claim-first-base', 'plant-two-base-pins', 'grow-and-harvest', 'craft-energy-bar']) {

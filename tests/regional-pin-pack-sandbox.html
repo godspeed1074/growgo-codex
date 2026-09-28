@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GrowGo Regional Pin Pack — Local Sandbox</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #092b42; color: #f4f8fb; }
+    body { margin: 0 auto; max-width: 980px; padding: 20px; }
+    h1 { margin: 0 0 6px; font-size: clamp(1.35rem, 3vw, 2rem); }
+    p { line-height: 1.45; }
+    .notice { background: #173f57; border: 1px solid #3a6b83; border-radius: 12px; padding: 12px 14px; }
+    .controls { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin: 16px 0; }
+    label { display: grid; gap: 5px; font-size: .82rem; color: #c6d7e1; }
+    input, select, button { font: inherit; border-radius: 9px; border: 1px solid #63869a; padding: 10px 12px; }
+    input, select { color: #102b3a; background: #fff; width: 150px; }
+    button { color: white; background: #138d69; border: 0; cursor: pointer; font-weight: 700; }
+    button.secondary { background: #24536b; }
+    button:disabled { opacity: .55; cursor: wait; }
+    #map { height: min(62vh, 620px); min-height: 330px; border-radius: 14px; overflow: hidden; border: 1px solid #55768a; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 12px 0; }
+    .metric { background: #123a52; border-radius: 10px; padding: 10px; }
+    .metric small { display: block; color: #b9cfda; }
+    .metric strong { font-size: 1.15rem; }
+    #status { min-height: 1.5em; color: #c9f7df; }
+    .pin-dot { width: 14px; height: 14px; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 0 2px #132e3b; }
+    .base { background: #16a46b; } .water { background: #159dd1; }
+    @media (max-width: 600px) { body { padding: 14px; } input, select { width: 130px; } }
+  </style>
+</head>
+<body>
+  <h1>Regional pin-pack sandbox</h1>
+  <p class="notice"><strong>Local preview only.</strong> It reads public map geometry through the local sandbox server, stores pin coordinates in this browser, and does not connect to GrowGo live data. The test radius is capped at 2 km. No capture or reward buttons are provided; the sandbox’s dynamic-state feed is currently empty.</p>
+  <div class="controls">
+    <label>Latitude<input id="lat" type="number" step="0.000001" value="-38.113"></label>
+    <label>Longitude<input id="lng" type="number" step="0.000001" value="145.283"></label>
+    <label>Pack radius<select id="radius"><option value="0.5">0.5 km</option><option value="1" selected>1 km</option><option value="2">2 km</option></select></label>
+    <button id="locate" class="secondary">Use my location</button>
+    <button id="download">Load / update pins</button>
+    <button id="cached" class="secondary">Show saved pins</button>
+    <button id="clear" class="secondary">Clear downloaded pack</button>
+  </div>
+  <div id="map" aria-label="Local pin pack map preview"></div>
+  <div class="metrics">
+    <div class="metric"><small>Pins drawn</small><strong id="pinCount">0</strong></div>
+    <div class="metric"><small>New shards</small><strong id="shards">0</strong></div>
+    <div class="metric"><small>Reused shards</small><strong id="reused">0</strong></div>
+    <div class="metric"><small>Bytes downloaded</small><strong id="bytes">0</strong></div>
+    <div class="metric"><small>Draw time</small><strong id="drawTime">—</strong></div>
+    <div class="metric"><small>Device storage</small><strong id="storage">0 B</strong></div>
+  </div>
+  <div id="status" role="status" aria-live="polite">Start the local sandbox server, then load a region.</div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script type="module">
+    import {createIndexedDbRegionalPinStorage, createRegionalPinPackPreview} from '/modules/regional-pin-pack-preview.mjs';
+    import {createRegionalPinPackSandboxTransport} from '/modules/regional-pin-pack-sandbox-transport.mjs';
+
+    const storage = createIndexedDbRegionalPinStorage({name: 'growgo-regional-pin-pack-test'});
+    const transport = createRegionalPinPackSandboxTransport();
+    const pack = createRegionalPinPackPreview({storage, transport, maxPackBytes: 50 * 1024 * 1024});
+    const map = L.map('map').setView([-38.113, 145.283], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'}).addTo(map);
+    const markers = L.layerGroup().addTo(map);
+    const $ = id => document.getElementById(id);
+    const formatBytes = n => n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`;
+    function center() { return {lat: Number($('lat').value), lng: Number($('lng').value)}; }
+    function drawPins(pins, elapsed = null) {
+      markers.clearLayers();
+      for (const pin of pins) {
+        const icon = L.divIcon({className: '', html: `<div class="pin-dot ${pin.type === 'water' ? 'water' : 'base'}"></div>`, iconSize: [18, 18], iconAnchor: [9, 9]});
+        L.marker([pin.latitude, pin.longitude], {icon, keyboard: false, title: pin.type === 'water' ? 'Water pin' : 'Base pin'}).addTo(markers);
+      }
+      $('pinCount').textContent = pins.length;
+      if (elapsed !== null) $('drawTime').textContent = `${elapsed.toFixed(0)} ms`;
+      void pack.diagnostics().then(info => $('storage').textContent = formatBytes(info.bytes));
+    }
+    async function showSaved() {
+      const manifest = await storage.getManifest();
+      if (!manifest) { $('status').textContent = 'No saved pack on this device yet.'; return; }
+      const pins = (await Promise.all(manifest.shards.map(shard => pack.getPins(shard.id)))).flat();
+      map.setView([manifest.center.lat, manifest.center.lng], 14);
+      drawPins(pins);
+      $('status').textContent = `Showing saved catalog ${manifest.catalogVersion}; this action did not request new pins.`;
+    }
+    $('download').addEventListener('click', async () => {
+      $('download').disabled = true;
+      const started = performance.now();
+      try {
+        const result = await pack.sync(center(), {radiusKm: Number($('radius').value)});
+        const manifest = await storage.getManifest();
+        for (const shard of manifest.shards) await pack.syncDelta(shard.id);
+        const pins = (await Promise.all(manifest.shards.map(shard => pack.getPins(shard.id)))).flat();
+        map.setView([manifest.center.lat, manifest.center.lng], 14);
+        drawPins(pins, performance.now() - started);
+        $('shards').textContent = result.shardsDownloaded;
+        $('reused').textContent = result.shardsReused;
+        $('bytes').textContent = formatBytes(result.bytesDownloaded);
+        $('status').textContent = `Loaded ${pins.length} canonical pins from ${result.shardsDownloaded} downloaded shard(s); ${result.shardsReused} shard(s) reused. No player state or rewards were changed.`;
+      } catch (error) {
+        $('status').textContent = error instanceof Error ? error.message : 'Sandbox request failed.';
+      } finally { $('download').disabled = false; }
+    });
+    $('cached').addEventListener('click', () => showSaved().catch(error => $('status').textContent = error.message));
+    $('clear').addEventListener('click', async () => {
+      await pack.clear(); markers.clearLayers();
+      $('pinCount').textContent = '0'; $('storage').textContent = '0 B'; $('status').textContent = 'Local pin pack cleared from this browser.';
+    });
+    $('locate').addEventListener('click', () => {
+      if (!navigator.geolocation) { $('status').textContent = 'This browser does not provide location access.'; return; }
+      navigator.geolocation.getCurrentPosition(position => {
+        $('lat').value = position.coords.latitude.toFixed(6);
+        $('lng').value = position.coords.longitude.toFixed(6);
+        map.setView([position.coords.latitude, position.coords.longitude], 14);
+        $('status').textContent = 'Location set. Press “Load / update pins” when you are safely stopped.';
+      }, error => { $('status').textContent = error.message || 'Could not read location.'; },
+      {enableHighAccuracy: true, timeout: 10_000, maximumAge: 30_000});
+    });
+    showSaved().catch(() => {});
+  </script>
+</body>
+</html>
