@@ -1,0 +1,51 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {gzipSync} from 'node:zlib';
+import path from 'node:path';
+const require=createRequire(import.meta.url);
+test('actual capture handler repairs outage evidence, rewards once, rejects repeat/out-of-range and lets another player capture',async t=>{
+ if(!process.env.FIRESTORE_EMULATOR_HOST){t.skip('Requires localhost Firestore; never accesses live players.');return;}
+ assert.equal(process.env.FIRESTORE_EMULATOR_HOST,'127.0.0.1:8792','Strictly local test only');
+ Object.assign(process.env,{GROWGO_PRIVATE_ALPHA_CAPTURE_ENABLED:'true',GROWGO_PRIVATE_ALPHA_OVERPASS_ENDPOINT:'https://example.invalid',GROWGO_ACTIVE_DEVICE_SESSION_ENFORCED:'false',GROWGO_DEVELOPMENT_INVITED_ALPHA_ENFORCED:'false'});
+ const {initializeApp,deleteApp}=require('firebase-admin/app');
+ const {getFirestore,Timestamp}=require('firebase-admin/firestore');
+ const app=initializeApp({projectId:'demo-growgo-capture-recovery'},`recovery-${process.pid}`);const db=getFirestore(app);
+ t.after(async()=>{await db.terminate();await deleteApp(app);});
+ const lib=process.env.GROWGO_CAPTURE_TEST_ARTIFACT_PATH?path.join(process.env.GROWGO_CAPTURE_TEST_ARTIFACT_PATH,'lib'):path.resolve(import.meta.dirname,'../lib');
+ const load=file=>require(path.join(lib,file));
+ const {buildDefaultPlayerDocument}=load('domain/players/playerStore.js');
+ const {buildAuthoritativeSourceCacheDocumentId}=load('infrastructure/pins/firestoreAuthoritativePinCache.js');
+ const {generateCanonicalPinsForWay}=load('domain/pins/canonicalPinGenerator.js');
+ const {capturePin}=load('api/capturePin.js');
+ const uid=`recovery-owner-${process.pid}`,guest=`recovery-guest-${process.pid}`;
+ for(const id of [uid,guest])await db.collection('players').doc(id).set({...buildDefaultPlayerDocument(Timestamp.now()),displayName:'Local capture test',profileComplete:true,country:'Australia',region:'oceania',state:'Victoria',gender:'male'});
+ const source={generatorVersion:1,sourceType:'osm-way',sourceId:String(990000000+process.pid),spacingMetres:50,orderedCoordinates:[{latitude:-38.451,longitude:145.241},{latitude:-38.449,longitude:145.241}]};
+ const [pin,other]=generateCanonicalPinsForWay(source);
+ const cellKey=`v1-${Math.floor((pin.latitude+90)/.004)}-${Math.floor((pin.longitude+180)/.004)}`;
+ const now=Date.now();
+ await db.collection('sharedMapGeometryV1').doc(cellKey).set({version:1,cellKey,data:gzipSync(JSON.stringify({version:1,cellKey,fetchedAt:now-3600000,payload:{elements:[{type:'way',id:source.sourceId,geometry:source.orderedCoordinates.map(p=>({lat:p.latitude,lon:p.longitude}))}]}}))});
+ const ref=db.collection('authoritativePinSourcesV1').doc(buildAuthoritativeSourceCacheDocumentId(source));
+ await ref.set({storageSchemaVersion:1,cacheRecord:{kind:'negative',code:'transport-failed',retryable:true,cachedAt:new Date(now-1000).toISOString(),expiresAt:new Date(now+21600000).toISOString()}});
+ for(const p of [pin,other])await db.collection('authoritativeWaterPinStates').doc(p.pinId).set({pinId:p.pinId,type:'base',latitude:p.latitude,longitude:p.longitude});
+ let calls=0;const originalFetch=globalThis.fetch;globalThis.fetch=async()=>{calls++;throw Error('No external provider allowed in recovery test');};t.after(()=>{globalThis.fetch=originalFetch;});
+ const request=(id,p=pin,extra={})=>({auth:{uid:id,token:{}},data:{requestId:`recovery-${Date.now()}-${Math.random()}`,pinId:p.pinId,pinLatitude:p.latitude,pinLongitude:p.longitude,latitude:p.latitude,longitude:p.longitude,accuracyMetres:5,clientCapturedAt:new Date().toISOString(),...extra}});
+ const initialPlayer=(await db.collection('players').doc(uid).get()).data();
+ let correction;
+ await assert.rejects(capturePin.run(request(uid,pin,{pinLatitude:pin.latitude+.0004})),error=>{
+  assert.equal(error.code,'failed-precondition');assert.equal(error.details?.reason,'pin-location-updated');
+  assert.deepEqual(error.details.pin,pin);correction=error.details.pin;return true;
+ });
+ assert.deepEqual((await db.collection('players').doc(uid).get()).data(),initialPlayer,'A correction must not grant rewards');
+ assert.equal((await db.collection('playerCaptureStates').doc(uid).collection('pins').get()).size,0);
+ // Corrected evidence never bypasses the player's real distance or GPS checks.
+ await assert.rejects(capturePin.run(request(uid,correction,{latitude:pin.latitude+.02})),{code:'failed-precondition'});
+ await assert.rejects(capturePin.run(request(uid,correction,{accuracyMetres:101})),{code:'failed-precondition'});
+ const first=await capturePin.run(request(uid,correction));assert.equal(first.accepted,true);assert.equal(first.capture.points,5);assert.equal(first.capture.xp,5);
+ assert.equal((await ref.get()).data().cacheRecord.kind,'positive');
+ const after=(await db.collection('players').doc(uid).get()).data();
+ await assert.rejects(capturePin.run(request(uid)),{code:'already-exists'});
+ await assert.rejects(capturePin.run(request(uid,other,{latitude:other.latitude+.02})),{code:'failed-precondition'});
+ const unchanged=(await db.collection('players').doc(uid).get()).data();assert.equal(unchanged.xp,after.xp);assert.equal(unchanged.coins,after.coins);
+ const second=await capturePin.run(request(guest));assert.equal(second.accepted,true);assert.equal(second.capture.points,5);assert.equal(calls,0);
+});

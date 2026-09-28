@@ -10,9 +10,16 @@ const fixedNowIso = "2026-07-21T00:00:00.000Z";
 const fixedNow = new Date(fixedNowIso);
 const overpassEndpoint = "https://example.invalid/overpass";
 const collectionName = "authoritativePinSourcesV1";
+const successfulSourceId = "900001111111";
+const cachedDisabledSourceId = "900001111112";
+const transportDisabledSourceId = "900001111113";
+const notFoundSourceId = "900001111114";
+const malformedSourceId = "900001111115";
+const staleFallbackSourceId = "900001111116";
+const captureSourceId = "900001119111";
 
 const successfulSourceFixture = Object.freeze({
-  sourceId: "900000000000001111",
+  sourceId: successfulSourceId,
   orderedCoordinates: Object.freeze([
     Object.freeze({ latitude: -38.45, longitude: 145.24 }),
     Object.freeze({ latitude: -38.4495503, longitude: 145.24 }),
@@ -21,7 +28,7 @@ const successfulSourceFixture = Object.freeze({
 });
 
 const captureSourceFixture = Object.freeze({
-  sourceId: "900000000000009111",
+  sourceId: captureSourceId,
   orderedCoordinates: Object.freeze([
     Object.freeze({ latitude: -38.451, longitude: 145.241 }),
     Object.freeze({ latitude: -38.4505503, longitude: 145.241 }),
@@ -228,10 +235,10 @@ function createCountingProvider(provider) {
 
 function createFakePersistence(storeModule) {
   const requestDocuments = new Map();
+  const reservations = new Map();
   const counts = {
     ensurePlayerExists: 0,
-    getStoredRequest: 0,
-    createDeferredRequest: 0
+    reserveDeferredRequest: 0
   };
 
   return {
@@ -239,21 +246,45 @@ function createFakePersistence(storeModule) {
       async ensurePlayerExists() {
         counts.ensurePlayerExists += 1;
       },
-      async getStoredRequest(requestKey) {
-        counts.getStoredRequest += 1;
-        return requestDocuments.get(requestKey) ?? null;
-      },
-      async createDeferredRequest({ uid, requestFingerprint, request }) {
-        counts.createDeferredRequest += 1;
+      async reserveDeferredRequest({ uid, requestFingerprint, request }) {
+        counts.reserveDeferredRequest += 1;
         const requestKey = storeModule.buildCaptureRequestKey(
           uid,
           request.requestId
         );
+        const reservationKey = JSON.stringify({
+          uid,
+          operation: "capturePin",
+          requestId: request.requestId
+        });
+        const existingReservation = reservations.get(reservationKey) ?? null;
 
-        if (requestDocuments.has(requestKey)) {
-          const error = new Error("already exists");
-          error.code = 6;
-          throw error;
+        if (existingReservation) {
+          if (existingReservation.requestFingerprint !== requestFingerprint) {
+            const { HttpsError } = await import(
+              path.join(
+                repoRoot,
+                "functions/node_modules/firebase-functions/lib/common/providers/https.js"
+              )
+            );
+            throw new HttpsError(
+              "already-exists",
+              "A different capture request already used this requestId for the authenticated player."
+            );
+          }
+
+          return {
+            classification: "exact-replay",
+            reservationKey,
+            captureRequestKey: requestKey,
+            requestFingerprint,
+            response: {
+              ...storeModule.buildInitialDeferredCaptureResponse(request),
+              replayed: true,
+              message:
+                "The original deferred result was returned without applying any additional write or reward."
+            }
+          };
         }
 
         requestDocuments.set(
@@ -269,6 +300,15 @@ function createFakePersistence(storeModule) {
             }
           })
         );
+        reservations.set(reservationKey, { requestFingerprint });
+
+        return {
+          classification: "first-request",
+          reservationKey,
+          captureRequestKey: requestKey,
+          requestFingerprint,
+          response: storeModule.buildInitialDeferredCaptureResponse(request)
+        };
       }
     },
     requestDocuments,
@@ -333,10 +373,10 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
 
   const caseDocumentIds = [
     successfulSourceFixture.sourceId,
-    "900000000000001112",
-    "900000000000001113",
-    "900000000000001114",
-    "900000000000001115",
+    cachedDisabledSourceId,
+    transportDisabledSourceId,
+    notFoundSourceId,
+    malformedSourceId,
     captureSourceFixture.sourceId
   ].map((sourceId) =>
     cacheModule.buildAuthoritativeSourceCacheDocumentId(buildReference(sourceId))
@@ -400,7 +440,7 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
       assert.equal(fakeHttp.calls.length, 1);
       assert.equal(
         fakeHttp.calls[0].body,
-        "[out:json][timeout:5];\nway(900000000000001111);\nout geom;"
+        `[out:json][timeout:5];\nway(${successfulSourceId});\nout geom;`
       );
       assert.deepEqual(result.source.orderedCoordinates, [
         ...successfulSourceFixture.orderedCoordinates
@@ -556,7 +596,7 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
     });
 
     await t.test("case 5: disabled acquisition performs zero cache and zero HTTP activity", async () => {
-      const reference = buildReference("900000000000001112");
+      const reference = buildReference(cachedDisabledSourceId);
       const fakeHttp = createFakeHttpClient(
         new Map([
           [
@@ -612,7 +652,7 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
     });
 
     await t.test("case 6: cache miss with remote transport disabled reads at most once and writes nothing", async () => {
-      const reference = buildReference("900000000000001113");
+      const reference = buildReference(transportDisabledSourceId);
       const fakeHttp = createFakeHttpClient(new Map());
       const countingFirestore = createCountingFirestoreAdapter(firestore);
       const cache = cacheModule.createFirestoreAuthoritativeSourceCache({
@@ -650,7 +690,7 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
     });
 
     await t.test("case 7: not-found response writes one negative cache record and the second acquisition stays local", async () => {
-      const reference = buildReference("900000000000001114");
+      const reference = buildReference(notFoundSourceId);
       const documentId =
         cacheModule.buildAuthoritativeSourceCacheDocumentId(reference);
       const fakeHttp = createFakeHttpClient(
@@ -735,7 +775,7 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
     });
 
     await t.test("case 8: malformed or incomplete geometry writes only a negative cache record and does not retry", async () => {
-      const reference = buildReference("900000000000001115");
+      const reference = buildReference(malformedSourceId);
       const documentId =
         cacheModule.buildAuthoritativeSourceCacheDocumentId(reference);
       const fakeHttp = createFakeHttpClient(
@@ -824,7 +864,7 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
     });
 
     await t.test("case 9: stale fallback remains disabled by default and works only when explicitly enabled in test gates", async () => {
-      const reference = buildReference("900000000000001116");
+      const reference = buildReference(staleFallbackSourceId);
       const documentId =
         cacheModule.buildAuthoritativeSourceCacheDocumentId(reference);
       const staleRecord = buildPositiveCacheRecord(
@@ -1056,9 +1096,9 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
       assert.equal(replayResponse.accepted, false);
       assert.equal(replayResponse.rewardGranted, false);
       assert.equal(fakeHttp.calls.length, afterEvidenceHttpCalls);
-      assert.equal(countingFirestore.counts.reads, afterEvidenceReads);
+      assert.equal(countingFirestore.counts.reads, afterEvidenceReads + 1);
       assert.equal(countingFirestore.counts.writes, afterEvidenceWrites);
-      assert.equal(countingProvider.calls.length, afterEvidenceProviderCalls);
+      assert.equal(countingProvider.calls.length, afterEvidenceProviderCalls + 1);
 
       const conflictingRequest = storeModule.normalizeCapturePinRequest({
         ...normalizedRequest,
@@ -1079,9 +1119,9 @@ test("authoritative acquisition emulator end-to-end stays local, preserves defer
           error &&
           error.code === "already-exists" &&
           fakeHttp.calls.length === afterEvidenceHttpCalls &&
-          countingFirestore.counts.reads === afterEvidenceReads &&
+          countingFirestore.counts.reads === afterEvidenceReads + 2 &&
           countingFirestore.counts.writes === afterEvidenceWrites &&
-          countingProvider.calls.length === afterEvidenceProviderCalls
+          countingProvider.calls.length === afterEvidenceProviderCalls + 2
       );
 
       const snapshot = await readCacheDocument(firestore, documentId);

@@ -1,0 +1,20 @@
+.gg-mail{box-sizing:border-box;width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;padding:20px;color:#fff4ce;background:radial-gradient(ellipse at center,#13718a,#062a43);border:3px solid #efdb98;border-radius:30px;font-family:inherit;text-align:center;box-shadow:0 20px 80px #001c36aa;touch-action:pan-y}
+.gg-mail::backdrop{background:#00182799;backdrop-filter:blur(3px)}
+.gg-mail *{box-sizing:border-box}.gg-mail header{position:relative}.gg-mail h1{font-size:42px;font-weight:900;margin:0 45px 16px;letter-spacing:1px}.gg-mail h2{font-size:23px;margin:14px 0}.gg-mail button{font:inherit;font-weight:800;color:inherit;background:#073c57;border:2px solid #dfd198;border-radius:18px;min-height:46px;padding:10px 16px;cursor:pointer;touch-action:manipulation}.gg-mail button:disabled{opacity:.6;cursor:default}.gg-mail .gg-mail-close{position:absolute;right:0;top:0;border-radius:50%;font-size:26px;padding:0;width:44px}.gg-mail .gg-mail-back{display:block;font-size:15px}.gg-mail nav{display:flex;margin:20px 0;gap:5px}.gg-mail nav button{flex:1}.gg-mail nav .active{background:#fff0c7;color:#093b54}.gg-mail-row{display:block;width:100%;text-align:left;margin:12px 0;min-height:72px!important}.gg-mail-paper{background:#fff1d4;color:#0c3852;padding:20px;border-radius:20px;line-height:1.5;font-weight:700}.gg-mail-from{opacity:.7}.gg-mail-rewards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gg-mail-reward{padding:20px 10px;border:1px solid #dfd198;border-radius:18px;font-size:19px;font-weight:800}.gg-mail .gg-mail-collect{width:100%;margin:20px 0 12px;background:linear-gradient(#51ae41,#147834);font-size:27px;border-radius:25px}.gg-mail small{display:block}.gg-mail-status{line-height:1.4}.gg-mail-envelope{width:85px;height:60px;margin:15px auto;background:#ee3836;border-radius:10px;box-shadow:0 4px 7px #001c36aa;position:relative;overflow:hidden}.gg-mail-envelope:after{content:'';position:absolute;width:66px;height:66px;border-right:5px solid #fff0ce;border-bottom:5px solid #fff0ce;transform:rotate(45deg);top:-40px;left:9px;border-radius:6px}
+.gg-mail[open]{display:flex;flex-direction:column;width:min(380px,calc(100vw - 20px));max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:hidden;padding:14px;font-size:16px;line-height:1.3;border-radius:24px;border-width:2px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.gg-mail header,.gg-mail footer{flex-shrink:0}
+.gg-mail header{min-height:44px;display:flex;align-items:center}
+.gg-mail h1{font-size:26px;margin:0 48px 0 0;line-height:1.2}
+.gg-mail h2{font-size:19px;line-height:1.2;margin:10px 0}
+.gg-mail-content{min-height:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y}
+.gg-mail .gg-mail-back{padding:5px 0;min-height:44px;border:0;background:none}
+.gg-mail .gg-mail-envelope{width:48px;height:32px;margin:2px auto 6px}
+.gg-mail .gg-mail-envelope:after{width:36px;height:36px;top:-24px;left:6px;border-width:3px}
+.gg-mail .gg-mail-from{font-size:14px;margin:6px 0}
+.gg-mail .gg-mail-paper{font-size:16px;line-height:1.35;padding:12px;border-radius:12px;margin:10px 0;overflow-wrap:anywhere}
+.gg-mail .gg-mail-rewards{grid-template-columns:minmax(0,1fr);gap:6px}
+.gg-mail .gg-mail-reward{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;min-height:40px;font-size:16px;border-radius:10px;text-align:left}
+.gg-mail-reward span{overflow-wrap:anywhere;text-transform:capitalize}.gg-mail-reward strong{flex-shrink:0;color:#ffe6a2}
+.gg-mail footer{padding-top:10px}.gg-mail .gg-mail-collect{font-size:18px;min-height:48px;margin:0 0 8px;border-radius:14px}
+.gg-mail small{font-size:12px;line-height:1.3}.gg-mail .gg-mail-status{font-size:14px;margin:6px 0 0;overflow-wrap:anywhere}.gg-mail-status:empty{display:none}
+@media(max-height:600px){.gg-mail[open]{padding:10px}.gg-mail .gg-mail-envelope{display:none}.gg-mail h2{margin:7px 0}.gg-mail .gg-mail-paper{padding:9px;margin:7px 0}.gg-mail .gg-mail-reward{padding:6px 10px;min-height:34px}.gg-mail footer{padding-top:8px}}

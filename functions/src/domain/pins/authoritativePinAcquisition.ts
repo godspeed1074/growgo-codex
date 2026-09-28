@@ -12,6 +12,8 @@ import {
   buildPositiveAuthoritativeSourceCacheRecord,
   isAuthoritativeSourceCacheRecordFresh,
   isAuthoritativeSourceCacheRecordUsableAsStale,
+  isTransientAuthoritativeSourceFailure,
+  TRANSIENT_AUTHORITATIVE_FAILURE_TTL_SECONDS,
   validateAuthoritativeSourceCacheRecord,
   validateTransportedPinSource
 } from "./authoritativePinCache";
@@ -126,7 +128,8 @@ export async function acquireAuthoritativePinSource(params: {
       now,
       allowStaleFallback:
         params.gates.allowStaleFallback &&
-        transportResult.code === "timeout"
+        (isTransientAuthoritativeSourceFailure(transportResult.code) ||
+          transportResult.code === "source-incomplete")
     });
     if (stalePositiveRecord) {
       return buildStaleFallbackResult(stalePositiveRecord);
@@ -278,6 +281,10 @@ function resolveNegativeCacheTtlSeconds(params: {
   policy: AuthoritativeSourceAcquisitionPolicy;
 }): number {
   switch (params.failure.code) {
+    case "timeout":
+    case "transport-failed":
+      return Math.min(params.policy.negativeCacheDurationSeconds,
+        TRANSIENT_AUTHORITATIVE_FAILURE_TTL_SECONDS);
     case "rate-limited":
       return Math.max(
         params.policy.rateLimitedMinimumRetryAfterSeconds,

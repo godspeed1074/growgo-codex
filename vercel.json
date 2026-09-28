@@ -1,0 +1,35 @@
+{
+  "buildCommand": "npm run build:alpha-web",
+  "outputDirectory": "dist",
+  "headers": [
+    {"source":"/version.json","headers":[{"key":"Cache-Control","value":"no-store"}]},
+    {"source":"/release-version.js","headers":[{"key":"Cache-Control","value":"no-store"}]},
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/client/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/development-alpha-client-config.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

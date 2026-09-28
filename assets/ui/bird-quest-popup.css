@@ -1,0 +1,52 @@
+/* Scoped to the dove pilot. Mirrors the approved Stats/Leaders visual tokens. */
+.gg-bird-panel,.gg-bird-dialog { font-family:ui-rounded,"Avenir Next","Trebuchet MS",sans-serif;color:#fffdf1; }
+.gg-bird-panel { padding:16px;margin:12px 0;border:1px solid #f7fff175;border-radius:17px;background:#053045bf; }
+.gg-bird-panel[hidden] { display:none!important; }
+.gg-birdhouse-entry { display:block;padding:0;border:0;background:transparent;cursor:pointer;width:128px;max-width:100%; }
+.gg-birdhouse-entry img { display:block;width:100%;height:auto;border-radius:18px; }
+.gg-birdhouse-row { display:flex;align-items:center;gap:14px;width:100%;padding:12px;border:1px solid #d7d89a;border-radius:16px;background:#124961;color:#fffdf1;text-align:left;font:inherit;cursor:pointer; }
+.gg-birdhouse-row img { width:64px;height:64px;object-fit:contain; }
+.gg-bird-panel-heading { display:flex;align-items:center;gap:12px; }
+.gg-bird-panel-heading img { width:64px;height:64px;object-fit:contain; }
+.gg-bird-panel p { font-size:16px;line-height:1.4; }
+.gg-bird-panel small { display:block;margin-top:10px;color:#d4e8dd;font-size:13px; }
+.gg-bird-panel progress { width:100%;accent-color:#c3d995; }
+.gg-bird-dialog { width:min(480px,calc(100vw - 32px));max-width:none;padding:0;border:1px solid #f3dfa3bf;border-radius:26px;background:#15506d;box-shadow:0 8px 0 #052b4070,0 30px 90px #03182599;overflow:hidden; }
+.gg-bird-dialog::backdrop { background:#031725aa;backdrop-filter:blur(4px); }
+.gg-bird-dialog * { box-sizing:border-box; }
+.gg-bird-popup { display:flex;flex-direction:column;max-height:calc(100dvh - 64px);background:radial-gradient(circle at 88% 0%,#76ceb73b,transparent 28%),radial-gradient(circle at 6% 34%,#fccf5d21,transparent 21%),linear-gradient(#1c6c88,#15506d 43%,#0d3551); }
+.gg-bird-header { position:relative;display:flex;align-items:center;gap:12px;margin:0 20px;padding:17px 38px 14px 0;border-bottom:1px solid #fffae061;flex-shrink:0; }
+.gg-bird-header img { width:70px;height:78px;object-fit:contain; }
+.gg-bird-header small { font-size:13px;font-weight:800;text-transform:uppercase;color:#cde9dc; }
+.gg-bird-header h2 { margin:6px 0 0;font-size:29px;font-weight:900;letter-spacing:-.055em;line-height:1.05;color:#fffdf1;text-shadow:0 2px 0 #062c405c; }
+.gg-bird-close { position:absolute;right:-7px;top:10px;width:44px;height:44px;border:1px solid #f8ecc872;border-radius:50%;background:#09394dc9;color:#fff3c5;font-size:28px;cursor:pointer; }
+.gg-bird-scroll { overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 20px;min-height:0; }
+.gg-bird-scroll p { font-size:16px;line-height:1.45; }
+.gg-bird-scroll fieldset { display:grid;gap:10px;border:0;margin:0;padding:0; }
+.gg-bird-choice { display:grid;grid-template-columns:54px minmax(0,1fr) 20px;gap:12px;align-items:center;padding:13px 12px;border:1px solid #f7fff175;border-radius:16px;background:#053045ba;box-shadow:0 4px 0 #05293c38;cursor:pointer;touch-action:pan-y; }
+.gg-bird-choice:has(input:checked) { border-color:#f4d36d;background:linear-gradient(#2b6765e8,#07374aeb); }
+.gg-bird-choice img { width:54px;height:66px;object-fit:contain; }
+.gg-bird-choice strong,.gg-bird-choice span span,.gg-bird-choice small { display:block; }
+.gg-bird-choice strong { font-size:18px;line-height:1.25;margin-bottom:5px; }
+.gg-bird-choice span span { font-size:16px;line-height:1.35; }
+.gg-bird-choice small { font-size:14px;line-height:1.35;margin-top:5px;color:#b9e7bc; }
+.gg-bird-choice input { width:20px;height:20px;margin:0;accent-color:#f4d36d; }
+.gg-bird-rewards { margin-top:20px;padding:14px;border:1px solid #f7fff194;border-radius:17px;background:radial-gradient(circle at 95% 0%,#ffe17e29,transparent 31%),#053045bf;text-align:center; }
+.gg-bird-rewards h3 { font-size:14px;margin:0 0 12px;color:#f6dc87;letter-spacing:.06em; }
+.gg-bird-reward-stats { display:grid;grid-template-columns:1fr 1fr; }
+.gg-bird-reward-stats div+div { border-left:1px solid #d2ecdc40; }
+.gg-bird-reward-stats strong { display:block;font-size:28px;color:#fff0b3; }
+.gg-bird-reward-stats span { font-size:14px; }
+.gg-bird-rewards p,.gg-bird-rewards>strong { font-size:14px;line-height:1.5; }
+.gg-bird-rewards>strong { color:#f6dc87; }
+.gg-bird-scroll .gg-bird-note { font-size:13px;color:#cbe3da;text-align:center; }
+.gg-bird-popup footer { flex-shrink:0;padding:14px 20px max(12px,env(safe-area-inset-bottom));border-top:1px solid #e6efdc35;background:#0b334ce8;display:grid;gap:5px; }
+.gg-bird-primary { min-height:48px;padding:12px 16px;border:1px solid #fff4c6;border-radius:13px;background:linear-gradient(#fff5cf,#f4df9c);color:#16475a;font:900 16px ui-rounded,"Avenir Next","Trebuchet MS",sans-serif;box-shadow:inset 0 1px 0 #ffffffe0,0 3px 0 #c69d50;cursor:pointer;touch-action:manipulation; }
+.gg-bird-primary:disabled { background:#658b80;color:#e0ebe1;border-color:#c6d8ba6b;box-shadow:0 3px 0 #3a625b;cursor:default; }
+.gg-bird-text { min-height:44px;padding:10px;color:#e4eee7;background:none;border:0;font:14px ui-rounded,"Avenir Next","Trebuchet MS",sans-serif;text-decoration:underline;cursor:pointer;touch-action:manipulation; }
+.gg-bird-primary:focus-visible,.gg-bird-close:focus-visible,.gg-bird-text:focus-visible,.gg-bird-choice:has(input:focus-visible) { outline:3px solid #fff3ad;outline-offset:3px; }
+.gg-bird-map-icon { background:none!important;border:0!important; }
+.gg-bird-map-icon .gg-bird-map-art { display:block;width:96px;height:120px;pointer-events:none; }
+.gg-bird-map-icon img { display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 3px #062c4090);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none; }
+.gg-bird-sr { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0); }
+@media(max-width:380px) { .gg-bird-header{margin-inline:14px;gap:7px}.gg-bird-header img{width:50px;height:62px}.gg-bird-header h2{font-size:25px}.gg-bird-choice{grid-template-columns:42px minmax(0,1fr) 20px;gap:8px;padding:12px 9px}.gg-bird-choice img{width:42px;height:55px}.gg-bird-scroll{padding-inline:14px} }

@@ -174,3 +174,24 @@ test("enabled read/write use one direct document operation and reject malformed 
 
   assert.equal(await malformedCache.read(buildReference()), null);
 });
+
+test("shared map preparation cannot mistake a failed source read/write for successful persistence", async () => {
+  const module = await loadCacheModule();
+  for (const failure of ["throwOnGet", "throwOnSet"]) {
+    const fake = createFakeFirestore(null, { [failure]: true });
+    const options = {
+      firestore: fake.firestore,
+      collectionName: module.AUTHORITATIVE_PIN_SOURCE_CACHE_COLLECTION_NAME,
+      readsEnabled: true, writesEnabled: true
+    };
+    const strict = module.createFirestoreAuthoritativeSourceCache({ ...options, propagateErrors: true });
+    const original = module.createFirestoreAuthoritativeSourceCache(options);
+    if (failure === "throwOnGet") {
+      await assert.rejects(strict.read(buildReference()), /get-failed/);
+      assert.equal(await original.read(buildReference()), null);
+    } else {
+      await assert.rejects(strict.write(buildReference(), buildPositiveRecord()), /set-failed/);
+      await original.write(buildReference(), buildPositiveRecord());
+    }
+  }
+});

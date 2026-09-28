@@ -18,13 +18,16 @@ export interface FirestoreAuthoritativeSourceCacheDependencies {
     collection(name: string): {
       doc(documentId: string): {
         get(): Promise<{ exists: boolean; data(): unknown }>;
-        set(value: unknown): Promise<void>;
+        set(value: any, options?: any): Promise<unknown>;
       };
     };
   };
   collectionName: string;
   readsEnabled: boolean;
   writesEnabled: boolean;
+  // Map bundles may record a persistence hint only after the write succeeds.
+  // Existing acquisition consumers retain their fail-soft behavior by default.
+  propagateErrors?: boolean;
 }
 
 export function buildAuthoritativeSourceCacheDocumentId(
@@ -83,7 +86,8 @@ export function createFirestoreAuthoritativeSourceCache(
         });
 
         return validation.ok ? validation.record : null;
-      } catch {
+      } catch (error) {
+        if (dependencies.propagateErrors) throw error;
         return null;
       }
     },
@@ -113,7 +117,8 @@ export function createFirestoreAuthoritativeSourceCache(
               AUTHORITATIVE_PIN_SOURCE_CACHE_STORAGE_SCHEMA_VERSION,
             cacheRecord: validation.record
           });
-      } catch {
+      } catch (error) {
+        if (dependencies.propagateErrors) throw error;
         return;
       }
     }

@@ -114,6 +114,7 @@ export function validateAuthoritativeSourceAcquisitionConfig(value: unknown) {
 export const runtimeConfig = deepFreeze({
   firebaseAlias: "dev",
   projectId: "growgo-development",
+  storageBucket: "growgo-development.firebasestorage.app",
   firestoreDatabaseId: "(default)",
   region: "australia-southeast1",
   appCheck: {

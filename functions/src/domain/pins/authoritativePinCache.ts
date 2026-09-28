@@ -11,6 +11,22 @@ import {
   type CanonicalCoordinate
 } from "./basePinTypes";
 
+// A provider outage is not evidence that a road does not exist. Keep retries
+// bounded without turning a brief failure into a six-hour capture lockout.
+export const TRANSIENT_AUTHORITATIVE_FAILURE_TTL_SECONDS = 60;
+
+export function isTransientAuthoritativeSourceFailure(code: string): boolean {
+  return code === "timeout" || code === "transport-failed" || code === "rate-limited";
+}
+
+export function shouldRepairNearbySourceCache(
+  record: AuthoritativeSourceCacheRecord | null,
+  now: Date
+): boolean {
+  return record === null || record.kind === "negative" ||
+    !isAuthoritativeSourceCacheRecordUsableAsStale({ record, now });
+}
+
 export function createNoopAuthoritativeSourceCache():
   AuthoritativeSourceCache {
   return {
@@ -41,14 +57,22 @@ export function buildNegativeAuthoritativeSourceCacheRecord(params: {
   cachedAt: Date;
   expiresAt: Date;
 }): AuthoritativeSourceCacheRecord {
-  return {
+  const record: Extract<AuthoritativeSourceCacheRecord, { kind: "negative" }> = {
     kind: "negative",
     code: params.code,
     retryable: params.retryable,
-    retryAfterSeconds: params.retryAfterSeconds,
     cachedAt: params.cachedAt.toISOString(),
     expiresAt: params.expiresAt.toISOString()
   };
+
+  if (params.retryAfterSeconds !== undefined) {
+    return {
+      ...record,
+      retryAfterSeconds: params.retryAfterSeconds
+    };
+  }
+
+  return record;
 }
 
 export function validateAuthoritativeSourceCacheRecord(params: {
@@ -111,7 +135,13 @@ export function isAuthoritativeSourceCacheRecordFresh(params: {
 }): boolean {
   if (params.record.kind !== "positive") {
     const expiresAt = parseIsoTimestamp(params.record.expiresAt);
-    return expiresAt !== null && expiresAt.getTime() > params.now.getTime();
+    const cachedAt = parseIsoTimestamp(params.record.cachedAt);
+    // Also shortens old six-hour outage records already stored in alpha.
+    const retryAt = params.record.code === "transport-failed" || params.record.code === "timeout"
+      ? Math.min(expiresAt?.getTime() ?? 0,
+          (cachedAt?.getTime() ?? 0) + TRANSIENT_AUTHORITATIVE_FAILURE_TTL_SECONDS * 1000)
+      : expiresAt?.getTime() ?? 0;
+    return retryAt > params.now.getTime();
   }
 
   const cachedAt = parseIsoTimestamp(params.record.cachedAt);
@@ -120,6 +150,7 @@ export function isAuthoritativeSourceCacheRecordFresh(params: {
   }
 
   return (
+    isAuthoritativeSourceCacheRecordUsableAsStale(params) &&
     cachedAt.getTime() + params.positiveFreshDurationSeconds * 1000 >
     params.now.getTime()
   );

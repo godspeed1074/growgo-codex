@@ -18,6 +18,12 @@ async function loadTypeModule() {
   );
 }
 
+async function loadDensityModule() {
+  return import(
+    path.join(repoRoot, "functions/lib/domain/pins/canonicalPinDensity.js")
+  );
+}
+
 function metresToLatitudeDegrees(metres) {
   return (metres / earthRadiusMetres) * (180 / Math.PI);
 }
@@ -161,6 +167,41 @@ test("canonical v1 source validation accepts exactly 50 metre spacing and reject
       }),
     /spacing must remain locked to 50 metres/
   );
+});
+
+test("minimum separation keeps nearby road pins from clustering while preserving stable output", async () => {
+  const generator = await loadGeneratorModule();
+  const density = await loadDensityModule();
+  const origin = { latitude: 0, longitude: 0 };
+  const closeParallelOrigin = makeEastingCoordinate(origin, 20);
+  const firstRoad = generator.generateCanonicalPinsForWay(
+    buildWaySource({
+      sourceId: "123456804",
+      coordinates: [origin, makeNorthingCoordinate(origin, 120)]
+    })
+  );
+  const secondRoad = generator.generateCanonicalPinsForWay(
+    buildWaySource({
+      sourceId: "123456805",
+      coordinates: [
+        closeParallelOrigin,
+        makeNorthingCoordinate(closeParallelOrigin, 120)
+      ]
+    })
+  );
+
+  const forward = density.filterCanonicalPinsByMinimumSeparation([
+    ...firstRoad,
+    ...secondRoad
+  ]);
+  const reversed = density.filterCanonicalPinsByMinimumSeparation([
+    ...secondRoad,
+    ...firstRoad
+  ]);
+
+  assert.equal(forward.length, 3);
+  assert.deepEqual(forward, reversed);
+  assert.equal(density.CANONICAL_V1_MINIMUM_PIN_SEPARATION_METRES, 46);
 });
 
 test("straight ways start at positionIndex 0 and place pins every 50 metres along the full way", async () => {

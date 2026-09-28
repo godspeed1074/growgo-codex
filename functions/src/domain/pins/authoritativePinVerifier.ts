@@ -53,6 +53,7 @@ export type AuthoritativePinVerificationResult =
         sourceId?: string;
         positionIndex?: number;
         submittedCoordinateErrorMetres?: number;
+        canonicalPin?: CanonicalBasePin;
         reason?: string;
       };
     };
@@ -177,7 +178,8 @@ export async function verifyAuthoritativeCanonicalPin(params: {
       details: {
         sourceId: sourceReference.sourceId,
         positionIndex: parsedPinId.parsedPinId.positionIndex,
-        submittedCoordinateErrorMetres
+        submittedCoordinateErrorMetres,
+        canonicalPin
       }
     };
   }
