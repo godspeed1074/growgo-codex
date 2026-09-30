@@ -92,3 +92,52 @@ test("private-alpha capture accepts only fresh, accurate, nearby canonical base-
     { code: "failed-precondition" }
   );
 });
+
+test("test range bypasses distance only; pin verification, GPS accuracy and freshness still apply", async () => {
+  const capturePolicy = await loadCapturePolicy();
+  const now = new Date("2026-08-27T00:03:00.000Z");
+  const canonicalEvidence = {
+    pinLatitude: canonicalPin.latitude,
+    pinLongitude: canonicalPin.longitude
+  };
+  const farRequest = buildRequest({ latitude: canonicalPin.latitude - 0.02 });
+
+  assert.throws(() => capturePolicy.assertPrivateAlphaCaptureEligible({
+    request: farRequest,
+    canonicalPin,
+    evidence: canonicalEvidence,
+    now
+  }), { code: "failed-precondition" });
+
+  assert.doesNotThrow(() => capturePolicy.assertPrivateAlphaCaptureEligible({
+    request: farRequest,
+    canonicalPin,
+    evidence: canonicalEvidence,
+    now,
+    unlimitedCaptureRange: true
+  }));
+
+  assert.throws(() => capturePolicy.assertPrivateAlphaCaptureEligible({
+    request: buildRequest({ latitude: canonicalPin.latitude - 0.02, accuracyMetres: 101 }),
+    canonicalPin,
+    evidence: canonicalEvidence,
+    now,
+    unlimitedCaptureRange: true
+  }), { code: "failed-precondition" });
+
+  assert.throws(() => capturePolicy.assertPrivateAlphaCaptureEligible({
+    request: farRequest,
+    canonicalPin,
+    evidence: { ...canonicalEvidence, pinLongitude: canonicalPin.longitude + 0.01 },
+    now,
+    unlimitedCaptureRange: true
+  }), { code: "failed-precondition" });
+
+  assert.throws(() => capturePolicy.assertPrivateAlphaCaptureEligible({
+    request: buildRequest({ latitude: canonicalPin.latitude - 0.02, clientCapturedAt: "2026-08-27T00:09:00.000Z" }),
+    canonicalPin,
+    evidence: canonicalEvidence,
+    now,
+    unlimitedCaptureRange: true
+  }), { code: "failed-precondition" });
+});

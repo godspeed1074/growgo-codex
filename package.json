@@ -1,6 +1,6 @@
 {
   "name": "growgo-codex",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "private": true,
   "scripts": {
     "release:patch": "npm version patch --no-git-tag-version",

@@ -1,4 +1,4 @@
-import { createDevelopmentAlphaController } from "./development-alpha-controller.mjs?v=achievement-pins-3&world-first-live-1&read-optimization-1&friends-profile-20260909&players-met-20260909&bird-pilot-20260911&batch-pilot-20260913";
+import { createDevelopmentAlphaController } from "./development-alpha-controller.mjs?v=achievement-pins-3&world-first-live-1&read-optimization-1&friends-profile-20260909&players-met-20260909&bird-pilot-20260911&batch-pilot-20260913&test-capture-range-1";
 import { createAutoCaptureBatcher } from "./auto-capture-batcher.mjs?v=20260913";
 
 const developmentAlphaStartupDiagnosticsNamespace =
@@ -48,7 +48,7 @@ function isLocalDevelopmentHost(hostname) {
 
 async function loadDevelopmentAlphaFirebaseRuntime(runtimeContract) {
   try {
-    const runtimeModule = await import("./development-alpha-runtime.mjs?v=achievement-pins-3&world-first-live-1&read-optimization-1&friends-profile-20260909&players-met-20260909&bird-pilot-20260911");
+    const runtimeModule = await import("./development-alpha-runtime.mjs?v=achievement-pins-3&world-first-live-1&read-optimization-1&friends-profile-20260909&players-met-20260909&bird-pilot-20260911&test-capture-range-1");
     const createRuntime = runtimeModule?.createDevelopmentAlphaFirebaseRuntime;
 
     if (typeof createRuntime !== "function") {
@@ -77,6 +77,7 @@ const elements = bindPanelElements(panel);
 const localUiPreviewEnabled =
   isLocalDevelopmentHost(globalThis?.location?.hostname ?? "") &&
   new URLSearchParams(globalThis?.location?.search ?? "").get("uiPreview") === "1";
+let testCaptureRangeMapToggleBusy = false;
 
 const controller = createDevelopmentAlphaController({
   readConfig() {
@@ -87,6 +88,7 @@ const controller = createDevelopmentAlphaController({
   },
   render(state) {
     renderPanel(elements, state);
+    renderTestCaptureRangeMapToggle(state);
   },
   toClientSafeError(error) {
     if (error && typeof error.message === "string" && error.message.trim()) {
@@ -105,6 +107,29 @@ const controller = createDevelopmentAlphaController({
     return `${prefix}-${Date.now().toString(36)}-${Math.random()
       .toString(36)
       .slice(2, 8)}`;
+  }
+});
+
+const testCaptureRangeMapToggle = document.querySelector("#testCaptureRangeMapToggle");
+testCaptureRangeMapToggle?.addEventListener("click", async () => {
+  if (testCaptureRangeMapToggleBusy) return;
+  const state = controller.getState();
+  const expiry = Date.parse(state.playerSnapshot?.testUnlimitedCaptureRangeExpiresAt || "");
+  const enabled = Number.isFinite(expiry) && expiry > Date.now();
+  testCaptureRangeMapToggleBusy = true;
+  renderTestCaptureRangeMapToggle(state);
+  try {
+    const result = await controller.toggleTestCaptureRange({ enabled: !enabled });
+    if (typeof globalThis.showToast === "function") {
+      globalThis.showToast("Test capture range", result.enabled ? "Enabled for 30 minutes." : "Disabled.");
+    }
+  } catch (error) {
+    if (typeof globalThis.showToast === "function") {
+      globalThis.showToast("Test capture range", error?.message || "Could not update the test range.");
+    }
+  } finally {
+    testCaptureRangeMapToggleBusy = false;
+    renderTestCaptureRangeMapToggle(controller.getState());
   }
 });
 
@@ -372,6 +397,9 @@ globalThis.__GROWGO_SERVER_GAMEPLAY__ = Object.freeze({
   searchAdminPlayer(payload) {
     return controller.searchAdminPlayer(payload);
   },
+  toggleTestCaptureRange(payload) {
+    return controller.toggleTestCaptureRange(payload);
+  },
   adjustAdminPlayerInventory(payload) {
     return controller.adjustAdminPlayerInventory(payload);
   },
@@ -615,6 +643,27 @@ function startBirdQuestPilot(state) {
     });
   }).catch(error => console.warn("Bird quest screen unavailable; gameplay continues.", error))
     .finally(() => { birdPilotLoading = false; });
+}
+
+function renderTestCaptureRangeMapToggle(state) {
+  const button = document.querySelector("#testCaptureRangeMapToggle");
+  if (!button) return;
+  const player = state.playerSnapshot;
+  const normalizedName = typeof player?.displayName === "string"
+    ? player.displayName.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US")
+    : "";
+  const eligibleName = normalizedName === "rubberlips" || normalizedName === "obi-cal";
+  const eligible = state.authStatus === "signed-in" && player?.profileComplete === true && eligibleName;
+  button.hidden = !eligible;
+  button.classList.toggle("hidden", !eligible);
+  const expiry = Date.parse(player?.testUnlimitedCaptureRangeExpiresAt || "");
+  const enabled = Number.isFinite(expiry) && expiry > Date.now();
+  button.classList.toggle("is-active", enabled);
+  button.setAttribute("aria-pressed", String(enabled));
+  button.setAttribute("aria-label", `Unlimited test capture range ${enabled ? "on" : "off"}`);
+  button.textContent = enabled ? "Test range · ON" : "Test range · OFF";
+  button.disabled = testCaptureRangeMapToggleBusy;
+  button.setAttribute("aria-busy", String(testCaptureRangeMapToggleBusy));
 }
 
 function renderPanel(elements, state) {

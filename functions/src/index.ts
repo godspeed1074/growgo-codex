@@ -38,6 +38,7 @@ export {
 } from "./api/growGoParties";
 export { capturePin } from "./api/capturePin";
 export { capturePinBatch } from "./api/capturePinBatch";
+export { toggleTestCaptureRange } from "./api/toggleTestCaptureRange";
 export { captureDailyPoi } from "./api/captureDailyPoi";
 export { getNearbyBasePins } from "./api/getNearbyBasePins";
 export { mutateWorldBasePin } from "./api/mutateWorldBasePin";

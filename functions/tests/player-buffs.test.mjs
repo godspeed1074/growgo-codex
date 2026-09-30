@@ -45,6 +45,20 @@ test("expired food buffs never increase capture XP", async () => {
   );
 });
 
+test("test capture range is active only until its server-stored expiry", async () => {
+  const { isTestUnlimitedCaptureRangeActive } = await loadPlayerBuffs();
+  const now = new Date("2026-09-29T12:00:00.000Z");
+
+  assert.equal(isTestUnlimitedCaptureRangeActive({}, now), false);
+  assert.equal(isTestUnlimitedCaptureRangeActive({ testUnlimitedCaptureRangeExpiresAt: null }, now), false);
+  assert.equal(isTestUnlimitedCaptureRangeActive({
+    testUnlimitedCaptureRangeExpiresAt: new Date(now.getTime() + 1)
+  }, now), true);
+  assert.equal(isTestUnlimitedCaptureRangeActive({
+    testUnlimitedCaptureRangeExpiresAt: new Date(now.getTime() - 1)
+  }, now), false);
+});
+
 test("Sweet Corn Snack grants its original 1–9 XP and coin boost for five minutes", async () => {
   const {
     createPlayerFoodBuff,

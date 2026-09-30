@@ -19,8 +19,10 @@ import {
   calculateCoinsWithActiveBuff,
   calculatePointsWithActiveBuff,
   calculateXpWithBestAvailableBonus,
-  getActivePlayerCaptureRadiusMultiplier
+  getActivePlayerCaptureRadiusMultiplier,
+  isTestUnlimitedCaptureRangeActive
 } from "../players/playerBuffs";
+import { getTestCaptureRangeAllowedNameKey, isTestCaptureRangeAccountIdentity } from "../players/testCaptureRangeAccess";
 import {
   resolvePartyXpBonusForReward,
   serializePartyXpBonus
@@ -159,6 +161,9 @@ export function assertPrivateAlphaCaptureEligible(params: {
   evidence: AlphaCaptureEvidence;
   now: Date;
   captureRadiusMetres?: number;
+  /** Internal preflight option; transaction later makes the authoritative range decision. */
+  deferDistanceCheck?: boolean;
+  unlimitedCaptureRange?: boolean;
 }): void {
   if (params.request.accuracyMetres > PRIVATE_ALPHA_CAPTURE_MAX_ACCURACY_METRES) {
     throw new HttpsError(
@@ -186,7 +191,7 @@ export function assertPrivateAlphaCaptureEligible(params: {
         Math.max(GROWGO_CAPTURE_RADIUS_METRES, requestedRadius)
       )
     : PRIVATE_ALPHA_CAPTURE_MAX_RADIUS_METRES;
-  if (playerDistance > captureRadiusMetres) {
+  if (!params.deferDistanceCheck && !params.unlimitedCaptureRange && playerDistance > captureRadiusMetres) {
     throw new HttpsError("failed-precondition", "You are too far away to capture this pin.");
   }
 
@@ -208,7 +213,10 @@ export async function acceptPrivateAlphaCapture(params: {
     request: params.request,
     canonicalPin: params.canonicalPin,
     evidence: params.evidence,
-    now
+    now,
+    // The transaction performs the authoritative range check alongside the
+    // server-owned test expiry and reserved-name identity.
+    deferDistanceCheck: true
   });
 
   const db = getAdminFirestore();
@@ -387,11 +395,24 @@ export async function acceptPrivateAlphaCapture(params: {
         "Complete your player profile before capturing pins."
       );
     }
+    let unlimitedCaptureRange = false;
+    if (isTestUnlimitedCaptureRangeActive(player, now)) {
+      const nameKey = getTestCaptureRangeAllowedNameKey(player.displayName);
+      if (nameKey) {
+        const reservedNameSnapshot = await transaction.get(db.collection("playerNames").doc(nameKey));
+        unlimitedCaptureRange = isTestCaptureRangeAccountIdentity({
+          displayName: player.displayName,
+          authenticatedUid: params.uid,
+          reservedUid: reservedNameSnapshot.data()?.uid
+        });
+      }
+    }
     assertPrivateAlphaCaptureEligible({
       request: params.request,
       canonicalPin: params.canonicalPin,
       evidence: params.evidence,
       now,
+      unlimitedCaptureRange,
       captureRadiusMetres:
         GROWGO_CAPTURE_RADIUS_METRES * getActivePlayerCaptureRadiusMultiplier(player, now)
     });
