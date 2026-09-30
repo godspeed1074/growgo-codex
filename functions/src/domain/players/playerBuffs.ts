@@ -7,6 +7,7 @@ import type {
 export type { FoodBuffItemId } from "./playerTypes";
 
 const MINUTE = 60 * 1_000;
+export const TEST_UNLIMITED_CAPTURE_RANGE_DURATION_MILLISECONDS = 30 * MINUTE;
 
 export const FOOD_BUFF_DEFINITIONS: Readonly<Record<FoodBuffItemId, {
   xpMultiplier: number;
@@ -146,6 +147,14 @@ export function getActivePlayerCaptureRadiusMultiplier(
   now: Date
 ): number {
   return getActivePlayerFoodBuff(player, now)?.radiusMultiplier ?? 1;
+}
+
+export function isTestUnlimitedCaptureRangeActive(
+  player: Pick<PlayerDocument, "testUnlimitedCaptureRangeExpiresAt">,
+  now: Date
+): boolean {
+  const expiresAt = player.testUnlimitedCaptureRangeExpiresAt;
+  return expiresAt instanceof Date && expiresAt.getTime() > now.getTime();
 }
 
 export function calculateXpWithActiveBuff(params: {

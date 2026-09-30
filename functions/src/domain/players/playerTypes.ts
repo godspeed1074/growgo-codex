@@ -112,6 +112,8 @@ export interface PlayerDocument {
   craftingXp: number;
   coins: number;
   activeBuff?: PlayerActiveBuff | null;
+  /** Temporary test override; only enabled by the server for two reserved accounts. */
+  testUnlimitedCaptureRangeExpiresAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
   lastLoginAt: Date;
@@ -134,6 +136,7 @@ export interface SafePlayerSnapshot {
   craftingXp: number;
   coins: number;
   activeBuff?: SafePlayerActiveBuff | null;
+  testUnlimitedCaptureRangeExpiresAt?: string | null;
   createdAt: string;
   updatedAt: string;
   lastLoginAt: string;

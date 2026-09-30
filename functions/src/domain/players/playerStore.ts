@@ -66,6 +66,9 @@ export function serializePlayerSnapshot(
     craftingXp: player.craftingXp,
     coins: player.coins,
     ...(player.activeBuff ? { activeBuff: serializeActiveBuff(player.activeBuff) } : {}),
+    ...(player.testUnlimitedCaptureRangeExpiresAt
+      ? { testUnlimitedCaptureRangeExpiresAt: player.testUnlimitedCaptureRangeExpiresAt.toISOString() }
+      : {}),
     createdAt: player.createdAt.toISOString(),
     updatedAt: player.updatedAt.toISOString(),
     lastLoginAt: player.lastLoginAt.toISOString()
@@ -154,6 +157,7 @@ export function readStoredPlayerDocument(data: DocumentData | undefined): Player
     : readNonNegativeSafeInteger(data.craftingXp, "craftingXp");
   const coins = readNonNegativeSafeInteger(data.coins, "coins");
   const activeBuff = readActiveBuff(data.activeBuff ?? null);
+  const testUnlimitedCaptureRangeExpiresAt = readOptionalDate(data.testUnlimitedCaptureRangeExpiresAt);
 
   return {
     schemaVersion: PLAYER_SCHEMA_VERSION,
@@ -172,10 +176,22 @@ export function readStoredPlayerDocument(data: DocumentData | undefined): Player
     craftingXp,
     coins,
     activeBuff,
+    testUnlimitedCaptureRangeExpiresAt,
     createdAt,
     updatedAt,
     lastLoginAt
   };
+}
+
+function readOptionalDate(value: unknown): Date | null {
+  if (value === undefined || value === null) return null;
+  try {
+    const date = asDate(value, "testUnlimitedCaptureRangeExpiresAt");
+    return Number.isFinite(date.getTime()) ? date : null;
+  } catch {
+    // Invalid test metadata must fail closed without blocking a player's login.
+    return null;
+  }
 }
 
 function readPlayerOnboarding(value: unknown): PlayerDocument["onboarding"] {

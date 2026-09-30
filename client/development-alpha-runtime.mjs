@@ -292,6 +292,11 @@ export async function createDevelopmentAlphaFirebaseRuntime(runtimeContract) {
       const response = await callable({ ...payload, deviceId });
       return response.data;
     },
+    async toggleTestCaptureRange(payload) {
+      const callable = httpsCallable(functions, "toggleTestCaptureRange");
+      const response = await callable({ ...payload, deviceId });
+      return response.data;
+    },
     async birdQuests(payload) {
       const callable = httpsCallable(functions, "birdQuests");
       const response = await callable({ ...payload, deviceId });

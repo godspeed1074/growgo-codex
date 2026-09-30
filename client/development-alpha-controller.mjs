@@ -840,6 +840,22 @@ export function createDevelopmentAlphaController(dependencies) {
     return runtime.searchAdminPlayer(payload);
   }
 
+  async function toggleTestCaptureRange(payload) {
+    if (!runtime || !state.user || typeof runtime.toggleTestCaptureRange !== "function") {
+      throw new Error("The secure GrowGo connection is not ready yet.");
+    }
+    const result = await runtime.toggleTestCaptureRange(payload);
+    if (state.playerSnapshot) {
+      publish({
+        playerSnapshot: {
+          ...state.playerSnapshot,
+          testUnlimitedCaptureRangeExpiresAt: result?.expiresAt ?? null
+        }
+      });
+    }
+    return result;
+  }
+
   async function adjustAdminPlayerInventory(payload) {
     if (!runtime || !state.user || typeof runtime.adjustAdminPlayerInventory !== "function") {
       throw new Error("The secure GrowGo connection is not ready yet.");
@@ -1132,6 +1148,7 @@ export function createDevelopmentAlphaController(dependencies) {
     assignAdminAccountRole,
     updateOfficialEvent,
     searchAdminPlayer,
+    toggleTestCaptureRange,
     adjustAdminPlayerInventory,
     moderateAdminPlayer,
     resetAdminMainQuest,

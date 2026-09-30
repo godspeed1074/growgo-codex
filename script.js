@@ -286930,6 +286930,18 @@ function getActiveCaptureRadiusMetres() {
   return Math.round(CAPTURE_RADIUS_METERS * Math.max(1, Number(buff?.radiusMultiplier) || 1));
 }
 
+function isActiveTestCaptureRange() {
+  const snapshot = getServerGameplayBridge()?.getPlayerSnapshot?.();
+  const normalizedName = String(snapshot?.displayName || "").trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
+  if (normalizedName !== "rubberlips" && normalizedName !== "obi-cal") return false;
+  const expiresAt = Date.parse(snapshot?.testUnlimitedCaptureRangeExpiresAt || "");
+  return Number.isFinite(expiresAt) && expiresAt > Date.now();
+}
+
+function isWithinActiveCaptureRange(distanceMetres, allowTestRange = true) {
+  return (allowTestRange && isActiveTestCaptureRange()) || distanceMetres <= getActiveCaptureRadiusMetres();
+}
+
 function getActiveCapturePointMultiplier() {
   return Math.max(1, Number(getActiveFoodBuff()?.pointsMultiplier) || 1);
 }
@@ -293226,13 +293238,10 @@ function shouldPinGlow(pin, capturedToday = null) {
 
   if (alreadyCaptured) return false;
 
-  const captureRadius = pin?.type === "poi"
-    ? isDailyGreenPoi(pin)
-      ? getDailyGreenPoiCaptureRadiusMetres()
-      : POI_CAPTURE_RADIUS_METERS
-    : getActiveCaptureRadiusMetres();
-  const isInCaptureRing =
-    playerLatLng.distanceTo([pin.lat, pin.lng]) <= captureRadius;
+  const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
+  const isInCaptureRing = pin?.type === "poi"
+    ? distance <= (isDailyGreenPoi(pin) ? getDailyGreenPoiCaptureRadiusMetres() : POI_CAPTURE_RADIUS_METERS)
+    : isWithinActiveCaptureRange(distance);
 
   return isInCaptureRing;
 }
@@ -294139,7 +294148,7 @@ function capturePin(pin) {
   const trustedNow = getTrustedNow();
   const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
 
-  if (distance > getActiveCaptureRadiusMetres()) {
+  if (!isWithinActiveCaptureRange(distance)) {
     showToast("Too far away", `${Math.round(distance)}m away.`);
     return;
   }
@@ -294361,7 +294370,7 @@ async function captureBasePinThroughServer(pin, serverGameplay, options = {}) {
   }
 
   const distance = playerLatLng.distanceTo([pin.lat, pin.lng]);
-  if (distance > getActiveCaptureRadiusMetres()) {
+  if (!isWithinActiveCaptureRange(distance, !auto)) {
     if (auto) {
       deferAutoCapturePin(pin);
     } else {
